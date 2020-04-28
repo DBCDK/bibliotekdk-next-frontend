@@ -6,7 +6,7 @@
   "scripts": {
     "build": "NODE_ENV=production webpack-cli --optimize-minimize --display-modules",
     "dev": "start-storybook -p 3000",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test-update-snapshots": "jest --updateSnapshot",
     "deploy": "npm run build && gh-pages -d dist",
     "storybook": "API_URI=http://localhost:3001/api/v1 start-storybook -p 3000",

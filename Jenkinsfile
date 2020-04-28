@@ -10,7 +10,7 @@ pipeline {
         IMAGE_NAME = "bibliotekdk-next-widgets${env.BRANCH_NAME != 'master' ? "-${env.BRANCH_NAME.toLowerCase()}" : ''}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
-        // GITLAB_ID = "623"
+        GITLAB_ID = "704"
 	}
     stages {
        
@@ -26,16 +26,16 @@ pipeline {
             }
         }
         
-        // stage('Static and unittest') {
-        //     steps { 
-        //         script {
-        //             ansiColor("xterm") {
-        //                 sh "docker run --rm ${IMAGE_NAME} npm run test" 
-        //                 sh "docker run --rm ${IMAGE_NAME} npm run lint" 
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Static and unittest') {
+            steps { 
+                script {
+                    ansiColor("xterm") {
+                        sh "docker run --rm ${IMAGE_NAME} npm run test" 
+                        sh "docker run --rm ${IMAGE_NAME} npm run lint" 
+                    }
+                }
+            }
+        }
         stage('Integration test') {
             steps { 
                 script {
@@ -61,32 +61,32 @@ pipeline {
                 }
             } }
         }
-        // stage("Update staging version number") {
-		// 	agent {
-		// 		docker {
-		// 			label 'devel9-head'
-		// 			image "docker-io.dbc.dk/python3-build-image"
-		// 			alwaysPull true
-		// 		}
-		// 	}
-		// 	when {
-		// 		branch "master"
-		// 	}
-		// 	steps {
-		// 		dir("deploy") {
-		// 			git(url: "gitlab@gitlab.dbc.dk:frontend/content-first-widget-deploy.git", credentialsId: "gitlab-svi", branch: "staging")
-		// 			sh """#!/usr/bin/env bash
-		// 				set -xe
-		// 				rm -rf auto-committer-env
-		// 				python3 -m venv auto-committer-env
-		// 				source auto-committer-env/bin/activate
-		// 				pip install -U pip
-		// 				pip install git+https://github.com/DBCDK/kube-deployment-auto-committer#egg=deployversioner
-		// 				set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
-		// 			"""
-		// 		}
-		// 	}
-		// }
+        stage("Update staging version number") {
+			agent {
+				docker {
+					label 'devel9-head'
+					image "docker-io.dbc.dk/python3-build-image"
+					alwaysPull true
+				}
+			}
+			when {
+				branch "master"
+			}
+			steps {
+				dir("deploy") {
+					git(url: "gitlab@gitlab.dbc.dk:frontend/content-first-widget-deploy.git", credentialsId: "gitlab-svi", branch: "staging")
+					sh """#!/usr/bin/env bash
+						set -xe
+						rm -rf auto-committer-env
+						python3 -m venv auto-committer-env
+						source auto-committer-env/bin/activate
+						pip install -U pip
+						pip install git+https://github.com/DBCDK/kube-deployment-auto-committer#egg=deployversioner
+						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
+					"""
+				}
+			}
+		}
     }
     post {
         always {
