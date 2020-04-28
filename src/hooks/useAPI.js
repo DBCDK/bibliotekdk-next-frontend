@@ -5,6 +5,11 @@ export default query => {
   const [state, setState] = useState({isLoading: true, query, response: null});
   useEffect(() => {
     (async () => {
+      setState({
+        isLoading: true,
+        query,
+        response: null
+      });
       const res = await fetch(
         'http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql',
         {
@@ -25,7 +30,7 @@ export default query => {
         response: json.data
       });
     })();
-  }, []);
+  }, [query]);
 
   return state;
 };

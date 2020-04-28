@@ -3,9 +3,7 @@ import useAPI from '../hooks/useAPI';
 import Recommendations from '../components/Recommendations';
 import styles from './Work.css';
 
-console.log(styles);
-
-export default ({pid}) => {
+export default ({pid, onWorkClick}) => {
   const {isLoading, response} = useAPI(`{
     record(pid: "${pid}") {
       title
@@ -57,7 +55,7 @@ export default ({pid}) => {
               );
             })}
       </div>
-      <Recommendations pid={pid} limit={5} />
+      <Recommendations pid={pid} limit={5} onWorkClick={onWorkClick} />
     </div>
   );
 };
