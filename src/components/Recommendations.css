@@ -1,0 +1,11 @@
+.Recommendations img {
+    max-width: 50px;
+}
+
+.Entry {
+    display: flex;
+    align-items: center;
+}
+.Entry > * {
+    margin: 4px 8px;
+}

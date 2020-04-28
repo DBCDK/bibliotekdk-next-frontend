@@ -1,5 +1,6 @@
 import React from 'react';
 import useAPI from '../hooks/useAPI';
+import styles from './Recommendations.css';
 
 export default ({pid, limit = 5}) => {
   const {isLoading, response} = useAPI(`{
@@ -7,6 +8,9 @@ export default ({pid, limit = 5}) => {
       recommendations(limit: ${limit}) {
         record {
           title
+          cover {
+            url
+          }
         }
         value
       }
@@ -14,19 +18,24 @@ export default ({pid, limit = 5}) => {
   }
   `);
   return (
-    <div>
+    <div className={styles.Recommendations}>
       <h3>Læs også ...</h3>
       {isLoading && <p>Indlæser</p>}
-      <ol>
+      <div>
         {response &&
-          response.record.recommendations.map((entry) => {
+          response.record.recommendations.map((entry, idx) => {
             return (
-              <li>
-                {entry.record.title} - {entry.value.toFixed(2)}
-              </li>
+              <div className={styles.Entry}>
+                <div>{idx + 1}</div>
+                {entry.record.cover && (
+                  <img src={entry.record.cover.url} alt={entry.type} />
+                )}
+                <div>{entry.record.title}</div>
+                <div>{entry.value.toFixed(2)}</div>
+              </div>
             );
           })}
-      </ol>
+      </div>
     </div>
   );
 };

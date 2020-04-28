@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import fetch from 'unfetch';
 
-export default (query) => {
+export default query => {
   const [state, setState] = useState({isLoading: true, query, response: null});
   useEffect(() => {
     (async () => {
@@ -10,11 +10,11 @@ export default (query) => {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            query,
-          }),
+            query
+          })
         }
       );
       const json = await res.json();
@@ -22,7 +22,7 @@ export default (query) => {
       setState({
         isLoading: false,
         query,
-        response: json.data,
+        response: json.data
       });
     })();
   }, []);

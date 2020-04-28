@@ -1,0 +1,16 @@
+.Work p {
+    max-width: 800px;
+}
+.Work h1 {
+
+    text-transform: uppercase;
+}
+.Collection {
+    display: flex;
+}
+.Collection img {
+    max-width: 80px;
+}
+.Collection > * {
+    margin-right: 8px;
+}

@@ -13,7 +13,8 @@
     "build-storybook": "build-storybook -c .storybook -o dist/storybook --quiet",
     "lint": "eslint src/",
     "cy:run": "npx cypress@latest run --project ./e2e",
-    "cy:open": "npx cypress@latest open --project ./e2e"
+    "cy:open": "npx cypress@latest open --project ./e2e",
+    "prettier": "prettier --single-quote --no-bracket-spacing --write 'src/**/*.js'"
   },
   "jest": {
     "testMatch": [
