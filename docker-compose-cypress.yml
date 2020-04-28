@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
+    image: '${IMAGE:-docker-ux.dbc.dk/bibliotekdk-next-widgets:latest}'
+    environment:
+      - PORT=3000
+  e2e:
+    ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
+    image: docker.dbc.dk/cypress:latest
+    volumes:
+      - './e2e:/app/e2e'
+    depends_on:
+      - web
+    environment:
+      - CYPRESS_baseUrl=http://web:3000
+    command: npm run cy

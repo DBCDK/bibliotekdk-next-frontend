@@ -36,17 +36,17 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('Integration test') {
-        //     steps { 
-        //         script {
-        //             ansiColor("xterm") {
-        //                 sh "docker pull docker.dbc.dk/cypress:latest" 
-        //                 sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
-        //                 sh "IMAGE=${IMAGE_NAME} LOWEL_CONNECTION_STRING=${LOWEL_CONNECTION_STRING} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e" 
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Integration test') {
+            steps { 
+                script {
+                    ansiColor("xterm") {
+                        sh "docker pull docker.dbc.dk/cypress:latest" 
+                        sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
+                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e" 
+                    }
+                }
+            }
+        }
         stage('Push to Artifactory') {
             when {
                 branch "master"
@@ -92,12 +92,12 @@ pipeline {
         always {
             sh """
                 echo Clean up
-                #mkdir -p logs
-                #docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
-                #docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
+                mkdir -p logs
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
                 docker rmi ${IMAGE_NAME}
             """
-            // archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
+            archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
         }
         failure {
             script {
