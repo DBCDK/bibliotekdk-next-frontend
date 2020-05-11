@@ -5,23 +5,24 @@ import styles from './Work.css';
 
 export default ({pid, onWorkClick}) => {
   const {isLoading, response} = useAPI(`{
-    record(pid: "${pid}") {
+    manifestation(pid: "${pid}") {
       title
-      creator {
+      creators {
         name
+        functionSingular
       }
       abstract
     }
   }
   `);
   const collectionRes = useAPI(`{
-    record(pid: "${pid}") {
+    manifestation(pid: "${pid}") {
       collection {
         cover {
-          url
+          detail
         }
-        type
-        date
+        materialType
+        publication
       }
     }
   }
@@ -33,24 +34,29 @@ export default ({pid, onWorkClick}) => {
       {isLoading && <p>Indlæser</p>}
       {response && (
         <div>
-          <h1>{response.record.title}</h1>
-          <h2>{response.record.creator.name}</h2>
-          <p>{response.record.abstract}</p>
+          <h1>{response.manifestation.title}</h1>
+          {response.manifestation.creators.map(creator => (
+            <h2 key={creator.name}>
+              {creator.name} ({creator.functionSingular})
+            </h2>
+          ))}
+
+          <p>{response.manifestation.abstract}</p>
         </div>
       )}
       <h3>Alle udgaver:</h3>
       <div className={styles.Collection}>
         {collectionRes.response &&
-          collectionRes.response.record.collection
-            .filter(entry => entry.cover)
+          collectionRes.response.manifestation.collection
+            .filter(entry => entry.cover.detail)
             .map(entry => {
               return (
                 <div>
                   <div>
-                    <img src={entry.cover.url} alt={entry.type} />
+                    <img src={entry.cover.detail} alt={entry.type} />
                   </div>
-                  <div>{entry.type}</div>
-                  <div>{entry.date}</div>
+                  <div>{entry.materialType}</div>
+                  <div>{entry.publication}</div>
                 </div>
               );
             })}
