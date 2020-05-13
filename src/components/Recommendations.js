@@ -4,13 +4,13 @@ import styles from './Recommendations.css';
 
 export default ({pid, limit = 5, onWorkClick}) => {
   const {isLoading, response} = useAPI(`{
-    record(pid: "${pid}") {
+    manifestation(pid: "${pid}") {
       recommendations(limit: ${limit}) {
-        record {
+        manifestation {
           pid
           title
           cover {
-            url
+            detail
           }
         }
         value
@@ -24,21 +24,24 @@ export default ({pid, limit = 5, onWorkClick}) => {
       {isLoading && <p>Indlæser</p>}
       <div>
         {response &&
-          response.record.recommendations.map((entry, idx) => {
+          response.manifestation.recommendations.map((entry, idx) => {
             return (
               <div
                 className={styles.Entry}
                 onClick={() => {
                   if (onWorkClick) {
-                    onWorkClick(entry.record.pid);
+                    onWorkClick(entry.manifestation.pid);
                   }
                 }}
               >
                 <div>{idx + 1}</div>
-                {entry.record.cover && (
-                  <img src={entry.record.cover.url} alt={entry.type} />
+                {entry.manifestation.cover && (
+                  <img
+                    src={entry.manifestation.cover.detail}
+                    alt={entry.type}
+                  />
                 )}
-                <div>{entry.record.title}</div>
+                <div>{entry.manifestation.title}</div>
                 <div>{entry.value.toFixed(2)}</div>
               </div>
             );
