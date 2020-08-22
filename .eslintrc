@@ -1,26 +1,7 @@
 {
-  "env": {
-    "browser": true,
-    "jest": true
-  },
   "parser": "babel-eslint",
-  "extends": [
-    "plugin:prettier/recommended",
-    "prettier/react",
-    "plugin:cypress/recommended"
-  ],
+  "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": [
-      "error",
-      {},
-      {
-        "usePrettierrc": true
-      }
-    ],
-    "no-underscore-dangle": 0,
-    "no-await-in-loop": 1
-  },
-  "settings": {
-    "import/resolver": "webpack"
+    "prettier/prettier": "error"
   }
 }

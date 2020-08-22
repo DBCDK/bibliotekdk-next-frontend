@@ -5,7 +5,7 @@
 
 describe('Work', () => {
   it(`Shows work data`, () => {
-    cy.visit('/storybook/?path=/story/work-page--doppler');
+    cy.visit('/?path=/story/prototype-work--doppler');
     cy.contains('Doppler');
   });
 });

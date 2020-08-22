@@ -1,25 +1,29 @@
-import React, {useState, useEffect} from 'react';
-import fetch from 'unfetch';
+import React, { useState, useEffect } from "react";
+import fetch from "unfetch";
 
-export default query => {
-  const [state, setState] = useState({isLoading: true, query, response: null});
+export default (query) => {
+  const [state, setState] = useState({
+    isLoading: true,
+    query,
+    response: null,
+  });
   useEffect(() => {
     (async () => {
       setState({
         isLoading: true,
         query,
-        response: null
+        response: null,
       });
       const res = await fetch(
-        'http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql',
+        "http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            query
-          })
+            query,
+          }),
         }
       );
       const json = await res.json();
@@ -27,7 +31,7 @@ export default query => {
       setState({
         isLoading: false,
         query,
-        response: json.data
+        response: json.data,
       });
     })();
   }, [query]);

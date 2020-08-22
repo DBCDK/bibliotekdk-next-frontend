@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Cypress
+e2e/cypress/videos/
+e2e/reports/

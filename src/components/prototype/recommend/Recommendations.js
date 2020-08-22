@@ -1,9 +1,9 @@
-import React from 'react';
-import useAPI from '../hooks/useAPI';
-import styles from './Recommendations.css';
+import React from "react";
+import useAPI from "../../../hooks/useAPI";
+import styles from "./Recommendations.module.css";
 
-export default ({pid, limit = 5, onWorkClick}) => {
-  const {isLoading, response} = useAPI(`{
+export default ({ pid, limit = 5, onWorkClick }) => {
+  const { isLoading, response } = useAPI(`{
     manifestation(pid: "${pid}") {
       recommendations(limit: ${limit}) {
         manifestation {

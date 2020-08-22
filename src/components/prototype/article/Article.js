@@ -1,8 +1,8 @@
-import React from 'react';
-import useAPI from '../hooks/useAPI';
+import React from "react";
+import useAPI from "../../../hooks/useAPI";
 
-export default ({path}) => {
-  const {isLoading, response} = useAPI(`{
+export default ({ path }) => {
+  const { isLoading, response } = useAPI(`{
     route(path: "${path}") {
       ... on EntityCanonicalUrl {
         nodeContext {
@@ -39,7 +39,7 @@ export default ({path}) => {
     return <p>Artiklen eksisterer ikke</p>;
   }
 
-  const {title, body, fieldImage} = response.route.nodeContext;
+  const { title, body, fieldImage } = response.route.nodeContext;
 
   return (
     <div>
@@ -50,11 +50,11 @@ export default ({path}) => {
           <img
             src={fieldImage.url}
             alt={fieldImage.alt}
-            style={{maxWidth: 150, maxHeight: 200}}
+            style={{ maxWidth: 150, maxHeight: 200 }}
           />
         )}
         {body && body.value && (
-          <div dangerouslySetInnerHTML={{__html: body.value}} />
+          <div dangerouslySetInnerHTML={{ __html: body.value }} />
         )}
       </div>
     </div>

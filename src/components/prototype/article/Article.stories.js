@@ -1,9 +1,9 @@
-import React from 'react';
-import Article from './Article';
-import Articles from './Articles';
+import React from "react";
+import Article from "./Article";
+import Articles from "./Articles";
 
 export default {
-  title: 'Articles'
+  title: "Prototype:Articles",
 };
 
 export const ArticleByPath = () => {
