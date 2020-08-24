@@ -1,5 +1,5 @@
 import React from "react";
-import useAPI from "../../../hooks/useAPI";
+import useAPI from "../hooks/useAPI";
 import Recommendations from "../recommend/Recommendations";
 import styles from "./Work.module.css";
 

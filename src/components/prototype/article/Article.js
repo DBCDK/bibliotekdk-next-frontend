@@ -1,5 +1,5 @@
 import React from "react";
-import useAPI from "../../../hooks/useAPI";
+import useAPI from "../hooks/useAPI";
 
 export default ({ path }) => {
   const { isLoading, response } = useAPI(`{
