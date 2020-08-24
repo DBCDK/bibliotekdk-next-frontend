@@ -4,7 +4,9 @@ services:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     image: '${IMAGE:-docker-ux.dbc.dk/bibliotekdk-next-widgets:latest}'
     environment:
-      - PORT=3000
+      - ENABLE_STORYBOOK=1
+      - STORYBOOK_PORT=4000
+    command: npm run start
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
     image: docker.dbc.dk/cypress:latest
