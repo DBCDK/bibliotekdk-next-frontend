@@ -9,7 +9,7 @@
     "start:next": "next start",
     "dev:storybook": "start-storybook -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "build-storybook -c .storybook -o dist/storybook --quiet",
-    "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && static -p \"${STORYBOOK_PORT:-4000}\" dist/storybook -a 0.0.0.0 || exit 0",
+    "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
     "dev": "run-p dev:storybook dev:next",
     "start": "run-p start:storybook start:next",
     "lint": "eslint src/",
@@ -29,8 +29,8 @@
     "style-loader": "^1.1.2"
   },
   "dependencies": {
+    "http-server": "^0.12.3",
     "next": "^9.5.2",
-    "node-static": "^0.7.11",
     "npm-run-all": "^4.1.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
