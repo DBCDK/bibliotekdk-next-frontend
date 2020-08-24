@@ -10,6 +10,7 @@
     "dev:storybook": "start-storybook -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "build-storybook -c .storybook -o dist/storybook --quiet",
     "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && static -p \"${STORYBOOK_PORT:-4000}\" dist/storybook -a 0.0.0.0 || exit 0",
+    "dev": "run-p dev:storybook dev:next",
     "start": "run-p start:storybook start:next",
     "lint": "eslint src/",
     "cy:run": "npx cypress@latest run --project ./e2e",
