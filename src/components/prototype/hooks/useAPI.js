@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import fetch from "unfetch";
+import config from '../../../config'
 
 export default (query) => {
   const [state, setState] = useState({
@@ -15,7 +16,7 @@ export default (query) => {
         response: null,
       });
       const res = await fetch(
-        "http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql",
+        config.api.url,
         {
           method: "POST",
           headers: {
