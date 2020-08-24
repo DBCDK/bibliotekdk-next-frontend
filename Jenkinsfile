@@ -25,17 +25,6 @@ pipeline {
                 } 
             }
         }
-        
-        stage('Static and unittest') {
-            steps { 
-                script {
-                    ansiColor("xterm") {
-                        sh "docker run --rm ${IMAGE_NAME} npm run test" 
-                        sh "docker run --rm ${IMAGE_NAME} npm run lint" 
-                    }
-                }
-            }
-        }
         stage('Integration test') {
             steps { 
                 script {
