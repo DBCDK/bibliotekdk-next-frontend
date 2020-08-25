@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: '${IMAGE:-docker-ux.dbc.dk/bibliotekdk-next-widgets:latest}'
+    image: '${IMAGE:-docker-ux.dbc.dk/bibliotekdk-next-frontend:latest}'
     environment:
       - ENABLE_STORYBOOK=1
       - STORYBOOK_PORT=4000
