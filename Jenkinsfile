@@ -63,7 +63,7 @@ pipeline {
 			}
 			steps {
 				dir("deploy") {
-					git(url: "gitlab@gitlab.dbc.dk:frontend/content-first-widget-deploy.git", credentialsId: "gitlab-svi", branch: "staging")
+					git(url: "gitlab@gitlab.dbc.dk:frontend/bibliotekdk-next-frontend-deploy.git", credentialsId: "gitlab-svi", branch: "staging")
 					sh """#!/usr/bin/env bash
 						set -xe
 						rm -rf auto-committer-env
