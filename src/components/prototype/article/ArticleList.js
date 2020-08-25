@@ -1,7 +1,7 @@
 import React from "react";
 import useAPI from "../hooks/useAPI";
 
-export default ({ path, promotedOnly = false }) => {
+export default ({ promotedOnly = false }) => {
   const { isLoading, response } = useAPI(`{
     nodeQuery(filter: {conditions: {field: "promote", value: [${
       promotedOnly ? '"1"' : '"1", "0"'

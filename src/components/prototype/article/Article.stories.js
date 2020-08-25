@@ -1,6 +1,6 @@
 import React from "react";
 import Article from "./Article";
-import Articles from "./Articles";
+import ArticleList from "./ArticleList";
 
 export default {
   title: "Prototype:Articles",
@@ -15,9 +15,9 @@ export const NonExistingArticle = () => {
 };
 
 export const PromotedArticles = () => {
-  return <Articles promotedOnly={true} />;
+  return <ArticleList promotedOnly={true} />;
 };
 
 export const AllArticles = () => {
-  return <Articles />;
+  return <ArticleList />;
 };
