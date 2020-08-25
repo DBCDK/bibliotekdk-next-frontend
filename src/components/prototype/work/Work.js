@@ -1,10 +1,10 @@
-import React from 'react';
-import useAPI from '../hooks/useAPI';
-import Recommendations from '../components/Recommendations';
-import styles from './Work.css';
+import React from "react";
+import useAPI from "../hooks/useAPI";
+import Recommendations from "../recommend/Recommendations";
+import styles from "./Work.module.css";
 
-export default ({pid, onWorkClick}) => {
-  const {isLoading, response} = useAPI(`{
+export default ({ pid, onWorkClick }) => {
+  const { isLoading, response } = useAPI(`{
     manifestation(pid: "${pid}") {
       title
       creators {
@@ -35,7 +35,7 @@ export default ({pid, onWorkClick}) => {
       {response && (
         <div>
           <h1>{response.manifestation.title}</h1>
-          {response.manifestation.creators.map(creator => (
+          {response.manifestation.creators.map((creator) => (
             <h2 key={creator.name}>
               {creator.name} ({creator.functionSingular})
             </h2>
@@ -48,8 +48,8 @@ export default ({pid, onWorkClick}) => {
       <div className={styles.Collection}>
         {collectionRes.response &&
           collectionRes.response.manifestation.collection
-            .filter(entry => entry.cover.detail)
-            .map(entry => {
+            .filter((entry) => entry.cover.detail)
+            .map((entry) => {
               return (
                 <div>
                   <div>

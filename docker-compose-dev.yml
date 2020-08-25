@@ -1,0 +1,13 @@
+version: '3'
+services:
+  dev:
+    image: docker.dbc.dk/dbc-node
+    volumes:
+      - .:/home/node/app
+    environment:
+      - NODE_ENV=development
+    working_dir: /home/node/app
+    command: bash -cx "npm install && npm run dev"
+    ports:
+      - 3000:3000
+      - 4000:4000

@@ -1,8 +1,8 @@
-import React from 'react';
-import useAPI from '../hooks/useAPI';
+import React from "react";
+import useAPI from "../hooks/useAPI";
 
-export default ({path, promotedOnly = false}) => {
-  const {isLoading, response} = useAPI(`{
+export default ({ promotedOnly = false }) => {
+  const { isLoading, response } = useAPI(`{
     nodeQuery(filter: {conditions: {field: "promote", value: [${
       promotedOnly ? '"1"' : '"1", "0"'
     }]}}) {
@@ -37,7 +37,7 @@ export default ({path, promotedOnly = false}) => {
     <div>
       <h1>Artikler</h1>
       <ul>
-        {entities.map(entity => {
+        {entities.map((entity) => {
           return (
             <li key={entity.entityUrl.path}>
               <strong>{entity.title}</strong> {entity.entityUrl.path}

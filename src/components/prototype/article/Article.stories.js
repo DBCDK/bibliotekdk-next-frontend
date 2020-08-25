@@ -1,9 +1,9 @@
-import React from 'react';
-import Article from './Article';
-import Articles from './Articles';
+import React from "react";
+import Article from "./Article";
+import ArticleList from "./ArticleList";
 
 export default {
-  title: 'Articles'
+  title: "Prototype:Articles",
 };
 
 export const ArticleByPath = () => {
@@ -15,9 +15,9 @@ export const NonExistingArticle = () => {
 };
 
 export const PromotedArticles = () => {
-  return <Articles promotedOnly={true} />;
+  return <ArticleList promotedOnly={true} />;
 };
 
 export const AllArticles = () => {
-  return <Articles />;
+  return <ArticleList />;
 };

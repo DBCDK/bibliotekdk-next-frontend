@@ -7,7 +7,7 @@ pipeline {
         label 'devel9-head'
     }
     environment {
-        IMAGE_NAME = "bibliotekdk-next-widgets${env.BRANCH_NAME != 'master' ? "-${env.BRANCH_NAME.toLowerCase()}" : ''}:${BUILD_NUMBER}"
+        IMAGE_NAME = "bibliotekdk-next-frontend${env.BRANCH_NAME != 'master' ? "-${env.BRANCH_NAME.toLowerCase()}" : ''}:${BUILD_NUMBER}"
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         GITLAB_ID = "704"
@@ -23,17 +23,6 @@ pipeline {
                         app = docker.image(IMAGE_NAME)
                     }
                 } 
-            }
-        }
-        
-        stage('Static and unittest') {
-            steps { 
-                script {
-                    ansiColor("xterm") {
-                        sh "docker run --rm ${IMAGE_NAME} npm run test" 
-                        sh "docker run --rm ${IMAGE_NAME} npm run lint" 
-                    }
-                }
             }
         }
         stage('Integration test') {
