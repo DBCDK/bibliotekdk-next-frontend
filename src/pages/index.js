@@ -1,12 +1,9 @@
-import { useState } from "react";
-import Work from "../components/prototype/work/Work";
+/**
+ * @file
+ * This is the index page of the application
+ *
+ */
 
 export default () => {
-  const [pid, setPid] = useState("870970-basis:51883322");
-  return (
-    <div>
-      Hello world!
-      <Work pid={pid} onWorkClick={(pid) => setPid(pid)} />
-    </div>
-  );
+  return <div>Hello world!</div>;
 };

@@ -1,7 +1,7 @@
 {
   "name": "bibliotekdk-next-widgets",
   "version": "0.0.1",
-  "description": "building embeddable bibliotekdk widgets with react",
+  "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
     "dev:next": "next",
