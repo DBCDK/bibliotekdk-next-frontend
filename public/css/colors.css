@@ -1,0 +1,39 @@
+/* Project colors */
+
+:root {
+  /* Primary */
+  --mine-shaft: #212121; /* Primary txt color */
+  --blue: #3333ff; /* Interaction color, links, buttons, ... */
+  --concrete: #f2f2f2; /* Default bg color */
+
+  /* Secondary */
+  --rose-bud: #fbad94; /* default */
+  --linen: #f8dfd9; /* light */
+  --eunry: #d3a79d; /* dark */
+
+  --pancho: #efd5a5; /* default */
+  --albescent-white: #f7ead2; /* light */
+  --sorrell-brown: #d2bb91; /* dark */
+
+  --aqua-island: #a1d8dd; /* default */
+  --botticelli: #d4e8ea; /* light */
+  --shadow-green: #95b8ba; /* dark */
+
+  /* Greys (Tones) */
+  --white: #ffffff;
+  --iron: #d6d6d7;
+  --gray: #828282;
+
+  /* Alerts */
+  --error: #e45e6a;
+  --erorr-light: #fab8ba;
+
+  --warning: #fbd85b;
+  --warning-light: #fbeaad;
+
+  --info: #3333ff;
+  --info-light: #d0e5f9;
+
+  --success: #27ae60;
+  --success-light: #d0f1d2;
+}

@@ -1,0 +1,72 @@
+@import "./imports.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+
+  /* Remove blue highlight on touch devices */
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-size: 14px;
+  font-family: var(--body-font);
+  color: var(--mine-shaft);
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+
+input,
+textarea {
+  /* Removes input shadow in safari*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+textarea {
+  resize: none;
+}
+
+button {
+  border: 0;
+}
+
+a {
+  color: var(--blue);
+}
+
+/* content wrapper */
+.container {
+  height: 100%;
+}
+
+@media screen and (min-width: 576px) {
+  body {
+    font-size: 18px;
+  }
+}
+
+@media screen and (min-width: 1048px) {
+  .container {
+    max-width: 1048px;
+    margin: auto;
+  }
+}
