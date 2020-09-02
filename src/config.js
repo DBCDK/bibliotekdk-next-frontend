@@ -9,6 +9,7 @@ const config = {
     url:
       process.env.API_URL ||
       "http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql",
+    timeout: process.env.API_TIMEOUT_MS || 150,
   },
 };
 
