@@ -312,17 +312,13 @@ export function getClient(initialState) {
  * Helper for each page to fetch data
  * when running on the server
  *
- * Client is reused when running in browser.
- * On the server we always create a new one
- *
  * @param {Object[]} queries will be fetched in parallel
  *
  * @return {function} getServerSideProps
  */
 export function fetchOnServer(queries) {
   /**
-   * Helper for each page to fetch data
-   * when running on the server
+   * A function that Next.js will invoke per page request
    *
    * @param {Object} context Next.js context
    *
