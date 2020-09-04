@@ -3,6 +3,11 @@
   font-size: 20px;
 }
 
+.story-description {
+  padding: 0 0 var(--pt4) 0;
+  font-size: 14px;
+}
+
 /* Spacing (horizontal spacing) */
 
 .space-1,

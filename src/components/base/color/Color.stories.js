@@ -14,6 +14,10 @@ export const Primary = () => {
   return (
     <div>
       <div className="story-heading">Primary Colors</div>
+      <div className="story-description">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
+        purus a iaculis finibus.
+      </div>
 
       {colors.map((color) => (
         <React.Fragment key={color.name}>
