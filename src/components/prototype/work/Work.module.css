@@ -3,8 +3,8 @@
 }
 .Work h1 {
     color: blue;
-    text-transform: uppercase;
     font-size: small; 
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 .Collection {
     display: flex;
