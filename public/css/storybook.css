@@ -29,8 +29,16 @@
   width: var(--pt4);
 }
 
-.space-4 {
+.space-5 {
   width: var(--pt5);
+}
+
+.space-6 {
+  width: var(--pt6);
+}
+
+.space-7 {
+  width: var(--pt7);
 }
 
 /* Vertical spacing */
