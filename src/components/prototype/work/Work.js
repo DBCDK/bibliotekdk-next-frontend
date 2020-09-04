@@ -41,7 +41,7 @@ export default ({ pid, onWorkClick }) => {
             </h2>
           ))}
 
-          <p>{response.manifestation.abstract}</p>
+          <p className={styles.WorkDescription}>{response.manifestation.abstract}</p>
         </div>
       )}
       <h3>Alle udgaver:</h3>
