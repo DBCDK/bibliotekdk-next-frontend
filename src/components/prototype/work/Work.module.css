@@ -2,8 +2,9 @@
     max-width: 800px;
 }
 .Work h1 {
-    color: red;
+    color: blue;
     text-transform: uppercase;
+    font-size: small; 
 }
 .Collection {
     display: flex;
