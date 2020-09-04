@@ -7,7 +7,12 @@
   cursor: pointer;
 }
 
-/* Button Types */
+/* 
+* Button Types 
+*
+*/
+
+/* Filled */
 
 .Button.filled {
   background-color: var(--blue);
@@ -23,6 +28,8 @@
   background-color: var(--concrete);
 }
 
+/* Outlined */
+
 .Button.outlined {
   color: var(--blue);
   border: 1px solid var(--blue);
@@ -37,11 +44,14 @@
   border: 1px solid var(--concrete);
 }
 
-/* Button Sizes */
+/* 
+* Button Sizes 
+*
+*/
 
 .Button.large {
   font-size: 20px;
-  padding: var(--pt2) var(--pt10);
+  padding: var(--pt1) var(--pt10);
 }
 
 .Button.medium {
@@ -54,7 +64,10 @@
   padding: var(--pt1) var(--pt4);
 }
 
-/* Disabled */
+/* 
+* Disabled 
+*
+*/
 
 .Button.disabled {
   pointer-events: none;

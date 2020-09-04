@@ -1,75 +1,125 @@
 import Button from "./Button";
+import Skeleton from "../skeleton";
+import { useEffect, useState } from "react";
 
 export default {
-  title: "Prototype:Button",
+  title: "Buttons",
 };
 
-export const buttonFilled = () => {
+const sizes = ["large", "medium", "small"];
+
+export const Filled = () => {
+  const [isSlow, setIsSlow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsSlow(!isSlow), 4500);
+  }, [isSlow]);
+
+  const type = "filled";
+
   return (
     <div>
-      <div className="story-heading"> Primary buttons </div>
+      <div className="story-heading">Filled buttons </div>
 
-      <Button type="filled" size="large">
-        Large
-      </Button>
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <div className="x-space-2" />
+      <div className="story-heading">[Disabled] Filled buttons </div>
 
-      <Button type="filled" size="medium">
-        Medium
-      </Button>
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size} disabled={true}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <div className="x-space-2" />
+      <div className="story-heading">[Loading] Filled skeleton buttons </div>
 
-      <Button type="filled" size="small">
-        Small
-      </Button>
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size} skeleton={true}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <div className="story-heading"> Disabled primary buttons </div>
+      <div className="story-heading">[Bad Loading] Filled skeleton buttons</div>
 
-      <Button type="filled" size="large" disabled={true}>
-        Large
-      </Button>
-
-      <div className="x-space-2" />
-
-      <Button type="filled" size="medium" disabled={true}>
-        Medium
-      </Button>
-
-      <div className="x-space-2" />
-
-      <Button type="filled" size="small" disabled={true}>
-        Small
-      </Button>
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Skeleton isSlow={isSlow}>
+            <Button type={type} size={size}>
+              {size}
+            </Button>
+          </Skeleton>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
     </div>
   );
 };
 
-export const buttonOutlined = () => {
+export const Outlined = () => {
+  const type = "outlined";
+
   return (
     <div>
-      <Button type="outlined" size="large">
-        Large
-      </Button>
+      <div className="story-heading">Outlined buttons </div>
 
-      <div className="space-2" />
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <Button type="outlined" size="large" disabled={true}>
-        Large
-      </Button>
+      <div className="story-heading">[Disabled] Outlined buttons </div>
 
-      <div className="space-2" />
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size} disabled={true}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <Button type="outlined" size="medium">
-        Medium
-      </Button>
+      <div className="story-heading">[Loading] Outlined skeleton buttons </div>
 
-      <div className="space-2" />
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Button type={type} size={size} skeleton={true}>
+            {size}
+          </Button>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
 
-      <Button type="outlined" size="small">
-        Small
-      </Button>
+      <div className="story-heading">
+        [Bad Loading] Outlined skeleton buttons
+      </div>
+
+      {sizes.map((size) => (
+        <React.Fragment key={`${type}-${size}`}>
+          <Skeleton isSlow={true}>
+            <Button type={type} size={size}>
+              {size}
+            </Button>
+          </Skeleton>
+          <div className="space-2" />
+        </React.Fragment>
+      ))}
     </div>
   );
 };

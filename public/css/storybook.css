@@ -3,69 +3,69 @@
   font-size: 20px;
 }
 
-.x-space-1,
-.x-space-2,
-.x-space-3,
-.x-space-4,
-.x-space-5 {
+/* Spacing (horizontal spacing) */
+
+.space-1,
+.space-2,
+.space-3,
+.space-4,
+.space-5 {
   display: inline-block;
 }
 
-/* X (horizontal spacing) */
-
-.x-space-1 {
+.space-1 {
   width: var(--pt1);
 }
 
-.x-space-2 {
+.space-2 {
   width: var(--pt2);
 }
 
-.x-space-3 {
+.space-3 {
   width: var(--pt3);
 }
 
-.x-space-4 {
+.space-4 {
   width: var(--pt4);
 }
 
-.x-space-4 {
+.space-4 {
   width: var(--pt5);
 }
 
-/* Y (vertical spacing) */
+/* Vertical spacing */
 
-.y-space-1 {
+.v-space-1 {
   height: var(--pt1);
   line-height: var(--pt1);
 }
 
-.y-space-2 {
+.v-space-2 {
   height: var(--pt2);
   line-height: var(--pt2);
 }
 
-.y-space-3 {
+.v-space-3 {
   height: var(--pt3);
   line-height: var(--pt3);
 }
 
-.y-space-4 {
+.v-space-4 {
   height: var(--pt4);
   line-height: var(--pt4);
 }
 
-.y-space-5 {
+.v-space-5 {
   height: var(--pt5);
   line-height: var(--pt5);
 }
 
-.y-space-6 {
+.v-space-6 {
   height: var(--pt6);
   line-height: var(--pt6);
 }
 
-.y-space-7 {
+.v-space-7 {
   height: var(--pt7);
   line-height: var(--pt7);
 }
