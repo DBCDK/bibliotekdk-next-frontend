@@ -24,16 +24,24 @@ export const Body = () => {
           <div className="v-space-2" />
         </React.Fragment>
       ))}
+    </div>
+  );
+};
 
+export const Loading = () => {
+  return (
+    <div>
       <div className="story-heading">[Loading] Text</div>
+
+      <div className="story-heading">2 lines block</div>
 
       <Text tag="h1" type={"text1"} skeleton={true} lines={2} />
 
-      <div className="v-space-4" />
+      <div className="story-heading">3 lines block</div>
 
       <Text tag="h1" type={"text1"} skeleton={true} lines={3} />
 
-      <div className="v-space-4" />
+      <div className="story-heading">4 lines block</div>
 
       <Text tag="h1" type={"text1"} skeleton={true} lines={4} />
     </div>

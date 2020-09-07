@@ -12,21 +12,30 @@ export const Titles = () => {
       <div className="story-heading">Titles</div>
 
       {titles.map((type) => (
-        <Title tag="h1" key={type} type={type}>
-          Hello World
-        </Title>
+        <React.Fragment key={type}>
+          <div className="story-heading">{`Title (${type})`}</div>
+          <Title tag="h1" key={type} type={type}>
+            Hello World
+          </Title>
+        </React.Fragment>
       ))}
+    </div>
+  );
+};
 
+export const Loading = () => {
+  return (
+    <div>
       <div className="story-heading">[Loading] Titles</div>
 
       {titles.map((type) => (
-        <div key={type}>
+        <React.Fragment key={type}>
+          <div className="story-heading">{`[Loading] Title (${type})`}</div>
+
           <Title tag="h1" type={type} skeleton={true}>
             Hello World
           </Title>
-
-          <div className="v-space-1" />
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );

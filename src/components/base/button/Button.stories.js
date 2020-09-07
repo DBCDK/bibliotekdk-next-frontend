@@ -9,12 +9,6 @@ export default {
 const sizes = ["large", "medium", "small"];
 
 export const Filled = () => {
-  const [isSlow, setIsSlow] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setIsSlow(!isSlow), 4500);
-  }, [isSlow]);
-
   const type = "filled";
 
   return (
@@ -37,30 +31,6 @@ export const Filled = () => {
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
-          <div className="space-2" />
-        </React.Fragment>
-      ))}
-
-      <div className="story-heading">[Loading] Filled skeleton buttons </div>
-
-      {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
-          <Button type={type} size={size} skeleton={true}>
-            {size}
-          </Button>
-          <div className="space-2" />
-        </React.Fragment>
-      ))}
-
-      <div className="story-heading">[Bad Loading] Filled skeleton buttons</div>
-
-      {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
-          <Skeleton isSlow={isSlow}>
-            <Button type={type} size={size}>
-              {size}
-            </Button>
-          </Skeleton>
           <div className="space-2" />
         </React.Fragment>
       ))}
@@ -94,7 +64,21 @@ export const Outlined = () => {
           <div className="space-2" />
         </React.Fragment>
       ))}
+    </div>
+  );
+};
 
+export const Loading = () => {
+  const type = "filled";
+
+  const [isSlow, setIsSlow] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsSlow(!isSlow), 4500);
+  }, [isSlow]);
+
+  return (
+    <div>
       <div className="story-heading">[Loading] Outlined skeleton buttons </div>
 
       {sizes.map((size) => (
@@ -112,7 +96,7 @@ export const Outlined = () => {
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
-          <Skeleton isSlow={true}>
+          <Skeleton isSlow={isSlow}>
             <Button type={type} size={size}>
               {size}
             </Button>
