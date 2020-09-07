@@ -32,7 +32,13 @@ function query({ workId }) {
   };
 }
 
-/* Renders an example component */
+/**
+ * Example component, showing basic info
+ *
+ * @param {Object} props Component props
+ * @param {string} props.title Material title
+ * @param {string} props.abstract Material abstract
+ */
 export function Example({ title, abstract }) {
   return (
     <div>
@@ -42,7 +48,12 @@ export function Example({ title, abstract }) {
   );
 }
 
-/* Renders an example skeleton component */
+/**
+ * Example skeleton component
+ *
+ * @param {Object} props Component props
+ * @param {boolean} props.isSlow Is it unexpectingly slow to load?
+ */
 export function ExampleSkeleton({ isSlow }) {
   return (
     <div>
@@ -51,7 +62,9 @@ export function ExampleSkeleton({ isSlow }) {
   );
 }
 
-/* Renders an example error component */
+/**
+ * Example error component
+ */
 export function ExampleError() {
   return (
     <div>
@@ -59,7 +72,14 @@ export function ExampleError() {
     </div>
   );
 }
-/* Fetches data and renders variants of the Example component*/
+
+/**
+ * Container is a react component responsible for loading
+ * data and displaying the right variant of the Example component
+ *
+ * @param {Object} props Component props
+ * @param {string} props.workId Material work id
+ */
 function Container({ workId }) {
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(query({ workId }));

@@ -10,9 +10,18 @@ import { useData } from "../../lib/api";
 import Link from "next/link";
 import { encodeTitleCreator } from "../../lib/utils";
 
-const query = ({ workId }) => ({
-  delay: 4000, // for debugging
-  query: `query ($workId: String!) {
+/**
+ * This function will create a query object
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+function query({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    query: `query ($workId: String!) {
     manifestation(pid: $workId) {
       recommendations {
         manifestation {
@@ -26,10 +35,17 @@ const query = ({ workId }) => ({
     }
   }
   `,
-  variables: { workId },
-  slowThreshold: 2000,
-});
+    variables: { workId },
+    slowThreshold: 2000,
+  };
+}
 
+/**
+ * Example component, showing work recommendations
+ *
+ * @param {Object} props Component props
+ * @param {Object[]} props.recommendations Array of recommendations
+ */
 export function Example2({ recommendations }) {
   return (
     <div>
@@ -55,6 +71,12 @@ export function Example2({ recommendations }) {
   );
 }
 
+/**
+ * Example skeleton component
+ *
+ * @param {Object} props Component props
+ * @param {boolean} props.isSlow Is it unexpectingly slow to load?
+ */
 export function Example2Skeleton({ isSlow }) {
   return (
     <div style={isSlow && { color: "red" }}>
@@ -63,6 +85,9 @@ export function Example2Skeleton({ isSlow }) {
   );
 }
 
+/**
+ * Example error component
+ */
 export function Example2Error() {
   return (
     <div>
@@ -71,6 +96,13 @@ export function Example2Error() {
   );
 }
 
+/**
+ * Container is a react component responsible for loading
+ * data and displaying the right variant of the Example component
+ *
+ * @param {Object} props Component props
+ * @param {string} props.workId Material work id
+ */
 function Container({ workId }) {
   const { data, isLoading, isSlow, error } = useData(query({ workId }));
   if (isLoading) {
