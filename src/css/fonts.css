@@ -1,0 +1,206 @@
+/**
+* Stylesheet for all font imports
+*
+*/
+
+/* Google CDN import */
+/* @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Serif:wght@300;400;500&display=swap'); */
+
+/**
+* font-family: 'IBM Plex Sans', sans-serif;
+*
+*/
+
+@font-face {
+  font-family: "ibm_plex_sansbold";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-bold-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-bold-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: "ibm_plex_sanssemibold";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-semibold-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-semibold-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "ibm_plex_sansmedium";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-medium-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-medium-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: "ibm_plex_sansregular";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-regular-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-regular-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: "ibm_plex_sanslight";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-light-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-light-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "ibm_plex_sansextralight";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-extralight-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-extralight-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "ibm_plex_sansthin";
+  src: url("../../public/fonts/ibm-sans/ibmplexsans-thin-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-sans/ibmplexsans-thin-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/**
+* font-family: 'IBM Plex Serif', serif;
+*
+*/
+
+/* @font-face {
+  font-family: "ibm_plex_serifbold";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-bold-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-bold-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "ibm_plex_serifsemibold";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-semibold-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-semibold-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: "ibm_plex_serifmedium";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-medium-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-medium-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ibm_plex_serifregular";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-regular-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-regular-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ibm_plex_seriflight";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-light-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-light-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: "ibm_plex_serifextralight";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-extralight-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-extralight-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+/* @font-face {
+  font-family: "ibm_plex_serifthin";
+  src: url("../../public/fonts/ibm-serif/ibmplexserif-thin-webfont.woff2")
+      format("woff2"),
+    url("../../public/fonts/ibm-serif/ibmplexserif-thin-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+} */
+
+:root {
+  /*
+*  Fonts
+*
+*/
+
+  /**
+  * Title Font (Serif)
+  * 
+  */
+
+  /* 400 */
+  --title-font: "ibm_plex_serifregular";
+
+  /* 100 */
+  /* --title-font-thin: "ibm_plex_serifthin"; */
+  /* 200 */
+  /* --title-font-xlight: "ibm_plex_serifextralight"; */
+  /* 300 */
+  --title-font-light: "ibm_plex_seriflight";
+  /* 500 */
+  --title-font-medium: "ibm_plex_serifmedium";
+  /* 600 */
+  /* --title-font-semibold: "ibm_plex_serifsemibold"; */
+  /* 700 */
+  /* --title-font-bold: "ibm_plex_serifsemibold"; */
+
+  /**
+  * Body Font (Sans Serif)
+  * 
+  */
+
+  /* 400 */
+  --body-font: "ibm_plex_sansregular";
+
+  /* 100 */
+  /* --body-font-thin: "ibm_plex_sansthin"; */
+  /* 200 */
+  /* --body-font-xlight: "ibm_plex_sansextralight"; */
+  /* 300 */
+  /* --body-font-light: "ibm_plex_sanslight"; */
+  /* 500 */
+  /* --body-font-medium: "ibm_plex_sansmedium"; */
+  /* 600 */
+  /* --body-font-semibold: "ibm_plex_sanssemibold"; */
+  /* 700 */
+  --body-font-bold: "ibm_plex_sansbold";
+}

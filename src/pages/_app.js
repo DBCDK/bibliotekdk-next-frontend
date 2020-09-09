@@ -1,6 +1,6 @@
 // import App from 'next/app'
 import React from "react";
-import "../../public/css/styles.css";
+import "../css/styles.css";
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;

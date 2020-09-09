@@ -5,59 +5,72 @@ import Skeleton from "../skeleton";
 import styles from "./Button.module.css";
 
 /**
+ * The Component function
  *
- * @param {object || string} children
- * @param {object || string} className
- * @param {string} type
- * @param {string} size
- * @param {bool} disabled
- * @param {bool} skeleton
+ * @param {obj} props
+ * See propTypes for specific props and types
  *
  * @returns {component}
  */
-export const Button = ({
+function Button({
   children = "im a button",
   className = "",
   type = "filled",
   size = "large",
+  onClick = null,
   disabled = false,
-}) => {
+}) {
   const disabledStyle = disabled ? styles.disabled : {};
 
   return (
     <button
       className={`${styles.Button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
+      onClick={onClick}
     >
       {children}
     </button>
   );
-};
+}
 
-// Skeleton (loading) version of button
-export const ButtonSkeleton = (props) => {
+/**
+ * Function to return skeleton (Loading) version of the Component
+ *
+ * @param {obj} props
+ *  See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+function ButtonSkeleton(props) {
   return (
     <Skeleton>
       <Button {...props} onClick={null} disabled={true} />
     </Skeleton>
   );
-};
+}
 
-export default (props) => {
-  // Data loading stuff here ...
-  // const { data, isLoading } = useQuery(query);
-
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function ButtonDefault(props) {
   if (props.skeleton) {
     return <ButtonSkeleton {...props} />;
   }
 
   return <Button {...props} />;
-};
+}
 
-Button.propTypes = {
+// PropTypes for Button component
+ButtonDefault.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["filled", "outlined"]),
   size: PropTypes.oneOf(["large", "medium", "small"]),
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
+  onClick: PropTypes.func,
 };

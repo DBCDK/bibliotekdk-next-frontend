@@ -6,9 +6,14 @@ export default {
   title: "Buttons",
 };
 
+// Current button types
 const sizes = ["large", "medium", "small"];
 
-export const Filled = () => {
+/**
+ * Returns all filled buttons (Default button style)
+ *
+ */
+export function Filled() {
   const type = "filled";
 
   return (
@@ -36,9 +41,13 @@ export const Filled = () => {
       ))}
     </div>
   );
-};
+}
 
-export const Outlined = () => {
+/**
+ * Returns all outlined buttons
+ *
+ */
+export function Outlined() {
   const type = "outlined";
 
   return (
@@ -66,9 +75,13 @@ export const Outlined = () => {
       ))}
     </div>
   );
-};
+}
 
-export const Loading = () => {
+/**
+ * Returns a skeleton loading version of the buttons
+ *
+ */
+export function Loading() {
   const type = "filled";
 
   const [isSlow, setIsSlow] = useState(false);
@@ -106,4 +119,4 @@ export const Loading = () => {
       ))}
     </div>
   );
-};
+}

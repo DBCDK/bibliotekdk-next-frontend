@@ -4,9 +4,14 @@ export default {
   title: "Titles",
 };
 
+// Current title types
 const titles = ["title1", "title2", "title3", "title4"];
 
-export const Titles = () => {
+/**
+ * Returns all Titles as h1 tags
+ *
+ */
+export function Titles() {
   return (
     <div>
       <div className="story-heading">Titles</div>
@@ -21,9 +26,13 @@ export const Titles = () => {
       ))}
     </div>
   );
-};
+}
 
-export const Loading = () => {
+/**
+ * Returns all Titles as h1 in skeleton loading mode
+ *
+ */
+export function Loading() {
   return (
     <div>
       <div className="story-heading">[Loading] Titles</div>
@@ -39,4 +48,4 @@ export const Loading = () => {
       ))}
     </div>
   );
-};
+}

@@ -1,4 +1,7 @@
-@import "./imports.css";
+/*
+* Stylesheet for overwriting predefined styles and/or wide hitting behavior
+*
+*/
 
 * {
   margin: 0;
@@ -53,20 +56,8 @@ a {
   color: var(--blue);
 }
 
-/* content wrapper */
-.container {
-  height: 100%;
-}
-
 @media screen and (min-width: 576px) {
   body {
     font-size: 18px;
-  }
-}
-
-@media screen and (min-width: 1048px) {
-  .container {
-    max-width: 1048px;
-    margin: auto;
   }
 }

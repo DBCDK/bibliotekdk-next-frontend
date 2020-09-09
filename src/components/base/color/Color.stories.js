@@ -4,6 +4,10 @@ export default {
   title: "Colors",
 };
 
+/**
+ * Returns all Primary colors
+ *
+ */
 export const Primary = () => {
   const colors = [
     { name: "blue", hex: "#3333ff" },
@@ -29,6 +33,10 @@ export const Primary = () => {
   );
 };
 
+/**
+ * Returns all Secondary colors
+ *
+ */
 export const Secondary = () => {
   const colors = [
     { name: "rose-bud", hex: "#fbad94" },
@@ -56,6 +64,10 @@ export const Secondary = () => {
   );
 };
 
+/**
+ * Returns all Grey colors/tones
+ *
+ */
 export const Greys = () => {
   const colors = [
     { name: "white", hex: "#ffffff" },
@@ -77,6 +89,10 @@ export const Greys = () => {
   );
 };
 
+/**
+ * Returns all Alert colors
+ *
+ */
 export const Alerts = () => {
   const colors = [
     { name: "error", hex: "#e45e6a" },

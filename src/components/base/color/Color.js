@@ -4,18 +4,26 @@ import styles from "./Color.module.css";
 
 import invertColor from "../../../utils/invertColor.js";
 
+/**
+ * Function to copy text to clipboard
+ *
+ * @param {string} text
+ *
+ */
 function copyToClipboard(text) {
   navigator.clipboard.writeText(text);
 }
 
 /**
+ * (FOR INTERNAL/STORYBOOK USE ONLY!)
+ * Function to return a color example
  *
  * @param {string} hex
  * @param {string} name
  *
  * @returns {component}
  */
-const Color = ({ hex = "#3333ff", name = "blue" }) => {
+export default function Color({ hex = "#3333ff", name = "blue" }) {
   return (
     <div className={styles.Color}>
       <button
@@ -33,10 +41,9 @@ const Color = ({ hex = "#3333ff", name = "blue" }) => {
       </span>
     </div>
   );
-};
+}
 
-export default Color;
-
+// PropTypes for Color component
 Color.propTypes = {
   hex: PropTypes.string,
   name: PropTypes.string,

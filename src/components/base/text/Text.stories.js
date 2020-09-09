@@ -1,13 +1,18 @@
 import Text from "./Text";
-import Skeleton from "../skeleton";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Texts",
 };
 
+// Current text types
 const texts = ["text1", "text2", "text3"];
 
-export const Body = () => {
+/**
+ * Returns all Text types
+ *
+ */
+export function Body() {
   return (
     <div>
       <div className="story-heading">Body Text</div>
@@ -26,24 +31,34 @@ export const Body = () => {
       ))}
     </div>
   );
-};
+}
 
-export const Loading = () => {
+/**
+ * Returns all Text types in skeleton loading mode (note the numer of lines wanted)
+ *
+ */
+export function Loading() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsLoaded(!isLoaded), 14500);
+  }, [isLoaded]);
+
   return (
     <div>
       <div className="story-heading">[Loading] Text</div>
 
       <div className="story-heading">2 lines block</div>
 
-      <Text tag="h1" type={"text1"} skeleton={true} lines={2} />
+      <Text type={"text1"} skeleton={true} lines={2} />
 
       <div className="story-heading">3 lines block</div>
 
-      <Text tag="h1" type={"text1"} skeleton={true} lines={3} />
+      <Text type={"text2"} skeleton={true} lines={3} />
 
       <div className="story-heading">4 lines block</div>
 
-      <Text tag="h1" type={"text1"} skeleton={true} lines={4} />
+      <Text type={"text3"} skeleton={true} lines={4} />
     </div>
   );
-};
+}

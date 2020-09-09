@@ -1,3 +1,2 @@
-import "../public/css/styles.css";
-import "../public/css/storybook.css";
-import "../public/css/global.css";
+import "../src/css/styles.css";
+import "../src/css/storybook.css";

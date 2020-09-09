@@ -9,7 +9,7 @@ import styles from "./Skeleton.module.css";
  *
  * @returns {array} elements (lines)
  */
-const CreateLines = ({ n, children }) => {
+function CreateLines({ n, children }) {
   let lines = [];
   for (let i = 0; i < Number(n); i++) {
     lines.push(
@@ -19,25 +19,24 @@ const CreateLines = ({ n, children }) => {
     );
   }
   return lines;
-};
+}
 
 /**
+ * Function to create a loading overlay on a component.
  *
- * @param {object || string} children
- * @param {string} className
- * @param {bool} isSlow
- * @param {int} lines
- * @param {string} display (block || inline-block)
+ * @param {object} props
+ * See propTypes for specific props and types
  *
  * @returns {component}
  */
-export const Skeleton = ({
+export default function Skeleton({
   children,
   className = "",
   isSlow = false,
   lines = 1,
   display = "inline-block",
-}) => {
+}) {
+  // Adds the slow loading class (error/red loading color)
   const slowClass = isSlow ? styles.slow : "";
 
   // display -> block: makes component fill 100% of width
@@ -51,10 +50,9 @@ export const Skeleton = ({
       </div>
     </div>
   );
-};
+}
 
-export default Skeleton;
-
+// PropTypes for Skeleton component
 Skeleton.propTypes = {
   children: PropTypes.object,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

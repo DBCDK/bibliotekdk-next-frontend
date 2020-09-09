@@ -5,15 +5,13 @@ import Skeleton from "../skeleton";
 import styles from "./Title.module.css";
 
 /**
+ * The Component function
  *
- * @param {object || string} children
- * @param {object || string} className
- * @param {string} tag
- * @param {string} type
+ * @param {obj} props
+ * See propTypes for specific props and types
  *
  * @returns {component}
  */
-
 export const Title = ({
   children = "im a title",
   className = "",
@@ -29,7 +27,14 @@ export const Title = ({
   );
 };
 
-// Skeleton (loading) version of component
+/**
+ * Function to return skeleton (Loading) version of the Component
+ *
+ * @param {obj} props
+ *  See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export const TitleSkeleton = (props) => {
   return (
     <Skeleton>
@@ -38,17 +43,23 @@ export const TitleSkeleton = (props) => {
   );
 };
 
-export default (props) => {
-  // Data loading stuff here ...
-  // const { data, isLoading } = useQuery(query);
-
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function TitleDefault(props) {
   if (props.skeleton) {
     return <TitleSkeleton {...props} />;
   }
 
   return <Title {...props} />;
-};
+}
 
+// PropTypes for Title component
 Title.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

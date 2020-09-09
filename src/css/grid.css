@@ -1,7 +1,9 @@
-/* Project spacings (8-point grid)*/
+/**
+* 8-point grid spacing variables
+*
+*/
 
 :root {
-  
   --pt05: 4px;
   --pt1: 8px;
   --pt2: 16px;
