@@ -16,4 +16,5 @@ services:
       - web
     environment:
       - CYPRESS_baseUrl=http://web:4000
+      - CYPRESS_nextjsBaseUrl=http://web:3000
     command: npm run cy

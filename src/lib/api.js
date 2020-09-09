@@ -54,6 +54,7 @@ export const useData = (query) => {
     query,
     data: currentState[key] ? currentState[key].data : null,
     error: currentState[key] ? currentState[key].error : null,
+    client,
   });
 
   // useEffect is used to perform side effects (async stuff)
@@ -74,6 +75,7 @@ export const useData = (query) => {
           query,
           data: currentState[key].data,
           error: currentState[key].error,
+          client,
         });
       } else {
         // Before we start the request we let
@@ -83,6 +85,7 @@ export const useData = (query) => {
           isLoading: true,
           query,
           data: null,
+          client,
         });
 
         // We define a timer that will let the parent
@@ -94,6 +97,7 @@ export const useData = (query) => {
               isSlow: true,
               query,
               data: null,
+              client,
             });
           }
         }, query.slowThreshold || 5000);
@@ -112,6 +116,7 @@ export const useData = (query) => {
             query,
             data: json.data,
             error: json.error,
+            client,
           });
         }
       }
