@@ -1,5 +1,4 @@
 import Text from "./Text";
-import { useEffect, useState } from "react";
 
 export default {
   title: "Texts",
@@ -38,12 +37,6 @@ export function Body() {
  *
  */
 export function Loading() {
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setIsLoaded(!isLoaded), 14500);
-  }, [isLoaded]);
-
   return (
     <div>
       <div className="story-heading">[Loading] Text</div>
