@@ -1,0 +1,26 @@
+.Title {
+  font-family: var(--title-font);
+}
+
+.title1 {
+  font-size: 80px;
+  line-height: 92px;
+  font-family: var(--title-font-medium);
+}
+
+.title2 {
+  font-size: 48px;
+  line-height: 62px;
+  font-family: var(--title-font-light);
+}
+
+.title3 {
+  font-size: 40px;
+  line-height: 56px;
+}
+
+.title4 {
+  font-size: 24px;
+  line-height: 32px;
+  font-family: var(--title-font-medium);
+}

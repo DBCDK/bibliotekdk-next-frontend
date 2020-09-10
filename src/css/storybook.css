@@ -1,0 +1,89 @@
+/**
+* Stylesheet for global 'Storybook-only' styles
+*
+*/
+
+.story-heading {
+  padding: var(--pt4) 0 var(--pt2) 0;
+  font-size: 20px;
+}
+
+.story-description {
+  padding: 0 0 var(--pt4) 0;
+  font-size: 14px;
+}
+
+/* Spacing (horizontal spacing) */
+
+.space-1,
+.space-2,
+.space-3,
+.space-4,
+.space-5 {
+  display: inline-block;
+}
+
+.space-1 {
+  width: var(--pt1);
+}
+
+.space-2 {
+  width: var(--pt2);
+}
+
+.space-3 {
+  width: var(--pt3);
+}
+
+.space-4 {
+  width: var(--pt4);
+}
+
+.space-5 {
+  width: var(--pt5);
+}
+
+.space-6 {
+  width: var(--pt6);
+}
+
+.space-7 {
+  width: var(--pt7);
+}
+
+/* Vertical spacing */
+
+.v-space-1 {
+  height: var(--pt1);
+  line-height: var(--pt1);
+}
+
+.v-space-2 {
+  height: var(--pt2);
+  line-height: var(--pt2);
+}
+
+.v-space-3 {
+  height: var(--pt3);
+  line-height: var(--pt3);
+}
+
+.v-space-4 {
+  height: var(--pt4);
+  line-height: var(--pt4);
+}
+
+.v-space-5 {
+  height: var(--pt5);
+  line-height: var(--pt5);
+}
+
+.v-space-6 {
+  height: var(--pt6);
+  line-height: var(--pt6);
+}
+
+.v-space-7 {
+  height: var(--pt7);
+  line-height: var(--pt7);
+}

@@ -1,0 +1,27 @@
+.Color {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Color button {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 12px;
+
+  cursor: pointer;
+  transition-duration: 0.3s;
+}
+
+.Color button:hover {
+  background-color: var(--mine-shaft) !important;
+  color: white !important;
+}
+
+.Color span {
+  cursor: pointer;
+  font-size: 14px;
+  margin: var(--pt05) 0 0 0;
+}

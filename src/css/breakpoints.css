@@ -1,0 +1,12 @@
+/**
+* breakpoints
+*
+*/
+
+:root {
+  --xs: 320px;
+  --sm: 576px;
+  --md: 768px;
+  --la: 992px;
+  --xl: 1048px;
+}
