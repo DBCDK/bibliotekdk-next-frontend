@@ -9,11 +9,11 @@
  * via getServerSideProps is used when the React app
  * is rendered.
  */
-import React from 'react';
-import '../css/styles.css';
-import {APIStateContext} from '../lib/api';
+import React from "react";
+import "../css/styles.css";
+import { APIStateContext } from "../lib/api";
 
-export default function MyApp({Component, pageProps}) {
+export default function MyApp({ Component, pageProps }) {
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Component {...pageProps} />
