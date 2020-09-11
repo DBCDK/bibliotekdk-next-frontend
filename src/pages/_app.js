@@ -1,21 +1,22 @@
-// import App from 'next/app'
-import React from "react";
-import "../css/styles.css";
+/**
+ * @file
+ * This is a custom app component.
+ * We use it to override default behaviour.
+ * See https://nextjs.org/docs/advanced-features/custom-app
+ *
+ * Specifically, we make sure pages are wrapped with the
+ * APIStateContext.Provider, such that the data fetched
+ * via getServerSideProps is used when the React app
+ * is rendered.
+ */
+import React from 'react';
+import '../css/styles.css';
+import {APIStateContext} from '../lib/api';
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+export default function MyApp({Component, pageProps}) {
+  return (
+    <APIStateContext.Provider value={pageProps.initialState}>
+      <Component {...pageProps} />
+    </APIStateContext.Provider>
+  );
 }
-
-// Only uncomment this method if you have blocking data requirements for
-// every single page in your application. This disables the ability to
-// perform automatic static optimization, causing every page in your app to
-// be server-side rendered.
-//
-// MyApp.getInitialProps = async (appContext) => {
-//   // calls page's `getInitialProps` and fills `appProps.pageProps`
-//   const appProps = await App.getInitialProps(appContext);
-//
-//   return { ...appProps }
-// }
-
-export default MyApp;

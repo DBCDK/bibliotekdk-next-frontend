@@ -4,5 +4,8 @@
   "reporterOptions": {
     "mochaFile": "/app/e2e/reports/test-result-[hash].xml",
     "toConsole": true
+  },
+  "env": {
+    "nextjsBaseUrl": "http://localhost:3000"
   }
 }
