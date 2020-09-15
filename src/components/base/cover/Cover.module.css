@@ -1,0 +1,12 @@
+.Cover {
+  display: inline-block;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.Cover img {
+  width: 100%;
+  height: auto;
+}

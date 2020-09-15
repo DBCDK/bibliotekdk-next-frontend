@@ -1,0 +1,22 @@
+.Icon {
+  display: inline-block;
+  /*  hack for removing whitespace around img tag */
+  font-size: 0px;
+}
+
+.Icon img {
+  width: 100%;
+  height: auto;
+}
+
+.Round {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Icon.Round img {
+  width: 40%;
+  height: 40%;
+}

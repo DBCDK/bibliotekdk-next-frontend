@@ -1,0 +1,54 @@
+.presentation {
+  background-color: var(--concrete);
+  padding: var(--pt8) 0;
+}
+
+.breadcrumbs {
+}
+
+.ornament {
+  margin: var(--pt3) 0;
+}
+
+.creators {
+  text-transform: capitalize;
+}
+
+.actions {
+  padding: var(--pt6) 0 0 0;
+}
+
+.materials button {
+  position: relative;
+  margin: 0 var(--pt2) var(--pt2) 0;
+}
+
+.materials button:last-child {
+  margin: 0 0 var(--pt2) 0;
+}
+
+.materials button:last-child {
+  margin: 0 0 var(--pt2) 0;
+}
+
+.basket {
+  padding: var(--pt3) 0 0 0;
+}
+
+.info {
+  padding: var(--pt2) 0 0 0;
+}
+
+.materials button i {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  transition-duration: 0.25s;
+  transform: scale(0) translate(50%, -50%);
+}
+
+.materials button.activeMaterial i {
+  transform: scale(1) translate(25%, -25%);
+  transition-timing-function: var(--bounce-effect);
+}

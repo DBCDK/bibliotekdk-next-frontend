@@ -6,17 +6,21 @@
 @import "./colors.css";
 @import "./fonts.css";
 @import "./breakpoints.css";
-@import "./grid.css";
+@import "./spacing.css";
 @import "./reset.css";
+
+:root {
+  --bounce-effect: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
 
 /* content wrapper */
 .container {
   height: 100%;
 }
 
-@media screen and (min-width: 1048px) {
+@media screen and (min-width: 1440px) {
   .container {
-    max-width: 1048px;
+    max-width: 1440px;
     margin: auto;
   }
 }

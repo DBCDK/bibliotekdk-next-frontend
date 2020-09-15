@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import Skeleton from "../skeleton";
 
-import styles from "./Button.module.css";
+import styles from "./Icon.module.css";
 
 /**
  * The Component function
@@ -12,23 +12,40 @@ import styles from "./Button.module.css";
  *
  * @returns {component}
  */
-function Button({
-  children = "im a button",
+function Icon({
+  src = "../",
   className = "",
-  type = "filled",
-  size = "large",
+  bgColor = null,
+  size = 5,
   onClick = null,
   disabled = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
+  const shapeStyle = bgColor ? styles.Round : "";
+
+  // Set icon size
+  const dimensions = {
+    width: `var(--pt${size})`,
+    height: bgColor ? `var(--pt${size})` : `auto`,
+  };
+
+  const backgroundColor = {
+    backgroundColor: bgColor ? bgColor : "transparent",
+  };
+
+  const dynamicStyles = {
+    ...dimensions,
+    ...backgroundColor,
+  };
 
   return (
-    <button
-      className={`${styles.Button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
+    <i
+      style={dynamicStyles}
+      className={`${styles.Icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
     >
-      {children}
-    </button>
+      <img src={`/icons/${src}`} />
+    </i>
   );
 }
 
@@ -40,10 +57,10 @@ function Button({
  *
  * @returns {component}
  */
-function ButtonSkeleton(props) {
+function IconSkeleton(props) {
   return (
     <Skeleton>
-      <Button {...props} onClick={null} disabled={true} />
+      <Icon {...props} onClick={null} disabled={true} />
     </Skeleton>
   );
 }
@@ -56,20 +73,20 @@ function ButtonSkeleton(props) {
  *
  * @returns {component}
  */
-export default function ButtonDefault(props) {
+export default function Container(props) {
   if (props.skeleton) {
-    return <ButtonSkeleton {...props} />;
+    return <IconSkeleton {...props} />;
   }
 
-  return <Button {...props} />;
+  return <Icon {...props} />;
 }
 
 // PropTypes for Button component
-ButtonDefault.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+Container.propTypes = {
+  src: PropTypes.string.isRequired,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["filled", "outlined"]),
-  size: PropTypes.oneOf(["large", "medium", "small"]),
+  bgColor: PropTypes.string,
+  size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

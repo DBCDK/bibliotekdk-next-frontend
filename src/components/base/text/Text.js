@@ -58,7 +58,11 @@ export default function TextDefault(props) {
 
 // PropTypes for Text component
 TextDefault.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.object,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3"]),
   skeleton: PropTypes.bool,
