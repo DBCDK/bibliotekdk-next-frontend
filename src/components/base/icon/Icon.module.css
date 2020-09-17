@@ -17,6 +17,26 @@
 }
 
 .Icon.Round img {
-  width: 40%;
+  width: auto;
   height: 40%;
+}
+
+.Icon.Round svg {
+  width: auto;
+  height: 50%;
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
 }

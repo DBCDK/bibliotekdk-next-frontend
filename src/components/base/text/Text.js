@@ -48,7 +48,7 @@ function TextSkeleton(props) {
  *
  * @returns {component}
  */
-export default function TextDefault(props) {
+export default function Container(props) {
   if (props.skeleton) {
     return <TextSkeleton {...props} />;
   }
@@ -56,8 +56,8 @@ export default function TextDefault(props) {
   return <Text {...props} />;
 }
 
-// PropTypes for Text component
-TextDefault.propTypes = {
+// PropTypes for the component
+Container.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,

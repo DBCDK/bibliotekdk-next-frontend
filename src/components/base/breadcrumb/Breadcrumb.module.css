@@ -1,0 +1,18 @@
+.breadcrumb {
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.separator {
+  padding: 0 var(--pt1);
+}
+
+/**
+* Disabled 
+*
+*/
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}

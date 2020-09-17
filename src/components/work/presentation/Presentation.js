@@ -7,7 +7,7 @@
  * doing the same thing
  */
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 
 import Title from "../../base/title";
@@ -15,6 +15,9 @@ import Text from "../../base/text";
 import Icon from "../../base/icon";
 import Button from "../../base/button";
 import Cover from "../../base/cover";
+import Tag from "../../base/forms/tag";
+import Bookmark from "../../base/bookmark";
+import Breadcrumb from "../../base/breadcrumb";
 
 import { useData } from "../../../lib/api";
 
@@ -51,6 +54,8 @@ function query({ workId }) {
  * @param {string} props.abstract Material abstract
  */
 export function Presentation({ title, creators, path, materialTypes }) {
+  // Save copy of all materialTypes (Temporary)
+  const allMaterialTypes = materialTypes;
   //  Temporary accepted materialTypes
   const acceptedTypes = ["Bog", "Ebog", "Lydbog (net)"];
   // Temporary filter materials
@@ -61,71 +66,84 @@ export function Presentation({ title, creators, path, materialTypes }) {
   // Set selected material - default as the first material in the materialTypes array
   const [selectedMaterial, setSelectedMaterial] = useState(materialTypes[0]);
 
-  useEffect(() => {
-    // setMaterial(material), 4500);
-  }, [selectedMaterial]);
-
   return (
-    <Grid container className={styles.presentation}>
-      <Grid item xs={12} sm={3} className={styles.breadcrumbs}>
-        <Text type="text3">
-          {path.map((c, i) => (path.length > i + 1 ? c + " / " : c))}
-        </Text>
-      </Grid>
-      <Grid container item xs={12} sm direction="row-reverse">
-        <Grid item xs={12} sm={3}>
-          <Cover src={selectedMaterial.cover.detail} />
-        </Grid>
-        <Grid item xs={12} sm>
-          <Title type="title3">{title}</Title>
-          <Icon size={6} src={"ornament1.svg"} className={styles.ornament} />
-          <Text type="text3" className={styles.creators}>
-            {creators.map((c, i) => (creators.length > i + 1 ? c + ", " : c))}
+    <div className={styles.background}>
+      <Grid
+        container
+        spacing={3}
+        className={`container ${styles.presentation}`}
+      >
+        <Grid item xs={12} md={3} className={styles.breadcrumbs}>
+          <Text type="text3">
+            {path.map((c, i) => {
+              const separator = path.length > i + 1;
+              return (
+                <Breadcrumb key={c} separator={separator}>
+                  {c}
+                </Breadcrumb>
+              );
+            })}
           </Text>
-          <Grid container className={styles.actions}>
-            <Grid item xs={12} className={styles.materials}>
-              {materialTypes.map((material) => {
-                console.log(selectedMaterial.pid + " - " + material.pid);
-
-                // Adds an active class if its the selectedMaterial
-                const isActive = material.pid === selectedMaterial.pid;
-
-                const activeClass = isActive ? styles.activeMaterial : "";
-
-                return (
-                  <Button
-                    key={material.materialType}
-                    className={activeClass}
-                    type="outlined"
-                    size="small"
-                    onClick={() => setSelectedMaterial(material)}
-                  >
-                    <Icon
-                      size={3}
-                      bgColor="var(--blue)"
-                      src={"checkmark.svg"}
-                    />
-
-                    {material.materialType}
-                  </Button>
-                );
-              })}
+        </Grid>
+        <Grid container item xs={12} md direction="row-reverse">
+          <Grid item xs={12} sm={4}>
+            <Cover src={selectedMaterial.cover.detail || allMaterialTypes}>
+              <Bookmark />
+            </Cover>
+          </Grid>
+          <Grid item xs={12} sm>
+            <Grid>
+              <Grid item xs={12}>
+                <Title type="title3">{title}</Title>
+              </Grid>
+              <Grid item xs={12}>
+                <Icon
+                  size={6}
+                  src={"ornament1.svg"}
+                  className={styles.ornament}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Text type="text3" className={styles.creators}>
+                  {creators.map((c, i) =>
+                    creators.length > i + 1 ? c + ", " : c
+                  )}
+                </Text>
+              </Grid>
             </Grid>
-            <Grid className={styles.basket} item xs={12}>
-              <Button size="large">Læg i lånekurv</Button>
-            </Grid>
-            <Grid className={styles.info} item xs={12}>
-              <Text type="text3">
-                Fysiske materialer leveres til dit lokale bibliotek
-              </Text>
-              <Text type="text3">
-                Digitale materialer bliver du sendt videre til
-              </Text>
+            <Grid className={styles.actions}>
+              <Grid item xs={12} className={styles.materials}>
+                {materialTypes.map((material) => {
+                  //  Sets isSelected flag if button should be selected
+                  const isSelected = material.pid === selectedMaterial.pid;
+
+                  return (
+                    <Tag
+                      key={material.materialType}
+                      selected={isSelected}
+                      onClick={() => setSelectedMaterial(material)}
+                    >
+                      {material.materialType}
+                    </Tag>
+                  );
+                })}
+              </Grid>
+              <Grid className={styles.basket} item xs={12} sm={9} md={8} la={5}>
+                <Button>Læg i lånekurv</Button>
+              </Grid>
+              <Grid className={styles.info} item xs={12}>
+                <Text type="text3">
+                  Fysiske materialer leveres til dit lokale bibliotek
+                </Text>
+                <Text type="text3">
+                  Digitale materialer bliver du sendt videre til
+                </Text>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </div>
   );
 }
 

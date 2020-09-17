@@ -15,6 +15,7 @@ import styles from "./Icon.module.css";
 function Icon({
   src = "../",
   className = "",
+  children = null,
   bgColor = null,
   size = 5,
   onClick = null,
@@ -44,7 +45,7 @@ function Icon({
       className={`${styles.Icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
     >
-      <img src={`/icons/${src}`} />
+      {children || <img src={`/icons/${src}`} />}
     </i>
   );
 }
@@ -83,8 +84,9 @@ export default function Container(props) {
 
 // PropTypes for Button component
 Container.propTypes = {
-  src: PropTypes.string.isRequired,
+  src: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bgColor: PropTypes.string,
   size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
   disabled: PropTypes.bool,

@@ -14,16 +14,21 @@ import styles from "./Cover.module.css";
  */
 function Cover({
   children = null,
-  src = "../",
+  src = "name.svg", // src takes starting point in the /public/icons folder
   className = "",
   bgColor = null,
-  size = [200, 300],
+  size = ["100%", "auto"],
   onClick = null,
 }) {
+  // If src is an array of cover images, select the first valid in line
+  if (src instanceof Array) {
+    src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
+  }
+
   // Set icon size
   const dimensions = {
-    width: `${size[0]}px`,
-    height: `${size[1]}px`,
+    width: `${size[0]}`,
+    height: `${size[1]}`,
   };
 
   const backgroundColor = {
@@ -42,6 +47,7 @@ function Cover({
       onClick={onClick}
     >
       <img src={src} />
+      {children}
     </div>
   );
 }
@@ -71,7 +77,7 @@ function CoverSkeleton(props) {
  * @returns {component}
  */
 export default function Container(props) {
-  if (props.skeleton || !props.src) {
+  if (props.skeleton) {
     return <CoverSkeleton {...props} />;
   }
 
@@ -81,7 +87,7 @@ export default function Container(props) {
 // PropTypes for the Component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  src: PropTypes.string.isRequired,
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bgColor: PropTypes.string,
   size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),

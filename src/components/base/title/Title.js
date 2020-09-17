@@ -51,7 +51,7 @@ export const TitleSkeleton = (props) => {
  *
  * @returns {component}
  */
-export default function TitleDefault(props) {
+export default function Container(props) {
   if (props.skeleton) {
     return <TitleSkeleton {...props} />;
   }
@@ -59,8 +59,8 @@ export default function TitleDefault(props) {
   return <Title {...props} />;
 }
 
-// PropTypes for Title component
-Title.propTypes = {
+// PropTypes for the component
+Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]),

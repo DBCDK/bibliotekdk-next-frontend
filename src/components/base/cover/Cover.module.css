@@ -4,6 +4,15 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
+  max-width: 200px;
+}
+
+.Cover i {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(25%, -25%);
 }
 
 .Cover img {

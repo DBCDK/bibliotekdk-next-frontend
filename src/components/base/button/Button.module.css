@@ -12,35 +12,37 @@
 *
 */
 
-/* Filled */
+/* Primary */
 
-.Button.filled {
+.Button.primary {
   background-color: var(--blue);
   color: var(--white);
+  display: block;
+  width: 100%;
 }
 
-.Button.filled:hover {
+.Button.primary:hover {
   background-color: var(--mine-shaft);
   color: var(--white);
 }
 
-.Button.filled.disabled {
+.Button.primary.disabled {
   background-color: var(--concrete);
 }
 
-/* Outlined */
+/* Secondary */
 
-.Button.outlined {
+.Button.secondary {
   color: var(--blue);
   border: 1px solid var(--blue);
 }
 
-.Button.outlined:hover {
+.Button.secondary:hover {
   border: 1px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
-.Button.outlined.disabled {
+.Button.secondary.disabled {
   border: 1px solid var(--concrete);
 }
 
@@ -49,17 +51,34 @@
 *
 */
 
-.Button.large {
+/* primary */
+.Button.primary.large {
+  font-size: 20px;
+  padding: var(--pt1) 0;
+}
+
+.Button.primary.medium {
+  font-size: 17px;
+  padding: var(--pt1) 0;
+}
+
+.Button.primary.small {
+  font-size: 13px;
+  padding: var(--pt1) 0;
+}
+
+/* secondary */
+.Button.secondary.large {
   font-size: 20px;
   padding: var(--pt1) var(--pt10);
 }
 
-.Button.medium {
+.Button.secondary.medium {
   font-size: 17px;
   padding: var(--pt1) var(--pt6);
 }
 
-.Button.small {
+.Button.secondary.small {
   font-size: 13px;
   padding: var(--pt1) var(--pt4);
 }

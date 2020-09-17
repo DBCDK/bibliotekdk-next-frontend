@@ -16,9 +16,7 @@ import { APIStateContext } from "../lib/api";
 export default function MyApp({ Component, pageProps }) {
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
-      <div className="container">
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </APIStateContext.Provider>
   );
 }

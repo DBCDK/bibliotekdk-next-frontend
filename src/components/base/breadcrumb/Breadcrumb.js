@@ -1,8 +1,13 @@
 import PropTypes from "prop-types";
 
 import Skeleton from "../skeleton";
+import Link from "../link";
 
-import styles from "./Button.module.css";
+import styles from "./Breadcrumb.module.css";
+
+function Separator() {
+  return <span className={styles.separator}>/</span>;
+}
 
 /**
  * The Component function
@@ -12,23 +17,24 @@ import styles from "./Button.module.css";
  *
  * @returns {component}
  */
-function Button({
-  children = "im a button",
+function Breadcrumb({
+  children = "Breadcrumb",
+  href = "/",
+  separator = true,
   className = "",
-  type = "primary",
-  size = "large",
-  onClick = null,
   disabled = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
 
   return (
-    <button
-      className={`${styles.Button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
-      onClick={onClick}
-    >
-      {children}
-    </button>
+    <Link href={href}>
+      <React.Fragment>
+        <span className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
+          {children}
+        </span>
+        {separator && <Separator />}
+      </React.Fragment>
+    </Link>
   );
 }
 
@@ -40,10 +46,10 @@ function Button({
  *
  * @returns {component}
  */
-function ButtonSkeleton(props) {
+function BreadcrumbSkeleton(props) {
   return (
     <Skeleton>
-      <Button {...props} onClick={null} disabled={true} />
+      <Breadcrumb {...props} onClick={null} disabled={true} />
     </Skeleton>
   );
 }
@@ -58,18 +64,17 @@ function ButtonSkeleton(props) {
  */
 export default function Container(props) {
   if (props.skeleton) {
-    return <ButtonSkeleton {...props} />;
+    return <BreadcrumbSkeleton {...props} />;
   }
 
-  return <Button {...props} />;
+  return <Breadcrumb {...props} />;
 }
 
 // PropTypes for component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["primary", "secondary"]),
-  size: PropTypes.oneOf(["large", "medium", "small"]),
+
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

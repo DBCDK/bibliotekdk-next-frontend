@@ -10,15 +10,15 @@ export default {
 const sizes = ["large", "medium", "small"];
 
 /**
- * Returns all filled buttons (Default button style)
+ * Returns all primary buttons (Default button style)
  *
  */
-export function Filled() {
-  const type = "filled";
+export function Primary() {
+  const type = "primary";
 
   return (
     <div>
-      <div className="story-heading">Filled buttons </div>
+      <div className="story-heading">Primary buttons </div>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -29,7 +29,7 @@ export function Filled() {
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Filled buttons </div>
+      <div className="story-heading">[Disabled] Primary buttons </div>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -44,15 +44,15 @@ export function Filled() {
 }
 
 /**
- * Returns all outlined buttons
+ * Returns all Secondary buttons
  *
  */
-export function Outlined() {
-  const type = "outlined";
+export function Secondary() {
+  const type = "secondary";
 
   return (
     <div>
-      <div className="story-heading">Outlined buttons </div>
+      <div className="story-heading">Secondary buttons </div>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -63,7 +63,7 @@ export function Outlined() {
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Outlined buttons </div>
+      <div className="story-heading">[Disabled] Secondary buttons </div>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -82,7 +82,7 @@ export function Outlined() {
  *
  */
 export function Loading() {
-  const type = "filled";
+  const type = "primary";
 
   const [isSlow, setIsSlow] = useState(false);
 
@@ -92,7 +92,7 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">[Loading] Outlined skeleton buttons </div>
+      <div className="story-heading">[Loading] Secondary skeleton buttons </div>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -104,7 +104,7 @@ export function Loading() {
       ))}
 
       <div className="story-heading">
-        [Bad Loading] Outlined skeleton buttons
+        [Bad Loading] Secondary skeleton buttons
       </div>
 
       {sizes.map((size) => (

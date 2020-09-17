@@ -11,6 +11,7 @@
 
 :root {
   --bounce-effect: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+  --shadow-effect: 0px 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* content wrapper */
@@ -21,6 +22,7 @@
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
-    margin: auto;
+    /* override guid spacing prop margin */
+    margin: auto !important;
   }
 }

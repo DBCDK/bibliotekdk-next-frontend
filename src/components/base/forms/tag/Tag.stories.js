@@ -1,9 +1,8 @@
-import Button from "./Cover";
-import Skeleton from "../skeleton";
+import Button from "./Tag";
 import { useEffect, useState } from "react";
 
 export default {
-  title: "Cover",
+  title: "Forms: Tag",
 };
 
 // Current button types
@@ -13,8 +12,8 @@ const sizes = ["large", "medium", "small"];
  * Returns all filled buttons (Default button style)
  *
  */
-export function Cover() {
+export function Tag() {
   const type = "filled";
 
-  return <div>cover</div>;
+  return <div>tag</div>;
 }
