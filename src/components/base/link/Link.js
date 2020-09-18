@@ -26,9 +26,6 @@ export default function Link({
 // PropTypes for component
 Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.string,
-  title: PropTypes.string,
   as: PropTypes.string,
-  disabled: PropTypes.bool,
 };

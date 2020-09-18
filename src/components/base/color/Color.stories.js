@@ -19,8 +19,8 @@ export const Primary = () => {
     <div>
       <div className="story-heading">Primary Colors</div>
       <div className="story-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
-        purus a iaculis finibus.
+        Copy #hex by clicking on the hexcode. Copy variable by clicking on the
+        color name
       </div>
 
       {colors.map((color) => (
@@ -53,7 +53,10 @@ export const Secondary = () => {
   return (
     <div>
       <div className="story-heading">Secondary Colors</div>
-
+      <div className="story-description">
+        Copy #hex by clicking on the hexcode. Copy variable by clicking on the
+        color name
+      </div>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
@@ -78,7 +81,10 @@ export const Greys = () => {
   return (
     <div>
       <div className="story-heading">Greys Colors</div>
-
+      <div className="story-description">
+        Copy #hex by clicking on the hexcode. Copy variable by clicking on the
+        color name
+      </div>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
@@ -108,7 +114,10 @@ export const Alerts = () => {
   return (
     <div>
       <div className="story-heading">Alert Colors</div>
-
+      <div className="story-description">
+        Copy #hex by clicking on the hexcode. Copy variable by clicking on the
+        color name
+      </div>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />

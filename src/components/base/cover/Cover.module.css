@@ -1,4 +1,4 @@
-.Cover {
+.cover {
   display: inline-block;
   position: relative;
   display: flex;
@@ -8,14 +8,23 @@
   max-width: 200px;
 }
 
-.Cover i {
+.cover i {
   position: absolute;
   top: 0;
   right: 0;
   transform: translate(25%, -25%);
 }
 
-.Cover img {
+.cover img {
   width: 100%;
   height: auto;
+}
+
+/**
+ * Frame
+ *
+ */
+
+.frame {
+  padding: var(--pt2);
 }

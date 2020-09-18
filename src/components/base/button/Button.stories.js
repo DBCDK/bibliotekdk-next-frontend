@@ -19,7 +19,9 @@ export function Primary() {
   return (
     <div>
       <div className="story-heading">Primary buttons </div>
-
+      <div className="story-description">
+        Primary buttons takes up 100% of width [block]
+      </div>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
@@ -53,7 +55,9 @@ export function Secondary() {
   return (
     <div>
       <div className="story-heading">Secondary buttons </div>
-
+      <div className="story-description">
+        Secondary buttons adapts to content [inline]
+      </div>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>

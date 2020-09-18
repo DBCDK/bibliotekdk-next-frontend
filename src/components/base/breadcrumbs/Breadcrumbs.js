@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 import Skeleton from "../skeleton";
 import Link from "../link";
+import Text from "../text";
 
 import styles from "./Breadcrumb.module.css";
 
@@ -28,12 +29,12 @@ function Breadcrumb({
 
   return (
     <Link href={href}>
-      <React.Fragment>
+      <Text className={styles.wrap} type="text3">
         <span className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
           {children}
         </span>
         {separator && <Separator />}
-      </React.Fragment>
+      </Text>
     </Link>
   );
 }
@@ -48,9 +49,14 @@ function Breadcrumb({
  */
 function BreadcrumbSkeleton(props) {
   return (
-    <Skeleton>
-      <Breadcrumb {...props} onClick={null} disabled={true} />
-    </Skeleton>
+    <React.Fragment>
+      <Skeleton>
+        <Breadcrumb {...props} separator={false} onClick={null} disabled={true}>
+          Crumb
+        </Breadcrumb>
+      </Skeleton>
+      {props.separator && <Separator />}
+    </React.Fragment>
   );
 }
 
@@ -63,19 +69,39 @@ function BreadcrumbSkeleton(props) {
  * @returns {component}
  */
 export default function Container(props) {
-  if (props.skeleton) {
-    return <BreadcrumbSkeleton {...props} />;
+  let { path, crumbs, skeleton } = props;
+
+  if (crumbs && skeleton) {
+    path = Array.from(Array(Number(crumbs)).keys());
   }
 
-  return <Breadcrumb {...props} />;
+  return path.map((c, i) => {
+    const separator = path.length > i + 1;
+
+    if (skeleton) {
+      return (
+        <BreadcrumbSkeleton
+          key={`crumb-${i}`}
+          {...props}
+          separator={separator}
+        />
+      );
+    }
+
+    return (
+      <Breadcrumb {...props} key={c} separator={separator}>
+        {c}
+      </Breadcrumb>
+    );
+  });
 }
 
 // PropTypes for component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-
   disabled: PropTypes.bool,
+  crumbs: PropTypes.number,
   skeleton: PropTypes.bool,
-  onClick: PropTypes.func,
+  href: PropTypes.string,
 };

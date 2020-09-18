@@ -1,16 +1,19 @@
-export default {
-  title: "Module",
-};
+import Presentation from "./Presentation";
 
-// Current text types
-const texts = ["text1", "text2", "text3"];
+export default {
+  title: "Module: Presentation",
+};
 
 /**
  * Returns all Text types
  *
  */
-export function Presentation() {
-  return <div>Work presentation</div>;
+export function WorkPresentation() {
+  return (
+    <div>
+      <Presentation />
+    </div>
+  );
 }
 
 /**
@@ -18,5 +21,9 @@ export function Presentation() {
  *
  */
 export function Loading() {
-  return <div>Loading . . .</div>;
+  return (
+    <div>
+      <Presentation skeleton={true} />
+    </div>
+  );
 }

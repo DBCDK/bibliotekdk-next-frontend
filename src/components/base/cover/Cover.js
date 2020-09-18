@@ -14,7 +14,7 @@ import styles from "./Cover.module.css";
  */
 function Cover({
   children = null,
-  src = "name.svg", // src takes starting point in the /public/icons folder
+  src = null,
   className = "",
   bgColor = null,
   size = ["100%", "auto"],
@@ -24,6 +24,8 @@ function Cover({
   if (src instanceof Array) {
     src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
   }
+
+  const frameStyle = bgColor ? styles.frame : "";
 
   // Set icon size
   const dimensions = {
@@ -43,7 +45,7 @@ function Cover({
   return (
     <div
       style={dynamicStyles}
-      className={`${styles.Cover} ${className}`}
+      className={`${styles.cover} ${frameStyle} ${className}`}
       onClick={onClick}
     >
       <img src={src} />
@@ -90,7 +92,7 @@ Container.propTypes = {
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bgColor: PropTypes.string,
-  size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+  size: PropTypes.array,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
 };

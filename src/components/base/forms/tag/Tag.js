@@ -42,7 +42,7 @@ function Tag({
  *
  * @returns {component}
  */
-function ButtonSkeleton(props) {
+function TagSkeleton(props) {
   return (
     <Skeleton>
       <Tag {...props} onClick={null} disabled={true} />

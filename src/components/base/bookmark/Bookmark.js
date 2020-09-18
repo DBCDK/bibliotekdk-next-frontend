@@ -19,14 +19,20 @@ function handleOnBookmarkClick() {
  *
  * @returns {component}
  */
-function Bookmark(props, { className = "", selected = false, onClick = null }) {
+function Bookmark({
+  className = "",
+  selected = false,
+  onClick = null,
+  disabled,
+}) {
   const selectedClass = selected ? styles.selected : "";
+
   return (
     <Icon
-      {...props}
+      disabled={disabled}
       size={5}
       bgColor="var(--white)"
-      onClick={() => (onClick ? onClick : handleOnBookmarkClick())}
+      onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
       className={`${className || ""} ${styles.bookmark} ${selectedClass}`}
     >
       <BookmarkSvg />
@@ -44,7 +50,7 @@ function Bookmark(props, { className = "", selected = false, onClick = null }) {
  */
 function BookmarkSkeleton(props) {
   return (
-    <Skeleton className={styles.skeleton}>
+    <Skeleton>
       <Bookmark {...props} onClick={null} disabled={true} />
     </Skeleton>
   );
@@ -69,7 +75,7 @@ export default function Container(props) {
 // PropTypes for Container component
 Container.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+  selected: PropTypes.bool,
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

@@ -19,10 +19,10 @@ export function Body() {
       {texts.map((type) => (
         <React.Fragment key={type}>
           <Text tag="h1" type={type}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-            mollis purus a iaculis finibus. Integer lacus dui, condimentum quis
-            elit in, feugiat hendrerit urna. Etiam facilisis id ligula congue
-            ultrices.
+            [{type}]: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Nulla mollis purus a iaculis finibus. Integer lacus dui, condimentum
+            quis elit in, feugiat hendrerit urna. Etiam facilisis id ligula
+            congue ultrices.
           </Text>
 
           <div className="v-space-2" />

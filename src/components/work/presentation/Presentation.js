@@ -17,7 +17,7 @@ import Button from "../../base/button";
 import Cover from "../../base/cover";
 import Tag from "../../base/forms/tag";
 import Bookmark from "../../base/bookmark";
-import Breadcrumb from "../../base/breadcrumb";
+import Breadcrumbs from "../../base/breadcrumbs";
 
 import { useData } from "../../../lib/api";
 
@@ -53,7 +53,13 @@ function query({ workId }) {
  * @param {string} props.title Material title
  * @param {string} props.abstract Material abstract
  */
-export function Presentation({ title, creators, path, materialTypes }) {
+export function Presentation({
+  title,
+  creators,
+  path,
+  materialTypes,
+  skeleton,
+}) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
   //  Temporary accepted materialTypes
@@ -68,22 +74,9 @@ export function Presentation({ title, creators, path, materialTypes }) {
 
   return (
     <div className={styles.background}>
-      <Grid
-        container
-        spacing={3}
-        className={`container ${styles.presentation}`}
-      >
+      <Grid container className={`container ${styles.presentation}`}>
         <Grid item xs={12} md={3} className={styles.breadcrumbs}>
-          <Text type="text3">
-            {path.map((c, i) => {
-              const separator = path.length > i + 1;
-              return (
-                <Breadcrumb key={c} separator={separator}>
-                  {c}
-                </Breadcrumb>
-              );
-            })}
-          </Text>
+          <Breadcrumbs path={path} />
         </Grid>
         <Grid container item xs={12} md direction="row-reverse">
           <Grid item xs={12} sm={4}>
@@ -153,10 +146,10 @@ export function Presentation({ title, creators, path, materialTypes }) {
  * @param {Object} props Component props
  * @param {boolean} props.isSlow Is it unexpectingly slow to load?
  */
-export function PresentationSkeleton({ isSlow }) {
+export function PresentationSkeleton(props) {
   return (
     <div>
-      <h1>{isSlow ? "Indlæser - gaaaab" : "Indlæser"}</h1>
+      <Presentation {...props} skeleton={true} />
     </div>
   );
 }
