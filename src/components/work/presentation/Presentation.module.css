@@ -6,6 +6,14 @@
   padding: var(--pt8) 0;
 }
 
+.breadcrumbs {
+  padding: 0 var(--pt2) var(--pt5) 0;
+}
+
+.cover {
+  padding: 0 0 var(--pt2) 0;
+}
+
 .ornament {
   margin: var(--pt3) 0;
 }
@@ -15,15 +23,11 @@
 }
 
 .actions {
-  padding: var(--pt6) 0 0 0;
+  padding: var(--pt5) 0 0 0;
 }
 
 .materials button {
   margin: 0 var(--pt2) var(--pt2) 0;
-}
-
-.materials button:last-child {
-  margin: 0 0 var(--pt2) 0;
 }
 
 .materials button:last-child {

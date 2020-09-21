@@ -22,7 +22,7 @@ function Icon({
   disabled = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
-  const shapeStyle = bgColor ? styles.Round : "";
+  const shapeStyle = bgColor ? styles.round : "";
 
   // Set icon size
   const dimensions = {
@@ -42,7 +42,7 @@ function Icon({
   return (
     <i
       style={dynamicStyles}
-      className={`${styles.Icon} ${className} ${shapeStyle} ${disabledStyle}`}
+      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
     >
       {children || <img src={`/icons/${src}`} />}

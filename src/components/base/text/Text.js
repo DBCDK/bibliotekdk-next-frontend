@@ -16,9 +16,16 @@ function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text1",
+  tag = "p",
 }) {
+  // Set type of tag.
+  // Because, this is a text component, p(aragraph) should always be used if possible!
+  const Tag = tag;
+
   return (
-    <p className={`${styles.Text} ${styles[type]} ${className}`}>{children}</p>
+    <Tag className={`${styles.text} ${styles[type]} ${className}`}>
+      {children}
+    </Tag>
   );
 }
 
@@ -65,5 +72,6 @@ Container.propTypes = {
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3"]),
+  tag: PropTypes.oneOf(["p", "span"]),
   skeleton: PropTypes.bool,
 };

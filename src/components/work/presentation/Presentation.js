@@ -58,13 +58,14 @@ export function Presentation({
   creators,
   path,
   materialTypes,
-  skeleton,
+  skeleton = false,
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
   //  Temporary accepted materialTypes
   const acceptedTypes = ["Bog", "Ebog", "Lydbog (net)"];
   // Temporary filter materials
+  // outcomment this func. to see all available materialTypes
   materialTypes = materialTypes.filter((type) =>
     acceptedTypes.includes(type.materialType)
   );
@@ -73,37 +74,36 @@ export function Presentation({
   const [selectedMaterial, setSelectedMaterial] = useState(materialTypes[0]);
 
   return (
-    <div className={styles.background}>
-      <Grid container className={`container ${styles.presentation}`}>
+    <div className={`${styles.background}`}>
+      <Grid container className={`container gutter ${styles.presentation}`}>
         <Grid item xs={12} md={3} className={styles.breadcrumbs}>
-          <Breadcrumbs path={path} />
+          <Breadcrumbs path={path} skeleton={skeleton} />
         </Grid>
         <Grid container item xs={12} md direction="row-reverse">
-          <Grid item xs={12} sm={4}>
-            <Cover src={selectedMaterial.cover.detail || allMaterialTypes}>
-              <Bookmark />
+          <Grid item xs={12} sm={4} className={styles.cover}>
+            <Cover
+              src={selectedMaterial.cover.detail || allMaterialTypes}
+              skeleton={skeleton}
+            >
+              <Bookmark skeleton={skeleton} />
             </Cover>
           </Grid>
           <Grid item xs={12} sm>
-            <Grid>
-              <Grid item xs={12}>
-                <Title type="title3">{title}</Title>
-              </Grid>
-              <Grid item xs={12}>
-                <Icon
-                  size={6}
-                  src={"ornament1.svg"}
-                  className={styles.ornament}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Text type="text3" className={styles.creators}>
-                  {creators.map((c, i) =>
-                    creators.length > i + 1 ? c + ", " : c
-                  )}
-                </Text>
-              </Grid>
-            </Grid>
+            <Title type="title3" skeleton={skeleton}>
+              {title}
+            </Title>
+
+            <Icon
+              size={6}
+              src={"ornament1.svg"}
+              className={styles.ornament}
+              skeleton={skeleton}
+            />
+
+            <Text type="text3" className={styles.creators} skeleton={skeleton}>
+              {creators.map((c, i) => (creators.length > i + 1 ? c + ", " : c))}
+            </Text>
+
             <Grid className={styles.actions}>
               <Grid item xs={12} className={styles.materials}>
                 {materialTypes.map((material) => {
@@ -115,6 +115,7 @@ export function Presentation({
                       key={material.materialType}
                       selected={isSelected}
                       onClick={() => setSelectedMaterial(material)}
+                      skeleton={skeleton}
                     >
                       {material.materialType}
                     </Tag>
@@ -122,13 +123,13 @@ export function Presentation({
                 })}
               </Grid>
               <Grid className={styles.basket} item xs={12} sm={9} md={8} la={5}>
-                <Button>Læg i lånekurv</Button>
+                <Button skeleton={skeleton}>Læg i lånekurv</Button>
               </Grid>
               <Grid className={styles.info} item xs={12}>
-                <Text type="text3">
+                <Text type="text3" skeleton={skeleton}>
                   Fysiske materialer leveres til dit lokale bibliotek
                 </Text>
-                <Text type="text3">
+                <Text type="text3" skeleton={skeleton}>
                   Digitale materialer bliver du sendt videre til
                 </Text>
               </Grid>

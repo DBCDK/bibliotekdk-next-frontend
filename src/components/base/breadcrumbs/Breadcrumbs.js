@@ -7,7 +7,11 @@ import Text from "../text";
 import styles from "./Breadcrumb.module.css";
 
 function Separator() {
-  return <span className={styles.separator}>/</span>;
+  return (
+    <Text type="text3" tag="span" className={styles.separator}>
+      /
+    </Text>
+  );
 }
 
 /**
@@ -29,12 +33,16 @@ function Breadcrumb({
 
   return (
     <Link href={href}>
-      <Text className={styles.wrap} type="text3">
-        <span className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
+      <span>
+        <Text
+          tag="span"
+          className={`${styles.breadcrumb} ${className} ${disabledStyle}`}
+          type="text3"
+        >
           {children}
-        </span>
+        </Text>
         {separator && <Separator />}
-      </Text>
+      </span>
     </Link>
   );
 }

@@ -24,7 +24,7 @@ function Button({
 
   return (
     <button
-      className={`${styles.Button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
+      className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
       onClick={onClick}
     >
       {children}

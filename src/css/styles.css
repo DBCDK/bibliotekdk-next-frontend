@@ -19,10 +19,28 @@
   height: 100%;
 }
 
-@media screen and (min-width: 1440px) {
+.gutter {
+  padding-left: var(--pt2) !important;
+  padding-right: var(--pt2) !important;
+}
+
+@media screen and (min-width: 600px) {
+  .gutter {
+    padding-left: var(--pt4) !important;
+    padding-right: var(--pt4) !important;
+  }
+}
+
+@media screen and (min-width: calc(1440px + (2*40px))) {
   .container {
     max-width: 1440px;
+
     /* override guid spacing prop margin */
     margin: auto !important;
+  }
+
+  .gutter {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }

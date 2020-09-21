@@ -21,7 +21,7 @@ export const Title = ({
   const Tag = tag;
 
   return (
-    <Tag className={`${styles.Title} ${styles[type]} ${className}`}>
+    <Tag className={`${styles.title} ${styles[type]} ${className}`}>
       {children}
     </Tag>
   );

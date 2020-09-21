@@ -1,8 +1,5 @@
-.wrap {
-  display: inline-block;
-}
-
 .breadcrumb {
+  display: inline-block;
   cursor: pointer;
   text-transform: capitalize;
 }

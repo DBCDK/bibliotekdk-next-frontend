@@ -18,7 +18,7 @@ export function BasicIcon() {
     <div>
       {sizes.map((size) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={size}>
             <Icon src={src} size={size} />
             <div className="space-5" />
           </React.Fragment>
@@ -40,7 +40,7 @@ export function RoundIcon() {
     <div>
       {sizes.map((size) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={size}>
             <Icon src={src} size={size} bgColor={bgColor} />
             <div className="space-5" />
           </React.Fragment>
@@ -63,7 +63,7 @@ export function Loading() {
     <div>
       {sizes.map((size) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={size}>
             <Icon src={src} size={size} bgColor={bgColor} skeleton={skeleton} />
             <div className="space-5" />
           </React.Fragment>

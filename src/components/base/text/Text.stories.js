@@ -18,11 +18,12 @@ export function Body() {
 
       {texts.map((type) => (
         <React.Fragment key={type}>
+          <div className="story-heading">Body text [{type}]</div>
           <Text tag="h1" type={type}>
-            [{type}]: Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Nulla mollis purus a iaculis finibus. Integer lacus dui, condimentum
-            quis elit in, feugiat hendrerit urna. Etiam facilisis id ligula
-            congue ultrices.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+            mollis purus a iaculis finibus. Integer lacus dui, condimentum quis
+            elit in, feugiat hendrerit urna. Etiam facilisis id ligula congue
+            ultrices.
           </Text>
 
           <div className="v-space-2" />

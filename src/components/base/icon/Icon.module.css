@@ -1,27 +1,27 @@
-.Icon {
+.icon {
   display: inline-block;
   /*  hack for removing whitespace around img tag */
   font-size: 0px;
 }
 
-.Icon img {
+.icon img {
   width: 100%;
   height: auto;
 }
 
-.Round {
+.round {
   border-radius: 50%;
   display: inline-flex;
   justify-content: center;
   align-items: center;
 }
 
-.Icon.Round img {
+.icon.round img {
   width: auto;
   height: 40%;
 }
 
-.Icon.Round svg {
+.icon.round svg {
   width: auto;
   height: 50%;
 }
