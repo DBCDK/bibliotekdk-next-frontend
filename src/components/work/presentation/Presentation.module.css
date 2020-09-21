@@ -41,3 +41,12 @@
 .info {
   padding: var(--pt2) 0 0 0;
 }
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  background-color: white;
+}

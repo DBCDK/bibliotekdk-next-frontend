@@ -19,6 +19,7 @@ function Tag({
   selected = false,
   onClick = null,
   disabled = false,
+  skeleton = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const selectedStyle = selected ? styles.selected : "";
@@ -29,7 +30,12 @@ function Tag({
       onClick={onClick}
     >
       {children}
-      <Icon size={3} bgColor="var(--blue)" src={"checkmark.svg"} />
+      <Icon
+        size={3}
+        bgColor="var(--blue)"
+        src={"checkmark.svg"}
+        skeleton={skeleton}
+      />
     </button>
   );
 }
@@ -44,9 +50,16 @@ function Tag({
  */
 function TagSkeleton(props) {
   return (
-    <Skeleton>
-      <Tag {...props} onClick={null} disabled={true} />
-    </Skeleton>
+    <Tag
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      onClick={null}
+      disabled={true}
+      selected={false}
+    >
+      <Skeleton />
+      {props.children}
+    </Tag>
   );
 }
 

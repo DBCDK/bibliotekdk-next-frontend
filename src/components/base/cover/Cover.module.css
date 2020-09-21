@@ -28,3 +28,12 @@
 .frame {
   padding: var(--pt2);
 }
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+}

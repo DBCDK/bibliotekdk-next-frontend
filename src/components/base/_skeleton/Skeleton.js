@@ -44,7 +44,7 @@ export default function Skeleton({
   display = styles[display];
 
   return (
-    <div className={`${styles.skeleton} ${className} ${slowClass}`}>
+    <div className={`${styles.skeleton} ${display} ${className} ${slowClass}`}>
       <div className={styles.lines}>
         <CreateLines n={lines}>{children}</CreateLines>
       </div>

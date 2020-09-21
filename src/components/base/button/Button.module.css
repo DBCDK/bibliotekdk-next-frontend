@@ -2,6 +2,7 @@
   background-color: transparent;
   font-family: var(--body-font-medium);
   transition-duration: 0.35s;
+  display: inline-block;
 }
 
 .button:hover {
@@ -97,4 +98,13 @@
 .button.disabled,
 .button.disabled:hover {
   color: var(--gray);
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
 }

@@ -64,9 +64,16 @@ function Cover({
  */
 function CoverSkeleton(props) {
   return (
-    <Skeleton>
-      <Cover {...props} onClick={null} src={null} bgColor={null} />
-    </Skeleton>
+    <Cover
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      onClick={null}
+      src={null}
+      bgColor={null}
+    >
+      <Skeleton />
+      {props.children}
+    </Cover>
   );
 }
 

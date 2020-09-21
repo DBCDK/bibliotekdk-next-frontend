@@ -23,12 +23,14 @@ function Bookmark({
   className = "",
   selected = false,
   onClick = null,
-  disabled,
+  disabled = false,
+  skeleton = false,
 }) {
   const selectedClass = selected ? styles.selected : "";
 
   return (
     <Icon
+      skeleton={skeleton}
       disabled={disabled}
       size={5}
       bgColor="var(--white)"
@@ -50,9 +52,14 @@ function Bookmark({
  */
 function BookmarkSkeleton(props) {
   return (
-    <Skeleton>
-      <Bookmark {...props} onClick={null} disabled={true} />
-    </Skeleton>
+    <Bookmark
+      {...props}
+      className={styles.skeleton}
+      onClick={null}
+      disabled={true}
+    >
+      <Skeleton />
+    </Bookmark>
   );
 }
 

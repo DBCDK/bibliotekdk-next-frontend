@@ -37,9 +37,10 @@ export const Title = ({
  */
 export const TitleSkeleton = (props) => {
   return (
-    <Skeleton display="block">
-      <Title {...props} />
-    </Skeleton>
+    <Title {...props} className={`${props.className} ${styles.skeleton}`}>
+      <Skeleton />
+      {props.children}
+    </Title>
   );
 };
 

@@ -28,6 +28,7 @@ export function TagButton() {
 
       {types.map((type) => {
         const isSelected = selectedType === type;
+
         return (
           <React.Fragment key={type}>
             <Tag selected={isSelected} onClick={() => setSelectedType(type)}>
@@ -51,7 +52,7 @@ export function Loading() {
       </Tag>
 
       <div className="story-heading">Multiple tags [Radio style]</div>
-      {types.map((type) => {
+      {types.map((type, i) => {
         return (
           <React.Fragment key={type}>
             <Tag selected={false} skeleton={true}>

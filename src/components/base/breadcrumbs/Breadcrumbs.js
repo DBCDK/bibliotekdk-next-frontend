@@ -56,6 +56,8 @@ function Breadcrumb({
  * @returns {component}
  */
 function BreadcrumbSkeleton(props) {
+  // className={`${props.className} ${styles.skeleton}`}
+
   return (
     <React.Fragment>
       <Skeleton>

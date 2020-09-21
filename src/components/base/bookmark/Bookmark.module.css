@@ -29,3 +29,16 @@
 .bookmark.selected svg path {
   stroke: var(--white);
 }
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+}
+
+.skeleton svg path {
+  stroke: transparent !important;
+}

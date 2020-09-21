@@ -86,7 +86,7 @@ export function Secondary() {
  *
  */
 export function Loading() {
-  const type = "primary";
+  const type = "secondary";
 
   const [isSlow, setIsSlow] = useState(false);
 
@@ -113,11 +113,11 @@ export function Loading() {
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
-          <Skeleton isSlow={isSlow}>
-            <Button type={type} size={size}>
-              {size}
-            </Button>
-          </Skeleton>
+          <Button className="relative" disabled={true} type={type} size={size}>
+            <Skeleton isSlow={isSlow} />
+            {size}
+          </Button>
+
           <div className="space-2" />
         </React.Fragment>
       ))}

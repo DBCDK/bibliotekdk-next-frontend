@@ -38,12 +38,15 @@ function Text({
  * @returns {component}
  */
 function TextSkeleton(props) {
-  // const lines = props.display === "block" ? props.lines || 3 : 1;
+  const lines = props.lines || 3;
 
   return (
-    <Skeleton lines={props.lines || 3} display={"block"}>
-      <Text {...props}>...</Text>
-    </Skeleton>
+    <Text {...props} className={`${props.className} ${styles.skeleton}`}>
+      <Skeleton lines={lines} />
+      {Array.from(Array(lines).keys()).map((l) => (
+        <Text {...props} />
+      ))}
+    </Text>
   );
 }
 

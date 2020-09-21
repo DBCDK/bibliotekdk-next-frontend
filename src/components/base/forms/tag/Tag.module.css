@@ -18,6 +18,7 @@
 
   transition-duration: 0.25s;
   transform: scale(0) translate(50%, -50%);
+  z-index: 1;
 }
 
 .tag:hover {
@@ -54,4 +55,14 @@
 .tag.disabled,
 .tag.disabled:hover {
   color: var(--gray);
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  border: 1px solid transparent !important;
 }

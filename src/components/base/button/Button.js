@@ -42,9 +42,15 @@ function Button({
  */
 function ButtonSkeleton(props) {
   return (
-    <Skeleton>
-      <Button {...props} onClick={null} disabled={true} />
-    </Skeleton>
+    <Button
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      onClick={null}
+      disabled={true}
+    >
+      <Skeleton />
+      {props.children}
+    </Button>
   );
 }
 

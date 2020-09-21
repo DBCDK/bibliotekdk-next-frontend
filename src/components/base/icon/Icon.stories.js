@@ -16,6 +16,9 @@ export function BasicIcon() {
 
   return (
     <div>
+      <div className="story-heading">
+        Icons sized according to width [auto height]
+      </div>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
@@ -38,6 +41,9 @@ export function RoundIcon() {
 
   return (
     <div>
+      <div className="story-heading">
+        Icons sized according to width and height
+      </div>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
@@ -55,16 +61,33 @@ export function RoundIcon() {
  *
  */
 export function Loading() {
-  const src = "checkmark.svg";
+  const src1 = "ornament1.svg";
+  const src2 = "checkmark.svg";
   const bgColor = "var(--blue)";
   const skeleton = true;
 
   return (
     <div>
+      <div className="story-heading">Loading basic icons</div>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
-            <Icon src={src} size={size} bgColor={bgColor} skeleton={skeleton} />
+            <Icon src={src1} size={size} skeleton={skeleton} />
+            <div className="space-5" />
+          </React.Fragment>
+        );
+      })}
+
+      <div className="story-heading">Loading round icons</div>
+      {sizes.map((size) => {
+        return (
+          <React.Fragment key={size}>
+            <Icon
+              src={src2}
+              size={size}
+              bgColor={bgColor}
+              skeleton={skeleton}
+            />
             <div className="space-5" />
           </React.Fragment>
         );

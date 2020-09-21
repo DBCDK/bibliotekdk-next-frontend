@@ -54,10 +54,11 @@ function query({ workId }) {
  * @param {string} props.abstract Material abstract
  */
 export function Presentation({
-  title,
-  creators,
-  path,
-  materialTypes,
+  title = "Doppler",
+  creators = ["Erlend Loe"],
+  path = [],
+  materialTypes = [],
+  className = "",
   skeleton = false,
 }) {
   // Save copy of all materialTypes (Temporary)
@@ -71,10 +72,12 @@ export function Presentation({
   );
 
   // Set selected material - default as the first material in the materialTypes array
-  const [selectedMaterial, setSelectedMaterial] = useState(materialTypes[0]);
+  const [selectedMaterial, setSelectedMaterial] = useState(
+    materialTypes[0] || false
+  );
 
   return (
-    <div className={`${styles.background}`}>
+    <div className={`${styles.background} ${className}`}>
       <Grid container className={`container gutter ${styles.presentation}`}>
         <Grid item xs={12} md={3} className={styles.breadcrumbs}>
           <Breadcrumbs path={path} skeleton={skeleton} />
@@ -82,7 +85,10 @@ export function Presentation({
         <Grid container item xs={12} md direction="row-reverse">
           <Grid item xs={12} sm={4} className={styles.cover}>
             <Cover
-              src={selectedMaterial.cover.detail || allMaterialTypes}
+              src={
+                (selectedMaterial && selectedMaterial.cover.detail) ||
+                allMaterialTypes
+              }
               skeleton={skeleton}
             >
               <Bookmark skeleton={skeleton} />
@@ -126,10 +132,10 @@ export function Presentation({
                 <Button skeleton={skeleton}>Læg i lånekurv</Button>
               </Grid>
               <Grid className={styles.info} item xs={12}>
-                <Text type="text3" skeleton={skeleton}>
+                <Text type="text3" skeleton={skeleton} lines={2}>
                   Fysiske materialer leveres til dit lokale bibliotek
                 </Text>
-                <Text type="text3" skeleton={skeleton}>
+                <Text type="text3" skeleton={skeleton} lines={0}>
                   Digitale materialer bliver du sendt videre til
                 </Text>
               </Grid>
@@ -150,7 +156,7 @@ export function Presentation({
 export function PresentationSkeleton(props) {
   return (
     <div>
-      <Presentation {...props} skeleton={true} />
+      <Presentation {...props} className={styles.skeleton} skeleton={true} />
     </div>
   );
 }
@@ -173,11 +179,11 @@ export function PresentationError() {
  * @param {Object} props Component props
  * @param {string} props.workId Material work id
  */
-function Container({ workId }) {
+function Container({ workId, skeleton }) {
   // use the useData hook to fetch data
   // const { data, isLoading, isSlow, error } = useData(query({ workId }));
 
-  const isLoading = false;
+  const isLoading = skeleton;
   const isSlow = false;
   const error = false;
   const data = {

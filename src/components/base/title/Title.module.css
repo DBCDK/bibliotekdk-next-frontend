@@ -24,3 +24,12 @@
   line-height: 32px;
   font-family: var(--title-font-medium);
 }
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+}

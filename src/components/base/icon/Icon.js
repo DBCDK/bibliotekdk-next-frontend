@@ -60,9 +60,15 @@ function Icon({
  */
 function IconSkeleton(props) {
   return (
-    <Skeleton>
-      <Icon {...props} onClick={null} disabled={true} />
-    </Skeleton>
+    <Icon
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      onClick={null}
+      disabled={true}
+    >
+      <Skeleton />
+      <Icon {...props} bgColor={null} />
+    </Icon>
   );
 }
 
