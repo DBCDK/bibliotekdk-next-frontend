@@ -1,3 +1,5 @@
+import { StoryTitle, StoryDescription, StorySpace } from "../storybook";
+
 import Color from "./Color";
 
 export default {
@@ -17,16 +19,16 @@ export const Primary = () => {
 
   return (
     <div>
-      <div className="story-heading">Primary Colors</div>
-      <div className="story-description">
+      <StoryTitle>Primary Colors</StoryTitle>
+      <StoryDescription>
         Copy #hex by clicking on the hexcode. Copy variable by clicking on the
         color name
-      </div>
+      </StoryDescription>
 
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
-          <div className="space-5" />
+          <StorySpace space="5" />
         </React.Fragment>
       ))}
     </div>
@@ -52,15 +54,15 @@ export const Secondary = () => {
 
   return (
     <div>
-      <div className="story-heading">Secondary Colors</div>
-      <div className="story-description">
+      <StoryTitle>Secondary Colors</StoryTitle>
+      <StoryDescription>
         Copy #hex by clicking on the hexcode. Copy variable by clicking on the
         color name
-      </div>
+      </StoryDescription>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
-          <div className="space-5" />
+          <StorySpace space="5" />
         </React.Fragment>
       ))}
     </div>
@@ -80,15 +82,15 @@ export const Greys = () => {
 
   return (
     <div>
-      <div className="story-heading">Greys Colors</div>
-      <div className="story-description">
+      <StoryTitle>Greys Colors</StoryTitle>
+      <StoryDescription>
         Copy #hex by clicking on the hexcode. Copy variable by clicking on the
         color name
-      </div>
+      </StoryDescription>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
-          <div className="space-5" />
+          <StorySpace space="5" />
         </React.Fragment>
       ))}
     </div>
@@ -113,15 +115,15 @@ export const Alerts = () => {
 
   return (
     <div>
-      <div className="story-heading">Alert Colors</div>
-      <div className="story-description">
+      <StoryTitle>Alert Colors</StoryTitle>
+      <StoryDescription>
         Copy #hex by clicking on the hexcode. Copy variable by clicking on the
         color name
-      </div>
+      </StoryDescription>
       {colors.map((color) => (
         <React.Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
-          <div className="space-5" />
+          <StorySpace space="5" />
         </React.Fragment>
       ))}
     </div>

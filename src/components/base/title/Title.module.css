@@ -32,4 +32,11 @@
 
 .skeleton {
   position: relative;
+  pointer-events: none;
+  cursor: default;
+  user-select: none;
+}
+
+.skeleton > * {
+  color: transparent;
 }

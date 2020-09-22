@@ -17,6 +17,7 @@ function Text({
   className = "",
   type = "text1",
   tag = "p",
+  onClick = null,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -24,7 +25,10 @@ function Text({
   const Tag = tag;
 
   return (
-    <Tag className={`${styles.text} ${styles[type]} ${className}`}>
+    <Tag
+      className={`${styles.text} ${styles[type]} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </Tag>
   );

@@ -1,3 +1,5 @@
+import { StoryTitle, StoryDescription, StorySpace } from "../storybook";
+
 import Button from "./Button";
 import Skeleton from "../skeleton";
 import { useEffect, useState } from "react";
@@ -18,27 +20,27 @@ export function Primary() {
 
   return (
     <div>
-      <div className="story-heading">Primary buttons </div>
-      <div className="story-description">
+      <StoryTitle>Primary buttons</StoryTitle>
+      <StoryDescription>
         Primary buttons takes up 100% of width [block]
-      </div>
+      </StoryDescription>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Primary buttons </div>
+      <StoryTitle>[Disabled] Primary buttons </StoryTitle>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>
@@ -54,27 +56,27 @@ export function Secondary() {
 
   return (
     <div>
-      <div className="story-heading">Secondary buttons </div>
-      <div className="story-description">
+      <StoryTitle>Secondary buttons </StoryTitle>
+      <StoryDescription>
         Secondary buttons adapts to content [inline]
-      </div>
+      </StoryDescription>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Secondary buttons </div>
+      <StoryTitle>[Disabled] Secondary buttons </StoryTitle>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>
@@ -96,20 +98,25 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">[Loading] Secondary skeleton buttons </div>
+      <StoryTitle>Loading Secondary buttons </StoryTitle>
+      <StoryDescription>
+        Normal skeleton loading version of the secondary button
+      </StoryDescription>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} skeleton={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">
-        [Bad Loading] Secondary skeleton buttons
-      </div>
+      <StoryTitle>[isSlow] Loading Secondary buttons</StoryTitle>
+      <StoryDescription>
+        This Loading version is used when expected loadtime has been exceeded.
+        The failed (red) loading animation is shown by passing an isSlow prop.
+      </StoryDescription>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
@@ -118,7 +125,7 @@ export function Loading() {
             {size}
           </Button>
 
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>

@@ -21,7 +21,7 @@ import Breadcrumbs from "../../base/breadcrumbs";
 
 import { useData } from "../../../lib/api";
 
-import styles from "./Presentation.module.css";
+import styles from "./Overview.module.css";
 
 /**
  * This function will create a query object
@@ -75,7 +75,7 @@ const defaultTypes = [
  * @param {string} props.title Material title
  * @param {string} props.abstract Material abstract
  */
-export function Presentation({
+export function Overview({
   title = "Doppler",
   creators = ["Erlend Loe"],
   path = [],
@@ -100,7 +100,7 @@ export function Presentation({
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Grid container className={`container gutter ${styles.presentation}`}>
+      <Grid container className={`container gutter ${styles.overview}`}>
         <Grid item xs={12} md={3} className={styles.breadcrumbs}>
           <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
         </Grid>
@@ -174,10 +174,10 @@ export function Presentation({
  * @param {Object} props Component props
  * @param {boolean} props.isSlow Is it unexpectingly slow to load?
  */
-export function PresentationSkeleton(props) {
+export function OverviewSkeleton(props) {
   return (
     <div>
-      <Presentation {...props} className={styles.skeleton} skeleton={true} />
+      <Overview {...props} className={styles.skeleton} skeleton={true} />
     </div>
   );
 }
@@ -185,7 +185,7 @@ export function PresentationSkeleton(props) {
 /**
  * Example error component
  */
-export function PresentationError() {
+export function OverviewError() {
   return (
     <div>
       <h1>Der skete en fejl</h1>
@@ -270,13 +270,13 @@ function Container({ workId, skeleton }) {
   };
 
   if (isLoading) {
-    return <PresentationSkeleton isSlow={isSlow} />;
+    return <OverviewSkeleton isSlow={isSlow} />;
   }
   if (error) {
-    return <PresentationError />;
+    return <OverviewError />;
   }
 
-  return <Presentation {...data.work} />;
+  return <Overview {...data.work} />;
 }
 
 // Attach query to container to expose the query to some page

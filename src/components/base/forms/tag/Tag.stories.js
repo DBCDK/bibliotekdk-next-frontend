@@ -1,5 +1,7 @@
-import Tag from "./Tag";
 import { useState } from "react";
+import { StoryTitle, StorySpace } from "../../storybook";
+
+import Tag from "./Tag";
 
 export default {
   title: "Forms: Tag",
@@ -18,13 +20,13 @@ export function TagButton() {
 
   return (
     <div>
-      <div className="story-heading">Single Tag [checkbox style]</div>
+      <StoryTitle>Single Tag ("Checkbox" style)</StoryTitle>
 
       <Tag selected={isSelected} onClick={() => setIsSelected(!isSelected)}>
         Book
       </Tag>
 
-      <div className="story-heading">Multiple tags [Radio style]</div>
+      <StoryTitle>Multiple tags ("Radio" style)</StoryTitle>
 
       {types.map((type) => {
         const isSelected = selectedType === type;
@@ -34,7 +36,7 @@ export function TagButton() {
             <Tag selected={isSelected} onClick={() => setSelectedType(type)}>
               {type}
             </Tag>
-            <div className="space-2" />
+            <StorySpace space="2" />
           </React.Fragment>
         );
       })}
@@ -45,20 +47,20 @@ export function TagButton() {
 export function Loading() {
   return (
     <div>
-      <div className="story-heading">Single Tag [checkbox style]</div>
+      <StoryTitle>Single Tag [checkbox style]</StoryTitle>
 
       <Tag selected={false} skeleton={true}>
         Book
       </Tag>
 
-      <div className="story-heading">Multiple tags [Radio style]</div>
+      <StoryTitle>Multiple tags [Radio style]</StoryTitle>
       {types.map((type, i) => {
         return (
           <React.Fragment key={type}>
             <Tag selected={false} skeleton={true}>
               {type}
             </Tag>
-            <div className="space-2" />
+            <StorySpace space="2" />
           </React.Fragment>
         );
       })}

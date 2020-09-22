@@ -1,17 +1,17 @@
-import Presentation from "./Presentation";
+import Overview from "./Overview";
 
 export default {
-  title: "Module: Presentation",
+  title: "Module: Overview",
 };
 
 /**
  * Returns all Text types
  *
  */
-export function WorkPresentation() {
+export function WorkOverview() {
   return (
     <div>
-      <Presentation />
+      <Overview />
     </div>
   );
 }
@@ -23,7 +23,7 @@ export function WorkPresentation() {
 export function Loading() {
   return (
     <div>
-      <Presentation skeleton={true} />
+      <Overview skeleton={true} />
     </div>
   );
 }

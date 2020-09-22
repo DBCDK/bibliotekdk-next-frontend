@@ -1,3 +1,5 @@
+import { StoryTitle, StorySpace } from "../storybook";
+
 import Icon from "./Icon";
 
 export default {
@@ -16,14 +18,12 @@ export function BasicIcon() {
 
   return (
     <div>
-      <div className="story-heading">
-        Icons sized according to width [auto height]
-      </div>
+      <StoryTitle>Icons sized according to width [auto height]</StoryTitle>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
             <Icon src={src} size={size} />
-            <div className="space-5" />
+            <StorySpace space="5" />
           </React.Fragment>
         );
       })}
@@ -41,14 +41,12 @@ export function RoundIcon() {
 
   return (
     <div>
-      <div className="story-heading">
-        Icons sized according to width and height
-      </div>
+      <StoryTitle>Icons sized according to width and height</StoryTitle>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
             <Icon src={src} size={size} bgColor={bgColor} />
-            <div className="space-5" />
+            <StorySpace space="5" />
           </React.Fragment>
         );
       })}
@@ -68,17 +66,17 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">Loading basic icons</div>
+      <StoryTitle>Loading basic icons</StoryTitle>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
             <Icon src={src1} size={size} skeleton={skeleton} />
-            <div className="space-5" />
+            <StorySpace space="5" />
           </React.Fragment>
         );
       })}
 
-      <div className="story-heading">Loading round icons</div>
+      <StoryTitle>Loading round icons</StoryTitle>
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
@@ -88,7 +86,7 @@ export function Loading() {
               bgColor={bgColor}
               skeleton={skeleton}
             />
-            <div className="space-5" />
+            <StorySpace space="5" />
           </React.Fragment>
         );
       })}

@@ -27,6 +27,8 @@
 
 .skeleton {
   position: relative;
+  pointer-events: none;
+  cursor: default;
 }
 
 .skeleton > * {

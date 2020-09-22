@@ -16,7 +16,7 @@
 import { useRouter } from "next/router";
 import { fetchOnServer } from "../../../lib/api";
 
-import Presentation from "../../../components/work/presentation/";
+import Overview from "../../../components/work/overview/";
 
 import Example from "../../../components/work/Example";
 import Example2 from "../../../components/work/Example2";
@@ -30,7 +30,7 @@ export default function WorkPage() {
 
   return (
     <div>
-      <Presentation workId={workId} />
+      <Overview workId={workId} />
     </div>
   );
 }

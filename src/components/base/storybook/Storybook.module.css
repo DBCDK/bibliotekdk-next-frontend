@@ -1,61 +1,63 @@
-/**
-* Stylesheet for global 'Storybook-only' styles
-*
-*/
-
-.story-heading {
+.title {
   padding: var(--pt4) 0 var(--pt2) 0;
-  font-size: 20px;
 }
 
-.story-description {
+.copy {
+  margin-top: var(--pt2);
+}
+
+.description {
   padding: 0 0 var(--pt4) 0;
-  font-size: 14px;
+}
+
+.demo {
+  background-color: var(--blue);
+  min-height: 8px;
 }
 
 /* Spacing (horizontal spacing) */
 
-.space-1,
-.space-2,
-.space-3,
-.space-4,
-.space-5,
-.space-6,
-.space-7,
-.space-8 {
+.h-space-1,
+.h-space-2,
+.h-space-3,
+.h-space-4,
+.h-space-5,
+.h-space-6,
+.h-space-7,
+.h-space-8 {
   display: inline-block;
 }
 
-.space-1 {
+.h-space-1 {
   width: var(--pt1);
 }
 
-.space-2 {
+.h-space-2 {
   width: var(--pt2);
 }
 
-.space-3 {
+.h-space-3 {
   width: var(--pt3);
 }
 
-.space-4 {
+.h-space-4 {
   width: var(--pt4);
 }
 
-.space-5 {
+.h-space-5 {
   width: var(--pt5);
 }
 
-.space-6 {
+.h-space-6 {
   width: var(--pt6);
 }
 
-.space-7 {
+.h-space-7 {
   width: var(--pt7);
 }
 
-.space-8 {
-  width: var(--pt7);
+.h-space-8 {
+  width: var(--pt8);
 }
 
 /* Vertical spacing */
@@ -96,6 +98,6 @@
 }
 
 .v-space-8 {
-  height: var(--pt7);
-  line-height: var(--pt7);
+  height: var(--pt8);
+  line-height: var(--pt8);
 }

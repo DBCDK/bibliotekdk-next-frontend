@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { StoryTitle, StoryDescription } from "../storybook";
+
 import Cover from "./Cover";
 import Bookmark from "../bookmark";
 
@@ -16,7 +18,7 @@ export function SimpleCover() {
 
   return (
     <div>
-      <div className="story-heading">Cover</div>
+      <StoryTitle>Cover</StoryTitle>
       <Cover src={doppler} />
     </div>
   );
@@ -32,8 +34,8 @@ export function BackgroundCover() {
 
   return (
     <div>
-      <div className="story-heading">Cover with background [Border effect]</div>
-      <div className="story-description">Usefull for carousel/slider use</div>
+      <StoryTitle>Cover with background [Border effect]</StoryTitle>
+      <StoryDescription>Usefull for carousel/slider use</StoryDescription>
       <Cover bgColor="var(--concrete)" src={doppler} />
     </div>
   );
@@ -50,10 +52,10 @@ export function BookmarkInCover() {
 
   return (
     <div>
-      <div className="story-heading">Bookmark button inside Cover</div>
-      <div className="story-description">
+      <StoryTitle>Bookmark button inside Cover</StoryTitle>
+      <StoryDescription>
         Icons and Bookmarks can easily be added to the Cover
-      </div>
+      </StoryDescription>
       <Cover bgColor="var(--concrete)" src={doppler}>
         <Bookmark
           selected={isBookmarked}
@@ -73,7 +75,7 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">Loading Cover</div>
+      <StoryTitle>Loading Cover</StoryTitle>
       <Cover size={size} skeleton={true} />
     </div>
   );

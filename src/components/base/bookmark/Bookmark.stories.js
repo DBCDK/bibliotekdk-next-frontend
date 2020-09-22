@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { StoryTitle, StoryDescription } from "../storybook";
 
 import Bookmark from "./Bookmark";
 import Cover from "../cover";
@@ -16,7 +17,11 @@ export function Button() {
 
   return (
     <div>
-      <div className="story-heading">Bookmark Button</div>
+      <StoryTitle>Bookmark Button</StoryTitle>
+      <StoryDescription>
+        The bookmark button is simply an icon component with an extra layer of
+        functionality
+      </StoryDescription>
       <Bookmark
         selected={isBookmarked}
         onClick={() => setIsBookmarked(!isBookmarked)}
@@ -34,7 +39,10 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">Loading Bookmark Button</div>
+      <StoryTitle>Loading Bookmark Button</StoryTitle>
+      <StoryDescription>
+        Loading state of the the bookmark button
+      </StoryDescription>
       <Bookmark skeleton={true} />
     </div>
   );
@@ -51,7 +59,11 @@ export function ButtonInCover() {
 
   return (
     <div>
-      <div className="story-heading">Bookmark button inside Cover</div>
+      <StoryTitle>Bookmark button inside Cover</StoryTitle>
+      <StoryDescription>
+        The bookmark button can easily be passed as a child to the Cover
+        component.
+      </StoryDescription>
       <Cover src={doppler}>
         <Bookmark
           selected={isBookmarked}
