@@ -7,15 +7,19 @@
 }
 
 .breadcrumbs {
-  padding: 0 var(--pt2) var(--pt5) 0;
+  padding: 0 var(--pt3) var(--pt5) 0;
 }
 
 .cover {
   padding: 0 0 var(--pt2) 0;
 }
 
+.about {
+  padding: 0 var(--pt3) 0 0;
+}
+
 .ornament {
-  margin: var(--pt3) 0;
+  padding: var(--pt3) 0;
 }
 
 .creators {

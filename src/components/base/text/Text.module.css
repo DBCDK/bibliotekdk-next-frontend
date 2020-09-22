@@ -1,5 +1,6 @@
 .text {
   font-family: var(--body-font);
+  display: block;
 }
 
 .text1 {
@@ -26,4 +27,8 @@
 
 .skeleton {
   position: relative;
+}
+
+.skeleton > * {
+  color: transparent;
 }

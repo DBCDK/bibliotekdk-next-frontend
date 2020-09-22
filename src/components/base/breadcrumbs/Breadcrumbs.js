@@ -23,7 +23,7 @@ function Separator() {
  * @returns {component}
  */
 function Breadcrumb({
-  children = "Breadcrumb",
+  children = "Crumb",
   href = "/",
   separator = true,
   className = "",
@@ -33,16 +33,12 @@ function Breadcrumb({
 
   return (
     <Link href={href}>
-      <span>
-        <Text
-          tag="span"
-          className={`${styles.breadcrumb} ${className} ${disabledStyle}`}
-          type="text3"
-        >
+      <div className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
+        <Text tag="span" type="text3">
           {children}
         </Text>
         {separator && <Separator />}
-      </span>
+      </div>
     </Link>
   );
 }
@@ -60,11 +56,16 @@ function BreadcrumbSkeleton(props) {
 
   return (
     <React.Fragment>
-      <Skeleton>
-        <Breadcrumb {...props} separator={false} onClick={null} disabled={true}>
-          Crumb
-        </Breadcrumb>
-      </Skeleton>
+      <Breadcrumb
+        {...props}
+        className={`${props.className || ""} ${styles.skeleton}`}
+        separator={false}
+        onClick={null}
+        disabled={true}
+      >
+        <Skeleton />
+        {"Crumb"}
+      </Breadcrumb>
       {props.separator && <Separator />}
     </React.Fragment>
   );
@@ -85,25 +86,29 @@ export default function Container(props) {
     path = Array.from(Array(Number(crumbs)).keys());
   }
 
-  return path.map((c, i) => {
-    const separator = path.length > i + 1;
+  return (
+    <div className={styles.breadcrumbs}>
+      {path.map((c, i) => {
+        const separator = path.length > i + 1;
 
-    if (skeleton) {
-      return (
-        <BreadcrumbSkeleton
-          key={`crumb-${i}`}
-          {...props}
-          separator={separator}
-        />
-      );
-    }
+        if (skeleton) {
+          return (
+            <BreadcrumbSkeleton
+              key={`crumb-${i}`}
+              {...props}
+              separator={separator}
+            />
+          );
+        }
 
-    return (
-      <Breadcrumb {...props} key={c} separator={separator}>
-        {c}
-      </Breadcrumb>
-    );
-  });
+        return (
+          <Breadcrumb {...props} key={c} separator={separator}>
+            {c}
+          </Breadcrumb>
+        );
+      })}
+    </div>
+  );
 }
 
 // PropTypes for component
@@ -111,7 +116,7 @@ Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   disabled: PropTypes.bool,
-  crumbs: PropTypes.number,
   skeleton: PropTypes.bool,
+  crumbs: PropTypes.number, // For skeleton use only
   href: PropTypes.string,
 };

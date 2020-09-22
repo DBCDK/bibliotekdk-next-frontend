@@ -19,7 +19,8 @@ function Text({
   tag = "p",
 }) {
   // Set type of tag.
-  // Because, this is a text component, p(aragraph) should always be used if possible!
+  // Because this is a text component, p(aragraph) should always be used if possible!
+  // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
 
   return (
@@ -38,13 +39,21 @@ function Text({
  * @returns {component}
  */
 function TextSkeleton(props) {
+  if (props.lines === 0) {
+    return null;
+  }
+
   const lines = props.lines || 3;
 
   return (
-    <Text {...props} className={`${props.className} ${styles.skeleton}`}>
+    <Text
+      {...props}
+      tag="span"
+      className={`${props.className} ${styles.skeleton}`}
+    >
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <Text {...props} />
+        <Text key={`txt-${l}`} {...props} />
       ))}
     </Text>
   );
@@ -75,6 +84,6 @@ Container.propTypes = {
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3"]),
-  tag: PropTypes.oneOf(["p", "span"]),
+  tag: PropTypes.oneOf(["p", "span", "div"]),
   skeleton: PropTypes.bool,
 };

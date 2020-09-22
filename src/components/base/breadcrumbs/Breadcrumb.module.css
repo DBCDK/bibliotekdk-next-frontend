@@ -1,5 +1,11 @@
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .breadcrumb {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   cursor: pointer;
   text-transform: capitalize;
 }
@@ -16,4 +22,14 @@
 .disabled {
   pointer-events: none;
   cursor: default;
+}
+
+/**
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  margin-bottom: var(--pt05);
 }

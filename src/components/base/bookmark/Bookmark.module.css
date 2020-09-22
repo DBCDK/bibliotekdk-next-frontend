@@ -37,6 +37,7 @@
 
 .skeleton {
   position: relative;
+  box-shadow: none;
 }
 
 .skeleton svg path {

@@ -46,6 +46,28 @@ function query({ workId }) {
   };
 }
 
+// Default materialTypes (For skeleton use)
+const defaultTypes = [
+  {
+    materialType: "Bog",
+    cover: {
+      detail: null,
+    },
+  },
+  {
+    materialType: "Ebog",
+    cover: {
+      detail: null,
+    },
+  },
+  {
+    materialType: "Lydbog (net)",
+    cover: {
+      detail: null,
+    },
+  },
+];
+
 /**
  * Example component, showing basic info
  *
@@ -57,7 +79,7 @@ export function Presentation({
   title = "Doppler",
   creators = ["Erlend Loe"],
   path = [],
-  materialTypes = [],
+  materialTypes = defaultTypes,
   className = "",
   skeleton = false,
 }) {
@@ -80,33 +102,32 @@ export function Presentation({
     <div className={`${styles.background} ${className}`}>
       <Grid container className={`container gutter ${styles.presentation}`}>
         <Grid item xs={12} md={3} className={styles.breadcrumbs}>
-          <Breadcrumbs path={path} skeleton={skeleton} />
+          <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
         </Grid>
         <Grid container item xs={12} md direction="row-reverse">
           <Grid item xs={12} sm={4} className={styles.cover}>
             <Cover
-              src={
-                (selectedMaterial && selectedMaterial.cover.detail) ||
-                allMaterialTypes
-              }
+              src={selectedMaterial.cover.detail || allMaterialTypes}
               skeleton={skeleton}
             >
               <Bookmark skeleton={skeleton} />
             </Cover>
           </Grid>
-          <Grid item xs={12} sm>
+          <Grid item xs={12} sm className={styles.about}>
             <Title type="title3" skeleton={skeleton}>
               {title}
             </Title>
 
-            <Icon
-              size={6}
-              src={"ornament1.svg"}
-              className={styles.ornament}
-              skeleton={skeleton}
-            />
+            <Grid className={styles.ornament}>
+              <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
+            </Grid>
 
-            <Text type="text3" className={styles.creators} skeleton={skeleton}>
+            <Text
+              type="text3"
+              className={styles.creators}
+              skeleton={skeleton}
+              lines={1}
+            >
               {creators.map((c, i) => (creators.length > i + 1 ? c + ", " : c))}
             </Text>
 
