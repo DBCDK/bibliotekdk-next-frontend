@@ -97,7 +97,7 @@ export default function Container(props) {
 // PropTypes for the Component
 Container.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]).isRequired,
+  src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bgColor: PropTypes.string,
   size: PropTypes.array,

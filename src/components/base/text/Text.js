@@ -85,6 +85,8 @@ Container.propTypes = {
     PropTypes.string,
     PropTypes.array,
     PropTypes.object,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3"]),

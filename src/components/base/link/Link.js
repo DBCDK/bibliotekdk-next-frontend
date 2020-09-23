@@ -1,8 +1,6 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
 
-import styles from "./Link.module.css";
-
 /**
  * The Component function
  *

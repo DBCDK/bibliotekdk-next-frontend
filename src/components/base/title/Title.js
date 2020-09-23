@@ -62,7 +62,12 @@ export default function Container(props) {
 
 // PropTypes for the component
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]),
   type: PropTypes.oneOf(["title1", "title2", "title3", "title4"]),
