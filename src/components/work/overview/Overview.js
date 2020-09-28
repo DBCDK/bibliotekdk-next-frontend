@@ -8,8 +8,7 @@
  */
 
 import { useState } from "react";
-// import Grid from "@material-ui/core/Grid";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container as Wrap, Row, Col } from "react-bootstrap";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -101,7 +100,7 @@ export function Overview({
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Container fluid className={`container`}>
+      <Wrap fluid className={`container`}>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
@@ -172,7 +171,7 @@ export function Overview({
             </Row>
           </Col>
         </Row>
-      </Container>
+      </Wrap>
     </div>
   );
 }
@@ -209,7 +208,7 @@ export function OverviewError() {
  * @param {Object} props Component props
  * @param {string} props.workId Material work id
  */
-function Containerr({ workId, skeleton }) {
+function Container({ workId, skeleton }) {
   // use the useData hook to fetch data
   // const { data, isLoading, isSlow, error } = useData(query({ workId }));
 
@@ -289,7 +288,7 @@ function Containerr({ workId, skeleton }) {
 }
 
 // Attach query to container to expose the query to some page
-Containerr.query = query;
+Container.query = query;
 
 // Export container as the default
-export default Containerr;
+export default Container;
