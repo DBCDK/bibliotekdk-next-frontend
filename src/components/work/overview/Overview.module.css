@@ -3,19 +3,28 @@
 }
 
 .overview {
-  padding: var(--pt8) 0;
+  padding: var(--pt8) 0 var(--pt14) 0;
+}
+
+.overview p {
+  margin: 0;
 }
 
 .breadcrumbs {
-  padding: 0 var(--pt3) var(--pt5) 0;
+  padding-bottom: var(--pt4);
 }
 
 .cover {
-  padding: 0 0 var(--pt2) 0;
+  padding-bottom: var(--pt2);
 }
 
 .about {
-  padding: 0 var(--pt3) 0 0;
+  /* padding: 0 var(--pt3) 0 0; */
+}
+
+.about h1 {
+  /* Bootstrap override */
+  margin: 0;
 }
 
 .ornament {
@@ -30,6 +39,10 @@
   padding: var(--pt5) 0 0 0;
 }
 
+.materials {
+  padding-top: var(--pt5);
+}
+
 .materials button {
   margin: 0 var(--pt2) var(--pt2) 0;
 }
@@ -39,11 +52,16 @@
 }
 
 .basket {
-  padding: var(--pt3) 0 0 0;
+  padding-top: var(--pt3);
 }
 
 .info {
-  padding: var(--pt2) 0 0 0;
+  padding-top: var(--pt2);
+}
+
+.info p {
+  /* Bootstrap override */
+  margin: 0;
 }
 
 /* 

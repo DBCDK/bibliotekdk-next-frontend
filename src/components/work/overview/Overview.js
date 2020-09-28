@@ -8,7 +8,8 @@
  */
 
 import { useState } from "react";
-import Grid from "@material-ui/core/Grid";
+// import Grid from "@material-ui/core/Grid";
+import { Container, Row, Col } from "react-bootstrap";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -100,39 +101,47 @@ export function Overview({
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Grid container className={`container gutter ${styles.overview}`}>
-        <Grid item xs={12} md={3} className={styles.breadcrumbs}>
-          <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
-        </Grid>
-        <Grid container item xs={12} md direction="row-reverse">
-          <Grid item xs={12} sm={4} className={styles.cover}>
+      <Container fluid className={`container`}>
+        <Row className={`${styles.overview}`}>
+          <Col xs={12} lg={3} className={styles.breadcrumbs}>
+            <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
+          </Col>
+
+          <Col xs={12} md={{ span: 4, order: 3 }} className={styles.cover}>
             <Cover
               src={selectedMaterial.cover.detail || allMaterialTypes}
               skeleton={skeleton}
             >
               <Bookmark skeleton={skeleton} />
             </Cover>
-          </Grid>
-          <Grid item xs={12} sm className={styles.about}>
-            <Title type="title3" skeleton={skeleton}>
-              {title}
-            </Title>
+          </Col>
 
-            <Grid className={styles.ornament}>
-              <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
-            </Grid>
+          <Col xs={12} md={{ order: 2 }} className={styles.about}>
+            <Row>
+              <Col xs={12}>
+                <Title type="title3" skeleton={skeleton}>
+                  {title}
+                </Title>
+              </Col>
+              <Col xs={12}>
+                <div className={styles.ornament}>
+                  <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
+                </div>
+              </Col>
+              <Col xs={12}>
+                <Text
+                  type="text3"
+                  className={styles.creators}
+                  skeleton={skeleton}
+                  lines={1}
+                >
+                  {creators.map((c, i) =>
+                    creators.length > i + 1 ? c + ", " : c
+                  )}
+                </Text>
+              </Col>
 
-            <Text
-              type="text3"
-              className={styles.creators}
-              skeleton={skeleton}
-              lines={1}
-            >
-              {creators.map((c, i) => (creators.length > i + 1 ? c + ", " : c))}
-            </Text>
-
-            <Grid className={styles.actions}>
-              <Grid item xs={12} className={styles.materials}>
+              <Col xs={12} className={styles.materials}>
                 {materialTypes.map((material) => {
                   //  Sets isSelected flag if button should be selected
                   const isSelected = material.pid === selectedMaterial.pid;
@@ -148,22 +157,22 @@ export function Overview({
                     </Tag>
                   );
                 })}
-              </Grid>
-              <Grid className={styles.basket} item xs={12} sm={9} md={8} la={5}>
+              </Col>
+              <Col xs={12} sm={9} md={8} className={styles.basket}>
                 <Button skeleton={skeleton}>Læg i lånekurv</Button>
-              </Grid>
-              <Grid className={styles.info} item xs={12}>
+              </Col>
+              <Col xs={12} className={styles.info}>
                 <Text type="text3" skeleton={skeleton} lines={2}>
                   Fysiske materialer leveres til dit lokale bibliotek
                 </Text>
                 <Text type="text3" skeleton={skeleton} lines={0}>
                   Digitale materialer bliver du sendt videre til
                 </Text>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
@@ -200,7 +209,7 @@ export function OverviewError() {
  * @param {Object} props Component props
  * @param {string} props.workId Material work id
  */
-function Container({ workId, skeleton }) {
+function Containerr({ workId, skeleton }) {
   // use the useData hook to fetch data
   // const { data, isLoading, isSlow, error } = useData(query({ workId }));
 
@@ -280,7 +289,7 @@ function Container({ workId, skeleton }) {
 }
 
 // Attach query to container to expose the query to some page
-Container.query = query;
+Containerr.query = query;
 
 // Export container as the default
-export default Container;
+export default Containerr;
