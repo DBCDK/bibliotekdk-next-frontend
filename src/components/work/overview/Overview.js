@@ -162,7 +162,7 @@ export function Overview({
                   );
                 })}
               </Col>
-              <Col xs={12} sm={9} md={8} className={styles.basket}>
+              <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <Button skeleton={skeleton}>Læg i lånekurv</Button>
               </Col>
               <Col xs={12} className={styles.info}>
