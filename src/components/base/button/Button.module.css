@@ -1,65 +1,86 @@
-.Button {
+.button {
   background-color: transparent;
   font-family: var(--body-font-medium);
+  transition-duration: 0.35s;
+  display: inline-block;
 }
 
-.Button:hover {
+.button:hover {
   cursor: pointer;
 }
 
 /* 
-* Button Types 
+* button Types 
 *
 */
 
-/* Filled */
+/* Primary */
 
-.Button.filled {
+.button.primary {
   background-color: var(--blue);
   color: var(--white);
+  display: block;
+  width: 100%;
 }
 
-.Button.filled:hover {
+.button.primary:hover {
   background-color: var(--mine-shaft);
   color: var(--white);
 }
 
-.Button.filled.disabled {
+.button.primary.disabled {
   background-color: var(--concrete);
 }
 
-/* Outlined */
+/* Secondary */
 
-.Button.outlined {
+.button.secondary {
   color: var(--blue);
   border: 1px solid var(--blue);
 }
 
-.Button.outlined:hover {
+.button.secondary:hover {
   border: 1px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
-.Button.outlined.disabled {
+.button.secondary.disabled {
   border: 1px solid var(--concrete);
 }
 
 /* 
-* Button Sizes 
+* button Sizes 
 *
 */
 
-.Button.large {
+/* primary */
+.button.primary.large {
+  font-size: 20px;
+  padding: var(--pt1) 0;
+}
+
+.button.primary.medium {
+  font-size: 17px;
+  padding: var(--pt1) 0;
+}
+
+.button.primary.small {
+  font-size: 13px;
+  padding: var(--pt1) 0;
+}
+
+/* secondary */
+.button.secondary.large {
   font-size: 20px;
   padding: var(--pt1) var(--pt10);
 }
 
-.Button.medium {
+.button.secondary.medium {
   font-size: 17px;
   padding: var(--pt1) var(--pt6);
 }
 
-.Button.small {
+.button.secondary.small {
   font-size: 13px;
   padding: var(--pt1) var(--pt4);
 }
@@ -69,12 +90,21 @@
 *
 */
 
-.Button.disabled {
+.button.disabled {
   pointer-events: none;
   cursor: default;
 }
 
-.Button.disabled,
-.Button.disabled:hover {
+.button.disabled,
+.button.disabled:hover {
   color: var(--gray);
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
 }

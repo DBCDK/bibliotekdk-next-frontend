@@ -1,3 +1,5 @@
+import { StoryTitle, StorySpace } from "../storybook";
+
 import Text from "./Text";
 
 export default {
@@ -14,18 +16,19 @@ const texts = ["text1", "text2", "text3"];
 export function Body() {
   return (
     <div>
-      <div className="story-heading">Body Text</div>
+      <StoryTitle>Body Text</StoryTitle>
 
       {texts.map((type) => (
         <React.Fragment key={type}>
-          <Text tag="h1" type={type}>
+          <StoryTitle>Body text [{type}]</StoryTitle>
+          <Text type={type}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
             mollis purus a iaculis finibus. Integer lacus dui, condimentum quis
             elit in, feugiat hendrerit urna. Etiam facilisis id ligula congue
             ultrices.
           </Text>
 
-          <div className="v-space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>
@@ -37,21 +40,19 @@ export function Body() {
  *
  */
 export function Loading() {
+  const type = "text2";
   return (
     <div>
-      <div className="story-heading">[Loading] Text</div>
+      <StoryTitle>Loading Text</StoryTitle>
 
-      <div className="story-heading">2 lines block</div>
+      <StoryTitle>2 lines [{type}]</StoryTitle>
+      <Text type={type} skeleton={true} lines={2} />
 
-      <Text type={"text1"} skeleton={true} lines={2} />
+      <StoryTitle>3 lines [{type}]</StoryTitle>
+      <Text type={type} skeleton={true} lines={3} />
 
-      <div className="story-heading">3 lines block</div>
-
-      <Text type={"text2"} skeleton={true} lines={3} />
-
-      <div className="story-heading">4 lines block</div>
-
-      <Text type={"text3"} skeleton={true} lines={4} />
+      <StoryTitle>4 lines [{type}]</StoryTitle>
+      <Text type={type} skeleton={true} lines={4} />
     </div>
   );
 }

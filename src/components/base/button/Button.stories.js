@@ -1,3 +1,5 @@
+import { StoryTitle, StoryDescription, StorySpace } from "../storybook";
+
 import Button from "./Button";
 import Skeleton from "../skeleton";
 import { useEffect, useState } from "react";
@@ -10,33 +12,35 @@ export default {
 const sizes = ["large", "medium", "small"];
 
 /**
- * Returns all filled buttons (Default button style)
+ * Returns all primary buttons (Default button style)
  *
  */
-export function Filled() {
-  const type = "filled";
+export function Primary() {
+  const type = "primary";
 
   return (
     <div>
-      <div className="story-heading">Filled buttons </div>
-
+      <StoryTitle>Primary buttons</StoryTitle>
+      <StoryDescription>
+        Primary buttons takes up 100% of width [block]
+      </StoryDescription>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Filled buttons </div>
+      <StoryTitle>[Disabled] Primary buttons </StoryTitle>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>
@@ -44,33 +48,35 @@ export function Filled() {
 }
 
 /**
- * Returns all outlined buttons
+ * Returns all Secondary buttons
  *
  */
-export function Outlined() {
-  const type = "outlined";
+export function Secondary() {
+  const type = "secondary";
 
   return (
     <div>
-      <div className="story-heading">Outlined buttons </div>
-
+      <StoryTitle>Secondary buttons </StoryTitle>
+      <StoryDescription>
+        Secondary buttons adapts to content [inline]
+      </StoryDescription>
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">[Disabled] Outlined buttons </div>
+      <StoryTitle>[Disabled] Secondary buttons </StoryTitle>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>
@@ -82,7 +88,7 @@ export function Outlined() {
  *
  */
 export function Loading() {
-  const type = "filled";
+  const type = "secondary";
 
   const [isSlow, setIsSlow] = useState(false);
 
@@ -92,29 +98,34 @@ export function Loading() {
 
   return (
     <div>
-      <div className="story-heading">[Loading] Outlined skeleton buttons </div>
+      <StoryTitle>Loading Secondary buttons </StoryTitle>
+      <StoryDescription>
+        Normal skeleton loading version of the secondary button
+      </StoryDescription>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} skeleton={true}>
             {size}
           </Button>
-          <div className="space-2" />
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
 
-      <div className="story-heading">
-        [Bad Loading] Outlined skeleton buttons
-      </div>
+      <StoryTitle>[isSlow] Loading Secondary buttons</StoryTitle>
+      <StoryDescription>
+        This Loading version is used when expected loadtime has been exceeded.
+        The failed (red) loading animation is shown by passing an isSlow prop.
+      </StoryDescription>
 
       {sizes.map((size) => (
         <React.Fragment key={`${type}-${size}`}>
-          <Skeleton isSlow={isSlow}>
-            <Button type={type} size={size}>
-              {size}
-            </Button>
-          </Skeleton>
-          <div className="space-2" />
+          <Button className="relative" disabled={true} type={type} size={size}>
+            <Skeleton isSlow={isSlow} />
+            {size}
+          </Button>
+
+          <StorySpace space="2" />
         </React.Fragment>
       ))}
     </div>

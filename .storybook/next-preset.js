@@ -45,6 +45,18 @@ module.exports = {
       ],
     });
 
+    // Adds svg loader to storybook webpack config
+    const fileLoaderRule = newConfig.module.rules.find(
+      (rule) => rule.test && rule.test.test(".svg")
+    );
+    fileLoaderRule.exclude = /\.svg$/;
+
+    newConfig.module.rules.push({
+      test: /\.svg$/,
+      enforce: "pre",
+      loader: require.resolve("@svgr/webpack"),
+    });
+
     return newConfig;
   },
 };

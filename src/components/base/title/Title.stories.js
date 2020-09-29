@@ -1,3 +1,5 @@
+import { StoryTitle } from "../storybook";
+
 import Title from "./Title";
 
 export default {
@@ -14,11 +16,11 @@ const titles = ["title1", "title2", "title3", "title4"];
 export function Titles() {
   return (
     <div>
-      <div className="story-heading">Titles</div>
+      <StoryTitle>Titles</StoryTitle>
 
       {titles.map((type) => (
         <React.Fragment key={type}>
-          <div className="story-heading">{`Title (${type})`}</div>
+          <StoryTitle>{`Title [${type}]`}</StoryTitle>
           <Title tag="h1" key={type} type={type}>
             Hello World
           </Title>
@@ -35,11 +37,11 @@ export function Titles() {
 export function Loading() {
   return (
     <div>
-      <div className="story-heading">[Loading] Titles</div>
+      <StoryTitle>Loading Titles</StoryTitle>
 
       {titles.map((type) => (
         <React.Fragment key={type}>
-          <div className="story-heading">{`[Loading] Title (${type})`}</div>
+          <StoryTitle>{`Loading Title [${type}]`}</StoryTitle>
 
           <Title tag="h1" type={type} skeleton={true}>
             Hello World

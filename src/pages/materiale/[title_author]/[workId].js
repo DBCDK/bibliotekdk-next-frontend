@@ -15,6 +15,9 @@
  */
 import { useRouter } from "next/router";
 import { fetchOnServer } from "../../../lib/api";
+
+import Overview from "../../../components/work/overview/";
+
 import Example from "../../../components/work/Example";
 import Example2 from "../../../components/work/Example2";
 
@@ -22,6 +25,20 @@ import Example2 from "../../../components/work/Example2";
  * Renders the WorkPage component
  */
 export default function WorkPage() {
+  const router = useRouter();
+  const { workId } = router.query;
+
+  return (
+    <div>
+      <Overview workId={workId} />
+    </div>
+  );
+}
+
+/**
+ * Renders example of WorkPage component
+ */
+export function ExampleWorkPage() {
   const router = useRouter();
   const { workId } = router.query;
 

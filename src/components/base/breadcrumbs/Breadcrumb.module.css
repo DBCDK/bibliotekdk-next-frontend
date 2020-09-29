@@ -1,0 +1,35 @@
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.separator {
+  padding: 0 var(--pt05);
+}
+
+/**
+* Disabled 
+*
+*/
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+/**
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  margin-bottom: var(--pt05);
+}

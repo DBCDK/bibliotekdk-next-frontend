@@ -16,9 +16,21 @@ function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text1",
+  tag = "p",
+  onClick = null,
 }) {
+  // Set type of tag.
+  // Because this is a text component, p(aragraph) should always be used if possible!
+  // Other tags can be used for none-semantic purposes. (eg. skeleton)
+  const Tag = tag;
+
   return (
-    <p className={`${styles.Text} ${styles[type]} ${className}`}>{children}</p>
+    <Tag
+      className={`${styles.text} ${styles[type]} ${className}`}
+      onClick={onClick}
+    >
+      {children}
+    </Tag>
   );
 }
 
@@ -31,12 +43,23 @@ function Text({
  * @returns {component}
  */
 function TextSkeleton(props) {
-  // const lines = props.display === "block" ? props.lines || 3 : 1;
+  if (props.lines === 0) {
+    return null;
+  }
+
+  const lines = props.lines || 3;
 
   return (
-    <Skeleton lines={props.lines || 3} display={"block"}>
-      <Text {...props}>...</Text>
-    </Skeleton>
+    <Text
+      {...props}
+      tag="span"
+      className={`${props.className} ${styles.skeleton}`}
+    >
+      <Skeleton lines={lines} />
+      {Array.from(Array(lines).keys()).map((l) => (
+        <Text key={`txt-${l}`} {...props} />
+      ))}
+    </Text>
   );
 }
 
@@ -48,7 +71,7 @@ function TextSkeleton(props) {
  *
  * @returns {component}
  */
-export default function TextDefault(props) {
+export default function Container(props) {
   if (props.skeleton) {
     return <TextSkeleton {...props} />;
   }
@@ -56,10 +79,17 @@ export default function TextDefault(props) {
   return <Text {...props} />;
 }
 
-// PropTypes for Text component
-TextDefault.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+// PropTypes for the component
+Container.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3"]),
+  tag: PropTypes.oneOf(["p", "span", "div"]),
   skeleton: PropTypes.bool,
 };

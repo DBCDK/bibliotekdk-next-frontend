@@ -1,0 +1,45 @@
+.bookmark {
+  cursor: pointer;
+  box-shadow: var(--shadow-effect);
+}
+
+.bookmark svg path {
+  stroke: var(--gray);
+}
+
+/* 
+* Hover
+*
+*/
+
+.bookmark:hover svg path {
+  stroke: blue;
+}
+
+/* 
+* Selected
+*
+*/
+
+.bookmark.selected {
+  /* Use of important to override dynamic inline style */
+  background-color: var(--blue) !important;
+}
+
+.bookmark.selected svg path {
+  stroke: var(--white);
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  box-shadow: none;
+}
+
+.skeleton svg path {
+  stroke: transparent !important;
+}

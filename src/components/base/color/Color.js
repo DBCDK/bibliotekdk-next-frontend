@@ -11,7 +11,12 @@ import invertColor from "../../../utils/invertColor.js";
  *
  */
 function copyToClipboard(text) {
-  navigator.clipboard.writeText(text);
+  const el = document.createElement("textarea");
+  el.value = text;
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand("copy");
+  document.body.removeChild(el);
 }
 
 /**
@@ -25,7 +30,7 @@ function copyToClipboard(text) {
  */
 export default function Color({ hex = "#3333ff", name = "blue" }) {
   return (
-    <div className={styles.Color}>
+    <div className={styles.color}>
       <button
         title="Copy hex"
         onClick={() => copyToClipboard(hex)}

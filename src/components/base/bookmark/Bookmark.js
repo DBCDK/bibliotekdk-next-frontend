@@ -1,8 +1,15 @@
 import PropTypes from "prop-types";
 
 import Skeleton from "../skeleton";
+import Icon from "../icon";
 
-import styles from "./Button.module.css";
+import BookmarkSvg from "../../../../public/icons/bookmark.svg";
+
+import styles from "./Bookmark.module.css";
+
+function handleOnBookmarkClick() {
+  alert("Bookmarked!");
+}
 
 /**
  * The Component function
@@ -12,23 +19,26 @@ import styles from "./Button.module.css";
  *
  * @returns {component}
  */
-function Button({
-  children = "im a button",
+function Bookmark({
   className = "",
-  type = "primary",
-  size = "large",
+  selected = false,
   onClick = null,
   disabled = false,
+  skeleton = false,
 }) {
-  const disabledStyle = disabled ? styles.disabled : "";
+  const selectedClass = selected ? styles.selected : "";
 
   return (
-    <button
-      className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
-      onClick={onClick}
+    <Icon
+      skeleton={skeleton}
+      disabled={disabled}
+      size={5}
+      bgColor="var(--white)"
+      onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
+      className={`${className || ""} ${styles.bookmark} ${selectedClass}`}
     >
-      {children}
-    </button>
+      <BookmarkSvg />
+    </Icon>
   );
 }
 
@@ -40,17 +50,16 @@ function Button({
  *
  * @returns {component}
  */
-function ButtonSkeleton(props) {
+function BookmarkSkeleton(props) {
   return (
-    <Button
+    <Bookmark
       {...props}
-      className={`${props.className} ${styles.skeleton}`}
+      className={styles.skeleton}
       onClick={null}
       disabled={true}
     >
       <Skeleton />
-      {props.children}
-    </Button>
+    </Bookmark>
   );
 }
 
@@ -64,18 +73,16 @@ function ButtonSkeleton(props) {
  */
 export default function Container(props) {
   if (props.skeleton) {
-    return <ButtonSkeleton {...props} />;
+    return <BookmarkSkeleton {...props} />;
   }
 
-  return <Button {...props} />;
+  return <Bookmark {...props} />;
 }
 
-// PropTypes for component
+// PropTypes for Container component
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["primary", "secondary"]),
-  size: PropTypes.oneOf(["large", "medium", "small"]),
+  selected: PropTypes.bool,
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

@@ -21,7 +21,7 @@ export const Title = ({
   const Tag = tag;
 
   return (
-    <Tag className={`${styles.Title} ${styles[type]} ${className}`}>
+    <Tag className={`${styles.title} ${styles[type]} ${className}`}>
       {children}
     </Tag>
   );
@@ -37,9 +37,10 @@ export const Title = ({
  */
 export const TitleSkeleton = (props) => {
   return (
-    <Skeleton>
-      <Title {...props} />
-    </Skeleton>
+    <Title {...props} className={`${props.className} ${styles.skeleton}`}>
+      <Skeleton />
+      {props.children}
+    </Title>
   );
 };
 
@@ -51,7 +52,7 @@ export const TitleSkeleton = (props) => {
  *
  * @returns {component}
  */
-export default function TitleDefault(props) {
+export default function Container(props) {
   if (props.skeleton) {
     return <TitleSkeleton {...props} />;
   }
@@ -59,9 +60,14 @@ export default function TitleDefault(props) {
   return <Title {...props} />;
 }
 
-// PropTypes for Title component
-Title.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+// PropTypes for the component
+Container.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]),
   type: PropTypes.oneOf(["title1", "title2", "title3", "title4"]),

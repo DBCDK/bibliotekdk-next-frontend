@@ -1,0 +1,68 @@
+.tag {
+  background-color: transparent;
+  font-family: var(--body-font);
+  font-size: 14px;
+  line-height: 22px;
+  padding: var(--pt1) var(--pt2);
+  border: 1px solid var(--gray);
+  color: var(--mine-shaft);
+  position: relative;
+
+  transition: transform 0.15s;
+}
+
+.tag i {
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  transition-duration: 0.25s;
+  transform: scale(0) translate(50%, -50%);
+  z-index: 1;
+}
+
+.tag:hover {
+  cursor: pointer;
+  border: 1px solid var(--blue);
+}
+
+/* 
+* Selected
+*
+*/
+
+.tag.selected {
+  box-shadow: var(--shadow-effect);
+  border: 1px solid var(--mine-shaft);
+  transform: translate(0, -2px);
+}
+
+.tag.selected i {
+  transform: scale(1) translate(25%, -25%);
+  transition-timing-function: var(--bounce-effect);
+}
+
+/* 
+* Disabled 
+*
+*/
+
+.tag.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.tag.disabled,
+.tag.disabled:hover {
+  color: var(--gray);
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  border: 1px solid transparent !important;
+}

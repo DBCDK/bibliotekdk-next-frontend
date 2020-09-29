@@ -13,7 +13,7 @@ function CreateLines({ n, children }) {
   let lines = [];
   for (let i = 0; i < Number(n); i++) {
     lines.push(
-      <div className={`${styles.Line}`} key={"line-" + i}>
+      <div className={`${styles.line}`} key={"line-" + i}>
         {children}
       </div>
     );
@@ -44,8 +44,8 @@ export default function Skeleton({
   display = styles[display];
 
   return (
-    <div className={`${styles.Skeleton} ${display} ${className} ${slowClass}`}>
-      <div className={styles.Lines}>
+    <div className={`${styles.skeleton} ${className} ${slowClass}`}>
+      <div className={styles.lines}>
         <CreateLines n={lines}>{children}</CreateLines>
       </div>
     </div>

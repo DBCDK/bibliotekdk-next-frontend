@@ -1,5 +1,6 @@
-.Text {
+.text {
   font-family: var(--body-font);
+  display: block;
 }
 
 .text1 {
@@ -15,5 +16,21 @@
 
 .text3 {
   font-size: 14px;
-  line-height: 24px;
+  line-height: 22px;
+  letter-spacing: 0.2px;
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  pointer-events: none;
+  cursor: default;
+}
+
+.skeleton > * {
+  color: transparent;
 }

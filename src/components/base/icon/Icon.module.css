@@ -1,0 +1,49 @@
+.icon {
+  display: inline-block;
+  /*  hack for removing whitespace around img tag */
+  font-size: 0px;
+}
+
+.icon img {
+  width: 100%;
+  height: auto;
+}
+
+.round {
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon.round img {
+  width: auto;
+  height: 40%;
+}
+
+.icon.round svg {
+  width: auto;
+  height: 50%;
+}
+
+/* 
+* disabled
+*
+*/
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* 
+* Skeleton
+*
+*/
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  /* Remove blue background-color */
+  background-color: transparent !important;
+}
