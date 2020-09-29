@@ -106,7 +106,12 @@ export function Overview({
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
           </Col>
 
-          <Col xs={12} md={{ span: 4, order: 3 }} className={styles.cover}>
+          <Col
+            xs={12}
+            md={{ span: 4, order: 3 }}
+            lg={3}
+            className={styles.cover}
+          >
             <Cover
               src={selectedMaterial.cover.detail || allMaterialTypes}
               skeleton={skeleton}
@@ -115,7 +120,7 @@ export function Overview({
             </Cover>
           </Col>
 
-          <Col xs={12} md={{ order: 2 }} className={styles.about}>
+          <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
             <Row>
               <Col xs={12}>
                 <Title type="title3" skeleton={skeleton}>
