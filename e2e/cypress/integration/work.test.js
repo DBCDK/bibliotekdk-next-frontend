@@ -6,12 +6,12 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 describe("Work", () => {
-  it(`Shows work data`, () => {
+  it.skip(`Shows work data`, () => {
     cy.visit("/?path=/story/prototype-work--doppler");
     cy.contains("Doppler");
   });
 
-  it(`renders all data on server`, () => {
+  it.skip(`renders all data on server`, () => {
     // we make a "request" instead of "visit" to see
     // the actual html returned from the server
     // set timeout to 10000ms to make sure data is loaded on server
@@ -24,7 +24,7 @@ describe("Work", () => {
       });
   });
 
-  it(`renders no data on server`, () => {
+  it.skip(`renders no data on server`, () => {
     // we make a request instead of visit to see
     // the actual html returned from the server
     // set timeout to 1ms to make sure no data is loaded on server
