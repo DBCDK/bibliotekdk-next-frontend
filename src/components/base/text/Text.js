@@ -15,7 +15,7 @@ import styles from "./Text.module.css";
 function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
-  type = "text1",
+  type = "text3",
   tag = "p",
   onClick = null,
 }) {

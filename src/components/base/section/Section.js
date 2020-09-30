@@ -6,6 +6,10 @@ import Title from "../title";
 
 import styles from "./Section.module.css";
 
+function Divider() {
+  return <div className={styles.divider} />;
+}
+
 /**
  * The Component function
  *
@@ -14,9 +18,20 @@ import styles from "./Section.module.css";
  *
  * @returns {component}
  */
-function Section({ children = "", className = "" }) {
+function Section({ children = "...", className = "" }) {
   return (
-    <section className={`${styles.section} ${className}`}>{children}</section>
+    <Container>
+      <Row as="section" className={`${styles.section} ${className}`}>
+        <Col xs={12} md={2}>
+          <Divider />
+          <Title type="title4">Beskrivelse</Title>
+        </Col>
+        <Col xs={12} md={{ offset: 1 }}>
+          <Divider />
+          {children}
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

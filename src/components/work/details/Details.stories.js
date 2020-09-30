@@ -10,9 +10,7 @@ export default {
  * Returns all primary buttons (Default button style)
  *
  */
-export function Primary() {
-  const type = "primary";
-
+export function DetailsSection() {
   return (
     <div>
       <StoryTitle>Detials section</StoryTitle>

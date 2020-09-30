@@ -100,7 +100,7 @@ export function Overview({
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Wrap fluid className={`container`}>
+      <Container>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
@@ -176,7 +176,7 @@ export function Overview({
             </Row>
           </Col>
         </Row>
-      </Wrap>
+      </Container>
     </div>
   );
 }

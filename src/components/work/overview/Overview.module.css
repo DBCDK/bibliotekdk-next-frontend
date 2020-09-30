@@ -26,11 +26,6 @@
   /* padding: 0 var(--pt3) 0 0; */
 }
 
-.about h1 {
-  /* Bootstrap override */
-  margin: 0;
-}
-
 .ornament {
   padding: var(--pt3) 0;
 }
@@ -61,11 +56,6 @@
 
 .info {
   padding-top: var(--pt2);
-}
-
-.info p {
-  /* Bootstrap override */
-  margin: 0;
 }
 
 /* 

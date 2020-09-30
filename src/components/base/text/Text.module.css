@@ -1,6 +1,9 @@
 .text {
   font-family: var(--body-font);
   display: block;
+
+  /* Bootstrap default override */
+  margin: 0;
 }
 
 .text1 {
@@ -18,6 +21,12 @@
   font-size: 14px;
   line-height: 22px;
   letter-spacing: 0.2px;
+}
+
+.text4 {
+  font-size: 14px;
+  line-height: 22px;
+  font-family: var(--body-font-bold);
 }
 
 /* 

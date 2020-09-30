@@ -8,6 +8,7 @@ export default {
 
 // Current title types
 const titles = ["title1", "title2", "title3", "title4"];
+const size = ["80/92", "48/62", "40/52", "24/32"];
 
 /**
  * Returns all Titles as h1 tags
@@ -18,9 +19,9 @@ export function Titles() {
     <div>
       <StoryTitle>Titles</StoryTitle>
 
-      {titles.map((type) => (
+      {titles.map((type, i) => (
         <React.Fragment key={type}>
-          <StoryTitle>{`Title [${type}]`}</StoryTitle>
+          <StoryTitle>{`${type} [${size[i]}]`}</StoryTitle>
           <Title tag="h1" key={type} type={type}>
             Hello World
           </Title>

@@ -1,5 +1,8 @@
 .title {
   font-family: var(--title-font);
+
+  /* Bootstrap default override */
+  margin: 0;
 }
 
 .title1 {

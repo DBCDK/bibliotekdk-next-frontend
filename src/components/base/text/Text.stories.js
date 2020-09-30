@@ -8,6 +8,7 @@ export default {
 
 // Current text types
 const texts = ["text1", "text2", "text3"];
+const size = ["17/24, 600", "17/24, 400", "14/22, 400"];
 
 /**
  * Returns all Text types
@@ -18,9 +19,11 @@ export function Body() {
     <div>
       <StoryTitle>Body Text</StoryTitle>
 
-      {texts.map((type) => (
+      {texts.map((type, i) => (
         <React.Fragment key={type}>
-          <StoryTitle>Body text [{type}]</StoryTitle>
+          <StoryTitle>
+            {type} [{size[i]}]
+          </StoryTitle>
           <Text type={type}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
             mollis purus a iaculis finibus. Integer lacus dui, condimentum quis
