@@ -17,7 +17,7 @@ import styles from "./Details.module.css";
  */
 function Details({ children = "", className = "", data = {} }) {
   return (
-    <Section>
+    <Section title="Detaljer">
       <Row className={`${styles.details} ${className}`}>
         {data.lang && (
           <Col xs={12} md>

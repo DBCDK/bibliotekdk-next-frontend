@@ -7,8 +7,8 @@ export default {
 };
 
 // Current text types
-const texts = ["text1", "text2", "text3"];
-const size = ["17/24, 600", "17/24, 400", "14/22, 400"];
+const texts = ["text1", "text2", "text3", "text4"];
+const size = ["17/24, 600", "17/24, 400", "14/22, 400", "14/22, 600"];
 
 /**
  * Returns all Text types

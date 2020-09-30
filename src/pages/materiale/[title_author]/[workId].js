@@ -18,6 +18,7 @@ import { fetchOnServer } from "../../../lib/api";
 
 import Overview from "../../../components/work/overview/";
 import Details from "../../../components/work/details/";
+import Description from "../../../components/work/description/";
 
 import Example from "../../../components/work/Example";
 import Example2 from "../../../components/work/Example2";
@@ -33,6 +34,7 @@ export default function WorkPage() {
     <div>
       <Overview workId={workId} />
       <Details />
+      <Description />
     </div>
   );
 }

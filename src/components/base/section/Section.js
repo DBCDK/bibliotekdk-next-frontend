@@ -6,6 +6,11 @@ import Title from "../title";
 
 import styles from "./Section.module.css";
 
+/**
+ * Divider function
+ *
+ * @returns {component}
+ */
 function Divider() {
   return <div className={styles.divider} />;
 }
@@ -18,13 +23,13 @@ function Divider() {
  *
  * @returns {component}
  */
-function Section({ children = "...", className = "" }) {
+function Section({ title = "Some section", children = "...", className = "" }) {
   return (
     <Container>
       <Row as="section" className={`${styles.section} ${className}`}>
         <Col xs={12} md={2}>
           <Divider />
-          <Title type="title4">Beskrivelse</Title>
+          <Title type="title4">{title}</Title>
         </Col>
         <Col xs={12} md={{ offset: 1 }}>
           <Divider />
