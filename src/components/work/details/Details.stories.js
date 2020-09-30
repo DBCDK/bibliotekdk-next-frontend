@@ -7,15 +7,31 @@ export default {
 };
 
 /**
- * Returns all primary buttons (Default button style)
+ * Returns details section
  *
  */
 export function DetailsSection() {
   return (
     <div>
       <StoryTitle>Detials section</StoryTitle>
-      <StoryDescription>...</StoryDescription>
+      <StoryDescription>
+        Work details component. Section component is used for layout.
+      </StoryDescription>
       <Details />
+    </div>
+  );
+}
+
+/**
+ * Returns loading details section
+ *
+ */
+export function Loading() {
+  return (
+    <div>
+      <StoryTitle>Detials section</StoryTitle>
+      <StoryDescription>Loading details component</StoryDescription>
+      <Details skeleton />
     </div>
   );
 }

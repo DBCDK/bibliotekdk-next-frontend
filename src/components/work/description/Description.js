@@ -15,13 +15,15 @@ import styles from "./Description.module.css";
  *
  * @returns {component}
  */
-function Description({ children = "", className = "", data = {} }) {
+function Description({ className = "", data = {}, skeleton = false }) {
   return (
     <Section title="Beskrivelse">
       <Row className={`${styles.details} ${className}`}>
         {data.description && (
           <Col xs={12} md>
-            <Text type="text2">{data.description}</Text>
+            <Text type="text2" skeleton={skeleton} lines={4}>
+              {data.description}
+            </Text>
           </Col>
         )}
       </Row>
@@ -39,10 +41,10 @@ function Description({ children = "", className = "", data = {} }) {
  */
 function DescriptionSkeleton(props) {
   return (
-    <Description {...props} className={`${props.className} ${styles.skeleton}`}>
-      <Skeleton />
-      {props.children}
-    </Description>
+    <Description
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+    />
   );
 }
 
@@ -61,7 +63,7 @@ export default function Wrap(props) {
   };
 
   if (props.skeleton) {
-    return <DescriptionSkeleton {...props} />;
+    return <DescriptionSkeleton {...props} data={data} />;
   }
 
   return <Description {...props} data={data} />;

@@ -43,3 +43,9 @@
 .skeleton > * {
   color: transparent;
 }
+
+.skeleton p {
+  /* large block of text to only 1 line */
+  white-space: nowrap;
+  overflow: hidden;
+}

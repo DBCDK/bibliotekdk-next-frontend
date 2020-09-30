@@ -15,37 +15,63 @@ import styles from "./Details.module.css";
  *
  * @returns {component}
  */
-function Details({ children = "", className = "", data = {} }) {
+function Details({ className = "", data = {}, skeleton = false }) {
   return (
     <Section title="Detaljer">
       <Row className={`${styles.details} ${className}`}>
         {data.lang && (
           <Col xs={12} md>
-            <Text type="text3" className={styles.title}>
+            <Text
+              type="text3"
+              className={styles.title}
+              skeleton={skeleton}
+              lines={2}
+            >
               Sprog
             </Text>
-            <Text type="text4">{data.lang}</Text>
+            <Text type="text4" skeleton={skeleton} lines={0}>
+              {data.lang}
+            </Text>
           </Col>
         )}
         {data.pages && (
           <Col xs={12} md>
-            <Text type="text3" className={styles.title}>
+            <Text
+              type="text3"
+              className={styles.title}
+              skeleton={skeleton}
+              lines={2}
+            >
               Sideantal
             </Text>
-            <Text type="text4">{data.pages}</Text>
+            <Text type="text4" skeleton={skeleton} lines={0}>
+              {data.pages}
+            </Text>
           </Col>
         )}
         {data.released && (
           <Col xs={12} md>
-            <Text type="text3" className={styles.title}>
+            <Text
+              type="text3"
+              className={styles.title}
+              skeleton={skeleton}
+              lines={2}
+            >
               Udgivet
             </Text>
-            <Text type="text4">{data.released}</Text>
+            <Text type="text4" skeleton={skeleton} lines={0}>
+              {data.released}
+            </Text>
           </Col>
         )}
         {data.contribution && (
           <Col xs={12} md>
-            <Text type="text3" className={styles.title}>
+            <Text
+              type="text3"
+              className={styles.title}
+              skeleton={skeleton}
+              lines={3}
+            >
               Bidrag
             </Text>
             {data.contribution.map((c, i) => {
@@ -54,7 +80,12 @@ function Details({ children = "", className = "", data = {} }) {
               // Trailing comma
               const t = i + 1 === l ? "" : ", ";
               return (
-                <Text type="text4" key={`${c}-${i}`}>
+                <Text
+                  type="text4"
+                  key={`${c}-${i}`}
+                  skeleton={skeleton}
+                  lines={0}
+                >
                   {c + t}
                 </Text>
               );
@@ -76,10 +107,7 @@ function Details({ children = "", className = "", data = {} }) {
  */
 function DetailsSkeleton(props) {
   return (
-    <Details {...props} className={`${props.className} ${styles.skeleton}`}>
-      <Skeleton />
-      {props.children}
-    </Details>
+    <Details {...props} className={`${props.className} ${styles.skeleton}`} />
   );
 }
 
@@ -100,7 +128,7 @@ export default function Wrap(props) {
   };
 
   if (props.skeleton) {
-    return <DetailsSkeleton {...props} />;
+    return <DetailsSkeleton {...props} data={data} />;
   }
 
   return <Details {...props} data={data} />;
