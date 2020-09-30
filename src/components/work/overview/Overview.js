@@ -8,7 +8,7 @@
  */
 
 import { useState } from "react";
-import { Container as Wrap, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -207,13 +207,13 @@ export function OverviewError() {
 }
 
 /**
- * Container is a react component responsible for loading
+ * Wrap is a react component responsible for loading
  * data and displaying the right variant of the Example component
  *
  * @param {Object} props Component props
  * @param {string} props.workId Material work id
  */
-function Container({ workId, skeleton }) {
+function Wrap({ workId, skeleton }) {
   // use the useData hook to fetch data
   // const { data, isLoading, isSlow, error } = useData(query({ workId }));
 
@@ -292,8 +292,8 @@ function Container({ workId, skeleton }) {
   return <Overview {...data.work} />;
 }
 
-// Attach query to container to expose the query to some page
-Container.query = query;
+// Attach query to wrap to expose the query to some page
+Wrap.query = query;
 
-// Export container as the default
-export default Container;
+// Export wrap as the default
+export default Wrap;
