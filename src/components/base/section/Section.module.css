@@ -1,7 +1,3 @@
-.section {
-  margin-top: var(--pt8);
-}
-
 .divider {
   height: 1px;
   background-color: var(--iron);

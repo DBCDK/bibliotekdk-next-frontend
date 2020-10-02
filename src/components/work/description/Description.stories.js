@@ -17,7 +17,7 @@ export function DescriptionSection() {
       <StoryDescription>
         Work description component. Section component is used for layout.
       </StoryDescription>
-      <Description />
+      <Description workId={"some-id"} type={"Bog"} />
     </div>
   );
 }

@@ -1,3 +1,12 @@
+.details {
+  min-height: 175px;
+  padding-bottom: var(--pt8);
+}
+
+.distanceTop {
+  margin-top: var(--pt8);
+}
+
 .title {
   margin: 0 0 var(--pt05) 0;
 }

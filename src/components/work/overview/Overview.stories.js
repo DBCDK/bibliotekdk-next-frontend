@@ -11,7 +11,7 @@ export default {
 export function WorkOverview() {
   return (
     <div>
-      <Overview />
+      <Overview workId={"some-id"} />
     </div>
   );
 }

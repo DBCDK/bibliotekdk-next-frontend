@@ -7,7 +7,8 @@
  * doing the same thing
  */
 
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Title from "../../base/title";
@@ -19,32 +20,9 @@ import Tag from "../../base/forms/tag";
 import Bookmark from "../../base/bookmark";
 import Breadcrumbs from "../../base/breadcrumbs";
 
-import { useData } from "../../../lib/api";
+import dummy_workDataApi from "../dummy.workDataApi.js";
 
 import styles from "./Overview.module.css";
-
-/**
- * This function will create a query object
- *
- * @param {Object} variables
- * @param {string} variables.workId
- *
- * @return {Object} a query object
- */
-function query({ workId }) {
-  return {
-    // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-    manifestation(pid: $workId) {
-      title
-      abstract
-    }
-  }
-  `,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
 
 // Default materialTypes (For skeleton use)
 const defaultTypes = [
@@ -93,10 +71,44 @@ export function Overview({
     acceptedTypes.includes(type.materialType)
   );
 
+  // Creates MaterialTypes as an index
+  const materialTypesMap = {};
+  materialTypes.forEach((m) => {
+    materialTypesMap[materialTypes] = m;
+  });
+
+  // Router
+  const router = useRouter();
+
   // Set selected material - default as the first material in the materialTypes array
   const [selectedMaterial, setSelectedMaterial] = useState(
-    materialTypes[0] || false
+    materialTypesMap[router && router.query.type] || materialTypes[0] || false
   );
+
+  // Only when component mounts
+  useEffect(() => {
+    if (selectedMaterial) {
+      handleSelectedMaterial(selectedMaterial);
+    }
+  }, []);
+
+  // Handle slectedMaterial
+  function handleSelectedMaterial(material) {
+    // Sets SelectedMaterial in state
+    setSelectedMaterial(material);
+
+    if (router) {
+      // Push material type param to url
+      const query = { type: material.materialType };
+      router.push(
+        { pathname: router.pathname, query },
+        {
+          pathname: router.asPath.replace(/\?.*/, ""),
+          query,
+        }
+      );
+    }
+  }
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -127,10 +139,8 @@ export function Overview({
                   {title}
                 </Title>
               </Col>
-              <Col xs={12}>
-                <div className={styles.ornament}>
-                  <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
-                </div>
+              <Col xs={12} className={styles.ornament}>
+                <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
               </Col>
               <Col xs={12}>
                 <Text
@@ -154,7 +164,7 @@ export function Overview({
                     <Tag
                       key={material.materialType}
                       selected={isSelected}
-                      onClick={() => setSelectedMaterial(material)}
+                      onClick={() => handleSelectedMaterial(material)}
                       skeleton={skeleton}
                     >
                       {material.materialType}
@@ -220,67 +230,9 @@ function Wrap({ workId, skeleton }) {
   const isLoading = skeleton;
   const isSlow = false;
   const error = false;
-  const data = {
-    work: {
-      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-      title: "Klodernes kamp",
-      creators: ["h g wells"],
-      materialTypes: [
-        {
-          materialType: "Bog",
-          pid: "870970-basis:06442870",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Bog stor skrift",
-          pid: "870970-basis:54926391",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
-          },
-        },
-        {
-          materialType: "Ebog",
-          pid: "870970-basis:52849985",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
-          },
-        },
-        {
-          materialType: "Lydbog (bånd)",
-          pid: "870970-basis:04843819",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Lydbog (cd-mp3)",
-          pid: "870970-basis:54687117",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Lydbog (net)",
-          pid: "870970-basis:54627890",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
-          },
-        },
-        {
-          materialType: "Punktskrift",
-          pid: "874310-katalog:DBB0106054",
-          cover: {
-            detail: null,
-          },
-        },
-      ],
-    },
-  };
+  const data = dummy_workDataApi({ workId });
+
+  console.log("data", data);
 
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
@@ -291,9 +243,6 @@ function Wrap({ workId, skeleton }) {
 
   return <Overview {...data.work} />;
 }
-
-// Attach query to wrap to expose the query to some page
-Wrap.query = query;
 
 // Export wrap as the default
 export default Wrap;

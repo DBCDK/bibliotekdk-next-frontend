@@ -6,7 +6,7 @@ import Text from "../../base/text";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
-import styles from "./Description.module.css";
+import styles from "./Content.module.css";
 
 /**
  * The Component function
@@ -16,17 +16,20 @@ import styles from "./Description.module.css";
  *
  * @returns {component}
  */
-function Description({ className = "", data = {}, skeleton = false }) {
+function Content({ className = "", data = {}, skeleton = false }) {
   return (
-    <Section title="Beskrivelse">
-      <Row className={`${styles.description} ${className}`}>
-        {data.description && (
-          <Col xs={12} md>
-            <Text type="text2" skeleton={skeleton} lines={4}>
-              {data.description}
-            </Text>
-          </Col>
-        )}
+    <Section title="Indhold">
+      <Row className={`${styles.content} ${className}`}>
+        {data.notes &&
+          data.notes.map((n) => {
+            return (
+              <Col key={n} xs={12}>
+                <Text type="text3" skeleton={skeleton} lines={8}>
+                  {n}
+                </Text>
+              </Col>
+            );
+          })}
       </Row>
     </Section>
   );
@@ -40,11 +43,11 @@ function Description({ className = "", data = {}, skeleton = false }) {
  *
  * @returns {component}
  */
-function DescriptionSkeleton(props) {
+function ContentSkeleton(props) {
   return (
-    <Description
+    <Content
       {...props}
-      data={{ description: "..." }}
+      data={{ notes: ["..."] }}
       className={`${props.className} ${styles.skeleton}`}
     />
   );
@@ -65,10 +68,10 @@ export default function Wrap(props) {
   const data = dummy_materialTypesApi({ workId, type });
 
   if (props.skeleton) {
-    return <DescriptionSkeleton {...props} data={data[workId]} />;
+    return <ContentSkeleton {...props} data={data[workId]} />;
   }
 
-  return <Description {...props} data={data[workId]} />;
+  return <Content {...props} data={data[workId]} />;
 }
 
 // PropTypes for component

@@ -2,8 +2,9 @@ import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
 import Section from "../../base/section";
-import Skeleton from "../../base/skeleton";
 import Text from "../../base/text";
+
+import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 import styles from "./Details.module.css";
 
@@ -17,7 +18,7 @@ import styles from "./Details.module.css";
  */
 function Details({ className = "", data = {}, skeleton = false }) {
   return (
-    <Section title="Detaljer">
+    <Section title="Detaljer" className={styles.distanceTop}>
       <Row className={`${styles.details} ${className}`}>
         {data.lang && (
           <Col xs={12} md>
@@ -106,8 +107,19 @@ function Details({ className = "", data = {}, skeleton = false }) {
  * @returns {component}
  */
 function DetailsSkeleton(props) {
+  const mock = {
+    lang: "...",
+    pages: "...",
+    released: "...",
+    contribution: ["..."],
+  };
+
   return (
-    <Details {...props} className={`${props.className} ${styles.skeleton}`} />
+    <Details
+      {...props}
+      data={mock}
+      className={`${props.className} ${styles.skeleton}`}
+    />
   );
 }
 
@@ -120,18 +132,16 @@ function DetailsSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const data = {
-    lang: "danglish",
-    pages: "123",
-    released: "2020",
-    contribution: ["some contributor", "some other contributor"],
-  };
+  const { workId, type } = props;
+
+  // Call materialTypes mockdata API
+  const data = dummy_materialTypesApi({ workId, type });
 
   if (props.skeleton) {
-    return <DetailsSkeleton {...props} data={data} />;
+    return <DetailsSkeleton {...props} data={data[workId]} />;
   }
 
-  return <Details {...props} data={data} />;
+  return <Details {...props} data={data[workId]} />;
 }
 
 // PropTypes for component

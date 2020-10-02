@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Skeleton from "../skeleton";
 import Title from "../title";
 
 import styles from "./Section.module.css";
@@ -23,7 +22,11 @@ function Divider() {
  *
  * @returns {component}
  */
-function Section({ title = "Some section", children = "...", className = "" }) {
+export default function Section({
+  title = "Some section",
+  children = "...",
+  className = "",
+}) {
   return (
     <Container>
       <Row as="section" className={`${styles.section} ${className}`}>
@@ -40,42 +43,8 @@ function Section({ title = "Some section", children = "...", className = "" }) {
   );
 }
 
-/**
- * Function to return skeleton (Loading) version of the Component
- *
- * @param {obj} props
- *  See propTypes for specific props and types
- *
- * @returns {component}
- */
-function SectionSkeleton(props) {
-  return (
-    <Section {...props} className={`${props.className} ${styles.skeleton}`}>
-      <Skeleton />
-      {props.children}
-    </Section>
-  );
-}
-
-/**
- *  Default export function of the Component
- *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
- */
-export default function Wrap(props) {
-  if (props.skeleton) {
-    return <SectionSkeleton {...props} />;
-  }
-
-  return <Section {...props} />;
-}
-
 // PropTypes for component
-Wrap.propTypes = {
+Section.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  skeleton: PropTypes.bool,
 };

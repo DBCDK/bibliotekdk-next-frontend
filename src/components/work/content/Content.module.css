@@ -1,0 +1,17 @@
+.content {
+  padding-bottom: var(--pt8);
+}
+
+.content p {
+  padding: 0 var(--pt1);
+  background-color: var(--concrete);
+}
+
+.content div:nth-child(2n) p {
+  background-color: var(--white);
+}
+
+.skeleton p {
+  /* Remove above concrete bg-color from p in skeleton mode */
+  background-color: transparent;
+}
