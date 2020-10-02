@@ -234,8 +234,6 @@ function Wrap({ workId, skeleton }) {
   const error = false;
   const data = dummy_workDataApi({ workId });
 
-  console.log("data", data);
-
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
   }

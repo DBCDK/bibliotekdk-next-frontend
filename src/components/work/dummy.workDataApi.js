@@ -63,8 +63,6 @@ export default function dummy_workDataApi({ workId }) {
     },
   };
 
-  console.log("response", response, response[workId]);
-
   // WorkId or type was not found
   if (!workId) {
     return {};
