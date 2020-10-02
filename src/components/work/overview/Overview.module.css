@@ -22,7 +22,7 @@
 }
 
 .about {
-  padding: 0 var(--pt3) 0 0;
+  padding-right: var(--pt3);
 }
 
 .ornament {
