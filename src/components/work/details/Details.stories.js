@@ -1,9 +1,9 @@
-import { StoryTitle, StoryDescription } from "../../base/storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
 
 import Details from "./Details";
 
 export default {
-  title: "Details",
+  title: "Work: Details",
 };
 
 /**
@@ -15,8 +15,9 @@ export function DetailsSection() {
     <div>
       <StoryTitle>Detials section</StoryTitle>
       <StoryDescription>
-        Work details component. Section component is used for layout.
+        Work details component. The Section component is used for layout.
       </StoryDescription>
+      <StorySpace direction="v" space="8" />
       <Details workId={"some-id"} type={"Bog"} />
     </div>
   );
@@ -31,6 +32,7 @@ export function Loading() {
     <div>
       <StoryTitle>Detials section</StoryTitle>
       <StoryDescription>Loading details component</StoryDescription>
+      <StorySpace direction="v" space="8" />
       <Details skeleton />
     </div>
   );

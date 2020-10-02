@@ -1,7 +1,7 @@
 import Overview from "./Overview";
 
 export default {
-  title: "Module: Overview",
+  title: "Work: Overview",
 };
 
 /**

@@ -3,7 +3,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
 import Content from "./Content";
 
 export default {
-  title: "Content",
+  title: "Work: Content",
 };
 
 /**
@@ -15,7 +15,7 @@ export function ContentSection() {
     <div>
       <StoryTitle>Content section</StoryTitle>
       <StoryDescription>
-        Work content component. Section component is used for layout.
+        Work content component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
       <Content workId={"some-id"} type={"Bog"} />
@@ -32,6 +32,7 @@ export function Loading() {
     <div>
       <StoryTitle>Content section</StoryTitle>
       <StoryDescription>Loading content component</StoryDescription>
+      <StorySpace direction="v" space="8" />
       <Content skeleton />
     </div>
   );

@@ -24,28 +24,6 @@ import dummy_workDataApi from "../dummy.workDataApi.js";
 
 import styles from "./Overview.module.css";
 
-// Default materialTypes (For skeleton use)
-const defaultTypes = [
-  {
-    materialType: "Bog",
-    cover: {
-      detail: null,
-    },
-  },
-  {
-    materialType: "Ebog",
-    cover: {
-      detail: null,
-    },
-  },
-  {
-    materialType: "Lydbog (net)",
-    cover: {
-      detail: null,
-    },
-  },
-];
-
 /**
  * Example component, showing basic info
  *
@@ -54,10 +32,10 @@ const defaultTypes = [
  * @param {string} props.abstract Material abstract
  */
 export function Overview({
-  title = "Doppler",
-  creators = ["Erlend Loe"],
+  title = "...",
+  creators = ["..."],
   path = [],
-  materialTypes = defaultTypes,
+  materialTypes = [],
   className = "",
   skeleton = false,
 }) {
@@ -198,9 +176,36 @@ export function Overview({
  * @param {boolean} props.isSlow Is it unexpectingly slow to load?
  */
 export function OverviewSkeleton(props) {
+  // Default materialTypes (For skeleton use)
+  const defaultTypes = [
+    {
+      materialType: "Bog",
+      cover: {
+        detail: null,
+      },
+    },
+    {
+      materialType: "Ebog",
+      cover: {
+        detail: null,
+      },
+    },
+    {
+      materialType: "Lydbog (net)",
+      cover: {
+        detail: null,
+      },
+    },
+  ];
+
   return (
     <div>
-      <Overview {...props} className={styles.skeleton} skeleton={true} />
+      <Overview
+        {...props}
+        materialTypes={defaultTypes}
+        className={styles.skeleton}
+        skeleton={true}
+      />
     </div>
   );
 }
@@ -224,9 +229,6 @@ export function OverviewError() {
  * @param {string} props.workId Material work id
  */
 function Wrap({ workId, skeleton }) {
-  // use the useData hook to fetch data
-  // const { data, isLoading, isSlow, error } = useData(query({ workId }));
-
   const isLoading = skeleton;
   const isSlow = false;
   const error = false;
