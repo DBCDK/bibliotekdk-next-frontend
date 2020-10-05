@@ -32,6 +32,13 @@ export default function WorkPage() {
   const router = useRouter();
   const { workId, type } = router.query;
 
+  /**
+   * Updates the query params in the url
+   * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
+   *
+   * @param {obj} query
+   */
+
   function handleOnTypeChange(query) {
     router.push(
       { pathname: router.pathname, query },
