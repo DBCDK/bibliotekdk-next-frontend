@@ -1,14 +1,6 @@
-/**
- * @file
- * This is an example component showing
- * how to fetch data from the API
- *
- * Should be removed when we have real components
- * doing the same thing
- */
-
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -24,11 +16,12 @@ import dummy_workDataApi from "../dummy.workDataApi.js";
 import styles from "./Overview.module.css";
 
 /**
- * Example component, showing basic info
+ * The Component function
  *
- * @param {Object} props Component props
- * @param {string} props.title Material title
- * @param {string} props.abstract Material abstract
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
  */
 export function Overview({
   title = "...",
@@ -160,7 +153,7 @@ export function Overview({
 }
 
 /**
- * Example skeleton component
+ * Skeleton/Loading version of component
  *
  * @param {Object} props Component props
  * @param {boolean} props.isSlow Is it unexpectingly slow to load?
@@ -201,7 +194,7 @@ export function OverviewSkeleton(props) {
 }
 
 /**
- * Example error component
+ * Returns error
  */
 export function OverviewError() {
   return (
@@ -213,12 +206,14 @@ export function OverviewError() {
 
 /**
  * Wrap is a react component responsible for loading
- * data and displaying the right variant of the Example component
+ * data and displaying the right variant of the component
  *
  * @param {Object} props Component props
- * @param {string} props.workId Material work id
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
  */
-function Wrap({ workId, skeleton, query, onTypeChange }) {
+export default function Wrap({ workId, skeleton, query, onTypeChange }) {
   const isLoading = skeleton;
   const isSlow = false;
   const error = false;
@@ -234,5 +229,10 @@ function Wrap({ workId, skeleton, query, onTypeChange }) {
   return <Overview {...data.work} query={query} onTypeChange={onTypeChange} />;
 }
 
-// Export wrap as the default
-export default Wrap;
+// PropTypes for component
+Wrap.propTypes = {
+  workId: PropTypes.string,
+  skeleton: PropTypes.bool,
+  query: PropTypes.object,
+  onTypeChange: PropTypes.func,
+};

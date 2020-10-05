@@ -73,7 +73,7 @@ export default function Wrap(props) {
 
 // PropTypes for component
 Wrap.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  workId: PropTypes.string,
+  type: PropTypes.string,
   skeleton: PropTypes.bool,
 };
