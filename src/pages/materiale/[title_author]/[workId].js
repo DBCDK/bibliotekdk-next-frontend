@@ -32,9 +32,23 @@ export default function WorkPage() {
   const router = useRouter();
   const { workId, type } = router.query;
 
+  function handleOnTypeChange(query) {
+    router.push(
+      { pathname: router.pathname, query },
+      {
+        pathname: router.asPath.replace(/\?.*/, ""),
+        query,
+      }
+    );
+  }
+
   return (
     <React.Fragment>
-      <Overview workId={workId} />
+      <Overview
+        workId={workId}
+        onTypeChange={handleOnTypeChange}
+        query={{ type }}
+      />
       <Details workId={workId} type={type} />
       <Description workId={workId} type={type} />
       <Content workId={workId} type={type} />

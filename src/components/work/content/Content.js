@@ -21,9 +21,9 @@ function Content({ className = "", data = {}, skeleton = false }) {
     <Section title="Indhold">
       <Row className={`${styles.content} ${className}`}>
         {data.notes &&
-          data.notes.map((n) => {
+          data.notes.map((n, i) => {
             return (
-              <Col key={n} xs={12}>
+              <Col key={n + i} xs={12}>
                 <Text type="text3" skeleton={skeleton} lines={8}>
                   {n}
                 </Text>

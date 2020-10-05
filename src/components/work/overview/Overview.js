@@ -7,7 +7,6 @@
  * doing the same thing
  */
 
-import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
@@ -36,18 +35,19 @@ export function Overview({
   creators = ["..."],
   path = [],
   materialTypes = [],
+  query = {},
+  onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
-  //  Temporary accepted materialTypes
-  const acceptedTypes = ["Bog", "Ebog", "Lydbog (net)"];
+
   // Temporary filter materials
   // outcomment this func. to see all available materialTypes
-  materialTypes = materialTypes.filter((type) =>
-    acceptedTypes.includes(type.materialType)
-  );
+  // materialTypes = materialTypes.filter((type) =>
+  //   ["Bog", "Ebog", "Lydbog (net)"].includes(type.materialType)
+  // );
 
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
@@ -55,12 +55,9 @@ export function Overview({
     materialTypesMap[materialTypes] = m;
   });
 
-  // Router
-  const router = useRouter();
-
   // Set selected material - default as the first material in the materialTypes array
   const [selectedMaterial, setSelectedMaterial] = useState(
-    materialTypesMap[router && router.query.type] || materialTypes[0] || false
+    materialTypesMap[query.type] || materialTypes[0] || false
   );
 
   // Only when component mounts
@@ -75,16 +72,9 @@ export function Overview({
     // Sets SelectedMaterial in state
     setSelectedMaterial(material);
 
-    if (router) {
-      // Push material type param to url
-      const query = { type: material.materialType };
-      router.push(
-        { pathname: router.pathname, query },
-        {
-          pathname: router.asPath.replace(/\?.*/, ""),
-          query,
-        }
-      );
+    // Update query param callback
+    if (query.type !== material.materialType) {
+      onTypeChange({ type: material.materialType });
     }
   }
 
@@ -228,7 +218,7 @@ export function OverviewError() {
  * @param {Object} props Component props
  * @param {string} props.workId Material work id
  */
-function Wrap({ workId, skeleton }) {
+function Wrap({ workId, skeleton, query, onTypeChange }) {
   const isLoading = skeleton;
   const isSlow = false;
   const error = false;
@@ -241,7 +231,7 @@ function Wrap({ workId, skeleton }) {
     return <OverviewError />;
   }
 
-  return <Overview {...data.work} />;
+  return <Overview {...data.work} query={query} onTypeChange={onTypeChange} />;
 }
 
 // Export wrap as the default
