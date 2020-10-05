@@ -1,14 +1,6 @@
-/**
- * @file
- * This is an example component showing
- * how to fetch data from the API
- *
- * Should be removed when we have real components
- * doing the same thing
- */
-
-import { useState } from "react";
-import { Container as Wrap, Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -19,88 +11,69 @@ import Tag from "../../base/forms/tag";
 import Bookmark from "../../base/bookmark";
 import Breadcrumbs from "../../base/breadcrumbs";
 
-import { useData } from "../../../lib/api";
+import dummy_workDataApi from "../dummy.workDataApi.js";
 
 import styles from "./Overview.module.css";
 
 /**
- * This function will create a query object
+ * The Component function
  *
- * @param {Object} variables
- * @param {string} variables.workId
+ * @param {obj} props
+ * See propTypes for specific props and types
  *
- * @return {Object} a query object
- */
-function query({ workId }) {
-  return {
-    // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-    manifestation(pid: $workId) {
-      title
-      abstract
-    }
-  }
-  `,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-// Default materialTypes (For skeleton use)
-const defaultTypes = [
-  {
-    materialType: "Bog",
-    cover: {
-      detail: null,
-    },
-  },
-  {
-    materialType: "Ebog",
-    cover: {
-      detail: null,
-    },
-  },
-  {
-    materialType: "Lydbog (net)",
-    cover: {
-      detail: null,
-    },
-  },
-];
-
-/**
- * Example component, showing basic info
- *
- * @param {Object} props Component props
- * @param {string} props.title Material title
- * @param {string} props.abstract Material abstract
+ * @returns {component}
  */
 export function Overview({
-  title = "Doppler",
-  creators = ["Erlend Loe"],
+  title = "...",
+  creators = ["..."],
   path = [],
-  materialTypes = defaultTypes,
+  materialTypes = [],
+  query = {},
+  onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
-  //  Temporary accepted materialTypes
-  const acceptedTypes = ["Bog", "Ebog", "Lydbog (net)"];
+
   // Temporary filter materials
   // outcomment this func. to see all available materialTypes
-  materialTypes = materialTypes.filter((type) =>
-    acceptedTypes.includes(type.materialType)
-  );
+  // materialTypes = materialTypes.filter((type) =>
+  //   ["Bog", "Ebog", "Lydbog (net)"].includes(type.materialType)
+  // );
+
+  // Creates MaterialTypes as an index
+  const materialTypesMap = {};
+  materialTypes.forEach((m) => {
+    materialTypesMap[materialTypes] = m;
+  });
 
   // Set selected material - default as the first material in the materialTypes array
   const [selectedMaterial, setSelectedMaterial] = useState(
-    materialTypes[0] || false
+    materialTypesMap[query.type] || materialTypes[0] || false
   );
+
+  // Only when component mounts
+  useEffect(() => {
+    if (selectedMaterial) {
+      handleSelectedMaterial(selectedMaterial);
+    }
+  }, []);
+
+  // Handle slectedMaterial
+  function handleSelectedMaterial(material) {
+    // Sets SelectedMaterial in state
+    setSelectedMaterial(material);
+
+    // Update query param callback
+    if (query.type !== material.materialType) {
+      onTypeChange({ type: material.materialType });
+    }
+  }
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Wrap fluid className={`container`}>
+      <Container>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
@@ -127,10 +100,8 @@ export function Overview({
                   {title}
                 </Title>
               </Col>
-              <Col xs={12}>
-                <div className={styles.ornament}>
-                  <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
-                </div>
+              <Col xs={12} className={styles.ornament}>
+                <Icon size={6} src={"ornament1.svg"} skeleton={skeleton} />
               </Col>
               <Col xs={12}>
                 <Text
@@ -154,7 +125,7 @@ export function Overview({
                     <Tag
                       key={material.materialType}
                       selected={isSelected}
-                      onClick={() => setSelectedMaterial(material)}
+                      onClick={() => handleSelectedMaterial(material)}
                       skeleton={skeleton}
                     >
                       {material.materialType}
@@ -176,27 +147,54 @@ export function Overview({
             </Row>
           </Col>
         </Row>
-      </Wrap>
+      </Container>
     </div>
   );
 }
 
 /**
- * Example skeleton component
+ * Skeleton/Loading version of component
  *
  * @param {Object} props Component props
  * @param {boolean} props.isSlow Is it unexpectingly slow to load?
  */
 export function OverviewSkeleton(props) {
+  // Default materialTypes (For skeleton use)
+  const defaultTypes = [
+    {
+      materialType: "Bog",
+      cover: {
+        detail: null,
+      },
+    },
+    {
+      materialType: "Ebog",
+      cover: {
+        detail: null,
+      },
+    },
+    {
+      materialType: "Lydbog (net)",
+      cover: {
+        detail: null,
+      },
+    },
+  ];
+
   return (
     <div>
-      <Overview {...props} className={styles.skeleton} skeleton={true} />
+      <Overview
+        {...props}
+        materialTypes={defaultTypes}
+        className={styles.skeleton}
+        skeleton={true}
+      />
     </div>
   );
 }
 
 /**
- * Example error component
+ * Returns error
  */
 export function OverviewError() {
   return (
@@ -207,80 +205,19 @@ export function OverviewError() {
 }
 
 /**
- * Container is a react component responsible for loading
- * data and displaying the right variant of the Example component
+ * Wrap is a react component responsible for loading
+ * data and displaying the right variant of the component
  *
  * @param {Object} props Component props
- * @param {string} props.workId Material work id
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
  */
-function Container({ workId, skeleton }) {
-  // use the useData hook to fetch data
-  // const { data, isLoading, isSlow, error } = useData(query({ workId }));
-
+export default function Wrap({ workId, skeleton, query, onTypeChange }) {
   const isLoading = skeleton;
   const isSlow = false;
   const error = false;
-  const data = {
-    work: {
-      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-      title: "Klodernes kamp",
-      creators: ["h g wells"],
-      materialTypes: [
-        {
-          materialType: "Bog",
-          pid: "870970-basis:06442870",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Bog stor skrift",
-          pid: "870970-basis:54926391",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
-          },
-        },
-        {
-          materialType: "Ebog",
-          pid: "870970-basis:52849985",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
-          },
-        },
-        {
-          materialType: "Lydbog (bånd)",
-          pid: "870970-basis:04843819",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Lydbog (cd-mp3)",
-          pid: "870970-basis:54687117",
-          cover: {
-            detail: null,
-          },
-        },
-        {
-          materialType: "Lydbog (net)",
-          pid: "870970-basis:54627890",
-          cover: {
-            detail:
-              "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
-          },
-        },
-        {
-          materialType: "Punktskrift",
-          pid: "874310-katalog:DBB0106054",
-          cover: {
-            detail: null,
-          },
-        },
-      ],
-    },
-  };
+  const data = dummy_workDataApi({ workId });
 
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
@@ -289,11 +226,13 @@ function Container({ workId, skeleton }) {
     return <OverviewError />;
   }
 
-  return <Overview {...data.work} />;
+  return <Overview {...data.work} query={query} onTypeChange={onTypeChange} />;
 }
 
-// Attach query to container to expose the query to some page
-Container.query = query;
-
-// Export container as the default
-export default Container;
+// PropTypes for component
+Wrap.propTypes = {
+  workId: PropTypes.string,
+  skeleton: PropTypes.bool,
+  query: PropTypes.object,
+  onTypeChange: PropTypes.func,
+};

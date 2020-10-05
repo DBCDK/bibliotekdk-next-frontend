@@ -13,10 +13,14 @@
  *  - workId: The work id we use when fetching data
  *
  */
+
 import { useRouter } from "next/router";
 import { fetchOnServer } from "../../../lib/api";
 
 import Overview from "../../../components/work/overview/";
+import Details from "../../../components/work/details/";
+import Description from "../../../components/work/description/";
+import Content from "../../../components/work/content/";
 
 import Example from "../../../components/work/Example";
 import Example2 from "../../../components/work/Example2";
@@ -26,12 +30,36 @@ import Example2 from "../../../components/work/Example2";
  */
 export default function WorkPage() {
   const router = useRouter();
-  const { workId } = router.query;
+  const { workId, type } = router.query;
+
+  /**
+   * Updates the query params in the url
+   * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
+   *
+   * @param {obj} query
+   */
+
+  function handleOnTypeChange(query) {
+    router.push(
+      { pathname: router.pathname, query },
+      {
+        pathname: router.asPath.replace(/\?.*/, ""),
+        query,
+      }
+    );
+  }
 
   return (
-    <div>
-      <Overview workId={workId} />
-    </div>
+    <React.Fragment>
+      <Overview
+        workId={workId}
+        onTypeChange={handleOnTypeChange}
+        query={{ type }}
+      />
+      <Details workId={workId} type={type} />
+      <Description workId={workId} type={type} />
+      <Content workId={workId} type={type} />
+    </React.Fragment>
   );
 }
 

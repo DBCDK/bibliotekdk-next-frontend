@@ -1,6 +1,9 @@
 .text {
   font-family: var(--body-font);
   display: block;
+
+  /* Bootstrap default override */
+  margin: 0;
 }
 
 .text1 {
@@ -20,6 +23,12 @@
   letter-spacing: 0.2px;
 }
 
+.text4 {
+  font-size: 14px;
+  line-height: 22px;
+  font-family: var(--body-font-bold);
+}
+
 /* 
 * Skeleton
 *
@@ -33,4 +42,10 @@
 
 .skeleton > * {
   color: transparent;
+}
+
+.skeleton p {
+  /* large block of text to only 1 line */
+  white-space: nowrap;
+  overflow: hidden;
 }

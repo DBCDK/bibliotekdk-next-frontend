@@ -15,7 +15,7 @@ import styles from "./Text.module.css";
 function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
-  type = "text1",
+  type = "text3",
   tag = "p",
   onClick = null,
 }) {
@@ -89,7 +89,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["text1", "text2", "text3"]),
+  type: PropTypes.oneOf(["text1", "text2", "text3", "text4"]),
   tag: PropTypes.oneOf(["p", "span", "div"]),
   skeleton: PropTypes.bool,
 };

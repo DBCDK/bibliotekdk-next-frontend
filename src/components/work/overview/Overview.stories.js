@@ -1,7 +1,7 @@
 import Overview from "./Overview";
 
 export default {
-  title: "Module: Overview",
+  title: "Work: Overview",
 };
 
 /**
@@ -11,7 +11,7 @@ export default {
 export function WorkOverview() {
   return (
     <div>
-      <Overview />
+      <Overview workId={"some-id"} />
     </div>
   );
 }

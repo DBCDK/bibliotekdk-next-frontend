@@ -44,8 +44,6 @@ function CopyButton({ el, txt = "Copy" }) {
 export function StoryTitle({ children, copy = false }) {
   const el = "<StoryTitle>Im a storybook title</StoryTitle>";
 
-  console.log("children", children);
-
   return (
     <div className={styles.title}>
       <Title type="title4">{children}</Title>
