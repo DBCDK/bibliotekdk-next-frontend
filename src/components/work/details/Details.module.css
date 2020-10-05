@@ -1,6 +1,9 @@
 .details {
-  min-height: 175px;
-  padding-bottom: var(--pt8);
+  padding-bottom: var(--pt4);
+}
+
+.details > div {
+  margin-bottom: var(--pt4);
 }
 
 .distanceTop {
@@ -9,4 +12,11 @@
 
 .title {
   margin: 0 0 var(--pt05) 0;
+}
+
+@media (min-width: 768px) {
+  .details {
+    min-height: 175px;
+    padding-bottom: var(--pt8);
+  }
 }

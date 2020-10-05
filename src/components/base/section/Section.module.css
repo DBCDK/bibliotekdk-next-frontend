@@ -1,5 +1,16 @@
 .divider {
+  width: 50%;
   height: 1px;
-  background-color: var(--iron);
   margin: 0 0 var(--pt2) 0;
+}
+
+.section div:first-child .divider {
+  background-color: var(--iron);
+}
+
+@media (min-width: 768px) {
+  .divider {
+    width: 100%;
+    background-color: var(--iron);
+  }
 }

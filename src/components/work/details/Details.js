@@ -21,7 +21,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
     <Section title="Detaljer" className={styles.distanceTop}>
       <Row className={`${styles.details} ${className}`}>
         {data.lang && (
-          <Col xs={12} md>
+          <Col xs={6} md>
             <Text
               type="text3"
               className={styles.title}
@@ -36,7 +36,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
           </Col>
         )}
         {data.pages && (
-          <Col xs={12} md>
+          <Col xs={6} md>
             <Text
               type="text3"
               className={styles.title}
@@ -51,7 +51,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
           </Col>
         )}
         {data.released && (
-          <Col xs={12} md>
+          <Col xs={6} md>
             <Text
               type="text3"
               className={styles.title}
@@ -66,7 +66,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
           </Col>
         )}
         {data.contribution && (
-          <Col xs={12} md>
+          <Col xs={6} md>
             <Text
               type="text3"
               className={styles.title}
