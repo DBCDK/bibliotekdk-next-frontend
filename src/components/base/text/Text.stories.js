@@ -39,6 +39,25 @@ export function Body() {
 }
 
 /**
+ * Show how to line clamp
+ *
+ */
+export function LineClamping() {
+  return (
+    <div>
+      <StoryTitle>Line clamping: Max 3 lines</StoryTitle>
+      <div style={{ maxWidth: 400 }}>
+        <Text type="text2" lines={3} clamp={true}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
+          purus a iaculis finibus. Integer lacus dui, condimentum quis elit in,
+          feugiat hendrerit urna. Etiam facilisis id ligula congue ultrices.
+        </Text>
+      </div>
+    </div>
+  );
+}
+
+/**
  * Returns all Text types in skeleton loading mode (note the numer of lines wanted)
  *
  */

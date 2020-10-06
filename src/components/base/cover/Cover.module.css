@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: flex-start;
 
-  max-width: 200px;
+  max-width: 208px;
 }
 
 .cover i {
@@ -19,6 +19,8 @@
 .cover img {
   width: 100%;
   height: auto;
+  object-fit: contain; 
+  object-position: 50% 0;
 }
 
 /**
