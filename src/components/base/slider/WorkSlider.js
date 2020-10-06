@@ -31,6 +31,7 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
       className={`${styles.button} ${styles.left} ${
         leftAdjust && styles["left-adjust"]
       } ${disabled && styles.disabled}`}
+      data-cy="arrow-left"
       onClick={onClick}
     >
       <Icon src={"arrowleft.svg"} size={5} bgColor={"transparent"} />
@@ -57,7 +58,7 @@ function ArrowRight({ onClick, disabled }) {
       className={`${styles.button} ${styles.right} ${
         disabled && styles.disabled
       }`}
-      disabled={disabled}
+      data-cy="arrow-right"
       onClick={onClick}
     >
       <Icon src={"arrowright.svg"} size={5} bgColor={"transparent"} />

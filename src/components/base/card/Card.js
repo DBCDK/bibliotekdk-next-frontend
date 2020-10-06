@@ -67,6 +67,7 @@ export default function Card({
         ref={cardRef || null}
         tabIndex="0"
         onFocus={onFocus}
+        data-cy="work-card"
       >
         <div className={styles.CoverWrapper}>
           <Cover src={cover.detail} size={["100%", "100%"]} />
@@ -104,13 +105,13 @@ export default function Card({
   );
 }
 
-// PropTypes for WorkSwiper component
 Card.propTypes = {
   cardRef: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.string,
   cover: PropTypes.object,
   creators: PropTypes.array,
   description: PropTypes.string,
+  id: PropTypes.string,
   onFocus: PropTypes.func,
   id: PropTypes.string,
   skeleton: PropTypes.bool,
