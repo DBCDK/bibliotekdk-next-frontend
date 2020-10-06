@@ -54,6 +54,8 @@ export default function Link({
 // PropTypes for component
 Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  href: PropTypes.string,
-  query: PropTypes.object,
+  href: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    query: PropTypes.object,
+  }),
 };

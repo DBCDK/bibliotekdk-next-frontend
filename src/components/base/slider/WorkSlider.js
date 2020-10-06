@@ -37,6 +37,11 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
     </label>
   );
 }
+ArrowLeft.propTypes = {
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+  leftAdjust: PropTypes.bool,
+};
 
 /**
  * The right arrow React component
@@ -59,6 +64,25 @@ function ArrowRight({ onClick, disabled }) {
     </label>
   );
 }
+ArrowRight.propTypes = {
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+};
+
+/**
+ * The work slider skeleton React component
+ */
+function WorkSliderSkeleton() {
+  // Number of skeleton cards to show
+  const numElements = 10;
+  return (
+    <div className={`${styles.WorkSlider} ${styles.skeleton}`}>
+      {Array.apply(null, Array(numElements)).map((el, idx) => (
+        <Card key={idx} className={styles.SlideWrapper} skeleton={true} />
+      ))}
+    </div>
+  );
+}
 
 /**
  * The work slider React component
@@ -68,7 +92,10 @@ function ArrowRight({ onClick, disabled }) {
  *
  * @returns {component}
  */
-export default function WorkSlider({ works }) {
+export default function WorkSlider({ skeleton, works }) {
+  if (skeleton) {
+    return <WorkSliderSkeleton />;
+  }
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -172,7 +199,7 @@ export default function WorkSlider({ works }) {
     </div>
   );
 }
-
 WorkSlider.propTypes = {
-  works: PropTypes.object,
+  skeleton: PropTypes.bool,
+  works: PropTypes.array,
 };

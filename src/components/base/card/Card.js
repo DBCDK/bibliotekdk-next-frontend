@@ -6,6 +6,9 @@ import Text from "../text";
 import Link from "../link";
 import { encodeTitleCreator } from "../../../lib/utils";
 
+/**
+ * The skeleton card React component
+ */
 function SkeletonCard() {
   return (
     <div className={styles.SkeletonCard}>
@@ -14,34 +17,18 @@ function SkeletonCard() {
       </div>
       <div>
         <Text
-          // className={`${styles.Title}`}
-          type="text1"
-          lines={3}
-          skeleton={true}
-        >
-          here goes some text
-        </Text>
-        {/* 
-        <Text
-          // className={`${styles.Creator}`}
-          type="text2"
-          lines={1}
-          skeleton={true}
-        ></Text>
-
-        <Text
-          // className={`${styles.Description}`}
+          className={`${styles.Title}`}
           type="text3"
-          lines={2}
+          lines={4}
           skeleton={true}
-        ></Text> */}
+        />
       </div>
     </div>
   );
 }
 
 /**
- * Function to create a loading overlay on a component.
+ * The card React component
  *
  * @param {object} props
  * See propTypes for specific props and types
@@ -119,5 +106,13 @@ export default function Card({
 
 // PropTypes for WorkSwiper component
 Card.propTypes = {
-  works: PropTypes.object,
+  cardRef: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  className: PropTypes.string,
+  cover: PropTypes.object,
+  creators: PropTypes.array,
+  description: PropTypes.string,
+  onFocus: PropTypes.func,
+  id: PropTypes.string,
+  skeleton: PropTypes.bool,
+  title: PropTypes.string,
 };

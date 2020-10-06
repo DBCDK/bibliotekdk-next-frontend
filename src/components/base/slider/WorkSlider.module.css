@@ -1,6 +1,11 @@
 .WorkSlider {
   position: relative;
 }
+.skeleton {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
 
 .SlideWrapper {
   border-right: 1px solid rgba(0, 0, 0, 0.25);
@@ -32,6 +37,7 @@
 }
 .button.disabled {
   background-color: var(--iron);
+  cursor: initial;
 }
 .left {
   left: var(--pt4);
@@ -49,6 +55,7 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+  /* Make buttons visible */
   .button {
     display: inherit;
   }
@@ -56,5 +63,4 @@
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-
 }

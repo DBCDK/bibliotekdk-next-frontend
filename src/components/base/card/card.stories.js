@@ -19,9 +19,9 @@ export function WorkNarrowAndWideCover() {
       detail:
         "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=28756674&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4d36c639cc28e6f7da2c",
     },
-    description: [
+    description:
       "Krimi med kommissær Wexford og hans makker Burden på sporet af historien bag fundet af to lig, der var gravet ned 11 og 8 år tidligere. Beboerne i den lille by Kingsmarkham har mange hemmeligheder, og nogle af dem er dystre",
-    ],
+
     title: "Ikke i kød og blod",
   };
 
@@ -35,9 +35,9 @@ export function WorkNarrowAndWideCover() {
       detail:
         "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29388598&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d7fd87c75aaaa00955b5",
     },
-    description: [
+    description:
       "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
-    ],
+
     title: "Blodrøde spor",
   };
 
@@ -50,7 +50,6 @@ export function WorkNarrowAndWideCover() {
       </StoryDescription>
       <Card {...narrow} />
       <Card {...wide} />
-      <Card skeleton={true} />
     </div>
   );
 }
