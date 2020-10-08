@@ -24,7 +24,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
 }
 
 WorkPage.propTypes = {
-  workId: propTypes.string,
+  workId: PropTypes.string,
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
 };
