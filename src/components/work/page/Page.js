@@ -1,10 +1,11 @@
+import PropTypes from "prop-types";
 import Content from "../content";
 import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
 
 /**
- * The Component function
+ * The work page React component
  *
  * @param {obj} props
  * See propTypes for specific props and types
@@ -21,3 +22,9 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
     </main>
   );
 }
+
+WorkPage.propTypes = {
+  workId: propTypes.string,
+  type: PropTypes.string,
+  onTypeChange: PropTypes.func,
+};
