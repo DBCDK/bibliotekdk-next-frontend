@@ -1,6 +1,7 @@
 .text {
   font-family: var(--body-font);
   display: block;
+  letter-spacing: 0.2px;
 
   /* Bootstrap default override */
   margin: 0;
@@ -8,25 +9,24 @@
 
 .text1 {
   font-size: 17px;
-  line-height: 24px;
-  font-family: var(--body-font-bold);
+  line-height: 26px;
+  font-family: var(--body-font-semibold);
 }
 
 .text2 {
   font-size: 17px;
-  line-height: 24px;
+  line-height: 26px;
 }
 
 .text3 {
   font-size: 14px;
   line-height: 22px;
-  letter-spacing: 0.2px;
 }
 
 .text4 {
   font-size: 14px;
   line-height: 22px;
-  font-family: var(--body-font-bold);
+  font-family: var(--body-font-semibold);
 }
 
 /* 

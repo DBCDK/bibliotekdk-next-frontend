@@ -1,9 +1,11 @@
 .tag {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
   background-color: transparent;
   font-family: var(--body-font);
   font-size: 14px;
-  line-height: 22px;
-  padding: var(--pt1) var(--pt2);
+  padding: 0 var(--pt2);
   border: 1px solid var(--gray);
   color: var(--mine-shaft);
   position: relative;
