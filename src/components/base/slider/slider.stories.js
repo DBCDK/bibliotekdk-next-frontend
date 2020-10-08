@@ -174,10 +174,6 @@ const works = [
   },
 ];
 
-/**
- * Return what-ever as a Link
- *
- */
 export function Work_Slider() {
   return (
     <div>
