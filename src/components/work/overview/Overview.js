@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -11,9 +11,9 @@ import Tag from "../../base/forms/tag";
 import Bookmark from "../../base/bookmark";
 import Breadcrumbs from "../../base/breadcrumbs";
 
-import dummy_workDataApi from "../dummy.workDataApi.js";
-
 import styles from "./Overview.module.css";
+import { useData } from "../../../lib/api/api";
+import * as workFragments from "../../../lib/api/work.fragments";
 
 /**
  * The Component function
@@ -25,10 +25,10 @@ import styles from "./Overview.module.css";
  */
 export function Overview({
   title = "...",
-  creators = ["..."],
+  creators = [{ name: "..." }],
   path = [],
   materialTypes = [],
-  query = {},
+  type,
   onTypeChange = () => {},
   className = "",
   skeleton = false,
@@ -45,28 +45,25 @@ export function Overview({
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes.forEach((m) => {
-    materialTypesMap[materialTypes] = m;
+    materialTypesMap[m.materialType] = m;
   });
 
   // Set selected material - default as the first material in the materialTypes array
-  const [selectedMaterial, setSelectedMaterial] = useState(
-    materialTypesMap[query.type] || materialTypes[0] || false
+  const [selectedMaterialState, setSelectedMaterialState] = useState(
+    materialTypes[0]
   );
 
-  // Only when component mounts
-  useEffect(() => {
-    if (selectedMaterial) {
-      handleSelectedMaterial(selectedMaterial);
-    }
-  }, []);
+  // Either use type from props, or from local state
+  const selectedMaterial =
+    materialTypesMap[type] || selectedMaterialState || false;
 
   // Handle slectedMaterial
   function handleSelectedMaterial(material) {
     // Sets SelectedMaterial in state
-    setSelectedMaterial(material);
+    setSelectedMaterialState(material);
 
     // Update query param callback
-    if (query.type !== material.materialType) {
+    if (type !== material.materialType) {
       onTypeChange({ type: material.materialType });
     }
   }
@@ -111,7 +108,7 @@ export function Overview({
                   lines={1}
                 >
                   {creators.map((c, i) =>
-                    creators.length > i + 1 ? c + ", " : c
+                    creators.length > i + 1 ? c.name + ", " : c.name
                   )}
                 </Text>
               </Col>
@@ -213,11 +210,11 @@ export function OverviewError() {
  *
  * @returns {component}
  */
-export default function Wrap({ workId, skeleton, query, onTypeChange }) {
-  const isLoading = skeleton;
-  const isSlow = false;
-  const error = false;
-  const data = dummy_workDataApi({ workId });
+export default function Wrap({ workId, type, onTypeChange }) {
+  // use the useData hook to fetch data
+  const { data, isLoading, isSlow, error } = useData(
+    workFragments.basic({ workId })
+  );
 
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
@@ -226,13 +223,12 @@ export default function Wrap({ workId, skeleton, query, onTypeChange }) {
     return <OverviewError />;
   }
 
-  return <Overview {...data.work} query={query} onTypeChange={onTypeChange} />;
+  return <Overview {...data.work} type={type} onTypeChange={onTypeChange} />;
 }
 
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  skeleton: PropTypes.bool,
-  query: PropTypes.object,
+  type: PropTypes.string,
   onTypeChange: PropTypes.func,
 };

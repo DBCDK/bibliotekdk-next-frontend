@@ -4,9 +4,9 @@
   "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
-    "dev:next": "next",
+    "dev:next": "next -p ${PORT}",
     "build:next": "next build",
-    "start:next": "next start",
+    "start:next": "next start -p ${PORT}",
     "dev:storybook": "STORYBOOK_ACTIVE=1 start-storybook -s ./public -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "STORYBOOK_ACTIVE=1 build-storybook -c .storybook -o dist/storybook --quiet",
     "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
@@ -20,6 +20,7 @@
   "author": "Frontend @ DBC",
   "license": "GNU",
   "devDependencies": {
+    "@storybook/addon-knobs": "^6.0.26",
     "@storybook/react": "^6.0.16",
     "babel-eslint": "^10.1.0",
     "css-loader": "^3.4.1",

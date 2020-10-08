@@ -4,7 +4,7 @@ export default function dummy_workDataApi({ workId }) {
       work: {
         path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
         title: "Klodernes kamp",
-        creators: ["h g wells"],
+        creators: [{ name: "h g wells" }],
         materialTypes: [
           {
             materialType: "Bog",
