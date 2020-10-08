@@ -1,0 +1,63 @@
+.SkeletonCard,
+.Card {
+  width: 120px;
+  margin-bottom: 2px;
+  padding-left: var(--pt1);
+  padding-right: var(--pt1);
+  padding-bottom: var(--pt05);
+  display: inline-block;
+}
+.Card,
+.Card:hover {
+  color: inherit;
+  text-decoration: inherit;
+}
+.Card:hover,
+.Card:focus {
+  background: var(--concrete);
+  border-bottom: 2px solid var(--mine-shaft);
+  margin-bottom: 0px;
+}
+.Title {
+  margin: 0;
+  margin-top: var(--pt05);
+}
+.Creator {
+  margin: 0;
+}
+.Description {
+  margin: 0;
+  /* margin-top: var(--pt05); */
+}
+.CoverWrapper {
+  height: 160px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .SkeletonCard,
+  .Card {
+    width: 160px;
+  }
+  .CoverWrapper {
+    height: 200px;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .button {
+    display: inherit;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 1200px) {
+  .SkeletonCard,
+  .Card {
+    width: 208px;
+  }
+  .CoverWrapper {
+    height: 288px;
+  }
+}

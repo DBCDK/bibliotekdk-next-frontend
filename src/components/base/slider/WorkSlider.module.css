@@ -1,0 +1,66 @@
+.WorkSlider {
+  position: relative;
+}
+.skeleton {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.SlideWrapper {
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.SlideWrapper:last-of-type {
+  padding-right: 0;
+  margin-right: 0;
+  border-right: 0;
+}
+
+.button {
+  cursor: pointer;
+  user-select: none;
+  display: none;
+  background-color: var(--blue);
+  color: var(--white);
+  transition-duration: 0.35s;
+
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  top: calc(50% - var(--pt5) / 2);
+}
+
+.button:hover {
+  background-color: var(--mine-shaft);
+}
+.button.disabled {
+  background-color: var(--iron);
+  cursor: initial;
+}
+.left {
+  left: var(--pt4);
+}
+.left-adjust {
+  left: calc(var(--pt4) * -1 - var(--pt5));
+}
+.right {
+  right: var(--pt4);
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* Make buttons visible */
+  .button {
+    display: inherit;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+}
