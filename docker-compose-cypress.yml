@@ -6,6 +6,7 @@ services:
     environment:
       - ENABLE_STORYBOOK=1
       - STORYBOOK_PORT=4000
+      - PORT=3000
     command: npm run start
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)

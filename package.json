@@ -4,9 +4,9 @@
   "description": "The frontend for bibliotek.dk",
   "main": "index.js",
   "scripts": {
-    "dev:next": "next -p ${PORT}",
+    "dev:next": "next -p ${PORT:-3000}",
     "build:next": "next build",
-    "start:next": "next start -p ${PORT}",
+    "start:next": "next start -p ${PORT:-3000}",
     "dev:storybook": "STORYBOOK_ACTIVE=1 start-storybook -s ./public -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "STORYBOOK_ACTIVE=1 build-storybook -c .storybook -o dist/storybook --quiet",
     "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
