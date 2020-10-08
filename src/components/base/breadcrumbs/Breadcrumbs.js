@@ -32,7 +32,7 @@ function Breadcrumb({
   const disabledStyle = disabled ? styles.disabled : "";
 
   return (
-    <Link href={href}>
+    <Link href={{ pathname: href }}>
       <div className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
         <Text tag="span" type="text3">
           {children}

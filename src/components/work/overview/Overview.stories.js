@@ -1,4 +1,5 @@
-import Overview from "./Overview";
+import dummy_workDataApi from "../dummy.workDataApi";
+import OverviewWithData, { OverviewSkeleton, Overview } from "./Overview";
 
 export default {
   title: "Work: Overview",
@@ -9,9 +10,10 @@ export default {
  *
  */
 export function WorkOverview() {
+  const data = dummy_workDataApi({ workId: "some-id" });
   return (
     <div>
-      <Overview workId={"some-id"} />
+      <Overview {...data.work} />
     </div>
   );
 }
@@ -23,7 +25,7 @@ export function WorkOverview() {
 export function Loading() {
   return (
     <div>
-      <Overview skeleton={true} />
+      <OverviewSkeleton />
     </div>
   );
 }

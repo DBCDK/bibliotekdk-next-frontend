@@ -15,22 +15,17 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchOnServer } from "../../../lib/api";
+import { fetchOnServer } from "../../../lib/api/api";
+import * as workFragments from "../../../lib/api/work.fragments";
 
-import Overview from "../../../components/work/overview/";
-import Details from "../../../components/work/details/";
-import Description from "../../../components/work/description/";
-import Content from "../../../components/work/content/";
-
-import Example from "../../../components/work/Example";
-import Example2 from "../../../components/work/Example2";
+import Page from "../../../components/work/page";
 
 /**
  * Renders the WorkPage component
  */
 export default function WorkPage() {
   const router = useRouter();
-  const { workId, type } = router.query;
+  const { workId, title_author, type } = router.query;
 
   /**
    * Updates the query params in the url
@@ -39,42 +34,20 @@ export default function WorkPage() {
    * @param {obj} query
    */
 
-  function handleOnTypeChange(query) {
-    router.push(
-      { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      }
-    );
+  function handleOnTypeChange({ type }) {
+    router.push({
+      pathname: "/materiale/[title_author]/[workId]",
+      query: { workId, title_author, type },
+    });
   }
 
   return (
-    <React.Fragment>
-      <Overview
-        workId={workId}
-        onTypeChange={handleOnTypeChange}
-        query={{ type }}
-      />
-      <Details workId={workId} type={type} />
-      <Description workId={workId} type={type} />
-      <Content workId={workId} type={type} />
-    </React.Fragment>
-  );
-}
-
-/**
- * Renders example of WorkPage component
- */
-export function ExampleWorkPage() {
-  const router = useRouter();
-  const { workId } = router.query;
-
-  return (
-    <div>
-      <Example workId={workId} />
-      <Example2 workId={workId} />
-    </div>
+    <Page
+      workId={workId}
+      onTypeChange={handleOnTypeChange}
+      type={type}
+      query={{ type }}
+    />
   );
 }
 
@@ -87,7 +60,7 @@ export function ExampleWorkPage() {
  * On this page, queries should only use:
  *  - workId
  */
-const serverQueries = [Example.query, Example2.query];
+const serverQueries = Object.values(workFragments);
 
 /**
  * We export getServerSideProps to let Next.js
