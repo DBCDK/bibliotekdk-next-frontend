@@ -4,6 +4,15 @@ import Skeleton from "../skeleton";
 
 import styles from "./Text.module.css";
 
+// Line heights are used for calculating line-clamp
+// Values are copied from css module ...
+const lineHeight = {
+  text1: 26,
+  text2: 26,
+  text3: 22,
+  text4: 22,
+};
+
 /**
  * The Component function
  *
@@ -16,6 +25,8 @@ function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text3",
+  lines,
+  clamp,
   tag = "p",
   onClick = null,
 }) {
@@ -26,8 +37,14 @@ function Text({
 
   return (
     <Tag
-      className={`${styles.text} ${styles[type]} ${className}`}
+      className={`${styles.text} ${styles[type]} ${className} ${
+        clamp && styles.clamp
+      }`}
       onClick={onClick}
+      style={
+        clamp &&
+        lines && { WebkitLineClamp: lines, maxHeight: lines * lineHeight[type] }
+      }
     >
       {children}
     </Tag>

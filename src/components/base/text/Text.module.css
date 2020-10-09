@@ -28,6 +28,11 @@
   line-height: 22px;
   font-family: var(--body-font-semibold);
 }
+.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* 
 * Skeleton

@@ -48,7 +48,7 @@ function Cover({
       className={`${styles.cover} ${frameStyle} ${className}`}
       onClick={onClick}
     >
-      <img src={src} />
+      <img style={dimensions} src={src} />
       {children}
     </div>
   );
@@ -67,7 +67,6 @@ function CoverSkeleton(props) {
     <Cover
       {...props}
       className={`${props.className} ${styles.skeleton}`}
-      size={["200px", "300px"]}
       onClick={null}
       src={null}
       bgColor={null}
