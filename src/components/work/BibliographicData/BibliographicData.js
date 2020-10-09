@@ -9,7 +9,6 @@ import Text from "../../base/text";
 import dummy_workDataApi from "../dummy.workDataApi";
 import React, { useState } from "react";
 
-
 /**
  * Export function of the Component
  *
@@ -96,19 +95,16 @@ function ManifestationColumn({ manifestation = null }) {
         <Rule color="orange" />
       </Col>
     );
-  }
-  else{
+  } else {
     // yes it is
     return (
       <Col key={manifestation.materialType.pid} xs={12} md>
         <Text type="text3" lines={2}>
-          This is a manifestation : {manifestation.pid} : in progress @TODO manifestation template
+          This is a manifestation : {manifestation.pid} : in progress @TODO
+          manifestation template
         </Text>
         <Rule color="orange" />
       </Col>
     );
   }
 }
-
-
-
