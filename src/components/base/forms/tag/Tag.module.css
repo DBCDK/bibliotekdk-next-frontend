@@ -60,6 +60,16 @@
 }
 
 /* 
+* Focus
+*
+*/
+
+.tag:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue) !important;
+}
+
+/* 
 * Skeleton
 *
 */
