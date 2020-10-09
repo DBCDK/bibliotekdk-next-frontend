@@ -1,6 +1,7 @@
 import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
+import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
-import Description from "./Description";
+import { Description, DescriptionSkeleton } from "./Description";
 
 export default {
   title: "Work: Description",
@@ -11,6 +12,9 @@ export default {
  *
  */
 export function DescriptionSection() {
+  const workId = "some-id";
+  const type = "Bog";
+  const data = dummy_materialTypesApi({ workId, type });
   return (
     <div>
       <StoryTitle>Description section</StoryTitle>
@@ -18,7 +22,8 @@ export function DescriptionSection() {
         Work description component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Description workId={"some-id"} type={"Bog"} />
+
+      <Description data={data[workId]} type={type} />
     </div>
   );
 }
@@ -33,7 +38,7 @@ export function Loading() {
       <StoryTitle>Description section</StoryTitle>
       <StoryDescription>Loading description component</StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Description skeleton />
+      <DescriptionSkeleton />
     </div>
   );
 }

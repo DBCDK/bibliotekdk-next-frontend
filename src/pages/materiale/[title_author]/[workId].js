@@ -34,11 +34,14 @@ export default function WorkPage() {
    * @param {obj} query
    */
 
-  function handleOnTypeChange({ type }) {
-    router.push({
-      pathname: "/materiale/[title_author]/[workId]",
-      query: { workId, title_author, type },
-    });
+  function handleOnTypeChange(query) {
+    router.push(
+      { pathname: router.pathname, query },
+      {
+        pathname: router.asPath.replace(/\?.*/, ""),
+        query,
+      }
+    );
   }
 
   return (

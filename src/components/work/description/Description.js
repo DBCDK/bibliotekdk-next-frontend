@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
+import { useData } from "../../../lib/api/api";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
-
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import * as workFragments from "../../../lib/api/work.fragments";
 
 import styles from "./Description.module.css";
 
@@ -16,14 +16,14 @@ import styles from "./Description.module.css";
  *
  * @returns {component}
  */
-function Description({ className = "", data = {}, skeleton = false }) {
+export function Description({ className = "", data = "", skeleton = false }) {
   return (
     <Section title="Beskrivelse">
       <Row className={`${styles.description} ${className}`}>
-        {data.description && (
+        {data && (
           <Col xs={12} md>
             <Text type="text2" skeleton={skeleton} lines={4}>
-              {data.description}
+              {data}
             </Text>
           </Col>
         )}
@@ -40,12 +40,13 @@ function Description({ className = "", data = {}, skeleton = false }) {
  *
  * @returns {component}
  */
-function DescriptionSkeleton(props) {
+export function DescriptionSkeleton(props) {
   return (
     <Description
       {...props}
-      data={{ description: "..." }}
+      data="..."
       className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
     />
   );
 }
@@ -59,16 +60,19 @@ function DescriptionSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type } = props;
+  const { workId } = props;
 
-  // Call materialTypes mockdata API
-  const data = dummy_materialTypesApi({ workId, type });
+  const { data, isLoading, error } = useData(workFragments.basic({ workId }));
 
-  if (props.skeleton) {
-    return <DescriptionSkeleton {...props} data={data[workId]} />;
+  if (isLoading) {
+    return <DescriptionSkeleton />;
   }
 
-  return <Description {...props} data={data[workId]} />;
+  if (error) {
+    return null;
+  }
+
+  return <Description {...props} data={data.work.description} />;
 }
 
 // PropTypes for component

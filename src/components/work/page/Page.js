@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Recommendations from "../recommendations";
 import Content from "../content";
 import Description from "../description";
 import Details from "../details";
@@ -19,6 +20,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Details workId={workId} type={type} />
       <Description workId={workId} type={type} />
       <Content workId={workId} type={type} />
+      <Recommendations workId={workId} />
     </main>
   );
 }
