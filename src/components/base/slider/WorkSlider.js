@@ -179,7 +179,7 @@ export default function WorkSlider({ skeleton, works }) {
           return (
             <Card
               cardRef={idx === 0 && cardRef}
-              key={work.cover.detail}
+              key={work.id}
               {...work}
               className={styles.SlideWrapper}
               onFocus={() => {
