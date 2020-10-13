@@ -24,8 +24,6 @@
 .bookmark:hover {
   /* bootstrap outline override */
   outline: none;
-  border: none;
-  transform: translate(25%, -25%);
 }
 
 /* 
@@ -54,8 +52,6 @@
 .bookmark:focus {
   /* bootstrap outline override */
   outline: none;
-  /* border: 2px solid var(--blue);
-  transform: translate(calc(25% + 1px), calc(-25% - 1px)); */
 }
 
 /* 
