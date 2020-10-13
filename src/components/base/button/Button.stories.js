@@ -24,25 +24,29 @@ export function Primary() {
       <StoryDescription>
         Primary buttons takes up 100% of width [block]
       </StoryDescription>
-      {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
-          <Button type={type} size={size}>
-            {size}
-          </Button>
-          <StorySpace space="2" />
-        </React.Fragment>
-      ))}
+      <div style={{ maxWidth: 400 }}>
+        {sizes.map((size) => (
+          <React.Fragment key={`${type}-${size}`}>
+            <Button type={type} size={size}>
+              {size}
+            </Button>
+            <StorySpace space="2" />
+          </React.Fragment>
+        ))}
+      </div>
 
       <StoryTitle>[Disabled] Primary buttons </StoryTitle>
 
-      {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
-          <Button type={type} size={size} disabled={true}>
-            {size}
-          </Button>
-          <StorySpace space="2" />
-        </React.Fragment>
-      ))}
+      <div style={{ maxWidth: 400 }}>
+        {sizes.map((size) => (
+          <React.Fragment key={`${type}-${size}`}>
+            <Button type={type} size={size} disabled={true}>
+              {size}
+            </Button>
+            <StorySpace space="2" />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }

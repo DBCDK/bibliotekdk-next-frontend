@@ -1,9 +1,11 @@
 .tag {
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
   background-color: transparent;
   font-family: var(--body-font);
   font-size: 14px;
-  line-height: 22px;
-  padding: var(--pt1) var(--pt2);
+  padding: 0 var(--pt2);
   border: 1px solid var(--gray);
   color: var(--mine-shaft);
   position: relative;
@@ -38,7 +40,7 @@
 }
 
 .tag.selected i {
-  transform: scale(1) translate(25%, -25%);
+  transform: scale(1) translate(40%, -40%);
   transition-timing-function: var(--bounce-effect);
 }
 
@@ -55,6 +57,16 @@
 .tag.disabled,
 .tag.disabled:hover {
   color: var(--gray);
+}
+
+/* 
+* Focus
+*
+*/
+
+.tag:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
 }
 
 /* 

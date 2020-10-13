@@ -8,7 +8,7 @@ export default {
 
 // Current text types
 const texts = ["text1", "text2", "text3", "text4"];
-const size = ["17/24, 600", "17/24, 400", "14/22, 400", "14/22, 600"];
+const size = ["17/26, 600", "17/26, 400", "14/22, 400", "14/22, 600"];
 
 /**
  * Returns all Text types
@@ -19,21 +19,24 @@ export function Body() {
     <div>
       <StoryTitle>Body Text</StoryTitle>
 
-      {texts.map((type, i) => (
-        <React.Fragment key={type}>
-          <StoryTitle>
-            {type} [{size[i]}]
-          </StoryTitle>
-          <Text type={type}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-            mollis purus a iaculis finibus. Integer lacus dui, condimentum quis
-            elit in, feugiat hendrerit urna. Etiam facilisis id ligula congue
-            ultrices.
-          </Text>
+      <div style={{ maxWidth: 600 }}>
+        {texts.map((type, i) => (
+          <React.Fragment key={type}>
+            <StoryTitle>
+              {type} [{size[i]}]
+            </StoryTitle>
 
-          <StorySpace space="2" />
-        </React.Fragment>
-      ))}
+            <Text type={type}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+              mollis purus a iaculis finibus. Integer lacus dui, condimentum
+              quis elit in, feugiat hendrerit urna. Etiam facilisis id ligula
+              congue ultrices.
+            </Text>
+
+            <StorySpace space="2" />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 }
@@ -67,14 +70,16 @@ export function Loading() {
     <div>
       <StoryTitle>Loading Text</StoryTitle>
 
-      <StoryTitle>2 lines [{type}]</StoryTitle>
-      <Text type={type} skeleton={true} lines={2} />
+      <div style={{ maxWidth: 600 }}>
+        <StoryTitle>2 lines [{type}]</StoryTitle>
+        <Text type={type} skeleton={true} lines={2} />
 
-      <StoryTitle>3 lines [{type}]</StoryTitle>
-      <Text type={type} skeleton={true} lines={3} />
+        <StoryTitle>3 lines [{type}]</StoryTitle>
+        <Text type={type} skeleton={true} lines={3} />
 
-      <StoryTitle>4 lines [{type}]</StoryTitle>
-      <Text type={type} skeleton={true} lines={4} />
+        <StoryTitle>4 lines [{type}]</StoryTitle>
+        <Text type={type} skeleton={true} lines={4} />
+      </div>
     </div>
   );
 }
