@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
+import Translate from "../../base/translate";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
@@ -17,8 +18,11 @@ import styles from "./Content.module.css";
  * @returns {component}
  */
 function Content({ className = "", data = {}, skeleton = false }) {
+  // Translate Context
+  const context = { context: "content" };
+
   return (
-    <Section title="Indhold">
+    <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.content} ${className}`}>
         {data.notes &&
           data.notes.map((n, i) => {
