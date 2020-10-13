@@ -1,9 +1,14 @@
 .bookmark {
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.bookmark i {
   cursor: pointer;
   box-shadow: var(--shadow-effect);
 }
 
-.bookmark svg path {
+.bookmark i svg path {
   stroke: var(--gray);
 }
 
@@ -12,8 +17,15 @@
 *
 */
 
-.bookmark:hover svg path {
+.bookmark:hover i svg path {
   stroke: blue;
+}
+
+.bookmark:hover {
+  /* bootstrap outline override */
+  outline: none;
+  border: none;
+  transform: translate(25%, -25%);
 }
 
 /* 
@@ -21,13 +33,29 @@
 *
 */
 
-.bookmark.selected {
+.bookmark.selected i {
   /* Use of important to override dynamic inline style */
   background-color: var(--blue) !important;
 }
 
-.bookmark.selected svg path {
+.bookmark.selected i svg path {
   stroke: var(--white);
+}
+
+/* 
+* focus
+*
+*/
+
+.bookmark:focus i svg path {
+  stroke: blue;
+}
+
+.bookmark:focus {
+  /* bootstrap outline override */
+  outline: none;
+  /* border: 2px solid var(--blue);
+  transform: translate(calc(25% + 1px), calc(-25% - 1px)); */
 }
 
 /* 

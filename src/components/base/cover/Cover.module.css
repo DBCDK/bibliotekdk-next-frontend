@@ -8,7 +8,8 @@
   max-width: 208px;
 }
 
-.cover i {
+/* Bookmark button */
+.cover button {
   position: absolute;
   top: 0;
   right: 0;
@@ -19,7 +20,7 @@
 .cover img {
   width: 100%;
   height: auto;
-  object-fit: contain; 
+  object-fit: contain;
   object-position: 50% 0;
 }
 

@@ -24,7 +24,7 @@ function Separator() {
  */
 function Breadcrumb({
   children = "Crumb",
-  href = "/",
+  href = { pathname: "/", query: {} },
   separator = true,
   className = "",
   disabled = false,
