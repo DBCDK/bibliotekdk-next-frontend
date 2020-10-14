@@ -10,8 +10,22 @@
   text-transform: capitalize;
 }
 
+.link {
+  color: var(--mine-shaft);
+}
+
 .separator {
   padding: 0 var(--pt05);
+}
+
+/* 
+* Focus
+*
+*/
+
+.link:focus {
+  color: var(--blue);
+  text-decoration: underline;
 }
 
 /**

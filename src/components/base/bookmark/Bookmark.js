@@ -29,16 +29,19 @@ function Bookmark({
   const selectedClass = selected ? styles.selected : "";
 
   return (
-    <Icon
-      skeleton={skeleton}
-      disabled={disabled}
-      size={5}
-      bgColor="var(--white)"
+    <button
+      className={`${className} ${styles.bookmark} ${selectedClass}`}
       onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
-      className={`${className || ""} ${styles.bookmark} ${selectedClass}`}
     >
-      <BookmarkSvg />
-    </Icon>
+      <Icon
+        skeleton={skeleton}
+        disabled={disabled}
+        size={5}
+        bgColor="var(--white)"
+      >
+        <BookmarkSvg />
+      </Icon>
+    </button>
   );
 }
 

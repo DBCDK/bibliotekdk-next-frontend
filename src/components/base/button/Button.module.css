@@ -86,6 +86,23 @@
 }
 
 /* 
+* Focused
+*
+*/
+
+.button.primary:focus {
+  background-color: var(--mine-shaft);
+  color: var(--white);
+  outline: none;
+}
+
+.button.secondary:focus {
+  outline: 1px solid var(--mine-shaft);
+  border: 1px solid var(--mine-shaft);
+  color: var(--mine-shaft);
+}
+
+/* 
 * Disabled 
 *
 */
