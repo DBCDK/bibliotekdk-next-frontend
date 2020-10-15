@@ -1,0 +1,261 @@
+{
+  "language": "da",
+  "contexts": {
+    "general": {
+      "readMore": {
+        "da": "Læs mere",
+        "en": "Read more"
+      },
+      "searchButton": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "back": {
+        "da": "Tilbage",
+        "en": "Back"
+      },
+      "cancel": {
+        "da": "Fortryd",
+        "en": "Cancel"
+      },
+      "ok": {
+        "da": "OK",
+        "en": "OK"
+      },
+      "close": {
+        "da": "Luk",
+        "en": "Close"
+      },
+      "save": {
+        "da": "Gem",
+        "en": "Save"
+      },
+      "edit": {
+        "da": "Rediger",
+        "en": "Edit"
+      },
+      "bestil": {
+        "da": "Bestil",
+        "en": "Order"
+      },
+      "all": {
+        "da": "Alle",
+        "en": "All"
+      },
+      "by": {
+        "da": "Af",
+        "en": "By"
+      },
+      "from": {
+        "da": "Fra",
+        "en": "From"
+      },
+      "new": {
+        "da": "Ny",
+        "en": "New"
+      },
+      "cancelEdit": {
+        "da": "Fortryd redigering",
+        "en": "Cancel edit"
+      },
+      "image": {
+        "da": "Billede:",
+        "en": "Image:"
+      },
+      "description": {
+        "da": "Beskrivelse:",
+        "en": "Description:"
+      },
+      "saveChanges": {
+        "da": "Gem ændringerne",
+        "en": "Save changes"
+      },
+      "book": {
+        "da": "bog",
+        "en": "book"
+      },
+      "books": {
+        "da": "bøger",
+        "en": "books"
+      },
+      "ebook": {
+        "da": "Ebog",
+        "en": "Ebook"
+      },
+      "audiobook": {
+        "da": "Lydbog",
+        "en": "Audiobook"
+      },
+      "private": {
+        "da": "Privat",
+        "en": "Private"
+      },
+      "public": {
+        "da": "Offentlig",
+        "en": "Public"
+      },
+      "create": {
+        "da": "opret",
+        "en": "create"
+      },
+      "createdThe": {
+        "da": "Oprettet d.",
+        "en": "Created the"
+      },
+      "addedThe": {
+        "da": "Tilføjet d.",
+        "en": "Added the"
+      },
+      "lists": {
+        "da": "Lister",
+        "en": "Lists"
+      },
+      "showMore": {
+        "da": "Vis mere",
+        "en": "Show more"
+      },
+      "and": {
+        "da": "og",
+        "en": "and"
+      },
+      "home": {
+        "da": "Hjem",
+        "en": "Home"
+      }
+    },
+    "overview": {
+      "addToCart": {
+        "da": "Læg i lånekurv",
+        "en": "Put in loan basket"
+      },
+      "addToCart-line1": {
+        "da": "Fysiske materialer leveres til dit lokale bibliotek",
+        "en": "Physical materials are delivered to your local library"
+      },
+      "addToCart-line2": {
+        "da": "Digitale materialer bliver du sendt videre til",
+        "en": "You will be forwarded to digital materials"
+      }
+    },
+    "details": {
+      "title": {
+        "da": "Detaljer",
+        "en": "Details"
+      },
+      "language": {
+        "da": "Sprog",
+        "en": "Language"
+      },
+      "pages": {
+        "da": "Sideantal",
+        "en": "Number of pages"
+      },
+      "released": {
+        "da": "Udgivet",
+        "en": "Released"
+      },
+      "contribution": {
+        "da": "Bidrag",
+        "en": "Contributions"
+      }
+    },
+    "description": {
+      "title": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      }
+    },
+    "content": {
+      "title": {
+        "da": "Indhold",
+        "en": "Content"
+      }
+    },
+    "recommendations": {
+      "remindsOf": {
+        "da": "Minder om",
+        "en": "Reminds of"
+      }
+    }
+  },
+  "units": {
+    "second": {
+      "da": "sekund",
+      "en": "second"
+    },
+    "seconds": {
+      "da": "sekunder",
+      "en": "seconds"
+    },
+    "minute": {
+      "da": "minut",
+      "en": "minute"
+    },
+    "minutes": {
+      "da": "minutter",
+      "en": "minutes"
+    },
+    "hour": {
+      "da": "time",
+      "en": "hour"
+    },
+    "hours": {
+      "da": "timer",
+      "en": "hours"
+    },
+    "day": {
+      "da": "dag",
+      "en": "day"
+    },
+    "days": {
+      "da": "dage",
+      "en": "days"
+    },
+    "month": {
+      "da": "måned",
+      "en": "month"
+    },
+    "months": {
+      "da": "måneder",
+      "en": "months"
+    },
+    "year": {
+      "da": "år",
+      "en": "year"
+    },
+    "years": {
+      "da": "år",
+      "en": "years"
+    },
+    "shortMonths": {
+      "da": [
+        "jan",
+        "feb",
+        "mar",
+        "apr",
+        "maj",
+        "jun",
+        "jul",
+        "aug",
+        "sep",
+        "okt",
+        "nov",
+        "dec"
+      ],
+      "en": [
+        "jan",
+        "feb",
+        "mar",
+        "apr",
+        "may",
+        "jun",
+        "jul",
+        "aug",
+        "sep",
+        "oct",
+        "nov",
+        "dec"
+      ]
+    }
+  }
+}

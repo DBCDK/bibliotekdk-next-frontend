@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
+
 import { useData } from "../../../lib/api/api";
+import * as workFragments from "../../../lib/api/work.fragments";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
-import * as workFragments from "../../../lib/api/work.fragments";
+import Translate from "../../base/translate";
 
 import styles from "./Description.module.css";
 
@@ -17,8 +19,11 @@ import styles from "./Description.module.css";
  * @returns {component}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
+  // Translate Context
+  const context = { context: "description" };
+
   return (
-    <Section title="Beskrivelse">
+    <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
         {data && (
           <Col xs={12} md>

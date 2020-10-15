@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
+import Translate from "../../base/translate";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
@@ -17,8 +18,14 @@ import styles from "./Details.module.css";
  * @returns {component}
  */
 function Details({ className = "", data = {}, skeleton = false }) {
+  // Translate Context
+  const context = { context: "details" };
+
   return (
-    <Section title="Detaljer" className={styles.distanceTop}>
+    <Section
+      title={Translate({ ...context, label: "title" })}
+      className={styles.distanceTop}
+    >
       <Row className={`${styles.details} ${className}`}>
         {data.lang && (
           <Col xs={6} md>
@@ -28,7 +35,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
               skeleton={skeleton}
               lines={2}
             >
-              Sprog
+              {Translate({ ...context, label: "language" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
               {data.lang}
@@ -43,7 +50,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
               skeleton={skeleton}
               lines={2}
             >
-              Sideantal
+              {Translate({ ...context, label: "pages" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
               {data.pages}
@@ -58,7 +65,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
               skeleton={skeleton}
               lines={2}
             >
-              Udgivet
+              {Translate({ ...context, label: "released" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
               {data.released}
@@ -73,7 +80,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
               skeleton={skeleton}
               lines={3}
             >
-              Bidrag
+              {Translate({ ...context, label: "contribution" })}
             </Text>
             {data.contribution.map((c, i) => {
               // Array length

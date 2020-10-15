@@ -10,6 +10,7 @@ import Cover from "../../base/cover";
 import Tag from "../../base/forms/tag";
 import Bookmark from "../../base/bookmark";
 import Breadcrumbs from "../../base/breadcrumbs";
+import Translate from "../../base/translate";
 
 import styles from "./Overview.module.css";
 import { useData } from "../../../lib/api/api";
@@ -33,6 +34,9 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
+  // Translate Context
+  const context = { context: "overview" };
+
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
 
@@ -131,14 +135,16 @@ export function Overview({
                 })}
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <Button skeleton={skeleton}>Læg i lånekurv</Button>
+                <Button skeleton={skeleton}>
+                  {Translate({ ...context, label: "addToCart" })}
+                </Button>
               </Col>
               <Col xs={12} className={styles.info}>
                 <Text type="text3" skeleton={skeleton} lines={2}>
-                  Fysiske materialer leveres til dit lokale bibliotek
+                  {Translate({ ...context, label: "addToCart-line1" })}
                 </Text>
                 <Text type="text3" skeleton={skeleton} lines={0}>
-                  Digitale materialer bliver du sendt videre til
+                  {Translate({ ...context, label: "addToCart-line2" })}
                 </Text>
               </Col>
             </Row>

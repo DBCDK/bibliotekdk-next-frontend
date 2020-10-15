@@ -7,10 +7,13 @@
 
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
+
 import { useData } from "../../../lib/api/api";
 import { recommendations } from "../../../lib/api/work.fragments";
+
 import Section from "../../base/section";
 import WorkSlider from "../../base/slider/WorkSlider";
+import Translate from "../../base/translate";
 
 /**
  * Parse recommendations
@@ -43,8 +46,11 @@ export default function Recommendations({ workId }) {
 
   const parsed = parse(data);
 
+  // Translate Context
+  const context = { context: "recommendations" };
+
   return (
-    <Section title="Minder om">
+    <Section title={Translate({ ...context, label: "remindsOf" })}>
       <Row>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={parsed} />

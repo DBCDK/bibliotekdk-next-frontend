@@ -86,7 +86,12 @@ export function StoryDescription({ children, copy }) {
  *
  * @returns {component}
  */
-export function StorySpace({ space, direction = "h", demo = false, copy }) {
+export function StorySpace({
+  space = "2",
+  direction = "h",
+  demo = false,
+  copy,
+}) {
   const demoClass = demo ? styles.demo : "";
   const key = `${direction}-space-${space}`;
   const spaceClass = styles[key];
@@ -96,5 +101,5 @@ export function StorySpace({ space, direction = "h", demo = false, copy }) {
     return <CopyButton el={el} txt="Copy space element" />;
   }
 
-  return <div className={`${styles.space} ${spaceClass} ${demoClass}`} />;
+  return <div className={`${spaceClass} ${demoClass}`} />;
 }
