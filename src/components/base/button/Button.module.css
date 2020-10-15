@@ -21,6 +21,7 @@
   color: var(--white);
   display: block;
   width: 100%;
+  line-height: 24px;
 }
 
 .button.primary:hover {
@@ -37,6 +38,7 @@
 .button.secondary {
   color: var(--blue);
   border: 1px solid var(--blue);
+  line-height: 22px;
 }
 
 .button.secondary:hover {
@@ -56,7 +58,6 @@
 /* primary */
 .button.primary.large {
   font-size: 20px;
-  line-height: 24px;
   padding: var(--pt2) 0;
 }
 
@@ -67,13 +68,13 @@
 
 .button.primary.small {
   font-size: 13px;
-  padding: var(--pt1) 0;
+  padding: var(--pt05) 0;
 }
 
 /* secondary */
 .button.secondary.large {
   font-size: 20px;
-  padding: var(--pt1) var(--pt10);
+  padding: var(--pt2) var(--pt10);
 }
 
 .button.secondary.medium {
@@ -83,7 +84,7 @@
 
 .button.secondary.small {
   font-size: 13px;
-  padding: var(--pt1) var(--pt4);
+  padding: var(--pt05) var(--pt4);
 }
 
 /* 
