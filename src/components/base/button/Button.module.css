@@ -56,7 +56,8 @@
 /* primary */
 .button.primary.large {
   font-size: 20px;
-  padding: var(--pt1) 0;
+  line-height: 24px;
+  padding: var(--pt2) 0;
 }
 
 .button.primary.medium {
