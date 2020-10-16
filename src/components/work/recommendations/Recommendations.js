@@ -15,6 +15,8 @@ import Section from "../../base/section";
 import WorkSlider from "../../base/slider/WorkSlider";
 import Translate from "../../base/translate";
 
+import styles from "./Recommendations.module.css";
+
 /**
  * Parse recommendations
  * We don't need this parser when the bibdk recommender
@@ -51,7 +53,7 @@ export default function Recommendations({ workId }) {
 
   return (
     <Section title={Translate({ ...context, label: "remindsOf" })}>
-      <Row>
+      <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={parsed} />
         </Col>

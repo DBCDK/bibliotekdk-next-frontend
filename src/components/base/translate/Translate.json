@@ -176,6 +176,12 @@
         "da": "Minder om",
         "en": "Reminds of"
       }
+    },
+    "keywords": {
+      "title": {
+        "da": "Emneord",
+        "en": "Keywords"
+      }
     }
   },
   "units": {

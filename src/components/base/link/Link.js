@@ -37,14 +37,20 @@ function StorybookLink({ children, href }) {
  */
 export default function Link({
   children = "Im a hyperlink now!",
+  target = "_self",
+  a = false,
   href = { pathname: "/", query: {} },
 }) {
   // Use Storybook link implementation if we are in Storybook mode
   const LinkImpl = useStoryBookLink ? StorybookLink : NextLink;
 
   // Maybe wrap with an a-tag
-  if (typeof children === "string") {
-    children = <a href={href.pathname || href}>{children}</a>;
+  if (typeof children === "string" || a) {
+    children = (
+      <a href={href.pathname || href} target={target}>
+        {children}
+      </a>
+    );
   }
 
   // Return the component
@@ -54,6 +60,8 @@ export default function Link({
 // PropTypes for component
 Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
+  a: PropTypes.bool,
   href: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
     query: PropTypes.object,
