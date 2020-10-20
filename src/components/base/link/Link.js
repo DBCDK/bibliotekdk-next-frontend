@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
+import styles from "./Link.module.css";
 
 const useStoryBookLink = !!process.env.STORYBOOK_ACTIVE;
 
@@ -44,11 +45,15 @@ export default function Link({
 
   // Maybe wrap with an a-tag
   if (typeof children === "string") {
-    children = <a href={href.pathname || href}>{children}</a>;
+    children = <a href={href.pathname || href}>{children} </a>;
   }
 
   // Return the component
-  return <LinkImpl href={href}>{children}</LinkImpl>;
+  return (
+    <span class={styles.bibdklink}>
+      <LinkImpl href={href}>{children}</LinkImpl>
+    </span>
+  );
 }
 
 // PropTypes for component
