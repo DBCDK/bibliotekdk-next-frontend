@@ -50,7 +50,7 @@ export default function Link({
 
   // Return the component
   return (
-    <span className ={styles.bibdklink}>
+    <span className={styles.bibdklink}>
       <LinkImpl href={href}>{children}</LinkImpl>
     </span>
   );
