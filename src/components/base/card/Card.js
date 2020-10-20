@@ -50,6 +50,7 @@ export default function Card({
   }
   return (
     <Link
+      a={false}
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
