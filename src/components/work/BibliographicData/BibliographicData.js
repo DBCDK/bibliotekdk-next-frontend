@@ -87,8 +87,7 @@ function ManifestationRowFull({ manifestation = null, index = 0 }) {
   if (manifestation.open) {
     return (
       <React.Fragment>
-        <Row>
-          key={index.toString() + "full"}
+        <Row key={index.toString() + "full"}>
           <ManifestationFull manifestation={manifestation} />,
         </Row>
         <Divider />

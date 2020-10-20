@@ -40,17 +40,18 @@ function TextLabelValue({ field }) {
 
   return (
     <React.Fragment>
-      <Text type="text4" lines={1}>{Object.keys(field)}</Text>
+      <Text type="text4" lines={1}>
+        {Object.keys(field)}
+      </Text>
       <TextValue value={printAbleArray} />
-
       <br />
     </React.Fragment>
   );
 }
 
 function TextValue(value) {
-  return value.value.map((value) => (
-    <Text type="text3" lines={2}>
+  return value.value.map((value, index) => (
+    <Text type="text3" lines={2} key={index}>
       {value}
     </Text>
   ));
