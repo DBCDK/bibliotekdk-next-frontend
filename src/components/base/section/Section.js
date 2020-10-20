@@ -26,25 +26,33 @@ export default function Section({
   title = "Some section",
   children = "...",
   className = "",
+  bgColor = null,
 }) {
+  const backgroundColor = bgColor;
+  const backgroundClass = bgColor ? styles.background : "";
+
   return (
-    <Container>
-      <Row as="section" className={`${styles.section} ${className}`}>
-        <Col xs={12} md={2}>
-          <Divider />
-          <Title type="title4">{title}</Title>
-        </Col>
-        <Col xs={12} md={{ offset: 1 }}>
-          <Divider />
-          {children}
-        </Col>
-      </Row>
-    </Container>
+    <div className={`${backgroundClass}`} style={{ backgroundColor }}>
+      <Container>
+        <Row as="section" className={`${styles.section} ${className}`}>
+          <Col xs={12} md={2}>
+            <Divider />
+            <Title type="title4">{title}</Title>
+          </Col>
+          <Col xs={12} md={{ offset: 1 }}>
+            <Divider />
+            {children}
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 }
 
 // PropTypes for component
 Section.propTypes = {
+  bgColor: PropTypes.string,
+  title: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

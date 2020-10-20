@@ -1,26 +1,30 @@
 /**
 * Colors 
 *
+* Colornames from:
+* https://chir.ag/projects/name-that-color
+*
 */
 
 :root {
   /* Primary */
   --mine-shaft: #212121; /* Primary txt color */
   --blue: #3333ff; /* Interaction color, links, buttons, ... */
-  --concrete: #f2f2f2; /* Default bg color */
 
   /* Secondary */
-  --rose-bud: #fbad94; /* default */
-  --linen: #f8dfd9; /* light */
-  --eunry: #d3a79d; /* dark */
+  --concrete: #f2f2f2; /* Default bg color */
 
-  --pancho: #efd5a5; /* default */
-  --albescent-white: #f7ead2; /* light */
-  --sorrell-brown: #d2bb91; /* dark */
+  --pippin: #ffe7e0; /* default */
+  --chardon: #fff3f0; /* light */
+  --bone: #e5c7bd; /* dark */
 
-  --aqua-island: #a1d8dd; /* default */
-  --botticelli: #d4e8ea; /* light */
-  --shadow-green: #95b8ba; /* dark */
+  --parchment: #f4efdd; /* default */
+  --merino: #f9f7ee; /* light */
+  --chamois: #eed9b0; /* dark */
+
+  --jagged-ice: #d0ebee; /* default */
+  --black-squeeze: #e7f5f6; /* light */
+  --ziggurat: #b7dee2; /* dark */
 
   /* Greys (Tones) */
   --white: #ffffff;

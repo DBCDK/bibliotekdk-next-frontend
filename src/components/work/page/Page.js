@@ -4,6 +4,7 @@ import Content from "../content";
 import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
+import Keywords from "../keywords";
 
 /**
  * The work page React component
@@ -21,6 +22,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Description workId={workId} type={type} />
       <Content workId={workId} type={type} />
       <Recommendations workId={workId} />
+      <Keywords workId={workId} type={type} />
     </main>
   );
 }

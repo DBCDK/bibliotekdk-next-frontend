@@ -1,0 +1,77 @@
+/**
+* Keywords container
+* 
+*/
+
+.keywords {
+  min-height: 150px;
+  padding-bottom: var(--pt8);
+}
+
+/**
+* Keyword items
+* 
+*/
+
+.keyword {
+  display: inline-block;
+  margin: 0 var(--pt2) var(--pt1) 0;
+  border-bottom: 1px solid var(--blue);
+}
+
+.keyword a {
+  color: var(--mine-shaft);
+  text-decoration: none;
+}
+
+.keyword:hover a {
+  color: var(--blue);
+}
+
+.keyword a:focus {
+  color: var(--blue);
+}
+
+.keyword.small h1 {
+  font-size: var(--pt3);
+  line-height: var(--pt4);
+}
+
+.keyword.medium h1 {
+  font-size: var(--pt4);
+  line-height: var(--pt5);
+}
+
+.keyword.large {
+  margin: 0 var(--pt3) var(--pt1) 0;
+}
+
+.keyword.large h1 {
+  font-size: var(--pt5);
+  line-height: var(--pt6);
+}
+
+/**
+* Skeleton
+* 
+*/
+
+.skeleton .keyword {
+  border-bottom: none;
+
+  pointer-events: none;
+  cursor: default;
+}
+
+.skeleton .keyword div:last-child {
+  background-color: var(--ziggurat);
+}
+
+.skeleton .keyword div:last-child::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--jagged-ice) 50%,
+    transparent 100%
+  );
+}

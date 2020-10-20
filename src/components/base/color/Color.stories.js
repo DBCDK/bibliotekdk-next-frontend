@@ -14,7 +14,6 @@ export const Primary = () => {
   const colors = [
     { name: "blue", hex: "#3333ff" },
     { name: "mine-shaft", hex: "#212121" },
-    { name: "concrete", hex: "#f2f2f2" },
   ];
 
   return (
@@ -41,15 +40,16 @@ export const Primary = () => {
  */
 export const Secondary = () => {
   const colors = [
-    { name: "rose-bud", hex: "#fbad94" },
-    { name: "linen", hex: "#f8dfd9" },
-    { name: "eunry", hex: "#d3a79d" },
-    { name: "pancho", hex: "#efd5a5" },
-    { name: "albescent-white", hex: "#f7ead2" },
-    { name: "sorrell-brown", hex: "#d2bb91" },
-    { name: "aqua-island", hex: "#a1d8dd" },
-    { name: "botticelli", hex: "#d4e8ea" },
-    { name: "shadow-green", hex: "#95b8ba" },
+    { name: "concrete", hex: "#f2f2f2" },
+    { name: "pippin", hex: "#ffe7e0" },
+    { name: "chardon", hex: "#fff3f0" },
+    { name: "bone", hex: "#e5c7bd" },
+    { name: "parchment", hex: "#f4efdd" },
+    { name: "merino", hex: "#f9f7ee" },
+    { name: "chamois", hex: "#eed9b0" },
+    { name: "jagged-ice", hex: "#d0ebee" },
+    { name: "black-squeeze", hex: "#e7f5f6" },
+    { name: "ziggurat", hex: "#b7dee2" },
   ];
 
   return (
