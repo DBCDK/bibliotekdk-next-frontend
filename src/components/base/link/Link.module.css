@@ -1,7 +1,5 @@
-.bibdklink a {
-    color:var(--mine-shaft);
-    text-decoration:underline;
-    text-decoration-color:var(--blue);
+.link {
+  color: var(--mine-shaft);
+  text-decoration: underline;
+  text-decoration-color: var(--blue);
 }
-
-

@@ -33,12 +33,10 @@ function Breadcrumb({
 
   return (
     <div className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
-      <Link href={href}>
-        <a href="#" className={`${styles.link}`}>
-          <Text tag="span" type="text3">
-            {children}
-          </Text>
-        </a>
+      <Link href={href} className={`${styles.link}`}>
+        <Text tag="span" type="text3">
+          {children}
+        </Text>
       </Link>
       {separator && <Separator />}
     </div>

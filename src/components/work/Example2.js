@@ -62,7 +62,7 @@ export function Example2({ recommendations }) {
                 )
               )}/${manifestation.pid}`}
             >
-              <a>{manifestation.title}</a>
+              {manifestation.title}
             </Link>
           </div>
         ))}

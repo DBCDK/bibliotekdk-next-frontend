@@ -11,7 +11,7 @@
 }
 
 .link {
-  color: var(--mine-shaft);
+  text-decoration: none;
 }
 
 .separator {
