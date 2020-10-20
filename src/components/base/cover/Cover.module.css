@@ -21,7 +21,7 @@
   width: 100%;
   height: auto;
   object-fit: contain;
-  object-position: 50% 0;
+  object-position: 50% 100%;
 }
 
 /**

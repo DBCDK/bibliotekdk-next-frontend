@@ -20,7 +20,7 @@ const works = [
       "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
 
     id: "some-work-id-1",
-    title: "Blodrøde spor",
+    title: "Blodrøde spor - nu med meget lang titel ",
   },
   {
     creators: [
@@ -68,7 +68,7 @@ const works = [
       "Kriminalroman. Kriminalkommissær McKenna skal løse mysteriet om en kvinde der er blevet fundet hængende bagbundet i en skov. Kvinden har hængt der i flere år, så identiteten er svær at finde frem til, og i lillebyen trives løgne og halve sandheder",
 
     id: "some-work-id-4",
-    title: "Simeons brud",
+    title: "Simeons brud - meget lang titel",
   },
   {
     creators: [

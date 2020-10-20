@@ -41,6 +41,22 @@ export function WorkNarrowAndWideCover() {
     title: "Blodrøde spor",
   };
 
+  const longTitle = {
+    creators: [
+      {
+        name: "Some Creator",
+      },
+    ],
+    cover: {
+      detail:
+        "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29388598&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d7fd87c75aaaa00955b5",
+    },
+    description:
+      "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
+    id: "work-id-3",
+    title: "I am a very long title, so long and very long. Its really long",
+  };
+
   return (
     <div>
       <StoryTitle>Work: Narrow and wide covers</StoryTitle>
@@ -48,8 +64,11 @@ export function WorkNarrowAndWideCover() {
         The work card has fixed dimensions. Lines are clamped, and cover is
         "contained" in a fixed sized box
       </StoryDescription>
-      <Card {...narrow} />
-      <Card {...wide} />
+      <div style={{ display: "flex" }}>
+        <Card {...narrow} />
+        <Card {...wide} />
+        <Card {...longTitle} />
+      </div>
     </div>
   );
 }

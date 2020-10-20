@@ -19,7 +19,7 @@ function SkeletonCard() {
         <Text
           className={`${styles.Title}`}
           type="text3"
-          lines={4}
+          lines={2}
           skeleton={true}
         />
       </div>
@@ -40,7 +40,6 @@ export default function Card({
   className = "",
   cover,
   creators,
-  description,
   onFocus,
   id,
   skeleton,
@@ -76,7 +75,7 @@ export default function Card({
           <Text
             className={`${styles.Title}`}
             type="text1"
-            lines={1}
+            lines={2}
             clamp={true}
           >
             {title}
@@ -85,19 +84,10 @@ export default function Card({
           <Text
             className={`${styles.Creator}`}
             type="text2"
-            lines={1}
-            clamp={true}
-          >
-            {creators[0].name}
-          </Text>
-
-          <Text
-            className={`${styles.Description}`}
-            type="text3"
             lines={2}
             clamp={true}
           >
-            {description}
+            {creators[0].name}
           </Text>
         </div>
       </a>
@@ -110,7 +100,6 @@ Card.propTypes = {
   className: PropTypes.string,
   cover: PropTypes.object,
   creators: PropTypes.array,
-  description: PropTypes.string,
   id: PropTypes.string,
   onFocus: PropTypes.func,
   id: PropTypes.string,
