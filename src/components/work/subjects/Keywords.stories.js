@@ -15,6 +15,9 @@ export function DescriptionSection() {
   const workId = "some-id";
   const type = "Bog";
   const data = dummy_materialTypesApi({ workId, type });
+
+  console.log("data", data[workId].subjects);
+
   return (
     <div>
       <StoryTitle>Keywords section</StoryTitle>
@@ -23,7 +26,7 @@ export function DescriptionSection() {
       </StoryDescription>
       <StorySpace direction="v" space="8" />
 
-      <Keywords data={data[workId]} type={type} />
+      <Keywords data={data[workId].subjects} type={type} />
     </div>
   );
 }

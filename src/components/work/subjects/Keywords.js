@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
+import { uniqBy } from "lodash";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import { useData } from "../../../lib/api/api";
+import * as workFragments from "../../../lib/api/work.fragments";
 
 import Section from "../../base/section";
 import Title from "../../base/title";
@@ -28,19 +30,22 @@ function url(keyword) {
  * @param {obj} data
  * Get fontsize according to amount of keywords
  *
- * @returns {string}
+ * @returns {obj} // styles.class
  */
-function getFontSize(data) {
-  if (!data || !data.keywords) {
-    return "";
+function getFontSize(keywords) {
+  if (!keywords) {
+    return styles.small;
   }
 
-  const numb = data.keywords.length;
-
-  if (numb < 3) {
+  if (keywords.length <= 3) {
+    return styles.large;
   }
 
-  return "";
+  if (keywords.length <= 6) {
+    return styles.medium;
+  }
+
+  return styles.small;
 }
 
 /**
@@ -51,11 +56,11 @@ function getFontSize(data) {
  *
  * @returns {component}
  */
-export function Keywords({ className = "", data = {}, skeleton = false }) {
+export function Keywords({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "keywords" };
 
-  const fontSize = getFontSize(data);
+  const sizeClass = getFontSize(data);
 
   return (
     <Section
@@ -63,18 +68,20 @@ export function Keywords({ className = "", data = {}, skeleton = false }) {
       bgColor="var(--jagged-ice)"
     >
       <div className={`${styles.keywords} ${className}`}>
-        {data.keywords &&
-          data.keywords.map((k) => {
-            return (
-              <span className={`${styles.keyword}`}>
-                <Link a href={url(k)} target="_blank">
-                  <Title type="title4" skeleton={skeleton}>
-                    {k}
-                  </Title>
-                </Link>
-              </span>
-            );
-          })}
+        {data.map((k) => {
+          return (
+            <span
+              className={`${styles.keyword} ${sizeClass}`}
+              key={`${k.type}-${k.value}`}
+            >
+              <Link a href={url(k.value)} target="_blank">
+                <Title type="title4" skeleton={skeleton}>
+                  {k.value.replace(/\./g, "")}
+                </Title>
+              </Link>
+            </span>
+          );
+        })}
       </div>
     </Section>
   );
@@ -89,16 +96,16 @@ export function Keywords({ className = "", data = {}, skeleton = false }) {
  * @returns {component}
  */
 export function KeywordsSkeleton(props) {
-  const data = {
-    keywords: [
-      "someKeyword",
-      "someKeyword",
-      "someKeyword",
-      "keyword",
-      "someKeyword",
-      "someOtherKeyword",
-    ],
-  };
+  const data = [
+    { type: "1", value: "someKeyword" },
+    { type: "2", value: "someKeyword" },
+    { type: "3", value: "someOtherKeyword" },
+    { type: "4", value: "someKeyword" },
+    { type: "5", value: "keyword" },
+    { type: "6", value: "someKeyword" },
+    { type: "7", value: "someOtherKeyword" },
+    { type: "8", value: "keyword" },
+  ];
 
   return (
     <Keywords
@@ -122,10 +129,8 @@ export default function Wrap(props) {
   const { workId, type, skeleton } = props;
 
   // Call materialTypes mockdata API
-  const data = dummy_materialTypesApi({ workId, type });
-
-  const isLoading = skeleton;
-  const error = false;
+  // const data = dummy_materialTypesApi({ workId, type });
+  const { data, isLoading, error } = useData(workFragments.basic({ workId }));
 
   if (isLoading) {
     return <KeywordsSkeleton />;
@@ -135,7 +140,23 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Keywords {...props} data={data[workId]} />;
+  // get subjects from response
+  const subjects = data.work.subjects;
+
+  // Include wanted subject types
+  const include = ["DBCS", null];
+  const filteredSubjects = subjects.filter((s) => include.includes(s.type));
+
+  // Remove duplicates
+  const ff = uniqBy(filteredSubjects, (s) =>
+    s.value.toLowerCase().replace(/\./g, "")
+  );
+
+  console.log("### b", subjects);
+  console.log("### a", filteredSubjects);
+  console.log("### ff", ff);
+
+  return <Keywords {...props} data={ff} />;
 }
 
 // PropTypes for component

@@ -32,6 +32,25 @@
   color: var(--blue);
 }
 
+.keyword.small h1 {
+  font-size: var(--pt3);
+  line-height: var(--pt4);
+}
+
+.keyword.medium h1 {
+  font-size: var(--pt4);
+  line-height: var(--pt5);
+}
+
+.keyword.large {
+  margin: 0 var(--pt3) var(--pt1) 0;
+}
+
+.keyword.large h1 {
+  font-size: var(--pt5);
+  line-height: var(--pt6);
+}
+
 /**
 * Skeleton
 * 

@@ -31,6 +31,10 @@ export function basic({ workId }) {
           }
           path
           title
+          subjects{
+            type
+            value
+          }
         }
       }`,
     variables: { workId },
