@@ -3,11 +3,15 @@
  * This component uses the section component defined in base/section
  */
 import { Row, Col } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
+import React, { useState } from "react";
 
 import Section from "../../base/section";
-import Text from "../../base/text";
+import { Divider } from "../../base/divider";
+import { ManifestationList } from "./ManifestationList";
+import { ManifestationFull } from "./ManifestationFull";
 import dummy_workDataApi from "../dummy.workDataApi";
-import React, { useState } from "react";
+import Icon from "../../base/icon/Icon";
 
 /**
  * Export function of the Component
@@ -55,28 +59,22 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
     setManifestations(ManiestationStates);
   };
 
-  // row template
   return manifestations.map((manifestation, index) => (
-    <Row key={index} onClick={() => (onClick ? onClick() : rowClicked(index))}>
-      <ManifestationColumn manifestation={manifestation} />
-    </Row>
+    <React.Fragment>
+      <Row
+        key={index.toString() + "list"}
+        onClick={() => (onClick ? onClick() : rowClicked(index))}
+      >
+        <ManifestationList manifestation={manifestation} />
+      </Row>
+      <Divider></Divider>
+      <ManifestationRowFull manifestation={manifestation} index={index} />
+    </React.Fragment>
   ));
 }
 
-// horizontal ruler - while developing
-const Rule = ({ color }) => (
-  <hr
-    style={{
-      color: color,
-      borderColor: color,
-      backgroundColor: color,
-      height: 5,
-    }}
-  />
-);
-
 /**
- * Show manifestation simple/full.
+ * Show manifestation full or null of manifestion is closed.
  * @param manifestation
  *  A simpole manifestation from workdata - manifestation holds minimal information (cocver & pid baically)
  *  Use the pid to retrieve full manifestation from api if manifestation is open
@@ -84,27 +82,19 @@ const Rule = ({ color }) => (
  *  Component
  * @constructor
  */
-function ManifestationColumn({ manifestation = null }) {
+function ManifestationRowFull({ manifestation = null, index = 0 }) {
   // is manifestation open ?
-  if (!manifestation.open) {
+  if (manifestation.open) {
     return (
-      <Col key={manifestation.materialType} xs={12} md>
-        <Text type="text3" lines={2}>
-          {manifestation.materialType}
-        </Text>
-        <Rule color="orange" />
-      </Col>
+      <React.Fragment>
+        <Row>
+          key={index.toString() + "full"}
+          <ManifestationFull manifestation={manifestation} />,
+        </Row>
+        <Divider />
+      </React.Fragment>
     );
   } else {
-    // yes it is
-    return (
-      <Col key={manifestation.materialType.pid} xs={12} md>
-        <Text type="text3" lines={2}>
-          This is a manifestation : {manifestation.pid} : in progress @TODO
-          manifestation template
-        </Text>
-        <Rule color="orange" />
-      </Col>
-    );
+    return null;
   }
 }
