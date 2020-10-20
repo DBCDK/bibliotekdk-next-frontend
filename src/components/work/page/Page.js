@@ -4,7 +4,7 @@ import Content from "../content";
 import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
-import Keywords from "../subjects";
+import Keywords from "../keywords";
 
 /**
  * The work page React component

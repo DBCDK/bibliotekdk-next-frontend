@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import { uniqBy } from "lodash";
 
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { useData } from "../../../lib/api/api";
 import * as workFragments from "../../../lib/api/work.fragments";
 
@@ -129,7 +128,6 @@ export default function Wrap(props) {
   const { workId, type, skeleton } = props;
 
   // Call materialTypes mockdata API
-  // const data = dummy_materialTypesApi({ workId, type });
   const { data, isLoading, error } = useData(workFragments.basic({ workId }));
 
   if (isLoading) {
