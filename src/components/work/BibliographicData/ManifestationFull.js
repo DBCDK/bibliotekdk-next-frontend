@@ -9,7 +9,6 @@ import Cover from "../../base/cover";
 import Link from "../../base/link";
 import Button from "../../base/button";
 
-
 import ManifestationParserObject from "./ManifestationParserObject";
 
 function dummyData(manifestation) {
@@ -41,16 +40,15 @@ function TextLabelValue({ field }) {
 
   return (
     <React.Fragment>
-      <Text type="text4" lines={1}>
-        {Object.keys(field)} : <TextValue value={printAbleArray} />
-      </Text>
+      <Text type="text4" lines={1}>{Object.keys(field)}</Text>
+      <TextValue value={printAbleArray} />
+
       <br />
     </React.Fragment>
   );
 }
 
 function TextValue(value) {
-  console.log(value);
   return value.value.map((value) => (
     <Text type="text3" lines={2}>
       {value}
@@ -58,11 +56,10 @@ function TextValue(value) {
   ));
 }
 
-function columnTwo(colTwo) {
-  console.log(colTwo);
+function anotherColumn(col) {
   return (
-    <Col key={"col2"} xs={18} md>
-      {colTwo.map((field) => (
+    <Col xs={18} md>
+      {col.map((field) => (
         <TextLabelValue field={field} />
       ))}
     </Col>
@@ -71,11 +68,10 @@ function columnTwo(colTwo) {
 
 export function ManifestationFull(manifestation) {
   let data = dummyData(manifestation);
-  console.log(data);
   const returnArray = [
     columnOne(manifestation),
-    columnTwo(data["col1"]),
-    columnTwo(data["col2"]),
+    anotherColumn(data["col1"]),
+    anotherColumn(data["col2"]),
   ];
 
   return returnArray;
