@@ -10,25 +10,37 @@ import Link from "../../base/link";
 import Button from "../../base/button";
 
 import ManifestationParserObject from "./ManifestationParserObject";
+import PropTypes from "prop-types";
 
 function dummyData(manifestation) {
   let parser = new ManifestationParserObject(manifestation);
   return parser.parseManifestation();
 }
 
-const columnOne = ({ manifestation }) => (
-  <Col key={"col1" + manifestation.pid} xs={6} md>
-    <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
-    <Link children="Link til bog" href="http://google.dk" />
-    <br />
-    <Link children="Huskeliste" href="http://google.dk" />
-    <br />
-    <Link children="Findes på 63 biblioteker" href="http://google.dk" />
-    <br />
-    <br />
-    <Button type={"secondary"} size={"small"} />
-  </Col>
-);
+function ColumnOne({ manifestation }) {
+  return (
+    <Col key={"col1" + manifestation.pid} xs={6} md>
+      <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
+      <Link
+        children="Im a hyperlink now!"
+        href={{ pathname: "http://google.dk", query: {} }}
+      />
+      <br />
+      <Link
+        children="Huskeliste"
+        href={{ pathname: "http://google.dk", query: {} }}
+      />
+      <br />
+      <Link
+        children="Findes på 63 biblioteker"
+        href={{ pathname: "http://google.dk", query: {} }}
+      />
+      <br />
+      <br />
+      <Button type={"secondary"} size={"small"} />
+    </Col>
+  );
+}
 
 function TextLabelValue({ field }) {
   let printAbleArray = [];
@@ -57,7 +69,7 @@ function TextValue(value) {
   ));
 }
 
-function anotherColumn(col) {
+function AnotherColumn({ col }) {
   return (
     <Col xs={18} md>
       {col.map((field) => (
@@ -67,13 +79,13 @@ function anotherColumn(col) {
   );
 }
 
-export function ManifestationFull(manifestation) {
+export function ManifestationFull({ manifestation }) {
   let data = dummyData(manifestation);
-  const returnArray = [
-    columnOne(manifestation),
-    anotherColumn(data["col1"]),
-    anotherColumn(data["col2"]),
-  ];
-
-  return returnArray;
+  return (
+    <React.Fragment>
+      <ColumnOne manifestation={manifestation}></ColumnOne>
+      <AnotherColumn col={data["col1"]}></AnotherColumn>
+      <AnotherColumn col={data["col2"]}></AnotherColumn>
+    </React.Fragment>
+  );
 }

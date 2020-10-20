@@ -1,6 +1,8 @@
 "use strict";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import Text from "../../base/text/Text";
+import React from "react";
 
 const fields = [
   "contribution",
@@ -13,7 +15,7 @@ const fields = [
 ];
 
 // constructor
-let ManifestationParserObject = function ({ manifestation }) {
+let ManifestationParserObject = function (manifestation) {
   this._manifestation = manifestation;
   this._fields = ManifestationParserObject.flipArray(fields);
 };
@@ -37,7 +39,7 @@ ManifestationParserObject.prototype = {
   _getDummyData: function () {
     let props = { workId: "workId", type: this._manifestation.materialType };
     let data = dummy_materialTypesApi(props);
-    let dataArray = [];
+    let dataArray = {};
     let element = [];
     for (let [key, value] of Object.entries(data.workId)) {
       if (this._fields[key]) {
@@ -47,15 +49,17 @@ ManifestationParserObject.prototype = {
           value = [value];
         }
         element[key] = value;
-        dataArray = [...dataArray, element];
+        dataArray[key] = value;
+        //dataArray = [...dataArray, element];
       }
     }
     return dataArray;
   },
-
   /**
    * Private function
    * Split given data in two arrays for two columns in ui
+   * for now 2 columns are hardcoded .. maybe it is a good idea
+   * to have as a variable ..
    * @param dataArray
    * @returns {[]|*[]}
    * @private
@@ -65,21 +69,38 @@ ManifestationParserObject.prototype = {
       return [];
     }
 
-    let divider = dataArray.length;
-    let colLength = (divider / 2) >> 0;
+    // we need to iterate data to know how count actual entries
+    let linecount = 0;
+    for (let [key, value] of Object.entries(dataArray)) {
+      linecount += value.length;
+    }
+
+    // the length of first column
+    let colLength = (linecount / 2) >> 0;
+    // holder for the two columns
     let arrayInColumns = [];
-
-    arrayInColumns["col1"] = dataArray.slice(0, colLength);
-    arrayInColumns["col2"] = dataArray.slice(colLength, dataArray.length);
-
+    // element in a column
+    let element = [];
+    // how far are we
+    let columnCount = 0;
+    // array with the two columns to return
+    let columnArray = [];
+    // iterate again to split into two columns
+    for (let [key, value] of Object.entries(dataArray)) {
+      // reset element
+      element = [];
+      columnCount += value.length;
+      if (columnCount > colLength) {
+        // we added half of the fields - reset and do column 2
+        arrayInColumns["col1"] = columnArray;
+        columnArray = [];
+      }
+      element[key] = value;
+      columnArray.push(element);
+    }
+    arrayInColumns["col2"] = columnArray;
     return arrayInColumns;
   },
-};
-
-// static functions
-// can be called from anywhere
-ManifestationParserObject.hest = function () {
-  console.log("hest");
 };
 
 /**
