@@ -34,7 +34,7 @@ ManifestationParserObject.prototype = {
    * @returns {[]}
    * @private
    */
-  _getDummyData: function() {
+  _getDummyData: function () {
     let props = { workId: "workId", type: this._manifestation.materialType };
     let data = dummy_materialTypesApi(props);
     let dataArray = [];
