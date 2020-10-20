@@ -152,10 +152,6 @@ export default function Wrap(props) {
     s.value.toLowerCase().replace(/\./g, "")
   );
 
-  console.log("### b", subjects);
-  console.log("### a", filteredSubjects);
-  console.log("### ff", ff);
-
   return <Keywords {...props} data={ff} />;
 }
 
