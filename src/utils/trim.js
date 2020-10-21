@@ -12,11 +12,15 @@
  */
 
 export function cyKey({
-  name = "name",
+  name = "cypress",
   prefix = "key",
   seperator = "-",
   lowerCase = true,
 }) {
+  if (typeof name !== "string") {
+    name = "cypress";
+  }
+
   const n = `${prefix}-${name.replace(/\s/g, seperator)}`;
 
   if (lowerCase) {

@@ -19,7 +19,7 @@ describe("Work", () => {
       });
   });
 
-  it(`renders no data on server`, () => {
+  it.only(`renders no data on server`, () => {
     // we make a request instead of visit to see
     // the actual html returned from the server
     // set timeout to 1ms to make sure no data is loaded on server
@@ -28,6 +28,8 @@ describe("Work", () => {
     )
       .its("body")
       .then((html) => {
+        console.log("html", html);
+
         expect(html).to.not.have.string("1950 High Noon</h1");
       });
   });
