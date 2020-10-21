@@ -4,6 +4,8 @@ import { uniqBy } from "lodash";
 import { useData } from "../../../lib/api/api";
 import * as workFragments from "../../../lib/api/work.fragments";
 
+import { cyKey } from "../../../utils/trim";
+
 import Section from "../../base/section";
 import Title from "../../base/title";
 import Link from "../../base/link";
@@ -59,6 +61,14 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "keywords" };
 
+  // Include wanted subject types
+  const include = ["DBCS", null];
+  const filteredData = data.filter((s) => include.includes(s.type));
+
+  // Remove duplicates
+  data = uniqBy(filteredData, (s) => s.value.toLowerCase().replace(/\./g, ""));
+
+  // Get fontsize - based on subjects in data
   const sizeClass = getFontSize(data);
 
   return (
@@ -66,16 +76,20 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
       title={Translate({ ...context, label: "title" })}
       bgColor="var(--jagged-ice)"
     >
-      <div className={`${styles.keywords} ${className}`}>
+      <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
         {data.map((k) => {
+          const val = k.value.replace(/\./g, "");
+          const key = cyKey({ name: val, prefix: "keyword" });
+
           return (
             <span
+              data-cy={key}
               className={`${styles.keyword} ${sizeClass}`}
-              key={`${k.type}-${k.value}`}
+              key={`${k.type}-${key}`}
             >
               <Link a href={url(k.value)} target="_blank">
                 <Title type="title4" skeleton={skeleton}>
-                  {k.value.replace(/\./g, "")}
+                  {val}
                 </Title>
               </Link>
             </span>
@@ -141,16 +155,7 @@ export default function Wrap(props) {
   // get subjects from response
   const subjects = data.work.subjects;
 
-  // Include wanted subject types
-  const include = ["DBCS", null];
-  const filteredSubjects = subjects.filter((s) => include.includes(s.type));
-
-  // Remove duplicates
-  const ff = uniqBy(filteredSubjects, (s) =>
-    s.value.toLowerCase().replace(/\./g, "")
-  );
-
-  return <Keywords {...props} data={ff} />;
+  return <Keywords {...props} data={subjects} />;
 }
 
 // PropTypes for component

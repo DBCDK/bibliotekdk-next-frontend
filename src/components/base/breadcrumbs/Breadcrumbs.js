@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "../../../utils/trim";
+
 import Skeleton from "../skeleton";
 import Link from "../link";
 import Text from "../text";
 
-import styles from "./Breadcrumb.module.css";
+import styles from "./Breadcrumbs.module.css";
 
 function Separator() {
   return (
@@ -30,9 +32,13 @@ function Breadcrumb({
   disabled = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
+  const key = cyKey({ name: children, prefix: "crumb" });
 
   return (
-    <div className={`${styles.breadcrumb} ${className} ${disabledStyle}`}>
+    <div
+      className={`${styles.breadcrumb} ${className} ${disabledStyle}`}
+      data-cy={key}
+    >
       <Link href={href} className={`${styles.link}`}>
         <Text tag="span" type="text3">
           {children}

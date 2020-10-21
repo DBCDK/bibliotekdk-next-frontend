@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "../../../../utils/trim";
+
 import Skeleton from "../../skeleton";
 import Icon from "../../icon";
 
@@ -14,18 +16,20 @@ import styles from "./Tag.module.css";
  * @returns {component}
  */
 function Tag({
-  children = "im a button",
+  children = "im a tag",
   className = "",
   selected = false,
   onClick = null,
   disabled = false,
   skeleton = false,
 }) {
+  const key = cyKey({ name: children, prefix: "tag" });
   const disabledStyle = disabled ? styles.disabled : "";
   const selectedStyle = selected ? styles.selected : "";
 
   return (
     <button
+      data-cy={key}
       className={`${styles.tag} ${className} ${selectedStyle} ${disabledStyle}`}
       onClick={onClick}
     >

@@ -90,7 +90,7 @@ export function Overview({
               src={selectedMaterial.cover.detail || allMaterialTypes}
               skeleton={skeleton}
             >
-              <Bookmark skeleton={skeleton} />
+              <Bookmark skeleton={skeleton} title={title} />
             </Cover>
           </Col>
 
