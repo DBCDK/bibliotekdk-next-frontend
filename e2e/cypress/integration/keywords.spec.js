@@ -30,22 +30,7 @@ describe("Keywords", () => {
       .parent()
       .should("have.attr", "data-cy", "keyword-far-søn-forholdet");
 
-    cy.tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab()
-      .tab();
+    cy.tabs(16);
 
     cy.focused().parent().should("have.attr", "data-cy", "keyword-2000-2009");
   });

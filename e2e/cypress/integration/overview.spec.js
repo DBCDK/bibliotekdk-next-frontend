@@ -13,7 +13,7 @@ describe("Overview", () => {
 
     cy.focused().parent().should("have.attr", "data-cy", "crumb-bøger");
 
-    cy.tab().tab().tab();
+    cy.tabs(3);
 
     cy.focused().parent().should("have.attr", "data-cy", "crumb-roman");
   });
@@ -27,7 +27,7 @@ describe("Overview", () => {
     cy.tab();
     cy.focused().should("have.attr", "data-cy", "tag-bog");
 
-    cy.tab().tab().tab().tab().tab().tab();
+    cy.tabs(6);
     cy.focused().should("have.attr", "data-cy", "tag-punktskrift");
   });
 
