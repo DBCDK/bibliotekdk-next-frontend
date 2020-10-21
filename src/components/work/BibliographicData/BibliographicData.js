@@ -30,8 +30,8 @@ export function GetBibData(props) {
   // console.log(workData.work.materialTypes);
   //}
   return (
-    <Section title="Informationer og udgaver">
-      <WorkTypesRow materialTypes={workData.work.materialTypes} />
+    <Section title="Informationer og udgaver" key={"fnis"}>
+      <WorkTypesRow materialTypes={workData.work.materialTypes} key={"is"} />
     </Section>
   );
 }
