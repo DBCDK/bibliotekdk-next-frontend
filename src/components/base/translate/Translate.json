@@ -182,6 +182,16 @@
         "da": "Emneord",
         "en": "Keywords"
       }
+    },
+    "bookmark": {
+      "defaultTitle": {
+        "da": "Bogmærk",
+        "en": "Bookmark"
+      },
+      "title": {
+        "da": "Bogmærk %s",
+        "en": "Bookmark %s"
+      }
     }
   },
   "units": {

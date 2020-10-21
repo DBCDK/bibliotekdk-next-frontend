@@ -23,7 +23,7 @@ describe("Sliders", () => {
     cy.get("[data-cy=work-card").last().should("not.be.visible");
 
     // Tab 10 times
-    cy.get("body").tab().tab().tab().tab().tab().tab().tab().tab().tab().tab();
+    cy.get("body").tabs(10);
 
     cy.get("[data-cy=work-card").first().should("not.be.visible");
     cy.get("[data-cy=work-card").last().should("be.visible");

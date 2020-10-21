@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+/**
+ * Tabs function
+ * @param {int} n // n is number of tabs -> default to 1
+ *
+ */
+Cypress.Commands.add("tabs", (n = 1) => {
+  for (let i = 0; i < Number(n); i++) {
+    cy.tab();
+  }
+});

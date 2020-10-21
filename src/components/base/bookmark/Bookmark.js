@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "../../../utils/trim";
+
 import Skeleton from "../skeleton";
 import Icon from "../icon";
+import translate from "../translate";
 
 import BookmarkSvg from "../../../../public/icons/bookmark.svg";
 
@@ -25,11 +28,26 @@ function Bookmark({
   onClick = null,
   disabled = false,
   skeleton = false,
+  title = false,
 }) {
+  const key = cyKey({ name: title || "button", prefix: "bookmark" });
+
   const selectedClass = selected ? styles.selected : "";
+
+  const context = { context: "bookmark" };
+
+  // Set hover title
+  const params =
+    title && !skeleton
+      ? { label: "title", vars: [title] }
+      : { label: "defaultTitle" };
+
+  title = translate({ ...context, ...params });
 
   return (
     <button
+      title={title}
+      data-cy={key}
       className={`${className} ${styles.bookmark} ${selectedClass}`}
       onClick={() => (onClick ? onClick() : handleOnBookmarkClick())}
     >

@@ -39,8 +39,7 @@ describe("Cards", () => {
 
     // Tab to the second work card and click
     cy.get("body")
-      .tab()
-      .tab()
+      .tabs(2)
       .click()
       .then(() => {
         const expected = JSON.stringify({

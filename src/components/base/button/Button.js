@@ -1,8 +1,14 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "../../../utils/trim";
+
 import Skeleton from "../skeleton";
 
 import styles from "./Button.module.css";
+
+function handleOnButtonClick() {
+  alert("Button clicked!");
+}
 
 /**
  * The Component function
@@ -21,11 +27,13 @@ function Button({
   disabled = false,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
+  const key = cyKey({ name: children, prefix: "button" });
 
   return (
     <button
+      data-cy={key}
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
-      onClick={onClick}
+      onClick={() => (onClick ? onClick() : handleOnButtonClick())}
     >
       {children}
     </button>
