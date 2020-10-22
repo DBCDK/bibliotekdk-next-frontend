@@ -4,8 +4,7 @@
 */
 
 .keywords {
-  min-height: 150px;
-  padding-bottom: var(--pt8);
+  padding-bottom: var(--pt5);
 }
 
 /**
@@ -32,16 +31,23 @@
   color: var(--blue);
 }
 
+.keyword h1 {
+  font-family: var(--title-font);
+}
+
+/* 3 or less keywords */
 .keyword.small h1 {
   font-size: var(--pt3);
   line-height: var(--pt4);
 }
 
+/* 6 or less keywords */
 .keyword.medium h1 {
   font-size: var(--pt4);
   line-height: var(--pt5);
 }
 
+/* more than 6 keywords */
 .keyword.large {
   margin: 0 var(--pt3) var(--pt1) 0;
 }
