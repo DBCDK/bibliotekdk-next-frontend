@@ -42,7 +42,7 @@ function Icon({
   return (
     <i
       style={dynamicStyles}
-      className={`${styles.icon} ${styles.className} ${shapeStyle} ${disabledStyle}`}
+      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
     >
       {children || <img src={`/icons/${src}`} />}
