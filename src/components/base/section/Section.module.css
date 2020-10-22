@@ -1,13 +1,9 @@
 .background {
-  margin-bottom: var(--pt8);
+  margin-bottom: var(--pt10);
 }
 
 .background section:last-child {
-  padding: var(--pt8) 0 0 0;
-}
-
-.background .divider {
-  display: none;
+  padding: var(--pt5) 0 0 0;
 }
 
 .divider {
@@ -20,9 +16,21 @@
   background-color: var(--iron);
 }
 
+.background .divider {
+  background-color: transparent;
+}
+
+.background .section div:first-child .divider {
+  display: none;
+}
+
 @media (min-width: 768px) {
   .divider {
     width: 100%;
     background-color: var(--iron);
+  }
+
+  .background .divider {
+    display: none;
   }
 }
