@@ -14,7 +14,7 @@
 
 .keyword {
   display: inline-block;
-  margin: 0 var(--pt2) var(--pt3) 0;
+  margin: 0 var(--pt3) var(--pt3) 0;
   position: relative;
 }
 
@@ -45,9 +45,6 @@
 }
 
 /* more than 6 keywords */
-.keyword.large {
-  margin: 0 var(--pt3) var(--pt1) 0;
-}
 
 .keyword.large h1 {
   font-size: var(--pt5);
