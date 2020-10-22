@@ -91,6 +91,7 @@ export default function Card({
             {creators[0].name}
           </Text>
         </div>
+        <div className={styles.BottomLine} />
       </a>
     </Link>
   );

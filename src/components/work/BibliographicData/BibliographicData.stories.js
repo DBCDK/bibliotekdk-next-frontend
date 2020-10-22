@@ -1,4 +1,4 @@
-import { GetBibData } from "./BibliographicData";
+import BibliographicData from "./BibliographicData";
 import React, { useState } from "react";
 
 export default {
@@ -9,5 +9,5 @@ export default {
  * Returns bibliographic data component
  */
 export function BibData() {
-  return <GetBibData workId={"some-id"} />;
+  return <BibliographicData workId={"some-id"} />;
 }

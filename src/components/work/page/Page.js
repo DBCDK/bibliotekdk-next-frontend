@@ -5,6 +5,7 @@ import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
 import Keywords from "../keywords";
+import BibliographicData from "../BibliographicData";
 
 /**
  * The work page React component
@@ -23,6 +24,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Content workId={workId} type={type} />
       <Recommendations workId={workId} />
       <Keywords workId={workId} type={type} />
+      <BibliographicData workId={workId} />
     </main>
   );
 }
