@@ -21,7 +21,7 @@ import Translate from "../../base/translate";
  *
  * @returns {component}
  */
-export function GetBibData(props) {
+export default function BibliographicData(props) {
   // get dummydata
   // @TODO get real - data Call API
   let workData = getWorkData(props);
