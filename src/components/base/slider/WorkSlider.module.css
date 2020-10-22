@@ -1,5 +1,7 @@
 .WorkSlider {
   position: relative;
+  margin-left: -8px;
+  margin-right: -8px;
 }
 .skeleton {
   display: flex;
@@ -8,10 +10,12 @@
 }
 
 .SlideWrapper {
-  border-left: 1px solid rgba(0, 0, 0, 0.25);
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  height: auto;
 }
 
 .SlideWrapper:last-of-type {
+  border-right: 0;
   padding-right: 0;
   margin-right: 0;
 }
@@ -60,8 +64,8 @@
   }
 }
 
-/* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) {
+/* Large devices (desktops, 1200px and up) */
+@media (min-width: 1200px) {
   .button {
     top: 124px;
   }
