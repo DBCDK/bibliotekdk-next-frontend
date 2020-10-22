@@ -1,7 +1,7 @@
 .WorkSlider {
   position: relative;
-  margin-left: -8px;
-  margin-right: -8px;
+  margin-left: calc(var(--pt1) * -1);
+  margin-right: calc(var(--pt1) * -1);
 }
 .skeleton {
   display: flex;
@@ -16,7 +16,7 @@
 
 .SlideWrapper:last-of-type {
   border-right: 0;
-  padding-right: 0;
+  padding-right: var(--pt1);
   margin-right: 0;
 }
 
