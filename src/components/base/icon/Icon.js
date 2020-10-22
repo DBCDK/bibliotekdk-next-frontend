@@ -20,7 +20,6 @@ function Icon({
   size = 5,
   onClick = null,
   disabled = false,
-  importedStyles = null,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
@@ -38,13 +37,12 @@ function Icon({
   const dynamicStyles = {
     ...dimensions,
     ...backgroundColor,
-    ...importedStyles,
   };
 
   return (
     <i
       style={dynamicStyles}
-      className={`${styles.icon}  ${shapeStyle} ${disabledStyle} `}
+      className={`${styles.icon} ${styles.className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
     >
       {children || <img src={`/icons/${src}`} />}
@@ -100,5 +98,4 @@ Container.propTypes = {
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
-  importedStyles: PropTypes.object,
 };
