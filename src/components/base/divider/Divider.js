@@ -1,5 +1,4 @@
 import styles from "./Divider.module.css";
-import { StoryTitle } from "../storybook";
 
 /**
  * divider  - basically hr
@@ -7,10 +6,5 @@ import { StoryTitle } from "../storybook";
  * @constructor
  */
 export function Divider({}) {
-  return (
-    <React.Fragment>
-      <StoryTitle>Divider</StoryTitle>
-      <hr className={styles.divider} />
-    </React.Fragment>
-  );
+  return <hr className={styles.divider} />;
 }
