@@ -3,7 +3,6 @@
  * This component uses the section component defined in base/section
  */
 import { Row, Col } from "react-bootstrap";
-import { ListGroup } from "react-bootstrap";
 import React, { useState } from "react";
 
 import Section from "../../base/section";
@@ -11,7 +10,8 @@ import { Divider } from "../../base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
 import dummy_workDataApi from "../dummy.workDataApi";
-import Icon from "../../base/icon/Icon";
+import styles from "./BibliographicData.module.css";
+import Translate from "../../base/translate";
 
 /**
  * Export function of the Component
@@ -24,20 +24,43 @@ import Icon from "../../base/icon/Icon";
 export function GetBibData(props) {
   // get dummydata
   // @TODO get real - data Call API
-  const workData = dummy_workDataApi(props);
-  // @TODO datacheck like:
-  // if (workData.work.materialTypes) {
-  // console.log(workData.work.materialTypes);
-  //}
+  let workData = getWorkData(props);
   return (
-    <Section title="Informationer og udgaver" key={"fnis"}>
-      <WorkTypesRow materialTypes={workData.work.materialTypes} key={"is"} />
+    <Section
+      title={Translate({
+        context: "bibliographic-data",
+        label: "storytitle",
+      })}
+    >
+      <WorkTypesRow materialTypes={workData.work.materialTypes} />
     </Section>
   );
 }
 
 /**
+ * First manifestation in list should be open - this is a 'static' variable ..
+ * @param props
+ * @returns {{}|*}
+ */
+function getWorkData(props) {
+  if (typeof getWorkData.data == "undefined") {
+    // first time we load the data
+
+    // @TODO datacheck like:
+    // if (workData.work.materialTypes) {
+    // console.log(workData.work.materialTypes);
+    //}
+
+    getWorkData.data = dummy_workDataApi(props);
+    // this is the first load - set first manifestation to open
+    getWorkData.data.work.materialTypes[0].open = true;
+  }
+  return getWorkData.data;
+}
+
+/**
  * Run through manifestations (WorkTypes) - do a row for each
+ * This is also where we handle state for each manifestation (open/closed)
  * @param materialTypes
  *   array of Manifestations from api
  * @param onClick
@@ -52,29 +75,38 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   // onclick handler. set state of clicked manifestion (open/!open)
   const rowClicked = (index) => {
     // copy the manifestations array
-    let ManiestationStates = [...manifestations];
+    let ManifestationStates = [...manifestations];
+    // close all manifestations except the one clicked
+    ManifestationStates.forEach((manifestation, idx) => {
+      if (idx !== index) {
+        manifestation.open = false;
+      }
+    });
     // toggle state of clicked manifestation
-    ManiestationStates[index].open = !ManiestationStates[index].open;
+    ManifestationStates[index].open = !ManifestationStates[index].open;
     // set new state(s)
-    setManifestations(ManiestationStates);
+    setManifestations(ManifestationStates);
   };
 
   return manifestations.map((manifestation, index) => (
     <React.Fragment>
       <Row
-        key={index.toString() + "list"}
-        onClick={() => (onClick ? onClick() : rowClicked(index))}
+        key={index.toString() + manifestation.pid}
+        onClick={() => {
+          onClick ? onClick() : rowClicked(index);
+        }}
+        className={styles.pointer}
       >
         <ManifestationList manifestation={manifestation} />
       </Row>
-      <Divider></Divider>
+      <Divider />
       <ManifestationRowFull manifestation={manifestation} index={index} />
     </React.Fragment>
   ));
 }
 
 /**
- * Show manifestation full or null of manifestion is closed.
+ * Show manifestation full if open or null if manifestion closed.
  * @param manifestation
  *  A simpole manifestation from workdata - manifestation holds minimal information (cocver & pid baically)
  *  Use the pid to retrieve full manifestation from api if manifestation is open
@@ -83,11 +115,12 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
  * @constructor
  */
 function ManifestationRowFull({ manifestation = null, index = 0 }) {
-  // is manifestation open ?
+  // is manifestation open ?;
   if (manifestation.open) {
+    // yes it is
     return (
       <React.Fragment>
-        <Row key={index.toString() + "full"}>
+        <Row key={index.toString()}>
           <ManifestationFull manifestation={manifestation} />,
         </Row>
         <Divider />
