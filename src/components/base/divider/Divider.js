@@ -1,7 +1,7 @@
 import styles from "./Divider.module.css";
 
 /**
- * divider  - basically hr with a div
+ * divider  - basically hr
  * @returns {JSX.Element}
  * @constructor
  */
