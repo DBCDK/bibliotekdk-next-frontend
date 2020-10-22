@@ -10,6 +10,8 @@ import { Divider } from "../../base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
 import dummy_workDataApi from "../dummy.workDataApi";
+import styles from "./BibliographicData.module.css";
+import Translate from "../../base/translate";
 
 /**
  * Export function of the Component
@@ -24,7 +26,12 @@ export function GetBibData(props) {
   // @TODO get real - data Call API
   let workData = getWorkData(props);
   return (
-    <Section title="Informationer og udgaver">
+    <Section
+      title={Translate({
+        context: "bibliographic-data",
+        label: "storytitle",
+      })}
+    >
       <WorkTypesRow materialTypes={workData.work.materialTypes} />
     </Section>
   );
@@ -68,17 +75,17 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   // onclick handler. set state of clicked manifestion (open/!open)
   const rowClicked = (index) => {
     // copy the manifestations array
-    let ManiestationStates = [...manifestations];
+    let ManifestationStates = [...manifestations];
     // close all manifestations except the one clicked
-    ManiestationStates.forEach((manifestation, idx) => {
+    ManifestationStates.forEach((manifestation, idx) => {
       if (idx !== index) {
         manifestation.open = false;
       }
     });
     // toggle state of clicked manifestation
-    ManiestationStates[index].open = !ManiestationStates[index].open;
+    ManifestationStates[index].open = !ManifestationStates[index].open;
     // set new state(s)
-    setManifestations(ManiestationStates);
+    setManifestations(ManifestationStates);
   };
 
   return manifestations.map((manifestation, index) => (
@@ -88,7 +95,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
         onClick={() => {
           onClick ? onClick() : rowClicked(index);
         }}
-        style={{ cursor: "pointer" }}
+        className={styles.pointer}
       >
         <ManifestationList manifestation={manifestation} />
       </Row>

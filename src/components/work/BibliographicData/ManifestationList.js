@@ -9,8 +9,6 @@ import styles from "./BibliographicData.module.css";
 
 export function ManifestationList({ manifestation = null }) {
   let icon = manifestation.open ? "iconminuswhite.svg" : "iconpluswhite.svg";
-  let importedStyles = { float: "right" };
-
   return (
     <Col key={manifestation.materialType} xs={12} md className={styles.right}>
       <Text type="text3" lines={4}>

@@ -11,6 +11,7 @@ import Button from "../../base/button";
 
 import ManifestationParserObject from "./ManifestationParserObject";
 import PropTypes from "prop-types";
+import Translate from "../../base/translate";
 
 function dummyData(manifestation) {
   let parser = new ManifestationParserObject(manifestation);
@@ -18,26 +19,44 @@ function dummyData(manifestation) {
 }
 
 function ColumnOne({ manifestation }) {
+  let number_of_libraries = "63";
   return (
     <Col key={"col1" + manifestation.pid} xs={6} md>
       <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
       <Link
-        children="Im a hyperlink now!"
+        children={Translate({
+          context: "bibliographic-data",
+          label: "editionlink",
+        })}
         href={{ pathname: "http://google.dk", query: {} }}
       />
       <br />
       <Link
-        children="Huskeliste"
+        children={Translate({
+          context: "bibliographic-data",
+          label: "bookmark",
+        })}
         href={{ pathname: "http://google.dk", query: {} }}
       />
       <br />
       <Link
-        children="Findes på 63 biblioteker"
+        children={Translate({
+          context: "bibliographic-data",
+          label: "library-locations",
+          vars: [number_of_libraries],
+        })}
         href={{ pathname: "http://google.dk", query: {} }}
       />
       <br />
       <br />
-      <Button type={"secondary"} size={"small"} />
+      <Button
+        type={"secondary"}
+        size={"small"}
+        children={Translate({
+          context: "overview",
+          label: "addToCart",
+        })}
+      />
     </Col>
   );
 }

@@ -123,6 +123,24 @@
         "en": "Home"
       }
     },
+    "bibliographic-data": {
+      "storytitle": {
+        "da": "Informationer og udgaver",
+        "en": "information and editions"
+      },
+      "library-locations": {
+        "da" : "Findes på %s biblioteker",
+        "en" : "Located at %s libraries"
+      },
+      "editionlink": {
+        "da": "Link til denne udgave",
+        "en": "Link to this edition"
+      },
+      "bookmark" : {
+        "da": "Tilføj som bogmærke",
+        "en" : "Add to bookmarks"
+      }
+    },
     "overview": {
       "addToCart": {
         "da": "Læg i lånekurv",
