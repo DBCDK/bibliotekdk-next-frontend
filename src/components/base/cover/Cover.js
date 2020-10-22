@@ -48,7 +48,7 @@ function Cover({
       className={`${styles.cover} ${frameStyle} ${className}`}
       onClick={onClick}
     >
-      <img style={dimensions} src={src} />
+      <img style={dimensions} data-src={src} class="lazyload" />
       {children}
     </div>
   );

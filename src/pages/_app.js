@@ -12,6 +12,7 @@
 import React from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/styles.css";
+import "lazysizes";
 
 import { APIStateContext } from "../lib/api/api";
 
