@@ -21,7 +21,6 @@ export function ManifestationList({ manifestation = null }) {
           importedStyles={importedStyles}
         />
       </Text>
-      <br />
     </Col>
   );
 }
