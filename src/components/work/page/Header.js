@@ -30,7 +30,6 @@ export default function Header({ workId }) {
   }
   const jsonld = getJSONLD(data.work);
   const pageDescription = getPageDescription(data.work);
-  // console.log(jsonld);
   // We should have a "primary cover" on the work
   // so we don't have to do this
   let cover;
