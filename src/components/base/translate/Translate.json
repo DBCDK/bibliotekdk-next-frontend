@@ -129,16 +129,16 @@
         "en": "information and editions"
       },
       "library-locations": {
-        "da" : "Findes på %s biblioteker",
-        "en" : "Located at %s libraries"
+        "da": "Findes på %s biblioteker",
+        "en": "Located at %s libraries"
       },
       "editionlink": {
         "da": "Link til denne udgave",
         "en": "Link to this edition"
       },
-      "bookmark" : {
+      "bookmark": {
         "da": "Tilføj som bogmærke",
-        "en" : "Add to bookmarks"
+        "en": "Add to bookmarks"
       }
     },
     "overview": {
@@ -209,6 +209,12 @@
       "title": {
         "da": "Bogmærk %s",
         "en": "Bookmark %s"
+      }
+    },
+    "reviews": {
+      "title": {
+        "da": "Anmeldelser (%s)",
+        "en": "Reviews (%s)"
       }
     }
   },

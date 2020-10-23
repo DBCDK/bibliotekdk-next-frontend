@@ -1,0 +1,4 @@
+.star.filled path {
+  fill: var(--blue);
+  stroke: var(--blue);
+}
