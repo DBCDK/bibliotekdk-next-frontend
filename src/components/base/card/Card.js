@@ -70,7 +70,7 @@ export default function Card({
         data-cy="work-card"
       >
         <div className={styles.CoverWrapper}>
-          <Cover src={cover.thumbnail} size={["100%", "100%"]} />
+          <Cover src={cover.detail} size={["100%", "100%"]} />
         </div>
         <div>
           <Text
