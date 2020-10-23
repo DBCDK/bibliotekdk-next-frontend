@@ -1,9 +1,10 @@
 "use strict";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
-import Text from "../../base/text/Text";
 import React from "react";
 
+// fields to handle - add to handle a field eg. subjects or lix or let or ...
+// @TODO it would be nice if fields are shown in the order here .. fix it
 const fields = [
   "contribution",
   "description",
@@ -14,16 +15,24 @@ const fields = [
   "released",
 ];
 
-// constructor
+/**
+ * @param manifestation
+ *  The work to parse. For now it holds {pid, materialtype, cover}
+ * @constructor
+ */
 let ManifestationParserObject = function (manifestation) {
   this._manifestation = manifestation;
   this._fields = ManifestationParserObject.flipArray(fields);
 };
 
 // public methods
-// can be called after initializing an object
 ManifestationParserObject.prototype = {
-  parseManifestation: function () {
+  /**
+   * Parse manifestation in two columns
+   * @returns {*[]|*[]}
+   *  object with an array for each column
+   */
+  parseManifestationInTwoColumns: function () {
     // @TODO get real data from api
     let dataToParse = this._getDummyData();
     let twoColumnsArray = this._splitInColumns(dataToParse);
@@ -32,7 +41,7 @@ ManifestationParserObject.prototype = {
 
   /**
    * Private function
-   * get additional data for objects manifestation
+   * get additional data for objects manifestatio. n
    * @returns {[]}
    * @private
    */
@@ -40,7 +49,6 @@ ManifestationParserObject.prototype = {
     let props = { workId: "workId", type: this._manifestation.materialType };
     let data = dummy_materialTypesApi(props);
     let dataArray = {};
-    let element = [];
     for (let [key, value] of Object.entries(data.workId)) {
       if (this._fields[key]) {
         let element = [];
@@ -48,9 +56,7 @@ ManifestationParserObject.prototype = {
         if (!Array.isArray(value)) {
           value = [value];
         }
-        element[key] = value;
         dataArray[key] = value;
-        //dataArray = [...dataArray, element];
       }
     }
     return dataArray;
@@ -69,7 +75,7 @@ ManifestationParserObject.prototype = {
       return [];
     }
 
-    // we need to iterate data to know how count actual entries
+    // we need to iterate data to count actual entries
     let linecount = 0;
     for (let [key, value] of Object.entries(dataArray)) {
       linecount += value.length;
