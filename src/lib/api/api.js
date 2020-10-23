@@ -338,6 +338,17 @@ export function fetchOnServer(queries) {
       return { props: {} };
     }
 
+    // Detect if requester is a bot
+    const userAgent = context.req.headers["user-agent"];
+    const isBot = require("isbot")(userAgent) || !!context.query.isBot;
+
+    // Increase timeout if its a bot, as much as possible should
+    // be server side rendered
+    const timeout = isBot
+      ? 10000
+      : (context.query.timeout && parseInt(context.query.timeout, 10)) ||
+        config.api.timeout;
+
     // The browser has not rendered the application yet
     // We fetch some data, which will be used for server
     // side rendering.
@@ -346,10 +357,7 @@ export function fetchOnServer(queries) {
         initialState: await getClient().batchRequest({
           queries,
           variables: context.params,
-          timeout: context.query.bot
-            ? 10000
-            : (context.query.timeout && parseInt(context.query.timeout, 10)) ||
-              config.api.timeout,
+          timeout,
         }),
       },
     };
