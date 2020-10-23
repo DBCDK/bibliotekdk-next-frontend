@@ -10,8 +10,9 @@ COPY . .
 RUN npm set progress=false && npm config set depth 0 && \
     npm install
 
-# Run lint
-RUN npm run lint
+# Run lint and tests
+RUN npm run lint && \
+    npm run test
 
 # build for production
 RUN npm run build:storybook && \
