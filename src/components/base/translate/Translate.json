@@ -215,6 +215,14 @@
       "title": {
         "da": "Anmeldelser (%s)",
         "en": "Reviews (%s)"
+      },
+      "reviewLinkText": {
+        "da": "Læs anmeldelse",
+        "en": "Read review"
+      },
+      "materialTitle": {
+        "da": "Bibliotekernes vurdering",
+        "en": "The libraries' assessment"
       }
     }
   },

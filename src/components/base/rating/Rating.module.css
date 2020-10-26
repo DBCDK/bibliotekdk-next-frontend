@@ -1,3 +1,7 @@
+.rating {
+  line-height: 0;
+}
+
 .star.filled path {
   fill: var(--blue);
   stroke: var(--blue);

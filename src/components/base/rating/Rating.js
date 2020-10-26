@@ -18,31 +18,40 @@ import styles from "./Rating.module.css";
  *
  * @returns {component}
  */
-function Rating({ className = "", rating = "", skeleton = false }) {
+function Rating({
+  className = "",
+  rating = "4/6",
+  type = "star",
+  skeleton = false,
+}) {
   const key = cyKey({ name: "cy", prefix: "rating" });
 
   const context = { context: "rating" };
 
+  if (rating === "" || !rating.includes("/")) {
+    return null;
+  }
+
+  // Build rating array
+  const arr = [];
+  const split = rating.split("/");
+  for (let i = 0; i < split[1]; i++) {
+    const filled = i < split[0];
+    arr.push({ type, filled });
+  }
+
   return (
     <div data-cy={key} className={`${className} ${styles.rating}`}>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star} ${styles.filled}`} />
-      </Icon>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star} ${styles.filled}`} />
-      </Icon>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star} ${styles.filled}`} />
-      </Icon>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star} ${styles.filled}`} />
-      </Icon>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star}`} />
-      </Icon>
-      <Icon skeleton={skeleton} size={3}>
-        <StarSvg className={`${styles.star}`} />
-      </Icon>
+      {arr.map((r) => {
+        const filledClass = r.filled ? styles.filled : "";
+        const typeClass = r.type === "star" ? styles.star : "";
+
+        return (
+          <Icon skeleton={skeleton} size={3}>
+            <StarSvg className={`${typeClass} ${filledClass}`} />
+          </Icon>
+        );
+      })}
     </div>
   );
 }
@@ -87,8 +96,7 @@ export default function Container(props) {
 // PropTypes for Container component
 Container.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  selected: PropTypes.bool,
-  disabled: PropTypes.bool,
+  rating: PropTypes.string,
+  type: PropTypes.string,
   skeleton: PropTypes.bool,
-  onClick: PropTypes.func,
 };

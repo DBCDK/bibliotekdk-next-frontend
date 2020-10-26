@@ -4,6 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { cyKey } from "../../../../../utils/trim";
 
 import Text from "../../../../base/text";
+import Icon from "../../../../base/icon";
 import Rating from "../../../../base/rating";
 import Link from "../../../../base/link";
 import Translate from "../../../../base/translate";
@@ -24,23 +25,38 @@ export function InfomediaReview({
   skeleton = false,
 }) {
   // Translate Context
-  const context = { context: "infomediaReview" };
+  const context = { context: "reviews" };
 
   return (
-    <Row className={`${styles.infomedia} ${className}`}>
-      <Col xs={12} className={styles.rating}>
-        <Rating rating={data.rating} />
-      </Col>
-      <Col xs={12} className={styles.media}>
-        {data.media}
-      </Col>
-      <Col xs={12} className={styles.author}>
-        {data.author}
-      </Col>
-      <Col xs={12} className={styles.url}>
-        {data.url}
-      </Col>
-    </Row>
+    <Col xs={12} md={4} className={`${styles.infomedia} ${className}`}>
+      {data.rating && (
+        <div className={styles.rating}>
+          <Rating rating={data.rating} />
+        </div>
+      )}
+      {data.media && (
+        <div className={styles.media}>
+          <Text type="text3">{data.media}</Text>
+        </div>
+      )}
+      {data.author && (
+        <div className={styles.author}>
+          <Text type="text3">
+            af <span>{data.author}</span> d. 05/07-2020
+          </Text>
+        </div>
+      )}
+      {data.url && (
+        <div className={styles.url}>
+          <Icon src="chevron.svg" size={1} />
+          <Link href={data.url} target="_blank">
+            <Text type="text2">
+              {Translate({ ...context, label: "reviewLinkText" })}
+            </Text>
+          </Link>
+        </div>
+      )}
+    </Col>
   );
 }
 

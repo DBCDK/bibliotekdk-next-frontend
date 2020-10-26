@@ -1,31 +1,25 @@
 import { useState } from "react";
 import { StoryTitle, StoryDescription } from "../storybook";
 
-import Bookmark from "./Bookmark";
+import Rating from "./Rating";
 import Cover from "../cover";
 
 export default {
-  title: "Bookmark",
+  title: "Rating",
 };
 
 /**
  * Returns Bookmark button
  *
  */
-export function Button() {
+export function SomeRating() {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
     <div>
-      <StoryTitle>Bookmark Button</StoryTitle>
-      <StoryDescription>
-        The bookmark button is simply an icon component with an extra layer of
-        functionality
-      </StoryDescription>
-      <Bookmark
-        selected={isBookmarked}
-        onClick={() => setIsBookmarked(!isBookmarked)}
-      />
+      <StoryTitle>Rating</StoryTitle>
+      <StoryDescription>...</StoryDescription>
+      <Rating />
     </div>
   );
 }
@@ -39,11 +33,9 @@ export function Loading() {
 
   return (
     <div>
-      <StoryTitle>Loading Bookmark Button</StoryTitle>
-      <StoryDescription>
-        Loading state of the the bookmark button
-      </StoryDescription>
-      <Bookmark skeleton={true} />
+      <StoryTitle>...</StoryTitle>
+      <StoryDescription>...</StoryDescription>
+      <Rating skeleton={true} />
     </div>
   );
 }

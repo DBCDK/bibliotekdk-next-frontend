@@ -1,8 +1,11 @@
 import PropTypes from "prop-types";
+import { Container, Row, Col } from "react-bootstrap";
 
 import { cyKey } from "../../../../../utils/trim";
 
+import Text from "../../../../base/text";
 import Title from "../../../../base/title";
+import Icon from "../../../../base/icon";
 import Link from "../../../../base/link";
 import Translate from "../../../../base/translate";
 
@@ -24,7 +27,44 @@ export function MaterialReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  return <div>some materialreview</div>;
+  return (
+    <Col xs={12} md={8} className={styles.materialReview}>
+      <Row>
+        <Col xs={4}>
+          <Text type="text3">
+            {Translate({ ...context, label: "materialTitle" })}
+          </Text>
+        </Col>
+        <Col xs={4} className={styles.author}>
+          <Text type="text3">
+            Af <span>{data.author}</span>
+          </Text>
+        </Col>
+        <Col xs={4}>
+          <Text type="text3">07/07-2010</Text>
+        </Col>
+      </Row>
+
+      <Col xs={12} className={styles.content}>
+        <Title type="title3">
+          For alle, der holder af en god afdæmpet historie. Forsiden - et
+          sort/hvidt billede af en dieselstander - sælger ikke bogen, men det
+          gør navnet og vor aktive formidling
+        </Title>
+      </Col>
+
+      {data.url && (
+        <Col xs={12} className={styles.url}>
+          <Icon src="chevron.svg" size={1} />
+          <Link href={data.url} target="_blank">
+            <Text type="text2">
+              {Translate({ ...context, label: "reviewLinkText" })}
+            </Text>
+          </Link>
+        </Col>
+      )}
+    </Col>
+  );
 }
 
 /**
@@ -67,10 +107,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  // get subjects from response
-  const subjects = data.work.subjects;
-
-  return <MaterialReview {...props} data={subjects} />;
+  return <MaterialReview {...props} />;
 }
 
 // PropTypes for component

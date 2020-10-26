@@ -1,2 +1,9 @@
 .reviews {
+  position: relative;
+  margin-left: calc(var(--pt1) * -1);
+  margin-right: calc(var(--pt1) * -1);
+}
+
+.SlideWrapper {
+  height: auto;
 }
