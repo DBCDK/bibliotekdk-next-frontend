@@ -7,7 +7,19 @@
     cursor: pointer;
 }
 
+.pointer:hover {
+    font-weight: bold;
+}
+
+.pointer:hover hr {
+    background-color: var(--gray);
+}
+
 .column {
     display: block;
     margin-bottom: var(--pt1);
+}
+
+.column:focus {
+    color: var(--blue);
 }

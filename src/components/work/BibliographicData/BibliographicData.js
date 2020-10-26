@@ -90,16 +90,18 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 
   return manifestations.map((manifestation, index) => (
     <React.Fragment>
-      <Row
-        key={index.toString() + manifestation.pid}
-        onClick={() => {
-          onClick ? onClick() : rowClicked(index);
-        }}
-        className={styles.pointer}
-      >
-        <ManifestationList manifestation={manifestation} />
-      </Row>
-      <Divider />
+      <div className={styles.pointer}>
+        <Row
+          key={index.toString() + manifestation.pid}
+          onClick={() => {
+            onClick ? onClick() : rowClicked(index);
+          }}
+          className={styles.pointer}
+        >
+          <ManifestationList manifestation={manifestation} />
+        </Row>
+        <Divider />
+      </div>
       <ManifestationRowFull manifestation={manifestation} index={index} />
     </React.Fragment>
   ));
