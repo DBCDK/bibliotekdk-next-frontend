@@ -9,7 +9,7 @@ const fields = [
   "contribution",
   "description",
   "lang",
-  "notes",
+  //"notes",
   "pages",
   "pid",
   "released",
@@ -50,14 +50,15 @@ ManifestationParserObject.prototype = {
     let data = dummy_materialTypesApi(props);
     let dataArray = {};
     for (let [key, value] of Object.entries(data.workId)) {
-      if (this._fields[key]) {
-        let element = [];
-        // make sure we return an array for easier parsing
-        if (!Array.isArray(value)) {
-          value = [value];
-        }
-        dataArray[key] = value;
+      if (!this._fields[key]) {
+        continue;
       }
+      let element = [];
+      // make sure we return an array for easier parsing
+      if (!Array.isArray(value)) {
+        value = [value];
+      }
+      dataArray[key] = value;
     }
     return dataArray;
   },
@@ -71,16 +72,14 @@ ManifestationParserObject.prototype = {
    * @private
    */
   _splitInColumns: function (dataArray) {
-    if (!dataArray) {
+    if (!Object.keys(dataArray).length) {
       return [];
     }
-
     // we need to iterate data to count actual entries
     let linecount = 0;
     for (let [key, value] of Object.entries(dataArray)) {
       linecount += value.length;
     }
-
     // the length of first column
     let colLength = (linecount / 2) >> 0;
     // holder for the two columns
@@ -91,12 +90,15 @@ ManifestationParserObject.prototype = {
     let columnCount = 0;
     // array with the two columns to return
     let columnArray = [];
+    // flag - is column 1 done
+    let columOneDone = false;
     // iterate again to split into two columns
     for (let [key, value] of Object.entries(dataArray)) {
       // reset element
       element = [];
       columnCount += value.length;
-      if (columnCount > colLength) {
+      if (columnCount > colLength && !columOneDone) {
+        columOneDone = true;
         // we added half of the fields - reset and do column 2
         arrayInColumns["col1"] = columnArray;
         columnArray = [];
@@ -105,6 +107,7 @@ ManifestationParserObject.prototype = {
       columnArray.push(element);
     }
     arrayInColumns["col2"] = columnArray;
+
     return arrayInColumns;
   },
 };

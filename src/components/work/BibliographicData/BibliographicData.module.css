@@ -20,6 +20,14 @@
     margin-bottom: var(--pt1);
 }
 
+.fullmanifestation img{
+    margin-bottom: var(--pt2);
+}
+
+.fullmanifestation button{
+    margin-top: var(--pt2);
+}
+
 .column:focus {
     color: var(--blue);
 }

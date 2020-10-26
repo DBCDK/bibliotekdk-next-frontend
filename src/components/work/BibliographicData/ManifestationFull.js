@@ -37,33 +37,46 @@ function ColumnOne({ manifestation }) {
       xs={6}
       md
       data-cy="bibliographic-column1"
+      className={styles.fullmanifestation}
     >
       <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
 
       <Link
-        children={Translate({
-          context: "bibliographic-data",
-          label: "editionlink",
-        })}
+        children={
+          <Text type="text3" lines={2}>
+            {Translate({
+              context: "bibliographic-data",
+              label: "editionlink",
+            })}
+          </Text>
+        }
         className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
 
       <Link
-        children={Translate({
-          context: "bibliographic-data",
-          label: "bookmark",
-        })}
+        children={
+          <Text type="text3" lines={2}>
+            {Translate({
+              context: "bibliographic-data",
+              label: "bookmark",
+            })}
+          </Text>
+        }
         className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
 
       <Link
-        children={Translate({
-          context: "bibliographic-data",
-          label: "library-locations",
-          vars: [number_of_libraries],
-        })}
+        children={
+          <Text type="text3" lines={2}>
+            {Translate({
+              context: "bibliographic-data",
+              label: "library-locations",
+              vars: [number_of_libraries],
+            })}
+          </Text>
+        }
         className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
