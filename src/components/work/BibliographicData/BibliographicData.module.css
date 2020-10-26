@@ -7,6 +7,10 @@
     cursor: pointer;
 }
 
+.fontligth{
+    font-family: var(--title-font-light);
+}
+
 .pointer:hover {
     font-weight: bold;
 }
@@ -26,6 +30,10 @@
 
 .fullmanifestation button{
     margin-top: var(--pt2);
+}
+
+.fullmanifestation {
+    font-weight: normal;
 }
 
 .column:focus {
