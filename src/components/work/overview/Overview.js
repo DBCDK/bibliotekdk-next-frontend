@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { merge } from "lodash";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -87,8 +88,12 @@ export function Overview({
             className={styles.cover}
           >
             <Cover
-              src={selectedMaterial.cover.detail || allMaterialTypes}
-              skeleton={skeleton}
+              src={
+                (selectedMaterial.cover && selectedMaterial.cover.detail) ||
+                allMaterialTypes
+              }
+              skeleton={!selectedMaterial.cover}
+              size={["200px", "300px"]}
             >
               <Bookmark skeleton={skeleton} title={title} />
             </Cover>
@@ -222,6 +227,8 @@ export default function Wrap({ workId, type, onTypeChange }) {
     workFragments.basic({ workId })
   );
 
+  const covers = useData(workFragments.covers({ workId }));
+
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
   }
@@ -229,7 +236,9 @@ export default function Wrap({ workId, type, onTypeChange }) {
     return <OverviewError />;
   }
 
-  return <Overview {...data.work} type={type} onTypeChange={onTypeChange} />;
+  const merged = merge({}, covers.data, data);
+
+  return <Overview {...merged.work} type={type} onTypeChange={onTypeChange} />;
 }
 
 // PropTypes for component

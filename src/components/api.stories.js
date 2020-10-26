@@ -45,11 +45,12 @@ export const FetchingData = () => {
   const { data, isLoading, isSlow } = useData(
     query({ workId, delay: 1000, slowThreshold: 500 })
   );
+
   return (
     <div>
       {isLoading && <h1>loader</h1>}
       {isSlow && <h1>langsomt</h1>}
-      {data && <h1>{data.manifestation.title[0]}</h1>}
+      {data && <h1>{data.manifestation.title}</h1>}
     </div>
   );
 };

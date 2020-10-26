@@ -23,7 +23,7 @@ describe("Testing useData hook", () => {
 
       const expected = {
         '{"query":"query ($workId: String!) {\\n    manifestation(pid: $workId) {\\n      title\\n    }\\n  }\\n  ","variables":{"workId":"870970-basis:51883322"}}': {
-          data: { manifestation: { title: ["Doppler : roman"] } },
+          data: { manifestation: { title: "Doppler : roman" } },
         },
       };
       expect(state).to.deep.equal(expected);
@@ -40,11 +40,11 @@ describe("Testing useData hook", () => {
 
       const expected = {
         '{"query":"query ($workId: String!) {\\n    manifestation(pid: $workId) {\\n      title\\n    }\\n  }\\n  ","variables":{"workId":"870970-basis:51883322"}}': {
-          data: { manifestation: { title: ["Doppler : roman"] } },
+          data: { manifestation: { title: "Doppler : roman" } },
         },
         '{"query":"query ($workId: String!) {\\n    manifestation(pid: $workId) {\\n      title\\n    }\\n  }\\n  ","variables":{"workId":"870970-basis:46578295"}}': {
           data: {
-            manifestation: { title: ["Egne rækker : et muntert tidsbillede"] },
+            manifestation: { title: "Egne rækker : et muntert tidsbillede" },
           },
         },
       };

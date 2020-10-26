@@ -28,7 +28,6 @@ function parse(data) {
       return {
         cover: manifestation.cover,
         creators: manifestation.creators,
-        description: manifestation.abstract[0],
         id: `work-of:${manifestation.pid}`,
         title: manifestation.title[0],
       };

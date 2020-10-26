@@ -8,10 +8,16 @@ export default function getMaterialTypes({ workId, type }) {
           cover: {
             detail: null,
           },
-          lang: "danglish",
-          pages: "xxvii, 123 sider, illustreret",
-          released: "2020",
-          contribution: ["some contributor", "some other contributor"],
+          language: ["danglish"],
+          physicalDescription: "xxvii, 123 sider, illustreret",
+          datePublished: "2020",
+          creators: [
+            {
+              name: "some contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
           notes: [
@@ -54,10 +60,16 @@ export default function getMaterialTypes({ workId, type }) {
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
           },
-          lang: "large danglish",
-          pages: "321 sider",
-          released: "2021",
-          contribution: ["Awesome contributor"],
+          language: ["large danglish"],
+          physicalDescription: "321 sider",
+          datePublished: "2021",
+          creators: [
+            {
+              name: "Awsome contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
           notes: [
@@ -87,10 +99,16 @@ export default function getMaterialTypes({ workId, type }) {
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
           },
-          lang: "digital danglish",
-          pages: "6t 37min",
-          released: "2021",
-          contribution: ["Some Ebook contributor"],
+          language: ["digital danglish"],
+          physicalDescription: "6t 37min",
+          datePublished: "2021",
+          creators: [
+            {
+              name: "some ebook contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat.",
           notes: [
@@ -115,10 +133,16 @@ export default function getMaterialTypes({ workId, type }) {
           cover: {
             detail: null,
           },
-          lang: "audio danglish",
-          pages: "5t 59min",
-          released: "2019",
-          contribution: ["Some Audio contributor"],
+          language: ["audio danglish"],
+          physicalDescription: "5t 59min",
+          datePublished: "2019",
+          creators: [
+            {
+              name: "some audio contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description: "",
           notes: [
             "Introduction, Barbara Larson;",
@@ -164,10 +188,16 @@ export default function getMaterialTypes({ workId, type }) {
           cover: {
             detail: null,
           },
-          lang: "audio danglish",
-          pages: "5t 48min",
-          released: "2019",
-          contribution: ["Some Audio contributor"],
+          language: ["audio danglish"],
+          physicalDescription: "5t 48min",
+          datePublished: "2019",
+          creators: [
+            {
+              name: "some audio contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
           notes: [],
@@ -197,10 +227,16 @@ export default function getMaterialTypes({ workId, type }) {
             detail:
               "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
           },
-          lang: "audio danglish",
-          pages: "5t 59min",
-          released: "2019",
-          contribution: ["Some Audio contributor"],
+          language: ["audio danglish"],
+          physicalDescription: "5t 59min",
+          datePublished: "2019",
+          creators: [
+            {
+              name: "some audio contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl.",
           notes: [
@@ -229,10 +265,16 @@ export default function getMaterialTypes({ workId, type }) {
           cover: {
             detail: null,
           },
-          lang: "dot danglish",
-          pages: "321 sider",
-          released: "2019",
-          contribution: ["Some Audio contributor"],
+          language: ["dot danglish"],
+          physicalDescription: "321 sider",
+          datePublished: "2019",
+          creators: [
+            {
+              name: "some audio contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
+          ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
           notes: [
