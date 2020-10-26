@@ -6,3 +6,8 @@
 .pointer {
     cursor: pointer;
 }
+
+.column {
+    display: block;
+    margin-bottom: var(--pt1);
+}

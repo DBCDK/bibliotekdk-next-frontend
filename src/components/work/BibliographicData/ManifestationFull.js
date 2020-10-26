@@ -8,9 +8,10 @@ import Text from "../../base/text";
 import Cover from "../../base/cover";
 import Link from "../../base/link";
 import Button from "../../base/button";
+import Translate from "../../base/translate";
 
 import ManifestationParserObject from "./ManifestationParserObject";
-import Translate from "../../base/translate";
+import styles from "./BibliographicData.module.css";
 
 /**
  * Init parserobject; return two columns with details for the work
@@ -38,32 +39,35 @@ function ColumnOne({ manifestation }) {
       data-cy="bibliographic-column1"
     >
       <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
+
       <Link
         children={Translate({
           context: "bibliographic-data",
           label: "editionlink",
         })}
+        className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
-      <br />
+
       <Link
         children={Translate({
           context: "bibliographic-data",
           label: "bookmark",
         })}
+        className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
-      <br />
+
       <Link
         children={Translate({
           context: "bibliographic-data",
           label: "library-locations",
           vars: [number_of_libraries],
         })}
+        className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
-      <br />
-      <br />
+
       <Button
         type={"secondary"}
         size={"small"}
@@ -111,7 +115,7 @@ function TextLabelValue({ field }) {
  */
 function TextValue(value) {
   return value.value.map((value, index) => (
-    <Text type="text3" lines={2} key={index}>
+    <Text type="text3" lines={2}>
       {value}
     </Text>
   ));
