@@ -47,6 +47,10 @@ export default function Recommendations({ workId }) {
 
   const parsed = parse(data);
 
+  if (!isLoading && parsed.length === 0) {
+    return null;
+  }
+
   // Translate Context
   const context = { context: "recommendations" };
 
