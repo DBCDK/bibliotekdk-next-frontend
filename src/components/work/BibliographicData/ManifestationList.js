@@ -12,9 +12,7 @@ export function ManifestationList({ manifestation = null }) {
   let icon = manifestation.open ? "iconminuswhite.svg" : "iconpluswhite.svg";
   return (
     <Col key={manifestation.materialType} xs={12} md className={styles.right}>
-      <Title type="title4" className={styles.fontligth}>
-        {manifestation.materialType}
-      </Title>
+      <Title type="title5">{manifestation.materialType}</Title>
       <Icon size={3} bgColor="var(--blue)" src={icon} />
     </Col>
   );
