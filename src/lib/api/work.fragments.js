@@ -75,6 +75,7 @@ export function details({ workId }) {
     query: `query ($workId: String!) {
         work(id: $workId) {
           materialTypes {
+            content
             creators {
               type
               functionSingular

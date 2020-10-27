@@ -20,7 +20,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
-          notes: [
+          content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
             "Why is the peacock's tail so beautiful?, Laurence Shafe;",
@@ -72,7 +72,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
-          notes: [
+          content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
             "Why is the peacock's tail so beautiful?, Laurence Shafe;",
@@ -111,7 +111,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat.",
-          notes: [
+          content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
             "On mimicry in Darwin and surrealism, Jan Soffner;",
@@ -144,7 +144,7 @@ export default function getMaterialTypes({ workId, type }) {
             },
           ],
           description: "",
-          notes: [
+          content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
             "Why is the peacock's tail so beautiful?, Laurence Shafe;",
@@ -200,7 +200,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
-          notes: [],
+          content: [],
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -239,7 +239,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl.",
-          notes: [
+          content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
             "Why is the peacock's tail so beautiful?, Laurence Shafe;",
@@ -277,7 +277,7 @@ export default function getMaterialTypes({ workId, type }) {
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
-          notes: [
+          content: [
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
