@@ -41,32 +41,17 @@ export function Overview({
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
 
-  // Temporary filter materials
-  // outcomment this func. to see all available materialTypes
-  // materialTypes = materialTypes.filter((type) =>
-  //   ["Bog", "Ebog", "Lydbog (net)"].includes(type.materialType)
-  // );
-
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes.forEach((m) => {
     materialTypesMap[m.materialType] = m;
   });
 
-  // Set selected material - default as the first material in the materialTypes array
-  const [selectedMaterialState, setSelectedMaterialState] = useState(
-    materialTypes[0]
-  );
-
   // Either use type from props, or from local state
-  const selectedMaterial =
-    materialTypesMap[type] || selectedMaterialState || false;
+  const selectedMaterial = materialTypesMap[type] || materialTypes[0] || false;
 
   // Handle slectedMaterial
   function handleSelectedMaterial(material) {
-    // Sets SelectedMaterial in state
-    setSelectedMaterialState(material);
-
     // Update query param callback
     if (type !== material.materialType) {
       onTypeChange({ type: material.materialType });
