@@ -60,6 +60,7 @@ ManifestationParserObject.prototype = {
       }
       dataArray[key] = value;
     }
+    console.log(dataArray, "DATA");
     return dataArray;
   },
   /**
@@ -75,12 +76,12 @@ ManifestationParserObject.prototype = {
     if (!Object.keys(dataArray).length) {
       return [];
     }
-    // we need to iterate data to count actual entries
-    let linecount = 0;
+    // we need to iterate data to count actual entries (content)
+    let linecount = 1;
     for (let [key, value] of Object.entries(dataArray)) {
       linecount += value.length;
     }
-    // the length of first column
+    // the length of first column (half of content)
     let colLength = (linecount / 2) >> 0;
     // holder for the two columns
     let arrayInColumns = [];
@@ -88,24 +89,39 @@ ManifestationParserObject.prototype = {
     let element = [];
     // how far are we
     let columnCount = 0;
-    // array with the two columns to return
+    // array with a column to return
     let columnArray = [];
     // flag - is column 1 done
     let columOneDone = false;
     // iterate again to split into two columns
+    let last = null;
     for (let [key, value] of Object.entries(dataArray)) {
       // reset element
       element = [];
+      // make a new element
+      element[key] = value;
+      // push to return array
+      columnArray.push(element);
+      // increase counter with length of array
       columnCount += value.length;
+      // check if column one holds more than half of content
       if (columnCount > colLength && !columOneDone) {
         columOneDone = true;
-        // we added half of the fields - reset and do column 2
+        if (columnArray.length > 1) {
+          // except the last added element - we want that in column 2
+          last = columnArray.pop();
+        } else {
+          last = null;
+        }
+        // we added half of the fields - reset to do column 2
         arrayInColumns["col1"] = columnArray;
         columnArray = [];
+        if (last) {
+          columnArray.push(last);
+        }
       }
-      element[key] = value;
-      columnArray.push(element);
     }
+    // push second column to return array
     arrayInColumns["col2"] = columnArray;
 
     return arrayInColumns;
