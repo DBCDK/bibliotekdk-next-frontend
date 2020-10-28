@@ -27,17 +27,24 @@ export function MaterialReview({
   // Translate Context
   const context = { context: "reviews" };
 
+  const bib = "https://bibliotek.dk/";
+
   return (
-    <Col xs={12} md={8} className={styles.materialReview}>
+    <Col xs={12} md={8} className={`${styles.materialReview} ${className}`}>
       <Row>
-        <Col xs={4}>
+        <Col xs={4} className={styles.type}>
           <Text type="text3">
-            {Translate({ ...context, label: "materialTitle" })}
+            <Link href={bib} target="_blank" animate>
+              {Translate({ ...context, label: "materialTitle" })}
+            </Link>
           </Text>
         </Col>
         <Col xs={4} className={styles.author}>
           <Text type="text3">
-            Af <span>{data.author}</span>
+            {Translate({ context: "general", label: "by" })}
+            <Link href={bib} target="_blank" animate>
+              <Text type="text3">{data.author}</Text>
+            </Link>
           </Text>
         </Col>
         <Col xs={4}>
@@ -55,11 +62,11 @@ export function MaterialReview({
 
       {data.url && (
         <Col xs={12} className={styles.url}>
-          <Icon src="chevron.svg" size={1} />
-          <Link href={data.url} target="_blank">
-            <Text type="text2">
-              {Translate({ ...context, label: "reviewLinkText" })}
-            </Text>
+          <Icon src="chevron.svg" size={2} />
+          <Link href={data.url} target="_blank" animate>
+            <Title type="title4">
+              {Translate({ ...context, label: "materialReviewLinkText" })}
+            </Title>
           </Link>
         </Col>
       )}

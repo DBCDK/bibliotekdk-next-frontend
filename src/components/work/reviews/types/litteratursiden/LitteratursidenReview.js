@@ -1,16 +1,13 @@
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 import { cyKey } from "../../../../../utils/trim";
 
 import Text from "../../../../base/text";
-import Title from "../../../../base/title";
-import Icon from "../../../../base/icon";
 import Rating from "../../../../base/rating";
-import Link from "../../../../base/link";
-import Translate from "../../../../base/translate";
+import Title from "../../../../base/title";
 
-import styles from "./InfomediaReview.module.css";
+import styles from "./LitteratursidenReview.module.css";
 
 /**
  * The Component function
@@ -20,7 +17,7 @@ import styles from "./InfomediaReview.module.css";
  *
  * @returns {component}
  */
-export function InfomediaReview({
+export function LitteratursidenReview({
   className = "",
   data = [],
   skeleton = false,
@@ -29,17 +26,20 @@ export function InfomediaReview({
   const context = { context: "reviews" };
 
   return (
-    <Col xs={12} sm={6} xl={4} className={`${styles.infomedia} ${className}`}>
-      {data.rating && (
-        <div className={styles.rating}>
-          <Rating rating={data.rating} />
-        </div>
-      )}
-      {data.media && (
-        <div className={styles.media}>
-          <Text type="text3">{data.media}</Text>
-        </div>
-      )}
+    <Col
+      xs={12}
+      sm={6}
+      xl={4}
+      className={`${styles.litteratursiden} ${className}`}
+    >
+      <div className={styles.rating}>
+        <Rating rating={"5/5"} />
+      </div>
+
+      <div className={styles.media}>
+        <Title type="title4">Litteratursiden</Title>
+      </div>
+
       {data.author && (
         <div className={styles.author}>
           <Text type="text3">af </Text>
@@ -47,16 +47,6 @@ export function InfomediaReview({
             {data.author}
           </Title>
           <Text type="text3"> d. 05/07-2020</Text>
-        </div>
-      )}
-      {data.url && (
-        <div className={styles.url}>
-          <Icon src="chevron.svg" size={2} />
-          <Link href={data.url} target="_blank" animate>
-            <Title type="title4">
-              {Translate({ ...context, label: "reviewLinkText" })}
-            </Title>
-          </Link>
         </div>
       )}
     </Col>
@@ -71,11 +61,11 @@ export function InfomediaReview({
  *
  * @returns {component}
  */
-export function InfomediaReviewSkeleton(props) {
+export function LitteratursidenReviewSkeleton(props) {
   const data = {};
 
   return (
-    <InfomediaReview
+    <LitteratursidenReview
       {...props}
       data={data}
       className={`${props.className} ${styles.skeleton}`}
@@ -96,10 +86,10 @@ export default function Wrap(props) {
   const { data, isSkeleton } = props;
 
   if (isSkeleton) {
-    return <InfomediaReviewSkeleton />;
+    return <LitteratursidenReviewSkeleton />;
   }
 
-  return <InfomediaReview {...props} data={data} />;
+  return <LitteratursidenReview {...props} data={data} />;
 }
 
 // PropTypes for component

@@ -1,9 +1,14 @@
 .materialReview {
-  padding: 0;
+  padding: 0 0 var(--pt1) 0;
 }
 
-.author p span {
-  border-bottom: 1px solid var(--blue);
+.author p {
+  display: flex;
+  align-items: center;
+}
+
+.author p a {
+  margin: 0 0 0 var(--pt1);
 }
 
 .content {
@@ -11,16 +16,12 @@
 }
 
 .url {
-  padding: 0;
+  padding: var(--pt2) 0 0 0;
   display: flex;
   align-items: center;
+  /* margin-top: auto; */
 }
 
 .url a {
   margin: 0 0 0 var(--pt2);
-  text-decoration: none;
-}
-
-.url a:focus {
-  color: red !important;
 }

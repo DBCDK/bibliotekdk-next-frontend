@@ -220,6 +220,10 @@
         "da": "Læs anmeldelse",
         "en": "Read review"
       },
+      "materialReviewLinkText": {
+        "da": "Læs hele vurderingen",
+        "en": "Read the full assessment"
+      },
       "materialTitle": {
         "da": "Bibliotekernes vurdering",
         "en": "The libraries' assessment"
