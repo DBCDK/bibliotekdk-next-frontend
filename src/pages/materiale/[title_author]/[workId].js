@@ -41,7 +41,8 @@ export default function WorkPage() {
       {
         pathname: router.asPath.replace(/\?.*/, ""),
         query,
-      }
+      },
+      { shallow: true }
     );
   }
 

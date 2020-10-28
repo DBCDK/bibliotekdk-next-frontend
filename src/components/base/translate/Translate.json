@@ -168,6 +168,10 @@
         "da": "Sideantal",
         "en": "Number of pages"
       },
+      "physicalDescription": {
+        "da": "Længde",
+        "en": "Length"
+      },
       "released": {
         "da": "Udgivet",
         "en": "Released"

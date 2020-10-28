@@ -28,7 +28,6 @@ function parse(data) {
       return {
         cover: manifestation.cover,
         creators: manifestation.creators,
-        description: manifestation.abstract[0],
         id: `work-of:${manifestation.pid}`,
         title: manifestation.title[0],
       };
@@ -47,6 +46,10 @@ export default function Recommendations({ workId }) {
   const { data, isLoading } = useData(recommendations({ workId }));
 
   const parsed = parse(data);
+
+  if (!isLoading && parsed.length === 0) {
+    return null;
+  }
 
   // Translate Context
   const context = { context: "recommendations" };

@@ -32,25 +32,30 @@ function getSchemaOrgBookFormat(materialType) {
 }
 
 /**
- * Part real data and part mocked data
- * We still need some more data to be available through the API
+ * Creates JSON-LD representation ofthe work
  * - https://developers.google.com/search/docs/data-types/book
  * - https://solsort.dk/dkabm-til-schema.org
  *
  *
- * Still needs a lot of work, we need more data to be available via API
+ * Note:
+ *  - It is recommended for work and manifestations to have "sameAs" field,
+ *    pointing to reference web page.
+ *  - "potentialAction" is not implemented
+ *  -
  *
  * @param {object} work
  *
- * @returns {object} json ld representation of work
+ * @returns {object} JSON-LD representation of work
  */
 export function getJSONLD({
   id,
   title,
+  description,
   creators = [],
   path,
   materialTypes = [],
 }) {
+  const url = getCanonicalWorkUrl({ title, creators, id });
   const res = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -58,35 +63,46 @@ export function getJSONLD({
     mainEntity: {
       "@id": id,
       "@type": "Book",
+      abstract: description,
       author: creators.map((creator) => ({
         "@type": "Person",
         name: creator.name,
       })),
       name: title,
-
-      url: getCanonicalWorkUrl({ title, creators, id }),
+      url,
       workExample: materialTypes.map((entry) => {
-        // edition/manifestation
         const manifestation = {
           "@id": entry.pid,
           "@type": "Book",
-          author: creators.map((creator) => ({
+          author: entry.creators.map((creator) => ({
             "@type": "Person",
             name: creator.name,
           })),
-          //   bookEdition: '' // TODO
-          datePublished: "2015-05-01", // TODO
-          //   identifier // TODO
-          // name: '' // only if its different, TODO
-          //   sameAs: '' // TODO
-          inLanguage: "Dansk", // TODO
-          isbn: "00000000", // TODO
-          publisher: { "@type": "Organization", name: "Some publisher" }, // TODO
-          //   url // TODO
-          //   potentialAction: {} // TODO
+          datePublished: entry.datePublished,
+          identifier: entry.pid,
+          url,
         };
+        if (entry.title && title !== entry.title) {
+          // only add name to manifestation if it differs from work
+          manifestation.name = entry.title;
+        }
+        if (entry.isbn) {
+          manifestation.isbn = entry.isbn;
+        }
         if (entry.cover) {
           manifestation.image = entry.cover.detail;
+        }
+        if (entry.edition) {
+          manifestation.bookEdition = entry.edition;
+        }
+        if (entry.publisher) {
+          manifestation.publisher = {
+            "@type": "Organization",
+            name: entry.publisher,
+          };
+        }
+        if (entry.language && entry.language.length > 0) {
+          manifestation.inLanguage = entry.language;
         }
         const bookFormat = getSchemaOrgBookFormat(entry.materialType);
         if (bookFormat) {
@@ -94,7 +110,6 @@ export function getJSONLD({
         }
         return manifestation;
       }),
-      //   sameAs: '' // recommended
     },
   };
   return res;

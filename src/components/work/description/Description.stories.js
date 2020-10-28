@@ -23,7 +23,7 @@ export function DescriptionSection() {
       </StoryDescription>
       <StorySpace direction="v" space="8" />
 
-      <Description data={data[workId]} type={type} />
+      <Description data={data[workId].description} type={type} />
     </div>
   );
 }

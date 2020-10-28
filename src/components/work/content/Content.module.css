@@ -4,11 +4,11 @@
 
 .content p {
   padding: 0 var(--pt1);
-  background-color: var(--concrete);
+  background-color: transparent;
 }
 
 .content div:nth-child(2n) p {
-  background-color: transparent;
+  background-color: var(--concrete);
 }
 
 .skeleton p {

@@ -9,11 +9,12 @@
  */
 import PropTypes from "prop-types";
 import Head from "next/head";
+import { merge } from "lodash";
 import { useData } from "../../../lib/api/api";
 import * as workFragments from "../../../lib/api/work.fragments";
 
 import { getJSONLD } from "../../../lib/jsonld";
-import { getPageDescription, getCanonicalWorkUrl } from "../../../lib/utils";
+import { getCanonicalWorkUrl } from "../../../lib/utils";
 
 /**
  * The work page React component
@@ -24,12 +25,23 @@ import { getPageDescription, getCanonicalWorkUrl } from "../../../lib/utils";
  * @returns {component}
  */
 export default function Header({ workId }) {
-  const { data, isLoading, error } = useData(workFragments.basic({ workId }));
-  if (!data || isLoading || error) {
+  const basic = useData(workFragments.basic({ workId }));
+  const details = useData(workFragments.details({ workId }));
+  const seo = useData(workFragments.details({ workId }));
+  if (
+    !basic.data ||
+    basic.isLoading ||
+    basic.error ||
+    !details.data ||
+    details.isLoading ||
+    details.error
+  ) {
     return null;
   }
+  const data = merge({}, basic.data, details.data, { work: { id: workId } });
   const jsonld = getJSONLD(data.work);
-  const pageDescription = getPageDescription(data.work);
+  const pageDescription = data.work.seo.description;
+  const pageTitle = data.work.seo.title;
   // We should have a "primary cover" on the work
   // so we don't have to do this
   let cover;
@@ -41,16 +53,11 @@ export default function Header({ workId }) {
 
   return (
     <Head>
-      <title>{`${data.work.title} - ${
-        data.work.creators[0] && data.work.creators[0].name
-      }`}</title>
+      <title>{pageTitle}</title>
       <meta name="description" content={pageDescription}></meta>
-      <meta
-        property="og:url"
-        content={getCanonicalWorkUrl({ ...data.work, id: workId })}
-      />
+      <meta property="og:url" content={getCanonicalWorkUrl(data.work)} />
       <meta property="og:type" content="website" />
-      <meta property="og:title" content={data.work.title} />
+      <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       {cover && <meta property="og:image" content={cover.detail} />}
 

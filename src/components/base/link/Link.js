@@ -60,7 +60,11 @@ export default function Link({
   }
 
   // Return the component
-  return <LinkImpl href={href}>{children}</LinkImpl>;
+  return (
+    <LinkImpl href={href} shallow={true}>
+      {children}
+    </LinkImpl>
+  );
 }
 
 // PropTypes for component

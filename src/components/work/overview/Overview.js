@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { merge } from "lodash";
 
 import Title from "../../base/title";
 import Text from "../../base/text";
@@ -40,32 +41,17 @@ export function Overview({
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
 
-  // Temporary filter materials
-  // outcomment this func. to see all available materialTypes
-  // materialTypes = materialTypes.filter((type) =>
-  //   ["Bog", "Ebog", "Lydbog (net)"].includes(type.materialType)
-  // );
-
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes.forEach((m) => {
     materialTypesMap[m.materialType] = m;
   });
 
-  // Set selected material - default as the first material in the materialTypes array
-  const [selectedMaterialState, setSelectedMaterialState] = useState(
-    materialTypes[0]
-  );
-
   // Either use type from props, or from local state
-  const selectedMaterial =
-    materialTypesMap[type] || selectedMaterialState || false;
+  const selectedMaterial = materialTypesMap[type] || materialTypes[0] || false;
 
   // Handle slectedMaterial
   function handleSelectedMaterial(material) {
-    // Sets SelectedMaterial in state
-    setSelectedMaterialState(material);
-
     // Update query param callback
     if (type !== material.materialType) {
       onTypeChange({ type: material.materialType });
@@ -87,8 +73,12 @@ export function Overview({
             className={styles.cover}
           >
             <Cover
-              src={selectedMaterial.cover.detail || allMaterialTypes}
-              skeleton={skeleton}
+              src={
+                (selectedMaterial.cover && selectedMaterial.cover.detail) ||
+                allMaterialTypes
+              }
+              skeleton={!selectedMaterial.cover}
+              size={["200px", "300px"]}
             >
               <Bookmark skeleton={skeleton} title={title} />
             </Cover>
@@ -222,6 +212,8 @@ export default function Wrap({ workId, type, onTypeChange }) {
     workFragments.basic({ workId })
   );
 
+  const covers = useData(workFragments.covers({ workId }));
+
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
   }
@@ -229,7 +221,9 @@ export default function Wrap({ workId, type, onTypeChange }) {
     return <OverviewError />;
   }
 
-  return <Overview {...data.work} type={type} onTypeChange={onTypeChange} />;
+  const merged = merge({}, covers.data, data);
+
+  return <Overview {...merged.work} type={type} onTypeChange={onTypeChange} />;
 }
 
 // PropTypes for component

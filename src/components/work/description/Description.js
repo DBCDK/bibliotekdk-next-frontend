@@ -19,6 +19,9 @@ import styles from "./Description.module.css";
  * @returns {component}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
+  if (!data) {
+    return null;
+  }
   // Translate Context
   const context = { context: "description" };
 

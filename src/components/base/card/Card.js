@@ -88,7 +88,7 @@ export default function Card({
             lines={2}
             clamp={true}
           >
-            {creators[0].name}
+            {creators[0] && creators[0].name}
           </Text>
         </div>
         <div className={styles.BottomLine} />
