@@ -2,7 +2,7 @@
  * @file
  * Test functionality of bibliographic data
  */
-describe("Keywords", () => {
+describe.skip("Keywords", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
   });
