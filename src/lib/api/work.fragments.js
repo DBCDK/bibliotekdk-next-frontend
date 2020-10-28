@@ -74,6 +74,10 @@ export function details({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          seo {
+            title
+            description
+          }
           materialTypes {
             content
             creators {
@@ -82,9 +86,12 @@ export function details({ workId }) {
               name
             }
             datePublished
+            edition
+            isbn
             materialType
             language
             physicalDescription
+            publisher
           }
         }
       }`,
