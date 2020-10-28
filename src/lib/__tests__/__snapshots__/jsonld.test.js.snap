@@ -8,6 +8,7 @@ Object {
   "mainEntity": Object {
     "@id": "some-id",
     "@type": "Book",
+    "abstract": "some description",
     "author": Array [
       Object {
         "@type": "Person",
@@ -23,131 +24,17 @@ Object {
         "author": Array [
           Object {
             "@type": "Person",
-            "name": "h g wells",
+            "name": "some contributor",
           },
         ],
         "bookFormat": "http://schema.org/Paperback",
-        "datePublished": "2015-05-01",
+        "datePublished": "2020",
+        "identifier": "870970-basis:06442870",
         "image": null,
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "870970-basis:54926391",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
+        "inLanguage": Array [
+          "danglish",
         ],
-        "bookFormat": "http://schema.org/Paperback",
-        "datePublished": "2015-05-01",
-        "image": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "870970-basis:52849985",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
-        ],
-        "bookFormat": "http://schema.org/EBook",
-        "datePublished": "2015-05-01",
-        "image": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "870970-basis:04843819",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
-        ],
-        "bookFormat": "http://schema.org/AudiobookFormat",
-        "datePublished": "2015-05-01",
-        "image": null,
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "870970-basis:54687117",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
-        ],
-        "bookFormat": "http://schema.org/AudiobookFormat",
-        "datePublished": "2015-05-01",
-        "image": null,
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "870970-basis:54627890",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
-        ],
-        "bookFormat": "http://schema.org/AudiobookFormat",
-        "datePublished": "2015-05-01",
-        "image": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
-      },
-      Object {
-        "@id": "874310-katalog:DBB0106054",
-        "@type": "Book",
-        "author": Array [
-          Object {
-            "@type": "Person",
-            "name": "h g wells",
-          },
-        ],
-        "datePublished": "2015-05-01",
-        "image": null,
-        "inLanguage": "Dansk",
-        "isbn": "00000000",
-        "publisher": Object {
-          "@type": "Organization",
-          "name": "Some publisher",
-        },
+        "url": "https://bibliotek.dk/klodernes-kamp_h-g-wells/some-id",
       },
     ],
   },
