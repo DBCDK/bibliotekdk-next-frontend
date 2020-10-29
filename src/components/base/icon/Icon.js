@@ -44,6 +44,7 @@ function Icon({
       style={dynamicStyles}
       className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
+      aria-hidden="true"
     >
       {children || <img src={`/icons/${src}`} />}
     </i>

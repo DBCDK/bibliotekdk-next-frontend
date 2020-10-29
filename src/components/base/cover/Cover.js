@@ -50,6 +50,7 @@ function Cover({
     >
       {src && (
         <img
+          alt=""
           style={dimensions}
           data-src={src}
           data-bg={src}
