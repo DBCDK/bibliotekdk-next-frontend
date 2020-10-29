@@ -27,7 +27,7 @@ import { getCanonicalWorkUrl } from "../../../lib/utils";
 export default function Header({ workId }) {
   const basic = useData(workFragments.basic({ workId }));
   const details = useData(workFragments.details({ workId }));
-  const seo = useData(workFragments.details({ workId }));
+
   if (
     !basic.data ||
     basic.isLoading ||

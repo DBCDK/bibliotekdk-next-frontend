@@ -33,6 +33,6 @@ export function encodeTitleCreator(title = "", creator = "") {
 export function getCanonicalWorkUrl({ title, creators, id }) {
   return `${config.externalBaseUrl}/${encodeTitleCreator(
     title,
-    creators[0].name
+    creators && creators[0] && creators[0].name
   )}/${id}`;
 }
