@@ -9,12 +9,15 @@
 
 module.exports = {
   distDir: "dist/next",
+  i18n: {
+    locales: ["da", "en"],
+    defaultLocale: "da",
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     });
-
     return config;
   },
 };
