@@ -3,12 +3,18 @@ import PropTypes from "prop-types";
 // Translation data obj
 import translation from "./Translate.json";
 
-let lang = "da";
+export let lang = "da";
+export const units = translation.units;
+export const contexts = translation.contexts;
+
+/**
+ * Set locale for the translate component
+ *
+ * @param {string} locale Either da or en
+ */
 export function setLocale(locale = "da") {
   lang = locale;
 }
-export const units = translation.units;
-export const contexts = translation.contexts;
 
 /**
  * 
