@@ -3,18 +3,31 @@
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import React from "react";
 
+import Translate from "../../base/translate";
+
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 // @TODO it would be nice if fields are shown in the order here .. fix it
-const fields = [
-  "contribution",
-  "description",
-  "language",
+const fields = {
+  description: Translate({
+    context: "bibliographic-data",
+    label: "description",
+  }),
+  language: Translate({
+    context: "bibliographic-data",
+    label: "language",
+  }),
   //"notes",
-  "physicalDescription",
-  "pid",
-  "datePublished",
-  //"creators",
-];
+  physicalDescription: Translate({
+    context: "bibliographic-data",
+    label: "physicalDescription",
+  }),
+  pid: "pid",
+  datePublished: Translate({
+    context: "bibliographic-data",
+    label: "datePublished",
+  }),
+  //"creators" - @TODO parse creators object,
+};
 
 /**
  * @param manifestation
@@ -23,7 +36,7 @@ const fields = [
  */
 let ManifestationParserObject = function (manifestation) {
   this._manifestation = manifestation;
-  this._fields = ManifestationParserObject.flipArray(fields);
+  this._fields = fields;
 };
 
 // public methods
@@ -50,6 +63,7 @@ ManifestationParserObject.prototype = {
     let props = { workId: "workId", type: this._manifestation.materialType };
     let data = dummy_materialTypesApi(props);
     let dataArray = {};
+    let translatedKey;
     for (let [key, value] of Object.entries(data.workId)) {
       if (!this._fields[key]) {
         continue;
@@ -59,7 +73,8 @@ ManifestationParserObject.prototype = {
       if (!Array.isArray(value)) {
         value = [value];
       }
-      dataArray[key] = value;
+
+      dataArray[this._fields[key]] = value;
     }
     return dataArray;
   },
