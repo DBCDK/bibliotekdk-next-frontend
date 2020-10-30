@@ -13,6 +13,7 @@ const fields = [
   "physicalDescription",
   "pid",
   "datePublished",
+  //"creators",
 ];
 
 /**
@@ -122,7 +123,6 @@ ManifestationParserObject.prototype = {
     }
     // push second column to return array
     arrayInColumns["col2"] = columnArray;
-
     return arrayInColumns;
   },
 };
