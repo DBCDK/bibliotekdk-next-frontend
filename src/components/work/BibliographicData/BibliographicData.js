@@ -3,7 +3,7 @@
  * This component uses the section component defined in base/section
  */
 import { Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Section from "../../base/section";
 import { Divider } from "../../base/divider";
@@ -53,7 +53,7 @@ function getWorkData(props) {
 
     getWorkData.data = dummy_workDataApi(props);
     // this is the first load - set first manifestation to open
-    getWorkData.data.work.materialTypes[0].open = true;
+    // getWorkData.data.work.materialTypes[0].open = true;
   }
   return getWorkData.data;
 }
@@ -92,17 +92,24 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
     <React.Fragment>
       <div className={styles.pointer}>
         <Row
+          tabIndex="0"
+          as={"li"}
           key={index.toString() + manifestation.pid}
           onClick={() => {
             onClick ? onClick() : rowClicked(index);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              rowClicked(index);
+            }
           }}
           className={styles.pointer}
         >
           <ManifestationList manifestation={manifestation} />
         </Row>
-        <Divider />
       </div>
       <ManifestationRowFull manifestation={manifestation} index={index} />
+      <Divider />
     </React.Fragment>
   ));
 }
@@ -117,18 +124,15 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
  * @constructor
  */
 function ManifestationRowFull({ manifestation = null, index = 0 }) {
-  // is manifestation open ?;
-  if (manifestation.open) {
-    // yes it is
-    return (
-      <React.Fragment>
-        <Row key={index.toString()}>
-          <ManifestationFull manifestation={manifestation} />,
-        </Row>
-        <Divider />
-      </React.Fragment>
-    );
-  } else {
-    return null;
-  }
+  let show = manifestation.open;
+  return (
+    <React.Fragment>
+      <Row
+        key={index.toString()}
+        className={`${styles.folded} ${!show ? "" : styles.expanded}`}
+      >
+        <ManifestationFull manifestation={manifestation} show={show} />
+      </Row>
+    </React.Fragment>
+  );
 }

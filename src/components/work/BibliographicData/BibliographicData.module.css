@@ -10,22 +10,35 @@
 
 .pointer:hover {
     font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
 }
 
-.pointer:hover hr {
-    background-color: var(--gray);
+.pointer:hover + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
+}
+
+.pointer:focus {
+    font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
+}
+
+.pointer:focus + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
 }
 
 .column {
-    display: block;
     margin-bottom: var(--pt1);
 }
 
-.fullmanifestation img{
-    margin-bottom: var(--pt2);
+.fullmanifestation img {
+    margin-bottom: var(--pt1);
 }
 
-.fullmanifestation button{
+.fullmanifestation button {
     margin-top: var(--pt2);
 }
 
@@ -35,4 +48,15 @@
 
 .column:focus {
     color: var(--blue);
+}
+
+.folded {
+    max-height: 0;
+    overflow: hidden;
+
+}
+
+.expanded {
+    transition-duration: 1s;
+    max-height: 100%;
 }

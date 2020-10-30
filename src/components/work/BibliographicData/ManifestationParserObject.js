@@ -60,7 +60,6 @@ ManifestationParserObject.prototype = {
       }
       dataArray[key] = value;
     }
-    console.log(dataArray, "DATA");
     return dataArray;
   },
   /**

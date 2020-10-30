@@ -5,6 +5,6 @@ import styles from "./Divider.module.css";
  * @returns {JSX.Element}
  * @constructor
  */
-export function Divider({}) {
-  return <hr className={styles.divider} />;
+export function Divider({ style, className = "" }) {
+  return <hr className={`${styles.divider} ${className}`} style={style} />;
 }

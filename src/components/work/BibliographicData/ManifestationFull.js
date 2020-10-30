@@ -3,12 +3,14 @@
  */
 import { Col, Row } from "react-bootstrap";
 import React from "react";
+import { useEffect, useState } from "react";
 
 import Text from "../../base/text";
 import Cover from "../../base/cover";
 import Link from "../../base/link";
 import Button from "../../base/button";
 import Translate from "../../base/translate";
+import { Divider } from "../../base/divider";
 
 import ManifestationParserObject from "./ManifestationParserObject";
 import styles from "./BibliographicData.module.css";
@@ -158,13 +160,18 @@ function AnotherColumn({ col = [], cyattribute = "" }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({ manifestation }) {
+export function ManifestationFull({ manifestation, show }) {
   let data = dummyData(manifestation);
-  return (
-    <React.Fragment>
-      <ColumnOne manifestation={manifestation} />
-      <AnotherColumn col={data["col1"]} cyattribute="bibliographic-column2" />
-      <AnotherColumn col={data["col2"]} cyattribute="bibliographic-column3" />
-    </React.Fragment>
-  );
+
+  if (show) {
+    return (
+      <React.Fragment>
+        <ColumnOne manifestation={manifestation} />
+        <AnotherColumn col={data["col1"]} cyattribute="bibliographic-column2" />
+        <AnotherColumn col={data["col2"]} cyattribute="bibliographic-column3" />
+      </React.Fragment>
+    );
+  } else {
+    return null;
+  }
 }
