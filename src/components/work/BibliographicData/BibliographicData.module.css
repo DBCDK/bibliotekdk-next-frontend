@@ -9,6 +9,7 @@
 }
 
 .pointer:hover {
+    color: var(--blue);
     font-weight: bold;
 }
 
@@ -38,6 +39,7 @@
 
 .fullmanifestation button {
     margin-top: var(--pt2);
+    margin-bottom: var(--pt2);
     font-weight: bold;
     transition: color 0.5s;
     color: var(--blue);

@@ -21,7 +21,6 @@ function ExpandIcon({ open }) {
     </Icon>
   );
 }
-
 export function ManifestationList({ manifestation = null }) {
   let icon = manifestation.open ? "iconminuswhite.svg" : "iconpluswhite.svg";
   let style = manifestation.open ? { display: "none" } : { display: "block" };
@@ -29,7 +28,7 @@ export function ManifestationList({ manifestation = null }) {
     <React.Fragment>
       <Col key={manifestation.materialType} xs={12} md className={styles.right}>
         <Title type="title4">{manifestation.materialType}</Title>
-        <Icon size={3} bgColor="var(--blue)" src={icon} />
+        <ExpandIcon open={manifestation.open} />
       </Col>
     </React.Fragment>
   );

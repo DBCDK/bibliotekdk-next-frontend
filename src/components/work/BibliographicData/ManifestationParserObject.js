@@ -8,11 +8,11 @@ import React from "react";
 const fields = [
   "contribution",
   "description",
-  "lang",
+  "language",
   //"notes",
-  "pages",
+  "physicalDescription",
   "pid",
-  "released",
+  "datePublished",
 ];
 
 /**
