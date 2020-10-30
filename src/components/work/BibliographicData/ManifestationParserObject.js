@@ -142,17 +142,4 @@ ManifestationParserObject.prototype = {
   },
 };
 
-/**
- * reverse key -> value of an array eg. [0:"fisk"] => ["fisk":0]
- * @param arrayToFlip
- * @returns {{[p: string]: *}}
- */
-ManifestationParserObject.flipArray = function (arrayToFlip) {
-  const flipped = Object.entries(arrayToFlip).reduce(
-    (obj, [key, value]) => ({ ...obj, [value]: key }),
-    {}
-  );
-  return flipped;
-};
-
 export default ManifestationParserObject;
