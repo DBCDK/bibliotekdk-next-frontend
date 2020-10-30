@@ -32,10 +32,6 @@ export function LitteratursidenReview({
       xl={4}
       className={`${styles.litteratursiden} ${className}`}
     >
-      <div className={styles.rating}>
-        <Rating rating={"5/5"} />
-      </div>
-
       <div className={styles.media}>
         <Title type="title4">Litteratursiden</Title>
       </div>
@@ -62,7 +58,11 @@ export function LitteratursidenReview({
  * @returns {component}
  */
 export function LitteratursidenReviewSkeleton(props) {
-  const data = {};
+  const data = {
+    author: "Svend Svendsen",
+    reviewType: "INFOMEDIA",
+    url: "http://",
+  };
 
   return (
     <LitteratursidenReview

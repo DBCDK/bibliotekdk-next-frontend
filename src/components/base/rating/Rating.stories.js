@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StoryTitle, StoryDescription } from "../storybook";
 
-import Rating from "./Rating";
+import { Rating, RatingSkeleton } from "./Rating";
 import Cover from "../cover";
 
 export default {
@@ -35,7 +35,7 @@ export function Loading() {
     <div>
       <StoryTitle>...</StoryTitle>
       <StoryDescription>...</StoryDescription>
-      <Rating skeleton={true} />
+      <RatingSkeleton />
     </div>
   );
 }

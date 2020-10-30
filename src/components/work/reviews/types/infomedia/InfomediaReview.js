@@ -32,15 +32,17 @@ export function InfomediaReview({
     <Col xs={12} sm={6} xl={4} className={`${styles.infomedia} ${className}`}>
       {data.rating && (
         <div className={styles.rating}>
-          <Rating rating={data.rating} />
+          <Rating rating={data.rating} skeleton={skeleton} />
         </div>
       )}
       {data.media && (
         <div className={styles.media}>
-          <Text type="text3">{data.media}</Text>
+          <Text type="text3" skeleton={skeleton} lines={3}>
+            {data.media}
+          </Text>
         </div>
       )}
-      {data.author && (
+      {!skeleton && data.author && (
         <div className={styles.author}>
           <Text type="text3">af </Text>
           <Title tag="h3" type="title4">
@@ -51,9 +53,9 @@ export function InfomediaReview({
       )}
       {data.url && (
         <div className={styles.url}>
-          <Icon src="chevron.svg" size={2} />
-          <Link href={data.url} target="_blank" animate>
-            <Title type="title4">
+          <Icon src="chevron.svg" size={2} skeleton={skeleton} />
+          <Link href={data.url} target="_blank" border={!skeleton}>
+            <Title type="title4" skeleton={skeleton}>
               {Translate({ ...context, label: "reviewLinkText" })}
             </Title>
           </Link>
@@ -72,7 +74,13 @@ export function InfomediaReview({
  * @returns {component}
  */
 export function InfomediaReviewSkeleton(props) {
-  const data = {};
+  const data = {
+    author: "Svend Svendsen",
+    media: "Jyllandsposten",
+    rating: "4/5",
+    reviewType: "INFOMEDIA",
+    url: "http://",
+  };
 
   return (
     <InfomediaReview

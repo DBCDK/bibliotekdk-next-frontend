@@ -6,3 +6,7 @@
   fill: var(--mine-shaft);
   stroke: var(--mine-shaft);
 }
+
+.skeleton i {
+  margin-right: var(--pt05);
+}

@@ -87,7 +87,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
               className={`${styles.keyword} ${sizeClass}`}
               key={`${k.type}-${key}`}
             >
-              <Link a href={url(k.value)} target="_blank" animate>
+              <Link a href={url(k.value)} target="_blank">
                 <Title type="title4" skeleton={skeleton}>
                   {val}
                 </Title>

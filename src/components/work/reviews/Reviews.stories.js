@@ -1,6 +1,19 @@
 import { StoryTitle, StoryDescription } from "../../base/storybook";
 
-import { Reviews, ReviewsSkeleton } from "./Reviews";
+import {
+  MaterialReview,
+  MaterialReviewSkeleton,
+} from "./types/material/MaterialReview.js";
+
+import {
+  InfomediaReview,
+  InfomediaReviewSkeleton,
+} from "./types/infomedia/InfomediaReview.js";
+
+import {
+  LitteratursidenReview,
+  LitteratursidenReviewSkeleton,
+} from "./types/litteratursiden/LitteratursidenReview.js";
 
 export default {
   title: "Reviews",
@@ -11,15 +24,53 @@ export default {
  *
  */
 
-export function SomeReviews() {
+export function Material() {
+  const data = {
+    author: "Svend Svendsen",
+    media: "Jyllandsposten",
+    rating: "4/5",
+    reviewType: "MATERIALREVIEW",
+    url: "http://",
+  };
   return (
     <div>
-      <StoryTitle>Breadcrumb path</StoryTitle>
-      <StoryDescription>
-        The breadcrump component takes a path, and breaks the path up in
-        clickable path fragments
-      </StoryDescription>
-      <Reviews />
+      <StoryTitle>MaterialReview template</StoryTitle>
+      <StoryDescription>Material review example</StoryDescription>
+      <div style={{ maxWidth: "1000px" }}>
+        <MaterialReview data={data} />
+      </div>
+    </div>
+  );
+}
+
+export function Infomedia() {
+  const data = {
+    author: "Svend Svendsen",
+    media: "Jyllandsposten",
+    rating: "4/5",
+    reviewType: "INFOMEDIA",
+    url: "http://",
+  };
+  return (
+    <div>
+      <StoryTitle>Infomedia template</StoryTitle>
+      <StoryDescription>Infomedia review example</StoryDescription>
+      <InfomediaReview data={data} />
+    </div>
+  );
+}
+
+export function Litteratursiden() {
+  const data = {
+    author: "Svend Svendsen",
+    reviewType: "INFOMEDIA",
+    url: "http://",
+  };
+  return (
+    <div>
+      <StoryTitle>Litteratursiden template</StoryTitle>
+      <StoryDescription>Litteratursiden review example</StoryDescription>
+      <LitteratursidenReview data={data} />
     </div>
   );
 }
@@ -27,12 +78,11 @@ export function SomeReviews() {
 export function Loading() {
   return (
     <div>
-      <StoryTitle>Loading breadcrumb path</StoryTitle>
+      <StoryTitle>Loading Infomedia template</StoryTitle>
       <StoryDescription>
-        The breadcrumbs component takes a fixed number of crumbs in skeleton
-        mode, here shown with 5.
+        Skeleton/loading view of the infomedia review template
       </StoryDescription>
-      <ReviewsSkeleton />
+      <InfomediaReviewSkeleton />
     </div>
   );
 }

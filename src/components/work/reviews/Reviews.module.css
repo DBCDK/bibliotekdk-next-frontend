@@ -4,7 +4,7 @@
 }
 
 .mixed {
-  padding-top: var(--pt8);
+  /* padding-top: var(--pt8); */
 }
 
 .mixed:first-child {

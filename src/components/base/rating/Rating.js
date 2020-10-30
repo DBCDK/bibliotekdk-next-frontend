@@ -41,13 +41,13 @@ function Rating({
   }
 
   return (
-    <div data-cy={key} className={`${className} ${styles.rating}`}>
-      {arr.map((r) => {
+    <div data-cy={key} className={`${styles.rating} ${className}`}>
+      {arr.map((r, i) => {
         const filledClass = r.filled ? styles.filled : "";
         const typeClass = r.type === "star" ? styles.star : "";
 
         return (
-          <Icon skeleton={skeleton} size={3}>
+          <Icon skeleton={skeleton} size={3} key={`rating-${i}`}>
             <StarSvg className={`${typeClass} ${filledClass}`} />
           </Icon>
         );

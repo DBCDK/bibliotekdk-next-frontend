@@ -4,25 +4,25 @@
   text-decoration-color: var(--blue);
 }
 
-.animate {
+.border {
   position: relative;
   text-decoration: none;
   /* !Dangerous: Prevent multiline */
   white-space: nowrap;
 }
 
-.link.animate:focus,
-.link.animate:hover {
+.link.border:focus,
+.link.border:hover {
   color: var(--blue);
   text-decoration: none;
 }
 
 /* Hover */
-.link.animate:hover hr:last-child {
+.link.border:hover hr:last-child {
   display: none;
 }
 
-.link.animate:hover hr {
+.link.border:hover hr {
   transform: scale(1);
 }
 /*  */

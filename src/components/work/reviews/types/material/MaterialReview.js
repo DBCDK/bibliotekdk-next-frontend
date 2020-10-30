@@ -32,22 +32,26 @@ export function MaterialReview({
   return (
     <Col xs={12} md={8} className={`${styles.materialReview} ${className}`}>
       <Row>
-        <Col xs={4} className={styles.type}>
+        <Col xs={6} xl={4} className={styles.type}>
           <Text type="text3">
-            <Link href={bib} target="_blank" animate>
+            <Link href={bib} target="_blank">
               {Translate({ ...context, label: "materialTitle" })}
             </Link>
           </Text>
         </Col>
-        <Col xs={4} className={styles.author}>
+        <Col
+          xs={{ span: 12, order: 3 }}
+          xl={{ span: 4, order: 2 }}
+          className={styles.author}
+        >
           <Text type="text3">
             {Translate({ context: "general", label: "by" })}
-            <Link href={bib} target="_blank" animate>
+            <Link href={bib} target="_blank">
               <Text type="text3">{data.author}</Text>
             </Link>
           </Text>
         </Col>
-        <Col xs={4}>
+        <Col xs={6} xl={4} className={styles.date}>
           <Text type="text3">07/07-2010</Text>
         </Col>
       </Row>
@@ -63,7 +67,7 @@ export function MaterialReview({
       {data.url && (
         <Col xs={12} className={styles.url}>
           <Icon src="chevron.svg" size={2} />
-          <Link href={data.url} target="_blank" animate>
+          <Link href={data.url} target="_blank">
             <Title type="title4">
               {Translate({ ...context, label: "materialReviewLinkText" })}
             </Title>

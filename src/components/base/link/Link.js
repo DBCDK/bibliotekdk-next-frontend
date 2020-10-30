@@ -44,20 +44,20 @@ export default function Link({
   a = true,
   href = { pathname: "/", query: {} },
   target = "_self",
-  animate = false,
+  border = true,
   className = "",
 }) {
   // Use Storybook link implementation if we are in Storybook mode
   const LinkImpl = useStoryBookLink ? StorybookLink : NextLink;
 
-  // Force wrap on animate
-  if (animate && a !== true) {
-    a = true;
+  // no wrap - no border
+  if (!a) {
+    border = false;
   }
 
   // Maybe wrap with an a-tag
   if (a) {
-    const animationClass = animate ? styles.animate : "";
+    const animationClass = border ? styles.border : "";
 
     children = (
       <a
@@ -66,7 +66,7 @@ export default function Link({
         className={`${styles.link} ${animationClass} ${className}`}
       >
         {children}
-        {animate && <AnimationLine keepVisible />}
+        {border && <AnimationLine keepVisible />}
       </a>
     );
   }
@@ -80,7 +80,7 @@ Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
-  animate: PropTypes.bool,
+  border: PropTypes.bool,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.shape({
     pathname: PropTypes.string.isRequired,

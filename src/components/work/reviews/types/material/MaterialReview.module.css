@@ -1,5 +1,12 @@
 .materialReview {
   padding: 0 0 var(--pt1) 0;
+  align-self: center;
+}
+
+.author,
+.type,
+.date {
+  padding-bottom: var(--pt1);
 }
 
 .author p {
@@ -12,7 +19,7 @@
 }
 
 .content {
-  padding: var(--pt4) 0;
+  padding: var(--pt3) 0;
 }
 
 .url {

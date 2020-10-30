@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import { orderBy } from "lodash";
+import { groupBy } from "lodash";
 
 import useWindowSize from "../../../lib/useWindowSize";
 import { useData } from "../../../lib/api/api";
@@ -107,8 +107,25 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "reviews" };
 
-  // temporary priority hack
-  data = orderBy(data, [(data) => data.reviewType], ["desc"]);
+  // Group data by reviewType
+  const groups = groupBy(data, "reviewType");
+
+  // const reviews = groups.INFOMEDIA.concat(groups.LITTERATURSIDEN);
+  const reviews = [
+    ...(groups.INFOMEDIA || []),
+    ...(groups.LITTERATURSIDEN || []),
+  ];
+
+  const materialReviews = [...(groups.MATERIALREVIEWS || [])];
+
+  materialReviews.forEach((m, i) => {
+    if (i === 0) {
+      reviews.unshift(m);
+    } else {
+      const pos = Math.floor(reviews.length / 3) * i;
+      reviews.splice(pos, 0, m);
+    }
+  });
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -117,36 +134,13 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   // Ref to the swiper instance
   const swiperRef = useRef(null);
 
-  // Ref to the first work card
-  const reviewRef = useRef(null);
-
   // The bounding rectangel for the swiper DOM element
   const swiperRect = swiperRef.current
     ? swiperRef.current.getBoundingClientRect()
     : null;
 
-  // The bounding rectangel for the first work card DOM element
-  const reviewRect = reviewRef.current
-    ? reviewRef.current.getBoundingClientRect()
-    : null;
-
   // Variables used for enabling/disabling prev/next buttons
   const [{ isBeginning, isEnd }, setPosition] = useState({});
-
-  // The number of cards to slide in one swipe (or clicking next/prev)
-  // Calculated based on width of swiper and width of a card
-  const slidesPerGroup =
-    swiperRect && reviewRect
-      ? Math.floor(swiperRect.width / reviewRect.width)
-      : 1;
-
-  // Update the swiper instance when slidesPerGroup changes
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
-      swiperRef.current.swiper.update();
-    }
-  }, [slidesPerGroup]);
 
   // If there is enough room to the left of the slider,
   // we move the left arrow a bit to the left
@@ -154,8 +148,8 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
 
   // The Swiper params
   const params = {
-    slidesPerView: 3,
-    slidesPerGroup,
+    slidesPerView: "auto",
+    slidesPerGroup: 1,
     on: {
       init: (swiper) => {
         // We update isBeginning and isEnd on init
@@ -195,17 +189,21 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   return (
     <Section
       className={`${styles.reviews}`}
-      title={Translate({ ...context, label: "title", vars: ["10"] })}
+      title={Translate({
+        ...context,
+        label: "title",
+        vars: [`${reviews.length}`],
+      })}
       bgColor="var(--parchment)"
     >
-      <Swiper {...params} ref={swiperRef}>
-        {data.map((review, idx) => {
+      <Swiper {...params} ref={swiperRef} className="hello">
+        {reviews.map((review, idx) => {
           // const Review = InfomediaReview;
           const Review = getTemplate(review.reviewType);
 
           return (
             <Review
-              reviewRef={idx === 0 && reviewRef}
+              skeleton={skeleton}
               key={`review-${idx}`}
               data={review}
               className={`${mixedClass} ${styles.SlideWrapper}`}
@@ -238,7 +236,29 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
  * @returns {component}
  */
 export function ReviewsSkeleton(props) {
-  const data = {};
+  const data = [
+    {
+      author: "Svend Svendsen",
+      media: "Jyllandsposten",
+      rating: "4/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+    {
+      author: "Svend Svendsen",
+      media: "Jyllandsposten",
+      rating: "4/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+    {
+      author: "Svend Svendsen",
+      media: "Jyllandsposten",
+      rating: "4/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+  ];
 
   return (
     <Reviews
