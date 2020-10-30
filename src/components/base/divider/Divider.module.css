@@ -1,6 +1,6 @@
 .divider {
     width: 100%;
     height: 1px;
-    margin: var(--pt1) 0 var(--pt2) 0;
-    color: var(--iron);
+    margin: 0 0 var(--pt2) 0;
+    background-color: var(--iron);
 }

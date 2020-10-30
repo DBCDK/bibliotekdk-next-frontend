@@ -1,61 +1,91 @@
 .right {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .pointer {
-  cursor: pointer;
-  padding: 4px 0 16px 0;
+    cursor: pointer;
+    padding: 4px 0 16px 0;
 }
 
 .pointer:hover {
-  font-weight: bold;
+    font-weight: bold;
 }
 
-.pointer:hover hr {
-  background-color: var(--gray);
+.pointer:hover + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
 }
 
-.column {
-  display: block;
-  margin-bottom: var(--pt1);
+.pointer:focus {
+    font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
 }
 
-.fullmanifestation img {
-  margin-bottom: var(--pt2);
-}
-
-.fullmanifestation button {
-  margin-top: var(--pt2);
+.pointer:focus + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
 }
 
 .fullmanifestation {
-  font-weight: normal;
+    font-weight: normal;
+}
+
+.fullmanifestation img {
+    margin-bottom: var(--pt2);
+}
+
+.fullmanifestation button {
+    margin-top: var(--pt2);
+    font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
+}
+
+.column {
+    margin-bottom: var(--pt1);
 }
 
 .column:focus {
-  color: var(--blue);
+    color: var(--blue);
 }
+
 .expandicon {
-  position: relative;
+    position: relative;
 }
+
 .expandicon span {
-  position: absolute;
-  top: calc(50% - 1px);
-  left: 6px;
-  right: 6px;
-  background: white;
-  height: 2px;
-  transition: all 0.35s;
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 6px;
+    right: 6px;
+    background: white;
+    height: 2px;
+    transition: all 0.35s;
 }
+
 .expandicon.opened span:first-child {
-  opacity: 0;
-  transform: rotate(90deg);
+    opacity: 0;
+    transform: rotate(90deg);
 }
+
 .expandicon.closed span:first-child {
-  opacity: 1;
-  transform: rotate(180deg);
+    opacity: 1;
+    transform: rotate(180deg);
 }
+
 .expandicon.closed span:last-child {
-  transform: rotate(90deg);
+    transform: rotate(90deg);
+    color: var(--blue);
+}
+
+.folded {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.expanded {
+    transition-duration: 1s;
+    max-height: 100%;
 }
