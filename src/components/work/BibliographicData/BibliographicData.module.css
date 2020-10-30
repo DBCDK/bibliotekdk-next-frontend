@@ -1,38 +1,61 @@
 .right {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .pointer {
-    cursor: pointer;
-    padding: 4px 0 16px 0;
+  cursor: pointer;
+  padding: 4px 0 16px 0;
 }
 
 .pointer:hover {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .pointer:hover hr {
-    background-color: var(--gray);
+  background-color: var(--gray);
 }
 
 .column {
-    display: block;
-    margin-bottom: var(--pt1);
+  display: block;
+  margin-bottom: var(--pt1);
 }
 
-.fullmanifestation img{
-    margin-bottom: var(--pt2);
+.fullmanifestation img {
+  margin-bottom: var(--pt2);
 }
 
-.fullmanifestation button{
-    margin-top: var(--pt2);
+.fullmanifestation button {
+  margin-top: var(--pt2);
 }
 
 .fullmanifestation {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .column:focus {
-    color: var(--blue);
+  color: var(--blue);
+}
+.expandicon {
+  position: relative;
+}
+.expandicon span {
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 6px;
+  right: 6px;
+  background: white;
+  height: 2px;
+  transition: all 0.35s;
+}
+.expandicon.opened span:first-child {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+.expandicon.closed span:first-child {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+.expandicon.closed span:last-child {
+  transform: rotate(90deg);
 }
