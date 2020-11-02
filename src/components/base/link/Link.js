@@ -5,32 +5,6 @@ import AnimationLine from "../../base/animation/line";
 
 import styles from "./Link.module.css";
 
-const useStoryBookLink = !!process.env.STORYBOOK_ACTIVE;
-
-/**
- * We use this link in Storybook
- * for testing purposes.
- *
- * It creates an alert instead of following the link
- *
- * @param {Object} props
- */
-function StorybookLink({ children, href }) {
-  return (
-    <React.Fragment>
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          href: href.pathname || href,
-          onClick: (e) => {
-            e.preventDefault();
-            alert(JSON.stringify(href));
-          },
-        })
-      )}
-    </React.Fragment>
-  );
-}
-
 /**
  * The Component function
  *
@@ -47,9 +21,6 @@ export default function Link({
   border = true,
   className = "",
 }) {
-  // Use Storybook link implementation if we are in Storybook mode
-  const LinkImpl = useStoryBookLink ? StorybookLink : NextLink;
-
   // no wrap - no border
   if (!a) {
     border = false;
@@ -73,9 +44,9 @@ export default function Link({
 
   // Return the component
   return (
-    <LinkImpl href={href} shallow={true}>
+    <NextLink href={href} shallow={true}>
       {children}
-    </LinkImpl>
+    </NextLink>
   );
 }
 
