@@ -1,3 +1,7 @@
+import { uniq } from "lodash";
+
+import config from "../config";
+
 /**
  * @file
  * This file contains utility function
@@ -10,7 +14,7 @@
  * @param {string} title
  * @param {string} creator
  *
- * @return {string} encoded string
+ * @returns {string} encoded string
  */
 export function encodeTitleCreator(title = "", creator = "") {
   return (
@@ -18,4 +22,17 @@ export function encodeTitleCreator(title = "", creator = "") {
     "_" +
     creator.replace(/\s+/g, "-")
   ).toLowerCase();
+}
+
+/**
+ * Create canonical URL for given work
+ * @param {object} work
+ *
+ * @returns {string} The canonical work URL
+ */
+export function getCanonicalWorkUrl({ title, creators, id }) {
+  return `${config.externalBaseUrl}/${encodeTitleCreator(
+    title,
+    creators && creators[0] && creators[0].name
+  )}/${id}`;
 }

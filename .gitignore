@@ -106,3 +106,7 @@ dist
 # Cypress
 e2e/cypress/videos/
 e2e/reports/
+
+# PHPStorm
+
+.idea

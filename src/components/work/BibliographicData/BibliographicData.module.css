@@ -5,4 +5,93 @@
 
 .pointer {
     cursor: pointer;
+    padding: 4px 0 16px 0;
+}
+
+.pointer:hover {
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.pointer:hover + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
+}
+
+.pointer:focus {
+    font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
+}
+
+.pointer:focus + div + hr {
+    background-color: var(--blue);
+    transition: background-color 1s;
+}
+
+.fullmanifestation {
+    font-weight: normal;
+}
+
+.fullmanifestation img {
+    margin-bottom: var(--pt3);
+}
+
+.fullmanifestation button {
+    margin-top: var(--pt4);
+    margin-bottom: var(--pt4);
+    font-weight: bold;
+    transition: color 0.5s;
+    color: var(--blue);
+}
+
+.column {
+    margin-bottom: var(--pt1);
+}
+
+.column:focus {
+    color: var(--blue);
+}
+
+.expandicon {
+    position: relative;
+}
+
+.expandicon span {
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 6px;
+    right: 6px;
+    background: white;
+    height: 2px;
+    transition: all 0.35s;
+}
+
+.expandicon.opened span:first-child {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+
+.expandicon.closed span:first-child {
+    opacity: 1;
+    transform: rotate(180deg);
+}
+
+.expandicon.closed span:last-child {
+    transform: rotate(90deg);
+    color: var(--blue);
+}
+
+.folded {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.expanded {
+    transition-duration: 1s;
+    max-height: 100%;
+}
+
+.locationtitle {
+    margin-bottom: var(--pt1);
 }

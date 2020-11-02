@@ -1,29 +1,52 @@
 "use strict";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
-import Text from "../../base/text/Text";
 import React from "react";
 
-const fields = [
-  "contribution",
-  "description",
-  "lang",
-  "notes",
-  "pages",
-  "pid",
-  "released",
-];
+import Translate from "../../base/translate";
 
-// constructor
+// fields to handle - add to handle a field eg. subjects or lix or let or ...
+// @TODO it would be nice if fields are shown in the order here .. fix it
+const fields = {
+  description: Translate({
+    context: "bibliographic-data",
+    label: "description",
+  }),
+  language: Translate({
+    context: "bibliographic-data",
+    label: "language",
+  }),
+  //"notes",
+  physicalDescription: Translate({
+    context: "bibliographic-data",
+    label: "physicalDescription",
+  }),
+  pid: "pid",
+  datePublished: Translate({
+    context: "bibliographic-data",
+    label: "datePublished",
+  }),
+  //"creators" - @TODO parse creators object,
+};
+
+/**
+ * @param manifestation
+ *  The work to parse. For now it holds {pid, materialtype, cover}
+ * @constructor
+ */
 let ManifestationParserObject = function (manifestation) {
   this._manifestation = manifestation;
-  this._fields = ManifestationParserObject.flipArray(fields);
+  this._fields = fields;
 };
 
 // public methods
-// can be called after initializing an object
 ManifestationParserObject.prototype = {
-  parseManifestation: function () {
+  /**
+   * Parse manifestation in two columns
+   * @returns {*[]|*[]}
+   *  object with an array for each column
+   */
+  parseManifestationInTwoColumns: function () {
     // @TODO get real data from api
     let dataToParse = this._getDummyData();
     let twoColumnsArray = this._splitInColumns(dataToParse);
@@ -32,7 +55,7 @@ ManifestationParserObject.prototype = {
 
   /**
    * Private function
-   * get additional data for objects manifestation
+   * get additional data for objects manifestatio. n
    * @returns {[]}
    * @private
    */
@@ -40,18 +63,18 @@ ManifestationParserObject.prototype = {
     let props = { workId: "workId", type: this._manifestation.materialType };
     let data = dummy_materialTypesApi(props);
     let dataArray = {};
-    let element = [];
+    let translatedKey;
     for (let [key, value] of Object.entries(data.workId)) {
-      if (this._fields[key]) {
-        let element = [];
-        // make sure we return an array for easier parsing
-        if (!Array.isArray(value)) {
-          value = [value];
-        }
-        element[key] = value;
-        dataArray[key] = value;
-        //dataArray = [...dataArray, element];
+      if (!this._fields[key]) {
+        continue;
       }
+      let element = [];
+      // make sure we return an array for easier parsing
+      if (!Array.isArray(value)) {
+        value = [value];
+      }
+
+      dataArray[this._fields[key]] = value;
     }
     return dataArray;
   },
@@ -65,17 +88,15 @@ ManifestationParserObject.prototype = {
    * @private
    */
   _splitInColumns: function (dataArray) {
-    if (!dataArray) {
+    if (!Object.keys(dataArray).length) {
       return [];
     }
-
-    // we need to iterate data to know how count actual entries
-    let linecount = 0;
+    // we need to iterate data to count actual entries (content)
+    let linecount = 1;
     for (let [key, value] of Object.entries(dataArray)) {
       linecount += value.length;
     }
-
-    // the length of first column
+    // the length of first column (half of content)
     let colLength = (linecount / 2) >> 0;
     // holder for the two columns
     let arrayInColumns = [];
@@ -83,37 +104,42 @@ ManifestationParserObject.prototype = {
     let element = [];
     // how far are we
     let columnCount = 0;
-    // array with the two columns to return
+    // array with a column to return
     let columnArray = [];
+    // flag - is column 1 done
+    let columOneDone = false;
     // iterate again to split into two columns
+    let last = null;
     for (let [key, value] of Object.entries(dataArray)) {
       // reset element
       element = [];
+      // make a new element
+      element[key] = value;
+      // push to return array
+      columnArray.push(element);
+      // increase counter with length of array
       columnCount += value.length;
-      if (columnCount > colLength) {
-        // we added half of the fields - reset and do column 2
+      // check if column one holds more than half of content
+      if (columnCount > colLength && !columOneDone) {
+        columOneDone = true;
+        if (columnArray.length > 1) {
+          // except the last added element - we want that in column 2
+          last = columnArray.pop();
+        } else {
+          last = null;
+        }
+        // we added half of the fields - reset to do column 2
         arrayInColumns["col1"] = columnArray;
         columnArray = [];
+        if (last) {
+          columnArray.push(last);
+        }
       }
-      element[key] = value;
-      columnArray.push(element);
     }
+    // push second column to return array
     arrayInColumns["col2"] = columnArray;
     return arrayInColumns;
   },
-};
-
-/**
- * reverse key -> value of an array eg. [0:"fisk"] => ["fisk":0]
- * @param arrayToFlip
- * @returns {{[p: string]: *}}
- */
-ManifestationParserObject.flipArray = function (arrayToFlip) {
-  const flipped = Object.entries(arrayToFlip).reduce(
-    (obj, [key, value]) => ({ ...obj, [value]: key }),
-    {}
-  );
-  return flipped;
 };
 
 export default ManifestationParserObject;

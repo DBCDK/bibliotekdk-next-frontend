@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
+import { useData } from "../../../lib/api/api";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
 import Translate from "../../base/translate";
+
+import * as workFragments from "../../../lib/api/work.fragments";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
@@ -17,9 +20,13 @@ import styles from "./Details.module.css";
  *
  * @returns {component}
  */
-function Details({ className = "", data = {}, skeleton = false }) {
+export function Details({ className = "", data = {}, skeleton = false }) {
   // Translate Context
   const context = { context: "details" };
+
+  const contributors =
+    data.creators &&
+    data.creators.filter((creator) => creator.type && creator.type !== "aut");
 
   return (
     <Section
@@ -27,7 +34,7 @@ function Details({ className = "", data = {}, skeleton = false }) {
       className={styles.distanceTop}
     >
       <Row className={`${styles.details} ${className}`}>
-        {data.lang && (
+        {data.language && (
           <Col xs={6} md>
             <Text
               type="text3"
@@ -38,11 +45,11 @@ function Details({ className = "", data = {}, skeleton = false }) {
               {Translate({ ...context, label: "language" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.lang}
+              {data.language}
             </Text>
           </Col>
         )}
-        {data.pages && (
+        {data.physicalDescription && (
           <Col xs={6} md>
             <Text
               type="text3"
@@ -50,14 +57,14 @@ function Details({ className = "", data = {}, skeleton = false }) {
               skeleton={skeleton}
               lines={2}
             >
-              {Translate({ ...context, label: "pages" })}
+              {Translate({ ...context, label: "physicalDescription" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.pages}
+              {data.physicalDescription}
             </Text>
           </Col>
         )}
-        {data.released && (
+        {data.datePublished && (
           <Col xs={6} md>
             <Text
               type="text3"
@@ -68,11 +75,11 @@ function Details({ className = "", data = {}, skeleton = false }) {
               {Translate({ ...context, label: "released" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.released}
+              {data.datePublished}
             </Text>
           </Col>
         )}
-        {data.contribution && (
+        {contributors && contributors.length > 0 && (
           <Col xs={6} md>
             <Text
               type="text3"
@@ -82,9 +89,9 @@ function Details({ className = "", data = {}, skeleton = false }) {
             >
               {Translate({ ...context, label: "contribution" })}
             </Text>
-            {data.contribution.map((c, i) => {
+            {contributors.map((c, i) => {
               // Array length
-              const l = data.contribution.length;
+              const l = contributors.length;
               // Trailing comma
               const t = i + 1 === l ? "" : ", ";
               return (
@@ -94,7 +101,9 @@ function Details({ className = "", data = {}, skeleton = false }) {
                   skeleton={skeleton}
                   lines={0}
                 >
-                  {c + t}
+                  {c.name +
+                    (c.functionSingular && ` (${c.functionSingular})`) +
+                    t}
                 </Text>
               );
             })}
@@ -113,12 +122,12 @@ function Details({ className = "", data = {}, skeleton = false }) {
  *
  * @returns {component}
  */
-function DetailsSkeleton(props) {
+export function DetailsSkeleton(props) {
   const mock = {
-    lang: "...",
-    pages: "...",
-    released: "...",
-    contribution: ["..."],
+    language: ["..."],
+    physicalDescription: "...",
+    datePublished: "...",
+    creators: [{ type: "...", name: "..." }],
   };
 
   return (
@@ -126,6 +135,7 @@ function DetailsSkeleton(props) {
       {...props}
       data={mock}
       className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
     />
   );
 }
@@ -141,14 +151,22 @@ function DetailsSkeleton(props) {
 export default function Wrap(props) {
   const { workId, type } = props;
 
-  // Call materialTypes mockdata API
-  const data = dummy_materialTypesApi({ workId, type });
+  const { data, isLoading, error } = useData(workFragments.details({ workId }));
 
-  if (props.skeleton) {
-    return <DetailsSkeleton {...props} data={data[workId]} />;
+  if (error) {
+    return null;
   }
 
-  return <Details {...props} data={data[workId]} />;
+  if (isLoading) {
+    return <DetailsSkeleton {...props} />;
+  }
+
+  // find the selected matieralType, use first element as fallback
+  const materialType =
+    data.work.materialTypes.find((element) => element.materialType === type) ||
+    data.work.materialTypes[0];
+
+  return <Details {...props} data={materialType} />;
 }
 
 // PropTypes for component

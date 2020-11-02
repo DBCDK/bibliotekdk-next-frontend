@@ -1,5 +1,4 @@
 {
-  "language": "da",
   "contexts": {
     "general": {
       "readMore": {
@@ -139,6 +138,26 @@
       "bookmark": {
         "da": "Tilføj som bogmærke",
         "en": "Add to bookmarks"
+      },
+      "datePublished": {
+        "da": "Udgivet",
+        "en": "Published"
+      },
+      "description": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "physicalDescription": {
+        "da": "Omfang",
+        "en": "physicalDescription"
+      },
+      "language": {
+        "da": "Sprog",
+        "en": "language"
+      },
+      "locationtitle": {
+        "da": "Hvor er bogen?",
+        "en": "Where is the book?"
       }
     },
     "overview": {
@@ -167,6 +186,10 @@
       "pages": {
         "da": "Sideantal",
         "en": "Number of pages"
+      },
+      "physicalDescription": {
+        "da": "Længde",
+        "en": "Length"
       },
       "released": {
         "da": "Udgivet",

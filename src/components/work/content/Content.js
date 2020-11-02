@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
+import { useData } from "../../../lib/api/api";
 
 import Section from "../../base/section";
 import Text from "../../base/text";
 import Translate from "../../base/translate";
 
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import * as workFragments from "../../../lib/api/work.fragments";
 
 import styles from "./Content.module.css";
 
@@ -17,23 +18,25 @@ import styles from "./Content.module.css";
  *
  * @returns {component}
  */
-function Content({ className = "", data = {}, skeleton = false }) {
+export function Content({ className = "", data = {}, skeleton = false }) {
+  if (!data.content) {
+    return null;
+  }
   // Translate Context
   const context = { context: "content" };
 
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.content} ${className}`}>
-        {data.notes &&
-          data.notes.map((n, i) => {
-            return (
-              <Col key={n + i} xs={12}>
-                <Text type="text3" skeleton={skeleton} lines={8}>
-                  {n}
-                </Text>
-              </Col>
-            );
-          })}
+        {data.content.map((n, i) => {
+          return (
+            <Col key={n + i} xs={12}>
+              <Text type="text3" skeleton={skeleton} lines={8}>
+                {n}
+              </Text>
+            </Col>
+          );
+        })}
       </Row>
     </Section>
   );
@@ -47,12 +50,13 @@ function Content({ className = "", data = {}, skeleton = false }) {
  *
  * @returns {component}
  */
-function ContentSkeleton(props) {
+export function ContentSkeleton(props) {
   return (
     <Content
       {...props}
-      data={{ notes: ["..."] }}
+      data={{ content: ["..."] }}
       className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
     />
   );
 }
@@ -68,14 +72,21 @@ function ContentSkeleton(props) {
 export default function Wrap(props) {
   const { workId, type } = props;
 
-  // Call materialTypes mockdata API
-  const data = dummy_materialTypesApi({ workId, type });
+  const { data, isLoading, error } = useData(workFragments.details({ workId }));
 
-  if (props.skeleton) {
-    return <ContentSkeleton {...props} data={data[workId]} />;
+  if (error) {
+    return null;
+  }
+  if (isLoading) {
+    return <ContentSkeleton {...props} />;
   }
 
-  return <Content {...props} data={data[workId]} />;
+  // find the selected matieralType, use first element as fallback
+  const materialType =
+    data.work.materialTypes.find((element) => element.materialType === type) ||
+    data.work.materialTypes[0];
+
+  return <Content {...props} data={materialType} />;
 }
 
 // PropTypes for component

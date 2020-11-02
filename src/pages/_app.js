@@ -13,10 +13,13 @@ import React from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/styles.css";
 import "lazysizes";
+import "lazysizes/plugins/attrchange/ls.attrchange";
 
 import { APIStateContext } from "../lib/api/api";
+import { setLocale } from "../components/base/translate/Translate";
 
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps, router }) {
+  setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Component {...pageProps} />

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * A React hook for listening to window size
@@ -7,7 +7,7 @@ import { useLayoutEffect, useState } from "react";
  */
 export default function useWindowSize() {
   const [size, setSize] = useState([0, 0]);
-  useLayoutEffect(() => {
+  useEffect(() => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }

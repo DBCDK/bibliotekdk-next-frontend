@@ -37,17 +37,17 @@
 
 .button.secondary {
   color: var(--blue);
-  border: 1px solid var(--blue);
-  line-height: 22px;
+  border: 2px solid var(--blue);
+  line-height: 23px;
 }
 
 .button.secondary:hover {
-  border: 1px solid var(--mine-shaft);
+  border: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
 .button.secondary.disabled {
-  border: 1px solid var(--concrete);
+  border: 2px solid var(--concrete);
 }
 
 /* 
@@ -100,7 +100,7 @@
 
 .button.secondary:focus {
   outline: 1px solid var(--mine-shaft);
-  border: 1px solid var(--mine-shaft);
+  border: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 

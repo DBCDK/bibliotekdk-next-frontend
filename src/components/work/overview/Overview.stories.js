@@ -1,3 +1,4 @@
+import { useState } from "react";
 import dummy_workDataApi from "../dummy.workDataApi";
 import OverviewWithData, { OverviewSkeleton, Overview } from "./Overview";
 
@@ -11,9 +12,14 @@ export default {
  */
 export function WorkOverview() {
   const data = dummy_workDataApi({ workId: "some-id" });
+  const [type, setType] = useState();
   return (
     <div>
-      <Overview {...data.work} />
+      <Overview
+        {...data.work}
+        type={type}
+        onTypeChange={(el) => setType(el.type)}
+      />
     </div>
   );
 }

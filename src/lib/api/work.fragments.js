@@ -6,9 +6,6 @@
 /**
  * Basic work info that is fast to fetch
  *
- * If its too slow, then consider moving "cover"
- * to its own fragment
- *
  * @param {object} params
  * @param {string} params.workId the work id
  */
@@ -23,9 +20,6 @@ export function basic({ workId }) {
           }
           description
           materialTypes {
-            cover {
-              detail
-            }
             pid
             materialType
           }
@@ -34,6 +28,70 @@ export function basic({ workId }) {
           subjects{
             type
             value
+          }
+        }
+      }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Covers for the different material types
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function covers({ workId }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($workId: String!) {
+      work(id: $workId) {
+        materialTypes {
+          cover {
+            detail
+          }
+        }
+      }
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Details for work manifestations
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function details({ workId }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($workId: String!) {
+        work(id: $workId) {
+          seo {
+            title
+            description
+          }
+          materialTypes {
+            content
+            creators {
+              type
+              functionSingular
+              name
+            }
+            datePublished
+            edition
+            isbn
+            materialType
+            language
+            physicalDescription
+            publisher
           }
         }
       }`,
@@ -60,7 +118,6 @@ export function recommendations({ workId }) {
     manifestation(pid: $workId) {
       recommendations {
         manifestation {
-          abstract
           cover {
             detail
           }
