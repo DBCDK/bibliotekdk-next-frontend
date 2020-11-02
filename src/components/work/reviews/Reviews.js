@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
 import { groupBy } from "lodash";
 
 import useWindowSize from "../../../lib/useWindowSize";
@@ -188,7 +187,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
 
   return (
     <Section
-      className={`${styles.reviews}`}
+      className={`${styles.reviews} ${className}`}
       title={Translate({
         ...context,
         label: "title",
@@ -201,12 +200,16 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
           // const Review = InfomediaReview;
           const Review = getTemplate(review.reviewType);
 
+          const skeletonReview = skeleton
+            ? `${styles.skeleton} ${styles.yellow}`
+            : "";
+
           return (
             <Review
               skeleton={skeleton}
               key={`review-${idx}`}
               data={review}
-              className={`${mixedClass} ${styles.SlideWrapper}`}
+              className={`${mixedClass} ${styles.SlideWrapper} ${skeletonReview}`}
               onFocus={() => {
                 // Make sure focused card become visible
                 // when tabbing through.

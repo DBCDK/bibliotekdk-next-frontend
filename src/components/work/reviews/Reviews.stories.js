@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription } from "../../base/storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
 
 import {
   MaterialReview,
@@ -16,7 +16,7 @@ import {
 } from "./types/litteratursiden/LitteratursidenReview.js";
 
 export default {
-  title: "Reviews",
+  title: "Work: Reviews",
 };
 
 /**
@@ -34,10 +34,22 @@ export function Material() {
   };
   return (
     <div>
-      <StoryTitle>MaterialReview template</StoryTitle>
-      <StoryDescription>Material review example</StoryDescription>
-      <div style={{ maxWidth: "1000px" }}>
-        <MaterialReview data={data} />
+      <div>
+        <StoryTitle>MaterialReview template</StoryTitle>
+        <StoryDescription>Material review example</StoryDescription>
+        <div style={{ maxWidth: "1000px" }}>
+          <MaterialReview data={data} />
+        </div>
+      </div>
+
+      <StorySpace direction="v" space="3" />
+
+      <div>
+        <StoryTitle>Loading</StoryTitle>
+        <StoryDescription>Loading Material review example</StoryDescription>
+        <div style={{ maxWidth: "1000px" }}>
+          <MaterialReviewSkeleton />
+        </div>
       </div>
     </div>
   );
@@ -53,9 +65,21 @@ export function Infomedia() {
   };
   return (
     <div>
-      <StoryTitle>Infomedia template</StoryTitle>
-      <StoryDescription>Infomedia review example</StoryDescription>
-      <InfomediaReview data={data} />
+      <div>
+        <StoryTitle>Infomedia template</StoryTitle>
+        <StoryDescription>Infomedia review example</StoryDescription>
+        <InfomediaReview data={data} />
+      </div>
+
+      <StorySpace direction="v" space="3" />
+
+      <div>
+        <StoryTitle>Loading</StoryTitle>
+        <StoryDescription>
+          Skeleton/loading view of the infomedia review template
+        </StoryDescription>
+        <InfomediaReviewSkeleton />
+      </div>
     </div>
   );
 }
@@ -68,21 +92,19 @@ export function Litteratursiden() {
   };
   return (
     <div>
-      <StoryTitle>Litteratursiden template</StoryTitle>
-      <StoryDescription>Litteratursiden review example</StoryDescription>
-      <LitteratursidenReview data={data} />
-    </div>
-  );
-}
+      <div>
+        <StoryTitle>Litteratursiden template</StoryTitle>
+        <StoryDescription>Litteratursiden review example</StoryDescription>
+        <LitteratursidenReview data={data} />
+      </div>
 
-export function Loading() {
-  return (
-    <div>
-      <StoryTitle>Loading Infomedia template</StoryTitle>
-      <StoryDescription>
-        Skeleton/loading view of the infomedia review template
-      </StoryDescription>
-      <InfomediaReviewSkeleton />
+      <StorySpace direction="v" space="3" />
+
+      <div>
+        <StoryTitle>Litteratursiden template</StoryTitle>
+        <StoryDescription>Litteratursiden review example</StoryDescription>
+        <LitteratursidenReviewSkeleton />
+      </div>
     </div>
   );
 }

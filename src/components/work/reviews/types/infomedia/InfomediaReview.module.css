@@ -39,20 +39,3 @@
   pointer-events: none;
   cursor: default;
 }
-
-.skeleton .rating div i div,
-.skeleton .url div,
-.skeleton .media span div div div {
-  background-color: var(--chamois);
-}
-
-.skeleton .rating div::before,
-.skeleton .url div::before,
-.skeleton .media div::before {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--parchment) 50%,
-    transparent 100%
-  );
-}

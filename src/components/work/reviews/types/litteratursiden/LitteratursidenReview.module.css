@@ -32,3 +32,9 @@
 .url a {
   margin: 0 0 0 var(--pt2);
 }
+
+/* Skeleton */
+
+.skeleton .author p {
+  display: block;
+}

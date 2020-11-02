@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { StoryTitle, StoryDescription } from "../storybook";
+import {
+  StoryTitle,
+  StoryDescription,
+  StoryLabel,
+  StorySpace,
+} from "../storybook";
 
 import { Rating, RatingSkeleton } from "./Rating";
-import Cover from "../cover";
 
 export default {
   title: "Rating",
@@ -13,13 +16,33 @@ export default {
  *
  */
 export function SomeRating() {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
   return (
     <div>
       <StoryTitle>Rating</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <Rating />
+      <StoryDescription>
+        Converts a string/rating (e.g. "5/6") to a rating component.
+      </StoryDescription>
+
+      <Rating rating="2/6" />
+
+      <StorySpace direction="v" space="6" />
+
+      <StoryDescription>Other examples:</StoryDescription>
+
+      <StoryLabel>Rate 0/6</StoryLabel>
+      <Rating rating="0/6" />
+      <StoryLabel>Rate 1/6</StoryLabel>
+      <Rating rating="1/6" />
+      <StoryLabel>Rate 2/6</StoryLabel>
+      <Rating rating="2/6" />
+      <StoryLabel>Rate 4/6</StoryLabel>
+      <Rating rating="3/6" />
+      <StoryLabel>Rate 4/6</StoryLabel>
+      <Rating rating="4/6" />
+      <StoryLabel>Rate 5/6</StoryLabel>
+      <Rating rating="5/6" />
+      <StoryLabel>Rate 6/6</StoryLabel>
+      <Rating rating="6/6" />
     </div>
   );
 }
@@ -29,39 +52,13 @@ export function SomeRating() {
  *
  */
 export function Loading() {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
   return (
     <div>
-      <StoryTitle>...</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <RatingSkeleton />
-    </div>
-  );
-}
-
-/**
- * Returns Bookmark button inside a Cover component
- *
- */
-export function ButtonInCover() {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const doppler =
-    "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4";
-
-  return (
-    <div>
-      <StoryTitle>Bookmark button inside Cover</StoryTitle>
+      <StoryTitle>Loading</StoryTitle>
       <StoryDescription>
-        The bookmark button can easily be passed as a child to the Cover
-        component.
+        Loading/skeleton version of rating component
       </StoryDescription>
-      <Cover src={doppler}>
-        <Bookmark
-          selected={isBookmarked}
-          onClick={() => setIsBookmarked(!isBookmarked)}
-        />
-      </Cover>
+      <RatingSkeleton />
     </div>
   );
 }

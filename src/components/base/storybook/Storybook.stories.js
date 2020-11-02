@@ -1,4 +1,9 @@
-import { StoryTitle, StoryDescription, StorySpace } from "./Storybook";
+import {
+  StoryTitle,
+  StoryDescription,
+  StorySpace,
+  StoryLabel,
+} from "./Storybook";
 
 export default {
   title: "Storybook",
@@ -31,17 +36,33 @@ export const StorybookDescription = () => {
 };
 
 /**
+ * Returns storybook label component
+ *
+ */
+export const StorybookLabel = () => {
+  return (
+    <div>
+      <StoryLabel copy>Im a label</StoryLabel>
+    </div>
+  );
+};
+
+/**
  * Returns storybook description component
  *
  */
-export const StorybookSpace = () => {
+export const HorizontalSpace = () => {
   return (
     <div>
-      <StoryTitle>Spacings used between storybook elements</StoryTitle>
+      <StoryTitle>StorybookSpace [Horizontal]</StoryTitle>
       <StoryDescription>
         Horizontal space used between elements in storybook. In this demo, space
         is illustrated with a blue color.
       </StoryDescription>
+
+      <StorySpace direction="h" copy />
+
+      <StorySpace direction="v" space="3" />
 
       <div>
         <StorySpace demo={true} space="1" />
@@ -60,11 +81,27 @@ export const StorybookSpace = () => {
         <StorySpace space="1" />
         <StorySpace demo={true} space="8" />
       </div>
-      <StoryTitle> </StoryTitle>
+    </div>
+  );
+};
+
+/**
+ * Returns storybook description component
+ *
+ */
+export const VerticalSpace = () => {
+  return (
+    <div>
+      <StoryTitle>StorybookSpace [Vertical]</StoryTitle>
       <StoryDescription>
         Vertical space used between elements in storybook. In this demo, space
         is illustrated with a blue color.
       </StoryDescription>
+
+      <StorySpace direction="v" copy />
+
+      <StorySpace direction="v" space="3" />
+
       <div>
         <StorySpace demo={true} direction="v" space="1" />
         <StorySpace space="1" />
@@ -82,11 +119,6 @@ export const StorybookSpace = () => {
         <StorySpace space="1" />
         <StorySpace demo={true} direction="v" space="8" />
       </div>
-
-      <StorySpace direction="v" space="3" />
-      <StorySpace direction="h" space="2" />
-
-      <StorySpace copy />
     </div>
   );
 };

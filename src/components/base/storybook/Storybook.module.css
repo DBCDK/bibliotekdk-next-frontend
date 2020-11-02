@@ -10,8 +10,35 @@
   padding: 0 0 var(--pt4) 0;
 }
 
+.label {
+  padding: var(--pt2) 0 0 0;
+}
+
+/* Demo */
+
 .demo {
   background-color: var(--blue);
+}
+
+.demo.v-space-1,
+.demo.v-space-2,
+.demo.v-space-3,
+.demo.v-space-4,
+.demo.v-space-5,
+.demo.v-space-6,
+.demo.v-space-7,
+.demo.v-space-8 {
+  max-width: var(--pt1);
+}
+
+.demo.h-space-1,
+.demo.h-space-2,
+.demo.h-space-3,
+.demo.h-space-4,
+.demo.h-space-5,
+.demo.h-space-6,
+.demo.h-space-7,
+.demo.h-space-8 {
   min-height: 8px;
 }
 

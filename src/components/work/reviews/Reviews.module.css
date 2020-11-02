@@ -49,6 +49,27 @@
   right: var(--pt4);
 }
 
+/* Skeleton */
+
+.skeleton .button {
+  display: none;
+}
+
+.skeleton.yellow div div div i div,
+.skeleton.yellow div > div div,
+.skeleton.yellow div span div div div {
+  background-color: var(--chamois);
+}
+
+.skeleton.yellow div div::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--parchment) 50%,
+    transparent 100%
+  );
+}
+
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   /* Make buttons visible */

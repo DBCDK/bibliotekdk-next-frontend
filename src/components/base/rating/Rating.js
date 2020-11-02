@@ -2,9 +2,7 @@ import PropTypes from "prop-types";
 
 import { cyKey } from "../../../utils/trim";
 
-import Skeleton from "../skeleton";
 import Icon from "../icon";
-import translate from "../translate";
 
 import StarSvg from "../../../../public/icons/star.svg";
 
@@ -18,15 +16,13 @@ import styles from "./Rating.module.css";
  *
  * @returns {component}
  */
-function Rating({
+export function Rating({
   className = "",
   rating = "4/6",
   type = "star",
   skeleton = false,
 }) {
   const key = cyKey({ name: "cy", prefix: "rating" });
-
-  const context = { context: "rating" };
 
   if (rating === "" || !rating.includes("/")) {
     return null;
@@ -64,16 +60,15 @@ function Rating({
  *
  * @returns {component}
  */
-function RatingSkeleton(props) {
+export function RatingSkeleton(props) {
   return (
     <Rating
       {...props}
       className={styles.skeleton}
+      skeleton={true}
       onClick={null}
       disabled={true}
-    >
-      <Skeleton />
-    </Rating>
+    />
   );
 }
 

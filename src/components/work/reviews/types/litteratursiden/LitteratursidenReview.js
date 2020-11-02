@@ -4,8 +4,8 @@ import { Col } from "react-bootstrap";
 import { cyKey } from "../../../../../utils/trim";
 
 import Text from "../../../../base/text";
-import Rating from "../../../../base/rating";
 import Title from "../../../../base/title";
+import Translate from "../../../../base/translate";
 
 import styles from "./LitteratursidenReview.module.css";
 
@@ -33,16 +33,22 @@ export function LitteratursidenReview({
       className={`${styles.litteratursiden} ${className}`}
     >
       <div className={styles.media}>
-        <Title type="title4">Litteratursiden</Title>
+        <Title type="title4" skeleton={skeleton}>
+          {Translate({ ...context, label: "litteratursiden" })}
+        </Title>
       </div>
 
       {data.author && (
         <div className={styles.author}>
-          <Text type="text3">af </Text>
-          <Title tag="h3" type="title4">
-            {data.author}
-          </Title>
-          <Text type="text3"> d. 05/07-2020</Text>
+          <Text type="text3" skeleton={skeleton} lines={2}>
+            {`${Translate({ context: "general", label: "by" })} `}
+          </Text>
+          {!skeleton && (
+            <Title tag="h3" type="title4">
+              {data.author}
+            </Title>
+          )}
+          {!skeleton && <Text type="text3"> d. 05/07-2020</Text>}
         </div>
       )}
     </Col>

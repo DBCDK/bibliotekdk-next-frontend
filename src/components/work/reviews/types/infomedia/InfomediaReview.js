@@ -44,7 +44,9 @@ export function InfomediaReview({
       )}
       {!skeleton && data.author && (
         <div className={styles.author}>
-          <Text type="text3">af </Text>
+          <Text type="text3">
+            {`${Translate({ context: "general", label: "by" })} `}
+          </Text>
           <Title tag="h3" type="title4">
             {data.author}
           </Title>

@@ -1,1 +1,1 @@
-export { StoryTitle, StoryDescription, StorySpace } from "./Storybook.js";
+export * from "./Storybook.js";
