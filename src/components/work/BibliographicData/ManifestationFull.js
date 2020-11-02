@@ -42,7 +42,12 @@ function ColumnOne({ manifestation }) {
       className={styles.fullmanifestation}
     >
       <Cover src={manifestation.cover.detail} size={["100px", "relative"]} />
-
+      <Text className={styles.locationtitle} type="text1" lines={1}>
+        {Translate({
+          context: "bibliographic-data",
+          label: "locationtitle",
+        })}
+      </Text>
       <Link
         children={
           <Text type="text3" lines={2}>
@@ -55,7 +60,6 @@ function ColumnOne({ manifestation }) {
         className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
-
       <Link
         children={
           <Text type="text3" lines={2}>
@@ -68,7 +72,6 @@ function ColumnOne({ manifestation }) {
         className={styles.column}
         href={{ pathname: "http://google.dk", query: {} }}
       />
-
       <Link
         children={
           <Text type="text3" lines={2}>

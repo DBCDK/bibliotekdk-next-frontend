@@ -154,6 +154,10 @@
       "language": {
         "da": "Sprog",
         "en" : "language"
+      },
+      "locationtitle": {
+        "da": "Hvor er bogen?",
+        "en" : "Where is the book?"
       }
     },
     "overview": {
