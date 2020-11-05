@@ -32,6 +32,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Bog",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -81,6 +82,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Bog stor skrift",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -118,6 +120,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Ebog",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -156,6 +159,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Lydbog (bånd)",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -201,6 +205,7 @@ export default function getMaterialTypes({ workId, type }) {
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
           content: [],
+          materialType: "Lydbog (cd-mp3)",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
@@ -258,6 +263,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Lydbog (net)",
           subjects: [],
         },
         Punktskrift: {
@@ -281,6 +287,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
+          materialType: "Punktskrift",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },
