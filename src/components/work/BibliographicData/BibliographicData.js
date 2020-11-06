@@ -89,8 +89,6 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
     setManifestations(ManifestationStates);
   };
 
-  const [open, setOpen] = useState(false);
-
   return manifestations.map((manifestation, index) => (
     <React.Fragment>
       <div className={styles.pointer}>
