@@ -12,7 +12,6 @@ import { ManifestationFull } from "./ManifestationFull";
 import dummy_workDataApi from "../dummy.workDataApi";
 import styles from "./BibliographicData.module.css";
 import Translate from "../../base/translate";
-import Button from "@storybook/react/dist/demo/Button";
 
 /**
  * Export function of the Component
@@ -104,9 +103,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
           <ManifestationList manifestation={manifestation} />
         </Row>
       </div>
-
       <ManifestationRowFull manifestation={manifestation} index={index} />
-
       <Divider />
     </React.Fragment>
   ));
