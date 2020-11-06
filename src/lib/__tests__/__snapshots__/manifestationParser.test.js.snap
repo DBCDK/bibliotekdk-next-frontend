@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test_parseManifestation 1`] = `
+Array [
+  Object {
+    "dataField": "notes",
+    "label": "Note",
+    "value": Array [
+      <span>
+        Introduction, Barbara Larson;
+        <br />
+      </span>,
+      <span>
+        Darwin, Burke, and the biological sublime, Barbara Larson;
+        <br />
+      </span>,
+      <span>
+        Why is the peacock's tail so beautiful?, Laurence Shafe;
+        <br />
+      </span>,
+      <span>
+        Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
+        <br />
+      </span>,
+      <span>
+        Cultural selection and the shape of time, Larry Silver;
+        <br />
+      </span>,
+      <span>
+        The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
+        <br />
+      </span>,
+      <span>
+        On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
+        <br />
+      </span>,
+      <span>
+        On mimicry in Darwin and surrealism, Jan Soffner;
+        <br />
+      </span>,
+      <span>
+        Contemporary art and the aesthetics of natural selection, Ellen Levy;
+        <br />
+      </span>,
+      <span>
+        index
+        <br />
+      </span>,
+    ],
+  },
+]
+`;
+
+exports[`Test_parseManifestation 2`] = `
+Array [
+  Object {
+    "dataField": "creators",
+    "label": "Af",
+    "value": "some contributor",
+  },
+  Object {
+    "dataField": "creators",
+    "label": "Bidrag",
+    "value": Array [
+      <span>
+        some other contributor
+        <br />
+      </span>,
+    ],
+  },
+  Object {
+    "dataField": "notes",
+    "label": "Note",
+    "value": Array [
+      <span>
+        Introduction, Barbara Larson;
+        <br />
+      </span>,
+      <span>
+        Darwin, Burke, and the biological sublime, Barbara Larson;
+        <br />
+      </span>,
+      <span>
+        Why is the peacock's tail so beautiful?, Laurence Shafe;
+        <br />
+      </span>,
+      <span>
+        Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
+        <br />
+      </span>,
+      <span>
+        Cultural selection and the shape of time, Larry Silver;
+        <br />
+      </span>,
+      <span>
+        The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
+        <br />
+      </span>,
+      <span>
+        On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
+        <br />
+      </span>,
+      <span>
+        On mimicry in Darwin and surrealism, Jan Soffner;
+        <br />
+      </span>,
+      <span>
+        Contemporary art and the aesthetics of natural selection, Ellen Levy;
+        <br />
+      </span>,
+      <span>
+        index
+        <br />
+      </span>,
+    ],
+  },
+]
+`;

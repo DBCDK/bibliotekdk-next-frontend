@@ -101,6 +101,53 @@ export function details({ workId }) {
 }
 
 /**
+ * Details for all manifestations in a work
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function detailsAllManifestations({ workId }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($workId: String!) {
+        work(id: $workId) {
+          manifestations {
+            content
+            creators {
+              type
+              functionSingular
+              name
+            }
+            cover {
+              detail
+            }
+            datePublished
+            dk5 {
+              value
+            }
+            edition
+            isbn
+            materialType
+            notes
+            language
+            originals
+            originalTitle
+            pid
+            physicalDescription
+            publisher
+            shelf
+            title
+          }
+        }
+      }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Recommendations for a work
  *
  * This is still the old laesekompas recommender

@@ -11,8 +11,8 @@
     "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
     "index"
   ],
-  "contribution": [
-    "some contributor",
-    "some other contributor"
+  "creators": [
+    { "name": "some contributor" },
+    { "name": "some other contributor" }
   ]
 }
