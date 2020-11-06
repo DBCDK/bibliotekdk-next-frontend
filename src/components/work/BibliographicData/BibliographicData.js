@@ -2,7 +2,7 @@
  * Component showing bibliographic data for a work and its manifestations
  * This component uses the section component defined in base/section
  */
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Collapse } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 
 import Section from "../../base/section";
@@ -126,13 +126,10 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 function ManifestationRowFull({ manifestation = null, index = 0 }) {
   let show = manifestation.open;
   return (
-    <React.Fragment>
-      <Row
-        key={index.toString()}
-        className={`${styles.folded} ${!show ? "" : styles.expanded}`}
-      >
+    <Collapse in={show}>
+      <Row key={index.toString()}>
         <ManifestationFull manifestation={manifestation} show={show} />
       </Row>
-    </React.Fragment>
+    </Collapse>
   );
 }

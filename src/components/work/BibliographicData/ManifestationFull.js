@@ -165,16 +165,11 @@ function AnotherColumn({ col = [], cyattribute = "" }) {
  */
 export function ManifestationFull({ manifestation, show }) {
   let data = dummyData(manifestation);
-
-  if (show) {
-    return (
-      <React.Fragment>
-        <ColumnOne manifestation={manifestation} />
-        <AnotherColumn col={data["col1"]} cyattribute="bibliographic-column2" />
-        <AnotherColumn col={data["col2"]} cyattribute="bibliographic-column3" />
-      </React.Fragment>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <React.Fragment>
+      <ColumnOne manifestation={manifestation} />
+      <AnotherColumn col={data["col1"]} cyattribute="bibliographic-column2" />
+      <AnotherColumn col={data["col2"]} cyattribute="bibliographic-column3" />
+    </React.Fragment>
+  );
 }
