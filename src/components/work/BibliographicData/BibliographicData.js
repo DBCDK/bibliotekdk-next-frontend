@@ -107,7 +107,7 @@ function ManifestationRowFull({ manifestation = null, index = 0 }) {
   return (
     <Collapse in={show}>
       <Row key={index.toString()}>
-        <ManifestationFull manifestation={manifestation} show={show} />
+        <ManifestationFull manifestation={manifestation} />
       </Row>
     </Collapse>
   );

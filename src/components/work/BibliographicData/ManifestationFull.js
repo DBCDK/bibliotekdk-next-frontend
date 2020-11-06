@@ -105,36 +105,32 @@ function ColumnOne({ manifestation }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({ manifestation, show }) {
+export function ManifestationFull({ manifestation }) {
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
     return parseManifestation(manifestation);
   }, [manifestation]);
 
-  if (show) {
-    return (
-      <React.Fragment>
-        <ColumnOne manifestation={manifestation} />
-        <Col xs={12} md>
-          <div className={styles.container}>
-            {parsed.map(({ label, value }) => {
-              return (
-                <div className={styles.item} key={label}>
-                  <Text type="text4" lines={1}>
-                    {label}
-                  </Text>
-                  <Text type="text3" lines={2}>
-                    {value}
-                  </Text>
-                </div>
-              );
-            })}
-          </div>
-        </Col>
-      </React.Fragment>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <React.Fragment>
+      <ColumnOne manifestation={manifestation} />
+      <Col xs={12} md>
+        <div className={styles.container}>
+          {parsed.map(({ label, value }) => {
+            return (
+              <div className={styles.item} key={label}>
+                <Text type="text4" lines={1}>
+                  {label}
+                </Text>
+                <Text type="text3" lines={2}>
+                  {value}
+                </Text>
+              </div>
+            );
+          })}
+        </div>
+      </Col>
+    </React.Fragment>
+  );
 }
