@@ -2,7 +2,7 @@
  * Component showing bibliographic data for a work and its manifestations
  * This component uses the section component defined in base/section
  */
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Collapse } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 
 import Section from "../../base/section";
@@ -12,6 +12,7 @@ import { ManifestationFull } from "./ManifestationFull";
 import dummy_workDataApi from "../dummy.workDataApi";
 import styles from "./BibliographicData.module.css";
 import Translate from "../../base/translate";
+import Button from "@storybook/react/dist/demo/Button";
 
 /**
  * Export function of the Component
@@ -88,6 +89,8 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
     setManifestations(ManifestationStates);
   };
 
+  const [open, setOpen] = useState(false);
+
   return manifestations.map((manifestation, index) => (
     <React.Fragment>
       <div className={styles.pointer}>
@@ -98,17 +101,14 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
           onClick={() => {
             onClick ? onClick() : rowClicked(index);
           }}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              rowClicked(index);
-            }
-          }}
           className={styles.pointer}
         >
           <ManifestationList manifestation={manifestation} />
         </Row>
       </div>
+
       <ManifestationRowFull manifestation={manifestation} index={index} />
+
       <Divider />
     </React.Fragment>
   ));
@@ -126,13 +126,10 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 function ManifestationRowFull({ manifestation = null, index = 0 }) {
   let show = manifestation.open;
   return (
-    <React.Fragment>
-      <Row
-        key={index.toString()}
-        className={`${styles.folded} ${!show ? "" : styles.expanded}`}
-      >
+    <Collapse in={show}>
+      <Row key={index.toString()}>
         <ManifestationFull manifestation={manifestation} show={show} />
       </Row>
-    </React.Fragment>
+    </Collapse>
   );
 }
