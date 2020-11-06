@@ -98,6 +98,11 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
           onClick={() => {
             onClick ? onClick() : rowClicked(index);
           }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              rowClicked(index);
+            }
+          }}
           className={styles.pointer}
         >
           <ManifestationList manifestation={manifestation} />
