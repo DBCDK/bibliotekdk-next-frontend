@@ -1,0 +1,79 @@
+.reviews {
+  position: relative;
+  height: auto;
+}
+
+.mixed {
+  /* padding-top: var(--pt8); */
+}
+
+.mixed:first-child {
+  padding-top: 0;
+}
+
+/* Slider */
+
+.SlideWrapper {
+  height: auto;
+}
+
+.button {
+  cursor: pointer;
+  user-select: none;
+  display: none;
+  background-color: var(--blue);
+  color: var(--white);
+  transition-duration: 0.35s;
+
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  position: absolute;
+  z-index: 100;
+  top: 40%;
+}
+
+.button:hover {
+  background-color: var(--mine-shaft);
+}
+.button.disabled {
+  background-color: var(--iron);
+  cursor: initial;
+}
+.left {
+  left: var(--pt4);
+}
+.left-adjust {
+  left: calc(var(--pt4) * -1 - var(--pt5));
+}
+.right {
+  right: var(--pt4);
+}
+
+/* Skeleton */
+
+.skeleton .button {
+  display: none;
+}
+
+.skeleton.yellow div div div i div,
+.skeleton.yellow div > div div,
+.skeleton.yellow div span div div div {
+  background-color: var(--chamois);
+}
+
+.skeleton.yellow div div::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--parchment) 50%,
+    transparent 100%
+  );
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  /* Make buttons visible */
+  .button {
+    display: inherit;
+  }
+}

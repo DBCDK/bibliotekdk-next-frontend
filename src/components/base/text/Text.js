@@ -60,7 +60,7 @@ function Text({
  * @returns {component}
  */
 function TextSkeleton(props) {
-  if (props.lines === 0) {
+  if (!props.lines) {
     return null;
   }
 

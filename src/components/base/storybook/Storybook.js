@@ -97,9 +97,30 @@ export function StorySpace({
   const spaceClass = styles[key];
 
   if (copy) {
-    const el = '<StorySpace direction="h" space="2" />';
+    const el = `<StorySpace direction="${direction}" space="2" />`;
     return <CopyButton el={el} txt="Copy space element" />;
   }
 
   return <div className={`${spaceClass} ${demoClass}`} />;
+}
+
+/**
+ * (FOR INTERNAL/STORYBOOK USE ONLY!)
+ * Function to return storybook label
+ *
+ * @param {obj} children
+ * @param {bool} copy // adds a copy button
+ *
+ * @returns {component}
+ */
+export function StoryLabel({ children, copy }) {
+  const el = "<StoryLabel>Im a label</StoryLabel>";
+
+  return (
+    <div className={styles.label}>
+      <Text type="text4">{children}</Text>
+
+      {copy && <CopyButton el={el} txt="Copy label element" />}
+    </div>
+  );
 }

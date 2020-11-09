@@ -92,8 +92,6 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
                   {val}
                 </Title>
               </Link>
-              <div className={`${styles.line1}`} />
-              <div className={`${styles.line2}`} />
             </span>
           );
         })}

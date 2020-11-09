@@ -36,10 +36,14 @@ export const Title = ({
  * @returns {component}
  */
 export const TitleSkeleton = (props) => {
+  const lines = props.lines || 1;
+
   return (
     <Title {...props} className={`${props.className} ${styles.skeleton}`}>
-      <Skeleton />
-      {props.children}
+      <Skeleton lines={lines} />
+      {Array.from(Array(lines).keys()).map((l) => (
+        <Title key={`txt-${l}`} {...props} />
+      ))}
     </Title>
   );
 };

@@ -1,0 +1,40 @@
+.litteratursiden {
+  padding-bottom: var(--pt1);
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.media {
+  padding: var(--pt2) 0 0 0;
+}
+
+.author {
+  padding: var(--pt2) var(--pt1) 0 0;
+}
+
+.author p,
+.author h3 {
+  display: inline;
+}
+
+.author p {
+  white-space: nowrap;
+}
+
+.url {
+  padding: var(--pt2) 0 0 0;
+  display: inline-flex;
+  align-items: center;
+  /* margin-top: auto; */
+}
+
+.url a {
+  margin: 0 0 0 var(--pt2);
+}
+
+/* Skeleton */
+
+.skeleton .author p {
+  display: block;
+}

@@ -1,5 +1,6 @@
 .background {
   margin-bottom: var(--pt10);
+  padding: 0 0 var(--pt5) 0;
 }
 
 .background section:last-child {

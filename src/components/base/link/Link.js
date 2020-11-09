@@ -1,5 +1,8 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
+
+import AnimationLine from "../../base/animation/line";
+
 import styles from "./Link.module.css";
 
 const useStoryBookLink = !!process.env.STORYBOOK_ACTIVE;
@@ -41,20 +44,29 @@ export default function Link({
   a = true,
   href = { pathname: "/", query: {} },
   target = "_self",
+  border = true,
   className = "",
 }) {
   // Use Storybook link implementation if we are in Storybook mode
   const LinkImpl = useStoryBookLink ? StorybookLink : NextLink;
 
+  // no wrap - no border
+  if (!a) {
+    border = false;
+  }
+
   // Maybe wrap with an a-tag
   if (a) {
+    const animationClass = border ? styles.border : "";
+
     children = (
       <a
         href={href.pathname || href}
         target={target}
-        className={`${styles.link} ${className}`}
+        className={`${styles.link} ${animationClass} ${className}`}
       >
         {children}
+        {border && <AnimationLine keepVisible />}
       </a>
     );
   }
@@ -72,6 +84,7 @@ Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
+  border: PropTypes.bool,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.shape({
     pathname: PropTypes.string.isRequired,

@@ -1,0 +1,34 @@
+.materialReview {
+  padding: 0 0 var(--pt1) 0;
+  align-self: center;
+}
+
+.author,
+.type,
+.date {
+  padding-bottom: var(--pt1);
+}
+
+.author p {
+  display: flex;
+  align-items: center;
+}
+
+.author p a {
+  margin: 0 0 0 var(--pt1);
+}
+
+.content {
+  padding: var(--pt3) 0;
+}
+
+.url {
+  padding: var(--pt2) 0 0 0;
+  display: flex;
+  align-items: center;
+  /* margin-top: auto; */
+}
+
+.url a {
+  margin: 0 0 0 var(--pt2);
+}

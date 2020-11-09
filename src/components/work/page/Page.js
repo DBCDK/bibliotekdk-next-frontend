@@ -5,6 +5,7 @@ import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
 import Keywords from "../keywords";
+import Reviews from "../reviews";
 import BibliographicData from "../BibliographicData";
 
 /**
@@ -24,6 +25,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Content workId={workId} type={type} />
       <Recommendations workId={workId} />
       <Keywords workId={workId} type={type} />
+      <Reviews workId={workId} />
       <BibliographicData workId={workId} />
     </main>
   );

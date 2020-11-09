@@ -182,3 +182,33 @@ export function recommendations({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Recommendations for a work
+ *
+ * This is still the old laesekompas recommender
+ * Will be changed at some point
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function reviews({ workId }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($workId: String!) {
+        work(id: $workId) {
+          reviews{
+            author
+            media
+            rating
+            reviewType
+            url
+          }
+        }
+      }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}

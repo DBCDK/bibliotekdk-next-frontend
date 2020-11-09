@@ -128,76 +128,76 @@
         "en": "information and editions"
       },
       "library-locations": {
-        "da" : "Findes på %s biblioteker",
-        "en" : "Located at %s libraries"
+        "da": "Findes på %s biblioteker",
+        "en": "Located at %s libraries"
       },
       "editionlink": {
         "da": "Link til denne udgave",
         "en": "Link to this edition"
       },
-      "bookmark" : {
+      "bookmark": {
         "da": "Tilføj som bogmærke",
-        "en" : "Add to bookmarks"
+        "en": "Add to bookmarks"
       },
       "datePublished": {
         "da": "Udgivelsesår",
-        "en" : "Published"
+        "en": "Published"
       },
       "description": {
         "da": "Beskrivelse",
-        "en" : "Description"
+        "en": "Description"
       },
       "physicalDescription": {
         "da": "Længde",
-        "en" : "physicalDescription"
+        "en": "physicalDescription"
       },
       "language": {
         "da": "Sprog",
-        "en" : "language"
+        "en": "language"
       },
       "locationtitle": {
         "da": "Hvor er bogen?",
-        "en" : "Where is the book?"
+        "en": "Where is the book?"
       },
       "title": {
         "da": "Titel",
-        "en" : "Title"
+        "en": "Title"
       },
       "creators": {
         "da": "Af",
-        "en" : "By"
+        "en": "By"
       },
-      "contributors" : {
+      "contributors": {
         "da": "Bidrag",
-        "en" : "Contribution"
+        "en": "Contribution"
       },
-      "isbn" : {
+      "isbn": {
         "da": "ISBN",
-        "en" : "ISBN"
+        "en": "ISBN"
       },
-      "publisher" : {
+      "publisher": {
         "da": "Udgiver",
-        "en" : "Publisher"
+        "en": "Publisher"
       },
-      "originals" : {
+      "originals": {
         "da": "Originaludgivelse",
-        "en" : "Original"
+        "en": "Original"
       },
-      "originalTitle" : {
+      "originalTitle": {
         "da": "Originaltitel",
-        "en" : "Original Title"
+        "en": "Original Title"
       },
-      "shelf" : {
+      "shelf": {
         "da": "Opstilling i folkebiblioteker",
-        "en" : "Shelf"
+        "en": "Shelf"
       },
-      "dk5" : {
+      "dk5": {
         "da": "DK5",
-        "en" : "DK5"
+        "en": "DK5"
       },
-      "notes" : {
+      "notes": {
         "da": "Note",
-        "en" : "Note"
+        "en": "Note"
       }
     },
     "overview": {
@@ -272,6 +272,28 @@
       "title": {
         "da": "Bogmærk %s",
         "en": "Bookmark %s"
+      }
+    },
+    "reviews": {
+      "title": {
+        "da": "Anmeldelser (%s)",
+        "en": "Reviews (%s)"
+      },
+      "reviewLinkText": {
+        "da": "Læs anmeldelse",
+        "en": "Read review"
+      },
+      "materialReviewLinkText": {
+        "da": "Læs hele vurderingen",
+        "en": "Read the full assessment"
+      },
+      "materialTitle": {
+        "da": "Bibliotekernes vurdering",
+        "en": "The libraries' assessment"
+      },
+      "litteratursiden": {
+        "da": "Litteratursiden",
+        "en": "Litteratursiden"
       }
     }
   },
