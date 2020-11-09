@@ -5,6 +5,14 @@
   align-self: center;
 }
 
+.litteratursiden a {
+  text-decoration: none;
+}
+
+.litteratursiden a:focus {
+  color: var(--blue);
+}
+
 .media {
   padding: var(--pt2) 0 0 0;
 }

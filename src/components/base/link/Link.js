@@ -45,6 +45,7 @@ export default function Link({
   href = { pathname: "/", query: {} },
   target = "_self",
   border = true,
+  onFocus = null,
   className = "",
 }) {
   // Use Storybook link implementation if we are in Storybook mode
@@ -63,6 +64,7 @@ export default function Link({
       <a
         href={href.pathname || href}
         target={target}
+        onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
       >
         {children}

@@ -191,7 +191,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
       title={Translate({
         ...context,
         label: "title",
-        vars: [`${reviews.length}`],
+        vars: [`${skeleton ? "..." : reviews.length}`],
       })}
       bgColor="var(--parchment)"
     >
@@ -201,7 +201,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
           const Review = getTemplate(review.reviewType);
 
           const skeletonReview = skeleton
-            ? `${styles.skeleton} ${styles.yellow}`
+            ? `${styles.skeleton} ${styles.custom}`
             : "";
 
           return (

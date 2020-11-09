@@ -23,6 +23,7 @@ export function MaterialReview({
   className = "",
   data = [],
   skeleton = false,
+  onFocus = null,
 }) {
   // Translate Context
   const context = { context: "reviews" };
@@ -30,7 +31,12 @@ export function MaterialReview({
   const bib = "https://bibliotek.dk/";
 
   return (
-    <Col xs={12} md={8} className={`${styles.materialReview} ${className}`}>
+    <Col
+      xs={12}
+      md={8}
+      className={`${styles.materialReview} ${className}`}
+      data-cy={cyKey({ prefix: "review", name: "material" })}
+    >
       <Row>
         <Col xs={6} xl={4} className={styles.type}>
           <Text type="text3" skeleton={skeleton} lines={1}>
@@ -69,7 +75,12 @@ export function MaterialReview({
       {data.url && (
         <Col xs={12} className={styles.url}>
           <Icon src="chevron.svg" size={2} skeleton={skeleton} />
-          <Link href={data.url} target="_blank" border={!skeleton}>
+          <Link
+            href={data.url}
+            target="_blank"
+            onFocus={onFocus}
+            border={!skeleton}
+          >
             <Title type="title4" skeleton={skeleton}>
               {Translate({ ...context, label: "materialReviewLinkText" })}
             </Title>

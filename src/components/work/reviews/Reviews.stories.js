@@ -1,5 +1,7 @@
 import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
 
+import { Reviews, ReviewsSkeleton } from "./Reviews.js";
+
 import {
   MaterialReview,
   MaterialReviewSkeleton,
@@ -23,6 +25,67 @@ export default {
  * Returns all primary buttons (Default button style)
  *
  */
+
+export function ReviewsSlider() {
+  const data = [
+    {
+      author: "Svend Svendsen",
+      media: "Jyllandsposten",
+      rating: "4/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+    {
+      author: "Didrik Pedersen",
+      media: "",
+      rating: "1/5",
+      reviewType: "LITTERATURSIDEN",
+      url: "http://",
+    },
+    {
+      author: "Svend Svendsen",
+      media: "",
+      rating: "3/5",
+      reviewType: "MATERIALREVIEWS",
+      url: "http://",
+    },
+    {
+      author: "Didrik Pedersen",
+      media: "Berlingske Tidende",
+      rating: "5/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+    {
+      author: "Svend Svendsen",
+      media: "Jyllandsposten",
+      rating: "4/5",
+      reviewType: "INFOMEDIA",
+      url: "http://",
+    },
+  ];
+
+  return (
+    <div>
+      <StoryTitle>Anmeldesler</StoryTitle>
+      <StoryDescription>...</StoryDescription>
+      <Reviews data={data} />
+    </div>
+  );
+}
+
+export function LoadingSlider() {
+  return (
+    <div>
+      <StoryTitle>Loading</StoryTitle>
+      <StoryDescription>
+        The loading/skeleton version of the review slider, uses the Infomedia
+        template as skeleton elements.
+      </StoryDescription>
+      <ReviewsSkeleton />
+    </div>
+  );
+}
 
 export function Material() {
   const data = {
