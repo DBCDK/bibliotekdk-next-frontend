@@ -2,16 +2,19 @@
  * Component showing bibliographic data for a work and its manifestations
  * This component uses the section component defined in base/section
  */
-import { Row, Col } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import { Row, Collapse } from "react-bootstrap";
+import PropTypes from "prop-types";
+import React, { useState } from "react";
 
 import Section from "../../base/section";
 import { Divider } from "../../base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
-import dummy_workDataApi from "../dummy.workDataApi";
 import styles from "./BibliographicData.module.css";
 import Translate from "../../base/translate";
+import { useData } from "../../../lib/api/api";
+
+import * as workFragments from "../../../lib/api/work.fragments";
 
 /**
  * Export function of the Component
@@ -21,10 +24,7 @@ import Translate from "../../base/translate";
  *
  * @returns {component}
  */
-export default function BibliographicData(props) {
-  // get dummydata
-  // @TODO get real - data Call API
-  let workData = getWorkData(props);
+export function BibliographicData(props) {
   return (
     <Section
       title={Translate({
@@ -32,30 +32,9 @@ export default function BibliographicData(props) {
         label: "storytitle",
       })}
     >
-      <WorkTypesRow materialTypes={workData.work.materialTypes} />
+      <WorkTypesRow materialTypes={props.data} />
     </Section>
   );
-}
-
-/**
- * First manifestation in list should be open - this is a 'static' variable ..
- * @param props
- * @returns {{}|*}
- */
-function getWorkData(props) {
-  if (typeof getWorkData.data == "undefined") {
-    // first time we load the data
-
-    // @TODO datacheck like:
-    // if (workData.work.materialTypes) {
-    // console.log(workData.work.materialTypes);
-    //}
-
-    getWorkData.data = dummy_workDataApi(props);
-    // this is the first load - set first manifestation to open
-    // getWorkData.data.work.materialTypes[0].open = true;
-  }
-  return getWorkData.data;
 }
 
 /**
@@ -126,13 +105,40 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 function ManifestationRowFull({ manifestation = null, index = 0 }) {
   let show = manifestation.open;
   return (
-    <React.Fragment>
-      <Row
-        key={index.toString()}
-        className={`${styles.folded} ${!show ? "" : styles.expanded}`}
-      >
-        <ManifestationFull manifestation={manifestation} show={show} />
+    <Collapse in={show}>
+      <Row key={index.toString()}>
+        <ManifestationFull manifestation={manifestation} />
       </Row>
-    </React.Fragment>
+    </Collapse>
   );
 }
+
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function Wrap({ workId }) {
+  const { data, isLoading, error } = useData(
+    workFragments.detailsAllManifestations({ workId })
+  );
+
+  if (error) {
+    return null;
+  }
+  if (isLoading) {
+    return null;
+  }
+
+  return <BibliographicData data={data.work.manifestations} />;
+}
+
+// PropTypes for component
+Wrap.propTypes = {
+  workId: PropTypes.string,
+  type: PropTypes.string,
+  skeleton: PropTypes.bool,
+};

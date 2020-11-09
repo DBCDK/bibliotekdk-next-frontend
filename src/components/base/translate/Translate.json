@@ -140,7 +140,7 @@
         "en": "Add to bookmarks"
       },
       "datePublished": {
-        "da": "Udgivet",
+        "da": "Udgivelsesår",
         "en": "Published"
       },
       "description": {
@@ -148,7 +148,7 @@
         "en": "Description"
       },
       "physicalDescription": {
-        "da": "Omfang",
+        "da": "Længde",
         "en": "physicalDescription"
       },
       "language": {
@@ -158,6 +158,46 @@
       "locationtitle": {
         "da": "Hvor er bogen?",
         "en": "Where is the book?"
+      },
+      "title": {
+        "da": "Titel",
+        "en": "Title"
+      },
+      "creators": {
+        "da": "Af",
+        "en": "By"
+      },
+      "contributors": {
+        "da": "Bidrag",
+        "en": "Contribution"
+      },
+      "isbn": {
+        "da": "ISBN",
+        "en": "ISBN"
+      },
+      "publisher": {
+        "da": "Udgiver",
+        "en": "Publisher"
+      },
+      "originals": {
+        "da": "Originaludgivelse",
+        "en": "Original"
+      },
+      "originalTitle": {
+        "da": "Originaltitel",
+        "en": "Original Title"
+      },
+      "shelf": {
+        "da": "Opstilling i folkebiblioteker",
+        "en": "Shelf"
+      },
+      "dk5": {
+        "da": "DK5",
+        "en": "DK5"
+      },
+      "notes": {
+        "da": "Note",
+        "en": "Note"
       }
     },
     "overview": {
