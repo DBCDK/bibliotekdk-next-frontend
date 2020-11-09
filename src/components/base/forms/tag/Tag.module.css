@@ -2,7 +2,7 @@
   height: 32px;
   display: inline-flex;
   align-items: center;
-  background-color: transparent;
+  background-color: white;
   font-family: var(--body-font);
   font-size: 14px;
   padding: 0 var(--pt2);
