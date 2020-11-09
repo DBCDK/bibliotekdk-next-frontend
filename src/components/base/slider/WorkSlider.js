@@ -133,8 +133,6 @@ export default function WorkSlider({ skeleton, works }) {
     }
   }, [slidesPerGroup]);
 
-  console.log("slidesPerGroup", slidesPerGroup);
-
   // If there is enough room to the left of the slider,
   // we move the left arrow a bit to the left
   const leftAdjustArrow = swiperRect ? swiperRect.left > 100 : true;

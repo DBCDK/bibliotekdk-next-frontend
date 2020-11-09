@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
 import { groupBy } from "lodash";
@@ -38,6 +38,32 @@ function getTemplate(type) {
     default:
       return InfomediaReview;
   }
+}
+
+function sortReviews(data) {
+  // Group data by reviewType
+  const groups = groupBy(data, "reviewType");
+
+  // reviews array containing infomedia and litteratursiden reviews
+  const reviews = [
+    ...(groups.INFOMEDIA || []),
+    ...(groups.LITTERATURSIDEN || []),
+  ];
+
+  // materialReviews seperated
+  const materialReviews = [...(groups.MATERIALREVIEWS || [])];
+
+  // Loop thrue materialreviews to place "randomly" -> always start with 1 materialReview
+  materialReviews.forEach((m, i) => {
+    if (i === 0) {
+      reviews.unshift(m);
+    } else {
+      const pos = Math.floor(reviews.length / 3) * i;
+      reviews.splice(pos, 0, m);
+    }
+  });
+
+  return reviews;
 }
 
 /**
@@ -106,25 +132,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "reviews" };
 
-  // Group data by reviewType
-  const groups = groupBy(data, "reviewType");
-
-  // const reviews = groups.INFOMEDIA.concat(groups.LITTERATURSIDEN);
-  const reviews = [
-    ...(groups.INFOMEDIA || []),
-    ...(groups.LITTERATURSIDEN || []),
-  ];
-
-  const materialReviews = [...(groups.MATERIALREVIEWS || [])];
-
-  materialReviews.forEach((m, i) => {
-    if (i === 0) {
-      reviews.unshift(m);
-    } else {
-      const pos = Math.floor(reviews.length / 3) * i;
-      reviews.splice(pos, 0, m);
-    }
-  });
+  const reviews = useMemo(() => sortReviews(data));
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
