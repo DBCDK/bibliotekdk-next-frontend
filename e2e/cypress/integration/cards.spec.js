@@ -16,13 +16,8 @@ describe("Cards", () => {
       .first()
       .click()
       .then(() => {
-        const expected = JSON.stringify({
-          pathname: "/materiale/[title_author]/[workId]",
-          query: {
-            title_author: "ikke-i-kød-og-blod_ruth-rendell",
-            workId: "work-id-1",
-          },
-        });
+        const expected =
+          "/materiale/[title_author]/[workId]?title_author=ikke-i-k%C3%B8d-og-blod_ruth-rendell&workId=work-id-1";
         expect(stub.getCall(0)).to.be.calledWith(expected);
       });
   });
@@ -42,13 +37,8 @@ describe("Cards", () => {
       .tabs(2)
       .click()
       .then(() => {
-        const expected = JSON.stringify({
-          pathname: "/materiale/[title_author]/[workId]",
-          query: {
-            title_author: "blodrøde-spor_andrew-taylor-(f.-1951)",
-            workId: "work-id-2",
-          },
-        });
+        const expected =
+          "/materiale/[title_author]/[workId]?title_author=blodr%C3%B8de-spor_andrew-taylor-%28f.-1951%29&workId=work-id-2";
         expect(stub.getCall(0)).to.be.calledWith(expected);
       });
   });
