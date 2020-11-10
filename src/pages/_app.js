@@ -15,8 +15,8 @@ import "../css/styles.css";
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 
-import { APIStateContext } from "../lib/api/api";
-import { setLocale } from "../components/base/translate/Translate";
+import { APIStateContext } from "@/lib/api/api";
+import { setLocale } from "@/components/base/translate/Translate";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);

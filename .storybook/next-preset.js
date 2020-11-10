@@ -15,6 +15,20 @@ module.exports = {
 
     const newConfig = {
       ...baseConfig,
+
+      resolve: {
+        ...baseConfig.resolve,
+        alias: {
+          ...baseConfig.resolve.alias,
+          "@/storybook": path.resolve(
+            __dirname,
+            "../src/components/base/storybook"
+          ),
+          "@/public": path.resolve(__dirname, "../public"),
+          "@": path.resolve(__dirname, "../src"),
+        },
+      },
+
       module: {
         ...module,
         rules: [...(module.rules || [])],

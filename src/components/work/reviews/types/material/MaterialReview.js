@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
-import { cyKey } from "../../../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Text from "../../../../base/text";
-import Title from "../../../../base/title";
-import Icon from "../../../../base/icon";
-import Link from "../../../../base/link";
-import Translate from "../../../../base/translate";
+import Text from "@/components/base/text";
+import Title from "@/components/base/title";
+import Icon from "@/components/base/icon";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 
 import styles from "./MaterialReview.module.css";
 

@@ -1,6 +1,6 @@
 import React from "react";
-import useAPI from "../hooks/useAPI";
-import Recommendations from "../recommend/Recommendations";
+import useAPI from "@/components/base/hooks/useAPI";
+import Recommendations from "@/components/base/recommend/Recommendations";
 import styles from "./Work.module.css";
 
 export default ({ pid, onWorkClick }) => {

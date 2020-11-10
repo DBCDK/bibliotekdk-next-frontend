@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import { Col } from "react-bootstrap";
 
-import { cyKey } from "../../../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Text from "../../../../base/text";
-import Title from "../../../../base/title";
-import Translate from "../../../../base/translate";
+import Text from "@/components/base/text";
+import Title from "@/components/base/title";
+import Translate from "@/components/base/translate";
 
 import styles from "./LitteratursidenReview.module.css";
 

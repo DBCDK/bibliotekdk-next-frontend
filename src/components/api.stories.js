@@ -6,7 +6,7 @@
  */
 
 import React from "react";
-import { useData } from "../lib/api/api";
+import { useData } from "@/lib/api/api";
 
 export default {
   title: "useAPI",

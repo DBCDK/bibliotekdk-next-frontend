@@ -15,11 +15,11 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchOnServer } from "../../../lib/api/api";
-import * as workFragments from "../../../lib/api/work.fragments";
+import { fetchOnServer } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
 
-import Page from "../../../components/work/page";
-import Header from "../../../components/work/page/Header";
+import Page from "@/components/work/page";
+import Header from "@/components/work/page/Header";
 
 /**
  * Renders the WorkPage component

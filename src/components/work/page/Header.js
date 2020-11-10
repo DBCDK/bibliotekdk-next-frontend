@@ -10,11 +10,11 @@
 import PropTypes from "prop-types";
 import Head from "next/head";
 import { merge } from "lodash";
-import { useData } from "../../../lib/api/api";
-import * as workFragments from "../../../lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
 
-import { getJSONLD } from "../../../lib/jsonld";
-import { getCanonicalWorkUrl } from "../../../lib/utils";
+import { getJSONLD } from "@/lib/jsonld";
+import { getCanonicalWorkUrl } from "@/lib/utils";
 
 /**
  * The work page React component

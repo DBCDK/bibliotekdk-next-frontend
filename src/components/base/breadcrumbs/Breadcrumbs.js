@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Skeleton from "../skeleton";
-import Link from "../link";
-import Text from "../text";
+import Skeleton from "@/components/base/skeleton";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
 
 import styles from "./Breadcrumbs.module.css";
 

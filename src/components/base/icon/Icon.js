@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import Skeleton from "../skeleton";
+import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Icon.module.css";
 

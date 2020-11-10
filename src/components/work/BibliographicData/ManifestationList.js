@@ -1,10 +1,10 @@
 /**
  * @file Template for showing a manifestation in list form
  */
-import Title from "../../base/title";
-import Text from "../../base/text";
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import { Col } from "react-bootstrap";
-import Icon from "../../base/icon/Icon";
+import Icon from "@/components/base/icon/Icon";
 import React from "react";
 import styles from "./BibliographicData.module.css";
 

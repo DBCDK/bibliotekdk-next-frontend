@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { StoryTitle, StoryDescription } from "../storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Bookmark from "./Bookmark";
-import Cover from "../cover";
+import Cover from "@/components/base/cover";
 
 export default {
   title: "Bookmark",

@@ -6,15 +6,15 @@ import { Row, Collapse } from "react-bootstrap";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import Section from "../../base/section";
-import { Divider } from "../../base/divider";
+import Section from "@/components/base/section";
+import { Divider } from "@/components/base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
 import styles from "./BibliographicData.module.css";
-import Translate from "../../base/translate";
-import { useData } from "../../../lib/api/api";
+import Translate from "@/components/base/translate";
+import { useData } from "@/lib/api/api";
 
-import * as workFragments from "../../../lib/api/work.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
 
 /**
  * Export function of the Component

@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Icon from "../icon";
+import Icon from "@/components/base/icon";
 
-import StarSvg from "../../../../public/icons/star.svg";
+import StarSvg from "@/public/icons/star.svg";
 
 import styles from "./Rating.module.css";
 

@@ -1,6 +1,6 @@
 "use strict";
 
-import Translate from "../components/base/translate";
+import Translate from "@/components/base/translate";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = [

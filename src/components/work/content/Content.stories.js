@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription, StorySpace } from "../../base/storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 import { Content, ContentSkeleton } from "./Content";

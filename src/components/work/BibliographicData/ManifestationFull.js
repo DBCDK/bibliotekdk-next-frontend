@@ -4,13 +4,13 @@
 import { Col, Row } from "react-bootstrap";
 import React, { useMemo } from "react";
 
-import Text from "../../base/text";
-import Cover from "../../base/cover";
-import Link from "../../base/link";
-import Button from "../../base/button";
-import Translate from "../../base/translate";
+import Text from "@/components/base/text";
+import Cover from "@/components/base/cover";
+import Link from "@/components/base/link";
+import Button from "@/components/base/button";
+import Translate from "@/components/base/translate";
 
-import { parseManifestation } from "../../../lib/manifestationParser";
+import { parseManifestation } from "@/lib/manifestationParser";
 import styles from "./BibliographicData.module.css";
 
 /**
