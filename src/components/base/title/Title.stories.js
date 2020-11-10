@@ -1,4 +1,4 @@
-import { StoryTitle } from "../storybook";
+import { StoryTitle } from "@/storybook";
 
 import Title from "./Title";
 

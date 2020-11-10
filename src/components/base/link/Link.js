@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
 
-import AnimationLine from "../../base/animation/line";
+import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
 

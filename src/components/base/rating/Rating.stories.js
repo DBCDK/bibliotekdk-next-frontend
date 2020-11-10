@@ -3,7 +3,7 @@ import {
   StoryDescription,
   StoryLabel,
   StorySpace,
-} from "../storybook";
+} from "@/storybook";
 
 import { Rating, RatingSkeleton } from "./Rating";
 

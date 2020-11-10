@@ -11,10 +11,10 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Swiper from "react-id-swiper";
-import useWindowSize from "../../../lib/useWindowSize";
+import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
-import Card from "../card";
-import Icon from "../icon";
+import Card from "@/components/base/card";
+import Icon from "@/components/base/icon";
 
 /**
  * The left arrow React component

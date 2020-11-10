@@ -1,6 +1,6 @@
-import Title from "../title";
-import Text from "../text";
-import Button from "../button";
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+import Button from "@/components/base/button";
 
 import styles from "./Storybook.module.css";
 

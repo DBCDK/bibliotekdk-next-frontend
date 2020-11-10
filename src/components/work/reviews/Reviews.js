@@ -3,15 +3,15 @@ import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
 import { groupBy } from "lodash";
 
-import useWindowSize from "../../../lib/useWindowSize";
-import { useData } from "../../../lib/api/api";
-import * as workFragments from "../../../lib/api/work.fragments";
+import useWindowSize from "@/lib/useWindowSize";
+import { useData } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Icon from "../../base/icon";
-import Section from "../../base/section";
-import Translate from "../../base/translate";
+import Icon from "@/components/base/icon";
+import Section from "@/components/base/section";
+import Translate from "@/components/base/translate";
 
 import InfomediaReview from "./types/infomedia";
 import LitteratursidenReview from "./types/litteratursiden";

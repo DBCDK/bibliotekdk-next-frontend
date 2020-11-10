@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 import styles from "./Color.module.css";
 
-import invertColor from "../../../utils/invertColor.js";
+import invertColor from "@/utils/invertColor.js";
 
 /**
  * Function to copy text to clipboard

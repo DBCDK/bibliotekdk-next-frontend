@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription, StorySpace } from "../storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import Section from "./Section";
 
 export default {

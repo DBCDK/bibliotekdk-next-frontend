@@ -1,5 +1,5 @@
 import React from "react";
-import useAPI from "../hooks/useAPI";
+import useAPI from "@/components/base/hooks/useAPI";
 import styles from "./Recommendations.module.css";
 
 export default ({ pid, limit = 5, onWorkClick }) => {

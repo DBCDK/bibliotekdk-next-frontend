@@ -8,12 +8,12 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
-import { useData } from "../../../lib/api/api";
-import { recommendations } from "../../../lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+import { recommendations } from "@/lib/api/work.fragments";
 
-import Section from "../../base/section";
-import WorkSlider from "../../base/slider/WorkSlider";
-import Translate from "../../base/translate";
+import Section from "@/components/base/section";
+import WorkSlider from "@/components/base/slider/WorkSlider";
+import Translate from "@/components/base/translate";
 
 import styles from "./Recommendations.module.css";
 

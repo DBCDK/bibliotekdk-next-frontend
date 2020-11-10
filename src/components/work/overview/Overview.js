@@ -1,21 +1,20 @@
-import { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { merge } from "lodash";
 
-import Title from "../../base/title";
-import Text from "../../base/text";
-import Icon from "../../base/icon";
-import Button from "../../base/button";
-import Cover from "../../base/cover";
-import Tag from "../../base/forms/tag";
-import Bookmark from "../../base/bookmark";
-import Breadcrumbs from "../../base/breadcrumbs";
-import Translate from "../../base/translate";
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+import Icon from "@/components/base/icon";
+import Button from "@/components/base/button";
+import Cover from "@/components/base/cover";
+import Tag from "@/components/base/forms/tag";
+import Bookmark from "@/components/base/bookmark";
+import Breadcrumbs from "@/components/base/breadcrumbs";
+import Translate from "@/components/base/translate";
 
 import styles from "./Overview.module.css";
-import { useData } from "../../../lib/api/api";
-import * as workFragments from "../../../lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
 
 /**
  * The Component function

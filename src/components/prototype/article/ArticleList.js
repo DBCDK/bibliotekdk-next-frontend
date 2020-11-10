@@ -1,5 +1,5 @@
 import React from "react";
-import useAPI from "../hooks/useAPI";
+import useAPI from "@/components/base/hooks/useAPI";
 
 export default ({ promotedOnly = false }) => {
   const { isLoading, response } = useAPI(`{
