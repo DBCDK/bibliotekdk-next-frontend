@@ -46,6 +46,7 @@ export default function Link({
   target = "_self",
   border = true,
   onFocus = null,
+  dataCy = "link",
   className = "",
 }) {
   // Use Storybook link implementation if we are in Storybook mode
@@ -63,6 +64,7 @@ export default function Link({
     children = (
       <a
         href={href.pathname || href}
+        data-cy={dataCy}
         target={target}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
@@ -86,6 +88,7 @@ Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
+  dataCy: PropTypes.string,
   border: PropTypes.bool,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.shape({

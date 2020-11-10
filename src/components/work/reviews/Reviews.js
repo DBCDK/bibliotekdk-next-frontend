@@ -188,6 +188,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   return (
     <Section
       className={`${styles.reviews} ${className}`}
+      dataCy={cyKey({ name: "section", prefix: "reviews" })}
       title={Translate({
         ...context,
         label: "title",
@@ -195,7 +196,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
       })}
       bgColor="var(--parchment)"
     >
-      <Swiper {...params} ref={swiperRef} className="hello">
+      <Swiper {...params} ref={swiperRef}>
         {reviews.map((review, idx) => {
           // const Review = InfomediaReview;
           const Review = getTemplate(review.reviewType);

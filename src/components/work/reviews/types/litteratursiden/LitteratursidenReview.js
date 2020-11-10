@@ -34,7 +34,11 @@ export function LitteratursidenReview({
       xl={4}
       className={`${styles.litteratursiden} ${className}`}
     >
-      <Link onFocus={onFocus} border={false}>
+      <Link
+        onFocus={onFocus}
+        border={false}
+        dataCy={cyKey({ name: "link", prefix: "litteratursiden" })}
+      >
         <div className={styles.media}>
           <Title type="title4" skeleton={skeleton}>
             {Translate({ ...context, label: "litteratursiden" })}
