@@ -6,9 +6,9 @@
  * see Example.js for more documentation
  */
 
-import { useData } from "../../lib/api";
+import { useData } from "@/lib/api";
 import Link from "next/link";
-import { encodeTitleCreator } from "../../lib/utils";
+import { encodeTitleCreator } from "@/lib/utils";
 
 /**
  * This function will create a query object

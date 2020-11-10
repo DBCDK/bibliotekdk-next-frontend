@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Skeleton from "../skeleton";
+import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Button.module.css";
 

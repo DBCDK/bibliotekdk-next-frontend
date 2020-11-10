@@ -1,35 +1,9 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
 
-import AnimationLine from "../../base/animation/line";
+import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
-
-const useStoryBookLink = !!process.env.STORYBOOK_ACTIVE;
-
-/**
- * We use this link in Storybook
- * for testing purposes.
- *
- * It creates an alert instead of following the link
- *
- * @param {Object} props
- */
-function StorybookLink({ children, href }) {
-  return (
-    <React.Fragment>
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, {
-          href: href.pathname || href,
-          onClick: (e) => {
-            e.preventDefault();
-            alert(JSON.stringify(href));
-          },
-        })
-      )}
-    </React.Fragment>
-  );
-}
 
 /**
  * The Component function
@@ -49,8 +23,10 @@ export default function Link({
   dataCy = "link",
   className = "",
 }) {
-  // Use Storybook link implementation if we are in Storybook mode
-  const LinkImpl = useStoryBookLink ? StorybookLink : NextLink;
+  // no wrap - no border
+  if (!a) {
+    border = false;
+  }
 
   // no wrap - no border
   if (!a) {
@@ -77,9 +53,9 @@ export default function Link({
 
   // Return the component
   return (
-    <LinkImpl href={href} shallow={true}>
+    <NextLink href={href} shallow={true}>
       {children}
-    </LinkImpl>
+    </NextLink>
   );
 }
 

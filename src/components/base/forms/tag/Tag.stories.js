@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StoryTitle, StorySpace } from "../../storybook";
+import { StoryTitle, StorySpace } from "@/storybook";
 
 import Tag from "./Tag";
 

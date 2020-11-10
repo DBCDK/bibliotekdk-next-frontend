@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription } from "../storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Card from "./Card";
 export default {

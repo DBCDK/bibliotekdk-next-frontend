@@ -1,12 +1,12 @@
 /**
  * @file Template for showing a manifestation in list form
  */
-import Title from "../../base/title";
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import { Col } from "react-bootstrap";
-import Icon from "../../base/icon/Icon";
+import Icon from "@/components/base/icon/Icon";
 import React from "react";
 import styles from "./BibliographicData.module.css";
-import { Divider } from "../../base/divider";
 
 function ExpandIcon({ open }) {
   return (
@@ -27,7 +27,10 @@ export function ManifestationList({ manifestation = null }) {
   return (
     <React.Fragment>
       <Col key={manifestation.materialType} xs={12} md className={styles.right}>
-        <Title type="title4">{manifestation.materialType}</Title>
+        <div>
+          <Title type="title4">{manifestation.materialType}</Title>
+          <Text type="text2">{manifestation.datePublished}</Text>
+        </div>
         <ExpandIcon open={manifestation.open} />
       </Col>
     </React.Fragment>

@@ -4,7 +4,7 @@
  */
 import { useState, useEffect, createContext, useContext } from "react";
 import fetch from "isomorphic-unfetch";
-import config from "../../config";
+import config from "@/config";
 
 // The global instance of graphql client
 // used in the browser only

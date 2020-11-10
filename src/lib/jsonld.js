@@ -1,4 +1,4 @@
-import { getCanonicalWorkUrl } from "./utils";
+import { getCanonicalWorkUrl } from "@/lib/utils";
 
 /**
  * Maps materialType to schema.org BookFormatType

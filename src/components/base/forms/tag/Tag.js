@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 
-import { cyKey } from "../../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Skeleton from "../../skeleton";
-import Icon from "../../icon";
+import Skeleton from "@/components/base/skeleton";
+import Icon from "@/components/base/icon";
 
 import styles from "./Tag.module.css";
 

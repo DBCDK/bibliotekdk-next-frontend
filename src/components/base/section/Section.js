@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Title from "../title";
+import Title from "@/components/base/title";
 
 import { cyKey } from "../../../utils/trim";
 

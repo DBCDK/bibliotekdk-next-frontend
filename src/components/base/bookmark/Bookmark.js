@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Skeleton from "../skeleton";
-import Icon from "../icon";
-import translate from "../translate";
+import Skeleton from "@/components/base/skeleton";
+import Icon from "@/components/base/icon";
+import translate from "@/components/base/translate";
 
-import BookmarkSvg from "../../../../public/icons/bookmark.svg";
+import BookmarkSvg from "@/public/icons/bookmark.svg";
 
 import styles from "./Bookmark.module.css";
 

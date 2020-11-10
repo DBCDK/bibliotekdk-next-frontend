@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import styles from "./Card.module.css";
-import Cover from "../cover";
+import Cover from "@/components/base/cover";
 
-import Text from "../text";
-import Link from "../link";
-import { encodeTitleCreator } from "../../../lib/utils";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import { encodeTitleCreator } from "@/lib/utils";
 
 /**
  * The skeleton card React component

@@ -1,7 +1,7 @@
-import { StoryTitle, StoryDescription, StorySpace } from "../storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "./Button";
-import Skeleton from "../skeleton";
+import Skeleton from "@/components/base/skeleton";
 import { useEffect, useState } from "react";
 
 export default {

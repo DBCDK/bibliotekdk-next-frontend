@@ -1,5 +1,5 @@
 import { Divider } from "./Divider";
-import { StoryTitle } from "../storybook";
+import { StoryTitle } from "@/storybook";
 
 export default {
   title: "Divider (<hr>)",

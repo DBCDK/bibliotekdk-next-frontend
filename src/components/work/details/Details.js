@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import { useData } from "../../../lib/api/api";
+import { useData } from "@/lib/api/api";
 
-import Section from "../../base/section";
-import Text from "../../base/text";
-import Translate from "../../base/translate";
+import Section from "@/components/base/section";
+import Text from "@/components/base/text";
+import Translate from "@/components/base/translate";
 
-import * as workFragments from "../../../lib/api/work.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
 
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 

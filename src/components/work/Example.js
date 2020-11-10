@@ -7,7 +7,7 @@
  * doing the same thing
  */
 
-import { useData } from "../../lib/api";
+import { useData } from "@/lib/api";
 
 /**
  * This function will create a query object

@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 import { uniqBy } from "lodash";
 
-import { useData } from "../../../lib/api/api";
-import * as workFragments from "../../../lib/api/work.fragments";
+import { useData } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
-import Section from "../../base/section";
-import Title from "../../base/title";
-import Link from "../../base/link";
-import Translate from "../../base/translate";
+import Section from "@/components/base/section";
+import Title from "@/components/base/title";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 
