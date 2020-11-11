@@ -35,7 +35,7 @@
     "style-loader": "^1.1.2"
   },
   "dependencies": {
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.0",
     "http-server": "^0.12.3",
     "isbot": "^3.0.13",
     "isomorphic-unfetch": "^3.0.0",
