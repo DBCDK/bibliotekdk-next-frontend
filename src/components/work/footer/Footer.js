@@ -165,13 +165,11 @@ const BranchLinks = () => {
  * @returns {JSX.Element}
  * @constructor
  */
-const FooterSection = ({ className = "", bgColor = null }) => {
-  const backgroundClass = bgColor ? styles.background : "";
-  const backgroundColor = null;
+const FooterSection = () => {
   return (
-    <div className={`${backgroundClass}`}>
+    <div className={styles.containerback}>
       <Container>
-        <Row as="section" className={`${styles.background} ${className}`}>
+        <Row as="section" className={`${styles.background} `}>
           <Col md={{ span: 2 }} xs="12" className={styles.padder}>
             <FooterLogo />
           </Col>
