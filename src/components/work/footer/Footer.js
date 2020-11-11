@@ -12,12 +12,23 @@ import React from "react";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 
+/**
+ * The logo @see icons/logowhite.svg
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const FooterLogo = () => {
   const size = 15;
   const src = "logowhite.svg";
   return <Icon src={src} size={size} />;
 };
 
+/**
+ * First column holds a description of bibliotek.dk and a link to administer
+ * cookie settings
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
   return (
@@ -27,6 +38,11 @@ const FirstColumn = () => {
   );
 };
 
+/**
+ * Second column holds link to contact, help, press etc.
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const SecondColumn = () => {
   let label = Translate({ context: "footer", label: "contact" });
   return (
@@ -38,16 +54,22 @@ const SecondColumn = () => {
   );
 };
 
-const contact_links = {
-  find_library: { pathname: "/", query: {} },
-  about: { pathname: "/", query: {} },
-  help: { pathname: "/", query: {} },
-  press: { pathname: "/", query: {} },
-  contact: { pathname: "/", query: {} },
-  privacy: { pathname: "/", query: {} },
-  English: { pathname: "/", query: {} },
-};
+/**
+ * Generate links for contacts
+ * @returns {unknown[]}
+ * @constructor
+ */
 const ContactLinks = () => {
+  // Object holding info to generate contact links * NOTICE Keys of objects are translated.
+  const contact_links = {
+    find_library: { pathname: "/", query: {} },
+    about: { pathname: "/", query: {} },
+    help: { pathname: "/", query: {} },
+    press: { pathname: "/", query: {} },
+    contact: { pathname: "/", query: {} },
+    privacy: { pathname: "/", query: {} },
+    English: { pathname: "/", query: {} },
+  };
   return Object.keys(contact_links).map((key, index) => (
     <React.Fragment>
       <Link
@@ -66,6 +88,12 @@ const ContactLinks = () => {
   ));
 };
 
+/**
+ * Third column holds links to different material types
+ * (don't know why it is called branches - see design)
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const ThirdColumn = () => {
   let label = Translate({ context: "footer", label: "branches" });
   return (
@@ -79,7 +107,15 @@ const ThirdColumn = () => {
   );
 };
 
+/**
+ * Generate links for materialtypes
+ * Object holding info to generate links to materialtypes
+ * NOTICE Keys are translated
+ * @returns {}
+ * @constructor
+ */
 const BranchLinks = () => {
+  // Object holding info to generate links to materialtypes * NOTICE Keys are translated.
   const branch_links = {
     books: { pathname: "/", query: {} },
     articles: { pathname: "/", query: {} },
@@ -107,6 +143,13 @@ const BranchLinks = () => {
   ));
 };
 
+/**
+ * Defines the footer section - one row with four columns
+ * @param className
+ * @param bgColor
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const FooterSection = ({ className = "", bgColor = null }) => {
   const backgroundClass = bgColor ? styles.background : "";
   const backgroundColor = null;
