@@ -19,6 +19,8 @@ export default function Link({
   href = { pathname: "/", query: {} },
   target = "_self",
   border = true,
+  onFocus = null,
+  dataCy = "link",
   className = "",
 }) {
   // no wrap - no border
@@ -33,7 +35,9 @@ export default function Link({
     children = (
       <a
         href={href.pathname || href}
+        data-cy={dataCy}
         target={target}
+        onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
       >
         {children}
@@ -55,6 +59,7 @@ Link.propTypes = {
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
+  dataCy: PropTypes.string,
   border: PropTypes.bool,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.shape({
