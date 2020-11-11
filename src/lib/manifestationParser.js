@@ -140,7 +140,6 @@ const fields = [
  * @returns {array}
  */
 export function parseManifestation(manifestation) {
-  console.log(manifestation);
   return (
     fields
       // Remove fields that are not in the manifestation
