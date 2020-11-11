@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import Title from "@/components/base/title";
 
-import { cyKey } from "../../../utils/trim";
+import { cyKey } from "@/utils/trim";
 
 import styles from "./Section.module.css";
 

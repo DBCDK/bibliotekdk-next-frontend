@@ -28,11 +28,6 @@ export default function Link({
     border = false;
   }
 
-  // no wrap - no border
-  if (!a) {
-    border = false;
-  }
-
   // Maybe wrap with an a-tag
   if (a) {
     const animationClass = border ? styles.border : "";
