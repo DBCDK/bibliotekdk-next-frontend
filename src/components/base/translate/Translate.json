@@ -69,6 +69,30 @@
         "da": "Gem ændringerne",
         "en": "Save changes"
       },
+      "articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "film": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "ematerials": {
+        "da": "E-materialer",
+        "en": "E-materials"
+      },
+      "games": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "nodes": {
+        "da": "Noder",
+        "en": "Nodes"
+      },
       "book": {
         "da": "bog",
         "en": "book"
@@ -84,6 +108,10 @@
       "audiobook": {
         "da": "Lydbog",
         "en": "Audiobook"
+      },
+      "administer_cookies": {
+        "da": "Administrer cookie indstillinger",
+        "en": "Administer cookie settings"
       },
       "private": {
         "da": "Privat",
@@ -120,6 +148,44 @@
       "home": {
         "da": "Hjem",
         "en": "Home"
+      }
+    },
+    "footer": {
+      "hvad_er_bibliotek_dk": {
+        "da": "Bibliotek.dk er en samlet indgang til alle danske bibliotekers materialer og til hvad der udgives i Danmark. Du kan bestille materialer og så hente og låne på dit eget bibliotek. \n Du kan bruge Bibliotek.dk til at søge frem, hvad der er udgivet af bøger, musik, tidsskrifter, artikler, e-bøger, lydbøger osv. Bibliotek.dk er altså ikke et fysisk bibliotek, men en database og service over hvad der findes på danske offentlige biblioteker, som du kan bestille og få leveret til dit lokale bibliotek.",
+        "en": "What is bibliotek.dk"
+      },
+      "contact": {
+        "da": "Kontakt",
+        "en": "Contact"
+      },
+      "branches": {
+        "da": "Afdelinger",
+        "en": "Branches"
+      },
+      "find_library": {
+        "da": "Find et bibliotek",
+        "en": "Find library"
+      },
+      "about": {
+        "da": "Om bibliotek.dk",
+        "en": "About bibliotek.dk"
+      },
+      "help": {
+        "da": "Hjælp og vejledning",
+        "en": "Help and guides"
+      },
+      "press": {
+        "da": "Presse og grafik",
+        "en": "Press and graphics"
+      },
+      "privacy": {
+        "da": "Privatlivspolitik",
+        "en": "Privacy"
+      },
+      "English": {
+        "da": "Engelsk",
+        "en": "English"
       }
     },
     "bibliographic-data": {
