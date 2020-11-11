@@ -179,6 +179,10 @@
         "da": "Udgiver",
         "en": "Publisher"
       },
+      "edition": {
+        "da": "Udgave",
+        "en": "Edition"
+      },
       "originals": {
         "da": "Originaludgivelse",
         "en": "Original"
