@@ -32,9 +32,24 @@ const FooterLogo = () => {
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
   return (
-    <Text type="text3" lines={1}>
-      {label}
-    </Text>
+    <React.Fragment>
+      <Text type="text3" lines={1}>
+        {label}
+      </Text>
+      <div className={styles.spacer}></div>
+      <Link
+        href={{ pathname: "/", query: {} }}
+        className={styles.footerlink}
+        border={false}
+      >
+        <Text tag="span" type="text3">
+          {Translate({
+            context: "general",
+            label: "administer_cookies",
+          })}
+        </Text>
+      </Link>
+    </React.Fragment>
   );
 };
 
@@ -166,19 +181,6 @@ const FooterSection = ({ className = "", bgColor = null }) => {
             className={styles.padder}
           >
             <FirstColumn />
-            <div className={styles.spacer}></div>
-            <Link
-              href={{ pathname: "/", query: {} }}
-              className={styles.footerlink}
-              border={false}
-            >
-              <Text tag="span" type="text3">
-                {Translate({
-                  context: "general",
-                  label: "administer_cookies",
-                })}
-              </Text>
-            </Link>
           </Col>
           <Col
             md={{ span: 2, order: 2, offset: 1 }}
