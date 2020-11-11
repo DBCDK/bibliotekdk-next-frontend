@@ -1,4 +1,4 @@
-import { encodeTitleCreator, getCanonicalWorkUrl } from "@/utils";
+import { encodeTitleCreator, getCanonicalWorkUrl } from "../utils";
 
 test("encodeTitleCreator", () => {
   const actual = encodeTitleCreator("en Bogtitel", "En Forfatter");
