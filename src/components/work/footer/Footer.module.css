@@ -1,0 +1,31 @@
+.background {
+    margin-top: 5em;
+    color: white;
+    padding-top: 3em;
+}
+
+.containerback {
+    background-color: var(--blue);
+}
+
+.footerlink {
+    display: block;
+    color: var(--iron);
+    text-decoration-color: var(--iron);
+}
+
+.spacer{
+    height: 10px;
+}
+
+.padder{
+    padding-bottom: 3em;
+}
+
+.footerlink:hover{
+    text-decoration: underline;
+    text-decoration-color: var(--white);
+    color: var(--white);
+}
+
+

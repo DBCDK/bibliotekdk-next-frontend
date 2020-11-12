@@ -55,13 +55,13 @@
   display: none;
 }
 
-.skeleton.yellow div div div i div,
-.skeleton.yellow div > div div,
-.skeleton.yellow div span div div div {
+.skeleton.custom div div div i div,
+.skeleton.custom div > div div,
+.skeleton.custom div span div div div {
   background-color: var(--chamois);
 }
 
-.skeleton.yellow div div::before {
+.skeleton.custom div div::before {
   background: linear-gradient(
     to right,
     transparent 0%,

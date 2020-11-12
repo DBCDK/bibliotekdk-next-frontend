@@ -121,6 +121,13 @@ const fields = [
         </span>
       )),
   },
+  {
+    dataField: "edition",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "edition",
+    }),
+  },
 ];
 
 /**

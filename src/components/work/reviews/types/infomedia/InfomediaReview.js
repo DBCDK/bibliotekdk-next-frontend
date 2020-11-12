@@ -23,13 +23,20 @@ import styles from "./InfomediaReview.module.css";
 export function InfomediaReview({
   className = "",
   data = [],
+  onFocus,
   skeleton = false,
 }) {
   // Translate Context
   const context = { context: "reviews" };
 
   return (
-    <Col xs={12} sm={6} xl={4} className={`${styles.infomedia} ${className}`}>
+    <Col
+      xs={12}
+      sm={6}
+      xl={4}
+      className={`${styles.infomedia} ${className}`}
+      data-cy={cyKey({ prefix: "review", name: "infomedia" })}
+    >
       {data.rating && (
         <div className={styles.rating}>
           <Rating rating={data.rating} skeleton={skeleton} />
@@ -56,7 +63,12 @@ export function InfomediaReview({
       {data.url && (
         <div className={styles.url}>
           <Icon src="chevron.svg" size={2} skeleton={skeleton} />
-          <Link href={data.url} target="_blank" border={!skeleton}>
+          <Link
+            href={data.url}
+            target="_blank"
+            border={!skeleton}
+            onFocus={onFocus}
+          >
             <Title type="title4" skeleton={skeleton}>
               {Translate({ ...context, label: "reviewLinkText" })}
             </Title>
