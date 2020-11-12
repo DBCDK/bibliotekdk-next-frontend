@@ -39,11 +39,11 @@ export function MaterialReview({
     >
       <Row>
         <Col xs={6} xl={4} className={styles.type}>
-          <Text type="text3" skeleton={skeleton} lines={1}>
-            <Link href={bib} target="_blank">
+          <Link href={bib} target="_blank">
+            <Text type="text3" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialTitle" })}
-            </Link>
-          </Text>
+            </Text>
+          </Link>
         </Col>
         <Col
           xs={{ span: 12, order: 3 }}
@@ -52,10 +52,10 @@ export function MaterialReview({
         >
           <Text type="text3" skeleton={skeleton} lines={1}>
             {Translate({ context: "general", label: "by" })}
-            <Link href={bib} target="_blank">
-              <Text type="text3">{data.author}</Text>
-            </Link>
           </Text>
+          <Link href={bib} target="_blank">
+            <Text type="text3">{data.author}</Text>
+          </Link>
         </Col>
         <Col xs={6} xl={4} className={styles.date}>
           <Text type="text3" skeleton={skeleton} lines={1}>

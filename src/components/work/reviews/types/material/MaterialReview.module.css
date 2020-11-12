@@ -7,14 +7,15 @@
 .type,
 .date {
   padding-bottom: var(--pt1);
+  align-self: center;
 }
 
-.author p {
+.author {
   display: flex;
   align-items: center;
 }
 
-.author p a {
+.author a {
   margin: 0 0 0 var(--pt1);
 }
 
