@@ -91,6 +91,7 @@ const ContactLinks = () => {
         href={contact_links[key]}
         className={styles.footerlink}
         border={false}
+        dataCy="contactlink"
       >
         <Text tag="span" type="text3">
           {Translate({
@@ -146,6 +147,7 @@ const BranchLinks = () => {
         href={branch_links[key]}
         className={styles.footerlink}
         border={false}
+        dataCy="branchlink"
       >
         <Text tag="span" type="text3">
           {Translate({
@@ -169,14 +171,24 @@ const FooterSection = () => {
   return (
     <div className={styles.containerback}>
       <Container>
-        <Row as="section" className={`${styles.background} `}>
-          <Col md={{ span: 2 }} xs="12" className={styles.padder}>
+        <Row
+          as="section"
+          className={`${styles.background} `}
+          data-cy="footer-section"
+        >
+          <Col
+            md={{ span: 2 }}
+            xs="12"
+            className={styles.padder}
+            data-cy="footer-column"
+          >
             <FooterLogo />
           </Col>
           <Col
             md={{ span: 3, order: 1, offset: 1 }}
             xs={{ span: 12, order: 3 }}
             className={styles.padder}
+            data-cy="footer-column"
           >
             <FirstColumn />
           </Col>
@@ -184,10 +196,15 @@ const FooterSection = () => {
             md={{ span: 2, order: 2, offset: 1 }}
             xs={{ span: 6, order: 1 }}
             className={styles.padder}
+            data-cy="footer-column"
           >
             <SecondColumn />
           </Col>
-          <Col md={{ span: 3, order: 3 }} xs={{ span: 6, order: 2 }}>
+          <Col
+            md={{ span: 3, order: 3 }}
+            xs={{ span: 6, order: 2 }}
+            data-cy="footer-column"
+          >
             <ThirdColumn />
           </Col>
         </Row>
