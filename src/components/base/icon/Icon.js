@@ -93,7 +93,11 @@ export default function Container(props) {
 Container.propTypes = {
   src: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   bgColor: PropTypes.string,
   size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]),
   disabled: PropTypes.bool,

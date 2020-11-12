@@ -69,6 +69,10 @@ Section.propTypes = {
   bgColor: PropTypes.string,
   title: PropTypes.string,
   dataCy: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

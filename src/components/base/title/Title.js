@@ -42,7 +42,7 @@ export const TitleSkeleton = (props) => {
     <Title {...props} className={`${props.className} ${styles.skeleton}`}>
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <Title key={`txt-${l}`} {...props} />
+        <br key={`txt-${l}`} />
       ))}
     </Title>
   );

@@ -9,6 +9,7 @@
   text-decoration: none;
   /* !Dangerous: Prevent multiline */
   white-space: nowrap;
+  display: inline-block;
 }
 
 .link.border:focus,

@@ -68,7 +68,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   };
 
   return manifestations.map((manifestation, index) => (
-    <React.Fragment>
+    <React.Fragment key={manifestation.pid}>
       <div className={styles.pointer}>
         <Row
           tabIndex="0"

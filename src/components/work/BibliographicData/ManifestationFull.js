@@ -49,43 +49,49 @@ function ColumnOne({ manifestation }) {
           label: "locationtitle",
         })}
       </Text>
-      <Link
-        children={
-          <Text type="text3" lines={2}>
-            {Translate({
-              context: "bibliographic-data",
-              label: "editionlink",
-            })}
-          </Text>
-        }
-        className={styles.column}
-        href={{ pathname: bibdkObjectUrl(manifestation.pid), query: {} }}
-      />
-      <Link
-        children={
-          <Text type="text3" lines={2}>
-            {Translate({
-              context: "bibliographic-data",
-              label: "bookmark",
-            })}
-          </Text>
-        }
-        className={styles.column}
-        href={{ pathname: "http://google.dk", query: {} }}
-      />
-      <Link
-        children={
-          <Text type="text3" lines={2}>
-            {Translate({
-              context: "bibliographic-data",
-              label: "library-locations",
-              vars: [number_of_libraries],
-            })}
-          </Text>
-        }
-        className={styles.column}
-        href={{ pathname: "http://google.dk", query: {} }}
-      />
+      <div>
+        <Link
+          children={
+            <Text type="text3" lines={2}>
+              {Translate({
+                context: "bibliographic-data",
+                label: "editionlink",
+              })}
+            </Text>
+          }
+          className={styles.column}
+          href={{ pathname: bibdkObjectUrl(manifestation.pid), query: {} }}
+        />
+      </div>
+      <div>
+        <Link
+          children={
+            <Text type="text3" lines={2}>
+              {Translate({
+                context: "bibliographic-data",
+                label: "bookmark",
+              })}
+            </Text>
+          }
+          className={styles.column}
+          href={{ pathname: "http://google.dk", query: {} }}
+        />
+      </div>
+      <div>
+        <Link
+          children={
+            <Text type="text3" lines={2}>
+              {Translate({
+                context: "bibliographic-data",
+                label: "library-locations",
+                vars: [number_of_libraries],
+              })}
+            </Text>
+          }
+          className={styles.column}
+          href={{ pathname: "http://google.dk", query: {} }}
+        />
+      </div>
 
       <Button
         type={"secondary"}

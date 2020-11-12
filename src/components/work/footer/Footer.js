@@ -86,7 +86,7 @@ const ContactLinks = () => {
     English: { pathname: "/", query: {} },
   };
   return Object.keys(contact_links).map((key, index) => (
-    <React.Fragment>
+    <React.Fragment key={key}>
       <Link
         href={contact_links[key]}
         className={styles.footerlink}
@@ -141,7 +141,7 @@ const BranchLinks = () => {
     nodes: { pathname: "/", query: {} },
   };
   return Object.keys(branch_links).map((key, index) => (
-    <React.Fragment>
+    <React.Fragment key={key}>
       <Link
         href={branch_links[key]}
         className={styles.footerlink}
