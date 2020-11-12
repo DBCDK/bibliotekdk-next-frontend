@@ -4,6 +4,7 @@
  */
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
+import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
 import { withNextRouter } from "storybook-addon-next-router";
 import { addDecorator } from "@storybook/react";

@@ -10,8 +10,10 @@
  * is rendered.
  */
 import React from "react";
-// import "bootstrap/dist/css/bootstrap.min.css";
+
+import "../scss/custom-bootstrap.scss";
 import "../css/styles.css";
+
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 

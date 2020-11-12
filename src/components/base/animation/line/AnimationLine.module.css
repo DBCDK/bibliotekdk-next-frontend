@@ -8,6 +8,7 @@
   transition-duration: 0.35s;
   pointer-events: none;
   margin: 0;
+  border: 0;
 }
 
 .line1 {
