@@ -191,8 +191,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     data[0] && data[0].reviewType === "MATERIALREVIEWS"
   );
 
-  const mixedClass = hasMaterialReview ? styles.mixed : "";
-
   return (
     <Section
       className={`${styles.reviews} ${className}`}
@@ -206,7 +204,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     >
       <Swiper {...params} ref={swiperRef}>
         {reviews.map((review, idx) => {
-          // const Review = InfomediaReview;
           const Review = getTemplate(review.reviewType);
 
           const skeletonReview = skeleton
@@ -218,7 +215,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
               skeleton={skeleton}
               key={`review-${idx}`}
               data={review}
-              className={`${mixedClass} ${styles.SlideWrapper} ${skeletonReview}`}
+              className={`${styles.SlideWrapper} ${skeletonReview}`}
               onFocus={() => {
                 // Make sure focused card become visible
                 // when tabbing through.

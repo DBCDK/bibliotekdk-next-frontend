@@ -3,14 +3,6 @@
   height: auto;
 }
 
-.mixed {
-  /* padding-top: var(--pt8); */
-}
-
-.mixed:first-child {
-  padding-top: 0;
-}
-
 /* Slider */
 
 .SlideWrapper {
