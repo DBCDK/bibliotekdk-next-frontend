@@ -57,7 +57,7 @@ export function MaterialReview({
             <Text type="text3">{data.author}</Text>
           </Link>
         </Col>
-        <Col xs={6} xl={4} className={styles.date}>
+        <Col xs={6} xl={{ span: 4, order: 3 }} className={styles.date}>
           <Text type="text3" skeleton={skeleton} lines={1}>
             07/07-2010
           </Text>

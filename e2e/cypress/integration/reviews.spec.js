@@ -27,7 +27,8 @@ describe("Overview", () => {
     cy.focused().should("have.attr", "data-cy", "litteratursiden-link");
   });
 
-  it(`Can navigate with arrows`, () => {
+  // Slider is now infinite -> buttons will never get disabled
+  it.skip(`Can navigate with arrows`, () => {
     // reset slider
     cy.visit("/iframe.html?id=work-reviews--reviews-slider");
 

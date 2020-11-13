@@ -4,6 +4,7 @@
 */
 
 .keywords {
+  overflow: hidden;
 }
 
 /**
@@ -20,6 +21,14 @@
   color: var(--mine-shaft);
   text-decoration: none;
   display: block;
+}
+
+.keyword a h1 {
+  max-width: calc(100vw - 40px);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .keyword a:focus {

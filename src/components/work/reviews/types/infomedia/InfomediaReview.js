@@ -44,9 +44,9 @@ export function InfomediaReview({
       )}
       {data.media && (
         <div className={styles.media}>
-          <Text type="text3" skeleton={skeleton} lines={3}>
+          <Title type="title4" skeleton={skeleton} lines={3}>
             {data.media}
-          </Text>
+          </Title>
         </div>
       )}
       {!skeleton && data.author && (
