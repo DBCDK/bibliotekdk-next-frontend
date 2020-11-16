@@ -66,7 +66,7 @@ export function MaterialReview({
       </Row>
 
       <Col xs={12} className={styles.content}>
-        <Title type="title3" skeleton={skeleton} lines={6}>
+        <Title type="title3" skeleton={skeleton} lines={4}>
           For alle, der holder af en god afdæmpet historie. Forsiden - et
           sort/hvidt billede af en dieselstander - sælger ikke bogen, men det
           gør navnet og vor aktive formidling
