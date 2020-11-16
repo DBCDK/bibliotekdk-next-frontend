@@ -42,7 +42,7 @@ export const TitleSkeleton = (props) => {
     <Title {...props} className={`${props.className} ${styles.skeleton}`}>
       <Skeleton lines={lines} />
       {Array.from(Array(lines).keys()).map((l) => (
-        <br key={`txt-${l}`} />
+        <Title tag={"span"} type={props.type} key={`txt-${l}`} />
       ))}
     </Title>
   );
@@ -73,7 +73,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]),
+  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6", "span"]),
   type: PropTypes.oneOf(["title1", "title2", "title3", "title4", "title5"]),
   skeleton: PropTypes.bool,
 };

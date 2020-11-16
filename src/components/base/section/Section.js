@@ -26,7 +26,7 @@ function Divider() {
  */
 export default function Section({
   title = "Some section",
-  children = "...",
+  children = "Some content",
   className = "",
   dataCy = "section",
   bgColor = null,

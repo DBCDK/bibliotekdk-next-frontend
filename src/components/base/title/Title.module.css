@@ -54,3 +54,7 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.skeleton span {
+  display: block;
+}

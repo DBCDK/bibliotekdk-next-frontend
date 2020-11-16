@@ -39,3 +39,16 @@
 .url a {
   margin: 0 0 0 var(--pt2);
 }
+
+.skeleton hr {
+  display: none;
+}
+
+.skeleton a {
+  border: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.skeleton .url a {
+}

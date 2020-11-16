@@ -53,7 +53,9 @@ export function MaterialReview({
             {Translate({ context: "general", label: "by" })}
           </Text>
           <Link href={bib} target="_blank">
-            <Text type="text3">{data.author}</Text>
+            <Text type="text3" skeleton={skeleton} lines={1}>
+              {data.author}
+            </Text>
           </Link>
         </Col>
         <Col xs={6} xl={{ span: 4, order: 3 }} className={styles.date}>
@@ -80,7 +82,7 @@ export function MaterialReview({
             onFocus={onFocus}
             border={!skeleton}
           >
-            <Title type="title4" skeleton={skeleton}>
+            <Title type="title4" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialReviewLinkText" })}
             </Title>
           </Link>
