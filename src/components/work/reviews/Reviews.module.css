@@ -12,7 +12,6 @@
 .button {
   cursor: pointer;
   user-select: none;
-  display: none;
   background-color: var(--blue);
   color: var(--white);
   transition-duration: 0.35s;
@@ -66,6 +65,6 @@
 @media (min-width: 768px) {
   /* Make buttons visible */
   .button {
-    display: inherit;
+    /* display: inherit; */
   }
 }

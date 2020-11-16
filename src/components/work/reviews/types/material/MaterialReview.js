@@ -33,7 +33,6 @@ export function MaterialReview({
   return (
     <Col
       xs={12}
-      md={8}
       className={`${styles.materialReview} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "material" })}
     >
