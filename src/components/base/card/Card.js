@@ -6,6 +6,8 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { encodeTitleCreator } from "@/lib/utils";
 
+import translate from "@/components/base/translate";
+
 /**
  * The skeleton card React component
  */
@@ -42,6 +44,7 @@ export default function Card({
   creators,
   onFocus,
   id,
+  series,
   skeleton,
   title,
 }) {
@@ -73,23 +76,40 @@ export default function Card({
           <Cover src={cover.detail} size={["100%", "100%"]} />
         </div>
         <div>
-          <Text
-            className={`${styles.Title}`}
-            type="text1"
-            lines={2}
-            clamp={true}
-          >
-            {title}
-          </Text>
+          {series ? (
+            <Text
+              className={`${styles.Title}`}
+              type="text2"
+              lines={4}
+              clamp={true}
+            >
+              {translate({
+                context: "series",
+                label: "part",
+                vars: [series.part, title],
+              })}
+            </Text>
+          ) : (
+            <React.Fragment>
+              <Text
+                className={`${styles.Title}`}
+                type="text1"
+                lines={2}
+                clamp={true}
+              >
+                {title}
+              </Text>
 
-          <Text
-            className={`${styles.Creator}`}
-            type="text2"
-            lines={2}
-            clamp={true}
-          >
-            {creators[0] && creators[0].name}
-          </Text>
+              <Text
+                className={`${styles.Creator}`}
+                type="text2"
+                lines={2}
+                clamp={true}
+              >
+                {creators[0] && creators[0].name}
+              </Text>
+            </React.Fragment>
+          )}
         </div>
         <div className={styles.BottomLine} />
       </a>
@@ -105,6 +125,9 @@ Card.propTypes = {
   id: PropTypes.string,
   onFocus: PropTypes.func,
   id: PropTypes.string,
+  series: PropTypes.shape({
+    part: PropTypes.number,
+  }),
   skeleton: PropTypes.bool,
   title: PropTypes.string,
 };

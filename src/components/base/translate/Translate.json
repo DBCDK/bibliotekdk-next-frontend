@@ -332,6 +332,10 @@
       "label": {
         "da": "I samme serie",
         "en": "Series"
+      },
+      "part": {
+        "da": "%s. del - %s",
+        "en": "Part %s - %s "
       }
     },
     "keywords": {

@@ -237,6 +237,9 @@ export function series({ workId }) {
             cover {
               detail
             }
+            series {
+              part
+            }
           }
         }
       }
