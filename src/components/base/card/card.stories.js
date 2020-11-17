@@ -73,6 +73,35 @@ export function WorkNarrowAndWideCover() {
   );
 }
 
+export function SeriesCard() {
+  const part = {
+    creators: [
+      {
+        name: "Andrew Taylor (f. 1951)",
+      },
+    ],
+    cover: {
+      detail:
+        "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29388598&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d7fd87c75aaaa00955b5",
+    },
+    description:
+      "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
+    id: "work-id-2",
+    title: "Blodrøde spor",
+    series: {
+      part: 17,
+    },
+  };
+
+  return (
+    <div>
+      <StoryTitle>Work: part 17 of series</StoryTitle>
+      <StoryDescription>...</StoryDescription>
+      <Card {...part} />
+    </div>
+  );
+}
+
 export function Loading() {
   return (
     <div>
