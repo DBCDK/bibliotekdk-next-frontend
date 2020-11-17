@@ -8,6 +8,7 @@ import Keywords from "../keywords";
 import Reviews from "../reviews";
 import BibliographicData from "../BibliographicData";
 import Footer from "@/components/work/footer";
+import Series from "../series";
 
 /**
  * The work page React component
@@ -24,6 +25,7 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Details workId={workId} type={type} />
       <Description workId={workId} type={type} />
       <Content workId={workId} type={type} />
+      <Series workId={workId} />
       <Recommendations workId={workId} />
       <Keywords workId={workId} type={type} />
       <Reviews workId={workId} />

@@ -212,3 +212,37 @@ export function reviews({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Series for a work
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function series({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    query: `query ($workId: String!) {
+      work(id: $workId) {
+        series {
+          title
+          works {
+            id
+            title
+            creators {
+              name
+            }
+            cover {
+              detail
+            }
+          }
+        }
+      }
+    }
+  `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}

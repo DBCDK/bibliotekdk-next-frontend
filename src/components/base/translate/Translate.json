@@ -328,6 +328,12 @@
         "en": "Reminds of"
       }
     },
+    "series": {
+      "label": {
+        "da": "I samme serie",
+        "en": "Series"
+      }
+    },
     "keywords": {
       "title": {
         "da": "Emneord",
