@@ -1,10 +1,3 @@
-/**
- * @file Contains Recommendations React component
- *
- * Uses the laesekompas recommender, should be changed to the
- * new bib dk recommender when its ready
- */
-
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
