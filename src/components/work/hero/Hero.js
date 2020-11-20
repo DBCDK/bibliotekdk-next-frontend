@@ -29,10 +29,6 @@ const HeroSection = () => {
   );
 };
 
-const HeroImg = () => {
-  return <img src="/img/bibdk-hero-scaled.jpeg" className={styles.heroimg} />;
-};
-
 export default function Hero() {
   return <HeroSection />;
 }
