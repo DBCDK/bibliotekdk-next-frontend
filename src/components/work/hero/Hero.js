@@ -8,7 +8,7 @@ import Translate from "@/components/base/translate";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
-const HeroSection = () => {
+export default function Hero() {
   return (
     <Container className={styles.containerback}>
       <Row>
@@ -27,8 +27,4 @@ const HeroSection = () => {
       </Row>
     </Container>
   );
-};
-
-export default function Hero() {
-  return <HeroSection />;
 }
