@@ -15,8 +15,8 @@ pipeline {
     stages {
         stage('Build image') {
             steps {
-                currentBuild.description = "Build ${IMAGE_NAME}:${BUILD_NUMBER}"
                 script {
+                    currentBuild.description = "Build ${IMAGE_NAME}:${BUILD_NUMBER}"
                     ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
                         sh "docker build -t ${IMAGE_NAME} --pull ."
