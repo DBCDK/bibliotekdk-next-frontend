@@ -67,7 +67,7 @@ function ResultRow({ data }) {
             skeleton={!work.creators && !creator}
             lines={1}
           >
-            {creatorName || "creator"}
+            {!work.creators && !creator ? "skeleton" : creatorName || " "}
           </Text>
           <div>
             <Text
