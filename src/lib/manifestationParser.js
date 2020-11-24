@@ -92,6 +92,7 @@ const fields = [
       context: "bibliographic-data",
       label: "language",
     }),
+    valueParser: (value) => value.join(", "),
   },
   {
     dataField: "isbn",
