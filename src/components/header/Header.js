@@ -1,0 +1,168 @@
+import PropTypes from "prop-types";
+import { Container, Row, Col } from "react-bootstrap";
+
+import { cyKey } from "@/utils/trim";
+
+import Translate from "@/components/base/translate";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import Icon from "@/components/base/icon";
+import Action from "@/components/base/action";
+
+import styles from "./Header.module.css";
+
+import LogoSvg from "@/public/icons/logo.svg";
+import SearchSvg from "@/public/icons/search.svg";
+import MenuSvg from "@/public/icons/burger.svg";
+import BasketSvg from "@/public/icons/basket.svg";
+import LoginSvg from "@/public/icons/login.svg";
+
+import LoginIcon from "./icons/login";
+import BasketIcon from "./icons/basket";
+import BurgerIcon from "./icons/burger";
+
+function Banner() {
+  return (
+    <div className={styles.bannerWrap}>
+      <Container className={styles.banner}>
+        <Text type="text3">
+          {Translate({ context: "header", label: "banner-text" })}
+        </Text>
+      </Container>
+    </div>
+  );
+}
+
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+function Header({ className = "" }) {
+  const context = { context: "header" };
+
+  const materials = [
+    { label: "books", href: "#!" },
+    { label: "articles", href: "#!" },
+    { label: "movies", href: "#!" },
+    { label: "eMaterials", href: "#!" },
+    { label: "games", href: "#!" },
+    { label: "music", href: "#!" },
+    { label: "nodes", href: "#!" },
+  ];
+
+  const actions = [
+    { label: "digitalOffers", href: "#!" },
+    { label: "askLibrarian", href: "#!" },
+    { label: "becomeLoaner", href: "#!" },
+  ];
+
+  const menu = [
+    { label: "search", icon: SearchSvg, href: "#!" },
+    { label: "login", icon: LoginIcon, href: "#!" },
+    { label: "basket", icon: BasketIcon, href: "#!", badge: "12" },
+    { label: "menu", icon: BurgerIcon, href: "#!" },
+  ];
+
+  return (
+    <header className={`${styles.wrap} ${className}`}>
+      <Banner />
+      <div className={styles.headerWrap}>
+        <Container className={styles.header}>
+          <Row>
+            <Col xs={2}>
+              <Icon className={styles.logo} size={4}>
+                <LogoSvg />
+              </Icon>
+            </Col>
+            <Col xs={{ span: 9, offset: 1 }}>
+              <div className={styles.top}>
+                <div className={styles.materials}>
+                  {materials.map((m) => (
+                    <Link href={m.href}>
+                      <Text type="text3">
+                        {Translate({ ...context, label: m.label })}
+                      </Text>
+                    </Link>
+                  ))}
+                </div>
+                <div className={styles.actions}>
+                  {actions.map((m) => (
+                    <Link href={m.href}>
+                      <Text type="text3">
+                        {Translate({ ...context, label: m.label })}
+                      </Text>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.bottom}>
+                <div className={styles._some_temp_searchbar}>
+                  <input placeholder="Søg i bøger, film, musik og mere" />
+                  <button>Søg</button>
+                </div>
+                <div className={styles.actions}>
+                  {menu.map((m) => {
+                    const ActionIcon = m.icon;
+
+                    return (
+                      <ActionIcon
+                        className={styles.action}
+                        href={m.href}
+                        badge={m.badge}
+                        title={Translate({ ...context, label: m.label })}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </header>
+  );
+}
+
+/**
+ * Function to return skeleton (Loading) version of the Component
+ *
+ * @param {obj} props
+ *  See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+function HeaderSkeleton(props) {
+  return (
+    <Header
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
+    />
+  );
+}
+
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function Wrap(props) {
+  if (props.skeleton) {
+    return <HeaderSkeleton {...props} />;
+  }
+
+  return <Header {...props} />;
+}
+
+// PropTypes for component
+Wrap.propTypes = {
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  skeleton: PropTypes.bool,
+};

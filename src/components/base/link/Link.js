@@ -18,7 +18,7 @@ export default function Link({
   a = true,
   href = { pathname: "/", query: {} },
   target = "_self",
-  border = true,
+  border = { top: false, bottom: true },
   onFocus = null,
   dataCy = "link",
   className = "",
@@ -30,7 +30,7 @@ export default function Link({
 
   // Maybe wrap with an a-tag
   if (a) {
-    const animationClass = border ? styles.border : "";
+    const animationClass = !!border ? styles.border : "";
 
     children = (
       <a
@@ -40,8 +40,15 @@ export default function Link({
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
       >
+        {border.top && (
+          <AnimationLine keepVisible={border.top && border.top.keepVisible} />
+        )}
         {children}
-        {border && <AnimationLine keepVisible />}
+        {border.bottom && (
+          <AnimationLine
+            keepVisible={border.bottom && border.bottom.keepVisible}
+          />
+        )}
       </a>
     );
   }
@@ -64,7 +71,23 @@ Link.propTypes = {
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
-  border: PropTypes.bool,
+  border: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.shape({
+      bottom: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.shape({
+          bottom: PropTypes.bool,
+        }),
+      ]),
+      top: PropTypes.oneOfType([
+        PropTypes.bool,
+        PropTypes.shape({
+          bottom: PropTypes.bool,
+        }),
+      ]),
+    }),
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.oneOfType([
     PropTypes.string,

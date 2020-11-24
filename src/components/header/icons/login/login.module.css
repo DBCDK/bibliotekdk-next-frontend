@@ -1,0 +1,67 @@
+.login {
+  height: 24px;
+  overflow: hidden;
+  transform: translate(0, -6px);
+}
+
+.login .icon {
+  transform: translate(0, 6px);
+}
+
+.login .icon .head {
+  width: var(--pt1);
+  height: var(--pt1);
+  border: 2px solid var(--mine-shaft);
+  border-radius: 50%;
+  margin: auto;
+}
+
+.login .icon .bodyWrap {
+  height: 10px;
+  overflow: hidden;
+}
+
+.login .icon .body {
+  width: var(--pt2);
+  height: var(--pt2);
+  border: 2px solid var(--mine-shaft);
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  margin: auto;
+  position: relative;
+}
+
+.login .icon .body .border {
+  width: var(--pt2);
+  height: 2px;
+  background-color: var(--mine-shaft);
+  position: absolute;
+  bottom: 4px;
+  left: -1px;
+}
+
+.logintrigger:hover .login .icon {
+  animation: jumpUp 0.5s cubic-bezier(0.3, 1, 0.32, 1.3);
+}
+
+.logintrigger:hover .login .icon .head {
+  animation: jumpHead 0.5s cubic-bezier(0.3, 1, 0.32, 1.3);
+}
+
+@keyframes jumpUp {
+  from {
+    transform: translate(0, 100%);
+  }
+  to {
+    transform: translate(0, 6px);
+  }
+}
+
+@keyframes jumpHead {
+  from {
+    transform: translate(0, 8px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}

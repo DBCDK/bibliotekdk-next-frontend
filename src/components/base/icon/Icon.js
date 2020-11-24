@@ -26,8 +26,8 @@ function Icon({
 
   // Set icon size
   const dimensions = {
-    width: `var(--pt${size})`,
-    height: bgColor ? `var(--pt${size})` : `auto`,
+    height: `var(--pt${size})`,
+    width: bgColor ? `var(--pt${size})` : `auto`,
   };
 
   const backgroundColor = {

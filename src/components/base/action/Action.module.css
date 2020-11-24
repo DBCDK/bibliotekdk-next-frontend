@@ -1,0 +1,47 @@
+.action {
+  position: relative;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  color: var(--mine-shaft);
+  text-decoration: none;
+}
+
+.action p {
+  display: none;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+}
+
+/* hover */
+
+/* .action:hover svg,
+.action:hover svg *,
+.action:focus svg,
+.action:focus svg * {
+  stroke: var(--blue);
+}
+
+.action:hover p,
+.action:hover p *,
+.action:focus p,
+.action:focus p * {
+  color: var(--blue);
+} */
+
+@media (min-width: 992px) {
+  .action p {
+    display: block;
+    margin: var(--pt05) 0 0 0;
+  }
+}
