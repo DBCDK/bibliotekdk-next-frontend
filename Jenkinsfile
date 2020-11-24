@@ -13,9 +13,9 @@ pipeline {
         GITLAB_ID = "704"
 	}
     stages {
-       
         stage('Build image') {
-            steps { 
+            steps {
+                currentBuild.description = "Build ${IMAGE_NAME}:${BUILD_NUMBER}"
                 script {
                     ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
