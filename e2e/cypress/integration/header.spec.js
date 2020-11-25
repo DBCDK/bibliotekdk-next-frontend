@@ -2,7 +2,7 @@
  * @file
  * Test functionality of Header
  */
-describe("Overview", () => {
+describe("Header", () => {
   before(function () {
     cy.visit("/iframe.html?id=header--nav-header");
   });

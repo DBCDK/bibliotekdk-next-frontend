@@ -1,8 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Breadcrumbs from "./Breadcrumbs";
-import Skeleton from "@/components/base/skeleton";
-import { useEffect, useState } from "react";
 
 export default {
   title: "Breadcrumbs",

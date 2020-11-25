@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 
+// Removed when real search input comes
+import { useState } from "react";
+
 import { cyKey } from "@/utils/trim";
 
 import Translate from "@/components/base/translate";
@@ -63,6 +66,9 @@ function Header({ className = "" }) {
     { label: "menu", icon: BurgerIcon, href: "/#!" },
   ];
 
+  // Removed when real search input comes
+  const [query, setQuery] = useState("");
+
   return (
     <header className={`${styles.wrap} ${className}`}>
       <Banner />
@@ -91,8 +97,8 @@ function Header({ className = "" }) {
                 >
                   {materials.map((m) => (
                     <Link
-                      href={m.href}
                       key={m.label}
+                      href={m.href}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",
@@ -110,8 +116,8 @@ function Header({ className = "" }) {
                 >
                   {actions.map((m) => (
                     <Link
-                      href={m.href}
                       key={m.label}
+                      href={m.href}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",
@@ -130,14 +136,24 @@ function Header({ className = "" }) {
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
                   <input
+                    onChange={(e) => setQuery(e.target.value)}
                     data-cy={cyKey({ name: "searchbar", prefix: "header" })}
                     placeholder="Søg i bøger, film, musik og mere"
                   />
-                  <button
-                    data-cy={cyKey({ name: "searchbutton", prefix: "header" })}
+                  <Link
+                    a={false}
+                    href={{ pathname: "/find", query: { q: query } }}
+                    border={false}
                   >
-                    Søg
-                  </button>
+                    <button
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
+                      })}
+                    >
+                      Søg
+                    </button>
+                  </Link>
                 </div>
                 <div
                   className={styles.actions}
