@@ -18,15 +18,14 @@ export default function Link({
   a = true,
   href = { pathname: "/", query: {} },
   target = "_self",
-  border = true,
+  border = null,
   onFocus = null,
   dataCy = "link",
   className = "",
+  tabIndex = "0",
 }) {
-  // no wrap - no border
-  if (!a) {
-    border = false;
-  }
+  // assign given border options to default border options
+  border = { top: false, bottom: true, ...border };
 
   // Maybe wrap with an a-tag
   if (a) {
@@ -34,14 +33,15 @@ export default function Link({
 
     children = (
       <a
-        href={href.pathname || href}
         data-cy={dataCy}
         target={target}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
+        tabIndex={tabIndex}
       >
+        {border.top && <AnimationLine keepVisible />}
         {children}
-        {border && <AnimationLine keepVisible />}
+        {border.bottom && <AnimationLine keepVisible />}
       </a>
     );
   }
@@ -64,7 +64,10 @@ Link.propTypes = {
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
-  border: PropTypes.bool,
+  border: PropTypes.shape({
+    top: PropTypes.bool,
+    bottom: PropTypes.bool,
+  }),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropTypes.oneOfType([
     PropTypes.string,
@@ -73,4 +76,5 @@ Link.propTypes = {
       query: PropTypes.object,
     }),
   ]),
+  tabIndex: PropTypes.string,
 };

@@ -1,0 +1,12 @@
+.quickfilters {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--pt3);
+}
+
+@media (max-width: 767px) {
+  .quickfilters > .viewselector {
+    display: none;
+  }
+}

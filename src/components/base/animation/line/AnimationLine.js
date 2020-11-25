@@ -30,10 +30,10 @@ export default function AnimationLine({ className = "", keepVisible = false }) {
   const hideClass = keepVisible ? "" : styles.hide;
 
   return (
-    <React.Fragment>
+    <div className={styles.wrapper}>
       <hr className={`${styles.line1} ${className}`} />
       <hr className={`${styles.line2} ${hideClass} ${className}`} />
-    </React.Fragment>
+    </div>
   );
 }
 

@@ -379,6 +379,20 @@
         "da": "Litteratursiden",
         "en": "Litteratursiden"
       }
+    },
+    "search": {
+      "title": {
+        "da": "Resultater",
+        "en": "Result"
+      },
+      "loanOptions": {
+        "da": "Lånemuligheder:",
+        "en": "Loan options:"
+      },
+      "more": {
+        "da": "Se flere",
+        "en": "More"
+      }
     }
   },
   "units": {

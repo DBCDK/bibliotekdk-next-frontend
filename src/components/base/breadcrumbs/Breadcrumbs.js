@@ -30,6 +30,7 @@ function Breadcrumb({
   separator = true,
   className = "",
   disabled = false,
+  link = true,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const key = cyKey({ name: children, prefix: "crumb" });
@@ -39,11 +40,18 @@ function Breadcrumb({
       className={`${styles.breadcrumb} ${className} ${disabledStyle}`}
       data-cy={key}
     >
-      <Link href={href} className={`${styles.link}`}>
+      {link ? (
+        <Link href={href} className={`${styles.link}`}>
+          <Text tag="span" type="text3">
+            {children}
+          </Text>
+        </Link>
+      ) : (
         <Text tag="span" type="text3">
           {children}
         </Text>
-      </Link>
+      )}
+
       {separator && <Separator />}
     </div>
   );
@@ -125,4 +133,5 @@ Container.propTypes = {
   skeleton: PropTypes.bool,
   crumbs: PropTypes.number, // For skeleton use only
   href: PropTypes.string,
+  link: PropTypes.bool,
 };
