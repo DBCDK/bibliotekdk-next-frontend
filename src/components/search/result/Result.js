@@ -69,27 +69,42 @@ function ResultRow({ data }) {
           >
             {!work.creators && !creator ? "skeleton" : creatorName || " "}
           </Text>
-          <div>
+          <div className={styles.materials}>
             <Text
               type="text3"
-              className={styles.materials}
               lines={2}
               clamp={true}
               skeleton={!work.materialTypes}
             >
-              <span>
-                {Translate({ context: "search", label: "loanOptions" })}
-              </span>
-              {work.materialTypes &&
-                work.materialTypes.length > 0 &&
-                work.materialTypes.map((material) => {
-                  return (
-                    <strong key={material.materialType}>
-                      {material.materialType}
-                    </strong>
-                  );
-                })}
+              {Translate({ context: "search", label: "loanOptions" })}
             </Text>
+            {work.materialTypes &&
+              work.materialTypes.length > 0 &&
+              work.materialTypes.map((material) => {
+                return (
+                  <Link
+                    a={true}
+                    className={styles.materiallink}
+                    href={{
+                      pathname: "/materiale/[title_author]/[workId]",
+                      query: {
+                        title_author: encodeTitleCreator(
+                          title,
+                          work.creators &&
+                            work.creators[0] &&
+                            work.creators[0].name
+                        ),
+                        type: material.materialType,
+                        workId: work.id,
+                      },
+                    }}
+                    key={material.materialType}
+                    tabIndex="-1"
+                  >
+                    <Text type="text4">{material.materialType}</Text>
+                  </Link>
+                );
+              })}
           </div>
         </Col>
         <Col xs={3}>

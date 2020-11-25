@@ -19,12 +19,12 @@
 }
 
 /* Hover */
-.link.border:focus hr:last-child,
-.link.border:hover hr:last-child {
+.link.border:focus > div > hr:last-child,
+.link.border:hover > div > hr:last-child {
   display: none;
 }
-.link.border:focus hr,
-.link.border:hover hr {
+.link.border:focus > div > hr,
+.link.border:hover > div > hr {
   transform: scale(1);
 }
 /*  */
