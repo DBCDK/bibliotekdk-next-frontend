@@ -8,7 +8,7 @@ const config = {
   externalBaseUrl: process.env.EXTERNAL_BASE_URL || "https://bibliotek.dk",
   api: {
     url:
-      process.env.API_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
       "http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql",
     timeout: process.env.API_TIMEOUT_MS || 150,
   },

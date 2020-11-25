@@ -18,12 +18,12 @@ The development environment may be set up using either npm or docker-compose.
  - `docker run --network="host" -ti --rm -v $(pwd)/e2e:/app/e2e -e CYPRESS_baseUrl=http://localhost:4000 docker.dbc.dk/cypress:latest npm run cy` runs tests (only headless mode supported via docker)
 
 ## Environment Variables
-The following environment variables can be set in the application
+The following environment variables can be set in the application. Variables prefixed with NEXT_PUBLIC_ are available from the application running in the browser.
 - **PORT**
 Port on which Next.js runs. Default is 3000.
 - **STORYBOOK_PORT**
 Port on which storybook runs. Defaults is 4000.
-- **API_URL**
+- **NEXT_PUBLIC_API_URL**
 URL to the GraphQL API. Defaults is http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql.
 - **API_TIMEOUT_MS**
 Time in ms for how long the Next.js server should wait for data when doing server side rendering. Defaults is 150.
