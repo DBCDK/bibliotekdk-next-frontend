@@ -7,15 +7,10 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
-import Action from "@/components/base/action";
 
 import styles from "./Header.module.css";
 
 import LogoSvg from "@/public/icons/logo.svg";
-// import SearchSvg from "@/public/icons/search.svg";
-// import MenuSvg from "@/public/icons/burger.svg";
-// import BasketSvg from "@/public/icons/basket.svg";
-// import LoginSvg from "@/public/icons/login.svg";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
@@ -46,26 +41,26 @@ function Header({ className = "" }) {
   const context = { context: "header" };
 
   const materials = [
-    { label: "books", href: "#!" },
-    { label: "articles", href: "#!" },
-    { label: "movies", href: "#!" },
-    { label: "eMaterials", href: "#!" },
-    { label: "games", href: "#!" },
-    { label: "music", href: "#!" },
-    { label: "nodes", href: "#!" },
+    { label: "books", href: "/#!" },
+    { label: "articles", href: "/#!" },
+    { label: "movies", href: "/#!" },
+    { label: "eMaterials", href: "/#!" },
+    { label: "games", href: "/#!" },
+    { label: "music", href: "/#!" },
+    { label: "nodes", href: "/#!" },
   ];
 
   const actions = [
-    { label: "digitalOffers", href: "#!" },
-    { label: "askLibrarian", href: "#!" },
-    { label: "becomeLoaner", href: "#!" },
+    { label: "digitalOffers", href: "/#!" },
+    { label: "askLibrarian", href: "/#!" },
+    { label: "becomeLoaner", href: "/#!" },
   ];
 
   const menu = [
-    { label: "search", icon: SearchIcon, href: "#!" },
-    { label: "login", icon: LoginIcon, href: "#!" },
-    { label: "basket", icon: BasketIcon, href: "#!", items: "4" },
-    { label: "menu", icon: BurgerIcon, href: "#!" },
+    { label: "search", icon: SearchIcon, href: "/#!" },
+    { label: "login", icon: LoginIcon, href: "/#!" },
+    { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
+    { label: "menu", icon: BurgerIcon, href: "/#!" },
   ];
 
   return (
@@ -75,15 +70,17 @@ function Header({ className = "" }) {
         <Container className={styles.header}>
           <Row>
             <Col xs={2}>
-              <Icon className={styles.logo} size={4}>
-                <LogoSvg />
-              </Icon>
+              <Link href="/" a={false}>
+                <Icon className={styles.logo} size={4}>
+                  <LogoSvg />
+                </Icon>
+              </Link>
             </Col>
             <Col xs={{ span: 9, offset: 1 }}>
               <div className={styles.top}>
                 <div className={styles.materials}>
                   {materials.map((m) => (
-                    <Link href={m.href}>
+                    <Link href={m.href} key={m.label}>
                       <Text type="text3">
                         {Translate({ ...context, label: m.label })}
                       </Text>
@@ -92,7 +89,7 @@ function Header({ className = "" }) {
                 </div>
                 <div className={styles.actions}>
                   {actions.map((m) => (
-                    <Link href={m.href}>
+                    <Link href={m.href} key={m.label}>
                       <Text type="text3">
                         {Translate({ ...context, label: m.label })}
                       </Text>
@@ -111,6 +108,7 @@ function Header({ className = "" }) {
 
                     return (
                       <ActionIcon
+                        key={m.label}
                         className={styles.action}
                         href={m.href}
                         items={m.items}

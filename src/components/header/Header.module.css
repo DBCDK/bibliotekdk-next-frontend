@@ -70,6 +70,10 @@
 
 /* Logo */
 
+.logo {
+  cursor: pointer;
+}
+
 .logo svg {
   display: block;
   height: var(--pt4);
