@@ -13,3 +13,7 @@
   text-align: center;
   line-height: var(--pt2);
 }
+
+.badge span {
+  display: block;
+}

@@ -24,9 +24,14 @@ export default function Action({
   title = "Go!",
   icon = "star.svg",
   children = null,
+  dataCy = null,
 }) {
   return (
-    <Link href={href} className={`${className} ${styles.action}`}>
+    <Link
+      href={href}
+      className={`${className} ${styles.action}`}
+      dataCy={dataCy}
+    >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
       <Icon size={2} src={icon} children={children} />
       <Text type="text3">{title}</Text>

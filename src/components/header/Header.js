@@ -70,7 +70,14 @@ function Header({ className = "" }) {
         <Container className={styles.header}>
           <Row>
             <Col xs={2}>
-              <Link href="/" a={false}>
+              <Link
+                href="/"
+                a={false}
+                dataCy={cyKey({
+                  name: "logo",
+                  prefix: "header",
+                })}
+              >
                 <Icon className={styles.logo} size={4}>
                   <LogoSvg />
                 </Icon>
@@ -78,18 +85,38 @@ function Header({ className = "" }) {
             </Col>
             <Col xs={{ span: 9, offset: 1 }}>
               <div className={styles.top}>
-                <div className={styles.materials}>
+                <div
+                  className={styles.materials}
+                  data-cy={cyKey({ name: "materials", prefix: "header" })}
+                >
                   {materials.map((m) => (
-                    <Link href={m.href} key={m.label}>
+                    <Link
+                      href={m.href}
+                      key={m.label}
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "header-link",
+                      })}
+                    >
                       <Text type="text3">
                         {Translate({ ...context, label: m.label })}
                       </Text>
                     </Link>
                   ))}
                 </div>
-                <div className={styles.actions}>
+                <div
+                  className={styles.actions}
+                  data-cy={cyKey({ name: "actions", prefix: "header-top" })}
+                >
                   {actions.map((m) => (
-                    <Link href={m.href} key={m.label}>
+                    <Link
+                      href={m.href}
+                      key={m.label}
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "header-link",
+                      })}
+                    >
                       <Text type="text3">
                         {Translate({ ...context, label: m.label })}
                       </Text>
@@ -98,16 +125,36 @@ function Header({ className = "" }) {
                 </div>
               </div>
               <div className={styles.bottom}>
-                <div className={styles._some_temp_searchbar}>
-                  <input placeholder="Søg i bøger, film, musik og mere" />
-                  <button>Søg</button>
+                <div
+                  className={styles._some_temp_searchbar}
+                  data-cy={cyKey({ name: "search", prefix: "header" })}
+                >
+                  <input
+                    data-cy={cyKey({ name: "searchbar", prefix: "header" })}
+                    placeholder="Søg i bøger, film, musik og mere"
+                  />
+                  <button
+                    data-cy={cyKey({ name: "searchbutton", prefix: "header" })}
+                  >
+                    Søg
+                  </button>
                 </div>
-                <div className={styles.actions}>
+                <div
+                  className={styles.actions}
+                  data-cy={cyKey({
+                    name: "actions",
+                    prefix: "header-bottom",
+                  })}
+                >
                   {menu.map((m) => {
                     const ActionIcon = m.icon;
 
                     return (
                       <ActionIcon
+                        dataCy={cyKey({
+                          name: m.label,
+                          prefix: "header-link",
+                        })}
                         key={m.label}
                         className={styles.action}
                         href={m.href}
