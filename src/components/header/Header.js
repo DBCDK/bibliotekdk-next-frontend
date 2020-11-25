@@ -12,14 +12,15 @@ import Action from "@/components/base/action";
 import styles from "./Header.module.css";
 
 import LogoSvg from "@/public/icons/logo.svg";
-import SearchSvg from "@/public/icons/search.svg";
-import MenuSvg from "@/public/icons/burger.svg";
-import BasketSvg from "@/public/icons/basket.svg";
-import LoginSvg from "@/public/icons/login.svg";
+// import SearchSvg from "@/public/icons/search.svg";
+// import MenuSvg from "@/public/icons/burger.svg";
+// import BasketSvg from "@/public/icons/basket.svg";
+// import LoginSvg from "@/public/icons/login.svg";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
+import SearchIcon from "./icons/search";
 
 function Banner() {
   return (
@@ -61,9 +62,9 @@ function Header({ className = "" }) {
   ];
 
   const menu = [
-    { label: "search", icon: SearchSvg, href: "#!" },
+    { label: "search", icon: SearchIcon, href: "#!" },
     { label: "login", icon: LoginIcon, href: "#!" },
-    { label: "basket", icon: BasketIcon, href: "#!", badge: "12" },
+    { label: "basket", icon: BasketIcon, href: "#!", items: "4" },
     { label: "menu", icon: BurgerIcon, href: "#!" },
   ];
 
@@ -112,7 +113,7 @@ function Header({ className = "" }) {
                       <ActionIcon
                         className={styles.action}
                         href={m.href}
-                        badge={m.badge}
+                        items={m.items}
                         title={Translate({ ...context, label: m.label })}
                       />
                     );

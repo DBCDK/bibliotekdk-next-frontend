@@ -1,8 +1,3 @@
-/* Basket */
-
-.basket {
-}
-
 .icon {
   position: relative;
 }
@@ -53,15 +48,18 @@
   border-color: var(--blue);
 } */
 
-.hovertrigger:hover .badge {
+.trigger:hover .badge,
+.trigger:focus .badge {
   animation: jumpUp 0.75s cubic-bezier(0.3, 1, 0.32, 1.3);
 }
 
-.hovertrigger:hover .handle {
+.trigger:hover .handle,
+.trigger:focus .handle {
   animation: flipHandle 0.5s linear;
 }
 
-.hovertrigger:hover ._bag {
+.trigger:hover ._bag,
+.trigger:focus ._bag {
   animation: openBag 0.5s linear;
 }
 

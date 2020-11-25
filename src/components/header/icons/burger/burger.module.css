@@ -1,9 +1,6 @@
-.burger {
-}
-
 .icon {
   width: var(--pt2);
-  height: var(--pt2);
+  height: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,9 +10,7 @@
   width: 100%;
   height: 2px;
   background-color: var(--mine-shaft);
-
   margin: auto;
-
   transition-duration: 0.3s;
 }
 
@@ -23,11 +18,13 @@
   transform: scale(0.75);
 }
 
-.hovertrigger:hover .line:not(:nth-child(2)) {
+.trigger:hover .line:not(:nth-child(2)),
+.trigger:focus .line:not(:nth-child(2)) {
   animation: fullWidth 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
 }
 
-.hovertrigger:hover .line:nth-child(2) {
+.trigger:hover .line:nth-child(2),
+.trigger:focus .line:nth-child(2) {
   transform: scale(1);
   animation: fullWidth 0.4s cubic-bezier(0.3, 1, 0.32, 2);
 }

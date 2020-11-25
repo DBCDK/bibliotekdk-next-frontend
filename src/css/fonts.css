@@ -31,7 +31,7 @@
   font-style: normal;
 }
 
-/* @font-face {
+@font-face {
   font-family: "ibm_plex_sansmedium";
   src: url("../../public/fonts/ibm-sans/ibmplexsans-medium-webfont.woff2")
       format("woff2"),
@@ -39,7 +39,7 @@
       format("woff");
   font-weight: normal;
   font-style: normal;
-} */
+}
 
 @font-face {
   font-family: "ibm_plex_sansregular";
@@ -198,7 +198,7 @@
   /* 300 */
   /* --body-font-light: "ibm_plex_sanslight"; */
   /* 500 */
-  /* --body-font-medium: "ibm_plex_sansmedium"; */
+  --body-font-medium: "ibm_plex_sansmedium";
   /* 600 */
   --body-font-semibold: "ibm_plex_sanssemibold";
   /* 700 */

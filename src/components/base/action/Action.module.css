@@ -12,7 +12,8 @@
   text-decoration: none;
 }
 
-.action p {
+.action p,
+.action hr {
   display: none;
 }
 
@@ -23,25 +24,13 @@
   transform: translate(30%, -30%);
 }
 
-/* hover */
-
-/* .action:hover svg,
-.action:hover svg *,
-.action:focus svg,
-.action:focus svg * {
-  stroke: var(--blue);
-}
-
-.action:hover p,
-.action:hover p *,
-.action:focus p,
-.action:focus p * {
-  color: var(--blue);
-} */
-
 @media (min-width: 992px) {
   .action p {
     display: block;
     margin: var(--pt05) 0 0 0;
+  }
+
+  .action hr:first-of-type {
+    display: block;
   }
 }

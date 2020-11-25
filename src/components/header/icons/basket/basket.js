@@ -8,14 +8,10 @@ import Badge from "@/components/base/badge";
 import styles from "./basket.module.css";
 
 export default function BasketIcon(props) {
-  const { className } = props;
+  const { className, items } = props;
 
   return (
-    <Action
-      {...props}
-      badge={false}
-      className={`${className} ${styles.hovertrigger}`}
-    >
+    <Action {...props} className={`${className} ${styles.trigger}`}>
       <div className={styles.basket}>
         <div className={styles.icon}>
           <div className={styles.bag}>
@@ -24,7 +20,7 @@ export default function BasketIcon(props) {
 
           <div className={styles._bag} />
 
-          <Badge className={styles.badge} children="1" />
+          <Badge className={styles.badge} children={items} />
         </div>
       </div>
     </Action>

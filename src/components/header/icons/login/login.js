@@ -10,7 +10,7 @@ export default function LoginIcon(props) {
   const { className } = props;
 
   return (
-    <Action {...props} className={`${className} ${styles.logintrigger}`}>
+    <Action {...props} className={`${className} ${styles.trigger}`}>
       <div className={styles.login}>
         <div className={styles.icon}>
           <div className={styles.head} />
