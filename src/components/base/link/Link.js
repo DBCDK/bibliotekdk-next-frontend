@@ -22,11 +22,10 @@ export default function Link({
   onFocus = null,
   dataCy = "link",
   className = "",
+  tabIndex = "0",
 }) {
-  // no wrap - no border
-  if (!a) {
-    border = false;
-  }
+  // assign given border options to default border options
+  // border = { top: false, bottom: true, ...border };
 
   // Maybe wrap with an a-tag
   if (a) {
@@ -34,11 +33,11 @@ export default function Link({
 
     children = (
       <a
-        href={href.pathname || href}
         data-cy={dataCy}
         target={target}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
+        tabIndex={tabIndex}
       >
         {border.top && (
           <AnimationLine keepVisible={border.top && border.top.keepVisible} />
@@ -96,4 +95,5 @@ Link.propTypes = {
       query: PropTypes.object,
     }),
   ]),
+  tabIndex: PropTypes.string,
 };

@@ -30,10 +30,13 @@ export default function Section({
   className = "",
   dataCy = "section",
   bgColor = null,
+  contentDivider = <Divider />,
+  titleDivider = <Divider />,
 }) {
   const backgroundColor = bgColor;
   const backgroundClass = bgColor ? styles.background : "";
-
+  title =
+    typeof title === "string" ? <Title type="title4">{title}</Title> : title;
   return (
     <div
       className={`${backgroundClass}`}
@@ -47,15 +50,15 @@ export default function Section({
             md={2}
             data-cy={cyKey({ name: "title", prefix: "section" })}
           >
-            <Divider />
-            <Title type="title4">{title}</Title>
+            {titleDivider}
+            {title}
           </Col>
           <Col
             xs={12}
             md={{ offset: 1 }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
           >
-            <Divider />
+            {contentDivider}
             {children}
           </Col>
         </Row>
@@ -67,7 +70,11 @@ export default function Section({
 // PropTypes for component
 Section.propTypes = {
   bgColor: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.array,
+  ]),
   dataCy: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,

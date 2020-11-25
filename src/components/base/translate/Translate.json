@@ -1,6 +1,10 @@
 {
   "contexts": {
     "general": {
+      "heroTxt": {
+        "da": "Afhent lokalt eller tilgå digitalt",
+        "en": "Pick up locally or access digitally"
+      },
       "readMore": {
         "da": "Læs mere",
         "en": "Read more"
@@ -436,6 +440,20 @@
       "menu": {
         "da": "Menu",
         "en": "Menu"
+      }
+    },
+    "search": {
+      "title": {
+        "da": "Resultater",
+        "en": "Result"
+      },
+      "loanOptions": {
+        "da": "Lånemuligheder:",
+        "en": "Loan options:"
+      },
+      "more": {
+        "da": "Se flere",
+        "en": "More"
       }
     }
   },

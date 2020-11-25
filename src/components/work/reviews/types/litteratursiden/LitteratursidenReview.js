@@ -36,7 +36,7 @@ export function LitteratursidenReview({
     >
       <Link
         onFocus={onFocus}
-        border={false}
+        border={{ bottom: false }}
         dataCy={cyKey({ name: "link", prefix: "litteratursiden" })}
       >
         <div className={styles.media}>

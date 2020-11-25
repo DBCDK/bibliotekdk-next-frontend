@@ -37,7 +37,7 @@ describe("Keywords", () => {
 
   it(`Can visit keywords`, () => {
     const tag = "barndom";
-    const url = `https://bibliotek.dk/da/search/work/?search_block_form=phrase.subject%3D%22${tag}%22#content`;
+    const url = `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${tag}%22#content`;
 
     // Get selected tag
     const item = cy.get(`[data-cy=keyword-${tag}]`).children();

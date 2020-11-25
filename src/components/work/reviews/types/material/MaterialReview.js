@@ -80,7 +80,7 @@ export function MaterialReview({
             href={data.url}
             target="_blank"
             onFocus={onFocus}
-            border={!skeleton}
+            border={{ bottom: !skeleton }}
           >
             <Title type="title4" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialReviewLinkText" })}

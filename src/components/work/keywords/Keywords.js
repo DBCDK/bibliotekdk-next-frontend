@@ -22,7 +22,7 @@ import styles from "./Keywords.module.css";
  * @returns {string}
  */
 function url(keyword) {
-  return `https://bibliotek.dk/da/search/work/?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
+  return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
 }
 
 /**
@@ -87,7 +87,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
               className={`${styles.keyword} ${sizeClass}`}
               key={`${k.type}-${key}`}
             >
-              <Link a href={{ pathname: url(k.value) }} target="_blank">
+              <Link a href={url(k.value)} target="_blank">
                 <Title type="title4" skeleton={skeleton}>
                   {val}
                 </Title>

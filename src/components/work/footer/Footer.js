@@ -40,7 +40,7 @@ const FirstColumn = () => {
       <Link
         href={{ pathname: "/", query: {} }}
         className={styles.footerlink}
-        border={false}
+        border={{ bottom: false }}
       >
         <Text tag="span" type="text3">
           {Translate({
@@ -90,7 +90,7 @@ const ContactLinks = () => {
       <Link
         href={contact_links[key]}
         className={styles.footerlink}
-        border={false}
+        border={{ bottom: false }}
         dataCy="contactlink"
       >
         <Text tag="span" type="text3">
@@ -146,7 +146,7 @@ const BranchLinks = () => {
       <Link
         href={branch_links[key]}
         className={styles.footerlink}
-        border={false}
+        border={{ bottom: false }}
         dataCy="branchlink"
       >
         <Text tag="span" type="text3">

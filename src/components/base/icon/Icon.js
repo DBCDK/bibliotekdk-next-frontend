@@ -19,7 +19,10 @@ function Icon({
   bgColor = null,
   size = 5,
   onClick = null,
+  onKeyDown,
   disabled = false,
+  tabIndex,
+  ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
@@ -44,7 +47,10 @@ function Icon({
       style={dynamicStyles}
       className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
       onClick={onClick}
+      onKeyDown={onKeyDown}
       aria-hidden="true"
+      tabIndex={tabIndex}
+      data-cy={props["data-cy"]}
     >
       {children || <img src={`/icons/${src}`} />}
     </i>
@@ -97,10 +103,12 @@ Container.propTypes = {
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
+    PropTypes.number,
   ]),
   bgColor: PropTypes.string,
   size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]),
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
+  "data-cy": PropTypes.string,
 };

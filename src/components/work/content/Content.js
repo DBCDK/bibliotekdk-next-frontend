@@ -19,7 +19,7 @@ import styles from "./Content.module.css";
  * @returns {component}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
-  if (!data.content) {
+  if (!data.content || data.content.length === 0) {
     return null;
   }
   // Translate Context

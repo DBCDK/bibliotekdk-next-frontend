@@ -66,7 +66,7 @@ export function InfomediaReview({
           <Link
             href={data.url}
             target="_blank"
-            border={!skeleton}
+            border={{ bottom: !skeleton }}
             onFocus={onFocus}
           >
             <Title type="title4" skeleton={skeleton}>

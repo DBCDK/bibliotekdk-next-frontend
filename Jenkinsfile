@@ -13,10 +13,10 @@ pipeline {
         GITLAB_ID = "704"
 	}
     stages {
-       
         stage('Build image') {
-            steps { 
+            steps {
                 script {
+                    currentBuild.description = "Build ${IMAGE_NAME}"
                     ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
                         sh "docker build -t ${IMAGE_NAME} --pull ."
@@ -86,6 +86,8 @@ pipeline {
                 docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
                 docker rmi ${IMAGE_NAME}
             """
+
+            junit 'e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
         }
         failure {

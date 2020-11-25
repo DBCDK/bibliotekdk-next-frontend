@@ -3,4 +3,5 @@
     height: 1px;
     margin: 0 0 var(--pt2) 0;
     background-color: var(--iron);
+    border: 0;
 }
