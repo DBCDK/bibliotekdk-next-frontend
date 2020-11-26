@@ -8,11 +8,10 @@ import Badge from "@/components/base/badge";
 import styles from "./Action.module.css";
 
 /**
- * Function to create a animated line
+ * Function to create a action menu item
  *
  *
- * @param {string} className
- * @param {bool}
+ * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -42,8 +41,10 @@ export default function Action({
 // PropTypes for component
 Action.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   icon: PropTypes.string,
   title: PropTypes.string,
   badge: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   children: PropTypes.object,
+  dataCy: PropTypes.string,
 };

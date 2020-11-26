@@ -1,11 +1,20 @@
 /**
- * Custom login action menu
+ * Custom basket action menu
  */
+import PropTypes from "prop-types";
 
 import Action from "@/components/base/action";
 
 import styles from "./login.module.css";
 
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function LoginIcon(props) {
   const { className } = props;
 
@@ -24,3 +33,14 @@ export default function LoginIcon(props) {
     </Action>
   );
 }
+
+// PropTypes for component
+LoginIcon.propTypes = {
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  badge: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  children: PropTypes.object,
+  dataCy: PropTypes.string,
+};

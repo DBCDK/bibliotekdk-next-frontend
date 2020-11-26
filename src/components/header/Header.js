@@ -216,9 +216,9 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  if (props.skeleton) {
-    return <HeaderSkeleton {...props} />;
-  }
+  // if (props.skeleton) {
+  //   return <HeaderSkeleton {...props} />;
+  // }
 
   return <Header {...props} />;
 }

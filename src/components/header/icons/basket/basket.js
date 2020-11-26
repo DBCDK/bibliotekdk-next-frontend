@@ -1,12 +1,21 @@
 /**
  * Custom basket action menu
  */
+import PropTypes from "prop-types";
 
 import Action from "@/components/base/action";
 import Badge from "@/components/base/badge";
 
 import styles from "./basket.module.css";
 
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function BasketIcon(props) {
   const { className, items } = props;
 
@@ -26,3 +35,15 @@ export default function BasketIcon(props) {
     </Action>
   );
 }
+
+// PropTypes for component
+BasketIcon.propTypes = {
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  items: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  href: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  icon: PropTypes.string,
+  title: PropTypes.string,
+  badge: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  children: PropTypes.object,
+  dataCy: PropTypes.string,
+};

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./Badge.module.css";
 
 /**
- * Function to create a animated line
+ * Function to create a badge
  *
  *
  * @param {string} className
