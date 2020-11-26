@@ -90,7 +90,7 @@ const ContactLinks = () => {
       <Link
         href={contact_links[key]}
         className={styles.footerlink}
-        border={{ bottom: false }}
+        border={{ bottom: false, top: false }}
         dataCy="contactlink"
       >
         <Text tag="span" type="text3">
@@ -146,7 +146,7 @@ const BranchLinks = () => {
       <Link
         href={branch_links[key]}
         className={styles.footerlink}
-        border={{ bottom: false }}
+        border={{ bottom: false, top: false }}
         dataCy="branchlink"
       >
         <Text tag="span" type="text3">

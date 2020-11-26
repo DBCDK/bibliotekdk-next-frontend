@@ -12,9 +12,8 @@
   display: inline-block;
 }
 
-/* Hover + Focus */
-.link.border:focus,
-.link.border:hover {
+.border:focus,
+.border:hover {
   color: var(--blue);
   text-decoration: none;
 }
