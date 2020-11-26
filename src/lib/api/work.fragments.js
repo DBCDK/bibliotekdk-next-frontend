@@ -74,6 +74,9 @@ export function details({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          cover {
+            detail
+          }
           seo {
             title
             description
