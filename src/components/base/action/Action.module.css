@@ -13,7 +13,7 @@
 }
 
 .action p,
-.action hr {
+.action > div hr {
   display: none;
 }
 
@@ -30,7 +30,7 @@
     margin: var(--pt05) 0 0 0;
   }
 
-  .action hr:first-of-type {
+  .action div hr:first-of-type {
     display: block;
   }
 }

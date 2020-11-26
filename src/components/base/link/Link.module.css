@@ -13,18 +13,21 @@
 }
 
 /* Hover + Focus */
-
 .link.border:focus,
 .link.border:hover {
   color: var(--blue);
   text-decoration: none;
 }
 
-.link.border:hover hr:last-child {
+.link.border:hover > div {
+}
+
+.link.border:focus > div > hr:last-child,
+.link.border:hover > div > hr:last-child {
   display: none;
 }
 
-.link.border:hover hr,
-.link.border:focus hr {
+.link.border:focus > div > hr,
+.link.border:hover > div > hr {
   transform: scale(1);
 }

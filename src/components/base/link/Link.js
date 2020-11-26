@@ -39,14 +39,10 @@ export default function Link({
         className={`${styles.link} ${animationClass} ${className}`}
         tabIndex={tabIndex}
       >
-        {border.top && (
-          <AnimationLine keepVisible={border.top && border.top.keepVisible} />
-        )}
+        {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
         {border.bottom && (
-          <AnimationLine
-            keepVisible={border.bottom && border.bottom.keepVisible}
-          />
+          <AnimationLine keepVisible={!!border.bottom.keepVisible} />
         )}
       </a>
     );
