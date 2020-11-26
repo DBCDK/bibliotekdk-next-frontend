@@ -29,7 +29,7 @@ function ResultRow({ data }) {
   return (
     <Link
       a={true}
-      border={{ top: true, bottom: true }}
+      border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
       className={styles.wrapper}
       href={{
         pathname: "/materiale/[title_author]/[workId]",
