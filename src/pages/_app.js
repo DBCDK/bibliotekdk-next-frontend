@@ -20,10 +20,13 @@ import "lazysizes/plugins/attrchange/ls.attrchange";
 import { APIStateContext } from "@/lib/api/api";
 import { setLocale } from "@/components/base/translate/Translate";
 
+import Header from "@/components/header";
+
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
+      <Header />
       <Component {...pageProps} />
     </APIStateContext.Provider>
   );

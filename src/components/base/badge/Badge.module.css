@@ -1,0 +1,19 @@
+.badge {
+  width: var(--pt2);
+  height: var(--pt2);
+
+  background-color: var(--blue);
+  border-radius: 50%;
+
+  font-size: var(--pt1);
+  color: var(--white);
+  font-family: var(--body-font-medium);
+  font-style: normal;
+
+  text-align: center;
+  line-height: var(--pt2);
+}
+
+.badge span {
+  display: block;
+}

@@ -18,7 +18,7 @@ import Link from "@/components/base/link";
  * @constructor
  */
 const FooterLogo = () => {
-  const size = 15;
+  const size = 6;
   const src = "logowhite.svg";
   return <Icon src={src} size={size} />;
 };

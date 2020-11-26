@@ -83,7 +83,7 @@ function ResultRow({ data }) {
               work.materialTypes.map((material) => {
                 return (
                   <Link
-                    a={true}
+                    border={{ top: false, bottom: { keepVisible: true } }}
                     className={styles.materiallink}
                     href={{
                       pathname: "/materiale/[title_author]/[workId]",

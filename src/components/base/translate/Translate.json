@@ -1,9 +1,9 @@
 {
   "contexts": {
     "general": {
-      "heroTxt" : {
-        "da" : "Afhent lokalt eller tilgå digitalt",
-        "en" : "Pick up locally or access digitally"
+      "heroTxt": {
+        "da": "Afhent lokalt eller tilgå digitalt",
+        "en": "Pick up locally or access digitally"
       },
       "readMore": {
         "da": "Læs mere",
@@ -378,6 +378,68 @@
       "litteratursiden": {
         "da": "Litteratursiden",
         "en": "Litteratursiden"
+      }
+    },
+    "header": {
+      "banner-text": {
+        "da": "Levering til og afhentning på dit bibliotek",
+        "en": "Delivery to and collection at your library"
+      },
+      "books": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "movies": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "eMaterials": {
+        "da": "E-materialer",
+        "en": "E-materials"
+      },
+      "games": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "nodes": {
+        "da": "Noder",
+        "en": "Nodes"
+      },
+      "digitalOffers": {
+        "da": "Digitale bibliotekstilbud",
+        "en": "Digital library offerings"
+      },
+      "askLibrarian": {
+        "da": "Spørg en bibliotekar",
+        "en": "Ask a librarian"
+      },
+      "becomeLoaner": {
+        "da": "Bliv låner",
+        "en": "Become a borrower"
+      },
+      "search": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "login": {
+        "da": "Log ind",
+        "en": "Sign in"
+      },
+      "basket": {
+        "da": "Kurv",
+        "en": "Basket"
+      },
+      "menu": {
+        "da": "Menu",
+        "en": "Menu"
       }
     },
     "search": {

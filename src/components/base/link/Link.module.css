@@ -1,6 +1,6 @@
 .link {
   color: var(--mine-shaft);
-  text-decoration: underline;
+  text-decoration: none;
   text-decoration-color: var(--blue);
 }
 
@@ -12,19 +12,22 @@
   display: inline-block;
 }
 
+/* Hover + Focus */
 .link.border:focus,
 .link.border:hover {
   color: var(--blue);
   text-decoration: none;
 }
 
-/* Hover */
+.link.border:hover > div {
+}
+
 .link.border:focus > div > hr:last-child,
 .link.border:hover > div > hr:last-child {
   display: none;
 }
+
 .link.border:focus > div > hr,
 .link.border:hover > div > hr {
   transform: scale(1);
 }
-/*  */

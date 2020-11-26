@@ -1,0 +1,36 @@
+.action {
+  position: relative;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  color: var(--mine-shaft);
+  text-decoration: none;
+}
+
+.action p,
+.action > div hr {
+  display: none;
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(30%, -30%);
+}
+
+@media (min-width: 992px) {
+  .action p {
+    display: block;
+    margin: var(--pt05) 0 0 0;
+  }
+
+  .action div hr:first-of-type {
+    display: block;
+  }
+}

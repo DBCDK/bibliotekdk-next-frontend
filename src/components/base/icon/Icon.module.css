@@ -1,12 +1,12 @@
 .icon {
-  display: inline-block;
+  display: block;
   /*  hack for removing whitespace around img tag */
   font-size: 0px;
 }
 
 .icon img {
-  width: 100%;
-  height: auto;
+  height: 100%;
+  width: auto;
 }
 
 .round {
