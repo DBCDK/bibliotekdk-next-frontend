@@ -24,9 +24,6 @@ export default function Link({
   className = "",
   tabIndex = "0",
 }) {
-  // assign given border options to default border options
-  // border = { top: false, bottom: true, ...border };
-
   // Maybe wrap with an a-tag
   if (a) {
     const animationClass = !!border ? styles.border : "";

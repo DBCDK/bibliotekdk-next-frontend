@@ -1,4 +1,4 @@
-import styles from "@/components/work/hero/Hero.module.css";
+import styles from "@/components/hero/Hero.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 import React from "react";
 
@@ -13,7 +13,7 @@ export default function Hero() {
     <Container className={styles.containerback}>
       <Row>
         <Col md={{ span: 3 }} xs="3" className={styles.heromargin}>
-          <Icon src={"ornament1white.svg"} size={10} />
+          <Icon src={"ornament1white.svg"} size={{ w: 13, h: "auto" }} />
         </Col>
         <Col md={{ span: 7 }} xs={{ span: 7 }} className={styles.heromargin}>
           <Title type="title6" className={styles.herotitle}>

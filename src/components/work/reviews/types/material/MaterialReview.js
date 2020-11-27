@@ -38,7 +38,13 @@ export function MaterialReview({
     >
       <Row>
         <Col xs={6} xl={4} className={styles.type}>
-          <Link href={bib} target="_blank">
+          <Link
+            href={bib}
+            target="_blank"
+            border={
+              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+            }
+          >
             <Text type="text3" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialTitle" })}
             </Text>
@@ -52,7 +58,13 @@ export function MaterialReview({
           <Text type="text3" skeleton={skeleton} lines={1}>
             {Translate({ context: "general", label: "by" })}
           </Text>
-          <Link href={bib} target="_blank">
+          <Link
+            href={bib}
+            target="_blank"
+            border={
+              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+            }
+          >
             <Text type="text3" skeleton={skeleton} lines={1}>
               {data.author}
             </Text>
@@ -75,12 +87,19 @@ export function MaterialReview({
 
       {data.url && (
         <Col xs={12} className={styles.url}>
-          <Icon src="chevron.svg" size={2} skeleton={skeleton} />
+          <Icon
+            src="chevron.svg"
+            size={{ w: 2, h: "auto" }}
+            skeleton={skeleton}
+          />
           <Link
             href={data.url}
             target="_blank"
             onFocus={onFocus}
             border={{ bottom: !skeleton }}
+            border={
+              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+            }
           >
             <Title type="title4" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialReviewLinkText" })}

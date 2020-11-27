@@ -11,7 +11,7 @@ import styles from "./BibliographicData.module.css";
 function ExpandIcon({ open }) {
   return (
     <Icon
-      size={3}
+      size={{ w: 3, h: 3 }}
       bgColor="var(--blue)"
       className={`${styles.expandicon} ${open ? styles.opened : styles.closed}`}
     >

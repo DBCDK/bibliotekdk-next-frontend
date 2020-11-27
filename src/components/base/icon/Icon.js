@@ -25,12 +25,17 @@ function Icon({
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
-  const shapeStyle = bgColor ? styles.round : "";
+  const shapeStyle = bgColor ? styles.round : styles.fit;
+
+  // size={{ w: 5, h: 5 }}
+
+  const height = size.h === "auto" ? size.h : `var(--pt${size.h || size})`;
+  const width = size.w === "auto" ? size.w : `var(--pt${size.w || size})`;
 
   // Set icon size
   const dimensions = {
-    height: `var(--pt${size})`,
-    width: bgColor ? `var(--pt${size})` : `auto`,
+    height,
+    width,
   };
 
   const backgroundColor = {
@@ -106,7 +111,11 @@ Container.propTypes = {
     PropTypes.number,
   ]),
   bgColor: PropTypes.string,
-  size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]),
+  size: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.int,
+    PropTypes.object,
+  ]),
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

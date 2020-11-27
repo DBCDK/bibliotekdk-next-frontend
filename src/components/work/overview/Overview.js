@@ -91,7 +91,11 @@ export function Overview({
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
-                <Icon size={2} src={"ornament1.svg"} skeleton={skeleton} />
+                <Icon
+                  size={{ w: 7, h: "auto" }}
+                  src={"ornament1.svg"}
+                  skeleton={skeleton}
+                />
               </Col>
               <Col xs={12}>
                 <Text

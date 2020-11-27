@@ -21,6 +21,7 @@ import { APIStateContext } from "@/lib/api/api";
 import { setLocale } from "@/components/base/translate/Translate";
 
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
@@ -28,6 +29,7 @@ export default function MyApp({ Component, pageProps, router }) {
     <APIStateContext.Provider value={pageProps.initialState}>
       <Header />
       <Component {...pageProps} />
+      <Footer />
     </APIStateContext.Provider>
   );
 }

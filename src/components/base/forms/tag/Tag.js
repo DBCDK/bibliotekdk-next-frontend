@@ -35,7 +35,7 @@ function Tag({
     >
       {children}
       <Icon
-        size={3}
+        size={{ w: 3, h: 3 }}
         bgColor="var(--blue)"
         src={"checkmark.svg"}
         skeleton={skeleton}

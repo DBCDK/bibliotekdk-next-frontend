@@ -4,13 +4,15 @@
  * well section .. rather a copy paste from the Section component
  */
 
-import { Container, Row, Col } from "react-bootstrap";
-import Icon from "@/components/base/icon";
-import styles from "@/components/work/footer/Footer.module.css";
-import Text from "@/components/base/text/Text";
 import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
+import Icon from "@/components/base/icon";
+import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+
+import styles from "./Footer.module.css";
 
 /**
  * The logo @see icons/logowhite.svg
@@ -18,9 +20,8 @@ import Link from "@/components/base/link";
  * @constructor
  */
 const FooterLogo = () => {
-  const size = 6;
   const src = "logowhite.svg";
-  return <Icon src={src} size={size} />;
+  return <Icon src={src} size={{ w: 15, h: "auto" }} />;
 };
 
 /**

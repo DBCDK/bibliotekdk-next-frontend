@@ -84,7 +84,7 @@ function Header({ className = "" }) {
                   prefix: "header",
                 })}
               >
-                <Icon className={styles.logo} size={4}>
+                <Icon className={styles.logo} size={{ w: 15, h: "auto" }}>
                   <LogoSvg />
                 </Icon>
               </Link>
