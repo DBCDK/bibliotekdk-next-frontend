@@ -84,7 +84,11 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
       data-cy="arrow-left"
       onClick={onClick}
     >
-      <Icon src={"arrowleft.svg"} size={5} bgColor={"transparent"} />
+      <Icon
+        src={"arrowleft.svg"}
+        size={{ w: 5, h: 5 }}
+        bgColor={"transparent"}
+      />
     </label>
   );
 }
@@ -111,7 +115,11 @@ function ArrowRight({ onClick, disabled }) {
       data-cy="arrow-right"
       onClick={onClick}
     >
-      <Icon src={"arrowright.svg"} size={5} bgColor={"transparent"} />
+      <Icon
+        src={"arrowright.svg"}
+        size={{ w: 5, h: 5 }}
+        bgColor={"transparent"}
+      />
     </label>
   );
 }

@@ -1,0 +1,26 @@
+.containerback {
+  background-color: green;
+  background-image: url("/img/bibdk-hero-scaled.jpeg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.heromargin {
+  line-height: 92px;
+  margin-top: 3em;
+  min-height: 30rem;
+}
+
+.heroicon {
+  margin-top: 3em;
+}
+
+@media (max-width: 768px) {
+  .heroicon {
+    display: none;
+  }
+}
+
+.herotitle {
+  color: var(--white);
+}

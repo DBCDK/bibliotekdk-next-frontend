@@ -27,10 +27,18 @@ function Icon({
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
 
+  // Scale according to W or H
+  const hasAuto = !!(size.h === "auto" || size.w === "auto");
+  const scaleStyle = hasAuto && size.w === "auto" ? styles.autoW : styles.autoH;
+
+  // Set scale sizes
+  const height = size.h === "auto" ? size.h : `var(--pt${size.h || size})`;
+  const width = size.w === "auto" ? size.w : `var(--pt${size.w || size})`;
+
   // Set icon size
   const dimensions = {
-    height: `var(--pt${size})`,
-    width: bgColor ? `var(--pt${size})` : `auto`,
+    height,
+    width,
   };
 
   const backgroundColor = {
@@ -45,7 +53,7 @@ function Icon({
   return (
     <i
       style={dynamicStyles}
-      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
+      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-hidden="true"
@@ -106,7 +114,11 @@ Container.propTypes = {
     PropTypes.number,
   ]),
   bgColor: PropTypes.string,
-  size: PropTypes.oneOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]),
+  size: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.int,
+    PropTypes.object,
+  ]),
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,

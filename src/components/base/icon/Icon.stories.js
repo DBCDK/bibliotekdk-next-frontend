@@ -22,7 +22,7 @@ export function BasicIcon() {
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
-            <Icon src={src} size={size} />
+            <Icon src={src} size={{ w: size, h: "auto" }} />
             <StorySpace space="5" />
           </React.Fragment>
         );
@@ -45,7 +45,7 @@ export function RoundIcon() {
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
-            <Icon src={src} size={size} bgColor={bgColor} />
+            <Icon src={src} size={{ w: size, h: size }} bgColor={bgColor} />
             <StorySpace space="5" />
           </React.Fragment>
         );
@@ -70,7 +70,11 @@ export function Loading() {
       {sizes.map((size) => {
         return (
           <React.Fragment key={size}>
-            <Icon src={src1} size={size} skeleton={skeleton} />
+            <Icon
+              src={src1}
+              size={{ w: size, h: "auto" }}
+              skeleton={skeleton}
+            />
             <StorySpace space="5" />
           </React.Fragment>
         );
@@ -82,7 +86,7 @@ export function Loading() {
           <React.Fragment key={size}>
             <Icon
               src={src2}
-              size={size}
+              size={{ w: size, h: size }}
               bgColor={bgColor}
               skeleton={skeleton}
             />

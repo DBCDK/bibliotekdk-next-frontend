@@ -12,6 +12,8 @@
 
   text-align: center;
   line-height: var(--pt2);
+
+  pointer-events: none;
 }
 
 .badge span {

@@ -1,13 +1,30 @@
 .icon {
-  display: block;
+  display: inline-block;
   /*  hack for removing whitespace around img tag */
   font-size: 0px;
 }
 
-.icon img {
-  height: 100%;
-  width: auto;
+/* auto-scale child*/
+
+.icon img,
+.icon svg {
+  width: 100%;
+  height: auto;
 }
+
+.icon.autoH img,
+.icon.autoH svg {
+  width: 100%;
+  height: auto;
+}
+
+.icon.autoW img,
+.icon.autoW svg {
+  width: auto;
+  height: 100%;
+}
+
+/* Shape */
 
 .round {
   border-radius: 50%;

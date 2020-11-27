@@ -62,12 +62,19 @@ export function InfomediaReview({
       )}
       {data.url && (
         <div className={styles.url}>
-          <Icon src="chevron.svg" size={2} skeleton={skeleton} />
+          <Icon
+            src="chevron.svg"
+            size={{ w: 2, h: "auto" }}
+            skeleton={skeleton}
+          />
           <Link
             href={data.url}
             target="_blank"
             border={{ bottom: !skeleton }}
             onFocus={onFocus}
+            border={
+              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+            }
           >
             <Title type="title4" skeleton={skeleton}>
               {Translate({ ...context, label: "reviewLinkText" })}

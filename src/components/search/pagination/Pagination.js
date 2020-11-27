@@ -39,7 +39,7 @@ export default function Pagination({
           return (
             <Icon
               key={index}
-              size={4}
+              size={{ w: 4, h: 4 }}
               bgColor={"var(--blue)"}
               skeleton={false}
               className={

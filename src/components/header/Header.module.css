@@ -74,10 +74,9 @@
   cursor: pointer;
 }
 
-.logo svg {
-  display: block;
-  height: var(--pt4);
-  width: auto;
+.logo {
+  /* inline dynamic style override */
+  width: var(--pt12) !important;
 }
 
 /* Searchbar */
@@ -144,9 +143,9 @@
     padding-bottom: var(--pt4);
   }
 
-  .logo svg {
-    height: var(--pt7);
-    width: auto;
+  .logo {
+    /* important style override */
+    width: var(--pt15) !important;
   }
 
   .header .bottom {

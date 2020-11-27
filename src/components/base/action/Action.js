@@ -32,7 +32,7 @@ export default function Action({
       dataCy={dataCy}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
-      <Icon size={2} src={icon} children={children} />
+      <Icon size={{ w: "auto", h: 2 }} src={icon} children={children} />
       <Text type="text3">{title}</Text>
     </Link>
   );

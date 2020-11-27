@@ -54,7 +54,7 @@ function Bookmark({
       <Icon
         skeleton={skeleton}
         disabled={disabled}
-        size={5}
+        size={{ w: 5, h: 5 }}
         bgColor="var(--white)"
       >
         <BookmarkSvg />
