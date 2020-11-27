@@ -12,6 +12,16 @@
     min-height: 30rem;
 }
 
+.heroicon {
+    margin-top: 3em;
+}
+
+@media (max-width: 768px) {
+    .heroicon {
+       display: none;
+    }
+}
+
 .herotitle {
     color: var(--white);
 }
