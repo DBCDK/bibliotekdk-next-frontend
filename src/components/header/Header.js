@@ -131,7 +131,7 @@ function Header({ className = "" }) {
                 </div>
               </div>
               <div className={styles.bottom}>
-                <div
+                <form
                   className={styles._some_temp_searchbar}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
@@ -146,6 +146,7 @@ function Header({ className = "" }) {
                     border={false}
                   >
                     <button
+                      type="submit"
                       data-cy={cyKey({
                         name: "searchbutton",
                         prefix: "header",
@@ -154,7 +155,8 @@ function Header({ className = "" }) {
                       Søg
                     </button>
                   </Link>
-                </div>
+                </form>
+
                 <div
                   className={styles.actions}
                   data-cy={cyKey({

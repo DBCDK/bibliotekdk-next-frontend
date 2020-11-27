@@ -25,10 +25,13 @@ function Icon({
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
-  const shapeStyle = bgColor ? styles.round : styles.fit;
+  const shapeStyle = bgColor ? styles.round : "";
 
-  // size={{ w: 5, h: 5 }}
+  // Scale according to W or H
+  const hasAuto = !!(size.h === "auto" || size.w === "auto");
+  const scaleStyle = hasAuto && size.w === "auto" ? styles.autoW : styles.autoH;
 
+  // Set scale sizes
   const height = size.h === "auto" ? size.h : `var(--pt${size.h || size})`;
   const width = size.w === "auto" ? size.w : `var(--pt${size.w || size})`;
 
@@ -50,7 +53,7 @@ function Icon({
   return (
     <i
       style={dynamicStyles}
-      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle}`}
+      className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
       onKeyDown={onKeyDown}
       aria-hidden="true"

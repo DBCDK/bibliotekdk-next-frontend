@@ -4,11 +4,27 @@
   font-size: 0px;
 }
 
+/* auto-scale child*/
+
 .icon img,
 .icon svg {
   width: 100%;
   height: auto;
 }
+
+.icon.autoH img,
+.icon.autoH svg {
+  width: 100%;
+  height: auto;
+}
+
+.icon.autoW img,
+.icon.autoW svg {
+  width: auto;
+  height: 100%;
+}
+
+/* Shape */
 
 .round {
   border-radius: 50%;
