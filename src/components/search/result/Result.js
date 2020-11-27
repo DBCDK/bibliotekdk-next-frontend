@@ -100,6 +100,7 @@ function ResultRow({ data }) {
                     }}
                     key={material.materialType}
                     tabIndex="-1"
+                    tag="span"
                   >
                     <Text type="text4">{material.materialType}</Text>
                   </Link>
