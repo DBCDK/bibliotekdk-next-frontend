@@ -10,9 +10,13 @@ describe("Header", () => {
   // Tabs
   it(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
+
+    // logo
     cy.get("body").tab();
+    cy.focused().should("have.attr", "data-cy", "header-logo");
 
     // first element in section
+    cy.tabs(1);
     cy.focused().should("have.attr", "data-cy", "header-link-books");
 
     // last element in section

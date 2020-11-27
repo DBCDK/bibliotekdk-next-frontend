@@ -25,6 +25,7 @@ export default function Link({
   tabIndex = "0",
   tag = "a",
 }) {
+  const Tag = tag;
   // Maybe wrap with an a-tag
   if (a) {
     const animationClass = !!border ? styles.border : "";
