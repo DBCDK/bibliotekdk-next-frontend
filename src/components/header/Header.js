@@ -78,7 +78,6 @@ function Header({ className = "" }) {
             <Col xs={2}>
               <Link
                 href="/"
-                a={false}
                 dataCy={cyKey({
                   name: "logo",
                   prefix: "header",
