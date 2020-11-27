@@ -23,7 +23,9 @@ export default function Link({
   dataCy = "link",
   className = "",
   tabIndex = "0",
+  tag = "a",
 }) {
+  const Tag = tag;
   // assign given border options to default border options
   // border = { top: false, bottom: true, ...border };
 
@@ -32,7 +34,7 @@ export default function Link({
     const animationClass = !!border ? styles.border : "";
 
     children = (
-      <a
+      <Tag
         data-cy={dataCy}
         target={target}
         onFocus={onFocus}
@@ -44,7 +46,7 @@ export default function Link({
         {border.bottom && (
           <AnimationLine keepVisible={!!border.bottom.keepVisible} />
         )}
-      </a>
+      </Tag>
     );
   }
 
@@ -92,4 +94,5 @@ Link.propTypes = {
     }),
   ]),
   tabIndex: PropTypes.string,
+  tag: PropTypes.oneOf(["a", "span"]),
 };
