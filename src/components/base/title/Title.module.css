@@ -8,7 +8,6 @@
 .title1 {
   font-size: 80px;
   line-height: 92px;
-  font-family: var(--title-font-medium);
 }
 
 .title2 {
@@ -33,13 +32,9 @@
   font-family: var(--title-font-light);
 }
 
-.title6 {
-  font-size: 80px;
-  line-height: 92px;
-}
 
 @media (max-width: 768px) {
-  .title6 {
+  .title1 {
     font-size: 60px;
     line-height: 70px;
   }

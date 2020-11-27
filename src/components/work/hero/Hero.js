@@ -13,10 +13,10 @@ export default function Hero() {
     <Container className={styles.containerback}>
       <Row>
         <Col md={{ span: 3 }} xs="3" className={styles.heromargin}>
-          <Icon src={"ornament1white.svg"} size={10} />
+          <Icon src={"ornament1white.svg"} size={4} />
         </Col>
         <Col md={{ span: 7 }} xs={{ span: 7 }} className={styles.heromargin}>
-          <Title type="title6" className={styles.herotitle}>
+          <Title type="title1" className={styles.herotitle}>
             {Translate({
               context: "general",
               label: "heroTxt",
