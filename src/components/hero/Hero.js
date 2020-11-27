@@ -12,18 +12,22 @@ export default function Hero() {
   return (
     <Container className={styles.containerback}>
       <Row>
-        <Col md={{ span: 3 }} xs="3" className={styles.heromargin}>
+        <Col md={{ span: 3 }} xs={{ span: 0 }} className={styles.heroicon}>
           <Icon src={"ornament1white.svg"} size={{ w: 13, h: "auto" }} />
         </Col>
-        <Col md={{ span: 7 }} xs={{ span: 7 }} className={styles.heromargin}>
-          <Title type="title6" className={styles.herotitle}>
+        <Col
+          md={{ span: 7, offset: 0 }}
+          xs={{ span: 8, offset: 2 }}
+          className={styles.heromargin}
+        >
+          <Title type="title1" className={styles.herotitle}>
             {Translate({
               context: "general",
               label: "heroTxt",
             })}
           </Title>
         </Col>
-        <Col md={{ span: 2 }} xs={{ span: 2 }} />
+        <Col md={{ span: 2 }} xs={{ span: 1 }} />
       </Row>
     </Container>
   );

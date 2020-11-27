@@ -42,14 +42,6 @@ export default function Header({ workId }) {
   const jsonld = getJSONLD(data.work);
   const pageDescription = data.work.seo.description;
   const pageTitle = data.work.seo.title;
-  // We should have a "primary cover" on the work
-  // so we don't have to do this
-  let cover;
-  data.work.materialTypes.forEach((materialType) => {
-    if (materialType.cover) {
-      cover = materialType.cover;
-    }
-  });
 
   return (
     <Head>
@@ -59,7 +51,9 @@ export default function Header({ workId }) {
       <meta property="og:type" content="website" />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
-      {cover && <meta property="og:image" content={cover.detail} />}
+      {data.work.cover && (
+        <meta property="og:image" content={data.work.cover.detail} />
+      )}
 
       <script
         type="application/ld+json"

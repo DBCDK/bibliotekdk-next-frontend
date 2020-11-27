@@ -2,7 +2,6 @@
   background-color: green;
   background-image: url("/img/bibdk-hero-scaled.jpeg");
   background-repeat: no-repeat;
-  background-attachment: fixed;
   background-position: center;
 }
 
@@ -10,6 +9,16 @@
   line-height: 92px;
   margin-top: 3em;
   min-height: 30rem;
+}
+
+.heroicon {
+  margin-top: 3em;
+}
+
+@media (max-width: 768px) {
+  .heroicon {
+    display: none;
+  }
 }
 
 .herotitle {
