@@ -1,31 +1,36 @@
 .background {
-    margin-top: 5em;
-    color: white;
-    padding-top: 3em;
+  margin-top: var(--pt10);
+  color: white;
+  padding-top: var(--pt10);
 }
 
 .containerback {
-    background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 .footerlink {
-    display: block;
-    color: var(--iron);
-    text-decoration-color: var(--iron);
+  color: var(--iron);
+  text-decoration-color: var(--iron);
 }
 
-.spacer{
-    height: 10px;
+.footerlink span {
+  display: inline-block;
 }
 
-.padder{
-    padding-bottom: 3em;
+.footerlink hr {
+  background-color: white;
 }
 
-.footerlink:hover{
-    text-decoration: underline;
-    text-decoration-color: var(--white);
-    color: var(--white);
+.spacer {
+  height: var(--pt1);
 }
 
+.padder {
+  padding-bottom: var(--pt5);
+}
 
+.footerlink:hover {
+  /* text-decoration: underline; */
+  text-decoration-color: var(--white);
+  color: var(--white);
+}
