@@ -33,16 +33,12 @@ const FooterLogo = () => {
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
   return (
-    <React.Fragment>
+    <div>
       <Text type="text3" lines={1}>
         {label}
       </Text>
       <div className={styles.spacer}></div>
-      <Link
-        href={{ pathname: "/", query: {} }}
-        className={styles.footerlink}
-        border={{ bottom: false }}
-      >
+      <Link href={{ pathname: "/", query: {} }} className={styles.footerlink}>
         <Text tag="span" type="text3">
           {Translate({
             context: "general",
@@ -50,7 +46,7 @@ const FirstColumn = () => {
           })}
         </Text>
       </Link>
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -87,11 +83,10 @@ const ContactLinks = () => {
     English: { pathname: "/", query: {} },
   };
   return Object.keys(contact_links).map((key, index) => (
-    <React.Fragment key={key}>
+    <div key={key}>
       <Link
         href={contact_links[key]}
         className={styles.footerlink}
-        border={{ bottom: false, top: false }}
         dataCy="contactlink"
       >
         <Text tag="span" type="text3">
@@ -101,7 +96,7 @@ const ContactLinks = () => {
           })}
         </Text>
       </Link>
-    </React.Fragment>
+    </div>
   ));
 };
 
@@ -143,11 +138,10 @@ const BranchLinks = () => {
     nodes: { pathname: "/", query: {} },
   };
   return Object.keys(branch_links).map((key, index) => (
-    <React.Fragment key={key}>
+    <div key={key}>
       <Link
         href={branch_links[key]}
         className={styles.footerlink}
-        border={{ bottom: false, top: false }}
         dataCy="branchlink"
       >
         <Text tag="span" type="text3">
@@ -157,7 +151,7 @@ const BranchLinks = () => {
           })}
         </Text>
       </Link>
-    </React.Fragment>
+    </div>
   ));
 };
 

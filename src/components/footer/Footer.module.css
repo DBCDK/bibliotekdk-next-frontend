@@ -1,31 +1,30 @@
 .background {
-    margin-top: 5em;
-    color: white;
-    padding-top: 3em;
+  margin-top: var(--pt10);
+  color: white;
+  padding-top: var(--pt10);
 }
 
 .containerback {
-    background-color: var(--blue);
+  background-color: var(--blue);
 }
 
 .footerlink {
-    display: block;
-    color: var(--iron);
-    text-decoration-color: var(--iron);
+  color: var(--white);
 }
 
-.spacer{
-    height: 10px;
+.footerlink hr {
+  background-color: white;
 }
 
-.padder{
-    padding-bottom: 3em;
+.spacer {
+  height: var(--pt1);
 }
 
-.footerlink:hover{
-    text-decoration: underline;
-    text-decoration-color: var(--white);
-    color: var(--white);
+.padder {
+  padding-bottom: var(--pt5);
 }
 
-
+.footerlink:hover,
+.footerlink:focus {
+  color: var(--white);
+}
