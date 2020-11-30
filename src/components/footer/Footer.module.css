@@ -9,12 +9,7 @@
 }
 
 .footerlink {
-  color: var(--iron);
-  text-decoration-color: var(--iron);
-}
-
-.footerlink span {
-  display: inline-block;
+  color: var(--white);
 }
 
 .footerlink hr {
@@ -29,8 +24,7 @@
   padding-bottom: var(--pt5);
 }
 
-.footerlink:hover {
-  /* text-decoration: underline; */
-  text-decoration-color: var(--white);
+.footerlink:hover,
+.footerlink:focus {
   color: var(--white);
 }
