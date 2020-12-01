@@ -1,0 +1,13 @@
+.dropdown,
+.toggle {
+  display: block;
+  height: 100%;
+}
+
+.toggle {
+  height: 100%;
+}
+
+.toggle::after {
+  display: none;
+}

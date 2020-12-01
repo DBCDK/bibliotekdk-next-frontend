@@ -455,6 +455,12 @@
         "da": "Se flere",
         "en": "More"
       }
+    },
+    "suggester": {
+      "search": {
+        "da": "Søg",
+        "en": "Search"
+      }
     }
   },
   "units": {

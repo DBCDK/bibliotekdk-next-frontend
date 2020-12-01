@@ -6,6 +6,9 @@ import { useState } from "react";
 
 import { cyKey } from "@/utils/trim";
 
+import Suggester from "./suggester/";
+import Dropdown from "@/components/base/forms/dropdown";
+
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -130,32 +133,13 @@ function Header({ className = "" }) {
                 </div>
               </div>
               <div className={styles.bottom}>
-                <form
-                  className={styles._some_temp_searchbar}
-                  data-cy={cyKey({ name: "search", prefix: "header" })}
-                >
-                  <input
-                    onChange={(e) => setQuery(e.target.value)}
-                    data-cy={cyKey({ name: "searchbar", prefix: "header" })}
-                    placeholder="Søg i bøger, film, musik og mere"
-                  />
-                  <Link
-                    a={false}
-                    href={{ pathname: "/find", query: { q: query } }}
-                    border={false}
-                  >
-                    <button
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      Søg
-                    </button>
-                  </Link>
-                </form>
-
+                <div className={styles.search}>
+                  <Suggester className={styles.suggester} />
+                  <Dropdown className={styles.dropdown} />
+                  <button className={styles.button}>
+                    {Translate({ ...context, label: "search" })}
+                  </button>
+                </div>
                 <div
                   className={styles.actions}
                   data-cy={cyKey({

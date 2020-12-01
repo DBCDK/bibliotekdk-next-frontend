@@ -1,0 +1,57 @@
+.container {
+  flex-grow: 2;
+  position: relative;
+}
+
+.container__open {
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+  border: 1px solid var(--gray);
+}
+
+.input__open {
+}
+
+.input__focused {
+}
+
+.suggestions_container {
+  display: none;
+}
+
+.suggestions_container__open {
+  display: block;
+  position: absolute;
+  top: 51px;
+  width: 280px;
+  border: 1px solid #aaa;
+  background-color: #fff;
+  font-family: Helvetica, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+}
+
+.suggestions_list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.suggestion {
+  cursor: pointer;
+  padding: 10px 20px;
+}
+
+.suggestion__highlighted {
+  background-color: #ddd;
+}

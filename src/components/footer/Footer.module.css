@@ -8,10 +8,6 @@
   background-color: var(--blue);
 }
 
-.footerlink {
-  color: var(--white);
-}
-
 .footerlink hr {
   background-color: white;
 }
@@ -24,6 +20,7 @@
   padding-bottom: var(--pt5);
 }
 
+.footerlink,
 .footerlink:hover,
 .footerlink:focus {
   color: var(--white);
