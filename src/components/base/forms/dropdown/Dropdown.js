@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import { Dropdown as BootstrapDropdown } from "react-bootstrap";
 
 import { cyKey } from "@/utils/trim";
@@ -24,28 +25,49 @@ function Dropdown({
 }) {
   const key = cyKey({ name: children, prefix: "tag" });
   const disabledStyle = disabled ? styles.disabled : "";
+  const [selected, setSelected] = useState("Søg i alt");
 
   return (
     <BootstrapDropdown
       data-cy={key}
-      className={`${styles.wrap} ${className} ${disabledStyle}`}
+      className={`${styles.dropdown} ${className} ${disabledStyle}`}
     >
       <BootstrapDropdown.Toggle
         className={`${styles.toggle}`}
         id="dropdown-basic"
       >
-        Dropdown Button
+        {selected}
       </BootstrapDropdown.Toggle>
 
-      <BootstrapDropdown.Menu>
-        <BootstrapDropdown.Item href="#/action-1">
-          Action
+      <BootstrapDropdown.Menu className={styles.items}>
+        <BootstrapDropdown.Item
+          className={styles.item}
+          as="span"
+          onClick={() => setSelected("Søg i alt")}
+        >
+          Søg i Alt
         </BootstrapDropdown.Item>
-        <BootstrapDropdown.Item href="#/action-2">
-          Another action
+        <BootstrapDropdown.Divider />
+        <BootstrapDropdown.Item
+          as="span"
+          className={styles.item}
+          onClick={() => setSelected("Bog")}
+        >
+          Bog
         </BootstrapDropdown.Item>
-        <BootstrapDropdown.Item href="#/action-3">
-          Something else
+        <BootstrapDropdown.Item
+          as="span"
+          className={styles.item}
+          onClick={() => setSelected("Ebog")}
+        >
+          Ebog
+        </BootstrapDropdown.Item>
+        <BootstrapDropdown.Item
+          as="span"
+          className={styles.item}
+          onClick={() => setSelected("Lydbog")}
+        >
+          Lydbog
         </BootstrapDropdown.Item>
       </BootstrapDropdown.Menu>
     </BootstrapDropdown>

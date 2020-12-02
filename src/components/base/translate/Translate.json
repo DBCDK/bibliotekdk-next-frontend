@@ -460,6 +460,10 @@
       "search": {
         "da": "Søg",
         "en": "Search"
+      },
+      "placeholder": {
+        "da": "Søg i bøger, film, musik og mere",
+        "en": "Search books, movies, music and more"
       }
     }
   },

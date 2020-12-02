@@ -98,6 +98,8 @@
 
 .dropdown {
   height: 100%;
+  width: 208px;
+  border-left: none !important;
 }
 
 /* Search button */

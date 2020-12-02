@@ -133,13 +133,32 @@ function Header({ className = "" }) {
                 </div>
               </div>
               <div className={styles.bottom}>
-                <div className={styles.search}>
-                  <Suggester className={styles.suggester} />
+                <form
+                  className={styles.search}
+                  data-cy={cyKey({ name: "search", prefix: "header" })}
+                >
+                  <Suggester
+                    className={styles.suggester}
+                    onChange={(q) => setQuery(q)}
+                  />
                   <Dropdown className={styles.dropdown} />
-                  <button className={styles.button}>
-                    {Translate({ ...context, label: "search" })}
-                  </button>
-                </div>
+                  <Link
+                    a={false}
+                    border={false}
+                    href={{ pathname: "/find", query: { q: query } }}
+                  >
+                    <button
+                      className={styles.button}
+                      type="submit"
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
+                      })}
+                    >
+                      {Translate({ ...context, label: "search" })}
+                    </button>
+                  </Link>
+                </form>
                 <div
                   className={styles.actions}
                   data-cy={cyKey({

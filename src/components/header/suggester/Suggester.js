@@ -58,7 +58,7 @@ const lowerCasedCompanies = companies.map((company) => {
  *
  * @returns {component}
  */
-function Suggester({ className = "" }) {
+function Suggester({ className = "", onChange = null }) {
   const [value, setValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -102,7 +102,8 @@ function Suggester({ className = "" }) {
   function renderInputComponent(inputProps) {
     const props = {
       ...inputProps,
-      placeholder: "Type 'c'",
+      placeholder: Translate({ ...context, label: "placeholder" }),
+      ["data-cy"]: cyKey({ name: "input", prefix: "suggester" }),
     };
 
     return <input {...props} />;
@@ -123,6 +124,7 @@ function Suggester({ className = "" }) {
       onSuggestionsClearRequested={() => setSuggestions([])}
       onSuggestionsFetchRequested={({ value }) => {
         setValue(value);
+        onChange(value);
         setSuggestions(getSuggestions(value));
       }}
       onSuggestionSelected={(_, { suggestionValue }) =>
