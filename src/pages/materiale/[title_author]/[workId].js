@@ -36,7 +36,7 @@ export default function WorkPage() {
    */
 
   function handleOnTypeChange(query) {
-    router.push(
+    router.replace(
       { pathname: router.pathname, query },
       {
         pathname: router.asPath.replace(/\?.*/, ""),
