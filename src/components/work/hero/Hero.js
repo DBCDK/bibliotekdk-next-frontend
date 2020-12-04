@@ -17,7 +17,7 @@ export default function Hero() {
         </Col>
         <Col
           md={{ span: 7, offset: 0 }}
-          xs={{ span: 8, offset: 2 }}
+          xs={{ span: 10, offset: 0 }}
           className={styles.heromargin}
         >
           <Title type="title1" className={styles.herotitle}>
