@@ -12,6 +12,9 @@ import { useRouter } from "next/router";
 function Find() {
   const router = useRouter();
   const { q, page, view } = router.query;
+  const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
+  const pageDescription =
+    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
 
   /**
    * Updates URL query params
@@ -32,6 +35,13 @@ function Find() {
   return (
     <React.Fragment>
       <Head>
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription}></meta>
+        <meta property="og:url" content="https://beta.bibliotek.dk/find" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
+        <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <div style={{ marginTop: 50 }}>
