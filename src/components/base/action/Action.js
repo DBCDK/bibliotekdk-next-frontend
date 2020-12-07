@@ -18,23 +18,28 @@ import styles from "./Action.module.css";
  */
 export default function Action({
   className = "",
-  href = "/",
+  href = null,
   badge = null,
   title = "Go!",
   icon = "star.svg",
   children = null,
+  onClick = null,
   dataCy = null,
 }) {
+  // Use html a or the Link component
+  const Wrap = onClick ? "a" : Link;
+
   return (
-    <Link
+    <Wrap
       href={href}
+      onClick={onClick}
       className={`${className} ${styles.action}`}
       dataCy={dataCy}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
       <Icon size={{ w: "auto", h: 2 }} src={icon} children={children} />
       <Text type="text3">{title}</Text>
-    </Link>
+    </Wrap>
   );
 }
 

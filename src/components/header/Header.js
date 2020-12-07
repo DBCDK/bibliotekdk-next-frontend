@@ -46,6 +46,10 @@ function Banner() {
 function Header({ className = "" }) {
   const context = { context: "header" };
 
+  // Removed when real search input comes
+  const [query, setQuery] = useState("");
+  const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
+
   const materials = [
     { label: "books", href: "/#!" },
     { label: "articles", href: "/#!" },
@@ -63,14 +67,21 @@ function Header({ className = "" }) {
   ];
 
   const menu = [
-    { label: "search", icon: SearchIcon, href: "/#!" },
+    {
+      label: "search",
+      icon: SearchIcon,
+      onClick: () => setSuggesterVisibleMobile(true),
+    },
     { label: "login", icon: LoginIcon, href: "/#!" },
     { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
     { label: "menu", icon: BurgerIcon, href: "/#!" },
   ];
 
-  // Removed when real search input comes
-  const [query, setQuery] = useState("");
+  const suggesterVisibleMobileClass = suggesterVisibleMobile
+    ? styles.suggester__visible
+    : "";
+
+  console.log("suggesterVisibleMobile", suggesterVisibleMobile);
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -134,14 +145,20 @@ function Header({ className = "" }) {
               </div>
               <div className={styles.bottom}>
                 <form
-                  className={styles.search}
+                  className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <Suggester
-                    className={styles.suggester}
-                    onChange={(q) => setQuery(q)}
-                  />
-                  <Dropdown className={styles.dropdown} />
+                  <div
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                  >
+                    <Suggester
+                      className={`${styles.suggester}`}
+                      isMobile={suggesterVisibleMobile}
+                      onChange={(q) => setQuery(q)}
+                      onClose={() => setSuggesterVisibleMobile(false)}
+                    />
+                  </div>
+                  {false && <Dropdown className={styles.dropdown} />}
                   <Link
                     a={false}
                     border={false}
@@ -178,6 +195,7 @@ function Header({ className = "" }) {
                         key={m.label}
                         className={styles.action}
                         href={m.href}
+                        onClick={m.onClick}
                         items={m.items}
                         title={Translate({ ...context, label: m.label })}
                       />
@@ -220,9 +238,9 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  // if (props.skeleton) {
-  //   return <HeaderSkeleton {...props} />;
-  // }
+  if (props.skeleton) {
+    return <HeaderSkeleton {...props} />;
+  }
 
   return <Header {...props} />;
 }

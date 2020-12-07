@@ -1,13 +1,25 @@
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
+import AutosuggestHighlightMatch from "autosuggest-highlight/match";
+import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 import { Container, Row, Col } from "react-bootstrap";
 
-// Removed when real search input comes
-import { useState } from "react";
+import { useState, useMemo, useEffect } from "react";
+
+import { useData } from "@/lib/api/api";
+import * as suggestFragments from "@/lib/api/suggest.fragments";
 
 import { cyKey } from "@/utils/trim";
 
 import Translate from "@/components/base/translate";
+import Icon from "@/components/base/icon";
+
+import ArrowSvg from "@/public/icons/arrowleft.svg";
+
+// Templates
+import Creator from "./templates/creator";
+import Work from "./templates/work";
+import Subject from "./templates/subject";
 
 import styles from "./Suggester.module.css";
 
@@ -32,23 +44,87 @@ const theme = {
   sectionTitle: "react-autosuggest__section-title",
 };
 
-// Dummy data
-const companies = [
-  { id: 1, name: "Company1" },
-  { id: 2, name: "Company2" },
-  { id: 3, name: "Company3" },
-  { id: 4, name: "Company4" },
-  { id: 5, name: "Company5" },
-  { id: 6, name: "Company6" },
-  { id: 7, name: "Company7" },
-];
+function highlightSuggestion(suggestion, query) {
+  const matches = AutosuggestHighlightMatch(suggestion, query);
+  const parts = AutosuggestHighlightParse(suggestion, matches);
 
-const lowerCasedCompanies = companies.map((company) => {
-  return {
-    id: company.id,
-    name: company.name.toLowerCase(),
+  return (
+    <span>
+      {parts.map((part, index) => {
+        const className = part.highlight
+          ? `${styles.match} react-autosuggest__suggestion-match`
+          : null;
+
+        return (
+          <span className={className} key={index}>
+            {part.text}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
+
+/**
+ * Custom suggestion container
+ *
+ */
+function renderSuggestionsContainer({ containerProps, children, query }) {
+  return <div {...containerProps}>{children}</div>;
+}
+
+/**
+ * Custom suggestions
+ *
+ */
+function renderSuggestion(suggestion, query, skeleton) {
+  const value = suggestion.name || suggestion.value || suggestion.title;
+
+  // Add to suggestion object
+  suggestion.highlight = highlightSuggestion(value, query);
+
+  switch (suggestion.__typename) {
+    case "Creator":
+      return <Creator data={suggestion} skeleton={skeleton} />;
+    case "Work":
+      return <Work data={suggestion} skeleton={skeleton} />;
+    case "Subject":
+      return <Subject data={suggestion} skeleton={skeleton} />;
+    default:
+      return <span>{"Unknown __typename"}</span>;
+  }
+}
+
+/**
+ * Custom input field
+ *
+ */
+function renderInputComponent(inputProps, isMobile, onClose) {
+  // Set placeholder according to device type
+  const placeholder = Translate({
+    ...context,
+    label: isMobile ? "placeholderMobile" : "placeholder",
+  });
+
+  const props = {
+    ...inputProps,
+    placeholder,
+    "data-cy": cyKey({ name: "input", prefix: "suggester" }),
   };
-});
+
+  return (
+    <div className={styles.input_wrap}>
+      <Icon
+        className={styles.arrow}
+        size={{ w: "auto", h: 2 }}
+        onClick={onClose}
+      >
+        <ArrowSvg />
+      </Icon>
+      <input {...props} />
+    </div>
+  );
+}
 
 /**
  * The Component function
@@ -58,62 +134,32 @@ const lowerCasedCompanies = companies.map((company) => {
  *
  * @returns {component}
  */
-function Suggester({ className = "", onChange = null }) {
-  const [value, setValue] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
-
+function Suggester({
+  className = "",
+  query = "",
+  suggestions = [],
+  onChange = null,
+  onClose = null,
+  isMobile = false,
+  skeleton = false,
+}) {
   /**
-   * Custom suggestion container
-   *
+   * Internal query state is needed for arrow navigation in suggester.
+   * When using arrow up/down, the value changes in the inputfield, but we dont
+   * want to trigger the query callback.
    */
-  function renderSuggestionsContainer({ containerProps, children, query }) {
-    return (
-      <div {...containerProps}>
-        {children}
-        <div>
-          Press Enter to search <strong>{query}</strong>
-        </div>
-      </div>
-    );
-  }
+  const [intQuery, setIntQuery] = useState(query);
 
-  /**
-   * Custom suggestions
-   *
-   */
-  function renderSuggestion(suggestion) {
-    return <span>{suggestion.name}</span>;
-  }
+  // Create theme container with className prop
+  useEffect(() => {
+    theme.container = `${styles.container} ${className} react-autosuggest__container`;
+  }, [className]);
 
-  /**
-   * Handle suggestion data
-   *
-   */
-  function getSuggestions(value) {
-    return lowerCasedCompanies.filter((company) =>
-      company.name.includes(value.trim().toLowerCase())
-    );
-  }
-
-  /**
-   * Custom input field
-   *
-   */
-  function renderInputComponent(inputProps) {
-    const props = {
-      ...inputProps,
-      placeholder: Translate({ ...context, label: "placeholder" }),
-      ["data-cy"]: cyKey({ name: "input", prefix: "suggester" }),
-    };
-
-    return <input {...props} />;
-  }
-
-  //   Default input props
+  // Default input props
   const inputProps = {
-    value,
+    value: intQuery,
     onChange: (event, { newValue }, method) => {
-      setValue(newValue);
+      setIntQuery(newValue);
     },
   };
 
@@ -121,19 +167,24 @@ function Suggester({ className = "", onChange = null }) {
     <AutoSuggest
       theme={theme}
       suggestions={suggestions}
-      onSuggestionsClearRequested={() => setSuggestions([])}
+      onSuggestionsClearRequested={() => {}}
       onSuggestionsFetchRequested={({ value }) => {
-        setValue(value);
         onChange(value);
-        setSuggestions(getSuggestions(value));
       }}
-      onSuggestionSelected={(_, { suggestionValue }) =>
-        console.log("Selected: " + suggestionValue)
-      }
+      onSuggestionSelected={(_, { suggestionValue }) => {
+        console.log("Selected: " + suggestionValue);
+        // onChange(suggestionValue);
+      }}
       renderSuggestionsContainer={(props) => renderSuggestionsContainer(props)}
-      getSuggestionValue={(suggestion) => suggestion.name}
-      renderSuggestion={(suggestion) => renderSuggestion(suggestion)}
-      renderInputComponent={(inputProps) => renderInputComponent(inputProps)}
+      getSuggestionValue={(suggestion) =>
+        suggestion.name || suggestion.title || suggestion.value
+      }
+      renderSuggestion={(suggestion, { query }) =>
+        renderSuggestion(suggestion, query, skeleton)
+      }
+      renderInputComponent={(inputProps) =>
+        renderInputComponent(inputProps, isMobile, onClose)
+      }
       highlightFirstSuggestion={true}
       inputProps={inputProps}
     />
@@ -167,15 +218,36 @@ function SuggesterSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  if (props.skeleton) {
-    return <SuggesterSkeleton {...props} />;
+  let { className } = props;
+  const { onChange, onClose } = props;
+  const [query, setQuery] = useState("");
+
+  const { data, isLoading, error } = useData(
+    suggestFragments.all({ q: query })
+  );
+
+  if (props.skeleton || isLoading) {
+    className = `${className} ${styles.skeleton}`;
   }
 
-  return <Suggester {...props} />;
+  return (
+    <Suggester
+      {...props}
+      onChange={(query) => {
+        onChange && onChange(query);
+        setQuery(query);
+      }}
+      className={className}
+      skeleton={isLoading}
+      query={query}
+      suggestions={(data && data.suggest && data.suggest.result) || []}
+    />
+  );
 }
 
 // PropTypes for component
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onChange: PropTypes.func,
   skeleton: PropTypes.bool,
 };

@@ -1,0 +1,49 @@
+.work {
+  display: flex;
+  align-items: center;
+}
+
+.wrap {
+  width: var(--pt5);
+  height: var(--pt5);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.wrap img,
+.wrap span {
+  height: 100%;
+}
+
+.wrap img {
+  width: auto;
+}
+
+.wrap span {
+  display: block;
+  width: var(--pt4);
+  background-color: var(--mine-shaft);
+}
+
+.text {
+  width: calc(100% - 40px);
+
+  display: flex;
+  flex-direction: column;
+  padding-left: var(--pt2);
+
+  overflow: hidden;
+}
+
+.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.type {
+}

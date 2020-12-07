@@ -423,7 +423,7 @@
       },
       "becomeLoaner": {
         "da": "Bliv låner",
-        "en": "Become a borrower"
+        "en": "Become a loaner"
       },
       "search": {
         "da": "Søg",
@@ -464,6 +464,22 @@
       "placeholder": {
         "da": "Søg i bøger, film, musik og mere",
         "en": "Search books, movies, music and more"
+      },
+      "placeholderMobile": {
+        "da": "Søg",
+        "en": "Search"
+      },
+      "book": {
+        "da": "Bog",
+        "en": "Book"
+      },
+      "creator": {
+        "da": "Forfatter",
+        "en": "Author"
+      },
+      "subject": {
+        "da": "Emne",
+        "en": "Subject"
       }
     }
   },
