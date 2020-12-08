@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
+import { useRouter } from "next/router";
 
 // Removed when real search input comes
 import { useState } from "react";
@@ -46,7 +47,10 @@ function Banner() {
 function Header({ className = "" }) {
   const context = { context: "header" };
 
-  // Removed when real search input comes
+  // temp:
+  const router = useRouter();
+  //
+
   const [query, setQuery] = useState("");
   const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
 
@@ -81,7 +85,8 @@ function Header({ className = "" }) {
     ? styles.suggester__visible
     : "";
 
-  console.log("suggesterVisibleMobile", suggesterVisibleMobile);
+  console.log("### ______________________");
+  console.log("### Header => query", query);
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -91,6 +96,7 @@ function Header({ className = "" }) {
           <Row>
             <Col xs={2}>
               <Link
+                border={false}
                 href="/"
                 dataCy={cyKey({
                   name: "logo",
@@ -156,6 +162,12 @@ function Header({ className = "" }) {
                       isMobile={suggesterVisibleMobile}
                       onChange={(q) => setQuery(q)}
                       onClose={() => setSuggesterVisibleMobile(false)}
+                      onSelect={(suggestionValue) =>
+                        router.push({
+                          pathname: "/find",
+                          query: { q: suggestionValue },
+                        })
+                      }
                     />
                   </div>
                   {false && <Dropdown className={styles.dropdown} />}

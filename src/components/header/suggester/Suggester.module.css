@@ -11,15 +11,35 @@
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
   border-bottom: 1px solid var(--gray);
+  position: relative;
 }
 
-.input_wrap .arrow {
+.input_wrap .arrow,
+.input_wrap .clear {
   /* override dynamic style */
-  width: 56px !important;
-  text-align: center;
+  min-width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.input_wrap .arrow path {
+.input_wrap .clear {
+  position: absolute;
+  right: 0;
+  top: var(--pt05);
+  transform: scale(0);
+
+  transition: transform 0.3s;
+}
+
+.clear.visible {
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.input_wrap .arrow path,
+.input_wrap .clear path {
   fill: var(--blue);
 }
 
@@ -30,6 +50,7 @@
   line-height: 26px;
   font-family: var(--body-font);
   border: none;
+  padding: 0 40px 0 0;
 }
 
 .input__open {
@@ -62,7 +83,7 @@
 
 .suggestion {
   cursor: pointer;
-  padding: var(--pt05) var(--pt2);
+  padding: var(--pt1) var(--pt2);
 }
 
 .suggestion__highlighted {
@@ -70,7 +91,7 @@
 }
 
 .suggestion .match {
-  color: var(--blue);
+  font-family: var(--body-font);
 }
 
 /* Skeleton */

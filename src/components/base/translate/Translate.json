@@ -480,6 +480,10 @@
       "subject": {
         "da": "Emne",
         "en": "Subject"
+      },
+      "history": {
+        "da": "Historik",
+        "en": "History"
       }
     }
   },

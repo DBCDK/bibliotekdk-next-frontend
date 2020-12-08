@@ -34,7 +34,7 @@ export default function Action({
       href={href}
       onClick={onClick}
       className={`${className} ${styles.action}`}
-      dataCy={dataCy}
+      data-cy={dataCy}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
       <Icon size={{ w: "auto", h: 2 }} src={icon} children={children} />
