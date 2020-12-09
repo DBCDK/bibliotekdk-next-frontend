@@ -25,7 +25,7 @@ export function History({ className = "", data = {}, skeleton = false }) {
   return (
     <div className={`${styles.history} ${className} ${skeletonClass}`}>
       <div className={styles.wrap}>
-        <Icon src="star.svg" bgColor="var(--iron)" skeleton={skeleton} />
+        <Icon src="history.svg" bgColor="var(--iron)" skeleton={skeleton} />
       </div>
 
       <div className={styles.text}>

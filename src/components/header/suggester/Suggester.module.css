@@ -99,6 +99,25 @@
   max-width: 400px;
 }
 
+/* history */
+.history {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--pt1);
+}
+
+.title,
+.clear {
+  padding: var(--pt1);
+}
+
+.title {
+}
+
+.clear {
+}
+
 @media (min-width: 992px) {
   .input {
     height: 100%;

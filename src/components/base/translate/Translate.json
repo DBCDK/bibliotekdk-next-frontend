@@ -484,6 +484,14 @@
       "history": {
         "da": "Historik",
         "en": "History"
+      },
+      "historyTitle": {
+        "da": "Søgehistorik",
+        "en": "Search history"
+      },
+      "historyClear": {
+        "da": "Ryd",
+        "en": "Clear"
       }
     }
   },

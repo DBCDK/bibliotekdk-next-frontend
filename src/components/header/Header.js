@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import { useRouter } from "next/router";
-
-// Removed when real search input comes
 import { useState } from "react";
+
+import useHistory from "@/components/hooks/useHistory";
 
 import { cyKey } from "@/utils/trim";
 
@@ -37,6 +37,14 @@ function Banner() {
 }
 
 /**
+ * Function to focus suggester input field
+ *
+ */
+function focusInput() {
+  document.getElementById("suggester-input").focus();
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -53,6 +61,9 @@ function Header({ className = "" }) {
 
   const [query, setQuery] = useState("");
   const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
+  const [history, setHistory, clearHistory] = useHistory();
+
+  console.log("ZZZ history in header", history);
 
   const materials = [
     { label: "books", href: "/#!" },
@@ -74,7 +85,10 @@ function Header({ className = "" }) {
     {
       label: "search",
       icon: SearchIcon,
-      onClick: () => setSuggesterVisibleMobile(true),
+      onClick: () => {
+        setSuggesterVisibleMobile(true);
+        focusInput();
+      },
     },
     { label: "login", icon: LoginIcon, href: "/#!" },
     { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
@@ -84,9 +98,6 @@ function Header({ className = "" }) {
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
-
-  console.log("### ______________________");
-  console.log("### Header => query", query);
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -151,6 +162,14 @@ function Header({ className = "" }) {
               </div>
               <div className={styles.bottom}>
                 <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setHistory(query);
+                    router.push({ pathname: "/find", query: { q: query } });
+                    // Cleanup on mobile
+                    suggesterVisibleMobile && setQuery("");
+                    suggesterVisibleMobile && setSuggesterVisibleMobile(false);
+                  }}
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
@@ -159,34 +178,32 @@ function Header({ className = "" }) {
                   >
                     <Suggester
                       className={`${styles.suggester}`}
+                      history={history}
+                      clearHistory={() => clearHistory()}
                       isMobile={suggesterVisibleMobile}
                       onChange={(q) => setQuery(q)}
                       onClose={() => setSuggesterVisibleMobile(false)}
-                      onSelect={(suggestionValue) =>
+                      onSelect={(suggestionValue) => {
+                        setHistory(suggestionValue);
                         router.push({
                           pathname: "/find",
                           query: { q: suggestionValue },
-                        })
-                      }
+                        });
+                      }}
                     />
                   </div>
                   {false && <Dropdown className={styles.dropdown} />}
-                  <Link
-                    a={false}
-                    border={false}
-                    href={{ pathname: "/find", query: { q: query } }}
+
+                  <button
+                    className={styles.button}
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
                   >
-                    <button
-                      className={styles.button}
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      {Translate({ ...context, label: "search" })}
-                    </button>
-                  </Link>
+                    {Translate({ ...context, label: "search" })}
+                  </button>
                 </form>
                 <div
                   className={styles.actions}

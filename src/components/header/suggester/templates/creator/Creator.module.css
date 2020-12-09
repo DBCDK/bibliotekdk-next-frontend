@@ -20,7 +20,7 @@
 }
 
 .wrap i img {
-  transform: scale(2) translate(0, var(--pt05));
+  /* transform: scale(2) translate(0, var(--pt05)); */
 }
 
 .text {

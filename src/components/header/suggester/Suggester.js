@@ -1,11 +1,9 @@
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
-// import { isMobile } from "react-device-detect";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/parse";
-import { Container, Row, Col } from "react-bootstrap";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
@@ -14,6 +12,7 @@ import { cyKey } from "@/utils/trim";
 
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon";
+import Text from "@/components/base/text";
 
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
@@ -48,50 +47,19 @@ const theme = {
 };
 
 /**
- * Function to GET suggester search history
+ * Function to focus suggester input field
  *
  */
-function getSuggesterHistory() {
-  // localStorage is only supported clientSide
-  if (typeof window !== "undefined") {
-    const str = localStorage.getItem("suggesterHistory") || "[]";
-    return JSON.parse(str);
-  }
-
-  return [];
+function focusInput() {
+  document.getElementById("suggester-input").focus();
 }
 
 /**
- * Function to SET suggester search history
+ * Function to blur suggester input field
  *
  */
-function setSuggesterHistory(newValue) {
-  let history = getSuggesterHistory();
-
-  // localStorage is only supported clientSide
-  if (typeof window !== "undefined") {
-    // New history obj
-    const obj = {
-      __typename: "History",
-      value: newValue,
-    };
-
-    // Remove duplicates if any
-    history = history.filter(
-      (h) => h.value.toLowerCase() !== newValue.toLowerCase()
-    );
-
-    // Add to beginning of array (latest first)
-    history.unshift(obj);
-
-    // onlye save the first 10
-    const newArr = history.slice(0, 9);
-
-    // save to storage
-    return localStorage.setItem("suggesterHistory", JSON.stringify(newArr));
-  }
-
-  return [];
+function blurInput() {
+  document.getElementById("suggester-input").blur();
 }
 
 /**
@@ -123,8 +91,31 @@ function highlightMatch(suggestion, query) {
  * Custom suggestion container
  *
  */
-function renderSuggestionsContainer({ containerProps, children, query }) {
-  return <div {...containerProps}>{children}</div>;
+function renderSuggestionsContainer(
+  containerProps,
+  children,
+  isHistory,
+  clearHistory
+) {
+  return (
+    <div {...containerProps}>
+      {isHistory && (
+        <div className={styles.history}>
+          <Text type="text1" className={styles.title}>
+            {Translate({ ...context, label: "historyTitle" })}
+          </Text>
+          <Text
+            type="text1"
+            className={styles.clear}
+            onClick={() => clearHistory()}
+          >
+            {Translate({ ...context, label: "historyClear" })}
+          </Text>
+        </div>
+      )}
+      {children}
+    </div>
+  );
 }
 
 /**
@@ -147,7 +138,7 @@ function renderSuggestion(suggestion, query, skeleton) {
     case "History":
       return <History data={suggestion} skeleton={skeleton} />;
     default:
-      return <span>{"Unknown __typename"}</span>;
+      return null;
   }
 }
 
@@ -164,12 +155,15 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
 
   const props = {
     ...inputProps,
+    id: "suggester-input",
     placeholder,
     "data-cy": cyKey({ name: "input", prefix: "suggester" }),
   };
 
+  // Clear/Cross should be visible
   const showClear = !!(isMobile && inputProps.value !== "");
 
+  // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
 
   return (
@@ -189,7 +183,10 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
 
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
-        onClick={onClear}
+        onClick={() => {
+          onClear();
+          focusInput();
+        }}
       >
         <Icon size={{ w: "auto", h: 2 }}>
           <ClearSvg />
@@ -219,9 +216,12 @@ function Suggester({
   onChange = null,
   onClose = null,
   onSelect = null,
+  onClear = null,
   isMobile = false,
   skeleton = false,
+  history = [],
   isHistory = false,
+  clearHistory = null,
 }) {
   /**
    * Internal query state is needed for arrow navigation in suggester.
@@ -233,14 +233,11 @@ function Suggester({
   // If user did not type any search, show latest history search as suggestions
   if (!intQuery || intQuery === "") {
     // Get history for latest user search (localStorage)
-    suggestions = getSuggesterHistory();
+    suggestions = history;
 
     // Flag that history is used in suggester
     isHistory = true;
   }
-
-  console.log("### Suggester => query", query);
-  console.log("### Suggester => intQuery", intQuery);
 
   // Create theme container with className prop
   useEffect(() => {
@@ -253,6 +250,13 @@ function Suggester({
     onChange: (event, { newValue }, method) => {
       setIntQuery(newValue);
     },
+    onKeyDown: (e) => {
+      switch (e.keyCode) {
+        case 13: {
+          isMobile && setIntQuery("");
+        }
+      }
+    },
   };
 
   return (
@@ -263,23 +267,26 @@ function Suggester({
       // shouldRenderSuggestions={shouldRenderSuggestions}
       suggestions={suggestions}
       onSuggestionsClearRequested={() => {}}
-      onSuggestionsFetchRequested={({ value }) => {
-        onChange(value);
-      }}
-      onSuggestionSelected={(_, { suggestionValue, suggestion, method }) => {
-        // Set history
-        setSuggesterHistory(suggestionValue);
+      onSuggestionsFetchRequested={({ value }) => onChange(value)}
+      onSuggestionSelected={(_, { suggestionValue }) => {
         // Clear Query
-        !isMobile && onChange(suggestionValue);
+        onChange(isMobile ? "" : suggestionValue);
         isMobile && setIntQuery("");
-        isMobile && onChange("");
         // Close suggester on mobile
         isMobile && onClose();
-
+        // Blur input if not mobile
+        !isMobile && blurInput();
         // Action
         onSelect(suggestionValue);
       }}
-      renderSuggestionsContainer={(props) => renderSuggestionsContainer(props)}
+      renderSuggestionsContainer={(props) =>
+        renderSuggestionsContainer(
+          props.containerProps,
+          props.children,
+          isHistory,
+          clearHistory
+        )
+      }
       getSuggestionValue={(suggestion) =>
         suggestion.name || suggestion.title || suggestion.value
       }
