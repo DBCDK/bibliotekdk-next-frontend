@@ -20,4 +20,12 @@ module.exports = {
     });
     return config;
   },
+  publicRuntimeConfig: {
+    useFixedSessionId:
+      typeof process.env.USE_FIXED_SESSION_ID === "undefined" ||
+      process.env.USE_FIXED_SESSION_ID !== "false" ||
+      !process.env.USE_FIXED_SESSION_ID
+        ? true
+        : false,
+  },
 };

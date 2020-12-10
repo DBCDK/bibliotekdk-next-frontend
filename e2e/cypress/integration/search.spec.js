@@ -28,6 +28,29 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
+  it(`Should collect data when clicking work result`, () => {
+    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    // wait for data to be loaded
+    cy.get('[data-cy="result-row"]');
+
+    cy.intercept({
+      method: "POST",
+      url: "/graphql",
+    }).as("apiCheck");
+
+    cy.get('[data-cy="result-row"]').first().click();
+
+    cy.wait("@apiCheck").then((interception) => {
+      console.log(interception.request);
+      const data = interception.request.body.variables.input.search_work;
+      expect(data.search_query).to.equal("harry potter");
+      expect(data.search_query_hit).to.equal(1);
+      expect(data.search_query_work).to.contain("work-of:");
+      expect(data.session_id).to.exist;
+      expect(interception.response.body.errors).to.be.undefined;
+    });
+  });
+
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--search-result&viewMode=story");
     cy.tabs(1);
