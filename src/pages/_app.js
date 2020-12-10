@@ -22,11 +22,13 @@ import { setLocale } from "@/components/base/translate/Translate";
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Matomo from "@/components/matomo";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
+      <Matomo />
       <Header router={router} />
       <Component {...pageProps} />
       <Footer />
