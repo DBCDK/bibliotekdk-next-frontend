@@ -20,6 +20,7 @@ import "lazysizes/plugins/attrchange/ls.attrchange";
 import { APIStateContext } from "@/lib/api/api";
 import { setLocale } from "@/components/base/translate/Translate";
 
+import App from "next/app";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
@@ -35,3 +36,10 @@ export default function MyApp({ Component, pageProps, router }) {
     </APIStateContext.Provider>
   );
 }
+
+// Server side render all pages..
+// Else publicRuntimeConfig doesn't work
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  return { ...appProps };
+};
