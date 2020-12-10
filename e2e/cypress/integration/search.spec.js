@@ -41,12 +41,11 @@ describe("Search", () => {
     cy.get('[data-cy="result-row"]').first().click();
 
     cy.wait("@apiCheck").then((interception) => {
-      console.log(interception.request);
       const data = interception.request.body.variables.input.search_work;
       expect(data.search_query).to.equal("harry potter");
       expect(data.search_query_hit).to.equal(1);
       expect(data.search_query_work).to.contain("work-of:");
-      expect(data.session_id).to.exist;
+      expect(data.session_id).to.equal("test");
       expect(interception.response.body.errors).to.be.undefined;
     });
   });
