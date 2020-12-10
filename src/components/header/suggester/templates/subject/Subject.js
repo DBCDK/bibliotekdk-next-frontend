@@ -12,7 +12,9 @@ import styles from "./Subject.module.css";
  *
  *
  * @param {string} className
+ * @param {bool} skeleton
  * @param {object} data
+ *
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -82,5 +84,9 @@ export default function Wrap(props) {
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   skeleton: PropTypes.bool,
-  data: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  data: PropTypes.shape({
+    __typename: PropTypes.string,
+    value: PropTypes.string,
+    highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  }),
 };

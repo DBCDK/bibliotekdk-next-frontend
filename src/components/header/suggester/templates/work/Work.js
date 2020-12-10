@@ -12,6 +12,7 @@ import styles from "./Work.module.css";
  *
  *
  * @param {string} className
+ * @param {bool} skeleton
  * @param {object} data
  * See propTypes for specific props and types
  *
@@ -91,5 +92,12 @@ export default function Wrap(props) {
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   skeleton: PropTypes.bool,
-  data: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  data: PropTypes.shape({
+    __typename: PropTypes.string,
+    title: PropTypes.string,
+    highlight: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    cover: PropTypes.shape({
+      thumbnail: PropTypes.string,
+    }),
+  }),
 };

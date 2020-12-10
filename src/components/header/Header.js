@@ -8,7 +8,6 @@ import useHistory from "@/components/hooks/useHistory";
 import { cyKey } from "@/utils/trim";
 
 import Suggester from "./suggester/";
-import Dropdown from "@/components/base/forms/dropdown";
 
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -52,18 +51,15 @@ function focusInput() {
  *
  * @returns {component}
  */
-function Header({ className = "" }) {
+function Header({ router = null, className = "" }) {
   const context = { context: "header" };
 
-  // temp:
-  const router = useRouter();
-  //
-
+  // Seach Query in suggester callback
   const [query, setQuery] = useState("");
+  // Suggester visible on mobile device
   const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
+  // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
-
-  console.log("ZZZ history in header", history);
 
   const materials = [
     { label: "books", href: "/#!" },
@@ -179,9 +175,9 @@ function Header({ className = "" }) {
                     <Suggester
                       className={`${styles.suggester}`}
                       history={history}
-                      clearHistory={() => clearHistory()}
+                      clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onChange={(q) => setQuery(q)}
+                      onChange={setQuery}
                       onClose={() => setSuggesterVisibleMobile(false)}
                       onSelect={(suggestionValue) => {
                         setHistory(suggestionValue);
@@ -192,8 +188,6 @@ function Header({ className = "" }) {
                       }}
                     />
                   </div>
-                  {false && <Dropdown className={styles.dropdown} />}
-
                   <button
                     className={styles.button}
                     type="submit"

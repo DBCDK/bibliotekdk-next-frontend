@@ -27,7 +27,7 @@ export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
-      <Header />
+      <Header router={router} />
       <Component {...pageProps} />
       <Footer />
     </APIStateContext.Provider>

@@ -8,7 +8,7 @@ describe("Header", () => {
   });
 
   // Tabs
-  it(`Can tab through all clickable elements`, () => {
+  it.only(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo
@@ -32,7 +32,7 @@ describe("Header", () => {
 
     // first element in section
     cy.tab();
-    cy.focused().should("have.attr", "data-cy", "header-searchbar");
+    cy.focused().should("have.attr", "data-cy", "suggester-input");
     // last element in section
     cy.tab();
     cy.focused().should("have.attr", "data-cy", "header-searchbutton");

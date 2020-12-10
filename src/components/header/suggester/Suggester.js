@@ -209,14 +209,13 @@ function shouldRenderSuggestions(value, reason) {
  *
  * @returns {component}
  */
-function Suggester({
+export function Suggester({
   className = "",
   query = "",
   suggestions = [],
   onChange = null,
   onClose = null,
   onSelect = null,
-  onClear = null,
   isMobile = false,
   skeleton = false,
   history = [],
@@ -267,17 +266,17 @@ function Suggester({
       // shouldRenderSuggestions={shouldRenderSuggestions}
       suggestions={suggestions}
       onSuggestionsClearRequested={() => {}}
-      onSuggestionsFetchRequested={({ value }) => onChange(value)}
+      onSuggestionsFetchRequested={({ value }) => onChange && onChange(value)}
       onSuggestionSelected={(_, { suggestionValue }) => {
         // Clear Query
-        onChange(isMobile ? "" : suggestionValue);
+        onChange && onChange(isMobile ? "" : suggestionValue);
         isMobile && setIntQuery("");
         // Close suggester on mobile
         isMobile && onClose();
         // Blur input if not mobile
         !isMobile && blurInput();
         // Action
-        onSelect(suggestionValue);
+        onSelect && onSelect(suggestionValue);
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(
@@ -296,29 +295,11 @@ function Suggester({
       renderInputComponent={(inputProps) =>
         renderInputComponent(inputProps, isMobile, onClose, () => {
           setIntQuery("");
-          onChange("");
+          onChange && onChange("");
         })
       }
       highlightFirstSuggestion={false}
       inputProps={inputProps}
-    />
-  );
-}
-
-/**
- * Function to return skeleton (Loading) version of the Component
- *
- * @param {obj} props
- *  See propTypes for specific props and types
- *
- * @returns {component}
- */
-function SuggesterSkeleton(props) {
-  return (
-    <Suggester
-      {...props}
-      className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
     />
   );
 }
@@ -333,7 +314,7 @@ function SuggesterSkeleton(props) {
  */
 export default function Wrap(props) {
   let { className } = props;
-  const { onChange, onClose } = props;
+  const { onChange } = props;
   const [query, setQuery] = useState("");
 
   const { data, isLoading, error } = useData(
