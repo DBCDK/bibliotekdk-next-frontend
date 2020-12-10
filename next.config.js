@@ -20,4 +20,14 @@ module.exports = {
     });
     return config;
   },
+  publicRuntimeConfig: {
+    // Set to false in production. When set to true, the session id is set to "test", when collecting data.
+    // This allow AI to remove entries with session_id=test
+    useFixedSessionId:
+      typeof process.env.USE_FIXED_SESSION_ID === "undefined" ||
+      process.env.USE_FIXED_SESSION_ID !== "false" ||
+      !process.env.USE_FIXED_SESSION_ID
+        ? true
+        : false,
+  },
 };

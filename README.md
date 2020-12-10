@@ -22,11 +22,13 @@ The following environment variables can be set in the application. Variables pre
 - **PORT**
 Port on which Next.js runs. Default is 3000.
 - **STORYBOOK_PORT**
-Port on which storybook runs. Defaults is 4000.
+Port on which storybook runs. Default is 4000.
+- **USE_FIXED_SESSION_ID**
+Set to false in production. When set to true, the session id is set to "test", when collecting data. This allow AI to remove entries with session_id=test. Default is true.
 - **NEXT_PUBLIC_API_URL**
-URL to the GraphQL API. Defaults is http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql.
+URL to the GraphQL API. Default is http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql.
 - **API_TIMEOUT_MS**
-Time in ms for how long the Next.js server should wait for data when doing server side rendering. Defaults is 150.
+Time in ms for how long the Next.js server should wait for data when doing server side rendering. Default is 150.
 
 
 

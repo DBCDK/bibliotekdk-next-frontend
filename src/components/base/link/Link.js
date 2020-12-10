@@ -19,6 +19,7 @@ export default function Link({
   href = { pathname: "/", query: {} },
   target = "_self",
   border = { top: false, bottom: true },
+  onClick,
   onFocus = null,
   dataCy = "link",
   className = "",
@@ -34,6 +35,7 @@ export default function Link({
       <Tag
         data-cy={dataCy}
         target={target}
+        onClick={onClick}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
         tabIndex={tabIndex}
