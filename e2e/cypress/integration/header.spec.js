@@ -102,18 +102,6 @@ describe("Header", () => {
 
     cy.get("[data-cy=header-searchbutton]").click();
 
-    // When running in Storybook mode, clicking a link
-    // will open an alert. We create a stub that record calls to alert.
-    // const stub = cy.stub();
-    // cy.on("window:alert", stub);
-
-    // cy.get("[data-cy=header-searchbutton]")
-    //   .click()
-    //   .then(() => {
-    //     const expected = "/findq=Anders%20Morgenthaler";
-    //     expect(stub.getCall(0)).to.be.calledWith(expected);
-    //   });
-
     cy.on("window:alert", (str) => {
       expect(str).to.equal(`/find?q=Anders Morgenthaler`);
     });
