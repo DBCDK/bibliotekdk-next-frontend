@@ -30,7 +30,7 @@ export default function MyApp({ Component, pageProps, router }) {
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
-      <Header />
+      <Header router={router} />
       <Component {...pageProps} />
       <Footer />
     </APIStateContext.Provider>

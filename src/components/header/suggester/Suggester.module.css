@@ -1,0 +1,150 @@
+.container {
+  position: relative;
+}
+
+.container__open {
+}
+
+.input_wrap {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: var(--pt2) var(--pt2) var(--pt2) 0;
+  border-bottom: 1px solid var(--gray);
+  position: relative;
+}
+
+.input_wrap .arrow,
+.input_wrap .clear {
+  /* override dynamic style */
+  min-width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input_wrap .clear {
+  position: absolute;
+  right: 0;
+  top: var(--pt05);
+  transform: scale(0);
+
+  transition: transform 0.3s;
+}
+
+.clear.visible {
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.input_wrap .arrow path,
+.input_wrap .clear path {
+  fill: var(--blue);
+}
+
+.input {
+  width: 100%;
+  height: 32px;
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+  border: none;
+  padding: 0 40px 0 0;
+}
+
+.input__open {
+  border-bottom: none;
+}
+
+.input__focused {
+  border-bottom: 1px solid var(--mine-shaft);
+}
+
+.suggestions_container {
+  display: none;
+}
+
+.suggestions_container__open {
+  display: block;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+
+  background-color: #fff;
+  border-top: none;
+}
+
+.suggestions_list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.suggestion {
+  cursor: pointer;
+  padding: var(--pt1) var(--pt2);
+}
+
+.suggestion__highlighted {
+  background-color: var(--iron);
+}
+
+.suggestion .match {
+  font-family: var(--body-font);
+}
+
+/* Skeleton */
+.skeleton .suggestion {
+  max-width: 400px;
+}
+
+/* history */
+.history {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--pt1);
+}
+
+.title,
+.clear {
+  padding: var(--pt1);
+}
+
+.title {
+}
+
+.clear {
+}
+
+@media (min-width: 992px) {
+  .input {
+    height: 100%;
+    padding: 16px;
+    border: 1px solid var(--gray);
+  }
+
+  .input__focused {
+    border: 1px solid var(--gray);
+  }
+
+  .input_wrap {
+    height: 64px;
+    /* display: flex;
+    align-items: center; */
+    padding: 0;
+    border: none;
+  }
+
+  .input_wrap .arrow {
+    display: none;
+  }
+
+  .suggestions_container__open {
+    top: calc(100% - 1px);
+
+    border: 1px solid var(--gray);
+    border-top: none;
+  }
+}

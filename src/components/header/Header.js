@@ -1,10 +1,13 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-
-// Removed when real search input comes
+import { useRouter } from "next/router";
 import { useState } from "react";
 
+import useHistory from "@/components/hooks/useHistory";
+
 import { cyKey } from "@/utils/trim";
+
+import Suggester from "./suggester/";
 
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -33,6 +36,14 @@ function Banner() {
 }
 
 /**
+ * Function to focus suggester input field
+ *
+ */
+function focusInput() {
+  document.getElementById("suggester-input").focus();
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -40,8 +51,15 @@ function Banner() {
  *
  * @returns {component}
  */
-function Header({ className = "" }) {
+function Header({ router = null, className = "" }) {
   const context = { context: "header" };
+
+  // Seach Query in suggester callback
+  const [query, setQuery] = useState("");
+  // Suggester visible on mobile device
+  const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
+  // Search history in suggester
+  const [history, setHistory, clearHistory] = useHistory();
 
   const materials = [
     { label: "books", href: "/#!" },
@@ -60,14 +78,22 @@ function Header({ className = "" }) {
   ];
 
   const menu = [
-    { label: "search", icon: SearchIcon, href: "/#!" },
+    {
+      label: "search",
+      icon: SearchIcon,
+      onClick: () => {
+        setSuggesterVisibleMobile(true);
+        focusInput();
+      },
+    },
     { label: "login", icon: LoginIcon, href: "/#!" },
     { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
     { label: "menu", icon: BurgerIcon, href: "/#!" },
   ];
 
-  // Removed when real search input comes
-  const [query, setQuery] = useState("");
+  const suggesterVisibleMobileClass = suggesterVisibleMobile
+    ? styles.suggester__visible
+    : "";
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -77,6 +103,7 @@ function Header({ className = "" }) {
           <Row>
             <Col xs={2}>
               <Link
+                border={false}
                 href="/"
                 dataCy={cyKey({
                   name: "logo",
@@ -131,31 +158,47 @@ function Header({ className = "" }) {
               </div>
               <div className={styles.bottom}>
                 <form
-                  className={styles._some_temp_searchbar}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setHistory(query);
+                    router.push({ pathname: "/find", query: { q: query } });
+                    // Cleanup on mobile
+                    suggesterVisibleMobile && setQuery("");
+                    suggesterVisibleMobile && setSuggesterVisibleMobile(false);
+                  }}
+                  className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <input
-                    onChange={(e) => setQuery(e.target.value)}
-                    data-cy={cyKey({ name: "searchbar", prefix: "header" })}
-                    placeholder="Søg i bøger, film, musik og mere"
-                  />
-                  <Link
-                    a={false}
-                    href={{ pathname: "/find", query: { q: query } }}
-                    border={false}
+                  <div
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
-                    <button
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      Søg
-                    </button>
-                  </Link>
+                    <Suggester
+                      className={`${styles.suggester}`}
+                      history={history}
+                      clearHistory={clearHistory}
+                      isMobile={suggesterVisibleMobile}
+                      onChange={setQuery}
+                      onClose={() => setSuggesterVisibleMobile(false)}
+                      onSelect={(suggestionValue) => {
+                        setHistory(suggestionValue);
+                        router.push({
+                          pathname: "/find",
+                          query: { q: suggestionValue },
+                        });
+                      }}
+                    />
+                  </div>
+                  <button
+                    className={styles.button}
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
+                  >
+                    {Translate({ ...context, label: "search" })}
+                  </button>
                 </form>
-
                 <div
                   className={styles.actions}
                   data-cy={cyKey({
@@ -175,6 +218,7 @@ function Header({ className = "" }) {
                         key={m.label}
                         className={styles.action}
                         href={m.href}
+                        onClick={m.onClick}
                         items={m.items}
                         title={Translate({ ...context, label: m.label })}
                       />
@@ -217,9 +261,9 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  // if (props.skeleton) {
-  //   return <HeaderSkeleton {...props} />;
-  // }
+  if (props.skeleton) {
+    return <HeaderSkeleton {...props} />;
+  }
 
   return <Header {...props} />;
 }
