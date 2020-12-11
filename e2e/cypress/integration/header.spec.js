@@ -8,7 +8,7 @@ describe("Header", () => {
   });
 
   // Tabs
-  it(`Can tab through all clickable elements`, () => {
+  it.only(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo

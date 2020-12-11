@@ -21,7 +21,7 @@ import ViewSelector from "../viewselector";
  * @param {object} props
  * @param {object} props.data
  */
-function ResultRow({ data }) {
+function ResultRow({ data, onClick }) {
   const { title, creator, work = {} } = data;
   const creatorName =
     (work.creators && work.creators[0] && work.creators[0].name) ||
@@ -42,6 +42,7 @@ function ResultRow({ data }) {
         },
       }}
       dataCy={`result-row${work.id ? "" : "-skeleton"}`}
+      onClick={onClick}
     >
       <Row className={styles.row}>
         <Col className={styles.leftcol} xs={3}>
@@ -122,6 +123,7 @@ function ResultRow({ data }) {
 }
 ResultRow.propTypes = {
   data: PropTypes.object,
+  onClick: PropTypes.func,
 };
 
 /**
@@ -131,9 +133,16 @@ ResultRow.propTypes = {
  * @param {boolean} props.isLoading
  * @param {array} props.rows
  * @param {function} props.onViewSelect
+ * @param {function} props.onWorkClick
  * @param {string} props.viewSelected
  */
-export function Result({ isLoading, rows = [], onViewSelect, viewSelected }) {
+export function Result({
+  isLoading,
+  rows = [],
+  onViewSelect,
+  onWorkClick,
+  viewSelected,
+}) {
   if (isLoading) {
     // Create some skeleton rows
     rows = [{}, {}, {}];
@@ -167,7 +176,11 @@ export function Result({ isLoading, rows = [], onViewSelect, viewSelected }) {
       }
     >
       {rows.map((row, index) => (
-        <ResultRow data={row} key={`${row.title}_${index}`} />
+        <ResultRow
+          data={row}
+          key={`${row.title}_${index}`}
+          onClick={onWorkClick && (() => onWorkClick(index, row.work))}
+        />
       ))}
     </Section>
   );
@@ -177,6 +190,7 @@ Result.propTypes = {
   rows: PropTypes.array,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
+  onWorkClick: PropTypes.func,
 };
 
 /**
@@ -188,7 +202,7 @@ Result.propTypes = {
  *
  * @returns {component}
  */
-export default function Wrap({ q, onViewSelect, viewSelected }) {
+export default function Wrap({ q, onViewSelect, onWorkClick, viewSelected }) {
   // use the useData hook to fetch data
   const fastResponse = useData(fast({ q }));
   const allResponse = useData(all({ q }));
@@ -206,6 +220,7 @@ export default function Wrap({ q, onViewSelect, viewSelected }) {
     <Result
       rows={data.search.result}
       onViewSelect={onViewSelect}
+      onWorkClick={onWorkClick}
       viewSelected={viewSelected}
     />
   );
@@ -214,4 +229,5 @@ Wrap.propTypes = {
   q: PropTypes.string,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
+  onWorkClick: PropTypes.func,
 };

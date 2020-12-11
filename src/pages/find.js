@@ -3,6 +3,8 @@ import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { collectSearchWorkClick } from "@/lib/api/datacollect.mutations";
+import { getClient } from "@/lib/api/api";
 
 /**
  * @file
@@ -54,6 +56,15 @@ function Find() {
             q={q}
             viewSelected={view}
             onViewSelect={(view) => updateQueryParams({ view })}
+            onWorkClick={(index, work) => {
+              getClient().request(
+                collectSearchWorkClick({
+                  search_query: q,
+                  search_query_hit: index + 1,
+                  search_query_work: work.id,
+                })
+              );
+            }}
           />
         )}
         {q && (
