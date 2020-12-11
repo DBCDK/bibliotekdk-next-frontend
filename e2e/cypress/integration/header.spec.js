@@ -8,7 +8,7 @@ describe("Header", () => {
   });
 
   // Tabs
-  it.only(`Can tab through all clickable elements`, () => {
+  it(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo
@@ -75,6 +75,22 @@ describe("Header", () => {
     cy.get("[data-cy=header-link-basket]").should("not.be.visible");
 
     cy.get("[data-cy=header-search]").should("be.visible");
+  });
+
+  it(`Check visible elemets for screensizes < 992`, () => {
+    cy.viewport(991, 700);
+
+    cy.get("[data-cy=header-materials]").should("not.be.visible");
+    cy.get("[data-cy=header-top-actions]").should("not.be.visible");
+    cy.get("[data-cy=header-search]").should("be.visible");
+
+    cy.get("[data-cy=suggester-input]").should("not.be.visible");
+    cy.get("[data-cy=header-searchbutton]").should("not.be.visible");
+
+    cy.get("[data-cy=header-link-menu]").should("be.visible");
+    cy.get("[data-cy=header-link-login]").should("be.visible");
+    cy.get("[data-cy=header-link-basket]").should("be.visible");
+    cy.get("[data-cy=header-link-search]").should("be.visible");
   });
 
   // Suggester
