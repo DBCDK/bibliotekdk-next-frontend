@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import { useRouter } from "next/router";
 import { useState } from "react";
 
 import useHistory from "@/components/hooks/useHistory";
@@ -51,7 +50,7 @@ function focusInput() {
  *
  * @returns {component}
  */
-function Header({ router = null, className = "" }) {
+function Header({ className = "", router = null, isStory = false }) {
   const context = { context: "header" };
 
   // Seach Query in suggester callback
@@ -161,7 +160,9 @@ function Header({ router = null, className = "" }) {
                   onSubmit={(e) => {
                     e.preventDefault();
                     setHistory(query);
-                    router.push({ pathname: "/find", query: { q: query } });
+                    router &&
+                      router.push({ pathname: "/find", query: { q: query } });
+                    isStory && alert(`/find?q=${query}`);
                     // Cleanup on mobile
                     suggesterVisibleMobile && setQuery("");
                     suggesterVisibleMobile && setSuggesterVisibleMobile(false);
@@ -181,10 +182,11 @@ function Header({ router = null, className = "" }) {
                       onClose={() => setSuggesterVisibleMobile(false)}
                       onSelect={(suggestionValue) => {
                         setHistory(suggestionValue);
-                        router.push({
-                          pathname: "/find",
-                          query: { q: suggestionValue },
-                        });
+                        router &&
+                          router.push({
+                            pathname: "/find",
+                            query: { q: suggestionValue },
+                          });
                       }}
                     />
                   </div>
@@ -271,5 +273,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  isStory: PropTypes.bool,
   skeleton: PropTypes.bool,
 };

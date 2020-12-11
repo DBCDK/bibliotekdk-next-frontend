@@ -13,7 +13,7 @@ export default {
 export function NavHeader() {
   return (
     <div>
-      <Header />
+      <Header isStory={true} />
     </div>
   );
 }

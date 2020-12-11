@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "@/utils/trim";
+
 import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
 
@@ -26,7 +28,10 @@ export function Work({ className = "", data = {}, skeleton = false }) {
   const hasCover = !!(data.cover && data.cover.thumbnail);
 
   return (
-    <div className={`${styles.work} ${className} ${skeletonClass}`}>
+    <div
+      className={`${styles.work} ${className} ${skeletonClass}`}
+      data-cy={cyKey({ name: "work-element", prefix: "suggester" })}
+    >
       <div className={styles.wrap}>
         {skeleton || hasCover ? (
           <Cover

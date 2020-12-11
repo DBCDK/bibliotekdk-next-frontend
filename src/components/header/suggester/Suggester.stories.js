@@ -51,6 +51,8 @@ export function HeaderSuggester() {
       <div style={{ maxWidth: "600px" }}>
         <Suggester
           isMobile={isMobile}
+          onSelect={(suggestionValue) => alert(`${suggestionValue} selected`)}
+          clearHistory={() => alert("History cleared")}
           history={[
             {
               __typename: "History",

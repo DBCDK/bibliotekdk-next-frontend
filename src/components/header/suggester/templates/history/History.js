@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "@/utils/trim";
+
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 
@@ -24,7 +26,10 @@ export function History({ className = "", data = {}, skeleton = false }) {
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   return (
-    <div className={`${styles.history} ${className} ${skeletonClass}`}>
+    <div
+      className={`${styles.history} ${className} ${skeletonClass}`}
+      data-cy={cyKey({ name: "history-element", prefix: "suggester" })}
+    >
       <div className={styles.wrap}>
         <Icon src="history.svg" bgColor="var(--iron)" skeleton={skeleton} />
       </div>

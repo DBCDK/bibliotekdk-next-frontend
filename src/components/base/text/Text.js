@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "@/utils/trim";
+
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
@@ -29,11 +31,15 @@ function Text({
   clamp,
   tag = "p",
   onClick = null,
+  dataCy = null,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
   // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
+
+  // generate data-cy key if none given
+  const key = dataCy || cyKey({ name: children, prefix: "text" });
 
   return (
     <Tag
@@ -41,6 +47,7 @@ function Text({
         clamp && styles.clamp
       }`}
       onClick={onClick}
+      data-cy={key}
       style={
         clamp &&
         lines && { WebkitLineClamp: lines, maxHeight: lines * lineHeight[type] }

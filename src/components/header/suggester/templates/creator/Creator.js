@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "@/utils/trim";
+
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 
@@ -24,7 +26,10 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   return (
-    <div className={`${styles.creator} ${className} ${skeletonClass}`}>
+    <div
+      className={`${styles.creator} ${className} ${skeletonClass}`}
+      data-cy={cyKey({ name: "creator-element", prefix: "suggester" })}
+    >
       <div className={styles.wrap}>
         {!skeleton && data.imageUrl ? (
           <img src={data.imageUrl} />

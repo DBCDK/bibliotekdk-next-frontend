@@ -57,6 +57,11 @@
   margin: 0 var(--pt3) 0 0;
 }
 
+.bottom .actions .action {
+  display: flex;
+  margin: 0 var(--pt4) 0 0;
+}
+
 .bottom .actions .action:last-child,
 .top .actions a:last-child {
   margin: 0;
@@ -196,6 +201,10 @@
 
   .header .bottom {
     padding: var(--pt4) 0 0 0;
+  }
+
+  .bottom .actions .action {
+    margin: 0 var(--pt3) 0 0;
   }
 }
 

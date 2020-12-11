@@ -8,7 +8,7 @@ describe("Header", () => {
   });
 
   // Tabs
-  it.only(`Can tab through all clickable elements`, () => {
+  it(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo
@@ -84,12 +84,26 @@ describe("Header", () => {
     cy.get("[data-cy=header-top-actions]").should("not.be.visible");
     cy.get("[data-cy=header-search]").should("be.visible");
 
-    cy.get("[data-cy=header-searchbar]").should("not.be.visible");
+    cy.get("[data-cy=suggester-input]").should("not.be.visible");
     cy.get("[data-cy=header-searchbutton]").should("not.be.visible");
 
     cy.get("[data-cy=header-link-menu]").should("be.visible");
     cy.get("[data-cy=header-link-login]").should("be.visible");
     cy.get("[data-cy=header-link-basket]").should("be.visible");
     cy.get("[data-cy=header-link-search]").should("be.visible");
+  });
+
+  // Suggester
+  it(`Can submit suggester form from header`, () => {
+    // container get visible when user types.
+    cy.get("[data-cy=suggester-input]").focus();
+    cy.get("[data-cy=suggester-input]").type("Anders Morgenthaler");
+    cy.get("[data-cy=suggester-container]").should("be.visible");
+
+    cy.get("[data-cy=header-searchbutton]").click();
+
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal(`/find?q=Anders Morgenthaler`);
+    });
   });
 });
