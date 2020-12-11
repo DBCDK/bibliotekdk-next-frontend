@@ -8,7 +8,7 @@ describe("Header", () => {
   });
 
   // Tabs
-  it.only(`Can tab through all clickable elements`, () => {
+  it(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo
@@ -77,19 +77,29 @@ describe("Header", () => {
     cy.get("[data-cy=header-search]").should("be.visible");
   });
 
-  it(`Check visible elemets for screensizes < 992`, () => {
-    cy.viewport(991, 700);
+  // Suggester
+  it(`Can submit suggester form from header`, () => {
+    // container get visible when user types.
+    cy.get("[data-cy=suggester-input]").focus();
+    cy.get("[data-cy=suggester-input]").type("Anders Morgenthaler");
+    cy.get("[data-cy=suggester-container]").should("be.visible");
 
-    cy.get("[data-cy=header-materials]").should("not.be.visible");
-    cy.get("[data-cy=header-top-actions]").should("not.be.visible");
-    cy.get("[data-cy=header-search]").should("be.visible");
+    cy.get("[data-cy=header-searchbutton]").click();
 
-    cy.get("[data-cy=header-searchbar]").should("not.be.visible");
-    cy.get("[data-cy=header-searchbutton]").should("not.be.visible");
+    // When running in Storybook mode, clicking a link
+    // will open an alert. We create a stub that record calls to alert.
+    // const stub = cy.stub();
+    // cy.on("window:alert", stub);
 
-    cy.get("[data-cy=header-link-menu]").should("be.visible");
-    cy.get("[data-cy=header-link-login]").should("be.visible");
-    cy.get("[data-cy=header-link-basket]").should("be.visible");
-    cy.get("[data-cy=header-link-search]").should("be.visible");
+    // cy.get("[data-cy=header-searchbutton]")
+    //   .click()
+    //   .then(() => {
+    //     const expected = "/findq=Anders%20Morgenthaler";
+    //     expect(stub.getCall(0)).to.be.calledWith(expected);
+    //   });
+
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal(`/find?q=Anders Morgenthaler`);
+    });
   });
 });

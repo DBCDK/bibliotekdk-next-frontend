@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { cyKey } from "@/utils/trim";
+
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 
@@ -25,7 +27,10 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   return (
-    <div className={`${styles.subject} ${className} ${skeletonClass}`}>
+    <div
+      className={`${styles.subject} ${className} ${skeletonClass}`}
+      data-cy={cyKey({ name: "subject-element", prefix: "suggester" })}
+    >
       <div className={styles.wrap}>
         <Icon src="search.svg" bgColor="var(--iron)" skeleton={skeleton} />
       </div>

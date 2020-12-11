@@ -98,13 +98,17 @@ function renderSuggestionsContainer(
   clearHistory
 ) {
   return (
-    <div {...containerProps}>
+    <div
+      {...containerProps}
+      data-cy={cyKey({ name: "container", prefix: "suggester" })}
+    >
       {isHistory && (
         <div className={styles.history}>
           <Text type="text1" className={styles.title}>
             {Translate({ ...context, label: "historyTitle" })}
           </Text>
           <Text
+            dataCy={cyKey({ name: "clear-history", prefix: "suggester" })}
             type="text1"
             className={styles.clear}
             onClick={() => clearHistory()}
@@ -180,7 +184,6 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
         </Icon>
       </span>
       <input {...props} />
-
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => {
