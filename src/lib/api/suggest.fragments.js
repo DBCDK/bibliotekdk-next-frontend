@@ -31,6 +31,7 @@ export function all({ q }) {
             }
           }
         }
+        monitor(name: "bibdknext_suggest_all")
       }`,
     variables: { q },
     slowThreshold: 3000,

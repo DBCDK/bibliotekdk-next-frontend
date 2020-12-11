@@ -21,6 +21,7 @@ export function fast({ q }) {
             }
           }
         }
+        monitor(name: "bibdknext_search_fast")
       }`,
     variables: { q },
     slowThreshold: 3000,
@@ -56,6 +57,7 @@ export function all({ q }) {
             }
           }
         }
+        monitor(name: "bibdknext_search_all")
       }`,
     variables: { q },
     slowThreshold: 3000,

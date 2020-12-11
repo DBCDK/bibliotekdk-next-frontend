@@ -30,6 +30,7 @@ export function basic({ workId }) {
             value
           }
         }
+        monitor(name: "bibdknext_work_basic")
       }`,
     variables: { workId },
     slowThreshold: 3000,
@@ -55,6 +56,7 @@ export function covers({ workId }) {
           }
         }
       }
+      monitor(name: "bibdknext_work_covers")
     }`,
     variables: { workId },
     slowThreshold: 3000,
@@ -97,6 +99,7 @@ export function details({ workId }) {
             publisher
           }
         }
+        monitor(name: "bibdknext_work_details")
       }`,
     variables: { workId },
     slowThreshold: 3000,
@@ -144,6 +147,7 @@ export function detailsAllManifestations({ workId }) {
             title
           }
         }
+        monitor(name: "bibdknext_work_detailsallmanifestations")
       }`,
     variables: { workId },
     slowThreshold: 3000,
@@ -179,6 +183,7 @@ export function recommendations({ workId }) {
         }
       }
     }
+    monitor(name: "bibdknext_work_recommendations")
   }
   `,
     variables: { workId: workId.replace("work-of:", "") },
@@ -210,6 +215,7 @@ export function reviews({ workId }) {
             url
           }
         }
+        monitor(name: "bibdknext_work_reviews")
       }`,
     variables: { workId },
     slowThreshold: 3000,
@@ -246,6 +252,7 @@ export function series({ workId }) {
           }
         }
       }
+      monitor(name: "bibdknext_work_series")
     }
   `,
     variables: { workId },
