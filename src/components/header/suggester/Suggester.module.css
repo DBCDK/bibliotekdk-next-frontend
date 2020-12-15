@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid var(--iron);
   position: relative;
 }
 
@@ -51,6 +51,10 @@
   font-family: var(--body-font);
   border: none;
   padding: 0 40px 0 0;
+
+  /* remove border on iphone */
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 
 .input__open {
@@ -70,8 +74,7 @@
   position: absolute;
   top: 100%;
   width: 100%;
-
-  background-color: #fff;
+  background-color: white;
   border-top: none;
 }
 

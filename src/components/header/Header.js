@@ -43,6 +43,14 @@ function focusInput() {
 }
 
 /**
+ * Function to blur suggester input field
+ *
+ */
+function blurInput() {
+  document.getElementById("suggester-input").blur();
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -165,6 +173,8 @@ function Header({ className = "", router = null, isStory = false }) {
                     isStory && alert(`/find?q=${query}`);
                     // Cleanup on mobile
                     suggesterVisibleMobile && setQuery("");
+                    // remove keyboard on mobile
+                    suggesterVisibleMobile && blurInput();
                     suggesterVisibleMobile && setSuggesterVisibleMobile(false);
                   }}
                   className={`${styles.search}`}

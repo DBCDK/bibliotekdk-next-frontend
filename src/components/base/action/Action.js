@@ -18,7 +18,7 @@ import styles from "./Action.module.css";
  */
 export default function Action({
   className = "",
-  href = null,
+  href = "/#",
   badge = null,
   title = "Go!",
   icon = "star.svg",
@@ -40,7 +40,7 @@ export default function Action({
       {...cy}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
-      <Icon size={{ w: "auto", h: 2 }} src={icon} children={children} />
+      <Icon size={{ w: "auto", h: 3 }} src={icon} children={children} />
       <Text type="text3">{title}</Text>
     </Wrap>
   );

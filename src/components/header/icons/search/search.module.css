@@ -1,20 +1,28 @@
 .search {
-  width: 18px;
-  height: 24px;
+  /* width: 18px;*/
+  /* height: 24px; */
+  width: 22px;
+  height: 30px;
   overflow: hidden;
-  transform: translate(-1px, -6px);
+  /* transform: translate(-1px, -6px); */
+  transform: translate(-1px, -8px);
 }
 
 .icon {
   position: relative;
-  width: 16px;
-  height: 18px;
-  transform: translate(1px, 6px);
+  /* width: 16px; */
+  /* height: 18px; */
+  width: 22px;
+  height: 22px;
+  /* transform: translate(1px, 6px); */
+  transform: translate(1px, 8px);
 }
 
 .lens {
-  width: 13px;
-  height: 13px;
+  /* width: 13px; */
+  /* height: 13px; */
+  width: 16px;
+  height: 16px;
   border: 2px solid var(--mine-shaft);
   border-radius: 50%;
   position: relative;
@@ -22,10 +30,12 @@
 
 .handle {
   position: absolute;
-  width: 8px;
+  /* width: 8px; */
+  width: 11px;
   height: 2px;
   background-color: var(--mine-shaft);
-  transform: translate(5px, 3px) rotate(45deg);
+  /* transform: translate(5px, 3px) rotate(45deg); */
+  transform: translate(7px, 3px) rotate(45deg);
   right: 0;
   bottom: 0;
 }
@@ -57,9 +67,11 @@
 @keyframes growHandle {
   0%,
   75% {
-    transform: translate(5px, 3px) rotate(45deg) scale(0);
+    /* transform: translate(5px, 3px) rotate(45deg) scale(0); */
+    transform: translate(7px, 3px) rotate(45deg) scale(0);
   }
   100% {
-    transform: translate(5px, 3px) rotate(45deg) scale(1);
+    /* transform: translate(5px, 3px) rotate(45deg) scale(1); */
+    transform: translate(7px, 3px) rotate(45deg) scale(1);
   }
 }

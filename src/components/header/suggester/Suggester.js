@@ -13,6 +13,7 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
+import Link from "@/components/base/link";
 
 import ArrowSvg from "@/public/icons/arrowleft.svg";
 import ClearSvg from "@/public/icons/close.svg";
@@ -107,13 +108,20 @@ function renderSuggestionsContainer(
           <Text type="text1" className={styles.title}>
             {Translate({ ...context, label: "historyTitle" })}
           </Text>
+
           <Text
             dataCy={cyKey({ name: "clear-history", prefix: "suggester" })}
             type="text1"
             className={styles.clear}
             onClick={() => clearHistory()}
           >
-            {Translate({ ...context, label: "historyClear" })}
+            <Link
+              tag="span"
+              onClick={(e) => e.preventDefault()}
+              border={{ bottom: { keepVisible: true } }}
+            >
+              {Translate({ ...context, label: "historyClear" })}
+            </Link>
           </Text>
         </div>
       )}
@@ -276,8 +284,8 @@ export function Suggester({
         isMobile && setIntQuery("");
         // Close suggester on mobile
         isMobile && onClose();
-        // Blur input if not mobile
-        !isMobile && blurInput();
+        // Blur input onselect
+        blurInput();
         // Action
         onSelect && onSelect(suggestionValue);
       }}
