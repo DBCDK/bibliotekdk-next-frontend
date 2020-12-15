@@ -28,19 +28,32 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
-  it(`Should collect data when clicking work result`, () => {
+  it(`Should collect data when searching and clicking work`, () => {
+    // Intercept data collection requests to graphql
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.startsWith("mutation")) {
+        req.alias = "apiMutation";
+      }
+    });
+
     cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+
+    // When search begin query should be logged
+    cy.wait("@apiMutation").then((interception) => {
+      const data = interception.request.body.variables.input.search;
+      expect(data.search_query).to.equal("harry potter");
+      expect(data.session_id).to.equal("test");
+      expect(interception.response.body.errors).to.be.undefined;
+    });
+
     // wait for data to be loaded
     cy.get('[data-cy="result-row"]');
 
-    cy.intercept({
-      method: "POST",
-      url: "/graphql",
-    }).as("apiCheck");
-
+    // click on row
     cy.get('[data-cy="result-row"]').first().click();
 
-    cy.wait("@apiCheck").then((interception) => {
+    // clicking the row should log
+    cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.search_work;
       expect(data.search_query).to.equal("harry potter");
       expect(data.search_query_hit).to.equal(1);
