@@ -35,7 +35,10 @@ export default function Action({
   return (
     <Wrap
       href={href}
-      onClick={onClick}
+      onClick={(e) => {
+        e.preventDefault(); // Prevent link href direct
+        onClick();
+      }}
       className={`${className} ${styles.action}`}
       {...cy}
     >

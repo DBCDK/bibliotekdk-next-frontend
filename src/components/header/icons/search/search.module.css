@@ -31,7 +31,7 @@
 .handle {
   position: absolute;
   /* width: 8px; */
-  width: 11px;
+  width: 10px;
   height: 2px;
   background-color: var(--mine-shaft);
   /* transform: translate(5px, 3px) rotate(45deg); */

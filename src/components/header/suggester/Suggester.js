@@ -182,6 +182,7 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
     <div className={styles.input_wrap}>
       <span
         className={styles.arrow}
+        data-cy={cyKey({ name: "arrow-close", prefix: "suggester" })}
         onClick={() => {
           onClear();
           onClose();

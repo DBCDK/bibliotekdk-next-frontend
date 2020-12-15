@@ -171,10 +171,10 @@ function Header({ className = "", router = null, isStory = false }) {
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
                     isStory && alert(`/find?q=${query}`);
-                    // Cleanup on mobile
-                    suggesterVisibleMobile && setQuery("");
                     // remove keyboard on mobile
                     suggesterVisibleMobile && blurInput();
+                    // Cleanup on mobile
+                    suggesterVisibleMobile && setQuery("");
                     suggesterVisibleMobile && setSuggesterVisibleMobile(false);
                   }}
                   className={`${styles.search}`}
