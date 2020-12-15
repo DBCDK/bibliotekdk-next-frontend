@@ -1,13 +1,13 @@
 .containerback {
   background-image: url("/img/bibdk-hero-scaled.jpeg");
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 50% 75%;
 }
 
 .heromargin {
   line-height: 92px;
   margin-top: 3em;
-  min-height: 30rem;
+  min-height: 20rem;
 }
 
 .heroicon {
