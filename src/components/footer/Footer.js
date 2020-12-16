@@ -165,7 +165,7 @@ const BranchLinks = () => {
 const FooterSection = () => {
   return (
     <div className={styles.containerback}>
-      <Container>
+      <Container fluid>
         <Row
           as="section"
           className={`${styles.background} `}

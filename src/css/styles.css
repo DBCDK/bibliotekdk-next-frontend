@@ -31,7 +31,8 @@
 }
 
 @media screen and (min-width: 1400px) {
-  .container {
+  .container,
+  .container-fluid {
     max-width: 1400px;
 
     /* override grid spacing prop margin */

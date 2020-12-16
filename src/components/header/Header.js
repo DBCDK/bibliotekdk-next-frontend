@@ -106,7 +106,7 @@ function Header({ className = "", router = null, isStory = false }) {
     <header className={`${styles.wrap} ${className}`}>
       <Banner />
       <div className={styles.headerWrap}>
-        <Container className={styles.header}>
+        <Container className={styles.header} fluid>
           <Row>
             <Col xs={2}>
               <Link

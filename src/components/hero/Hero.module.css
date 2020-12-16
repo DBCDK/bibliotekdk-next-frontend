@@ -1,7 +1,9 @@
 .containerback {
+  height: 560px;
   background-image: url("/img/bibdk-hero-scaled.jpeg");
   background-repeat: no-repeat;
   background-position: center;
+  background-size: cover;
 }
 
 .heromargin {
