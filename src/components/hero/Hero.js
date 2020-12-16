@@ -13,7 +13,7 @@ export default function Hero() {
     <Container className={styles.containerback} fluid>
       <Row>
         <Col md={{ span: 3 }} xs={{ span: 0 }} className={styles.heroicon}>
-          <Icon src={"ornament1white.svg"} size={{ w: 13, h: "auto" }} />
+          <Icon src={"ornament1white.svg"} size={{ w: 5, h: "auto" }} />
         </Col>
         <Col
           md={{ span: 7, offset: 0 }}

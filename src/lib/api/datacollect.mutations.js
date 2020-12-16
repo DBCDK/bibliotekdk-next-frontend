@@ -12,6 +12,29 @@ const { publicRuntimeConfig } = getConfig();
 const session_id = publicRuntimeConfig.useFixedSessionId ? "test" : uuidv4();
 
 /**
+ * When user searches
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function collectSearch({ search_query }) {
+  return {
+    query: `mutation ($input: DataCollectInput!) {
+      data_collect(input: $input)
+    }
+    `,
+    variables: {
+      input: {
+        search: {
+          search_query,
+          session_id,
+        },
+      },
+    },
+  };
+}
+
+/**
  * When user searches and then clicks on work
  *
  * @param {object} params

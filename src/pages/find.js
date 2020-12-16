@@ -3,8 +3,12 @@ import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { collectSearchWorkClick } from "@/lib/api/datacollect.mutations";
+import {
+  collectSearch,
+  collectSearchWorkClick,
+} from "@/lib/api/datacollect.mutations";
 import { getClient } from "@/lib/api/api";
+import { useEffect } from "react";
 
 /**
  * @file
@@ -34,6 +38,19 @@ function Find() {
       { shallow: true }
     );
   }
+
+  // Sideeffects to be run when search query changes
+  useEffect(() => {
+    // Check that q is set and not the empty string
+    if (q) {
+      getClient().request(
+        collectSearch({
+          search_query: q,
+        })
+      );
+    }
+  }, [q]);
+
   return (
     <React.Fragment>
       <Head>
