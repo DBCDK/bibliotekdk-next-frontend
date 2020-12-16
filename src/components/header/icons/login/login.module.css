@@ -1,29 +1,41 @@
 .login {
-  height: 24px;
+  /* height: var(--pt3); */
+  height: 30px;
+
   overflow: hidden;
-  transform: translate(0, -6px);
+  /* transform: translate(0, -6px); */
+  transform: translate(0, -8px);
 }
 
 .icon {
-  transform: translate(0, 6px);
+  /* transform: translate(0, 6px); */
+  transform: translate(0, 8px);
 }
 
 .head {
-  width: var(--pt1);
-  height: var(--pt1);
+  /* width: var(--pt1);
+  height: var(--pt1); */
+  width: 10px;
+  height: 10px;
+
   border: 2px solid var(--mine-shaft);
   border-radius: 50%;
   margin: auto;
 }
 
 .bodyWrap {
-  height: 10px;
+  /* height: 10px; */
+  height: 12px;
+
   overflow: hidden;
 }
 
 .body {
-  width: var(--pt2);
-  height: var(--pt2);
+  /* width: var(--pt2);
+  height: var(--pt2); */
+  width: 18px;
+  height: 18px;
+
   border: 2px solid var(--mine-shaft);
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
@@ -55,7 +67,8 @@
     transform: translate(0, 100%);
   }
   to {
-    transform: translate(0, 6px);
+    /* transform: translate(0, 6px); */
+    transform: translate(0, 8px);
   }
 }
 

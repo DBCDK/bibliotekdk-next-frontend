@@ -106,4 +106,46 @@ describe("Header", () => {
       expect(str).to.equal(`/find?q=Anders Morgenthaler`);
     });
   });
+
+  it(`Mobile: remove focus and empty field on input search`, () => {
+    cy.visit("/iframe.html?id=header--nav-header");
+    cy.viewport(411, 731);
+
+    cy.get("[data-cy=header-link-search]").click();
+    cy.get("[data-cy=suggester-input]").type("matthesen");
+    cy.get("[data-cy=suggester-input]").type("{enter}");
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal(`/find?q=matthesen`);
+    });
+    cy.get("[data-cy=suggester-input]").should(
+      "not.have.class",
+      "react-autosuggest__input--focused"
+    );
+    cy.get("[data-cy=suggester-input]").should("have.value", "");
+  });
+
+  it(`Mobile: remove focus and empty field on "arrow/close" suggester click`, () => {
+    cy.viewport(411, 731);
+
+    cy.get("[data-cy=header-link-search]").click();
+    cy.get("[data-cy=suggester-input]").type("hest");
+    cy.get("[data-cy=suggester-arrow-close]").click();
+    cy.get("[data-cy=suggester-input]").should(
+      "not.have.class",
+      "react-autosuggest__input--focused"
+    );
+    cy.get("[data-cy=suggester-input]").should("have.value", "");
+  });
+
+  it(`Mobile: remove history`, () => {
+    cy.viewport(411, 731);
+
+    cy.get("[data-cy=header-link-search]").click();
+    cy.get("[data-cy=suggester-input]").type("hest");
+    cy.get("[data-cy=suggester-input]").type("{enter}");
+    cy.get("[data-cy=header-link-search]").click();
+    cy.get("[data-cy=suggester-container] ul li").should("have.length", 1);
+    cy.get("[data-cy=suggester-clear-history]").click();
+    cy.get("[data-cy=suggester-container] ul li").should("have.length", 0);
+  });
 });

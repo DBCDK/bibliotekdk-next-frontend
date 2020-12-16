@@ -6,10 +6,10 @@
 ._bag {
   position: relative;
   z-index: 1;
-
-  width: var(--pt2);
-  height: 14px;
-  /* height: calc(var(--pt2) - var(--pt05)); */
+  /* width: var(--pt2); */
+  /* height: 14px; */
+  width: 20px;
+  height: 18px;
   margin-top: 4px;
   border: 2px solid var(--mine-shaft);
   background-color: white;
@@ -17,15 +17,19 @@
 
 .handle,
 ._handle {
-  width: var(--pt1);
-  height: var(--pt1);
+  /* width: var(--pt1); */
+  /* height: var(--pt1); */
+  width: 10px;
+  height: 10px;
+
   border: 2px solid var(--mine-shaft);
   border-bottom: 0;
 
   position: absolute;
   top: 0;
   left: 0;
-  transform: translate(2px, -6px);
+  /* transform: translate(2px, -8px); */
+  transform: translate(3px, -7px);
 }
 
 ._bag {
@@ -42,6 +46,18 @@
   right: 0;
   z-index: 2;
   transform: translate(75%, -75%) scale(1);
+
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.font__small {
+  font-size: 10px;
+}
+
+.font__large {
+  font-size: 12px;
 }
 
 /* .hovertrigger:hover .icon * {
@@ -68,10 +84,12 @@
 @keyframes jumpUp {
   0% {
     z-index: -1;
-    transform: translate(2px, 0) scale(0.5);
+    /* transform: translate(2px, 0) scale(0.5); */
+    transform: translate(1px, 0) scale(0.5);
   }
   50% {
-    transform: translate(2px, -100%) scale(0.5);
+    /* transform: translate(2px, -100%) scale(0.5); */
+    transform: translate(1px, -100%) scale(0.5);
   }
   100% {
     z-index: 2;
@@ -82,10 +100,12 @@
 @keyframes flipHandle {
   0%,
   75% {
-    transform: translate(2px, -2px) scaleY(-1);
+    /* transform: translate(2px, -2px) scaleY(-1); */
+    transform: translate(3px, -2px) scaleY(-1);
   }
   100% {
-    transform: translate(2px, -6px) scaleY(1);
+    /* transform: translate(2px, -6px) scaleY(1); */
+    transform: translate(3px, -7px) scaleY(1);
   }
 }
 

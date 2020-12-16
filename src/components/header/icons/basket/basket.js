@@ -19,6 +19,9 @@ import styles from "./basket.module.css";
 export default function BasketIcon(props) {
   const { className, items } = props;
 
+  // Badge font size
+  const sizeClass = items.length > 1 ? styles.font__small : styles.font__large;
+
   return (
     <Action {...props} className={`${className} ${styles.trigger}`}>
       <div className={styles.basket}>
@@ -29,7 +32,7 @@ export default function BasketIcon(props) {
 
           <div className={styles._bag} />
 
-          <Badge className={styles.badge} children={items} />
+          <Badge className={`${styles.badge} ${sizeClass}`} children={items} />
         </div>
       </div>
     </Action>

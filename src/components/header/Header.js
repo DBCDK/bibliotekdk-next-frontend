@@ -43,6 +43,14 @@ function focusInput() {
 }
 
 /**
+ * Function to blur suggester input field
+ *
+ */
+function blurInput() {
+  document.getElementById("suggester-input").blur();
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -98,7 +106,7 @@ function Header({ className = "", router = null, isStory = false }) {
     <header className={`${styles.wrap} ${className}`}>
       <Banner />
       <div className={styles.headerWrap}>
-        <Container className={styles.header}>
+        <Container className={styles.header} fluid>
           <Row>
             <Col xs={2}>
               <Link
@@ -163,6 +171,8 @@ function Header({ className = "", router = null, isStory = false }) {
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
                     isStory && alert(`/find?q=${query}`);
+                    // remove keyboard on mobile
+                    suggesterVisibleMobile && blurInput();
                     // Cleanup on mobile
                     suggesterVisibleMobile && setQuery("");
                     suggesterVisibleMobile && setSuggesterVisibleMobile(false);
