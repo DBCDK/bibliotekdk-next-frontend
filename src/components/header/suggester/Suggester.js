@@ -242,7 +242,7 @@ export function Suggester({
   const [intQuery, setIntQuery] = useState(query);
 
   // If user did not type any search, show latest history search as suggestions
-  if (!intQuery || intQuery === "") {
+  if (isMobile && (!query || query === "")) {
     // Get history for latest user search (localStorage)
     suggestions = history;
 
@@ -259,14 +259,10 @@ export function Suggester({
   const inputProps = {
     value: intQuery,
     onChange: (event, { newValue }, method) => {
+      // For updating onChange when deleting last char in input
+      newValue === "" && onChange && onChange("");
+      // internal query update
       setIntQuery(newValue);
-    },
-    onKeyDown: (e) => {
-      switch (e.keyCode) {
-        case 13: {
-          isMobile && setIntQuery("");
-        }
-      }
     },
   };
 
@@ -277,8 +273,18 @@ export function Suggester({
       alwaysRenderSuggestions={isMobile}
       // shouldRenderSuggestions={shouldRenderSuggestions}
       suggestions={suggestions}
-      onSuggestionsClearRequested={() => {}}
-      onSuggestionsFetchRequested={({ value }) => onChange && onChange(value)}
+      onSuggestionsClearRequested={() => {
+        // clear internal and external query if mobile
+        if (isMobile) {
+          onChange && onChange("");
+          setIntQuery("");
+        }
+      }}
+      onSuggestionsFetchRequested={({ value, reason }) => {
+        if (reason === "input-changed") {
+          onChange && onChange(value);
+        }
+      }}
       onSuggestionSelected={(_, { suggestionValue }) => {
         // Clear Query
         onChange && onChange(isMobile ? "" : suggestionValue);
@@ -340,9 +346,9 @@ export default function Wrap(props) {
   return (
     <Suggester
       {...props}
-      onChange={(query) => {
-        onChange && onChange(query);
-        setQuery(query);
+      onChange={(q) => {
+        onChange && onChange(q);
+        setQuery(q);
       }}
       className={className}
       skeleton={isLoading}

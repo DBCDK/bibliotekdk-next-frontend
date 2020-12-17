@@ -27,6 +27,7 @@ export default {
  */
 export function HeaderSuggester() {
   const [isMobile, setIsMobile] = useState(false);
+  const [query, setQuery] = useState("");
 
   return (
     <div>
@@ -50,7 +51,10 @@ export function HeaderSuggester() {
 
       <div style={{ maxWidth: "600px" }}>
         <Suggester
+          query={query}
           isMobile={isMobile}
+          onChange={(q) => setQuery(q)}
+          onClose={() => {}}
           onSelect={(suggestionValue) => alert(`${suggestionValue} selected`)}
           clearHistory={() => alert("History cleared")}
           history={[
