@@ -90,7 +90,9 @@ function Header({ className = "", router = null, isStory = false }) {
       icon: SearchIcon,
       onClick: () => {
         setSuggesterVisibleMobile(true);
-        focusInput();
+        setTimeout(() => {
+          focusInput();
+        }, 100);
       },
     },
     { label: "login", icon: LoginIcon, href: "/#!" },
@@ -110,6 +112,7 @@ function Header({ className = "", router = null, isStory = false }) {
           <Row>
             <Col xs={2}>
               <Link
+                className={styles.logoWrap}
                 border={false}
                 href="/"
                 dataCy={cyKey({
@@ -167,14 +170,18 @@ function Header({ className = "", router = null, isStory = false }) {
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
+                    if (query === "") {
+                      return;
+                    }
                     setHistory(query);
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
                     isStory && alert(`/find?q=${query}`);
-                    // remove keyboard on mobile
-                    suggesterVisibleMobile && blurInput();
-                    // Cleanup on mobile
+                    // cler query if mobile
                     suggesterVisibleMobile && setQuery("");
+                    // remove keyboard/unfocus
+                    blurInput();
+                    // remove mobile status
                     suggesterVisibleMobile && setSuggesterVisibleMobile(false);
                   }}
                   className={`${styles.search}`}
@@ -208,7 +215,8 @@ function Header({ className = "", router = null, isStory = false }) {
                       prefix: "header",
                     })}
                   >
-                    {Translate({ ...context, label: "search" })}
+                    <span>{Translate({ ...context, label: "search" })}</span>
+                    <div className={styles.fill} />
                   </button>
                 </form>
                 <div
