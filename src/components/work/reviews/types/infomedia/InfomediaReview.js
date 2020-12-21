@@ -28,7 +28,6 @@ export function InfomediaReview({
 }) {
   // Translate Context
   const context = { context: "reviews" };
-
   return (
     <Col
       xs={12}
@@ -57,7 +56,7 @@ export function InfomediaReview({
           <Title tag="h3" type="title4">
             {data.author}
           </Title>
-          <Text type="text3"> d. 05/07-2020</Text>
+          <Text type="text3"> d. {data.date}</Text>
         </div>
       )}
       {data.url && (

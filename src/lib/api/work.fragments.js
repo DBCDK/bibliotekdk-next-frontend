@@ -207,12 +207,26 @@ export function reviews({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
-          reviews{
-            author
-            media
-            rating
-            reviewType
-            url
+          reviews {
+            __typename
+            ... on ReviewInfomedia {
+              author
+              date
+              media
+              rating
+            }
+            ... on ReviewLitteratursiden {
+              author
+              date
+              url
+            }
+            ... on ReviewMatVurd {
+              author
+              date
+              all {
+                text
+              }
+            }
           }
         }
         monitor(name: "bibdknext_work_reviews")

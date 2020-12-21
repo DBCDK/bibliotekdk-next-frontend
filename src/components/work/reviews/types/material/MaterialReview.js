@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
@@ -72,16 +73,14 @@ export function MaterialReview({
         </Col>
         <Col xs={6} xl={{ span: 4, order: 3 }} className={styles.date}>
           <Text type="text3" skeleton={skeleton} lines={1}>
-            07/07-2010
+            {data.date}
           </Text>
         </Col>
       </Row>
 
       <Col xs={12} className={styles.content}>
-        <Title type="title3" skeleton={skeleton} lines={4}>
-          For alle, der holder af en god afdæmpet historie. Forsiden - et
-          sort/hvidt billede af en dieselstander - sælger ikke bogen, men det
-          gør navnet og vor aktive formidling
+        <Title type="title3" skeleton={skeleton} lines={4} clamp={true}>
+          {data.all && data.all.map((paragraph) => paragraph.text).join(". ")}
         </Title>
       </Col>
 
