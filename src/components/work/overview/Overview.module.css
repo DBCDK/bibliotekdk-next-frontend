@@ -3,7 +3,7 @@
 }
 
 .overview {
-  padding: var(--pt8) 0 var(--pt14) 0;
+  padding: var(--pt3) 0 var(--pt14) 0;
 }
 
 .overview p {
@@ -11,7 +11,7 @@
 }
 
 .breadcrumbs {
-  padding-bottom: var(--pt4);
+  padding-bottom: var(--pt3);
 }
 
 .cover {
@@ -65,4 +65,14 @@
 
 .skeleton {
   background-color: white;
+}
+
+@media (min-width: 768px) {
+  .overview {
+    padding: var(--pt8) 0 var(--pt14) 0;
+  }
+
+  .breadcrumbs {
+    padding-bottom: var(--pt4);
+  }
 }

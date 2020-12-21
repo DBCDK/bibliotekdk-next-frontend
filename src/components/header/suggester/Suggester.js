@@ -289,8 +289,6 @@ export function Suggester({
         // Clear Query
         onChange && onChange(isMobile ? "" : suggestionValue);
         isMobile && setIntQuery("");
-        // Close suggester on mobile
-        isMobile && onClose();
         // Blur input onselect
         blurInput();
         // Action

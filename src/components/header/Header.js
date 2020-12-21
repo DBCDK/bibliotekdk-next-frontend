@@ -189,7 +189,6 @@ function Header({ className = "", router = null, isStory = false }) {
                       return;
                     }
                     setHistory(query);
-
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
 
@@ -231,12 +230,13 @@ function Header({ className = "", router = null, isStory = false }) {
                         isStory && story_setSuggesterVisibleMobile(false);
                       }}
                       onSelect={(suggestionValue) => {
-                        setHistory(suggestionValue);
                         router &&
                           router.push({
                             pathname: "/find",
                             query: { q: suggestionValue },
                           });
+
+                        setHistory(suggestionValue);
                       }}
                     />
                   </div>
