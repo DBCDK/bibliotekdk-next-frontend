@@ -79,7 +79,7 @@ export function MaterialReview({
       </Row>
 
       <Col xs={12} className={styles.content}>
-        <Title type="title3" skeleton={skeleton} lines={4} clamp={true}>
+        <Title type="title3" skeleton={skeleton} lines={5} clamp={true}>
           {data.all &&
             data.all
               .map((paragraph) => paragraph.text)
