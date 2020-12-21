@@ -63,8 +63,13 @@ function Header({ className = "", router = null, isStory = false }) {
 
   // Seach Query in suggester callback
   const [query, setQuery] = useState("");
-  // Suggester visible on mobile device
-  const [suggesterVisibleMobile, setSuggesterVisibleMobile] = useState(false);
+
+  // Storybook handle suggester internal state (url params not working in storybook)
+  const [
+    story_suggesterVisibleMobile,
+    story_setSuggesterVisibleMobile,
+  ] = useState(false);
+
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
 
@@ -89,7 +94,12 @@ function Header({ className = "", router = null, isStory = false }) {
       label: "search",
       icon: SearchIcon,
       onClick: () => {
-        setSuggesterVisibleMobile(true);
+        router &&
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, searchModal: true },
+          });
+        isStory && story_setSuggesterVisibleMobile(true);
         setTimeout(() => {
           focusInput();
         }, 100);
@@ -100,6 +110,11 @@ function Header({ className = "", router = null, isStory = false }) {
     { label: "menu", icon: BurgerIcon, href: "/#!" },
   ];
 
+  // Search modal suggester is visible
+  const suggesterVisibleMobile =
+    story_suggesterVisibleMobile || (router && router.query.searchModal);
+
+  // SearchModal visible class
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
@@ -174,15 +189,20 @@ function Header({ className = "", router = null, isStory = false }) {
                       return;
                     }
                     setHistory(query);
+
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
+
+                    // view query in storybook
                     isStory && alert(`/find?q=${query}`);
-                    // cler query if mobile
+
+                    // Remove suggester in storybook
+                    isStory && story_setSuggesterVisibleMobile(false);
+
+                    // clear query if mobile
                     suggesterVisibleMobile && setQuery("");
                     // remove keyboard/unfocus
                     blurInput();
-                    // remove mobile status
-                    suggesterVisibleMobile && setSuggesterVisibleMobile(false);
                   }}
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
@@ -196,7 +216,20 @@ function Header({ className = "", router = null, isStory = false }) {
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
                       onChange={setQuery}
-                      onClose={() => setSuggesterVisibleMobile(false)}
+                      onClose={() => {
+                        if (router) {
+                          // remove searchModal prop from query obj
+                          delete router.query.searchModal;
+
+                          router &&
+                            router.push({
+                              pathname: router.pathname,
+                              query: router.query,
+                            });
+                        }
+                        // Remove suggester in storybook
+                        isStory && story_setSuggesterVisibleMobile(false);
+                      }}
                       onSelect={(suggestionValue) => {
                         setHistory(suggestionValue);
                         router &&
