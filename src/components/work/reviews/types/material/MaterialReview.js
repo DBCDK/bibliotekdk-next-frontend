@@ -83,7 +83,11 @@ export function MaterialReview({
           {data.all &&
             data.all
               .map((paragraph) => paragraph.text)
-              .filter((text) => !text.startsWith("Materialevurdering"))
+              .filter(
+                (text) =>
+                  !text.startsWith("Materialevurdering") &&
+                  !text.startsWith("Indscannet version")
+              )
               .join(". ")}
         </Title>
       </Col>
