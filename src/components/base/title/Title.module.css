@@ -32,6 +32,11 @@
   font-family: var(--title-font-light);
 }
 
+.clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 @media (max-width: 768px) {
   .title1 {

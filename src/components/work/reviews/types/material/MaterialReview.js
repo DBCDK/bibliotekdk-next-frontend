@@ -80,7 +80,11 @@ export function MaterialReview({
 
       <Col xs={12} className={styles.content}>
         <Title type="title3" skeleton={skeleton} lines={4} clamp={true}>
-          {data.all && data.all.map((paragraph) => paragraph.text).join(". ")}
+          {data.all &&
+            data.all
+              .map((paragraph) => paragraph.text)
+              .filter((text) => !text.startsWith("Materialevurdering"))
+              .join(". ")}
         </Title>
       </Col>
 

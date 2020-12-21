@@ -5,15 +5,8 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
-
-// Line heights are used for calculating line-clamp
-// Values are copied from css module ...
-const lineHeight = {
-  text1: 26,
-  text2: 26,
-  text3: 22,
-  text4: 22,
-};
+import { getStyle } from "@/utils/css";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * The Component function
@@ -38,20 +31,35 @@ function Text({
   // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
 
+  // ref to dom element
+  const el = useRef(null);
+
+  // style used for line clamping
+  const [style, setStyle] = useState();
+
+  // calculate height when lineclamping is on and set style
+  useEffect(() => {
+    if (clamp && lines) {
+      const lineHeight = getStyle(el.current, "line-height");
+      setStyle({
+        WebkitLineClamp: lines,
+        maxHeight: lines * parseInt(lineHeight, 10),
+      });
+    }
+  }, []);
+
   // generate data-cy key if none given
   const key = dataCy || cyKey({ name: children, prefix: "text" });
 
   return (
     <Tag
+      ref={el}
       className={`${styles.text} ${styles[type]} ${className} ${
         clamp && styles.clamp
       }`}
       onClick={onClick}
       data-cy={key}
-      style={
-        clamp &&
-        lines && { WebkitLineClamp: lines, maxHeight: lines * lineHeight[type] }
-      }
+      style={style}
     >
       {children}
     </Tag>
