@@ -35,9 +35,11 @@ export function LitteratursidenReview({
       className={`${styles.litteratursiden} ${className}`}
     >
       <Link
+        href={data.url}
         onFocus={onFocus}
         border={{ bottom: false }}
         dataCy={cyKey({ name: "link", prefix: "litteratursiden" })}
+        target="_blank"
       >
         <div className={styles.media}>
           <Title type="title4" skeleton={skeleton}>
@@ -55,7 +57,7 @@ export function LitteratursidenReview({
                 {data.author}
               </Title>
             )}
-            {!skeleton && <Text type="text3"> d. 05/07-2020</Text>}
+            {!skeleton && <Text type="text3"> d. {data.date}</Text>}
           </div>
         )}
       </Link>

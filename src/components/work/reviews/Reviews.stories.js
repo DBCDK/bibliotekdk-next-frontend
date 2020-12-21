@@ -29,38 +29,59 @@ export default {
 export function ReviewsSlider() {
   const data = [
     {
+      __typename: "ReviewInfomedia",
       author: "Svend Svendsen",
+      date: "2013-06-25",
       media: "Jyllandsposten",
       rating: "4/5",
-      reviewType: "INFOMEDIA",
       url: "http://",
     },
     {
+      __typename: "ReviewLitteratursiden",
       author: "Didrik Pedersen",
+      date: "2013-06-25",
       media: "",
       rating: "1/5",
-      reviewType: "LITTERATURSIDEN",
       url: "http://",
     },
     {
+      __typename: "ReviewMatVurd",
       author: "Svend Svendsen",
-      media: "",
-      rating: "3/5",
-      reviewType: "MATERIALREVIEWS",
+      date: "2013-06-25",
+      all: [
+        {
+          text:
+            "Romanen er Ninni SchuImans anden fritstående krimi om journalisten Magdalene og betjentene Petra og Christer. I den svenske sommervarme er en pyroman løs. En kvinde omkommer i flammerne og nu må politiet, sammen med journalisten Magdalene, forsøge at finde frem til gerningsmanden, inden der bliver begået flere mord. Bag det spinkle plot, som er meget utroværdigt selv inden for genrens rammer, er romanen en skildring af fortabte drømme, kærlighed og livet omkring de 40. Problemet er dog, at de to dele, krimien og hverdagsrealismen, aldrig bliver koblet ordenligt sammen, og så hæmmer det realismen voldsomt, at plottet ikke er troværdigt. Politifolkene fremstår eksempelvis unødvendigt inkompetente. Forfatteren formår dog at komme med fine miljøskildringer og et par enkelte fine karakterer, som hæver sig over det todimensionale og skabelonagtige",
+        },
+        {
+          text:
+            'Til den store læserskare af "nordiske krimier tilsat hverdagsrealisme". Der findes mange bedre krimier, der ligner Drengen der holdt op med at græde til forveksling',
+        },
+        {
+          text:
+            "Det er oplagt at sammenligne med Liza Marklund og Mari Jungstedt, der også benytter sig af makkerparret journalist/politimand",
+        },
+        {
+          text:
+            "Ordinær krimi, med fine miljøskildringer, hvor plottet dog virker forceret og utroværdigt, og det drukner de ellers fine tilløb til hverdagsrealisme. Der findes mange bedre skandinaviske krimier på markedet, som formår at koble det realistiske sammen med et veludført plot",
+        },
+      ],
       url: "http://",
     },
     {
+      __typename: "ReviewInfomedia",
+      date: "2013-06-25",
       author: "Didrik Pedersen",
       media: "Berlingske Tidende",
       rating: "5/5",
-      reviewType: "INFOMEDIA",
       url: "http://",
     },
     {
+      __typename: "ReviewInfomedia",
+      date: "2013-06-25",
       author: "Svend Svendsen",
       media: "Jyllandsposten",
       rating: "4/5",
-      reviewType: "INFOMEDIA",
       url: "http://",
     },
   ];

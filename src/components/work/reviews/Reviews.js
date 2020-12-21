@@ -29,11 +29,11 @@ import styles from "./Reviews.module.css";
 
 function getTemplate(type) {
   switch (type) {
-    case "MATERIALREVIEWS":
+    case "ReviewMatVurd":
       return MaterialReview;
-    case "LITTERATURSIDEN":
+    case "ReviewLitteratursiden":
       return LitteratursidenReview;
-    case "INFOMEDIA":
+    case "ReviewInfomedia":
       return InfomediaReview;
     default:
       return InfomediaReview;
@@ -42,16 +42,16 @@ function getTemplate(type) {
 
 function sortReviews(data) {
   // Group data by reviewType
-  const groups = groupBy(data, "reviewType");
+  const groups = groupBy(data, "__typename");
 
   // reviews array containing infomedia and litteratursiden reviews
   const reviews = [
-    ...(groups.INFOMEDIA || []),
-    ...(groups.LITTERATURSIDEN || []),
+    ...(groups.ReviewInfomedia || []),
+    ...(groups.ReviewLitteratursiden || []),
   ];
 
   // materialReviews seperated
-  const materialReviews = [...(groups.MATERIALREVIEWS || [])];
+  const materialReviews = [...(groups.ReviewMatVurd || [])];
 
   // Loop thrue materialreviews to place "randomly" -> always start with 1 materialReview
   materialReviews.forEach((m, i) => {
@@ -140,7 +140,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "reviews" };
 
-  const reviews = useMemo(() => sortReviews(data));
+  const reviews = useMemo(() => sortReviews(data), [data]);
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -212,12 +212,11 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     >
       <Swiper {...params} ref={swiperRef}>
         {reviews.map((review, idx) => {
-          const Review = getTemplate(review.reviewType);
+          const Review = getTemplate(review.__typename);
 
           const skeletonReview = skeleton
             ? `${styles.skeleton} ${styles.custom}`
             : "";
-
           return (
             <Review
               skeleton={skeleton}
