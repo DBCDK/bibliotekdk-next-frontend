@@ -98,9 +98,12 @@ function renderSuggestionsContainer(
   isHistory,
   clearHistory
 ) {
+  const keepVisibleClass = isHistory ? styles.suggestions_container__open : "";
+
   return (
     <div
       {...containerProps}
+      className={`${containerProps.className} ${keepVisibleClass}`}
       data-cy={cyKey({ name: "container", prefix: "suggester" })}
     >
       {isHistory && (

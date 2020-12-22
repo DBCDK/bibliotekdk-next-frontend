@@ -58,17 +58,11 @@ function blurInput() {
  *
  * @returns {component}
  */
-function Header({ className = "", router = null, isStory = false }) {
+function Header({ className = "", router = null, story = null }) {
   const context = { context: "header" };
 
   // Seach Query in suggester callback
   const [query, setQuery] = useState("");
-
-  // Storybook handle suggester internal state (url params not working in storybook)
-  const [
-    story_suggesterVisibleMobile,
-    story_setSuggesterVisibleMobile,
-  ] = useState(false);
 
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
@@ -99,7 +93,7 @@ function Header({ className = "", router = null, isStory = false }) {
             pathname: router.pathname,
             query: { ...router.query, searchModal: true },
           });
-        isStory && story_setSuggesterVisibleMobile(true);
+        story && story.setSuggesterVisibleMobile(true);
         setTimeout(() => {
           focusInput();
         }, 100);
@@ -112,7 +106,8 @@ function Header({ className = "", router = null, isStory = false }) {
 
   // Search modal suggester is visible
   const suggesterVisibleMobile =
-    story_suggesterVisibleMobile || (router && router.query.searchModal);
+    (story && story.suggesterVisibleMobile) ||
+    (router && router.query.searchModal);
 
   // SearchModal visible class
   const suggesterVisibleMobileClass = suggesterVisibleMobile
@@ -188,15 +183,20 @@ function Header({ className = "", router = null, isStory = false }) {
                     if (query === "") {
                       return;
                     }
-                    setHistory(query);
+
+                    // Delay history update in list
+                    setTimeout(() => {
+                      setHistory(query);
+                    }, 300);
+
                     router &&
                       router.push({ pathname: "/find", query: { q: query } });
 
                     // view query in storybook
-                    isStory && alert(`/find?q=${query}`);
+                    story && alert(`/find?q=${query}`);
 
                     // Remove suggester in storybook
-                    isStory && story_setSuggesterVisibleMobile(false);
+                    story && story.setSuggesterVisibleMobile(false);
 
                     // clear query if mobile
                     suggesterVisibleMobile && setQuery("");
@@ -227,7 +227,7 @@ function Header({ className = "", router = null, isStory = false }) {
                             });
                         }
                         // Remove suggester in storybook
-                        isStory && story_setSuggesterVisibleMobile(false);
+                        story && story.setSuggesterVisibleMobile(false);
                       }}
                       onSelect={(suggestionValue) => {
                         router &&
@@ -235,8 +235,10 @@ function Header({ className = "", router = null, isStory = false }) {
                             pathname: "/find",
                             query: { q: suggestionValue },
                           });
-
-                        setHistory(suggestionValue);
+                        // Delay history update in list
+                        setTimeout(() => {
+                          setHistory(suggestionValue);
+                        }, 300);
                       }}
                     />
                   </div>
@@ -324,6 +326,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  isStory: PropTypes.bool,
+  story: PropTypes.object,
   skeleton: PropTypes.bool,
 };
