@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import { merge } from "lodash";
+import merge from "lodash/merge";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";

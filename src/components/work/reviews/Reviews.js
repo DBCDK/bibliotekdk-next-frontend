@@ -1,7 +1,7 @@
 import { useRef, useState, useMemo } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
-import { groupBy } from "lodash";
+import groupBy from "lodash/groupBy";
 
 import useWindowSize from "@/lib/useWindowSize";
 import { useData } from "@/lib/api/api";

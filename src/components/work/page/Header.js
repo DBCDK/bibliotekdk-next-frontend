@@ -9,7 +9,7 @@
  */
 import PropTypes from "prop-types";
 import Head from "next/head";
-import { merge } from "lodash";
+import merge from "lodash/merge";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 

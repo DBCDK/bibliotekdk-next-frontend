@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { uniqBy } from "lodash";
+import uniqBy from "lodash/uniqBy";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
