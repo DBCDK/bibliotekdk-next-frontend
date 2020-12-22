@@ -34,7 +34,7 @@ function Cover({
   };
 
   const backgroundColor = {
-    backgroundColor: bgColor ? bgColor : "transparent",
+    backgroundColor: bgColor ? bgColor : src ? "transparent" : "var(--iron)",
   };
 
   const dynamicStyles = {

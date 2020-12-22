@@ -1,7 +1,6 @@
 .link {
   color: var(--mine-shaft);
   text-decoration: none;
-  text-decoration-color: var(--blue);
   cursor: pointer;
 }
 

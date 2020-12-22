@@ -23,11 +23,6 @@
 *
 */
 
-.link:focus {
-  color: var(--blue);
-  text-decoration: underline;
-}
-
 /**
 * Disabled 
 *

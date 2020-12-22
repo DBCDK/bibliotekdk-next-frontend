@@ -98,9 +98,12 @@ function renderSuggestionsContainer(
   isHistory,
   clearHistory
 ) {
+  const keepVisibleClass = isHistory ? styles.suggestions_container__open : "";
+
   return (
     <div
       {...containerProps}
+      className={`${containerProps.className} ${keepVisibleClass}`}
       data-cy={cyKey({ name: "container", prefix: "suggester" })}
     >
       {isHistory && (
@@ -289,8 +292,6 @@ export function Suggester({
         // Clear Query
         onChange && onChange(isMobile ? "" : suggestionValue);
         isMobile && setIntQuery("");
-        // Close suggester on mobile
-        isMobile && onClose();
         // Blur input onselect
         blurInput();
         // Action

@@ -58,6 +58,11 @@ function getFontSize(keywords) {
  * @returns {component}
  */
 export function Keywords({ className = "", data = [], skeleton = false }) {
+  // Dont return empty komponent if nothing to show
+  if (data.length === 0) {
+    return null;
+  }
+
   // Translate Context
   const context = { context: "keywords" };
 
