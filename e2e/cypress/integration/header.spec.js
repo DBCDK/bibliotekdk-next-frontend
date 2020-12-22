@@ -136,16 +136,4 @@ describe("Header", () => {
     );
     cy.get("[data-cy=suggester-input]").should("have.value", "");
   });
-
-  it(`Mobile: remove history`, () => {
-    cy.viewport(411, 731);
-
-    cy.get("[data-cy=header-link-search]").click();
-    cy.get("[data-cy=suggester-input]").type("hest");
-    cy.get("[data-cy=suggester-input]").type("{enter}");
-    cy.get("[data-cy=header-link-search]").click();
-    cy.get("[data-cy=suggester-container] ul li").should("have.length", 1);
-    cy.get("[data-cy=suggester-clear-history]").click();
-    cy.get("[data-cy=suggester-container] ul li").should("have.length", 0);
-  });
 });
