@@ -46,16 +46,23 @@ export const useData = (query) => {
   // Generate key based on the query
   const key = generateKey(query);
 
-  // Setup the initial response of the hook
-  // Maybe the query is already fetched on the server,
-  // so we check the state
-  const [response, setResponse] = useState({
-    isLoading: currentState[key] ? false : true,
+  // Extra fields to go in the response
+  // These are fields that do not originate
+  // from the current state of the api client
+  const [extra, setExtra] = useState({ isSlow: false });
+
+  // Create response object from the current state of the api client
+  const response = {
+    isLoading:
+      currentState[key] && (currentState[key].data || currentState[key].error)
+        ? false
+        : true,
     query,
     data: currentState[key] ? currentState[key].data : null,
     error: currentState[key] ? currentState[key].error : null,
     client,
-  });
+    ...extra,
+  };
 
   // useEffect is used to perform side effects (async stuff)
   // I.e. we fetch data here
@@ -69,55 +76,26 @@ export const useData = (query) => {
     (async () => {
       // We may have the data in the state already,
       // then we won't request the API
-      if (currentState[key]) {
-        setResponse({
-          isLoading: false,
-          query,
-          data: currentState[key].data,
-          error: currentState[key].error,
-          client,
-        });
-      } else {
-        // Before we start the request we let
-        // the parent component know that the
-        // data is now loading
-        setResponse({
-          isLoading: true,
-          query,
-          data: null,
-          client,
-        });
-
+      if (!currentState[key]) {
         // We define a timer that will let the parent
         // component know if a request is slow
         const isSlowTimeout = setTimeout(() => {
           if (!canceled) {
-            setResponse({
-              isLoading: true,
-              isSlow: true,
-              query,
-              data: null,
-              client,
-            });
+            setExtra({ isSlow: true });
           }
         }, query.slowThreshold || 5000);
 
         // Perform the request and await
-        const json = await client.request(query);
+        // The result will be loaded to the internal state of client
+        await client.request(query);
 
         // Clear timeout
         clearTimeout(isSlowTimeout);
 
-        // Set the response. But only if the request
-        // has noot been canceled
+        // Trigger a rerender. But only if the request
+        // has not been canceled
         if (!canceled) {
-          setResponse({
-            isLoading: false,
-            query,
-            data: json.data,
-            error: json.error,
-            client,
-          });
+          setExtra({ isSlow: false });
         }
       }
     })();

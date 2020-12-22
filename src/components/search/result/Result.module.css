@@ -6,6 +6,7 @@
 }
 .cover {
   max-height: 160px;
+  min-height: 160px;
   max-width: 104px;
 }
 .cover img {
