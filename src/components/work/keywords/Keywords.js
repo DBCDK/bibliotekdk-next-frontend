@@ -65,6 +65,11 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
   const include = ["DBCS", null];
   const filteredData = data.filter((s) => include.includes(s.type));
 
+  // Remove entire keyword section when there are no keywords
+  if (!filteredData.length) {
+    return null;
+  }
+
   // Remove duplicates
   data = uniqBy(filteredData, (s) => s.value.toLowerCase().replace(/\./g, ""));
 

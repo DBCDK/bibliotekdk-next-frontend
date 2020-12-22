@@ -295,9 +295,8 @@ export function ReviewsSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type, skeleton } = props;
+  const { workId } = props;
 
-  // Call materialTypes mockdata API
   const { data, isLoading, error } = useData(workFragments.reviews({ workId }));
 
   if (isLoading) {
@@ -305,6 +304,10 @@ export default function Wrap(props) {
   }
 
   if (error) {
+    return null;
+  }
+
+  if (!data.work.reviews.length) {
     return null;
   }
 
