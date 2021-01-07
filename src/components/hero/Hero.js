@@ -9,7 +9,7 @@ import Translate from "@/components/base/translate";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
-export default function Hero({ onSearchClick }) {
+export default function Hero() {
   return (
     <Container className={styles.containerback} fluid>
       <Row>
