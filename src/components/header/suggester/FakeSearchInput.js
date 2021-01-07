@@ -23,7 +23,7 @@ export default function FakeSearchInput({ className }) {
           openMobileSuggester();
         }
       }}
-      tabindex="0"
+      tabIndex="0"
     >
       <div className={styles.fakeinput}>
         <Text type="text2">Søg på bøger, film, osv.</Text>
