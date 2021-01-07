@@ -1,3 +1,5 @@
+import Router from "next/router";
+
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
@@ -48,10 +50,23 @@ const theme = {
 };
 
 /**
+ * Function to open mobile suggester
+ *
+ */
+export function openMobileSuggester() {
+  Router.push({
+    pathname: Router.pathname,
+    query: { searchModal: true },
+  });
+  setTimeout(() => {
+    focusInput();
+  }, 100);
+}
+/**
  * Function to focus suggester input field
  *
  */
-function focusInput() {
+export function focusInput() {
   document.getElementById("suggester-input").focus();
 }
 
@@ -59,7 +74,7 @@ function focusInput() {
  * Function to blur suggester input field
  *
  */
-function blurInput() {
+export function blurInput() {
   document.getElementById("suggester-input").blur();
 }
 

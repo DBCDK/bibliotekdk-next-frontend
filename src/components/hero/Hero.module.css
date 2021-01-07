@@ -1,33 +1,44 @@
 .containerback {
-    height: 560px;
+    height: 260px;
     background-image: url("/img/bibdk-hero-scaled.jpeg");
     background-repeat: no-repeat;
     /* background-position: center; */
     background-position: 50% 75%;
     background-size: cover;
-}
-
-.heromargin {
-    line-height: 92px;
-    margin-top: 3em;
+    padding-top: var(--pt4);
 }
 
 .heroicon {
-    margin-top: 5em;
+    margin-top: var(--pt5);
+    display: none;
 }
 
-@media (max-width: 768px) {
-    .heroicon {
-        display: none;
-    }
+.fakesearchinput {
+    margin-top: var(--pt4);
+}
 
+
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
     .containerback {
-        height: 260px;
+        height: 360px;
+        padding-top: var(--pt6);
     }
+}
 
-  .heromargin{
-    margin-top: 1em;
-  }
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    .heroicon {
+        display: initial;
+    }
+    .containerback {
+        height: 560px;
+        padding-top: var(--pt12);
+    }
+    .fakesearchinput {
+        display: none !important;
+    }
 }
 
 .herotitle {
