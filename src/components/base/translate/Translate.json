@@ -2,8 +2,8 @@
   "contexts": {
     "general": {
       "heroTxt": {
-        "da": "Afhent lokalt eller tilgå digitalt",
-        "en": "Pick up locally or access digitally"
+        "da": "Afhent lokalt<br /> eller tilgå digitalt",
+        "en": "Pick up locally<br /> or access digitally"
       },
       "readMore": {
         "da": "Læs mere",

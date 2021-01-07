@@ -6,7 +6,7 @@ import useHistory from "@/components/hooks/useHistory";
 
 import { cyKey } from "@/utils/trim";
 
-import Suggester from "./suggester/";
+import Suggester, { focusInput, blurInput } from "./suggester/";
 
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -32,22 +32,6 @@ function Banner() {
       </Container>
     </div>
   );
-}
-
-/**
- * Function to focus suggester input field
- *
- */
-function focusInput() {
-  document.getElementById("suggester-input").focus();
-}
-
-/**
- * Function to blur suggester input field
- *
- */
-function blurInput() {
-  document.getElementById("suggester-input").blur();
 }
 
 /**
@@ -113,6 +97,23 @@ function Header({ className = "", router = null, story = null }) {
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
+
+  const doSearch = (query) => {
+    // If we are on mobile we replace
+    // since we don't want suggest modal to open if user goes back
+    let routerFunc = suggesterVisibleMobile ? "replace" : "push";
+
+    router &&
+      router[routerFunc]({
+        pathname: "/find",
+        query: { q: query },
+      });
+
+    // Delay history update in list
+    setTimeout(() => {
+      setHistory(query);
+    }, 300);
+  };
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -184,13 +185,7 @@ function Header({ className = "", router = null, story = null }) {
                       return;
                     }
 
-                    // Delay history update in list
-                    setTimeout(() => {
-                      setHistory(query);
-                    }, 300);
-
-                    router &&
-                      router.push({ pathname: "/find", query: { q: query } });
+                    doSearch(query);
 
                     // view query in storybook
                     story && alert(`/find?q=${query}`);
@@ -218,28 +213,12 @@ function Header({ className = "", router = null, story = null }) {
                       onClose={() => {
                         if (router) {
                           // remove searchModal prop from query obj
-                          delete router.query.searchModal;
-
-                          router &&
-                            router.push({
-                              pathname: router.pathname,
-                              query: router.query,
-                            });
+                          router.back();
                         }
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
-                      onSelect={(suggestionValue) => {
-                        router &&
-                          router.push({
-                            pathname: "/find",
-                            query: { q: suggestionValue },
-                          });
-                        // Delay history update in list
-                        setTimeout(() => {
-                          setHistory(suggestionValue);
-                        }, 300);
-                      }}
+                      onSelect={doSearch}
                     />
                   </div>
                   <button
