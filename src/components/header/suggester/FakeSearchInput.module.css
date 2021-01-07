@@ -1,6 +1,11 @@
 .container {
   display: flex;
-  user-select: none; 
+  user-select: none;
+  cursor: pointer;
+}
+.container:hover,
+.container:focus {
+  outline: 2px solid var(--blue);
 }
 .fakeinput {
   background: white;

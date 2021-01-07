@@ -13,12 +13,14 @@ export default function Hero() {
   return (
     <Container className={styles.containerback} fluid>
       <Row>
-        <Col md={{ span: 3 }} xs={{ span: 0 }} className={styles.heroicon}>
+        <Col lg={{ span: 2 }} xs={{ span: 0 }} className={styles.heroicon}>
           <Icon src={"ornament1white.svg"} size={{ w: 5, h: "auto" }} />
         </Col>
 
         <Col
-          sm={{ span: 9, offset: 0 }}
+          lg={{ span: 10, offset: 0 }}
+          md={{ span: 8, offset: 2 }}
+          sm={{ span: 10, offset: 1 }}
           xs={{ span: 12, offset: 0 }}
           className={styles.heromargin}
         >

@@ -14,16 +14,19 @@
 }
 
 .fakesearchinput {
-    margin-top: var(--pt4);
+    margin-top: var(--pt3);
 }
 
 
 
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) { 
+/* Small devices */
+@media (min-width: 576px) { 
     .containerback {
         height: 360px;
         padding-top: var(--pt6);
+    }
+    .fakesearchinput {
+        margin-top: var(--pt4);
     }
 }
 

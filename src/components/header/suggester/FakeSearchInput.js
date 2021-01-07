@@ -18,6 +18,12 @@ export default function FakeSearchInput({ className }) {
     <div
       className={`${styles.container} ${className}`}
       onClick={openMobileSuggester}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          openMobileSuggester();
+        }
+      }}
+      tabindex="0"
     >
       <div className={styles.fakeinput}>
         <Text type="text2">Søg på bøger, film, osv.</Text>
