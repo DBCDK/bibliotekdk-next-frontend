@@ -166,7 +166,7 @@
   color: white;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .search > * {
     display: none;
   }

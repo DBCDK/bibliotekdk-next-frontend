@@ -1,1 +1,1 @@
-export { default } from "./Suggester.js";
+export { default, focusInput, blurInput } from "./Suggester.js";

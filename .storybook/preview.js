@@ -14,10 +14,10 @@ import { addDecorator } from "@storybook/react";
 addDecorator(
   withNextRouter({
     async replace(path) {
-      alert(path);
+      alert(typeof path === "object" ? JSON.stringify(path) : path);
     },
     async push(path) {
-      alert(path);
+      alert(typeof path === "object" ? JSON.stringify(path) : path);
     },
   })
 );
