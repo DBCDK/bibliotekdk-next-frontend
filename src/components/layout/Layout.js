@@ -1,5 +1,18 @@
+/**
+ * @file
+ * Handles Layout related functions
+ *
+ */
+
+import PropTypes from "prop-types";
+
 import styles from "./Layout.module.css";
 
+/**
+ * Function to get scrollY (scroll distance from top)
+ *
+ * @returns {int}
+ */
 function getScrollYPos() {
   // Get scrollY (all browsers)
   var doc = document.documentElement;
@@ -7,9 +20,18 @@ function getScrollYPos() {
   return top;
 }
 
+/**
+ * Function to handle scrollLock on body
+ *
+ * @param {bool} shouldLockScroll
+ * See propTypes for specific props and types
+ *
+ */
 let scrollY = 0;
 function scrollLock(shouldLockScroll) {
   const body = document.body;
+
+  console.log("shouldLockScroll", shouldLockScroll);
 
   if (!body) {
     return;
@@ -29,6 +51,14 @@ function scrollLock(shouldLockScroll) {
   }
 }
 
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function Layout({ children, router }) {
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query
@@ -42,3 +72,9 @@ export default function Layout({ children, router }) {
 
   return children;
 }
+
+// PropTypes for component
+Layout.propTypes = {
+  children: PropTypes.object,
+  router: PropTypes.object,
+};
