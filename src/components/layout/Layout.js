@@ -24,14 +24,11 @@ function getScrollYPos() {
  * Function to handle scrollLock on body
  *
  * @param {bool} shouldLockScroll
- * See propTypes for specific props and types
  *
  */
 let scrollY = 0;
 function scrollLock(shouldLockScroll) {
   const body = document.body;
-
-  console.log("shouldLockScroll", shouldLockScroll);
 
   if (!body) {
     return;
