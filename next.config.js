@@ -20,6 +20,15 @@ module.exports = {
           },
         ],
       },
+      {
+        source: "/img:slug*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=15552000",
+          },
+        ],
+      },
     ];
   },
   i18n: {
@@ -27,6 +36,7 @@ module.exports = {
     defaultLocale: "da",
   },
   images: {
+    domains: ["forfatterweb.dk"],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 1400],
   },
   webpack(config) {
