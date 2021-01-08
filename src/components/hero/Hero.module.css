@@ -16,6 +16,11 @@
 .fakesearchinput {
     margin-top: var(--pt3);
 }
+.readmorebutton {
+    margin-top: var(--pt5);
+    max-width: 208px;
+    display: none !important;
+}
 
 
 
@@ -41,6 +46,11 @@
     }
     .fakesearchinput {
         display: none !important;
+    }
+    .readmorebutton {
+        margin-top: var(--pt5);
+        max-width: 208px;
+        display: initial !important;
     }
 }
 

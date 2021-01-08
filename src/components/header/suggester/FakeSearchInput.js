@@ -1,6 +1,7 @@
 import Text from "@/components/base/text";
 import styles from "./FakeSearchInput.module.css";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
+import Translate from "@/components/base/translate";
 
 /**
  * A Fake Search Input Field
@@ -26,10 +27,20 @@ export default function FakeSearchInput({ className }) {
       tabIndex="0"
     >
       <div className={styles.fakeinput}>
-        <Text type="text2">Søg på bøger, film, osv.</Text>
+        <Text type="text2">
+          {Translate({
+            context: "suggester",
+            label: "placeholder",
+          })}
+        </Text>
       </div>
       <div className={styles.fakebutton}>
-        <Text type="text2">Søg</Text>
+        <Text type="text2">
+          {Translate({
+            context: "suggester",
+            label: "search",
+          })}
+        </Text>
       </div>
     </div>
   );

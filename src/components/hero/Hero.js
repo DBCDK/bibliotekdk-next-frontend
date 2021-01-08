@@ -3,7 +3,9 @@ import { Col, Container, Row } from "react-bootstrap";
 import React from "react";
 
 import Title from "@/components/base/title";
+import Button from "@/components/base/button";
 import Icon from "@/components/base/icon";
+
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Translate from "@/components/base/translate";
 
@@ -31,6 +33,12 @@ export default function Hero() {
               renderAsHtml: true,
             })}
           </Title>
+          <Button className={styles.readmorebutton} type="primary" size="large">
+            {Translate({
+              context: "general",
+              label: "readMore",
+            })}
+          </Button>
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />
