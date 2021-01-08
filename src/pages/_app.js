@@ -24,15 +24,18 @@ import App from "next/app";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
+import Layout from "@/components/layout";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
-      <Header router={router} />
-      <Component {...pageProps} />
-      <Footer />
+      <Layout router={router}>
+        <Header router={router} />
+        <Component {...pageProps} />
+        <Footer />
+      </Layout>
     </APIStateContext.Provider>
   );
 }
