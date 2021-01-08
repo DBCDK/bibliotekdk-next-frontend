@@ -27,10 +27,16 @@ export default function FakeSearchInput({ className }) {
       tabIndex="0"
     >
       <div className={styles.fakeinput}>
-        <Text type="text2">
+        <Text type="text2" className={styles.placeholder}>
           {Translate({
             context: "suggester",
             label: "placeholder",
+          })}
+        </Text>
+        <Text type="text2" className={styles.placeholderxs}>
+          {Translate({
+            context: "suggester",
+            label: "placeholderMobile",
           })}
         </Text>
       </div>

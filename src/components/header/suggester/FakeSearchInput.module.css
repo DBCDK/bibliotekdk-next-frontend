@@ -35,3 +35,15 @@
   line-height: 54px;
   text-align: center;
 }
+.placeholder {
+  display: none;
+}
+
+@media (min-width: 464px) {
+  .placeholder {
+    display: initial;
+  }
+  .placeholderxs {
+    display: none;
+  }
+}

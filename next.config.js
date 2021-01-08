@@ -9,9 +9,25 @@
 
 module.exports = {
   distDir: "dist/next",
+  headers: async () => {
+    return [
+      {
+        source: "/_next/image:slug*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=15552000",
+          },
+        ],
+      },
+    ];
+  },
   i18n: {
     locales: ["da", "en"],
     defaultLocale: "da",
+  },
+  images: {
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 1400],
   },
   webpack(config) {
     config.module.rules.push({
