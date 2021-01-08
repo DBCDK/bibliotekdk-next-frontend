@@ -7,6 +7,10 @@
 .container:focus {
   outline: 2px solid var(--blue);
 }
+.container:hover .fakeinput,
+.container:focus .fakeinput {
+  border: 1px solid white;
+}
 .fakeinput {
   background: white;
   height: 56px;
