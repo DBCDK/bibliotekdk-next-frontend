@@ -1,12 +1,13 @@
 /**
  * @file
- * Handles Layout related functions
+ * Handles BodyScrollLock on active modals
  *
  */
 
+import { useRouter } from "next/router";
 import PropTypes from "prop-types";
 
-import styles from "./Layout.module.css";
+import styles from "./BodyScrollLock.module.css";
 
 /**
  * Function to get scrollY (scroll distance from top)
@@ -56,7 +57,9 @@ function scrollLock(shouldLockScroll) {
  *
  * @returns {component}
  */
-export default function Layout({ children, router }) {
+export default function BodyScrollLock() {
+  const router = useRouter();
+
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query
      if any found lock body scroll */
@@ -66,12 +69,11 @@ export default function Layout({ children, router }) {
 
     scrollLock(shouldLockScroll);
   }
-
-  return children;
+  return null;
 }
 
 // PropTypes for component
-Layout.propTypes = {
+BodyScrollLock.propTypes = {
   children: PropTypes.object,
   router: PropTypes.object,
 };

@@ -24,18 +24,17 @@ import App from "next/app";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
-import Layout from "@/components/layout";
+import BodyScrollLock from "@/components/scroll/lock";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
-      <Layout router={router}>
-        <Header router={router} />
-        <Component {...pageProps} />
-        <Footer />
-      </Layout>
+      <BodyScrollLock />
+      <Header router={router} />
+      <Component {...pageProps} />
+      <Footer />
     </APIStateContext.Provider>
   );
 }

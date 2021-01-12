@@ -136,4 +136,19 @@ describe("Header", () => {
     );
     cy.get("[data-cy=suggester-input]").should("have.value", "");
   });
+
+  // it.only(`Mobile: Prevent backgroundscroll when searchModal is open`, () => {
+  //   cy.viewport(411, 731);
+
+  //   cy.get("body").invoke("attr", "style", "height:3000px;");
+
+  //   cy.document().then((doc) => {
+  //     cy.get("body").invoke("outerHeight").should("be.gt", 731);
+
+  //     cy.get("[data-cy=header-link-search]").click();
+
+  //     cy.get("body").invoke("outerHeight").should("be.eq", 731);
+  //     console.log("doc", doc.documentElement.getBoundingClientRect().height);
+  //   });
+  // });
 });
