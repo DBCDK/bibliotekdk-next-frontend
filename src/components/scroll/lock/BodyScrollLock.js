@@ -5,7 +5,6 @@
  */
 
 import { useRouter } from "next/router";
-import PropTypes from "prop-types";
 
 import styles from "./BodyScrollLock.module.css";
 
@@ -71,9 +70,3 @@ export default function BodyScrollLock() {
   }
   return null;
 }
-
-// PropTypes for component
-BodyScrollLock.propTypes = {
-  children: PropTypes.object,
-  router: PropTypes.object,
-};
