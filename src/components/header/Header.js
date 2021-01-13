@@ -25,7 +25,7 @@ import SearchIcon from "./icons/search";
 function Banner() {
   return (
     <div className={styles.bannerWrap}>
-      <Container className={styles.banner}>
+      <Container className={styles.banner} fluid>
         <Text type="text3">
           {Translate({ context: "header", label: "banner-text" })}
         </Text>

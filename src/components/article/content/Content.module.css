@@ -1,0 +1,33 @@
+.content {
+}
+
+.top {
+  background-color: var(--parchment);
+}
+
+.title {
+  padding: var(--pt3);
+}
+
+.img {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.img.landscape {
+}
+
+.img.portrait {
+}
+
+.body {
+  padding-top: var(--pt12);
+}
+
+@media (min-width: 768px) {
+  .top {
+    height: 300px;
+  }
+}
