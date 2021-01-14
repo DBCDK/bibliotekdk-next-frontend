@@ -43,7 +43,7 @@ export default function Section({
       style={{ backgroundColor }}
       data-cy={dataCy}
     >
-      <Container>
+      <Container fluid>
         <Row as="section" className={`${styles.section} ${className}`}>
           <Col
             xs={12}

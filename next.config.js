@@ -9,35 +9,38 @@
 
 module.exports = {
   distDir: "dist/next",
-  headers: async () => {
-    return [
-      {
-        source: "/_next/image:slug*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=15552000",
-          },
-        ],
-      },
-      {
-        source: "/img:slug*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=15552000",
-          },
-        ],
-      },
-    ];
-  },
+  // headers: async () => {
+  //   return [
+  //     {
+  //       source: "/_next/image:slug*",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "public, s-maxage=600",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       source: "/img:slug*",
+  //       headers: [
+  //         {
+  //           key: "Cache-Control",
+  //           value: "public, s-maxage=600",
+  //         },
+  //       ],
+  //     },
+  //   ];
+  // },
   i18n: {
     locales: ["da", "en"],
     defaultLocale: "da",
   },
   images: {
-    domains: ["forfatterweb.dk"],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 1400],
+    domains: [
+      "forfatterweb.dk",
+      "bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk",
+    ],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },
   webpack(config) {
     config.module.rules.push({

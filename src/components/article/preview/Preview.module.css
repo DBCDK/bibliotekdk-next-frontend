@@ -1,0 +1,63 @@
+.preview { 
+    color: var(--mine-shaft);
+    text-decoration: none;
+    display: block;
+    margin-bottom: var(--pt5);
+}
+.preview:focus,
+.preview:hover {
+    color: var(--blue) !important;
+}
+.preview h3 {
+    word-break: break-word;
+}
+.imagewrapper {
+  position: relative;
+  /* Maintain 16:9 aspect ratio by setting padding-bottom */
+  padding-bottom: 56%;
+}
+.imageskeleton {
+    padding-bottom: var(--pt05);
+}
+.arrow {
+    display: relative;
+    margin-top: var(--pt2)
+}
+.arrow > div {
+    display:absolute;
+    width: 15px;
+    height: 3px;
+    background: var(--blue);
+    /* top: 0px;
+    left: 0px; */
+    transition: transform 0.2s ease;
+}
+
+.arrow > div:nth-child(1) {
+    transform: rotate(45deg);
+}
+.arrow > div:nth-child(2) {
+    transform: translateY(6px) rotate(-45deg);
+}
+.arrow > div:nth-child(3) {
+    transform: translateX(10px) translateY(-6px) rotate(45deg);
+}
+.arrow > div:nth-child(4) {
+    transform: translateX(10px) translateY(0px) rotate(-45deg);
+}
+.preview:focus .arrow > div:nth-child(1),
+.preview:hover .arrow > div:nth-child(1) {
+    transform: translateX(15px) translateY(6px) rotate(-180deg);
+}
+.preview:focus .arrow > div:nth-child(2),
+.preview:hover .arrow > div:nth-child(2) {
+    transform: translateX(0px) translateY(3px) rotate(0deg);
+}
+.preview:focus .arrow > div:nth-child(3),
+.preview:hover .arrow > div:nth-child(3) {
+    transform: translateX(30px) translateY(0px) rotate(0deg);
+}
+.preview:focus .arrow > div:nth-child(4),
+.preview:hover .arrow > div:nth-child(4) {
+    transform: translateX(45px) translateY(-3px) rotate(-180deg);
+}

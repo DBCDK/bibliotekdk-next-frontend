@@ -4,8 +4,11 @@
  *
  */
 
+import ArticleSection from "@/components/article/section";
 import Hero from "@/components/hero";
 import Head from "next/head";
+import { promotedArticles } from "@/lib/api/article.fragments";
+import { fetchOnServer } from "@/lib/api/api";
 
 const Index = () => {
   const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
@@ -25,9 +28,28 @@ const Index = () => {
       </Head>
       <div>
         <Hero />
+        <ArticleSection
+          title="Bibliotek.dk tilbyder"
+          matchTag="section-offerings"
+        />
+        <ArticleSection title="Kan vi hjælpe?" matchTag="section-help" />
       </div>
     </React.Fragment>
   );
 };
+
+/**
+ * These queries are run on the server.
+ * I.e. the data fetched will be used for server side rendering
+ */
+const serverQueries = [promotedArticles];
+
+/**
+ * We export getServerSideProps to let Next.js
+ * fetch the data server side
+ *
+ * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+ */
+export const getServerSideProps = fetchOnServer(serverQueries);
 
 export default Index;

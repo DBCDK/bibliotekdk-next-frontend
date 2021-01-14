@@ -1,11 +1,8 @@
 .containerback {
+    position: relative;
     height: 260px;
-    background-image: url("/_next/image?url=/img/bibdk-hero-scaled.jpeg&w=1400&q=85");
-    background-repeat: no-repeat;
-    /* background-position: center; */
-    background-position: 50% 75%;
-    background-size: cover;
     padding-top: var(--pt4);
+    margin-bottom: var(--pt10);
 }
 
 .heroicon {
