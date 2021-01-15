@@ -15,6 +15,7 @@ export function article({ articleId }) {
     query: `query ($articleId: String!) {
         article: nodeById(id: $articleId) {
           ... on NodeArticle {
+            nid
             title
             fieldRubrik
             body {

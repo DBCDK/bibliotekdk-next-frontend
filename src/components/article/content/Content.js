@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
+import { get } from "lodash";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
 
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
+import Image from "@/components/base/image";
 import Translate from "@/components/base/translate";
 
 import * as articleFragments from "@/lib/api/article.fragments";
@@ -53,7 +55,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   const context = { context: "article" };
 
   return (
-    <Container fluid>
+    <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
         <Col
           className={styles.top}
@@ -65,10 +67,18 @@ export function Content({ className = "", data = {}, skeleton = false }) {
             {hasUrl && (
               <Col
                 className={`${styles.img} ${styles[orientation]}`}
-                style={{ backgroundImage: `url(${article.fieldImage.url})` }}
                 xs={12}
                 md={6}
-              />
+              >
+                <Image
+                  //   width={article.fieldImage.width}
+                  //   height={article.fieldImage.height}
+                  src={article.fieldImage.url}
+                  alt={article.fieldImage.alt || ""}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </Col>
             )}
             <Col className={styles.title} xs={12} md={6}>
               <Title type="title3" skeleton={skeleton}>
@@ -77,10 +87,22 @@ export function Content({ className = "", data = {}, skeleton = false }) {
             </Col>
           </Row>
         </Col>
-
-        <Col className={styles.body} xs={12} md={{ span: 6, offset: 3 }}>
-          <Text type="text2">
-            <div dangerouslySetInnerHTML={{ __html: article.body.value }} />
+      </Row>
+      <Row>
+        <Col className={styles.abstract} xs={12}>
+          <Text type="text1" skeleton={skeleton} lines={5}>
+            {article.fieldRubrik && (
+              <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
+            )}
+          </Text>
+        </Col>
+      </Row>
+      <Row>
+        <Col className={styles.body} xs={12}>
+          <Text type="text2" skeleton={skeleton}>
+            {article.body && (
+              <div dangerouslySetInnerHTML={{ __html: article.body.value }} />
+            )}
           </Text>
         </Col>
       </Row>
@@ -141,7 +163,7 @@ export default function Wrap(props) {
   if (error) {
     return null;
   }
-  if (isLoading) {
+  if (isLoading || !get(data, "article.body.value")) {
     return <ContentSkeleton {...props} />;
   }
 

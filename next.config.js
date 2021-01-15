@@ -36,7 +36,10 @@ module.exports = {
     defaultLocale: "da",
   },
   images: {
-    domains: ["forfatterweb.dk"],
+    domains: [
+      "forfatterweb.dk",
+      "bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk",
+    ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 1400],
   },
   webpack(config) {

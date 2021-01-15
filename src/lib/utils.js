@@ -1,11 +1,20 @@
-import uniq from "lodash/uniq";
-
 import config from "../config";
 
 /**
  * @file
  * This file contains utility function
  */
+
+/**
+ * Encode string
+ *
+ * @param {string}
+ *
+ * @returns {string} encoded string
+ */
+export function encodeString(str = "") {
+  return str.replace(/\s+/g, "-").toLowerCase();
+}
 
 /**
  * Encode title and creator to be used
@@ -17,11 +26,7 @@ import config from "../config";
  * @returns {string} encoded string
  */
 export function encodeTitleCreator(title = "", creator = "") {
-  return (
-    title.replace(/\s+/g, "-") +
-    "_" +
-    creator.replace(/\s+/g, "-")
-  ).toLowerCase();
+  return (encodeString(title) + "_" + encodeString(creator)).toLowerCase();
 }
 
 /**
@@ -35,4 +40,14 @@ export function getCanonicalWorkUrl({ title, creators, id }) {
     title,
     creators && creators[0] && creators[0].name
   )}/${id}`;
+}
+
+/**
+ * Create canonical URL for given article
+ * @param {object} article
+ *
+ * @returns {string} The canonical article URL
+ */
+export function getCanonicalArticleUrl({ title, nid }) {
+  return `${config.externalBaseUrl}/${encodeString(title)}/${nid}`;
 }

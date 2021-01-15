@@ -16,17 +16,17 @@
 
 import { useRouter } from "next/router";
 import { fetchOnServer } from "@/lib/api/api";
-import * as articleFragments from "@/lib/api/article.fragments";
+import { article } from "@/lib/api/article.fragments";
 
 import Page from "@/components/article/page";
-import Header from "@/components/work/page/Header";
+import Header from "@/components/article/page/Header";
 
 /**
  * Renders the WorkPage component
  */
 export default function ArticlePage() {
   const router = useRouter();
-  const { articleId, title } = router.query;
+  const { articleId } = router.query;
 
   /**
    * Updates the query params in the url
@@ -34,8 +34,6 @@ export default function ArticlePage() {
    *
    * @param {obj} query
    */
-
-  console.log("################# q", articleId, title);
 
   return (
     <React.Fragment>
@@ -54,7 +52,7 @@ export default function ArticlePage() {
  * On this page, queries should only use:
  *  - articleId
  */
-const serverQueries = Object.values(articleFragments);
+const serverQueries = [article];
 
 /**
  * We export getServerSideProps to let Next.js
