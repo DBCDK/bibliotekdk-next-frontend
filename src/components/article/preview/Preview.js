@@ -12,10 +12,11 @@ import Link from "@/components/base/link";
 function Arrow() {
   return (
     <div className={styles.arrow}>
-      <div />
-      <div />
-      <div />
-      <div />
+      <div className={styles.trapezoid} />
+      <div className={styles.trapezoid} />
+      <div className={styles.trapezoid} />
+      <div className={styles.trapezoid} />
+      {/* <div className={styles.flatnose} /> */}
     </div>
   );
 }
@@ -53,7 +54,13 @@ export default function ArticlePreview({ article, skeleton }) {
           {skeleton && <Skeleton className={styles.imageskeleton} />}
         </div>
 
-        <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
+        <Title
+          className={styles.title}
+          tag="h3"
+          type="title3"
+          lines={1}
+          skeleton={skeleton}
+        >
           {article.title}
         </Title>
         <Text type="text2" lines={3} clamp={true} skeleton={skeleton}>

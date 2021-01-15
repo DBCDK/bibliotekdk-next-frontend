@@ -73,7 +73,7 @@ export function ArticleSection({ title, articles, skeleton, matchTag }) {
     <Section title={title} className={styles.section}>
       <Row>
         {articles.map((article, index) => (
-          <Col xs={12} sm={4} key={`${article.title}_${index}`}>
+          <Col xs={12} md={4} key={`${article.title}_${index}`}>
             <ArticlePreview article={article} skeleton={skeleton} />
           </Col>
         ))}

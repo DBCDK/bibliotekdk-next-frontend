@@ -47,7 +47,7 @@ export default function Section({
         <Row as="section" className={`${styles.section} ${className}`}>
           <Col
             xs={12}
-            md={2}
+            lg={2}
             data-cy={cyKey({ name: "title", prefix: "section" })}
           >
             {titleDivider}
@@ -55,7 +55,7 @@ export default function Section({
           </Col>
           <Col
             xs={12}
-            md={{ offset: 1 }}
+            lg={{ offset: 1 }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
           >
             {contentDivider}
