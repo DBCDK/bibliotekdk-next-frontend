@@ -16,7 +16,15 @@ import { getCanonicalArticleUrl } from "@/lib/utils";
  *
  * @returns {object} JSON-LD representation of work
  */
-export function getJSONLD({ nid, title, fieldRubrik, fieldImage }) {
+export function getJSONLD({
+  nid,
+  title,
+  fieldRubrik,
+  fieldImage,
+  body,
+  entityCreated,
+  entityModified,
+}) {
   const url = getCanonicalArticleUrl({ title, nid });
   const res = {
     "@context": "https://schema.org",
@@ -27,8 +35,10 @@ export function getJSONLD({ nid, title, fieldRubrik, fieldImage }) {
     },
     headline: title,
     image: [fieldImage],
-    datePublished: "2015-02-05T08:00:00+08:00",
-    dateModified: "2015-02-05T09:20:00+08:00",
+    datePublished: entityCreated,
+    dateModified: entityModified,
+    description: fieldRubrik,
+    articleBody: body.value,
     author: {
       "@type": "Organization",
       name: "Bibliotek.dk",

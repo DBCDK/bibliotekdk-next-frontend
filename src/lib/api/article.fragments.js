@@ -16,6 +16,8 @@ export function article({ articleId }) {
         article: nodeById(id: $articleId) {
           ... on NodeArticle {
             nid
+            entityCreated
+            entityChanged
             title
             fieldRubrik
             body {

@@ -71,6 +71,11 @@
   font-family: var(--body-font-semibold);
 }
 
+.body ul,
+.body ol {
+  padding-left: var(--pt5);
+}
+
 @media (min-width: 768px) {
   .top {
     height: 300px;
