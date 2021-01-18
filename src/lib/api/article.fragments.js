@@ -5,7 +5,7 @@
 
 /**
  *
- * Basic work info that is fast to fetch
+ * Fetch a specific article by id (nid)
  *
  * @param {object} params
  * @param {string} params.articleId the id of the article

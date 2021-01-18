@@ -69,14 +69,6 @@
   );
 }
 
-/* .skeleton img {
-  opacity: 0;
-}
-
-.skeleton .left {
-  background-color: var(--iron);
-} */
-
 @media (min-width: 768px) {
   .top {
     height: 300px;

@@ -26,7 +26,7 @@ export function encodeString(str = "") {
  * @returns {string} encoded string
  */
 export function encodeTitleCreator(title = "", creator = "") {
-  return (encodeString(title) + "_" + encodeString(creator)).toLowerCase();
+  return encodeString(title) + "_" + encodeString(creator);
 }
 
 /**
