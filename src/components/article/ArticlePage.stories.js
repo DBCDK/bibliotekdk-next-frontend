@@ -30,7 +30,7 @@ export function ArticlePage() {
 
   return (
     <div>
-      <StoryTitle>Article Preview Section</StoryTitle>
+      <StoryTitle>Article Page</StoryTitle>
       <Content data={data} />
     </div>
   );
@@ -39,7 +39,7 @@ export function ArticlePage() {
 export function Loading() {
   return (
     <div>
-      <StoryTitle>Article Preview Section - loading</StoryTitle>
+      <StoryTitle>Article Page - loading</StoryTitle>
       <ContentSkeleton />
     </div>
   );
