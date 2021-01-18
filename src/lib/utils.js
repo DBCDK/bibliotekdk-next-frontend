@@ -43,11 +43,21 @@ export function getCanonicalWorkUrl({ title, creators, id }) {
 }
 
 /**
+ * Create internal article path for given article
+ * @param {object} article
+ *
+ * @returns {string} The canonical article URL
+ */
+export function getArticlePath({ title, nid }) {
+  return `artikel/${encodeString(title)}/${nid}`;
+}
+
+/**
  * Create canonical URL for given article
  * @param {object} article
  *
  * @returns {string} The canonical article URL
  */
-export function getCanonicalArticleUrl({ title, nid }) {
-  return `${config.externalBaseUrl}/${encodeString(title)}/${nid}`;
+export function getCanonicalArticleUrl(props) {
+  return `${config.externalBaseUrl}/${getArticlePath(props)}`;
 }

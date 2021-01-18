@@ -5,46 +5,21 @@
   background-color: var(--parchment);
 }
 
-.title {
+.right {
   padding: var(--pt2);
 }
 
-.img {
+.left {
   max-width: auto !important;
   position: relative;
   height: 300px;
   padding: 0;
 }
 
-.img img {
+.left img {
   width: auto;
   height: 300px;
 }
-
-/* .img img {
-  position: relative;
-  padding: 0;
-  height: 300px;
-  width: 500px;
-}
-
-.img,
-.img div {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.img.landscape div {
-  width: 100%;
-  height: 300px;
-}
-
-.img.portrait div {
-}
-
-.img div {
-} */
 
 /* Abstract */
 
@@ -75,6 +50,32 @@
 .body ol {
   padding-left: var(--pt5);
 }
+
+/* Skeleton */
+
+.skeleton .right div div div i div,
+.skeleton .right div > div div,
+.skeleton .right div span div div div {
+  background-color: var(--parchment);
+  opacity: 0.5;
+}
+
+.skeleton .right div div::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--chamois) 50%,
+    transparent 100%
+  );
+}
+
+/* .skeleton img {
+  opacity: 0;
+}
+
+.skeleton .left {
+  background-color: var(--iron);
+} */
 
 @media (min-width: 768px) {
   .top {

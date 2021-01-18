@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-import { get } from "lodash";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
 
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Image from "@/components/base/image";
-import Translate from "@/components/base/translate";
+import Skeleton from "@/components/base/skeleton";
 
 import * as articleFragments from "@/lib/api/article.fragments";
 
@@ -44,15 +43,12 @@ export function Content({ className = "", data = {}, skeleton = false }) {
 
   const article = data.article;
 
+  // check if article has image url
   const hasUrl = article.fieldImage && article.fieldImage.url;
 
+  // check article image orientation -> adds orientation class [portrait/landscape(default)]
   const orientation =
     (hasUrl && getOrientation(article.fieldImage)) || "landscape";
-
-  console.log("article", article);
-
-  // Translate Context
-  const context = { context: "article" };
 
   return (
     <Container as="article" fluid>
@@ -66,7 +62,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           <Row>
             {hasUrl && (
               <Col
-                className={`${styles.img} ${styles[orientation]}`}
+                className={`${styles.left} ${styles[orientation]}`}
                 xs={12}
                 md={6}
               >
@@ -75,12 +71,14 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                   //   height={article.fieldImage.height}
                   src={article.fieldImage.url}
                   alt={article.fieldImage.alt || ""}
+                  title={article.fieldImage.title || ""}
                   layout="fill"
                   objectFit="cover"
                 />
+                {skeleton && <Skeleton />}
               </Col>
             )}
-            <Col className={styles.title} xs={12} md={6}>
+            <Col className={styles.right} xs={12} md={6}>
               <Title type="title3" skeleton={skeleton}>
                 {article.title}
               </Title>
@@ -90,7 +88,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
       </Row>
       <Row>
         <Col className={styles.abstract} xs={12}>
-          <Text type="text1" skeleton={skeleton} lines={5}>
+          <Text type="text1" skeleton={skeleton} lines={3}>
             {article.fieldRubrik && (
               <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
             )}
@@ -99,7 +97,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
       </Row>
       <Row>
         <Col className={styles.body} xs={12}>
-          <Text type="text2" skeleton={skeleton}>
+          <Text type="text2" skeleton={skeleton} lines={30}>
             {article.body && (
               <div dangerouslySetInnerHTML={{ __html: article.body.value }} />
             )}
@@ -119,12 +117,18 @@ export function Content({ className = "", data = {}, skeleton = false }) {
  * @returns {component}
  */
 export function ContentSkeleton(props) {
-  const mock = { article: {} };
+  const mock = {
+    article: {
+      fieldImage: {
+        url: "/img/article-dummy.jpeg",
+      },
+    },
+  };
 
   return (
     <Content
       {...props}
-      data={mock}
+      data={props.data || mock}
       className={`${props.className} ${styles.skeleton}`}
       skeleton={true}
     />
@@ -146,25 +150,12 @@ export default function Wrap(props) {
     articleFragments.article({ articleId })
   );
 
-  //   const data = {
-  //     title: "Digitale bibliotekstilbud",
-  //     fieldRubrik:
-  //       "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
-  //     fieldImage: {
-  //       alt: "some image alt",
-  //       title: "some image title",
-  //       url: "/img/bibdk-hero-scaled.jpeg",
-  //     },
-  //     body: {
-  //       value: "<p>Denne streng <b>vil</b> indeholde html-formatering</p>",
-  //     },
-  //   };
-
   if (error) {
     return null;
   }
-  if (isLoading || !get(data, "article.body.value")) {
-    return <ContentSkeleton {...props} />;
+
+  if (isLoading) {
+    return <ContentSkeleton {...props} data={null} />;
   }
 
   return <Content {...props} data={data} />;

@@ -38,7 +38,7 @@ export function getJSONLD({
     datePublished: entityCreated,
     dateModified: entityModified,
     description: fieldRubrik,
-    articleBody: body.value,
+    articleBody: body && body.value,
     author: {
       "@type": "Organization",
       name: "Bibliotek.dk",
