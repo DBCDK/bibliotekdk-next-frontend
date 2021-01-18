@@ -16,8 +16,8 @@
 }
 
 .title3 {
-  font-size: 40px;
-  line-height: 52px;
+  font-size: 28px;
+  line-height: 38px;
 }
 
 .title4 {
@@ -51,6 +51,14 @@
   .title1 {
     font-size: 80px;
     line-height: 92px;
+  }
+  
+}
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+  .title3 {
+    font-size: 40px;
+    line-height: 52px;
   }
 }
 

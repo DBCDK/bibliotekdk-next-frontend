@@ -1,0 +1,144 @@
+.preview { 
+    color: var(--mine-shaft);
+    text-decoration: none;
+    display: block;
+    margin-bottom: var(--pt5);
+}
+.preview:focus,
+.preview:hover {
+    color: var(--blue) !important;
+}
+.preview h3 {
+    word-break: break-word;
+}
+.title {
+    margin-bottom: var(--pt2);
+}
+.imagewrapper {
+  position: relative;
+  /* Maintain 16:9 aspect ratio by setting padding-bottom */
+  padding-bottom: 56%;
+  margin-bottom: var(--pt2);
+}
+.imageskeleton {
+    padding-bottom: var(--pt05);
+}
+.arrow {
+    position: relative;
+    margin-top: var(--pt3);
+    padding-bottom: var(--pt2);
+    height: 20px;
+    
+}
+.trapezoid {
+    position: absolute;
+    width: 4px;
+    
+    border-bottom: 15px solid var(--blue);
+    border-left: 1px solid transparent;
+    border-right: 1px solid transparent;
+    top: 0px;
+    left: 4px;
+    transition: transform 0.2s ease;
+    shape-rendering: geometricPrecision;
+    image-rendering: optimizeQuality;
+    text-rendering: geometricPrecision;
+    
+}
+.flatnose {
+    position: absolute;
+    width: 1px;
+    height: 10px;
+    background: white;
+    top: 6px;
+    left: 12px;
+    opacity: 1;
+    transition-delay: 0.2s;
+    shape-rendering: geometricPrecision;
+}
+
+.trapezoid:nth-child(1){
+    transform: rotate(-45deg);
+}
+.trapezoid:nth-child(2){
+    transform: translateY(9px) rotate(225deg);
+}
+.trapezoid:nth-child(3) {
+    transform: translateX(10px) rotate(-45deg);
+}
+.trapezoid:nth-child(4) {
+    transform: translateX(10px) translateY(9px) rotate(225deg);
+}
+.preview:focus .trapezoid,
+.preview:hover .trapezoid {
+    border-left: 0px;
+    border-right: 0px;
+    width: 3px;
+}
+.preview:focus .trapezoid:nth-child(1),
+.preview:hover .trapezoid:nth-child(1) {
+    transform: translateX(15px) translateY(4px) rotate(90deg);
+}
+.preview:focus .trapezoid:nth-child(2),
+.preview:hover .trapezoid:nth-child(2) {
+    transform: translateX(0px) translateY(4px) rotate(-90deg);
+}
+.preview:focus .trapezoid:nth-child(3),
+.preview:hover .trapezoid:nth-child(3) {
+    transform: translateX(45px) translateY(4px) rotate(90deg);
+}
+.preview:focus .trapezoid:nth-child(4),
+.preview:hover .trapezoid:nth-child(4) {
+    transform: translateX(30px) translateY(4px) rotate(90deg);
+}
+.preview:focus .flatnose,
+.preview:hover .flatnose {
+    opacity: 0;
+    transition-delay: 0s;
+}
+
+
+
+
+
+/* .trapezoid {
+    position: absolute;
+    width: 2px;
+    border-bottom: 16px solid blue;
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    transform: scale(1);
+    transition: all 0.25s;
+  }
+  .trapezoid:nth-child(1) {
+    transform: rotate(-45deg)
+  }
+  .trapezoid:nth-child(2) {
+    transform: translateY(90px) rotate(-135deg)
+  }
+  .white {
+    position: absolute;
+    width: 20px;
+    height: 100px;
+    background: white;
+    transform: translateY(80px) translateX(85px)
+  }
+  .wrapper {
+    margin-left: 800px;
+    position: relative;
+    width: 10px;
+    height: 20px;
+    background: red;
+  }
+  .wrapper:hover {
+  
+  }
+  .wrapper:hover .trapezoid {
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    width: 40px;
+  }
+  .wrapper:hover .trapezoid:nth-child(1) {
+  
+    
+  } */

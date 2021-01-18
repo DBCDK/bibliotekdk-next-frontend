@@ -8,12 +8,19 @@ import Icon from "@/components/base/icon";
 
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Translate from "@/components/base/translate";
+import Image from "@/components/base/image";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
 export default function Hero() {
   return (
     <Container className={styles.containerback} fluid>
+      <Image
+        src="/img/bibdk-hero-scaled.jpeg"
+        layout="fill"
+        priority={true}
+        objectFit="cover"
+      />
       <Row>
         <Col lg={{ span: 3 }} xs={{ span: 0 }} className={styles.heroicon}>
           <Icon src={"ornament1white.svg"} size={{ w: 5, h: "auto" }} />
