@@ -25,9 +25,12 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
+import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
+  // Restore scrollPosition on page change (where page using getServersideProps)
+  useScrollRestoration(router);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
