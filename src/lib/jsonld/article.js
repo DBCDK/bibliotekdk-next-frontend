@@ -3,18 +3,11 @@ import { getCanonicalArticleUrl } from "@/lib/utils";
 /**
  * Creates JSON-LD representation of the article
  * - https://developers.google.com/search/docs/data-types/article
- * - https://solsort.dk/dkabm-til-schema.org
- *
- *
- * Note:
- *  - It is recommended for work and manifestations to have "sameAs" field,
- *    pointing to reference web page.
- *  - "potentialAction" is not implemented
  *
  *
  * @param {object} article
  *
- * @returns {object} JSON-LD representation of work
+ * @returns {object} JSON-LD representation of article
  */
 export function getJSONLD({
   nid,
