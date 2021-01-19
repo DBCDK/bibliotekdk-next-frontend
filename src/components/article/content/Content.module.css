@@ -1,0 +1,88 @@
+.content {
+}
+
+.top {
+  background-color: var(--parchment);
+}
+
+.right {
+  padding: var(--pt2);
+}
+
+.left {
+  max-width: auto !important;
+  position: relative;
+  height: 300px;
+  padding: 0;
+}
+
+.left img {
+  width: auto;
+  height: 300px;
+}
+
+/* Abstract */
+
+.abstract {
+  padding-top: var(--pt4);
+}
+
+.abstract,
+.body {
+  max-width: 560px;
+  margin: auto;
+}
+
+/* Body */
+
+.body {
+  padding-top: var(--pt4);
+}
+
+/* Tags */
+
+.body strong {
+  font-weight: normal;
+  font-family: var(--body-font-semibold);
+}
+
+.body ul,
+.body ol {
+  padding-left: var(--pt5);
+}
+
+/* Skeleton */
+
+.skeleton .right div div div i div,
+.skeleton .right div > div div,
+.skeleton .right div span div div div {
+  background-color: var(--parchment);
+  opacity: 0.5;
+}
+
+.skeleton .right div div::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--chamois) 50%,
+    transparent 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .top {
+    height: 300px;
+  }
+
+  .right {
+    padding: var(--pt3);
+  }
+
+  .body {
+    padding-top: var(--pt8);
+  }
+
+  .abstract {
+    padding-top: var(--pt12);
+  }
+}

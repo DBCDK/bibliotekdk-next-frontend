@@ -6,6 +6,8 @@ import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 
+import { getArticlePath } from "@/lib/utils";
+
 /**
  * Animated arrow that turns into a line when hovered/focused
  */
@@ -33,12 +35,8 @@ export default function ArticlePreview({ article, skeleton }) {
   return (
     <Link
       a={false}
-      // TODO fix href object when article page exists
       href={{
-        pathname: "/article",
-        query: {
-          articleId: article.nid,
-        },
+        pathname: getArticlePath(article),
       }}
     >
       <a className={styles.preview} data-cy="article-preview">
