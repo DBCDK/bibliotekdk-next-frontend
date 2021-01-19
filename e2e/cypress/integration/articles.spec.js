@@ -33,7 +33,7 @@ describe("Article", () => {
       .click()
       .then(() => {
         expect(stub.getCall(0)).to.be.calledWith(
-          "/artikel/digitale-bibliotekstilbud/1"
+          "/artikel/[title]/[articleId]?title=digitale-bibliotekstilbud&articleId=1"
         );
       });
   });

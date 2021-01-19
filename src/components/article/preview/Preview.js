@@ -5,6 +5,7 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
+import { encodeString } from "@/lib/utils";
 
 import { getArticlePath } from "@/lib/utils";
 
@@ -32,11 +33,16 @@ function Arrow() {
  */
 export default function ArticlePreview({ article, skeleton }) {
   const image = article && article.fieldImage;
+
   return (
     <Link
       a={false}
       href={{
-        pathname: getArticlePath(article),
+        pathname: "/artikel/[title]/[articleId]",
+        query: {
+          title: encodeString(article.title),
+          articleId: article.nid,
+        },
       }}
     >
       <a className={styles.preview} data-cy="article-preview">
