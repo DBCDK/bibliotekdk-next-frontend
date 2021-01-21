@@ -103,7 +103,7 @@
 
 .suggester__wrap {
   flex-grow: 2;
-  max-width: 680px;
+  max-width: 672px;
   /* max-width: 468px; */
 }
 
@@ -131,7 +131,7 @@
   font-family: var(--body-font);
   font-size: 20px;
   line-height: 22px;
-  margin-left: var(--pt3);
+  margin-left: var(--pt4);
   cursor: pointer;
   overflow: hidden;
 }

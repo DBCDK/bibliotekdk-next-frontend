@@ -45,6 +45,8 @@ export function Content({ className = "", data = {}, skeleton = false }) {
 
   // check if article has image url
   const hasUrl = article.fieldImage && article.fieldImage.url;
+  // const hasUrl = false;
+  const noImageClass = hasUrl ? "" : styles.noImage;
 
   // check article image orientation -> adds orientation class [portrait/landscape(default)]
   const orientation =
@@ -54,10 +56,9 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
         <Col
-          className={styles.top}
+          className={`${styles.top} ${noImageClass}`}
           xs={12}
-          lg={{ span: 10, offset: 1 }}
-          xl={{ span: 8, offset: 2 }}
+          lg={{ span: 8, offset: 2 }}
         >
           <Row>
             {hasUrl && (
@@ -78,7 +79,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 {skeleton && <Skeleton />}
               </Col>
             )}
-            <Col className={styles.right} xs={12} md={6}>
+            <Col
+              className={styles.right}
+              xs={12}
+              md={{ span: hasUrl ? 6 : 10, offset: hasUrl ? 0 : 1 }}
+            >
               <Title type="title3" skeleton={skeleton}>
                 {article.title}
               </Title>
@@ -87,7 +92,12 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         </Col>
       </Row>
       <Row>
-        <Col className={styles.abstract} xs={12}>
+        <Col
+          className={styles.rubrik}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
           <Text type="text1" skeleton={skeleton} lines={3}>
             {article.fieldRubrik && (
               <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
@@ -96,7 +106,12 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         </Col>
       </Row>
       <Row>
-        <Col className={styles.body} xs={12}>
+        <Col
+          className={styles.body}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
           <Text type="text2" skeleton={skeleton} lines={30}>
             {article.body && (
               <div dangerouslySetInnerHTML={{ __html: article.body.value }} />

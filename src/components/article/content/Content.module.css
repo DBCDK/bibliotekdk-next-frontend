@@ -2,11 +2,19 @@
 }
 
 .top {
+  min-height: 300px;
   background-color: var(--parchment);
 }
 
 .right {
   padding: var(--pt2);
+}
+
+.noImage .right {
+  height: 300px;
+  padding: var(--pt2);
+  display: flex;
+  align-items: center;
 }
 
 .left {
@@ -21,22 +29,26 @@
   height: 300px;
 }
 
-/* Abstract */
+/* Rubrik */
 
-.abstract {
+.rubrik {
   padding-top: var(--pt4);
 }
 
-.abstract,
+.rubrik,
 .body {
-  max-width: 560px;
-  margin: auto;
+  /* max-width: 560px;
+  margin: auto; */
 }
 
 /* Body */
 
 .body {
   padding-top: var(--pt4);
+}
+
+.body img {
+  max-height: 25vh;
 }
 
 /* Tags */
@@ -69,20 +81,26 @@
   );
 }
 
+@media (min-width: 992px) {
+  .noImage .right {
+    padding: var(--pt2) var(--pt6);
+  }
+}
+
 @media (min-width: 768px) {
   .top {
-    height: 300px;
   }
 
   .right {
     padding: var(--pt3);
+    height: 300px;
   }
 
   .body {
     padding-top: var(--pt8);
   }
 
-  .abstract {
+  .rubrik {
     padding-top: var(--pt12);
   }
 }
