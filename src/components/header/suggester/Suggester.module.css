@@ -6,16 +6,14 @@
 }
 
 .input_wrap {
+  width: 100%;
   height: 64px;
   display: flex;
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
   border-bottom: 1px solid var(--iron);
-  position: relative;
-
-  /* ... */
+  /* position fix hack for mobile suggester scroll */
   position: fixed;
-  width: 100%;
   top: 0;
   left: 0;
   z-index: 3;
@@ -37,7 +35,6 @@
   right: 0;
   top: var(--pt05);
   transform: scale(0);
-
   transition: transform 0.3s;
 }
 
@@ -84,7 +81,6 @@
   width: 100%;
   background-color: white;
   border-top: none;
-  /* background-color: red; */
   height: 100vh;
   overflow-y: auto;
   padding: 72px 0 16px 0;
