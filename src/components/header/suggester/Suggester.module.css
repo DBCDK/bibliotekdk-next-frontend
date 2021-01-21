@@ -6,12 +6,18 @@
 }
 
 .input_wrap {
+  width: 100%;
   height: 64px;
   display: flex;
   align-items: center;
   padding: var(--pt2) var(--pt2) var(--pt2) 0;
   border-bottom: 1px solid var(--iron);
-  position: relative;
+  /* position fix hack for mobile suggester scroll */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background-color: white;
 }
 
 .input_wrap .arrow,
@@ -29,7 +35,6 @@
   right: 0;
   top: var(--pt05);
   transform: scale(0);
-
   transition: transform 0.3s;
 }
 
@@ -76,6 +81,9 @@
   width: 100%;
   background-color: white;
   border-top: none;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 72px 0 16px 0;
 }
 
 .suggestions_list {
@@ -134,10 +142,13 @@
 
   .input_wrap {
     height: 64px;
-    /* display: flex;
-    align-items: center; */
     padding: 0;
     border: none;
+
+    position: relative;
+    z-index: 1;
+    top: auto;
+    left: auto;
   }
 
   .input_wrap .arrow {
@@ -149,5 +160,16 @@
 
     border: 1px solid var(--gray);
     border-top: none;
+
+    height: auto;
+    padding: 0;
+  }
+
+  .suggestion:first-child {
+    padding: var(--pt2) var(--pt2) var(--pt1) var(--pt2);
+  }
+
+  .suggestion:last-child {
+    padding: var(--pt1) var(--pt2) var(--pt2) var(--pt2);
   }
 }
