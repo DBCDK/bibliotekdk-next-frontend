@@ -77,7 +77,7 @@ export function Overview({
                 allMaterialTypes
               }
               skeleton={!selectedMaterial.cover}
-              size={["200px", "300px"]}
+              size={["200px", "auto"]}
             >
               <Bookmark skeleton={skeleton} title={title} />
             </Cover>
