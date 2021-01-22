@@ -11,8 +11,8 @@
 }
 
 .title2 {
-  font-size: 48px;
-  line-height: 62px;
+  font-size: 40px;
+  line-height: 52px;
 }
 
 .title3 {
@@ -39,7 +39,7 @@
 }
 
 /* Small devices */
-@media (min-width: 576px) { 
+@media (min-width: 576px) {
   .title1 {
     font-size: 48px;
     line-height: 56px;
@@ -47,15 +47,14 @@
 }
 
 /* Large devices (desktops, 992px and up) */
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
   .title1 {
     font-size: 80px;
     line-height: 92px;
   }
-  
 }
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
   .title3 {
     font-size: 40px;
     line-height: 52px;

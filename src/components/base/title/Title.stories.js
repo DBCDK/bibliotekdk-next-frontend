@@ -8,7 +8,13 @@ export default {
 
 // Current title types
 const titles = ["title1", "title2", "title3", "title4", "title5"];
-const size = ["80/92", "48/62", "40/52", "24/32", "24/32 - light"];
+const size = [
+  "80/92 - 400",
+  "48/62 - 400",
+  "40/52 - 400",
+  "24/32 - 500",
+  "24/32 - 300",
+];
 
 /**
  * Returns all Titles as h1 tags

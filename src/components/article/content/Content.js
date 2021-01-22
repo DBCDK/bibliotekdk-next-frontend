@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
@@ -9,10 +10,43 @@ import Skeleton from "@/components/base/skeleton";
 
 import * as articleFragments from "@/lib/api/article.fragments";
 
+import { timestampToShortDate } from "@/utils/datetimeConverter";
+
 import styles from "./Content.module.css";
 
 /**
- * The Component function
+ * Body parse search-and-replace funtion
+ *
+ * @param {string} str
+ *
+ * @returns {string}
+ */
+function parseBody(str) {
+  const img_regex = /<\s*img[^>]*\/>/g;
+  const cap_regex = /data-caption=\"(.*?)\"/;
+
+  const img = str.match(img_regex);
+
+  img &&
+    img.map((img) => {
+      if (img) {
+        const caption = img.match(cap_regex);
+
+        let captionEl = "";
+        if (caption && caption[1]) {
+          captionEl = `<figcaption>${caption[1]}</figcaption>`;
+        }
+
+        const newEl = `<figure> ${img} ${captionEl && captionEl}</figure>`;
+        str = str.replace(img, newEl);
+      }
+    });
+
+  return str;
+}
+
+/**
+ * Orientation function
  *
  * @param {obj} props
  * @param {obj} props.width
@@ -51,6 +85,15 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   // check article image orientation -> adds orientation class [portrait/landscape(default)]
   const orientation =
     (hasUrl && getOrientation(article.fieldImage)) || "landscape";
+
+  const parsedBody = useMemo(() => {
+    if (article.body && article.body.value) {
+      return parseBody(article.body.value);
+    }
+    return "";
+  }, [article.body && article.body.value]);
+
+  console.log("article", article);
 
   return (
     <Container as="article" fluid>
@@ -91,6 +134,18 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           </Row>
         </Col>
       </Row>
+
+      <Row>
+        <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
+          <Row className={styles.test}>
+            <Col xs={"auto"}>{timestampToShortDate(article.entityCreated)}</Col>
+            <Col xs={"auto"}>Nyhed</Col>
+            <Col xs={"auto"}>Af Bibliotek.dk redaktionen</Col>
+            <Col xs={"auto"}>Print</Col>
+          </Row>
+        </Col>
+      </Row>
+
       <Row>
         <Col
           className={styles.rubrik}
@@ -98,11 +153,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           md={{ span: 10, offset: 1 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Text type="text1" skeleton={skeleton} lines={3}>
+          <Title type="title4" skeleton={skeleton} lines={3}>
             {article.fieldRubrik && (
               <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
             )}
-          </Text>
+          </Title>
         </Col>
       </Row>
       <Row>
@@ -114,7 +169,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         >
           <Text type="text2" skeleton={skeleton} lines={30}>
             {article.body && (
-              <div dangerouslySetInnerHTML={{ __html: article.body.value }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parsedBody,
+                }}
+              />
             )}
           </Text>
         </Col>
