@@ -35,6 +35,21 @@
   height: 300px;
 }
 
+/* Info */
+
+.info {
+  padding: var(--pt2);
+}
+
+.info > div > div:first-child,
+.info > div > div:nth-child(2) {
+  margin-bottom: var(--pt1);
+}
+
+.info > div > div:nth-child(2n) {
+  text-align: right;
+}
+
 /* Rubrik */
 
 .rubrik {
@@ -140,7 +155,25 @@
     padding-top: var(--pt8);
   }
 
+  .info > div > div:first-child,
+  .info > div > div:nth-child(2) {
+    margin-bottom: 0;
+  }
+
+  .info > div > div:nth-child(2n) {
+    text-align: left;
+  }
+
   .rubrik {
     padding-top: var(--pt12);
+  }
+}
+
+/* Print styles */
+
+@media print {
+  .left,
+  .left img {
+    height: 400px;
   }
 }

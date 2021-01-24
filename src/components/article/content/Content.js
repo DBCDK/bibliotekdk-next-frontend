@@ -7,6 +7,8 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Image from "@/components/base/image";
 import Skeleton from "@/components/base/skeleton";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 
 import * as articleFragments from "@/lib/api/article.fragments";
 
@@ -75,11 +77,14 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     return null;
   }
 
+  const context = { context: "articles" };
+
   const article = data.article;
 
   // check if article has image url
   const hasUrl = article.fieldImage && article.fieldImage.url;
   // const hasUrl = false;
+
   const noImageClass = hasUrl ? "" : styles.noImage;
 
   // check article image orientation -> adds orientation class [portrait/landscape(default)]
@@ -92,8 +97,6 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     }
     return "";
   }, [article.body && article.body.value]);
-
-  console.log("article", article);
 
   return (
     <Container as="article" fluid>
@@ -136,12 +139,35 @@ export function Content({ className = "", data = {}, skeleton = false }) {
       </Row>
 
       <Row>
-        <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
+        <Col
+          className={styles.info}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
           <Row className={styles.test}>
-            <Col xs={"auto"}>{timestampToShortDate(article.entityCreated)}</Col>
-            <Col xs={"auto"}>Nyhed</Col>
-            <Col xs={"auto"}>Af Bibliotek.dk redaktionen</Col>
-            <Col xs={"auto"}>Print</Col>
+            <Col xs={6} md={"auto"}>
+              {timestampToShortDate(article.entityCreated)}
+            </Col>
+            <Col xs={6} md={"auto"}>
+              Nyhed
+            </Col>
+            <Col xs={6} md={"auto"}>
+              Af bibliotek.dk redaktionen
+            </Col>
+            <Col xs={6} md={"auto"}>
+              <Link
+                tag="span"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window !== "undefined") {
+                    window.print();
+                  }
+                }}
+              >
+                {Translate({ ...context, label: "printButton" })}
+              </Link>
+            </Col>
           </Row>
         </Col>
       </Row>

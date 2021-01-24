@@ -263,3 +263,11 @@
     display: block;
   }
 }
+
+/* Print styles */
+
+@media print {
+  .wrap {
+    display: none;
+  }
+}
