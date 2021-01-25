@@ -146,13 +146,15 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         >
           <Row className={styles.test}>
             <Col xs={6} md={"auto"}>
-              {timestampToShortDate(article.entityCreated)}
+              <Text type="text4">
+                {timestampToShortDate(article.entityCreated)}
+              </Text>
             </Col>
             <Col xs={6} md={"auto"}>
-              Nyhed
+              <Text type="text4">Nyhed</Text>
             </Col>
             <Col xs={6} md={"auto"}>
-              Af bibliotek.dk redaktionen
+              <Text type="text4">Af bibliotek.dk redaktionen</Text>
             </Col>
             <Col xs={6} md={"auto"}>
               <Link
@@ -164,7 +166,9 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                   }
                 }}
               >
-                {Translate({ ...context, label: "printButton" })}
+                <Text type="text4">
+                  {Translate({ ...context, label: "printButton" })}
+                </Text>
               </Link>
             </Col>
           </Row>
