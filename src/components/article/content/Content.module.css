@@ -2,11 +2,25 @@
 }
 
 .top {
+  min-height: 300px;
   background-color: var(--parchment);
 }
 
 .right {
   padding: var(--pt2);
+  overflow: hidden;
+}
+
+.noImage .right {
+  height: 300px;
+  padding: var(--pt2);
+  display: flex;
+  align-items: center;
+}
+
+.test {
+  display: flex;
+  justify-content: space-between;
 }
 
 .left {
@@ -21,22 +35,52 @@
   height: 300px;
 }
 
-/* Abstract */
+/* Info */
 
-.abstract {
-  padding-top: var(--pt4);
+.info {
+  padding: var(--pt2);
 }
 
-.abstract,
-.body {
-  max-width: 560px;
-  margin: auto;
+.info > div > div:first-child,
+.info > div > div:nth-child(2) {
+  margin-bottom: var(--pt1);
+}
+
+.info > div > div:nth-child(2n) {
+  text-align: right;
+}
+
+/* Rubrik */
+
+.rubrik {
+  padding-top: var(--pt4);
 }
 
 /* Body */
 
 .body {
-  padding-top: var(--pt4);
+  padding-top: var(--pt3);
+}
+
+.body figure {
+}
+
+.body figure img {
+  max-width: 100%;
+  max-height: 250px;
+}
+
+.body figure {
+  padding: var(--pt4) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.body figcaption {
+  font-size: 14px;
+  line-height: 22px;
+  padding: var(--pt1) 0 0 0;
 }
 
 /* Tags */
@@ -49,6 +93,18 @@
 .body ul,
 .body ol {
   padding-left: var(--pt5);
+}
+
+.body h1,
+.body h2,
+.body h3,
+.body h4,
+.body h5,
+.body h6 {
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font-semibold);
+  font-weight: 400;
 }
 
 /* Skeleton */
@@ -69,20 +125,45 @@
   );
 }
 
+@media (min-width: 992px) {
+  .noImage .right {
+    padding: var(--pt2) var(--pt6);
+  }
+
+  .body figure img {
+    max-width: 100%;
+    max-height: 375px;
+  }
+}
+
 @media (min-width: 768px) {
   .top {
-    height: 300px;
   }
 
   .right {
     padding: var(--pt3);
+    height: 300px;
   }
 
-  .body {
-    padding-top: var(--pt8);
+  .info > div > div:first-child,
+  .info > div > div:nth-child(2) {
+    margin-bottom: 0;
   }
 
-  .abstract {
-    padding-top: var(--pt12);
+  .info > div > div:nth-child(2n) {
+    text-align: left;
+  }
+
+  .rubrik {
+    padding-top: var(--pt1);
+  }
+}
+
+/* Print styles */
+
+@media print {
+  .left,
+  .left img {
+    height: 400px;
   }
 }

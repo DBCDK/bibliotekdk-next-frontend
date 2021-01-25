@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
@@ -6,13 +7,48 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Image from "@/components/base/image";
 import Skeleton from "@/components/base/skeleton";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 
 import * as articleFragments from "@/lib/api/article.fragments";
+
+import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 
 /**
- * The Component function
+ * Body parse search-and-replace funtion
+ *
+ * @param {string} str
+ *
+ * @returns {string}
+ */
+function parseBody(str) {
+  const img_regex = /<\s*img[^>]*\/>/g;
+  const cap_regex = /data-caption=\"(.*?)\"/;
+
+  const img = str.match(img_regex);
+
+  img &&
+    img.map((img) => {
+      if (img) {
+        const caption = img.match(cap_regex);
+
+        let captionEl = "";
+        if (caption && caption[1]) {
+          captionEl = `<figcaption>${caption[1]}</figcaption>`;
+        }
+
+        const newEl = `<figure> ${img} ${captionEl && captionEl}</figure>`;
+        str = str.replace(img, newEl);
+      }
+    });
+
+  return str;
+}
+
+/**
+ * Orientation function
  *
  * @param {obj} props
  * @param {obj} props.width
@@ -41,23 +77,33 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     return null;
   }
 
+  const context = { context: "articles" };
+
   const article = data.article;
 
   // check if article has image url
   const hasUrl = article.fieldImage && article.fieldImage.url;
 
+  const noImageClass = hasUrl ? "" : styles.noImage;
+
   // check article image orientation -> adds orientation class [portrait/landscape(default)]
   const orientation =
     (hasUrl && getOrientation(article.fieldImage)) || "landscape";
+
+  const parsedBody = useMemo(() => {
+    if (article.body && article.body.value) {
+      return parseBody(article.body.value);
+    }
+    return "";
+  }, [article.body && article.body.value]);
 
   return (
     <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
         <Col
-          className={styles.top}
+          className={`${styles.top} ${noImageClass}`}
           xs={12}
-          lg={{ span: 10, offset: 1 }}
-          xl={{ span: 8, offset: 2 }}
+          lg={{ span: 8, offset: 2 }}
         >
           <Row>
             {hasUrl && (
@@ -78,7 +124,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 {skeleton && <Skeleton />}
               </Col>
             )}
-            <Col className={styles.right} xs={12} md={6}>
+            <Col
+              className={styles.right}
+              xs={12}
+              md={{ span: hasUrl ? 6 : 10, offset: hasUrl ? 0 : 1 }}
+            >
               <Title type="title3" skeleton={skeleton}>
                 {article.title}
               </Title>
@@ -86,20 +136,69 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           </Row>
         </Col>
       </Row>
+
       <Row>
-        <Col className={styles.abstract} xs={12}>
-          <Text type="text1" skeleton={skeleton} lines={3}>
+        <Col
+          className={styles.info}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
+          <Row className={styles.test}>
+            <Col xs={6} md={"auto"}>
+              {timestampToShortDate(article.entityCreated)}
+            </Col>
+            <Col xs={6} md={"auto"}>
+              Nyhed
+            </Col>
+            <Col xs={6} md={"auto"}>
+              Af bibliotek.dk redaktionen
+            </Col>
+            <Col xs={6} md={"auto"}>
+              <Link
+                tag="span"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window !== "undefined") {
+                    window.print();
+                  }
+                }}
+              >
+                {Translate({ ...context, label: "printButton" })}
+              </Link>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col
+          className={styles.rubrik}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
+          <Title type="title4" skeleton={skeleton} lines={3}>
             {article.fieldRubrik && (
               <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
             )}
-          </Text>
+          </Title>
         </Col>
       </Row>
       <Row>
-        <Col className={styles.body} xs={12}>
+        <Col
+          className={styles.body}
+          xs={12}
+          md={{ span: 10, offset: 1 }}
+          lg={{ span: 6, offset: 3 }}
+        >
           <Text type="text2" skeleton={skeleton} lines={30}>
             {article.body && (
-              <div dangerouslySetInnerHTML={{ __html: article.body.value }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: parsedBody,
+                }}
+              />
             )}
           </Text>
         </Col>

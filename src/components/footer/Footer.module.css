@@ -25,3 +25,11 @@
 .footerlink:focus span {
   color: var(--white);
 }
+
+/* Print styles */
+
+@media print {
+  .containerback {
+    display: none;
+  }
+}

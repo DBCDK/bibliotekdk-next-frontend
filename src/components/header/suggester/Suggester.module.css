@@ -81,7 +81,7 @@
   width: 100%;
   background-color: white;
   border-top: none;
-  height: 100vh;
+  height: calc(100vh - 50px);
   overflow-y: auto;
   padding: 72px 0 16px 0;
 }
