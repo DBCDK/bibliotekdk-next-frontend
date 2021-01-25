@@ -56,16 +56,10 @@
   padding-top: var(--pt4);
 }
 
-.rubrik,
-.body {
-  /* max-width: 560px;
-  margin: auto; */
-}
-
 /* Body */
 
 .body {
-  padding-top: var(--pt4);
+  padding-top: var(--pt3);
 }
 
 .body figure {
@@ -151,10 +145,6 @@
     height: 300px;
   }
 
-  .body {
-    padding-top: var(--pt8);
-  }
-
   .info > div > div:first-child,
   .info > div > div:nth-child(2) {
     margin-bottom: 0;
@@ -165,7 +155,7 @@
   }
 
   .rubrik {
-    padding-top: var(--pt12);
+    padding-top: var(--pt1);
   }
 }
 

@@ -83,7 +83,6 @@ export function Content({ className = "", data = {}, skeleton = false }) {
 
   // check if article has image url
   const hasUrl = article.fieldImage && article.fieldImage.url;
-  // const hasUrl = false;
 
   const noImageClass = hasUrl ? "" : styles.noImage;
 

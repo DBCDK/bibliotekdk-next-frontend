@@ -499,86 +499,86 @@
         "da": "Ryd",
         "en": "Clear"
       }
-    }
-  },
-  "units": {
-    "second": {
-      "da": "sekund",
-      "en": "second"
     },
-    "seconds": {
-      "da": "sekunder",
-      "en": "seconds"
-    },
-    "minute": {
-      "da": "minut",
-      "en": "minute"
-    },
-    "minutes": {
-      "da": "minutter",
-      "en": "minutes"
-    },
-    "hour": {
-      "da": "time",
-      "en": "hour"
-    },
-    "hours": {
-      "da": "timer",
-      "en": "hours"
-    },
-    "day": {
-      "da": "dag",
-      "en": "day"
-    },
-    "days": {
-      "da": "dage",
-      "en": "days"
-    },
-    "month": {
-      "da": "måned",
-      "en": "month"
-    },
-    "months": {
-      "da": "måneder",
-      "en": "months"
-    },
-    "year": {
-      "da": "år",
-      "en": "year"
-    },
-    "years": {
-      "da": "år",
-      "en": "years"
-    },
-    "shortMonths": {
-      "da": [
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "maj",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "okt",
-        "nov",
-        "dec"
-      ],
-      "en": [
-        "jan",
-        "feb",
-        "mar",
-        "apr",
-        "may",
-        "jun",
-        "jul",
-        "aug",
-        "sep",
-        "oct",
-        "nov",
-        "dec"
-      ]
+    "units": {
+      "second": {
+        "da": "sekund",
+        "en": "second"
+      },
+      "seconds": {
+        "da": "sekunder",
+        "en": "seconds"
+      },
+      "minute": {
+        "da": "minut",
+        "en": "minute"
+      },
+      "minutes": {
+        "da": "minutter",
+        "en": "minutes"
+      },
+      "hour": {
+        "da": "time",
+        "en": "hour"
+      },
+      "hours": {
+        "da": "timer",
+        "en": "hours"
+      },
+      "day": {
+        "da": "dag",
+        "en": "day"
+      },
+      "days": {
+        "da": "dage",
+        "en": "days"
+      },
+      "month": {
+        "da": "måned",
+        "en": "month"
+      },
+      "months": {
+        "da": "måneder",
+        "en": "months"
+      },
+      "year": {
+        "da": "år",
+        "en": "year"
+      },
+      "years": {
+        "da": "år",
+        "en": "years"
+      },
+      "shortMonths": {
+        "da": [
+          "jan",
+          "feb",
+          "mar",
+          "apr",
+          "maj",
+          "jun",
+          "jul",
+          "aug",
+          "sep",
+          "okt",
+          "nov",
+          "dec"
+        ],
+        "en": [
+          "jan",
+          "feb",
+          "mar",
+          "apr",
+          "may",
+          "jun",
+          "jul",
+          "aug",
+          "sep",
+          "oct",
+          "nov",
+          "dec"
+        ]
+      }
     }
   }
 }

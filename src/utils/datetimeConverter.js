@@ -1,17 +1,5 @@
-const shortMonth = [
-  "jan",
-  "feb",
-  "mar",
-  "apr",
-  "maj",
-  "jun",
-  "jul",
-  "aug",
-  "sep",
-  "okt",
-  "nov",
-  "dec",
-];
+import Translate from "@/components/base/translate";
+const shortMonth = Translate({ context: "units", label: "shortMonths" });
 
 /**
  * epoch timestamp to human date
