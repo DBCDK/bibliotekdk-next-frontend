@@ -30,12 +30,15 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
+import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle that
   setTranslations(pageProps.translations);
+  // Restore scrollPosition on page change (where page using getServersideProps)
+  useScrollRestoration(router);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
@@ -66,7 +69,8 @@ MyApp.getInitialProps = async (appContext) => {
 
 /**
  * Check if translations are OK
- * @param translations
+ * @param transProps
+ *  translations from backend {ok:true/false, translations:obj/null}
  * @return boolean
  *
  * @TODO more checks

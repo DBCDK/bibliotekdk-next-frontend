@@ -29,10 +29,12 @@ describe("Article", () => {
   it(`Article preview links to article page`, () => {
     const stub = cy.stub();
     cy.on("window:alert", stub);
-    cy.tab()
+    cy.tabs(3)
       .click()
       .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith("/article?articleId=2");
+        expect(stub.getCall(0)).to.be.calledWith(
+          "/artikel/[title]/[articleId]?title=digitale-bibliotekstilbud&articleId=1"
+        );
       });
   });
 });

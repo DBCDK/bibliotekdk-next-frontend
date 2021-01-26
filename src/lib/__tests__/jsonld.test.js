@@ -1,4 +1,4 @@
-import { getJSONLD } from "../jsonld";
+import { getJSONLD } from "../jsonld/work";
 
 test("generateJSONLD", () => {
   const work = {

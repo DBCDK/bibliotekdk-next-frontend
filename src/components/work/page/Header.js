@@ -13,7 +13,7 @@ import merge from "lodash/merge";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
-import { getJSONLD } from "@/lib/jsonld";
+import { getJSONLD } from "@/lib/jsonld/work";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 
 /**

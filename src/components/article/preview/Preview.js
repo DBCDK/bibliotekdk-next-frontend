@@ -5,6 +5,9 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
+import { encodeString } from "@/lib/utils";
+
+import { getArticlePath } from "@/lib/utils";
 
 /**
  * Animated arrow that turns into a line when hovered/focused
@@ -30,13 +33,14 @@ function Arrow() {
  */
 export default function ArticlePreview({ article, skeleton }) {
   const image = article && article.fieldImage;
+
   return (
     <Link
       a={false}
-      // TODO fix href object when article page exists
       href={{
-        pathname: "/article",
+        pathname: "/artikel/[title]/[articleId]",
         query: {
+          title: encodeString(article.title),
           articleId: article.nid,
         },
       }}
