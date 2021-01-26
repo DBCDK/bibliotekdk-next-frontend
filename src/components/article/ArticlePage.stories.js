@@ -20,6 +20,7 @@ export function ArticlePage() {
         title: "some image title",
         url: "/img/bibdk-hero-scaled.jpeg",
       },
+      entityCreated: 1611654950000,
       body: {
         // eslint-disable max-len
         value:

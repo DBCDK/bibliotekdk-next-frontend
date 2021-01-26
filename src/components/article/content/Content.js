@@ -10,42 +10,13 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
+import parseArticleBody from "./utils";
+
 import * as articleFragments from "@/lib/api/article.fragments";
 
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
-
-/**
- * Body parse search-and-replace funtion
- *
- * @param {string} str
- *
- * @returns {string}
- */
-function parseBody(str) {
-  const img_regex = /<\s*img[^>]*\/>/g;
-  const cap_regex = /data-caption=\"(.*?)\"/;
-
-  const img = str.match(img_regex);
-
-  img &&
-    img.map((img) => {
-      if (img) {
-        const caption = img.match(cap_regex);
-
-        let captionEl = "";
-        if (caption && caption[1]) {
-          captionEl = `<figcaption>${caption[1]}</figcaption>`;
-        }
-
-        const newEl = `<figure> ${img} ${captionEl && captionEl}</figure>`;
-        str = str.replace(img, newEl);
-      }
-    });
-
-  return str;
-}
 
 /**
  * Orientation function
@@ -92,7 +63,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
 
   const parsedBody = useMemo(() => {
     if (article.body && article.body.value) {
-      return parseBody(article.body.value);
+      return parseArticleBody(article.body.value);
     }
     return "";
   }, [article.body && article.body.value]);
@@ -146,18 +117,19 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         >
           <Row className={styles.test}>
             <Col xs={6} md={"auto"}>
-              <Text type="text4">
+              <Text type="text3">
                 {timestampToShortDate(article.entityCreated)}
               </Text>
             </Col>
             <Col xs={6} md={"auto"}>
-              <Text type="text4">Nyhed</Text>
+              <Text type="text3">Nyhed</Text>
             </Col>
             <Col xs={6} md={"auto"}>
-              <Text type="text4">Af bibliotek.dk redaktionen</Text>
+              <Text type="text3">Af bibliotek.dk redaktionen</Text>
             </Col>
             <Col xs={6} md={"auto"}>
               <Link
+                dataCy="print-article"
                 tag="span"
                 onClick={(e) => {
                   e.preventDefault();
@@ -166,7 +138,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                   }
                 }}
               >
-                <Text type="text4">
+                <Text type="text3">
                   {Translate({ ...context, label: "printButton" })}
                 </Text>
               </Link>
