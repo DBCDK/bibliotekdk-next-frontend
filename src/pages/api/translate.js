@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   // status flag
   let ok = true;
   // @TODO errorhandling
-  const response = await fetch(config.backend.url, {
+  const response = await fetch(config.backend.url + "/get_translations", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -14,7 +14,7 @@ const config = {
   backend: {
     url:
       process.env.NEXT_BACKEND_API_URL ||
-      "http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/get_translations",
+      "http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk",
     internalurl: "/api/translate",
     timeout: process.env.API_TIMEOUT_MS || 150,
   },
