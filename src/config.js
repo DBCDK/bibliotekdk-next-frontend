@@ -11,6 +11,13 @@ const config = {
       "https://beta-api.bibliotek.dk/graphql",
     timeout: process.env.API_TIMEOUT_MS || 150,
   },
+  backend: {
+    url:
+      process.env.NEXT_BACKEND_API_URL ||
+      "http://bibdk-backend-www-develop.frontend-features.svc.cloud.dbc.dk/get_translations",
+    internalurl: "/api/translate",
+    timeout: process.env.API_TIMEOUT_MS || 150,
+  },
 };
 
 export default config;

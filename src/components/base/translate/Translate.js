@@ -1,12 +1,9 @@
 import PropTypes from "prop-types";
 
-// Translation data obj
+// Translation data obj - used as default and to get translations from backend
 import translation from "./Translate.json";
-
 export let lang = "da";
-export const units = translation.units;
-export const contexts = translation.contexts;
-
+export let contexts = {};
 /**
  * Set locale for the translate component
  *
@@ -14,6 +11,28 @@ export const contexts = translation.contexts;
  */
 export function setLocale(locale = "da") {
   lang = locale;
+}
+
+/**
+ * Set translations - they are fetched serverside
+ * this function is imported in _app.js
+ * @see _app.js::setTranslations
+ *
+ * @param translations
+ *  translations from backend
+ * @return
+ *  obj | false
+ */
+export function setTranslations(translations) {
+  // we use the file (Translate.json) as default if
+  // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
+  if (translations === false) {
+    // get it from file
+    contexts = translation.contexts;
+  } else {
+    // set it from backend
+    contexts = translations.translations.contexts;
+  }
 }
 
 /**
@@ -89,12 +108,7 @@ export function setLocale(locale = "da") {
  * @returns {string}
  *
  */
-export default function Translate({
-  context,
-  label,
-  vars = [],
-  renderAsHtml = false,
-}) {
+function Translate({ context, label, vars = [], renderAsHtml = false }) {
   // Check if requested text exist, return error message instead, if not
   if (!contexts[context]) {
     return `[! unknown context: ${context}]`;
@@ -148,3 +162,5 @@ Translate.propTypes = {
   vars: PropTypes.array,
   renderAsHtml: PropTypes.bool,
 };
+
+export default Translate;

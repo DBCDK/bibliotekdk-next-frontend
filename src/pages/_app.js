@@ -18,7 +18,12 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 
 import { APIStateContext } from "@/lib/api/api";
-import { setLocale } from "@/components/base/translate/Translate";
+import {
+  setLocale,
+  setTranslations,
+} from "@/components/base/translate/Translate";
+
+import fetchTranslations from "@/lib/api/backend";
 
 import App from "next/app";
 import Header from "@/components/header";
@@ -28,6 +33,9 @@ import BodyScrollLock from "@/components/scroll/lock";
 
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
+  // pass translations to Translate component - it might be false -
+  // let Translate component handle that
+  setTranslations(pageProps.translations);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
@@ -43,5 +51,42 @@ export default function MyApp({ Component, pageProps, router }) {
 // Else publicRuntimeConfig doesn't work
 MyApp.getInitialProps = async (appContext) => {
   const appProps = await App.getInitialProps(appContext);
+  // get translations from backend
+  let transProps = await fetchTranslations();
+  // check if translation object is good
+  if (!checkTranslationsObject(transProps)) {
+    // @TODO log this error
+    transProps = false;
+  }
+  // add them to pageprops - @see above (MyApp)
+  appProps.pageProps.translations = transProps;
+
   return { ...appProps };
 };
+
+/**
+ * Check if translations are OK
+ * @param translations
+ * @return boolean
+ *
+ * @TODO more checks
+ */
+function checkTranslationsObject(transProps) {
+  if (!transProps) {
+    return false;
+  }
+  // is it an object ?
+  if (!(transProps.constructor === Object)) {
+    return false;
+  }
+  // check status - translate may return false
+  if (transProps.ok === false) {
+    return false;
+  }
+  // does it have a translations.context section ?
+  if (!transProps.translations.contexts) {
+    return false;
+  }
+
+  return true;
+}
