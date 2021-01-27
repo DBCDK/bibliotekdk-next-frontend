@@ -53,13 +53,13 @@
 /* Rubrik */
 
 .rubrik {
-  padding-top: var(--pt4);
+  padding: var(--pt2);
 }
 
 /* Body */
 
 .body {
-  padding-top: var(--pt3);
+  padding: var(--pt2);
 }
 
 .body figure {
@@ -152,10 +152,6 @@
 
   .info > div > div:nth-child(2n) {
     text-align: left;
-  }
-
-  .rubrik {
-    padding-top: var(--pt1);
   }
 }
 
