@@ -129,7 +129,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
             </Col>
             <Col xs={6} md={"auto"}>
               <Link
-                dataCy="print-article"
+                dataCy="article-print"
                 tag="span"
                 onClick={(e) => {
                   e.preventDefault();
@@ -163,6 +163,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
       </Row>
       <Row>
         <Col
+          data-cy="article-body"
           className={styles.body}
           xs={12}
           md={{ span: 10, offset: 1 }}
