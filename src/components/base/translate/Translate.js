@@ -14,6 +14,36 @@ export function setLocale(locale = "da") {
 }
 
 /**
+ * Check if translations are OK
+ * @param transProps
+ *  translations from backend {ok:true/false, translations:obj/null}
+ * @return boolean
+ *
+ * @TODO more checks
+ */
+export function checkTranslationsObject(transProps) {
+  // is it ?
+  if (!transProps) {
+    return false;
+  }
+
+  // is it an object ?
+  if (!(transProps.constructor === Object)) {
+    return false;
+  }
+  // check status - translate may return false
+  if (transProps.ok === false) {
+    return false;
+  }
+  // does it have a translations.context section ?
+  if (!transProps.translations || !transProps.translations.contexts) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Set translations - they are fetched serverside
  * this function is imported in _app.js
  * @see _app.js::setTranslations
@@ -26,6 +56,7 @@ export function setLocale(locale = "da") {
 export function setTranslations(translations) {
   // we use the file (Translate.json) as default if
   // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
+  // also we use the translation file if this is storybook ( for test purpose )
   if (translations === false) {
     // get it from file
     contexts = translation.contexts;
@@ -109,6 +140,11 @@ export function setTranslations(translations) {
  *
  */
 function Translate({ context, label, vars = [], renderAsHtml = false }) {
+  // hmm .. this is for test purposes:  cy- and jest-tests
+  // use translation file for tests
+  if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
+    contexts = translation.contexts;
+  }
   // Check if requested text exist, return error message instead, if not
   if (!contexts[context]) {
     return `[! unknown context: ${context}]`;

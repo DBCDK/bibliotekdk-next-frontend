@@ -1,21 +1,28 @@
 import config from "@/config";
+// Translation data obj - this one needs to be passed to backend, so it knows
+// what to translate
+import Translate from "@/components/base/translate/Translate.json";
 
+/**
+ * get translations from backend
+ */
 export default async function fetchTranslations() {
-  // @TODO denher skal vi lige have kigget på - hvordan laver vi en generisk url?
-  const baseURL = "http://localhost:" + config.port;
-  const url = new URL(config.backend.internalurl, baseURL);
+  // status flag
+  let ok = true;
+  // @TODO errorhandling
   try {
-    // this one has its own 'page' to get translations - @see src/pages/api/translate.js
-    const res = await fetch(url, {
+    const response = await fetch(config.backend.url + "/get_translations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(Translate),
     });
-    return await res.json().catch((error) => {
-      console.log("ERROR");
-      console.log(error);
+
+    const result = await response.json().catch((error) => {
+      ok = false;
     });
+    return { ok: ok, translations: result };
   } catch (e) {
     console.log(e.toString());
   }
