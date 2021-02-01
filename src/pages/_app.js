@@ -11,8 +11,8 @@
  */
 import React from "react";
 
-import "../scss/custom-bootstrap.scss";
-import "../css/styles.css";
+import "@/scss/custom-bootstrap.scss";
+import "@/css/styles.css";
 
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
@@ -21,6 +21,7 @@ import { APIStateContext } from "@/lib/api/api";
 import {
   setLocale,
   setTranslations,
+  checkTranslationsObject,
 } from "@/components/base/translate/Translate";
 
 import fetchTranslations from "@/lib/api/backend";
@@ -58,6 +59,7 @@ MyApp.getInitialProps = async (appContext) => {
   const appProps = await App.getInitialProps(appContext);
   // get translations from backend
   let transProps = await fetchTranslations();
+
   // check if translation object is good
   if (!checkTranslationsObject(transProps)) {
     // @TODO log this error
@@ -65,34 +67,5 @@ MyApp.getInitialProps = async (appContext) => {
   }
   // add them to pageprops - @see above (MyApp)
   appProps.pageProps.translations = transProps;
-
   return { ...appProps };
 };
-
-/**
- * Check if translations are OK
- * @param transProps
- *  translations from backend {ok:true/false, translations:obj/null}
- * @return boolean
- *
- * @TODO more checks
- */
-function checkTranslationsObject(transProps) {
-  if (!transProps) {
-    return false;
-  }
-  // is it an object ?
-  if (!(transProps.constructor === Object)) {
-    return false;
-  }
-  // check status - translate may return false
-  if (transProps.ok === false) {
-    return false;
-  }
-  // does it have a translations.context section ?
-  if (!transProps.translations.contexts) {
-    return false;
-  }
-
-  return true;
-}

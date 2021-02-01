@@ -4,8 +4,12 @@
  */
 
 import config from "@/config";
+
 import Translate from "@/components/base/translate/Translate.json";
 
+/**
+ * get translations from backend
+ */
 export default async function fetchTranslations() {
   // status flag
   let ok = true;
@@ -19,12 +23,10 @@ export default async function fetchTranslations() {
       body: JSON.stringify(Translate),
     });
 
-    const json = await response.json().catch((error) => {
-      // @TODO log
-      console.log(errer, "ERROR");
+    const result = await response.json().catch((error) => {
       ok = false;
     });
-    return { ok, translations: json };
+    return { ok: ok, translations: result };
   } catch (e) {
     // @TODO log
     console.log(e, "ERROR");
