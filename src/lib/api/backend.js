@@ -28,11 +28,12 @@ export default async function fetchTranslations() {
       console.log(error, "FETCH ERROR");
       ok = false;
     });
-    return { ok: ok, translations: result };
+
+    return { ok, result };
   } catch (e) {
     // @TODO log
     console.log(e, "ERROR");
     ok = false;
-    return { ok, translations: false };
+    return { ok, result };
   }
 }

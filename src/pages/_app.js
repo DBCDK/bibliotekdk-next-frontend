@@ -36,10 +36,8 @@ import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
-  // let Translate component handle that
-
+  // let Translate component handle whatever could be wrong with the result
   setTranslations(pageProps.translations);
-
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
@@ -60,9 +58,9 @@ MyApp.getInitialProps = async (appContext) => {
 
   // If we are not serverside
   if (typeof window !== "undefined") {
-    console.log("WINDOW");
     return { ...appProps };
   }
+
   // get translations from backend
   appProps.pageProps.translations = await fetchTranslations();
 

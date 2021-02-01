@@ -41,7 +41,7 @@ export function checkTranslationsObject(transProps) {
     return false;
   }
   // does it have a translations.contexts section ?
-  if (!transProps.translations || !transProps.translations.contexts) {
+  if (!transProps.result || !transProps.result.contexts) {
     return false;
   }
 
@@ -61,12 +61,21 @@ export function checkTranslationsObject(transProps) {
 export function setTranslations(translations) {
   // we use the file (Translate.json) as default if
   // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
-  // also we use the translation file if this is storybook ( for test purpose )
-  if (checkTranslationsObject(translations)) {
-    contexts = translations.translations.contexts;
-  } else {
+  if (translations && checkTranslationsObject(translations)) {
+    // this is the happy path - translation received from backend
+    contexts = translations.result.contexts;
+  }
+  // translations from backend might be an empty object - eg. if fetch fails
+  // reset it
+  if (contexts && Object.keys(contexts).length < 1) {
+    contexts = null;
+  }
+  // if you route to the page using the component translations will not
+  // be set from backend - hopefully they are in context already ...
+  // if they are not in context - set them from file
+  if (!contexts) {
     // @TODO log
-    console.log("ERROR translations from file NOT backend");
+    console.log(translations, "TRANS FROM FILE");
     contexts = translation.contexts;
   }
 }
