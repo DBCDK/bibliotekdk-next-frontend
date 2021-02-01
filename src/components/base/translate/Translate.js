@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
 
+import { useState, useEffect, createContext, useContext } from "react";
+
 // Translation data obj - used as default and to get translations from backend
 import translation from "./Translate.json";
 export let lang = "da";
@@ -12,6 +14,8 @@ export let contexts = {};
 export function setLocale(locale = "da") {
   lang = locale;
 }
+
+let which;
 
 /**
  * Set translations - they are fetched serverside

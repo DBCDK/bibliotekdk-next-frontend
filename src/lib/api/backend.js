@@ -1,22 +1,34 @@
+/**
+ * @file
+ * get translations from cms backend
+ */
+
 import config from "@/config";
+import Translate from "@/components/base/translate/Translate.json";
 
 export default async function fetchTranslations() {
-  // @TODO denher skal vi lige have kigget på - hvordan laver vi en generisk url?
-  const baseURL = "http://localhost:" + config.port;
-  const url = new URL(config.backend.internalurl, baseURL);
+  // status flag
+  let ok = true;
+  // @TODO errorhandling
   try {
-    // this one has its own 'page' to get translations - @see src/pages/api/translate.js
-    const res = await fetch(url, {
+    const response = await fetch(config.backend.url + "/get_translations", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(Translate),
     });
-    return await res.json().catch((error) => {
-      console.log("ERROR");
-      console.log(error);
+
+    const json = await response.json().catch((error) => {
+      // @TODO log
+      console.log(errer, "ERROR");
+      ok = false;
     });
+    return { ok, translations: json };
   } catch (e) {
-    console.log(e.toString());
+    // @TODO log
+    console.log(e, "ERROR");
+    ok = false;
+    return { ok, translations: false };
   }
 }

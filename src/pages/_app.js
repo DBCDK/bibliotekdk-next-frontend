@@ -36,7 +36,9 @@ export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle that
-  setTranslations(pageProps.translations);
+  if (pageProps.translations) {
+    setTranslations(pageProps.translations);
+  }
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
