@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseArticleBodyImages 1`] = `"<h2>Overskrift 2</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p><figure> <img src=\\"/_next/image?url=/img/doppler.jpeg&w=1920&q=75\\" alt=\\"Doppler\\" title=\\"Erlend Loe - Doppler\\"> <figcaption>Erlend Loe - Doppler</figcaption></figure><p>Pellentesque varius tincidunt egestas. Vivamus rutrum accumsan arcu in auctor.</p>"`;
