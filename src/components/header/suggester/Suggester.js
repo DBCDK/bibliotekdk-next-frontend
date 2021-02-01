@@ -56,7 +56,7 @@ const theme = {
 export function openMobileSuggester() {
   Router.push({
     pathname: Router.pathname,
-    query: { searchModal: true },
+    query: { suggester: true },
   });
   setTimeout(() => {
     focusInput();

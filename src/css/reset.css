@@ -22,6 +22,11 @@ html {
   overflow-y: scroll;
 }
 
+#Layout {
+  position: relative;
+  height: 100%;
+}
+
 body {
   font-size: 14px;
   font-family: var(--body-font);

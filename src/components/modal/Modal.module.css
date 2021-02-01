@@ -1,0 +1,107 @@
+/** 
+* Smooth as butter CSS transition article
+* https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108 
+*/
+
+/* Dimmer as */
+.dimmer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Modal */
+.modal {
+  width: 100%;
+  max-width: 576px;
+  height: 100%;
+  background-color: var(--blue);
+  position: relative;
+  z-index: 150;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.25);
+
+  /* animation */
+  transform: translateX(103%);
+  transition: transform 330ms ease-out;
+  will-change: transform;
+}
+
+.modal.visible {
+  pointer-events: auto;
+  transform: none;
+  transition: transform 330ms ease-out;
+}
+
+/* Top */
+.top {
+  color: var(--white);
+  padding: var(--pt3) var(--pt2);
+}
+
+.wrap {
+  position: relative;
+}
+
+.title {
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: calc(var(--pt1) * -1);
+  padding: var(--pt1);
+  box-sizing: content-box;
+  cursor: pointer;
+}
+
+/* Content */
+.content {
+  padding: var(--pt2);
+  color: var(--white);
+  height: calc(100% - 136px);
+  overflow-y: auto;
+}
+
+/* Dimmer */
+.dimmer:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  will-change: opacity;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.visible.dimmer:after {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding: var(--pt10) var(--pt6) var(--pt3) var(--pt6);
+  }
+
+  .close {
+    top: calc(var(--pt1) * -1);
+  }
+
+  .content {
+    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+    height: calc(100% - 136px);
+  }
+}

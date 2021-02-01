@@ -75,7 +75,7 @@ function Header({ className = "", router = null, story = null }) {
         router &&
           router.push({
             pathname: router.pathname,
-            query: { ...router.query, searchModal: true },
+            query: { ...router.query, suggester: true },
           });
         story && story.setSuggesterVisibleMobile(true);
         setTimeout(() => {
@@ -85,15 +85,26 @@ function Header({ className = "", router = null, story = null }) {
     },
     { label: "login", icon: LoginIcon, href: "/#!" },
     { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
-    { label: "menu", icon: BurgerIcon, href: "/#!" },
+    {
+      label: "menu",
+      icon: BurgerIcon,
+      onClick: () => {
+        if (router) {
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, modal: "menu" },
+          });
+        }
+      },
+    },
   ];
 
   // Search modal suggester is visible
   const suggesterVisibleMobile =
     (story && story.suggesterVisibleMobile) ||
-    (router && router.query.searchModal);
+    (router && router.query.suggester);
 
-  // SearchModal visible class
+  // suggester visible class
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
@@ -212,7 +223,7 @@ function Header({ className = "", router = null, story = null }) {
                       onChange={setQuery}
                       onClose={() => {
                         if (router) {
-                          // remove searchModal prop from query obj
+                          // remove suggester prop from query obj
                           router.back();
                         }
                         // Remove suggester in storybook

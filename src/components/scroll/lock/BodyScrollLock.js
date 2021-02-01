@@ -29,6 +29,7 @@ function getScrollYPos() {
 let scrollY = 0;
 function scrollLock(shouldLockScroll) {
   const body = document.body;
+  // const body = document.getElementById("layout");
 
   if (!body) {
     return;
@@ -37,13 +38,14 @@ function scrollLock(shouldLockScroll) {
   // Add "lock" class and add "fake" scrollY position to body
   if (shouldLockScroll) {
     scrollY = getScrollYPos();
-    body.style.top = `-${scrollY}px`;
+    body.style.marginTop = `-${scrollY}px`;
     body.classList.add(styles.lockScroll);
   }
   // Remove "lock", remove "fake" scrollY position
   // + Scroll back to the scrollY position - same as before the modal was triggered
   else if (body.classList.contains(styles.lockScroll)) {
     body.classList.remove(styles.lockScroll);
+    body.style.marginTop = `0px`;
     window.scrollTo(0, scrollY);
   }
 }
@@ -59,12 +61,16 @@ function scrollLock(shouldLockScroll) {
 export default function BodyScrollLock() {
   const router = useRouter();
 
+  // Query param targets to track
+  const targetList = ["modal", "suggester"];
+
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query
      if any found lock body scroll */
     const shouldLockScroll =
-      Object.keys(router.query).filter((k) => k.toLowerCase().includes("modal"))
-        .length > 0;
+      Object.keys(router.query).filter((k) =>
+        targetList.find((a) => a.toLowerCase().includes(k.toLowerCase()))
+      ).length > 0;
 
     scrollLock(shouldLockScroll);
   }

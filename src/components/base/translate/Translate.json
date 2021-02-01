@@ -500,6 +500,20 @@
         "en": "Clear"
       }
     },
+    "modal": {
+      "title-menu": {
+        "da": "Menu",
+        "en": "Menu"
+      },
+      "title-basket": {
+        "da": "Kurv",
+        "en": "Basket"
+      },
+      "title-filter": {
+        "da": "Filtrer og sorter",
+        "en": "Filter and sort"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",

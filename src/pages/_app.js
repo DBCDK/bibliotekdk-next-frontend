@@ -25,6 +25,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
+import Modal from "@/components/modal";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 
 export default function MyApp({ Component, pageProps, router }) {
@@ -35,9 +36,11 @@ export default function MyApp({ Component, pageProps, router }) {
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo />
       <BodyScrollLock />
+      <Modal />
       <Header router={router} />
       <Component {...pageProps} />
       <Footer />
+      <div id="layout"></div>
     </APIStateContext.Provider>
   );
 }
