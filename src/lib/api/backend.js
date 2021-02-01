@@ -24,6 +24,8 @@ export default async function fetchTranslations() {
     });
 
     const result = await response.json().catch((error) => {
+      // @TODO log
+      console.log(error, "FETCH ERROR");
       ok = false;
     });
     return { ok: ok, translations: result };

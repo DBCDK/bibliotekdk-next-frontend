@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 
-import { useState, useEffect, createContext, useContext } from "react";
-
 // Translation data obj - used as default and to get translations from backend
 import translation from "./Translate.json";
 export let lang = "da";
@@ -30,17 +28,20 @@ export function checkTranslationsObject(transProps) {
   if (!transProps) {
     return false;
   }
-
   // is it an object ?
   if (!(transProps.constructor === Object)) {
+    return false;
+  }
+  // is it empty ?
+  if (Object.keys(transProps).length < 1) {
     return false;
   }
   // check status - translate may return false
   if (transProps.ok === false) {
     return false;
   }
-  // does it have a translations.context section ?
-  if (!transProps.translations && !transProps.translations.contexts) {
+  // does it have a translations.contexts section ?
+  if (!transProps.translations || !transProps.translations.contexts) {
     return false;
   }
 
@@ -61,12 +62,12 @@ export function setTranslations(translations) {
   // we use the file (Translate.json) as default if
   // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
   // also we use the translation file if this is storybook ( for test purpose )
-  if (translations === false) {
-    // get it from file
-    contexts = translation.contexts;
-  } else {
-    // set it from backend
+  if (checkTranslationsObject(translations)) {
     contexts = translations.translations.contexts;
+  } else {
+    // @TODO log
+    console.log("ERROR translations from file NOT backend");
+    contexts = translation.contexts;
   }
 }
 
@@ -147,13 +148,6 @@ function Translate({ context, label, vars = [], renderAsHtml = false }) {
   // hmm .. this is for test purposes:  cy- and jest-tests
   // use translation file for tests
   if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
-    contexts = translation.contexts;
-  }
-
-  // this one i when backend fails to get translations - it returns an empty object
-  if (contexts && Object.keys(contexts).length < 1) {
-    // @TODO log
-    console.log("ERROR", "translations from file NOT backend");
     contexts = translation.contexts;
   }
   // Check if requested text exist, return error message instead, if not

@@ -37,9 +37,9 @@ export default function MyApp({ Component, pageProps, router }) {
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle that
-  if (pageProps.translations) {
-    setTranslations(pageProps.translations);
-  }
+
+  setTranslations(pageProps.translations);
+
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
@@ -57,15 +57,14 @@ export default function MyApp({ Component, pageProps, router }) {
 // Else publicRuntimeConfig doesn't work
 MyApp.getInitialProps = async (appContext) => {
   const appProps = await App.getInitialProps(appContext);
-  // get translations from backend
-  let transProps = await fetchTranslations();
 
-  // check if translation object is good
-  if (!checkTranslationsObject(transProps)) {
-    // @TODO log this error
-    transProps = false;
+  // If we are not serverside
+  if (typeof window !== "undefined") {
+    console.log("WINDOW");
+    return { ...appProps };
   }
-  // add them to pageprops - @see above (MyApp)
-  appProps.pageProps.translations = transProps;
+  // get translations from backend
+  appProps.pageProps.translations = await fetchTranslations();
+
   return { ...appProps };
 };
