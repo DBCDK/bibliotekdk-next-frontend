@@ -36,9 +36,10 @@ test("Test_checkTranslations", () => {
   // fake array
   expect(output).toEqual(expected);
 
-  input = { ok: true, translations: translation };
+  input = { ok: true, result: translation };
   expected = true;
   output = checkTranslationsObject(input);
+
   // the real thing
   expect(output).toEqual(expected);
 
