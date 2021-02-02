@@ -117,7 +117,7 @@ CookieBox.propTypes = {
  */
 export default function Wrapper() {
   const router = useRouter();
-  const [currentDecision, setCurrentDecision] = useState(false);
+  const [currentDecision, setCurrentDecision] = useState(true);
 
   // If we are on the policy article page,
   // we show the small cookiebox with headline and buttons only
@@ -130,6 +130,8 @@ export default function Wrapper() {
       setCurrentDecision(COOKIES_DENIED);
     } else if (Cookies.get(COOKIES_ALLOWED)) {
       setCurrentDecision(COOKIES_ALLOWED);
+    } else {
+      setCurrentDecision(false);
     }
   }, []);
 
