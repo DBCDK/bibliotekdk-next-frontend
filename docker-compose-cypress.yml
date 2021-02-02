@@ -7,6 +7,7 @@ services:
       - ENABLE_STORYBOOK=1
       - STORYBOOK_PORT=4000
       - PORT=3000
+      - NEXT_BACKEND_API_URL=http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk
     command: npm run start
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
