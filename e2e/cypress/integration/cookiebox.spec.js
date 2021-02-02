@@ -1,6 +1,6 @@
 /**
  * @file
- * Test functionality of work landing page
+ * Test functionality of the cookie box
  */
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
