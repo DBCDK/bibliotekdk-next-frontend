@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function Matomo() {
+export default function Matomo({ allowCookies = false }) {
   const router = useRouter();
 
   useEffect(() => {
@@ -13,6 +13,9 @@ export default function Matomo() {
       setTimeout(() => {
         window._paq.push(["setCustomUrl", url]);
         window._paq.push(["setDocumentTitle", document.title]);
+        if (!allowCookies) {
+          window._paq.push(["disableCookies"]);
+        }
         window._paq.push(["trackPageView"]);
       }, 500);
     };
@@ -30,6 +33,7 @@ export default function Matomo() {
       <script
         dangerouslySetInnerHTML={{
           __html: `var _paq = window._paq || [];
+              ${allowCookies ? "" : '_paq.push(["disableCookies"]);'}
               _paq.push(['trackPageView']);
               _paq.push(['enableLinkTracking']);
               (function() {
