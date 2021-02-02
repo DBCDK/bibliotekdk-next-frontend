@@ -11,6 +11,9 @@
  */
 import React from "react";
 
+import nookies from "nookies";
+import Cookies from "js-cookie";
+
 import "@/scss/custom-bootstrap.scss";
 import "@/css/styles.css";
 
@@ -32,8 +35,16 @@ import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
+import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 
 export default function MyApp({ Component, pageProps, router }) {
+  // If this is rendered on server, allowCookies will be in pageProps
+  // In the browser, we use Cookies.get
+  const allowCookies =
+    typeof window === "undefined"
+      ? pageProps.allowCookies
+      : !!Cookies.get(COOKIES_ALLOWED);
+
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle whatever could be wrong with the result
@@ -42,10 +53,11 @@ export default function MyApp({ Component, pageProps, router }) {
   useScrollRestoration(router);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
-      <Matomo />
+      <Matomo allowCookies={allowCookies} />
       <BodyScrollLock />
       <Header router={router} />
       <Component {...pageProps} />
+      <CookieBox />
       <Footer />
     </APIStateContext.Provider>
   );
@@ -63,6 +75,11 @@ MyApp.getInitialProps = async (appContext) => {
 
   // get translations from backend
   appProps.pageProps.translations = await fetchTranslations();
+
+  // Set allowCookies on pageProps
+  appProps.pageProps.allowCookies = !!nookies.get(appContext.ctx)[
+    COOKIES_ALLOWED
+  ];
 
   return { ...appProps };
 };
