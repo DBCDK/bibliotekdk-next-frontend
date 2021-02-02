@@ -70,7 +70,7 @@ export function setTranslations(translations) {
   if (contexts && Object.keys(contexts).length < 1) {
     contexts = null;
   }
-  // if you route to the page using the component translations will not
+  // if you route to the page using the component, translations will not
   // be set from backend - hopefully they are in context already ...
   // if they are not in context - set them from file
   if (!contexts) {
