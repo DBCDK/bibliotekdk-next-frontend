@@ -50,7 +50,7 @@ describe("CookieBox", () => {
   it(`can show cookie policy article`, () => {
     cy.visit(`${nextjsBaseUrl}`);
 
-    cy.get("[data-cy=text-privatlivspolitik]").first().click();
+    cy.get("[data-cy=cookiebox] a").click();
 
     cy.contains("En cookie er en lille tekstfil, som lægges på din computer");
 
