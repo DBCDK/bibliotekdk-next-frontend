@@ -12,9 +12,9 @@ import { getArticlePath } from "@/lib/utils";
 /**
  * Animated arrow that turns into a line when hovered/focused
  */
-function Arrow() {
+export function Arrow({ className = "" }) {
   return (
-    <div className={styles.arrow}>
+    <div className={`${styles.arrow} ${className}`}>
       <div className={styles.trapezoid} />
       <div className={styles.trapezoid} />
       <div className={styles.trapezoid} />

@@ -514,6 +514,52 @@
         "en": "Filter and sort"
       }
     },
+    "navigation": {
+      "categories": {
+        "da": "Kategorier",
+        "en": "Categories"
+      },
+      "books": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "movies": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "eMaterials": {
+        "da": "E-materialer",
+        "en": "E-materials"
+      },
+      "games": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "nodes": {
+        "da": "Noder",
+        "en": "Nodes"
+      },
+      "digitalOffers": {
+        "da": "Digitale bibliotekstilbud",
+        "en": "Digital library offerings"
+      },
+      "askLibrarian": {
+        "da": "Spørg en bibliotekar",
+        "en": "Ask a librarian"
+      },
+      "becomeLoaner": {
+        "da": "Bliv låner",
+        "en": "Become a loaner"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",

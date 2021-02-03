@@ -54,16 +54,11 @@ function getTemplate(template) {
  */
 export function Modal({
   className = "",
+  onClose = null,
   visible = false,
-  template = null,
+  template = "default",
   skeleton = false,
 }) {
-  if (typeof window === "undefined") {
-    return "hest";
-  }
-
-  const router = useRouter();
-
   // Listen on escape keypress
   const isEscape = useKeyPress("Escape");
 
@@ -73,18 +68,15 @@ export function Modal({
     template: getTemplate(),
   });
 
-  // Get title from template (forced mode) or query
-  const title = template || get(router, "query.modal", false);
-
   //  Update modal context
   useEffect(() => {
-    if (title) {
+    if (template) {
       const copy = { ...context };
-      copy.title = title;
-      copy.template = getTemplate(title);
+      copy.title = template;
+      copy.template = getTemplate(template);
       setContext(copy);
     }
-  }, [title]);
+  }, [template]);
 
   //  Close chain on Escape key
   useEffect(() => {
@@ -95,9 +87,7 @@ export function Modal({
 
   // Close functions
   function handleClose() {
-    if (router) {
-      router.back();
-    }
+    onClose();
   }
 
   // active modal class
@@ -130,7 +120,7 @@ export function Modal({
           </div>
         </div>
         <div className={styles.content}>
-          <context.template />
+          <context.template visible={visible} />
         </div>
       </div>
     </div>
@@ -166,8 +156,13 @@ export function ModalSkeleton(props) {
 export default function Wrap(props) {
   const router = useRouter();
   let shouldBeVisible = false;
+  let template = "";
 
-  //   const [visible, setVisible] = useState(false);
+  const onClose = function onClose() {
+    if (router) {
+      router.back();
+    }
+  };
 
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query
@@ -176,12 +171,18 @@ export default function Wrap(props) {
       Object.keys(router.query).filter((k) => k.toLowerCase().includes("modal"))
         .length > 0;
 
-    // if (visible !== shouldBeVisible) {
-    //   setVisible(shouldBeVisible);
-    // }
+    // Get template name from query
+    template = get(router, "query.modal", null);
   }
 
-  return <Modal {...props} visible={shouldBeVisible} />;
+  return (
+    <Modal
+      {...props}
+      template={template}
+      visible={shouldBeVisible}
+      onClose={onClose}
+    />
+  );
 }
 
 // PropTypes for component
