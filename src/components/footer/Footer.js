@@ -11,6 +11,7 @@ import Icon from "@/components/base/icon";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 
 import styles from "./Footer.module.css";
 
@@ -38,7 +39,7 @@ const FirstColumn = () => {
         {label}
       </Text>
       <div className={styles.spacer}></div>
-      <Link href={{ pathname: "/", query: {} }} className={styles.footerlink}>
+      <Link href={POLICY_ARTICLE_PATH} className={styles.footerlink}>
         <Text tag="span" type="text3">
           {Translate({
             context: "general",

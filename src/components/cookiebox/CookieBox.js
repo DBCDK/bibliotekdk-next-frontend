@@ -16,6 +16,8 @@ const POLICY_URL_TITLE = "privatlivspolitik";
 // The ID of the article in the CMS
 const POLICY_ARTICLE_ID = 11;
 
+export const POLICY_ARTICLE_PATH = `/artikel/${POLICY_URL_TITLE}/${POLICY_ARTICLE_ID}`;
+
 // The name of cookies
 export const COOKIES_DENIED = "cookies_denied";
 export const COOKIES_ALLOWED = "cookies_allowed";
@@ -70,7 +72,7 @@ export function CookieBox({ onAllowCookies, onDenyCookies, size }) {
         <div className={styles.bottom}>
           <Link
             border={{ top: false, bottom: { keepVisible: true } }}
-            href={`/artikel/${POLICY_URL_TITLE}/${POLICY_ARTICLE_ID}`}
+            href={POLICY_ARTICLE_PATH}
           >
             <Text type="text2">
               {translate({
