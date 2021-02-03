@@ -1,12 +1,9 @@
 import PropTypes from "prop-types";
 
-// Translation data obj
+// Translation data obj - used as default and to get translations from backend
 import translation from "./Translate.json";
-
 export let lang = "da";
-export const units = translation.units;
-export const contexts = translation.contexts;
-
+export let contexts = {};
 /**
  * Set locale for the translate component
  *
@@ -14,6 +11,73 @@ export const contexts = translation.contexts;
  */
 export function setLocale(locale = "da") {
   lang = locale;
+}
+
+let which;
+
+/**
+ * Check if translations are OK
+ * @param transProps
+ *  translations from backend {ok:true/false, translations:obj/null}
+ * @return boolean
+ *
+ * @TODO more checks
+ */
+export function checkTranslationsObject(transProps) {
+  // is it ?
+  if (!transProps) {
+    return false;
+  }
+  // is it an object ?
+  if (!(transProps.constructor === Object)) {
+    return false;
+  }
+  // is it empty ?
+  if (Object.keys(transProps).length < 1) {
+    return false;
+  }
+  // check status - translate may return false
+  if (transProps.ok === false) {
+    return false;
+  }
+  // does it have a translations.contexts section ?
+  if (!transProps.result || !transProps.result.contexts) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Set translations - they are fetched serverside
+ * this function is imported in _app.js
+ * @see _app.js::setTranslations
+ *
+ * @param translations
+ *  translations from backend
+ * @return
+ *  obj | false
+ */
+export function setTranslations(translations) {
+  // we use the file (Translate.json) as default if
+  // translations fail to get -> translations are set to false. (@see _app.js::getInitialProps)
+  if (translations && checkTranslationsObject(translations)) {
+    // this is the happy path - translation received from backend
+    contexts = translations.result.contexts;
+  }
+  // translations from backend might be an empty object - eg. if fetch fails
+  // reset it
+  if (contexts && Object.keys(contexts).length < 1) {
+    contexts = null;
+  }
+  // if you route to the page using the component, translations will not
+  // be set from backend - hopefully they are in context already ...
+  // if they are not in context - set them from file
+  if (!contexts) {
+    // @TODO log
+    console.log(translations, "TRANS FROM FILE");
+    contexts = translation.contexts;
+  }
 }
 
 /**
@@ -89,12 +153,12 @@ export function setLocale(locale = "da") {
  * @returns {string}
  *
  */
-export default function Translate({
-  context,
-  label,
-  vars = [],
-  renderAsHtml = false,
-}) {
+function Translate({ context, label, vars = [], renderAsHtml = false }) {
+  // hmm .. this is for test purposes:  cy- and jest-tests
+  // use translation file for tests
+  if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
+    contexts = translation.contexts;
+  }
   // Check if requested text exist, return error message instead, if not
   if (!contexts[context]) {
     return `[! unknown context: ${context}]`;
@@ -148,3 +212,5 @@ Translate.propTypes = {
   vars: PropTypes.array,
   renderAsHtml: PropTypes.bool,
 };
+
+export default Translate;

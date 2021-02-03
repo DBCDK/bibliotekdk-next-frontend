@@ -90,7 +90,13 @@ ArticleSection.propTypes = {
 
 export default function Wrapper(props) {
   const { isLoading, data } = useData(promotedArticles());
-  const articles = data && data.nodeQuery && data.nodeQuery.entities;
+  const articles =
+    data &&
+    data.nodeQuery &&
+    data.nodeQuery.entities &&
+    data.nodeQuery.entities.filter(
+      (article) => article && article.__typename === "NodeArticle"
+    );
 
   return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
 }

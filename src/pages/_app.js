@@ -11,14 +11,23 @@
  */
 import React from "react";
 
-import "../scss/custom-bootstrap.scss";
-import "../css/styles.css";
+import nookies from "nookies";
+import Cookies from "js-cookie";
+
+import "@/scss/custom-bootstrap.scss";
+import "@/css/styles.css";
 
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 
 import { APIStateContext } from "@/lib/api/api";
-import { setLocale } from "@/components/base/translate/Translate";
+import {
+  setLocale,
+  setTranslations,
+  checkTranslationsObject,
+} from "@/components/base/translate/Translate";
+
+import fetchTranslations from "@/lib/api/backend";
 
 import App from "next/app";
 import Header from "@/components/header";
@@ -27,18 +36,30 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/modal";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
+import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 
 export default function MyApp({ Component, pageProps, router }) {
+  // If this is rendered on server, allowCookies will be in pageProps
+  // In the browser, we use Cookies.get
+  const allowCookies =
+    typeof window === "undefined"
+      ? pageProps.allowCookies
+      : !!Cookies.get(COOKIES_ALLOWED);
+
   setLocale(router.locale);
+  // pass translations to Translate component - it might be false -
+  // let Translate component handle whatever could be wrong with the result
+  setTranslations(pageProps.translations);
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
-      <Matomo />
+      <Matomo allowCookies={allowCookies} />
       <BodyScrollLock />
       <Modal />
       <Header router={router} />
       <Component {...pageProps} />
+      <CookieBox />
       <Footer />
       <div id="layout"></div>
     </APIStateContext.Provider>
@@ -49,5 +70,19 @@ export default function MyApp({ Component, pageProps, router }) {
 // Else publicRuntimeConfig doesn't work
 MyApp.getInitialProps = async (appContext) => {
   const appProps = await App.getInitialProps(appContext);
+
+  // If we are not serverside
+  if (typeof window !== "undefined") {
+    return { ...appProps };
+  }
+
+  // get translations from backend
+  appProps.pageProps.translations = await fetchTranslations();
+
+  // Set allowCookies on pageProps
+  appProps.pageProps.allowCookies = !!nookies.get(appContext.ctx)[
+    COOKIES_ALLOWED
+  ];
+
   return { ...appProps };
 };

@@ -15,6 +15,7 @@ export function article({ articleId }) {
     // delay: 1000, // for debugging
     query: `query ($articleId: String!) {
         article: nodeById(id: $articleId) {
+          __typename
           ... on NodeArticle {
             nid
             entityCreated
@@ -49,6 +50,7 @@ export function promotedArticles() {
     query: `query {
       nodeQuery (filter: {conditions: {field: "promote", value: "1", operator: EQUAL}}) {
         entities {
+          __typename
           ... on NodeArticle {
             nid
             title

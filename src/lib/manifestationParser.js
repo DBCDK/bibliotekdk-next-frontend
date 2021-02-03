@@ -3,7 +3,7 @@
 import Translate from "@/components/base/translate";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
-const fields = [
+const fields = () => [
   {
     dataField: "title",
     label: Translate({
@@ -142,7 +142,7 @@ const fields = [
  */
 export function parseManifestation(manifestation) {
   return (
-    fields
+    fields()
       // Remove fields that are not in the manifestation
       .filter((field) => manifestation[field.dataField])
       // Parse fields
