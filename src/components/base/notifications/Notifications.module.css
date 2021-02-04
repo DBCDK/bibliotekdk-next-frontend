@@ -1,0 +1,31 @@
+.warning {
+    background-color: var(--warning);
+}
+
+.error {
+    background-color: var(--error);
+}
+
+.info {
+    background-color: var(--info);
+}
+
+.succuss {
+    background-color: var(--success);
+}
+
+.hidden {
+    display: none;
+}
+
+div.notification {
+    text-align: center;
+    padding: var(--pt2);
+}
+
+div.notification button {
+    position: relative;
+    top: -32px;
+    float: right;
+    border: none;
+}
