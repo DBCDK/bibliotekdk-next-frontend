@@ -9,6 +9,7 @@ import Hero from "@/components/hero";
 import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchOnServer } from "@/lib/api/api";
+import Notifications from "@/components/base/notifications/Notifications";
 
 const Index = () => {
   const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
@@ -27,6 +28,7 @@ const Index = () => {
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <div>
+        <Notifications />
         <Hero />
         <ArticleSection
           title="Bibliotek.dk tilbyder"
