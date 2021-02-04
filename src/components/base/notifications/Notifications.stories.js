@@ -8,26 +8,23 @@ export default {
 };
 
 // a single notification in an array
-export function notification() {
-  const notification = [
-    {
-      data: {
-        nodeQuery: {
-          count: 1,
-          entities: [
-            {
-              nid: 13,
-              langcode: {
-                value: "en",
-              },
-              fieldNotificationText: "dether er en warning",
-              fieldNotificationType: "warning",
-            },
-          ],
+function notification() {
+  const notification = {
+    nodeQuery: {
+      count: 1,
+      entities: [
+        {
+          nid: 13,
+          langcode: {
+            value: "en",
+          },
+          fieldNotificationText: "dether er en warning",
+          fieldNotificationType: "warning",
         },
-      },
+      ],
     },
-  ];
+  };
+
   return notification;
 }
 
@@ -41,7 +38,7 @@ export function Notify() {
     <div>
       <StoryTitle>Notifications</StoryTitle>
       <StoryDescription>Notification to be displayed</StoryDescription>
-      <Notifications notifications={notes} />
+      <Notifications notificationObject={notes} />
     </div>
   );
 }

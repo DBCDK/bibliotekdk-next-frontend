@@ -23,7 +23,11 @@ div.notification {
     padding: var(--pt2);
 }
 
-div.notification button {
+div.notification .button.secondary{
+    border:none;
+}
+
+div.notification button, .button.secondary {
     position: relative;
     top: -32px;
     float: right;

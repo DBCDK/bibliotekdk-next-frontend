@@ -15,7 +15,16 @@ import Button from "@/components/base/button/Button";
  * @return {unknown[]}
  * @constructor
  */
-export function Notifications({ notificationArray, hideNotification }) {
+export function Notifications({ notificationObject }) {
+  // check and make it an array
+  const notificationArray = notificationsFilter(notificationObject);
+
+  const [showNotification, setShowNotification] = useState(true);
+  const toggleNotification = () => {
+    sessionStorage.setItem("showme", "no");
+    setShowNotification(!showNotification);
+  };
+
   return notificationArray.map((notification, index) => (
     <div
       key={`${notification.fieldNotificationText}_${index}`}
@@ -26,28 +35,14 @@ export function Notifications({ notificationArray, hideNotification }) {
       )}
     >
       <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
-      <Button type="secondary" size="small" onClick={hideNotification}>
+      <Button type="secondary" size="small" onClick={toggleNotification}>
         x
       </Button>
     </div>
   ));
 }
 
-/**
- * wrapper to export
- * @param props
- * @return {JSX.Element}
- */
-export default function wrapper(props) {
-  const [showNotification, setShowNotification] = useState(true);
-
-  const toggleNotification = () => {
-    sessionStorage.setItem("showme", "no");
-    setShowNotification(!showNotification);
-  };
-
-  const { isLoading, data, error } = useData(notificationsQuery());
-  // check and make it an array
+function notificationsFilter(data) {
   const notificationfetch =
     data &&
     data.nodeQuery &&
@@ -56,15 +51,20 @@ export default function wrapper(props) {
 
   const notifications = notificationfetch ? notificationfetch : [];
 
-  return (
-    <Notifications
-      notificationArray={notifications}
-      hideNotification={toggleNotification}
-    />
-  );
+  return notifications;
+}
+
+/**
+ * wrapper to export
+ * @param props
+ * @return {JSX.Element}
+ */
+export default function wrapper(props) {
+  const { isLoading, data, error } = useData(notificationsQuery());
+
+  return <Notifications notificationObject={data} />;
 }
 
 Notifications.propTypes = {
-  notificationArray: PropTypes.array,
-  toggleNotification: PropTypes.func,
+  notificationObject: PropTypes.object,
 };
