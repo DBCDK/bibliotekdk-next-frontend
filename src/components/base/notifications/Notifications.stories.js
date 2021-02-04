@@ -29,7 +29,7 @@ function notification() {
 }
 
 /**
- * Returns Bookmark button
+ * Returns Notification
  *
  */
 export function Notify() {

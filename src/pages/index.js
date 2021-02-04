@@ -8,7 +8,6 @@ import ArticleSection from "@/components/article/section";
 import Hero from "@/components/hero";
 import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
-import { notificationsQuery } from "@/lib/api/notification.query";
 import { fetchOnServer } from "@/lib/api/api";
 import Notifications from "@/components/base/notifications/Notifications";
 
