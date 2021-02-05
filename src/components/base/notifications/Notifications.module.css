@@ -20,7 +20,7 @@
 
 div.notification {
     text-align: center;
-    padding: var(--pt2);
+    padding: var(--pt3);
 }
 
 div.notification .cancelicon{
