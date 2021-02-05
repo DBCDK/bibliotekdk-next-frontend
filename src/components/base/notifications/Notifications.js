@@ -22,7 +22,6 @@ export function Notifications({ notificationObject }) {
 
   const [showNotification, setShowNotification] = useState(true);
   const toggleNotification = (index) => {
-    console.log(index);
     sessionStorage.setItem("showme_" + index, "no");
     setShowNotification(!showNotification);
   };
