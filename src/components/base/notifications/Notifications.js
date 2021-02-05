@@ -8,6 +8,7 @@ import styles from "./Notifications.module.css";
 import classNames from "classnames/bind";
 import Button from "@/components/base/button/Button";
 import { Container } from "react-bootstrap";
+import Icon from "@/components/base/icon/Icon";
 
 /**
  * list of notifications
@@ -27,7 +28,7 @@ export function Notifications({ notificationObject }) {
   };
 
   return notificationArray.map((notification, index) => (
-    <Container
+    <div
       key={`${notification.fieldNotificationText}_${index}`}
       className={classNames(
         styles[`${notification.fieldNotificationType}`],
@@ -35,16 +36,16 @@ export function Notifications({ notificationObject }) {
         sessionStorage.getItem("showme_" + index) === "no" ? styles.hidden : ""
       )}
     >
-      <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
-      <Button
-        type="secondary"
-        size="small"
-        onClick={() => toggleNotification(index)}
-        className={styles.notificationbutton}
-      >
-        X
-      </Button>
-    </Container>
+      <Container>
+        <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
+        <Icon
+          src={"close.svg"}
+          size={{ w: "auto", h: "auto" }}
+          className={styles.cancelicon}
+          onClick={() => toggleNotification(index)}
+        />
+      </Container>
+    </div>
   ));
 }
 
