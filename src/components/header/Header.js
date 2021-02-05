@@ -24,7 +24,7 @@ import SearchIcon from "./icons/search";
 import Notifications from "@/components/base/notifications/Notifications";
 import { APIStateContext } from "@/lib/api/api";
 
-export function Banner() {
+function Banner() {
   return (
     <div className={styles.bannerWrap}>
       <Container className={styles.banner} fluid>
