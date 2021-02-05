@@ -7,6 +7,7 @@ import { notificationsQuery } from "@/lib/api/notification.fragment";
 import styles from "./Notifications.module.css";
 import classNames from "classnames/bind";
 import Button from "@/components/base/button/Button";
+import { Container } from "react-bootstrap";
 
 /**
  * list of notifications
@@ -26,7 +27,7 @@ export function Notifications({ notificationObject }) {
   };
 
   return notificationArray.map((notification, index) => (
-    <div
+    <Container
       key={`${notification.fieldNotificationText}_${index}`}
       className={classNames(
         styles[`${notification.fieldNotificationType}`],
@@ -38,7 +39,7 @@ export function Notifications({ notificationObject }) {
       <Button type="secondary" size="small" onClick={toggleNotification}>
         x
       </Button>
-    </div>
+    </Container>
   ));
 }
 
