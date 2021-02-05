@@ -22,7 +22,7 @@ import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 
-function Banner() {
+export function Banner() {
   return (
     <div className={styles.bannerWrap}>
       <Container className={styles.banner} fluid>
@@ -117,7 +117,6 @@ function Header({ className = "", router = null, story = null }) {
 
   return (
     <header className={`${styles.wrap} ${className}`}>
-      <Banner />
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>

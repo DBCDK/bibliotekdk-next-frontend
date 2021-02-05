@@ -28,7 +28,6 @@ const Index = () => {
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <div>
-        <Notifications />
         <Hero />
         <ArticleSection
           title="Bibliotek.dk tilbyder"

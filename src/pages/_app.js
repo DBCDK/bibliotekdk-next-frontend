@@ -36,6 +36,8 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
+import Notifications from "@/components/base/notifications/Notifications";
+import { Banner } from "@/components/header/Header";
 
 export default function MyApp({ Component, pageProps, router }) {
   // If this is rendered on server, allowCookies will be in pageProps
@@ -55,6 +57,8 @@ export default function MyApp({ Component, pageProps, router }) {
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo allowCookies={allowCookies} />
       <BodyScrollLock />
+      <Banner />
+      <Notifications />
       <Header router={router} />
       <Component {...pageProps} />
       <CookieBox />
