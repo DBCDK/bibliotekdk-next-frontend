@@ -23,13 +23,15 @@ div.notification {
     padding: var(--pt2);
 }
 
-div.notification .button.secondary{
+div.notification .notificationbutton{
     border:none;
+    position: relative;
+    top: -30px;
+    float: right;
 }
 
-div.notification button, .button.secondary {
-    position: relative;
-    top: -32px;
-    float: right;
-    border: none;
+div.notification .notificationbutton:hover{
+    border:none;
+    font-weight: bolder;
+    color:var(--blue);
 }

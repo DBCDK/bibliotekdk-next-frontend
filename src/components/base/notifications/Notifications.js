@@ -36,8 +36,13 @@ export function Notifications({ notificationObject }) {
       )}
     >
       <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
-      <Button type="secondary" size="small" onClick={toggleNotification}>
-        x
+      <Button
+        type="secondary"
+        size="small"
+        onClick={toggleNotification}
+        className={styles.notificationbutton}
+      >
+        X
       </Button>
     </Container>
   ));
