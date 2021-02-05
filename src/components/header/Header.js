@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import useHistory from "@/components/hooks/useHistory";
 
@@ -21,6 +21,8 @@ import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+import Notifications from "@/components/base/notifications/Notifications";
+import { APIStateContext } from "@/lib/api/api";
 
 export function Banner() {
   return (
@@ -117,6 +119,8 @@ function Header({ className = "", router = null, story = null }) {
 
   return (
     <header className={`${styles.wrap} ${className}`}>
+      <Banner />
+      <Notifications />
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
