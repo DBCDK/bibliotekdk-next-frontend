@@ -21,8 +21,9 @@ export function Notifications({ notificationObject }) {
   const notificationArray = notificationsFilter(notificationObject);
 
   const [showNotification, setShowNotification] = useState(true);
-  const toggleNotification = () => {
-    sessionStorage.setItem("showme", "no");
+  const toggleNotification = (index) => {
+    console.log(index);
+    sessionStorage.setItem("showme_" + index, "no");
     setShowNotification(!showNotification);
   };
 
@@ -32,14 +33,14 @@ export function Notifications({ notificationObject }) {
       className={classNames(
         styles[`${notification.fieldNotificationType}`],
         styles.notification,
-        sessionStorage.getItem("showme") === "no" ? styles.hidden : ""
+        sessionStorage.getItem("showme_" + index) === "no" ? styles.hidden : ""
       )}
     >
       <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
       <Button
         type="secondary"
         size="small"
-        onClick={toggleNotification}
+        onClick={() => toggleNotification(index)}
         className={styles.notificationbutton}
       >
         X
