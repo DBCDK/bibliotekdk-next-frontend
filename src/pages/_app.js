@@ -55,13 +55,14 @@ export default function MyApp({ Component, pageProps, router }) {
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo allowCookies={allowCookies} />
-      <BodyScrollLock />
-      <Modal />
-      <Header router={router} />
-      <Component {...pageProps} />
-      <CookieBox />
-      <Footer />
-      <div id="layout"></div>
+      <BodyScrollLock router={router} />
+      <Modal router={router} />
+      <div id="layout">
+        <Header router={router} />
+        <Component {...pageProps} />
+        <CookieBox />
+        <Footer />
+      </div>
     </APIStateContext.Provider>
   );
 }

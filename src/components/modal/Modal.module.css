@@ -31,12 +31,21 @@
   transform: translateX(103%);
   transition: transform 330ms ease-out;
   will-change: transform;
+
+  /* Dialog override */
+  display: block;
+  border: none;
 }
 
 .modal.visible {
   pointer-events: auto;
   transform: none;
   transition: transform 330ms ease-out;
+}
+
+/* kill-me */
+.modal:focus {
+  background-color: purple !important;
 }
 
 /* Top */
@@ -59,6 +68,15 @@
   padding: var(--pt1);
   box-sizing: content-box;
   cursor: pointer;
+}
+
+.close:focus-visible {
+  outline: solid 1px var(--white);
+  outline-offset: var(--pt05);
+}
+
+.close:active {
+  outline: none;
 }
 
 /* Content */

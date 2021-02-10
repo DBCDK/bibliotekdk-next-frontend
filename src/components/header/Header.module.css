@@ -17,7 +17,7 @@
 .banner {
   display: flex;
   justify-content: flex-end;
-  padding: var(--pt1) 0;
+  padding: var(--pt1) var(--pt2);
 }
 
 /* Header */

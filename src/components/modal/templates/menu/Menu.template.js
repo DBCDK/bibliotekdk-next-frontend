@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 import { materials, actions } from "@/components/navigation";
 import { cyKey } from "@/utils/trim";
@@ -11,7 +12,17 @@ import { Arrow } from "@/components/article/preview";
 
 import styles from "./Menu.module.css";
 
-function Menu({ visible = false }) {
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * @param {obj} props.isVisible // modal is currently active/visible
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+
+function Menu({ isVisible = false }) {
   const context = { context: "navigation" };
 
   // Expanded status
@@ -19,21 +30,31 @@ function Menu({ visible = false }) {
 
   //  Close expanded categories on Modal close
   useEffect(() => {
-    if (!visible) {
+    if (!isVisible) {
       setExpanded(false);
     }
-  }, [visible]);
+  }, [isVisible]);
 
   const expandedClass = expanded ? styles.expanded : "";
 
   return (
     <div className={`${styles.menu} ${expandedClass}`}>
-      <a className={styles.trigger} onClick={() => setExpanded(!expanded)}>
+      <div
+        className={styles.trigger}
+        tabindex={isVisible ? "0" : "-1"}
+        onClick={() => setExpanded(!expanded)}
+        onKeyDown={(e) => {
+          console.log("e", e);
+          if (e.key === "Enter" || e.keyCode === 13) {
+            setExpanded(!expanded);
+          }
+        }}
+      >
         <Title type="title3">
           {Translate({ ...context, label: "categories" })}
         </Title>
         <Arrow className={styles.arrow} />
-      </a>
+      </div>
 
       <div className={`${styles.wrap}`}>
         <ul>
@@ -48,7 +69,7 @@ function Menu({ visible = false }) {
                   prefix: "header-link",
                 })}
               >
-                <li>
+                <li tabindex={!expanded && isVisible ? "0" : "-1"}>
                   <Title type="title3">
                     {Translate({ ...context, label: a.label })}
                   </Title>
@@ -56,6 +77,12 @@ function Menu({ visible = false }) {
               </Link>
             );
           })}
+          <li
+            className={styles.language}
+            tabindex={!expanded && isVisible ? "0" : "-1"}
+          >
+            English
+          </li>
         </ul>
         <ul>
           {materials.map((m) => {
@@ -69,7 +96,7 @@ function Menu({ visible = false }) {
                   prefix: "header-link",
                 })}
               >
-                <li>
+                <li tabindex={isVisible && expanded ? "0" : "-1"}>
                   <Title type="title3">
                     {Translate({ ...context, label: m.label })}
                   </Title>
@@ -82,5 +109,10 @@ function Menu({ visible = false }) {
     </div>
   );
 }
+
+// PropTypes for component
+Menu.propTypes = {
+  isVisible: PropTypes.bool,
+};
 
 export default Menu;

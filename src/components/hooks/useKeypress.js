@@ -5,15 +5,15 @@ export default (targetKey) => {
   const [keyPressed, setKeyPressed] = useState(false);
 
   // If pressed key is our target key then set to true
-  function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true);
+  function downHandler(e) {
+    if (e.key === targetKey) {
+      setKeyPressed(e);
     }
   }
 
   // If released key is our target key then set to false
-  const upHandler = ({ key }) => {
-    if (key === targetKey) {
+  const upHandler = (e) => {
+    if (e.key === targetKey) {
       setKeyPressed(false);
     }
   };

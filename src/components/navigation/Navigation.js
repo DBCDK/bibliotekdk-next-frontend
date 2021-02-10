@@ -9,7 +9,12 @@ export const materials = [
 ];
 
 export const actions = [
-  { label: "digitalOffers", href: "/#!" },
+  { label: "scientificArticles", href: "/#!" },
   { label: "askLibrarian", href: "/#!" },
   { label: "becomeLoaner", href: "/#!" },
+  { label: "digitalOffers", href: "/#!" },
+  { label: "forStudents", href: "/#!" },
+  { label: "useTheLibraries", href: "/#!" },
+  { label: "mySearches", href: "/#!" },
+  { label: "helpCenter", href: "/#!" },
 ];

@@ -530,6 +530,10 @@
       "title-filter": {
         "da": "Filtrer og sorter",
         "en": "Filter and sort"
+      },
+      "close-modal-title": {
+        "da": "Luk modal",
+        "en": "Close modal"
       }
     },
     "navigation": {
@@ -576,6 +580,26 @@
       "becomeLoaner": {
         "da": "Bliv låner",
         "en": "Become a loaner"
+      },
+      "scientificArticles": {
+        "da": "Videnskabelige artikler",
+        "en": "Scientific articles"
+      },
+      "forStudents": {
+        "da": "For studerende",
+        "en": "For students"
+      },
+      "useTheLibraries": {
+        "da": "Brug bibliotekerne",
+        "en": "Use the libraries"
+      },
+      "mySearches": {
+        "da": "Mine søgninger",
+        "en": "My searches"
+      },
+      "helpCenter": {
+        "da": "Hjælp og vejledninger",
+        "en": "Help and instructions"
       }
     },
     "units": {
