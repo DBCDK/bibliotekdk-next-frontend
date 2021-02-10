@@ -225,6 +225,10 @@ export function reviews({ workId }) {
               date
               all {
                 text
+                work {
+                  title
+                  id
+                }
               }
             }
           }
