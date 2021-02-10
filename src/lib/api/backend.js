@@ -34,6 +34,6 @@ export default async function fetchTranslations() {
     // @TODO log
     console.log(e, "ERROR");
     ok = false;
-    return { ok, result };
+    return { ok };
   }
 }

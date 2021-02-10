@@ -114,24 +114,43 @@ function LectorReview({ data, skeleton }) {
     <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
       {data.all &&
         data.all
-          .map((paragraph) => paragraph.text)
+          .map((paragraph) => paragraph)
           .filter(
-            (text) =>
-              !text.startsWith("Materialevurdering") &&
-              !text.startsWith("Indscannet version")
+            (paragraph) =>
+              !paragraph.text.startsWith("Materialevurdering") &&
+              !paragraph.text.startsWith("Indscannet version")
           )
-          .join(". ")}
+          .map((paragraph) => {
+            return (
+              <span className={styles.reviewTxt}>
+                <Title type="title4" skeleton={skeleton} lines={1}>
+                  {paragraph.text}
+                </Title>
+                <LectorLink paragraph={paragraph} skeleton={skeleton} />
+              </span>
+            );
+          })}
     </Title>
   );
+}
+
+function LectorLink({ paragraph, skeleton }) {
+  if (!paragraph.work) {
+    return ". ";
+  }
+  return <Link href={paragraph.work.id}>{paragraph.work.title}</Link>;
 }
 
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param
+    {obj}
+    props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns
+    {component}
  */
 export function MaterialReviewSkeleton(props) {
   const data = {
@@ -155,10 +174,13 @@ export function MaterialReviewSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param
+    {obj}
+    props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns
+    {component}
  */
 export default function Wrap(props) {
   const { data, error, isSkeleton } = props;
