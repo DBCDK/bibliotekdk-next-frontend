@@ -79,17 +79,7 @@ export function MaterialReview({
       </Row>
 
       <Col xs={12} className={styles.content}>
-        <Title type="title3" skeleton={skeleton} lines={5} clamp={true}>
-          {data.all &&
-            data.all
-              .map((paragraph) => paragraph.text)
-              .filter(
-                (text) =>
-                  !text.startsWith("Materialevurdering") &&
-                  !text.startsWith("Indscannet version")
-              )
-              .join(". ")}
-        </Title>
+        <LectorReview data={data} skeleton={skeleton} />
       </Col>
 
       {data.url && (
@@ -115,6 +105,23 @@ export function MaterialReview({
         </Col>
       )}
     </Col>
+  );
+}
+
+function LectorReview({ data, skeleton }) {
+  console.log(data, "DATA");
+  return (
+    <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
+      {data.all &&
+        data.all
+          .map((paragraph) => paragraph.text)
+          .filter(
+            (text) =>
+              !text.startsWith("Materialevurdering") &&
+              !text.startsWith("Indscannet version")
+          )
+          .join(". ")}
+    </Title>
   );
 }
 
