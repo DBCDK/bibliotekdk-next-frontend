@@ -109,7 +109,6 @@ export function MaterialReview({
 }
 
 function LectorReview({ data, skeleton }) {
-  console.log(data, "DATA");
   return (
     <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
       {data.all &&
