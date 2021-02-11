@@ -43,7 +43,7 @@ function Menu({ isVisible = false, onLang = null }) {
     <div className={`${styles.menu} ${expandedClass}`}>
       <div
         className={styles.trigger}
-        tabindex={isVisible ? "0" : "-1"}
+        tabIndex={isVisible ? "0" : "-1"}
         onClick={(e) => setExpanded(!expanded)}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.keyCode === 13) {
@@ -91,7 +91,7 @@ function Menu({ isVisible = false, onLang = null }) {
               </li>
             );
           })}
-          <li>
+          <li className={styles.language}>
             <Link
               onClick={(e) => {
                 e.preventDefault();
