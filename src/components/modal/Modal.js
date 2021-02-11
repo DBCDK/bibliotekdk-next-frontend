@@ -122,6 +122,7 @@ export function Modal({
   // force modal focus (accessibility)
   useEffect(() => {
     if (isVisible && modalRef.current) {
+      // Wait for animation to finish
       setTimeout(() => {
         modalRef.current.focus();
       }, 200);
@@ -248,20 +249,15 @@ export default function Wrap({ router }) {
 
   // On language select
   const onLang = function onLang() {
-    const locale = router.locale === "da" ? "en" : "da";
-
     if (router) {
-      router.push(
-        {
-          pathname: router.pathname,
-          query: router.query,
-        },
-        {
-          pathname: router.pathname,
-          query: router.query,
-        },
-        { locale }
-      );
+      const locale = router.locale === "da" ? "en" : "da";
+      const pathname = router.pathname;
+      const query = router.query;
+
+      // Force modal close on lang select
+      delete query.modal;
+
+      router.replace({ pathname, query }, null, { locale });
     }
   };
 

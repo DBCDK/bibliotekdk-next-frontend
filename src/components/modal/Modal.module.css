@@ -78,7 +78,7 @@
 .content {
   padding: var(--pt2);
   color: var(--white);
-  height: calc(100% - 136px);
+  height: calc(100% - 80px);
   overflow-y: auto;
 }
 

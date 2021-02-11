@@ -128,7 +128,7 @@
 
 @keyframes shakeLeft {
   from {
-    transform: scale(0.6) translate(-20px, 0);
+    transform: scale(0.6) translate(-10px, 0);
   }
   to {
     transform: scale(0.6) translate(0, 0);
@@ -137,7 +137,7 @@
 
 @keyframes shakeRight {
   from {
-    transform: scale(0.6) translate(20px, 0);
+    transform: scale(0.6) translate(10px, 0);
   }
   to {
     transform: scale(0.6) translate(0, 0);

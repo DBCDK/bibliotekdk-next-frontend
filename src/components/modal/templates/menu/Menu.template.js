@@ -52,6 +52,7 @@ function Menu({ isVisible = false, onLang = null }) {
         }}
       >
         <Link
+          onClick={(e) => e.preventDefault()}
           border={false}
           tabIndex={"-1"}
           className={styles.link}
