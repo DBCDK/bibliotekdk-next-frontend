@@ -69,7 +69,6 @@ Link.propTypes = {
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
-  color: PropTypes.string,
   border: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({
@@ -96,5 +95,5 @@ Link.propTypes = {
     }),
   ]),
   tabIndex: PropTypes.string,
-  tag: PropTypes.oneOf(["a", "span", "div"]),
+  tag: PropTypes.oneOf(["a", "span"]),
 };

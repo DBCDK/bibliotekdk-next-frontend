@@ -137,6 +137,8 @@ function Menu({ isVisible = false, onLang = null }) {
 // PropTypes for component
 Menu.propTypes = {
   isVisible: PropTypes.bool,
+  onClose: PropTypes.func,
+  onLang: PropTypes.func,
 };
 
 export default Menu;

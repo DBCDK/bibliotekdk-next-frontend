@@ -83,8 +83,13 @@ function Header({ className = "", router = null, story = null }) {
         }, 100);
       },
     },
-    { label: "login", icon: LoginIcon, href: "/#!" },
-    { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
+    { label: "login", icon: LoginIcon, onClick: () => {} },
+    {
+      label: "basket",
+      icon: BasketIcon,
+      onClick: () => {},
+      items: "4",
+    },
     {
       label: "menu",
       icon: BurgerIcon,

@@ -213,6 +213,15 @@ export function Modal({
   );
 }
 
+// PropTypes for Modal component
+Modal.propTypes = {
+  skeleton: PropTypes.bool,
+  template: PropTypes.string,
+  onClose: PropTypes.func,
+  onLang: PropTypes.func,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+};
+
 /**
  * Function to return skeleton (Loading) version of the Component
  *
@@ -269,7 +278,5 @@ export default function Wrap({ router }) {
 
 // PropTypes for component
 Wrap.propTypes = {
-  skeleton: PropTypes.bool,
-  template: PropTypes.string,
-  onClose: PropTypes.func,
+  router: PropTypes.object,
 };
