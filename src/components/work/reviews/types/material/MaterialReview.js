@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
 import { cyKey } from "@/utils/trim";
-
+import { encodeTitleCreator } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
@@ -155,7 +155,16 @@ function LectorLink({ paragraph, skeleton }) {
   if (!paragraph.work) {
     return ". ";
   }
-  const path = `/materiale/${paragraph.work.title}/${paragraph.work.id}`;
+
+  // @TODO there may be more than one creator - for now simply grab the first
+  // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
+  const creator = paragraph.work.creators[0].name
+    ? paragraph.work.creators[0].name
+    : "";
+  const title = paragraph.work.title ? paragraph.work.title : "";
+  const title_crator = encodeTitleCreator(title, creator);
+
+  const path = `/materiale/${title_crator}/${paragraph.work.id}`;
   return <Link href={path}>{paragraph.work.title}</Link>;
 }
 

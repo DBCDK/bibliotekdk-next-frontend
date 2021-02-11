@@ -228,6 +228,9 @@ export function reviews({ workId }) {
                 work {
                   title
                   id
+                  creators {
+                    name
+                  }
                 }
               }
             }
