@@ -108,6 +108,16 @@ export function MaterialReview({
   );
 }
 
+/**
+ * Handle a Lector review. A review is one or more paragraphs (chapters). This
+ * one handles paragraphs one by one - a paragraph may contain a link to a related
+ * work.
+ *
+ * @param data
+ * @param skeleton
+ * @return {JSX.Element}
+ * @constructor
+ */
 function LectorReview({ data, skeleton }) {
   return (
     <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
@@ -133,6 +143,14 @@ function LectorReview({ data, skeleton }) {
   );
 }
 
+/**
+ * Check if a paragraph holds a link to another work - if so parse as link
+ * if not return a period (.)
+ * @param paragraph
+ * @param skeleton
+ * @return {JSX.Element|string}
+ * @constructor
+ */
 function LectorLink({ paragraph, skeleton }) {
   if (!paragraph.work) {
     return ". ";
