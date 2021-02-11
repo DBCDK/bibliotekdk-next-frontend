@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { get } from "lodash";
-import { useRouter } from "next/router";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -65,21 +63,6 @@ function handleTab(event, container) {
   sequence[currentIndex + offset].focus();
 }
 
-// kill-me
-export const deleteQueryParam = (path, router, paramKey) => {
-  const pathname = path || router.pathname;
-  let queryStr = "";
-  const org = parseQuery(router);
-  Object.entries(org)
-    .filter(([key]) => key !== paramKey)
-    .forEach(([key, val], id) => {
-      queryStr += `${id === 0 ? "?" : "&"}${key}=${encodeURIComponent(
-        JSON.stringify(val)
-      )}`;
-    });
-  router.replace(`${pathname}${queryStr}`);
-};
-
 /**
  * Template selection function
  *
@@ -111,6 +94,7 @@ function getTemplate(template) {
 export function Modal({
   className = "",
   onClose = null,
+  onLang = null,
   template = null,
   skeleton = false,
 }) {
@@ -121,10 +105,10 @@ export function Modal({
   const visibleClass = isVisible ? styles.visible : "";
 
   // Listen on escape keypress
-  const isEscape = useKeyPress("Escape");
+  const escapeEvent = useKeyPress("Escape");
 
   // Listen on tab keypress
-  const isTab = useKeyPress("Tab");
+  const tabEvent = useKeyPress("Tab");
 
   // Modal ref
   const modalRef = useRef(null);
@@ -135,7 +119,7 @@ export function Modal({
     template: getTemplate(),
   });
 
-  // focus modal (accessibility)
+  // force modal focus (accessibility)
   useEffect(() => {
     if (isVisible && modalRef.current) {
       setTimeout(() => {
@@ -156,17 +140,17 @@ export function Modal({
 
   //  Close chain on Escape key
   useEffect(() => {
-    if (isVisible && isEscape) {
+    if (isVisible && escapeEvent) {
       handleClose();
     }
-  }, [isEscape]);
+  }, [escapeEvent]);
 
-  //  Close chain on Escape key
+  // Update and handle target on tab key press
   useEffect(() => {
-    if (isVisible && get(isTab, "target") && get(modalRef, "current")) {
-      handleTab(isTab, modalRef.current);
+    if (isVisible && get(tabEvent, "target") && get(modalRef, "current")) {
+      handleTab(tabEvent, modalRef.current);
     }
-  }, [isTab, modalRef.current]);
+  }, [tabEvent, modalRef.current]);
 
   // Close functions
   function handleClose() {
@@ -183,7 +167,7 @@ export function Modal({
       <dialog
         aria-modal="true"
         role="dialog"
-        tabindex={isVisible ? "0" : null}
+        tabIndex={isVisible ? "0" : null}
         ref={isVisible ? modalRef : null}
         aria-hidden={!isVisible || null}
         className={`${styles.modal} ${visibleClass}`}
@@ -217,7 +201,11 @@ export function Modal({
           </div>
         </div>
         <div className={styles.content}>
-          <context.template isVisible={isVisible} />
+          <context.template
+            isVisible={isVisible}
+            onClose={onClose}
+            onLang={onLang}
+          />
         </div>
       </dialog>
     </div>
@@ -250,19 +238,37 @@ export function ModalSkeleton(props) {
  *
  * @returns {component}
  */
-export default function Wrap(props) {
-  const router = useRouter();
-
+export default function Wrap({ router }) {
+  // On modal close
   const onClose = function onClose() {
     if (router) {
       router.back();
     }
   };
 
+  // On language select
+  const onLang = function onLang() {
+    const locale = router.locale === "da" ? "en" : "da";
+
+    if (router) {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: router.query,
+        },
+        {
+          pathname: router.pathname,
+          query: router.query,
+        },
+        { locale }
+      );
+    }
+  };
+
   // Get template name from query
   const template = get(router, "query.modal", null);
 
-  return <Modal {...props} template={template} onClose={onClose} />;
+  return <Modal template={template} onClose={onClose} onLang={onLang} />;
 }
 
 // PropTypes for component

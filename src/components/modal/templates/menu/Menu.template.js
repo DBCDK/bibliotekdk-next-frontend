@@ -8,6 +8,8 @@ import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
+import AnimationLine from "@/components/base/animation/line";
+
 import { Arrow } from "@/components/article/preview";
 
 import styles from "./Menu.module.css";
@@ -22,7 +24,7 @@ import styles from "./Menu.module.css";
  * @returns {component}
  */
 
-function Menu({ isVisible = false }) {
+function Menu({ isVisible = false, onLang = null }) {
   const context = { context: "navigation" };
 
   // Expanded status
@@ -42,66 +44,87 @@ function Menu({ isVisible = false }) {
       <div
         className={styles.trigger}
         tabindex={isVisible ? "0" : "-1"}
-        onClick={() => setExpanded(!expanded)}
+        onClick={(e) => setExpanded(!expanded)}
         onKeyDown={(e) => {
-          console.log("e", e);
           if (e.key === "Enter" || e.keyCode === 13) {
             setExpanded(!expanded);
           }
         }}
       >
-        <Title type="title3">
-          {Translate({ ...context, label: "categories" })}
-        </Title>
+        <Link
+          border={false}
+          tabIndex={"-1"}
+          className={styles.link}
+          dataCy={cyKey({
+            name: "categories",
+            prefix: "menu-link",
+          })}
+        >
+          <Title type="title3">
+            {Translate({ ...context, label: "categories" })}
+          </Title>
+          <AnimationLine />
+        </Link>
         <Arrow className={styles.arrow} />
       </div>
 
       <div className={`${styles.wrap}`}>
-        <ul>
+        <ul aria-hidden={expanded}>
           {actions.map((a) => {
+            const title = Translate({ ...context, label: a.label });
+
             return (
-              <Link
-                a={false}
-                key={a.label}
-                href={a.href}
-                dataCy={cyKey({
-                  name: a.label,
-                  prefix: "header-link",
-                })}
-              >
-                <li tabindex={!expanded && isVisible ? "0" : "-1"}>
-                  <Title type="title3">
-                    {Translate({ ...context, label: a.label })}
-                  </Title>
-                </li>
-              </Link>
+              <li key={a.label}>
+                <Link
+                  className={styles.link}
+                  tabIndex={!expanded && isVisible ? "0" : "-1"}
+                  title={title}
+                  href={a.href}
+                  dataCy={cyKey({
+                    name: a.label,
+                    prefix: "menu-link",
+                  })}
+                >
+                  <Title type="title3">{title}</Title>
+                </Link>
+              </li>
             );
           })}
-          <li
-            className={styles.language}
-            tabindex={!expanded && isVisible ? "0" : "-1"}
-          >
-            English
+          <li>
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                onLang();
+              }}
+              className={styles.link}
+              tabIndex={!expanded && isVisible ? "0" : "-1"}
+              dataCy={cyKey({
+                name: "language",
+                prefix: "menu-link",
+              })}
+            >
+              {Translate({ context: "modal", label: "language" })}
+            </Link>
           </li>
         </ul>
-        <ul>
+        <ul aria-hidden={!expanded}>
           {materials.map((m) => {
             return (
-              <Link
-                a={false}
-                key={m.label}
-                href={m.href}
-                dataCy={cyKey({
-                  name: m.label,
-                  prefix: "header-link",
-                })}
-              >
-                <li tabindex={isVisible && expanded ? "0" : "-1"}>
+              <li key={m.label}>
+                <Link
+                  className={styles.link}
+                  tabIndex={expanded && isVisible ? "0" : "-1"}
+                  href={m.href}
+                  dataCy={cyKey({
+                    name: m.label,
+                    prefix: "menu-link",
+                  })}
+                >
                   <Title type="title3">
                     {Translate({ ...context, label: m.label })}
                   </Title>
-                </li>
-              </Link>
+                </Link>
+              </li>
             );
           })}
         </ul>

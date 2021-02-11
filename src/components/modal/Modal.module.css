@@ -43,11 +43,6 @@
   transition: transform 330ms ease-out;
 }
 
-/* kill-me */
-.modal:focus {
-  background-color: purple !important;
-}
-
 /* Top */
 .top {
   color: var(--white);

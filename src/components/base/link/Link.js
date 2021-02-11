@@ -19,7 +19,8 @@ export default function Link({
   href = { pathname: "/", query: {} },
   target = "_self",
   border = { top: false, bottom: true },
-  onClick,
+  onClick = null,
+  onKeyDown = null,
   onFocus = null,
   dataCy = "link",
   className = "",
@@ -36,6 +37,7 @@ export default function Link({
         data-cy={dataCy}
         target={target}
         onClick={onClick}
+        onKeyDown={onKeyDown}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}
         tabIndex={tabIndex}
@@ -67,6 +69,7 @@ Link.propTypes = {
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
+  color: PropTypes.string,
   border: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.shape({
@@ -93,5 +96,5 @@ Link.propTypes = {
     }),
   ]),
   tabIndex: PropTypes.string,
-  tag: PropTypes.oneOf(["a", "span"]),
+  tag: PropTypes.oneOf(["a", "span", "div"]),
 };

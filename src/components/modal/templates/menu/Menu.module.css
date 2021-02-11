@@ -9,6 +9,7 @@
 }
 
 .trigger {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,6 +17,18 @@
   cursor: pointer;
   color: white;
 }
+
+/* custom animationline */
+.trigger:focus .link hr:last-child,
+.trigger:hover .link hr:last-child {
+  display: none;
+}
+
+.trigger:focus .link hr,
+.trigger:hover .link hr {
+  transform: scale(1);
+}
+/*  */
 
 /* Arrow */
 .trigger .arrow {
@@ -79,16 +92,20 @@
   min-width: 100%;
 }
 
-/* kill-me */
-.wrap li:focus,
-.trigger:focus {
-  color: red !important;
-}
-
 .wrap li {
   list-style: none;
   padding: var(--pt1) 0;
   cursor: pointer;
+}
+
+/* Link -> link component styles override */
+.link,
+.link:hover,
+.link:focus {
+  color: white;
+}
+.link div hr {
+  background-color: white;
 }
 
 /* kill-me */
@@ -104,8 +121,7 @@
     animation: shakeLeft 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
   }
 
-  .menu.expanded .trigger:hover .arrow,
-  .menu.expanded .trigger:focus-visible .arrow {
+  .menu.expanded .trigger:hover .arrow {
     animation: shakeRight 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
   }
 }

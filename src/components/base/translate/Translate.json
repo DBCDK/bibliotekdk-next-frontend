@@ -534,6 +534,10 @@
       "close-modal-title": {
         "da": "Luk modal",
         "en": "Close modal"
+      },
+      "language": {
+        "da": "English",
+        "en": "Dansk"
       }
     },
     "navigation": {
