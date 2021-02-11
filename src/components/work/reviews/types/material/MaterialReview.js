@@ -137,7 +137,8 @@ function LectorLink({ paragraph, skeleton }) {
   if (!paragraph.work) {
     return ". ";
   }
-  return <Link href={paragraph.work.id}>{paragraph.work.title}</Link>;
+  const path = `/materiale/${paragraph.work.title}/${paragraph.work.id}`;
+  return <Link href={path}>{paragraph.work.title}</Link>;
 }
 
 /**
