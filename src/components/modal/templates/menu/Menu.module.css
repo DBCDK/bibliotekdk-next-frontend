@@ -102,7 +102,7 @@
 .link,
 .link:hover,
 .link:focus {
-  color: white;
+  color: white !important;
 }
 .link div hr {
   background-color: white;
