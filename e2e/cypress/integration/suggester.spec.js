@@ -67,7 +67,7 @@ describe("Suggester", () => {
     });
   });
 
-  it(`Can select suggestion on 'mouse' click`, () => {
+  it(`Desktop: Can select suggestion on 'mouse' click`, () => {
     cy.get("[data-cy=suggester-input]").focus();
     cy.get("[data-cy=suggester-input]").type("a");
     cy.get("[data-cy=suggester-container]").should("be.visible");
@@ -79,7 +79,7 @@ describe("Suggester", () => {
     });
   });
 
-  it(`Can select suggestion on 'mouse' click`, () => {
+  it(`Mobile: Can select suggestion on 'mouse' click`, () => {
     cy.viewport(411, 731);
 
     cy.get("[data-cy=suggester-input]").focus();
@@ -93,7 +93,7 @@ describe("Suggester", () => {
     });
   });
 
-  it(`Should have search history on mobile version of suggester`, () => {
+  it(`Mobile: Should have search history on mobile version of suggester`, () => {
     cy.viewport(411, 731);
     cy.get("[data-cy=button-mobile]").click();
     cy.get("[data-cy=suggester-input]").clear();
@@ -102,7 +102,7 @@ describe("Suggester", () => {
     cy.get("[data-cy=suggester-container] ul li").should("have.length", 2);
   });
 
-  it(`Clear history on mobile version of suggester`, () => {
+  it(`Mobile: Clear history on mobile version of suggester`, () => {
     cy.viewport(411, 731);
 
     cy.get("[data-cy=suggester-clear-history]").should("be.visible");
