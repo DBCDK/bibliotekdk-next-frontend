@@ -56,8 +56,8 @@ function Header({ className = "", router = null, story = null }) {
   const materials = [
     { label: "books", href: "/#!" },
     { label: "articles", href: "/#!" },
-    { label: "movies", href: "/#!" },
-    { label: "eMaterials", href: "/#!" },
+    { label: "film", href: "/#!" },
+    { label: "ematerials", href: "/#!" },
     { label: "games", href: "/#!" },
     { label: "music", href: "/#!" },
     { label: "nodes", href: "/#!" },
@@ -77,7 +77,7 @@ function Header({ className = "", router = null, story = null }) {
         router &&
           router.push({
             pathname: router.pathname,
-            query: { ...router.query, searchModal: true },
+            query: { ...router.query, suggester: true },
           });
         story && story.setSuggesterVisibleMobile(true);
         setTimeout(() => {
@@ -85,17 +85,33 @@ function Header({ className = "", router = null, story = null }) {
         }, 100);
       },
     },
-    { label: "login", icon: LoginIcon, href: "/#!" },
-    { label: "basket", icon: BasketIcon, href: "/#!", items: "4" },
-    { label: "menu", icon: BurgerIcon, href: "/#!" },
+    { label: "login", icon: LoginIcon, onClick: () => {} },
+    {
+      label: "basket",
+      icon: BasketIcon,
+      onClick: () => {},
+      items: "4",
+    },
+    {
+      label: "menu",
+      icon: BurgerIcon,
+      onClick: () => {
+        if (router) {
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, modal: "menu" },
+          });
+        }
+      },
+    },
   ];
 
   // Search modal suggester is visible
   const suggesterVisibleMobile =
     (story && story.suggesterVisibleMobile) ||
-    (router && router.query.searchModal);
+    (router && router.query.suggester);
 
-  // SearchModal visible class
+  // suggester visible class
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
@@ -155,7 +171,7 @@ function Header({ className = "", router = null, story = null }) {
                       })}
                     >
                       <Text type="text3">
-                        {Translate({ ...context, label: m.label })}
+                        {Translate({ context: "general", label: m.label })}
                       </Text>
                     </Link>
                   ))}
@@ -215,7 +231,7 @@ function Header({ className = "", router = null, story = null }) {
                       onChange={setQuery}
                       onClose={() => {
                         if (router) {
-                          // remove searchModal prop from query obj
+                          // remove suggester prop from query obj
                           router.back();
                         }
                         // Remove suggester in storybook

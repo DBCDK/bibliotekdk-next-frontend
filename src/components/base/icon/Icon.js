@@ -19,9 +19,9 @@ function Icon({
   bgColor = null,
   size = 5,
   onClick = null,
-  onKeyDown,
+  onKeyDown = null,
   disabled = false,
-  tabIndex,
+  tabIndex = null,
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -122,5 +122,7 @@ Container.propTypes = {
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
   "data-cy": PropTypes.string,
+  tabIndex: PropTypes.string,
 };

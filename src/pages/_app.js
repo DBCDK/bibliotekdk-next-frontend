@@ -34,6 +34,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
+import Modal from "@/components/modal";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 
@@ -54,11 +55,14 @@ export default function MyApp({ Component, pageProps, router }) {
   return (
     <APIStateContext.Provider value={pageProps.initialState}>
       <Matomo allowCookies={allowCookies} />
-      <BodyScrollLock />
-      <Header router={router} />
-      <Component {...pageProps} />
-      <CookieBox />
-      <Footer />
+      <BodyScrollLock router={router} />
+      <Modal router={router} />
+      <div id="layout">
+        <Header router={router} />
+        <Component {...pageProps} />
+        <CookieBox />
+        <Footer />
+      </div>
     </APIStateContext.Provider>
   );
 }

@@ -30,7 +30,7 @@ export function HeaderSuggester() {
   const [query, setQuery] = useState("");
 
   return (
-    <div>
+    <div style={{ height: "800px" }}>
       <StoryTitle>{isMobile ? "Mobile" : "Desktop"} Suggester</StoryTitle>
       <StoryDescription>
         Suggester showing 3 different result types. Suggester comes in both
@@ -49,7 +49,7 @@ export function HeaderSuggester() {
 
       <StorySpace direction="v" space="4" />
 
-      <div style={{ maxWidth: "600px" }}>
+      <div style={{ maxWidth: "600px", position: "relative" }}>
         <Suggester
           query={query}
           isMobile={isMobile}

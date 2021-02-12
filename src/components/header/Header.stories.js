@@ -17,7 +17,7 @@ export function NavHeader() {
   const story = { suggesterVisibleMobile, setSuggesterVisibleMobile };
 
   return (
-    <div>
+    <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
       <StoryDescription>Full header component</StoryDescription>
       <Header story={story} />

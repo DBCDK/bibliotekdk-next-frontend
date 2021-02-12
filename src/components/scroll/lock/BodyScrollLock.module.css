@@ -1,7 +1,4 @@
 /* Class to prevent user from body-scrolling when a modal is open */
 .lockScroll {
-  position: fixed;
-
-  /* used for cypress test only */
-  overflow: hidden;
+  height: 100vh;
 }
