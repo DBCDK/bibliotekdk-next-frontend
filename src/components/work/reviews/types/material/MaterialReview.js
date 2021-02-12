@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
 import { cyKey } from "@/utils/trim";
-
+import { encodeTitleCreator } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
@@ -79,17 +79,7 @@ export function MaterialReview({
       </Row>
 
       <Col xs={12} className={styles.content}>
-        <Title type="title3" skeleton={skeleton} lines={5} clamp={true}>
-          {data.all &&
-            data.all
-              .map((paragraph) => paragraph.text)
-              .filter(
-                (text) =>
-                  !text.startsWith("Materialevurdering") &&
-                  !text.startsWith("Indscannet version")
-              )
-              .join(". ")}
-        </Title>
+        <LectorReview data={data} skeleton={skeleton} />
       </Col>
 
       {data.url && (
@@ -119,12 +109,75 @@ export function MaterialReview({
 }
 
 /**
+ * Handle a Lector review. A review is one or more paragraphs (chapters). This
+ * one handles paragraphs one by one - a paragraph may contain a link to a related
+ * work.
+ *
+ * @param data
+ * @param skeleton
+ * @return {JSX.Element}
+ * @constructor
+ */
+function LectorReview({ data, skeleton }) {
+  return (
+    <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
+      {data.all &&
+        data.all
+          .map((paragraph) => paragraph)
+          .filter(
+            (paragraph) =>
+              !paragraph.text.startsWith("Materialevurdering") &&
+              !paragraph.text.startsWith("Indscannet version")
+          )
+          .map((paragraph) => {
+            return (
+              <span className={styles.reviewTxt}>
+                <Title type="title4" skeleton={skeleton} lines={1}>
+                  {paragraph.text}
+                </Title>
+                <LectorLink paragraph={paragraph} skeleton={skeleton} />
+              </span>
+            );
+          })}
+    </Title>
+  );
+}
+
+/**
+ * Check if a paragraph holds a link to another work - if so parse as link
+ * if not return a period (.)
+ * @param paragraph
+ * @param skeleton
+ * @return {JSX.Element|string}
+ * @constructor
+ */
+function LectorLink({ paragraph, skeleton }) {
+  if (!paragraph.work) {
+    return ". ";
+  }
+
+  // @TODO there may be more than one creator - for now simply grab the first
+  // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
+  const creator = paragraph.work.creators[0].name
+    ? paragraph.work.creators[0].name
+    : "";
+  const title = paragraph.work.title ? paragraph.work.title : "";
+  const title_crator = encodeTitleCreator(title, creator);
+
+  const path = `/materiale/${title_crator}/${paragraph.work.id}`;
+  return <Link href={path}>{paragraph.work.title}</Link>;
+}
+
+/**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
+ * @param
+    {obj}
+    props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns
+    {component}
  */
 export function MaterialReviewSkeleton(props) {
   const data = {
@@ -148,10 +201,13 @@ export function MaterialReviewSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param
+    {obj}
+    props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns
+    {component}
  */
 export default function Wrap(props) {
   const { data, error, isSkeleton } = props;

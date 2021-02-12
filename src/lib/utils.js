@@ -26,6 +26,8 @@ export function encodeString(str = "") {
  * @returns {string} encoded string
  */
 export function encodeTitleCreator(title = "", creator = "") {
+  // @TODO there may be more than one creator - should it be handled? if yes
+  // then it should be handled here - make creator an array
   return encodeString(title) + "_" + encodeString(creator);
 }
 

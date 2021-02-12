@@ -52,3 +52,17 @@
 
 .skeleton .url a {
 }
+
+.reviewTxt h1{
+  font-size: var(--pt4);
+  line-height: var(--pt5);
+  font-family: var(--title-font);
+  display: inline;
+}
+
+.reviewTxt a{
+  color: var(--blue);
+  font-size: var(--pt4);
+  line-height: var(--pt5);
+  font-family: var(--title-font);
+}
