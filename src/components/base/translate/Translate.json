@@ -120,8 +120,8 @@
         "en": "book"
       },
       "books": {
-        "da": "bøger",
-        "en": "books"
+        "da": "Bøger",
+        "en": "Books"
       },
       "ebook": {
         "da": "Ebog",
@@ -170,6 +170,14 @@
       "home": {
         "da": "Hjem",
         "en": "Home"
+      },
+      "close-modal-title": {
+        "da": "Luk modal",
+        "en": "Close modal"
+      },
+      "language": {
+        "da": "English",
+        "en": "Dansk"
       }
     },
     "articles": {
@@ -409,34 +417,6 @@
         "da": "Levering til og afhentning på dit bibliotek",
         "en": "Delivery to and collection at your library"
       },
-      "books": {
-        "da": "Bøger",
-        "en": "Books"
-      },
-      "articles": {
-        "da": "Artikler",
-        "en": "Articles"
-      },
-      "movies": {
-        "da": "Film",
-        "en": "Movies"
-      },
-      "eMaterials": {
-        "da": "E-materialer",
-        "en": "E-materials"
-      },
-      "games": {
-        "da": "Spil",
-        "en": "Games"
-      },
-      "music": {
-        "da": "Musik",
-        "en": "Music"
-      },
-      "nodes": {
-        "da": "Noder",
-        "en": "Nodes"
-      },
       "digitalOffers": {
         "da": "Digitale bibliotekstilbud",
         "en": "Digital library offerings"
@@ -530,48 +510,12 @@
       "title-filter": {
         "da": "Filtrer og sorter",
         "en": "Filter and sort"
-      },
-      "close-modal-title": {
-        "da": "Luk modal",
-        "en": "Close modal"
-      },
-      "language": {
-        "da": "English",
-        "en": "Dansk"
       }
     },
     "navigation": {
       "categories": {
         "da": "Kategorier",
         "en": "Categories"
-      },
-      "books": {
-        "da": "Bøger",
-        "en": "Books"
-      },
-      "articles": {
-        "da": "Artikler",
-        "en": "Articles"
-      },
-      "movies": {
-        "da": "Film",
-        "en": "Movies"
-      },
-      "eMaterials": {
-        "da": "E-materialer",
-        "en": "E-materials"
-      },
-      "games": {
-        "da": "Spil",
-        "en": "Games"
-      },
-      "music": {
-        "da": "Musik",
-        "en": "Music"
-      },
-      "nodes": {
-        "da": "Noder",
-        "en": "Nodes"
       },
       "digitalOffers": {
         "da": "Digitale bibliotekstilbud",

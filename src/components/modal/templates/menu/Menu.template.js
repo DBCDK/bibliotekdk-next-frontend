@@ -18,7 +18,7 @@ import styles from "./Menu.module.css";
  * The Component function
  *
  * @param {obj} props
- * @param {obj} props.isVisible // modal is currently active/visible
+ * @param {obj} props.isVisible modal is currently active/visible
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -104,7 +104,7 @@ function Menu({ isVisible = false, onLang = null }) {
                 prefix: "menu-link",
               })}
             >
-              {Translate({ context: "modal", label: "language" })}
+              {Translate({ context: "general", label: "language" })}
             </Link>
           </li>
         </ul>
@@ -122,7 +122,7 @@ function Menu({ isVisible = false, onLang = null }) {
                   })}
                 >
                   <Title type="title3">
-                    {Translate({ ...context, label: m.label })}
+                    {Translate({ context: "general", label: m.label })}
                   </Title>
                 </Link>
               </li>

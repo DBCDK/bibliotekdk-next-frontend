@@ -18,9 +18,11 @@ import styles from "./Modal.module.css";
 /**
  * Function to trap Tab inside modal
  *
- * @param {obj} event // current target element (focused element)
- * @param {obj} container // container to trap Tab in (modal)
+ * @param {obj} event current target element (focused element)
+ * @param {obj} container container to trap Tab in (modal)
  *
+ * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
+ * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
  */
 function handleTab(event, container) {
   // Search container for elements (tabindex prop)
@@ -66,7 +68,7 @@ function handleTab(event, container) {
 /**
  * Template selection function
  *
- * @param {string} template // name of template
+ * @param {string} template name of template
  *
  * @returns {component}
  */
@@ -186,7 +188,7 @@ export function Modal({
             <Icon
               tabIndex={isVisible ? "0" : "-1"}
               title={Translate({
-                context: "modal",
+                context: "general",
                 label: "close-modal-title",
               })}
               className={styles.close}

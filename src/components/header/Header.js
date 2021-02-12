@@ -54,8 +54,8 @@ function Header({ className = "", router = null, story = null }) {
   const materials = [
     { label: "books", href: "/#!" },
     { label: "articles", href: "/#!" },
-    { label: "movies", href: "/#!" },
-    { label: "eMaterials", href: "/#!" },
+    { label: "film", href: "/#!" },
+    { label: "ematerials", href: "/#!" },
     { label: "games", href: "/#!" },
     { label: "music", href: "/#!" },
     { label: "nodes", href: "/#!" },
@@ -168,7 +168,7 @@ function Header({ className = "", router = null, story = null }) {
                       })}
                     >
                       <Text type="text3">
-                        {Translate({ ...context, label: m.label })}
+                        {Translate({ context: "general", label: m.label })}
                       </Text>
                     </Link>
                   ))}

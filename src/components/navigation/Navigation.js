@@ -3,8 +3,8 @@
 export const materials = [
   { label: "books", href: "/#!" },
   { label: "articles", href: "/#!" },
-  { label: "movies", href: "/#!" },
-  { label: "eMaterials", href: "/#!" },
+  { label: "film", href: "/#!" },
+  { label: "ematerials", href: "/#!" },
   { label: "games", href: "/#!" },
   { label: "music", href: "/#!" },
   { label: "nodes", href: "/#!" },
