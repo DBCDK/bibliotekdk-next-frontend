@@ -23,7 +23,9 @@ function parseArticles(articles, matchTag) {
   // Remove articles that don't match the section tag
   let processedArticles = articles.filter(
     (article) =>
-      article.fieldArticleSection && article.fieldArticleSection === matchTag
+      article &&
+      article.fieldArticleSection &&
+      article.fieldArticleSection === matchTag
   );
   // Extract the position tag to use as sort key
   processedArticles.forEach((article) => {

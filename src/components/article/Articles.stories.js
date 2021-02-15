@@ -10,6 +10,8 @@ export function ArticlePreviewSection() {
     {
       nid: 1,
       title: "Digitale bibliotekstilbud",
+      fieldArticleSection: "section 2",
+      fieldArticlePosition: "3",
       fieldRubrik:
         "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
       fieldImage: {
@@ -25,6 +27,8 @@ export function ArticlePreviewSection() {
     {
       nid: 2,
       title: "Spørg en bibliotekar",
+      fieldArticleSection: "section 2",
+      fieldArticlePosition: "1",
       fieldRubrik:
         "Online bibliotekarhjælp. Få råd og hjælp til alt fra informationssøgning til reservationer.",
       fieldImage: {
@@ -40,6 +44,8 @@ export function ArticlePreviewSection() {
     {
       nid: 3,
       title: "Bibliotek.dk",
+      fieldArticleSection: "section 2",
+      fieldArticlePosition: "2",
       fieldRubrik:
         "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
       fieldImage: {
@@ -61,6 +67,8 @@ export function ArticlePreviewSection() {
         title: "some image title",
         url: "/img/bibdk-hero-scaled.jpeg",
       },
+      fieldArticleSection: "section other",
+      fieldArticlePosition: "1",
       fieldTags: [
         { entity: { entityLabel: "section-other" } },
         { entity: { entityLabel: "pos-1" } },
@@ -75,7 +83,7 @@ export function ArticlePreviewSection() {
       <ArticleSection
         title="Bibliotek.dk tilbyder"
         articles={articles}
-        matchTag="section-help"
+        matchTag="section 2"
       />
     </div>
   );
