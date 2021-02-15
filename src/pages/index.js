@@ -29,11 +29,8 @@ const Index = () => {
       </Head>
       <div>
         <Hero />
-        <ArticleSection
-          title="Bibliotek.dk tilbyder"
-          matchTag="section-offerings"
-        />
-        <ArticleSection title="Kan vi hjælpe?" matchTag="section-help" />
+        <ArticleSection title="Bibliotek.dk tilbyder" matchTag="section 1" />
+        <ArticleSection title="Kan vi hjælpe?" matchTag="section 2" />
       </div>
     </React.Fragment>
   );

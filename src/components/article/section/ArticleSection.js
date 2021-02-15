@@ -20,26 +20,14 @@ import ArticlePreview from "@/components/article/preview";
  * @returns {array}
  */
 function parseArticles(articles, matchTag) {
-  // Flatten tags
-  let processedArticles = articles
-    .filter((article) => !!article)
-    .map((article) => ({
-      ...article,
-      tags: article.fieldTags.map((fieldTag) => fieldTag.entity.entityLabel),
-    }));
-
   // Remove articles that don't match the section tag
-  processedArticles = processedArticles.filter((article) =>
-    article.tags.includes(matchTag)
+  let processedArticles = articles.filter(
+    (article) =>
+      article.fieldArticleSection && article.fieldArticleSection === matchTag
   );
-
   // Extract the position tag to use as sort key
   processedArticles.forEach((article) => {
-    article.tags.forEach((tag) => {
-      if (tag.startsWith("pos")) {
-        article.sort = tag;
-      }
-    });
+    article.sort = article.fieldArticlePosition;
   });
 
   // Sort articles
