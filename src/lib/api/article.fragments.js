@@ -55,6 +55,8 @@ export function promotedArticles() {
             nid
             title
             fieldRubrik
+            fieldArticleSection
+            fieldArticlePosition
             fieldImage {
               alt
               title
