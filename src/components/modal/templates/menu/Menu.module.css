@@ -112,12 +112,6 @@ li.language {
   padding-top: var(--pt7);
 }
 
-/* kill-me */
-.menu h1 {
-  font-size: 20px;
-  line-height: 32px;
-}
-
 @media (min-width: 576px) {
   .trigger {
     /* display: none; */

@@ -5,6 +5,7 @@ import { materials, actions } from "@/components/navigation";
 import { cyKey } from "@/utils/trim";
 
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
@@ -61,7 +62,7 @@ function Menu({ isVisible = false, onLang = null }) {
             prefix: "menu-link",
           })}
         >
-          <Title type="title3">
+          <Title type="title5">
             {Translate({ ...context, label: "categories" })}
           </Title>
           <AnimationLine />
@@ -86,7 +87,7 @@ function Menu({ isVisible = false, onLang = null }) {
                     prefix: "menu-link",
                   })}
                 >
-                  <Title type="title3">{title}</Title>
+                  <Title type="title5">{title}</Title>
                 </Link>
               </li>
             );
@@ -104,7 +105,9 @@ function Menu({ isVisible = false, onLang = null }) {
                 prefix: "menu-link",
               })}
             >
-              {Translate({ context: "general", label: "language" })}
+              <Text type="text2">
+                {Translate({ context: "general", label: "language" })}
+              </Text>
             </Link>
           </li>
         </ul>
@@ -121,7 +124,7 @@ function Menu({ isVisible = false, onLang = null }) {
                     prefix: "menu-link",
                   })}
                 >
-                  <Title type="title3">
+                  <Title type="title5">
                     {Translate({ context: "general", label: m.label })}
                   </Title>
                 </Link>
