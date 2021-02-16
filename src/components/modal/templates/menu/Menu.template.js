@@ -40,7 +40,7 @@ function Menu({ isVisible = false, onLang = null }) {
   const expandedClass = expanded ? styles.expanded : "";
 
   return (
-    <div className={`${styles.menu} ${expandedClass}`}>
+    <div className={`${styles.menu} ${expandedClass}`} data-cy="menu-modal">
       <div
         className={styles.trigger}
         tabIndex={isVisible ? "0" : "-1"}
@@ -95,7 +95,7 @@ function Menu({ isVisible = false, onLang = null }) {
             <Link
               onClick={(e) => {
                 e.preventDefault();
-                onLang();
+                onLang && onLang();
               }}
               className={styles.link}
               tabIndex={!expanded && isVisible ? "0" : "-1"}

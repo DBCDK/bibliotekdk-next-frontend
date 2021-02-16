@@ -83,7 +83,7 @@
 }
 
 /* Dimmer */
-.dimmer:after {
+.dimmer::after {
   content: "";
   display: block;
   position: absolute;
@@ -98,7 +98,7 @@
   transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
 
-.visible.dimmer:after {
+.visible.dimmer::after {
   opacity: 1;
   pointer-events: auto;
   cursor: pointer;

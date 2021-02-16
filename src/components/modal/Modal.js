@@ -157,17 +157,19 @@ export function Modal({
 
   // Close functions
   function handleClose() {
-    onClose();
+    onClose && onClose();
     document.activeElement.blur();
   }
 
   return (
     <div
+      data-cy="modal-dimmer"
       aria-hidden={true}
       className={`${styles.dimmer} ${className} ${visibleClass}`}
       onClick={(e) => handleClose()}
     >
       <dialog
+        data-cy="modal-container"
         aria-modal="true"
         role="dialog"
         tabIndex={isVisible ? "0" : null}
@@ -186,6 +188,7 @@ export function Modal({
                 })}
             </Title>
             <Icon
+              dataCy="close-modal"
               tabIndex={isVisible ? "0" : "-1"}
               title={Translate({
                 context: "general",
