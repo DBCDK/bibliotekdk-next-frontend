@@ -162,6 +162,7 @@
     border-top: none;
 
     height: auto;
+    max-height: 50vh;
     padding: 0;
   }
 

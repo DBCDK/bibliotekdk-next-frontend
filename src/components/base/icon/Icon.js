@@ -22,6 +22,7 @@ function Icon({
   onKeyDown = null,
   disabled = false,
   tabIndex = null,
+  dataCy = null,
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -58,7 +59,7 @@ function Icon({
       onKeyDown={onKeyDown}
       aria-hidden="true"
       tabIndex={tabIndex}
-      data-cy={props["data-cy"]}
+      data-cy={props["data-cy"] || dataCy || ""}
     >
       {children || <img src={`/icons/${src}`} />}
     </i>
