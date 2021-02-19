@@ -18,7 +18,7 @@ import ArticlePreview from "@/components/article/preview";
  *
  * @returns {array}
  */
-export function parseArticles(articles, matchTag) {
+export function parseArticles(articles, matchTag, numberOfArticles) {
   // We are filtering and sorting, hence we make us of useMemo
   articles = useMemo(() => {
     if (!articles) {
@@ -35,7 +35,7 @@ export function parseArticles(articles, matchTag) {
         .sort(function (a, b) {
           return a.fieldArticlePosition - b.fieldArticlePosition;
         })
-        .slice(0, 3);
+        .slice(0, numberOfArticles);
     }
   }, [articles]);
 
@@ -65,7 +65,7 @@ export function getArticleData() {
  *
  */
 export function ArticleSection({ title, articles, skeleton, matchTag }) {
-  articles = parseArticles(articles, matchTag);
+  articles = parseArticles(articles, matchTag, 3);
   return (
     <Section title={title}>
       <Row>
