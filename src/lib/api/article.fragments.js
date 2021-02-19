@@ -24,6 +24,8 @@ export function article({ articleId }) {
             fieldRubrik
             body {
               value
+            }entityOwner {
+              name
             }
             fieldImage {
               alt
@@ -31,6 +33,11 @@ export function article({ articleId }) {
               url
               width
               height
+            }
+            fieldTags {
+              entity {
+                entityLabel
+              }
             }
           }
           }
@@ -63,11 +70,6 @@ export function promotedArticles() {
               url
               width
               height
-            }
-            fieldTags {
-              entity {
-                entityLabel
-              }
             }
           }
         }
