@@ -34,7 +34,8 @@ export function parseArticles(articles, matchTag) {
         )
         .sort(function (a, b) {
           return a.fieldArticlePosition - b.fieldArticlePosition;
-        });
+        })
+        .slice(0, 3);
     }
   }, [articles]);
 
