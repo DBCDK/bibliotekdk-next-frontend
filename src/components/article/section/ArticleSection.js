@@ -19,17 +19,38 @@ import ArticlePreview from "@/components/article/preview";
  * @returns {array}
  */
 export function parseArticles(articles, matchTag) {
-  // Remove articles that don't match the section tag
-  return articles
-    .filter(
-      (article) =>
-        article &&
-        article.fieldArticleSection &&
-        article.fieldArticleSection === matchTag
-    )
-    .sort(function (a, b) {
-      return a.fieldArticlePosition - b.fieldArticlePosition;
-    });
+  // We are filtering and sorting, hence we make us of useMemo
+  articles = useMemo(() => {
+    if (!articles) {
+      // Create skeleton articles
+      return Array(3).fill({});
+    } else {
+      return articles
+        .filter(
+          (article) =>
+            article &&
+            article.fieldArticleSection &&
+            article.fieldArticleSection === matchTag
+        )
+        .sort(function (a, b) {
+          return a.fieldArticlePosition - b.fieldArticlePosition;
+        });
+    }
+  }, [articles]);
+
+  return articles;
+}
+
+export function getArticleData() {
+  const { isLoading, data } = useData(promotedArticles());
+  const articles =
+    data &&
+    data.nodeQuery &&
+    data.nodeQuery.entities &&
+    data.nodeQuery.entities.filter(
+      (article) => article && article.__typename === "NodeArticle"
+    );
+  return { articles, isLoading, data };
 }
 
 /**
@@ -43,16 +64,7 @@ export function parseArticles(articles, matchTag) {
  *
  */
 export function ArticleSection({ title, articles, skeleton, matchTag }) {
-  // We are filtering and sorting, hence we make us of useMemo
-  articles = useMemo(() => {
-    if (!articles) {
-      // Create skeleton articles
-      return Array(3).fill({});
-    } else {
-      return parseArticles(articles, matchTag);
-    }
-  }, [articles]);
-
+  articles = parseArticles(articles, matchTag);
   return (
     <Section title={title}>
       <Row>
@@ -73,15 +85,7 @@ ArticleSection.propTypes = {
 };
 
 export default function Wrapper(props) {
-  const { isLoading, data } = useData(promotedArticles());
-  const articles =
-    data &&
-    data.nodeQuery &&
-    data.nodeQuery.entities &&
-    data.nodeQuery.entities.filter(
-      (article) => article && article.__typename === "NodeArticle"
-    );
-
+  const { articles, isLoading, data } = getArticleData();
   return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
 }
 Wrapper.propTypes = {
