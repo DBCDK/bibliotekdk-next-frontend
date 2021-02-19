@@ -4,6 +4,7 @@ import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Badge from "@/components/base/badge";
+import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Action.module.css";
 
@@ -22,6 +23,7 @@ export default function Action({
   badge = null,
   title = "Go!",
   icon = "star.svg",
+  animation = false,
   children = null,
   onClick = null,
   dataCy = null,
@@ -45,6 +47,7 @@ export default function Action({
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
       <Icon size={{ w: "auto", h: 3 }} src={icon} children={children} />
       <Text type="text3">{title}</Text>
+      {animation && <AnimationLine />}
     </Wrap>
   );
 }
