@@ -2,10 +2,9 @@ import { useMemo } from "react";
 import PropTypes from "prop-types";
 import sortBy from "lodash/sortBy";
 
-import { promotedArticles } from "@/lib/api/article.fragments";
+import { article, promotedArticles } from "@/lib/api/article.fragments";
 import { useData } from "@/lib/api/api";
 import { Col, Row } from "react-bootstrap";
-import styles from "./ArticleSection.module.css";
 import Section from "@/components/base/section";
 import ArticlePreview from "@/components/article/preview";
 
@@ -19,23 +18,18 @@ import ArticlePreview from "@/components/article/preview";
  *
  * @returns {array}
  */
-function parseArticles(articles, matchTag) {
+export function parseArticles(articles, matchTag) {
   // Remove articles that don't match the section tag
-  let processedArticles = articles.filter(
-    (article) =>
-      article &&
-      article.fieldArticleSection &&
-      article.fieldArticleSection === matchTag
-  );
-  // Extract the position tag to use as sort key
-  processedArticles.forEach((article) => {
-    article.sort = article.fieldArticlePosition;
-  });
-
-  // Sort articles
-  processedArticles = sortBy(processedArticles, "sort");
-
-  return processedArticles;
+  return articles
+    .filter(
+      (article) =>
+        article &&
+        article.fieldArticleSection &&
+        article.fieldArticleSection === matchTag
+    )
+    .sort(function (a, b) {
+      return a.fieldArticlePosition - b.fieldArticlePosition;
+    });
 }
 
 /**
@@ -60,7 +54,7 @@ export function ArticleSection({ title, articles, skeleton, matchTag }) {
   }, [articles]);
 
   return (
-    <Section title={title} className={styles.section}>
+    <Section title={title}>
       <Row>
         {articles.map((article, index) => (
           <Col xs={12} md={4} key={`${article.title}_${index}`}>
