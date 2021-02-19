@@ -5,6 +5,7 @@
  */
 
 import ArticleSection from "@/components/article/section";
+import ArticleSectionTwoRows from "@/components/article/sectiontwo";
 import Hero from "@/components/hero";
 import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
@@ -31,6 +32,7 @@ const Index = () => {
         <Hero />
         <ArticleSection title="Bibliotek.dk tilbyder" matchTag="section 1" />
         <ArticleSection title="Kan vi hjælpe?" matchTag="section 2" />
+        <ArticleSectionTwoRows title="Nyheder" matchTag="section 3" />
       </div>
     </React.Fragment>
   );
