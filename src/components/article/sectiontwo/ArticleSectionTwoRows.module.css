@@ -4,6 +4,13 @@
 
 .sectionrow{
     display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 992px) {
+    .sectionrow {
+        flex-direction: row;
+    }
 }
 
 .sectioncol_left{
