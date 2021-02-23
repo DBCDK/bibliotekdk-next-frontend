@@ -28,11 +28,31 @@ export function ArticleSectionTwoRows({ title, articles, skeleton, matchTag }) {
   return (
     <Section title={title} className={styles.sectioncontainer}>
       <Row className={styles.sectionrow}>
-        {articles.map((article, index) => (
-          <Col key={`${article.title}_${index}`} className={styles.sectioncol}>
-            <ArticlePreview article={article} skeleton={skeleton} />
+        {articles[0] && (
+          <Col
+            key={`${articles[0].title}_0`}
+            className={styles.sectioncol_left}
+          >
+            <ArticlePreview
+              article={articles[0]}
+              skeleton={skeleton}
+              rubrik={false}
+            />
           </Col>
-        ))}
+        )}
+
+        {articles[1] && (
+          <Col
+            key={`${articles[1].title}_1`}
+            className={styles.sectioncol_right}
+          >
+            <ArticlePreview
+              article={articles[1]}
+              skeleton={skeleton}
+              rubrik={false}
+            />
+          </Col>
+        )}
       </Row>
     </Section>
   );

@@ -1,11 +1,19 @@
-.sectioncol{
-
-}
-
 .sectioncontainer{
-background-color: var(--jagged-ice);
+    background-color: var(--jagged-ice);
 }
 
 .sectionrow{
-
+    display: flex;
 }
+
+.sectioncol_left{
+    flex: 5;
+}
+
+.sectioncol_right{
+    flex: 4;
+    align-self: flex-end;
+}
+
+
+
