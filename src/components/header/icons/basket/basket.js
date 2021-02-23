@@ -23,7 +23,11 @@ export default function BasketIcon(props) {
   const sizeClass = items.length > 1 ? styles.font__small : styles.font__large;
 
   return (
-    <Action {...props} className={`${className} ${styles.trigger}`}>
+    <Action
+      {...props}
+      className={`${className} ${styles.trigger}`}
+      animation={true}
+    >
       <div className={styles.basket}>
         <div className={styles.icon}>
           <div className={styles.bag}>

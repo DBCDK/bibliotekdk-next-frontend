@@ -4,6 +4,31 @@ import PropTypes from "prop-types";
 import translation from "./Translate.json";
 export let lang = "da";
 export let contexts = {};
+
+/**
+ * units
+ *
+ * @param {string} label
+ */
+
+export function months({ label }) {
+  if (!contexts.units) {
+    return;
+  }
+
+  if (!contexts.units[label]) {
+    return `[! unknown label: ${label} in units]`;
+  }
+
+  if (label === "shortenedMonths") {
+    // convert to array of short months
+    const months = contexts.units[label][lang];
+    return months && months.split(",");
+  }
+
+  return contexts.units[label][lang];
+}
+
 /**
  * Set locale for the translate component
  *
@@ -12,8 +37,6 @@ export let contexts = {};
 export function setLocale(locale = "da") {
   lang = locale;
 }
-
-let which;
 
 /**
  * Check if translations are OK

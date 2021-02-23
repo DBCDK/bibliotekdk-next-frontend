@@ -1,5 +1,4 @@
-import Translate from "@/components/base/translate";
-const shortMonth = Translate({ context: "units", label: "shortMonths" });
+import { months } from "@/components/base/translate";
 
 /**
  * epoch timestamp to human date
@@ -10,9 +9,16 @@ const shortMonth = Translate({ context: "units", label: "shortMonths" });
  */
 
 export function timestampToShortDate(timestamp) {
+  if (!timestamp) {
+    return;
+  }
+
+  const shortMonths = months({ label: "shortenedMonths" });
+
   const a = new Date(timestamp);
+
   const year = a.getFullYear();
-  const month = shortMonth[a.getMonth()];
+  const month = (shortMonths && shortMonths[a.getMonth()]) || a.getMonth() + 1;
   const date = a.getDate();
 
   return date + " " + month + ". " + year;

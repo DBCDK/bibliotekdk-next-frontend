@@ -24,6 +24,12 @@
   object-position: 50% 100%;
 }
 
+.cover.missingCover {
+  width: 100%;
+  /* override inline styles */
+  height: 300px !important;
+}
+
 /**
  * Frame
  *

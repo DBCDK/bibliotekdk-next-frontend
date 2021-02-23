@@ -23,6 +23,22 @@
   transform: translate(30%, -30%);
 }
 
+/* custom animationline */
+.action:focus-visible hr:last-child,
+.action:hover hr:last-child {
+  display: none;
+}
+
+.action:focus-visible hr,
+.action:hover hr {
+  transform: scale(1);
+}
+/*  */
+
+.action:focus-visible p {
+  color: var(--blue);
+}
+
 @media (min-width: 992px) {
   .action p {
     display: block;
