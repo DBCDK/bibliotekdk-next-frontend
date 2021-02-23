@@ -1,1 +1,1 @@
-export { default } from "./Translate.js";
+export { default, months } from "./Translate.js";

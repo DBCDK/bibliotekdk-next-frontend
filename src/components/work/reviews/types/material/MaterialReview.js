@@ -129,9 +129,9 @@ function LectorReview({ data, skeleton }) {
               !paragraph.text.startsWith("Materialevurdering") &&
               !paragraph.text.startsWith("Indscannet version")
           )
-          .map((paragraph) => {
+          .map((paragraph, i) => {
             return (
-              <span className={styles.reviewTxt}>
+              <span key={`paragraph-${i}`} className={styles.reviewTxt}>
                 <Title type="title4" skeleton={skeleton} lines={1}>
                   {paragraph.text}
                 </Title>
