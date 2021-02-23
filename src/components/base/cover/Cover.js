@@ -25,6 +25,9 @@ function Cover({
     src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
   }
 
+  // Add class for misisng cover image
+  const missingCoverClass = src ? "" : styles.missingCover;
+
   const frameStyle = bgColor ? styles.frame : "";
 
   // Set icon size
@@ -45,7 +48,7 @@ function Cover({
   return (
     <div
       style={dynamicStyles}
-      className={`${styles.cover} ${frameStyle} ${className}`}
+      className={`${styles.cover} ${frameStyle} ${missingCoverClass} ${className}`}
       onClick={onClick}
     >
       {src && (

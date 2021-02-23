@@ -599,35 +599,9 @@
         "da": "år",
         "en": "years"
       },
-      "shortMonths": {
-        "da": [
-          "jan",
-          "feb",
-          "mar",
-          "apr",
-          "maj",
-          "jun",
-          "jul",
-          "aug",
-          "sep",
-          "okt",
-          "nov",
-          "dec"
-        ],
-        "en": [
-          "jan",
-          "feb",
-          "mar",
-          "apr",
-          "may",
-          "jun",
-          "jul",
-          "aug",
-          "sep",
-          "oct",
-          "nov",
-          "dec"
-        ]
+      "shortenedMonths": {
+        "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
+        "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
       }
     }
   }

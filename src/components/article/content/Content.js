@@ -18,6 +18,68 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 
+function ArticleHeader({ article }) {
+  const context = { context: "articles" };
+
+  let creatorName =
+    article && article.entityOwner && article.entityOwner.name
+      ? article.entityOwner.name
+      : "Af redaktøren";
+
+  if (creatorName === "admin") {
+    creatorName = "Af bibliotek.dk redaktionen";
+  }
+
+  let category =
+    article && article.fieldTags
+      ? article.fieldTags
+          .slice(0, 2)
+          .map((fieldTag, index) => fieldTag.entity.entityLabel)
+          .join(", ")
+      : "Nyhed";
+
+  return (
+    <Row>
+      <Col
+        className={styles.info}
+        xs={12}
+        md={{ span: 10, offset: 1 }}
+        lg={{ span: 6, offset: 3 }}
+      >
+        <Row className={styles.test}>
+          <Col xs={6} md={"auto"}>
+            <Text type="text3" dataCy="article-header-date">
+              {timestampToShortDate(article.entityCreated)}
+            </Text>
+          </Col>
+          <Col xs={6} md={"auto"}>
+            <Text type="text3">{category}</Text>
+          </Col>
+          <Col xs={6} md={"auto"}>
+            <Text type="text3">{creatorName}</Text>
+          </Col>
+          <Col xs={6} md={"auto"}>
+            <Link
+              dataCy="article-print"
+              tag="span"
+              onClick={(e) => {
+                e.preventDefault();
+                if (typeof window !== "undefined") {
+                  window.print();
+                }
+              }}
+            >
+              <Text type="text3">
+                {Translate({ ...context, label: "printButton" })}
+              </Text>
+            </Link>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  );
+}
+
 /**
  * Orientation function
  *
@@ -45,6 +107,10 @@ function getOrientation({ width, height }) {
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
   if (!data.article) {
+    return null;
+  }
+
+  if (typeof window === "undefined") {
     return null;
   }
 
@@ -107,7 +173,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           </Row>
         </Col>
       </Row>
-      <ArticleHeader article={article} context={context} />
+      <ArticleHeader article={article} />
       <Row>
         <Col
           className={styles.rubrik}
@@ -117,7 +183,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         >
           <Title type="title4" skeleton={skeleton} lines={3}>
             {article.fieldRubrik && (
-              <div dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
+              <span dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
             )}
           </Title>
         </Col>
@@ -130,76 +196,14 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           md={{ span: 10, offset: 1 }}
           lg={{ span: 6, offset: 3 }}
         >
-          <Text type="text2" skeleton={skeleton} lines={30}>
-            {article.body && (
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: parsedBody,
-                }}
-              />
-            )}
-          </Text>
+          {article.body && (
+            <Text type="text2" skeleton={skeleton} lines={30}>
+              <span dangerouslySetInnerHTML={{ __html: parsedBody }} />
+            </Text>
+          )}
         </Col>
       </Row>
     </Container>
-  );
-}
-
-function ArticleHeader({ article, context }) {
-  let creatorName =
-    article && article.entityOwner && article.entityOwner.name
-      ? article.entityOwner.name
-      : "Af redaktøren";
-  if (creatorName === "admin") {
-    creatorName = "Af bibliotek.dk redaktionen";
-  }
-  let category =
-    article && article.fieldTags
-      ? article.fieldTags
-          .slice(0, 2)
-          .map((fieldTag, index) => fieldTag.entity.entityLabel)
-          .join(", ")
-      : "Nyhed";
-
-  return (
-    <Row>
-      <Col
-        className={styles.info}
-        xs={12}
-        md={{ span: 10, offset: 1 }}
-        lg={{ span: 6, offset: 3 }}
-      >
-        <Row className={styles.test}>
-          <Col xs={6} md={"auto"}>
-            <Text type="text3">
-              {timestampToShortDate(article.entityCreated)}
-            </Text>
-          </Col>
-          <Col xs={6} md={"auto"}>
-            <Text type="text3">{category}</Text>
-          </Col>
-          <Col xs={6} md={"auto"}>
-            <Text type="text3">{creatorName}</Text>
-          </Col>
-          <Col xs={6} md={"auto"}>
-            <Link
-              dataCy="article-print"
-              tag="span"
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== "undefined") {
-                  window.print();
-                }
-              }}
-            >
-              <Text type="text3">
-                {Translate({ ...context, label: "printButton" })}
-              </Text>
-            </Link>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
   );
 }
 

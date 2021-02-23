@@ -117,7 +117,7 @@ Container.propTypes = {
   bgColor: PropTypes.string,
   size: PropTypes.oneOfType([
     PropTypes.string,
-    PropTypes.int,
+    PropTypes.number,
     PropTypes.object,
   ]),
   disabled: PropTypes.bool,

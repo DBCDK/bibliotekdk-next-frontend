@@ -67,7 +67,9 @@ function Menu({ isVisible = false, onLang = null }) {
           </Title>
           <AnimationLine />
         </Link>
-        <Arrow className={styles.arrow} />
+        <span>
+          <Arrow className={styles.arrow} />
+        </span>
       </div>
 
       <div className={`${styles.wrap}`}>

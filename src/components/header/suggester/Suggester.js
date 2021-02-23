@@ -276,6 +276,14 @@ export function Suggester({
   // Default input props
   const inputProps = {
     value: intQuery,
+    onBlur: (event, { highlightedSuggestion }) => {
+      // Update value in header on e.g. tab key
+      if (highlightedSuggestion) {
+        const s = highlightedSuggestion;
+        const value = s.name || s.title || s.value;
+        onChange && onChange(value);
+      }
+    },
     onChange: (event, { newValue }, method) => {
       // For updating onChange when deleting last char in input
       newValue === "" && onChange && onChange("");
@@ -288,7 +296,7 @@ export function Suggester({
     <AutoSuggest
       theme={theme}
       focusInputOnSuggestionClick={false}
-      alwaysRenderSuggestions={isMobile}
+      alwaysRenderSuggestions={!!isMobile}
       // shouldRenderSuggestions={shouldRenderSuggestions}
       suggestions={suggestions}
       onSuggestionsClearRequested={() => {
