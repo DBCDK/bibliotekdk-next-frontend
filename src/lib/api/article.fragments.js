@@ -55,7 +55,10 @@ export function promotedArticles() {
   return {
     // delay: 1000, // for debugging
     query: `query {
-      nodeQuery (filter: {conditions: {field: "promote", value: "1", operator: EQUAL}}) {
+      nodeQuery (limit:20 filter: {conditions: [
+        {field: "type", value: ["article"]}, 
+        {field: "promote", value: "1"}
+      ] }) {
         entities {
           __typename
           ... on NodeArticle {
