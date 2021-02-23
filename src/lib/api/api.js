@@ -8,7 +8,9 @@ import storybookConfig from "@/config";
 import getConfig from "next/config";
 
 // TODO handle config better
-const config = getConfig() || storybookConfig;
+const nextJsConfig = getConfig();
+const config =
+  (nextJsConfig && nextJsConfig.publicRuntimeConfig) || storybookConfig;
 
 // The global instance of graphql client
 // used in the browser only
