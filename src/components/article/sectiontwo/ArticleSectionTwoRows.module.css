@@ -1,11 +1,26 @@
-.sectioncol{
-
-}
-
 .sectioncontainer{
-background-color: var(--jagged-ice);
+    background-color: var(--jagged-ice);
 }
 
 .sectionrow{
-
+    display: flex;
+    flex-direction: column;
 }
+
+@media (min-width: 768px) {
+    .sectionrow {
+        flex-direction: row;
+    }
+}
+
+.sectioncol_left{
+    flex: 5;
+}
+
+.sectioncol_right{
+    flex: 4;
+    align-self: flex-end;
+}
+
+
+
