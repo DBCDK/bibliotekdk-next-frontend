@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useMemo } from "react";
-import { get } from "lodash";
+import get from "lodash/get";
 
 import { sortArticles } from "./utils";
 

@@ -93,7 +93,7 @@ export function allArticles() {
   return {
     // delay: 1000, // for debugging
     query: `query {
-      nodeQuery (limit:20 filter: {conditions: [
+      nodeQuery (limit:100 filter: {conditions: [
         {field: "type", value: ["article"]},
         {field: "status", value: "1"}
       ] }) {
