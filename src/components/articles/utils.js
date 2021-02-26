@@ -1,12 +1,12 @@
 import { orderBy } from "lodash";
 
 /**
- * The Article page React component
+ * function to sort array of articles (desc)
  *
- * @param {obj} props
+ * @param {array} articles
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {array}
  */
 export function sortArticles(articles) {
   // latest articles first

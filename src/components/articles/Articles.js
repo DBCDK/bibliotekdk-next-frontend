@@ -33,7 +33,6 @@ export function Articles({ articles, skeleton }) {
   );
 }
 Articles.propTypes = {
-  title: PropTypes.string,
   articles: PropTypes.array,
   skeleton: PropTypes.bool,
 };
@@ -46,8 +45,3 @@ export default function Wrapper(props) {
 
   return <Articles {...props} articles={articles} skeleton={isLoading} />;
 }
-
-Wrapper.propTypes = {
-  title: PropTypes.string,
-  matchTag: PropTypes.string,
-};
