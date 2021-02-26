@@ -51,10 +51,7 @@ export default function Header({ articleId }) {
           __html: JSON.stringify(getJSONLD(article)),
         }}
       />
-      <link
-        rel="preconnect"
-        href="http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk"
-      ></link>
+      <link rel="preconnect" href="http://fisk"></link>
     </Head>
   );
 }

@@ -39,6 +39,8 @@ module.exports = {
     domains: [
       "forfatterweb.dk",
       "bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk",
+      "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
+      "172.17.36.204",
     ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },
@@ -58,5 +60,9 @@ module.exports = {
       !process.env.USE_FIXED_SESSION_ID
         ? true
         : false,
+    api: {
+      url: process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/graphql",
+      timeout: process.env.API_TIMEOUT_MS || 150,
+    },
   },
 };
