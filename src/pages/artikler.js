@@ -1,0 +1,40 @@
+/**
+ * @file
+ * This is the all-articles page
+ *
+ * Next.js page docs are found here
+ * https://nextjs.org/docs/basic-features/pages
+ *
+ * Note that dynamic routing (file based) is used on this page.
+ * https://nextjs.org/docs/routing/dynamic-routes
+ *
+ */
+
+import { fetchOnServer } from "@/lib/api/api";
+import { allArticles } from "@/lib/api/article.fragments";
+
+import Page from "@/components/articles/page";
+
+/**
+ * Renders the WorkPage component
+ */
+export default function ArticlesPage() {
+  return <Page />;
+}
+
+/**
+ * These queries are run on the server.
+ * I.e. the data fetched will be used for server side rendering
+ *
+ * Note that the queries must only take variables provided by
+ * the dynamic routing - or else requests will fail.
+ */
+const serverQueries = [allArticles];
+
+/**
+ * We export getServerSideProps to let Next.js
+ * fetch the data server side
+ *
+ * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+ */
+export const getServerSideProps = fetchOnServer(serverQueries);

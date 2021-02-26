@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sortArticles desc 1`] = `
+Array [
+  Object {
+    "entityCreated": "2021-02-25T14:40:40+0100",
+    "fieldImage": Object {
+      "alt": "some image alt",
+      "title": "some image title",
+      "url": "/img/bibdk-hero-scaled.jpeg",
+    },
+    "fieldRubrik": "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
+    "nid": 4,
+    "title": "Nyeste artikel",
+  },
+  Object {
+    "entityCreated": "2021-01-20T14:38:46+0100",
+    "fieldImage": Object {
+      "alt": "some image alt",
+      "title": "some image title",
+      "url": "/img/bibdk-hero-scaled.jpeg",
+    },
+    "fieldRubrik": "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
+    "nid": 3,
+    "title": "Ny artikel",
+  },
+  Object {
+    "entityCreated": "2021-01-13T13:47:27+0100",
+    "fieldImage": Object {
+      "alt": "some image alt",
+      "title": "some image title",
+      "url": "/img/bibdk-hero-scaled.jpeg",
+    },
+    "fieldRubrik": "Online bibliotekarhjælp. Få råd og hjælp til alt fra informationssøgning til reservationer.",
+    "nid": 2,
+    "title": "Gammel artikel",
+  },
+  Object {
+    "entityCreated": "2021-01-05T10:19:13+0100",
+    "fieldImage": Object {
+      "alt": "some image alt",
+      "title": "some image title",
+      "url": "/img/bibdk-hero-scaled.jpeg",
+    },
+    "fieldRubrik": "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
+    "nid": 1,
+    "title": "Ældste artikel",
+  },
+]
+`;

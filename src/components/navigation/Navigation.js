@@ -11,7 +11,7 @@ export const materials = [
 ];
 
 export const actions = [
-  { label: "scientificArticles", href: "/#!" },
+  { label: "scientificArticles", href: "/artikler" },
   { label: "askLibrarian", href: "/artikel/spørg-en-bibliotekar/7" },
   { label: "becomeLoaner", href: "/#!" },
   { label: "digitalOffers", href: "/artikel/digitale-bibliotekstilbud/5" },
