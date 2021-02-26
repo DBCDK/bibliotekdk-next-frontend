@@ -97,7 +97,7 @@ describe("Header", () => {
   it(`Can submit suggester form from header`, () => {
     // container get visible when user types.
     cy.get("[data-cy=suggester-input]").focus();
-    cy.get("[data-cy=suggester-input]").type("Anders Morgenthale");
+    cy.get("[data-cy=suggester-input]").type("peter tudv");
     cy.get("[data-cy=suggester-container]").should("be.visible");
 
     cy.get("[data-cy=suggester-input]").clear();

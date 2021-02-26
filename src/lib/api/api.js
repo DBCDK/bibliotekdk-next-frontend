@@ -4,7 +4,13 @@
  */
 import { useState, useEffect, createContext, useContext } from "react";
 import fetch from "isomorphic-unfetch";
-import config from "@/config";
+import storybookConfig from "@/config";
+import getConfig from "next/config";
+
+// TODO handle config better
+const nextJsConfig = getConfig();
+const config =
+  (nextJsConfig && nextJsConfig.publicRuntimeConfig) || storybookConfig;
 
 // The global instance of graphql client
 // used in the browser only
