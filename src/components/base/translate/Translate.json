@@ -184,6 +184,10 @@
       "printButton": {
         "da": "Print",
         "en": "Print"
+      },
+      "section-title": {
+        "da": "Alle artikler",
+        "en": "All articles"
       }
     },
     "footer": {

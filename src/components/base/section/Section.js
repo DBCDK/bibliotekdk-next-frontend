@@ -35,8 +35,13 @@ export default function Section({
 }) {
   const backgroundColor = bgColor;
   const backgroundClass = bgColor ? styles.background : "";
+
+  const noContentDividerClass = !contentDivider ? styles.noContentDivider : "";
+  const noTitleDividerClass = !titleDivider ? styles.noTitleDivider : "";
+
   title =
     typeof title === "string" ? <Title type="title4">{title}</Title> : title;
+
   return (
     <div
       className={`${backgroundClass}`}
@@ -49,6 +54,7 @@ export default function Section({
             xs={12}
             lg={2}
             data-cy={cyKey({ name: "title", prefix: "section" })}
+            className={noTitleDividerClass}
           >
             {titleDivider}
             {title}
@@ -57,6 +63,7 @@ export default function Section({
             xs={12}
             lg={{ offset: 1 }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
+            className={noContentDividerClass}
           >
             {contentDivider}
             {children}

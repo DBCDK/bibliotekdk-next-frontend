@@ -83,3 +83,38 @@ export function promotedArticles() {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * All published Articles
+ */
+export function allArticles() {
+  return {
+    // delay: 1000, // for debugging
+    query: `query {
+      nodeQuery (limit:20 filter: {conditions: [
+        {field: "type", value: ["article"]},
+        {field: "status", value: "1"}
+      ] }) {
+        entities {
+          __typename
+          ... on NodeArticle {
+            nid
+            title
+            fieldRubrik
+            entityCreated
+            fieldImage {
+              alt
+              title
+              url
+              width
+              height
+            }
+          }
+        }
+      }
+      monitor(name: "all_articles")
+    }`,
+    variables: {},
+    slowThreshold: 3000,
+  };
+}
