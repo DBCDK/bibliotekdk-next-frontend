@@ -57,7 +57,8 @@ export function promotedArticles() {
     query: `query {
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["article"]}, 
-        {field: "promote", value: "1"}
+        {field: "promote", value: "1"},
+        {field: "status", value: "1"}
       ] }) {
         entities {
           __typename
@@ -67,6 +68,7 @@ export function promotedArticles() {
             fieldRubrik
             fieldArticleSection
             fieldArticlePosition
+            entityPublished
             fieldImage {
               alt
               title
