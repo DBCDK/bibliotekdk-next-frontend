@@ -16,6 +16,7 @@ import React from "react";
 
 import { useRouter } from "next/router";
 import Footer from "@/components/footer";
+import Banner from "@/components/banner/Banner";
 
 const Index = () => {
   const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";

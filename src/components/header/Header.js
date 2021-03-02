@@ -24,18 +24,6 @@ import SearchIcon from "./icons/search";
 import Notifications from "@/components/base/notifications/Notifications";
 import { APIStateContext } from "@/lib/api/api";
 
-export function Banner() {
-  return (
-    <div className={styles.bannerWrap}>
-      <Container className={styles.banner} fluid>
-        <Text type="text3">
-          {Translate({ context: "header", label: "banner-text" })}
-        </Text>
-      </Container>
-    </div>
-  );
-}
-
 /**
  * The Component function
  *
