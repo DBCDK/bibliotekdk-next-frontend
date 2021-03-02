@@ -15,8 +15,6 @@ import Header from "@/components/header/Header";
 import React from "react";
 
 import { useRouter } from "next/router";
-import Footer from "@/components/footer";
-import Banner from "@/components/banner/Banner";
 
 const Index = () => {
   const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
@@ -43,7 +41,6 @@ const Index = () => {
         <ArticleSection title="Bibliotek.dk tilbyder" matchTag="section 1" />
         <ArticleSection title="Kan vi hjælpe?" matchTag="section 2" />
         <ArticleSectionTwoRows title="Nyheder" matchTag="section 3" />
-        <Footer />
       </div>
     </React.Fragment>
   );

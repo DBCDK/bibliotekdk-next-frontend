@@ -63,6 +63,7 @@ export default function MyApp({ Component, pageProps, router }) {
         <Notifications />
         <Component {...pageProps} />
         <CookieBox />
+        <Footer />
       </div>
     </APIStateContext.Provider>
   );

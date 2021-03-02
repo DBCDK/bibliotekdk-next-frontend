@@ -43,7 +43,6 @@ export default function ArticlePage() {
       <Header router={router} />
       <ArticleHeader articleId={articleId} />
       <Page articleId={articleId} />
-      <Footer />
     </React.Fragment>
   );
 }

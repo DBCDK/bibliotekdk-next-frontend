@@ -10,7 +10,6 @@ import BibliographicData from "../BibliographicData";
 import Series from "../series";
 import Header from "@/components/header/Header";
 import React from "react";
-import Footer from "@/components/footer";
 import { useRouter } from "next/router";
 
 /**
@@ -35,7 +34,6 @@ export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
       <Keywords workId={workId} type={type} />
       <Reviews workId={workId} />
       <BibliographicData workId={workId} />
-      <Footer />
     </main>
   );
 }

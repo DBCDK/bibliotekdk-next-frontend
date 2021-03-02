@@ -10,7 +10,6 @@ import {
 import { getClient } from "@/lib/api/api";
 import React, { useEffect } from "react";
 import Header from "@/components/header/Header";
-import Footer from "@/components/footer";
 
 /**
  * @file
@@ -93,7 +92,6 @@ function Find() {
             onChange={(page) => updateQueryParams({ page })}
           />
         )}
-        <Footer />
       </div>
     </React.Fragment>
   );
