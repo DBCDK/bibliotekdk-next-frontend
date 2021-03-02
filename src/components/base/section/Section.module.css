@@ -25,6 +25,11 @@
   display: none;
 }
 
+.noTitleDivider,
+.noContentDivider {
+  padding-top: var(--pt2);
+}
+
 @media (min-width: 992px) {
   .divider {
     width: 100%;
@@ -33,5 +38,10 @@
 
   .background .divider {
     display: none;
+  }
+
+  .noTitleDivider,
+  .noContentDivider {
+    padding-top: 0;
   }
 }
