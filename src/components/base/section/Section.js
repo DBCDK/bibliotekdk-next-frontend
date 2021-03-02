@@ -39,8 +39,10 @@ export default function Section({
   const noContentDividerClass = !contentDivider ? styles.noContentDivider : "";
   const noTitleDividerClass = !titleDivider ? styles.noTitleDivider : "";
 
-  title =
-    typeof title === "string" ? <Title type="title4">{title}</Title> : title;
+  if (title) {
+    title =
+      typeof title === "string" ? <Title type="title4">{title}</Title> : title;
+  }
 
   return (
     <div
@@ -50,18 +52,20 @@ export default function Section({
     >
       <Container fluid>
         <Row as="section" className={`${styles.section} ${className}`}>
+          {title && (
+            <Col
+              xs={12}
+              lg={2}
+              data-cy={cyKey({ name: "title", prefix: "section" })}
+              className={noTitleDividerClass}
+            >
+              {titleDivider}
+              {title}
+            </Col>
+          )}
           <Col
             xs={12}
-            lg={2}
-            data-cy={cyKey({ name: "title", prefix: "section" })}
-            className={noTitleDividerClass}
-          >
-            {titleDivider}
-            {title}
-          </Col>
-          <Col
-            xs={12}
-            lg={{ offset: 1 }}
+            lg={{ offset: title ? 1 : 0 }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={noContentDividerClass}
           >

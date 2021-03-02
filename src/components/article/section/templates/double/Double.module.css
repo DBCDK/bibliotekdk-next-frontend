@@ -1,0 +1,19 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    flex-direction: row;
+  }
+}
+
+.article:first-child {
+  flex: 5;
+}
+
+.article:last-child {
+  flex: 4;
+  align-self: flex-end;
+}

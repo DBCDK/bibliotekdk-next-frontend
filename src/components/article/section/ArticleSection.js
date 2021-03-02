@@ -8,6 +8,37 @@ import { Col, Row } from "react-bootstrap";
 import Section from "@/components/base/section";
 import ArticlePreview from "@/components/article/preview";
 
+// templates
+import Single from "./templates/single";
+import Double from "./templates/double";
+import Triple from "./templates/triple";
+
+/**
+ * Get context by template name
+ *
+ * @param {object} props
+ *
+ */
+function getContext(template) {
+  switch (template) {
+    case "single":
+      return {
+        template: Single,
+        numberOfArticles: 1,
+        background: "var(--pippin)",
+      };
+    case "double":
+      return {
+        template: Double,
+        numberOfArticles: 2,
+        background: "var(--jagged-ice)",
+      };
+    case "triple":
+      return { template: Triple, numberOfArticles: 3 };
+    default:
+      return { template: Single, numberOfArticles: 1 };
+  }
+}
 /**
  * Will remove articles that does not have fieldTag
  * matching matchTag
@@ -23,7 +54,7 @@ export function parseArticles(articles, matchTag, numberOfArticles) {
   articles = useMemo(() => {
     if (!articles) {
       // Create skeleton articles
-      return Array(3).fill({});
+      return Array(numberOfArticles).fill({});
     } else {
       return articles
         .filter(
@@ -41,6 +72,12 @@ export function parseArticles(articles, matchTag, numberOfArticles) {
 
   return articles;
 }
+
+/**
+ * get promoted articles
+ *
+ * @returns {array}
+ */
 
 export function getArticleData() {
   const { isLoading, data } = useData(promotedArticles());
@@ -64,17 +101,24 @@ export function getArticleData() {
  * @param {string} props.matchTag
  *
  */
-export function ArticleSection({ title, articles, skeleton, matchTag }) {
-  articles = parseArticles(articles, matchTag, 3);
+export function ArticleSection({
+  title,
+  articles,
+  skeleton,
+  matchTag,
+  template,
+}) {
+  const context = getContext(template);
+
+  const numberOfArticles = context.numberOfArticles;
+  const Template = context.template;
+  const backgroundColor = context.background || null;
+
+  articles = parseArticles(articles, matchTag, numberOfArticles);
+
   return (
-    <Section title={title}>
-      <Row>
-        {articles.map((article, index) => (
-          <Col xs={12} md={4} key={`${article.title}_${index}`}>
-            <ArticlePreview article={article} skeleton={skeleton} />
-          </Col>
-        ))}
-      </Row>
+    <Section title={title} bgColor={backgroundColor}>
+      <Template articles={articles} skeleton={skeleton} />
     </Section>
   );
 }
@@ -92,4 +136,5 @@ export default function Wrapper(props) {
 Wrapper.propTypes = {
   title: PropTypes.string,
   matchTag: PropTypes.string,
+  template: PropTypes.string,
 };
