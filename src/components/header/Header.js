@@ -24,7 +24,7 @@ import SearchIcon from "./icons/search";
 import Notifications from "@/components/base/notifications/Notifications";
 import { APIStateContext } from "@/lib/api/api";
 
-function Banner() {
+export function Banner() {
   return (
     <div className={styles.bannerWrap}>
       <Container className={styles.banner} fluid>
@@ -135,8 +135,6 @@ function Header({ className = "", router = null, story = null }) {
 
   return (
     <header className={`${styles.wrap} ${className}`}>
-      <Banner />
-      <Notifications />
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
