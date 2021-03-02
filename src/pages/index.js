@@ -12,7 +12,6 @@ import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchOnServer } from "@/lib/api/api";
 import Notifications from "@/components/base/notifications/Notifications";
 import Header from "@/components/header/Header";
-import React from "react";
 
 import { useRouter } from "next/router";
 
