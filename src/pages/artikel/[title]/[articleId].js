@@ -19,7 +19,10 @@ import { fetchOnServer } from "@/lib/api/api";
 import { article } from "@/lib/api/article.fragments";
 
 import Page from "@/components/article/page";
-import Header from "@/components/article/page/Header";
+import ArticleHeader from "@/components/article/page/Header";
+import Header from "@/components/header/Header";
+import React from "react";
+import Footer from "@/components/footer";
 
 /**
  * Renders the WorkPage component
@@ -37,7 +40,8 @@ export default function ArticlePage() {
 
   return (
     <React.Fragment>
-      <Header articleId={articleId} />
+      <Header router={router} />
+      <ArticleHeader articleId={articleId} />
       <Page articleId={articleId} />
     </React.Fragment>
   );

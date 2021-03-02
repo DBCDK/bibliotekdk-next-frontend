@@ -9,16 +9,6 @@
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Banner */
-.bannerWrap {
-  display: none;
-}
-
-.banner {
-  display: flex;
-  justify-content: flex-end;
-  padding: var(--pt1) var(--pt2);
-}
 
 /* Header */
 .headerWrap {
@@ -199,14 +189,6 @@
   }
 }
 
-@media (min-width: 768px) {
-  /* Banner */
-  .bannerWrap {
-    display: block;
-    background-color: var(--mine-shaft);
-    color: var(--white);
-  }
-}
 
 @media (min-width: 992px) {
   .header {

@@ -30,13 +30,14 @@ import {
 import fetchTranslations from "@/lib/api/backend";
 
 import App from "next/app";
-import Header from "@/components/header";
+import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/modal";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
+import Notifications from "@/components/base/notifications/Notifications";
 
 export default function MyApp({ Component, pageProps, router }) {
   // If this is rendered on server, allowCookies will be in pageProps
@@ -58,7 +59,8 @@ export default function MyApp({ Component, pageProps, router }) {
       <BodyScrollLock router={router} />
       <Modal router={router} />
       <div id="layout">
-        <Header router={router} />
+        <Banner />
+        <Notifications />
         <Component {...pageProps} />
         <CookieBox />
         <Footer />

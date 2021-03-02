@@ -11,11 +11,17 @@ import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchOnServer } from "@/lib/api/api";
 import Notifications from "@/components/base/notifications/Notifications";
+import Header from "@/components/header/Header";
+
+import { useRouter } from "next/router";
 
 const Index = () => {
   const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
   const pageDescription =
     "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+
+  const router = useRouter();
+
   return (
     <React.Fragment>
       <Head>
@@ -29,6 +35,7 @@ const Index = () => {
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <div>
+        <Header router={router} />
         <Hero />
         <ArticleSection title="Bibliotek.dk tilbyder" matchTag="section 1" />
         <ArticleSection title="Kan vi hjælpe?" matchTag="section 2" />
