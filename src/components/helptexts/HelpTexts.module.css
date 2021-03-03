@@ -1,0 +1,13 @@
+.helpmenu{
+    border: 1px solid green;
+}
+
+.helpmenugroup{
+    background-color: aqua;
+}
+
+.helplink{
+    border: 1px solid red;
+    display: block;
+}
+

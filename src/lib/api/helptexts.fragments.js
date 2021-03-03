@@ -34,3 +34,33 @@ export function publishedHelptexts() {
     slowThreshold: 3000,
   };
 }
+
+export function helpText(helpTxtId) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($helpTxtId: String!) {
+        helptext: nodeById(id: $helpTxtId){
+        ... on NodeHelpText {
+                  nid
+                  title
+                  body{
+                    value
+                    processed
+                  }
+                  fieldHelpTextGroup
+                  fieldImage {
+                    alt
+                    title
+                    url
+                    width
+                    height
+                  }
+                }
+             }
+          
+          monitor(name: "helptext_by_id")
+        }`,
+    variables: { helpTxtId },
+    slowThreshold: 3000,
+  };
+}

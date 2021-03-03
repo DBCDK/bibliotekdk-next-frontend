@@ -15,24 +15,16 @@
 
 import { useRouter } from "next/router";
 import { fetchOnServer } from "@/lib/api/api";
-import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
+import { helpText } from "@/lib/api/helptexts.fragments";
 
 import Page from "@/components/helptexts/Page";
-//import Header from "@/components/helptexts/page/Header";
 
 /**
- * Renders the WorkPage component
+ * Renders the help text component
  */
 export default function HelptextPage() {
   const router = useRouter();
   const { helptxtId } = router.query;
-
-  /**
-   * Updates the query params in the url
-   * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
-   *
-   * @param {obj} query
-   */
 
   return (
     <React.Fragment>
@@ -50,7 +42,7 @@ export default function HelptextPage() {
  * On this page, queries should only use:
  *  - articleId
  */
-const serverQueries = [publishedHelptexts];
+const serverQueries = [helpText];
 
 /**
  * We export getServerSideProps to let Next.js
