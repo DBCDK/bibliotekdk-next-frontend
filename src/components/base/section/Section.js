@@ -85,6 +85,7 @@ Section.propTypes = {
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
+    PropTypes.bool,
   ]),
   dataCy: PropTypes.string,
   children: PropTypes.oneOfType([

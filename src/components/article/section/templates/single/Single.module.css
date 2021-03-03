@@ -1,0 +1,25 @@
+.preview {
+  color: var(--mine-shaft);
+  text-decoration: none;
+  display: block;
+  margin-bottom: var(--pt5);
+}
+.preview:focus,
+.preview:hover {
+  color: var(--blue) !important;
+}
+.preview h3 {
+  word-break: break-word;
+}
+.title {
+  margin-bottom: var(--pt2);
+}
+.imagewrapper {
+  position: relative;
+  /* Maintain 16:9 aspect ratio by setting padding-bottom */
+  padding-bottom: 56%;
+  margin-bottom: var(--pt2);
+}
+.imageskeleton {
+  padding-bottom: var(--pt05);
+}
