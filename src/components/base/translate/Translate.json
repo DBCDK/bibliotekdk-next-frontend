@@ -189,9 +189,13 @@
         "da": "Alle artikler",
         "en": "All articles"
       },
-      "all-articles-btn": {
+      "alternative-url-btn": {
         "da": "Alle artikler",
         "en": "All articles"
+      },
+      "read-more-btn": {
+        "da": "Læs mere",
+        "en": "Read more"
       }
     },
     "footer": {

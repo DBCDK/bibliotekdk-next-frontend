@@ -1,89 +1,163 @@
-import { StoryTitle } from "@/storybook";
+import { StoryTitle, StoryLabel, StoryDescription } from "@/storybook";
 import { ArticleSection } from "@/components/article/section";
 
 export default {
   title: "Articles",
 };
 
-export function ArticlePreviewSection() {
-  const articles = [
-    {
-      nid: 1,
-      title: "Digitale bibliotekstilbud",
-      fieldArticleSection: "section 2",
-      fieldArticlePosition: "3",
-      fieldRubrik:
-        "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
-      fieldImage: {
-        alt: "some image alt",
-        title: "some image title",
-        url: "/img/bibdk-hero-scaled.jpeg",
-      },
-      fieldTags: [
-        { entity: { entityLabel: "section-help" } },
-        { entity: { entityLabel: "pos-3" } },
-      ],
+const articles = [
+  {
+    nid: 1,
+    title: "Digitale bibliotekstilbud",
+    fieldArticleSection: "section 2",
+    fieldArticlePosition: "3",
+    fieldRubrik:
+      "Læs mere om forfattere, musik og temaer. Se film, læs artikler, e- og lydbøger, og meget mere.",
+    fieldImage: {
+      alt: "some image alt",
+      title: "some image title",
+      url: "/img/bibdk-hero-scaled.jpeg",
     },
-    {
-      nid: 2,
-      title: "Spørg en bibliotekar",
-      fieldArticleSection: "section 2",
-      fieldArticlePosition: "1",
-      fieldRubrik:
-        "Online bibliotekarhjælp. Få råd og hjælp til alt fra informationssøgning til reservationer.",
-      fieldImage: {
-        alt: "some image alt",
-        title: "some image title",
-        url: "/img/bibdk-hero-scaled.jpeg",
-      },
-      fieldTags: [
-        { entity: { entityLabel: "section-help" } },
-        { entity: { entityLabel: "pos-1" } },
-      ],
+    entityUrl: {
+      path: "n/node/1",
     },
-    {
-      nid: 3,
-      title: "Bibliotek.dk",
-      fieldArticleSection: "section 2",
-      fieldArticlePosition: "2",
-      fieldRubrik:
-        "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
-      fieldImage: {
-        alt: "some image alt",
-        title: "some image title",
-        url: "/img/bibdk-hero-scaled.jpeg",
-      },
-      fieldTags: [
-        { entity: { entityLabel: "section-help" } },
-        { entity: { entityLabel: "pos-2" } },
-      ],
+    fieldTags: [
+      { entity: { entityLabel: "section-help" } },
+      { entity: { entityLabel: "pos-3" } },
+    ],
+  },
+  {
+    nid: 2,
+    title: "Spørg en bibliotekar",
+    fieldArticleSection: "section 2",
+    fieldArticlePosition: "1",
+    fieldRubrik:
+      "Online bibliotekarhjælp. Få råd og hjælp til alt fra informationssøgning til reservationer.",
+    fieldImage: {
+      alt: "some image alt",
+      title: "some image title",
+      url: "/img/bibdk-hero-scaled.jpeg",
     },
-    {
-      title: "Bibliotek.dk",
-      fieldRubrik:
-        "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
-      fieldImage: {
-        alt: "some image alt",
-        title: "some image title",
-        url: "/img/bibdk-hero-scaled.jpeg",
-      },
-      fieldArticleSection: "section other",
-      fieldArticlePosition: "1",
-      fieldTags: [
-        { entity: { entityLabel: "section-other" } },
-        { entity: { entityLabel: "pos-1" } },
-      ],
+    entityUrl: {
+      path: "n/node/2",
     },
-    null,
-  ];
+    fieldTags: [
+      { entity: { entityLabel: "section-help" } },
+      { entity: { entityLabel: "pos-1" } },
+    ],
+  },
+  {
+    nid: 3,
+    title: "Bibliotek.dk",
+    fieldArticleSection: "section 2",
+    fieldArticlePosition: "2",
+    fieldRubrik:
+      "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
+    fieldImage: {
+      alt: "some image alt",
+      title: "some image title",
+      url: "/img/bibdk-hero-scaled.jpeg",
+    },
+    entityUrl: {
+      path: "n/node/3",
+    },
+    fieldTags: [
+      { entity: { entityLabel: "section-help" } },
+      { entity: { entityLabel: "pos-2" } },
+    ],
+  },
+  {
+    title: "Bibliotek.dk",
+    fieldRubrik:
+      "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
+    fieldImage: {
+      alt: "some image alt",
+      title: "some image title",
+      url: "/img/bibdk-hero-scaled.jpeg",
+    },
+    fieldArticleSection: "section 2",
+    fieldArticlePosition: "1",
+    entityUrl: {
+      path: "n/node/4",
+    },
+    fieldTags: [
+      { entity: { entityLabel: "section-other" } },
+      { entity: { entityLabel: "pos-1" } },
+    ],
+  },
+  {
+    title: "Alle artikler",
+    fieldRubrik: "Vejledninger og information",
+    fieldImage: {
+      alt: "some image alt",
+      title: "some image title",
+      url: "/img/bibdk-hero-scaled.jpeg",
+    },
+    entityUrl: {
+      path: "/artikler",
+    },
+    fieldArticleSection: "section 3",
+    fieldArticlePosition: "1",
+    fieldTags: [
+      { entity: { entityLabel: "section-other" } },
+      { entity: { entityLabel: "pos-1" } },
+    ],
+  },
+  null,
+];
+
+export function SingleSection() {
   return (
     <div>
-      <StoryTitle>Article Preview Section</StoryTitle>
+      <StoryTitle>1 article template</StoryTitle>
+      <StoryDescription></StoryDescription>
+      <ArticleSection
+        title={false}
+        articles={articles}
+        matchTag="section 2"
+        template="single"
+      />
+    </div>
+  );
+}
 
+export function SingleSectionAlternativeUrl() {
+  return (
+    <div>
+      <StoryTitle>1 article template</StoryTitle>
+      <ArticleSection
+        title={false}
+        articles={articles}
+        matchTag="section 3"
+        template="single"
+      />
+    </div>
+  );
+}
+
+export function DoubleSection() {
+  return (
+    <div>
+      <StoryTitle>2 articles template</StoryTitle>
       <ArticleSection
         title="Bibliotek.dk tilbyder"
         articles={articles}
         matchTag="section 2"
+        template="double"
+      />
+    </div>
+  );
+}
+
+export function TripleSection() {
+  return (
+    <div>
+      <StoryTitle>3 articles template</StoryTitle>
+      <ArticleSection
+        title="Bibliotek.dk tilbyder"
+        articles={articles}
+        matchTag="section 2"
+        template="triple"
       />
     </div>
   );
@@ -93,7 +167,23 @@ export function Loading() {
   return (
     <div>
       <StoryTitle>Article Preview Section - loading</StoryTitle>
-      <ArticleSection title="Bibliotek.dk tilbyder" skeleton={true} />
+
+      <StoryLabel>Loading single section</StoryLabel>
+      <ArticleSection title={false} skeleton={true} template="single" />
+
+      <StoryLabel>Loading double section</StoryLabel>
+      <ArticleSection
+        title="Bibliotek.dk tilbyder"
+        skeleton={true}
+        template="double"
+      />
+
+      <StoryLabel>Loading triple section</StoryLabel>
+      <ArticleSection
+        title="Bibliotek.dk tilbyder"
+        skeleton={true}
+        template="triple"
+      />
     </div>
   );
 }

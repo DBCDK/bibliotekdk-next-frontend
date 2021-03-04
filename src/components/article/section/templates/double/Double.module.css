@@ -1,11 +1,13 @@
 .wrap {
   display: flex;
   flex-direction: column;
+  padding: 0;
 }
 
 @media (min-width: 768px) {
   .wrap {
     flex-direction: row;
+    padding: var(--pt5) 0;
   }
 }
 
@@ -16,4 +18,19 @@
 .article:last-child {
   flex: 4;
   align-self: flex-end;
+}
+
+/* Custom color background */
+
+.skeleton div div:last-child {
+  background-color: var(--ziggurat);
+}
+
+.skeleton div div:last-child::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--jagged-ice) 50%,
+    transparent 100%
+  );
 }

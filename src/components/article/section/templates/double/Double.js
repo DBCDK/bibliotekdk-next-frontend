@@ -23,10 +23,15 @@ export default function Double({ articles, skeleton }) {
     return "Less than 2 articles found";
   }
 
+  const skeletonClass = skeleton ? styles.skeleton : "";
+
   return (
     <Row className={styles.wrap}>
       {articles.map((article, index) => (
-        <Col key={`${article.title}_${index}`} className={styles.article}>
+        <Col
+          key={`${article.title}_${index}`}
+          className={`${styles.article} ${skeletonClass}`}
+        >
           <ArticlePreview
             article={article}
             skeleton={skeleton}

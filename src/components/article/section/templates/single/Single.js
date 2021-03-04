@@ -41,6 +41,8 @@ export default function Single({ articles, skeleton }) {
   const entityUrl = get(article, "entityUrl.path", false);
   const hasAlternativeUrl = entityUrl && entityUrl !== `/node/${article.nid}`;
 
+  const skeletonClass = skeleton ? styles.skeleton : "";
+
   let pathname = "/artikel/[title]/[articleId]";
   // Update pathname if alternative url is found
   if (hasAlternativeUrl) {
@@ -53,12 +55,23 @@ export default function Single({ articles, skeleton }) {
     query = { title: encodeString(article.title), articleId: article.nid };
   }
 
+  // Action button label
+  const btnLabel = hasAlternativeUrl ? "alternative-url-btn" : "read-more-btn";
+
+  console.log("btnLabel", btnLabel);
+
   return (
     <Row className={styles.wrap}>
-      <Col xs={12} lg={{ span: 10, offset: 1 }} className={styles.article}>
-        <Row>
-          <Col xs={12} lg={5}>
-            <Text type="text2" lines={3} clamp={true} skeleton={skeleton}>
+      <Col xs={12} lg={{ span: 10, offset: 1 }}>
+        <Row className={`${styles.content} ${skeletonClass}`}>
+          <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
+            <Text
+              type="text2"
+              className={styles.text}
+              lines={1}
+              clamp={true}
+              skeleton={skeleton}
+            >
               {article.fieldRubrik}
             </Text>
             <Title
@@ -71,12 +84,12 @@ export default function Single({ articles, skeleton }) {
               {article.title}
             </Title>
             <Link a={false} href={{ pathname, query }}>
-              <Button type="secondary" size="medium">
-                {Translate({ ...context, label: "all-articles-btn" })}
+              <Button type="secondary" size="medium" skeleton={skeleton}>
+                {Translate({ ...context, label: btnLabel })}
               </Button>
             </Link>
           </Col>
-          <Col xs={12} lg={7}>
+          <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
             <div className={styles.imagewrapper}>
               {image && (
                 <Image

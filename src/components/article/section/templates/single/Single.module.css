@@ -1,19 +1,23 @@
-.preview {
-  color: var(--mine-shaft);
-  text-decoration: none;
-  display: block;
-  margin-bottom: var(--pt5);
+.wrap {
+  padding: 0;
 }
-.preview:focus,
-.preview:hover {
-  color: var(--blue) !important;
+
+.content {
+  align-items: center;
 }
-.preview h3 {
-  word-break: break-word;
+
+.content > div:first-child {
+  padding-bottom: var(--pt2);
 }
+
 .title {
-  margin-bottom: var(--pt2);
+  margin-bottom: var(--pt3);
 }
+
+.text {
+  margin-bottom: var(--pt1);
+}
+
 .imagewrapper {
   position: relative;
   /* Maintain 16:9 aspect ratio by setting padding-bottom */
@@ -22,4 +26,29 @@
 }
 .imageskeleton {
   padding-bottom: var(--pt05);
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding: var(--pt5) 0;
+  }
+
+  .content > div:first-child {
+    transform: translate(0, -30%);
+  }
+}
+
+/* Custom color background */
+
+.skeleton div div:last-child {
+  background-color: var(--bone);
+}
+
+.skeleton div div:last-child::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--pippin) 50%,
+    transparent 100%
+  );
 }
