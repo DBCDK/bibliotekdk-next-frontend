@@ -58,8 +58,6 @@ export default function Single({ articles, skeleton }) {
   // Action button label
   const btnLabel = hasAlternativeUrl ? "alternative-url-btn" : "read-more-btn";
 
-  console.log("btnLabel", btnLabel);
-
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>

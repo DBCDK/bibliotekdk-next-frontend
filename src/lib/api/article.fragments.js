@@ -107,6 +107,9 @@ export function allArticles() {
             title
             fieldRubrik
             entityCreated
+            entityUrl {
+              path
+            }
             fieldImage {
               alt
               title
