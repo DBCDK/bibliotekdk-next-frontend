@@ -1,4 +1,4 @@
-describe("Article", () => {
+describe("ArticlePage", () => {
   before(() => {
     cy.visit("/iframe.html?id=article-page--article-page&viewMode=story");
   });

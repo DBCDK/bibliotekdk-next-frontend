@@ -1,13 +1,41 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-import sortBy from "lodash/sortBy";
 
-import { article, promotedArticles } from "@/lib/api/article.fragments";
+import { promotedArticles } from "@/lib/api/article.fragments";
 import { useData } from "@/lib/api/api";
-import { Col, Row } from "react-bootstrap";
 import Section from "@/components/base/section";
-import ArticlePreview from "@/components/article/preview";
 
+// templates
+import Single from "./templates/single";
+import Double from "./templates/double";
+import Triple from "./templates/triple";
+
+/**
+ * Get context by template name (template settings)
+ *
+ * @param {string} template template name
+ *
+ */
+function getContext(template) {
+  switch (template) {
+    case "single":
+      return {
+        template: Single,
+        numberOfArticles: 1,
+        background: "var(--pippin)",
+      };
+    case "double":
+      return {
+        template: Double,
+        numberOfArticles: 2,
+        background: "var(--jagged-ice)",
+      };
+    case "triple":
+      return { template: Triple, numberOfArticles: 3 };
+    default:
+      return { template: Single, numberOfArticles: 1 };
+  }
+}
 /**
  * Will remove articles that does not have fieldTag
  * matching matchTag
@@ -15,15 +43,16 @@ import ArticlePreview from "@/components/article/preview";
  * Sort remaining articles by the special 'pos' tag
  * @param {array} articles
  * @param {string} matchTag
+ *  @param {int} numberOfArticles
  *
  * @returns {array}
  */
-export function parseArticles(articles, matchTag, numberOfArticles) {
+function parseArticles(articles, matchTag, numberOfArticles) {
   // We are filtering and sorting, hence we make us of useMemo
   articles = useMemo(() => {
     if (!articles) {
       // Create skeleton articles
-      return Array(3).fill({});
+      return Array(numberOfArticles).fill({});
     } else {
       return articles
         .filter(
@@ -42,7 +71,13 @@ export function parseArticles(articles, matchTag, numberOfArticles) {
   return articles;
 }
 
-export function getArticleData() {
+/**
+ * get promoted articles
+ *
+ * @returns {array}
+ */
+
+function getArticleData() {
   const { isLoading, data } = useData(promotedArticles());
   const articles =
     data &&
@@ -64,32 +99,54 @@ export function getArticleData() {
  * @param {string} props.matchTag
  *
  */
-export function ArticleSection({ title, articles, skeleton, matchTag }) {
-  articles = parseArticles(articles, matchTag, 3);
+export function ArticleSection({
+  title,
+  articles,
+  skeleton,
+  matchTag,
+  template,
+}) {
+  const context = getContext(template);
+
+  const numberOfArticles = context.numberOfArticles;
+  const Template = context.template;
+  const backgroundColor = context.background || null;
+
+  articles = parseArticles(articles, matchTag, numberOfArticles);
+
+  // Check if amount of articles matches the template requirement
+  if (articles.length !== numberOfArticles) {
+    console.log(
+      `OBS! Articles tagged with "${matchTag}", does not match the minimum level for the current template. ${numberOfArticles} is required ${articles.length} found.`
+    );
+    // prevent mount
+    return null;
+  }
+
   return (
-    <Section title={title}>
-      <Row>
-        {articles.map((article, index) => (
-          <Col xs={12} md={4} key={`${article.title}_${index}`}>
-            <ArticlePreview article={article} skeleton={skeleton} />
-          </Col>
-        ))}
-      </Row>
+    <Section title={title} bgColor={backgroundColor}>
+      <Template articles={articles} skeleton={skeleton} />
     </Section>
   );
 }
+
 ArticleSection.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   articles: PropTypes.array,
   skeleton: PropTypes.bool,
   matchTag: PropTypes.string,
+  template: PropTypes.string,
 };
 
 export default function Wrapper(props) {
   const { articles, isLoading, data } = getArticleData();
   return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
 }
+
 Wrapper.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  articles: PropTypes.array,
+  skeleton: PropTypes.bool,
   matchTag: PropTypes.string,
+  template: PropTypes.string,
 };
