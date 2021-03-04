@@ -8,7 +8,8 @@ import {
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
 import { getClient } from "@/lib/api/api";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import Header from "@/components/header/Header";
 
 /**
  * @file
@@ -63,6 +64,7 @@ function Find() {
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
+      <Header router={router} />
       <div style={{ marginTop: 50 }}>
         <QuickFilters
           viewSelected={view}
