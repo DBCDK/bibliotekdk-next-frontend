@@ -20,7 +20,7 @@
   align-self: flex-end;
 }
 
-/* Custom color background */
+/* Custom skeleton color background */
 
 .skeleton div div:last-child {
   background-color: var(--ziggurat);

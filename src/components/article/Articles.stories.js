@@ -19,7 +19,7 @@ const articles = [
       url: "/img/bibdk-hero-scaled.jpeg",
     },
     entityUrl: {
-      path: "n/node/1",
+      path: "/node/1",
     },
     fieldTags: [
       { entity: { entityLabel: "section-help" } },
@@ -39,7 +39,7 @@ const articles = [
       url: "/img/bibdk-hero-scaled.jpeg",
     },
     entityUrl: {
-      path: "n/node/2",
+      path: "/node/2",
     },
     fieldTags: [
       { entity: { entityLabel: "section-help" } },
@@ -59,7 +59,7 @@ const articles = [
       url: "/img/bibdk-hero-scaled.jpeg",
     },
     entityUrl: {
-      path: "n/node/3",
+      path: "/node/3",
     },
     fieldTags: [
       { entity: { entityLabel: "section-help" } },
@@ -67,6 +67,7 @@ const articles = [
     ],
   },
   {
+    nid: 4,
     title: "Bibliotek.dk",
     fieldRubrik:
       "På bibliotek.dk søger du i alle landets fysiske og digitale biblioteker. Det du ønsker kan du nemt få leveret til dit lokale bibliotek eller tilgå direkte online.",
@@ -75,10 +76,10 @@ const articles = [
       title: "some image title",
       url: "/img/bibdk-hero-scaled.jpeg",
     },
-    fieldArticleSection: "section 2",
+    fieldArticleSection: "section 4",
     fieldArticlePosition: "1",
     entityUrl: {
-      path: "n/node/4",
+      path: "/node/4",
     },
     fieldTags: [
       { entity: { entityLabel: "section-other" } },
@@ -86,6 +87,7 @@ const articles = [
     ],
   },
   {
+    nid: 5,
     title: "Alle artikler",
     fieldRubrik: "Vejledninger og information",
     fieldImage: {
@@ -110,11 +112,11 @@ export function SingleSection() {
   return (
     <div>
       <StoryTitle>1 article template</StoryTitle>
-      <StoryDescription></StoryDescription>
+      <StoryDescription>Action button goes to current article</StoryDescription>
       <ArticleSection
         title={false}
         articles={articles}
-        matchTag="section 2"
+        matchTag="section 4"
         template="single"
       />
     </div>
@@ -125,6 +127,10 @@ export function SingleSectionAlternativeUrl() {
   return (
     <div>
       <StoryTitle>1 article template</StoryTitle>
+      <StoryDescription>
+        Action button goes to an alternative url (page), defined by an editor in
+        the CMS
+      </StoryDescription>
       <ArticleSection
         title={false}
         articles={articles}
