@@ -4,6 +4,10 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import styles from "./HelpTexts.module.css";
 import Link from "@/components/base/link";
+import classNames from "classnames/bind";
+import React, { useState } from "react";
+import Icon from "@/components/base/icon";
+import { Row } from "react-bootstrap";
 
 export function getPublishedHelpTexts() {
   const { isLoading, data } = useData(publishedHelptexts());
@@ -29,6 +33,8 @@ export function HelpTextMenu({ helpTextId }) {
   // @TODO use helptxtId to activate a menu
   // get all helptexts
   const { isLoading, data } = getPublishedHelpTexts();
+
+  // @TODO datacheck
   if (isLoading) {
     return null;
   } else {
@@ -36,16 +42,22 @@ export function HelpTextMenu({ helpTextId }) {
     return Object.keys(menus).map((menu, index) => (
       <div className={styles.helpmenu} key={`menu-${index}`}>
         <Text
+          tabIndex="0"
           type="text1"
           lines={30}
           key={index}
-          className={styles.helpmenugroup}
+          className={classNames(menu.open ? styles.active : styles.helplink)}
         >
+          <span>
+            <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+          </span>
           <span>{menu}</span>
         </Text>
         <HelptTextMenuLinks
+          parent={menu}
           menuItems={menus}
           item={menu}
+          helpTextId={helpTextId}
           key={`links-${index}`}
         />
       </div>
@@ -53,19 +65,24 @@ export function HelpTextMenu({ helpTextId }) {
   }
 }
 
-function HelptTextMenuLinks({ menuItems, item }) {
+function HelptTextMenuLinks({ parent, menuItems, item, helpTextId }) {
   // @TODO style the link
   return menuItems[item].map((item, index) => (
-    <Link
-      children={
-        <Text type="text3" lines={2}>
-          {item.title}
-        </Text>
-      }
-      className={styles.helplink}
-      href={{ pathname: `/helptexts/${item.id}`, query: {} }}
-      key={`menulink-${index}`}
-    />
+    <div>
+      <span>
+        <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+      </span>
+      <Link
+        children={
+          <Text type="text3" lines={2}>
+            {item.title}
+          </Text>
+        }
+        href={{ pathname: `/helptexts/${item.id}`, query: {} }}
+        key={`menulink-${index}`}
+        className={styles.helplink}
+      />
+    </div>
   ));
 }
 

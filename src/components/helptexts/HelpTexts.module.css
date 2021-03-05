@@ -8,6 +8,21 @@
 
 .helplink{
     border: 1px solid red;
-    display: block;
+}
+
+.helplink.active{
+    font-weight: bolder;
+    background-color: red;
+}
+
+.none{
+    background-color: transparent;
+    border: none;
+}
+
+
+
+.helpheader{
+    height: 175px;
 }
 
