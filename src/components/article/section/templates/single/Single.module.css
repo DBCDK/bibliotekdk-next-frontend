@@ -4,6 +4,12 @@
 
 .content {
   align-items: center;
+  cursor: pointer;
+}
+
+.content:hover h3,
+.content:hover p {
+  color: var(--blue);
 }
 
 .content > div:first-child {
