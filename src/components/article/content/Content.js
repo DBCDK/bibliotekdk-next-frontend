@@ -33,7 +33,7 @@ function ArticleHeader({ article }) {
   let category =
     article && article.fieldTags
       ? article.fieldTags
-          .slice(0, 2)
+          .slice(0, 1)
           .map((fieldTag, index) => fieldTag.entity.entityLabel)
           .join(", ")
       : "Nyhed";
