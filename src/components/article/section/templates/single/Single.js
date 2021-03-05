@@ -61,46 +61,48 @@ export default function Single({ articles, skeleton }) {
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Row className={`${styles.content} ${skeletonClass}`}>
-          <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
-            <Text
-              type="text2"
-              className={styles.text}
-              lines={1}
-              clamp={true}
-              skeleton={skeleton}
-            >
-              {article.fieldRubrik}
-            </Text>
-            <Title
-              className={styles.title}
-              tag="h3"
-              type="title3"
-              lines={1}
-              skeleton={skeleton}
-            >
-              {article.title}
-            </Title>
-            <Link a={false} href={{ pathname, query }}>
-              <Button type="secondary" size="medium" skeleton={skeleton}>
-                {Translate({ ...context, label: btnLabel })}
-              </Button>
-            </Link>
-          </Col>
-          <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
-            <div className={styles.imagewrapper}>
-              {image && (
-                <Image
-                  src={image.url}
-                  alt={image.alt}
-                  layout="fill"
-                  objectFit="cover"
-                />
-              )}
-              {skeleton && <Skeleton className={styles.imageskeleton} />}
-            </div>
-          </Col>
-        </Row>
+        <Link a={false} href={{ pathname, query }}>
+          <Row className={`${styles.content} ${skeletonClass}`}>
+            <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
+              <Text
+                type="text2"
+                className={styles.text}
+                lines={1}
+                clamp={true}
+                skeleton={skeleton}
+              >
+                {article.fieldRubrik}
+              </Text>
+              <Title
+                className={styles.title}
+                tag="h3"
+                type="title3"
+                lines={1}
+                skeleton={skeleton}
+              >
+                {article.title}
+              </Title>
+              <Link a={false} href={{ pathname, query }}>
+                <Button type="secondary" size="medium" skeleton={skeleton}>
+                  {Translate({ ...context, label: btnLabel })}
+                </Button>
+              </Link>
+            </Col>
+            <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
+              <div className={styles.imagewrapper}>
+                {image && (
+                  <Image
+                    src={image.url}
+                    alt={image.alt}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                )}
+                {skeleton && <Skeleton className={styles.imageskeleton} />}
+              </div>
+            </Col>
+          </Row>
+        </Link>
       </Col>
     </Row>
   );
