@@ -14,10 +14,15 @@ import Translate from "@/components/base/translate";
  *
  * @returns {component}
  */
-export default function FakeSearchInput({ className }) {
+export default function FakeSearchInput({ query = "", className }) {
+  const hasQuery = query && query !== "";
+  const hasQueryClass = hasQuery ? styles.hasQuery : "";
+
+  console.log("query", query);
+
   return (
     <div
-      className={`${styles.container} ${className}`}
+      className={`${styles.container} ${className} ${hasQueryClass}`}
       onClick={openMobileSuggester}
       onKeyDown={(event) => {
         if (event.key === "Enter") {
@@ -28,16 +33,20 @@ export default function FakeSearchInput({ className }) {
     >
       <div className={styles.fakeinput}>
         <Text type="text2" className={styles.placeholder}>
-          {Translate({
-            context: "suggester",
-            label: "placeholder",
-          })}
+          {hasQuery
+            ? query
+            : Translate({
+                context: "suggester",
+                label: "placeholder",
+              })}
         </Text>
         <Text type="text2" className={styles.placeholderxs}>
-          {Translate({
-            context: "suggester",
-            label: "placeholderMobile",
-          })}
+          {hasQuery
+            ? query
+            : Translate({
+                context: "suggester",
+                label: "placeholderMobile",
+              })}
         </Text>
       </div>
       <div className={styles.fakebutton}>
