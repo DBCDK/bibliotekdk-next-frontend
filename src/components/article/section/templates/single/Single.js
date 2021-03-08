@@ -18,6 +18,7 @@ import { encodeString } from "@/lib/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
+import AnimationLine from "@/components/base/animation/line";
 
 /**
  * A section displaying three articles
@@ -64,24 +65,19 @@ export default function Single({ articles, skeleton }) {
         <Link a={false} href={{ pathname, query }}>
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
-              <Text
-                type="text2"
-                className={styles.text}
-                lines={1}
-                clamp={true}
-                skeleton={skeleton}
-              >
-                {article.fieldRubrik}
-              </Text>
-              <Title
-                className={styles.title}
-                tag="h3"
-                type="title3"
-                lines={1}
-                skeleton={skeleton}
-              >
-                {article.title}
-              </Title>
+              <span className={styles.text}>
+                <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
+                  {article.fieldRubrik}
+                </Text>
+              </span>
+              <div />
+              <span className={styles.title}>
+                <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
+                  {article.title}
+                </Title>
+                <AnimationLine />
+              </span>
+              <div />
               <Link a={false} href={{ pathname, query }}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
                   {Translate({ ...context, label: btnLabel })}
