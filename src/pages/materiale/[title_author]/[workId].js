@@ -47,7 +47,7 @@ export default function WorkPage() {
   }
 
   function handleOnOnlineAccess(url) {
-    window.open(url, "_ blank");
+    window.open(url, "_blank");
   }
 
   return (
