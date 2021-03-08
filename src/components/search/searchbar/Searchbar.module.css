@@ -1,7 +1,20 @@
 .filter {
   display: flex;
   justify-content: flex-end;
+  padding-top: var(--pt2);
 }
 
 .button {
+  display: flex;
+  align-items: center;
+}
+
+.button p {
+  margin: 0 var(--pt1) 0 0;
+}
+
+@media (min-width: 992px) {
+  .wrap {
+    display: none;
+  }
 }

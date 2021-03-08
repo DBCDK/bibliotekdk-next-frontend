@@ -1,7 +1,7 @@
 function Filter() {
   return (
     <div>
-      <p>#noFilter :)</p>
+      <p>...</p>
     </div>
   );
 }
