@@ -34,6 +34,7 @@ function Button({
       data-cy={key}
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
+      disabled={disabled}
     >
       {children}
     </button>

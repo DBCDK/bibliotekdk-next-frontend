@@ -62,4 +62,30 @@ describe("Overview", () => {
     cy.get(`[data-cy=${tag}]`).children("i").should("be.visible");
     cy.get(`[data-cy=${tag2}]`).children("i").should("not.be.visible");
   });
+
+  it(`Can access external ebook`, () => {
+    cy.get(`[data-cy=tag-ebog]`).click();
+    cy.get("[data-cy=button-cypress]").contains("Gå til e-bog");
+    cy.get("[data-cy=button-cypress]").click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("https://ebookurl");
+    });
+  });
+
+  it(`Can access external audio book`, () => {
+    cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
+    cy.get("[data-cy=button-cypress]").contains("Gå til lydbog");
+    cy.get("[data-cy=button-cypress]").click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("https://audiobookurl");
+    });
+  });
+
+  it(`Shows button skeleton when it has not been determined if material is physical or online`, () => {
+    // Punkskrift material has onlineAccess undefined.
+    // I.e. work details have not been fetched yet.
+    // Othwerwise it is null or an array
+    cy.get(`[data-cy=tag-punktskrift]`).click();
+    cy.get("[data-cy=button-cypress]").should("be.disabled");
+  });
 });
