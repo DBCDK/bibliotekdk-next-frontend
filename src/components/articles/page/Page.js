@@ -1,3 +1,7 @@
+import { useRouter } from "next/router";
+
+import Header from "@/components/header/Header";
+
 import Section from "@/components/base/section";
 import Articles from "@/components/articles";
 
@@ -11,15 +15,20 @@ import styles from "./Page.module.css";
  * @returns {component}
  */
 export default function Page() {
+  const router = useRouter();
+
   return (
-    <main>
-      <Section
-        className={styles.articles}
-        title={Translate({ context: "articles", label: "section-title" })}
-        contentDivider={false}
-      >
-        <Articles />
-      </Section>
-    </main>
+    <>
+      <Header router={router} />
+      <main>
+        <Section
+          className={styles.articles}
+          title={Translate({ context: "articles", label: "section-title" })}
+          contentDivider={false}
+        >
+          <Articles />
+        </Section>
+      </main>
+    </>
   );
 }
