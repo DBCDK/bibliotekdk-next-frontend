@@ -46,12 +46,17 @@ export default function WorkPage() {
     );
   }
 
+  function handleOnOnlineAccess(url) {
+    window.open(url, "_ blank");
+  }
+
   return (
     <React.Fragment>
       <Header workId={workId} />
       <Page
         workId={workId}
         onTypeChange={handleOnTypeChange}
+        onOnlineAccess={handleOnOnlineAccess}
         type={type}
         query={{ type }}
       />

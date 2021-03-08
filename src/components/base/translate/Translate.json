@@ -330,6 +330,18 @@
       "addToCart-line2": {
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
+      },
+      "onlineAccessUnknown": {
+        "da": "Gå til produktet",
+        "en": "Get the material"
+      },
+      "onlineAccessEbook": {
+        "da": "Gå til e-bog",
+        "en": "Get the ebook"
+      },
+      "onlineAccessAudiobook": {
+        "da": "Gå til lydbog",
+        "en": "Get the audio book"
       }
     },
     "details": {
