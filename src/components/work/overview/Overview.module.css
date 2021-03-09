@@ -58,6 +58,15 @@
   padding-top: var(--pt2);
 }
 
+.externalLink i {
+  height: 20px !important;
+  width: 20px !important;
+  margin-right: var(--pt1);
+}
+.externalLink img {
+  margin-bottom: -2px;
+}
+
 /* 
 * Skeleton
 *

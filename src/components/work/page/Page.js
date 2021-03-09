@@ -20,12 +20,22 @@ import { useRouter } from "next/router";
  *
  * @returns {component}
  */
-export default function WorkPage({ workId, onTypeChange, type = "Bog" }) {
+export default function WorkPage({
+  workId,
+  onTypeChange,
+  onOnlineAccess,
+  type = "Bog",
+}) {
   const router = useRouter();
   return (
     <main>
       <Header router={router} />
-      <Overview workId={workId} onTypeChange={onTypeChange} type={type} />
+      <Overview
+        workId={workId}
+        onTypeChange={onTypeChange}
+        onOnlineAccess={onOnlineAccess}
+        type={type}
+      />
       <Details workId={workId} type={type} />
       <Description workId={workId} type={type} />
       <Content workId={workId} type={type} />
@@ -42,4 +52,5 @@ WorkPage.propTypes = {
   workId: PropTypes.string,
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
+  onOnlineAccess: PropTypes.func,
 };

@@ -31,6 +31,7 @@ export function Overview({
   materialTypes = [],
   type,
   onTypeChange = () => {},
+  onOnlineAccess = () => {},
   className = "",
   skeleton = false,
 }) {
@@ -56,6 +57,11 @@ export function Overview({
       onTypeChange({ type: material.materialType });
     }
   }
+
+  // The loan button is skeleton until we know if selected
+  // material is physical or online
+  const buttonSkeleton =
+    skeleton || typeof selectedMaterial.onlineAccess === "undefined";
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -128,9 +134,30 @@ export function Overview({
                 })}
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <Button skeleton={skeleton}>
-                  {Translate({ ...context, label: "addToCart" })}
-                </Button>
+                {selectedMaterial.onlineAccess ? (
+                  <Button
+                    className={styles.externalLink}
+                    skeleton={buttonSkeleton}
+                    onClick={() =>
+                      onOnlineAccess(selectedMaterial.onlineAccess[0]?.url)
+                    }
+                  >
+                    <Icon src={"external.svg"} skeleton={skeleton} />
+                    {Translate({
+                      ...context,
+                      label:
+                        selectedMaterial.materialType === "Ebog"
+                          ? "onlineAccessEbook"
+                          : selectedMaterial.materialType.includes("Lydbog")
+                          ? "onlineAccessAudiobook"
+                          : "onlineAccessUnknown",
+                    })}
+                  </Button>
+                ) : (
+                  <Button skeleton={buttonSkeleton}>
+                    {Translate({ ...context, label: "addToCart" })}
+                  </Button>
+                )}
               </Col>
               <Col xs={12} className={styles.info}>
                 <Text type="text3" skeleton={skeleton} lines={2}>
@@ -209,10 +236,14 @@ export function OverviewError() {
  *
  * @returns {component}
  */
-export default function Wrap({ workId, type, onTypeChange }) {
+export default function Wrap({ workId, type, onTypeChange, onOnlineAccess }) {
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })
+  );
+
+  const { data: detailsData, error: detailsError } = useData(
+    workFragments.details({ workId })
   );
 
   const covers = useData(workFragments.covers({ workId }));
@@ -220,13 +251,20 @@ export default function Wrap({ workId, type, onTypeChange }) {
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
   }
-  if (error) {
+  if (error || detailsError) {
     return <OverviewError />;
   }
 
-  const merged = merge({}, covers.data, data);
+  const merged = merge({}, covers.data, data, detailsData);
 
-  return <Overview {...merged.work} type={type} onTypeChange={onTypeChange} />;
+  return (
+    <Overview
+      {...merged.work}
+      type={type}
+      onTypeChange={onTypeChange}
+      onOnlineAccess={onOnlineAccess}
+    />
+  );
 }
 
 // PropTypes for component
@@ -234,4 +272,5 @@ Wrap.propTypes = {
   workId: PropTypes.string,
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
+  onOnlineAccess: PropTypes.func,
 };

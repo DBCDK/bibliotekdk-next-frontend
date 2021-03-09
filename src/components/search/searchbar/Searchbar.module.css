@@ -8,11 +8,6 @@
   padding: 0 !important;
 }
 
-.innerWrap {
-  max-width: 600px;
-  margin: 0 -15px;
-}
-
 .filter {
   display: flex;
   justify-content: flex-end;
@@ -26,17 +21,11 @@
 }
 
 .button i {
-  margin: 0 0 0 var(--pt2);
+  margin: 0 0 0 var(--pt1);
 }
 
 @media (min-width: 992px) {
   .wrap {
     display: none;
-  }
-}
-
-@media (min-width: 600px) {
-  .innerWrap {
-    margin: auto;
   }
 }

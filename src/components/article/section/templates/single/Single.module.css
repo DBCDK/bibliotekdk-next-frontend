@@ -7,11 +7,6 @@
   cursor: pointer;
 }
 
-.content:hover h3,
-.content:hover p {
-  color: var(--blue);
-}
-
 .content > div:first-child {
   padding-bottom: var(--pt2);
 }
@@ -43,6 +38,26 @@
     transform: translate(0, -30%);
   }
 }
+
+/* Custom AnimationLine */
+
+.title,
+.text {
+  position: relative;
+  display: inline-block;
+}
+
+.title:hover hr:last-child {
+  display: none;
+}
+
+.content:hover .title hr,
+.content:focus-within .title hr {
+  transform: scale(1);
+  background-color: var(--mine-shaft);
+}
+
+/*  */
 
 /* Custom color background */
 
