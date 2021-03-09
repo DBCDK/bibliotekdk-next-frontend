@@ -18,8 +18,6 @@ export default function FakeSearchInput({ query = "", className }) {
   const hasQuery = query && query !== "";
   const hasQueryClass = hasQuery ? styles.hasQuery : "";
 
-  console.log("query", query);
-
   return (
     <div
       className={`${styles.container} ${className} ${hasQueryClass}`}
@@ -31,7 +29,7 @@ export default function FakeSearchInput({ query = "", className }) {
       }}
       tabIndex="0"
     >
-      <div className={styles.fakeinput}>
+      <div className={styles.fakeinput} data-cy="fake-search-input">
         <Text type="text2" className={styles.placeholder}>
           {hasQuery
             ? query

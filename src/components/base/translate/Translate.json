@@ -470,6 +470,10 @@
       "more": {
         "da": "Se flere",
         "en": "More"
+      },
+      "filters": {
+        "da": "Filtrer",
+        "en": "Filters"
       }
     },
     "suggester": {

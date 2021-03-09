@@ -67,7 +67,7 @@ function Find() {
       </Head>
       <Header router={router} />
       <Searchbar query={q} />
-      <div style={{ marginTop: 50 }}>
+      <div>
         <QuickFilters
           viewSelected={view}
           onViewSelect={(view) => updateQueryParams({ view })}

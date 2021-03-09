@@ -1,3 +1,18 @@
+.section {
+  padding: var(--pt3) 0 var(--pt2) 0;
+  margin: 0;
+}
+
+.section section {
+  /* override default section styling */
+  padding: 0 !important;
+}
+
+.innerWrap {
+  max-width: 600px;
+  margin: 0 -15px;
+}
+
 .filter {
   display: flex;
   justify-content: flex-end;
@@ -7,14 +22,21 @@
 .button {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
-.button p {
-  margin: 0 var(--pt1) 0 0;
+.button i {
+  margin: 0 0 0 var(--pt2);
 }
 
 @media (min-width: 992px) {
   .wrap {
     display: none;
+  }
+}
+
+@media (min-width: 600px) {
+  .innerWrap {
+    margin: auto;
   }
 }
