@@ -2,11 +2,11 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-bottom: var(--pt3);
+  margin: var(--pt3) 0;
 }
 
 @media (max-width: 767px) {
-  .quickfilters > .viewselector {
+  .quickfilters {
     display: none;
   }
 }

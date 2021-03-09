@@ -1,6 +1,7 @@
 import Pagination from "@/components/search/pagination/Pagination";
 import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
+import Searchbar from "@/components/search/searchbar";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -65,7 +66,8 @@ function Find() {
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <Header router={router} />
-      <div style={{ marginTop: 50 }}>
+      <Searchbar query={q} />
+      <div>
         <QuickFilters
           viewSelected={view}
           onViewSelect={(view) => updateQueryParams({ view })}

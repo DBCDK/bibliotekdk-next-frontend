@@ -1,0 +1,31 @@
+.section {
+  padding: var(--pt3) 0 var(--pt2) 0;
+  margin: 0;
+}
+
+.section section {
+  /* override default section styling */
+  padding: 0 !important;
+}
+
+.filter {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--pt2);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.button i {
+  margin: 0 0 0 var(--pt1);
+}
+
+@media (min-width: 992px) {
+  .wrap {
+    display: none;
+  }
+}

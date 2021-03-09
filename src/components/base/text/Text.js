@@ -25,6 +25,7 @@ function Text({
   tag = "p",
   onClick = null,
   dataCy = null,
+  tabIndex = null,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -60,6 +61,7 @@ function Text({
       onClick={onClick}
       data-cy={key}
       style={style}
+      tabIndex={tabIndex}
     >
       {children}
     </Tag>

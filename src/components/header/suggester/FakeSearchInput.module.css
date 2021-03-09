@@ -23,6 +23,11 @@
   text-align: left;
   margin-left: var(--pt2);
 }
+
+.hasQuery .fakeinput p {
+  color: var(--mine-shaft);
+}
+
 .fakebutton {
   background: var(--blue);
   width: 68px;

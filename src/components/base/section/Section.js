@@ -46,12 +46,12 @@ export default function Section({
 
   return (
     <div
-      className={`${backgroundClass}`}
+      className={`${backgroundClass} ${className}`}
       style={{ backgroundColor }}
       data-cy={dataCy}
     >
       <Container fluid>
-        <Row as="section" className={`${styles.section} ${className}`}>
+        <Row as="section" className={`${styles.section}`}>
           {title && (
             <Col
               xs={12}
