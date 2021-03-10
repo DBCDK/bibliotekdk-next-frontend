@@ -1,0 +1,39 @@
+.header {
+  padding-top: var(--pt4);
+  padding-bottom: var(--pt4);
+}
+
+.right {
+  display: flex;
+}
+
+.right span {
+  margin-left: auto;
+}
+
+.ask {
+  position: relative;
+  padding-right: var(--pt3);
+  margin-right: var(--pt8);
+}
+
+.ask i {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Logo */
+
+.logoWrap:focus-visible {
+  outline: solid 1px var(--blue);
+  outline-offset: var(--pt1);
+}
+
+.logoWrap:active {
+  outline: none;
+}
+
+.logo {
+  cursor: pointer;
+}
