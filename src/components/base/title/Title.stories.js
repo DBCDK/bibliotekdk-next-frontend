@@ -3,7 +3,7 @@ import { StoryTitle } from "@/storybook";
 import Title from "./Title";
 
 export default {
-  title: "Titles",
+  title: "base/Titles",
 };
 
 // Current title types

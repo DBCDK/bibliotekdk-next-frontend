@@ -3,7 +3,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import Breadcrumbs from "./Breadcrumbs";
 
 export default {
-  title: "Breadcrumbs",
+  title: "base/Breadcrumbs",
 };
 
 /**

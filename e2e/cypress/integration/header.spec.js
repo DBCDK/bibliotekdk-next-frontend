@@ -4,7 +4,7 @@
  */
 describe("Header", () => {
   before(function () {
-    cy.visit("/iframe.html?id=header--nav-header");
+    cy.visit("/iframe.html?id=layout-header--nav-header");
   });
 
   // Tabs
@@ -110,7 +110,7 @@ describe("Header", () => {
   });
 
   it(`Mobile: remove focus and empty field on input search`, () => {
-    cy.visit("/iframe.html?id=header--nav-header");
+    cy.visit("/iframe.html?id=layout-header--nav-header");
     cy.viewport(411, 731);
 
     cy.get("[data-cy=header-link-search]").click();

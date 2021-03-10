@@ -4,7 +4,7 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { Keywords, KeywordsSkeleton } from "./Keywords";
 
 export default {
-  title: "Work: Keywords",
+  title: "work/Keywords",
 };
 
 /**

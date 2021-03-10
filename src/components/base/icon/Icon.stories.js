@@ -3,7 +3,7 @@ import { StoryTitle, StorySpace } from "@/storybook";
 import Icon from "./Icon";
 
 export default {
-  title: "Icon",
+  title: "base/Icon",
 };
 
 // Current button types

@@ -2,7 +2,7 @@ import { StoryTitle, StoryLabel, StoryDescription } from "@/storybook";
 import { ArticleSection } from "@/components/article/section";
 
 export default {
-  title: "Articles",
+  title: "articles/sections",
 };
 
 const articles = [

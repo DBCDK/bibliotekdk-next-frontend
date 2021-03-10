@@ -5,7 +5,7 @@ import Bookmark from "./Bookmark";
 import Cover from "@/components/base/cover";
 
 export default {
-  title: "Bookmark",
+  title: "base/Bookmark",
 };
 
 /**
