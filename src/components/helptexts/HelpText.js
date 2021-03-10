@@ -39,35 +39,51 @@ export function HelpTextMenu({ helpTextId }) {
     return null;
   } else {
     const menus = helpTextParseMenu(data.nodeQuery.entities);
-    return Object.keys(menus).map((menu, index) => (
-      <div className={styles.helpmenu} key={`menu-${index}`}>
-        <Text
-          tabIndex="0"
-          type="text1"
-          lines={30}
-          key={index}
-          className={classNames(menu.open ? styles.active : styles.helplink)}
-        >
-          <span>
-            <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-          </span>
-          <span>{menu}</span>
-        </Text>
-        <HelptTextMenuLinks
-          parent={menu}
-          menuItems={menus}
-          item={menu}
-          helpTextId={helpTextId}
-          key={`links-${index}`}
-        />
-      </div>
-    ));
+
+    const [showMenus, setShowMenus] = useState(menus);
+    const rowClicked = ({ group }) => {
+      // toggle state of clicked group
+      showMenus[group].open = !showMenus[group].open;
+      // set new state(s)
+      setShowMenus(showMenus);
+    };
+
+    return Object.keys(showMenus).map((group, index) => {
+      console.log(showMenus, "FISK");
+      return (
+        <div className={styles.helpmenu} key={`group-${index}`}>
+          <Text
+            tabIndex="0"
+            type="text1"
+            lines={30}
+            key={`helpmenu-${index}`}
+            className={classNames(
+              showMenus[group].open ? styles.active : styles.helpgroup
+            )}
+            onClick={() => {
+              rowClicked({ group });
+            }}
+          >
+            <span>
+              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            </span>
+            <span>{group}</span>
+          </Text>
+          <HelptTextMenuLinks
+            menuItems={showMenus}
+            group={group}
+            helpTextId={helpTextId}
+            key={`links-${index}`}
+          />
+        </div>
+      );
+    });
   }
 }
 
-function HelptTextMenuLinks({ parent, menuItems, item, helpTextId }) {
+function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   // @TODO style the link
-  return menuItems[item].map((item, index) => (
+  return menuItems[group].map((item, index) => (
     <div>
       <span>
         <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
@@ -80,7 +96,12 @@ function HelptTextMenuLinks({ parent, menuItems, item, helpTextId }) {
         }
         href={{ pathname: `/helptexts/${item.id}`, query: {} }}
         key={`menulink-${index}`}
-        className={styles.helplink}
+        className={classNames(
+          styles.helplink,
+          menuItems[group][index].id === parseInt(helpTextId.helptxtId, "10")
+            ? styles.active
+            : ""
+        )}
       />
     </div>
   ));

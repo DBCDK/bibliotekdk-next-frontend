@@ -10,7 +10,11 @@
     border: 1px solid red;
 }
 
-.helplink.active{
+.helpgroup{
+    border: 2px solid yellow;
+}
+
+.active{
     font-weight: bolder;
     background-color: red;
 }
