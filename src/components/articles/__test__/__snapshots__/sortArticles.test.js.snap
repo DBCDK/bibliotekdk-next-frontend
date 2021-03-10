@@ -4,6 +4,9 @@ exports[`sortArticles desc 1`] = `
 Array [
   Object {
     "entityCreated": "2021-02-25T14:40:40+0100",
+    "entityUrl": Object {
+      "path": "/node/4",
+    },
     "fieldImage": Object {
       "alt": "some image alt",
       "title": "some image title",
@@ -15,6 +18,9 @@ Array [
   },
   Object {
     "entityCreated": "2021-01-20T14:38:46+0100",
+    "entityUrl": Object {
+      "path": "/node/3",
+    },
     "fieldImage": Object {
       "alt": "some image alt",
       "title": "some image title",
@@ -26,6 +32,9 @@ Array [
   },
   Object {
     "entityCreated": "2021-01-13T13:47:27+0100",
+    "entityUrl": Object {
+      "path": "/node/2",
+    },
     "fieldImage": Object {
       "alt": "some image alt",
       "title": "some image title",
@@ -37,6 +46,9 @@ Array [
   },
   Object {
     "entityCreated": "2021-01-05T10:19:13+0100",
+    "entityUrl": Object {
+      "path": "/node/1",
+    },
     "fieldImage": Object {
       "alt": "some image alt",
       "title": "some image title",

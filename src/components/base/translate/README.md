@@ -1,4 +1,4 @@
-Translations are handled here. 
+Translations are handled here.
 To translate a string wrap it in translate() method and add it to translate.json file
 eg.
 in code:

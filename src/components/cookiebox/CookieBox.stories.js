@@ -1,7 +1,7 @@
 import { CookieBox } from "./CookieBox";
 
 export default {
-  title: "CookieBox",
+  title: "cookies/CookieBox",
 };
 
 export function CookieBox_full() {

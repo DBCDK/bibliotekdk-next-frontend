@@ -95,6 +95,10 @@ export function details({ workId }) {
             isbn
             materialType
             language
+            onlineAccess {
+              url
+              note
+            }
             physicalDescription
             publisher
           }

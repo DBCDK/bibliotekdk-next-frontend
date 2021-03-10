@@ -31,7 +31,7 @@ export function Arrow({ className = "" }) {
  * @param {object} props.article
  * @param {boolean} props.skeleton
  */
-export default function ArticlePreview({ article, skeleton, rubrik }) {
+export default function ArticlePreview({ article, skeleton, rubrik = true }) {
   const image = article && article.fieldImage;
 
   return (
@@ -67,7 +67,7 @@ export default function ArticlePreview({ article, skeleton, rubrik }) {
         >
           {article.title}
         </Title>
-        {rubrik !== false && (
+        {rubrik && (
           <Text type="text2" lines={3} clamp={true} skeleton={skeleton}>
             {article.fieldRubrik}
           </Text>

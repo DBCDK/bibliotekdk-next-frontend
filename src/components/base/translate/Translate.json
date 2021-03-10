@@ -188,6 +188,14 @@
       "section-title": {
         "da": "Alle artikler",
         "en": "All articles"
+      },
+      "alternative-url-btn": {
+        "da": "Alle artikler",
+        "en": "All articles"
+      },
+      "read-more-btn": {
+        "da": "Læs mere",
+        "en": "Read more"
       }
     },
     "footer": {
@@ -322,6 +330,18 @@
       "addToCart-line2": {
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
+      },
+      "onlineAccessUnknown": {
+        "da": "Gå til produktet",
+        "en": "Get the material"
+      },
+      "onlineAccessEbook": {
+        "da": "Gå til e-bog",
+        "en": "Get the ebook"
+      },
+      "onlineAccessAudiobook": {
+        "da": "Gå til lydbog",
+        "en": "Get the audio book"
       }
     },
     "details": {
@@ -462,6 +482,10 @@
       "more": {
         "da": "Se flere",
         "en": "More"
+      },
+      "filters": {
+        "da": "Filtrer",
+        "en": "Filters"
       }
     },
     "suggester": {

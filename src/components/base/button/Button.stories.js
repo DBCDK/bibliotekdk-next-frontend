@@ -5,7 +5,7 @@ import Skeleton from "@/components/base/skeleton";
 import { useEffect, useState } from "react";
 
 export default {
-  title: "Buttons",
+  title: "base/Buttons",
 };
 
 // Current button types

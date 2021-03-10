@@ -3,7 +3,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import Color from "./Color";
 
 export default {
-  title: "Colors",
+  title: "base/Colors",
 };
 
 /**

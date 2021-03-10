@@ -5,7 +5,7 @@ import {
 } from "@/components/article/content/Content.js";
 
 export default {
-  title: "Article page",
+  title: "articles/page",
 };
 
 export function ArticlePage() {

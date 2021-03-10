@@ -33,7 +33,8 @@ function Button({
     <button
       data-cy={key}
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
-      onClick={() => (onClick ? onClick() : handleOnButtonClick())}
+      onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
+      disabled={disabled}
     >
       {children}
     </button>

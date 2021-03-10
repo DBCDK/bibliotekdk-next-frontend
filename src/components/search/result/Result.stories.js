@@ -5,7 +5,7 @@ import QuickFilters from "../quickfilters";
 import { Result } from "./Result";
 
 export default {
-  title: "Search: Result",
+  title: "search/Result",
 };
 
 export function SearchResult() {

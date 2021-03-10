@@ -4,7 +4,7 @@ import { useState } from "react";
 import WorkPage from "./Page";
 
 export default {
-  title: "Work: Page",
+  title: "work/Page",
   decorators: [withKnobs],
 };
 

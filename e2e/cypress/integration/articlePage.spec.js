@@ -1,6 +1,6 @@
-describe("Article", () => {
+describe("ArticlePage", () => {
   before(() => {
-    cy.visit("/iframe.html?id=article-page--article-page&viewMode=story");
+    cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
   });
 
   it(`Check if article has parsed body image`, () => {

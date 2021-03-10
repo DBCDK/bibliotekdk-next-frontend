@@ -3,7 +3,7 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { Details, DetailsSkeleton } from "./Details";
 
 export default {
-  title: "Work: Details",
+  title: "work/Details",
 };
 
 /**

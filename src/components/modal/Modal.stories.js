@@ -6,7 +6,7 @@ import Button from "@/components/base/button";
 import { Modal } from "./";
 
 export default {
-  title: "Modal",
+  title: "modal/Modal",
 };
 
 /**

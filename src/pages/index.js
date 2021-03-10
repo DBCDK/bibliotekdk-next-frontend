@@ -5,12 +5,10 @@
  */
 
 import ArticleSection from "@/components/article/section";
-import ArticleSectionTwoRows from "@/components/article/sectiontwo";
 import Hero from "@/components/hero";
 import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchOnServer } from "@/lib/api/api";
-import Notifications from "@/components/base/notifications/Notifications";
 import Header from "@/components/header/Header";
 
 import { useRouter } from "next/router";
@@ -37,9 +35,22 @@ const Index = () => {
       <div>
         <Header router={router} />
         <Hero />
-        <ArticleSection title="Bibliotek.dk tilbyder" matchTag="section 1" />
-        <ArticleSection title="Kan vi hjælpe?" matchTag="section 2" />
-        <ArticleSectionTwoRows title="Nyheder" matchTag="section 3" />
+        <ArticleSection
+          title="Bibliotek.dk tilbyder"
+          matchTag="section 1"
+          template="triple"
+        />
+        <ArticleSection
+          title="Kan vi hjælpe?"
+          matchTag="section 2"
+          template="triple"
+        />
+        <ArticleSection
+          title="Nyheder"
+          matchTag="section 3"
+          template="double"
+        />
+        <ArticleSection title={false} matchTag="section 4" template="single" />
       </div>
     </React.Fragment>
   );

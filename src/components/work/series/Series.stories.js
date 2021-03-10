@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { Series } from "./Series";
 
 export default {
-  title: "Work: Series",
+  title: "work/Series",
 };
 
 export function SeriesSlider() {

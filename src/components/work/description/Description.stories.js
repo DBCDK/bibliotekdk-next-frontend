@@ -4,7 +4,7 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { Description, DescriptionSkeleton } from "./Description";
 
 export default {
-  title: "Work: Description",
+  title: "work/Description",
 };
 
 /**

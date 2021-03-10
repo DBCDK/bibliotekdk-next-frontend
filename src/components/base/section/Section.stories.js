@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import Section from "./Section";
 
 export default {
-  title: "Section",
+  title: "base/Section",
 };
 
 /**

@@ -1,0 +1,75 @@
+.wrap {
+  padding: 0;
+}
+
+.content {
+  align-items: center;
+  cursor: pointer;
+}
+
+.content > div:first-child {
+  padding-bottom: var(--pt2);
+}
+
+.title {
+  margin-bottom: var(--pt3);
+}
+
+.text {
+  margin-bottom: var(--pt1);
+}
+
+.imagewrapper {
+  position: relative;
+  /* Maintain 16:9 aspect ratio by setting padding-bottom */
+  padding-bottom: 56%;
+  margin-bottom: var(--pt2);
+}
+.imageskeleton {
+  padding-bottom: var(--pt05);
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding: var(--pt5) 0;
+  }
+
+  .content > div:first-child {
+    transform: translate(0, -30%);
+  }
+}
+
+/* Custom AnimationLine */
+
+.title,
+.text {
+  position: relative;
+  display: inline-block;
+}
+
+.title:hover hr:last-child {
+  display: none;
+}
+
+.content:hover .title hr,
+.content:focus-within .title hr {
+  transform: scale(1);
+  background-color: var(--mine-shaft);
+}
+
+/*  */
+
+/* Custom color background */
+
+.skeleton div div:last-child {
+  background-color: var(--bone);
+}
+
+.skeleton div div:last-child::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--pippin) 50%,
+    transparent 100%
+  );
+}

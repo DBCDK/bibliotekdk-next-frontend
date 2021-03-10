@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import Banner from "./Banner";
 
 export default {
-  title: "Banner",
+  title: "layout/Banner",
 };
 
 /**

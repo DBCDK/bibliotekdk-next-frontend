@@ -12,6 +12,7 @@ export default function dummy_workDataApi({ workId }) {
             cover: {
               detail: null,
             },
+            onlineAccess: null,
           },
           {
             materialType: "Bog stor skrift",
@@ -20,6 +21,7 @@ export default function dummy_workDataApi({ workId }) {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
             },
+            onlineAccess: null,
           },
           {
             materialType: "Ebog",
@@ -28,6 +30,7 @@ export default function dummy_workDataApi({ workId }) {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
             },
+            onlineAccess: [{ url: "https://ebookurl", note: "" }],
           },
           {
             materialType: "Lydbog (bånd)",
@@ -35,6 +38,7 @@ export default function dummy_workDataApi({ workId }) {
             cover: {
               detail: null,
             },
+            onlineAccess: null,
           },
           {
             materialType: "Lydbog (cd-mp3)",
@@ -42,6 +46,7 @@ export default function dummy_workDataApi({ workId }) {
             cover: {
               detail: null,
             },
+            onlineAccess: null,
           },
           {
             materialType: "Lydbog (net)",
@@ -50,6 +55,7 @@ export default function dummy_workDataApi({ workId }) {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
             },
+            onlineAccess: [{ url: "https://audiobookurl", note: "" }],
           },
           {
             materialType: "Punktskrift",

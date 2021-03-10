@@ -8,7 +8,7 @@ import {
 import { Rating, RatingSkeleton } from "./Rating";
 
 export default {
-  title: "Rating",
+  title: "base/Rating",
 };
 
 /**

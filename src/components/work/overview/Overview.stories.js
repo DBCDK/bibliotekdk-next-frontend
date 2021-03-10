@@ -1,9 +1,9 @@
 import { useState } from "react";
 import dummy_workDataApi from "../dummy.workDataApi";
-import OverviewWithData, { OverviewSkeleton, Overview } from "./Overview";
+import { OverviewSkeleton, Overview } from "./Overview";
 
 export default {
-  title: "Work: Overview",
+  title: "work/Overview",
 };
 
 /**
@@ -19,6 +19,7 @@ export function WorkOverview() {
         {...data.work}
         type={type}
         onTypeChange={(el) => setType(el.type)}
+        onOnlineAccess={(el) => alert(el)}
       />
     </div>
   );

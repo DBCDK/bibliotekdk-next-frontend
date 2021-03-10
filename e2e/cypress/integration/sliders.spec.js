@@ -4,7 +4,7 @@
  */
 describe("Sliders", () => {
   it(`Buttons may be used to slide`, () => {
-    cy.visit("/iframe.html?id=slider--work-slider&viewMode=story");
+    cy.visit("/iframe.html?id=base-slider--work-slider&viewMode=story");
     cy.get("[data-cy=work-card").first().should("be.visible");
     cy.get("[data-cy=work-card").last().should("not.be.visible");
 
@@ -18,7 +18,7 @@ describe("Sliders", () => {
   });
 
   it(`Tabbing may be used to slide`, () => {
-    cy.visit("/iframe.html?id=slider--work-slider&viewMode=story");
+    cy.visit("/iframe.html?id=base-slider--work-slider&viewMode=story");
     cy.get("[data-cy=work-card").first().should("be.visible");
     cy.get("[data-cy=work-card").last().should("not.be.visible");
 

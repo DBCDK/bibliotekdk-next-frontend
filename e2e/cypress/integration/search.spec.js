@@ -80,4 +80,15 @@ describe("Search", () => {
     cy.tabs(3);
     cy.focused().should("have.attr", "data-cy", "page-4-button");
   });
+
+  it(`Desktop: Fake searchfield not visible`, () => {
+    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
+  });
+
+  it(`Mobile: Has searchfield including query`, () => {
+    cy.viewport(411, 731);
+    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.get('[data-cy="fake-search-input"]').contains("harry potter");
+  });
 });

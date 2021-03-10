@@ -1,4 +1,5 @@
 import orderBy from "lodash/orderBy";
+import get from "lodash/get";
 
 /**
  * function to sort array of articles (desc)
@@ -9,6 +10,10 @@ import orderBy from "lodash/orderBy";
  * @returns {array}
  */
 export function sortArticles(articles) {
+  // remove articles with alternative url (entityUrl)
+  articles = articles.filter((a) => {
+    return get(a, "entityUrl.path", false) === `/node/${a.nid}`;
+  });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);
 }

@@ -69,6 +69,9 @@ export function promotedArticles() {
             fieldArticleSection
             fieldArticlePosition
             entityPublished
+            entityUrl {
+              path
+            }
             fieldImage {
               alt
               title
@@ -104,6 +107,9 @@ export function allArticles() {
             title
             fieldRubrik
             entityCreated
+            entityUrl {
+              path
+            }
             fieldImage {
               alt
               title
