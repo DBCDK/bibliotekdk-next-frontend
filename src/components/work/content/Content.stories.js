@@ -4,7 +4,7 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { Content, ContentSkeleton } from "./Content";
 
 export default {
-  title: "Work: Content",
+  title: "work/Content",
 };
 
 /**

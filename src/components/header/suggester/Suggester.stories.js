@@ -18,7 +18,7 @@ import Subject from "./templates/subject";
 import History from "./templates/history";
 
 export default {
-  title: "Suggester",
+  title: "search/Suggester",
 };
 
 /**

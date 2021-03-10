@@ -1,7 +1,7 @@
 import Footer from "./Footer";
 
 export default {
-  title: "Footer",
+  title: "layout/Footer",
 };
 
 export function FooterStory() {

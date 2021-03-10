@@ -18,7 +18,7 @@ import {
 } from "./types/litteratursiden/LitteratursidenReview.js";
 
 export default {
-  title: "Work: Reviews",
+  title: "work/Reviews",
 };
 
 /**

@@ -4,7 +4,7 @@ import { Notifications } from "./Notifications";
 import { Rating } from "@/components/base/rating/Rating";
 
 export default {
-  title: "Notifications",
+  title: "base/Notifications",
 };
 
 // a single notification in an array

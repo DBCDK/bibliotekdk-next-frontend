@@ -2,7 +2,7 @@ import { Divider } from "./Divider";
 import { StoryTitle } from "@/storybook";
 
 export default {
-  title: "Divider (<hr>)",
+  title: "base/Divider (<hr>)",
 };
 
 /**

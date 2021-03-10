@@ -4,7 +4,7 @@ import Link from "./Link";
 import Text from "@/components/base/text";
 
 export default {
-  title: "Link",
+  title: "base/Link",
 };
 
 /**

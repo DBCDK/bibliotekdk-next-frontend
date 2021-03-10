@@ -1,6 +1,6 @@
 describe("Overview", () => {
   before(function () {
-    cy.visit("/iframe.html?id=footer--footer-story");
+    cy.visit("/iframe.html?id=layout-footer--footer-story");
   });
 
   it("there should be 4 columns", () => {

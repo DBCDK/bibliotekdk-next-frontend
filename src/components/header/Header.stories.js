@@ -3,7 +3,7 @@ import { useState } from "react";
 import Header from "./Header";
 
 export default {
-  title: "Header",
+  title: "layout/Header",
 };
 
 /**

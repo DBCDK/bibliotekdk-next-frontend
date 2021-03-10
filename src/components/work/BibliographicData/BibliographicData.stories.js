@@ -4,7 +4,7 @@ import dummy_workDataApi from "../dummy.workDataApi";
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 export default {
-  title: "Work: Bibliographic data",
+  title: "work/Bibliographic data",
 };
 
 /**
