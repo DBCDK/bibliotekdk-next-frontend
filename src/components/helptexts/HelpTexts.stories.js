@@ -1,12 +1,12 @@
 import { StoryTitle } from "@/storybook";
 import { HelpText } from "@/components/helptexts/HelpText";
-import { HelpTextMenu } from "@/components/helptexts/HelpTextMenu";
+import { HelpTextMenu } from "@/components/helptexts/menu/HelpTextMenu";
 
 import aHelptText from "./aHelpText.json";
 import allHelp from "./allHelp.json";
 
 export default {
-  title: "Helptext",
+  title: "helptext/Helptext",
 };
 
 /**

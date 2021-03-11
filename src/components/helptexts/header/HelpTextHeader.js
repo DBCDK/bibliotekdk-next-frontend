@@ -2,7 +2,7 @@ import Icon from "@/components/base/icon";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import LogoSvg from "@/public/icons/logo.svg";
-import styles from "./HelpTexts.module.css";
+import styles from "../HelpTexts.module.css";
 
 export function HelpTextHeader() {
   return (

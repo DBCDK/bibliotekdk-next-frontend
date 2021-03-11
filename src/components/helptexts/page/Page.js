@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 
-import HelpText from "./HelpText";
+import HelpText from "../HelpText";
 import styles from "@/components/header/Header.module.css";
 import { Col, Container, Row } from "react-bootstrap";
 import React from "react";
-import { HelpTextHeader } from "./HelpTextHeader";
+import { HelpTextHeader } from "../header/HelpTextHeader";
 import { Title } from "@/components/base/title/Title";
-import HelpTextMenu from "./HelpTextMenu";
+import HelpTextMenu from "../menu/HelpTextMenu";
 
 /**
  * HelpText page React component
