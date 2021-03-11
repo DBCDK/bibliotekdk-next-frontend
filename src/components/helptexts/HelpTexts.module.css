@@ -1,32 +1,24 @@
-.helpmenu{
-    border: 1px solid green;
+.helplink {
+    padding-left: var(--pt3);
 }
 
-.helpmenugroup{
-    background-color: aqua;
+.helpicon {
+    padding-right: var(--pt1);
 }
 
-.helplink{
-    border: 1px solid red;
+.helpgroup {
+    cursor: pointer;
 }
 
-.helpgroup{
-    border: 2px solid yellow;
+.helpactive p{
+    font-weight: bold;
 }
 
-.active{
-    font-weight: bolder;
-    background-color: red;
+.helphide {
+    display: none;
 }
 
-.none{
-    background-color: transparent;
-    border: none;
-}
-
-
-
-.helpheader{
+.helpheader {
     height: 175px;
 }
 
