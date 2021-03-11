@@ -1,3 +1,4 @@
+import Router from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Translate from "@/components/base/translate";
@@ -38,11 +39,20 @@ export default function Header() {
         <Col className={styles.right}>
           <span>
             <Link href="/hjaelp" className={styles.ask}>
-              <Text>Spørg en bibliotekar</Text>
+              <Text type="text2">Spørg en bibliotekar</Text>
               <Icon size={2} src="bubble.svg" />
             </Link>
-            <Link>
-              <Text>Eng</Text>
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                const locale = Router.locale === "da" ? "en" : "da";
+                const pathname = Router.pathname;
+                const query = Router.query;
+
+                Router.replace({ pathname, query }, null, { locale });
+              }}
+            >
+              <Text type="text2">Eng</Text>
             </Link>
           </span>
         </Col>

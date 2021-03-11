@@ -10,8 +10,10 @@ export default function Expand({ open, size = 3 }) {
       className={`${styles.expandicon} ${open ? styles.opened : styles.closed}`}
     >
       {/* Lines to be animated */}
-      <span />
-      <span />
+      <div>
+        <span />
+        <span />
+      </div>
     </Icon>
   );
 }

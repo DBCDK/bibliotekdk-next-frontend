@@ -17,6 +17,6 @@
   color: var(--blue);
 }
 
-.content {
-  padding: var(--pt3);
+.content p {
+  padding: var(--pt3) var(--pt10) var(--pt3) 0;
 }

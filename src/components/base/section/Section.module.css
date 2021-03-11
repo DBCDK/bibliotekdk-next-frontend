@@ -11,6 +11,7 @@
   width: 50%;
   height: 1px;
   margin: 0 0 var(--pt2) 0;
+  border: none;
 }
 
 .section div:first-child .divider {

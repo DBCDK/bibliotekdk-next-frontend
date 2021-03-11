@@ -39,7 +39,9 @@ function Element({ title, text, eventKey }) {
         className={styles.content}
         eventKey={eventKey}
       >
-        <Card.Body>{text}</Card.Body>
+        <Card.Body>
+          <Text type="text2">{text}</Text>
+        </Card.Body>
       </BootstrapAccordion.Collapse>
     </Card>
   );

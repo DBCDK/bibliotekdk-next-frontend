@@ -2,27 +2,40 @@
   position: relative;
 }
 
+.expandicon div {
+  width: 40%;
+  height: 40%;
+  position: relative;
+
+  top: 20%;
+  left: 20%;
+
+  transform: translate(-50%, -50%);
+}
+
 .expandicon span {
   position: absolute;
   top: calc(50% - 1px);
-  left: 6px;
-  right: 6px;
+  left: 0;
+
+  width: 100%;
+
   background: white;
   height: 2px;
   transition: all 0.35s;
 }
 
-.expandicon.opened span:first-child {
+.expandicon.opened div span:first-child {
   opacity: 0;
   transform: rotate(90deg);
 }
 
-.expandicon.closed span:first-child {
+.expandicon.closed div span:first-child {
   opacity: 1;
   transform: rotate(180deg);
 }
 
-.expandicon.closed span:last-child {
+.expandicon.closed div span:last-child {
   transform: rotate(90deg);
   color: var(--blue);
 }

@@ -1,9 +1,12 @@
 import PropTypes from "prop-types";
 import { useMemo } from "react";
 
+import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";
 
 import { sortData } from "./utils";
+
+import styles from "./Faq.module.css";
 
 /**
  * The Article page React component
@@ -14,10 +17,17 @@ import { sortData } from "./utils";
  *
  * @returns {component}
  */
-export function Faq({ data }) {
+export function Faq({ className, data }) {
   data = useMemo(() => sortData(data), [data]);
 
-  return <Accordion data={data} />;
+  return (
+    <Section
+      className={`${styles.section} ${className}`}
+      title="Ofte stillede spørgsmål"
+    >
+      <Accordion data={data} />
+    </Section>
+  );
 }
 
 Faq.propTypes = {
@@ -64,5 +74,5 @@ export default function Wrapper(props) {
     },
   ];
 
-  return <Faq data={data} />;
+  return <Faq {...props} data={data} />;
 }

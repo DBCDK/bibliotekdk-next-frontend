@@ -13,7 +13,7 @@ import styles from "./Section.module.css";
  * @returns {component}
  */
 function Divider() {
-  return <div className={styles.divider} />;
+  return <hr className={styles.divider} />;
 }
 
 /**

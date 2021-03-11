@@ -68,9 +68,7 @@ export default function Page() {
         >
           <input placeholder="Søg i hjælp" />
         </Section>
-        <Section className={styles.faq} title="Ofte stillede spørgsmål">
-          <Faq />
-        </Section>
+        <Faq className={styles.faq} />
       </main>
     </React.Fragment>
   );
