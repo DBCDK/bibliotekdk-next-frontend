@@ -1,0 +1,22 @@
+.element {
+  border-bottom: 1px solid var(--iron);
+}
+
+.header {
+  height: var(--pt7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 var(--pt3) 0 0;
+  cursor: pointer;
+}
+
+.header:focus p,
+.header:hover p {
+  color: var(--blue);
+}
+
+.content {
+  padding: var(--pt3);
+}

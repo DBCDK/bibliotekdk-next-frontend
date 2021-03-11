@@ -3,6 +3,10 @@
   padding-bottom: var(--pt4);
 }
 
+.header > div {
+  align-items: center;
+}
+
 .right {
   display: flex;
 }
@@ -19,7 +23,7 @@
 
 .ask i {
   position: absolute;
-  top: 0;
+  top: calc(var(--pt05) * -1);
   right: 0;
 }
 

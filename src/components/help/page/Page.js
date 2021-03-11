@@ -1,12 +1,34 @@
 import Head from "next/head";
 
+import { Container, Row, Col } from "react-bootstrap";
+
 import Section from "@/components/base/section";
+import Link from "@/components/base/link";
+import Icon from "@/components/base/icon";
+import Text from "@/components/base/text";
+import Title from "@/components/base/title";
+import Faq from "../faq";
 
 import Header from "../header";
 
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
+
+/**
+ * Back to bibliotek.dk button
+ *
+ * @returns {component}
+ */
+function BackButton() {
+  return (
+    <div className={styles.back}>
+      <Link href="/" border={{ bottom: { keepVisible: true } }}>
+        <Text>Tilbage til bibliotek.dk</Text>
+      </Link>
+    </div>
+  );
+}
 
 /**
  * The Articles page React component
@@ -31,13 +53,23 @@ export default function Page() {
       </Head>
       <Header />
       <main>
+        <Container className={styles.top} fluid>
+          <Row>
+            <Col xs={12} lg={{ span: 9, offset: 3 }}>
+              <Title type="title3">Hjælp og vejledninger</Title>
+            </Col>
+          </Row>
+        </Container>
         <Section
           className={styles.search}
-          title={Translate({ context: "articles", label: "section-title" })}
+          title={<BackButton />}
           titleDivider={false}
           contentDivider={false}
         >
-          ...
+          <input placeholder="Søg i hjælp" />
+        </Section>
+        <Section className={styles.faq} title="Ofte stillede spørgsmål">
+          <Faq />
         </Section>
       </main>
     </React.Fragment>

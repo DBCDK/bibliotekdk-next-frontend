@@ -1,0 +1,28 @@
+.expandicon {
+  position: relative;
+}
+
+.expandicon span {
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 6px;
+  right: 6px;
+  background: white;
+  height: 2px;
+  transition: all 0.35s;
+}
+
+.expandicon.opened span:first-child {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.expandicon.closed span:first-child {
+  opacity: 1;
+  transform: rotate(180deg);
+}
+
+.expandicon.closed span:last-child {
+  transform: rotate(90deg);
+  color: var(--blue);
+}

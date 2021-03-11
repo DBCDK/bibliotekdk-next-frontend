@@ -24,6 +24,7 @@ function Text({
   clamp,
   tag = "p",
   onClick = null,
+  onKeyPress = null,
   dataCy = null,
   tabIndex = null,
 }) {
@@ -59,6 +60,7 @@ function Text({
         clamp && styles.clamp
       }`}
       onClick={onClick}
+      onKeyPress={onKeyPress}
       data-cy={key}
       style={style}
       tabIndex={tabIndex}

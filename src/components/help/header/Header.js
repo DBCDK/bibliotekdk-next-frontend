@@ -37,10 +37,8 @@ export default function Header() {
         </Col>
         <Col className={styles.right}>
           <span>
-            <Link border={false} className={styles.ask}>
-              <Link onClick={(e) => e.preventDefault()}>
-                <Text>Spørg en bibliotekar</Text>
-              </Link>
+            <Link href="/hjaelp" className={styles.ask}>
+              <Text>Spørg en bibliotekar</Text>
               <Icon size={2} src="bubble.svg" />
             </Link>
             <Link>
