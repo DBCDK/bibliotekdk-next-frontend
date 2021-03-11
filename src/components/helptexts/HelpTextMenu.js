@@ -4,9 +4,19 @@ import styles from "@/components/helptexts/HelpTexts.module.css";
 import Icon from "@/components/base/icon/Icon";
 import classNames from "classnames/bind";
 import Link from "@/components/base/link";
-import { getPublishedHelpTexts } from "@/components/helptexts/HelpText";
+import { useData } from "@/lib/api/api";
+import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 
+/**
+ * Component to show helptext menu in groups
+ * @param menus
+ * @param groups
+ * @param helpTextId
+ * @return {*}
+ * @constructor
+ */
 function HelpTextGroups({ menus, groups, helpTextId }) {
+  // use state to handle clickevent on group
   const [showGroups, setShowGroups] = useState(groups);
   const rowClicked = ({ index }) => {
     let groupStates = [...groups];
@@ -65,10 +75,17 @@ function HelpTextGroups({ menus, groups, helpTextId }) {
   });
 }
 
+/**
+ * Entry function for helptext menu, parse helptext in menu groups - return the menu
+ * @param helpTexts
+ * @param helpTextId
+ * @return {JSX.Element}
+ * @constructor
+ */
 export function HelpTextMenu({ helpTexts, helpTextId }) {
   const menus = helpTextParseMenu(helpTexts);
-  const groups = Object.keys(menus).map((group, index) => {
-    return { name: group, open: false };
+  const groups = Object.keys(menus).map((groupname, index) => {
+    return { name: groupname, open: false };
   });
 
   return (
@@ -76,6 +93,14 @@ export function HelpTextMenu({ helpTexts, helpTextId }) {
   );
 }
 
+/**
+ * Get a link for a helptext
+ * @param menuItems
+ * @param group
+ * @param helpTextId
+ * @return {*}
+ * @constructor
+ */
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => (
     <div className={styles.helplink} key={`div-menulink-${index}`}>
@@ -100,6 +125,11 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   ));
 }
 
+/**
+ * Defines an element in a help group
+ * @param heltptext
+ * @return {{id: (number|string|*), title}}
+ */
 function setGroupElement(heltptext) {
   return {
     id: heltptext.nid,
@@ -107,6 +137,12 @@ function setGroupElement(heltptext) {
   };
 }
 
+/**
+ * Parse helptexts by groups
+ * @param helpTexts
+ * @return {{}}
+ *  eg. {Søgning:[{id:25, title:fisk}. {id:1,title:hest}]}
+ */
 function helpTextParseMenu(helpTexts) {
   // sort helptexts by group
   const structuredHelpTexts = {};
@@ -124,6 +160,21 @@ function helpTextParseMenu(helpTexts) {
   return structuredHelpTexts;
 }
 
+/**
+ * Get all helptexts from api
+ * @return {{isLoading, data}}
+ */
+function getPublishedHelpTexts() {
+  const { isLoading, data } = useData(publishedHelptexts());
+  return { isLoading, data };
+}
+
+/**
+ * Default export function for component
+ * @param helpTextID
+ * @return {JSX.Element|null}
+ * @constructor
+ */
 export default function Wrapper({ helpTextID }) {
   const { isLoading, data } = getPublishedHelpTexts();
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
@@ -132,5 +183,6 @@ export default function Wrapper({ helpTextID }) {
   }
 
   const allHelpTexts = data.nodeQuery.entities;
+
   return <HelpTextMenu helpTexts={allHelpTexts} helpTextId={helpTextID} />;
 }
