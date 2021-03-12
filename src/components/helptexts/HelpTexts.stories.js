@@ -6,7 +6,7 @@ import aHelptText from "./aHelpText.json";
 import allHelp from "./allHelp.json";
 
 export default {
-  title: "helptext/Helptext",
+  title: "help/Helptext",
 };
 
 /**

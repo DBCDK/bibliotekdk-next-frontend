@@ -7,6 +7,7 @@ import React from "react";
 import { HelpTextHeader } from "../header/HelpTextHeader";
 import { Title } from "@/components/base/title/Title";
 import HelpTextMenu from "../menu/HelpTextMenu";
+import translate from "@/components/base/translate";
 
 /**
  * HelpText page React component
@@ -24,7 +25,12 @@ export default function HelpTextPage({ helptxtId }) {
           <HelpTextHeader />
         </Col>
         <Col md={{ span: 9 }}>
-          <Title type="title4">Hjælp og vejledninger</Title>
+          <Title type="title4">
+            {translate({
+              context: "help",
+              label: "Help and guides",
+            })}
+          </Title>
         </Col>
       </Row>
       <Row>

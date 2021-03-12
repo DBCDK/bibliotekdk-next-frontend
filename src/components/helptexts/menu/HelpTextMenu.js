@@ -6,6 +6,8 @@ import classNames from "classnames/bind";
 import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
+import PropTypes from "prop-types";
+import { HelpText } from "@/components/helptexts/HelpText";
 
 /**
  * Component to show helptext menu in groups
@@ -175,7 +177,7 @@ function getPublishedHelpTexts() {
  * @return {JSX.Element|null}
  * @constructor
  */
-export default function Wrapper({ helpTextID }) {
+export default function Wrap({ helpTextID }) {
   const { isLoading, data } = getPublishedHelpTexts();
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
     // @TODO skeleton
@@ -186,3 +188,8 @@ export default function Wrapper({ helpTextID }) {
 
   return <HelpTextMenu helpTexts={allHelpTexts} helpTextId={helpTextID} />;
 }
+
+HelpTextMenu.propTypes = {
+  helpTexts: PropTypes.object,
+  helpTextId: PropTypes.string,
+};

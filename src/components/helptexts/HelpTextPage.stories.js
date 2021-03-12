@@ -2,7 +2,7 @@ import HelpPage from "./page/Page";
 import { StoryTitle } from "@/storybook";
 
 export default {
-  title: "helptext/page",
+  title: "help/page",
 };
 
 export function HelpTextPage() {
