@@ -114,7 +114,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
             {item.title}
           </Text>
         }
-        href={{ pathname: `/help/${item.id}`, query: {} }}
+        href={{ pathname: `/help/${item.title}/${item.id}`, query: {} }}
         key={`menulink-${index}`}
         className={classNames(
           menuItems[group.name][index].id === parseInt(helpTextId, "10")
