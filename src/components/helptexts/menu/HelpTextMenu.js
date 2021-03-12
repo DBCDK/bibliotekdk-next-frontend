@@ -187,6 +187,6 @@ export default function Wrap({ helpTextID }) {
 }
 
 HelpTextMenu.propTypes = {
-  helpTexts: PropTypes.object,
+  helpTexts: PropTypes.array,
   helpTextId: PropTypes.string,
 };
