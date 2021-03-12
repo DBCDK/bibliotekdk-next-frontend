@@ -578,6 +578,34 @@
         "en": "Help and instructions"
       }
     },
+    "help": {
+      "header-button-ask": {
+        "da": "Spørg en bibliotekar",
+        "en": "Ask a librarian"
+      },
+      "faq-title": {
+        "da": "Ofte stillede spørgsmål",
+        "en": "Frequently asked questions"
+      },
+      "back-to-bib": {
+        "da": "Tilbage til bibliotek.dk",
+        "en": "Back to bibliotek.dk"
+      },
+      "help-title": {
+        "da": "Hjælp og vejledninger",
+        "en": "Help and instructions"
+      },
+      "show-more-faq": {
+        "da": "Vis flere spørgsmål",
+        "en": "Show more questions"
+      }
+    },
+    "language": {
+      "eng-dan": {
+        "da": "Eng",
+        "en": "Dan"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",

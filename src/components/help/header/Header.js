@@ -1,10 +1,10 @@
-import Router from "next/router";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
+import Language from "@/components/base/language";
 
 import LogoSvg from "@/public/icons/logo_help.svg";
 
@@ -39,21 +39,18 @@ export default function Header() {
         <Col className={styles.right}>
           <span>
             <Link href="/hjaelp" className={styles.ask}>
-              <Text type="text2">Spørg en bibliotekar</Text>
+              <Text type="text2">
+                {Translate({ context: "help", label: "header-button-ask" })}
+              </Text>
               <Icon size={2} src="bubble.svg" />
             </Link>
-            <Link
-              onClick={(e) => {
-                e.preventDefault();
-                const locale = Router.locale === "da" ? "en" : "da";
-                const pathname = Router.pathname;
-                const query = Router.query;
-
-                Router.replace({ pathname, query }, null, { locale });
-              }}
-            >
-              <Text type="text2">Eng</Text>
-            </Link>
+            <Language>
+              <Link>
+                <Text type="text2">
+                  {Translate({ context: "language", label: "eng-dan" })}
+                </Text>
+              </Link>
+            </Language>
           </span>
         </Col>
       </Row>

@@ -8,6 +8,7 @@ import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Faq from "../faq";
+import Sections from "../sections";
 
 import Header from "../header";
 
@@ -24,7 +25,7 @@ function BackButton() {
   return (
     <div className={styles.back}>
       <Link href="/" border={{ bottom: { keepVisible: true } }}>
-        <Text>Tilbage til bibliotek.dk</Text>
+        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
       </Link>
     </div>
   );
@@ -56,7 +57,9 @@ export default function Page() {
         <Container className={styles.top} fluid>
           <Row>
             <Col xs={12} lg={{ span: 9, offset: 3 }}>
-              <Title type="title3">Hjælp og vejledninger</Title>
+              <Title type="title3">
+                {Translate({ context: "help", label: "help-title" })}
+              </Title>
             </Col>
           </Row>
         </Container>
@@ -69,6 +72,7 @@ export default function Page() {
           <input placeholder="Søg i hjælp" />
         </Section>
         <Faq className={styles.faq} />
+        <Sections className={styles.sections} />
       </main>
     </React.Fragment>
   );

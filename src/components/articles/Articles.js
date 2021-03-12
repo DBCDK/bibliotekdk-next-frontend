@@ -37,7 +37,7 @@ Articles.propTypes = {
   skeleton: PropTypes.bool,
 };
 
-export default function Wrapper(props) {
+export default function Wrap(props) {
   const { isLoading, data } = useData(allArticles());
   const articles = get(data, "nodeQuery.entities", []).filter(
     (article) => article && article.__typename === "NodeArticle"

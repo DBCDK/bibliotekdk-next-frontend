@@ -1,3 +1,7 @@
 .section section div:last-child > hr {
   margin: 0;
 }
+
+.button {
+  margin-top: var(--pt2);
+}

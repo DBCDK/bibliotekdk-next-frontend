@@ -6,13 +6,15 @@ import Accordion from "@/components/base/accordion";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 import Link from "@/components/base/link";
+import Icon from "@/components/base/icon";
+import Title from "@/components/base/title";
 
-import { sortData } from "./utils";
+// import { sortData } from "./utils";
 
-import styles from "./Faq.module.css";
+import styles from "./Sections.module.css";
 
 /**
- * The FAQ React component
+ * The Sections page React component
  *
  * @param {obj} props
  * @param {obj} props.className
@@ -21,26 +23,24 @@ import styles from "./Faq.module.css";
  *
  * @returns {component}
  */
-export function Faq({ className, data }) {
-  data = useMemo(() => sortData(data), [data]);
+export function Sections({ className, data }) {
+  //   data = useMemo(() => sortData(data), [data]);
 
   return (
     <Section
       className={`${styles.section} ${className}`}
-      title={Translate({ context: "help", label: "faq-title" })}
+      title={<Icon size={{ w: 6, h: "auto" }} src={"ornament1.svg"} />}
+      titleDivider={false}
+      contentDivider={false}
     >
-      <Accordion data={data} />
-
-      <Link href="/hjaelp" a={false}>
-        <Button type="secondary" size="medium" className={styles.button}>
-          {Translate({ context: "help", label: "show-more-faq" })}
-        </Button>
-      </Link>
+      <Title type="title3">
+        {Translate({ context: "help", label: "show-more-faq" })}
+      </Title>
     </Section>
   );
 }
 
-Faq.propTypes = {
+Sections.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
 };
@@ -88,7 +88,7 @@ export default function Wrap(props) {
     },
   ];
 
-  return <Faq {...props} data={data} />;
+  return <Sections {...props} data={data} />;
 }
 
 Wrap.propTypes = {
