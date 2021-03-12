@@ -2,13 +2,15 @@ import { useData } from "@/lib/api/api";
 import { helpText } from "@/lib/api/helptexts.fragments.js";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+import PropTypes from "prop-types";
+import { CookieBox } from "@/components/cookiebox/CookieBox";
 
 /**
  * get a helptext by id from api
  * @param helpTextID
  * @return {{isLoading, data}}
  */
-export function getAhelpText({ helpTextID }) {
+function getAhelpText({ helpTextID }) {
   const { isLoading, data } = useData(helpText(helpTextID));
   return { isLoading, data };
 }
@@ -40,7 +42,7 @@ export function HelpText({ helptext }) {
  * @return {JSX.Element|null}
  * @constructor
  */
-export default function Wrapper({ helpTextID }) {
+export default function Wrap({ helpTextID }) {
   const { isLoading, data } = getAhelpText({ helpTextID });
   if (!data || !data.helptext) {
     // @TODO skeleton
@@ -49,3 +51,7 @@ export default function Wrapper({ helpTextID }) {
 
   return <HelpText helptext={data.helptext} />;
 }
+
+HelpText.propTypes = {
+  helptext: PropTypes.object,
+};
