@@ -7,7 +7,6 @@ import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
-import { HelpText } from "@/components/helptexts/HelpText";
 
 /**
  * Component to show helptext menu in groups
@@ -115,7 +114,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
             {item.title}
           </Text>
         }
-        href={{ pathname: `/helptexts/${item.id}`, query: {} }}
+        href={{ pathname: `/help/${item.id}`, query: {} }}
         key={`menulink-${index}`}
         className={classNames(
           menuItems[group.name][index].id === parseInt(helpTextId, "10")
@@ -183,9 +182,7 @@ export default function Wrap({ helpTextID }) {
     // @TODO skeleton
     return null;
   }
-
   const allHelpTexts = data.nodeQuery.entities;
-
   return <HelpTextMenu helpTexts={allHelpTexts} helpTextId={helpTextID} />;
 }
 
