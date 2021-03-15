@@ -80,10 +80,11 @@ export function PreExpanded() {
 
   return (
     <div>
-      <StoryTitle>Accordion: Custom content</StoryTitle>
+      <StoryTitle>Pre-expanded</StoryTitle>
       <StoryDescription>
-        Custom content can be passed to the Accordion component. Import the Item
-        component from the Accordion and pass strings or components as children.
+        A section can be mounted open as default by using the "defaultActiveKey"
+        prop and set the key for the section you want to pre-open (e.g.
+        defaultActiveKey="1")
       </StoryDescription>
       <div style={{ maxWidth: "1000px" }}>
         <Accordion data={data} defaultActiveKey="1" />
@@ -128,11 +129,10 @@ export function CustomContent() {
 
   return (
     <div>
-      <StoryTitle>Accordion: Pre-expanded section</StoryTitle>
+      <StoryTitle>Custom Content</StoryTitle>
       <StoryDescription>
-        A section can be mounted open as default by using the "defaultActiveKey"
-        prop and set the key for the section you want to pre-open (e.g.
-        defaultActiveKey="1")
+        Custom content can be passed to the Accordion component. Import the Item
+        component from the Accordion and pass strings or components as children.
       </StoryDescription>
       <div style={{ maxWidth: "1000px" }}>
         <Accordion>
