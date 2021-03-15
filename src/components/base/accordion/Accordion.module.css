@@ -2,21 +2,38 @@
   border-bottom: 1px solid var(--iron);
 }
 
-.header {
-  height: var(--pt7);
+.element .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 var(--pt3) 0 0;
+  padding: var(--pt2) 0;
   cursor: pointer;
 }
 
-.header:focus p,
-.header:hover p {
+.element .header p {
+  width: calc(100% - var(--pt7));
+}
+
+.element .header:focus p,
+.element .header:hover p {
   color: var(--blue);
 }
 
 .content p {
-  padding: var(--pt3) var(--pt10) var(--pt3) 0;
+  padding: var(--pt2) var(--pt7) var(--pt3) 0;
+}
+
+@media (min-width: 992px) {
+  .element .header p {
+    width: calc(100% - var(--pt10));
+  }
+
+  .content p {
+    padding: var(--pt2) var(--pt10) var(--pt3) 0;
+  }
+
+  .element .header {
+    padding: var(--pt2) var(--pt3) var(--pt2) 0;
+  }
 }

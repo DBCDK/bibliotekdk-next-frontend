@@ -26,11 +26,10 @@ export function Faq({ className, data }) {
 
   return (
     <Section
-      className={`${styles.section} ${className}`}
+      className={`${styles.faq} ${className}`}
       title={Translate({ context: "help", label: "faq-title" })}
     >
-      <Accordion data={data} />
-
+      <Accordion data={data} className={styles.accordion} />
       <Link href="/hjaelp" a={false}>
         <Button type="secondary" size="medium" className={styles.button}>
           {Translate({ context: "help", label: "show-more-faq" })}

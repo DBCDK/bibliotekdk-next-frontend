@@ -1,0 +1,17 @@
+.sections {
+  padding-top: var(--pt15);
+  padding-bottom: var(--pt5);
+}
+
+.sections section div:first-child {
+  display: flex;
+  align-items: center;
+}
+
+.section {
+  padding-bottom: var(--pt10);
+}
+
+.section .links {
+  padding-top: var(--pt1);
+}

@@ -8,6 +8,7 @@ import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 
 // import { sortData } from "./utils";
 
@@ -27,16 +28,38 @@ export function Sections({ className, data }) {
   //   data = useMemo(() => sortData(data), [data]);
 
   return (
-    <Section
-      className={`${styles.section} ${className}`}
-      title={<Icon size={{ w: 6, h: "auto" }} src={"ornament1.svg"} />}
-      titleDivider={false}
-      contentDivider={false}
-    >
-      <Title type="title3">
-        {Translate({ context: "help", label: "show-more-faq" })}
-      </Title>
-    </Section>
+    <div>
+      <Section
+        className={`${styles.sections} ${className}`}
+        title={<Icon size={{ w: 6, h: "auto" }} src={"ornament1.svg"} />}
+        titleDivider={false}
+        contentDivider={false}
+      >
+        <Title type="title3">
+          {Translate({ context: "help", label: "all-pages" })}
+        </Title>
+      </Section>
+
+      {data.map((s, i) => {
+        return (
+          <Section
+            className={`${className} ${styles.section}`}
+            title={s.title}
+            key={`${s.title}_${i}`}
+          >
+            {s.links.map((l, i) => {
+              return (
+                <div className={styles.links} key={`${l.title}_${i}`}>
+                  <Link href={l.href}>
+                    <Text type="text1">{l.title}</Text>
+                  </Link>
+                </div>
+              );
+            })}
+          </Section>
+        );
+      })}
+    </div>
   );
 }
 
@@ -51,40 +74,40 @@ export default function Wrap(props) {
   // temp. dummy
   const data = [
     {
-      title: "Har mit bibliotek bogen?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem. Pellentesque placerat facilisis commodo. Aenean ligula metus, sodales et augue eget, porttitor gravida arcu.",
-      },
+      title: "Some title 1",
+      links: [
+        { title: "Some page 1", href: "/hjaelp" },
+        { title: "Some page 2", href: "/hjaelp" },
+        { title: "Some page 3", href: "/hjaelp" },
+        { title: "Some page 4", href: "/hjaelp" },
+      ],
     },
     {
-      title:
-        "Hvorfor ser jeg et mindre antal poster end det, der står i antal hits?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor.",
-      },
+      title: "Some title 2",
+      links: [
+        { title: "Some page 1", href: "/hjaelp" },
+        { title: "Some page 2", href: "/hjaelp" },
+        { title: "Some page 3", href: "/hjaelp" },
+        { title: "Some page 4", href: "/hjaelp" },
+      ],
     },
     {
-      title: "Hvordan søger jeg specifikt på fx. mp3-lydbøger?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem.",
-      },
+      title: "Some title 3",
+      links: [
+        { title: "Some page 1", href: "/hjaelp" },
+        { title: "Some page 2", href: "/hjaelp" },
+        { title: "Some page 3", href: "/hjaelp" },
+        { title: "Some page 4", href: "/hjaelp" },
+      ],
     },
     {
-      title: "Hvordan ser jeg de nyeste resultater først?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor.",
-      },
-    },
-    {
-      title: "Hvordan fornyer jeg et lån?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem.",
-      },
+      title: "Some title 4",
+      links: [
+        { title: "Some page 1", href: "/hjaelp" },
+        { title: "Some page 2", href: "/hjaelp" },
+        { title: "Some page 3", href: "/hjaelp" },
+        { title: "Some page 4", href: "/hjaelp" },
+      ],
     },
   ];
 

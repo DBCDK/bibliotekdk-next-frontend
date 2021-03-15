@@ -31,7 +31,7 @@ export default function Header() {
               prefix: "header-help",
             })}
           >
-            <Icon className={styles.logo} size={{ w: "auto", h: 6 }}>
+            <Icon className={styles.logo} size={{ w: "auto", h: 5 }}>
               <LogoSvg />
             </Icon>
           </Link>
@@ -39,8 +39,17 @@ export default function Header() {
         <Col className={styles.right}>
           <span>
             <Link href="/hjaelp" className={styles.ask}>
-              <Text type="text2">
-                {Translate({ context: "help", label: "header-button-ask" })}
+              <Text type="text2" className={styles.full}>
+                {Translate({
+                  context: "help",
+                  label: "header-button-ask-full",
+                })}
+              </Text>
+              <Text type="text2" className={styles.short}>
+                {Translate({
+                  context: "help",
+                  label: "header-button-ask-short",
+                })}
               </Text>
               <Icon size={2} src="bubble.svg" />
             </Link>

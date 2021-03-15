@@ -57,9 +57,16 @@ function Element({ title, text, eventKey }) {
  * @returns {component}
  */
 
-export default function Accordion({ defaultActiveKey = null, data }) {
+export default function Accordion({
+  defaultActiveKey = null,
+  data,
+  className = "",
+}) {
   return (
-    <BootstrapAccordion defaultActiveKey={defaultActiveKey}>
+    <BootstrapAccordion
+      defaultActiveKey={defaultActiveKey}
+      className={className}
+    >
       {data.map((a, i) => (
         <Element
           {...a}

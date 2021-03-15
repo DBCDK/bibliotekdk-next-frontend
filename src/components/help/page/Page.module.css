@@ -1,28 +1,13 @@
 .top {
-  padding-top: var(--pt12);
+  padding-top: var(--pt10);
 }
-
-.back {
-  /* Same height as input field - used to align center*/
-  height: var(--pt7);
-
-  display: inline-flex;
-  align-items: center;
-}
-
-.search {
-  padding-top: var(--pt3);
-}
-
-/* Dummy -> delete when real input is ready */
-.search input {
-  height: var(--pt7);
-  width: 559px;
-  border: 1px solid var(--gray);
-  padding: var(--pt2);
-}
-/*  */
 
 .faq {
   padding-top: var(--pt15);
+}
+
+@media (min-width: 992px) {
+  .top {
+    padding-top: var(--pt12);
+  }
 }

@@ -38,8 +38,12 @@ function Icon({
 
   // Set icon size
   const dimensions = {
-    height,
     width,
+    minWidth: width,
+    maxWidth: width,
+    height,
+    minHeight: height,
+    maxHeight: height,
   };
 
   const backgroundColor = {
