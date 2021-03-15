@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Card from "./Card";
 export default {
-  title: "Cards",
+  title: "base/Cards",
 };
 
 export function WorkNarrowAndWideCover() {

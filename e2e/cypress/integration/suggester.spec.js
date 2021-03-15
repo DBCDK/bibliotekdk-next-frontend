@@ -4,7 +4,7 @@
  */
 describe("Suggester", () => {
   before(function () {
-    cy.visit("/iframe.html?id=suggester--header-suggester");
+    cy.visit("/iframe.html?id=search-suggester--header-suggester");
   });
 
   // Tabs

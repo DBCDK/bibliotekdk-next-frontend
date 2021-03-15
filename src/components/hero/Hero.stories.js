@@ -1,7 +1,7 @@
 import Hero from "./Hero";
 
 export default {
-  title: "Hero",
+  title: "layout/Hero",
 };
 
 export function HeroStory() {

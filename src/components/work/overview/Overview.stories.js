@@ -3,7 +3,7 @@ import dummy_workDataApi from "../dummy.workDataApi";
 import { OverviewSkeleton, Overview } from "./Overview";
 
 export default {
-  title: "Work: Overview",
+  title: "work/Overview",
 };
 
 /**

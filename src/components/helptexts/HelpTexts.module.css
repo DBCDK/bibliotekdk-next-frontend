@@ -1,0 +1,24 @@
+.helplink {
+    padding-left: var(--pt3);
+}
+
+.helpicon {
+    padding-right: var(--pt1);
+}
+
+.helpgroup {
+    cursor: pointer;
+}
+
+.helpactive p{
+    font-weight: bold;
+}
+
+.helphide {
+    display: none;
+}
+
+.helpheader {
+    height: 100px;
+}
+

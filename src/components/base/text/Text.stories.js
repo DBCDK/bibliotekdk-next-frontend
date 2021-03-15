@@ -3,7 +3,7 @@ import { StoryTitle, StorySpace } from "@/storybook";
 import Text from "./Text";
 
 export default {
-  title: "Texts",
+  title: "base/Texts",
 };
 
 // Current text types

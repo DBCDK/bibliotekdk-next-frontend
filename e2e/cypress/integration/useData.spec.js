@@ -5,19 +5,23 @@
  */
 describe("Testing useData hook", () => {
   it(`is able to fetch data, showing the different load states`, () => {
-    cy.visit("/iframe.html?id=useapi--fetching-data&viewMode=story");
+    cy.visit("/iframe.html?id=hooks-usedata--fetching-data&viewMode=story");
     cy.contains("loader");
     cy.contains("langsomt");
     cy.contains("Doppler");
   });
 
   it(`shows error`, () => {
-    cy.visit("/iframe.html?id=useapi--error-fetching-data&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=hooks-usedata--error-fetching-data&viewMode=story"
+    );
     cy.contains("error");
   });
 
   it(`same query should not create doublet entries in client state`, () => {
-    cy.visit("/iframe.html?id=useapi--exposing-client-state&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=hooks-usedata--exposing-client-state&viewMode=story"
+    );
     cy.get("[data-cy=client-state]").then((el) => {
       const state = JSON.parse(el.text());
 
@@ -32,7 +36,7 @@ describe("Testing useData hook", () => {
 
   it(`should show multiple entries in client state`, () => {
     cy.visit(
-      "/iframe.html?id=useapi--exposing-client-state-multiple-entries&viewMode=story"
+      "/iframe.html?id=hooks-usedata--exposing-client-state-multiple-entries&viewMode=story"
     );
     cy.get("[data-cy=client-state]").then((el) => {
       const state = JSON.parse(el.text());
@@ -54,7 +58,7 @@ describe("Testing useData hook", () => {
 
   it(`should show error in client state`, () => {
     cy.visit(
-      "/iframe.html?id=useapi--exposing-client-state-with-error&viewMode=story"
+      "/iframe.html?id=hooks-usedata--exposing-client-state-with-error&viewMode=story"
     );
     cy.get("[data-cy=client-state]").then((el) => {
       const state = JSON.parse(el.text());

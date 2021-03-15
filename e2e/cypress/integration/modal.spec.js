@@ -4,7 +4,7 @@
  */
 describe("Suggester", () => {
   beforeEach(function () {
-    cy.visit("/iframe.html?id=modal--show-modal");
+    cy.visit("/iframe.html?id=modal-modal--show-modal");
   });
 
   it(`Can show modal with menu template`, () => {

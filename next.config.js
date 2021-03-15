@@ -40,6 +40,8 @@ module.exports = {
       "forfatterweb.dk",
       "bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk",
       "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
+
+      "172.17.36.204",
     ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },
@@ -77,6 +79,7 @@ module.exports = {
       url:
         process.env.NEXT_PUBLIC_API_URL ||
         "https://alfa-api.stg.bibliotek.dk/graphql",
+
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
   },

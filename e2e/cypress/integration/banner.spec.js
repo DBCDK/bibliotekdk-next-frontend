@@ -4,7 +4,7 @@
  */
 describe("TopBanner", () => {
   before(function () {
-    cy.visit("/iframe.html?id=banner--top-banner");
+    cy.visit("/iframe.html?id=layout-banner--top-banner");
   });
 
   it(`View in BIG viewport`, () => {

@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import WorkSlider from "./WorkSlider";
 export default {
-  title: "Slider",
+  title: "base/Slider",
 };
 
 const works = [

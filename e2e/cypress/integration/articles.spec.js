@@ -1,6 +1,8 @@
 describe("Article", () => {
   it(`Section display article previews`, () => {
-    cy.visit("/iframe.html?id=articles--triple-section&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=articles-sections--triple-section&viewMode=story"
+    );
     // Check that only articles matching section are shown
     cy.get("[data-cy=article-preview]").its("length").should("equal", 3);
 
@@ -13,7 +15,9 @@ describe("Article", () => {
   });
 
   it(`Tab through article previews`, () => {
-    cy.visit("/iframe.html?id=articles--triple-section&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=articles-sections--triple-section&viewMode=story"
+    );
     cy.tab();
     cy.focused().contains("Spørg en bibliotekar");
     cy.tab();
@@ -23,7 +27,9 @@ describe("Article", () => {
   });
 
   it(`Article preview links to article page`, () => {
-    cy.visit("/iframe.html?id=articles--triple-section&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=articles-sections--triple-section&viewMode=story"
+    );
     const stub = cy.stub();
     cy.on("window:alert", stub);
     cy.tabs(3)
@@ -36,7 +42,9 @@ describe("Article", () => {
   });
 
   it(`Single-section: Can navigate to article`, () => {
-    cy.visit("/iframe.html?id=articles--single-section&viewMode=story");
+    cy.visit(
+      "/iframe.html?id=articles-sections--single-section&viewMode=story"
+    );
     const stub = cy.stub();
     cy.on("window:alert", stub);
     cy.tab()
@@ -49,7 +57,9 @@ describe("Article", () => {
   });
 
   it(`Single-section: Can navigate to alternative url`, () => {
-    cy.visit("/iframe.html?id=articles--single-section-alternative-url");
+    cy.visit(
+      "/iframe.html?id=articles-sections--single-section-alternative-url"
+    );
     const stub = cy.stub();
     cy.on("window:alert", stub);
     cy.tab()

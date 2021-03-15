@@ -5,7 +5,7 @@
 describe("Cards", () => {
   it(`Clicking card links to work page`, () => {
     cy.visit(
-      "/iframe.html?id=cards--work-narrow-and-wide-cover&viewMode=story"
+      "/iframe.html?id=base-cards--work-narrow-and-wide-cover&viewMode=story"
     );
 
     // When running in Storybook mode, clicking a link
@@ -24,7 +24,7 @@ describe("Cards", () => {
 
   it(`Tabbing will focus cards`, () => {
     cy.visit(
-      "/iframe.html?id=cards--work-narrow-and-wide-cover&viewMode=story"
+      "/iframe.html?id=base-cards--work-narrow-and-wide-cover&viewMode=story"
     );
 
     // When running in Storybook mode, clicking a link

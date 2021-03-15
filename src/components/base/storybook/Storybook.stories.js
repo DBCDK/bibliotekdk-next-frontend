@@ -6,7 +6,7 @@ import {
 } from "./Storybook";
 
 export default {
-  title: "Storybook",
+  title: "storybook/Storybook",
 };
 
 /**
