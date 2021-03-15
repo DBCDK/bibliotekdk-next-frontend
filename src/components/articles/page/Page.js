@@ -27,11 +27,11 @@ export default function Page() {
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
-        <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
+        <meta property="og:url" content="https://alfa.bibliotek.dk/artikler" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
+        <meta property="og:url" content="https://alfa.bibliotek.dk/artikler" />
       </Head>
       <Header router={router} />
       <main>

@@ -1,0 +1,86 @@
+.header {
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header > div {
+  align-items: center;
+}
+
+.right {
+  display: flex;
+}
+
+.right span {
+  margin-left: auto;
+}
+
+.ask {
+  position: relative;
+  padding-right: var(--pt3);
+  margin-right: var(--pt3);
+}
+
+.ask i {
+  position: absolute;
+  top: calc(var(--pt2) * -1);
+  right: 0;
+}
+
+.ask .full,
+.ask .short {
+  display: none;
+}
+
+/* Logo */
+
+.logoWrap:focus-visible {
+  outline: solid 1px var(--blue);
+  outline-offset: var(--pt1);
+}
+
+.logoWrap:active {
+  outline: none;
+}
+
+.logo {
+  cursor: pointer;
+}
+
+@media (min-width: 364px) {
+  .ask i {
+    top: calc(var(--pt05) * -1);
+  }
+
+  .ask .short {
+    display: block;
+  }
+}
+
+@media (min-width: 992px) {
+  .header {
+    padding-top: var(--pt4);
+    padding-bottom: var(--pt4);
+    box-shadow: none;
+  }
+
+  .logo {
+    /* override icon inline style */
+    height: var(--pt6) !important;
+    min-height: var(--pt6) !important;
+    max-height: var(--pt6) !important;
+  }
+
+  .ask {
+    margin-right: var(--pt8);
+  }
+
+  .ask .full {
+    display: block;
+  }
+
+  .ask .short {
+    display: none;
+  }
+}

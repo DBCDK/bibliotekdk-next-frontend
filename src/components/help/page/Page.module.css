@@ -1,0 +1,13 @@
+.top {
+  padding-top: var(--pt10);
+}
+
+.faq {
+  padding-top: var(--pt15);
+}
+
+@media (min-width: 992px) {
+  .top {
+    padding-top: var(--pt12);
+  }
+}

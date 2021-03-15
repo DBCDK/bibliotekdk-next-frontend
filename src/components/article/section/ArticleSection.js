@@ -138,12 +138,12 @@ ArticleSection.propTypes = {
   template: PropTypes.string,
 };
 
-export default function Wrapper(props) {
+export default function Wrap(props) {
   const { articles, isLoading, data } = getArticleData();
   return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
 }
 
-Wrapper.propTypes = {
+Wrap.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   articles: PropTypes.array,
   skeleton: PropTypes.bool,

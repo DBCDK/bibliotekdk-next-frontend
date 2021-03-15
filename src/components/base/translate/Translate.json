@@ -578,6 +578,46 @@
         "en": "Help and instructions"
       }
     },
+    "help": {
+      "Help and guides": {
+        "da": "Hjælp og vejledinger",
+        "en": "Help and guidance"
+      },
+      "header-button-ask-full": {
+        "da": "Spørg en bibliotekar",
+        "en": "Ask a librarian"
+      },
+      "header-button-ask-short": {
+        "da": "Bibliotekar",
+        "en": "Librarian"
+      },
+      "faq-title": {
+        "da": "Ofte stillede spørgsmål",
+        "en": "Frequently asked questions"
+      },
+      "back-to-bib": {
+        "da": "Tilbage til bibliotek.dk",
+        "en": "Back to bibliotek.dk"
+      },
+      "help-title": {
+        "da": "Hjælp og vejledninger",
+        "en": "Help and instructions"
+      },
+      "show-more-faq": {
+        "da": "Vis flere spørgsmål",
+        "en": "Show more questions"
+      },
+      "all-pages": {
+        "da": "Alle hjælpesider",
+        "en": "All help pages"
+      }
+    },
+    "language": {
+      "eng-dan": {
+        "da": "Eng",
+        "en": "Dan"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",
@@ -630,12 +670,6 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
-      }
-    },
-    "help": {
-      "Help and guides": {
-        "da": "Hjælp og vejledinger",
-        "en": "Help and guidance"
       }
     }
   }

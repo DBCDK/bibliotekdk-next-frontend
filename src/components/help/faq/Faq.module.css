@@ -1,0 +1,28 @@
+.faq section div:first-child > hr {
+  display: none;
+}
+
+.button {
+  margin-top: var(--pt2);
+  width: 100%;
+}
+
+.accordion > div:first-child {
+  border-top: 1px solid var(--iron);
+}
+
+@media (min-width: 576px) {
+  .button {
+    width: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .faq section div:last-child > hr {
+    margin: 0;
+  }
+
+  .accordion > div:first-child {
+    border-top: none;
+  }
+}

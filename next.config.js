@@ -52,6 +52,20 @@ module.exports = {
     });
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: "/hj%C3%A6lp",
+        destination: "/hjaelp",
+        permanent: true,
+      },
+      {
+        source: "/help",
+        destination: "/hjaelp",
+        permanent: true,
+      },
+    ];
+  },
   publicRuntimeConfig: {
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
     // This allow AI to remove entries with session_id=test
