@@ -6,6 +6,14 @@
   padding-top: var(--pt15);
 }
 
+.back {
+  /* Same height as input field - used to align center*/
+  height: var(--pt7);
+
+  display: inline-flex;
+  align-items: center;
+}
+
 @media (min-width: 992px) {
   .top {
     padding-top: var(--pt12);

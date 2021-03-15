@@ -14,6 +14,21 @@ import Translate from "@/components/base/translate";
 import styles from "./Page.module.css";
 
 /**
+ * Back to bibliotek.dk button
+ *
+ * @returns {component}
+ */
+function BackButton() {
+  return (
+    <div className={styles.back}>
+      <Link href="/" border={{ bottom: { keepVisible: true } }}>
+        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
+      </Link>
+    </div>
+  );
+}
+
+/**
  * The Articles page React component
  *
  * @returns {component}

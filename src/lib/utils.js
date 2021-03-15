@@ -13,7 +13,13 @@ import config from "../config";
  * @returns {string} encoded string
  */
 export function encodeString(str = "") {
-  return str.replace(/\s+/g, "-").toLowerCase();
+  return str
+    .replace(/\s+/g, "-")
+    .toLowerCase()
+    .replace(/æ/g, "ae")
+    .replace(/ø/g, "oe")
+    .replace(/å/g, "aa")
+    .toLowerCase();
 }
 
 /**
