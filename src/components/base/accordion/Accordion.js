@@ -61,7 +61,7 @@ export function Item({ title, children, eventKey }) {
   );
 }
 
-Element.propTypes = {
+Item.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   eventKey: PropTypes.string.isRequired,
