@@ -1,16 +1,11 @@
 import PropTypes from "prop-types";
-import { useMemo } from "react";
 
 import Section from "@/components/base/section";
-import Accordion from "@/components/base/accordion";
 import Translate from "@/components/base/translate";
-import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
-
-// import { sortData } from "./utils";
 
 import styles from "./Sections.module.css";
 
@@ -25,8 +20,6 @@ import styles from "./Sections.module.css";
  * @returns {component}
  */
 export function Sections({ className, data }) {
-  //   data = useMemo(() => sortData(data), [data]);
-
   return (
     <div>
       <Section

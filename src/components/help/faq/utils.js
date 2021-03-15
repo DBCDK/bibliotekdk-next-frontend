@@ -10,7 +10,7 @@ import get from "lodash/get";
  */
 export function sortData(data) {
   data = data.map((d) => {
-    return { title: d.title, text: get(d, "body.value", "") };
+    return { title: d.title, content: get(d, "body.value", "") };
   });
 
   // latest articles first
