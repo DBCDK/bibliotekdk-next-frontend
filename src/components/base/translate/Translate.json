@@ -579,6 +579,10 @@
       }
     },
     "help": {
+      "Help and guides": {
+        "da": "Hjælp og vejledinger",
+        "en": "Help and guidance"
+      },
       "header-button-ask-full": {
         "da": "Spørg en bibliotekar",
         "en": "Ask a librarian"
@@ -666,12 +670,6 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
-      }
-    },
-    "help": {
-      "Help and guides": {
-        "da": "Hjælp og vejledinger",
-        "en": "Help and guidance"
       }
     }
   }

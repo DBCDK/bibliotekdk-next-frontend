@@ -5,7 +5,6 @@ import AccordionContext from "react-bootstrap/AccordionContext";
 
 import ExpandIcon from "@/components/base/animation/expand";
 
-import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 
 import styles from "./Accordion.module.css";
@@ -25,7 +24,7 @@ function Element({ title, text, eventKey }) {
   const isCurrentEventKey = currentEventKey === eventKey;
 
   return (
-    <Card className={styles.element}>
+    <Card className={styles.element} data-cy="accordion-item">
       <Card.Header
         tabIndex="0"
         className={styles.header}
@@ -66,6 +65,7 @@ export default function Accordion({
     <BootstrapAccordion
       defaultActiveKey={defaultActiveKey}
       className={className}
+      data-cy="accordion"
     >
       {data.map((a, i) => (
         <Element
