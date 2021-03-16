@@ -1,4 +1,4 @@
-import Search from "@/components/help/search";
+import { Search } from "@/components/help/search";
 import { useState } from "react";
 
 export default {

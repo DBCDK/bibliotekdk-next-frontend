@@ -486,6 +486,14 @@
       "filters": {
         "da": "Filtrer",
         "en": "Filters"
+      },
+      "noResults": {
+        "da": "Din søgning giver ingen resultater",
+        "en": "Your search returned no results"
+      },
+      "noResultsResolution": {
+        "da": "Tjek din stavning eller prøv med et andet søgeord.",
+        "en": "Check your spelling or try a different keyword."
       }
     },
     "suggester": {

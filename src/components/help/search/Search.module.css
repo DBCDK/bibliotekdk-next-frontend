@@ -29,6 +29,10 @@
   background-color: var(--iron) !important;
   width: 100%;
 }
+.skeleton .group {
+  max-width: 380px;
+}
+
 
 .row {
   margin: var(--pt2) 0;

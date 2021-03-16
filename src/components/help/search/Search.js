@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title/Title";
@@ -6,7 +8,16 @@ import { encodeString } from "@/lib/utils";
 import styles from "./Search.module.css";
 import Translate from "@/components/base/translate";
 
-export default function Search({
+/**
+ * Search component
+ * Makes it possible to search for help texts.
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export function Search({
   result = [],
   query = "",
   isLoading,
@@ -36,10 +47,10 @@ export default function Search({
       {query && result.length === 0 && !isLoading && (
         <div>
           <Title type="title4" tag="h4">
-            Din søgning giver ingen resultater
+            {Translate({ context: "search", label: "noResults" })}
           </Title>
           <Text type="text2">
-            Tjek din stavning eller prøv med et andet søgeord.
+            {Translate({ context: "search", label: "noResultsResolution" })}
           </Text>
         </div>
       )}
@@ -66,7 +77,12 @@ export default function Search({
             }
           >
             <div className={styles.row} data-cy="result-row">
-              <Text type="text3" lines={1} skeleton={isLoading}>
+              <Text
+                type="text3"
+                lines={1}
+                skeleton={isLoading}
+                className={styles.group}
+              >
                 <span
                   dangerouslySetInnerHTML={{
                     __html: doc.group || "indlæser",
@@ -93,4 +109,14 @@ export default function Search({
       })}
     </div>
   );
+}
+Search.propTypes = {
+  result: PropTypes.array,
+  query: PropTypes.string,
+  isLoading: PropTypes.bool,
+  onQueryChange: PropTypes.func,
+};
+
+export default function Wrap(props) {
+  return <Search {...props} />;
 }
