@@ -41,12 +41,7 @@ function ColumnOne({ manifestation }) {
       className={styles.fullmanifestation}
     >
       {manifestation.cover && (
-        <div>
-          <Cover
-            src={manifestation.cover.detail}
-            size={["100px", manifestation.cover.detail ? "auto" : "175px"]}
-          />
-        </div>
+        <Cover src={manifestation.cover.detail} size={["100px", "auto"]} />
       )}
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({
