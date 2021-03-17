@@ -36,6 +36,10 @@
     cursor: pointer;
 }
 
+.helpgroup:focus{
+    text-decoration: underline;
+}
+
 .helptext img{
     max-width: 100%;
 }

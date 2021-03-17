@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
+import { isConsole } from "react-device-detect";
 
 /**
  * Component to show helptext menu in groups
@@ -19,7 +20,7 @@ import PropTypes from "prop-types";
 function HelpTextGroups({ menus, groups, helpTextId }) {
   // use state to handle clickevent on group
   const [showGroups, setShowGroups] = useState(groups);
-  const rowClicked = ({ index }) => {
+  const rowClicked = (index) => {
     let groupStates = [...groups];
 
     groupStates.forEach((group, idx) => {
@@ -43,29 +44,25 @@ function HelpTextGroups({ menus, groups, helpTextId }) {
 
     return (
       <div key={`group-${index}`}>
-        <Text
-          tabIndex="0"
-          type="text1"
-          lines={30}
-          key={`helpmenu-${index}`}
-          className={classNames(
-            styles.helpgroup,
-            group.open ? styles.groupactive : ""
-          )}
-          onClick={() => {
-            rowClicked({ index });
-          }}
+        <div
+          tabIndex={0}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               rowClicked(index);
             }
           }}
+          className={styles.helpgroup}
+          onClick={() => {
+            rowClicked(index);
+          }}
         >
-          <span className={styles.helpicongroup}>
-            <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-          </span>
-          <span>{group.name}</span>
-        </Text>
+          <Text type="text1" lines={30} key={`helpmenu-${index}`}>
+            <span className={styles.helpicongroup}>
+              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            </span>
+            <span>{group.name}</span>
+          </Text>
+        </div>
         <div
           key={`dev-helpmenu-${index}`}
           className={classNames(
