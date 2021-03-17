@@ -34,7 +34,6 @@ function Breadcrumb({
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const key = cyKey({ name: children, prefix: "crumb" });
-
   return (
     <div
       className={`${styles.breadcrumb} ${className} ${disabledStyle}`}

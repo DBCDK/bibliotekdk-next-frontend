@@ -1,13 +1,43 @@
 .helplink {
-    padding-left: var(--pt3);
+    padding-left: var(--pt4);
 }
 
-.helpicon {
-    padding-right: var(--pt1);
+.helpmenu{
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .helpmenu {
+        display: block;
+    }
+}
+
+.helpbreadcrumb{
+    margin: var(--pt2) 0 var(--pt2) 0;
+    display:none;
+}
+@media (max-width: 992px) {
+    .helpbreadcrumb {
+        display: block;
+    }
+}
+
+.helpicongroup {
+    padding-right:var(--pt1);
+}
+
+.helpiconlink{
+    padding-left:var(--pt1);
+    position: relative;
+    top: 2px;
 }
 
 .helpgroup {
     cursor: pointer;
+}
+
+.helptext img{
+    max-width: 100%;
 }
 
 .helpactive p{
@@ -18,7 +48,4 @@
     display: none;
 }
 
-.helpheader {
-    height: 100px;
-}
 

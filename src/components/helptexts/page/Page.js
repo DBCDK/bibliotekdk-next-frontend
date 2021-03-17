@@ -1,13 +1,9 @@
 import PropTypes from "prop-types";
-
 import HelpText from "../HelpText";
-import styles from "@/components/header/Header.module.css";
+import styles from "../HelpTexts.module.css";
 import { Col, Container, Row } from "react-bootstrap";
-import React from "react";
-import { HelpTextHeader } from "../header/HelpTextHeader";
-import { Title } from "@/components/base/title/Title";
+import HelpTextHeader from "@/components/help/header";
 import HelpTextMenu from "../menu/HelpTextMenu";
-import translate from "@/components/base/translate";
 
 /**
  * HelpText page React component
@@ -19,29 +15,19 @@ import translate from "@/components/base/translate";
  */
 export default function HelpTextPage({ helptxtId }) {
   return (
-    <Container className={styles.header} fluid>
-      <Row>
-        <Col md={{ span: 3 }}>
-          <HelpTextHeader />
-        </Col>
-        <Col md={{ span: 9 }}>
-          <Title type="title4">
-            {translate({
-              context: "help",
-              label: "Help and guides",
-            })}
-          </Title>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{ span: 3 }}>
-          <HelpTextMenu helpTextID={helptxtId} />
-        </Col>
-        <Col md={{ span: 9 }}>
-          <HelpText helpTextID={helptxtId} />
-        </Col>
-      </Row>
-    </Container>
+    <React.Fragment>
+      <HelpTextHeader />
+      <Container fluid>
+        <Row>
+          <Col md={{ span: 3 }} className={styles.helpmenu}>
+            <HelpTextMenu helpTextID={helptxtId} />
+          </Col>
+          <Col md={{ span: 9 }} xs={{ span: 12 }} className={styles.helptext}>
+            <HelpText helpTextID={helptxtId} />
+          </Col>
+        </Row>
+      </Container>
+    </React.Fragment>
   );
 }
 

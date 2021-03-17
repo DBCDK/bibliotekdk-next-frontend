@@ -48,12 +48,20 @@ function HelpTextGroups({ menus, groups, helpTextId }) {
           type="text1"
           lines={30}
           key={`helpmenu-${index}`}
-          className={styles.helpgroup}
+          className={classNames(
+            styles.helpgroup,
+            group.open ? styles.groupactive : ""
+          )}
           onClick={() => {
             rowClicked({ index });
           }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              rowClicked(index);
+            }
+          }}
         >
-          <span className={styles.helpicon}>
+          <span className={styles.helpicongroup}>
             <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
           </span>
           <span>{group.name}</span>
@@ -105,9 +113,6 @@ export function HelpTextMenu({ helpTexts, helpTextId }) {
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => (
     <div className={styles.helplink} key={`div-menulink-${index}`}>
-      <span className={styles.helpicon}>
-        <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-      </span>
       <Link
         children={
           <Text type="text3" lines={2}>
@@ -122,6 +127,11 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
             : ""
         )}
       />
+      {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
+        <span className={styles.helpiconlink}>
+          <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+        </span>
+      )}
     </div>
   ));
 }
