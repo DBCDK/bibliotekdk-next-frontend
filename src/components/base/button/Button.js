@@ -25,6 +25,7 @@ function Button({
   size = "large",
   onClick = null,
   disabled = false,
+  tabIndex = null,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const key = cyKey({ name: children, prefix: "button" });
@@ -35,6 +36,7 @@ function Button({
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
       disabled={disabled}
+      tabIndex={tabIndex}
     >
       {children}
     </button>

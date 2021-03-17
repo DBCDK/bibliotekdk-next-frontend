@@ -4,14 +4,16 @@
   left: 0px;
   width: 100%; 
   z-index: 100;
+  pointer-events: none;
 }
+
 .cookiebox {
   max-width: 482px;
   background: var(--parchment);
   padding: var(--pt2) var(--pt3);
   margin: var(--pt2) var(--pt3);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  
+  pointer-events: auto;
 }
 .headline {
   margin-bottom: var(--pt05);

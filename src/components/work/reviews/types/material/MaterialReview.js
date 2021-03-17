@@ -132,7 +132,7 @@ function LectorReview({ data, skeleton }) {
           .map((paragraph, i) => {
             return (
               <span key={`paragraph-${i}`} className={styles.reviewTxt}>
-                <Title type="title4" skeleton={skeleton} lines={1}>
+                <Title type="title3" skeleton={skeleton} lines={1}>
                   {paragraph.text}
                 </Title>
                 <LectorLink paragraph={paragraph} skeleton={skeleton} />

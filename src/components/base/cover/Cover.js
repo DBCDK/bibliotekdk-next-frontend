@@ -33,7 +33,8 @@ function Cover({
   // Set icon size
   const dimensions = {
     width: `${size[0]}`,
-    height: `${size[1]}`,
+    // If no img/src is found, set height relative to width
+    height: `${src ? size[1] : size[0].match(/\d+/) * 1.5}px`,
   };
 
   const backgroundColor = {

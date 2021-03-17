@@ -73,6 +73,7 @@ export function CookieBox({ onAllowCookies, onDenyCookies, size }) {
           <Link
             border={{ top: false, bottom: { keepVisible: true } }}
             href={POLICY_ARTICLE_PATH}
+            tabIndex="1"
           >
             <Text type="text2">
               {translate({
@@ -82,13 +83,23 @@ export function CookieBox({ onAllowCookies, onDenyCookies, size }) {
             </Text>
           </Link>
           <div className={`${styles.buttonwrapper}`}>
-            <Button type="secondary" size="small" onClick={onAllowCookies}>
+            <Button
+              type="secondary"
+              size="small"
+              onClick={onAllowCookies}
+              tabIndex="2"
+            >
               {translate({
                 context: "general",
                 label: "ok",
               })}
             </Button>
-            <Button type="secondary" size="small" onClick={onDenyCookies}>
+            <Button
+              type="secondary"
+              size="small"
+              onClick={onDenyCookies}
+              tabIndex="3"
+            >
               {translate({
                 context: "general",
                 label: "no",
