@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { fetchOnServer } from "@/lib/api/api";
 import { helpText } from "@/lib/api/helptexts.fragments";
 
-import Page from "@/components/helptexts/page/Page";
+import Page from "@/components/help/texts/page";
 
 /**
  * Renders the help text component

@@ -8,7 +8,7 @@ import { useData } from "@/lib/api/api";
 import { helpTextSearch } from "@/lib/api/helptexts.fragments";
 import { useRouter } from "next/router";
 import Faq from "@/components/help/faq";
-import HelpTextMenu from "@/components/helptexts/menu";
+import HelpTextMenu from "@/components/help/menu";
 
 import styles from "./Page.module.css";
 

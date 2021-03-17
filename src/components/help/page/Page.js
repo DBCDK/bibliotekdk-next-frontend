@@ -2,12 +2,8 @@ import Head from "next/head";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import Title from "@/components/base/title";
 import Faq from "@/components/help/faq";
 import Sections from "../sections";
-import Search from "../search";
-
-import Header from "../header";
 
 import Translate from "@/components/base/translate";
 

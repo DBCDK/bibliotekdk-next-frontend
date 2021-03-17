@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Text from "@/components/base/text/Text";
-import styles from "@/components/helptexts/HelpTexts.module.css";
+import styles from "@/components/help/menu/HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
 import classNames from "classnames/bind";
 import Link from "@/components/base/link";
@@ -44,7 +44,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
     );
 
     return (
-      <div key={`group-${index}`} className={className}>
+      <div key={`group-${index}`} className={className} data-cy="help-menu">
         <div
           tabIndex={0}
           onKeyDown={(event) => {
