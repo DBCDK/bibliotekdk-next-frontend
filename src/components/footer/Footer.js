@@ -10,6 +10,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import Language from "@/components/base/language";
 import Link from "@/components/base/link";
 import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 
@@ -77,28 +78,50 @@ const ContactLinks = () => {
   const contact_links = {
     find_library: { pathname: "/", query: {} },
     about: { pathname: "/", query: {} },
-    help: { pathname: "/", query: {} },
+    help: { pathname: "/hjaelp", query: {} },
     press: { pathname: "/", query: {} },
     contact: { pathname: "/", query: {} },
-    privacy: { pathname: "/", query: {} },
+    privacy: {
+      pathname: "/artikel/privatlivspolitik/11",
+      query: {},
+    },
     English: { pathname: "/", query: {} },
   };
-  return Object.keys(contact_links).map((key, index) => (
-    <div key={key}>
+
+  const FooterLink = function ({ href, children, onClick }) {
+    return (
       <Link
-        href={contact_links[key]}
+        href={href}
         className={styles.footerlink}
         dataCy="contactlink"
+        onClick={onClick}
       >
         <Text tag="span" type="text3">
-          {Translate({
-            context: "footer",
-            label: `${key}`,
-          })}
+          {children}
         </Text>
       </Link>
-    </div>
-  ));
+    );
+  };
+
+  return Object.keys(contact_links).map((key) => {
+    let item = (
+      <FooterLink href={contact_links[key]}>
+        {Translate({ context: "footer", label: `${key}` })}
+      </FooterLink>
+    );
+
+    if (key === "English") {
+      item = (
+        <Language>
+          <FooterLink href={contact_links[key]}>
+            {Translate({ context: "language", label: "english-danish" })}
+          </FooterLink>
+        </Language>
+      );
+    }
+
+    return <div key={key}>{item}</div>;
+  });
 };
 
 /**

@@ -616,6 +616,10 @@
       "eng-dan": {
         "da": "Eng",
         "en": "Dan"
+      },
+      "english-danish": {
+        "da": "English",
+        "en": "Dansk"
       }
     },
     "units": {

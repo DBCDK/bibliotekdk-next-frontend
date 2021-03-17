@@ -30,16 +30,19 @@ export const Title = ({
   // style used for line clamping
   const [style, setStyle] = useState();
 
+  // Calc lineheight if clamp is set
+  const lineHeight =
+    clamp && el && el.current && getStyle(el.current, "line-height");
+
   // calculate height when lineclamping is on and set style
   useEffect(() => {
-    if (clamp && lines) {
-      const lineHeight = getStyle(el.current, "line-height");
+    if (clamp && lines && lineHeight) {
       setStyle({
         WebkitLineClamp: lines,
         maxHeight: lines * parseInt(lineHeight, 10),
       });
     }
-  }, []);
+  }, [lineHeight]);
 
   return (
     <Tag

@@ -18,5 +18,5 @@ export const actions = [
   { label: "forStudents", href: "/artikel/er-du-studerende%3F/9" },
   { label: "useTheLibraries", href: "/#!" },
   { label: "mySearches", href: "/#!" },
-  { label: "helpCenter", href: "/#!" },
+  { label: "helpCenter", href: "/hjaelp" },
 ];
