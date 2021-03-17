@@ -7,6 +7,10 @@ import { encodeString } from "@/lib/utils";
 
 import styles from "./Search.module.css";
 import Translate from "@/components/base/translate";
+import { useState } from "react";
+
+import { useData } from "@/lib/api/api";
+import { helpTextSearch } from "@/lib/api/helptexts.fragments.js";
 
 /**
  * Search component
@@ -117,6 +121,18 @@ Search.propTypes = {
   onQueryChange: PropTypes.func,
 };
 
-export default function Wrap(props) {
-  return <Search {...props} />;
+export default function Wrap() {
+  // Does query need to be part of the url?
+  // Seems like its not necessary, so we keep it local
+  const [query, setQuery] = useState();
+  const { isLoading, data } = useData(query && helpTextSearch(query));
+
+  return (
+    <Search
+      result={data?.help?.result}
+      query={query}
+      onQueryChange={(q) => setQuery(q)}
+      isLoading={isLoading}
+    />
+  );
 }

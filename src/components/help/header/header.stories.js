@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Header from "./Header";
+import { Header } from "./Header";
 
 export default {
   title: "Help/Header",

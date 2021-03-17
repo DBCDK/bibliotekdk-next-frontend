@@ -101,6 +101,7 @@
   width: 100%;
 }
 
+
 .search form {
   display: flex;
   margin-bottom: var(--pt4);
@@ -108,6 +109,7 @@
 }
 
 .search h4 {
+  margin-top: var(--pt2);
   margin-bottom: var(--pt1)
 }
 .row mark {
@@ -119,5 +121,12 @@
 @media (min-width: 768px) {
   .search form {
     margin-bottom: var(--pt12);
+  }
+
+}
+
+@media (min-width: 992px) {
+  .search h4 {
+    margin-top: initial;
   }
 }

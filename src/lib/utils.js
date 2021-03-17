@@ -19,6 +19,7 @@ export function encodeString(str = "") {
     .replace(/æ/g, "ae")
     .replace(/ø/g, "oe")
     .replace(/å/g, "aa")
+    .replace(/\?/g, "")
     .toLowerCase();
 }
 

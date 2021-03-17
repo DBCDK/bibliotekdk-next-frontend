@@ -494,6 +494,14 @@
       "noResultsResolution": {
         "da": "Tjek din stavning eller prøv med et andet søgeord.",
         "en": "Check your spelling or try a different keyword."
+      },
+      "noQuery": {
+        "da": "Indtast søgning for at finde hjælp",
+        "en": "Enter search to find help"
+      },
+      "noQueryResolution": {
+        "da": "Søg eksempelvis på 'bestil'",
+        "en": ""
       }
     },
     "suggester": {
