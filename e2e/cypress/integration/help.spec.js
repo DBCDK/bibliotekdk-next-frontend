@@ -6,11 +6,6 @@ describe("help", () => {
     cy.contains("Din søgning giver ingen resultater");
     cy.get("[data-cy=faq]").should("be.visible");
   });
-  it(`Search: should show empty input message`, () => {
-    cy.visit("/iframe.html?path=/story/help-search--empty-input");
-    cy.contains("Indtast søgning for at finde hjælp");
-    cy.get("[data-cy=faq]").should("be.visible");
-  });
   it(`Search: should show two results`, () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=result-row]").its("length").should("eq", 2);

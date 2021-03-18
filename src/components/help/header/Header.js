@@ -112,6 +112,9 @@ export default function Wrap() {
   const onHelpfrontPage = router.pathname === "/hjaelp";
   const onHelpFindpage = router.pathname === "/hjaelp/find";
   const updateUrl = () => {
+    if (!onHelpfrontPage && !query) {
+      router.replace("/hjaelp");
+    }
     if (onHelpFindpage || query) {
       router[onHelpFindpage ? "replace" : "push"](
         {

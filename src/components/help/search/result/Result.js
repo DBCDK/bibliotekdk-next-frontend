@@ -29,16 +29,6 @@ export function Result({ result = [], isLoading, query }) {
           </Text>
         </div>
       )}
-      {!query && (
-        <div>
-          <Title type="title4" tag="h4">
-            {Translate({ context: "search", label: "noQuery" })}
-          </Title>
-          <Text type="text2">
-            {Translate({ context: "search", label: "noQueryResolution" })}
-          </Text>
-        </div>
-      )}
       {query &&
         (isLoading ? [{}, {}, {}] : result).map((doc, idx) => {
           return (
