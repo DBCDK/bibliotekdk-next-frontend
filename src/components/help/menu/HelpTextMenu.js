@@ -95,6 +95,9 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
     return { name: groupname, open: false };
   });
 
+  console.log("menus", menus);
+  console.log("groups", groups);
+
   return (
     <HelpTextGroups
       {...props}

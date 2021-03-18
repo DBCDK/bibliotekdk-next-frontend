@@ -87,7 +87,7 @@ export function Header({
             <Language>
               <Link>
                 <Text type="text2">
-                  {Translate({ context: "language", label: "english-danish" })}
+                  {Translate({ context: "language", label: "en-da" })}
                 </Text>
               </Link>
             </Language>
