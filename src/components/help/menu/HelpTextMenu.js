@@ -59,7 +59,13 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
         >
           <Text type="text1" lines={30} key={`helpmenu-${index}`}>
             <span className={styles.helpicongroup}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+              <Icon
+                size={{ w: 1, h: 1 }}
+                src="arrowrightblue.svg"
+                className={classNames(
+                  group.open || activelink ? styles.helpiconrotate : ""
+                )}
+              />
             </span>
             <span>{group.name}</span>
           </Text>

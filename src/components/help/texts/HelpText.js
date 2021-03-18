@@ -25,7 +25,7 @@ function getAhelpText({ helpTextID }) {
  */
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
-    const path = ["help", helptext.title];
+    const path = ["help", helptext.fieldHelpTextGroup];
     return (
       <React.Fragment>
         <div className={styles.helpbreadcrumb}>
