@@ -61,8 +61,8 @@ export default function MyApp({ Component, pageProps, router }) {
       <Modal router={router} />
       <div id="layout">
         <Banner />
-        <HelpHeader />
         <Notifications />
+        <HelpHeader />
         <Component {...pageProps} />
         <CookieBox />
         <Footer />
