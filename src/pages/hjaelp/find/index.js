@@ -1,6 +1,6 @@
 /**
  * @file
- * Page for displaying a helptext
+ * This is the help page
  *
  * Next.js page docs are found here
  * https://nextjs.org/docs/basic-features/pages
@@ -8,29 +8,18 @@
  * Note that dynamic routing (file based) is used on this page.
  * https://nextjs.org/docs/routing/dynamic-routes
  *
- * Path parameters on this page:
- *  - helptxtId
- *
  */
 
-import { useRouter } from "next/router";
 import { fetchOnServer } from "@/lib/api/api";
-import { helpText } from "@/lib/api/helptexts.fragments";
+import { allArticles } from "@/lib/api/article.fragments";
 
-import Page from "@/components/helptexts/page/Page";
+import Page from "@/components/help/search/page";
 
 /**
- * Renders the help text component
+ * Renders the WorkPage component
  */
-export default function HelptextPage() {
-  const router = useRouter();
-  const { helptxtId } = router.query;
-
-  return (
-    <React.Fragment>
-      <Page helptxtId={helptxtId} />
-    </React.Fragment>
-  );
+export default function HelpPage() {
+  return <Page />;
 }
 
 /**
@@ -39,10 +28,8 @@ export default function HelptextPage() {
  *
  * Note that the queries must only take variables provided by
  * the dynamic routing - or else requests will fail.
- * On this page, queries should only use:
- *  - articleId
  */
-const serverQueries = [helpText];
+const serverQueries = [allArticles];
 
 /**
  * We export getServerSideProps to let Next.js

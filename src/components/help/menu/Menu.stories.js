@@ -1,27 +1,11 @@
 import { StoryTitle } from "@/storybook";
-import { HelpText } from "@/components/helptexts/HelpText";
-import { HelpTextMenu } from "@/components/helptexts/menu/HelpTextMenu";
+import { HelpTextMenu } from "@/components/help/menu/HelpTextMenu";
 
-import aHelptText from "./aHelpText.json";
 import allHelp from "./allHelp.json";
 
 export default {
-  title: "help/Helptext",
+  title: "help/menu",
 };
-
-/**
- * a single helptext
- * @return {JSX.Element}
- * @constructor
- */
-export function OneHelpText() {
-  return (
-    <div>
-      <StoryTitle>A single Helptext</StoryTitle>
-      <HelpText helptext={aHelptText} skeleton={true} />
-    </div>
-  );
-}
 
 /**
  * HelpMenu - collapsed if no id is given

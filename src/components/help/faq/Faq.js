@@ -29,6 +29,7 @@ export function Faq({ className, data }) {
     <Section
       className={`${styles.faq} ${className}`}
       title={Translate({ context: "help", label: "faq-title" })}
+      dataCy="faq"
     >
       <Row>
         <Col lg="8">

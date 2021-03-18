@@ -64,3 +64,23 @@ export function helpText(helpTxtId) {
     slowThreshold: 3000,
   };
 }
+
+export function helpTextSearch(q) {
+  return {
+    delay: 100, // add small delay to avoid flicker when query is fast
+    query: `query ($q: String!) {
+              help(q: $q) {
+                result {
+                  body
+                  group
+                  nid      
+                  orgTitle
+                  title
+                }
+              }
+          monitor(name: "helptext_search")
+        }`,
+    variables: { q },
+    slowThreshold: 3000,
+  };
+}

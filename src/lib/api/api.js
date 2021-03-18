@@ -50,7 +50,7 @@ export const useData = (query) => {
   // We need the current state of the client
   const currentState = client.getState();
   // Generate key based on the query
-  const key = generateKey(query);
+  const key = generateKey(query || "");
 
   // Extra fields to go in the response
   // These are fields that do not originate
@@ -60,12 +60,13 @@ export const useData = (query) => {
   // Create response object from the current state of the api client
   const response = {
     isLoading:
-      currentState[key] && (currentState[key].data || currentState[key].error)
+      !query ||
+      (currentState[key] && (currentState[key].data || currentState[key].error))
         ? false
         : true,
     query,
-    data: currentState[key] ? currentState[key].data : null,
-    error: currentState[key] ? currentState[key].error : null,
+    data: query && currentState[key] ? currentState[key].data : null,
+    error: query && currentState[key] ? currentState[key].error : null,
     client,
     ...extra,
   };
@@ -73,6 +74,9 @@ export const useData = (query) => {
   // useEffect is used to perform side effects (async stuff)
   // I.e. we fetch data here
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     // If the query changes while a request is running
     // we end up having a race condition.
     // This boolean indicates whether a request is canceled
