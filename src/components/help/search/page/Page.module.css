@@ -1,0 +1,21 @@
+.top {
+  padding-top: var(--pt10);
+}
+
+.faq {
+  padding-top: var(--pt15);
+}
+
+/* hide menu on mobile */
+.menu {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .top {
+    padding-top: var(--pt12);
+  }
+  .menu {
+    display: initial;
+  }
+}

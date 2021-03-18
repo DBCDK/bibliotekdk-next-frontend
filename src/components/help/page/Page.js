@@ -2,16 +2,29 @@ import Head from "next/head";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import Title from "@/components/base/title";
-import Faq from "../faq";
+import Faq from "@/components/help/faq";
 import Sections from "../sections";
-import Search from "../search";
-
-import Header from "../header";
 
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
+
+/**
+ * Back to bibliotek.dk button
+ *
+ * @returns {component}
+ */
+function BackButton() {
+  return (
+    <div className={styles.back}>
+      <Link href="/" border={{ bottom: { keepVisible: true } }}>
+        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
+      </Link>
+    </div>
+  );
+}
 
 /**
  * The Articles page React component
@@ -36,18 +49,14 @@ export default function Page() {
         <meta property="og:description" content={pageDescription} />
         <meta property="og:url" content="https://alfa.bibliotek.dk/hjaelp" />
       </Head>
-      <Header />
       <main>
         <Container className={styles.top} fluid>
           <Row>
-            <Col xs={12} lg={{ span: 9, offset: 3 }}>
-              <Title type="title3">
-                {Translate({ context: "help", label: "help-title" })}
-              </Title>
+            <Col xs={12} lg={{ span: 3 }}>
+              <BackButton />
             </Col>
           </Row>
         </Container>
-        <Search />
         <Faq className={styles.faq} />
         <Sections className={styles.sections} />
       </main>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Text from "@/components/base/text/Text";
-import styles from "@/components/helptexts/HelpTexts.module.css";
+import styles from "@/components/help/menu/HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
 import classNames from "classnames/bind";
 import Link from "@/components/base/link";
@@ -8,6 +8,7 @@ import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
 import { isConsole } from "react-device-detect";
+import { encodeString } from "@/lib/utils";
 
 /**
  * Component to show helptext menu in groups
@@ -17,7 +18,7 @@ import { isConsole } from "react-device-detect";
  * @return {*}
  * @constructor
  */
-function HelpTextGroups({ menus, groups, helpTextId }) {
+function HelpTextGroups({ menus, groups, helpTextId, className }) {
   // use state to handle clickevent on group
   const [showGroups, setShowGroups] = useState(groups);
   const rowClicked = (index) => {
@@ -43,7 +44,7 @@ function HelpTextGroups({ menus, groups, helpTextId }) {
     );
 
     return (
-      <div key={`group-${index}`}>
+      <div key={`group-${index}`} className={className} data-cy="help-menu">
         <div
           tabIndex={0}
           onKeyDown={(event) => {
@@ -88,14 +89,19 @@ function HelpTextGroups({ menus, groups, helpTextId }) {
  * @return {JSX.Element}
  * @constructor
  */
-export function HelpTextMenu({ helpTexts, helpTextId }) {
+export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const menus = helpTextParseMenu(helpTexts);
   const groups = Object.keys(menus).map((groupname, index) => {
     return { name: groupname, open: false };
   });
 
   return (
-    <HelpTextGroups menus={menus} helpTextId={helpTextId} groups={groups} />
+    <HelpTextGroups
+      {...props}
+      menus={menus}
+      helpTextId={helpTextId}
+      groups={groups}
+    />
   );
 }
 
@@ -116,7 +122,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
             {item.title}
           </Text>
         }
-        href={{ pathname: `/help/${item.title}/${item.id}`, query: {} }}
+        href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
         key={`menulink-${index}`}
         className={classNames(
           menuItems[group.name][index].id === parseInt(helpTextId, "10")
@@ -183,14 +189,16 @@ function getPublishedHelpTexts() {
  * @return {JSX.Element|null}
  * @constructor
  */
-export default function Wrap({ helpTextID }) {
+export default function Wrap({ helpTextID, ...props }) {
   const { isLoading, data } = getPublishedHelpTexts();
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
     // @TODO skeleton
     return null;
   }
   const allHelpTexts = data.nodeQuery.entities;
-  return <HelpTextMenu helpTexts={allHelpTexts} helpTextId={helpTextID} />;
+  return (
+    <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextID} />
+  );
 }
 
 HelpTextMenu.propTypes = {
