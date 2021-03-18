@@ -61,7 +61,7 @@
 
 /* Custom color background */
 
-.skeleton div div:last-child {
+/* .skeleton div div:last-child {
   background-color: var(--bone);
 }
 
@@ -72,4 +72,4 @@
     var(--pippin) 50%,
     transparent 100%
   );
-}
+} */

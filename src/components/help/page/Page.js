@@ -6,6 +6,7 @@ import Title from "@/components/base/title";
 import Faq from "../faq";
 import Sections from "../sections";
 import Search from "../search";
+import Contact from "../contact";
 
 import Header from "../header";
 
@@ -50,6 +51,7 @@ export default function Page() {
         <Search />
         <Faq className={styles.faq} />
         <Sections className={styles.sections} />
+        <Contact />
       </main>
     </React.Fragment>
   );

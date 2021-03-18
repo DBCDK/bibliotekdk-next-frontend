@@ -59,6 +59,9 @@ export default function Single({ articles, skeleton }) {
   // Action button label
   const btnLabel = hasAlternativeUrl ? "alternative-url-btn" : "read-more-btn";
 
+  // Strip body for html tags
+  const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
+
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
@@ -67,7 +70,7 @@ export default function Single({ articles, skeleton }) {
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
                 <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
-                  {article.fieldRubrik}
+                  {bodyText}
                 </Text>
               </span>
               <div />
@@ -80,7 +83,8 @@ export default function Single({ articles, skeleton }) {
               <div />
               <Link a={false} href={{ pathname, query }}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {Translate({ ...context, label: btnLabel })}
+                  {article.fieldRubrik ||
+                    Translate({ ...context, label: "read-more-btn" })}
                 </Button>
               </Link>
             </Col>

@@ -25,7 +25,7 @@ export default function Header() {
           <Link
             className={styles.logoWrap}
             border={false}
-            href="/"
+            href="/hjaelp"
             dataCy={cyKey({
               name: "logo",
               prefix: "header-help",
@@ -56,7 +56,7 @@ export default function Header() {
             <Language>
               <Link>
                 <Text type="text2">
-                  {Translate({ context: "language", label: "eng-dan" })}
+                  {Translate({ context: "language", label: "english-danish" })}
                 </Text>
               </Link>
             </Language>
