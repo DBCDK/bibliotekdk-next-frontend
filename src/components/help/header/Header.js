@@ -28,6 +28,7 @@ export function Header({
   expanded = true,
   query,
   onQueryChange,
+  onQueryClear,
   onQuerySubmit,
 }) {
   return (
@@ -62,6 +63,7 @@ export function Header({
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
               onSubmit={onQuerySubmit}
+              onClear={onQueryClear}
             />
           </div>
         </Col>
@@ -98,6 +100,7 @@ export function Header({
 Header.propTypes = {
   expanded: PropTypes.bool,
   onQueryChange: PropTypes.func,
+  onQueryClear: PropTypes.func,
   onQuerySubmit: PropTypes.func,
   query: PropTypes.string,
 };
@@ -132,6 +135,7 @@ export default function Wrap() {
       expanded={onHelpfrontPage}
       query={query}
       onQueryChange={(q) => setQuery(q)}
+      onQueryClear={() => setQuery("")}
       onQuerySubmit={updateUrl}
     />
   );
