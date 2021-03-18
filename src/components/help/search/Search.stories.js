@@ -1,5 +1,4 @@
 import { Page } from "@/components/help/search/page";
-import { useState } from "react";
 
 export default {
   title: "help/search",

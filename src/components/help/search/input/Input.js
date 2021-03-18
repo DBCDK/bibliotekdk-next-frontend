@@ -43,4 +43,5 @@ export default function Input({
 Input.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onSubmit: PropTypes.func,
 };

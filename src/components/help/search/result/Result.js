@@ -9,8 +9,7 @@ import styles from "./Result.module.css";
 import Translate from "@/components/base/translate";
 
 /**
- * Search component
- * Makes it possible to search for help texts.
+ * Shows help text search result
  *
  * @param {obj} props
  * See propTypes for specific props and types
@@ -100,6 +99,7 @@ export function Result({ result = [], isLoading, query }) {
 Result.propTypes = {
   result: PropTypes.array,
   isLoading: PropTypes.bool,
+  query: PropTypes.string,
 };
 
 export default Result;

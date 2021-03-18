@@ -1,6 +1,9 @@
+import PropTypes from "prop-types";
 import Head from "next/head";
 
-import { Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import Result from "@/components/help/search/result";
 
@@ -13,12 +16,11 @@ import HelpTextMenu from "@/components/help/menu";
 import styles from "./Page.module.css";
 
 /**
- * The Articles page React component
+ * The page showing help search results
  *
  * @returns {component}
  *
  */
-
 export function Page({ result, isLoading, query }) {
   const pageTitle = "Alle Artikler | alfa.bibliotek.dk";
   const pageDescription =
@@ -59,7 +61,18 @@ export function Page({ result, isLoading, query }) {
     </React.Fragment>
   );
 }
+Page.propTypes = {
+  result: PropTypes.array,
+  isLoading: PropTypes.bool,
+  query: PropTypes.string,
+};
 
+/**
+ * We get hold of the url query parameter 'q'
+ * and make a help search request.
+ *
+ * And then pass it all to the result page
+ */
 export default function Wrap() {
   const router = useRouter();
   const { q } = router.query;

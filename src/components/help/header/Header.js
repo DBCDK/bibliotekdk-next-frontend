@@ -1,4 +1,7 @@
-import { Container, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
@@ -92,6 +95,12 @@ export function Header({
     </Container>
   );
 }
+Header.propTypes = {
+  expanded: PropTypes.bool,
+  onQueryChange: PropTypes.func,
+  onQuerySubmit: PropTypes.func,
+  query: PropTypes.string,
+};
 
 export default function Wrap() {
   const router = useRouter();
