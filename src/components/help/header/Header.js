@@ -112,7 +112,9 @@ export default function Wrap() {
   const onHelpfrontPage = router.pathname === "/hjaelp";
   const onHelpFindpage = router.pathname === "/hjaelp/find";
   const updateUrl = () => {
-    if (router.query.q && !onHelpfrontPage && !query) {
+    if (onHelp && router.query.q && !onHelpfrontPage && !query) {
+      // User cleared the input field
+      // Redirect to help frontpage
       router.replace("/hjaelp");
     }
     if (onHelpFindpage || query) {
