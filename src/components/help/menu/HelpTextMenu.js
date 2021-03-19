@@ -58,7 +58,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
             rowClicked(index);
           }}
         >
-          <Text type="text1" lines={30} key={`helpmenu-${index}`}>
+          <Text type="text2" lines={30} key={`helpmenu-${index}`}>
             <span className={styles.helpicongroup}>
               <Icon
                 size={{ w: 1, h: 1 }}
