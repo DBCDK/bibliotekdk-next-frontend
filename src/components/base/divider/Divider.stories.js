@@ -1,4 +1,4 @@
-import { Divider } from "./Divider";
+import Divider from "./Divider";
 import { StoryTitle } from "@/storybook";
 
 export default {

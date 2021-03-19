@@ -97,6 +97,7 @@ export function Header({
     </Container>
   );
 }
+
 Header.propTypes = {
   expanded: PropTypes.bool,
   onQueryChange: PropTypes.func,
@@ -105,6 +106,14 @@ Header.propTypes = {
   query: PropTypes.string,
 };
 
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function Wrap() {
   const router = useRouter();
   const [query, setQuery] = useState(router.query.q);

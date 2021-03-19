@@ -21,6 +21,7 @@ import styles from "./Sections.module.css";
  * @param {obj} props
  * @param {obj} props.className
  * @param {obj} props.data
+ * @param {obj} props.skeleton
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -79,6 +80,7 @@ export function Sections({ className, data, skeleton }) {
 Sections.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
+  skeleton: PropTypes.bool,
 };
 
 /**
@@ -123,6 +125,14 @@ export function SectionsSkeleton(props) {
   );
 }
 
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function Wrap(props) {
   // real data goes here ...
   const { isLoading, data } = useData(publishedHelptexts());
