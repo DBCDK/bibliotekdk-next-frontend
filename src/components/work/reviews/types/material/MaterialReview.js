@@ -158,7 +158,7 @@ function LectorLink({ paragraph, skeleton }) {
 
   // @TODO there may be more than one creator - for now simply grab the first
   // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
-  const creator = paragraph.work.creators[0].name
+  const creator = paragraph.work.creators[0]?.name
     ? paragraph.work.creators[0].name
     : "";
   const title = paragraph.work.title ? paragraph.work.title : "";
