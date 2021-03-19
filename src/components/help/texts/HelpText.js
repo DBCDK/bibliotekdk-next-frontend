@@ -9,11 +9,11 @@ import React from "react";
 
 /**
  * get a helptext by id from api
- * @param helpTextID
+ * @param helpTextId
  * @return {{isLoading, data}}
  */
-function getAhelpText({ helpTextID }) {
-  const { isLoading, data } = useData(helpText(helpTextID));
+function getAhelpText({ helpTextId }) {
+  const { isLoading, data } = useData(helpText({ helpTextId }));
   return { isLoading, data };
 }
 
@@ -26,6 +26,7 @@ function getAhelpText({ helpTextID }) {
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
     const path = ["help", helptext.fieldHelpTextGroup];
+
     return (
       <React.Fragment>
         <div className={styles.helpbreadcrumb}>
@@ -33,7 +34,7 @@ export function HelpText({ helptext }) {
         </div>
         <Title type="title4">{helptext.title}</Title>
         <Text type="text2" lines={30} className={styles.helptext}>
-          <span dangerouslySetInnerHTML={{ __html: helptext.body.value }} />
+          <div dangerouslySetInnerHTML={{ __html: helptext.body.value }} />
         </Text>
       </React.Fragment>
     );
@@ -44,12 +45,13 @@ export function HelpText({ helptext }) {
 
 /**
  * Default export function for component
- * @param helpTextID
+ * @param helpTextId
  * @return {JSX.Element|null}
  * @constructor
  */
-export default function Wrap({ helpTextID }) {
-  const { isLoading, data } = getAhelpText({ helpTextID });
+export default function Wrap({ helpTextId }) {
+  const { isLoading, data } = getAhelpText({ helpTextId });
+
   if (!data || !data.helptext) {
     // @TODO skeleton
     return null;

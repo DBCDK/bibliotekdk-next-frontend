@@ -9,7 +9,7 @@ export function HelpTextPage() {
   return (
     <div>
       <StoryTitle>Help Text Page</StoryTitle>
-      <HelpPage helptxtId={"19"} />
+      <HelpPage helpTextId={"19"} />
     </div>
   );
 }
