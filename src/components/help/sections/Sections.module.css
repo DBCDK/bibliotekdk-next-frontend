@@ -27,3 +27,14 @@
   max-width:300px;
   width:100%;
 }
+
+.section .divider{
+  display:none;
+}
+
+@media (min-width: 992px) {
+
+  .section .divider{
+    display:block;
+  }
+}

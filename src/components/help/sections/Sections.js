@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { Row, Col } from "react-bootstrap";
 
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
@@ -9,6 +10,7 @@ import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+import Divider from "@/components/base/divider";
 
 import { helpTextParseMenu } from "../utils.js";
 import { encodeString } from "@/lib/utils";
@@ -38,9 +40,13 @@ export function Sections({ className, data, skeleton }) {
         titleDivider={false}
         contentDivider={false}
       >
-        <Title type="title3">
-          {Translate({ context: "help", label: "all-pages" })}
-        </Title>
+        <Row>
+          <Col lg="8">
+            <Title type="title3">
+              {Translate({ context: "help", label: "all-pages" })}
+            </Title>
+          </Col>
+        </Row>
       </Section>
 
       {Object.keys(menus).map((s, i) => {
@@ -49,6 +55,7 @@ export function Sections({ className, data, skeleton }) {
         return (
           <Section
             className={`${className} ${styles.section}`}
+            contentDivider={false}
             title={
               <Title type="title4" skeleton={skeleton}>
                 {s}
@@ -56,20 +63,25 @@ export function Sections({ className, data, skeleton }) {
             }
             key={`${s}_${i}`}
           >
-            {links.map((l, i) => {
-              return (
-                <div className={styles.links} key={`${l.title}_${i}`}>
-                  <Link
-                    href={`/hjaelp/${encodeString(l.title)}/${l.id}`}
-                    border={{ bottom: !skeleton }}
-                  >
-                    <Text type="text1" skeleton={skeleton} lines={3}>
-                      {l.title}
-                    </Text>
-                  </Link>
-                </div>
-              );
-            })}
+            <Row className={styles.content}>
+              <Col lg="8">
+                <Divider className={styles.divider} />
+                {links.map((l, i) => {
+                  return (
+                    <div className={styles.links} key={`${l.title}_${i}`}>
+                      <Link
+                        href={`/hjaelp/${encodeString(l.title)}/${l.id}`}
+                        border={{ bottom: !skeleton }}
+                      >
+                        <Text type="text1" skeleton={skeleton} lines={3}>
+                          {l.title}
+                        </Text>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </Col>
+            </Row>
           </Section>
         );
       })}
