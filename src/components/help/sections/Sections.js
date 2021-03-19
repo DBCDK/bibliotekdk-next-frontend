@@ -1,11 +1,17 @@
 import PropTypes from "prop-types";
 
+import { useData } from "@/lib/api/api";
+import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
+
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
+
+import { helpTextParseMenu } from "../utils.js";
+import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
 
@@ -19,7 +25,10 @@ import styles from "./Sections.module.css";
  *
  * @returns {component}
  */
-export function Sections({ className, data }) {
+export function Sections({ className, data, skeleton }) {
+  // Parse helptexts
+  const menus = helpTextParseMenu(data);
+
   return (
     <div>
       <Section
@@ -33,18 +42,29 @@ export function Sections({ className, data }) {
         </Title>
       </Section>
 
-      {data.map((s, i) => {
+      {Object.keys(menus).map((s, i) => {
+        const links = menus[s];
+
         return (
           <Section
             className={`${className} ${styles.section}`}
-            title={s.title}
-            key={`${s.title}_${i}`}
+            title={
+              <Title type="title4" skeleton={skeleton}>
+                {s}
+              </Title>
+            }
+            key={`${s}_${i}`}
           >
-            {s.links.map((l, i) => {
+            {links.map((l, i) => {
               return (
                 <div className={styles.links} key={`${l.title}_${i}`}>
-                  <Link href={l.href}>
-                    <Text type="text1">{l.title}</Text>
+                  <Link
+                    href={`/hjaelp/${encodeString(l.title)}/${l.id}`}
+                    border={{ bottom: !skeleton }}
+                  >
+                    <Text type="text1" skeleton={skeleton} lines={3}>
+                      {l.title}
+                    </Text>
                   </Link>
                 </div>
               );
@@ -61,50 +81,60 @@ Sections.propTypes = {
   data: PropTypes.array,
 };
 
-export default function Wrap(props) {
-  // real data goes here ...
-
-  // temp. dummy
+/**
+ * Function to return skeleton (Loading) version of the Component
+ *
+ * @param {obj} props
+ *  See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export function SectionsSkeleton(props) {
   const data = [
     {
-      title: "Some title 1",
-      links: [
-        { title: "Some page 1", href: "/hjaelp" },
-        { title: "Some page 2", href: "/hjaelp" },
-        { title: "Some page 3", href: "/hjaelp" },
-        { title: "Some page 4", href: "/hjaelp" },
-      ],
+      nid: 1,
+      title: "Some dummy text title 1",
+      fieldHelpTextGroup: "Group 1",
     },
     {
-      title: "Some title 2",
-      links: [
-        { title: "Some page 1", href: "/hjaelp" },
-        { title: "Some page 2", href: "/hjaelp" },
-        { title: "Some page 3", href: "/hjaelp" },
-        { title: "Some page 4", href: "/hjaelp" },
-      ],
+      nid: 2,
+      title: "Some dummy text title 2",
+      fieldHelpTextGroup: "Group 2",
     },
     {
-      title: "Some title 3",
-      links: [
-        { title: "Some page 1", href: "/hjaelp" },
-        { title: "Some page 2", href: "/hjaelp" },
-        { title: "Some page 3", href: "/hjaelp" },
-        { title: "Some page 4", href: "/hjaelp" },
-      ],
+      nid: 3,
+      title: "Some dummy text title 7",
+      fieldHelpTextGroup: "Group 3",
     },
     {
-      title: "Some title 4",
-      links: [
-        { title: "Some page 1", href: "/hjaelp" },
-        { title: "Some page 2", href: "/hjaelp" },
-        { title: "Some page 3", href: "/hjaelp" },
-        { title: "Some page 4", href: "/hjaelp" },
-      ],
+      nid: 4,
+      title: "Some dummy text title 4",
+      fieldHelpTextGroup: "Group 4",
     },
   ];
 
-  return <Sections {...props} data={data} />;
+  return (
+    <Sections
+      {...props}
+      data={data}
+      className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
+    />
+  );
+}
+
+export default function Wrap(props) {
+  // real data goes here ...
+  const { isLoading, data } = useData(publishedHelptexts());
+
+  if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
+    // @TODO skeleton
+    return <SectionsSkeleton {...props} />;
+  }
+
+  const allHelpTexts = data.nodeQuery.entities;
+
+  return <Sections {...props} data={allHelpTexts} />;
 }
 
 Wrap.propTypes = {
