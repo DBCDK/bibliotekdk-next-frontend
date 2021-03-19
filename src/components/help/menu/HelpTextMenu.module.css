@@ -23,8 +23,18 @@
     top: 2px;
 }
 
+.helpiconrotate{
+    transform: rotate(90deg);
+    position: relative;
+    top: 5px;
+}
+
 .helpgroup {
     cursor: pointer;
+}
+
+.helpgroup:focus{
+    text-decoration: underline;
 }
 
 .helpactive p{
