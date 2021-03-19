@@ -69,6 +69,9 @@ export function promotedArticles() {
             fieldArticleSection
             fieldArticlePosition
             entityPublished
+            body {
+              value
+            }
             entityUrl {
               path
             }

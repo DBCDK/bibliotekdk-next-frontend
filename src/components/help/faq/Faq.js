@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useMemo } from "react";
+import { Row, Col } from "react-bootstrap";
 
 import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";
@@ -28,13 +29,18 @@ export function Faq({ className, data }) {
     <Section
       className={`${styles.faq} ${className}`}
       title={Translate({ context: "help", label: "faq-title" })}
+      dataCy="faq"
     >
-      <Accordion data={data} className={styles.accordion} />
-      <Link href="/hjaelp" a={false}>
-        <Button type="secondary" size="medium" className={styles.button}>
-          {Translate({ context: "help", label: "show-more-faq" })}
-        </Button>
-      </Link>
+      <Row>
+        <Col lg="8">
+          <Accordion data={data} className={styles.accordion} />
+          <Link href="/hjaelp" a={false}>
+            <Button type="secondary" size="medium" className={styles.button}>
+              {Translate({ context: "help", label: "show-more-faq" })}
+            </Button>
+          </Link>
+        </Col>
+      </Row>
     </Section>
   );
 }

@@ -2,18 +2,11 @@
     padding-left: var(--pt4);
 }
 
-.helpmenu{
-    display: none;
-}
 
-@media (min-width: 992px) {
-    .helpmenu {
-        display: block;
-    }
-}
 
 .helpbreadcrumb{
     margin: var(--pt2) 0 var(--pt2) 0;
+    text-decoration: underline;
     display:none;
 }
 @media (max-width: 992px) {
@@ -40,8 +33,13 @@
     text-decoration: underline;
 }
 
+/* max sixe for images */
 .helptext img{
     max-width: 100%;
+}
+/* bullets */
+.helptext ul{
+    padding-left: var(--pt5);
 }
 
 .helpactive p{

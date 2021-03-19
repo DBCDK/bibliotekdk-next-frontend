@@ -13,5 +13,17 @@
 }
 
 .section .links {
-  padding-top: var(--pt1);
+  padding-bottom: var(--pt1);
+}
+
+/* Skeleton */
+
+.skeleton section > div h1{
+  max-width: 400px;
+}
+
+.skeleton a{
+  pointer-events: none;
+  max-width:300px;
+  width:100%;
 }

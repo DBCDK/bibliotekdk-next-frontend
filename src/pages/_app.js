@@ -38,6 +38,7 @@ import Modal from "@/components/modal";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
+import HelpHeader from "@/components/help/header";
 
 export default function MyApp({ Component, pageProps, router }) {
   // If this is rendered on server, allowCookies will be in pageProps
@@ -61,6 +62,7 @@ export default function MyApp({ Component, pageProps, router }) {
       <div id="layout">
         <Banner />
         <Notifications />
+        <HelpHeader />
         <Component {...pageProps} />
         <CookieBox />
         <Footer />

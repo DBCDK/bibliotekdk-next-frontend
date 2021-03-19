@@ -17,7 +17,7 @@ describe("Cards", () => {
       .click()
       .then(() => {
         const expected =
-          "/materiale/[title_author]/[workId]?title_author=ikke-i-k%C3%B8d-og-blod_ruth-rendell&workId=work-id-1";
+          "/materiale/[title_author]/[workId]?title_author=ikke-i-koed-og-blod_ruth-rendell&workId=work-id-1";
         expect(stub.getCall(0)).to.be.calledWith(expected);
       });
   });
@@ -38,7 +38,7 @@ describe("Cards", () => {
       .click()
       .then(() => {
         const expected =
-          "/materiale/[title_author]/[workId]?title_author=blodr%C3%B8de-spor_andrew-taylor-%28f.-1951%29&workId=work-id-2";
+          "/materiale/[title_author]/[workId]?title_author=blodroede-spor_andrew-taylor-%28f.-1951%29&workId=work-id-2";
         expect(stub.getCall(0)).to.be.calledWith(expected);
       });
   });

@@ -1,3 +1,8 @@
+
+.faq section > div:first-child{
+  margin-bottom: var(--pt2)
+}
+
 .faq section div:first-child > hr {
   display: none;
 }
@@ -18,11 +23,12 @@
 }
 
 @media (min-width: 992px) {
-  .faq section div:last-child > hr {
-    margin: 0;
+  .faq section div:first-child > hr {
+    display: block;
   }
 
-  .accordion > div:first-child {
-    border-top: none;
+  .faq section div:last-child > hr {
+    display:none;
   }
+
 }
