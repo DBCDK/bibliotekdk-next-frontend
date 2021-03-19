@@ -38,8 +38,8 @@
     max-width: 100%;
 }
 /* bullets */
-.helptext ul{
-    padding-left: var(--pt5);
+.helptext ul, .helptext ol{
+    padding-left: var(--pt2);
 }
 
 .helpactive p{
