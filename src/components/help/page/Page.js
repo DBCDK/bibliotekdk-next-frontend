@@ -34,7 +34,7 @@ function BackButton() {
  */
 
 export default function Page() {
-  const pageTitle = "Alle Artikler | alfa.bibliotek.dk";
+  const pageTitle = "Hjælp og vejledninger | alfa.bibliotek.dk";
   const pageDescription =
     "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
 
