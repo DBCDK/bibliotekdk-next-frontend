@@ -42,7 +42,7 @@ export function Header({
           <Link
             className={styles.logoWrap}
             border={false}
-            href="/"
+            href="/hjaelp"
             dataCy={cyKey({
               name: "logo",
               prefix: "header-help",
@@ -87,7 +87,7 @@ export function Header({
             <Language>
               <Link>
                 <Text type="text2">
-                  {Translate({ context: "language", label: "eng-dan" })}
+                  {Translate({ context: "language", label: "en-da" })}
                 </Text>
               </Link>
             </Language>
@@ -97,6 +97,7 @@ export function Header({
     </Container>
   );
 }
+
 Header.propTypes = {
   expanded: PropTypes.bool,
   onQueryChange: PropTypes.func,
@@ -105,6 +106,14 @@ Header.propTypes = {
   query: PropTypes.string,
 };
 
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function Wrap() {
   const router = useRouter();
   const [query, setQuery] = useState(router.query.q);

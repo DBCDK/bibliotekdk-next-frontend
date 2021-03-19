@@ -4,7 +4,7 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import Faq from "@/components/help/faq";
 import Sections from "../sections";
-
+import Contact from "../contact";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
@@ -59,6 +59,7 @@ export default function Page() {
         </Container>
         <Faq className={styles.faq} />
         <Sections className={styles.sections} />
+        <Contact />
       </main>
     </React.Fragment>
   );

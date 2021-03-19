@@ -629,6 +629,10 @@
       }
     },
     "language": {
+      "en-da": {
+        "da": "En",
+        "en": "Da"
+      },
       "eng-dan": {
         "da": "Eng",
         "en": "Dan"

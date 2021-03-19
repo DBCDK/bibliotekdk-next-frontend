@@ -56,20 +56,3 @@
   transform: scale(1);
   background-color: var(--mine-shaft);
 }
-
-/*  */
-
-/* Custom color background */
-
-.skeleton div div:last-child {
-  background-color: var(--bone);
-}
-
-.skeleton div div:last-child::before {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--pippin) 50%,
-    transparent 100%
-  );
-}

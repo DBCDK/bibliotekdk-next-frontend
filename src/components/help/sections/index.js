@@ -1,1 +1,1 @@
-export { default } from "./Sections";
+export { default, Sections, SectionsSkeleton } from "./Sections";

@@ -105,12 +105,13 @@ export function ArticleSection({
   skeleton,
   matchTag,
   template,
+  color = false,
 }) {
   const context = getContext(template);
 
   const numberOfArticles = context.numberOfArticles;
   const Template = context.template;
-  const backgroundColor = context.background || null;
+  const backgroundColor = color || context.background || null;
 
   articles = parseArticles(articles, matchTag, numberOfArticles);
 
@@ -136,6 +137,7 @@ ArticleSection.propTypes = {
   skeleton: PropTypes.bool,
   matchTag: PropTypes.string,
   template: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default function Wrap(props) {

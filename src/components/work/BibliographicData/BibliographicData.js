@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 
 import Section from "@/components/base/section";
-import { Divider } from "@/components/base/divider";
+import Divider from "@/components/base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
 import styles from "./BibliographicData.module.css";

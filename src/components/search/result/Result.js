@@ -11,7 +11,7 @@ import { useData } from "@/lib/api/api";
 import { fast, all } from "@/lib/api/search.fragments";
 import Link from "@/components/base/link";
 import { encodeTitleCreator } from "@/lib/utils";
-import { Divider } from "@/components/base/divider";
+import Divider from "@/components/base/divider";
 import { Row, Col } from "react-bootstrap";
 import ViewSelector from "../viewselector";
 

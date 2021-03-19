@@ -7,8 +7,9 @@ import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
-import { isConsole } from "react-device-detect";
 import { encodeString } from "@/lib/utils";
+
+import { helpTextParseMenu } from "../utils.js";
 
 /**
  * Component to show helptext menu in groups
@@ -146,41 +147,6 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
 }
 
 /**
- * Defines an element in a help group
- * @param heltptext
- * @return {{id: (number|string|*), title}}
- */
-function setGroupElement(heltptext) {
-  return {
-    id: heltptext.nid,
-    title: heltptext.title,
-  };
-}
-
-/**
- * Parse helptexts by groups
- * @param helpTexts
- * @return {{}}
- *  eg. {Søgning:[{id:25, title:fisk}. {id:1,title:hest}]}
- */
-function helpTextParseMenu(helpTexts) {
-  // sort helptexts by group
-  const structuredHelpTexts = {};
-  let element = {};
-  let group;
-  helpTexts.forEach((helptext, idx) => {
-    element = setGroupElement(helptext);
-    group = helptext.fieldHelpTextGroup;
-    if (structuredHelpTexts[group]) {
-      structuredHelpTexts[group].push(element);
-    } else {
-      structuredHelpTexts[group] = [element];
-    }
-  });
-  return structuredHelpTexts;
-}
-
-/**
  * Get all helptexts from api
  * @return {{isLoading, data}}
  */
@@ -201,7 +167,9 @@ export default function Wrap({ helpTextID, ...props }) {
     // @TODO skeleton
     return null;
   }
+
   const allHelpTexts = data.nodeQuery.entities;
+
   return (
     <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextID} />
   );
