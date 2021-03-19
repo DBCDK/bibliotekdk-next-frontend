@@ -68,7 +68,7 @@ export function Result({ result = [], isLoading, query }) {
                 <Title type="title5" tag="h3" lines={1} skeleton={isLoading}>
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: doc.title || "indlæser",
+                      __html: doc.orgTitle || "indlæser",
                     }}
                   />
                 </Title>

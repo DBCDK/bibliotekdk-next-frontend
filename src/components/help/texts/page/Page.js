@@ -20,7 +20,7 @@ export default function HelpTextPage({ helptxtId }) {
         <Col md={{ span: 3 }} className={styles.helpmenu}>
           <HelpTextMenu helpTextID={helptxtId} />
         </Col>
-        <Col md={{ span: 9 }} xs={{ span: 12 }} className={styles.helptext}>
+        <Col lg={{ span: 6 }} md={{ span: 9 }} className={styles.helptext}>
           <HelpText helpTextID={helptxtId} />
         </Col>
       </Row>

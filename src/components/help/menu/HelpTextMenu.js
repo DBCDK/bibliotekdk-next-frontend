@@ -124,11 +124,6 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => (
     <div className={styles.helplink} key={`div-menulink-${index}`}>
       <Link
-        children={
-          <Text type="text3" lines={2}>
-            {item.title}
-          </Text>
-        }
         href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
         key={`menulink-${index}`}
         className={classNames(
@@ -136,12 +131,16 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
             ? styles.helpactive
             : ""
         )}
-      />
-      {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
-        <span className={styles.helpiconlink}>
-          <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-        </span>
-      )}
+      >
+        <Text type="text2" lines={2}>
+          {item.title}
+          {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
+            <span className={styles.helpiconlink}>
+              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            </span>
+          )}
+        </Text>
+      </Link>
     </div>
   ));
 }

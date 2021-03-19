@@ -1,6 +1,9 @@
 .helplink {
     padding-left: var(--pt4);
 }
+.helplink p{
+    white-space: normal;
+}
 
 .helpmenu{
     display: none;
