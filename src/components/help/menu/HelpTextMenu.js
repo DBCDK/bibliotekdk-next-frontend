@@ -156,11 +156,11 @@ function getPublishedHelpTexts() {
 
 /**
  * Default export function for component
- * @param helpTextID
+ * @param helpTextId
  * @return {JSX.Element|null}
  * @constructor
  */
-export default function Wrap({ helpTextID, ...props }) {
+export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = getPublishedHelpTexts();
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
     // @TODO skeleton
@@ -170,7 +170,7 @@ export default function Wrap({ helpTextID, ...props }) {
   const allHelpTexts = data.nodeQuery.entities;
 
   return (
-    <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextID} />
+    <HelpTextMenu {...props} helpTexts={allHelpTexts} helpTextId={helpTextId} />
   );
 }
 

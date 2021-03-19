@@ -35,11 +35,11 @@ export function publishedHelptexts() {
   };
 }
 
-export function helpText(helpTxtId) {
+export function helpText({ helpTextId }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($helpTxtId: String!) {
-        helptext: nodeById(id: $helpTxtId){
+    query: `query ($helpTextId: String!) {
+        helptext: nodeById(id: $helpTextId){
         ... on NodeHelpText {
                   nid
                   title
@@ -60,7 +60,7 @@ export function helpText(helpTxtId) {
           
           monitor(name: "helptext_by_id")
         }`,
-    variables: { helpTxtId },
+    variables: { helpTextId },
     slowThreshold: 3000,
   };
 }

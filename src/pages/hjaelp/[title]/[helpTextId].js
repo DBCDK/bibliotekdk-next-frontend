@@ -9,13 +9,13 @@
  * https://nextjs.org/docs/routing/dynamic-routes
  *
  * Path parameters on this page:
- *  - helptxtId
+ *  - helpTextId
  *
  */
 
 import { useRouter } from "next/router";
 import { fetchOnServer } from "@/lib/api/api";
-import { helpText } from "@/lib/api/helptexts.fragments";
+import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
 
 import Page from "@/components/help/texts/page";
 
@@ -24,11 +24,11 @@ import Page from "@/components/help/texts/page";
  */
 export default function HelptextPage() {
   const router = useRouter();
-  const { helptxtId } = router.query;
+  const { helpTextId } = router.query;
 
   return (
     <React.Fragment>
-      <Page helptxtId={helptxtId} />
+      <Page helpTextId={helpTextId} />
     </React.Fragment>
   );
 }
@@ -42,7 +42,7 @@ export default function HelptextPage() {
  * On this page, queries should only use:
  *  - articleId
  */
-const serverQueries = [helpText];
+const serverQueries = [helpText, publishedHelptexts];
 
 /**
  * We export getServerSideProps to let Next.js
