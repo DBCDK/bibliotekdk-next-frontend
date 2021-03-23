@@ -188,6 +188,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         >
           <BodyParser
             body={article?.body?.value}
+            className={styles.body}
             skeleton={skeleton}
             lines={10}
           />

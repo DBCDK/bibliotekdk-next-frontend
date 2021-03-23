@@ -14,7 +14,7 @@ import styles from "./BodyParser.module.css";
  *
  * @returns {component}
  */
-export default function BodyParser({ body, skeleton, lines = 10 }) {
+export default function BodyParser({ body, className, skeleton, lines = 10 }) {
   const parsedBody = useMemo(() => {
     if (body) {
       return parseArticleBody(body);
@@ -26,10 +26,12 @@ export default function BodyParser({ body, skeleton, lines = 10 }) {
     return <Text type="text2" skeleton={true} lines={lines}></Text>;
   }
   return (
-    <div
-      className={styles.body}
-      dangerouslySetInnerHTML={{ __html: parsedBody }}
-    />
+    <Text type="text2">
+      <div
+        className={`${styles.body} ${className}`}
+        dangerouslySetInnerHTML={{ __html: parsedBody }}
+      />
+    </Text>
   );
 }
 BodyParser.propTypes = {
