@@ -60,7 +60,7 @@
   transform: translateY(12px);
   font-size: 40px !important;
   line-height: 52px !important;
-  z-index: 10;
+  z-index: 2;
   margin: 0 var(--pt2);
 }
 .inputwrapper h1 {

@@ -1,11 +1,11 @@
 import { useData } from "@/lib/api/api";
 import { helpText } from "@/lib/api/helptexts.fragments.js";
 import Title from "@/components/base/title";
-import Text from "@/components/base/text";
 import PropTypes from "prop-types";
 import styles from "./HelpTexts.module.css";
 import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
 import React from "react";
+import BodyParser from "@/components/base/bodyparser/BodyParser";
 
 /**
  * get a helptext by id from api
@@ -32,10 +32,10 @@ export function HelpText({ helptext }) {
         <div className={styles.helpbreadcrumb}>
           <Breadcrumbs path={path} href="/help" skeleton={false} />
         </div>
-        <Title type="title4">{helptext.title}</Title>
-        <Text type="text2" lines={30} className={styles.helptext}>
-          <div dangerouslySetInnerHTML={{ __html: helptext.body.value }} />
-        </Text>
+        <Title type="title4" className={styles.title}>
+          {helptext.title}
+        </Title>
+        <BodyParser body={helptext?.body?.value} />
       </React.Fragment>
     );
   } else {
