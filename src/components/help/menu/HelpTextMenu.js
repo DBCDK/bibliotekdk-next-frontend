@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * Component to show helptext menu in groups
@@ -162,8 +163,13 @@ function getPublishedHelpTexts() {
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = getPublishedHelpTexts();
+
+  if (isLoading) {
+    return <Skeleton className={styles.helpskeleton} lines={8} />;
+  }
+
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
-    // @TODO skeleton
+    // @TODO some error here .. message for user .. log ??
     return null;
   }
 

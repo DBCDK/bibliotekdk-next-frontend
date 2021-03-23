@@ -29,10 +29,10 @@ export function HelpMenu() {
 export function HelpMenuWithId() {
   return (
     <div>
-      <StoryTitle>Helptext Manu expanded by id</StoryTitle>
+      <StoryTitle>Helptext Menu expanded by id</StoryTitle>
       <HelpTextMenu
         helpTexts={allHelp.data.nodeQuery.entities}
-        helpTextId={19}
+        helpTextId={"19"}
       />
     </div>
   );
