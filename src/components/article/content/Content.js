@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
@@ -10,13 +9,12 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
-import parseArticleBody from "./utils";
-
 import * as articleFragments from "@/lib/api/article.fragments";
 
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
+import BodyParser from "@/components/base/bodyparser/BodyParser";
 
 function ArticleHeader({ article }) {
   const context = { context: "articles" };
@@ -127,13 +125,6 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   const orientation =
     (hasUrl && getOrientation(article.fieldImage)) || "landscape";
 
-  const parsedBody = useMemo(() => {
-    if (article.body && article.body.value) {
-      return parseArticleBody(article.body.value);
-    }
-    return "";
-  }, [article.body && article.body.value]);
-
   return (
     <Container as="article" fluid>
       <Row className={`${styles.content} ${className}`}>
@@ -191,16 +182,15 @@ export function Content({ className = "", data = {}, skeleton = false }) {
       <Row>
         <Col
           data-cy="article-body"
-          className={styles.body}
           xs={12}
           md={{ span: 10, offset: 1 }}
           lg={{ span: 6, offset: 3 }}
         >
-          {article.body && (
-            <Text type="text2" skeleton={skeleton} lines={30}>
-              <span dangerouslySetInnerHTML={{ __html: parsedBody }} />
-            </Text>
-          )}
+          <BodyParser
+            body={article?.body?.value}
+            skeleton={skeleton}
+            lines={10}
+          />
         </Col>
       </Row>
     </Container>
