@@ -6,6 +6,7 @@ import styles from "./HelpTexts.module.css";
 import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
 import React from "react";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * get a helptext by id from api
@@ -13,8 +14,8 @@ import BodyParser from "@/components/base/bodyparser/BodyParser";
  * @return {{isLoading, data}}
  */
 function getAhelpText({ helpTextId }) {
-  const { isLoading, data } = useData(helpText({ helpTextId }));
-  return { isLoading, data };
+  const { isLoading, data, error } = useData(helpText({ helpTextId }));
+  return { isLoading, data, error };
 }
 
 /**
@@ -26,7 +27,6 @@ function getAhelpText({ helpTextId }) {
 export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
     const path = ["help", helptext.fieldHelpTextGroup];
-
     return (
       <React.Fragment>
         <div className={styles.helpbreadcrumb}>
@@ -50,10 +50,14 @@ export function HelpText({ helptext }) {
  * @constructor
  */
 export default function Wrap({ helpTextId }) {
-  const { isLoading, data } = getAhelpText({ helpTextId });
+  const { isLoading, data, error } = getAhelpText({ helpTextId });
 
-  if (!data || !data.helptext) {
-    // @TODO skeleton
+  if (isLoading) {
+    return <Skeleton lines={2} />;
+  }
+
+  if (!data || !data.helptext || error) {
+    // @TODO some error here .. message for user .. log ??
     return null;
   }
 
