@@ -1,3 +1,7 @@
+.helpskeleton{
+    max-height: 250px;
+}
+
 .helplink {
     padding-left: var(--pt4);
 }

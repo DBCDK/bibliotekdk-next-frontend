@@ -50,4 +50,7 @@
     display: none;
 }
 
+.title {
+    margin-bottom: var(--pt4);
+}
 
