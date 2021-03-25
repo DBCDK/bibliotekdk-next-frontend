@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import Section from "@/components/base/section";
@@ -11,6 +11,9 @@ import Link from "@/components/base/link";
 import { sortData } from "./utils";
 
 import styles from "./Faq.module.css";
+import { useData } from "@/lib/api/api";
+import * as faqFragments from "@/lib/api/faq.fragments";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * The FAQ React component
@@ -52,9 +55,21 @@ Faq.propTypes = {
 
 export default function Wrap(props) {
   // real data goes here ...
+  const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
+
+  if (isLoading) {
+    return <Skeleton lines={2} />;
+  }
+
+  if (!data || !data.faq || error) {
+    // @TODO some error here .. message for user .. log ??
+    return null;
+  }
+
+  const realdata = data.faq.entities;
 
   // temp. dummy
-  const data = [
+  const dummy = [
     {
       title: "Har mit bibliotek bogen?",
       body: {
@@ -93,7 +108,7 @@ export default function Wrap(props) {
     },
   ];
 
-  return <Faq {...props} data={data} />;
+  return <Faq {...props} data={realdata} />;
 }
 
 Wrap.propTypes = {

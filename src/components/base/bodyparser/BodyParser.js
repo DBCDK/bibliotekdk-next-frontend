@@ -27,7 +27,7 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
   }
   return (
     <Text type="text2">
-      <div
+      <span
         className={`${styles.body} ${className}`}
         dangerouslySetInnerHTML={{ __html: parsedBody }}
       />

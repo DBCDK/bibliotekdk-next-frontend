@@ -9,6 +9,8 @@ import ExpandIcon from "@/components/base/animation/expand";
 import Text from "@/components/base/text";
 
 import styles from "./Accordion.module.css";
+import BodyParser from "@/components/base/bodyparser";
+import React from "react";
 
 /**
  * The Component function
@@ -93,7 +95,7 @@ export default function Accordion({
         key={`${a.title}_${i}`}
         eventKey={a.key || i.toString()}
       >
-        {a.content}
+        <BodyParser body={a.content} />
       </Item>
     ));
 
