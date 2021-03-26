@@ -28,6 +28,7 @@ export function Result({
   onViewSelect,
   onWorkClick,
   viewSelected,
+  children = null,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
@@ -62,16 +63,17 @@ export function Result({
         </div>
       }
     >
-      {Array(isMobile ? page : 1)
-        .fill({})
-        .map((p, index) => (
-          <ResultPage
-            key={`result-page-${index}`}
-            q={q}
-            page={isMobile ? index + 1 : page}
-            onWorkClick={onWorkClick}
-          />
-        ))}
+      {children ||
+        Array(isMobile ? page : 1)
+          .fill({})
+          .map((p, index) => (
+            <ResultPage
+              key={`result-page-${index}`}
+              q={q}
+              page={isMobile ? index + 1 : page}
+              onWorkClick={onWorkClick}
+            />
+          ))}
     </Section>
   );
 }

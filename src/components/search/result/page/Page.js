@@ -10,7 +10,7 @@ import { fast, all } from "@/lib/api/search.fragments";
  * @param {object} props
  * See propTypes for specific props and types
  */
-function ResultPage({ rows, onWorkClick, isLoading }) {
+export function ResultPage({ rows, onWorkClick, isLoading }) {
   if (isLoading) {
     // Create some skeleton rows
     rows = [{}, {}, {}];

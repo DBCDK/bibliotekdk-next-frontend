@@ -1,1 +1,1 @@
-export { default } from "./Page.js";
+export { default, ResultPage } from "./Page.js";

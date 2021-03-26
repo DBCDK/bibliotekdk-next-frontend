@@ -3,6 +3,7 @@ import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 import QuickFilters from "../quickfilters";
 import { Result } from "./Result";
+import { ResultPage } from "./page";
 
 export default {
   title: "search/Result",
@@ -151,10 +152,12 @@ export function SearchResult() {
         viewSelected={viewSelected}
       />
       <Result
-        rows={rows}
+        hitcount="1234"
         onViewSelect={setSelectedView}
         viewSelected={viewSelected}
-      />
+      >
+        <ResultPage rows={rows} />
+      </Result>
       <Pagination currentPage={currentPage} onChange={setCurrentPage} />
     </div>
   );
