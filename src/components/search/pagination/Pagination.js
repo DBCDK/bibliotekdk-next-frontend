@@ -20,7 +20,18 @@ export default function Pagination({
   return (
     <React.Fragment>
       <div className={`${styles.pagination} ${styles.mobile}`}>
-        <Button type="secondary" size="medium" skeleton={isLoading}>
+        <Button
+          type="secondary"
+          size="medium"
+          tabIndex="0"
+          skeleton={isLoading}
+          onClick={onChange && (() => onChange(currentPage + 1, false))}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && onChange) {
+              onChange(currentPage + 1, false);
+            }
+          }}
+        >
           {Translate({ context: "search", label: "more" })}
         </Button>
       </div>
