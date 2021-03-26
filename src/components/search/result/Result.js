@@ -66,11 +66,10 @@ export function Result({
         .fill({})
         .map((p, index) => (
           <ResultPage
+            key={`result-page-${index}`}
             q={q}
-            isMobile={isMobile}
             page={isMobile ? index + 1 : page}
             onWorkClick={onWorkClick}
-            key={`result-page-${index}`}
           />
         ))}
     </Section>

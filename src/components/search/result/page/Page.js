@@ -8,7 +8,7 @@ import { fast, all } from "@/lib/api/search.fragments";
  * Row representation of a search result entry
  *
  * @param {object} props
- * @param {object} props.data
+ * See propTypes for specific props and types
  */
 function ResultPage({ rows, onWorkClick, isLoading }) {
   if (isLoading) {
@@ -29,6 +29,12 @@ function ResultPage({ rows, onWorkClick, isLoading }) {
   );
 }
 
+ResultPage.propTypes = {
+  rows: PropTypes.array,
+  isLoading: PropTypes.bool,
+  onWorkClick: PropTypes.func,
+};
+
 /**
  * Wrap is a react component responsible for loading
  * data and displaying the right variant of the component
@@ -38,17 +44,10 @@ function ResultPage({ rows, onWorkClick, isLoading }) {
  *
  * @returns {component}
  */
-export default function Wrap({ q, page, onWorkClick, updateNumPages }) {
+export default function Wrap({ q, page, onWorkClick }) {
   // settings
-  const l = 10; // limit
-  const p = parseInt(page); // page
-  const o = l * (p - 1); // offset
-
-  // calculate limit
-  const limit = l;
-
-  // calculate offset
-  const offset = o;
+  const limit = 10; // limit
+  const offset = limit * (page - 1); // offset
 
   // use the useData hook to fetch data
   const fastResponse = useData(fast({ q, limit, offset }));
@@ -64,20 +63,10 @@ export default function Wrap({ q, page, onWorkClick, updateNumPages }) {
 
   const data = allResponse.data || fastResponse.data;
 
-  // Update hitcount in parent component, for pagination use
-  if (updateNumPages && data) {
-    const hitcount = data.search.hitcount;
-    const numPages = Math.ceil(hitcount / limit);
-    updateNumPages(numPages);
-  }
-
   return <ResultPage rows={data.search.result} onWorkClick={onWorkClick} />;
 }
 Wrap.propTypes = {
   q: PropTypes.string,
-  isMobile: PropTypes.bool,
-  page: PropTypes.string,
-  viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
+  page: PropTypes.number,
   onWorkClick: PropTypes.func,
 };
