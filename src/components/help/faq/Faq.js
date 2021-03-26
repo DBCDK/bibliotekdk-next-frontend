@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import Section from "@/components/base/section";
@@ -11,6 +11,9 @@ import Link from "@/components/base/link";
 import { sortData } from "./utils";
 
 import styles from "./Faq.module.css";
+import { useData } from "@/lib/api/api";
+import * as faqFragments from "@/lib/api/faq.fragments";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * The FAQ React component
@@ -52,48 +55,20 @@ Faq.propTypes = {
 
 export default function Wrap(props) {
   // real data goes here ...
+  const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
 
-  // temp. dummy
-  const data = [
-    {
-      title: "Har mit bibliotek bogen?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem. Pellentesque placerat facilisis commodo. Aenean ligula metus, sodales et augue eget, porttitor gravida arcu.",
-      },
-    },
-    {
-      title:
-        "Hvorfor ser jeg et mindre antal poster end det, der står i antal hits?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor.",
-      },
-    },
-    {
-      title: "Hvordan søger jeg specifikt på fx. mp3-lydbøger?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem.",
-      },
-    },
-    {
-      title: "Hvordan ser jeg de nyeste resultater først?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor.",
-      },
-    },
-    {
-      title: "Hvordan fornyer jeg et lån?",
-      body: {
-        value:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam placerat sodales risus ac suscipit. Integer aliquam lacus enim, sit amet pharetra diam tempor eu. Etiam vel augue eros. Donec ac malesuada tortor. Curabitur quis diam sapien. Sed vel massa metus. Suspendisse feugiat scelerisque commodo. Sed scelerisque pharetra nisi vel sagittis. Ut id pellentesque sem.",
-      },
-    },
-  ];
+  if (isLoading) {
+    return <Skeleton lines={2} />;
+  }
 
-  return <Faq {...props} data={data} />;
+  if (!data || !data.faq || error) {
+    // @TODO some error here .. message for user .. log ??
+    return null;
+  }
+
+  const realdata = data.faq.entities;
+
+  return <Faq {...props} data={realdata} />;
 }
 
 Wrap.propTypes = {
