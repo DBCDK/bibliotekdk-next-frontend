@@ -26,12 +26,10 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
     return <Text type="text2" skeleton={true} lines={lines}></Text>;
   }
   return (
-    <Text type="text2">
-      <span
-        className={`${styles.body} ${className}`}
-        dangerouslySetInnerHTML={{ __html: parsedBody }}
-      />
-    </Text>
+    <div
+      className={`${styles.body} ${className}`}
+      dangerouslySetInnerHTML={{ __html: parsedBody }}
+    />
   );
 }
 BodyParser.propTypes = {
