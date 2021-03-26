@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 
+import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
-import { fast, all } from "@/lib/api/search.fragments";
+import { fast } from "@/lib/api/search.fragments";
 import Divider from "@/components/base/divider";
 import ViewSelector from "../viewselector";
 
@@ -24,47 +25,49 @@ export function Result({
   q,
   page,
   isLoading,
-  hitcount,
+  hitcount = 0,
   onViewSelect,
   onWorkClick,
   viewSelected,
-  children = null,
+  onPageChange,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+
+  const numPages = Math.ceil(hitcount / 10);
 
   // Set number of hits for the user, ads a '+' if "more" than 100 results found.
   const hits = hitcount === 100 ? `${hitcount}+` : hitcount;
 
   return (
-    <Section
-      contentDivider={null}
-      titleDivider={<Divider className={styles.titledivider} />}
-      title={
-        <div className={styles.titlewrapper}>
-          <Title type="title4">
-            {Translate({ context: "search", label: "title" })}
-          </Title>
-          <div>
-            <Title
-              type="title2"
-              tag="h3"
-              className={styles.resultlength}
-              skeleton={isLoading}
-            >
-              {hits}
+    <>
+      <Section
+        contentDivider={null}
+        titleDivider={<Divider className={styles.titledivider} />}
+        title={
+          <div className={styles.titlewrapper}>
+            <Title type="title4">
+              {Translate({ context: "search", label: "title" })}
             </Title>
-            <ViewSelector
-              className={styles.viewselector}
-              onViewSelect={onViewSelect}
-              viewSelected={viewSelected}
-            />
+            <div>
+              <Title
+                type="title2"
+                tag="h3"
+                className={styles.resultlength}
+                skeleton={isLoading}
+              >
+                {hits}
+              </Title>
+              <ViewSelector
+                className={styles.viewselector}
+                onViewSelect={onViewSelect}
+                viewSelected={viewSelected}
+              />
+            </div>
           </div>
-        </div>
-      }
-    >
-      {children ||
-        Array(isMobile ? page : 1)
+        }
+      >
+        {Array(isMobile ? page : 1)
           .fill({})
           .map((p, index) => (
             <ResultPage
@@ -74,7 +77,14 @@ export function Result({
               onWorkClick={onWorkClick}
             />
           ))}
-    </Section>
+      </Section>
+      <Pagination
+        isLoading={isLoading}
+        numPages={numPages}
+        currentPage={parseInt(page, 10)}
+        onChange={onPageChange}
+      />
+    </>
   );
 }
 
@@ -103,17 +113,13 @@ export default function Wrap({
   onViewSelect,
   onWorkClick,
   viewSelected,
-  updateNumPages,
+  onPageChange,
 }) {
   // settings
   const limit = 10; // limit
 
   // use the useData hook to fetch data
-  const fastResponse = useData(fast({ q, offset: 0, limit }));
-
-  if (fastResponse.isLoading) {
-    return <Result isLoading={true} />;
-  }
+  const fastResponse = useData(q && fast({ q, offset: 0, limit }));
 
   if (fastResponse.error) {
     return null;
@@ -121,11 +127,8 @@ export default function Wrap({
 
   const data = fastResponse.data;
 
-  // Update hitcount in parent component, for pagination use
-  if (updateNumPages && data) {
-    const hitcount = data.search.hitcount;
-    const numPages = Math.ceil(hitcount / limit);
-    updateNumPages(numPages);
+  if (fastResponse.isLoading || !data) {
+    return <Result isLoading={true} />;
   }
 
   return (
@@ -136,6 +139,7 @@ export default function Wrap({
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
       viewSelected={viewSelected}
+      onPageChange={onPageChange}
     />
   );
 }

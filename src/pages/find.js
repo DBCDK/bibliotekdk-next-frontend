@@ -1,4 +1,3 @@
-import Pagination from "@/components/search/pagination/Pagination";
 import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Searchbar from "@/components/search/searchbar";
@@ -80,6 +79,9 @@ function Find() {
           viewSelected={view}
           updateNumPages={(pages) => setNumPages(pages)}
           onViewSelect={(view) => updateQueryParams({ view })}
+          onPageChange={(page, scroll) =>
+            updateQueryParams({ page }, { scroll })
+          }
           onWorkClick={(index, work) => {
             getClient().request(
               collectSearchWorkClick({
@@ -89,13 +91,6 @@ function Find() {
               })
             );
           }}
-        />
-      )}
-      {q && (
-        <Pagination
-          numPages={numPages}
-          currentPage={parseInt(page, 10)}
-          onChange={(page, scroll) => updateQueryParams({ page }, { scroll })}
         />
       )}
     </>

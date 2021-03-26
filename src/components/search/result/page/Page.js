@@ -50,18 +50,18 @@ export default function Wrap({ q, page, onWorkClick }) {
   const offset = limit * (page - 1); // offset
 
   // use the useData hook to fetch data
-  const fastResponse = useData(fast({ q, limit, offset }));
-  const allResponse = useData(all({ q, limit, offset }));
-
-  if (fastResponse.isLoading) {
-    return <ResultPage isLoading={true} />;
-  }
+  const fastResponse = useData(q && fast({ q, limit, offset }));
+  const allResponse = useData(q && all({ q, limit, offset }));
 
   if (fastResponse.error || allResponse.error) {
     return null;
   }
 
   const data = allResponse.data || fastResponse.data;
+
+  if (fastResponse.isLoading || !data) {
+    return <ResultPage isLoading={true} />;
+  }
 
   return <ResultPage rows={data.search.result} onWorkClick={onWorkClick} />;
 }
