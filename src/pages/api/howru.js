@@ -1,4 +1,4 @@
-import { getClient } from "@/lib/api/api";
+import { fetcher } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as searchFragments from "@/lib/api/search.fragments";
 
@@ -17,12 +17,11 @@ export default async function handler(req, res) {
   const services = [
     ...Object.entries(workFragments).map(([name, func]) => ({
       service: `api-work-${name}`,
-      handler: () =>
-        getClient().request(func({ workId: "work-of:870970-basis:23154382" })),
+      handler: () => fetcher(func({ workId: "work-of:870970-basis:23154382" })),
     })),
     ...Object.entries(searchFragments).map(([name, func]) => ({
       service: `api-search-${name}`,
-      handler: () => getClient().request(func({ q: "hest" })),
+      handler: () => fetcher(func({ q: "hest" })),
     })),
   ];
 
