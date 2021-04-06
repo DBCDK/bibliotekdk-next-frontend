@@ -1,16 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { useState } from "react";
-import Pagination from "../pagination/Pagination";
-import QuickFilters from "../quickfilters";
-import { Result } from "./Result";
+import { ResultPage } from ".";
 
 export default {
   title: "search/Result",
 };
 
-export function SearchResult() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [viewSelected, setSelectedView] = useState();
+export function Default() {
   const rows = [
     {
       title: "Harry Potter og de vises sten",
@@ -144,23 +139,16 @@ export function SearchResult() {
   ];
   return (
     <div>
-      <StoryTitle>Search Result section</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <QuickFilters
-        onViewSelect={setSelectedView}
-        viewSelected={viewSelected}
-      />
-      <Result
-        rows={rows}
-        onViewSelect={setSelectedView}
-        viewSelected={viewSelected}
-      />
-      <Pagination currentPage={currentPage} onChange={setCurrentPage} />
+      <StoryTitle>Result</StoryTitle>
+      <StoryDescription>Multiple results found</StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <ResultPage rows={rows} />
+      </div>
     </div>
   );
 }
 
-export function SearchResult_Partial() {
+export function Partial() {
   const partial = [
     {
       title: "Harry Potter og de vises sten",
@@ -183,23 +171,23 @@ export function SearchResult_Partial() {
   ];
   return (
     <div>
-      <StoryTitle>Search Result section with partial data</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <QuickFilters />
-      <Result rows={partial} />
-      <Pagination isLoading={true} />
+      <StoryTitle>Partial data fetched</StoryTitle>
+      <StoryDescription>Partial fetched data visible</StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <ResultPage rows={partial} />
+      </div>
     </div>
   );
 }
 
-export function SearchResult_isLoading() {
+export function Loading() {
   return (
     <div>
-      <StoryTitle>Search Result section with partial data</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <QuickFilters />
-      <Result isLoading={true} />
-      <Pagination isLoading={true} />
+      <StoryTitle>Loading version</StoryTitle>
+      <StoryDescription>No data ready to show</StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <ResultPage isLoading={true} />
+      </div>
     </div>
   );
 }

@@ -64,17 +64,28 @@ describe("Search", () => {
   });
 
   it(`Should focus elements when tabbing`, () => {
-    cy.visit("/iframe.html?id=search-result--search-result&viewMode=story");
+    cy.visit("/iframe.html?id=search-result--default&viewMode=story");
+
+    cy.tabs(1);
+    cy.focused().should("have.attr", "data-cy", "result-row");
+
+    cy.tabs(2);
+    cy.focused().should("have.attr", "data-cy", "result-row");
+  });
+
+  it(`Should focus grid buttons when tabbing`, () => {
+    cy.visit("/iframe.html?id=search-quickfilters--default&viewMode=story");
     cy.tabs(1);
     cy.focused().should("have.attr", "data-cy", "grid-button");
 
     cy.tabs(1);
     cy.focused().should("have.attr", "data-cy", "list-button");
+  });
+
+  it(`Should focus pagination buttons when tabbing`, () => {
+    cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
     cy.tabs(1);
-    cy.focused().should("have.attr", "data-cy", "result-row");
-
-    cy.tabs(3);
     cy.focused().should("have.attr", "data-cy", "page-1-button");
 
     cy.tabs(3);

@@ -1,193 +1,98 @@
 import PropTypes from "prop-types";
 
+import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
-import Breadcrumbs from "@/components/base/breadcrumbs";
-import Cover from "@/components/base/cover";
-import styles from "./Result.module.css";
 import Title from "@/components/base/title";
-import Text from "@/components/base/text";
 import { useData } from "@/lib/api/api";
-import { fast, all } from "@/lib/api/search.fragments";
-import Link from "@/components/base/link";
-import { encodeTitleCreator } from "@/lib/utils";
+import { fast } from "@/lib/api/search.fragments";
 import Divider from "@/components/base/divider";
-import { Row, Col } from "react-bootstrap";
 import ViewSelector from "../viewselector";
 
-/**
- * Row representation of a search result entry
- *
- * @param {object} props
- * @param {object} props.data
- */
-function ResultRow({ data, onClick }) {
-  const { title, creator, work = {} } = data;
-  const creatorName =
-    (work.creators && work.creators[0] && work.creators[0].name) ||
-    (creator && creator.name);
-  return (
-    <Link
-      a={true}
-      border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
-      className={styles.wrapper}
-      href={{
-        pathname: "/materiale/[title_author]/[workId]",
-        query: {
-          title_author: encodeTitleCreator(
-            title,
-            work.creators && work.creators[0] && work.creators[0].name
-          ),
-          workId: work.id,
-        },
-      }}
-      dataCy={`result-row${work.id ? "" : "-skeleton"}`}
-      onClick={onClick}
-    >
-      <Row className={styles.row}>
-        <Col className={styles.leftcol} xs={3}>
-          <Breadcrumbs
-            skeleton={!work.path}
-            crumbs={work.path ? null : 4}
-            path={work.path || []}
-            link={false}
-          />
-        </Col>
-        <Col>
-          <Title
-            type="title5"
-            tag="h2"
-            lines={1}
-            skeleton={!work.title && !title}
-          >
-            {work.title || title}
-          </Title>
-          <Text
-            type="text3"
-            className={styles.creator}
-            skeleton={!work.creators && !creator}
-            lines={1}
-          >
-            {!work.creators && !creator ? "skeleton" : creatorName || " "}
-          </Text>
-          <div className={styles.materials}>
-            <Text
-              type="text3"
-              lines={2}
-              clamp={true}
-              skeleton={!work.materialTypes}
-            >
-              {Translate({ context: "search", label: "loanOptions" })}
-            </Text>
-            {work.materialTypes &&
-              work.materialTypes.length > 0 &&
-              work.materialTypes.map((material) => {
-                return (
-                  <Link
-                    border={{ top: false, bottom: { keepVisible: true } }}
-                    className={styles.materiallink}
-                    href={{
-                      pathname: "/materiale/[title_author]/[workId]",
-                      query: {
-                        title_author: encodeTitleCreator(
-                          title,
-                          work.creators &&
-                            work.creators[0] &&
-                            work.creators[0].name
-                        ),
-                        type: material.materialType,
-                        workId: work.id,
-                      },
-                    }}
-                    key={material.materialType}
-                    tabIndex="-1"
-                    tag="span"
-                  >
-                    <Text type="text4">{material.materialType}</Text>
-                  </Link>
-                );
-              })}
-          </div>
-        </Col>
-        <Col xs={3}>
-          <Cover
-            className={styles.cover}
-            src={work.cover && work.cover.detail}
-            skeleton={!work.cover}
-            size={["100%", "100%"]}
-          />
-        </Col>
-      </Row>
-    </Link>
-  );
-}
-ResultRow.propTypes = {
-  data: PropTypes.object,
-  onClick: PropTypes.func,
-};
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+import ResultPage from "./page";
+
+import styles from "./Result.module.css";
 
 /**
  * Search result
  *
  * @param {object} props
- * @param {boolean} props.isLoading
- * @param {array} props.rows
- * @param {function} props.onViewSelect
- * @param {function} props.onWorkClick
- * @param {string} props.viewSelected
+ * See propTypes for specific props and types
  */
 export function Result({
+  q,
+  page,
   isLoading,
-  rows = [],
+  hitcount = 0,
   onViewSelect,
   onWorkClick,
   viewSelected,
+  onPageChange,
 }) {
-  if (isLoading) {
-    // Create some skeleton rows
-    rows = [{}, {}, {}];
-  }
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
+
+  const numPages = Math.ceil(hitcount / 10);
+
+  // Set number of hits for the user, ads a '+' if "more" than 100 results found.
+  const hits = hitcount === 100 ? `${hitcount}+` : hitcount;
+
   return (
-    <Section
-      className={styles.section}
-      contentDivider={null}
-      titleDivider={<Divider className={styles.titledivider} />}
-      title={
-        <div className={styles.titlewrapper}>
-          <Title type="title4">
-            {Translate({ context: "search", label: "title" })}
-          </Title>
-          <div>
-            <Title
-              type="title2"
-              tag="h3"
-              className={styles.resultlength}
-              skeleton={isLoading}
-            >
-              1456
+    <>
+      <Section
+        contentDivider={null}
+        titleDivider={<Divider className={styles.titledivider} />}
+        title={
+          <div className={styles.titlewrapper}>
+            <Title type="title4">
+              {Translate({ context: "search", label: "title" })}
             </Title>
-            <ViewSelector
-              className={styles.viewselector}
-              onViewSelect={onViewSelect}
-              viewSelected={viewSelected}
-            />
+            <div>
+              <Title
+                type="title2"
+                tag="h3"
+                className={styles.resultlength}
+                skeleton={isLoading}
+              >
+                {hits}
+              </Title>
+              <ViewSelector
+                className={styles.viewselector}
+                onViewSelect={onViewSelect}
+                viewSelected={viewSelected}
+              />
+            </div>
           </div>
-        </div>
-      }
-    >
-      {rows.map((row, index) => (
-        <ResultRow
-          data={row}
-          key={`${row.title}_${index}`}
-          onClick={onWorkClick && (() => onWorkClick(index, row.work))}
-        />
-      ))}
-    </Section>
+        }
+      >
+        {Array(isMobile ? page : 1)
+          .fill({})
+          .map((p, index) => (
+            <ResultPage
+              key={`result-page-${index}`}
+              q={q}
+              page={isMobile ? index + 1 : page}
+              onWorkClick={onWorkClick}
+            />
+          ))}
+      </Section>
+      <Pagination
+        isLoading={isLoading}
+        numPages={numPages}
+        currentPage={parseInt(page, 10)}
+        onChange={onPageChange}
+      />
+    </>
   );
 }
+
 Result.propTypes = {
+  q: PropTypes.string,
+  page: PropTypes.number,
   isLoading: PropTypes.bool,
-  rows: PropTypes.array,
+  hitcount: PropTypes.number,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,
@@ -202,31 +107,46 @@ Result.propTypes = {
  *
  * @returns {component}
  */
-export default function Wrap({ q, onViewSelect, onWorkClick, viewSelected }) {
-  // use the useData hook to fetch data
-  const fastResponse = useData(fast({ q }));
-  const allResponse = useData(all({ q }));
+export default function Wrap({
+  q,
+  page,
+  onViewSelect,
+  onWorkClick,
+  viewSelected,
+  onPageChange,
+}) {
+  // settings
+  const limit = 10; // limit
 
-  if (fastResponse.isLoading) {
-    return <Result isLoading={true} />;
-  }
-  if (fastResponse.error || allResponse.error) {
+  // use the useData hook to fetch data
+  const fastResponse = useData(q && fast({ q, offset: 0, limit }));
+
+  if (fastResponse.error) {
     return null;
   }
 
-  const data = allResponse.data || fastResponse.data;
+  const data = fastResponse.data;
+
+  if (fastResponse.isLoading || !data) {
+    return <Result isLoading={true} />;
+  }
 
   return (
     <Result
-      rows={data.search.result}
+      q={q}
+      page={page}
+      hitcount={data.search.hitcount}
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
       viewSelected={viewSelected}
+      onPageChange={onPageChange}
     />
   );
 }
+
 Wrap.propTypes = {
   q: PropTypes.string,
+  page: PropTypes.number,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
   onWorkClick: PropTypes.func,

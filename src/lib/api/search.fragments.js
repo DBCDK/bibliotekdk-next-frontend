@@ -9,21 +9,22 @@
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function fast({ q }) {
+export function fast({ q, limit, offset }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!) {
-        search(q: $q) {
+    query: `query ($q: String!, $limit: Int, $offset: Int) {
+        search(q: $q, limit: $limit, offset: $offset) {
           result {
             title
             creator {
               name
             }
           }
+          hitcount
         }
         monitor(name: "bibdknext_search_fast")
       }`,
-    variables: { q },
+    variables: { q, limit, offset },
     slowThreshold: 3000,
   };
 }
@@ -34,11 +35,11 @@ export function fast({ q }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function all({ q }) {
+export function all({ q, limit, offset }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!) {
-        search(q: $q) {
+    query: `query ($q: String!, $limit: Int, $offset: Int) {
+        search(q: $q, limit: $limit, offset: $offset) {
           result {
             title
             work {
@@ -56,10 +57,11 @@ export function all({ q }) {
               title
             }
           }
+          hitcount
         }
         monitor(name: "bibdknext_search_all")
       }`,
-    variables: { q },
+    variables: { q, limit, offset },
     slowThreshold: 3000,
   };
 }
