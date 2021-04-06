@@ -15,7 +15,7 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchOnServer } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import Page from "@/components/work/page";
@@ -76,9 +76,11 @@ export default function WorkPage() {
 const serverQueries = Object.values(workFragments);
 
 /**
- * We export getServerSideProps to let Next.js
+ * We use getInitialProps to let Next.js
  * fetch the data server side
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-export const getServerSideProps = fetchOnServer(serverQueries);
+WorkPage.getInitialProps = async (ctx) => {
+  return fetchAll(serverQueries, ctx);
+};

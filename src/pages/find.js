@@ -9,7 +9,7 @@ import {
   collectSearch,
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
-import { fetcher } from "@/lib/api/api";
+import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
 
 /**
@@ -97,5 +97,8 @@ function Find() {
     </>
   );
 }
+Find.getInitialProps = async (ctx) => {
+  return fetchAll([], ctx);
+};
 
 export default Find;

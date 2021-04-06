@@ -11,7 +11,6 @@
  */
 import React from "react";
 
-import nookies from "nookies";
 import Cookies from "js-cookie";
 
 import "@/scss/custom-bootstrap.scss";
@@ -24,12 +23,8 @@ import { APIStateContext } from "@/lib/api/api";
 import {
   setLocale,
   setTranslations,
-  checkTranslationsObject,
 } from "@/components/base/translate/Translate";
 
-import fetchTranslations from "@/lib/api/backend";
-
-import App from "next/app";
 import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
@@ -70,24 +65,3 @@ export default function MyApp({ Component, pageProps, router }) {
     </APIStateContext.Provider>
   );
 }
-
-// Server side render all pages..
-// Else publicRuntimeConfig doesn't work
-MyApp.getInitialProps = async (appContext) => {
-  const appProps = await App.getInitialProps(appContext);
-
-  // If we are not serverside
-  if (typeof window !== "undefined") {
-    return { ...appProps };
-  }
-
-  // get translations from backend
-  appProps.pageProps.translations = await fetchTranslations();
-
-  // Set allowCookies on pageProps
-  appProps.pageProps.allowCookies = !!nookies.get(appContext.ctx)[
-    COOKIES_ALLOWED
-  ];
-
-  return { ...appProps };
-};

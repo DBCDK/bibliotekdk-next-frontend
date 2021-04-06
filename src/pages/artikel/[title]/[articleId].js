@@ -15,7 +15,7 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchOnServer } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/api";
 import { article } from "@/lib/api/article.fragments";
 
 import Page from "@/components/article/page";
@@ -59,9 +59,11 @@ export default function ArticlePage() {
 const serverQueries = [article];
 
 /**
- * We export getServerSideProps to let Next.js
+ * We use getInitialProps to let Next.js
  * fetch the data server side
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-export const getServerSideProps = fetchOnServer(serverQueries);
+ArticlePage.getInitialProps = async (ctx) => {
+  return fetchAll(serverQueries, ctx);
+};

@@ -14,7 +14,7 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchOnServer } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/api";
 import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
 
 import Page from "@/components/help/texts/page";
@@ -45,9 +45,11 @@ export default function HelptextPage() {
 const serverQueries = [helpText, publishedHelptexts];
 
 /**
- * We export getServerSideProps to let Next.js
+ * We use getInitialProps to let Next.js
  * fetch the data server side
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-export const getServerSideProps = fetchOnServer(serverQueries);
+HelptextPage.getInitialProps = async (ctx) => {
+  return fetchAll(serverQueries, ctx);
+};

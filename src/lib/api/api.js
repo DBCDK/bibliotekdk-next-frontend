@@ -7,6 +7,7 @@ import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
+import fetchTranslations from "@/lib/api/backend";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -90,35 +91,24 @@ export function useData(query) {
   };
 }
 
-/**
- * Helper for each page to fetch data
- * when running on the server
- *
- * @param {Object[]} queries will be fetched in parallel
- *
- * @return {function} getServerSideProps
- */
-export function fetchOnServer(queries) {
-  /**
-   * A function that Next.js will invoke per page request
-   *
-   * @param {Object} context Next.js context
-   *
-   * @return {Object} props used for server side rendering
-   */
-  return async function getServerSideProps(context) {
-    // Detect if requester is a bot
-    const userAgent = context.req.headers["user-agent"];
-    const isBot = require("isbot")(userAgent) || !!context.query.isBot;
+export async function fetchAll(queries, context) {
+  // If we are in a browser, we return immidiately
+  // This prevents a roundtrip to the server
+  // and will make page changes feel faster
+  if (typeof window !== "undefined") {
+    return { initialState: {} };
+  }
 
-    // If user is not a bot, we don't care about SSR
-    // We show the page as fast as we can with skeleton elements
-    if (!isBot) {
-      return { props: {} };
-    }
+  // Detect if requester is a bot
+  const userAgent = context.req.headers["user-agent"];
+  const isBot = require("isbot")(userAgent) || !!context.query.isBot;
 
-    // Fetch all queries in parallel
-    const initialState = {};
+  // Fetch all queries in parallel
+  const initialState = {};
+
+  // If user is a bot, we care about SSR, and fetch data now
+  // Otherwise, we show the page as fast as we can with skeleton elements
+  if (isBot) {
     (
       await Promise.all(
         queries.map(async (queryFunc) => {
@@ -130,11 +120,12 @@ export function fetchOnServer(queries) {
     ).forEach(({ queryKey, queryRes }) => {
       initialState[queryKey] = queryRes;
     });
+  }
 
-    return {
-      props: {
-        initialState,
-      },
-    };
+  return {
+    props: {
+      initialState,
+      translations: await fetchTranslations(),
+    },
   };
 }
