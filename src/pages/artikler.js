@@ -38,5 +38,5 @@ const serverQueries = [allArticles];
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
 ArticlesPage.getInitialProps = (ctx) => {
-  return fetchAll(queries, ctx);
+  return fetchAll(serverQueries, ctx);
 };
