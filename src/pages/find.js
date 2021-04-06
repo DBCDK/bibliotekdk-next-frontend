@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+
 import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Searchbar from "@/components/search/searchbar";
@@ -7,8 +9,7 @@ import {
   collectSearch,
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
-import { getClient } from "@/lib/api/api";
-import React, { useEffect, useState } from "react";
+import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
 
 /**
@@ -45,7 +46,7 @@ function Find() {
   useEffect(() => {
     // Check that q is set and not the empty string
     if (q) {
-      getClient().request(
+      fetcher(
         collectSearch({
           search_query: q,
         })
@@ -83,7 +84,7 @@ function Find() {
             updateQueryParams({ page }, { scroll })
           }
           onWorkClick={(index, work) => {
-            getClient().request(
+            fetcher(
               collectSearchWorkClick({
                 search_query: q,
                 search_query_hit: index + 1,
@@ -96,5 +97,8 @@ function Find() {
     </>
   );
 }
+Find.getInitialProps = (ctx) => {
+  return fetchAll([], ctx);
+};
 
 export default Find;
