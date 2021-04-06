@@ -97,7 +97,7 @@ function Find() {
     </>
   );
 }
-Find.getInitialProps = async (ctx) => {
+Find.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };
 

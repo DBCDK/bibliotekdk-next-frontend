@@ -81,6 +81,6 @@ const serverQueries = Object.values(workFragments);
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-WorkPage.getInitialProps = async (ctx) => {
+WorkPage.getInitialProps = (ctx) => {
   return fetchAll(serverQueries, ctx);
 };

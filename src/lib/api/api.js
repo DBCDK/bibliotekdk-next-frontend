@@ -104,7 +104,7 @@ export async function fetchAll(queries, context) {
   const isBot = require("isbot")(userAgent) || !!context.query.isBot;
 
   // Fetch all queries in parallel
-  const initialState = {};
+  const initialData = {};
 
   // If user is a bot, we care about SSR, and fetch data now
   // Otherwise, we show the page as fast as we can with skeleton elements
@@ -112,20 +112,18 @@ export async function fetchAll(queries, context) {
     (
       await Promise.all(
         queries.map(async (queryFunc) => {
-          const queryKey = generateKey(queryFunc(context.params));
+          const queryKey = generateKey(queryFunc(context.query));
           const queryRes = await fetcher(queryKey);
           return { queryKey, queryRes };
         })
       )
     ).forEach(({ queryKey, queryRes }) => {
-      initialState[queryKey] = queryRes;
+      initialData[queryKey] = queryRes;
     });
   }
 
   return {
-    props: {
-      initialState,
-      translations: await fetchTranslations(),
-    },
+    initialData,
+    translations: await fetchTranslations(),
   };
 }

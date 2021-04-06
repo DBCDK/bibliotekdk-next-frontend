@@ -68,7 +68,7 @@ const serverQueries = [promotedArticles];
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-Index.getInitialProps = async (ctx) => {
+Index.getInitialProps = (ctx) => {
   return fetchAll(promotedArticles, ctx);
 };
 

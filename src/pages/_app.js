@@ -50,7 +50,7 @@ export default function MyApp({ Component, pageProps, router }) {
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
-    <APIStateContext.Provider value={pageProps.initialState}>
+    <APIStateContext.Provider value={pageProps.initialData}>
       <Matomo allowCookies={allowCookies} />
       <BodyScrollLock router={router} />
       <Modal router={router} />

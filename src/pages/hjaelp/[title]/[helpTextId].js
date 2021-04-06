@@ -50,6 +50,6 @@ const serverQueries = [helpText, publishedHelptexts];
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-HelptextPage.getInitialProps = async (ctx) => {
+HelptextPage.getInitialProps = (ctx) => {
   return fetchAll(serverQueries, ctx);
 };
