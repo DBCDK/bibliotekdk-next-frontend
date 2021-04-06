@@ -3,11 +3,13 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useState } from "react";
+import nookies from "nookies";
 import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
 import fetchTranslations from "@/lib/api/backend";
+import { COOKIES_ALLOWED } from "@/components/cookiebox";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -125,5 +127,6 @@ export async function fetchAll(queries, context) {
   return {
     initialData,
     translations: await fetchTranslations(),
+    allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
   };
 }
