@@ -79,7 +79,7 @@ export function useData(query) {
   // Fetch data
   const { data, error } = useSWR(key, fetcher, {
     initialData: initialData[key],
-    loadingTimeout: query.slowThreshold || 5000,
+    loadingTimeout: query?.slowThreshold || 5000,
     onLoadingSlow: () => setIsSlow(true),
   });
 
