@@ -12,7 +12,7 @@ import get from "lodash/get";
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
   articles = articles.filter((a) => {
-    return get(a, "entityUrl.path", false) === `/node/${a.nid}`;
+    return get(a, "fieldAlternativeArticleUrl.uri", false) !== null;
   });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);

@@ -41,7 +41,13 @@ export default function Single({ articles, skeleton }) {
   const image = article && article.fieldImage;
 
   // Check for alternative url alias
-  const entityUrl = get(article, "entityUrl.path", false);
+  let entityUrl = get(article, "fieldAlternativeArticleUrl.uri", false);
+
+  if (entityUrl) {
+    entityUrl = entityUrl.replace("internal:", "");
+  }
+
+  console.log(entityUrl, "ENTITYURL");
   const hasAlternativeUrl = entityUrl && entityUrl !== `/node/${article.nid}`;
 
   const skeletonClass = skeleton ? styles.skeleton : "";
@@ -59,8 +65,11 @@ export default function Single({ articles, skeleton }) {
   }
 
   // Action button label
-  const btnLabel = hasAlternativeUrl ? "alternative-url-btn" : "read-more-btn";
+  const btnLabel = hasAlternativeUrl
+    ? article.fieldAlternativeArticleUrl.title
+    : Translate({ ...context, label: "read-more-btn" });
 
+  console.log(btnLabel, "LABEL");
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
@@ -85,8 +94,7 @@ export default function Single({ articles, skeleton }) {
               <div />
               <Link a={false} href={{ pathname, query }}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {article.fieldRubrik ||
-                    Translate({ ...context, label: "read-more-btn" })}
+                  {article.fieldRubrik || btnLabel}
                 </Button>
               </Link>
             </Col>
