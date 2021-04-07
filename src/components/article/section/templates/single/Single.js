@@ -31,6 +31,8 @@ export default function Single({ articles, skeleton }) {
   const context = { context: "articles" };
   const article = articles[0];
 
+  console.log(article, "ARTICLE");
+
   if (!articles[0]) {
     return "No article found";
   }

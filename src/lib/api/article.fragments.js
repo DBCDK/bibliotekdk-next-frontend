@@ -34,6 +34,10 @@ export function article({ articleId }) {
               width
               height
             }
+            fieldAlternativeArticleUrl{
+              uri
+              title
+            }
             fieldTags {
               entity {
                 entityLabel
@@ -75,6 +79,10 @@ export function promotedArticles() {
             entityUrl {
               path
             }
+            fieldAlternativeArticleUrl{
+              uri
+              title
+            }
             fieldImage {
               alt
               title
@@ -112,6 +120,10 @@ export function allArticles() {
             entityCreated
             entityUrl {
               path
+            }
+            fieldAlternativeArticleUrl{
+              uri
+              title
             }
             fieldImage {
               alt
