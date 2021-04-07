@@ -65,10 +65,13 @@ export default function Single({ articles, skeleton }) {
   }
 
   // Action button label
-  const btnLabel = hasAlternativeUrl
+  /*const btnLabel = article.fieldAlternativeArticleUrl.title
+
     ? article.fieldAlternativeArticleUrl.title
     : Translate({ ...context, label: "read-more-btn" });
+*/
 
+  const btnLabel = "HEST";
   console.log(btnLabel, "LABEL");
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
