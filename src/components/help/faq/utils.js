@@ -3,10 +3,9 @@ import groupBy from "lodash/groupBy";
 import get from "lodash/get";
 
 import Translate from "@/components/base/translate";
-import { helpText } from "@/lib/api/helptexts.fragments";
 
 /**
- * function to sort data for accordian structure
+ * function to sort data for accordion structure
  *
  * @param {array} data
  *
@@ -22,11 +21,11 @@ export function sortData(data) {
 }
 
 /**
- * function to sort data for accordian structure
+ * function to group data for accordion structure
  *
  * @param {array} data
  *
- * @returns {array}
+ * @returns {object}
  */
 export function groupData(data) {
   const fallback = Translate({ context: "help", label: "faq-group-other" });
@@ -40,7 +39,7 @@ export function groupData(data) {
 }
 
 /**
- * function to sort data for accordian structure
+ * function to group and sort data for accordion structure
  *
  * @param {array} data
  *

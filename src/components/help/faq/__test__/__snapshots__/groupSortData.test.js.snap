@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Group and sort Data 1`] = `
+Object {
+  "Andet": Array [
+    Object {
+      "content": "<p>This faq goes first in the group ...</p>",
+      "title": "abc",
+    },
+    Object {
+      "content": "<p>This faq goes last in the group ...</p>",
+      "title": "def",
+    },
+  ],
+  "Bestillinger": Array [
+    Object {
+      "content": "<p>This faq goes first in the group ...</p>",
+      "title": "abc",
+    },
+  ],
+  "Søgninger": Array [
+    Object {
+      "content": "<p>This faq goes first in the group...</p>",
+      "title": "abc",
+    },
+    Object {
+      "content": "<p>This faq goes second in the group ...</p>",
+      "title": "def",
+    },
+    Object {
+      "content": "<p>This faq goes last in the group ...</p>",
+      "title": "ghi",
+    },
+  ],
+}
+`;
