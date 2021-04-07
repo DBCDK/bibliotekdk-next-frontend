@@ -5,13 +5,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Result from "@/components/help/search/result";
-import Faq from "@/components/help/faq/promoted";
+import Faq from "@/components/help/faq/published";
 import HelpTextMenu from "@/components/help/menu";
-
-import { useData } from "@/lib/api/api";
-import { helpTextSearch } from "@/lib/api/helptexts.fragments";
-import { useRouter } from "next/router";
 
 import styles from "./Page.module.css";
 
@@ -21,8 +16,8 @@ import styles from "./Page.module.css";
  * @returns {component}
  *
  */
-export function Page({ result, isLoading, query }) {
-  const pageTitle = "Alle Artikler | alfa.bibliotek.dk";
+export default function Page() {
+  const pageTitle = "Ofte stillede spørgsmål | alfa.bibliotek.dk";
   const pageDescription =
     "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
 
@@ -50,13 +45,10 @@ export function Page({ result, isLoading, query }) {
               <HelpTextMenu className={styles.menu} />
             </Col>
             <Col xs={12} lg={{ span: 6 }}>
-              <Result result={result} isLoading={isLoading} query={query} />
+              <Faq className={styles.faq} />
             </Col>
           </Row>
         </Container>
-        {((!isLoading && result?.length) === 0 || !query) && (
-          <Faq className={styles.faq} />
-        )}
       </main>
     </React.Fragment>
   );
@@ -66,17 +58,3 @@ Page.propTypes = {
   isLoading: PropTypes.bool,
   query: PropTypes.string,
 };
-
-/**
- * We get hold of the url query parameter 'q'
- * and make a help search request.
- *
- * And then pass it all to the result page
- */
-export default function Wrap() {
-  const router = useRouter();
-  const { q } = router.query;
-  const { isLoading, data } = useData(q && helpTextSearch(q));
-
-  return <Page result={data?.help?.result} isLoading={isLoading} query={q} />;
-}

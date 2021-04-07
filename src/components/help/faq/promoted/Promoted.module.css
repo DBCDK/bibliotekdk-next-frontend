@@ -1,9 +1,8 @@
-
-.faq section > div:first-child{
-  margin-bottom: var(--pt2)
+.promoted section > div:first-child {
+  margin-bottom: var(--pt2);
 }
 
-.faq section div:first-child > hr {
+.promoted section div:first-child > hr {
   display: none;
 }
 
@@ -23,12 +22,11 @@
 }
 
 @media (min-width: 992px) {
-  .faq section div:first-child > hr {
+  .promoted section div:first-child > hr {
     display: block;
   }
 
-  .faq section div:last-child > hr {
-    display:none;
+  .promoted section div:last-child > hr {
+    display: none;
   }
-
 }

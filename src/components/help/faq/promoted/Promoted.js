@@ -8,15 +8,16 @@ import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 
-import { sortData } from "./utils";
+import { sortData } from "../utils";
 
-import styles from "./Faq.module.css";
 import { useData } from "@/lib/api/api";
-import * as faqFragments from "@/lib/api/faq.fragments";
+import { promotedFaqs } from "@/lib/api/faq.fragments";
 import Skeleton from "@/components/base/skeleton";
 
+import styles from "./Promoted.module.css";
+
 /**
- * The FAQ React component
+ * The Promoted FAQs React component
  *
  * @param {obj} props
  * @param {obj} props.className
@@ -25,19 +26,19 @@ import Skeleton from "@/components/base/skeleton";
  *
  * @returns {component}
  */
-export function Faq({ className, data }) {
+export function Promoted({ className, data }) {
   data = useMemo(() => sortData(data), [data]);
 
   return (
     <Section
-      className={`${styles.faq} ${className}`}
+      className={`${styles.promoted} ${className}`}
       title={Translate({ context: "help", label: "faq-title" })}
       dataCy="faq"
     >
       <Row>
         <Col lg="8">
           <Accordion data={data} className={styles.accordion} />
-          <Link href="/hjaelp" a={false}>
+          <Link href="/hjaelp/faq" a={false}>
             <Button type="secondary" size="medium" className={styles.button}>
               {Translate({ context: "help", label: "show-more-faq" })}
             </Button>
@@ -48,14 +49,14 @@ export function Faq({ className, data }) {
   );
 }
 
-Faq.propTypes = {
+Promoted.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
 };
 
 export default function Wrap(props) {
   // real data goes here ...
-  const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
+  const { isLoading, data, error } = useData(promotedFaqs());
 
   if (isLoading) {
     return <Skeleton lines={2} />;
@@ -68,7 +69,7 @@ export default function Wrap(props) {
 
   const realdata = data.faq.entities;
 
-  return <Faq {...props} data={realdata} />;
+  return <Promoted {...props} data={realdata} />;
 }
 
 Wrap.propTypes = {

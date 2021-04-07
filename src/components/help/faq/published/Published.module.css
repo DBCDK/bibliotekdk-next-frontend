@@ -1,0 +1,11 @@
+.published h1 {
+  padding-bottom: var(--pt8);
+}
+
+.wrap {
+  padding-bottom: var(--pt8);
+}
+
+.wrap .group {
+  padding-bottom: var(--pt4);
+}
