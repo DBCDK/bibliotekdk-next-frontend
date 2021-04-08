@@ -20,14 +20,14 @@ describe("Accordion", () => {
   });
 
   it(`Can expand and close sections`, () => {
-    cy.get("[data-cy=accordion-item]").first().click("top");
+    cy.get("[data-cy=accordion-item]").first().click();
 
     cy.get("[data-cy=accordion-item]")
       .first()
       .find(".collapse")
       .should("have.class", "show");
 
-    cy.get("[data-cy=accordion-item]").eq(1).click("top");
+    cy.get("[data-cy=accordion-item]").eq(1).click();
 
     cy.get("[data-cy=accordion-item]")
       .eq(1)
@@ -39,7 +39,7 @@ describe("Accordion", () => {
       .find(".collapse")
       .should("not.have.class", "show");
 
-    cy.get("[data-cy=accordion-item]").eq(1).click("top");
+    cy.get("[data-cy=accordion-item]").eq(1).click();
 
     cy.get("[data-cy=accordion-item]")
       .eq(1)
@@ -48,7 +48,7 @@ describe("Accordion", () => {
   });
 
   it(`Expand icon changes on click`, () => {
-    cy.get("[data-cy=accordion-item]").first().click("top");
+    cy.get("[data-cy=accordion-item]").first().click();
 
     cy.get("[data-cy=accordion-item]")
       .first()
