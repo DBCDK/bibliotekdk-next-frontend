@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import Head from "next/head";
 
 import Container from "react-bootstrap/Container";
@@ -11,7 +10,7 @@ import HelpTextMenu from "@/components/help/menu";
 import styles from "./Page.module.css";
 
 /**
- * The page showing help search results
+ * The FAQ page
  *
  * @returns {component}
  *
@@ -53,8 +52,3 @@ export default function Page() {
     </React.Fragment>
   );
 }
-Page.propTypes = {
-  result: PropTypes.array,
-  isLoading: PropTypes.bool,
-  query: PropTypes.string,
-};

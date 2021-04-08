@@ -16,7 +16,7 @@ import { publishedFaqs } from "@/lib/api/faq.fragments";
 import Page from "@/components/help/faq/page";
 
 /**
- * Renders the WorkPage component
+ * Renders the FAQ Page component
  */
 export default function Faq() {
   return <Page />;

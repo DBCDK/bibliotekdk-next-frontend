@@ -52,6 +52,16 @@ Published.propTypes = {
   data: PropTypes.array,
 };
 
+/**
+ * The Default export with data fetch
+ *
+ * @param {obj} props
+ * @param {obj} props.className
+ * @param {obj} props.data
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 export default function Wrap(props) {
   // real data goes here ...
   const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
