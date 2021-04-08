@@ -21,7 +21,10 @@ import styles from "./BibliographicData.module.css";
  * @returns {string}
  */
 function bibdkObjectUrl(pid) {
-  return `https://bibliotek.dk/linkme.php?rec.id=${encodeURIComponent(pid)}`;
+  return {
+    pathname: "https://bibliotek.dk/linkme.php",
+    query: `rec.id=${pid}`,
+  };
 }
 
 /**
@@ -60,7 +63,7 @@ function ColumnOne({ manifestation }) {
             </Text>
           }
           className={styles.column}
-          href={{ pathname: bibdkObjectUrl(manifestation.pid), query: {} }}
+          href={bibdkObjectUrl(manifestation.pid)}
         />
       </div>
       <div>
