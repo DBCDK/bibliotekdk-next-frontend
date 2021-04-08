@@ -14,7 +14,7 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 
-import { encodeString } from "@/lib/utils";
+import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
@@ -37,27 +37,9 @@ export default function Single({ articles, skeleton }) {
   // extract image from article
   const image = article && article.fieldImage;
 
-  // Check for alternative url
-  let entityUrl = get(article, "fieldAlternativeArticleUrl.uri", false);
-  // check if alternative url is for linking out of the page
-  let external = false;
-  if (entityUrl) {
-    external = entityUrl.indexOf("internal") === -1;
-    // drupal marks an internal url - remove the mark
-    if (!external) {
-      entityUrl = entityUrl.replace("internal:", "");
-    }
-  }
-
   const skeletonClass = skeleton ? styles.skeleton : "";
-  // which pathname to use
-  const pathname = entityUrl ? entityUrl : "/artikel/[title]/[articleId]";
-  // Update query if no alternative url is found
-  let query = {};
-  if (!entityUrl) {
-    query = { title: encodeString(article.title), articleId: article.nid };
-  }
 
+  const { target, query, pathname } = articlePathAndTarget(article);
   // Action button label
   const btnLabel = get(article, "fieldAlternativeArticleUrl.title", false)
     ? get(article, "fieldAlternativeArticleUrl.title", false)
@@ -69,11 +51,7 @@ export default function Single({ articles, skeleton }) {
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link
-          a={false}
-          href={{ pathname, query }}
-          target={`${external} ? "_blank : "_self"`}
-        >
+        <Link a={false} href={{ pathname, query }} target={`${target}`}>
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
@@ -89,7 +67,7 @@ export default function Single({ articles, skeleton }) {
                 <AnimationLine />
               </span>
               <div />
-              <Link a={false} href={{ pathname, query }}>
+              <Link a={false} href={{ pathname, query }} target={`${target}`}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
                   {btnLabel}
                 </Button>
