@@ -626,6 +626,10 @@
       "all-pages": {
         "da": "Alle hjælpesider",
         "en": "All help pages"
+      },
+      "faq-group-other": {
+        "da": "Andet",
+        "en": "Other"
       }
     },
     "language": {

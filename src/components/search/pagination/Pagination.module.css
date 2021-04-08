@@ -36,17 +36,18 @@
   user-select: none;
   cursor: pointer;
   background-color: unset !important;
-  
   /* transition: all 0.25s; */
 }
+
+.pagination i:focus,
+.pagination i:hover {
+  background-color: var(--white) !important;
+  border: 1px solid var(--blue);
+}
+
 .pagination i.selected {
   color: white;
   background-color: var(--blue) !important;
-}
-.pagination i:focus,
-.pagination i:hover {
-  color: white;
-  background-color: var(--mine-shaft) !important;
 }
 
 @media (min-width: 768px) {
@@ -57,4 +58,3 @@
     display: none;
   }
 }
-

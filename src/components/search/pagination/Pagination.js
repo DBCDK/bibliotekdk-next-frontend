@@ -19,22 +19,24 @@ export default function Pagination({
 }) {
   return (
     <React.Fragment>
-      <div className={`${styles.pagination} ${styles.mobile}`}>
-        <Button
-          type="secondary"
-          size="medium"
-          tabIndex="0"
-          skeleton={isLoading}
-          onClick={onChange && (() => onChange(currentPage + 1, false))}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && onChange) {
-              onChange(currentPage + 1, false);
-            }
-          }}
-        >
-          {Translate({ context: "search", label: "more" })}
-        </Button>
-      </div>
+      {numPages > 1 && numPages > currentPage && (
+        <div className={`${styles.pagination} ${styles.mobile}`}>
+          <Button
+            type="secondary"
+            size="medium"
+            tabIndex="0"
+            skeleton={isLoading}
+            onClick={onChange && (() => onChange(currentPage + 1, false))}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" && onChange) {
+                onChange(currentPage + 1, false);
+              }
+            }}
+          >
+            {Translate({ context: "search", label: "more" })}
+          </Button>
+        </div>
+      )}
       <div className={`${styles.pagination} ${styles.desktop}`}>
         <div
           className={`${styles.arrow} ${
@@ -66,7 +68,7 @@ export default function Pagination({
               tabIndex="0"
               data-cy={`page-${page}-button`}
             >
-              {page}
+              <span>{page}</span>
             </Icon>
           );
         })}

@@ -37,7 +37,7 @@ export function Result({
   const numPages = Math.ceil(hitcount / 10);
 
   // Set number of hits for the user, ads a '+' if "more" than 100 results found.
-  const hits = hitcount === 100 ? `${hitcount}+` : hitcount;
+  const hits = hitcount === 100 ? `Over ${hitcount}` : hitcount;
 
   return (
     <>

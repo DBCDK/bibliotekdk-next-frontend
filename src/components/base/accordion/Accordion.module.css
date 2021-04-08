@@ -2,6 +2,10 @@
   border-bottom: 1px solid var(--iron);
 }
 
+.element:first-child {
+  border-top: 1px solid var(--iron);
+}
+
 .element .header {
   display: flex;
   align-items: center;
@@ -32,7 +36,6 @@
 .content p {
   padding: var(--pt2) var(--pt7) var(--pt3) 0;
 }
-
 
 @media (min-width: 992px) {
   .element .header p {

@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Group data 1`] = `
+Object {
+  "Andet": Array [
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes last in the group ...</p>",
+      },
+      "fieldTags": Array [],
+      "langcode": Object {
+        "value": "da",
+      },
+      "nid": 32,
+      "promote": false,
+      "title": "def",
+    },
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes first in the group ...</p>",
+      },
+      "fieldTags": Array [],
+      "langcode": Object {
+        "value": "da",
+      },
+      "nid": 32,
+      "promote": false,
+      "title": "abc",
+    },
+  ],
+  "Bestillinger": Array [
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes first in the group ...</p>",
+      },
+      "fieldTags": Array [
+        Object {
+          "entity": Object {
+            "entityLabel": "Bestillinger",
+          },
+        },
+      ],
+      "langcode": Object {
+        "value": "en",
+      },
+      "nid": 30,
+      "promote": false,
+      "title": "abc",
+    },
+  ],
+  "Søgninger": Array [
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes last in the group ...</p>",
+      },
+      "fieldTags": Array [
+        Object {
+          "entity": Object {
+            "entityLabel": "Søgninger",
+          },
+        },
+      ],
+      "langcode": Object {
+        "value": "en",
+      },
+      "nid": 31,
+      "promote": true,
+      "title": "ghi",
+    },
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes second in the group ...</p>",
+      },
+      "fieldTags": Array [
+        Object {
+          "entity": Object {
+            "entityLabel": "Søgninger",
+          },
+        },
+      ],
+      "langcode": Object {
+        "value": "en",
+      },
+      "nid": 31,
+      "promote": true,
+      "title": "def",
+    },
+    Object {
+      "body": Object {
+        "value": "<p>This faq goes first in the group...</p>",
+      },
+      "fieldTags": Array [
+        Object {
+          "entity": Object {
+            "entityLabel": "Søgninger",
+          },
+        },
+      ],
+      "langcode": Object {
+        "value": "en",
+      },
+      "nid": 31,
+      "promote": true,
+      "title": "abc",
+    },
+  ],
+}
+`;

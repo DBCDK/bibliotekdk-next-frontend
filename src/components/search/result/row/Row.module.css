@@ -4,11 +4,7 @@
   white-space: normal;
   color: var(--mine-shaft);
 }
-.cover {
-  max-height: 160px;
-  min-height: 160px;
-  max-width: 104px;
-}
+
 .cover img {
   object-position: 50% 0%;
 }
@@ -62,6 +58,14 @@
 @media (min-width: 768px) {
   .wrapper:first-child {
     margin-top: 0;
+  }
+
+  .cover,
+  .cover img {
+    max-height: 160px;
+    min-height: 160px;
+    min-width: 104px;
+    max-width: 104px;
   }
 }
 

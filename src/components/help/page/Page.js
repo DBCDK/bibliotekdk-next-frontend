@@ -2,7 +2,7 @@ import Head from "next/head";
 
 import { Container, Row, Col } from "react-bootstrap";
 
-import Faq from "@/components/help/faq";
+import Faq from "@/components/help/faq/promoted";
 import Sections from "../sections";
 import Contact from "../contact";
 import Translate from "@/components/base/translate";
