@@ -5,9 +5,6 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
-import { encodeString } from "@/lib/utils";
-
-import { getArticlePath } from "@/lib/utils";
 import { articlePathAndTarget } from "@/components/articles/utils";
 
 /**
