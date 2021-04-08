@@ -31,55 +31,49 @@ export default function Single({ articles, skeleton }) {
   const context = { context: "articles" };
   const article = articles[0];
 
-  console.log(article, "ARTICLE");
-
   if (!articles[0]) {
     return "No article found";
   }
-
   // extract image from article
   const image = article && article.fieldImage;
 
-  // Check for alternative url alias
+  // Check for alternative url
   let entityUrl = get(article, "fieldAlternativeArticleUrl.uri", false);
-
+  // check if alternative url is for linking out of the page
+  let external = false;
   if (entityUrl) {
-    entityUrl = entityUrl.replace("internal:", "");
+    external = entityUrl.indexOf("internal") === -1;
+    // drupal marks an internal url - remove the mark
+    if (!external) {
+      entityUrl = entityUrl.replace("internal:", "");
+    }
   }
-
-  console.log(entityUrl, "ENTITYURL");
-  const hasAlternativeUrl = entityUrl && entityUrl !== `/node/${article.nid}`;
 
   const skeletonClass = skeleton ? styles.skeleton : "";
-
-  let pathname = "/artikel/[title]/[articleId]";
-  // Update pathname if alternative url is found
-  if (hasAlternativeUrl) {
-    pathname = entityUrl;
-  }
-
-  let query = {};
+  // which pathname to use
+  const pathname = entityUrl ? entityUrl : "/artikel/[title]/[articleId]";
   // Update query if no alternative url is found
-  if (!hasAlternativeUrl) {
+  let query = {};
+  if (!entityUrl) {
     query = { title: encodeString(article.title), articleId: article.nid };
   }
 
   // Action button label
-  /*const btnLabel = article.fieldAlternativeArticleUrl.title
-
-    ? article.fieldAlternativeArticleUrl.title
+  const btnLabel = get(article, "fieldAlternativeArticleUrl.title", false)
+    ? get(article, "fieldAlternativeArticleUrl.title", false)
     : Translate({ ...context, label: "read-more-btn" });
-*/
 
-  const btnLabel = "HEST";
-  console.log(btnLabel, "LABEL");
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link a={false} href={{ pathname, query }}>
+        <Link
+          a={false}
+          href={{ pathname, query }}
+          target={`${external} ? "_blank : "_self"`}
+        >
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
@@ -97,7 +91,7 @@ export default function Single({ articles, skeleton }) {
               <div />
               <Link a={false} href={{ pathname, query }}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {article.fieldRubrik || btnLabel}
+                  {btnLabel}
                 </Button>
               </Link>
             </Col>
