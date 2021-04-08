@@ -72,9 +72,10 @@ export function promotedArticles() {
             body {
               value
             }
-            entityUrl {
-              path
-            }
+            fieldAlternativeArticleUrl{
+              uri
+              title
+            }           
             fieldImage {
               alt
               title
@@ -110,9 +111,10 @@ export function allArticles() {
             title
             fieldRubrik
             entityCreated
-            entityUrl {
-              path
-            }
+            fieldAlternativeArticleUrl{
+              uri
+              title
+            }           
             fieldImage {
               alt
               title

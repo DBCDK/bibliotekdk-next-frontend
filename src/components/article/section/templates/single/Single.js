@@ -14,7 +14,7 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 
-import { encodeString } from "@/lib/utils";
+import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
@@ -34,30 +34,16 @@ export default function Single({ articles, skeleton }) {
   if (!articles[0]) {
     return "No article found";
   }
-
   // extract image from article
   const image = article && article.fieldImage;
 
-  // Check for alternative url alias
-  const entityUrl = get(article, "entityUrl.path", false);
-  const hasAlternativeUrl = entityUrl && entityUrl !== `/node/${article.nid}`;
-
   const skeletonClass = skeleton ? styles.skeleton : "";
 
-  let pathname = "/artikel/[title]/[articleId]";
-  // Update pathname if alternative url is found
-  if (hasAlternativeUrl) {
-    pathname = entityUrl;
-  }
-
-  let query = {};
-  // Update query if no alternative url is found
-  if (!hasAlternativeUrl) {
-    query = { title: encodeString(article.title), articleId: article.nid };
-  }
-
+  const { target, query, pathname } = articlePathAndTarget(article);
   // Action button label
-  const btnLabel = hasAlternativeUrl ? "alternative-url-btn" : "read-more-btn";
+  const btnLabel = get(article, "fieldAlternativeArticleUrl.title", false)
+    ? get(article, "fieldAlternativeArticleUrl.title", false)
+    : Translate({ ...context, label: "read-more-btn" });
 
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
@@ -65,7 +51,7 @@ export default function Single({ articles, skeleton }) {
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link a={false} href={{ pathname, query }}>
+        <Link a={false} href={{ pathname, query }} target={`${target}`}>
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
@@ -81,10 +67,9 @@ export default function Single({ articles, skeleton }) {
                 <AnimationLine />
               </span>
               <div />
-              <Link a={false} href={{ pathname, query }}>
+              <Link a={false} href={{ pathname, query }} target={`${target}`}>
                 <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {article.fieldRubrik ||
-                    Translate({ ...context, label: "read-more-btn" })}
+                  {btnLabel}
                 </Button>
               </Link>
             </Col>

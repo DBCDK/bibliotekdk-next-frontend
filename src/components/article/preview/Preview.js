@@ -8,6 +8,7 @@ import Link from "@/components/base/link";
 import { encodeString } from "@/lib/utils";
 
 import { getArticlePath } from "@/lib/utils";
+import { articlePathAndTarget } from "@/components/articles/utils";
 
 /**
  * Animated arrow that turns into a line when hovered/focused
@@ -33,19 +34,21 @@ export function Arrow({ className = "" }) {
  */
 export default function ArticlePreview({ article, skeleton, rubrik = true }) {
   const image = article && article.fieldImage;
+  const { target, query, pathname } = articlePathAndTarget(article);
 
   return (
     <Link
       a={false}
       href={{
-        pathname: "/artikel/[title]/[articleId]",
-        query: {
-          title: encodeString(article.title),
-          articleId: article.nid,
-        },
+        pathname: pathname,
+        query: query,
       }}
     >
-      <a className={styles.preview} data-cy="article-preview">
+      <a
+        className={styles.preview}
+        data-cy="article-preview"
+        target={`${target}`}
+      >
         <div className={styles.imagewrapper}>
           {image && (
             <Image

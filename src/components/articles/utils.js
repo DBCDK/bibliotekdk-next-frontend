@@ -1,5 +1,6 @@
 import orderBy from "lodash/orderBy";
 import get from "lodash/get";
+import { encodeString } from "@/lib/utils";
 
 /**
  * function to sort array of articles (desc)
@@ -12,8 +13,34 @@ import get from "lodash/get";
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
   articles = articles.filter((a) => {
-    return get(a, "entityUrl.path", false) === `/node/${a.nid}`;
+    return get(a, "fieldAlternativeArticleUrl.uri", false) !== null;
   });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);
+}
+
+export function articlePathAndTarget(article) {
+  // Check for alternative url
+  let entityUrl = get(article, "fieldAlternativeArticleUrl.uri", false);
+  // check if alternative url is for linking out of the page
+  let isExternal = false;
+  if (entityUrl) {
+    isExternal = entityUrl.indexOf("internal") === -1;
+    // drupal marks an internal url - remove the mark
+    if (!isExternal) {
+      entityUrl = entityUrl.replace("internal:", "");
+    }
+  }
+
+  const target = isExternal ? "_blank" : "_self";
+
+  // which pathname to use
+  const pathname = entityUrl ? entityUrl : "/artikel/[title]/[articleId]";
+  // Update query if no alternative url is found
+  let query = {};
+  if (!entityUrl) {
+    query = { title: encodeString(article.title), articleId: article.nid };
+  }
+
+  return { target, pathname, query };
 }
