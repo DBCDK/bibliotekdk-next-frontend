@@ -45,6 +45,15 @@
   line-height: 26px;
   font-family: var(--body-font-semibold);
   font-weight: 400;
+  padding-top: var(--pt3);
+  padding-bottom: var(--pt1);
+}
+
+.body p {
+  padding-bottom: var(--pt1);
+}
+.body > *:first-child {
+  padding-top: 0;
 }
 
 /* Links with animated underline */
