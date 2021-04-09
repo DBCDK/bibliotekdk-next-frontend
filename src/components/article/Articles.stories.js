@@ -78,9 +78,6 @@ const articles = [
     },
     fieldArticleSection: "section 4",
     fieldArticlePosition: "1",
-    entityUrl: {
-      path: "/node/4",
-    },
     fieldTags: [
       { entity: { entityLabel: "section-other" } },
       { entity: { entityLabel: "pos-1" } },
@@ -95,8 +92,9 @@ const articles = [
       title: "some image title",
       url: "/img/bibdk-hero-scaled.jpeg",
     },
-    entityUrl: {
-      path: "/artikler",
+    fieldAlternativeArticleUrl: {
+      uri: "internal:/artikler",
+      title: "Vejledninger og information",
     },
     fieldArticleSection: "section 3",
     fieldArticlePosition: "1",
