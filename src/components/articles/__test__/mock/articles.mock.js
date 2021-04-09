@@ -64,8 +64,9 @@ const data = [
     title: "Article to get removed",
     entityCreated: "2021-01-20T14:38:46+0100",
     fieldRubrik: "I will get removed, because i have an alternative url",
-    entityUrl: {
-      path: "/artikler",
+    fieldAlternativeArticleUrl: {
+      uri: "internal:/artikler",
+      title: "Vejledninger og information",
     },
     fieldImage: {
       alt: "some image alt",

@@ -13,7 +13,7 @@ import { encodeString } from "@/lib/utils";
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
   articles = articles.filter((a) => {
-    return get(a, "fieldAlternativeArticleUrl.uri", false) !== null;
+    return !get(a, "fieldAlternativeArticleUrl", false);
   });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);
