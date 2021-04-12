@@ -48,7 +48,7 @@
 /* 6 or less keywords */
 .keyword.medium h1 {
   font-size: var(--pt4);
-  line-height: var(--pt5);
+  line-height: var(--pt6);
 }
 
 /* more than 6 keywords */
