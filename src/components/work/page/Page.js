@@ -38,10 +38,10 @@ export default function WorkPage({
       />
       <Details workId={workId} type={type} />
       <Description workId={workId} type={type} />
+      <Keywords workId={workId} type={type} />
       <Content workId={workId} type={type} />
       <Series workId={workId} />
       <Recommendations workId={workId} />
-      <Keywords workId={workId} type={type} />
       <Reviews workId={workId} />
       <BibliographicData workId={workId} />
     </main>
