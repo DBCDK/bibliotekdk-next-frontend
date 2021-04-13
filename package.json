@@ -39,6 +39,7 @@
     "style-loader": "^1.1.2"
   },
   "dependencies": {
+    "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^4.5.0",
     "http-server": "^0.12.3",
