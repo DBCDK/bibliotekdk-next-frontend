@@ -13,12 +13,19 @@ import { encodeString } from "@/lib/utils";
 export function sortArticles(articles) {
   // remove articles with alternative url (entityUrl)
   articles = articles.filter((a) => {
-    return get(a, "fieldAlternativeArticleUrl.uri", false) !== null;
+    return !get(a, "fieldAlternativeArticleUrl", false);
   });
   // latest articles first
   return orderBy(articles, ["entityCreated"], ["desc"]);
 }
 
+/**
+ * What kind of link should the article use ?. Check if article
+ * has an alternative url and if it is external. Return info needed to generate
+ * an url.
+ * @param article
+ * @return {{query: {}, target: (string), pathname: (*|string)}}
+ */
 export function articlePathAndTarget(article) {
   // Check for alternative url
   let entityUrl = get(article, "fieldAlternativeArticleUrl.uri", false);
@@ -33,7 +40,6 @@ export function articlePathAndTarget(article) {
   }
 
   const target = isExternal ? "_blank" : "_self";
-
   // which pathname to use
   const pathname = entityUrl ? entityUrl : "/artikel/[title]/[articleId]";
   // Update query if no alternative url is found

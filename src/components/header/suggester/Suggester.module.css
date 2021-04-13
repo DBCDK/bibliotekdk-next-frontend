@@ -137,7 +137,8 @@
   }
 
   .input__focused {
-    border: 1px solid var(--gray);
+    border: 1px solid var(--blue);
+    outline: 1px solid var(--blue);
   }
 
   .input_wrap {

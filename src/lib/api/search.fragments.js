@@ -12,7 +12,7 @@
 export function fast({ q, limit, offset }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: Int, $offset: Int) {
+    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int) {
         search(q: $q, limit: $limit, offset: $offset) {
           result {
             title
@@ -38,7 +38,7 @@ export function fast({ q, limit, offset }) {
 export function all({ q, limit, offset }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: Int, $offset: Int) {
+    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int) {
         search(q: $q, limit: $limit, offset: $offset) {
           result {
             title
