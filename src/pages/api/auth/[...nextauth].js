@@ -10,6 +10,20 @@ if (!clientId || !clientSecret) {
 }
 
 const options = {
+  jwt: {
+    secret: serverRuntimeConfig.jwtSecret,
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        expires: null,
+      },
+    },
+  },
   providers: [
     adgangsplatformen({
       clientId,
