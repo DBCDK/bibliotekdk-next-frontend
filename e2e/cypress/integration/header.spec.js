@@ -71,8 +71,8 @@ describe("Header", () => {
     cy.get("[data-cy=header-top-actions]").should("not.be.visible");
 
     cy.get("[data-cy=header-link-menu]").should("be.visible");
-    cy.get("[data-cy=header-link-login]").should("not.be.visible");
-    cy.get("[data-cy=header-link-basket]").should("not.be.visible");
+    cy.get("[data-cy=header-link-login]").should("be.visible");
+    cy.get("[data-cy=header-link-basket]").should("be.visible");
 
     cy.get("[data-cy=header-search]").should("be.visible");
   });
