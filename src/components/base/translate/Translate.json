@@ -461,6 +461,10 @@
         "da": "Log ind",
         "en": "Sign in"
       },
+      "logout": {
+        "da": "Log ud",
+        "en": "Sign out"
+      },
       "basket": {
         "da": "Kurv",
         "en": "Basket"

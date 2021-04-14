@@ -110,3 +110,6 @@ e2e/reports/
 # PHPStorm
 
 .idea
+
+# NextJS
+.env.local

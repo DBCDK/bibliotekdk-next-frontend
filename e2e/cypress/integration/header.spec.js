@@ -138,4 +138,15 @@ describe("Header", () => {
     );
     cy.get("[data-cy=suggester-input]").should("have.value", "");
   });
+
+  it(`Should show log in button when logged out`, () => {
+    cy.viewport(1920, 1080);
+    cy.get("[data-cy=text-log-ind]").should("have.text", "Log ind");
+  });
+
+  it(`Should show log out button when logged in`, () => {
+    cy.visit("/iframe.html?id=layout-header--nav-header-user-logged-in");
+    cy.viewport(1920, 1080);
+    cy.get("[data-cy=text-log-ud]").should("have.text", "Log ud");
+  });
 });
