@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
 
+import { signIn, signOut } from "@dbcdk/login-nextjs/client";
+
 import useHistory from "@/components/hooks/useHistory";
 
 import { cyKey } from "@/utils/trim";
@@ -21,8 +23,7 @@ import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
-import Notifications from "@/components/base/notifications/Notifications";
-import { APIStateContext } from "@/lib/api/api";
+import useUser from "../hooks/useUser";
 
 /**
  * The Component function
@@ -32,7 +33,7 @@ import { APIStateContext } from "@/lib/api/api";
  *
  * @returns {component}
  */
-function Header({ className = "", router = null, story = null }) {
+export function Header({ className = "", router = null, story = null, user }) {
   const context = { context: "header" };
 
   // Seach Query in suggester callback
@@ -73,7 +74,11 @@ function Header({ className = "", router = null, story = null }) {
         }, 100);
       },
     },
-    { label: "login", icon: LoginIcon, onClick: () => {} },
+    {
+      label: user.isAuthenticated ? "logout" : "login",
+      icon: LoginIcon,
+      onClick: user.isAuthenticated ? signOut : signIn,
+    },
     {
       label: "basket",
       icon: BasketIcon,
@@ -300,11 +305,13 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
+  const user = useUser();
+
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} />;
+  return <Header {...props} user={user} />;
 }
 
 // PropTypes for component

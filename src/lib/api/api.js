@@ -10,6 +10,7 @@ import getConfig from "next/config";
 import useSWR from "swr";
 import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
+import { getSession, useSession } from "next-auth/client";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -39,7 +40,7 @@ function generateKey(query) {
  * @param {string} queryStr
  */
 export async function fetcher(queryStr) {
-  const { query, variables, delay } =
+  const { query, variables, delay, accessToken } =
     typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
   if (delay) {
@@ -48,11 +49,16 @@ export async function fetcher(queryStr) {
     });
   }
 
+  const headers = {
+    "Content-Type": "application/json",
+  };
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
   const res = await fetch(config.api.url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({
       query,
       variables,
@@ -68,8 +74,13 @@ export async function fetcher(queryStr) {
  * @param {Object} obj - A query object.
  */
 export function useData(query) {
+  // The session may contain access token
+  const [session, sessionIsLoading] = useSession();
+  const accessToken = session?.accessToken;
+
   // The key for this query
-  const key = query && generateKey(query || "");
+  const key =
+    query && !sessionIsLoading && generateKey({ ...query, accessToken } || "");
 
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
@@ -128,5 +139,6 @@ export async function fetchAll(queries, context) {
     initialData,
     translations: await fetchTranslations(),
     allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
+    session: (await getSession(context)) || {},
   };
 }
