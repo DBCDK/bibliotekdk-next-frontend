@@ -93,6 +93,7 @@ Link.propTypes = {
       pathname: PropTypes.string.isRequired,
       query: PropTypes.object,
     }),
+    PropTypes.object,
   ]),
   tabIndex: PropTypes.string,
   tag: PropTypes.oneOf(["a", "span"]),
