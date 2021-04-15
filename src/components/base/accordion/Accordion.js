@@ -49,7 +49,7 @@ export function Item({ title, children, eventKey }) {
         onClick={onClick}
         onKeyPress={handleKeypress}
       >
-        <Text type="text1">{title}</Text>
+        <Text type="text2">{title}</Text>
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse
