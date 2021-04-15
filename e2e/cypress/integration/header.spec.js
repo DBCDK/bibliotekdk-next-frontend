@@ -71,8 +71,8 @@ describe("Header", () => {
     cy.get("[data-cy=header-top-actions]").should("not.be.visible");
 
     cy.get("[data-cy=header-link-menu]").should("be.visible");
-    cy.get("[data-cy=header-link-login]").should("not.be.visible");
-    cy.get("[data-cy=header-link-basket]").should("not.be.visible");
+    cy.get("[data-cy=header-link-login]").should("be.visible");
+    cy.get("[data-cy=header-link-basket]").should("be.visible");
 
     cy.get("[data-cy=header-search]").should("be.visible");
   });
@@ -137,5 +137,16 @@ describe("Header", () => {
       "react-autosuggest__input--focused"
     );
     cy.get("[data-cy=suggester-input]").should("have.value", "");
+  });
+
+  it(`Should show log in button when logged out`, () => {
+    cy.viewport(1920, 1080);
+    cy.get("[data-cy=text-log-ind]").should("have.text", "Log ind");
+  });
+
+  it(`Should show log out button when logged in`, () => {
+    cy.visit("/iframe.html?id=layout-header--nav-header-user-logged-in");
+    cy.viewport(1920, 1080);
+    cy.get("[data-cy=text-log-ud]").should("have.text", "Log ud");
   });
 });

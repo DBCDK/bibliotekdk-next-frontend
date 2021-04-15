@@ -12,6 +12,7 @@
 import React from "react";
 
 import Cookies from "js-cookie";
+import { Provider } from "next-auth/client";
 
 import "@/scss/custom-bootstrap.scss";
 import "@/css/styles.css";
@@ -50,18 +51,26 @@ export default function MyApp({ Component, pageProps, router }) {
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
   return (
-    <APIStateContext.Provider value={pageProps.initialData}>
-      <Matomo allowCookies={allowCookies} />
-      <BodyScrollLock router={router} />
-      <Modal router={router} />
-      <div id="layout">
-        <Banner />
-        <Notifications />
-        <HelpHeader />
-        <Component {...pageProps} />
-        <CookieBox />
-        <Footer />
-      </div>
-    </APIStateContext.Provider>
+    <Provider
+      session={pageProps.session}
+      options={{
+        clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
+        keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
+      }}
+    >
+      <APIStateContext.Provider value={pageProps.initialData}>
+        <Matomo allowCookies={allowCookies} />
+        <BodyScrollLock router={router} />
+        <Modal router={router} />
+        <div id="layout">
+          <Banner />
+          <Notifications />
+          <HelpHeader />
+          <Component {...pageProps} />
+          <CookieBox />
+          <Footer />
+        </div>
+      </APIStateContext.Provider>
+    </Provider>
   );
 }

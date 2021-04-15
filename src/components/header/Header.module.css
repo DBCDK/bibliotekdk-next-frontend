@@ -205,7 +205,7 @@
     height: auto;
   }
 
-  .bottom .actions .action {
+  .bottom .actions .action:first-child {
     display: none;
   }
 

@@ -29,6 +29,14 @@ Set to false in production. When set to true, the session id is set to "test", w
 URL to the GraphQL API. Default is http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql.
 - **API_TIMEOUT_MS**
 Time in ms for how long the Next.js server should wait for data when doing server side rendering. Default is 150.
+- **NEXTAUTH_URL**
+Used for generating redirect uris. Set to root page URL, like https://alfa.bibliotek.dk
+- **JWT_SECRET**
+Secret used to sign JWT
+- **CLIENT_ID**
+The smaug client id
+- **CLIENT_SECRET**
+The smaug client secret
 
 
 

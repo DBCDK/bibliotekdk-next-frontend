@@ -66,6 +66,12 @@ module.exports = {
       },
     ];
   },
+  serverRuntimeConfig: {
+    // Will only be available on the server side
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    jwtSecret: process.env.JWT_SECRET,
+  },
   publicRuntimeConfig: {
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
     // This allow AI to remove entries with session_id=test
