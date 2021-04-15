@@ -6,10 +6,6 @@
   margin-bottom: var(--pt4);
 }
 
-.distanceTop {
-  margin-top: var(--pt8);
-}
-
 .title {
   margin: 0 0 var(--pt05) 0;
 }

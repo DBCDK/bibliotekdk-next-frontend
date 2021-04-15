@@ -1,8 +1,51 @@
 /* Menu */
 
 .menu {
-  position: sticky;
+  background-color: var(--concrete);
+  padding: var(--pt2) 0 0 0;
+  border-bottom: 1px solid var(--iron);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.menu.sticky {
+  width: 100%;
+  position: fixed;
   top: 0;
-  background-color: yellow;
-  padding: 20px;
+  z-index: 101;
+}
+
+/* Menu items */
+.menu .item {
+  display: inline-block;
+  margin-right: var(--pt3);
+}
+.menu .item p {
+  /* link styles override */
+  padding: 0 0 var(--pt2) 0;
+}
+.menu .item hr {
+  /* link styles override */
+  height: 2px;
+  margin-top: -2px;
+}
+
+.menu .item:first-letter {
+  text-transform: uppercase;
+}
+
+/* hover + focus item */
+.menu .item:focus p {
+  color: var(--mine-shaft);
+}
+.menu .item:focus-visible p {
+  color: var(--blue);
+}
+
+/* Active item */
+.menu .item.active hr {
+  transition-delay: 0.2s;
+  transform: scale(1);
 }

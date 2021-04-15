@@ -30,11 +30,14 @@ export default function Section({
   className = "",
   dataCy = "section",
   bgColor = null,
+  topSpace = false,
   contentDivider = <Divider />,
   titleDivider = <Divider />,
 }) {
   const backgroundColor = bgColor;
   const backgroundClass = bgColor ? styles.background : "";
+
+  const topSpaceClass = bgColor || topSpace ? styles.topSpace : "";
 
   const noContentDividerClass = !contentDivider ? styles.noContentDivider : "";
   const noTitleDividerClass = !titleDivider ? styles.noTitleDivider : "";
@@ -45,35 +48,37 @@ export default function Section({
   }
 
   return (
-    <div
-      className={`${backgroundClass} ${className}`}
-      style={{ backgroundColor }}
-      data-cy={dataCy}
-    >
-      <Container fluid>
-        <Row as="section" className={`${styles.section}`}>
-          {title && (
+    <div className={topSpaceClass}>
+      <div
+        className={`${backgroundClass} ${className}`}
+        style={{ backgroundColor }}
+        data-cy={dataCy}
+      >
+        <Container fluid>
+          <Row as="section" className={`${styles.section}`}>
+            {title && (
+              <Col
+                xs={12}
+                lg={2}
+                data-cy={cyKey({ name: "title", prefix: "section" })}
+                className={noTitleDividerClass}
+              >
+                {titleDivider}
+                {title}
+              </Col>
+            )}
             <Col
               xs={12}
-              lg={2}
-              data-cy={cyKey({ name: "title", prefix: "section" })}
-              className={noTitleDividerClass}
+              lg={{ offset: title ? 1 : 0 }}
+              data-cy={cyKey({ name: "content", prefix: "section" })}
+              className={noContentDividerClass}
             >
-              {titleDivider}
-              {title}
+              {contentDivider}
+              {children}
             </Col>
-          )}
-          <Col
-            xs={12}
-            lg={{ offset: title ? 1 : 0 }}
-            data-cy={cyKey({ name: "content", prefix: "section" })}
-            className={noContentDividerClass}
-          >
-            {contentDivider}
-            {children}
-          </Col>
-        </Row>
-      </Container>
+          </Row>
+        </Container>
+      </div>
     </div>
   );
 }
