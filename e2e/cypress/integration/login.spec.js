@@ -17,15 +17,18 @@ describe("Login", () => {
     );
 
     // Wait for session to be fetched
-    cy.wait("@sessionRequest");
+    cy.wait("@sessionRequest").then(() => {});
 
-    // Intercept API request
-    cy.intercept(/.*graphql/).as("apiRequest");
+    // Intercept API request with bearer token
+    cy.intercept({
+      url: /.*graphql/,
+      headers: {
+        authorization: "Bearer dummy-access-token",
+      },
+    }).as("apiRequest");
 
-    // Check authorization header has bearer token set
-    cy.wait("@apiRequest")
-      .its("request.headers.authorization")
-      .should("equal", "Bearer dummy-access-token");
+    // Make sure api request with bearer token has been called
+    cy.wait("@apiRequest");
   });
 
   it(`should not send bearer token when not logged in`, () => {
