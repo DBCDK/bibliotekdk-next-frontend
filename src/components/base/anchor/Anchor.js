@@ -14,6 +14,8 @@ import { encodeString } from "@/lib/utils";
 import styles from "./Anchor.module.css";
 
 function Menu({ items, onMount }) {
+  const [mountedOnClient, setMountedOnClient] = useState(false);
+
   const refresh = useState()[1];
   // Menu wrapper ref
   const menuWrap = useRef(null);
@@ -24,7 +26,24 @@ function Menu({ items, onMount }) {
 
   useEffect(() => {
     onMount(() => refresh({}));
+    setMountedOnClient(true);
   }, []);
+
+  function getActiveElement() {
+    //   ..
+    Object.keys(items).forEach((item) => {});
+  }
+
+  const activeElement = getActiveElement();
+
+  useEffect(() => {
+    //   ...
+    alignMenuItem(itemRef, 16);
+  }, [activeElement]);
+
+  if (!mountedOnClient) {
+    return null;
+  }
 
   // Scroll to ref on select
   function handleScroll(section, offset = 0) {
@@ -115,7 +134,7 @@ function Menu({ items, onMount }) {
                 if (itemRef) {
                   // if element is active
                   if (active) {
-                    alignMenuItem(itemRef, 16);
+                    // alignMenuItem(itemRef, 16);
                   }
                 }
                 return (
@@ -161,24 +180,19 @@ function Element({ id, children, sectionRef, onChange }) {
 }
 
 function Wrap({ children }) {
-  // clientside render
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   // Object to collect all section refs by id
   const menu = useRef();
   const refs = useRef({});
   const [sections, setSections] = useState(refs);
 
   const onChange = useMemo(
-    () => throttle(() => menu.current && menu.current.updateMenu(), 50),
+    () => throttle(() => menu.current && menu.current.updateMenu(), 10),
     []
   );
 
   useEffect(() => {
     window.addEventListener("scroll", onChange);
-    // clenup on unMount
+    // cleanup on unMount
     return () => window.removeEventListener("scroll", onChange);
   }, []);
 
