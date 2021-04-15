@@ -11,6 +11,7 @@ import useSWR from "swr";
 import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import { getSession, useSession } from "next-auth/client";
+import useUser from "@/components/hooks/useUser";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -75,12 +76,11 @@ export async function fetcher(queryStr) {
  */
 export function useData(query) {
   // The session may contain access token
-  const [session, sessionIsLoading] = useSession();
-  const accessToken = session?.accessToken;
+  const user = useUser();
+  const accessToken = user?.accessToken;
 
   // The key for this query
-  const key =
-    query && !sessionIsLoading && generateKey({ ...query, accessToken } || "");
+  const key = query && generateKey({ ...query, accessToken } || "");
 
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
