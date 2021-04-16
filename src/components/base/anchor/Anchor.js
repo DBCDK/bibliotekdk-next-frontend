@@ -1,6 +1,5 @@
 import useMutationObserver from "@rooks/use-mutation-observer";
 import { useState, useEffect, useRef, createRef, useMemo } from "react";
-import debounce from "lodash/debounce";
 import throttle from "lodash/throttle";
 // import useWindowSize from "@/lib/useWindowSize";
 
@@ -11,9 +10,21 @@ import Link from "@/components/base/link";
 
 import { encodeString } from "@/lib/utils";
 
+import {
+  getSectionById,
+  getActiveElement,
+  handleScroll,
+  getName,
+  alignMenuItem,
+} from "./utils";
+
 import styles from "./Anchor.module.css";
 
+let activeItemId = null;
+
 function Menu({ items, onMount }) {
+  const [hest, setHest] = useState(activeItemId);
+
   const [mountedOnClient, setMountedOnClient] = useState(false);
 
   const refresh = useState()[1];
@@ -24,63 +35,23 @@ function Menu({ items, onMount }) {
   // menu item container ref
   const itemRefs = useRef({});
 
+  // Handle mounting + clientside render menu
   useEffect(() => {
     onMount(() => refresh({}));
     setMountedOnClient(true);
   }, []);
 
-  function getActiveElement() {
-    //   ..
-    Object.keys(items).forEach((item) => {});
-  }
-
-  const activeElement = getActiveElement();
-
+  // Handles scroll to active menu item
   useEffect(() => {
-    //   ...
-    alignMenuItem(itemRef, 16);
-  }, [activeElement]);
+    if (activeItemId) {
+      const item = itemRefs.current[activeItemId];
+      alignMenuItem(menuWrap, item, 16, itemsWrap);
+    }
+  }, [activeItemId]);
 
+  // Prevent render if not on client
   if (!mountedOnClient) {
     return null;
-  }
-
-  // Scroll to ref on select
-  function handleScroll(section, offset = 0) {
-    // Scroll to element position
-    const count = section.offsetTop;
-    window.scrollTo({
-      top: count - offset,
-      left: 0,
-      behavior: "smooth",
-    });
-  }
-
-  // Strip id to get section name (anchor-label prop)
-  function getName(id) {
-    id = id.replace(/-\d+/g, "");
-    id = id.replace(/-/g, " ");
-    return id;
-  }
-
-  // Left align menu items on select
-  function alignMenuItem(item, offset = 0) {
-    // Check that menu wrap exist
-    if (!itemsWrap.current) {
-      return null;
-    }
-    // If item exist
-    if (!item.current) {
-      return null;
-    }
-
-    // Scroll to element position
-    const count = item.current.offsetLeft;
-    itemsWrap.current.scrollTo({
-      top: 0,
-      left: count - offset,
-      behavior: "smooth",
-    });
   }
 
   // window Y distance from top
@@ -93,6 +64,13 @@ function Menu({ items, onMount }) {
   // Menu distance from top
   const menuT = menuWrap.current && menuWrap.current.offsetTop;
 
+  // active menu element
+  activeItemId = getActiveElement(items, scrollY, menuT, height);
+
+  if (hest !== activeItemId) {
+    setHest(activeItemId);
+  }
+
   // Menu is sticky
   const isSticky = scrollY > menuT;
   const stickyClass = isSticky ? styles.sticky : "";
@@ -103,43 +81,27 @@ function Menu({ items, onMount }) {
         <Container fluid>
           <Row>
             <Col xs={12} lg={{ offset: 3 }}>
-              {Object.keys(items).map((item) => {
+              {Object.keys(items).map((id) => {
                 // target section
-                const section = items[item].current;
+                const section = getSectionById(id, items, menuT, height);
 
-                if (!section || section.children.length === 0) {
+                if (!section) {
                   return null;
                 }
 
-                // Check scroll position for active section
-                const sectionH = section.clientHeight;
-                const sectionT = section.offsetTop;
-
-                // Set offset according to menu is above or underneath section
-                const offset = sectionT + sectionH > menuT ? height : 0;
-
-                // Active section calculation
-                const active =
-                  scrollY + offset >= sectionT &&
-                  scrollY + offset < sectionT + sectionH;
+                // check if element is active
+                const active = activeItemId === id;
                 const activeClass = active ? styles.active : "";
 
                 // Create menu item ref if not already exist
-                itemRefs.current[item] = itemRefs.current[item] ?? createRef();
+                itemRefs.current[id] = itemRefs.current[id] ?? createRef();
 
                 // Set item ref
-                const itemRef = itemRefs.current[item];
+                const itemRef = itemRefs.current[id];
 
-                // If item ref exist
-                if (itemRef) {
-                  // if element is active
-                  if (active) {
-                    // alignMenuItem(itemRef, 16);
-                  }
-                }
                 return (
                   <Link
-                    key={`link-${item}`}
+                    key={`link-${id}`}
                     linkRef={itemRef}
                     // border={{ bottom: { keepVisible: active } }}
                     className={`${styles.item} ${activeClass}`}
@@ -147,17 +109,27 @@ function Menu({ items, onMount }) {
                     tag="span"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleScroll(section, offset);
-                      alignMenuItem(e);
+                      handleScroll(window, section.element, section.offset);
+                      // alignMenuItem(
+                      //   menuWrap,
+                      //   itemRefs.current[id],
+                      //   16,
+                      //   itemsWrap
+                      // );
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        handleScroll(section, offset);
-                        alignMenuItem(e);
+                        handleScroll(window, section.element, section.offset);
+                        // alignMenuItem(
+                        //   menuWrap,
+                        //   itemRefs.current[id],
+                        //   16,
+                        //   itemsWrap
+                        // );
                       }
                     }}
                   >
-                    <Text type={"text2"}>{getName(item)}</Text>
+                    <Text type={"text2"}>{getName(id)}</Text>
                   </Link>
                 );
               })}
