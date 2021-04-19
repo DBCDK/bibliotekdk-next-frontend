@@ -39,6 +39,14 @@ export function setLocale(locale = "da") {
 }
 
 /**
+ * get language.
+ * @return {string}
+ */
+export function getLocale() {
+  return lang;
+}
+
+/**
  * Check if translations are OK
  * @param transProps
  *  translations from backend {ok:true/false, translations:obj/null}

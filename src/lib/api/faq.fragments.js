@@ -1,13 +1,13 @@
-export function promotedFaqs() {
+export function promotedFaqs(language) {
   return {
-    query: `query {
+    query: `query($language: LanguageId!) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
         {field: "promote", value:"1"}
       ] }) {
         count
-        entities {
+        entities (language: $language){
         ... on NodeFaq {
           langcode {
             value
@@ -29,7 +29,7 @@ export function promotedFaqs() {
       }
      monitor(name: "promoted_faqs")
     }`,
-    variables: {},
+    variables: { language },
     slowThreshold: 3000,
   };
 }

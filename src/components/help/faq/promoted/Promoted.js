@@ -14,6 +14,8 @@ import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
 import Skeleton from "@/components/base/skeleton";
 
+import { getLocale } from "@/components/base/translate/Translate";
+
 import styles from "./Promoted.module.css";
 
 /**
@@ -54,6 +56,11 @@ Promoted.propTypes = {
   data: PropTypes.array,
 };
 
+function getLangcode() {
+  const language = getLocale();
+  return language === "en" ? "EN_GB" : "EN";
+}
+
 /**
  * The Default export with data fetch
  *
@@ -65,8 +72,9 @@ Promoted.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
+  const langcode = getLangcode();
   // real data goes here ...
-  const { isLoading, data, error } = useData(promotedFaqs());
+  const { isLoading, data, error } = useData(promotedFaqs(langcode));
 
   if (isLoading) {
     return <Skeleton lines={2} />;
