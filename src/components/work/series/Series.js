@@ -22,7 +22,7 @@ export function Series({ isLoading, works = [] }) {
   const context = { context: "series" };
 
   return (
-    <Section title={Translate({ ...context, label: "label" })}>
+    <Section title={Translate({ ...context, label: "label" })} topSpace={true}>
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={works} />

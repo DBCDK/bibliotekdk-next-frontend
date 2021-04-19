@@ -1,5 +1,4 @@
 .details {
-  padding-bottom: var(--pt4);
 }
 
 .details > div {
@@ -12,7 +11,10 @@
 
 @media (min-width: 768px) {
   .details {
-    min-height: 175px;
-    padding-bottom: var(--pt8);
+    min-height: 75px;
+  }
+
+  .details > div {
+    margin-bottom: 0;
   }
 }

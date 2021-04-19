@@ -13,8 +13,16 @@
 .menu.sticky {
   width: 100%;
   position: fixed;
-  top: 0;
+  left: 0;
   z-index: 101;
+}
+
+.menu.sticky.stickyTop {
+  top: 0;
+}
+
+.menu.sticky.stickyBottom {
+  bottom: 0;
 }
 
 /* Menu items */
@@ -37,15 +45,14 @@
 }
 
 /* hover + focus item */
-.menu .item:focus p {
+.menu .item:focus p,
+.menu .item:hover p {
   color: var(--mine-shaft);
-}
-.menu .item:focus-visible p {
-  color: var(--blue);
 }
 
 /* Active item */
 .menu .item.active hr {
   transition-delay: 0.2s;
   transform: scale(1);
+  /* background-color: var(--blue); */
 }

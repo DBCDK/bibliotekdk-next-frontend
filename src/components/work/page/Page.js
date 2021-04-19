@@ -38,7 +38,7 @@ export default function WorkPage({
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
           type={type}
-          anchor-label="Top"
+          anchor-label="Lån"
         />
         <Anchor.Menu />
         <Details workId={workId} type={type} anchor-label="Detaljer" />

@@ -63,13 +63,6 @@ export function handleScroll(container, section, offset = 0) {
   });
 }
 
-// Strip id to get section name (anchor-label prop)
-export function getName(id) {
-  id = id.replace(/-\d+/g, "");
-  id = id.replace(/-/g, " ");
-  return id;
-}
-
 // Left align menu items on select
 function debouncedAlignMenuItem(container, item, offset = 0, itemsWrap) {
   // Check that menu wrap exist

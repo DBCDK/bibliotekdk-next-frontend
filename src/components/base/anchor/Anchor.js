@@ -1,32 +1,45 @@
 import useMutationObserver from "@rooks/use-mutation-observer";
 import { useState, useEffect, useRef, createRef, useMemo } from "react";
+import PropTypes from "prop-types";
 import throttle from "lodash/throttle";
 // import useWindowSize from "@/lib/useWindowSize";
 
 import { Container, Row, Col } from "react-bootstrap";
-import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 
 import { encodeString } from "@/lib/utils";
-
 import {
   getSectionById,
   getActiveElement,
   handleScroll,
-  getName,
   alignMenuItem,
 } from "./utils";
 
 import styles from "./Anchor.module.css";
 
+// Global active element
 let activeItemId = null;
 
-function Menu({ items, onMount }) {
-  const [hest, setHest] = useState(activeItemId);
+/**
+ * Menu function - to generate the menu
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 
+function Menu({
+  items,
+  titles,
+  onMount,
+  stickyTop = true,
+  stickyBottom = false,
+}) {
+  // mount
   const [mountedOnClient, setMountedOnClient] = useState(false);
-
+  // force update
   const refresh = useState()[1];
   // Menu wrapper ref
   const menuWrap = useRef(null);
@@ -57,9 +70,10 @@ function Menu({ items, onMount }) {
   // window Y distance from top
   const scrollY = window.scrollY;
 
+  const windowH = window.innerHeight;
+
   // Calc height for placeholder (used by the wrap while menu is fixed)
-  const height =
-    (menuWrap.current && menuWrap.current.children[0]?.clientHeight) || 0;
+  const height = menuWrap.current && menuWrap.current.children[0]?.clientHeight;
 
   // Menu distance from top
   const menuT = menuWrap.current && menuWrap.current.offsetTop;
@@ -67,17 +81,21 @@ function Menu({ items, onMount }) {
   // active menu element
   activeItemId = getActiveElement(items, scrollY, menuT, height);
 
-  if (hest !== activeItemId) {
-    setHest(activeItemId);
-  }
+  // Menu is sticky options
+  const isStickyTop = stickyTop && scrollY > menuT;
+  const isStickyBottom = stickyBottom && windowH < menuT + height - scrollY;
+  const isSticky = isStickyTop || isStickyBottom;
 
-  // Menu is sticky
-  const isSticky = scrollY > menuT;
+  const stickyTopClass = isStickyTop ? styles.stickyTop : "";
+  const stickyBottomClass = isStickyBottom ? styles.stickyBottom : "";
   const stickyClass = isSticky ? styles.sticky : "";
 
   return (
     <div className={styles.wrap} ref={menuWrap} style={{ height }}>
-      <div className={`${styles.menu} ${stickyClass}`} ref={itemsWrap}>
+      <div
+        className={`${styles.menu} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
+        ref={itemsWrap}
+      >
         <Container fluid>
           <Row>
             <Col xs={12} lg={{ offset: 3 }}>
@@ -101,35 +119,24 @@ function Menu({ items, onMount }) {
 
                 return (
                   <Link
+                    tabIndex="-1"
                     key={`link-${id}`}
                     linkRef={itemRef}
                     // border={{ bottom: { keepVisible: active } }}
-                    className={`${styles.item} ${activeClass}`}
+                    className={`anchor-menu-item ${styles.item} ${activeClass}`}
                     dataCy="anchor-menu-item"
                     tag="span"
                     onClick={(e) => {
                       e.preventDefault();
                       handleScroll(window, section.element, section.offset);
-                      // alignMenuItem(
-                      //   menuWrap,
-                      //   itemRefs.current[id],
-                      //   16,
-                      //   itemsWrap
-                      // );
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         handleScroll(window, section.element, section.offset);
-                        // alignMenuItem(
-                        //   menuWrap,
-                        //   itemRefs.current[id],
-                        //   16,
-                        //   itemsWrap
-                        // );
                       }
                     }}
                   >
-                    <Text type={"text2"}>{getName(id)}</Text>
+                    <Text type={"text2"}>{titles[id]}</Text>
                   </Link>
                 );
               })}
@@ -141,6 +148,23 @@ function Menu({ items, onMount }) {
   );
 }
 
+Menu.propTypes = {
+  items: PropTypes.string,
+  titles: PropTypes.object,
+  onMount: PropTypes.func,
+  stickyTop: PropTypes.bool,
+  stickyBottom: PropTypes.bool,
+};
+
+/**
+ * Element function - wraps all children in a div container (ref)
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+
 function Element({ id, children, sectionRef, onChange }) {
   useMutationObserver(sectionRef, () => onChange(sectionRef));
 
@@ -151,11 +175,30 @@ function Element({ id, children, sectionRef, onChange }) {
   );
 }
 
+Element.propTypes = {
+  id: PropTypes.string,
+  sectionRef: PropTypes.string,
+  onChange: PropTypes.func,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+};
+
+/**
+ * The Component function
+ *
+ * [!] 'anchor-label' prop is required on all children to generate the menu
+ *
+ * @param {obj} props
+ * @param {obj} props.children
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
 function Wrap({ children }) {
   // Object to collect all section refs by id
   const menu = useRef();
   const refs = useRef({});
   const [sections, setSections] = useState(refs);
+  const titles = {};
 
   const onChange = useMemo(
     () => throttle(() => menu.current && menu.current.updateMenu(), 10),
@@ -176,8 +219,10 @@ function Wrap({ children }) {
           return (
             <Menu
               key="items-menu"
+              titles={titles}
               items={sections.current}
               onMount={(updateMenu) => (menu.current = { updateMenu })}
+              {...child.props}
             />
           );
         }
@@ -189,6 +234,8 @@ function Wrap({ children }) {
 
       // Create ref if not already exist
       sections.current[id] = sections.current[id] ?? createRef();
+
+      titles[id] = child.props["anchor-label"];
 
       return (
         <Element
@@ -204,4 +251,8 @@ function Wrap({ children }) {
     .filter((c) => c);
 }
 
-export default { Wrap, Menu, Element };
+Wrap.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+};
+
+export default { Wrap, Menu };
