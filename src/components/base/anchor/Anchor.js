@@ -19,7 +19,8 @@ import {
 import styles from "./Anchor.module.css";
 
 // Global active element
-let activeItemId = null;
+let globalActiveItemId = null;
+const globalDynamicClassList = [styles.scrolling];
 
 /**
  * Menu function - to generate the menu
@@ -37,6 +38,8 @@ function Menu({
   stickyTop = true,
   stickyBottom = false,
 }) {
+  const [activeItemId, setActiveItemId] = useState(globalActiveItemId);
+
   // mount
   const [mountedOnClient, setMountedOnClient] = useState(false);
   // force update
@@ -58,7 +61,7 @@ function Menu({
   useEffect(() => {
     if (activeItemId) {
       const item = itemRefs.current[activeItemId];
-      alignMenuItem(menuWrap, item, 16, itemsWrap);
+      alignMenuItem(itemsWrap, item, 16);
     }
   }, [activeItemId]);
 
@@ -79,7 +82,12 @@ function Menu({
   const menuT = menuWrap.current && menuWrap.current.offsetTop;
 
   // active menu element
-  activeItemId = getActiveElement(items, scrollY, menuT, height);
+  globalActiveItemId = getActiveElement(items, scrollY, menuT, height);
+
+  // force rerender if the active element has changed
+  if (activeItemId !== globalActiveItemId) {
+    setActiveItemId(globalActiveItemId);
+  }
 
   // Menu is sticky options
   const isStickyTop = stickyTop && scrollY > menuT;
@@ -90,10 +98,16 @@ function Menu({
   const stickyBottomClass = isStickyBottom ? styles.stickyBottom : "";
   const stickyClass = isSticky ? styles.sticky : "";
 
+  // Reuse dynamically added styles from menuItemsWrap rerender
+  const dynamicClassList = [...(itemsWrap.current?.classList || [])];
+  const dynamicStyles = dynamicClassList.filter((c) =>
+    globalDynamicClassList.includes(c)
+  );
+
   return (
     <div className={styles.wrap} ref={menuWrap} style={{ height }}>
       <div
-        className={`${styles.menu} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
+        className={`${styles.menu} ${dynamicStyles} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
         ref={itemsWrap}
       >
         <Container fluid>
@@ -122,18 +136,27 @@ function Menu({
                     tabIndex="-1"
                     key={`link-${id}`}
                     linkRef={itemRef}
-                    // border={{ bottom: { keepVisible: active } }}
                     className={`anchor-menu-item ${styles.item} ${activeClass}`}
                     dataCy="anchor-menu-item"
                     tag="span"
                     onClick={(e) => {
                       e.preventDefault();
-                      handleScroll(window, section.element, section.offset);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        handleScroll(window, section.element, section.offset);
-                      }
+                      const target = itemRef.current;
+                      const wrap = itemsWrap.current;
+                      wrap.classList.add(styles.scrolling);
+                      target.classList.add(styles.clicked);
+
+                      handleScroll(
+                        window,
+                        section.element,
+                        section.offset,
+                        // callback
+                        () => {
+                          target.classList.remove(styles.clicked);
+                          wrap.classList.remove(styles.scrolling);
+                          alignMenuItem(itemsWrap, itemRefs.current[id], 16);
+                        }
+                      );
                     }}
                   >
                     <Text type={"text2"}>{titles[id]}</Text>

@@ -50,9 +50,7 @@
   color: var(--mine-shaft);
 }
 
-/* Active item */
+/* active */
 .menu .item.active hr {
-  transition-delay: 0.2s;
   transform: scale(1);
-  /* background-color: var(--blue); */
 }

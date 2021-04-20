@@ -1,6 +1,15 @@
 import debounce from "lodash/debounce";
 
-// Get string by id
+/**
+ * Get section by id
+ *
+ * @param {string} id
+ * @param {object} items
+ * @param {int} menuT
+ * @param {int} height
+ *
+ * @returns {object}
+ */
 export function getSectionById(id, items, menuT, height) {
   // target section
   const section = items[id].current;
@@ -26,6 +35,16 @@ export function getSectionById(id, items, menuT, height) {
   };
 }
 
+/**
+ * Get id of the active section (visible in users viewport)
+ *
+ * @param {object} items
+ * @param {string} scrollY
+ * @param {int} menuT
+ * @param {int} height
+ *
+ * @returns {string}
+ */
 export function getActiveElement(items, scrollY, menuT, height) {
   if (!items) {
     return null;
@@ -52,19 +71,47 @@ export function getActiveElement(items, scrollY, menuT, height) {
   return activeId;
 }
 
-// Scroll to ref on select
-export function handleScroll(container, section, offset = 0) {
+/**
+ * Get id of the active section (visible in users viewport)
+ *
+ * @param {component} container
+ * @param {component} section
+ * @param {int} offset
+ *
+ */
+export function handleScroll(container, section, offset = 0, callback = null) {
   // Scroll to element position
-  const distance = section.offsetTop;
+  const distance = section.offsetTop - offset;
+
+  // Callback trigger on scroll finish
+  const onScroll = function () {
+    if (container.scrollY === distance) {
+      container.removeEventListener("scroll", onScroll);
+      callback && callback();
+    }
+  };
+
+  container.addEventListener("scroll", onScroll);
+  onScroll();
+  //  ---
+
   container.scrollTo({
-    top: distance - offset,
+    top: distance,
     left: 0,
     behavior: "smooth",
   });
 }
 
-// Left align menu items on select
-function debouncedAlignMenuItem(container, item, offset = 0, itemsWrap) {
+/**
+ * Align active menu item to the left on active change
+ *
+ * @param {component} container
+ * @param {component} item
+ *
+ * @param {int} offset
+ *
+ */
+function debouncedAlignMenuItem(container, item, offset = 0, callback = null) {
   // Check that menu wrap exist
   if (!container.current) {
     return null;
@@ -75,16 +122,36 @@ function debouncedAlignMenuItem(container, item, offset = 0, itemsWrap) {
     return null;
   }
 
+  container = container.current;
+
   // Scroll to element position
-  const distance = item.current.offsetLeft;
-  itemsWrap.current.scrollTo({
+  const distance = item.current.offsetLeft - offset;
+
+  // Callback trigger on scroll finish
+  const onScroll = function () {
+    const scrollWidth = container.scrollWidth;
+    const scrollLeft = container.scrollLeft;
+    const offsetWidth = container.offsetWidth;
+
+    // When distance is reached OR if no scroll is needed
+    if (scrollLeft === distance || scrollWidth - scrollLeft <= offsetWidth) {
+      container.removeEventListener("scroll", onScroll);
+      callback && callback();
+    }
+  };
+  container.addEventListener("scroll", onScroll);
+  onScroll();
+  // ---
+
+  container.scrollTo({
     top: 0,
-    left: distance - offset,
+    left: distance,
     behavior: "smooth",
   });
 }
 
+// debounce wrapped
 export const alignMenuItem = debounce(debouncedAlignMenuItem, 100, {
-  leading: false,
+  leading: true,
   trailing: true,
 });
