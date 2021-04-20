@@ -14,7 +14,7 @@ import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
 import Skeleton from "@/components/base/skeleton";
 
-import { getLocale } from "@/components/base/translate/Translate";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 import styles from "./Promoted.module.css";
 
@@ -55,11 +55,6 @@ Promoted.propTypes = {
   className: PropTypes.string,
   data: PropTypes.array,
 };
-
-function getLangcode() {
-  const language = getLocale();
-  return language === "en" ? "EN_GB" : "EN";
-}
 
 /**
  * The Default export with data fetch

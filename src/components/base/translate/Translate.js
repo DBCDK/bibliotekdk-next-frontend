@@ -38,12 +38,8 @@ export function setLocale(locale = "da") {
   lang = locale;
 }
 
-/**
- * get language.
- * @return {string}
- */
-export function getLocale() {
-  return lang;
+export function getLangcode() {
+  return lang === "en" ? "EN_GB" : "EN";
 }
 
 /**
