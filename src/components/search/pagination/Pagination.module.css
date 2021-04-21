@@ -7,6 +7,7 @@
   cursor: pointer;
   opacity: 1;
   transition: opacity 0.25s;
+  border-radius: 50%;
 }
 .arrow.hidden {
   opacity: 0;
@@ -40,7 +41,9 @@
 }
 
 .pagination i:focus,
-.pagination i:hover {
+.pagination i:hover,
+.arrow:focus,
+.arrow:hover {
   background-color: var(--white) !important;
   border: 1px solid var(--blue);
 }

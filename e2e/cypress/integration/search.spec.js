@@ -85,7 +85,7 @@ describe("Search", () => {
   it(`Should focus pagination buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
-    cy.tabs(1);
+    cy.tabs(2);
     cy.focused().should("have.attr", "data-cy", "page-1-button");
 
     cy.tabs(3);

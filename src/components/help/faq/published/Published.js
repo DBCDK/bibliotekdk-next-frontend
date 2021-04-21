@@ -7,6 +7,7 @@ import Accordion from "@/components/base/accordion";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 import { groupSortData } from "../utils";
 
@@ -63,8 +64,11 @@ Published.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
+  const langcode = getLangcode();
   // real data goes here ...
-  const { isLoading, data, error } = useData(faqFragments.publishedFaqs());
+  const { isLoading, data, error } = useData(
+    faqFragments.publishedFaqs(langcode)
+  );
 
   if (isLoading) {
     return <Skeleton lines={2} />;

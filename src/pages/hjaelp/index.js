@@ -11,7 +11,8 @@
  */
 
 import { fetchAll } from "@/lib/api/api";
-import { allArticles } from "@/lib/api/article.fragments";
+import { publishedHelptexts } from "@/lib/api/helptexts.fragments.js";
+import { promotedFaqs } from "@/lib/api/faq.fragments.js";
 
 import Page from "@/components/help/page";
 
@@ -29,7 +30,7 @@ export default function HelpPage() {
  * Note that the queries must only take variables provided by
  * the dynamic routing - or else requests will fail.
  */
-const serverQueries = [allArticles];
+const serverQueries = [publishedHelptexts, promotedFaqs];
 
 /**
  * We use getInitialProps to let Next.js

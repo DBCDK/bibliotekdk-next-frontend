@@ -39,9 +39,15 @@ export default function Pagination({
       )}
       <div className={`${styles.pagination} ${styles.desktop}`}>
         <div
+          tabIndex="0"
           className={`${styles.arrow} ${
             !isLoading && currentPage > 1 ? "" : styles.hidden
           }`}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && onChange) {
+              onChange(Math.max(currentPage - 1, 1));
+            }
+          }}
           onClick={onChange && (() => onChange(Math.max(currentPage - 1, 1)))}
         >
           <LeftSvg />
@@ -76,6 +82,12 @@ export default function Pagination({
           className={`${styles.arrow} ${
             !isLoading && currentPage < numPages ? "" : styles.hidden
           }`}
+          tabIndex="0"
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && onChange) {
+              onChange(Math.min(currentPage + 1, numPages));
+            }
+          }}
           onClick={
             onChange && (() => onChange(Math.min(currentPage + 1, numPages)))
           }

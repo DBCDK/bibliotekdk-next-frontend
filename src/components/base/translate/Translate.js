@@ -38,6 +38,10 @@ export function setLocale(locale = "da") {
   lang = locale;
 }
 
+export function getLangcode() {
+  return lang === "en" ? "EN_GB" : "EN";
+}
+
 /**
  * Check if translations are OK
  * @param transProps

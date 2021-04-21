@@ -14,7 +14,7 @@ export function article({ articleId }) {
   return {
     // delay: 1000, // for debugging
     query: `query ($articleId: String!) {
-        article: nodeById(id: $articleId) {
+        article: nodeById(id: $articleId ) {
           __typename
           ... on NodeArticle {
             nid
