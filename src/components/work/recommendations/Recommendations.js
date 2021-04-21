@@ -55,7 +55,10 @@ export default function Recommendations({ workId }) {
   const context = { context: "recommendations" };
 
   return (
-    <Section title={Translate({ ...context, label: "remindsOf" })}>
+    <Section
+      title={Translate({ ...context, label: "remindsOf" })}
+      topSpace={true}
+    >
       <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={parsed} />

@@ -31,9 +31,10 @@ export function Details({ className = "", data = {}, skeleton = false }) {
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
-      className={styles.distanceTop}
+      topSpace={true}
+      className={`${className}`}
     >
-      <Row className={`${styles.details} ${className}`}>
+      <Row className={`${styles.details}`}>
         {data.language && (
           <Col xs={6} md>
             <Text

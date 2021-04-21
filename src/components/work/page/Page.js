@@ -12,6 +12,8 @@ import Header from "@/components/header/Header";
 import React from "react";
 import { useRouter } from "next/router";
 
+import Anchor from "@/components/base/anchor";
+
 /**
  * The work page React component
  *
@@ -30,20 +32,24 @@ export default function WorkPage({
   return (
     <main>
       <Header router={router} />
-      <Overview
-        workId={workId}
-        onTypeChange={onTypeChange}
-        onOnlineAccess={onOnlineAccess}
-        type={type}
-      />
-      <Details workId={workId} type={type} />
-      <Description workId={workId} type={type} />
-      <Keywords workId={workId} type={type} />
-      <Content workId={workId} type={type} />
-      <Series workId={workId} />
-      <Recommendations workId={workId} />
-      <Reviews workId={workId} />
-      <BibliographicData workId={workId} />
+      <Anchor.Wrap>
+        <Overview
+          workId={workId}
+          onTypeChange={onTypeChange}
+          onOnlineAccess={onOnlineAccess}
+          type={type}
+          anchor-label="Lån"
+        />
+        <Anchor.Menu />
+        <Details workId={workId} type={type} anchor-label="Detaljer" />
+        <Description workId={workId} type={type} anchor-label="Beskrivelse" />
+        <Content workId={workId} type={type} anchor-label="Indhold" />
+        <Series workId={workId} anchor-label="Serie" />
+        <Recommendations workId={workId} anchor-label="Minder om" />
+        <Keywords workId={workId} type={type} anchor-label="Emneord" />
+        <Reviews workId={workId} anchor-label="Anmeldelser" />
+        <BibliographicData workId={workId} anchor-label="Udgaver" />
+      </Anchor.Wrap>
     </main>
   );
 }

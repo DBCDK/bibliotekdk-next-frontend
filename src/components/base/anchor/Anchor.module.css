@@ -1,0 +1,76 @@
+/* Menu */
+
+.wrap {
+  background-color: var(--concrete);
+}
+
+.menu {
+  background-color: var(--concrete);
+  padding: var(--pt2) 0 0 0;
+  border-bottom: 1px solid var(--iron);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.menu.sticky {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  z-index: 101;
+}
+
+.menu.sticky.stickyTop {
+  top: 0;
+}
+
+.menu.sticky.stickyBottom {
+  bottom: 0;
+}
+
+/* Menu items */
+.menu .item {
+  display: inline-block;
+  margin-right: var(--pt3);
+}
+.menu .item p {
+  /* link styles override */
+  padding: 0 0 var(--pt2) 0;
+}
+.menu .item hr {
+  /* link styles override */
+  height: 2px;
+  margin-top: -2px;
+}
+
+.menu .item:first-letter {
+  text-transform: uppercase;
+}
+
+/* hover + focus item */
+.menu .item:focus p,
+.menu .item:hover p {
+  color: var(--mine-shaft);
+}
+
+/* active */
+.menu .item.active hr {
+  transform: scale(1);
+}
+
+/* When sticky menu is moving */
+.menu.isScrolling {
+}
+
+/* when a menu item is clicked */
+.menu .item.isClicked hr {
+}
+
+.menu .item.isClicked hr {
+  transform: scale(1) !important;
+}
+
+.menu.isScrolling .item.active hr {
+  transform: scale(0);
+}

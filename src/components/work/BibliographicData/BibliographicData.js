@@ -31,6 +31,7 @@ export function BibliographicData(props) {
         context: "bibliographic-data",
         label: "storytitle",
       })}
+      topSpace={true}
     >
       <WorkTypesRow materialTypes={props.data} />
     </Section>

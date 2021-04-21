@@ -65,7 +65,7 @@ export function Overview({
 
   return (
     <div className={`${styles.background} ${className}`}>
-      <Container>
+      <Container fluid>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
@@ -236,7 +236,9 @@ export function OverviewError() {
  *
  * @returns {component}
  */
-export default function Wrap({ workId, type, onTypeChange, onOnlineAccess }) {
+export default function Wrap(props) {
+  const { workId, type, onTypeChange, onOnlineAccess } = props;
+
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })

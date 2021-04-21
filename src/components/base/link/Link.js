@@ -16,6 +16,7 @@ import styles from "./Link.module.css";
 export default function Link({
   children = "Im a hyperlink now!",
   a = true,
+  linkRef = null,
   href = { pathname: "/", query: {} },
   target = "_self",
   border = { top: false, bottom: true },
@@ -34,6 +35,7 @@ export default function Link({
 
     children = (
       <Tag
+        ref={linkRef}
         data-cy={dataCy}
         target={target}
         onClick={onClick}

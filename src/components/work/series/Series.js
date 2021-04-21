@@ -22,7 +22,7 @@ export function Series({ isLoading, works = [] }) {
   const context = { context: "series" };
 
   return (
-    <Section title={Translate({ ...context, label: "label" })}>
+    <Section title={Translate({ ...context, label: "label" })} topSpace={true}>
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={works} />
@@ -46,7 +46,7 @@ export default function Container({ workId }) {
   const { data, isLoading } = useData(series({ workId }));
 
   // if work is not part of series, we wont show series section
-  if (!isLoading && data.work && !data.work.series) {
+  if (!isLoading && data && data.work && !data.work.series) {
     return null;
   }
 
