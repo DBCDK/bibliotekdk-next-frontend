@@ -58,3 +58,19 @@
 .menu .item.active hr {
   transform: scale(1);
 }
+
+/* When sticky menu is moving */
+.menu.isScrolling {
+}
+
+/* when a menu item is clicked */
+.menu .item.isClicked hr {
+}
+
+.menu .item.isClicked hr {
+  transform: scale(1) !important;
+}
+
+.menu.isScrolling .item.active hr {
+  transform: scale(0);
+}

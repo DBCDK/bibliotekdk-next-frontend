@@ -17,10 +17,6 @@ import {
 
 import styles from "./Anchor.module.css";
 
-// Global active element
-let globalActiveItemId = null;
-const globalDynamicClassList = [styles.scrolling];
-
 /**
  * Menu function - to generate the menu
  *
@@ -37,8 +33,12 @@ function Menu({
   stickyTop = true,
   stickyBottom = false,
 }) {
-  const [activeItemId, setActiveItemId] = useState(globalActiveItemId);
-
+  // currently active section (window position)
+  const [activeItemId, setActiveItemId] = useState(null);
+  // Menu isScrolling
+  const [isScrolling, setIsScrolling] = useState(false);
+  // item clicked
+  const [isClicked, setIsClicked] = useState(false);
   // mount
   const [mountedOnClient, setMountedOnClient] = useState(false);
   // force update
@@ -64,14 +64,25 @@ function Menu({
     }
   }, [activeItemId]);
 
+  useEffect(() => {
+    // active menu element
+    const curActiveId = getActiveElement(items, scrollY, menuT, height);
+
+    // force rerender if the active element has changed
+    if (activeItemId !== curActiveId) {
+      setActiveItemId(curActiveId);
+    }
+  });
+
   // Prevent render if not on client
   if (!mountedOnClient) {
     return null;
   }
 
-  // window Y distance from top
+  // window distance from top
   const scrollY = window.scrollY;
 
+  // window Height
   const windowH = window.innerHeight;
 
   // Calc height for placeholder (used by the wrap while menu is fixed)
@@ -81,35 +92,35 @@ function Menu({
   // Menu distance from top
   const menuT = (menuWrap.current && menuWrap.current.offsetTop) || windowH;
 
-  // active menu element
-  globalActiveItemId = getActiveElement(items, scrollY, menuT, height);
-
-  // force rerender if the active element has changed
-  if (activeItemId !== globalActiveItemId) {
-    setActiveItemId(globalActiveItemId);
-  }
-
   // Menu is sticky options
   const isStickyTop = stickyTop && scrollY > menuT;
   const isStickyBottom = stickyBottom && windowH < menuT + height - scrollY;
 
+  // Is menu sticky
   const isSticky = isStickyTop || isStickyBottom;
 
-  const stickyTopClass = isStickyTop ? styles.stickyTop : "";
-  const stickyBottomClass = isStickyBottom ? styles.stickyBottom : "";
-  const stickyClass = isSticky ? styles.sticky : "";
+  // Class writings (Global + dynamic/css modules)
+  const stickyClass = isSticky ? `sticky ${styles.sticky}` : "";
+  const stickyTopClass = isStickyTop ? `sticky-top ${styles.stickyTop}` : "";
+  const stickyBottomClass = isStickyBottom
+    ? `sticky-bottom ${styles.stickyBottom}`
+    : "";
 
-  // Reuse dynamically added styles from menuItemsWrap rerender
-  const dynamicClassList = [...(itemsWrap.current?.classList || [])];
-  const dynamicStyles = dynamicClassList.filter((c) =>
-    globalDynamicClassList.includes(c)
-  );
+  // Menu is moving
+  const isScrollingClass =
+    isSticky && isScrolling ? `scrolling ${styles.isScrolling}` : "";
 
   return (
-    <div className={styles.wrap} ref={menuWrap} style={{ height }}>
+    <div
+      className={styles.wrap}
+      ref={menuWrap}
+      style={{ height }}
+      data-cy="anchor-menu-wrap"
+    >
       <div
-        className={`${styles.menu} ${dynamicStyles} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
+        className={`${styles.menu} ${isScrollingClass} ${stickyBottomClass} ${stickyTopClass} ${stickyClass}`}
         ref={itemsWrap}
+        data-cy="anchor-menu-items"
       >
         <Container fluid>
           <Row>
@@ -118,13 +129,14 @@ function Menu({
                 // target section
                 const section = getSectionById(id, items, menuT, height);
 
-                if (!section) {
+                // Remove sections which has returned null Or has no height
+                if (!section || section.clientHeight === 0) {
                   return null;
                 }
 
                 // check if element is active
                 const active = activeItemId === id;
-                const activeClass = active ? styles.active : "";
+                const activeClass = active ? `active ${styles.active}` : "";
 
                 // Create menu item ref if not already exist
                 itemRefs.current[id] = itemRefs.current[id] ?? createRef();
@@ -132,20 +144,21 @@ function Menu({
                 // Set item ref
                 const itemRef = itemRefs.current[id];
 
+                const isClickedClass =
+                  isClicked === id ? `clicked ${styles.isClicked}` : "";
+
                 return (
                   <Link
                     tabIndex="-1"
                     key={`link-${id}`}
                     linkRef={itemRef}
-                    className={`anchor-menu-item ${styles.item} ${activeClass}`}
+                    className={`anchor-menu-item ${styles.item} ${activeClass} ${isClickedClass}`}
                     dataCy="anchor-menu-item"
                     tag="span"
                     onClick={(e) => {
                       e.preventDefault();
-                      const target = itemRef.current;
-                      const wrap = itemsWrap.current;
-                      wrap.classList.add(styles.scrolling);
-                      target.classList.add(styles.clicked);
+                      setIsScrolling(true);
+                      setIsClicked(id);
 
                       handleScroll(
                         window,
@@ -153,8 +166,10 @@ function Menu({
                         section.offset,
                         // callback
                         () => {
-                          target.classList.remove(styles.clicked);
-                          wrap.classList.remove(styles.scrolling);
+                          setTimeout(() => {
+                            setIsScrolling(false);
+                            setIsClicked(false);
+                          }, 100);
                           alignMenuItem(itemsWrap, itemRefs.current[id], 16);
                         }
                       );
@@ -193,7 +208,12 @@ function Element({ id, children, sectionRef, onChange }) {
   useMutationObserver(sectionRef, () => onChange(sectionRef));
 
   return (
-    <div id={id} className="anchor-section" ref={sectionRef}>
+    <div
+      id={id}
+      data-cy="anchor-section"
+      className="anchor-section"
+      ref={sectionRef}
+    >
       {children}
     </div>
   );

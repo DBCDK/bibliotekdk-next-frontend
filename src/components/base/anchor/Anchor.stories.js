@@ -31,19 +31,19 @@ export function Default() {
       <Anchor.Wrap>
         <Anchor.Menu />
         <section anchor-label="Section1" style={styles}>
-          <span>Section one 1</span>
+          <span>Section 1</span>
         </section>
         <section anchor-label="Section2" style={styles}>
-          <span>Section one 2</span>
+          <span>Section 2</span>
         </section>
         <section anchor-label="Section3" style={styles}>
-          <span>Section one 3</span>
+          <span>Section 3</span>
         </section>
         <section anchor-label="Section4" style={styles}>
-          <span>Section one 4</span>
+          <span>Section 4</span>
         </section>
         <section anchor-label="Section5" style={styles}>
-          <span>Section one 5</span>
+          <span>Section 5</span>
         </section>
       </Anchor.Wrap>
     </div>
@@ -51,7 +51,7 @@ export function Default() {
 }
 
 /**
- * Anchor - anchor one-page menu
+ * Anchor - anchor -page menu
  *
  */
 
@@ -67,26 +67,28 @@ export function MissingAnchorLabel() {
 
   return (
     <div>
-      <StoryTitle>Anchor Menu - No section 2</StoryTitle>
+      <StoryTitle>Anchor Menu - 2 Removed sections</StoryTitle>
       <StoryDescription>
-        Section 2 has no "anchor-label" and is therefor not rendered.
+        Section 2 has no "anchor-label" and is therefor not rendered. Section 3
+        has no height, and is therefor also removed.
       </StoryDescription>
       <Anchor.Wrap>
         <Anchor.Menu />
         <section anchor-label="Section1" style={styles}>
-          <span>Section one 1</span>
+          <span>Section 1</span>
         </section>
         <section style={styles}>
-          <span>Section one 2</span>
+          <span>Section 2</span>
         </section>
-        <section anchor-label="Section3" style={styles}>
-          <span>Section one 3</span>
-        </section>
+        <section
+          anchor-label="Section3"
+          style={{ ...styles, height: 0 }}
+        ></section>
         <section anchor-label="Section4" style={styles}>
-          <span>Section one 4</span>
+          <span>Section 4</span>
         </section>
         <section anchor-label="Section5" style={styles}>
-          <span>Section one 5</span>
+          <span>Section 5</span>
         </section>
       </Anchor.Wrap>
     </div>
@@ -116,20 +118,20 @@ export function SectionsAboveMenu() {
       </StoryDescription>
       <Anchor.Wrap>
         <section anchor-label="Section1" style={styles}>
-          <span>Section one 1</span>
+          <span>Section 1</span>
         </section>
         <Anchor.Menu />
         <section anchor-label="Section2" style={styles}>
-          <span>Section one 2</span>
+          <span>Section 2</span>
         </section>
         <section anchor-label="Section3" style={styles}>
-          <span>Section one 3</span>
+          <span>Section 3</span>
         </section>
         <section anchor-label="Section4" style={styles}>
-          <span>Section one 4</span>
+          <span>Section 4</span>
         </section>
         <section anchor-label="Section5" style={styles}>
-          <span>Section one 5</span>
+          <span>Section 5</span>
         </section>
       </Anchor.Wrap>
     </div>
@@ -159,20 +161,20 @@ export function StickyTopAndBottom() {
       </StoryDescription>
       <Anchor.Wrap>
         <section anchor-label="Section1" style={styles}>
-          <span>Section one 1</span>
+          <span>Section 1</span>
         </section>
         <section anchor-label="Section2" style={styles}>
-          <span>Section one 2</span>
+          <span>Section 2</span>
         </section>
         <Anchor.Menu stickyTop={true} stickyBottom={true} />
         <section anchor-label="Section3" style={styles}>
-          <span>Section one 3</span>
+          <span>Section 3</span>
         </section>
         <section anchor-label="Section4" style={styles}>
-          <span>Section one 4</span>
+          <span>Section 4</span>
         </section>
         <section anchor-label="Section5" style={styles}>
-          <span>Section one 5</span>
+          <span>Section 5</span>
         </section>
       </Anchor.Wrap>
     </div>
