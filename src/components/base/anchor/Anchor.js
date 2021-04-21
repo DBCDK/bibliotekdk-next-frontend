@@ -2,7 +2,6 @@ import useMutationObserver from "@rooks/use-mutation-observer";
 import { useState, useEffect, useRef, createRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import throttle from "lodash/throttle";
-// import useWindowSize from "@/lib/useWindowSize";
 
 import { Container, Row, Col } from "react-bootstrap";
 import Text from "@/components/base/text";
