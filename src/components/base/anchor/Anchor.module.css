@@ -1,5 +1,9 @@
 /* Menu */
 
+.wrap {
+  background-color: var(--concrete);
+}
+
 .menu {
   background-color: var(--concrete);
   padding: var(--pt2) 0 0 0;

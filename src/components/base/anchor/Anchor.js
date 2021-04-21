@@ -76,10 +76,11 @@ function Menu({
   const windowH = window.innerHeight;
 
   // Calc height for placeholder (used by the wrap while menu is fixed)
-  const height = menuWrap.current && menuWrap.current.children[0]?.clientHeight;
+  const height =
+    (menuWrap.current && menuWrap.current.children[0]?.clientHeight) || 56;
 
   // Menu distance from top
-  const menuT = menuWrap.current && menuWrap.current.offsetTop;
+  const menuT = (menuWrap.current && menuWrap.current.offsetTop) || windowH;
 
   // active menu element
   globalActiveItemId = getActiveElement(items, scrollY, menuT, height);
@@ -92,6 +93,7 @@ function Menu({
   // Menu is sticky options
   const isStickyTop = stickyTop && scrollY > menuT;
   const isStickyBottom = stickyBottom && windowH < menuT + height - scrollY;
+
   const isSticky = isStickyTop || isStickyBottom;
 
   const stickyTopClass = isStickyTop ? styles.stickyTop : "";
@@ -172,7 +174,7 @@ function Menu({
 }
 
 Menu.propTypes = {
-  items: PropTypes.string,
+  items: PropTypes.object,
   titles: PropTypes.object,
   onMount: PropTypes.func,
   stickyTop: PropTypes.bool,
@@ -200,7 +202,7 @@ function Element({ id, children, sectionRef, onChange }) {
 
 Element.propTypes = {
   id: PropTypes.string,
-  sectionRef: PropTypes.string,
+  sectionRef: PropTypes.object,
   onChange: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
