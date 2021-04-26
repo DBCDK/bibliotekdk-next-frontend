@@ -6,6 +6,8 @@ import Col from "react-bootstrap/Col";
 
 import Faq from "@/components/help/faq/published";
 import HelpTextMenu from "@/components/help/menu";
+import Breadcrumbs from "@/components/base/breadcrumbs";
+import translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
 
@@ -27,14 +29,14 @@ export default function Page() {
         <meta name="description" content={pageDescription}></meta>
         <meta
           property="og:url"
-          content="https://alfa.bibliotek.dk/hjaelp/find"
+          content="https://alfa.bibliotek.dk/hjaelp/faq"
         />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <meta
           property="og:url"
-          content="https://alfa.bibliotek.dk/hjaelp/find"
+          content="https://alfa.bibliotek.dk/hjaelp/faq"
         />
       </Head>
       <main>
@@ -42,6 +44,14 @@ export default function Page() {
           <Row>
             <Col xs={12} lg={{ span: 3 }}>
               <HelpTextMenu className={styles.menu} />
+              <Breadcrumbs
+                path={[
+                  translate({ context: "help", label: "help-breadcrumb" }),
+                ]}
+                href={{ pathname: "/hjaelp" }}
+                seperatorTail={true}
+                className={styles.breadcrumbs}
+              />
             </Col>
             <Col xs={12} lg={{ span: 6 }}>
               <Faq className={styles.faq} />

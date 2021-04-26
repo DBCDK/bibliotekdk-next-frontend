@@ -93,16 +93,20 @@ function BreadcrumbSkeleton(props) {
  * @returns {component}
  */
 export default function Container(props) {
-  let { path, crumbs, skeleton } = props;
+  let { path, crumbs = 5, skeleton, seperatorTail = false } = props;
 
   if (crumbs && skeleton) {
     path = Array.from(Array(Number(crumbs)).keys());
   }
 
+  if (!path) {
+    path = ["This", "is", "Some", "Relative", "Path"];
+  }
+
   return (
     <div className={styles.breadcrumbs}>
       {path.map((c, i) => {
-        const separator = path.length > i + 1;
+        const separator = seperatorTail || path.length > i + 1;
 
         if (skeleton) {
           return (

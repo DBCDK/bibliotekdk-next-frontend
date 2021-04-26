@@ -1,3 +1,22 @@
 .top {
   padding-top: var(--pt12);
 }
+
+.menu {
+  display: none;
+}
+
+.breadcrumbs {
+  padding-bottom: var(--pt1);
+  padding-top: var(--pt2);
+}
+
+@media (min-width: 992px) {
+  .breadcrumbs {
+    display: none;
+  }
+
+  .menu {
+    display: block;
+  }
+}
