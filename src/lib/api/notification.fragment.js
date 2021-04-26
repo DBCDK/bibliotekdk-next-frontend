@@ -10,7 +10,9 @@ export function notificationsQuery() {
         langcode {
           value
         }
-        fieldNotificationText
+        fieldNotificationText{
+          value
+        }
         fieldNotificationType
         }
       }  

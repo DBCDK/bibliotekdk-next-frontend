@@ -6,7 +6,7 @@ import { useData } from "@/lib/api/api";
 import { notificationsQuery } from "@/lib/api/notification.fragment";
 import styles from "./Notifications.module.css";
 import classNames from "classnames/bind";
-import Button from "@/components/base/button/Button";
+import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { Container } from "react-bootstrap";
 import Icon from "@/components/base/icon/Icon";
 
@@ -37,7 +37,7 @@ export function Notifications({ notificationObject }) {
       )}
     >
       <Container>
-        <Text type="text2">{`${notification.fieldNotificationText}`}</Text>
+        <BodyParser body={notification.fieldNotificationText.value} />
         <Icon
           src={"close.svg"}
           size={{ w: "auto", h: "auto" }}
