@@ -37,7 +37,7 @@ export default function Section({
   const backgroundColor = bgColor;
   const backgroundClass = bgColor ? styles.background : "";
 
-  const topSpaceClass = bgColor || topSpace ? styles.topSpace : "";
+  const topSpaceClass = topSpace ? styles.topSpace : "";
 
   const noContentDividerClass = !contentDivider ? styles.noContentDivider : "";
   const noTitleDividerClass = !titleDivider ? styles.noTitleDivider : "";

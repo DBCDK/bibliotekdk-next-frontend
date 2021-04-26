@@ -125,7 +125,7 @@ export function ArticleSection({
   }
 
   return (
-    <Section title={title} bgColor={backgroundColor}>
+    <Section title={title} bgColor={backgroundColor} topSpace={true}>
       <Template articles={articles} skeleton={skeleton} />
     </Section>
   );
