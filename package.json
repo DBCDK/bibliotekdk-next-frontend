@@ -39,8 +39,8 @@
     "style-loader": "^1.1.2"
   },
   "dependencies": {
-    "@rooks/use-mutation-observer": "^4.11.0",
     "@dbcdk/login-nextjs": "0.0.2",
+    "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^4.5.0",
     "dbc-node-logger": "^2.0.9",
@@ -60,6 +60,7 @@
     "react-device-detect": "^1.14.0",
     "react-dom": "^16.13.1",
     "react-id-swiper": "^4.0.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^6.3.5",
     "swr": "^0.5.4",
     "unfetch": "^4.1.0",
