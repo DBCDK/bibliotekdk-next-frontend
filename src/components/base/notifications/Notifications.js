@@ -37,13 +37,13 @@ export function Notifications({ notificationObject }) {
       )}
     >
       <Container>
-        <BodyParser body={notification.fieldNotificationText.value} />
         <Icon
           src={"close.svg"}
           size={{ w: "auto", h: "auto" }}
           className={styles.cancelicon}
           onClick={() => toggleNotification(index)}
         />
+        <BodyParser body={notification.fieldNotificationText.value} />
       </Container>
     </div>
   ));
