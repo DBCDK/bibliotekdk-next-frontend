@@ -634,6 +634,10 @@
       "faq-group-other": {
         "da": "Andet",
         "en": "Other"
+      },
+      "help-breadcrumb": {
+        "da": "Hjælp",
+        "en": "Help"
       }
     },
     "language": {

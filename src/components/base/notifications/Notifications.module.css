@@ -1,34 +1,33 @@
 .warning {
-    background-color: var(--warning);
+  background-color: var(--warning);
 }
 
 .error {
-    background-color: var(--error);
+  background-color: var(--error);
 }
 
 .info {
-    background-color: var(--info-light);
+  background-color: var(--info-light);
 }
 
 .succuss {
-    background-color: var(--success);
+  background-color: var(--success);
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 div.notification {
-    text-align: center;
-    padding: var(--pt3);
+  text-align: center;
+  padding: var(--pt3) var(--pt3) 0 var(--pt3);
 }
 
-div.notification .cancelicon{
-    position: relative;
-    top: -20px;
-    float: right;
+div.notification .cancelicon {
+  position: relative;
+  float: right;
 }
 
-div.notification .cancelicon:hover{
-    cursor: pointer;
+div.notification .cancelicon:hover {
+  cursor: pointer;
 }

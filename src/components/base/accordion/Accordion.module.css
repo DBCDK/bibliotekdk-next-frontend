@@ -33,8 +33,12 @@
   color: var(--blue);
 }
 
+.content > div {
+  padding-top: var(--pt2);
+}
+
 .content p {
-  padding: var(--pt2) var(--pt7) var(--pt3) 0;
+  padding-right: var(--pt7);
 }
 
 @media (min-width: 992px) {
@@ -43,7 +47,7 @@
   }
 
   .content p {
-    padding: var(--pt2) var(--pt10) var(--pt3) 0;
+    padding-right: var(--pt10);
   }
 
   .element .header {

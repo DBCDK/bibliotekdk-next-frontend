@@ -50,7 +50,7 @@
 }
 
 .body p {
-  padding-bottom: var(--pt1);
+  padding-bottom: var(--pt3);
 }
 .body > *:first-child {
   padding-top: 0;
@@ -64,10 +64,13 @@
 }
 .body a::before,
 .body a::after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   margin-bottom: -2px;
   border-bottom: solid 1px var(--blue);
 }
@@ -75,7 +78,7 @@
   transform: scaleX(1);
 }
 .body a::after {
-  transform: scaleX(0);  
+  transform: scaleX(0);
   transition: transform 0.4s;
 }
 .body a:focus,
