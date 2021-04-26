@@ -13,6 +13,7 @@ import React from "react";
 
 import Cookies from "js-cookie";
 import { Provider } from "next-auth/client";
+import smoothscroll from "smoothscroll-polyfill";
 
 import "@/scss/custom-bootstrap.scss";
 import "@/css/styles.css";
@@ -35,6 +36,11 @@ import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
+
+// kick off the polyfill!
+if (typeof window !== "undefined") {
+  smoothscroll.polyfill();
+}
 
 export default function MyApp({ Component, pageProps, router }) {
   // If this is rendered on server, allowCookies will be in pageProps
