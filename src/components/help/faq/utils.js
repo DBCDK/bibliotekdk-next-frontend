@@ -1,7 +1,5 @@
 import orderBy from "lodash/orderBy";
 import groupBy from "lodash/groupBy";
-import sortBy from "lodash/sortBy";
-import keys from "lodash/keys";
 import get from "lodash/get";
 
 import Translate from "@/components/base/translate";
