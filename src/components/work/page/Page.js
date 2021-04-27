@@ -11,6 +11,7 @@ import Series from "../series";
 import Header from "@/components/header/Header";
 import React from "react";
 import { useRouter } from "next/router";
+import Translate from "@/components/base/translate";
 
 import Anchor from "@/components/base/anchor";
 
@@ -38,17 +39,48 @@ export default function WorkPage({
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
           type={type}
-          anchor-label="Lån"
+          anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
         <Anchor.Menu />
-        <Details workId={workId} type={type} anchor-label="Detaljer" />
-        <Description workId={workId} type={type} anchor-label="Beskrivelse" />
-        <Content workId={workId} type={type} anchor-label="Indhold" />
-        <Series workId={workId} anchor-label="Serie" />
-        <Recommendations workId={workId} anchor-label="Minder om" />
-        <Keywords workId={workId} type={type} anchor-label="Emneord" />
-        <Reviews workId={workId} anchor-label="Anmeldelser" />
-        <BibliographicData workId={workId} anchor-label="Udgaver" />
+        <Details
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "details", label: "title" })}
+        />
+        <Description
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "description", label: "title" })}
+        />
+        <Content
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "content", label: "title" })}
+        />
+        <Series
+          workId={workId}
+          anchor-label={Translate({ context: "workmenu", label: "series" })}
+        />
+        <Recommendations
+          workId={workId}
+          anchor-label={Translate({
+            context: "recommendations",
+            label: "remindsOf",
+          })}
+        />
+        <Keywords
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "keywords", label: "title" })}
+        />
+        <Reviews
+          workId={workId}
+          anchor-label={Translate({ context: "workmenu", label: "reviews" })}
+        />
+        <BibliographicData
+          workId={workId}
+          anchor-label={Translate({ context: "workmenu", label: "editions" })}
+        />
       </Anchor.Wrap>
     </main>
   );

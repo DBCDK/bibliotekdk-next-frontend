@@ -53,8 +53,14 @@ export function groupSortData(data) {
     (e) => e?.fieldTags[0]?.entity?.entityLabel || fallback
   );
 
+  // Sort groups naturaly by keyname
+  const sortedKeys = Object.keys(groups).sort();
+  // Fallback group keyname is send to last
+  sortedKeys.push(sortedKeys.splice(sortedKeys.indexOf(fallback), 1)[0]);
+
   const sortedGroups = {};
-  Object.keys(groups).forEach((key) => {
+  // Using the sorted keynames to sort group (values)
+  sortedKeys.forEach((key) => {
     sortedGroups[key] = sortData(groups[key]);
   });
 

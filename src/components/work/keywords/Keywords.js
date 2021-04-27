@@ -84,6 +84,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
+      topSpace={true}
       bgColor="var(--jagged-ice)"
     >
       <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
