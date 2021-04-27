@@ -208,6 +208,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
         label: "title",
         vars: [`${skeleton ? "..." : reviews.length}`],
       })}
+      topSpace={true}
       bgColor="var(--parchment)"
     >
       <Swiper {...params} ref={swiperRef}>

@@ -30,7 +30,6 @@ export default function WorkPage({
   type = "Bog",
 }) {
   const router = useRouter();
-  const context = { context: "workmenu" };
   return (
     <main>
       <Header router={router} />
@@ -40,44 +39,47 @@ export default function WorkPage({
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
           type={type}
-          anchor-label={Translate({ ...context, label: "loan" })}
+          anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
         <Anchor.Menu />
         <Details
           workId={workId}
           type={type}
-          anchor-label={Translate({ ...context, label: "details" })}
+          anchor-label={Translate({ context: "details", label: "title" })}
         />
         <Description
           workId={workId}
           type={type}
-          anchor-label={Translate({ ...context, label: "description" })}
+          anchor-label={Translate({ context: "description", label: "title" })}
         />
         <Content
           workId={workId}
           type={type}
-          anchor-label={Translate({ ...context, label: "content" })}
+          anchor-label={Translate({ context: "content", label: "title" })}
         />
         <Series
           workId={workId}
-          anchor-label={Translate({ ...context, label: "series" })}
+          anchor-label={Translate({ context: "workmenu", label: "series" })}
         />
         <Recommendations
           workId={workId}
-          anchor-label={Translate({ ...context, label: "reminds-of" })}
+          anchor-label={Translate({
+            context: "recommendations",
+            label: "remindsOf",
+          })}
         />
         <Keywords
           workId={workId}
           type={type}
-          anchor-label={Translate({ ...context, label: "keywords" })}
+          anchor-label={Translate({ context: "keywords", label: "title" })}
         />
         <Reviews
           workId={workId}
-          anchor-label={Translate({ ...context, label: "reviews" })}
+          anchor-label={Translate({ context: "workmenu", label: "reviews" })}
         />
         <BibliographicData
           workId={workId}
-          anchor-label={Translate({ ...context, label: "editions" })}
+          anchor-label={Translate({ context: "workmenu", label: "editions" })}
         />
       </Anchor.Wrap>
     </main>
