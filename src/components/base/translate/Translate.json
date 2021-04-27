@@ -654,6 +654,44 @@
         "en": "Dansk"
       }
     },
+    "workmenu": {
+      "loan": {
+        "da": "Lån",
+        "en": "Loan"
+      },
+      "details": {
+        "da": "Detaljer",
+        "en": "Details"
+      },
+      "description": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "content": {
+        "da": "Indhold",
+        "en": "Content"
+      },
+      "series": {
+        "da": "Serie",
+        "en": "Series"
+      },
+      "reminds-of": {
+        "da": "Minder om",
+        "en": "Reminds of"
+      },
+      "keywords": {
+        "da": "Emneord",
+        "en": "Keywords"
+      },
+      "reviews": {
+        "da": "Anmeldelser",
+        "en": "Reviews"
+      },
+      "editions": {
+        "da": "Udgaver",
+        "en": "Editions"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",
