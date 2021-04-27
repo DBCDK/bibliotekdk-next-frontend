@@ -19,7 +19,7 @@ describe("Accordion", () => {
       .should("have.length", 5);
   });
 
-  it.only(`Can expand and close sections`, () => {
+  it(`Can expand and close sections`, () => {
     cy.get("[data-cy=accordion-item]").first().click();
 
     cy.get("[data-cy=accordion-item]")
