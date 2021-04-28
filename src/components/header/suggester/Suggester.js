@@ -5,7 +5,7 @@ import AutoSuggest from "react-autosuggest";
 import AutosuggestHighlightMatch from "autosuggest-highlight/match";
 import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
@@ -252,6 +252,13 @@ export function Suggester({
   isHistory = false,
   clearHistory = null,
 }) {
+  // Make copy of all suggestion objects
+  // react-autosuggest will mutate these objects,
+  // and data from swr must not be mutated (may lead to endless loop)
+  suggestions = useMemo(
+    () => suggestions.map((suggestion) => ({ ...suggestion })),
+    [suggestions]
+  );
   /**
    * Internal query state is needed for arrow navigation in suggester.
    * When using arrow up/down, the value changes in the inputfield, but we dont
@@ -360,7 +367,7 @@ export default function Wrap(props) {
   const [query, setQuery] = useState("");
 
   const { data, isLoading, error } = useData(
-    suggestFragments.all({ q: query })
+    query && suggestFragments.all({ q: query })
   );
 
   if (props.skeleton || isLoading) {
