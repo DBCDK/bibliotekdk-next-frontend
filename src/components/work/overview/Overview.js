@@ -1,3 +1,5 @@
+import Router from "next/router";
+
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import merge from "lodash/merge";
@@ -154,7 +156,21 @@ export function Overview({
                     })}
                   </Button>
                 ) : (
-                  <Button skeleton={buttonSkeleton}>
+                  <Button
+                    skeleton={buttonSkeleton}
+                    onClick={(e) => {
+                      if (Router) {
+                        Router.push({
+                          pathname: Router.pathname,
+                          query: {
+                            ...Router.query,
+                            order: selectedMaterial.pid,
+                            modal: "order",
+                          },
+                        });
+                      }
+                    }}
+                  >
                     {Translate({ ...context, label: "addToCart" })}
                   </Button>
                 )}

@@ -558,6 +558,10 @@
       "title-filter": {
         "da": "Filtrer og sorter",
         "en": "Filter and sort"
+      },
+      "title-order": {
+        "da": "Bestil",
+        "en": "Order"
       }
     },
     "navigation": {

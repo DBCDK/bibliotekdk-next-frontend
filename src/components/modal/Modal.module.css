@@ -65,6 +65,10 @@
   cursor: pointer;
 }
 
+.close svg path {
+  stroke: var(--white);
+}
+
 .close:focus-visible {
   outline: solid 1px var(--white);
   outline-offset: var(--pt05);
@@ -104,6 +108,32 @@
   cursor: pointer;
 }
 
+/*
+*
+* Modal themes 
+*
+*/
+
+.modal.order-theme {
+  background-color: var(--white);
+}
+
+.modal.order-theme > * {
+  color: var(--mine-shaft);
+}
+
+.modal.order-theme .top {
+  color: var(--blue);
+}
+
+.modal.order-theme .close svg path {
+  stroke: var(--blue);
+}
+
+.modal.order-theme .close:focus-visible {
+  outline: solid 1px var(--mine-shaft);
+}
+
 @media (min-width: 576px) {
   .top {
     padding: var(--pt10) var(--pt6) var(--pt3) var(--pt6);
@@ -120,8 +150,8 @@
 }
 
 @media (hover: hover) {
-  .close:hover img,
-  .close:focus-visible img {
+  .close:hover svg,
+  .close:focus-visible svg {
     animation: elastic 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
   }
 
