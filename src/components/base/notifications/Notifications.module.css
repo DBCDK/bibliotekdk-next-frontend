@@ -23,12 +23,11 @@ div.notification {
   padding: var(--pt3) var(--pt3) 0 var(--pt3);
 }
 
-div.notification .cancelicon {
-  position: relative;
-  top:-5px;
-  right: -20px;
+div.notification i{
   float: right;
-
+  position: relative;
+  top:5px;
+  right: -20px;
 }
 
 div.notification .cancelicon:hover {
