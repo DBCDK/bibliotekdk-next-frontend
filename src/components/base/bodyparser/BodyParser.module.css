@@ -61,6 +61,7 @@
   position: relative;
   color: var(--mine-shaft);
   text-decoration: none;
+  display: inline-flex;
 }
 .body a::before,
 .body a::after {

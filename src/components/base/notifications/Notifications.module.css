@@ -25,7 +25,10 @@ div.notification {
 
 div.notification .cancelicon {
   position: relative;
+  top:-5px;
+  right: -20px;
   float: right;
+
 }
 
 div.notification .cancelicon:hover {
