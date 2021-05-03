@@ -15,6 +15,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 function ArticleHeader({ article }) {
   const context = { context: "articles" };
@@ -104,6 +105,8 @@ function getOrientation({ width, height }) {
  * @returns {component}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
+  console.log(data, "DATA");
+
   if (!data.article) {
     return null;
   }
@@ -234,10 +237,11 @@ export function ContentSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { articleId } = props;
+  const langcode = { language: getLangcode() };
 
+  let articleArgs = { ...props, ...langcode };
   const { data, isLoading, error } = useData(
-    articleFragments.article({ articleId })
+    articleFragments.article(articleArgs)
   );
 
   if (error) {

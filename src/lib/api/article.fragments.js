@@ -10,11 +10,11 @@
  * @param {object} params
  * @param {string} params.articleId the id of the article
  */
-export function article({ articleId }) {
+export function article({ articleId, language }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($articleId: String!) {
-        article: nodeById(id: $articleId ) {
+    query: `query ($articleId: String! $language: LanguageId! ) {
+        article: nodeById(id: $articleId language:$language ) {
           __typename
           ... on NodeArticle {
             nid
@@ -43,7 +43,7 @@ export function article({ articleId }) {
           }
           monitor(name: "article_lookup")
         }`,
-    variables: { articleId },
+    variables: { articleId, language },
     slowThreshold: 3000,
   };
 }
@@ -51,16 +51,16 @@ export function article({ articleId }) {
 /**
  * Articles that are promoted to the frontpage
  */
-export function promotedArticles() {
+export function promotedArticles({ language }) {
   return {
     // delay: 1000, // for debugging
-    query: `query {
+    query: `query ( $language: LanguageId! ) {
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["article"]}, 
         {field: "promote", value: "1"},
         {field: "status", value: "1"}
       ] }) {
-        entities {
+        entities (language:$language) {
           __typename
           ... on NodeArticle {
             nid
@@ -88,7 +88,7 @@ export function promotedArticles() {
       }
       monitor(name: "promoted_articles")
     }`,
-    variables: {},
+    variables: { language },
     slowThreshold: 3000,
   };
 }
@@ -96,15 +96,15 @@ export function promotedArticles() {
 /**
  * All published Articles
  */
-export function allArticles() {
+export function allArticles({ language }) {
   return {
     // delay: 1000, // for debugging
-    query: `query {
+    query: `query( $language: LanguageId! ) {
       nodeQuery (limit:100 filter: {conditions: [
         {field: "type", value: ["article"]},
         {field: "status", value: "1"}
       ] }) {
-        entities {
+        entities(language:$language) {
           __typename
           ... on NodeArticle {
             nid
@@ -127,7 +127,7 @@ export function allArticles() {
       }
       monitor(name: "all_articles")
     }`,
-    variables: {},
+    variables: { language },
     slowThreshold: 3000,
   };
 }

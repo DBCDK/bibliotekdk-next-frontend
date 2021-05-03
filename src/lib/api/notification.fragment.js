@@ -1,10 +1,10 @@
 // @TODO export below in a function
-export function notificationsQuery() {
+export function notificationsQuery({ language }) {
   return {
-    query: `query {
+    query: `query($language: LanguageId!) {
   nodeQuery(filter: {conditions: {field: "type", value: "notification", operator: EQUAL}}) {
     count
-    entities {
+    entities(language:$language) {
       ... on NodeNotification {
         nid
         langcode {
@@ -19,7 +19,7 @@ export function notificationsQuery() {
     }
      monitor(name: "notifications")
   }`,
-    variables: {},
+    variables: { language },
     slowThreshold: 3000,
   };
 }
