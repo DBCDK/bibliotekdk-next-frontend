@@ -67,9 +67,9 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          {/* <Col xs={12} lg={3} className={styles.breadcrumbs}>
+          <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
-          </Col> */}
+          </Col>
 
           <Col
             xs={12}
