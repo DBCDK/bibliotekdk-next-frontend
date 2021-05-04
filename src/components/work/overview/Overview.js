@@ -119,7 +119,7 @@ export function Overview({
                   lines={1}
                 >
                   {creators.map((c, i) => {
-                    let creatorComp = (
+                    let creatorLink = (
                       <Link
                         children={c.name}
                         href={`${searchOnUrl}${c.name}`}
@@ -127,8 +127,8 @@ export function Overview({
                       />
                     );
                     return creators.length > i + 1
-                      ? creatorComp + ", "
-                      : creatorComp;
+                      ? creatorLink + ", "
+                      : creatorLink;
                   })}
                 </Text>
               </Col>
