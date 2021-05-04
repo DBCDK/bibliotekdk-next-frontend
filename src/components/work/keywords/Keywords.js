@@ -22,7 +22,8 @@ import styles from "./Keywords.module.css";
  * @returns {string}
  */
 function url(keyword) {
-  return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
+  return `/find?q=${keyword}`;
+  //return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
 }
 
 /**
@@ -165,6 +166,8 @@ export default function Wrap(props) {
 
   // get subjects from response
   const subjects = data.work.subjects;
+
+  console.log(subjects, "SUBJECTS");
 
   return <Keywords {...props} data={subjects} />;
 }
