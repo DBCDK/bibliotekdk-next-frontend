@@ -1,15 +1,15 @@
 /**
  * Helptexts - published
  */
-export function publishedHelptexts() {
+export function publishedHelptexts({ language }) {
   return {
-    query: `query {
+    query: `query ($language: LanguageId!){
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["help_text"]},
         {field: "status", value:"1"}
       ] }) {
         count
-        entities {
+        entities(language:$language) {
         ... on NodeHelpText {
             nid
             title
@@ -30,16 +30,16 @@ export function publishedHelptexts() {
       }
      monitor(name: "published_helptexts")
     }`,
-    variables: {},
+    variables: { language },
     slowThreshold: 3000,
   };
 }
 
-export function helpText({ helpTextId }) {
+export function helpText({ helpTextId, language }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($helpTextId: String!) {
-        helptext: nodeById(id: $helpTextId){
+    query: `query ($helpTextId: String! $language: LanguageId!) {
+        helptext: nodeById(id: $helpTextId language:$language){
         ... on NodeHelpText {
                   nid
                   title
@@ -60,7 +60,7 @@ export function helpText({ helpTextId }) {
           
           monitor(name: "helptext_by_id")
         }`,
-    variables: { helpTextId },
+    variables: { helpTextId, language },
     slowThreshold: 3000,
   };
 }

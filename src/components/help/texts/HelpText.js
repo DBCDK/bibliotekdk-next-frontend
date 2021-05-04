@@ -7,14 +7,18 @@ import Breadcrumbs from "@/components/base/breadcrumbs/Breadcrumbs";
 import React from "react";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import Skeleton from "@/components/base/skeleton";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  * get a helptext by id from api
  * @param helpTextId
  * @return {{isLoading, data}}
  */
-function getAhelpText({ helpTextId }) {
-  const { isLoading, data, error } = useData(helpText({ helpTextId }));
+function getAhelpText(helpTextId) {
+  const langcode = { language: getLangcode() };
+  const args = { ...helpTextId, ...langcode };
+
+  const { isLoading, data, error } = useData(helpText(args));
   return { isLoading, data, error };
 }
 

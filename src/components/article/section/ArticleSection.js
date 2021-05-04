@@ -9,6 +9,7 @@ import Section from "@/components/base/section";
 import Single from "./templates/single";
 import Double from "./templates/double";
 import Triple from "./templates/triple";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  * Get context by template name (template settings)
@@ -78,7 +79,8 @@ function parseArticles(articles, matchTag, numberOfArticles) {
  */
 
 function getArticleData() {
-  const { isLoading, data } = useData(promotedArticles());
+  const langcode = { language: getLangcode() };
+  const { isLoading, data } = useData(promotedArticles(langcode));
   const articles =
     data &&
     data.nodeQuery &&
