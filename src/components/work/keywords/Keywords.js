@@ -167,8 +167,6 @@ export default function Wrap(props) {
   // get subjects from response
   const subjects = data.work.subjects;
 
-  console.log(subjects, "SUBJECTS");
-
   return <Keywords {...props} data={subjects} />;
 }
 
