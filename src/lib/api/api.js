@@ -104,7 +104,7 @@ export function useData(query) {
   return {
     data: data?.data,
     error: error || data?.errors,
-    isLoading: !data,
+    isLoading: query && !data,
     isSlow: data ? false : isSlow,
   };
 }
