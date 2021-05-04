@@ -1,0 +1,137 @@
+[
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Tore Rye Andersen",
+    "date": "Årg. 29, nr. 4 (2015)",
+    "media": "Standart",
+    "rating": ""
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Pernille Ꜳgꜳrd",
+    "date": "nr. 32 (2000)",
+    "media": "IKON",
+    "rating": ""
+  },
+  {
+    "__typename": "ReviewMatVurd",
+    "author": "Helle Laursen",
+    "date": "2020-10-30",
+    "all": [
+      {
+        "text": "Flot og gennemillustreret udgave af historien om Harry Potter, der har trolddomsblod i årerne og bliver elev på Hogwarts skole for magi. For både nye og gamle Harry Potter-fans fra 11 til 99 år og egnet til højtlæsning for børn fra ca. 8-9 år",
+        "work": null
+      },
+      {
+        "text": "Den forældreløse Harry Potter starter på Hogwarts Skole for Heksekunster og Troldmandsskab. Med sig har han en tryllestav, en ugle og en heksekedel. Nu starter et eventyrligt liv fyldt af magi for Harry, hvor han får nye venner, men også fjender. En af dem er den onde troldmand, der dræbte hans forældre. Denne udgave er illustreret af MinaLima, den prisvindende tegnestue, der står bag den grafiske udtryk fra filmserien \"Fantastiske skabninger\", som er en del af Harry Potter-universet. Teksten er den samme i denne 9. udgave. Indbundet i format 23x16 cm",
+        "work": null
+      },
+      {
+        "text": "Bøgerne om Harry Potter har klassiker-status, og denne nye udgave er pragtfuld og vil være guf for både fans og nye læsere. Den emmer af kvalitet, lige fra det kraftigt prægede omslag til de stilsikre illustrationer og vignetter inde i bogen. Bogens er virkelig flot og rigt udstyret, og flere af illustrationerne kan foldes ud og poppes op",
+        "work": null
+      },
+      {
+        "text": "Den prisvindende illustrator Jim Kay har også illustreret Harry Potter-serien i et flot, stort format. Læs også ",
+        "work": {
+          "title": "Ild og vand",
+          "id": "work-of:870970-basis:25929802",
+          "creators": [
+            {
+              "name": "Kathrine Louise Nielsen"
+            }
+          ]
+        }
+      },
+      {
+        "text": " om den 12-årige Maeve, der bliver lærling på en trolddomsskole",
+        "work": null
+      }
+    ]
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Steffen Larsen",
+    "date": "2015-12-23",
+    "media": "Politiken",
+    "rating": "4/6"
+  },
+  {
+    "__typename": "ReviewLitteratursiden",
+    "author": "Arne Larsen",
+    "date": "2015-10-09",
+    "url": "https://litteratursiden.dk/boeger/harry-potter-og-de-vises-sten-0"
+  },
+  {
+    "__typename": "ReviewMatVurd",
+    "author": "Torben Bråe Olesen",
+    "date": "2015-10-08",
+    "all": [
+      {
+        "text": "En ny og illustreret udgave af historien om Harry Potter, der starter som elev på Hogwarts skole for magi og møde nye venner og fjender. Bogen er i stort og flot format. For børn, unge og voksne på 12-99 år, og egnet til oplæsning for børn fra 8-9 år",
+        "work": null
+      },
+      {
+        "text": "Harry er ikke er som de andre børn. Han er 11 år og forældreløs. Han bor hos sin onkel og tante, som ikke forstår ham, og de kan dybest set ikke lide ham. Harry har troldmandsblod i årene og bliver optaget på skolen for magi, Hogwarts. Det er et kollegium i en mystisk, magisk parallelverden, hvor Harry møder venner på sin egen alder samt lærere og troldmænd, der hjælper og udvikler ham, men han møder også nye fjender og modstandere. Det styrker ham til fx at klare sin modbydelige onkel og tante i virkelighedens verden. Illustrationerne er i farver og i forskellige størrelser, mange fylder 1 side og nogle et helt opslag",
+        "work": null
+      },
+      {
+        "text": "Harry Potter er med god grund elsket af mange, og her kan man få lidt mere af alt det gode; flotte billeder og layout oven i den fremragende historie om, hvordan Harry udvikler sig som ung magiker",
+        "work": null
+      },
+      {
+        "text": "Teksten er den samme i denne 7. udgave, som i de tidligere, men illustrationerne i farver er nye, og der er tilføjet et sort/hvidt opslag om trolde og en farveside om drageæg. Teksten er sat i 2 spalter, og bogens format er større og lidt tungere i denne udgave. Bogens layout og design er der også kælet for med fx tonet papir og små vignetter",
+        "work": null
+      }
+    ]
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Kari Sønsthagen",
+    "date": "2015-10-06",
+    "media": "Berlingske tidende",
+    "rating": "6/6"
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Christian Monggꜳrd Christensen",
+    "date": "2000-01-15",
+    "media": "Information",
+    "rating": ""
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Marianne Gade",
+    "date": "1999-01-16",
+    "media": "Jyllands-posten",
+    "rating": ""
+  },
+  {
+    "__typename": "ReviewInfomedia",
+    "author": "Lars Tjalve",
+    "date": "1999-01-05",
+    "media": "Kristeligt dagblad",
+    "rating": ""
+  },
+  {
+    "__typename": "ReviewMatVurd",
+    "author": "Vera Jensen",
+    "date": "1998-10-06",
+    "all": [
+      {
+        "text": "Dette er første gang, vi stifter bekendtskab med den skotske forfatter Joanne K. Rowling, og det er forhåbentlig ikke sidste gang. Det er sjældent, at en debutant får udgivet en så suveræn og stilsikker eventyrroman som den foreliggende. Selve handlingen er på alle måder original, velskrevet og fyldt med humor og visdom. Det er et digert værk, men historien føles på ingen måde for lang, da man lige fra den første side bliver mystificeret, grebet og underholdt på bedste vis. Genremæssigt taler vi om den fantastiske børneroman, som den britiske litteraturverden i forvejen har fostret så mange klassiske eksempler på. Handlingen udspilles både i en realverden og i et eventyrunivers eller en parallelverden, om man vil. Den forældreløse 11-årige Harry Potter bliver adopteret af sin tante og onkel, som er ret modbydelige. Harry har trolddomsgener i kroppen, og på et tidspunkt bliver han optaget på et trolddomskollegium, der befinder sig i en parallelverden, og så kommer der virkelig gang i begivenhederne. Både Harry og de mange bipersoner er skildret med stor indlevelse med troværdige personkarakteristikker. Absolut velegnet for børnebibliotekets ældste gode læsere. Flot og fængende forside, hvor Harry er i aktion med tryllestaven",
+        "work": null
+      }
+    ]
+  },
+  {
+    "__typename": "ReviewMatVurd",
+    "author": "Lis Mikkelsen (skole)",
+    "date": "1998-10-06",
+    "all": [
+      {
+        "text": "Verden er ikke den samme, efter at jeg har læst om Harry Potter og de vises sten. Den er blevet sjovere og større. På det reale plan er Harrys verden deprimerende. Hans forældre er begge døde, og Harry vokser op som et uønsket medlem af moderens søsters familie. Moster Petunia benytter enhver lejlighed til at promovere sin fede, ondskabsfulde søn Dudley på Harrys bekostning. Livet går sin meget skæve gang, indtil Harry opdager, at han har særlige evner. Og så åbner Joanna Rowlings magiske univers sig for læseren. Harry Potter begynder på magikerskolen Hogwarts. Han deltager i kampen om de vises sten og vinder sig rigtige venner. Da han efter det store opgør mellem godt og ondt må vende hjem til en sommerferie sammen med den usympatiske familie, er han blevet så styrket, at han kan klare ikke blot det magiske, men også det reelle univers. Det er en stor bog. En varm og morsom historie, der river sin læser fuldstændig med. Den kan bruges til oplæsning fra 3.-10. kl og til oplevelse for børn og voksne i alle aldre. Det er forfatterens debutbog. 2. bind om Harry Potter er udkommet i England og ligger på bestsellerlisten. Hanna Lützen må gerne skynde sig med oversættelsen",
+        "work": null
+      }
+    ]
+  }
+]

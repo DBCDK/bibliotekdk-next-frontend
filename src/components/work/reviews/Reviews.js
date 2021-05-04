@@ -1,7 +1,6 @@
 import { useRef, useState, useMemo } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
-import groupBy from "lodash/groupBy";
 
 import useWindowSize from "@/lib/useWindowSize";
 import { useData } from "@/lib/api/api";
@@ -17,6 +16,7 @@ import InfomediaReview from "./types/infomedia";
 import LitteratursidenReview from "./types/litteratursiden";
 import MaterialReview from "./types/material";
 
+import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 /**
@@ -38,33 +38,6 @@ function getTemplate(type) {
     default:
       return InfomediaReview;
   }
-}
-
-function sortReviews(data) {
-  /* sort order
-  1. ReviewMatVurd
-  2. review with an url - direct access
-  3. reviews with stars (judgment)
-  4. others
-*/
-
-  // Group data by reviewType
-  const groups = groupBy(data, "__typename");
-
-  const sortedInfomedia =
-    groups.ReviewInfomedia &&
-    groups.ReviewInfomedia.sort(function (a, b) {
-      return a.rating ? -1 : 1;
-    });
-
-  // reviews array containing infomedia and litteratursiden reviews
-  const reviews = [
-    ...(groups.ReviewMatVurd || []),
-    ...(groups.ReviewLitteratursiden || []),
-    ...(sortedInfomedia || []),
-  ];
-
-  return reviews;
 }
 
 /**
