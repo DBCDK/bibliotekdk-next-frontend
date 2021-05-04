@@ -41,27 +41,28 @@ function getTemplate(type) {
 }
 
 function sortReviews(data) {
+  /* sort order
+  1. ReviewMatVurd
+  2. review with an url - direct access
+  3. reviews with stars (judgment)
+  4. others
+*/
+
   // Group data by reviewType
   const groups = groupBy(data, "__typename");
 
+  const sortedInfomedia =
+    groups.ReviewInfomedia &&
+    groups.ReviewInfomedia.sort(function (a, b) {
+      return a.rating ? -1 : 1;
+    });
+
   // reviews array containing infomedia and litteratursiden reviews
   const reviews = [
-    ...(groups.ReviewInfomedia || []),
+    ...(groups.ReviewMatVurd || []),
     ...(groups.ReviewLitteratursiden || []),
+    ...(sortedInfomedia || []),
   ];
-
-  // materialReviews seperated
-  const materialReviews = [...(groups.ReviewMatVurd || [])];
-
-  // Loop thrue materialreviews to place "randomly" -> always start with 1 materialReview
-  materialReviews.forEach((m, i) => {
-    if (i === 0) {
-      reviews.unshift(m);
-    } else {
-      const pos = Math.floor(reviews.length / 3) * i;
-      reviews.splice(pos, 0, m);
-    }
-  });
 
   return reviews;
 }
@@ -92,6 +93,7 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
     </label>
   );
 }
+
 ArrowLeft.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
@@ -123,6 +125,7 @@ function ArrowRight({ onClick, disabled }) {
     </label>
   );
 }
+
 ArrowRight.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
