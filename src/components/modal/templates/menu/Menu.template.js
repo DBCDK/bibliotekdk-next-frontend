@@ -71,69 +71,70 @@ function Menu({ isVisible = false, onLang = null }) {
           <Arrow className={styles.arrow} />
         </span>
       </div>
+      <div className={styles.outerWrap}>
+        <div className={`${styles.wrap}`}>
+          <ul aria-hidden={expanded}>
+            {actions.map((a) => {
+              const title = Translate({ ...context, label: a.label });
 
-      <div className={`${styles.wrap}`}>
-        <ul aria-hidden={expanded}>
-          {actions.map((a) => {
-            const title = Translate({ ...context, label: a.label });
-
-            return (
-              <li key={a.label}>
-                <Link
-                  className={styles.link}
-                  tabIndex={!expanded && isVisible ? "0" : "-1"}
-                  title={title}
-                  href={a.href}
-                  dataCy={cyKey({
-                    name: a.label,
-                    prefix: "menu-link",
-                  })}
-                >
-                  <Title type="title5">{title}</Title>
-                </Link>
-              </li>
-            );
-          })}
-          <li className={styles.language}>
-            <Link
-              onClick={(e) => {
-                e.preventDefault();
-                onLang && onLang();
-              }}
-              className={styles.link}
-              tabIndex={!expanded && isVisible ? "0" : "-1"}
-              dataCy={cyKey({
-                name: "language",
-                prefix: "menu-link",
-              })}
-            >
-              <Text type="text2">
-                {Translate({ context: "general", label: "language" })}
-              </Text>
-            </Link>
-          </li>
-        </ul>
-        <ul aria-hidden={!expanded}>
-          {materials.map((m) => {
-            return (
-              <li key={m.label}>
-                <Link
-                  className={styles.link}
-                  tabIndex={expanded && isVisible ? "0" : "-1"}
-                  href={m.href}
-                  dataCy={cyKey({
-                    name: m.label,
-                    prefix: "menu-link",
-                  })}
-                >
-                  <Title type="title5">
-                    {Translate({ context: "general", label: m.label })}
-                  </Title>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+              return (
+                <li key={a.label}>
+                  <Link
+                    className={styles.link}
+                    tabIndex={!expanded && isVisible ? "0" : "-1"}
+                    title={title}
+                    href={a.href}
+                    dataCy={cyKey({
+                      name: a.label,
+                      prefix: "menu-link",
+                    })}
+                  >
+                    <Title type="title5">{title}</Title>
+                  </Link>
+                </li>
+              );
+            })}
+            <li className={styles.language}>
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                  onLang && onLang();
+                }}
+                className={styles.link}
+                tabIndex={!expanded && isVisible ? "0" : "-1"}
+                dataCy={cyKey({
+                  name: "language",
+                  prefix: "menu-link",
+                })}
+              >
+                <Text type="text2">
+                  {Translate({ context: "general", label: "language" })}
+                </Text>
+              </Link>
+            </li>
+          </ul>
+          <ul aria-hidden={!expanded}>
+            {materials.map((m) => {
+              return (
+                <li key={m.label}>
+                  <Link
+                    className={styles.link}
+                    tabIndex={expanded && isVisible ? "0" : "-1"}
+                    href={m.href}
+                    dataCy={cyKey({
+                      name: m.label,
+                      prefix: "menu-link",
+                    })}
+                  >
+                    <Title type="title5">
+                      {Translate({ context: "general", label: m.label })}
+                    </Title>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </div>
   );

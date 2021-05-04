@@ -11,13 +11,96 @@ import Divider from "@/components/base/divider";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
+import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
+
+// Layers
+import Info from "./layers/info";
+import Edition from "./layers/edition";
+import Pickup from "./layers/pickup";
 
 import styles from "./Order.module.css";
 
+/**
+ * Handles edition action-button click
+ */
+function onEditionLayerClick() {
+  alert("Some edition selected");
+}
+
+/**
+ * Handles pickup-point action-button click
+ */
+function onPickupLayerClick() {
+  alert("Some pickup point selected");
+}
+
+/**
+ * Handles order action-button click
+ */
+function onOrderClick() {
+  // alert("Ordered!");
+}
+
+function ActionButton({
+  layer,
+  children,
+  onClick = null,
+  validated,
+  callback,
+}) {
+  const isOrder = layer === "info";
+
+  if (!onClick) {
+    if (layer === "edition") {
+      onClick = onEditionLayerClick;
+    } else if (layer === "pickup") {
+      onClick = onPickupLayerClick;
+    } else {
+      onClick = onOrderClick;
+    }
+  }
+
+  return (
+    <div className={`${styles.action}`}>
+      {children}
+      <Button
+        onClick={() => {
+          // validated &&
+          onClick();
+          isOrder && callback();
+        }}
+      >
+        Bestil
+      </Button>
+    </div>
+  );
+}
+
 function Order({ pid, work, isVisible, onClose }) {
-  // Edition state
-  const [activePage, setActivePage] = useState("default");
+  // translated state
+
+  // layer state
+  const [translated, setTranslated] = useState(false);
+  const [activeLayer, setActiveLayer] = useState(null);
+
+  // Order is validated state
+  const [validated, setValidated] = useState(false);
+
+  // Cleanup on modal close
+  useEffect(() => {
+    if (!isVisible) {
+      setActiveLayer(null);
+      setTranslated(false);
+    }
+  }, [isVisible]);
+
+  function handleLayer(layer) {
+    if (layer !== activeLayer) {
+      setActiveLayer(layer);
+    }
+    setTranslated(true);
+  }
 
   // Work props
   const {
@@ -33,64 +116,55 @@ function Order({ pid, work, isVisible, onClose }) {
   // Material by pid
   const material = filter(materialTypes, (o) => o.pid === pid)[0];
 
-  const activePageClass = styles[`active-${activePage}`];
+  const activePageClass = activeLayer ? styles[`active-${activeLayer}`] : "";
+  const activeTranslatedClass = translated ? styles.translated : "";
+
+  // Validated
+  const validatedClass = validated ? styles.validated : "";
+
+  // ${validatedClass}
 
   return (
     <div className={styles.order}>
-      <div className={`${styles.container} ${activePageClass}`}>
-        <div className={styles.left}>
-          <div className={`${styles.page} ${styles[`page-default`]}`}>
-            Default
-            <br />
-            <br />
-            <Link
-              onClick={(e) => {
+      <div className={styles.container}>
+        <div
+          className={`${styles.wrap} ${activePageClass} ${activeTranslatedClass}`}
+        >
+          <div className={styles.left}>
+            <Info
+              className={`${styles.page} ${styles[`page-info`]}`}
+              onLayerSelect={(e, layer) => {
                 e.preventDefault();
-                setActivePage("edition");
+                handleLayer(layer);
               }}
-            >
-              Vælg udgave
-            </Link>
-            <br />
-            <Link
-              onClick={(e) => {
-                e.preventDefault();
-                setActivePage("library");
-              }}
-            >
-              Vælg bibliotek
-            </Link>
+            />
           </div>
-        </div>
-        <div className={styles.right}>
-          <div className={`${styles.page} ${styles[`page-edition`]}`}>
-            Edition
-            <br />
-            <br />
-            <Link
-              onClick={(e) => {
+          <div className={styles.right}>
+            <Edition
+              className={`${styles.page} ${styles[`page-edition`]}`}
+              onClose={(e) => {
                 e.preventDefault();
-                setActivePage("default");
+                setTranslated(false);
               }}
-            >
-              Tilbage
-            </Link>
-          </div>
-          <div className={`${styles.page} ${styles[`page-library`]}`}>
-            Library
-            <br />
-            <br />
-            <Link
-              onClick={(e) => {
+            />
+            <Pickup
+              className={`${styles.page} ${styles[`page-library`]}`}
+              onClose={(e) => {
                 e.preventDefault();
-                setActivePage("default");
+                setTranslated(false);
               }}
-            >
-              Tilbage
-            </Link>
+            />
           </div>
         </div>
       </div>
+      <ActionButton
+        validated={validated}
+        layer={translated ? activeLayer : "info"}
+        callback={() => {
+          // some validation goes here...
+          setValidated(true);
+        }}
+      />
     </div>
   );
 }
@@ -113,8 +187,6 @@ export default function Wrap(props) {
   const { order } = Router.query;
 
   const workId = `work-of:${order}`;
-
-  console.log("workId", workId);
 
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(

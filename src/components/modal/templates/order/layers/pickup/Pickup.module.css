@@ -1,0 +1,10 @@
+.pickup {
+  background-color: papayawhip;
+  padding: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .pickup {
+    padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

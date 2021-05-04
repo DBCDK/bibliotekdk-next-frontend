@@ -1,0 +1,24 @@
+.info {
+  position: relative;
+  height: 100%;
+}
+
+.edition {
+  background-color: var(--concrete);
+  height: 100px;
+  transform: scaleX(var(--pt6));
+}
+
+.edition,
+.pickup,
+.user {
+  padding: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .edition,
+  .pickup,
+  .user {
+    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+  }
+}

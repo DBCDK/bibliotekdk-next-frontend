@@ -1,4 +1,5 @@
 .menu {
+  padding: var(--pt2);
   overflow: hidden;
 }
 
@@ -45,7 +46,6 @@
 }
 
 /* trigger button */
-
 .menu.expanded .trigger {
   transform: translate(calc(-100% + 48px));
   padding-right: var(--pt2);
@@ -78,20 +78,24 @@
   transform: translateX(10px) translateY(9px) rotate(135deg);
 }
 
-/* content wrap */
+.outerWrap {
+  overflow: hidden;
+}
 
+/* content wrap */
 .wrap {
+  width: 200%;
   display: flex;
   flex-wrap: nowrap;
 }
 
 .menu.expanded .wrap {
-  transform: translate(-100%);
+  transform: translate(-50%);
   position: relative;
 }
 
 .wrap ul {
-  min-width: 100%;
+  width: 100%;
 }
 
 .wrap li {
@@ -116,6 +120,10 @@ li.language {
 }
 
 @media (min-width: 576px) {
+  .menu {
+    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+  }
+
   .trigger {
     /* display: none; */
   }
