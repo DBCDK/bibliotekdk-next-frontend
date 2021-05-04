@@ -105,8 +105,6 @@ function getOrientation({ width, height }) {
  * @returns {component}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
-  console.log(data, "DATA");
-
   if (!data.article) {
     return null;
   }
