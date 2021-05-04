@@ -1,11 +1,7 @@
 .cover {
   display: inline-block;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  max-width: 208px;
+  line-height: 0px;
 }
 
 /* Bookmark button */
@@ -18,13 +14,39 @@
 }
 
 .cover img {
-  width: 100%;
-  height: auto;
   object-fit: contain;
-  object-position: 50% 100%;
+  object-position: 0% 0%;
+  opacity: 0;
+}
+.cover.loaded img {
+  transition: opacity 0.3s;
+  opacity: 1;
 }
 
-.cover.missingCover {
+.cover.large img {
+  max-height: 300px;
+  max-width: 450px;
+}
+.cover.medium img {
+  max-height: 200px;
+  max-width: 280px;
+}
+.cover.thumbnail img {
+  max-height: 100px;
+  max-width: 180px;
+}
+.cover.fill img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.cover.fill {
+  height: 100%;
+}
+.cover.fill-width img {
+  max-height: 100%;
+  max-width: 100%;
+}
+.cover.fill-width {
   width: 100%;
 }
 
@@ -32,7 +54,6 @@
  * Frame
  *
  */
-
 .frame {
   padding: var(--pt2);
 }
@@ -41,7 +62,53 @@
 * Skeleton
 *
 */
-
-.skeleton {
-  position: relative;
+.skeleton.thumbnail {
+  width: 75px;
+  height: 100px;
 }
+.skeleton.medium {
+  width: 150px;
+  height: 200px;
+}
+.skeleton.large {
+  width: 200px;
+  height: 300px;
+}
+.skeleton.fill {
+  width: 100%;
+  height: 100%;
+}
+.skeleton.fill-width {
+  width: 100%;
+  height: 100px; /* how to determine height? */
+}
+
+/* 
+* Missing cover
+* due to no cover or error
+*/
+.fallback {
+  background-color: var(--iron);
+}
+.thumbnail .fallback {
+  width: 75px;
+  height: 100px;
+}
+.medium .fallback {
+  width: 150px;
+  height: 200px;
+}
+.large .fallback{
+  width: 200px;
+  height: 300px;
+}
+.fill .fallback {
+  width: 100%;
+  height: 100%;
+}
+.fill-width .fallback {
+  width: 100%;
+  height: 100px; /* how to determine height? */
+}
+
+

@@ -67,9 +67,9 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} lg={3} className={styles.breadcrumbs}>
+          {/* <Col xs={12} lg={3} className={styles.breadcrumbs}>
             <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
-          </Col>
+          </Col> */}
 
           <Col
             xs={12}
@@ -77,16 +77,21 @@ export function Overview({
             lg={3}
             className={styles.cover}
           >
-            <Cover
-              src={
-                (selectedMaterial.cover && selectedMaterial.cover.detail) ||
-                allMaterialTypes
-              }
-              skeleton={!selectedMaterial.cover}
-              size={["200px", "auto"]}
-            >
-              <Bookmark skeleton={skeleton} title={title} />
-            </Cover>
+            <Row>
+              <Cover
+                src={
+                  (selectedMaterial.cover && selectedMaterial.cover.detail) ||
+                  allMaterialTypes
+                }
+                skeleton={skeleton || !selectedMaterial.cover}
+                size="large"
+              >
+                <Bookmark
+                  skeleton={skeleton || !selectedMaterial.cover}
+                  title={title}
+                />
+              </Cover>
+            </Row>
           </Col>
 
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>

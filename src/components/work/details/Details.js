@@ -8,8 +8,6 @@ import Translate from "@/components/base/translate";
 
 import * as workFragments from "@/lib/api/work.fragments";
 
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
-
 import styles from "./Details.module.css";
 
 /**
@@ -46,7 +44,7 @@ export function Details({ className = "", data = {}, skeleton = false }) {
               {Translate({ ...context, label: "language" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.language}
+              {data.language && data.language.join(", ")}
             </Text>
           </Col>
         )}

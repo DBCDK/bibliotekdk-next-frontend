@@ -8,6 +8,14 @@ export default {
   title: "base/Cover",
 };
 
+const sizes = ["thumbnail", "medium", "large"];
+const urls = [
+  "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4",
+  "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52723698&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0e50344833e1e96049e5",
+  "https://unknown",
+  null,
+];
+
 /**
  * Returns Cover component
  *
@@ -19,24 +27,16 @@ export function SimpleCover() {
   return (
     <div>
       <StoryTitle>Cover</StoryTitle>
-      <Cover src={doppler} />
-    </div>
-  );
-}
 
-/**
- * Returns Cover component with a background color
- *
- */
-export function BackgroundCover() {
-  const doppler =
-    "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4";
-
-  return (
-    <div>
-      <StoryTitle>Cover with background [Border effect]</StoryTitle>
-      <StoryDescription>Usefull for carousel/slider use</StoryDescription>
-      <Cover bgColor="var(--concrete)" src={doppler} />
+      {sizes.map((size) => {
+        return (
+          <div style={{ display: "flex" }}>
+            {urls.map((url) => (
+              <Cover key={size + url} src={url} size={size} />
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -47,8 +47,6 @@ export function BackgroundCover() {
  */
 export function BookmarkInCover() {
   const [isBookmarked, setIsBookmarked] = useState(false);
-  const doppler =
-    "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4";
 
   return (
     <div>
@@ -56,12 +54,25 @@ export function BookmarkInCover() {
       <StoryDescription>
         Icons and Bookmarks can easily be added to the Cover
       </StoryDescription>
-      <Cover bgColor="var(--concrete)" src={doppler}>
-        <Bookmark
-          selected={isBookmarked}
-          onClick={() => setIsBookmarked(!isBookmarked)}
-        />
-      </Cover>
+      {sizes.map((size) => {
+        return (
+          <div style={{ display: "flex" }}>
+            {urls.map((url) => (
+              <Cover
+                key={size + url}
+                src={url}
+                size={size}
+                // bgColor="var(--concrete)"
+              >
+                <Bookmark
+                  selected={isBookmarked}
+                  onClick={() => setIsBookmarked(!isBookmarked)}
+                />
+              </Cover>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -71,12 +82,23 @@ export function BookmarkInCover() {
  *
  */
 export function Loading() {
-  const size = ["200px", "300px"];
-
   return (
     <div>
       <StoryTitle>Loading Cover</StoryTitle>
-      <Cover size={size} skeleton={true} />
+      {sizes.map((size) => {
+        return (
+          <div style={{ display: "flex" }}>
+            {urls.map((url) => (
+              <Cover
+                key={size + url}
+                size={size}
+                bgColor="var(--concrete)"
+                skeleton={true}
+              />
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 }

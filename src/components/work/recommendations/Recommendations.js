@@ -29,7 +29,7 @@ function parse(data) {
         cover: manifestation.cover,
         creators: manifestation.creators,
         id: `work-of:${manifestation.pid}`,
-        title: manifestation.title[0],
+        title: manifestation.title,
       };
     });
   }

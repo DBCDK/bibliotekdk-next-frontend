@@ -112,7 +112,7 @@ export default function ResultRow({ data, onClick }) {
             className={styles.cover}
             src={work.cover && work.cover.detail}
             skeleton={!work.cover}
-            size={["75px", "auto"]}
+            size="fill-width"
           />
         </Col>
       </Row>
