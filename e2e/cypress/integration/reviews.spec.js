@@ -3,7 +3,7 @@ describe("Overview", () => {
     cy.visit("/iframe.html?id=work-reviews--reviews-slider");
   });
 
-  it(`First 2 reviews should be visible - last not visible`, () => {
+  it(`First review should be visible - last not visible`, () => {
     // All reviews visible?
     cy.get(
       "[data-cy=reviews-section] [data-cy=section-content] .swiper-wrapper"
@@ -13,7 +13,7 @@ describe("Overview", () => {
 
     // All materials sorted correct and is visible?
     cy.get("[data-cy=review-material]").first().should("be.visible");
-    cy.get("[data-cy=review-infomedia]").first().should("be.visible");
+    cy.get("[data-cy=review-infomedia]").first().should("not.be.visible");
     cy.get("[data-cy=review-infomedia]").last().should("not.be.visible");
   });
 
@@ -23,7 +23,7 @@ describe("Overview", () => {
       .parent()
       .parent()
       .should("have.attr", "data-cy", "review-material");
-    cy.tabs(4);
+    cy.tabs(1);
     cy.focused().should("have.attr", "data-cy", "litteratursiden-link");
   });
 
