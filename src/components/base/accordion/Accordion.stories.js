@@ -120,7 +120,7 @@ export function CustomContent() {
         <div style={{ padding: "16px" }}>
           <Cover
             src="https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4"
-            size={["100px", "150px"]}
+            size="thumbnail"
           />
         </div>
       ),

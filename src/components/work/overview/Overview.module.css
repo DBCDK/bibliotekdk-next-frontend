@@ -15,10 +15,10 @@
 }
 
 .cover {
-  max-width: 200px;
+  /* max-width: 200px; */
   /* Padding is beyond cover width */
-  box-sizing: content-box;
-  padding-bottom: var(--pt2);
+  margin-left: var(--pt2);
+  margin-bottom: var(--pt2);
 }
 
 .about {

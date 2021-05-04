@@ -15,7 +15,7 @@ function SkeletonCard() {
   return (
     <div className={styles.SkeletonCard}>
       <div className={styles.CoverWrapper}>
-        <Cover size={["100%", "100%"]} skeleton={true} />
+        <Cover size="fill" skeleton={true} />
       </div>
       <div>
         <Text
@@ -73,7 +73,7 @@ export default function Card({
         data-cy="work-card"
       >
         <div className={styles.CoverWrapper}>
-          <Cover src={cover.detail} size={["100%", "100%"]} />
+          <Cover src={cover.detail} size="fill" />
         </div>
         <div>
           {series ? (

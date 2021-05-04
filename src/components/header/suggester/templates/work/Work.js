@@ -34,11 +34,7 @@ export function Work({ className = "", data = {}, skeleton = false }) {
     >
       <div className={styles.wrap}>
         {skeleton || hasCover ? (
-          <Cover
-            src={data.cover.thumbnail}
-            size={["100%", "100%"]}
-            skeleton={skeleton}
-          />
+          <Cover src={data.cover.thumbnail} size="fill" skeleton={skeleton} />
         ) : (
           <span />
         )}

@@ -49,6 +49,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "js-cookie": "^2.2.1",
     "lazysizes": "^5.2.2",
+    "lodash": "^4.17.21",
     "next": "^10.0.5",
     "next-auth": "^3.14.6",
     "node-sass": "^4.14.1",
@@ -62,7 +63,7 @@
     "react-id-swiper": "^4.0.0",
     "smoothscroll-polyfill": "^0.4.4",
     "swiper": "^6.3.5",
-    "swr": "^0.5.4",
+    "swr": "^0.5.5",
     "unfetch": "^4.1.0",
     "uuid": "^8.3.2"
   }
