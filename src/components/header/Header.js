@@ -55,10 +55,10 @@ export function Header({ className = "", router = null, story = null, user }) {
   const actions = [
     {
       label: "digitalOffers",
-      href: "https://alfa.bibliotek.dk/artikel/digitale-bibliotekstilbud/5",
+      href: "/artikel/digitale-bibliotekstilbud/5",
     },
-    { label: "askLibrarian", href: "/#!" },
-    { label: "becomeLoaner", href: "/#!" },
+    { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
+    { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
   ];
 
   const menu = [
