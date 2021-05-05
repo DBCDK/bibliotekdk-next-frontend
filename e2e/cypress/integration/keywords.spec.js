@@ -43,7 +43,7 @@ describe("Keywords", () => {
     const item = cy.get(`[data-cy=keyword-${tag}]`).children();
 
     // Check link attributes
-    item.should("have.attr", "target", "_blank");
+    item.should("have.attr", "target", "_self");
     item.should("have.attr", "href", url);
   });
 });
