@@ -9,7 +9,6 @@
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-
 /* Header */
 .headerWrap {
   background-color: var(--white);
@@ -117,7 +116,7 @@
   padding: var(--pt2) var(--pt4);
   background-color: transparent;
   color: var(--blue);
-  border: 1px solid var(--blue);
+  border: 2px solid var(--blue);
   font-family: var(--body-font);
   font-size: 20px;
   line-height: 22px;
@@ -130,6 +129,7 @@
   color: var(--blue);
   position: relative;
   z-index: 2;
+  border-width: 3px;
 }
 
 .button .fill {
@@ -188,7 +188,6 @@
     transition-duration: 0.35s;
   }
 }
-
 
 @media (min-width: 992px) {
   .header {
