@@ -25,6 +25,8 @@ import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
+import externalUrls from "@/utils/externalUrls";
+
 /**
  * The Component function
  *
@@ -54,7 +56,7 @@ export function Header({ className = "", router = null, story = null, user }) {
 
   const actions = [
     { label: "digitalOffers", href: "/#!" },
-    { label: "askLibrarian", href: "/#!" },
+    { label: "askLibrarian", href: externalUrls.askLibrarianUrl },
     { label: "becomeLoaner", href: "/#!" },
   ];
 
