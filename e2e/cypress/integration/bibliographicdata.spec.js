@@ -37,6 +37,6 @@ describe("bibliographic data", () => {
     cy.get("[data-cy=edition-data-af] p a")
       .should("have.attr", "href")
       .should("not.be.empty")
-      .and("contain", "/find?q=");
+      .and("contain", "/find?q=some%20contributor");
   });
 });
