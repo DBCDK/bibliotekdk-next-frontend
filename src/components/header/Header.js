@@ -25,6 +25,8 @@ import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
+import { externalUrls } from "@/lib/Navigation";
+
 /**
  * The Component function
  *
@@ -178,6 +180,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     <Link
                       key={m.label}
                       href={m.href}
+                      target={m.target}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",

@@ -45,6 +45,15 @@ describe("Header", () => {
     cy.focused().should("have.attr", "data-cy", "header-link-menu");
   });
 
+  it("check url on top action elements", () => {
+    // top actions only visible on BIG viewport
+    cy.viewport(1920, 1080);
+    cy.get("[data-cy=header-link-asklibrarian")
+      .should("have.attr", "href")
+      .should("not.be.empty")
+      .and("contain", "https://adm.biblioteksvagten.dk/");
+  });
+
   // Screen size
   it(`Check visible elemets for screensizes > 1400`, () => {
     cy.viewport(1920, 1080);

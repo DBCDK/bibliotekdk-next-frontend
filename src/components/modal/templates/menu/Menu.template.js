@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import { materials, actions } from "@/components/navigation";
+import { materials, actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
 import Title from "@/components/base/title";
@@ -82,6 +82,7 @@ function Menu({ isVisible = false, onLang = null }) {
                 <Link
                   className={styles.link}
                   tabIndex={!expanded && isVisible ? "0" : "-1"}
+                  target={a.target ? a.target : "_self"}
                   title={title}
                   href={a.href}
                   dataCy={cyKey({
