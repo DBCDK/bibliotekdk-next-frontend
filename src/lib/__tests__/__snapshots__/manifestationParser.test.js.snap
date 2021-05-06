@@ -56,7 +56,19 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Af",
-    "value": "some contributor",
+    "value": <Link
+      border={
+        Object {
+          "bottom": Object {
+            "keepVisible": true,
+          },
+          "top": false,
+        }
+      }
+      href="/find?q=some contributor"
+    >
+      some contributor
+    </Link>,
   },
   Object {
     "dataField": "creators",
