@@ -37,10 +37,9 @@ describe("bibliographic data", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
   });
-  it("check contributor url", () => {
+  it("open edition", () => {
     // get first edition
-    const edition = cy.get("[data-cy=bib-edition-0]");
-    edition.click();
-    edition.sho;
+    cy.get("[data-cy=bib-edition-0]").click();
+    cy.get("[data-cy=edition-data-af] p a");
   });
 });
