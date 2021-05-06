@@ -54,6 +54,7 @@ export default function Link({
   }
 
   // Return the component
+  console.log(href, "HREF");
   return (
     <NextLink href={href} shallow={true}>
       {children}
@@ -68,7 +69,7 @@ Link.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ]),
-  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
+  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top", "_default"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
   border: PropTypes.oneOfType([
