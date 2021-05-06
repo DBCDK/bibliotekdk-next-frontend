@@ -15,6 +15,7 @@ import Translate from "@/components/base/translate";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import Link from "@/components/base/link";
 
 /**
  * The Component function
@@ -62,6 +63,8 @@ export function Overview({
   // material is physical or online
   const buttonSkeleton =
     skeleton || typeof selectedMaterial.onlineAccess === "undefined";
+
+  const searchOnUrl = "/find?q=";
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -115,9 +118,18 @@ export function Overview({
                   skeleton={skeleton}
                   lines={1}
                 >
-                  {creators.map((c, i) =>
-                    creators.length > i + 1 ? c.name + ", " : c.name
-                  )}
+                  {creators.map((c, i) => {
+                    let creatorLink = (
+                      <Link
+                        children={c.name}
+                        href={`${searchOnUrl}${c.name}`}
+                        border={{ top: false, bottom: { keepVisible: true } }}
+                      />
+                    );
+                    return creators.length > i + 1
+                      ? creatorLink + ", "
+                      : creatorLink;
+                  })}
                 </Text>
               </Col>
 

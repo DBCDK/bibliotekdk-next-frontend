@@ -2,7 +2,7 @@
  * @file
  * Test functionality of bibliographic data
  */
-describe.skip("Keywords", () => {
+describe.skip("fisk", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
   });
@@ -24,5 +24,19 @@ describe.skip("Keywords", () => {
     column1.get("a").should("have.length", "3");
     // and fineally a button
     column1.get("button").should("have.length", "1");
+  });
+});
+
+describe("bibliographic data", () => {
+  before(function () {
+    cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
+  });
+  it("open edition - check creator link", () => {
+    // get first edition
+    cy.get("[data-cy=bib-edition-0]").click();
+    cy.get("[data-cy=edition-data-af] p a")
+      .should("have.attr", "href")
+      .should("not.be.empty")
+      .and("contain", "/find?q=some%20contributor");
   });
 });

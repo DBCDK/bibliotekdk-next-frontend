@@ -15,6 +15,7 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 
 import * as workFragments from "@/lib/api/work.fragments";
+import { cyKey } from "@/utils/trim";
 
 /**
  * Export function of the Component
@@ -70,7 +71,10 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 
   return manifestations.map((manifestation, index) => (
     <React.Fragment key={manifestation.pid}>
-      <div className={styles.pointer}>
+      <div
+        className={styles.pointer}
+        data-cy={cyKey({ name: `${index}`, prefix: "bib-edition" })}
+      >
         <Row
           tabIndex="0"
           as={"li"}
