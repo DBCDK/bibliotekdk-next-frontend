@@ -25,12 +25,6 @@ describe.skip("fisk", () => {
     // and fineally a button
     column1.get("button").should("have.length", "1");
   });
-
-  it("check contributor url", () => {
-    // get first edition
-    const edition = cy.get("[data-cy=bib-edition-0]");
-    edition.click();
-  });
 });
 
 describe("bibliographic data", () => {
