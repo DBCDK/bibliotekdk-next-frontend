@@ -24,7 +24,7 @@ describe("Overview", () => {
   });
 
   it(`Can tab to material selection`, () => {
-    cy.tab();
+    cy.tabs(2);
     cy.focused().should("have.attr", "data-cy", "tag-bog");
 
     cy.tabs(6);
