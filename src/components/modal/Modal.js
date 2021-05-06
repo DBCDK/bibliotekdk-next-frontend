@@ -286,7 +286,9 @@ export default function Wrap({ router }) {
   };
 
   // Get template name from query
-  const template = get(router, "query.modal", null);
+  const param = get(router, "query.modal", null);
+  // use only first level of modal name ("-"" seperated names is for modal layers)
+  const template = param && param.split("-")[0];
 
   return <Modal template={template} onClose={onClose} onLang={onLang} />;
 }

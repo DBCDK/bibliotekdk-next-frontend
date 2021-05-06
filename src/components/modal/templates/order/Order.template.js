@@ -6,6 +6,7 @@ import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import * as userFragments from "@/lib/api/user.fragments";
 
 import Divider from "@/components/base/divider";
 import Title from "@/components/base/title";
@@ -49,7 +50,14 @@ function ActionButton({ onClick = null, isVisible, callback }) {
   );
 }
 
-function Order({ pid, work, isVisible, onClose }) {
+/**
+ *  Order component function
+ *
+ * @param {*} param0
+ * @returns component
+ */
+
+function Order({ pid, work, user, isVisible, onClose }) {
   // translated state
 
   // layer state
@@ -61,6 +69,29 @@ function Order({ pid, work, isVisible, onClose }) {
 
   // Cleanup on modal close
   useEffect(() => {
+    const layer = Router.query.modal?.split("-")[1];
+
+    // If layer info (default) layer is requsted
+    if (!layer) {
+      setTranslated(false);
+    }
+
+    // If another layer is requested
+    else {
+      // If same layer as before is requested
+      if (layer === activeLayer) {
+        setTranslated(true);
+      }
+      // else set new layer
+      if (layer !== activeLayer) {
+        setActiveLayer(layer);
+        setTranslated(true);
+      }
+    }
+  }, [Router.query.modal]);
+
+  // Cleanup on modal close
+  useEffect(() => {
     if (!isVisible) {
       setActiveLayer(null);
       setTranslated(false);
@@ -68,10 +99,14 @@ function Order({ pid, work, isVisible, onClose }) {
   }, [isVisible]);
 
   function handleLayer(layer) {
-    if (layer !== activeLayer) {
-      setActiveLayer(layer);
+    if (layer !== Router.query.modal) {
+      // setActiveLayer(layer);
+      // setTranslated(true);
+      Router.push({
+        pathname: Router.pathname,
+        query: { ...Router.query, modal: `order-${layer}` },
+      });
     }
-    setTranslated(true);
   }
 
   // Work props
@@ -84,6 +119,9 @@ function Order({ pid, work, isVisible, onClose }) {
     // path = [],
     materialTypes = [],
   } = work;
+
+  // User props
+  const { name, mail, agency, postalCode, address } = user;
 
   // Material by pid
   const material = filter(materialTypes, (o) => o.pid === pid)[0];
@@ -104,20 +142,24 @@ function Order({ pid, work, isVisible, onClose }) {
         >
           <div className={styles.left}>
             <Info
+              work={work}
+              user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
-              onLayerSelect={(layer) => handleLayer(layer)}
+              onLayerSelect={(layer) => {
+                handleLayer(layer);
+              }}
             />
           </div>
           <div className={styles.right}>
             <Edition
               className={`${styles.page} ${styles[`page-edition`]}`}
               onChange={(val) => console.log(val + " selected")}
-              onClose={(e) => setTranslated(false)}
+              onClose={(e) => Router.back()}
             />
             <Pickup
               className={`${styles.page} ${styles[`page-library`]}`}
               onChange={(val) => console.log(val + " selected")}
-              onClose={() => setTranslated(false)}
+              onClose={() => Router.back()}
             />
           </div>
         </div>
@@ -154,25 +196,31 @@ export default function Wrap(props) {
 
   const workId = `work-of:${order}`;
 
-  // use the useData hook to fetch data
+  // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })
   );
-
   const { data: detailsData, error: detailsError } = useData(
     workFragments.details({ workId })
   );
 
   const covers = useData(workFragments.covers({ workId }));
 
+  // Fetch user data
+  const { data: userData, error: userDataError } = useData(
+    userFragments.basic()
+  );
+
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
-  if (error || detailsError) {
+  if (error || detailsError || userDataError) {
     return <div>Error :( !!!!!</div>;
   }
 
-  const merged = merge({}, covers.data, data, detailsData);
+  const mergedWork = merge({}, covers.data, data, detailsData);
 
-  return <Order work={merged.work} pid={order} {...props} />;
+  return (
+    <Order work={mergedWork.work} user={userData.user} pid={order} {...props} />
+  );
 }
