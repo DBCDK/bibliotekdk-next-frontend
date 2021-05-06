@@ -11,9 +11,9 @@ export default function Edtion({ className, onChange, onClose }) {
       <br />
       <br />
       <br />
-      <Link onClick={(e) => onChange(e, "edition-1")}>Some edition 1</Link>
+      <Link onClick={() => onChange("edition-1")}>Some edition 1</Link>
       <br />
-      <Link onClick={(e) => onChange(e, "edition-2")}>Some edition 2</Link>
+      <Link onClick={() => onChange("edition-2")}>Some edition 2</Link>
     </div>
   );
 }

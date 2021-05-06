@@ -10,9 +10,9 @@ export default function Pickup({ className, onChange, onClose }) {
       <br />
       <br />
       <br />
-      <Link onClick={(e) => onChange(e, "branch-1")}>Some branch 1</Link>
+      <Link onClick={() => onChange("branch-1")}>Some branch 1</Link>
       <br />
-      <Link onClick={(e) => onChange(e, "branch-2")}>Some branch 2</Link>
+      <Link onClick={() => onChange("branch-2")}>Some branch 2</Link>
     </div>
   );
 }

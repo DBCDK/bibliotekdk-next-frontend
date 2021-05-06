@@ -105,34 +105,19 @@ function Order({ pid, work, isVisible, onClose }) {
           <div className={styles.left}>
             <Info
               className={`${styles.page} ${styles[`page-info`]}`}
-              onLayerSelect={(e, layer) => {
-                e.preventDefault();
-                handleLayer(layer);
-              }}
+              onLayerSelect={(layer) => handleLayer(layer)}
             />
           </div>
           <div className={styles.right}>
             <Edition
               className={`${styles.page} ${styles[`page-edition`]}`}
-              onChange={(e, val) => {
-                e.preventDefault();
-                console.log(val + " selected");
-              }}
-              onClose={(e) => {
-                e.preventDefault();
-                setTranslated(false);
-              }}
+              onChange={(val) => console.log(val + " selected")}
+              onClose={(e) => setTranslated(false)}
             />
             <Pickup
               className={`${styles.page} ${styles[`page-library`]}`}
-              onChange={(e, val) => {
-                e.preventDefault();
-                console.log(val + " selected");
-              }}
-              onClose={(e) => {
-                e.preventDefault();
-                setTranslated(false);
-              }}
+              onChange={(val) => console.log(val + " selected")}
+              onClose={() => setTranslated(false)}
             />
           </div>
         </div>

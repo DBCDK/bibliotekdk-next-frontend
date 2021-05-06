@@ -38,7 +38,12 @@ export default function Link({
         ref={linkRef}
         data-cy={dataCy}
         target={target}
-        onClick={onClick}
+        onClick={(e) => {
+          if (onClick) {
+            e.preventDefault();
+            onClick(e);
+          }
+        }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${className}`}

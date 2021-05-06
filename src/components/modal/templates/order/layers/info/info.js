@@ -6,11 +6,11 @@ export default function Info({ className, onLayerSelect }) {
   return (
     <div className={`${styles.info} ${className}`}>
       <div className={styles.edition}>
-        <Link onClick={(e) => onLayerSelect(e, "edition")}>Vælg udgave</Link>
+        <Link onClick={() => onLayerSelect("edition")}>Vælg udgave</Link>
       </div>
 
       <div className={styles.pickup}>
-        <Link onClick={(e) => onLayerSelect(e, "pickup")}>Vælg afhentning</Link>
+        <Link onClick={() => onLayerSelect("pickup")}>Vælg afhentning</Link>
       </div>
 
       <div className={styles.user}>bruger ...</div>
