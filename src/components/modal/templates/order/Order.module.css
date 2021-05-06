@@ -12,7 +12,7 @@
   height: 100%;
   width: 200%;
   display: flex;
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
 }
 
 .wrap.translated,
@@ -23,6 +23,7 @@
 .wrap .left,
 .wrap .right {
   width: 50%;
+  position: relative;
 }
 
 .wrap .left {
@@ -74,6 +75,10 @@
 
   box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.25);
   transition-duration: 0.3s;
+}
+
+.action.hidden {
+  transform: translateY(calc(100% + 12px));
 }
 
 .action.validated {

@@ -22,56 +22,28 @@ import Pickup from "./layers/pickup";
 import styles from "./Order.module.css";
 
 /**
- * Handles edition action-button click
- */
-function onEditionLayerClick() {
-  alert("Some edition selected");
-}
-
-/**
- * Handles pickup-point action-button click
- */
-function onPickupLayerClick() {
-  alert("Some pickup point selected");
-}
-
-/**
  * Handles order action-button click
  */
 function onOrderClick() {
-  // alert("Ordered!");
+  alert("Ordered!");
 }
 
-function ActionButton({
-  layer,
-  children,
-  onClick = null,
-  validated,
-  callback,
-}) {
-  const isOrder = layer === "info";
-
-  if (!onClick) {
-    if (layer === "edition") {
-      onClick = onEditionLayerClick;
-    } else if (layer === "pickup") {
-      onClick = onPickupLayerClick;
-    } else {
-      onClick = onOrderClick;
-    }
-  }
+/**
+ * Order Button
+ */
+function ActionButton({ onClick = null, isVisible, callback }) {
+  const hiddenClass = !isVisible ? styles.hidden : "";
 
   return (
-    <div className={`${styles.action}`}>
-      {children}
+    <div className={`${styles.action} ${hiddenClass}`} aria-hidden={!isVisible}>
       <Button
         onClick={() => {
-          // validated &&
-          onClick();
-          isOrder && callback();
+          //
+          onClick && onClick();
+          callback && callback();
         }}
       >
-        Bestil
+        Godkend
       </Button>
     </div>
   );
@@ -142,6 +114,10 @@ function Order({ pid, work, isVisible, onClose }) {
           <div className={styles.right}>
             <Edition
               className={`${styles.page} ${styles[`page-edition`]}`}
+              onChange={(e, val) => {
+                e.preventDefault();
+                console.log(val + " selected");
+              }}
               onClose={(e) => {
                 e.preventDefault();
                 setTranslated(false);
@@ -149,6 +125,10 @@ function Order({ pid, work, isVisible, onClose }) {
             />
             <Pickup
               className={`${styles.page} ${styles[`page-library`]}`}
+              onChange={(e, val) => {
+                e.preventDefault();
+                console.log(val + " selected");
+              }}
               onClose={(e) => {
                 e.preventDefault();
                 setTranslated(false);
@@ -156,15 +136,16 @@ function Order({ pid, work, isVisible, onClose }) {
             />
           </div>
         </div>
+        <ActionButton
+          isVisible={!translated}
+          validated={validated}
+          onClick={() => onOrderClick()}
+          callback={() => {
+            // some validation goes here...
+            setValidated(true);
+          }}
+        />
       </div>
-      <ActionButton
-        validated={validated}
-        layer={translated ? activeLayer : "info"}
-        callback={() => {
-          // some validation goes here...
-          setValidated(true);
-        }}
-      />
     </div>
   );
 }
