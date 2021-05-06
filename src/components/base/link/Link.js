@@ -68,7 +68,7 @@ Link.propTypes = {
     PropTypes.object,
     PropTypes.array,
   ]),
-  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top", "_default"]),
+  target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
   border: PropTypes.oneOfType([

@@ -55,13 +55,13 @@ export function Header({ className = "", router = null, story = null, user }) {
   ];
 
   const actions = [
-    { label: "digitalOffers", href: "/#!", target: "_default" },
+    { label: "digitalOffers", href: "/#!", target: "_self" },
     {
       label: "askLibrarian",
       href: externalUrls.askLibrarianUrl,
       target: "_blank",
     },
-    { label: "becomeLoaner", href: "/#!", target: "_default" },
+    { label: "becomeLoaner", href: "/#!", target: "_self" },
   ];
 
   const menu = [

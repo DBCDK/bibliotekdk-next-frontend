@@ -82,7 +82,7 @@ function Menu({ isVisible = false, onLang = null }) {
                 <Link
                   className={styles.link}
                   tabIndex={!expanded && isVisible ? "0" : "-1"}
-                  target={a.target ? a.target : "_default"}
+                  target={a.target ? a.target : "_self"}
                   title={title}
                   href={a.href}
                   dataCy={cyKey({
