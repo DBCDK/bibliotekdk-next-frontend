@@ -54,7 +54,6 @@ export default function Link({
   }
 
   // Return the component
-  console.log(href, "HREF");
   return (
     <NextLink href={href} shallow={true}>
       {children}
