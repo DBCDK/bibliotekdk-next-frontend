@@ -1,0 +1,61 @@
+.row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pt1) var(--pt2) var(--pt1) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.row:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.25);
+}
+.row:focus-visible {
+  outline: 1px solid var(--blue);
+  border-color: transparent;
+}
+.content {
+  transition: transform 0.2s;
+}
+.row:focus-visible > .content {
+  transform: translateX(var(--pt2));
+}
+.row > .dot {
+  position: relative;
+  height: 18px;
+  width: 18px;
+}
+.row.selected > .dot {
+  border-color: var(--blue);
+}
+
+/* Radio button animation */
+.row > .dot::before,
+.row > .dot::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+}
+.row > .dot::before {
+  background: var(--blue);
+  transform: scale(0);
+  transition: transform 0.4s;
+}
+.row.selected > .dot::before {
+  transform: scale(0.7);
+}
+.row > .dot::after {
+  border: 1px solid var(--gray);
+}
+.row.selected > .dot::after {
+  border-color: var(--blue);
+}
+.label {
+  display: none
+}
