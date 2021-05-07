@@ -52,10 +52,12 @@
 
 .basket {
   padding-top: var(--pt3);
+  border: 1px solid blueviolet;
 }
 
 .info {
   padding-top: var(--pt2);
+  border: 1px solid red;
 }
 
 .externalLink i {
@@ -64,6 +66,8 @@
   min-height: 20px !important;
   max-height: 20px !important;
   margin-right: var(--pt1);
+
+  border: 5px solid green;
 }
 .externalLink img {
   margin-bottom: -2px;
