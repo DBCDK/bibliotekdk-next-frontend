@@ -8,10 +8,6 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 
-import Divider from "@/components/base/divider";
-import Title from "@/components/base/title";
-import Text from "@/components/base/text";
-import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 
@@ -39,7 +35,6 @@ function ActionButton({ onClick = null, isVisible, callback }) {
     <div className={`${styles.action} ${hiddenClass}`} aria-hidden={!isVisible}>
       <Button
         onClick={() => {
-          //
           onClick && onClick();
           callback && callback();
         }}
@@ -142,7 +137,7 @@ function Order({ pid, work, user, isVisible, onClose }) {
         >
           <div className={styles.left}>
             <Info
-              work={work}
+              material={{ ...material, title, creators }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) => {
@@ -214,6 +209,7 @@ export default function Wrap(props) {
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
+
   if (error || detailsError || userDataError) {
     return <div>Error :( !!!!!</div>;
   }
@@ -221,6 +217,11 @@ export default function Wrap(props) {
   const mergedWork = merge({}, covers.data, data, detailsData);
 
   return (
-    <Order work={mergedWork.work} user={userData.user} pid={order} {...props} />
+    <Order
+      work={mergedWork?.work}
+      user={userData?.user || {}}
+      pid={order}
+      {...props}
+    />
   );
 }

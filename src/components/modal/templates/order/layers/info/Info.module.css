@@ -4,9 +4,33 @@
 }
 
 .edition {
+  padding: var(--pt2) 0;
   background-color: var(--concrete);
-  height: 100px;
-  transform: scaleX(var(--pt6));
+
+  display: flex;
+}
+
+.creators {
+  padding: var(--pt1) 0 0 0;
+}
+
+.material {
+  padding: var(--pt2) 0 0 0;
+}
+
+.material span {
+  margin: 0 var(--pt2) 0 0;
+}
+
+.about {
+  flex-grow: 2;
+}
+
+.cover,
+.cover > div,
+.cover > div img {
+  width: auto !important;
+  height: 100% !important;
 }
 
 .edition,
@@ -19,6 +43,6 @@
   .edition,
   .pickup,
   .user {
-    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+    padding: var(--pt2) var(--pt6) var(--pt3) var(--pt6);
   }
 }

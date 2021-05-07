@@ -22,13 +22,16 @@ function Tag({
   onClick = null,
   disabled = false,
   skeleton = false,
+  tag = "button",
 }) {
+  const Tag = tag;
+
   const key = cyKey({ name: children, prefix: "tag" });
   const disabledStyle = disabled ? styles.disabled : "";
   const selectedStyle = selected ? styles.selected : "";
 
   return (
-    <button
+    <Tag
       data-cy={key}
       className={`${styles.tag} ${className} ${selectedStyle} ${disabledStyle}`}
       onClick={onClick}
@@ -40,7 +43,7 @@ function Tag({
         src={"checkmark.svg"}
         skeleton={skeleton}
       />
-    </button>
+    </Tag>
   );
 }
 
@@ -91,4 +94,5 @@ Container.propTypes = {
   disabled: PropTypes.bool,
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
+  tag: PropTypes.string,
 };
