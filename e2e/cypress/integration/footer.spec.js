@@ -21,7 +21,7 @@ describe("Overview", () => {
   it("check contact links", () => {
     cy.get(
       "[data-cy=footer-section] [data-cy=footer-column] [data-cy=contactlink]"
-    ).should("have.length", 7);
+    ).should("have.length", 5);
   });
 
   it("check branch links", () => {

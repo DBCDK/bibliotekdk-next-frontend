@@ -45,7 +45,7 @@ describe("Header", () => {
     cy.focused().should("have.attr", "data-cy", "header-link-menu");
   });
 
-  it("check url on top action elements", () => {
+  it.skip("check url on top action elements", () => {
     // top actions only visible on BIG viewport
     cy.viewport(1920, 1080);
     cy.get("[data-cy=header-link-asklibrarian")

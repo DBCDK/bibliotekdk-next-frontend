@@ -55,13 +55,12 @@ export function Header({ className = "", router = null, story = null, user }) {
   ];
 
   const actions = [
-    { label: "digitalOffers", href: "/#!", target: "_self" },
     {
-      label: "askLibrarian",
-      href: externalUrls.askLibrarianUrl,
-      target: "_blank",
+      label: "digitalOffers",
+      href: "/artikel/digitale-bibliotekstilbud/5",
     },
-    { label: "becomeLoaner", href: "/#!", target: "_self" },
+    { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
+    { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
   ];
 
   const menu = [
