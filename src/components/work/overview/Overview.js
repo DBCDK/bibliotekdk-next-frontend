@@ -116,19 +116,18 @@ export function Overview({
                   return (
                     <span>
                       <Link
-                        children={
-                          <Text
-                            type="text3"
-                            className={styles.creators}
-                            skeleton={skeleton}
-                            lines={1}
-                          >
-                            {c.name}
-                          </Text>
-                        }
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
-                      />
+                      >
+                        <Text
+                          type="text3"
+                          className={styles.creators}
+                          skeleton={skeleton}
+                          lines={1}
+                        >
+                          {c.name}
+                        </Text>
+                      </Link>
                       {creators.length > i + 1 ? ", " : ""}
                     </span>
                   );
