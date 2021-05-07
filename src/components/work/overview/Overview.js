@@ -112,25 +112,27 @@ export function Overview({
                 />
               </Col>
               <Col xs={12}>
-                <Text
-                  type="text3"
-                  className={styles.creators}
-                  skeleton={skeleton}
-                  lines={1}
-                >
-                  {creators.map((c, i) => {
-                    let creatorLink = (
+                {creators.map((c, i) => {
+                  return (
+                    <span>
                       <Link
-                        children={c.name}
+                        children={
+                          <Text
+                            type="text3"
+                            className={styles.creators}
+                            skeleton={skeleton}
+                            lines={1}
+                          >
+                            {c.name}
+                          </Text>
+                        }
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
                       />
-                    );
-                    return creators.length > i + 1
-                      ? creatorLink + ", "
-                      : creatorLink;
-                  })}
-                </Text>
+                      {creators.length > i + 1 ? ", " : ""}
+                    </span>
+                  );
+                })}
               </Col>
 
               <Col xs={12} className={styles.materials}>
