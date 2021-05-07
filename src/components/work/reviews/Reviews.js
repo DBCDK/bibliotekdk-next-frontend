@@ -1,7 +1,6 @@
 import { useRef, useState, useMemo } from "react";
 import Swiper from "react-id-swiper";
 import PropTypes from "prop-types";
-import groupBy from "lodash/groupBy";
 
 import useWindowSize from "@/lib/useWindowSize";
 import { useData } from "@/lib/api/api";
@@ -17,6 +16,7 @@ import InfomediaReview from "./types/infomedia";
 import LitteratursidenReview from "./types/litteratursiden";
 import MaterialReview from "./types/material";
 
+import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 /**
@@ -38,32 +38,6 @@ function getTemplate(type) {
     default:
       return InfomediaReview;
   }
-}
-
-function sortReviews(data) {
-  // Group data by reviewType
-  const groups = groupBy(data, "__typename");
-
-  // reviews array containing infomedia and litteratursiden reviews
-  const reviews = [
-    ...(groups.ReviewInfomedia || []),
-    ...(groups.ReviewLitteratursiden || []),
-  ];
-
-  // materialReviews seperated
-  const materialReviews = [...(groups.ReviewMatVurd || [])];
-
-  // Loop thrue materialreviews to place "randomly" -> always start with 1 materialReview
-  materialReviews.forEach((m, i) => {
-    if (i === 0) {
-      reviews.unshift(m);
-    } else {
-      const pos = Math.floor(reviews.length / 3) * i;
-      reviews.splice(pos, 0, m);
-    }
-  });
-
-  return reviews;
 }
 
 /**
@@ -92,6 +66,7 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
     </label>
   );
 }
+
 ArrowLeft.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
@@ -123,6 +98,7 @@ function ArrowRight({ onClick, disabled }) {
     </label>
   );
 }
+
 ArrowRight.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,

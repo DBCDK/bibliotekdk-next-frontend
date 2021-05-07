@@ -44,19 +44,13 @@ export async function fetcher(queryStr) {
   const { query, variables, delay, accessToken } =
     typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
-  if (delay) {
-    await new Promise((r) => {
-      setTimeout(r, delay);
-    });
-  }
-
   const headers = {
     "Content-Type": "application/json",
   };
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
   }
-
+  const start = Date.now();
   const res = await fetch(config.api.url, {
     method: "POST",
     headers,
@@ -65,6 +59,17 @@ export async function fetcher(queryStr) {
       variables,
     }),
   });
+  const duration = Date.now() - start;
+
+  if (delay && typeof window !== "undefined") {
+    const remaining = delay - duration;
+    if (remaining > 0) {
+      await new Promise((r) => {
+        setTimeout(r, remaining);
+      });
+    }
+  }
+
   return res.json();
 }
 
@@ -99,7 +104,7 @@ export function useData(query) {
   return {
     data: data?.data,
     error: error || data?.errors,
-    isLoading: !data,
+    isLoading: query && !data,
     isSlow: data ? false : isSlow,
   };
 }

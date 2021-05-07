@@ -25,6 +25,8 @@ import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
+import { externalUrls } from "@/lib/Navigation";
+
 /**
  * The Component function
  *
@@ -53,9 +55,13 @@ export function Header({ className = "", router = null, story = null, user }) {
   ];
 
   const actions = [
-    { label: "digitalOffers", href: "/#!" },
-    { label: "askLibrarian", href: "/#!" },
-    { label: "becomeLoaner", href: "/#!" },
+    { label: "digitalOffers", href: "/#!", target: "_self" },
+    {
+      label: "askLibrarian",
+      href: externalUrls.askLibrarianUrl,
+      target: "_blank",
+    },
+    { label: "becomeLoaner", href: "/#!", target: "_self" },
   ];
 
   const menu = [
@@ -175,6 +181,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     <Link
                       key={m.label}
                       href={m.href}
+                      target={m.target}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",

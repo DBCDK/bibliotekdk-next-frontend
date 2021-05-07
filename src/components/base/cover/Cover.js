@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Cover.module.css";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * The Component function
@@ -17,75 +18,69 @@ function Cover({
   src = null,
   className = "",
   bgColor = null,
-  size = ["100%", "auto"],
+  size = "large",
   onClick = null,
+  skeleton,
 }) {
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const imageRef = useRef();
+
   // If src is an array of cover images, select the first valid in line
   if (src instanceof Array) {
     src = src.map((t) => t.cover && t.cover.detail).filter((c) => c)[0];
   }
 
-  // Add class for misisng cover image
+  useEffect(() => {
+    setLoaded(false);
+    setError(false);
+  }, [src]);
+
+  // Add class for missing cover image
   const missingCoverClass = src ? "" : styles.missingCover;
 
-  const frameStyle = bgColor ? styles.frame : "";
+  const loadedClass = loaded ? styles.loaded : "";
 
-  // Set icon size
-  const dimensions = {
-    width: `${size[0]}`,
-    // If no img/src is found, set height relative to width
-    height: `${src ? size[1] : size[0].match(/\d+/) * 1.5}px`,
-  };
+  const errorClass = error ? styles.error : "";
+
+  const skeletonClass = skeleton || (!loaded && src) ? styles.skeleton : "";
+
+  const frameStyle = bgColor ? styles.frame : "";
 
   const backgroundColor = {
     backgroundColor: bgColor ? bgColor : src ? "transparent" : "var(--iron)",
   };
 
   const dynamicStyles = {
-    ...dimensions,
     ...backgroundColor,
   };
 
   return (
     <div
       style={dynamicStyles}
-      className={`${styles.cover} ${frameStyle} ${missingCoverClass} ${className}`}
+      className={`${styles.cover} ${frameStyle} ${loadedClass} ${errorClass} ${missingCoverClass} ${skeletonClass} ${className} ${styles[size]}`}
       onClick={onClick}
     >
-      {src && (
+      {skeletonClass && <Skeleton />}
+      {src && !error && (
         <img
+          ref={imageRef}
           alt=""
-          style={dimensions}
           data-src={src}
           data-bg={src}
           className="lazyload"
+          onLoad={() => {
+            setLoaded(true);
+          }}
+          onError={() => {
+            setLoaded(true);
+            setError(true);
+          }}
         />
       )}
+      {((!skeleton && !src) || error) && <div className={styles.fallback} />}
       {children}
     </div>
-  );
-}
-
-/**
- * Function to return skeleton (Loading) version of the Component
- *
- * @param {obj} props
- *  See propTypes for specific props and types
- *
- * @returns {component}
- */
-function CoverSkeleton(props) {
-  return (
-    <Cover
-      {...props}
-      className={`${props.className} ${styles.skeleton}`}
-      onClick={null}
-      src={null}
-      bgColor={null}
-    >
-      <Skeleton />
-      {props.children}
-    </Cover>
   );
 }
 
@@ -98,10 +93,6 @@ function CoverSkeleton(props) {
  * @returns {component}
  */
 export default function Container(props) {
-  if (props.skeleton) {
-    return <CoverSkeleton {...props} />;
-  }
-
   return <Cover {...props} />;
 }
 
@@ -111,7 +102,7 @@ Container.propTypes = {
   src: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   bgColor: PropTypes.string,
-  size: PropTypes.array,
+  size: PropTypes.oneOf(["thumbnail", "medium", "large", "fill", "fill-width"]),
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
 };

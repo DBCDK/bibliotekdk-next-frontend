@@ -12,6 +12,7 @@ import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
 import styles from "./BibliographicData.module.css";
+import { cyKey } from "@/utils/trim";
 
 /**
  * bibliotek.dk object url
@@ -44,7 +45,7 @@ function ColumnOne({ manifestation }) {
       className={styles.fullmanifestation}
     >
       {manifestation.cover && (
-        <Cover src={manifestation.cover.detail} size={["100px", "auto"]} />
+        <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({
@@ -128,7 +129,11 @@ export function ManifestationFull({ manifestation }) {
         <div className={styles.container}>
           {parsed.map(({ label, value }) => {
             return (
-              <div className={styles.item} key={label}>
+              <div
+                className={styles.item}
+                key={label}
+                data-cy={cyKey({ name: `${label}`, prefix: "edition-data" })}
+              >
                 <Text type="text4" lines={1}>
                   {label}
                 </Text>

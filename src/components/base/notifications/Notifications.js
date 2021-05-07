@@ -9,6 +9,7 @@ import classNames from "classnames/bind";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { Container } from "react-bootstrap";
 import Icon from "@/components/base/icon/Icon";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  * list of notifications
@@ -67,7 +68,8 @@ function notificationsFilter(data) {
  * @return {JSX.Element}
  */
 export default function wrapper(props) {
-  const { isLoading, data, error } = useData(notificationsQuery());
+  const langcode = { language: getLangcode() };
+  const { isLoading, data, error } = useData(notificationsQuery(langcode));
 
   return <Notifications notificationObject={data} />;
 }

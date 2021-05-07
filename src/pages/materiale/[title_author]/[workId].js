@@ -42,7 +42,7 @@ export default function WorkPage() {
         pathname: router.asPath.replace(/\?.*/, ""),
         query,
       },
-      { shallow: true }
+      { shallow: true, scroll: false }
     );
   }
 

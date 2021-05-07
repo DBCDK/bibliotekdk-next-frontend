@@ -11,7 +11,7 @@
  */
 export function basic({ workId }) {
   return {
-    // delay: 1000, // for debugging
+    // delay: 250,
     query: `query ($workId: String!) {
         work(id: $workId) {
           creators {
@@ -47,7 +47,7 @@ export function basic({ workId }) {
  */
 export function covers({ workId }) {
   return {
-    // delay: 1000, // for debugging
+    // delay: 250,
     query: `query ($workId: String!) {
       work(id: $workId) {
         materialTypes {

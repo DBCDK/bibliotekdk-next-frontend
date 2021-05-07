@@ -1,7 +1,19 @@
 "use strict";
 
 import Translate from "@/components/base/translate";
+import Link from "@/components/base/link";
 
+const searchOnUrl = "/find?q=";
+
+function manifestationLink({ name }) {
+  return (
+    <Link
+      children={name}
+      href={`${searchOnUrl}${name}`}
+      border={{ top: false, bottom: { keepVisible: true } }}
+    />
+  );
+}
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
   {
@@ -17,7 +29,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "creators",
     }),
-    valueParser: (value) => (value[0] && value[0].name) || "",
+    valueParser: (value) =>
+      (value[0] && manifestationLink({ name: value[0].name })) || "",
   },
   {
     dataField: "creators",

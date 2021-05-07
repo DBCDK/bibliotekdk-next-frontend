@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import { materials, actions } from "@/components/navigation";
+import { materials, actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
 import Title from "@/components/base/title";

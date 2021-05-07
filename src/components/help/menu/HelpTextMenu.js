@@ -11,6 +11,7 @@ import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  * Component to show helptext menu in groups
@@ -151,7 +152,8 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  * @return {{isLoading, data}}
  */
 function getPublishedHelpTexts() {
-  const { isLoading, data } = useData(publishedHelptexts());
+  const langcode = { language: getLangcode() };
+  const { isLoading, data } = useData(publishedHelptexts(langcode));
   return { isLoading, data };
 }
 

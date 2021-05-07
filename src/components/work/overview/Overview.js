@@ -17,6 +17,7 @@ import Translate from "@/components/base/translate";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import Link from "@/components/base/link";
 
 /**
  * The Component function
@@ -65,6 +66,8 @@ export function Overview({
   const buttonSkeleton =
     skeleton || typeof selectedMaterial.onlineAccess === "undefined";
 
+  const searchOnUrl = "/find?q=";
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -79,16 +82,21 @@ export function Overview({
             lg={3}
             className={styles.cover}
           >
-            <Cover
-              src={
-                (selectedMaterial.cover && selectedMaterial.cover.detail) ||
-                allMaterialTypes
-              }
-              skeleton={!selectedMaterial.cover}
-              size={["200px", "auto"]}
-            >
-              <Bookmark skeleton={skeleton} title={title} />
-            </Cover>
+            <Row>
+              <Cover
+                src={
+                  (selectedMaterial.cover && selectedMaterial.cover.detail) ||
+                  allMaterialTypes
+                }
+                skeleton={skeleton || !selectedMaterial.cover}
+                size="large"
+              >
+                <Bookmark
+                  skeleton={skeleton || !selectedMaterial.cover}
+                  title={title}
+                />
+              </Cover>
+            </Row>
           </Col>
 
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
@@ -112,9 +120,18 @@ export function Overview({
                   skeleton={skeleton}
                   lines={1}
                 >
-                  {creators.map((c, i) =>
-                    creators.length > i + 1 ? c.name + ", " : c.name
-                  )}
+                  {creators.map((c, i) => {
+                    let creatorLink = (
+                      <Link
+                        children={c.name}
+                        href={`${searchOnUrl}${c.name}`}
+                        border={{ top: false, bottom: { keepVisible: true } }}
+                      />
+                    );
+                    return creators.length > i + 1
+                      ? creatorLink + ", "
+                      : creatorLink;
+                  })}
                 </Text>
               </Col>
 

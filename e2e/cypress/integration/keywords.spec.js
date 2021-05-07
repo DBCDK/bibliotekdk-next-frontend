@@ -37,13 +37,13 @@ describe("Keywords", () => {
 
   it(`Can visit keywords`, () => {
     const tag = "barndom";
-    const url = `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${tag}%22#content`;
+    const url = `/find?q=${tag}`;
 
     // Get selected tag
     const item = cy.get(`[data-cy=keyword-${tag}]`).children();
 
     // Check link attributes
-    item.should("have.attr", "target", "_blank");
+    item.should("have.attr", "target", "_self");
     item.should("have.attr", "href", url);
   });
 });

@@ -9,7 +9,8 @@ import { useData } from "@/lib/api/api";
 import { Col, Row } from "react-bootstrap";
 import ArticlePreview from "@/components/article/preview";
 
-import { allArticles } from "@/lib/api/article.fragments";
+import { allArticles, promotedArticles } from "@/lib/api/article.fragments";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  * The Article page React component
@@ -38,7 +39,8 @@ Articles.propTypes = {
 };
 
 export default function Wrap(props) {
-  const { isLoading, data } = useData(allArticles());
+  const langcode = { language: getLangcode() };
+  const { isLoading, data } = useData(allArticles(langcode));
   const articles = get(data, "nodeQuery.entities", []).filter(
     (article) => article && article.__typename === "NodeArticle"
   );
