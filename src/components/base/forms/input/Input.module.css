@@ -1,0 +1,11 @@
+.input {
+  height: var(--pt7);
+  width: 100%;
+  max-width: 450px;
+  border: 1px solid var(--gray);
+  padding: 0 var(--pt2);
+
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font);
+}

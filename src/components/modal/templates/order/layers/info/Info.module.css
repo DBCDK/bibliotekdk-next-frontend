@@ -22,16 +22,52 @@
   margin: 0 var(--pt2) 0 0;
 }
 
-.about {
+.left {
   flex-grow: 2;
 }
 
-.cover,
-.cover > div,
-.cover > div img {
-  width: auto !important;
-  height: 100% !important;
+.right {
+  flex-shrink: 2;
 }
+
+/* Library */
+.library {
+  padding: var(--pt2) 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.library > div {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  width: 22px;
+  margin: 0 0 0 var(--pt1);
+  transform: scale(0.9);
+}
+/*  */
+
+/* User */
+
+.name {
+  padding: var(--pt2) 0 0 0;
+}
+.email {
+  padding: var(--pt2) 0 0 0;
+}
+
+.email input {
+  margin: var(--pt1) 0 0 0;
+}
+
+.message {
+  padding: var(--pt1) 0 0 0;
+  color: var(--gray);
+}
+
+/*  */
 
 .edition,
 .pickup,
@@ -43,6 +79,6 @@
   .edition,
   .pickup,
   .user {
-    padding: var(--pt2) var(--pt6) var(--pt3) var(--pt6);
+    padding: var(--pt3) var(--pt6);
   }
 }

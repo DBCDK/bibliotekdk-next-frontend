@@ -27,11 +27,14 @@ export default function Link({
   className = "",
   tabIndex = "0",
   tag = "a",
+  disabled = false,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
   if (a) {
     const animationClass = !!border ? styles.border : "";
+
+    const disabledClass = disabled ? styles.disabled : "";
 
     children = (
       <Tag
@@ -46,8 +49,8 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${styles.link} ${animationClass} ${className}`}
-        tabIndex={tabIndex}
+        className={`${styles.link} ${animationClass} ${disabledClass} ${className}`}
+        tabIndex={disabled ? "-1" : tabIndex}
       >
         {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
@@ -104,4 +107,5 @@ Link.propTypes = {
   ]),
   tabIndex: PropTypes.string,
   tag: PropTypes.oneOf(["a", "span"]),
+  disabled: PropTypes.bool,
 };
