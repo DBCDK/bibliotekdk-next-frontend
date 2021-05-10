@@ -27,6 +27,8 @@ export default function WorkPage({
   workId,
   onTypeChange,
   onOnlineAccess,
+  onLogin,
+  onOrder,
   type = "Bog",
 }) {
   const router = useRouter();
@@ -38,6 +40,8 @@ export default function WorkPage({
           workId={workId}
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
+          onLogin={onLogin}
+          onOrder={onOrder}
           type={type}
           anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
