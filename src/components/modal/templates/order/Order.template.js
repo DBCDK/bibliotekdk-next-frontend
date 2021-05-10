@@ -18,6 +18,34 @@ import Pickup from "./layers/pickup";
 
 import styles from "./Order.module.css";
 
+// MOCK for now
+const agency = {
+  name: "Ballerup Bibliotekerne",
+  branches: [
+    {
+      agencyId: "715100",
+      branchId: "715100",
+      name: "Ballerup Bibliotek",
+      openingHours:
+        "Mandag - torsdag: 07 - 22\r\nFredag - lørdag - søndag: 07 - 17\r\n\r\n\r\nBetjening:\r\nMandag-torsdag: 10 - 19\r\nFredag: 10 - 17\r\nLørdag: 10 - 14",
+    },
+    {
+      agencyId: "715100",
+      branchId: "715101",
+      name: "Skovlunde Kulturhus",
+      openingHours:
+        "Mandag-torsdag: 07 - 22\r\nFredag-lørdag-søndag: 07 - 17\r\n\r\n\r\nBetjening:\r\nMandag: 13 - 17\r\nTirsdag: 13 - 17\r\nOnsdag: 10 - 17\r\nTorsdag: 13 - 17\r\nFredag: 10 - 17\r\nLørdag: 10 - 14",
+    },
+    {
+      agencyId: "715100",
+      branchId: "715102",
+      name: "Kulturhus Måløv",
+      openingHours:
+        "Alle dage: 07-22\r\n\r\nBetjening:\r\nMandag: 14-18\r\nTirsdag: 14-18\r\nOnsdag: 10-18\r\nTorsdag: 14-18\r\nFredag: 13-17\r\nLørdag: 10-14",
+    },
+  ],
+};
+
 /**
  * Handles order action-button click
  */
@@ -74,6 +102,9 @@ function Order({ pid, work, user, isVisible, onClose }) {
   const [validated, setValidated] = useState(false);
 
   const [orderStatus, setOrderStatus] = useState(false);
+
+  // Selected pickup branch
+  const [pickupBranch, setPickupBranch] = useState(agency.branches[0]);
 
   useEffect(() => {
     // ...
@@ -173,9 +204,15 @@ function Order({ pid, work, user, isVisible, onClose }) {
               onClose={(e) => Router.back()}
             />
             <Pickup
+              agency={agency}
               className={`${styles.page} ${styles[`page-library`]}`}
-              onChange={(val) => console.log(val + " selected")}
+              onSelect={(branch) => {
+                setPickupBranch(branch);
+                // Give it some time to animate before closing
+                setTimeout(() => Router.back(), 300);
+              }}
               onClose={() => Router.back()}
+              selected={pickupBranch}
             />
           </div>
         </div>
