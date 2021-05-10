@@ -1,0 +1,50 @@
+.h-border-bottom,
+.f-border-bottom {
+  display: inline-block;
+  position: relative;
+}
+.h-border-bottom::after,
+.f-border-bottom::after {
+  content: " ";
+  position: absolute;
+  top: 0px;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  border-bottom: solid 1px var(--blue);
+  transform: scaleX(0);
+}
+.on-hover:hover.h-border-bottom::after,
+.on-hover:hover .h-border-bottom::after,
+.on-focus:focus-visible.f-border-bottom::after,
+.on-focus:focus-visible .f-border-bottom::after {
+  transform: scaleX(1);
+  transition: transform 0.4s;
+}
+
+.h-translate-right,
+.f-translate-right {
+  transition: transform 0.3s;
+}
+.on-hover:hover.h-translate-right,
+.on-hover:hover .h-translate-right,
+.on-focus:focus-visible.f-translate-right,
+.on-focus:focus-visible .f-translate-right {
+  transform: translateX(var(--pt2));
+}
+
+.on-hover:hover.h-color-blue,
+.on-hover:hover .h-color-blue,
+.on-focus:focus-visible.f-color-blue,
+.on-focus:focus-visible .f-color-blue {
+  color: var(--blue);
+}
+
+.on-hover:hover.h-outline,
+.on-hover:hover .h-outline,
+.on-focus:focus-visible.f-outline,
+.on-focus:focus-visible .f-outline {
+  outline: solid 1px var(--blue);
+  border-color: transparent !important;
+}
+
