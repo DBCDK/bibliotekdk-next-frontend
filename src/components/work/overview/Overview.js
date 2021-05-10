@@ -17,6 +17,12 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Link from "@/components/base/link";
 
+import useUser from "@/components/hooks/useUser";
+import { act } from "react-dom/test-utils";
+
+// Translate Context
+const context = { context: "overview" };
+
 /**
  * The Component function
  *
@@ -36,9 +42,6 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
-  // Translate Context
-  const context = { context: "overview" };
-
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
 
@@ -58,11 +61,6 @@ export function Overview({
       onTypeChange({ type: material.materialType });
     }
   }
-
-  // The loan button is skeleton until we know if selected
-  // material is physical or online
-  const buttonSkeleton =
-    skeleton || typeof selectedMaterial.onlineAccess === "undefined";
 
   const searchOnUrl = "/find?q=";
 
@@ -151,30 +149,10 @@ export function Overview({
                 })}
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                {selectedMaterial.onlineAccess ? (
-                  <Button
-                    className={styles.externalLink}
-                    skeleton={buttonSkeleton}
-                    onClick={() =>
-                      onOnlineAccess(selectedMaterial.onlineAccess[0]?.url)
-                    }
-                  >
-                    <Icon src={"external.svg"} skeleton={skeleton} />
-                    {Translate({
-                      ...context,
-                      label:
-                        selectedMaterial.materialType === "Ebog"
-                          ? "onlineAccessEbook"
-                          : selectedMaterial.materialType.includes("Lydbog")
-                          ? "onlineAccessAudiobook"
-                          : "onlineAccessUnknown",
-                    })}
-                  </Button>
-                ) : (
-                  <Button skeleton={buttonSkeleton}>
-                    {Translate({ ...context, label: "addToCart" })}
-                  </Button>
-                )}
+                <OrderButton
+                  selectedMaterial={selectedMaterial}
+                  skeleton={skeleton}
+                />
               </Col>
               <Col xs={12} className={styles.info}>
                 <Text type="text3" skeleton={skeleton} lines={2}>
@@ -189,6 +167,40 @@ export function Overview({
         </Row>
       </Container>
     </div>
+  );
+}
+
+function OrderButton({ selectedMaterial, skeleton }) {
+  const user = useUser();
+  console.log(user, "USER");
+
+  console.log(selectedMaterial, "MATERIAL");
+  // The loan button is skeleton until we know if selected
+  // material is physical or online
+  const buttonSkeleton =
+    skeleton || typeof selectedMaterial.onlineAccess === "undefined";
+
+  return selectedMaterial.onlineAccess ? (
+    <Button
+      className={styles.externalLink}
+      skeleton={buttonSkeleton}
+      onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0]?.url)}
+    >
+      <Icon src={"external.svg"} skeleton={skeleton} />
+      {Translate({
+        ...context,
+        label:
+          selectedMaterial.materialType === "Ebog"
+            ? "onlineAccessEbook"
+            : selectedMaterial.materialType.includes("Lydbog")
+            ? "onlineAccessAudiobook"
+            : "onlineAccessUnknown",
+      })}
+    </Button>
+  ) : (
+    <Button skeleton={buttonSkeleton}>
+      {Translate({ ...context, label: "addToCart" })}
+    </Button>
   );
 }
 
@@ -255,6 +267,8 @@ export function OverviewError() {
  */
 export default function Wrap(props) {
   const { workId, type, onTypeChange, onOnlineAccess } = props;
+
+  console.log(props, "PROPS");
 
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
