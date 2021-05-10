@@ -1,18 +1,74 @@
+import PropTypes from "prop-types";
+
 import Link from "@/components/base/link";
+import Radio from "@/components/base/radio";
+import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 
 import styles from "./Pickup.module.css";
+import animations from "@/components/base/animation/animations.module.css";
 
-export default function Pickup({ className, onChange, onClose }) {
+/**
+ * Make pickup branches selectable with Radio buttons
+ *
+ * @param {object} props
+ * @param {object} props.agency
+ * @param {className} props.string
+ * @param {function} props.onClose
+ * @param {function} props.onSelect
+ * @param {object} props.selected The selected branch object
+ * @param {function} props._ref
+ */
+export default function Pickup({
+  agency,
+  className,
+  onClose,
+  onSelect,
+  selected,
+}) {
+  if (!agency) {
+    return null;
+  }
   return (
     <div className={`${styles.pickup} ${className}`}>
+      {/* TODO insert proper back button */}
       <Link onClick={onClose}>Tilbage</Link>
-      <br />
-      <br />
-      <br />
-      <br />
-      <Link onClick={() => onChange("branch-1")}>Some branch 1</Link>
-      <br />
-      <Link onClick={() => onChange("branch-2")}>Some branch 2</Link>
+      <Title type="title4" tag="h2">
+        {agency.name || "Afhentningssted"}
+      </Title>
+
+      <Radio.Group>
+        {agency.branches.map((branch) => (
+          <Radio.Button
+            key={branch.branchId}
+            selected={selected.branchId === branch.branchId}
+            onSelect={() => {
+              onSelect(branch);
+            }}
+            label={branch.name}
+            className={[styles.radiobutton, animations["on-hover"]].join(" ")}
+          >
+            <Text
+              type="text2"
+              className={[
+                styles.library,
+                animations["h-border-bottom"],
+                animations["h-color-blue"],
+              ].join(" ")}
+            >
+              {branch.name}
+            </Text>
+          </Radio.Button>
+        ))}
+      </Radio.Group>
     </div>
   );
 }
+
+Pickup.propTypes = {
+  agency: PropTypes.object,
+  className: PropTypes.string,
+  onClose: PropTypes.func,
+  onSelect: PropTypes.func,
+  selected: PropTypes.object,
+};

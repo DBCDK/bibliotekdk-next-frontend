@@ -9,6 +9,8 @@ import ExpandIcon from "@/components/base/animation/expand";
 import Text from "@/components/base/text";
 
 import styles from "./Accordion.module.css";
+import animations from "@/components/base/animation/animations.module.css";
+
 import BodyParser from "@/components/base/bodyparser";
 
 /**
@@ -45,11 +47,25 @@ export function Item({ title, children, eventKey }) {
     <Card className={styles.element} data-cy="accordion-item">
       <Card.Header
         tabIndex="0"
-        className={styles.header}
+        className={[
+          styles.header,
+          animations["on-hover"],
+          animations["on-focus"],
+          animations["f-outline"],
+        ].join(" ")}
         onClick={onClick}
         onKeyPress={handleKeypress}
       >
-        <Text type="text2">{title}</Text>
+        <Text
+          type="text2"
+          className={[
+            animations["h-color-blue"],
+            animations["h-border-bottom"],
+            animations["f-translate-right"],
+          ].join(" ")}
+        >
+          {title}
+        </Text>
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse

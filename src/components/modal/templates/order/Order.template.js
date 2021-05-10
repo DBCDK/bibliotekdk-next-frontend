@@ -75,6 +75,11 @@ function Order({ pid, work, user, isVisible, onClose }) {
 
   const [orderStatus, setOrderStatus] = useState(false);
 
+  // Selected pickup branch
+  // If none selected, use first branch in the list
+  let [pickupBranch, setPickupBranch] = useState();
+  pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
+
   useEffect(() => {
     // ...
   }, orderStatus);
@@ -164,6 +169,7 @@ function Order({ pid, work, user, isVisible, onClose }) {
               onLayerSelect={(layer) => {
                 handleLayer(layer);
               }}
+              pickupBranch={pickupBranch}
             />
           </div>
           <div className={styles.right}>
@@ -173,9 +179,15 @@ function Order({ pid, work, user, isVisible, onClose }) {
               onClose={(e) => Router.back()}
             />
             <Pickup
+              agency={agency}
               className={`${styles.page} ${styles[`page-library`]}`}
-              onChange={(val) => console.log(val + " selected")}
+              onSelect={(branch) => {
+                setPickupBranch(branch);
+                // Give it some time to animate before closing
+                setTimeout(() => Router.back(), 300);
+              }}
               onClose={() => Router.back()}
+              selected={pickupBranch}
             />
           </div>
         </div>
