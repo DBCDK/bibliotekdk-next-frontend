@@ -8,19 +8,31 @@ import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import styles from "./Radio.module.css";
 
+import animations from "@/components/base/animation/animations.module.css";
+
 /**
  * A custom Radio Button displayed as a row
  *
  * @param {object} props
  * @param {array} props.children
+ * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
  * @param {boolean} props.selected
  * @param {function} props._ref
  */
-function Button({ children, label, onSelect, selected, _ref }) {
+function Button({
+  children,
+  label,
+  onSelect,
+  selected,
+  _ref,
+  className,
+  ...props
+}) {
   return (
     <div
+      data-cy={props["data-cy"]}
       ref={_ref}
       role="radio"
       aria-checked={selected}
@@ -30,9 +42,15 @@ function Button({ children, label, onSelect, selected, _ref }) {
           onSelect(e);
         }
       }}
-      className={`${styles.row} ${selected ? styles.selected : ""}`}
+      className={`${styles.row} ${animations["on-focus"]} ${
+        animations["f-outline"]
+      } ${selected ? styles.selected : ""} ${className || ""}`}
     >
-      <div className={styles.content}>{children}</div>
+      <div
+        className={[styles.content, animations["f-translate-right"]].join(" ")}
+      >
+        {children}
+      </div>
       <div className={styles.dot} />
       <div id="radio-label" className={styles.label}>
         {label}
@@ -41,6 +59,7 @@ function Button({ children, label, onSelect, selected, _ref }) {
   );
 }
 Button.propTypes = {
+  className: PropTypes.string,
   label: PropTypes.string,
   onSelect: PropTypes.func,
   selected: PropTypes.bool,
@@ -90,6 +109,7 @@ function Group({ children }) {
       {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           _ref: (ref) => (childrenRef.current[index] = ref),
+          "data-cy": "radio-button-" + index,
         })
       )}
     </div>
