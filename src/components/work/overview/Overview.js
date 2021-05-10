@@ -15,10 +15,15 @@ import Translate from "@/components/base/translate";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Link from "@/components/base/link";
 
 import useUser from "@/components/hooks/useUser";
+import Skeleton from "@/components/base/skeleton";
+
+import includes from "lodash/includes";
 import { act } from "react-dom/test-utils";
+import { action } from "@storybook/addon-actions";
 
 // Translate Context
 const context = { context: "overview" };
@@ -39,6 +44,8 @@ export function Overview({
   type,
   onTypeChange = () => {},
   onOnlineAccess = () => {},
+  onLogin = () => {},
+  onOrder = () => {},
   className = "",
   skeleton = false,
 }) {
@@ -53,6 +60,12 @@ export function Overview({
 
   // Either use type from props, or from local state
   const selectedMaterial = materialTypesMap[type] || materialTypes[0] || false;
+
+  const orderActions = {
+    onlineAccess: onOnlineAccess,
+    onLogin: onLogin,
+    onOrder: onOrder,
+  };
 
   // Handle slectedMaterial
   function handleSelectedMaterial(material) {
@@ -119,6 +132,7 @@ export function Overview({
                   {creators.map((c, i) => {
                     let creatorLink = (
                       <Link
+                        key={`${c.name}-${i}`}
                         children={c.name}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
@@ -152,6 +166,7 @@ export function Overview({
                 <OrderButton
                   selectedMaterial={selectedMaterial}
                   skeleton={skeleton}
+                  funcs={orderActions}
                 />
               </Col>
               <Col xs={12} className={styles.info}>
@@ -170,38 +185,82 @@ export function Overview({
   );
 }
 
-function OrderButton({ selectedMaterial, skeleton }) {
-  const user = useUser();
-  console.log(user, "USER");
-
-  console.log(selectedMaterial, "MATERIAL");
+function OrderButton({ selectedMaterial, skeleton, funcs }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
-  const buttonSkeleton =
+  let buttonSkeleton =
     skeleton || typeof selectedMaterial.onlineAccess === "undefined";
 
-  return selectedMaterial.onlineAccess ? (
-    <Button
-      className={styles.externalLink}
-      skeleton={buttonSkeleton}
-      onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0]?.url)}
-    >
-      <Icon src={"external.svg"} skeleton={skeleton} />
-      {Translate({
-        ...context,
-        label:
-          selectedMaterial.materialType === "Ebog"
-            ? "onlineAccessEbook"
-            : selectedMaterial.materialType.includes("Lydbog")
-            ? "onlineAccessAudiobook"
-            : "onlineAccessUnknown",
-      })}
+  /* order button acts on following scenarios:
+  1. material is accessible online (no user login) -> go to online url
+  2. user is not logged in -> go to login
+  3. material is available for logged in library -> prepare order button with parameters
+  4. material is not avialable -> disable
+   */
+
+  if (selectedMaterial.onlineAccess) {
+    return (
+      <Button
+        className={styles.externalLink}
+        skeleton={buttonSkeleton}
+        onClick={() =>
+          funcs.onlineAccess(selectedMaterial.onlineAccess[0]?.url)
+        }
+      >
+        <Icon src={"external.svg"} skeleton={skeleton} />
+        {Translate({
+          ...context,
+          label:
+            selectedMaterial.materialType === "Ebog"
+              ? "onlineAccessEbook"
+              : selectedMaterial.materialType.includes("Lydbog")
+              ? "onlineAccessAudiobook"
+              : "onlineAccessUnknown",
+        })}
+      </Button>
+    );
+  }
+  // is user logged in
+  const user = useUser();
+  let actions = {};
+  // is user logged in
+  if (!user.isAuthenticated) {
+    return (
+      <Button skeleton={buttonSkeleton} onClick={() => funcs.onLogin()}>
+        {Translate({ ...context, label: "Order (not logged in)" })}
+      </Button>
+    );
+  }
+
+  // user is logged in - check availability
+  const pid = selectedMaterial.pid;
+  const materialType = selectedMaterial.materialType;
+  const { data, isLoading, isSlow, error } = useData(
+    manifestationFragments.availability({ pid })
+  );
+
+  if (isLoading) {
+    buttonSkeleton = <Skeleton lines={1} />;
+  }
+
+  return checkAvailability({ data, materialType }) ? (
+    <Button skeleton={buttonSkeleton} onClick={() => funcs.onOrder(pid)}>
+      {Translate({ context: "general", label: "bestil" })}
     </Button>
   ) : (
-    <Button skeleton={buttonSkeleton}>
-      {Translate({ ...context, label: "addToCart" })}
-    </Button>
+    <span>fisk</span>
   );
+}
+
+function checkAvailability({ data, materialType }) {
+  // for now we only support oredering books
+  const supportedMaterialTypes = ["Bog"];
+
+  if (!includes(supportedMaterialTypes, materialType)) {
+    return false;
+  }
+
+  return data;
 }
 
 /**
@@ -266,10 +325,14 @@ export function OverviewError() {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type, onTypeChange, onOnlineAccess } = props;
-
-  console.log(props, "PROPS");
-
+  const {
+    workId,
+    type,
+    onTypeChange,
+    onOnlineAccess,
+    onLogin,
+    onOrder,
+  } = props;
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })
@@ -296,6 +359,8 @@ export default function Wrap(props) {
       type={type}
       onTypeChange={onTypeChange}
       onOnlineAccess={onOnlineAccess}
+      onLogin={onLogin}
+      onOrder={onOrder}
     />
   );
 }
@@ -306,4 +371,5 @@ Wrap.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
+  onOrder: PropTypes.func,
 };
