@@ -178,6 +178,14 @@
       "language": {
         "da": "English",
         "en": "Dansk"
+      },
+      "email": {
+        "da": "Email",
+        "en": "Email"
+      },
+      "accept": {
+        "da": "Godkend",
+        "en": "Accept"
       }
     },
     "articles": {
@@ -694,6 +702,28 @@
       "editions": {
         "da": "Udgaver",
         "en": "Editions"
+      }
+    },
+    "order": {
+      "no-specific-edition": {
+        "da": "Udgave underordnet",
+        "en": "Unspecified edition"
+      },
+      "pickup-title": {
+        "da": "Afhentningssted",
+        "en": "Pickup location"
+      },
+      "pickup-link": {
+        "da": "Vælg afhentning",
+        "en": "Select pickup"
+      },
+      "ordered-by": {
+        "da": "Bestilles af",
+        "en": "Ordered by"
+      },
+      "order-message": {
+        "da": "Du får besked når materialet er klar til afhentning på %s",
+        "en": "You will be notified when the material is ready for collection at %s"
       }
     },
     "units": {

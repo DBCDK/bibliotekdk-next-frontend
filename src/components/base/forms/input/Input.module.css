@@ -9,3 +9,10 @@
   line-height: 26px;
   font-family: var(--body-font);
 }
+
+.input.valid {
+}
+
+.input.readOnly {
+  background-color: var(--concrete);
+}

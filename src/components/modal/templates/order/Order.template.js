@@ -28,18 +28,29 @@ function onOrderClick() {
 /**
  * Order Button
  */
-function ActionButton({ onClick = null, isVisible, callback }) {
+function ActionButton({
+  onClick = null,
+  isVisible,
+  isOrdering,
+  isOrdered,
+  isFailed,
+  callback,
+}) {
   const hiddenClass = !isVisible ? styles.hidden : "";
+  const orderingClass = isOrdering ? styles.ordering : "";
 
   return (
-    <div className={`${styles.action} ${hiddenClass}`} aria-hidden={!isVisible}>
+    <div
+      className={`${styles.action} ${orderingClass} ${hiddenClass}`}
+      aria-hidden={!isVisible}
+    >
       <Button
         onClick={() => {
           onClick && onClick();
           callback && callback();
         }}
       >
-        Godkend
+        {Translate({ context: "general", label: "accept" })}
       </Button>
     </div>
   );
@@ -61,6 +72,12 @@ function Order({ pid, work, user, isVisible, onClose }) {
 
   // Order is validated state
   const [validated, setValidated] = useState(false);
+
+  const [orderStatus, setOrderStatus] = useState(false);
+
+  useEffect(() => {
+    // ...
+  }, orderStatus);
 
   // Cleanup on modal close
   useEffect(() => {
@@ -121,13 +138,17 @@ function Order({ pid, work, user, isVisible, onClose }) {
   // Material by pid
   const material = filter(materialTypes, (o) => o.pid === pid)[0];
 
+  // status
+  const isOrdering = orderStatus && orderStatus === "ordering";
+  const isOrdered = orderStatus && orderStatus === "ordered";
+  const isFailed = orderStatus && orderStatus === "failed";
+
+  // class'
   const activePageClass = activeLayer ? styles[`active-${activeLayer}`] : "";
   const activeTranslatedClass = translated ? styles.translated : "";
 
   // Validated
   const validatedClass = validated ? styles.validated : "";
-
-  // ${validatedClass}
 
   return (
     <div className={styles.order}>
@@ -161,7 +182,13 @@ function Order({ pid, work, user, isVisible, onClose }) {
         <ActionButton
           isVisible={!translated}
           validated={validated}
-          onClick={() => onOrderClick()}
+          isOrdering={isOrdering}
+          isOrdered={isOrdered}
+          isFailed={isFailed}
+          onClick={() => {
+            onOrderClick();
+            setOrderStatus("ordering");
+          }}
           callback={() => {
             // some validation goes here...
             setValidated(true);

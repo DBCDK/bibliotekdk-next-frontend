@@ -8,6 +8,7 @@
   background-color: var(--concrete);
 
   display: flex;
+  flex-wrap: nowrap;
 }
 
 .creators {
@@ -28,6 +29,10 @@
 
 .right {
   flex-shrink: 2;
+}
+
+.right .cover {
+  max-height: 100px;
 }
 
 /* Library */
