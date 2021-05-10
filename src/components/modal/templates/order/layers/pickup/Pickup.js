@@ -26,6 +26,9 @@ export default function Pickup({
   onSelect,
   selected,
 }) {
+  if (!agency) {
+    return null;
+  }
   return (
     <div className={`${styles.pickup} ${className}`}>
       {/* TODO insert proper back button */}

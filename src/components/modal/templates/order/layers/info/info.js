@@ -11,7 +11,13 @@ import { Arrow } from "@/components/article/preview";
 
 import styles from "./Info.module.css";
 
-export default function Info({ material, user, className, onLayerSelect }) {
+export default function Info({
+  material,
+  user,
+  className,
+  onLayerSelect,
+  pickupBranch,
+}) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
@@ -52,7 +58,7 @@ export default function Info({ material, user, className, onLayerSelect }) {
           </Title>
         </div>
         <div className={styles.library}>
-          <Text type="text1">{agency?.branches[0]?.name}</Text>
+          <Text type="text1">{pickupBranch?.name}</Text>
           <div>
             <Link
               onClick={() => onLayerSelect("pickup")}
