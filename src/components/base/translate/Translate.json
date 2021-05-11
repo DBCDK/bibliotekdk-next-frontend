@@ -346,6 +346,10 @@
       "Order (not logged in)" : {
         "da": "Bestil (ikke logget ind)",
         "en": "Order (not logged in)"
+      },
+      "Order-disabled": {
+        "da" : "Bestil (deaktiveret))",
+        "en" : "Order (disabled)"
       }
     },
     "details": {

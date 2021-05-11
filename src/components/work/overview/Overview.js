@@ -249,8 +249,12 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
 
   if (!isLoading && !available) {
     return (
-      <Button skeleton={buttonSkeleton} disabled={true}>
-        {Translate({ context: "general", label: "order-disabled" })}
+      <Button
+        skeleton={buttonSkeleton}
+        disabled={true}
+        className={styles.disabledbutton}
+      >
+        {Translate({ context: "overview", label: "Order-disabled" })}
       </Button>
     );
   }

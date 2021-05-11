@@ -83,7 +83,7 @@ export default function Container(props) {
 
 // PropTypes for component
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.any,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["primary", "secondary"]),
   size: PropTypes.oneOf(["large", "medium", "small"]),
