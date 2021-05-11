@@ -68,8 +68,6 @@
   min-height: 20px !important;
   max-height: 20px !important;
   margin-right: var(--pt1);
-
-  border: 5px solid green;
 }
 .externalLink img {
   margin-bottom: -2px;
