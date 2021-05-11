@@ -183,6 +183,17 @@ export function Overview({
   );
 }
 
+/**
+ * Seperat function for orderbutton
+ * Check what kind of material (eg. online, not avialable etc)
+ * and present appropiate button
+ *
+ * @param selectedMaterial
+ * @param skeleton
+ * @param funcs
+ * @return {JSX.Element}
+ * @constructor
+ */
 function OrderButton({ selectedMaterial, skeleton, funcs }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
@@ -220,9 +231,8 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
   }
   // is user logged in
   const user = useUser();
-  let actions = {};
-  // is user logged in
   if (!user.isAuthenticated) {
+    // login button
     return (
       <Button skeleton={buttonSkeleton} onClick={() => funcs.onLogin()}>
         {Translate({ ...context, label: "Order (not logged in)" })}
@@ -244,7 +254,9 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
     available = checkAvailability({ data, materialType });
   }
 
+  // finished loading - materail can not be ordered - disable buttons
   if (!isLoading && !available) {
+    // disabled button
     return (
       <Button
         skeleton={buttonSkeleton}
@@ -255,7 +267,7 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
       </Button>
     );
   }
-
+  // all is well - material can be ordered - order button
   return (
     <Button skeleton={buttonSkeleton} onClick={() => funcs.onOrder(pid)}>
       {Translate({ context: "general", label: "bestil" })}
