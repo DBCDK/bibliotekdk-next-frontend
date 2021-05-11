@@ -128,6 +128,7 @@ export function Overview({
                   className={styles.creators}
                   skeleton={skeleton}
                   lines={1}
+                  tag="span"
                 >
                   {creators.map((c, i) => {
                     let creatorLink = (
@@ -239,16 +240,25 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
     manifestationFragments.availability({ pid })
   );
 
+  let available = false;
   if (isLoading) {
-    buttonSkeleton = <Skeleton lines={1} />;
+    buttonSkeleton = true;
+  } else {
+    available = checkAvailability({ data, materialType });
   }
 
-  return checkAvailability({ data, materialType }) ? (
+  if (!isLoading && !available) {
+    return (
+      <Button skeleton={buttonSkeleton} disabled={true}>
+        {Translate({ context: "general", label: "order-disabled" })}
+      </Button>
+    );
+  }
+
+  return (
     <Button skeleton={buttonSkeleton} onClick={() => funcs.onOrder(pid)}>
       {Translate({ context: "general", label: "bestil" })}
     </Button>
-  ) : (
-    <span>fisk</span>
   );
 }
 
