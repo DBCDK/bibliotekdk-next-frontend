@@ -19,7 +19,6 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Link from "@/components/base/link";
 
 import useUser from "@/components/hooks/useUser";
-import Skeleton from "@/components/base/skeleton";
 
 import includes from "lodash/includes";
 // Translate Context
