@@ -4,7 +4,7 @@ import filter from "lodash/filter";
 import { useState, useEffect } from "react";
 import merge from "lodash/merge";
 
-import { useData } from "@/lib/api/api";
+import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 
@@ -17,13 +17,6 @@ import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
 
 import styles from "./Order.module.css";
-
-/**
- * Handles order action-button click
- */
-function onOrderClick() {
-  alert("Ordered!");
-}
 
 /**
  * Order Button
@@ -63,7 +56,7 @@ function ActionButton({
  * @returns component
  */
 
-function Order({ pid, work, user, isVisible, onClose }) {
+function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
   // translated state
 
   // layer state
@@ -82,7 +75,7 @@ function Order({ pid, work, user, isVisible, onClose }) {
 
   useEffect(() => {
     // ...
-  }, orderStatus);
+  }, [orderStatus]);
 
   // Cleanup on modal close
   useEffect(() => {
@@ -198,7 +191,7 @@ function Order({ pid, work, user, isVisible, onClose }) {
           isOrdered={isOrdered}
           isFailed={isFailed}
           onClick={() => {
-            onOrderClick();
+            onSubmit();
             setOrderStatus("ordering");
           }}
           callback={() => {
@@ -245,6 +238,9 @@ export default function Wrap(props) {
     userFragments.basic()
   );
 
+  const orderMutation = useMutate();
+  console.log("orderMutation", orderMutation);
+
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
@@ -260,6 +256,9 @@ export default function Wrap(props) {
       work={mergedWork?.work}
       user={userData?.user || {}}
       pid={order}
+      onSubmit={() => {
+        orderMutation.post(workFragments.details({ workId }));
+      }}
       {...props}
     />
   );
