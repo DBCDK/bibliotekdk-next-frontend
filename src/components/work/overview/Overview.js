@@ -22,9 +22,6 @@ import useUser from "@/components/hooks/useUser";
 import Skeleton from "@/components/base/skeleton";
 
 import includes from "lodash/includes";
-import { act } from "react-dom/test-utils";
-import { action } from "@storybook/addon-actions";
-
 // Translate Context
 const context = { context: "overview" };
 
