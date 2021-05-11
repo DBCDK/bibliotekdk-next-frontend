@@ -65,8 +65,8 @@ export default function WorkPage() {
         workId={workId}
         onTypeChange={handleOnTypeChange}
         onOnlineAccess={handleOnOnlineAccess}
-        onLogin={signIn}
-        onOrder={handleOrder}
+        login={signIn}
+        openOrderModal={handleOrder}
         type={type}
         query={{ type }}
       />

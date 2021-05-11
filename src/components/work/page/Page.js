@@ -27,8 +27,8 @@ export default function WorkPage({
   workId,
   onTypeChange,
   onOnlineAccess,
-  onLogin,
-  onOrder,
+  login,
+  openOrderModal,
   type = "Bog",
 }) {
   const router = useRouter();
@@ -40,8 +40,8 @@ export default function WorkPage({
           workId={workId}
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
-          onLogin={onLogin}
-          onOrder={onOrder}
+          login={login}
+          openOrderModal={openOrderModal}
           type={type}
           anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
@@ -95,4 +95,5 @@ WorkPage.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
+  openOrderModal: PropTypes.func,
 };

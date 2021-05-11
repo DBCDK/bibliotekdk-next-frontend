@@ -40,8 +40,9 @@ export function Overview({
   type,
   onTypeChange = () => {},
   onOnlineAccess = () => {},
-  onLogin = () => {},
-  onOrder = () => {},
+  login = () => {},
+  openOrderModal = () => {},
+  user = {},
   className = "",
   skeleton = false,
 }) {
@@ -59,8 +60,8 @@ export function Overview({
 
   const orderActions = {
     onlineAccess: onOnlineAccess,
-    onLogin: onLogin,
-    onOrder: onOrder,
+    login: login,
+    openOrderModal: openOrderModal,
   };
 
   // Handle slectedMaterial
@@ -163,7 +164,10 @@ export function Overview({
                 <OrderButton
                   selectedMaterial={selectedMaterial}
                   skeleton={skeleton}
-                  funcs={orderActions}
+                  user={user}
+                  onlineAccess={onOnlineAccess}
+                  login={login}
+                  openOrderModal={openOrderModal}
                 />
               </Col>
               <Col xs={12} className={styles.info}>
@@ -193,7 +197,20 @@ export function Overview({
  * @return {JSX.Element}
  * @constructor
  */
-function OrderButton({ selectedMaterial, skeleton, funcs }) {
+function OrderButton({
+  selectedMaterial,
+  skeleton,
+  onlineAccess,
+  login,
+  openOrderModal,
+  user,
+}) {
+  /*
+   onlineAccess={onOnlineAccess}
+                  login={login}
+                  openOrderModal={openOrderModal}
+   */
+
   // The loan button is skeleton until we know if selected
   // material is physical or online
   let buttonSkeleton =
@@ -211,9 +228,7 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
       <Button
         className={styles.externalLink}
         skeleton={buttonSkeleton}
-        onClick={() =>
-          funcs.onlineAccess(selectedMaterial.onlineAccess[0]?.url)
-        }
+        onClick={() => onlineAccess(selectedMaterial.onlineAccess[0]?.url)}
       >
         <Icon src={"external.svg"} skeleton={skeleton} />
         {Translate({
@@ -229,11 +244,10 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
     );
   }
   // is user logged in
-  const user = useUser();
   if (!user.isAuthenticated) {
     // login button
     return (
-      <Button skeleton={buttonSkeleton} onClick={() => funcs.onLogin()}>
+      <Button skeleton={buttonSkeleton} onClick={() => login()}>
         {Translate({ ...context, label: "Order (not logged in)" })}
       </Button>
     );
@@ -268,7 +282,7 @@ function OrderButton({ selectedMaterial, skeleton, funcs }) {
   }
   // all is well - material can be ordered - order button
   return (
-    <Button skeleton={buttonSkeleton} onClick={() => funcs.onOrder(pid)}>
+    <Button skeleton={buttonSkeleton} onClick={() => openOrderModal(pid)}>
       {Translate({ context: "general", label: "bestil" })}
     </Button>
   );
@@ -352,9 +366,12 @@ export default function Wrap(props) {
     type,
     onTypeChange,
     onOnlineAccess,
-    onLogin,
-    onOrder,
+    login,
+    openOrderModal,
   } = props;
+
+  const user = useUser();
+
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })
@@ -381,8 +398,9 @@ export default function Wrap(props) {
       type={type}
       onTypeChange={onTypeChange}
       onOnlineAccess={onOnlineAccess}
-      onLogin={onLogin}
-      onOrder={onOrder}
+      login={login}
+      openOrderModal={openOrderModal}
+      user={user}
     />
   );
 }
@@ -393,5 +411,7 @@ Wrap.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
-  onOrder: PropTypes.func,
+  openOrderModal: PropTypes.func,
+  user: PropTypes.object,
+  login: PropTypes.func,
 };
