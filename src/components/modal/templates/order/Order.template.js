@@ -7,47 +7,15 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
-
-import Button from "@/components/base/button";
-import Translate from "@/components/base/translate";
+import { submitOrder } from "@/lib/api/order.mutations";
 
 // Layers
 import Info from "./layers/info";
 import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
+import Action from "./layers/action";
 
 import styles from "./Order.module.css";
-
-/**
- * Order Button
- */
-function ActionButton({
-  onClick = null,
-  isVisible,
-  isOrdering,
-  isOrdered,
-  isFailed,
-  callback,
-}) {
-  const hiddenClass = !isVisible ? styles.hidden : "";
-  const orderingClass = isOrdering ? styles.ordering : "";
-
-  return (
-    <div
-      className={`${styles.action} ${orderingClass} ${hiddenClass}`}
-      aria-hidden={!isVisible}
-    >
-      <Button
-        onClick={() => {
-          onClick && onClick();
-          callback && callback();
-        }}
-      >
-        {Translate({ context: "general", label: "accept" })}
-      </Button>
-    </div>
-  );
-}
 
 /**
  *  Order component function
@@ -56,7 +24,7 @@ function ActionButton({
  * @returns component
  */
 
-function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
+function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   // translated state
 
   // layer state
@@ -66,16 +34,13 @@ function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
   // Order is validated state
   const [validated, setValidated] = useState(false);
 
-  const [orderStatus, setOrderStatus] = useState(false);
-
   // Selected pickup branch
   // If none selected, use first branch in the list
   let [pickupBranch, setPickupBranch] = useState();
   pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
 
-  useEffect(() => {
-    // ...
-  }, [orderStatus]);
+  // Email
+  const [mail, setMail] = useState(false);
 
   // Cleanup on modal close
   useEffect(() => {
@@ -108,10 +73,16 @@ function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
     }
   }, [isVisible]);
 
+  useEffect(() => {
+    const hasMail = !!(user.mail || mail);
+    const hasBranchId = !!pickupBranch?.branchId;
+    const hasPid = !!pid;
+
+    setValidated(hasMail && hasBranchId && hasPid);
+  }, [mail, pid, pickupBranch]);
+
   function handleLayer(layer) {
     if (layer !== Router.query.modal) {
-      // setActiveLayer(layer);
-      // setTranslated(true);
       Router.push({
         pathname: Router.pathname,
         query: { ...Router.query, modal: `order-${layer}` },
@@ -123,23 +94,26 @@ function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
   const {
     title = "...",
     creators = [{ name: "..." }],
-    // cover = {},
-    // description = "",
-    // subjects = [],
-    // path = [],
     materialTypes = [],
   } = work;
 
   // User props
-  const { name, mail, agency, postalCode, address } = user;
+  const { agency } = user;
+
+  // order
+  const {
+    data: orderData,
+    error: orderError,
+    isLoading: orderIsLoading,
+  } = order;
 
   // Material by pid
   const material = filter(materialTypes, (o) => o.pid === pid)[0];
 
   // status
-  const isOrdering = orderStatus && orderStatus === "ordering";
-  const isOrdered = orderStatus && orderStatus === "ordered";
-  const isFailed = orderStatus && orderStatus === "failed";
+  const isOrdering = orderIsLoading;
+  const isOrdered = orderData?.submitOrder?.status === "ok";
+  const isFailed = !!orderError;
 
   // class'
   const activePageClass = activeLayer ? styles[`active-${activeLayer}`] : "";
@@ -163,6 +137,7 @@ function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
                 handleLayer(layer);
               }}
               pickupBranch={pickupBranch}
+              onMailChange={(mail) => setMail(mail)}
             />
           </div>
           <div className={styles.right}>
@@ -184,15 +159,14 @@ function Order({ pid, work, user, isVisible, onClose, onSubmit }) {
             />
           </div>
         </div>
-        <ActionButton
+        <Action
           isVisible={!translated}
-          validated={validated}
+          isValidated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
           isFailed={isFailed}
           onClick={() => {
-            onSubmit();
-            setOrderStatus("ordering");
+            validated && onSubmit && onSubmit(pid, pickupBranch, mail);
           }}
           callback={() => {
             // some validation goes here...
@@ -239,7 +213,6 @@ export default function Wrap(props) {
   );
 
   const orderMutation = useMutate();
-  console.log("orderMutation", orderMutation);
 
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
@@ -256,8 +229,12 @@ export default function Wrap(props) {
       work={mergedWork?.work}
       user={userData?.user || {}}
       pid={order}
-      onSubmit={() => {
-        orderMutation.post(workFragments.details({ workId }));
+      order={orderMutation}
+      onSubmit={(pid, pickupBranch) => {
+        // console.log("onSubmit", pid, pickupBranch.branchId);
+        // orderMutation.post(
+        //   submitOrder({ pid, branchId: pickupBranch.branchId })
+        // );
       }}
       {...props}
     />

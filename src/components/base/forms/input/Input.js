@@ -25,24 +25,31 @@ function Input({
   onValidation,
   readOnly = false,
 }) {
+  const [val, setVal] = useState("");
+  const [valid, setValid] = useState(null);
+
   // Check for valid input (email), when input changes
   useEffect(() => {
-    if (onValidation) {
-      const valid = validateEmail(val);
-      // Allow empty field if field is not required
-      const isEmpty = val === "";
-      const allowEmpty = isEmpty && !required;
+    const valid = validateEmail(val);
+    // Allow empty field if field is not required
+    const isEmpty = val === "";
+    const allowEmpty = isEmpty && !required;
 
-      setValid(valid || allowEmpty);
-      onValidation(valid || allowEmpty);
-    }
-  }, val);
+    // Update validation
+    setValid(valid || allowEmpty);
+    onValidation && onValidation(valid || allowEmpty);
+    onChange && onChange(val, valid);
+  }, [val]);
 
-  const [val, setVal] = useState(value);
-  const [valid, setValid] = useState(null);
+  // Update value if undefined/null at first render
+  useEffect(() => {
+    setVal(value);
+  }, [value]);
 
   const validClass = valid ? styles.valid : "";
   const readOnlyClass = readOnly ? styles.readOnly : "";
+
+  console.log("val", val, value);
 
   return (
     <input
@@ -51,10 +58,7 @@ function Input({
       type="text"
       value={val}
       readOnly={readOnly}
-      onChange={(e) => {
-        setVal(e.target.value);
-        onChange && onChange(e.target.value);
-      }}
+      onChange={(e) => setVal(e.target.value)}
     />
   );
 }

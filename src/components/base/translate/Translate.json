@@ -722,8 +722,8 @@
         "en": "Ordered by"
       },
       "order-message": {
-        "da": "Du får besked når materialet er klar til afhentning på %s",
-        "en": "You will be notified when the material is ready for collection at %s"
+        "da": "Du får besked fra %s når materialet er klar til afhentning",
+        "en": "You will be notified by %s when the material is ready for collection"
       }
     },
     "units": {

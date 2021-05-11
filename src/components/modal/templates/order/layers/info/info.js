@@ -1,8 +1,6 @@
 import Link from "@/components/base/link";
-import Divider from "@/components/base/divider";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
-import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 import Tag from "@/components/base/forms/tag";
 import Input from "@/components/base/forms/input";
@@ -17,11 +15,12 @@ export default function Info({
   className,
   onLayerSelect,
   pickupBranch,
+  onMailChange,
 }) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
-  const { agency, name, mail } = user;
+  const { name, mail } = user;
 
   const context = { context: "order" };
 
@@ -72,8 +71,8 @@ export default function Info({
           </div>
         </div>
         <div className={styles.address}>
-          <Text type="text3">Willy Sørensens Plads 1</Text>
-          <Text type="text3">7100 Vejle</Text>
+          <Text type="text3">{pickupBranch?.postalAddress}</Text>
+          <Text type="text3">{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
         </div>
       </div>
 
@@ -85,17 +84,16 @@ export default function Info({
           <Text type="text1">{name}</Text>
         </div>
         <div className={styles.email}>
-          <label for="order-user-email">
+          <label htmlFor="order-user-email">
             <Text type="text1">
               {Translate({ context: "general", label: "email" })}
             </Text>
           </label>
           <Input
-            value={mail}
+            value={mail || ""}
             id="order-user-email"
-            onChange={(val) => console.log("input", val)}
-            onValidation={(valid) => console.log("valid", valid)}
-            readOnly={true}
+            onChange={(value, valid) => valid && onMailChange(value)}
+            readOnly={mail}
           />
         </div>
         <div className={styles.message}>
@@ -103,7 +101,7 @@ export default function Info({
             {Translate({
               ...context,
               label: "order-message",
-              vars: ["Vejle Bibliotek"],
+              vars: [pickupBranch?.name],
             })}
           </Text>
         </div>

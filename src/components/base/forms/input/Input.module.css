@@ -15,4 +15,6 @@
 
 .input.readOnly {
   background-color: var(--concrete);
+  color: var(--gray);
+  cursor: not-allowed;
 }
