@@ -121,9 +121,8 @@ export function Overview({
               <Col xs={12}>
                 {creators.map((c, i) => {
                   return (
-                    <span>
+                    <span key={`${c.name}-${i}`}>
                       <Link
-                        key={`${c.name}-${i}`}
                         children={c.name}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
