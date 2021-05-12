@@ -32,7 +32,7 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   const [activeLayer, setActiveLayer] = useState(null);
 
   // Order is validated state
-  const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(null);
 
   // Selected pickup branch
   // If none selected, use first branch in the list
@@ -40,7 +40,7 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
 
   // Email
-  const [mail, setMail] = useState(false);
+  const [mail, setMail] = useState(null);
 
   // Cleanup on modal close
   useEffect(() => {
@@ -74,11 +74,15 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   }, [isVisible]);
 
   useEffect(() => {
-    const hasMail = !!(user.mail || mail);
+    const hasMail = !!(user.mail || (mail?.value && mail?.valid));
+
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
 
-    setValidated(hasMail && hasBranchId && hasPid);
+    const status = hasMail && hasBranchId && hasPid;
+    const details = { hasMail, hasBranchId, hasPid };
+
+    setValidated({ status, details });
   }, [mail, pid, pickupBranch]);
 
   function handleLayer(layer) {
@@ -89,6 +93,8 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
       });
     }
   }
+
+  console.log("mail", mail);
 
   // Work props
   const {
@@ -120,7 +126,7 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   const activeTranslatedClass = translated ? styles.translated : "";
 
   // Validated
-  const validatedClass = validated ? styles.validated : "";
+  const validatedClass = validated?.status ? styles.validated : "";
 
   return (
     <div className={styles.order}>
@@ -137,7 +143,7 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
                 handleLayer(layer);
               }}
               pickupBranch={pickupBranch}
-              onMailChange={(mail) => setMail(mail)}
+              onMailChange={(value, valid) => setMail({ value, valid })}
             />
           </div>
           <div className={styles.right}>
@@ -161,16 +167,18 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
         </div>
         <Action
           isVisible={!translated}
-          isValidated={validated}
+          validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
+          data={{ pickupBranch, order }}
           isFailed={isFailed}
           onClick={() => {
-            validated && onSubmit && onSubmit(pid, pickupBranch, mail);
+            console.log("Action => onClick");
+            onSubmit && onSubmit(pid, pickupBranch, mail?.value);
           }}
+          onClose={onClose}
           callback={() => {
-            // some validation goes here...
-            setValidated(true);
+            console.log("callback");
           }}
         />
       </div>
@@ -230,11 +238,11 @@ export default function Wrap(props) {
       user={userData?.user || {}}
       pid={order}
       order={orderMutation}
-      onSubmit={(pid, pickupBranch) => {
-        // console.log("onSubmit", pid, pickupBranch.branchId);
-        // orderMutation.post(
-        //   submitOrder({ pid, branchId: pickupBranch.branchId })
-        // );
+      onSubmit={(pid, pickupBranch, email) => {
+        console.log("onSubmit : ", pid, pickupBranch.branchId, email);
+        orderMutation.post(
+          submitOrder({ pid, branchId: pickupBranch.branchId })
+        );
       }}
       {...props}
     />

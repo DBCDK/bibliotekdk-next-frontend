@@ -4,7 +4,7 @@
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function submitOrder({ pid, branchId }) {
+export function submitOrder({ pid, branchId, email }) {
   return {
     query: `mutation ($input: SubmitOrderInput!){
         submitOrder(input: $input){
@@ -19,6 +19,7 @@ export function submitOrder({ pid, branchId }) {
       input: {
         pids: [pid],
         pickUpBranch: branchId,
+        email,
       },
     },
   };

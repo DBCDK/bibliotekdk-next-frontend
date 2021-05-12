@@ -92,7 +92,7 @@ export default function Info({
           <Input
             value={mail || ""}
             id="order-user-email"
-            onChange={(value, valid) => valid && onMailChange(value)}
+            onBlur={(value, valid) => onMailChange(value, valid)}
             readOnly={mail}
           />
         </div>

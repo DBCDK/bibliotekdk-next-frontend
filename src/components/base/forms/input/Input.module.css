@@ -13,6 +13,10 @@
 .input.valid {
 }
 
+.input.error {
+  border: 1px solid var(--error);
+}
+
 .input.readOnly {
   background-color: var(--concrete);
   color: var(--gray);

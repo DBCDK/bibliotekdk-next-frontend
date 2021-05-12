@@ -22,22 +22,20 @@ function Input({
   value,
   required = false,
   onChange,
-  onValidation,
+  onBlur,
   readOnly = false,
 }) {
-  const [val, setVal] = useState("");
-  const [valid, setValid] = useState(null);
+  const [val, setVal] = useState(value || "");
+  const [valid, setValid] = useState(true);
 
   // Check for valid input (email), when input changes
   useEffect(() => {
     const valid = validateEmail(val);
+
     // Allow empty field if field is not required
-    const isEmpty = val === "";
-    const allowEmpty = isEmpty && !required;
+    const allowEmpty = val === "" && !required;
 
     // Update validation
-    setValid(valid || allowEmpty);
-    onValidation && onValidation(valid || allowEmpty);
     onChange && onChange(val, valid);
   }, [val]);
 
@@ -46,10 +44,8 @@ function Input({
     setVal(value);
   }, [value]);
 
-  const validClass = valid ? styles.valid : "";
+  const validClass = valid ? styles.valid : styles.error;
   const readOnlyClass = readOnly ? styles.readOnly : "";
-
-  console.log("val", val, value);
 
   return (
     <input
@@ -58,6 +54,14 @@ function Input({
       type="text"
       value={val}
       readOnly={readOnly}
+      onBlur={(e) => {
+        if (onBlur) {
+          const allowEmpty = val === "" && !required;
+          const valid = validateEmail(val) || allowEmpty;
+          setValid(valid);
+          onBlur(e.target.value, valid);
+        }
+      }}
       onChange={(e) => setVal(e.target.value)}
     />
   );
@@ -71,6 +75,7 @@ Input.propTypes = {
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 export default Input;
