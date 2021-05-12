@@ -7,7 +7,7 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
 import { useState, useEffect, useMemo } from "react";
 
-import { useData } from "@/lib/api/api";
+import { useData, fetcher } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 
 import { cyKey } from "@/utils/trim";
@@ -27,6 +27,10 @@ import Subject from "./templates/subject";
 import History from "./templates/history";
 
 import styles from "./Suggester.module.css";
+import {
+  collectSuggestPresented,
+  collectSuggestClick,
+} from "@/lib/api/datacollect.mutations";
 
 // Context
 const context = { context: "suggester" };
@@ -318,14 +322,18 @@ export function Suggester({
           onChange && onChange(value);
         }
       }}
-      onSuggestionSelected={(_, { suggestionValue }) => {
-        // Clear Query
-        onChange && onChange(isMobile ? "" : suggestionValue);
-        isMobile && setIntQuery("");
+      onSuggestionSelected={(_, entry) => {
+        const { suggestionValue, suggestion } = entry;
+
         // Blur input onselect
         blurInput();
         // Action
-        onSelect && onSelect(suggestionValue);
+        onSelect &&
+          onSelect(suggestionValue, suggestion, entry.suggestionIndex);
+
+        // Clear Query
+        onChange && onChange(isMobile ? "" : suggestionValue);
+        isMobile && setIntQuery("");
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(
@@ -365,10 +373,21 @@ export default function Wrap(props) {
   let { className } = props;
   const { onChange } = props;
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState();
 
   const { data, isLoading, error } = useData(
-    query && suggestFragments.all({ q: query })
+    query && query !== selected && suggestFragments.all({ q: query })
   );
+
+  useEffect(() => {
+    // Collect data
+    // User is presented with suggestions
+    if (query && data?.suggest?.result) {
+      fetcher(
+        collectSuggestPresented({ query, suggestions: data.suggest.result })
+      );
+    }
+  }, [data]);
 
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
@@ -380,6 +399,17 @@ export default function Wrap(props) {
       onChange={(q) => {
         onChange && onChange(q);
         setQuery(q);
+      }}
+      onSelect={(suggestionValue, suggestion, suggestionIndex) => {
+        setSelected(suggestionValue);
+        props.onSelect(suggestionValue);
+        fetcher(
+          collectSuggestClick({
+            query,
+            suggestion,
+            suggest_query_hit: suggestionIndex + 1,
+          })
+        );
       }}
       className={className}
       skeleton={isLoading}
