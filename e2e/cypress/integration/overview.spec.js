@@ -33,7 +33,7 @@ describe("Overview", () => {
 
   it(`Can tab to 'add-to-basket' button`, () => {
     cy.tab();
-    cy.focused().should("have.attr", "data-cy", "button-læg-i-lånekurv");
+    cy.focused().should("have.attr", "data-cy");
   });
 
   // Clicks
@@ -46,8 +46,8 @@ describe("Overview", () => {
   });
 
   it(`Can click on 'add-to-basket' button`, () => {
-    cy.get(`[data-cy=button-læg-i-lånekurv]`).click();
-    cy.focused().should("have.attr", "data-cy", "button-læg-i-lånekurv");
+    cy.get(`[data-cy=button-order-overview]`).click();
+    cy.focused().should("have.attr", "data-cy", "button-order-overview");
     cy.on("window:alert", (str) => {
       expect(str).to.equal(`Button clicked!`);
     });
@@ -86,6 +86,6 @@ describe("Overview", () => {
     // I.e. work details have not been fetched yet.
     // Othwerwise it is null or an array
     cy.get(`[data-cy=tag-punktskrift]`).click();
-    cy.get("[data-cy=button-cypress]").should("be.disabled");
+    cy.get("[data-cy=button-order-overview]").should("be.disabled");
   });
 });

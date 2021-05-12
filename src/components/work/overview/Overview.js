@@ -58,12 +58,6 @@ export function Overview({
   // Either use type from props, or from local state
   const selectedMaterial = materialTypesMap[type] || materialTypes[0] || false;
 
-  const orderActions = {
-    onlineAccess: onOnlineAccess,
-    login: login,
-    openOrderModal: openOrderModal,
-  };
-
   // Handle slectedMaterial
   function handleSelectedMaterial(material) {
     // Update query param callback
@@ -163,7 +157,6 @@ export function Overview({
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <OrderButton
                   selectedMaterial={selectedMaterial}
-                  skeleton={skeleton}
                   user={user}
                   onlineAccess={onOnlineAccess}
                   login={login}
@@ -197,9 +190,8 @@ export function Overview({
  * @return {JSX.Element}
  * @constructor
  */
-function OrderButton({
+export function OrderButton({
   selectedMaterial,
-  skeleton,
   onlineAccess,
   login,
   openOrderModal,
@@ -213,8 +205,7 @@ function OrderButton({
 
   // The loan button is skeleton until we know if selected
   // material is physical or online
-  let buttonSkeleton =
-    skeleton || typeof selectedMaterial.onlineAccess === "undefined";
+  let buttonSkeleton = typeof selectedMaterial.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
   1. material is accessible online (no user login) -> go to online url
@@ -230,7 +221,7 @@ function OrderButton({
         skeleton={buttonSkeleton}
         onClick={() => onlineAccess(selectedMaterial.onlineAccess[0]?.url)}
       >
-        <Icon src={"external.svg"} skeleton={skeleton} />
+        <Icon src={"external.svg"} skeleton={buttonSkeleton} />
         {Translate({
           ...context,
           label:
@@ -247,7 +238,11 @@ function OrderButton({
   if (!user.isAuthenticated) {
     // login button
     return (
-      <Button skeleton={buttonSkeleton} onClick={() => login()}>
+      <Button
+        skeleton={buttonSkeleton}
+        onClick={() => login()}
+        data_cy="button-order-overview"
+      >
         {Translate({ ...context, label: "Order (not logged in)" })}
       </Button>
     );
@@ -259,6 +254,10 @@ function OrderButton({
   const { data, isLoading, isSlow, error } = useData(
     manifestationFragments.availability({ pid })
   );
+
+  if (error) {
+    console.log("ERROR");
+  }
 
   let available = false;
   if (isLoading) {
@@ -275,6 +274,7 @@ function OrderButton({
         skeleton={buttonSkeleton}
         disabled={true}
         className={styles.disabledbutton}
+        data_cy="button-order-overview"
       >
         {Translate({ context: "overview", label: "Order-disabled" })}
       </Button>
@@ -282,15 +282,22 @@ function OrderButton({
   }
   // all is well - material can be ordered - order button
   return (
-    <Button skeleton={buttonSkeleton} onClick={() => openOrderModal(pid)}>
+    <Button
+      skeleton={buttonSkeleton}
+      onClick={() => openOrderModal(pid)}
+      data_cy="button-order-overview"
+    >
       {Translate({ context: "general", label: "bestil" })}
     </Button>
   );
 }
 
 function checkAvailability({ data, materialType }) {
-  // for now we only support oredering books
+  // for now we only support ordering books
   const supportedMaterialTypes = ["Bog"];
+
+  // @TODO use this: process.env.STORYBOOK_ACTIVE
+  // we cannot load data in wrap since materialType is selected ..
 
   if (!includes(supportedMaterialTypes, materialType)) {
     return false;

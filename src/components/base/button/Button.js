@@ -26,9 +26,10 @@ function Button({
   onClick = null,
   disabled = false,
   tabIndex = null,
+  data_cy = null,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
-  const key = cyKey({ name: children, prefix: "button" });
+  const key = data_cy ? data_cy : cyKey({ name: children, prefix: "button" });
 
   return (
     <button
