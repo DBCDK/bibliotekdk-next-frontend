@@ -2,6 +2,8 @@
  * @file
  * Test functionality of Header
  */
+const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+
 describe("Suggester", () => {
   before(function () {
     cy.visit("/iframe.html?id=search-suggester--header-suggester");
@@ -110,6 +112,71 @@ describe("Suggester", () => {
 
     cy.on("window:alert", (str) => {
       expect(str).to.equal(`History cleared`);
+    });
+  });
+});
+
+describe("Suggester data collect", () => {
+  it(`Should collect data for suggester`, () => {
+    // Intercept requests to graphql
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.startsWith("mutation")) {
+        req.alias = "apiMutation";
+      } else if (req.body.query.includes("suggest")) {
+        // mock the suggest response
+        req.reply({
+          data: {
+            suggest: {
+              result: [
+                {
+                  id: "some-work-id",
+                  __typename: "Work",
+                  title: "Hest i flugt",
+                  cover: {
+                    thumbnail:
+                      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51971485&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=244ae7aa540f41939461",
+                  },
+                },
+              ],
+            },
+            monitor: "OK",
+          },
+        });
+      }
+    });
+
+    cy.visit(`${nextjsBaseUrl}`);
+    cy.get("[data-cy=suggester-input]").type("h");
+
+    // When suggestions appear data should be logged
+    cy.wait("@apiMutation").then((interception) => {
+      const data = interception.request.body.variables.input.suggest_presented;
+
+      expect(data).to.deep.equal({
+        suggest_query: "h",
+        suggest_query_request_types: ["subject", "creator", "work"],
+        suggest_query_results: [{ type: "work", value: "some-work-id" }],
+        session_id: "test",
+      });
+
+      expect(interception.response.body.errors).to.be.undefined;
+    });
+
+    cy.get("[data-cy=suggester-work-element]").first().click();
+
+    // When a row is clicked data should be logged
+    cy.wait("@apiMutation").then((interception) => {
+      const data = interception.request.body.variables.input.suggest_click;
+
+      expect(data).to.deep.equal({
+        suggest_query: "h",
+        suggest_query_hit: 1,
+        suggest_query_request_types: ["subject", "creator", "work"],
+        suggest_query_result: { type: "work", value: "some-work-id" },
+        session_id: "test",
+      });
+
+      expect(interception.response.body.errors).to.be.undefined;
     });
   });
 });
