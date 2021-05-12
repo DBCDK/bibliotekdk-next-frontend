@@ -18,7 +18,6 @@ import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLangcode } from "@/components/base/translate/Translate";
 
 function ArticleHeader({ article }) {
-  console.log(article, "ARTICLE");
   const context = { context: "articles" };
 
   let creatorName =
