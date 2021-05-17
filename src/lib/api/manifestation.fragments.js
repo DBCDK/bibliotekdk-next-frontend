@@ -11,16 +11,13 @@ export function availability({ pid }) {
     // delay: 250,
     query: `query ($pid: String!) {
       manifestation(pid: $pid) {
-      materialType
-      materialType
-           
-              availability{
-                orderPossible
-                orderPossibleReason
-                willLend
-                expectedDelivery
-              }
-           
+        materialType
+        availability{
+           orderPossible
+           orderPossibleReason
+           willLend
+           expectedDelivery
+           }
       }
       monitor(name: "bibdknext_manifestations_availability")
     }`,
