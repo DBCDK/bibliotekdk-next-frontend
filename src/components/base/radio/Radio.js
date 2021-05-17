@@ -27,11 +27,13 @@ function Button({
   onSelect,
   selected,
   _ref,
+  tabIndex = "0",
   className,
   ...props
 }) {
   return (
     <div
+      tabIndex={tabIndex}
       data-cy={props["data-cy"]}
       ref={_ref}
       role="radio"
@@ -60,6 +62,7 @@ function Button({
 }
 Button.propTypes = {
   className: PropTypes.string,
+  tabIndex: PropTypes.string,
   label: PropTypes.string,
   onSelect: PropTypes.func,
   selected: PropTypes.bool,

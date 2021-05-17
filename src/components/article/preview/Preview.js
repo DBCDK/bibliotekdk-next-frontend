@@ -7,20 +7,7 @@ import Skeleton from "@/components/base/skeleton";
 import Link from "@/components/base/link";
 import { articlePathAndTarget } from "@/components/articles/utils";
 
-/**
- * Animated arrow that turns into a line when hovered/focused
- */
-export function Arrow({ className = "" }) {
-  return (
-    <div className={`${styles.arrow} ${className}`}>
-      <div className={styles.trapezoid} />
-      <div className={styles.trapezoid} />
-      <div className={styles.trapezoid} />
-      <div className={styles.trapezoid} />
-      {/* <div className={styles.flatnose} /> */}
-    </div>
-  );
-}
+import Arrow from "@/components/base/animation/arrow";
 
 /**
  * Preview of article
@@ -72,7 +59,7 @@ export default function ArticlePreview({ article, skeleton, rubrik = true }) {
             {article.fieldRubrik}
           </Text>
         )}
-        <Arrow />
+        <Arrow className={styles.arrow} />
       </a>
     </Link>
   );

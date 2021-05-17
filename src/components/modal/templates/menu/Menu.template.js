@@ -7,11 +7,10 @@ import { cyKey } from "@/utils/trim";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
+import Arrow from "@/components/base/animation/arrow";
 import Translate from "@/components/base/translate";
 
 import AnimationLine from "@/components/base/animation/line";
-
-import { Arrow } from "@/components/article/preview";
 
 import styles from "./Menu.module.css";
 

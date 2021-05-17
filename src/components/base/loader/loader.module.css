@@ -11,7 +11,9 @@
   height: 100%;
   background-color: var(--blue);
   transform: translateX(-100%);
+}
 
+.loader.active .bar {
   animation: load 2s ease-in-out 1s forwards;
 }
 

@@ -5,7 +5,7 @@ import Translate from "@/components/base/translate";
 import Tag from "@/components/base/forms/tag";
 import Input from "@/components/base/forms/input";
 import Cover from "@/components/base/cover";
-import { Arrow } from "@/components/article/preview";
+import Arrow from "@/components/base/animation/arrow";
 
 import styles from "./Info.module.css";
 
@@ -16,6 +16,7 @@ export default function Info({
   onLayerSelect,
   pickupBranch,
   onMailChange,
+  isVisible,
 }) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
@@ -62,6 +63,7 @@ export default function Info({
             <Link
               onClick={() => onLayerSelect("pickup")}
               border={{ bottom: { keepVisible: true } }}
+              tabIndex={isVisible ? "0" : "-1"}
             >
               <Text type="text3">
                 {Translate({ ...context, label: "pickup-link" })}
@@ -90,6 +92,7 @@ export default function Info({
             </Text>
           </label>
           <Input
+            tabIndex={isVisible ? "0" : "-1"}
             value={mail || ""}
             id="order-user-email"
             onBlur={(value, valid) => onMailChange(value, valid)}

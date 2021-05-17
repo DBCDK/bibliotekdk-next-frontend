@@ -24,7 +24,16 @@ import styles from "./Order.module.css";
  * @returns component
  */
 
-function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
+function Order({
+  pid,
+  work,
+  user,
+  order,
+  isVisible,
+  onClose,
+  onSubmit,
+  isLoading,
+}) {
   // translated state
 
   // layer state
@@ -42,15 +51,13 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   // Email
   const [mail, setMail] = useState(null);
 
-  // Cleanup on modal close
+  // Update modal url param
   useEffect(() => {
     const layer = Router.query.modal?.split("-")[1];
-
     // If layer info (default) layer is requsted
     if (!layer) {
       setTranslated(false);
     }
-
     // If another layer is requested
     else {
       // If same layer as before is requested
@@ -73,9 +80,14 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
     }
   }, [isVisible]);
 
+  // Update email
   useEffect(() => {
-    const hasMail = !!(user.mail || (mail?.value && mail?.valid));
+    setMail({ value: user.mail || "", valid: true });
+  }, [user.mail]);
 
+  // Update validation
+  useEffect(() => {
+    const hasMail = !!mail?.valid;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
 
@@ -85,6 +97,11 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
     setValidated({ status, details });
   }, [mail, pid, pickupBranch]);
 
+  /**
+   *  Function to handle the active layer in modal
+   *
+   * @param {string} layer
+   */
   function handleLayer(layer) {
     if (layer !== Router.query.modal) {
       Router.push({
@@ -93,8 +110,6 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
       });
     }
   }
-
-  console.log("mail", mail);
 
   // Work props
   const {
@@ -128,6 +143,8 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   // Validated
   const validatedClass = validated?.status ? styles.validated : "";
 
+  console.log("validated", validated);
+
   return (
     <div className={styles.order}>
       <div className={styles.container}>
@@ -136,6 +153,7 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
         >
           <div className={styles.left}>
             <Info
+              isVisible={!translated}
               material={{ ...material, title, creators }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
@@ -148,11 +166,13 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
           </div>
           <div className={styles.right}>
             <Edition
+              isVisible={activeLayer === "edition"}
               className={`${styles.page} ${styles[`page-edition`]}`}
               onChange={(val) => console.log(val + " selected")}
               onClose={(e) => Router.back()}
             />
             <Pickup
+              isVisible={activeLayer === "pickup"}
               agency={agency}
               className={`${styles.page} ${styles[`page-library`]}`}
               onSelect={(branch) => {
@@ -173,8 +193,9 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
           data={{ pickupBranch, order }}
           isFailed={isFailed}
           onClick={() => {
-            console.log("Action => onClick");
-            onSubmit && onSubmit(pid, pickupBranch, mail?.value);
+            if (validated.status) {
+              onSubmit && onSubmit(pid, pickupBranch, mail?.value);
+            }
           }}
           onClose={onClose}
           callback={() => {
@@ -186,8 +207,15 @@ function Order({ pid, work, user, order, isVisible, onClose, onSubmit }) {
   );
 }
 
-function OrderSkeleton({}) {
-  return <div>loading...</div>;
+function OrderSkeleton(props) {
+  return "hest";
+
+  return (
+    <Order
+      className={`${props.className} ${styles.skeleton}`}
+      isLoading={true}
+    />
+  );
 }
 
 /**

@@ -5,6 +5,8 @@ import Radio from "@/components/base/radio";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 
+import Arrow from "@/components/base/animation/arrow";
+
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
@@ -25,21 +27,29 @@ export default function Pickup({
   onClose,
   onSelect,
   selected,
+  isVisible,
 }) {
   if (!agency) {
     return null;
   }
+
+  // tabIndex
+  const tabIndex = isVisible ? "0" : "-1";
+
   return (
     <div className={`${styles.pickup} ${className}`}>
-      {/* TODO insert proper back button */}
-      <Link onClick={onClose}>Tilbage</Link>
+      <Link onClick={onClose} tabIndex={tabIndex}>
+        <Arrow flip className={styles.arrow} />
+      </Link>
+
       <Title type="title4" tag="h2">
         {agency.name || "Afhentningssted"}
       </Title>
 
-      <Radio.Group>
+      <Radio.Group tabIndex={tabIndex}>
         {agency.branches.map((branch) => (
           <Radio.Button
+            tabIndex={tabIndex}
             key={branch.branchId}
             selected={selected.branchId === branch.branchId}
             onSelect={() => {

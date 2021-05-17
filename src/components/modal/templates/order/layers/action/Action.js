@@ -16,24 +16,39 @@ function Action({
   onClick = null,
   validated,
   isVisible,
-  isOrdering,
-  isOrdered,
-  isFailed,
+  isOrdering: _isOrdering,
+  isOrdered: _isOrdered,
+  isFailed: _isFailed,
   data,
   onClose,
   callback,
 }) {
   const context = { context: "order" };
-  //   debug
-  //   const [isOrdering, setIsOrdering] = useState(true);
-  //   const [isOrdered, setIsOrdered] = useState(false);
-  //   const [isFailed, setIsFailed] = useState(false);
 
-  //   setTimeout(() => {
-  //     setIsOrdering(false);
-  //     setIsOrdered(false);
-  //     setIsFailed(true);
-  //   }, 3000);
+  // Internal orderstatus
+  const [isOrdering, setIsOrdering] = useState(false);
+  const [isOrdered, setIsOrdered] = useState(false);
+  const [isFailed, setIsFailed] = useState(false);
+
+  // Loader callback status (set to true when loadingbar has finished loading)
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    if (_isOrdering) {
+      setIsOrdering(true);
+    }
+
+    if (hasLoaded) {
+      if (_isOrdered) {
+        setIsOrdering(false);
+        setIsOrdered(true);
+      } else if (_isFailed) {
+        setIsOrdering(false);
+        setIsOrdered(false);
+        setIsFailed(true);
+      }
+    }
+  }, [_isOrdering, _isOrdered, _isFailed, hasLoaded]);
 
   // order data
   const {
@@ -47,11 +62,8 @@ function Action({
 
   const hiddenClass = !isVisible ? styles.hidden : "";
   const orderingClass = isOrdering ? styles.ordering : "";
-  const orderedClass = isOrdered ? styles.ordered : "";
-  const failedClass = isFailed ? styles.failed : "";
-
-  //   const isValidated = validated?.status;
-  const isValidated = true;
+  const orderedClass = isOrdered && hasLoaded ? styles.ordered : "";
+  const failedClass = isFailed && hasLoaded ? styles.failed : "";
 
   const orsId = orderData?.submitOrder?.orsId;
 
@@ -62,8 +74,9 @@ function Action({
     >
       <div className={styles.top}>
         <Button
+          tabIndex={isVisible ? "0" : "-1"}
           onClick={() => {
-            onClick && isValidated && onClick();
+            onClick && onClick();
             callback && callback();
           }}
         >
@@ -72,7 +85,13 @@ function Action({
       </div>
 
       <div className={styles.loaderWrap}>
-        <Loader className={styles.loader} duration={2} delay={1} />
+        <Loader
+          className={styles.loader}
+          callback={() => setHasLoaded(true)}
+          start={isOrdering}
+          duration={2}
+          delay={1}
+        />
       </div>
 
       <div className={styles.result}>
@@ -109,7 +128,11 @@ function Action({
             </Text>
           )}
 
-          <Button className={styles.close} onClick={onClose}>
+          <Button
+            tabIndex={isVisible && orsId ? "0" : "-1"}
+            className={styles.close}
+            onClick={onClose}
+          >
             {Translate({ context: "general", label: "close" })}
           </Button>
         </div>

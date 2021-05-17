@@ -18,6 +18,7 @@ import { useState, useEffect } from "react";
  */
 function Input({
   className,
+  tabIndex = "0",
   id,
   value,
   required = false,
@@ -54,6 +55,7 @@ function Input({
       type="text"
       value={val}
       readOnly={readOnly}
+      tabIndex={tabIndex}
       onBlur={(e) => {
         if (onBlur) {
           const allowEmpty = val === "" && !required;
@@ -70,6 +72,7 @@ function Input({
 // PropTypes for component
 Input.propTypes = {
   id: PropTypes.string,
+  tabIndex: PropTypes.string,
   className: PropTypes.string,
   value: PropTypes.string,
   required: PropTypes.bool,
