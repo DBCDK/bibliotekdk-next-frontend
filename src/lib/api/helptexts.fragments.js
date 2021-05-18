@@ -1,12 +1,15 @@
+import { getLangcode } from "./fragments.utils";
 /**
  * Helptexts - published
  */
 export function publishedHelptexts({ language }) {
+  const langcode = getLangcode(language);
   return {
-    query: `query ($language: LanguageId!){
+    query: `query ($language: LanguageId! $langcode: [String]){
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["help_text"]},
-        {field: "status", value:"1"}
+        {field: "status", value:"1"},
+        {field: "langcode", value: $langcode}
       ] }) {
         count
         entities(language:$language) {
@@ -30,7 +33,7 @@ export function publishedHelptexts({ language }) {
       }
      monitor(name: "published_helptexts")
     }`,
-    variables: { language },
+    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }
