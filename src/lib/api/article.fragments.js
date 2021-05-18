@@ -3,6 +3,8 @@
  *
  */
 
+import { getLangcode } from "./fragments.utils";
+
 /**
  *
  * Fetch a specific article by id (nid)
@@ -52,13 +54,15 @@ export function article({ articleId, language }) {
  * Articles that are promoted to the frontpage
  */
 export function promotedArticles({ language }) {
+  const langcode = getLangcode(language);
   return {
     // delay: 1000, // for debugging
-    query: `query ( $language: LanguageId! ) {
+    query: `query ( $language: LanguageId! $langcode: [String] ) {
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["article"]}, 
         {field: "promote", value: "1"},
-        {field: "status", value: "1"}
+        {field: "status", value: "1"},
+        {field: "langcode", value: $langcode}
       ] }) {
         entities (language:$language) {
           __typename
@@ -88,7 +92,7 @@ export function promotedArticles({ language }) {
       }
       monitor(name: "promoted_articles")
     }`,
-    variables: { language },
+    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }
@@ -97,12 +101,14 @@ export function promotedArticles({ language }) {
  * All published Articles
  */
 export function allArticles({ language }) {
+  const langcode = getLangcode(language);
   return {
     // delay: 1000, // for debugging
-    query: `query( $language: LanguageId! ) {
+    query: `query( $language: LanguageId! $langcode: [String] ) {
       nodeQuery (limit:100 filter: {conditions: [
         {field: "type", value: ["article"]},
-        {field: "status", value: "1"}
+        {field: "status", value: "1"},
+        {field: "langcode", value: $langcode}
       ] }) {
         entities(language:$language) {
           __typename
@@ -127,7 +133,7 @@ export function allArticles({ language }) {
       }
       monitor(name: "all_articles")
     }`,
-    variables: { language },
+    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }

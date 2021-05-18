@@ -1,10 +1,14 @@
+import { getLangcode } from "./fragments.utils";
+
 export function promotedFaqs(language) {
+  const langcode = getLangcode(language);
   return {
-    query: `query($language: LanguageId!) {
+    query: `query($language: LanguageId! $langcode [String) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
-        {field: "promote", value:"1"}
+        {field: "promote", value:"1"},
+        {field: "langcode", value: $langcode}
       ] }) {
         count
         entities (language: $language){
@@ -29,27 +33,29 @@ export function promotedFaqs(language) {
       }
      monitor(name: "promoted_faqs")
     }`,
-    variables: { language },
+    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }
 
 /**
  * Get published faq's
- * @param langcode
+ * @param language
  *  NOTICE Drupals default language code is en - most (all) content is written in en ..
  *  as default
  * @return {{variables: {}, slowThreshold: number, query: string}}
  */
-export function publishedFaqs(langcode) {
+export function publishedFaqs(language) {
+  const langcode = getLangcode(language);
   return {
-    query: `query($langcode: LanguageId!) {
+    query: `query($language: LanguageId! $langcode [String] ) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
-        {field: "status", value:"1"}
+        {field: "status", value:"1"},
+        {field: "langcode", value: $langcode}
       ] }) {
         count
-        entities (language: $langcode){
+        entities (language: $language){
         ... on NodeFaq {
             langcode {
               value
@@ -71,7 +77,7 @@ export function publishedFaqs(langcode) {
       }
      monitor(name: "published_faqs")
     }`,
-    variables: { langcode },
+    variables: { language, langcode },
     slowThreshold: 3000,
   };
 }
