@@ -43,7 +43,6 @@ export function Result({ result = [], isLoading, query }) {
                 isLoading ? styles.skeleton : ""
               }`}
               href={`/hjaelp/${encodeString(doc.orgTitle)}/${doc.nid}`}
-              disabled={true}
               onClick={
                 isLoading &&
                 ((e) => {
