@@ -27,6 +27,8 @@ export default function WorkPage({
   workId,
   onTypeChange,
   onOnlineAccess,
+  login,
+  openOrderModal,
   type = "Bog",
 }) {
   const router = useRouter();
@@ -38,6 +40,8 @@ export default function WorkPage({
           workId={workId}
           onTypeChange={onTypeChange}
           onOnlineAccess={onOnlineAccess}
+          login={login}
+          openOrderModal={openOrderModal}
           type={type}
           anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
@@ -57,6 +61,11 @@ export default function WorkPage({
           type={type}
           anchor-label={Translate({ context: "content", label: "title" })}
         />
+        <Keywords
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "keywords", label: "title" })}
+        />
         <Series
           workId={workId}
           anchor-label={Translate({ context: "workmenu", label: "series" })}
@@ -67,11 +76,6 @@ export default function WorkPage({
             context: "recommendations",
             label: "remindsOf",
           })}
-        />
-        <Keywords
-          workId={workId}
-          type={type}
-          anchor-label={Translate({ context: "keywords", label: "title" })}
         />
         <Reviews
           workId={workId}
@@ -91,4 +95,5 @@ WorkPage.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
+  openOrderModal: PropTypes.func,
 };

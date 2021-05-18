@@ -20,6 +20,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
+import { signIn } from "@dbcdk/login-nextjs/client";
 
 /**
  * Renders the WorkPage component
@@ -50,6 +51,13 @@ export default function WorkPage() {
     window.open(url, "_blank");
   }
 
+  function handleOrder(pid) {
+    router.push({
+      pathname: router.pathname,
+      query: { ...router.query, order: `${pid}`, modal: "order" },
+    });
+  }
+
   return (
     <React.Fragment>
       <Header workId={workId} />
@@ -57,6 +65,8 @@ export default function WorkPage() {
         workId={workId}
         onTypeChange={handleOnTypeChange}
         onOnlineAccess={handleOnOnlineAccess}
+        login={signIn}
+        openOrderModal={handleOrder}
         type={type}
         query={{ type }}
       />

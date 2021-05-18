@@ -137,7 +137,7 @@ export function ManifestationFull({ manifestation }) {
                 <Text type="text4" lines={1}>
                   {label}
                 </Text>
-                <Text type="text3" lines={2}>
+                <Text type="text3" lines={2} tag="span">
                   {value}
                 </Text>
               </div>

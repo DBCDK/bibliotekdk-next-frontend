@@ -350,6 +350,14 @@
       "onlineAccessAudiobook": {
         "da": "Gå til lydbog",
         "en": "Get the audio book"
+      },
+      "Order (not logged in)" : {
+        "da": "Bestil (ikke logget ind)",
+        "en": "Order (not logged in)"
+      },
+      "Order-disabled": {
+        "da" : "Bestil (deaktiveret))",
+        "en" : "Order (disabled)"
       }
     },
     "details": {

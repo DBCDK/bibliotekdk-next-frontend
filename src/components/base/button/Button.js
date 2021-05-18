@@ -26,9 +26,10 @@ function Button({
   onClick = null,
   disabled = false,
   tabIndex = null,
+  data_cy = null,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
-  const key = cyKey({ name: children, prefix: "button" });
+  const key = data_cy ? data_cy : cyKey({ name: children, prefix: "button" });
 
   return (
     <button
@@ -83,7 +84,7 @@ export default function Container(props) {
 
 // PropTypes for component
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.any,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["primary", "secondary"]),
   size: PropTypes.oneOf(["large", "medium", "small"]),

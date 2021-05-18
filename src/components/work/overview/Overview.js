@@ -17,7 +17,14 @@ import Translate from "@/components/base/translate";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Link from "@/components/base/link";
+
+import useUser from "@/components/hooks/useUser";
+
+import includes from "lodash/includes";
+// Translate Context
+const context = { context: "overview" };
 
 /**
  * The Component function
@@ -35,12 +42,12 @@ export function Overview({
   type,
   onTypeChange = () => {},
   onOnlineAccess = () => {},
+  login = () => {},
+  openOrderModal = () => {},
+  user = {},
   className = "",
   skeleton = false,
 }) {
-  // Translate Context
-  const context = { context: "overview" };
-
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
 
@@ -60,11 +67,6 @@ export function Overview({
       onTypeChange({ type: material.materialType });
     }
   }
-
-  // The loan button is skeleton until we know if selected
-  // material is physical or online
-  const buttonSkeleton =
-    skeleton || typeof selectedMaterial.onlineAccess === "undefined";
 
   const searchOnUrl = "/find?q=";
 
@@ -114,25 +116,27 @@ export function Overview({
                 />
               </Col>
               <Col xs={12}>
-                <Text
-                  type="text3"
-                  className={styles.creators}
-                  skeleton={skeleton}
-                  lines={1}
-                >
-                  {creators.map((c, i) => {
-                    let creatorLink = (
+                {creators.map((c, i) => {
+                  return (
+                    <span key={`${c.name}-${i}`}>
                       <Link
                         children={c.name}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
-                      />
-                    );
-                    return creators.length > i + 1
-                      ? creatorLink + ", "
-                      : creatorLink;
-                  })}
-                </Text>
+                      >
+                        <Text
+                          type="text3"
+                          className={styles.creators}
+                          skeleton={skeleton}
+                          lines={1}
+                        >
+                          {c.name}
+                        </Text>
+                      </Link>
+                      {creators.length > i + 1 ? ", " : ""}
+                    </span>
+                  );
+                })}
               </Col>
 
               <Col xs={12} className={styles.materials}>
@@ -153,44 +157,13 @@ export function Overview({
                 })}
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                {selectedMaterial.onlineAccess ? (
-                  <Button
-                    className={styles.externalLink}
-                    skeleton={buttonSkeleton}
-                    onClick={() =>
-                      onOnlineAccess(selectedMaterial.onlineAccess[0]?.url)
-                    }
-                  >
-                    <Icon src={"external.svg"} skeleton={skeleton} />
-                    {Translate({
-                      ...context,
-                      label:
-                        selectedMaterial.materialType === "Ebog"
-                          ? "onlineAccessEbook"
-                          : selectedMaterial.materialType.includes("Lydbog")
-                          ? "onlineAccessAudiobook"
-                          : "onlineAccessUnknown",
-                    })}
-                  </Button>
-                ) : (
-                  <Button
-                    skeleton={buttonSkeleton}
-                    onClick={(e) => {
-                      if (Router) {
-                        Router.push({
-                          pathname: Router.pathname,
-                          query: {
-                            ...Router.query,
-                            order: selectedMaterial.pid,
-                            modal: "order",
-                          },
-                        });
-                      }
-                    }}
-                  >
-                    {Translate({ ...context, label: "addToCart" })}
-                  </Button>
-                )}
+                <OrderButton
+                  selectedMaterial={selectedMaterial}
+                  user={user}
+                  onlineAccess={onOnlineAccess}
+                  login={login}
+                  openOrderModal={openOrderModal}
+                />
               </Col>
               <Col xs={12} className={styles.info}>
                 <Text type="text3" skeleton={skeleton} lines={2}>
@@ -206,6 +179,133 @@ export function Overview({
       </Container>
     </div>
   );
+}
+
+/**
+ * Seperat function for orderbutton
+ * Check what kind of material (eg. online, not avialable etc)
+ * and present appropiate button
+ *
+ * @param selectedMaterial
+ * @param skeleton
+ * @param funcs
+ * @return {JSX.Element}
+ * @constructor
+ */
+export function OrderButton({
+  selectedMaterial,
+  onlineAccess,
+  login,
+  openOrderModal,
+  user,
+}) {
+  /*
+   onlineAccess={onOnlineAccess}
+                  login={login}
+                  openOrderModal={openOrderModal}
+   */
+
+  // The loan button is skeleton until we know if selected
+  // material is physical or online
+  let buttonSkeleton = typeof selectedMaterial.onlineAccess === "undefined";
+
+  /* order button acts on following scenarios:
+  1. material is accessible online (no user login) -> go to online url
+  2. user is not logged in -> go to login
+  3. material is available for logged in library -> prepare order button with parameters
+  4. material is not avialable -> disable
+   */
+
+  if (selectedMaterial.onlineAccess) {
+    return (
+      <Button
+        className={styles.externalLink}
+        skeleton={buttonSkeleton}
+        onClick={() => onlineAccess(selectedMaterial.onlineAccess[0]?.url)}
+      >
+        <Icon src={"external.svg"} skeleton={buttonSkeleton} />
+        {Translate({
+          ...context,
+          label:
+            selectedMaterial.materialType === "Ebog"
+              ? "onlineAccessEbook"
+              : selectedMaterial.materialType.includes("Lydbog")
+              ? "onlineAccessAudiobook"
+              : "onlineAccessUnknown",
+        })}
+      </Button>
+    );
+  }
+  // is user logged in
+  if (!user.isAuthenticated) {
+    // login button
+    return (
+      <Button
+        skeleton={buttonSkeleton}
+        onClick={() => login()}
+        data_cy="button-order-overview"
+      >
+        {Translate({ ...context, label: "Order (not logged in)" })}
+      </Button>
+    );
+  }
+
+  // user is logged in - check availability
+  const pid = selectedMaterial.pid;
+  const materialType = selectedMaterial.materialType;
+  const { data, isLoading, isSlow, error } = useData(
+    manifestationFragments.availability({ pid })
+  );
+
+  if (error) {
+    console.log("ERROR");
+  }
+
+  let available = false;
+  if (isLoading) {
+    buttonSkeleton = true;
+  } else {
+    available = checkAvailability({ data, materialType });
+  }
+
+  // finished loading - materail can not be ordered - disable buttons
+  if (!isLoading && !available) {
+    // disabled button
+    return (
+      <Button
+        skeleton={buttonSkeleton}
+        disabled={true}
+        className={styles.disabledbutton}
+        data_cy="button-order-overview"
+      >
+        {Translate({ context: "overview", label: "Order-disabled" })}
+      </Button>
+    );
+  }
+  // all is well - material can be ordered - order button
+  return (
+    <Button
+      skeleton={buttonSkeleton}
+      onClick={() => openOrderModal(pid)}
+      data_cy="button-order-overview"
+    >
+      {Translate({ context: "general", label: "bestil" })}
+    </Button>
+  );
+}
+
+function checkAvailability({ data, materialType }) {
+  // for now we only support ordering books
+  const supportedMaterialTypes = ["Bog"];
+
+  // @TODO use this: process.env.STORYBOOK_ACTIVE
+  // we cannot load data in wrap since materialType is selected ..
+
+  if (!includes(supportedMaterialTypes, materialType)) {
+    return false;
+  }
+
+  return data;
 }
 
 /**
@@ -270,7 +370,16 @@ export function OverviewError() {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type, onTypeChange, onOnlineAccess } = props;
+  const {
+    workId,
+    type,
+    onTypeChange,
+    onOnlineAccess,
+    login,
+    openOrderModal,
+  } = props;
+
+  const user = useUser();
 
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
@@ -298,6 +407,9 @@ export default function Wrap(props) {
       type={type}
       onTypeChange={onTypeChange}
       onOnlineAccess={onOnlineAccess}
+      login={login}
+      openOrderModal={openOrderModal}
+      user={user}
     />
   );
 }
@@ -308,4 +420,7 @@ Wrap.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
+  openOrderModal: PropTypes.func,
+  user: PropTypes.object,
+  login: PropTypes.func,
 };

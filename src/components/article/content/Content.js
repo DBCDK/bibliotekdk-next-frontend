@@ -30,7 +30,7 @@ function ArticleHeader({ article }) {
   }
 
   let category =
-    article && article.fieldTags
+    article && article.fieldTags && article.fieldTags.entity
       ? article.fieldTags
           .slice(0, 1)
           .map((fieldTag, index) => fieldTag.entity.entityLabel)

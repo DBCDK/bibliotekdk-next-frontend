@@ -24,6 +24,7 @@ export function all({ q }) {
               value
             }
             ... on Work {
+              id
               title
               cover {
                 thumbnail

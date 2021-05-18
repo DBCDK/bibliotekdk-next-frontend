@@ -43,6 +43,7 @@ export default function Card({
   cover,
   creators,
   onFocus,
+  onClick,
   id,
   series,
   skeleton,
@@ -71,6 +72,7 @@ export default function Card({
         tabIndex="0"
         onFocus={onFocus}
         data-cy="work-card"
+        onClick={onClick}
       >
         <div className={styles.CoverWrapper}>
           <Cover src={cover.detail} size="fill" />
@@ -124,6 +126,7 @@ Card.propTypes = {
   creators: PropTypes.array,
   id: PropTypes.string,
   onFocus: PropTypes.func,
+  onClick: PropTypes.func,
   id: PropTypes.string,
   series: PropTypes.shape({
     part: PropTypes.number,
