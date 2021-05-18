@@ -1,0 +1,111 @@
+{
+  "data": {
+    "manifestation": {
+      "recommendations": [
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29135592&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=1f04ec9a49ffebaeca69"
+            },
+            "pid": "870970-basis:29135592",
+            "title": "En regnbue af glas",
+            "creators": [
+              { "name": "James Lee Burke" },
+              { "name": "Ole Lindegård Henriksen" }
+            ]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24882225&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d38905816f48e091284a"
+            },
+            "pid": "870970-basis:24882225",
+            "title": "Jolie Blons blues",
+            "creators": [{ "name": "James Lee Burke" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27668097&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4f1a93523ca5d466337a"
+            },
+            "pid": "870970-basis:27668097",
+            "title": "De dødes hvisken",
+            "creators": [{ "name": "Simon Beckett" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": { "detail": null },
+            "pid": "870970-basis:21182036",
+            "title": "Rum punch",
+            "creators": [{ "name": "Elmore Leonard" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25625463&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0f79e5c478174d910bc5"
+            },
+            "pid": "870970-basis:25625463",
+            "title": "Spyfluer : spændingsroman",
+            "creators": [{ "name": "Patricia D. Cornwell" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=28269978&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=5d2f8b5c99d3235ade37"
+            },
+            "pid": "870970-basis:28269978",
+            "title": "Dexters dunkle drømme",
+            "creators": [
+              { "name": "Jeffry P. Lindsay" },
+              { "name": "Jesper Bøllehuus" }
+            ]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25399110&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d1238a30eceeec08abb6"
+            },
+            "pid": "870970-basis:25399110",
+            "title": "Hvad ingen ved",
+            "creators": [{ "name": "Mary Jane Clark" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": { "detail": null },
+            "pid": "870970-basis:21690910",
+            "title": "En lang række døde mænd",
+            "creators": [{ "name": "Lawrence Block" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27507271&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=67acdcce6138adf50870"
+            },
+            "pid": "870970-basis:27507271",
+            "title": "Echo Park",
+            "creators": [{ "name": "Michael Connelly" }]
+          }
+        },
+        {
+          "manifestation": {
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=26780349&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=f910e7f0eb9361668f59"
+            },
+            "pid": "870970-basis:26780349",
+            "title": "Malstrøm",
+            "creators": [{ "name": "Michael Connelly" }]
+          }
+        }
+      ]
+    },
+    "monitor": "OK"
+  }
+}
