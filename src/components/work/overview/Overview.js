@@ -21,7 +21,6 @@ import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
 
 import includes from "lodash/includes";
-import { log } from "dbc-node-logger/src";
 // Translate Context
 const context = { context: "overview" };
 
