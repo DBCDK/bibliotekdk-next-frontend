@@ -1,9 +1,8 @@
 import { getLangcode } from "./fragments.utils";
-
 export function promotedFaqs(language) {
   const langcode = getLangcode(language);
   return {
-    query: `query($language: LanguageId! $langcode [String) {
+    query: `query($language: LanguageId! $langcode: [String]) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
@@ -48,7 +47,7 @@ export function promotedFaqs(language) {
 export function publishedFaqs(language) {
   const langcode = getLangcode(language);
   return {
-    query: `query($language: LanguageId! $langcode [String] ) {
+    query: `query($language: LanguageId! $langcode: [String]) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
         {field: "status", value:"1"},
