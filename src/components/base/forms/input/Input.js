@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
  * @param {obj} props.isVisible modal is currently active/visible
  * See propTypes for specific props and types
  *
- * Get yout value like <Input onChange={(value) => console.log(value)} ... />
+ * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
  * @returns {component}
  */

@@ -32,8 +32,6 @@ function Loader({ className, start, duration = 2, delay = 1, callback }) {
 
   const activeClass = loading ? styles.active : "";
 
-  console.log("activeClass", activeClass);
-
   return (
     <div className={`${styles.loader} ${activeClass} ${className}`}>
       <div className={styles.bar} style={animation} />

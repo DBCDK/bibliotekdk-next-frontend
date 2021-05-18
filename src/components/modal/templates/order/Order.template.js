@@ -143,8 +143,6 @@ function Order({
   // Validated
   const validatedClass = validated?.status ? styles.validated : "";
 
-  console.log("validated", validated);
-
   return (
     <div className={styles.order}>
       <div className={styles.container}>
@@ -192,14 +190,11 @@ function Order({
           isOrdered={isOrdered}
           data={{ pickupBranch, order }}
           isFailed={isFailed}
+          onClose={onClose}
           onClick={() => {
             if (validated.status) {
               onSubmit && onSubmit(pid, pickupBranch, mail?.value);
             }
-          }}
-          onClose={onClose}
-          callback={() => {
-            console.log("callback");
           }}
         />
       </div>
@@ -208,8 +203,6 @@ function Order({
 }
 
 function OrderSkeleton(props) {
-  return "hest";
-
   return (
     <Order
       className={`${props.className} ${styles.skeleton}`}
@@ -267,9 +260,8 @@ export default function Wrap(props) {
       pid={order}
       order={orderMutation}
       onSubmit={(pid, pickupBranch, email) => {
-        console.log("onSubmit : ", pid, pickupBranch.branchId, email);
         orderMutation.post(
-          submitOrder({ pid, branchId: pickupBranch.branchId })
+          submitOrder({ pid, branchId: pickupBranch.branchId, email })
         );
       }}
       {...props}
