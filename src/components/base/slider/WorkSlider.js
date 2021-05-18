@@ -183,7 +183,9 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   // Restore progress for slider
   useEffect(() => {
-    swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
+    if (storedProgress[hash]) {
+      swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
+    }
   }, [works]);
 
   // If there is enough room to the left of the slider,
