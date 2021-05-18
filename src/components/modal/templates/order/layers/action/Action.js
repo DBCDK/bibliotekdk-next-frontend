@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
-import Loader from "@/components/base/loader";
+import Progress from "@/components/base/progress";
 import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -85,7 +85,7 @@ function Action({
       </div>
 
       <div className={styles.loaderWrap}>
-        <Loader
+        <Progress
           className={styles.loader}
           callback={() => setHasLoaded(true)}
           start={isOrdering}

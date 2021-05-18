@@ -82,8 +82,8 @@ function Order({
 
   // Update email
   useEffect(() => {
-    setMail({ value: user.mail || "", valid: true });
-  }, [user.mail]);
+    setMail({ value: user?.mail || "", valid: true });
+  }, [user?.mail]);
 
   // Update validation
   useEffect(() => {
@@ -244,6 +244,7 @@ export default function Wrap(props) {
   const orderMutation = useMutate();
 
   if (isLoading) {
+    return null;
     return <OrderSkeleton isSlow={isSlow} />;
   }
 

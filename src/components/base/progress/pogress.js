@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import styles from "./loader.module.css";
+import styles from "./progress.module.css";
 
 /**
  *
  * @returns component
  */
 
-function Loader({ className, start, duration = 2, delay = 1, callback }) {
+function Progress({ className, start, duration = 2, delay = 1, callback }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,10 +33,10 @@ function Loader({ className, start, duration = 2, delay = 1, callback }) {
   const activeClass = loading ? styles.active : "";
 
   return (
-    <div className={`${styles.loader} ${activeClass} ${className}`}>
+    <div className={`${styles.progress} ${activeClass} ${className}`}>
       <div className={styles.bar} style={animation} />
     </div>
   );
 }
 
-export default Loader;
+export default Progress;

@@ -1,6 +1,6 @@
-/* loader */
+/* progress */
 
-.loader {
+.progress {
   height: var(--pt2);
   border: 1px solid var(--blue);
   overflow: hidden;
@@ -13,7 +13,7 @@
   transform: translateX(-100%);
 }
 
-.loader.active .bar {
+.progress.active .bar {
   animation: load 2s ease-in-out 1s forwards;
 }
 
