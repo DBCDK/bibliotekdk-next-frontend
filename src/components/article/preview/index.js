@@ -1,1 +1,1 @@
-export { default, Arrow } from "./Preview.js";
+export { default } from "./Preview.js";

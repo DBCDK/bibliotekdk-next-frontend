@@ -1,0 +1,27 @@
+/* progress */
+
+.progress {
+  height: var(--pt2);
+  border: 1px solid var(--blue);
+  overflow: hidden;
+}
+
+.bar {
+  width: 100%;
+  height: 100%;
+  background-color: var(--blue);
+  transform: translateX(-100%);
+}
+
+.progress.active .bar {
+  animation: load 2s ease-in-out 1s forwards;
+}
+
+@keyframes load {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}

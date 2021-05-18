@@ -1,0 +1,89 @@
+.info {
+  position: relative;
+  height: 100%;
+}
+
+.edition {
+  padding: var(--pt2) 0;
+  background-color: var(--concrete);
+
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.creators {
+  padding: var(--pt1) 0 0 0;
+}
+
+.material {
+  padding: var(--pt2) 0 0 0;
+}
+
+.material span {
+  margin: 0 var(--pt2) 0 0;
+}
+
+.left {
+  flex-grow: 2;
+}
+
+.right {
+  flex-shrink: 2;
+}
+
+.right .cover {
+  max-height: 100px;
+}
+
+/* Library */
+.library {
+  padding: var(--pt2) 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.library > div {
+  display: flex;
+  align-items: center;
+}
+
+.arrow {
+  width: 22px;
+  margin: 0 0 0 var(--pt1);
+  transform: scale(0.9);
+}
+/*  */
+
+/* User */
+
+.name {
+  padding: var(--pt2) 0 0 0;
+}
+.email {
+  padding: var(--pt2) 0 0 0;
+}
+
+.email input {
+  margin: var(--pt1) 0 0 0;
+}
+
+.message {
+  padding: var(--pt1) 0 0 0;
+  color: var(--gray);
+}
+
+/*  */
+
+.edition,
+.pickup,
+.user {
+  padding: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .edition,
+  .pickup,
+  .user {
+    padding: var(--pt3) var(--pt6);
+  }
+}

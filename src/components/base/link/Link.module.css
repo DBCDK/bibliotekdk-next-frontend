@@ -26,16 +26,24 @@
   transform: scale(1);
 }
 
+/* disabled */
+
+.link.disabled {
+  color: var(--gray);
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Real-hover */
 @media (hover: hover) {
-  .border:hover {
+  .border:hover:not(.disabled) {
     color: var(--blue);
     text-decoration: none;
   }
-  .link.border:hover > div > hr:last-child {
+  .link.border:hover:not(.disabled) > div > hr:last-child {
     display: none;
   }
-  .link.border:hover > div > hr {
+  .link.border:hover:not(.disabled) > div > hr {
     transform: scale(1);
   }
 }

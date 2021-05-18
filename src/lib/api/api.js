@@ -74,6 +74,40 @@ export async function fetcher(queryStr) {
 }
 
 /**
+ * A custom React hook for sending mutate requests to the GraphQL API
+ *
+ * @param {Object} obj - A query object.
+ */
+export function useMutate() {
+  // The session may contain access token
+  const user = useUser();
+  const accessToken = user?.accessToken;
+  const [isLoading, setisLoading] = useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+
+  async function post(query) {
+    const key = generateKey({ ...query, accessToken } || "");
+    setisLoading(true);
+    setData(null);
+    setError(null);
+    try {
+      const res = await fetcher(key);
+      setData(res);
+    } catch (e) {
+      setError(e);
+    }
+    setisLoading(false);
+  }
+  return {
+    data: data?.data,
+    error: error || data?.errors,
+    isLoading,
+    post,
+  };
+}
+
+/**
  * A custom React hook for fetching data from the GraphQL API
  * https://reactjs.org/docs/hooks-custom.html
  *

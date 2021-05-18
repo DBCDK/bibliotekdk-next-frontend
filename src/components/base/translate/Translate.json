@@ -178,6 +178,14 @@
       "language": {
         "da": "English",
         "en": "Dansk"
+      },
+      "email": {
+        "da": "Email",
+        "en": "Email"
+      },
+      "accept": {
+        "da": "Godkend",
+        "en": "Accept"
       }
     },
     "articles": {
@@ -566,6 +574,10 @@
       "title-filter": {
         "da": "Filtrer og sorter",
         "en": "Filter and sort"
+      },
+      "title-order": {
+        "da": "Bestil",
+        "en": "Order"
       }
     },
     "navigation": {
@@ -698,6 +710,40 @@
       "editions": {
         "da": "Udgaver",
         "en": "Editions"
+      }
+    },
+    "order": {
+      "no-specific-edition": {
+        "da": "Udgave underordnet",
+        "en": "Unspecified edition"
+      },
+      "pickup-title": {
+        "da": "Afhentningssted",
+        "en": "Pickup location"
+      },
+      "pickup-link": {
+        "da": "Vælg afhentning",
+        "en": "Select pickup"
+      },
+      "ordered-by": {
+        "da": "Bestilles af",
+        "en": "Ordered by"
+      },
+      "order-message": {
+        "da": "Du får besked fra %s når materialet er klar til afhentning",
+        "en": "You will be notified by %s when the material is ready for collection"
+      },
+      "order-success": {
+        "da": "Bestillingen blev gennemført",
+        "en": "The order was completed"
+      },
+      "order-success-message": {
+        "da": "Du vil få besked når materialet er klar til afhentning på %s",
+        "en": "You will be notified when the material is ready for collection at %s"
+      },
+      "order-success-id": {
+        "da": "Bestillingsnummer: %s",
+        "en": "Order number: %s"
       }
     },
     "units": {

@@ -1,0 +1,13 @@
+.pickup {
+  background-color: white;
+  padding: var(--pt2);
+}
+.pickup h2 {
+  margin: var(--pt2) 0;
+}
+
+@media (min-width: 576px) {
+  .pickup {
+    padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

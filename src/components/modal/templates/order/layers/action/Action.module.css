@@ -1,0 +1,159 @@
+/* Action button */
+
+.action {
+  width: 100%;
+  height: calc(200vh + 152px);
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  background-color: white;
+
+  padding: var(--pt2);
+
+  box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.25);
+  transition-duration: 0.5s;
+  transition-delay: 0.2s;
+
+  transform: translateY(-152px);
+}
+
+.action.hidden {
+  /* ensure to hide the shadows */
+  transform: translateY(12px);
+}
+
+.action .top {
+  width: 100%;
+  height: 152px;
+}
+
+.action.validated {
+}
+
+.action.ordering {
+  /* add the buttons height */
+  transform: translateY(calc(-100vh - 152px - 32px));
+}
+
+.action.ordered,
+.action.failed {
+  transform: translateY(calc(-200vh - 152px - 32px));
+}
+
+.action.ordering .top,
+.action.ordered .top {
+  /* opacity: 0; */
+}
+
+/* loader */
+
+.loaderWrap {
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.loader {
+  margin: auto;
+  width: 50%;
+}
+
+.result {
+  width: 100%;
+  height: 100vh;
+
+  transition: opacity 0.3s linear;
+  transition-delay: 0.3s;
+  opacity: 0;
+}
+
+.result .success,
+.result .error {
+  transform: translateY(-50%);
+  transition: opacity 0.3s linear;
+}
+
+/* Success */
+
+.success,
+.error {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  display: none;
+
+  transition: opacity 0.3s linear;
+}
+
+.success .check {
+  height: var(--pt9);
+  width: var(--pt9);
+  border-radius: 50%;
+  border: 1px solid var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success .title,
+.success .ornament,
+.success .message,
+.success .orderNumber {
+  padding: var(--pt3) 0 0 0;
+}
+
+.success .message,
+.success .orderNumber {
+  text-align: center;
+}
+
+.success .close {
+  position: absolute;
+  bottom: var(--pt15);
+}
+
+/* error */
+
+.error {
+}
+
+/* states */
+
+.action.ordered .loaderWrap,
+.action.failed .loaderWrap {
+  opacity: 0;
+}
+
+.action.ordered .result,
+.action.failed .result {
+  opacity: 1;
+}
+
+.action.ordered .result .success,
+.action.failed .result .error {
+  transform: none;
+}
+
+.action.ordered .success {
+  display: flex;
+}
+
+.action.failed .error {
+  display: flex;
+}
+
+@media (min-width: 576px) {
+  .action {
+    padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

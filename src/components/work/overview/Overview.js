@@ -1,3 +1,5 @@
+import Router from "next/router";
+
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import merge from "lodash/merge";

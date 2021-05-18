@@ -15,22 +15,8 @@
   cursor: pointer;
 }
 
-.element .header:focus-visible {
-  outline: solid 1px var(--blue);
-}
-
 .element .header p {
-  transition-duration: 0.2s;
-  width: calc(100% - var(--pt7));
-}
-
-.element .header:focus-visible p {
-  padding-left: var(--pt2);
-}
-
-.element .header:focus-visible p,
-.element .header:hover p {
-  color: var(--blue);
+  margin-right: var(--pt2);
 }
 
 .content > div {
@@ -42,10 +28,6 @@
 }
 
 @media (min-width: 992px) {
-  .element .header p {
-    width: calc(100% - var(--pt10));
-  }
-
   .content p {
     padding-right: var(--pt10);
   }

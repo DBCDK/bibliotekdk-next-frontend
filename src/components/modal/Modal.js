@@ -12,6 +12,9 @@ import Icon from "@/components/base/icon";
 import Menu from "./templates/menu";
 import Basket from "./templates/basket";
 import Filter from "./templates/filter";
+import Order from "./templates/order";
+
+import CloseSvg from "@/public/icons/close.svg";
 
 import styles from "./Modal.module.css";
 
@@ -80,6 +83,8 @@ function getTemplate(template) {
       return Basket;
     case "filter":
       return Filter;
+    case "order":
+      return Order;
     default:
       return Menu;
   }
@@ -161,6 +166,9 @@ export function Modal({
     document.activeElement.blur();
   }
 
+  // Custom modal theme class
+  const themeClass = styles[`${context.title}-theme`] || "";
+
   return (
     <div
       data-cy="modal-dimmer"
@@ -175,7 +183,7 @@ export function Modal({
         tabIndex={isVisible ? "0" : null}
         ref={isVisible ? modalRef : null}
         aria-hidden={!isVisible || null}
-        className={`${styles.modal} ${visibleClass}`}
+        className={`${styles.modal} ${themeClass} ${visibleClass}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={styles.top}>
@@ -195,7 +203,7 @@ export function Modal({
                 label: "close-modal-title",
               })}
               className={styles.close}
-              src="close_white.svg"
+              // src="close_white.svg"
               size={2}
               onClick={() => handleClose()}
               onKeyDown={(e) => {
@@ -203,7 +211,9 @@ export function Modal({
                   handleClose();
                 }
               }}
-            />
+            >
+              <CloseSvg />
+            </Icon>
           </div>
         </div>
         <div className={styles.content}>
@@ -276,7 +286,9 @@ export default function Wrap({ router }) {
   };
 
   // Get template name from query
-  const template = get(router, "query.modal", null);
+  const param = get(router, "query.modal", null);
+  // use only first level of modal name ("-"" seperated names is for modal layers)
+  const template = param && param.split("-")[0];
 
   return <Modal template={template} onClose={onClose} onLang={onLang} />;
 }

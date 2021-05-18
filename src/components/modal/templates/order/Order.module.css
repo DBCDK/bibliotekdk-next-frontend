@@ -1,0 +1,59 @@
+.order {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  overflow: hidden;
+}
+
+.wrap {
+  height: 100%;
+  width: 200%;
+  display: flex;
+  transition-duration: 0.3s;
+}
+
+.wrap.translated,
+.wrap.translated {
+  transform: translateX(-50%);
+}
+
+.wrap .left,
+.wrap .right {
+  width: 50%;
+  position: relative;
+}
+
+.wrap .left {
+}
+
+.wrap .right {
+  position: relative;
+}
+
+.wrap .right .page {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+/* Active layer */
+
+.wrap .page.page-edition {
+}
+
+.wrap.active-edition .page.page-edition {
+  z-index: 1;
+}
+
+.wrap .page.page-library {
+}
+
+.wrap.active-library .page.page-library {
+  z-index: 1;
+}
