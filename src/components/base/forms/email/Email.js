@@ -37,7 +37,6 @@ function Email(props) {
         }
       }}
       onChange={(value) => {
-        console.log("-_value", value);
         if (onChange) {
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;

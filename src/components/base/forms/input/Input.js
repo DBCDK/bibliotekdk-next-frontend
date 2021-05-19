@@ -27,7 +27,6 @@ function Input({
   const [val, setVal] = useState(value || "");
 
   useEffect(() => {
-    console.log("val", val);
     onChange && onChange(val);
   }, [val]);
 
