@@ -175,6 +175,7 @@ export function recommendations({ workId }) {
     query: `query ($workId: String!) {
     manifestation(pid: $workId) {
       recommendations {
+        reader
         manifestation {
           cover {
             detail
