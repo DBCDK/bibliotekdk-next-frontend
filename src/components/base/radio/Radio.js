@@ -27,13 +27,11 @@ function Button({
   onSelect,
   selected,
   _ref,
-  tabIndex = "0",
   className,
   ...props
 }) {
   return (
     <div
-      tabIndex={tabIndex}
       data-cy={props["data-cy"]}
       ref={_ref}
       role="radio"
@@ -62,14 +60,13 @@ function Button({
 }
 Button.propTypes = {
   className: PropTypes.string,
-  tabIndex: PropTypes.string,
   label: PropTypes.string,
   onSelect: PropTypes.func,
   selected: PropTypes.bool,
   _ref: PropTypes.func,
 };
 
-function Group({ children }) {
+function Group({ children, enabled = true }) {
   const childrenRef = useRef([]);
 
   useEffect(() => {
@@ -85,15 +82,18 @@ function Group({ children }) {
         index = idx;
       }
     });
-    if (childrenRef.current[index]) {
+    if (childrenRef.current[index] && enabled) {
       childrenRef.current[index].tabIndex = "0";
     }
-  }, [children]);
+  }, [children, enabled]);
 
   return (
     <div
       role="radiogroup"
       aria-labelledby="radio-label"
+      className={`${styles.group} ${
+        enabled ? styles.enabled : styles.disabled
+      }`}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement

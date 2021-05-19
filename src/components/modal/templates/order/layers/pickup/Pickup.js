@@ -54,10 +54,9 @@ export default function Pickup({
         {agency.name || "Afhentningssted"}
       </Title>
 
-      <Radio.Group tabIndex={tabIndex}>
+      <Radio.Group enabled={isVisible}>
         {agency.branches.map((branch) => (
           <Radio.Button
-            tabIndex={tabIndex}
             key={branch.branchId}
             selected={selected.branchId === branch.branchId}
             onSelect={() => {

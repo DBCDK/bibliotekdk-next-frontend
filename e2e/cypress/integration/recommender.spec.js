@@ -26,21 +26,21 @@ describe("Recommender data collect", () => {
   });
   it(`Should collect data for recommender`, () => {
     // When a recommendation is clicked data should be logged
-    cy.get("[data-cy=text-en-regnbue-af-glas]").click();
+    cy.get("[data-cy=text-sidste-sporvogn-til-elysian-fields]").click();
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.recommender_click;
 
       expect(data).to.deep.equal({
         recommender_based_on: "work-of:870970-basis:26578191",
         recommender_click_hit: 1,
-        recommender_click_work: "work-of:870970-basis:29135592",
-        recommender_click_reader: "recompass-work-metacompass",
+        recommender_click_work: "work-of:870970-basis:25803671",
+        recommender_click_reader: "_booklens_webtrekk",
         recommender_shown_recommendations: [
-          "work-of:870970-basis:29135592",
-          "work-of:870970-basis:24882225",
-          "work-of:870970-basis:27668097",
-          "work-of:870970-basis:21182036",
-          "work-of:870970-basis:25625463",
+          "work-of:870970-basis:25803671",
+          "work-of:870970-basis:27722717",
+          "work-of:870970-basis:28947240",
+          "work-of:870970-basis:46014863",
+          "work-of:870970-basis:27866263",
         ],
         session_id: "test",
       });
@@ -54,7 +54,7 @@ describe("Recommender data collect", () => {
     // and pick the last one
     cy.get("[data-cy=recommender] [data-cy=arrow-right]").click();
     cy.get("[data-cy=recommender] [data-cy=arrow-right]").click();
-    cy.get("[data-cy=text-malstrøm]").click();
+    cy.get("[data-cy=text-adèle-bedeau-forsvinder]").click();
 
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.recommender_click;
@@ -62,19 +62,19 @@ describe("Recommender data collect", () => {
       expect(data).to.deep.equal({
         recommender_based_on: "work-of:870970-basis:26578191",
         recommender_click_hit: 10,
-        recommender_click_work: "work-of:870970-basis:26780349",
-        recommender_click_reader: "recompass-work-metacompass",
+        recommender_click_work: "work-of:870970-basis:55103143",
+        recommender_click_reader: "_booklens_webtrekk",
         recommender_shown_recommendations: [
-          "work-of:870970-basis:29135592",
-          "work-of:870970-basis:24882225",
-          "work-of:870970-basis:27668097",
-          "work-of:870970-basis:21182036",
-          "work-of:870970-basis:25625463",
-          "work-of:870970-basis:28269978",
-          "work-of:870970-basis:25399110",
-          "work-of:870970-basis:21690910",
-          "work-of:870970-basis:27507271",
-          "work-of:870970-basis:26780349",
+          "work-of:870970-basis:25803671",
+          "work-of:870970-basis:27722717",
+          "work-of:870970-basis:28947240",
+          "work-of:870970-basis:46014863",
+          "work-of:870970-basis:27866263",
+          "work-of:870970-basis:46068955",
+          "work-of:870970-basis:51761510",
+          "work-of:870970-basis:45961850",
+          "work-of:870970-basis:54881789",
+          "work-of:870970-basis:55103143",
         ],
         session_id: "test",
       });
