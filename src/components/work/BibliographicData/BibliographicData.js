@@ -4,7 +4,7 @@
  */
 import { Row, Collapse } from "react-bootstrap";
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Section from "@/components/base/section";
 import Divider from "@/components/base/divider";
@@ -53,10 +53,17 @@ export function BibliographicData(props) {
 function WorkTypesRow({ materialTypes = null, onClick = null }) {
   // state for the onclick event
   const [manifestations, setManifestations] = useState(materialTypes);
+
+  useEffect(() => {
+    setManifestations(materialTypes);
+  }, [materialTypes]);
+
   // onclick handler. set state of clicked manifestion (open/!open)
   const rowClicked = (index) => {
     // copy the manifestations array
-    let ManifestationStates = [...manifestations];
+    let ManifestationStates = manifestations.map((manifestation) => ({
+      ...manifestation,
+    }));
     // close all manifestations except the one clicked
     ManifestationStates.forEach((manifestation, idx) => {
       if (idx !== index) {
