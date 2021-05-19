@@ -55,4 +55,10 @@ describe("Radio", () => {
     cy.focused().type("{leftarrow}");
     cy.focused().contains("Second");
   });
+  it(`Disabled group can't be interacted with`, () => {
+    cy.visit("/iframe.html?id=base-radio--disabled-radio-group");
+    cy.tab();
+    // It has focused element below radio button group
+    cy.focused().contains("I am tabbable");
+  });
 });

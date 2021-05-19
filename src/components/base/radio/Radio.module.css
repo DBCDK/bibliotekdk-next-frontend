@@ -8,6 +8,10 @@
   cursor: pointer;
 }
 
+.group.disabled {
+  pointer-events: none;
+}
+
 .row:first-child {
   border-top: 1px solid rgba(0, 0, 0, 0.25);
 }
