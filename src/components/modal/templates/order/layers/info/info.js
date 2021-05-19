@@ -73,6 +73,11 @@ export default function Info({
           <div
             className={`${styles.link} ${animations["on-hover"]} `}
             onClick={() => onLayerSelect("pickup")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                onLayerSelect("pickup");
+              }
+            }}
           >
             <Link
               className={`${animations["on-focus"]}`}

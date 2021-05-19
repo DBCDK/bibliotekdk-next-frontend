@@ -42,11 +42,16 @@ export default function Pickup({
         border={false}
         onClick={onClose}
         tabIndex={tabIndex}
-        className={animations["on-hover"]}
+        className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            onClose();
+          }
+        }}
       >
         <Arrow
           flip
-          className={`${styles.arrow} ${animations["h-bounce-left"]}`}
+          className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
         />
       </Link>
 

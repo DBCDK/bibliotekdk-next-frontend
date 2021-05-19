@@ -34,8 +34,6 @@ function Order({
   onSubmit,
   isLoading,
 }) {
-  // translated state
-
   // layer state
   const [translated, setTranslated] = useState(false);
   const [activeLayer, setActiveLayer] = useState(null);
@@ -165,13 +163,13 @@ function Order({
           </div>
           <div className={styles.right}>
             <Edition
-              isVisible={activeLayer === "edition"}
+              isVisible={translated && activeLayer === "edition"}
               className={`${styles.page} ${styles[`page-edition`]}`}
               onChange={(val) => console.log(val + " selected")}
               onClose={(e) => Router.back()}
             />
             <Pickup
-              isVisible={activeLayer === "pickup"}
+              isVisible={translated && activeLayer === "pickup"}
               agency={agency}
               className={`${styles.page} ${styles[`page-library`]}`}
               onSelect={(branch) => {

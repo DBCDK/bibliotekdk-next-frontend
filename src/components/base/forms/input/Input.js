@@ -46,7 +46,7 @@ function Input({
       value={val}
       disabled={disabled}
       readOnly={readOnly}
-      tabIndex={tabIndex}
+      tabIndex={disabled ? "-1" : tabIndex}
       onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => setVal(e.target.value)}
     />
