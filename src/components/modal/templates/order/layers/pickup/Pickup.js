@@ -38,8 +38,21 @@ export default function Pickup({
 
   return (
     <div className={`${styles.pickup} ${className}`}>
-      <Link onClick={onClose} tabIndex={tabIndex}>
-        <Arrow flip className={styles.arrow} />
+      <Link
+        border={false}
+        onClick={onClose}
+        tabIndex={tabIndex}
+        className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            onClose();
+          }
+        }}
+      >
+        <Arrow
+          flip
+          className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
+        />
       </Link>
 
       <Title type="title4" tag="h2">

@@ -6,6 +6,10 @@
   margin: var(--pt2) 0;
 }
 
+.link > .arrow {
+  outline-offset: var(--pt1);
+}
+
 @media (min-width: 576px) {
   .pickup {
     padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);

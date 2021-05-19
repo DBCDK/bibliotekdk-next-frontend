@@ -1,10 +1,25 @@
 .arrow {
   position: relative;
-  height: 20px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
 }
 
-.arrow.flip {
-  transform: rotate(180deg);
+.arrow.flip .trapezoid {
+  transition: transform 0.3s ease;
+}
+
+.arrow.flip .trapezoid:nth-child(1) {
+  transform: rotate(45deg);
+}
+.arrow.flip .trapezoid:nth-child(2) {
+  transform: translateY(9px) rotate(135deg);
+}
+.arrow.flip .trapezoid:nth-child(3) {
+  transform: translateX(10px) rotate(45deg);
+}
+.arrow.flip .trapezoid:nth-child(4) {
+  transform: translateX(10px) translateY(9px) rotate(135deg);
 }
 
 .trapezoid {

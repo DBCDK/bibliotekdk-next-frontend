@@ -3,9 +3,11 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Tag from "@/components/base/forms/tag";
-import Input from "@/components/base/forms/input";
+import Email from "@/components/base/forms/email";
 import Cover from "@/components/base/cover";
 import Arrow from "@/components/base/animation/arrow";
+
+import animations from "@/components/base/animation/animations.module.css";
 
 import styles from "./Info.module.css";
 
@@ -17,6 +19,7 @@ export default function Info({
   pickupBranch,
   onMailChange,
   isVisible,
+  isLoading,
 }) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
@@ -29,25 +32,31 @@ export default function Info({
     <div className={`${styles.info} ${className}`}>
       <div className={styles.edition}>
         <div className={styles.left}>
-          <Text type="text1" className={styles.title}>
-            {title}
-          </Text>
-          <Text type="text3" className={styles.creators}>
-            {creators.map((c, i) =>
-              creators.length > i + 1 ? c.name + ", " : c.name
-            )}
-          </Text>
+          <div className={styles.title}>
+            <Text type="text1" skeleton={isLoading} lines={1}>
+              {title}
+            </Text>
+          </div>
+          <div className={styles.creators}>
+            <Text type="text3" skeleton={isLoading} lines={1}>
+              {creators.map((c, i) =>
+                creators.length > i + 1 ? c.name + ", " : c.name
+              )}
+            </Text>
+          </div>
           <div className={styles.material}>
-            <Tag tag="span">{materialType}</Tag>
+            <Tag tag="span" skeleton={isLoading}>
+              {materialType}
+            </Tag>
             <Link onClick={() => onLayerSelect("edition")} disabled>
-              <Text type="text3">
+              <Text type="text3" skeleton={isLoading} lines={1}>
                 {Translate({ ...context, label: "no-specific-edition" })}
               </Text>
             </Link>
           </div>
         </div>
         <div className={styles.right}>
-          <Cover src={cover?.detail} size="thumbnail" />
+          <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
         </div>
       </div>
 
@@ -58,23 +67,43 @@ export default function Info({
           </Title>
         </div>
         <div className={styles.library}>
-          <Text type="text1">{pickupBranch?.name}</Text>
-          <div>
+          <Text type="text1" skeleton={isLoading} lines={1}>
+            {pickupBranch?.name}
+          </Text>
+          <div
+            className={`${styles.link} ${animations["on-hover"]} `}
+            onClick={() => onLayerSelect("pickup")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                onLayerSelect("pickup");
+              }
+            }}
+          >
             <Link
-              onClick={() => onLayerSelect("pickup")}
-              border={{ bottom: { keepVisible: true } }}
+              className={`${animations["on-focus"]}`}
+              disabled={isLoading}
+              onClick={(e) => e.preventDefault()}
+              border={{ bottom: { keepVisible: !isLoading } }}
               tabIndex={isVisible ? "0" : "-1"}
             >
               <Text type="text3">
                 {Translate({ ...context, label: "pickup-link" })}
               </Text>
             </Link>
-            <Arrow className={styles.arrow} />
+            <Arrow
+              className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
+            />
           </div>
         </div>
         <div className={styles.address}>
-          <Text type="text3">{pickupBranch?.postalAddress}</Text>
-          <Text type="text3">{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
+          <Text type="text3" skeleton={isLoading} lines={2}>
+            {pickupBranch?.postalAddress}
+          </Text>
+          <Text
+            type="text3"
+            skeleton={isLoading}
+            lines={0}
+          >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
         </div>
       </div>
 
@@ -83,7 +112,9 @@ export default function Info({
           {Translate({ ...context, label: "ordered-by" })}
         </Title>
         <div className={styles.name}>
-          <Text type="text1">{name}</Text>
+          <Text type="text1" skeleton={isLoading} lines={1}>
+            {name}
+          </Text>
         </div>
         <div className={styles.email}>
           <label htmlFor="order-user-email">
@@ -91,7 +122,8 @@ export default function Info({
               {Translate({ context: "general", label: "email" })}
             </Text>
           </label>
-          <Input
+          <Email
+            disabled={isLoading}
             tabIndex={isVisible ? "0" : "-1"}
             value={mail || ""}
             id="order-user-email"

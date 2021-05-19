@@ -48,3 +48,44 @@
   border-color: transparent !important;
 }
 
+/* Bounce */
+
+.h-bounce-right,
+.f-bounce-right,
+.h-bounce-left,
+.f-bounce-left {
+  transition: transform 0.3s;
+}
+.on-hover:hover.h-bounce-right,
+.on-hover:hover .h-bounce-right,
+.on-focus:focus-visible.f-bounce-right,
+.on-focus:focus-visible .f-bounce-right,
+.on-focus:focus-visible ~ .f-bounce-right {
+  animation: bounceRight 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
+}
+
+.on-hover:hover.h-bounce-left,
+.on-hover:hover .h-bounce-left,
+.on-focus:focus-visible.f-bounce-left,
+.on-focus:focus-visible .f-bounce-left,
+.on-focus:focus-visible ~ .f-bounce-left {
+  animation: bounceRight 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
+}
+
+@keyframes bounceLeft {
+  from {
+    transform: translate(-10px, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes bounceRight {
+  from {
+    transform: translate(10px, 0);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}

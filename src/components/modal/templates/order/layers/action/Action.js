@@ -19,6 +19,7 @@ function Action({
   isOrdering: _isOrdering,
   isOrdered: _isOrdered,
   isFailed: _isFailed,
+  isLoading,
   data,
   onClose,
   callback,
@@ -75,6 +76,7 @@ function Action({
       <div className={styles.top}>
         <Button
           tabIndex={isVisible ? "0" : "-1"}
+          skeleton={isLoading}
           onClick={() => {
             onClick && onClick();
             callback && callback();
@@ -131,6 +133,7 @@ function Action({
           <Button
             tabIndex={isVisible && orsId ? "0" : "-1"}
             className={styles.close}
+            skeleton={isLoading}
             onClick={onClose}
           >
             {Translate({ context: "general", label: "close" })}

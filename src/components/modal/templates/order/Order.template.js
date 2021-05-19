@@ -34,8 +34,6 @@ function Order({
   onSubmit,
   isLoading,
 }) {
-  // translated state
-
   // layer state
   const [translated, setTranslated] = useState(false);
   const [activeLayer, setActiveLayer] = useState(null);
@@ -160,17 +158,18 @@ function Order({
               }}
               pickupBranch={pickupBranch}
               onMailChange={(value, valid) => setMail({ value, valid })}
+              isLoading={isLoading}
             />
           </div>
           <div className={styles.right}>
             <Edition
-              isVisible={activeLayer === "edition"}
+              isVisible={translated && activeLayer === "edition"}
               className={`${styles.page} ${styles[`page-edition`]}`}
               onChange={(val) => console.log(val + " selected")}
               onClose={(e) => Router.back()}
             />
             <Pickup
-              isVisible={activeLayer === "pickup"}
+              isVisible={translated && activeLayer === "pickup"}
               agency={agency}
               className={`${styles.page} ${styles[`page-library`]}`}
               onSelect={(branch) => {
@@ -190,6 +189,7 @@ function Order({
           isOrdered={isOrdered}
           data={{ pickupBranch, order }}
           isFailed={isFailed}
+          isLoading={isLoading}
           onClose={onClose}
           onClick={() => {
             if (validated.status) {
@@ -203,8 +203,40 @@ function Order({
 }
 
 function OrderSkeleton(props) {
+  const work = {
+    title: "...",
+    creators: [{ name: "..." }],
+    materialTypes: [{ pid: "some-pid", materialType: "Bog" }],
+  };
+
+  // User props
+  const user = {
+    agency: {
+      name: "",
+      branches: [
+        {
+          name: "some-library-branch",
+          postalAddress: "some-address",
+          postalCode: "1234",
+          city: "some-city",
+        },
+      ],
+    },
+  };
+
+  // order
+  const order = {
+    data: {},
+    error: false,
+    isLoading: false,
+  };
+
   return (
     <Order
+      pid="some-pid"
+      work={work}
+      user={user}
+      order={order}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
     />
@@ -224,7 +256,15 @@ export default function Wrap(props) {
   // order pid
   const { order } = Router.query;
 
-  const workId = `work-of:${order}`;
+  const [pid, setPid] = useState(null);
+
+  useEffect(() => {
+    if (order) {
+      setPid(order);
+    }
+  }, [order]);
+
+  const workId = `work-of:${pid}`;
 
   // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
@@ -244,7 +284,6 @@ export default function Wrap(props) {
   const orderMutation = useMutate();
 
   if (isLoading) {
-    return null;
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -258,7 +297,7 @@ export default function Wrap(props) {
     <Order
       work={mergedWork?.work}
       user={userData?.user || {}}
-      pid={order}
+      pid={pid}
       order={orderMutation}
       onSubmit={(pid, pickupBranch, email) => {
         orderMutation.post(
