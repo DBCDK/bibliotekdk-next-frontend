@@ -76,5 +76,5 @@
 
 .skeleton {
   position: relative;
-  border: 1px solid transparent !important;
+  border: 1px solid var(--concrete);
 }

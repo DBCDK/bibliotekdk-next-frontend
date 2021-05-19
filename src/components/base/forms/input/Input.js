@@ -1,15 +1,12 @@
 import PropTypes from "prop-types";
 import styles from "./Input.module.css";
 
-import { validateEmail } from "@/utils/validateEmail";
-
 import { useState, useEffect } from "react";
 
 /**
  * The Component function
  *
  * @param {obj} props
- * @param {obj} props.isVisible modal is currently active/visible
  * See propTypes for specific props and types
  *
  * Get you value like <Input onChange={(value) => console.log(value)} ... />
@@ -19,25 +16,19 @@ import { useState, useEffect } from "react";
 function Input({
   className,
   tabIndex = "0",
+  type = "text",
   id,
-  value,
-  required = false,
+  value = "",
+  disabled = false,
   onChange,
   onBlur,
   readOnly = false,
 }) {
   const [val, setVal] = useState(value || "");
-  const [valid, setValid] = useState(true);
 
-  // Check for valid input (email), when input changes
   useEffect(() => {
-    const valid = validateEmail(val);
-
-    // Allow empty field if field is not required
-    const allowEmpty = val === "" && !required;
-
-    // Update validation
-    onChange && onChange(val, valid);
+    console.log("val", val);
+    onChange && onChange(val);
   }, [val]);
 
   // Update value if undefined/null at first render
@@ -45,25 +36,18 @@ function Input({
     setVal(value);
   }, [value]);
 
-  const validClass = valid ? styles.valid : styles.error;
-  const readOnlyClass = readOnly ? styles.readOnly : "";
+  const readOnlyClass = readOnly || disabled ? styles.readOnly : "";
 
   return (
     <input
       id={id}
-      className={`${styles.input} ${validClass} ${readOnlyClass} ${className}`}
-      type="text"
+      className={`${styles.input} ${readOnlyClass} ${className}`}
+      type={type}
       value={val}
+      disabled={disabled}
       readOnly={readOnly}
       tabIndex={tabIndex}
-      onBlur={(e) => {
-        if (onBlur) {
-          const allowEmpty = val === "" && !required;
-          const valid = validateEmail(val) || allowEmpty;
-          setValid(valid);
-          onBlur(e.target.value, valid);
-        }
-      }}
+      onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => setVal(e.target.value)}
     />
   );
@@ -72,9 +56,11 @@ function Input({
 // PropTypes for component
 Input.propTypes = {
   id: PropTypes.string,
+  type: PropTypes.string,
   tabIndex: PropTypes.string,
   className: PropTypes.string,
   value: PropTypes.string,
+  disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func,

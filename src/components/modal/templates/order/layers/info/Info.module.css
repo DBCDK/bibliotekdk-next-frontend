@@ -11,12 +11,18 @@
   flex-wrap: nowrap;
 }
 
+.title {
+  padding: 0 var(--pt2) 0 0;
+}
+
 .creators {
-  padding: var(--pt1) 0 0 0;
+  padding: var(--pt1) var(--pt2) 0 0;
 }
 
 .material {
   padding: var(--pt2) 0 0 0;
+  display: flex;
+  align-items: center;
 }
 
 .material span {
@@ -42,15 +48,14 @@
   justify-content: space-between;
 }
 
-.library > div {
+.library .link {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .arrow {
-  width: 22px;
   margin: 0 0 0 var(--pt1);
-  transform: scale(0.9);
 }
 /*  */
 

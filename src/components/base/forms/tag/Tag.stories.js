@@ -4,7 +4,7 @@ import { StoryTitle, StorySpace } from "@/storybook";
 import Tag from "./Tag";
 
 export default {
-  title: "base/Forms: Tag",
+  title: "base/Forms/Tag",
 };
 
 //  Some material types to show in a Tag

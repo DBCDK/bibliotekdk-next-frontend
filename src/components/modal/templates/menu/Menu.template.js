@@ -67,7 +67,7 @@ function Menu({ isVisible = false, onLang = null }) {
           <AnimationLine />
         </Link>
         <span>
-          <Arrow className={styles.arrow} />
+          <Arrow flip={expanded} className={styles.arrow} />
         </span>
       </div>
       <div className={styles.outerWrap}>
