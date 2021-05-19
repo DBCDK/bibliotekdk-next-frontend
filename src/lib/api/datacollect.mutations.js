@@ -24,6 +24,7 @@ export function collectRecommenderClick({
   recommender_based_on,
   recommender_click_hit,
   recommender_click_work,
+  recommender_click_reader,
   recommender_shown_recommendations,
 }) {
   return {
@@ -37,7 +38,7 @@ export function collectRecommenderClick({
           recommender_based_on,
           recommender_click_hit,
           recommender_click_work,
-          recommender_click_reader: "recompass-work-metacompass",
+          recommender_click_reader,
           recommender_shown_recommendations,
           session_id,
         },
