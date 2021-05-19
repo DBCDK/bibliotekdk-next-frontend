@@ -17,7 +17,7 @@ export default function Link({
   children = "Im a hyperlink now!",
   a = true,
   linkRef = null,
-  href = { pathname: "/", query: {} },
+  href,
   target = "_self",
   border = { top: false, bottom: true },
   onClick = null,
@@ -43,7 +43,9 @@ export default function Link({
         target={target}
         onClick={(e) => {
           if (onClick) {
-            e.preventDefault();
+            if (!href) {
+              e.preventDefault();
+            }
             onClick(e);
           }
         }}
@@ -59,6 +61,10 @@ export default function Link({
         )}
       </Tag>
     );
+  }
+
+  if (!href) {
+    return children;
   }
 
   // Return the component
