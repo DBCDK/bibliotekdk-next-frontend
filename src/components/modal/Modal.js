@@ -112,10 +112,10 @@ export function Modal({
   const visibleClass = isVisible ? styles.visible : "";
 
   // Listen on escape keypress
-  const escapeEvent = useKeyPress("Escape");
+  const escapeEvent = useKeyPress(isVisible && "Escape");
 
   // Listen on tab keypress
-  const tabEvent = useKeyPress("Tab");
+  const tabEvent = useKeyPress(isVisible && "Tab");
 
   // Modal ref
   const modalRef = useRef(null);

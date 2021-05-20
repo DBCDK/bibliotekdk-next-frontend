@@ -102,10 +102,14 @@ function Order({
    */
   function handleLayer(layer) {
     if (layer !== Router.query.modal) {
-      Router.push({
-        pathname: Router.pathname,
-        query: { ...Router.query, modal: `order-${layer}` },
-      });
+      Router.push(
+        {
+          pathname: Router.pathname,
+          query: { ...Router.query, modal: `order-${layer}` },
+        },
+        null,
+        { shallow: false, scroll: false }
+      );
     }
   }
 
@@ -149,7 +153,7 @@ function Order({
         >
           <div className={styles.left}>
             <Info
-              isVisible={!translated}
+              isVisible={!translated && isVisible}
               material={{ ...material, title, creators }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
@@ -183,7 +187,7 @@ function Order({
           </div>
         </div>
         <Action
-          isVisible={!translated}
+          isVisible={!translated && isVisible}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}

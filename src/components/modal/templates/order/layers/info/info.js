@@ -123,12 +123,12 @@ export default function Info({
             </Text>
           </label>
           <Email
-            disabled={isLoading}
+            disabled={isLoading || !!mail}
             tabIndex={isVisible ? "0" : "-1"}
             value={mail || ""}
             id="order-user-email"
             onBlur={(value, valid) => onMailChange(value, valid)}
-            readOnly={mail}
+            readOnly={!!mail}
           />
         </div>
         <div className={styles.message}>

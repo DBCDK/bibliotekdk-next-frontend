@@ -1,11 +1,12 @@
 .order {
   width: 100%;
   height: 100%;
+  padding-bottom: 88px;
 }
 
 .container {
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .wrap {
@@ -56,4 +57,10 @@
 
 .wrap.active-library .page.page-library {
   z-index: 1;
+}
+
+@media (min-width: 576px) {
+  .order {
+    padding-bottom: 152px;
+  }
 }

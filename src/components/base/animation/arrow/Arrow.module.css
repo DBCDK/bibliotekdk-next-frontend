@@ -3,6 +3,8 @@
   display: inline-block;
   width: 24px;
   height: 24px;
+
+  transform: scale(0.668) !important;
 }
 
 .arrow.flip .trapezoid {

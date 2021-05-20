@@ -56,6 +56,7 @@ export default function MyApp({ Component, pageProps, router }) {
   setTranslations(pageProps.translations);
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
+
   return (
     <Provider
       session={pageProps.session}

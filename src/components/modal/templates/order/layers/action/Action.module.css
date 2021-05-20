@@ -2,7 +2,7 @@
 
 .action {
   width: 100%;
-  height: calc(200vh + 152px);
+  height: calc(200vh + 152px + 32px);
 
   position: absolute;
   top: 100%;
@@ -16,7 +16,7 @@
   transition-duration: 0.5s;
   transition-delay: 0.2s;
 
-  transform: translateY(-152px);
+  transform: translateY(-88px);
 }
 
 .action.hidden {
@@ -154,6 +154,7 @@
 
 @media (min-width: 576px) {
   .action {
+    transform: translateY(-152px);
     padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
   }
 }
