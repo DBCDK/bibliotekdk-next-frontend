@@ -17,7 +17,7 @@ describe("Reservation button", () => {
                 availability: {
                   orderPossible: true,
                   orderPossibleReason: "not_owned_ILL_loc",
-                  willLend: false,
+                  willLend: true,
                   expectedDelivery: "",
                 },
               },
