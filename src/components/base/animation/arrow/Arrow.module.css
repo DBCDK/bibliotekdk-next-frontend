@@ -1,10 +1,8 @@
 .arrow {
   position: relative;
   display: inline-block;
-  width: 24px;
-  height: 24px;
-
-  transform: scale(0.668) !important;
+  width: 16px;
+  height: 16px;
 }
 
 .arrow.flip .trapezoid {
@@ -15,20 +13,20 @@
   transform: rotate(45deg);
 }
 .arrow.flip .trapezoid:nth-child(2) {
-  transform: translateY(9px) rotate(135deg);
+  transform: translateY(6px) rotate(135deg);
 }
 .arrow.flip .trapezoid:nth-child(3) {
-  transform: translateX(10px) rotate(45deg);
+  transform: translateX(8px) rotate(45deg);
 }
 .arrow.flip .trapezoid:nth-child(4) {
-  transform: translateX(10px) translateY(9px) rotate(135deg);
+  transform: translateX(8px) translateY(6px) rotate(135deg);
 }
 
 .trapezoid {
   position: absolute;
   width: 4px;
 
-  border-bottom: 15px solid var(--blue);
+  border-bottom: 12px solid var(--blue);
   border-left: 1px solid transparent;
   border-right: 1px solid transparent;
   top: 0px;
@@ -55,40 +53,13 @@
   transform: rotate(-45deg);
 }
 .trapezoid:nth-child(2) {
-  transform: translateY(9px) rotate(225deg);
+  transform: translateY(6px) rotate(225deg);
 }
 .trapezoid:nth-child(3) {
-  transform: translateX(10px) rotate(-45deg);
+  transform: translateX(8px) rotate(-45deg);
 }
 .trapezoid:nth-child(4) {
-  transform: translateX(10px) translateY(9px) rotate(225deg);
-}
-.preview:focus .trapezoid,
-.preview:hover .trapezoid {
-  border-left: 0px;
-  border-right: 0px;
-  width: 3px;
-}
-.preview:focus .trapezoid:nth-child(1),
-.preview:hover .trapezoid:nth-child(1) {
-  transform: translateX(15px) translateY(4px) rotate(90deg);
-}
-.preview:focus .trapezoid:nth-child(2),
-.preview:hover .trapezoid:nth-child(2) {
-  transform: translateX(0px) translateY(4px) rotate(-90deg);
-}
-.preview:focus .trapezoid:nth-child(3),
-.preview:hover .trapezoid:nth-child(3) {
-  transform: translateX(45px) translateY(4px) rotate(90deg);
-}
-.preview:focus .trapezoid:nth-child(4),
-.preview:hover .trapezoid:nth-child(4) {
-  transform: translateX(30px) translateY(4px) rotate(90deg);
-}
-.preview:focus .flatnose,
-.preview:hover .flatnose {
-  opacity: 0;
-  transition-delay: 0s;
+  transform: translateX(8px) translateY(6px) rotate(225deg);
 }
 
 /* .trapezoid {

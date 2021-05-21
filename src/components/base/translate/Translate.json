@@ -186,6 +186,10 @@
       "accept": {
         "da": "Godkend",
         "en": "Accept"
+      },
+      "select": {
+        "da": "Vælg",
+        "en": "Select"
       }
     },
     "articles": {
@@ -351,13 +355,13 @@
         "da": "Gå til lydbog",
         "en": "Get the audio book"
       },
-      "Order (not logged in)" : {
+      "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",
         "en": "Order (not logged in)"
       },
       "Order-disabled": {
-        "da" : "Bestil (deaktiveret))",
-        "en" : "Order (disabled)"
+        "da": "Bestil (deaktiveret))",
+        "en": "Order (disabled)"
       }
     },
     "details": {
@@ -733,6 +737,10 @@
         "da": "Du får besked fra %s når materialet er klar til afhentning",
         "en": "You will be notified by %s when the material is ready for collection"
       },
+      "order-message-library": {
+        "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
+        "en": "You will be notified by your library when the material is ready for collection"
+      },
       "order-success": {
         "da": "Bestillingen blev gennemført",
         "en": "The order was completed"
@@ -744,6 +752,16 @@
       "order-success-id": {
         "da": "Bestillingsnummer: %s",
         "en": "Order number: %s"
+      }
+    },
+    "form": {
+      "empty-email-field": {
+        "da": "*Skriv venligst din email-adresse",
+        "en": "*Please write your email address"
+      },
+      "wrong-email-field": {
+        "da": "*Angiv venligst en korrekt email-adresse",
+        "en": "*Please enter a correct email address"
       }
     },
     "units": {

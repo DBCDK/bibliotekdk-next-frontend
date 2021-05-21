@@ -8,6 +8,10 @@
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font);
+
+  /* remove border-radius on iphone */
+  border-radius: 0;
+  -webkit-appearance: none;
 }
 
 .input.valid {

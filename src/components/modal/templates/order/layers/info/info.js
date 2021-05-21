@@ -86,8 +86,11 @@ export default function Info({
               border={{ bottom: { keepVisible: !isLoading } }}
               tabIndex={isVisible ? "0" : "-1"}
             >
-              <Text type="text3">
+              <Text type="text3" className={styles.fullLink}>
                 {Translate({ ...context, label: "pickup-link" })}
+              </Text>
+              <Text type="text3" className={styles.shortLink}>
+                {Translate({ context: "general", label: "select" })}
               </Text>
             </Link>
             <Arrow
@@ -123,11 +126,13 @@ export default function Info({
             </Text>
           </label>
           <Email
+            required={true}
             disabled={isLoading || !!mail}
             tabIndex={isVisible ? "0" : "-1"}
             value={mail || ""}
             id="order-user-email"
             onBlur={(value, valid) => onMailChange(value, valid)}
+            onMount={(value, valid) => onMailChange(value, valid)}
             readOnly={!!mail}
           />
         </div>
@@ -135,8 +140,7 @@ export default function Info({
           <Text type="text3">
             {Translate({
               ...context,
-              label: "order-message",
-              vars: [pickupBranch?.name],
+              label: "order-message-library",
             })}
           </Text>
         </div>

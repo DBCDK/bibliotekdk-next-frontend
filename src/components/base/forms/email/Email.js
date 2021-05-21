@@ -1,11 +1,22 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Input from "@/components/base/forms/input";
+import Translate from "@/components/base/translate";
 
 import { validateEmail } from "@/utils/validateEmail";
 
 import styles from "./Email.module.css";
+
+// Error messages
+const emptyFieldMessage = Translate({
+  context: "form",
+  label: "empty-email-field",
+});
+const invalidEmailMessage = Translate({
+  context: "form",
+  label: "wrong-email-field",
+});
 
 /**
  * The Component function
@@ -18,8 +29,39 @@ import styles from "./Email.module.css";
  * @returns {component}
  */
 function Email(props) {
-  const { className, onChange, onBlur, required = false } = props;
-  const [valid, setValid] = useState(true);
+  const {
+    className,
+    onChange,
+    onBlur,
+    required = false,
+    value,
+    onMount,
+  } = props;
+  const [valid, setValid] = useState(null);
+
+  // Validation onMount
+
+  useEffect(
+    () => {
+      const allowEmpty = value === "" && !required;
+      const valid = validateEmail(value) || allowEmpty;
+      setValid(valid);
+
+      onMount &&
+        onMount(value, {
+          status: valid,
+          message: getMessage(value, valid),
+        });
+
+      console.log("value", value);
+    }, // Updates if value changes (initial value)
+    [value]
+  );
+
+  function getMessage(value, valid) {
+    const message = (value === "" && "empty hest") || "invalid hest";
+    return (!valid && message) || null;
+  }
 
   const validClass = valid ? styles.valid : styles.inValid;
 
@@ -33,7 +75,10 @@ function Email(props) {
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
-          onBlur(value, valid);
+          onBlur(value, {
+            status: valid,
+            message: getMessage(value, valid),
+          });
         }
       }}
       onChange={(value) => {
@@ -41,7 +86,11 @@ function Email(props) {
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
-          onChange(value, valid);
+
+          onChange(value, {
+            status: valid,
+            message: getMessage(value, valid),
+          });
         }
       }}
     />
@@ -54,6 +103,7 @@ Email.propTypes = {
   required: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  onMount: PropTypes.func,
 
   // Input component props
   id: PropTypes.string,

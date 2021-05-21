@@ -80,17 +80,33 @@ function Order({
 
   // Update email
   useEffect(() => {
-    setMail({ value: user?.mail || "", valid: true });
+    const userMail = user?.mail;
+
+    if (userMail) {
+      const message =
+        (!!userMail && "Din mail er hentet fra Vejle Bibliotekerne") ||
+        mail?.valid?.message ||
+        null;
+
+      setMail({
+        value: userMail || "",
+        valid: { status: !!userMail, message },
+      });
+    }
   }, [user?.mail]);
 
   // Update validation
   useEffect(() => {
-    const hasMail = !!mail?.valid;
+    const hasMail = !!mail?.valid?.status;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
 
     const status = hasMail && hasBranchId && hasPid;
-    const details = { hasMail, hasBranchId, hasPid };
+    const details = {
+      hasMail: { status: hasMail, message: mail?.valid?.message },
+      hasBranchId: { status: hasBranchId },
+      hasPid: { status: hasPid },
+    };
 
     setValidated({ status, details });
   }, [mail, pid, pickupBranch]);
@@ -108,7 +124,7 @@ function Order({
           query: { ...Router.query, modal: `order-${layer}` },
         },
         null,
-        { shallow: false, scroll: false }
+        { shallow: true, scroll: false }
       );
     }
   }
@@ -145,6 +161,10 @@ function Order({
   // Validated
   const validatedClass = validated?.status ? styles.validated : "";
 
+  console.log("validation", validated);
+
+  console.log("mail", mail);
+
   return (
     <div className={styles.order}>
       <div className={styles.container}>
@@ -161,7 +181,9 @@ function Order({
                 handleLayer(layer);
               }}
               pickupBranch={pickupBranch}
-              onMailChange={(value, valid) => setMail({ value, valid })}
+              onMailChange={(value, valid) => {
+                setMail({ value, valid });
+              }}
               isLoading={isLoading}
             />
           </div>
