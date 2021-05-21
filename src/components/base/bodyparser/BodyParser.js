@@ -30,7 +30,17 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
   // handle login links (https://login.bib.dk/login) - replace
   // with click event to use login platform
   const articleBody = useRef();
+
   useEffect(() => {
+    // quickfix .. notifications caused this one to fail
+    if (!articleBody) {
+      return;
+    }
+    if (!articleBody.current) {
+      return;
+    }
+    // end quickfix
+
     // get dom element containing login links
     const timer = setTimeout(() => {
       const href = articleBody.current.querySelectorAll(

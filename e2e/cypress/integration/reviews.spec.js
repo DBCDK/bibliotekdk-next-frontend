@@ -17,7 +17,8 @@ describe("Overview", () => {
     cy.get("[data-cy=review-infomedia]").last().should("not.be.visible");
   });
 
-  it(`Can tab through path`, () => {
+  //BETA-1 skip this test - material reviews are gone
+  it.skip(`Can tab through path`, () => {
     cy.get("body").tabs(3);
     cy.focused()
       .parent()

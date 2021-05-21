@@ -295,6 +295,15 @@ export function OrderButton({
 }
 
 function checkAvailability({ data, materialType }) {
+  // @TODO use this:
+  /*
+  const { data, isLoading, error } = useData(
+      workFragments.detailsAllManifestations({ workId })
+  );
+  .. run through ALL manifestations - check if requestButton is true
+  .. it is checked in openformat ..
+   */
+
   // for now we only support ordering books
   const supportedMaterialTypes = ["Bog"];
 
