@@ -307,7 +307,8 @@ function checkAvailability({ error, data, materialType }) {
     data &&
     data.manifestation &&
     data.manifestation.availability &&
-    data.manifestation.availability.orderPossible
+    data.manifestation.availability.orderPossible &&
+    data.manifestation.availability.willLend
   );
 }
 
