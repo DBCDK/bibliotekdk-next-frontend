@@ -33,6 +33,8 @@ export default function Section({
   topSpace = false,
   contentDivider = <Divider />,
   titleDivider = <Divider />,
+  // to hide entire section
+  hide = false,
 }) {
   const backgroundColor = bgColor;
   const backgroundClass = bgColor ? styles.background : "";
@@ -48,9 +50,9 @@ export default function Section({
   }
 
   return (
-    <div className={topSpaceClass}>
+    <div className={`${topSpaceClass} ${hide ? styles.hide : ""}`}>
       <div
-        className={`${backgroundClass} ${className}`}
+        className={`${backgroundClass} ${className} `}
         style={{ backgroundColor }}
         data-cy={dataCy}
       >
@@ -99,4 +101,5 @@ Section.propTypes = {
     PropTypes.array,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  hide: PropTypes.bool,
 };

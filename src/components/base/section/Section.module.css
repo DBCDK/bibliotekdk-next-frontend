@@ -34,6 +34,10 @@
   padding-top: var(--pt2);
 }
 
+.hide{
+  display: none;
+}
+
 @media (min-width: 992px) {
   .divider {
     width: 100%;
