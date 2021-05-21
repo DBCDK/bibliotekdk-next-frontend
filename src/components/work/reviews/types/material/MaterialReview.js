@@ -31,7 +31,7 @@ export function MaterialReview({
 
   const bib = "https://bibliotek.dk/";
 
-  // BETA-1 disable links to library assesment and review author
+  // BETA-1 disable links to library assessment and review author
   const disablebiblinks = true;
   return (
     <Col
