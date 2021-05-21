@@ -107,7 +107,7 @@ export function ReservationButtonActive() {
   const data = dummy_workDataApi({ workId: "some-id" });
   return (
     <div>
-      <StoryTitle>user logged in - materatal reservable</StoryTitle>
+      <StoryTitle>user logged in - material reservable</StoryTitle>
       <StoryDescription>user is logged in - order is possible</StoryDescription>
       <OrderButton
         selectedMaterial={data.work.materialTypes[0]}

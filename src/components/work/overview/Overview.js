@@ -257,15 +257,11 @@ export function OrderButton({
     manifestationFragments.availability({ pid })
   );
 
-  if (error) {
-    console.log("ERROR");
-  }
-
   let available = false;
   if (isLoading) {
     buttonSkeleton = true;
   } else {
-    available = checkAvailability({ data, materialType });
+    available = checkAvailability({ error, data, materialType });
   }
 
   // finished loading - materail can not be ordered - disable buttons
@@ -294,18 +290,25 @@ export function OrderButton({
   );
 }
 
-function checkAvailability({ data, materialType }) {
+function checkAvailability({ error, data, materialType }) {
+  if (error && !process.env.STORYBOOK_ACTIVE) {
+    log(error, `availability check failed with error: ${error}`);
+    return false;
+  }
   // for now we only support ordering books
   const supportedMaterialTypes = ["Bog"];
-
-  // @TODO use this: process.env.STORYBOOK_ACTIVE
-  // we cannot load data in wrap since materialType is selected ..
-
   if (!includes(supportedMaterialTypes, materialType)) {
     return false;
   }
 
-  return data;
+  // check availability response
+  // @TODO check with nanna or rikke to verify
+  return (
+    data &&
+    data.manifestation &&
+    data.manifestation.availability &&
+    data.manifestation.availability.orderPossible
+  );
 }
 
 /**
