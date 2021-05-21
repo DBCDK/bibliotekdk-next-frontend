@@ -70,12 +70,20 @@ export function Overview({
 
   const searchOnUrl = "/find?q=";
 
+  // BETA-1 .. disable breadcrumb links
+  const breadcrumbsdisabled = true;
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
-            <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
+            <Breadcrumbs
+              path={path}
+              skeleton={skeleton}
+              crumbs={4}
+              disabled={breadcrumbsdisabled}
+            />
           </Col>
 
           <Col

@@ -67,6 +67,7 @@ function ColumnOne({ manifestation }) {
           href={bibdkObjectUrl(manifestation.pid)}
         />
       </div>
+      {/* --- BETA-1 commented out .. location (number of libraries), bookmark, basket
       <div>
         <Link
           children={
@@ -97,6 +98,7 @@ function ColumnOne({ manifestation }) {
         />
       </div>
 
+
       <Button
         type={"secondary"}
         size={"small"}
@@ -105,6 +107,7 @@ function ColumnOne({ manifestation }) {
           label: "addToCart",
         })}
       />
+      */}
     </Col>
   );
 }
