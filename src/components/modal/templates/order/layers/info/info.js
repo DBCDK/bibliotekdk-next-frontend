@@ -20,13 +20,18 @@ export default function Info({
   onMailChange,
   isVisible,
   isLoading,
+  mail,
 }) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
-  const { name, mail } = user;
+  const { name, mail: userMail } = user;
 
   const context = { context: "order" };
+
+  console.log("mail", mail);
+
+  const validClass = mail?.valid?.status ? styles.valid : styles.inValid;
 
   return (
     <div className={`${styles.info} ${className}`}>
@@ -127,14 +132,19 @@ export default function Info({
           </label>
           <Email
             required={true}
-            disabled={isLoading || !!mail}
+            disabled={isLoading || !!userMail}
             tabIndex={isVisible ? "0" : "-1"}
-            value={mail || ""}
+            value={userMail || ""}
             id="order-user-email"
             onBlur={(value, valid) => onMailChange(value, valid)}
             onMount={(value, valid) => onMailChange(value, valid)}
-            readOnly={!!mail}
+            readOnly={!!userMail}
           />
+          {mail?.valid?.message && (
+            <div className={`${styles.emailMessage} ${validClass}`}>
+              <Text type="text3">{mail?.valid?.message}</Text>
+            </div>
+          )}
         </div>
         <div className={styles.message}>
           <Text type="text3">

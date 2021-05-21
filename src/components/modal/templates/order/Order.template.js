@@ -38,7 +38,7 @@ function Order({
   const [translated, setTranslated] = useState(false);
   const [activeLayer, setActiveLayer] = useState(null);
 
-  // Order is validated state
+  // Validation state
   const [validated, setValidated] = useState(null);
 
   // Selected pickup branch
@@ -46,7 +46,7 @@ function Order({
   let [pickupBranch, setPickupBranch] = useState();
   pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
 
-  // Email
+  // Email state
   const [mail, setMail] = useState(null);
 
   // Update modal url param
@@ -78,19 +78,16 @@ function Order({
     }
   }, [isVisible]);
 
-  // Update email
+  // Update email from user account
   useEffect(() => {
     const userMail = user?.mail;
 
     if (userMail) {
-      const message =
-        (!!userMail && "Din mail er hentet fra Vejle Bibliotekerne") ||
-        mail?.valid?.message ||
-        null;
+      const message = "Din mail er hentet fra Vejle Bibliotekerne" || null;
 
       setMail({
-        value: userMail || "",
-        valid: { status: !!userMail, message },
+        value: userMail,
+        valid: { status: true, message },
       });
     }
   }, [user?.mail]);
@@ -161,10 +158,6 @@ function Order({
   // Validated
   const validatedClass = validated?.status ? styles.validated : "";
 
-  console.log("validation", validated);
-
-  console.log("mail", mail);
-
   return (
     <div className={styles.order}>
       <div className={styles.container}>
@@ -181,9 +174,8 @@ function Order({
                 handleLayer(layer);
               }}
               pickupBranch={pickupBranch}
-              onMailChange={(value, valid) => {
-                setMail({ value, valid });
-              }}
+              onMailChange={(value, valid) => setMail({ value, valid })}
+              mail={mail}
               isLoading={isLoading}
             />
           </div>

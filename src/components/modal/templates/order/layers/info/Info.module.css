@@ -78,7 +78,14 @@
 
 .message {
   padding: var(--pt1) 0 0 0;
-  color: var(--gray);
+}
+
+.emailMessage {
+  padding: var(--pt1) 0 0 0;
+}
+
+.emailMessage.inValid {
+  color: var(--error);
 }
 
 /*  */

@@ -8,16 +8,6 @@ import { validateEmail } from "@/utils/validateEmail";
 
 import styles from "./Email.module.css";
 
-// Error messages
-const emptyFieldMessage = Translate({
-  context: "form",
-  label: "empty-email-field",
-});
-const invalidEmailMessage = Translate({
-  context: "form",
-  label: "wrong-email-field",
-});
-
 /**
  * The Component function
  *
@@ -39,6 +29,16 @@ function Email(props) {
   } = props;
   const [valid, setValid] = useState(null);
 
+  // Error messages
+  const emptyFieldMessage = Translate({
+    context: "form",
+    label: "empty-email-field",
+  });
+  const invalidEmailMessage = Translate({
+    context: "form",
+    label: "wrong-email-field",
+  });
+
   // Validation onMount
 
   useEffect(
@@ -59,7 +59,7 @@ function Email(props) {
   );
 
   function getMessage(value, valid) {
-    const message = (value === "" && "empty hest") || "invalid hest";
+    const message = (value === "" && emptyFieldMessage) || invalidEmailMessage;
     return (!valid && message) || null;
   }
 
