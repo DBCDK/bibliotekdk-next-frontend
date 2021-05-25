@@ -22,29 +22,39 @@ export default function Info({
   isLoading,
   validated,
 }) {
+  const context = { context: "order" };
+
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
+  // user props
   const { name, mail: userMail } = user;
 
-  const context = { context: "order" };
-
-  // Only show validation if user has already tried to submit order
+  // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
 
-  // Email validation (from validate object)
+  // Get email messages (from validate object)
   const emailStatus = validated?.details?.hasMail?.status;
-  const errorMessage = hasTry && validated?.details?.hasMail?.message;
+  const errorMessage = validated?.details?.hasMail?.message;
 
-  const defaultMessage = {
+  const libraryFallback = Translate({
+    context: "general",
+    label: "your-library",
+  });
+
+  // If user profile has an email, email field will be locked and this message shown
+  const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: ["Dit Bibliotek"],
+    vars: [pickupBranch?.name || libraryFallback],
   };
+
+  // Set email input message if any
+  const message = (hasTry && errorMessage) || (userMail && lockedMessage);
 
   // Email validation class'
   const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
-  const fieldInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
+  const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
   return (
     <div className={`${styles.info} ${className}`}>
@@ -144,7 +154,7 @@ export default function Info({
             </Text>
           </label>
           <Email
-            invalidClass={fieldInvalidClass}
+            invalidClass={customInvalidClass}
             required={true}
             disabled={isLoading || !!userMail}
             tabIndex={isVisible ? "0" : "-1"}
@@ -154,20 +164,11 @@ export default function Info({
             onMount={(value, valid) => onMailChange(value, valid)}
             readOnly={!!userMail}
           />
-
-          <div className={`${styles.emailMessage} ${validClass}`}>
-            <Text type="text3">
-              {Translate(errorMessage || defaultMessage)}
-            </Text>
-          </div>
-        </div>
-        <div className={styles.message}>
-          <Text type="text3">
-            {Translate({
-              ...context,
-              label: "order-message-library",
-            })}
-          </Text>
+          {message && (
+            <div className={`${styles.emailMessage} ${validClass}`}>
+              <Text type="text3">{Translate(message)}</Text>
+            </div>
+          )}
         </div>
       </div>
     </div>

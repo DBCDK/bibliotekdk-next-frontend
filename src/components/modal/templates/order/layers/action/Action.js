@@ -66,7 +66,15 @@ function Action({
   const orderedClass = isOrdered && hasLoaded ? styles.ordered : "";
   const failedClass = isFailed && hasLoaded ? styles.failed : "";
 
+  // Order ors id on order success
   const orsId = orderData?.submitOrder?.orsId;
+
+  // check if user has already tried to submit order (but validation failed)
+  const hasTry = validated?.hasTry;
+
+  // Check for email validation and email error messages
+  const hasEmail = validated?.details?.hasMail?.status;
+  const message = hasTry && !hasEmail && validated?.details?.hasMail?.message;
 
   return (
     <div
@@ -74,6 +82,24 @@ function Action({
       aria-hidden={!isVisible}
     >
       <div className={styles.top}>
+        {message && (
+          <div className={styles.validationFail}>
+            <Text type="text3">
+              {Translate({
+                context: "order",
+                label: `action-${message.label}`,
+              })}
+            </Text>
+          </div>
+        )}
+        <div className={styles.message}>
+          <Text type="text3">
+            {Translate({
+              ...context,
+              label: "order-message-library",
+            })}
+          </Text>
+        </div>
         <Button
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}

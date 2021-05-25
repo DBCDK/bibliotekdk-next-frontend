@@ -190,6 +190,10 @@
       "select": {
         "da": "Vælg",
         "en": "Select"
+      },
+      "your-library": {
+        "da": "dit bibliotek",
+        "en": "your library"
       }
     },
     "articles": {
@@ -754,8 +758,16 @@
         "en": "Order number: %s"
       },
       "info-email-message": {
-        "da": "Din mail er hentet fra dit bibliotek",
-        "en": "Your email has been retrieved from your library"
+        "da": "Din mail er hentet fra %s",
+        "en": "Your email has been retrieved from %s"
+      },
+      "action-empty-email-field": {
+        "da": "Du mangler at udfylde din e-mail",
+        "en": "You need to fill out your email"
+      },
+      "action-wrong-email-field": {
+        "da": "Du mangler at angive en korrekt e-mail",
+        "en": "You need to enter a correct email"
       }
     },
     "form": {
