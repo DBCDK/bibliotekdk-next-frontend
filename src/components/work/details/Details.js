@@ -165,7 +165,7 @@ export default function Wrap(props) {
     data.work.materialTypes.find((element) => element.materialType === type) ||
     data.work.materialTypes[0];
 
-  return <Details {...props} data={materialType} />;
+  return <Details {...props} data={materialType?.manifestations?.[0]} />;
 }
 
 // PropTypes for component

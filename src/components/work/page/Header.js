@@ -25,20 +25,12 @@ import { getCanonicalWorkUrl } from "@/lib/utils";
  * @returns {component}
  */
 export default function Header({ workId }) {
-  const basic = useData(workFragments.basic({ workId }));
-  const details = useData(workFragments.details({ workId }));
+  const details = useData(workFragments.detailsAllManifestations({ workId }));
 
-  if (
-    !basic.data ||
-    basic.isLoading ||
-    basic.error ||
-    !details.data ||
-    details.isLoading ||
-    details.error
-  ) {
+  if (!details.data || details.isLoading || details.error) {
     return null;
   }
-  const data = merge({}, basic.data, details.data, { work: { id: workId } });
+  const data = details.data;
   const jsonld = getJSONLD(data.work);
   const pageDescription = data.work.seo.description;
   const pageTitle = data.work.seo.title;

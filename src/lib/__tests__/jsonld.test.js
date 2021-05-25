@@ -6,7 +6,7 @@ test("generateJSONLD", () => {
     title: "Klodernes kamp",
     creators: [{ name: "h g wells" }],
     description: "some description",
-    materialTypes: [
+    manifestations: [
       {
         pid: "870970-basis:06442870",
         cover: {
