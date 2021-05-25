@@ -21,26 +21,29 @@ import styles from "./Email.module.css";
 function Email(props) {
   const {
     className,
+    invalidClass = styles.invalid,
+    validClass = styles.valid,
     onChange,
     onBlur,
     required = false,
     value,
     onMount,
   } = props;
+
+  // validation state
   const [valid, setValid] = useState(null);
 
-  // Error messages
-  const emptyFieldMessage = Translate({
+  // Error messages for translate
+  const emptyField = {
     context: "form",
     label: "empty-email-field",
-  });
-  const invalidEmailMessage = Translate({
+  };
+  const invalidEmail = {
     context: "form",
     label: "wrong-email-field",
-  });
+  };
 
   // Validation onMount
-
   useEffect(
     () => {
       const allowEmpty = value === "" && !required;
@@ -50,26 +53,25 @@ function Email(props) {
       onMount &&
         onMount(value, {
           status: valid,
-          message: getMessage(value, valid),
+          message: getLabel(value, valid),
         });
-
-      console.log("value", value);
     }, // Updates if value changes (initial value)
     [value]
   );
 
-  function getMessage(value, valid) {
-    const message = (value === "" && emptyFieldMessage) || invalidEmailMessage;
-    return (!valid && message) || null;
+  function getLabel(value, valid) {
+    const label = (value === "" && emptyField) || invalidEmail;
+    return (!valid && label) || null;
   }
 
-  const validClass = valid ? styles.valid : styles.inValid;
+  // email valid / invalid status class
+  const statusClass = valid ? validClass : invalidClass;
 
   return (
     <Input
       {...props}
       type="email"
-      className={`${className} ${styles.email} ${validClass}`}
+      className={`${className} ${styles.email} ${statusClass}`}
       onBlur={(value) => {
         if (onBlur) {
           const allowEmpty = value === "" && !required;
@@ -77,7 +79,7 @@ function Email(props) {
           setValid(valid);
           onBlur(value, {
             status: valid,
-            message: getMessage(value, valid),
+            message: getLabel(value, valid),
           });
         }
       }}
@@ -89,7 +91,7 @@ function Email(props) {
 
           onChange(value, {
             status: valid,
-            message: getMessage(value, valid),
+            message: getLabel(value, valid),
           });
         }
       }}
@@ -100,6 +102,8 @@ function Email(props) {
 // PropTypes for component
 Email.propTypes = {
   className: PropTypes.string,
+  invalidClass: PropTypes.string,
+  validClass: PropTypes.string,
   required: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,

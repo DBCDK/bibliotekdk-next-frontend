@@ -49,6 +49,9 @@ function Order({
   // Email state
   const [mail, setMail] = useState(null);
 
+  // Sets if user has unsuccessfully tried to submit the order
+  const [hasTry, setHasTry] = useState(false);
+
   // Update modal url param
   useEffect(() => {
     const layer = Router.query.modal?.split("-")[1];
@@ -83,7 +86,7 @@ function Order({
     const userMail = user?.mail;
 
     if (userMail) {
-      const message = "Din mail er hentet fra Vejle Bibliotekerne" || null;
+      const message = null;
 
       setMail({
         value: userMail,
@@ -100,13 +103,17 @@ function Order({
 
     const status = hasMail && hasBranchId && hasPid;
     const details = {
-      hasMail: { status: hasMail, message: mail?.valid?.message },
+      hasMail: {
+        status: hasMail,
+        value: mail?.value,
+        message: mail?.valid?.message,
+      },
       hasBranchId: { status: hasBranchId },
       hasPid: { status: hasPid },
     };
 
-    setValidated({ status, details });
-  }, [mail, pid, pickupBranch]);
+    setValidated({ status, hasTry, details });
+  }, [mail, pid, pickupBranch, hasTry]);
 
   /**
    *  Function to handle the active layer in modal
@@ -176,6 +183,7 @@ function Order({
               pickupBranch={pickupBranch}
               onMailChange={(value, valid) => setMail({ value, valid })}
               mail={mail}
+              validated={validated}
               isLoading={isLoading}
             />
           </div>
@@ -212,6 +220,8 @@ function Order({
           onClick={() => {
             if (validated.status) {
               onSubmit && onSubmit(pid, pickupBranch, mail?.value);
+            } else {
+              setHasTry(true);
             }
           }}
         />

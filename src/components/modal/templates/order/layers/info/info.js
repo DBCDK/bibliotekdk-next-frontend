@@ -20,7 +20,7 @@ export default function Info({
   onMailChange,
   isVisible,
   isLoading,
-  mail,
+  validated,
 }) {
   // Mateiral props
   const { title, creators, materialType, cover } = material;
@@ -29,9 +29,22 @@ export default function Info({
 
   const context = { context: "order" };
 
-  console.log("mail", mail);
+  // Only show validation if user has already tried to submit order
+  const hasTry = validated?.hasTry;
 
-  const validClass = mail?.valid?.status ? styles.valid : styles.inValid;
+  // Email validation (from validate object)
+  const emailStatus = validated?.details?.hasMail?.status;
+  const errorMessage = hasTry && validated?.details?.hasMail?.message;
+
+  const defaultMessage = {
+    context: "order",
+    label: "info-email-message",
+    vars: ["Dit Bibliotek"],
+  };
+
+  // Email validation class'
+  const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
+  const fieldInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
   return (
     <div className={`${styles.info} ${className}`}>
@@ -131,6 +144,7 @@ export default function Info({
             </Text>
           </label>
           <Email
+            invalidClass={fieldInvalidClass}
             required={true}
             disabled={isLoading || !!userMail}
             tabIndex={isVisible ? "0" : "-1"}
@@ -140,11 +154,12 @@ export default function Info({
             onMount={(value, valid) => onMailChange(value, valid)}
             readOnly={!!userMail}
           />
-          {mail?.valid?.message && (
-            <div className={`${styles.emailMessage} ${validClass}`}>
-              <Text type="text3">{mail?.valid?.message}</Text>
-            </div>
-          )}
+
+          <div className={`${styles.emailMessage} ${validClass}`}>
+            <Text type="text3">
+              {Translate(errorMessage || defaultMessage)}
+            </Text>
+          </div>
         </div>
         <div className={styles.message}>
           <Text type="text3">

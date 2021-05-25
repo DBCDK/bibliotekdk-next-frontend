@@ -752,6 +752,10 @@
       "order-success-id": {
         "da": "Bestillingsnummer: %s",
         "en": "Order number: %s"
+      },
+      "info-email-message": {
+        "da": "Din mail er hentet fra dit bibliotek",
+        "en": "Your email has been retrieved from your library"
       }
     },
     "form": {

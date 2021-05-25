@@ -84,8 +84,12 @@
   padding: var(--pt1) 0 0 0;
 }
 
-.emailMessage.inValid {
+.emailMessage.invalid {
   color: var(--error);
+}
+
+.invalidInput {
+  border: 1px solid var(--error);
 }
 
 /*  */
