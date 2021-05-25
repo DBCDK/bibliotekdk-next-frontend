@@ -8,61 +8,73 @@ export default function dummy_workDataApi({ workId }) {
         materialTypes: [
           {
             materialType: "Bog",
-            pid: "870970-basis:06442870",
             cover: {
               detail: null,
             },
-            onlineAccess: null,
+            manifestations: [
+              { pid: "870970-basis:06442870", onlineAccess: null },
+            ],
           },
           {
             materialType: "Bog stor skrift",
-            pid: "870970-basis:54926391",
             cover: {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=7966902ee80cd277d0e8",
             },
-            onlineAccess: null,
+            manifestations: [
+              { pid: "870970-basis:54926391", onlineAccess: null },
+            ],
           },
           {
             materialType: "Ebog",
-            pid: "870970-basis:52849985",
             cover: {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",
             },
-            onlineAccess: [{ url: "https://ebookurl", note: "" }],
+            manifestations: [
+              {
+                pid: "870970-basis:52849985",
+                onlineAccess: [{ url: "https://ebookurl", note: "" }],
+              },
+            ],
           },
           {
             materialType: "Lydbog (bånd)",
-            pid: "870970-basis:04843819",
             cover: {
               detail: null,
             },
-            onlineAccess: null,
+            manifestations: [
+              { pid: "870970-basis:04843819", onlineAccess: null },
+            ],
           },
           {
             materialType: "Lydbog (cd-mp3)",
-            pid: "870970-basis:54687117",
             cover: {
               detail: null,
             },
-            onlineAccess: null,
+            manifestations: [
+              { pid: "870970-basis:54687117", onlineAccess: null },
+            ],
           },
           {
             materialType: "Lydbog (net)",
-            pid: "870970-basis:54627890",
             cover: {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2a9e3e64e43b94aafe62",
             },
-            onlineAccess: [{ url: "https://audiobookurl", note: "" }],
+            manifestations: [
+              {
+                pid: "870970-basis:54627890",
+                onlineAccess: [{ url: "https://audiobookurl", note: "" }],
+              },
+            ],
           },
           {
             materialType: "Punktskrift",
-            pid: "874310-katalog:DBB0106054",
             cover: {
               detail: null,
             },
+            manifestations: [{ pid: "874310-katalog:DBB0106054" }],
           },
         ],
       },

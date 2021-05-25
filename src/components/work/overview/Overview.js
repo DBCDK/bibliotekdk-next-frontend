@@ -159,7 +159,7 @@ export function Overview({
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <OrderButton
-                  selectedMaterial={selectedMaterial?.manifestations?.[0]}
+                  selectedMaterial={selectedMaterial}
                   user={user}
                   onlineAccess={onOnlineAccess}
                   login={login}
@@ -211,7 +211,10 @@ export function OrderButton({
   if (!selectedMaterial) {
     return null;
   }
+  const materialType = selectedMaterial.materialType;
 
+  // TODO every manifestation for this type may have orderPossibe=true
+  selectedMaterial = selectedMaterial.manifestations?.[0];
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
@@ -232,9 +235,9 @@ export function OrderButton({
         {Translate({
           ...context,
           label:
-            selectedMaterial?.materialType === "Ebog"
+            materialType === "Ebog"
               ? "onlineAccessEbook"
-              : selectedMaterial?.materialType.includes("Lydbog")
+              : materialType?.includes("Lydbog")
               ? "onlineAccessAudiobook"
               : "onlineAccessUnknown",
         })}
@@ -257,7 +260,6 @@ export function OrderButton({
 
   // user is logged in - check availability
   const pid = selectedMaterial.pid;
-  const materialType = selectedMaterial.materialType;
   const { data, isLoading, isSlow, error } = useData(
     manifestationFragments.availability({ pid })
   );
