@@ -113,7 +113,7 @@ function Order({
   const {
     title = "...",
     creators = [{ name: "..." }],
-    materialTypes = [],
+    manifestations = [],
   } = work;
 
   // User props
@@ -127,7 +127,10 @@ function Order({
   } = order;
 
   // Material by pid
-  const material = filter(materialTypes, (o) => o.pid === pid)[0];
+  const material = filter(
+    manifestations,
+    (manifestation) => manifestation.pid === pid
+  )[0];
 
   // status
   const isOrdering = orderIsLoading;
@@ -150,7 +153,7 @@ function Order({
           <div className={styles.left}>
             <Info
               isVisible={!translated}
-              material={{ ...material, title, creators }}
+              material={{ title, creators, ...material }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) => {
@@ -268,10 +271,7 @@ export default function Wrap(props) {
 
   // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
-    workFragments.basic({ workId })
-  );
-  const { data: detailsData, error: detailsError } = useData(
-    workFragments.details({ workId })
+    workFragments.detailsAllManifestations({ workId })
   );
 
   const covers = useData(workFragments.covers({ workId }));
@@ -287,11 +287,11 @@ export default function Wrap(props) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error || detailsError || userDataError) {
+  if (error || userDataError) {
     return <div>Error :( !!!!!</div>;
   }
 
-  const mergedWork = merge({}, covers.data, data, detailsData);
+  const mergedWork = merge({}, covers.data, data);
 
   return (
     <Order

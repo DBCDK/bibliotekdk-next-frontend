@@ -20,8 +20,11 @@ export function basic({ workId }) {
           }
           description
           materialTypes {
-            pid
             materialType
+            manifestations {
+              pid
+              materialType
+            }
           }
           path
           title
@@ -84,23 +87,26 @@ export function details({ workId }) {
             description
           }
           materialTypes {
-            content
-            creators {
-              type
-              functionSingular
-              name
-            }
-            datePublished
-            edition
-            isbn
             materialType
-            language
-            onlineAccess {
-              url
-              note
+            manifestations {
+              content
+              creators {
+                type
+                functionSingular
+                name
+              }
+              datePublished
+              edition
+              isbn
+              materialType
+              language
+              onlineAccess {
+                url
+                note
+              }
+              physicalDescription
+              publisher
             }
-            physicalDescription
-            publisher
           }
         }
         monitor(name: "bibdknext_work_details")
@@ -123,6 +129,11 @@ export function detailsAllManifestations({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          path
+          seo {
+            title
+            description
+          }
           manifestations {
             content
             creators {

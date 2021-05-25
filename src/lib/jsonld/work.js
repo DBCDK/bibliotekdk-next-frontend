@@ -53,7 +53,7 @@ export function getJSONLD({
   description,
   creators = [],
   path,
-  materialTypes = [],
+  manifestations = [],
 }) {
   const url = getCanonicalWorkUrl({ title, creators, id });
   const res = {
@@ -70,7 +70,7 @@ export function getJSONLD({
       })),
       name: title,
       url,
-      workExample: materialTypes.map((entry) => {
+      workExample: manifestations.map((entry) => {
         const manifestation = {
           "@id": entry.pid,
           "@type": "Book",

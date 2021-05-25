@@ -142,7 +142,8 @@ export function Overview({
               <Col xs={12} className={styles.materials}>
                 {materialTypes.map((material) => {
                   //  Sets isSelected flag if button should be selected
-                  const isSelected = material.pid === selectedMaterial.pid;
+                  const isSelected =
+                    material.materialType === selectedMaterial.materialType;
 
                   return (
                     <Tag
@@ -158,7 +159,7 @@ export function Overview({
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <OrderButton
-                  selectedMaterial={selectedMaterial}
+                  selectedMaterial={selectedMaterial?.manifestations?.[0]}
                   user={user}
                   onlineAccess={onOnlineAccess}
                   login={login}
@@ -207,7 +208,11 @@ export function OrderButton({
 
   // The loan button is skeleton until we know if selected
   // material is physical or online
-  let buttonSkeleton = typeof selectedMaterial.onlineAccess === "undefined";
+  if (!selectedMaterial) {
+    return null;
+  }
+
+  let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
   1. material is accessible online (no user login) -> go to online url
@@ -216,20 +221,20 @@ export function OrderButton({
   4. material is not avialable -> disable
    */
 
-  if (selectedMaterial.onlineAccess) {
+  if (selectedMaterial?.onlineAccess) {
     return (
       <Button
         className={styles.externalLink}
         skeleton={buttonSkeleton}
-        onClick={() => onlineAccess(selectedMaterial.onlineAccess[0]?.url)}
+        onClick={() => onlineAccess(selectedMaterial?.onlineAccess[0]?.url)}
       >
         <Icon src={"external.svg"} skeleton={buttonSkeleton} />
         {Translate({
           ...context,
           label:
-            selectedMaterial.materialType === "Ebog"
+            selectedMaterial?.materialType === "Ebog"
               ? "onlineAccessEbook"
-              : selectedMaterial.materialType.includes("Lydbog")
+              : selectedMaterial?.materialType.includes("Lydbog")
               ? "onlineAccessAudiobook"
               : "onlineAccessUnknown",
         })}
