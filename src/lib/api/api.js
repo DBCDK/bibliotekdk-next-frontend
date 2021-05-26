@@ -86,6 +86,12 @@ export function useMutate() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
+  function reset() {
+    setisLoading(false);
+    setData(false);
+    setError(false);
+  }
+
   async function post(query) {
     const key = generateKey({ ...query, accessToken } || "");
     setisLoading(true);
@@ -104,6 +110,7 @@ export function useMutate() {
     error: error || data?.errors,
     isLoading,
     post,
+    reset,
   };
 }
 

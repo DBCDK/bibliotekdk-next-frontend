@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
@@ -16,9 +16,9 @@ function Action({
   onClick = null,
   validated,
   isVisible,
-  isOrdering: _isOrdering,
-  isOrdered: _isOrdered,
-  isFailed: _isFailed,
+  isOrdering,
+  isOrdered,
+  isFailed,
   isLoading,
   data,
   onClose,
@@ -26,45 +26,19 @@ function Action({
 }) {
   const context = { context: "order" };
 
-  // Internal orderstatus
-  const [isOrdering, setIsOrdering] = useState(false);
-  const [isOrdered, setIsOrdered] = useState(false);
-  const [isFailed, setIsFailed] = useState(false);
-
   // Loader callback status (set to true when loadingbar has finished loading)
-  const [hasLoaded, setHasLoaded] = useState(false);
-
-  useEffect(() => {
-    if (_isOrdering) {
-      setIsOrdering(true);
-    }
-
-    if (hasLoaded) {
-      if (_isOrdered) {
-        setIsOrdering(false);
-        setIsOrdered(true);
-      } else if (_isFailed) {
-        setIsOrdering(false);
-        setIsOrdered(false);
-        setIsFailed(true);
-      }
-    }
-  }, [_isOrdering, _isOrdered, _isFailed, hasLoaded]);
+  const [showProgress, setShowProgress] = useState(false);
 
   // order data
-  const {
-    data: orderData,
-    error: orderError,
-    isLoading: orderIsLoading,
-  } = data.order;
+  const { data: orderData } = data.order;
 
   // branch data
   const branchName = data.pickupBranch?.name;
 
   const hiddenClass = !isVisible ? styles.hidden : "";
-  const orderingClass = isOrdering ? styles.ordering : "";
-  const orderedClass = isOrdered && hasLoaded ? styles.ordered : "";
-  const failedClass = isFailed && hasLoaded ? styles.failed : "";
+  const orderingClass = isOrdering || showProgress ? styles.ordering : "";
+  const orderedClass = isOrdered && !showProgress ? styles.ordered : "";
+  const failedClass = isFailed && !showProgress ? styles.failed : "";
 
   const orsId = orderData?.submitOrder?.orsId;
 
@@ -78,6 +52,7 @@ function Action({
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}
           onClick={() => {
+            setShowProgress(true);
             onClick && onClick();
             callback && callback();
           }}
@@ -89,7 +64,7 @@ function Action({
       <div className={styles.loaderWrap}>
         <Progress
           className={styles.loader}
-          callback={() => setHasLoaded(true)}
+          callback={() => setShowProgress(false)}
           start={isOrdering}
           duration={2}
           delay={1}
