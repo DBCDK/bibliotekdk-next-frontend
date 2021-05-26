@@ -1,13 +1,16 @@
 import Router from "next/router";
 import filter from "lodash/filter";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import merge from "lodash/merge";
+
+import useMutationObserver from "@rooks/use-mutation-observer";
 
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
+import useWindowSize from "@/lib/useWindowSize";
 
 // Layers
 import Info from "./layers/info";
@@ -51,6 +54,15 @@ function Order({
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasTry, setHasTry] = useState(false);
+
+  // amount of space the Action layer takes up in the scrollable area
+  const [scrollOverlap, setScrollOverlap] = useState(0);
+
+  // actionLayer ref
+  const actionRef = useRef(null);
+
+  // Check for ref changes
+  useMutationObserver(actionRef, () => handleScrollOverlap());
 
   // Update modal url param
   useEffect(() => {
@@ -115,6 +127,13 @@ function Order({
     setValidated({ status, hasTry, details });
   }, [mail, pid, pickupBranch, hasTry]);
 
+  // keep track of scroll area
+  useEffect(() => {
+    if (actionRef) {
+      handleScrollOverlap();
+    }
+  }, [actionRef, useWindowSize()]);
+
   /**
    *  Function to handle the active layer in modal
    *
@@ -130,6 +149,20 @@ function Order({
         null,
         { shallow: true, scroll: false }
       );
+    }
+  }
+
+  /**
+   *  Function to handle layer taking space upon the modal
+   *  (Adds padding-bottom to order-modal to make it scrollable)
+   *
+   * @param {string} layer
+   */
+  function handleScrollOverlap() {
+    const cur = actionRef.current;
+    const h = cur.offsetHeight;
+    if (h !== scrollOverlap) {
+      setScrollOverlap(h);
     }
   }
 
@@ -169,7 +202,10 @@ function Order({
   const validatedClass = validated?.status ? styles.validated : "";
 
   return (
-    <div className={styles.order}>
+    <div
+      className={styles.order}
+      style={{ paddingBottom: `${scrollOverlap}px` }}
+    >
       <div className={styles.container}>
         <div
           className={`${styles.wrap} ${activePageClass} ${activeTranslatedClass}`}
@@ -212,6 +248,7 @@ function Order({
           </div>
         </div>
         <Action
+          topRef={actionRef}
           isVisible={!translated && isVisible}
           validated={validated}
           isOrdering={isOrdering}
