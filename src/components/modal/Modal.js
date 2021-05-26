@@ -33,6 +33,11 @@ function handleTab(event, container) {
     container.querySelectorAll('[tabindex]:not([tabindex="-1"])')
   );
 
+  if (sequence.length < 1) {
+    console.log("UNDEFINED");
+    return;
+  }
+
   const backward = event.shiftKey;
   const first = sequence[0];
   const last = sequence[sequence.length - 1];

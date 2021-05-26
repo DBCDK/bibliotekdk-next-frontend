@@ -31,6 +31,8 @@ export function MaterialReview({
 
   const bib = "https://bibliotek.dk/";
 
+  // BETA-1 disable links to library assessment and review author
+  const disablebiblinks = true;
   return (
     <Col
       xs={12}
@@ -43,8 +45,11 @@ export function MaterialReview({
             href={bib}
             target="_blank"
             border={
-              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+              !skeleton && !disablebiblinks
+                ? { top: false, bottom: { keepVisible: true } }
+                : false
             }
+            disabled={disablebiblinks}
           >
             <Text type="text3" skeleton={skeleton} lines={1}>
               {Translate({ ...context, label: "materialTitle" })}
@@ -63,8 +68,11 @@ export function MaterialReview({
             href={bib}
             target="_blank"
             border={
-              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
+              !skeleton && !disablebiblinks
+                ? { top: false, bottom: { keepVisible: true } }
+                : false
             }
+            disabled={disablebiblinks}
           >
             <Text type="text3" skeleton={skeleton} lines={1}>
               {data.author}

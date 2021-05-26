@@ -54,6 +54,9 @@ export function Header({ className = "", router = null, story = null, user }) {
     { label: "nodes", href: "/#!" },
   ];
 
+  // for beta1 - disable links above
+  const linksdisabled = true;
+
   const actions = [
     {
       label: "digitalOffers",
@@ -84,12 +87,13 @@ export function Header({ className = "", router = null, story = null, user }) {
       icon: LoginIcon,
       onClick: user.isAuthenticated ? signOut : signIn,
     },
-    {
+    /*{
       label: "basket",
       icon: BasketIcon,
       onClick: () => {},
       items: "4",
     },
+     */
     {
       label: "menu",
       icon: BurgerIcon,
@@ -161,6 +165,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     <Link
                       key={m.label}
                       href={m.href}
+                      disabled={`${linksdisabled}`}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",

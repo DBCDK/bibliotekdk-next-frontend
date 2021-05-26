@@ -9,6 +9,7 @@ import Icon from "@/components/base/icon";
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Translate from "@/components/base/translate";
 import Image from "@/components/base/image";
+import Link from "@/components/base/link";
 
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
@@ -40,12 +41,18 @@ export default function Hero() {
               renderAsHtml: true,
             })}
           </Title>
-          <Button className={styles.readmorebutton} type="primary" size="large">
-            {Translate({
-              context: "general",
-              label: "readMore",
-            })}
-          </Button>
+          <Link a={false} href="/artikel/bibliotek.dk/6" target="_self">
+            <Button
+              className={styles.readmorebutton}
+              type="primary"
+              size="large"
+            >
+              {Translate({
+                context: "general",
+                label: "readMore",
+              })}
+            </Button>
+          </Link>
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />

@@ -21,8 +21,13 @@ export function Series({ isLoading, works = [] }) {
   // Translate Context
   const context = { context: "series" };
 
+  // BETA-1 hide series section ( hide={true} ) - it is not implemented
   return (
-    <Section title={Translate({ ...context, label: "label" })} topSpace={true}>
+    <Section
+      title={Translate({ ...context, label: "label" })}
+      topSpace={true}
+      hide={true}
+    >
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={works} />

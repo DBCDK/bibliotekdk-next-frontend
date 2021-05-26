@@ -70,12 +70,20 @@ export function Overview({
 
   const searchOnUrl = "/find?q=";
 
+  // BETA-1 .. disable breadcrumb links
+  const breadcrumbsdisabled = true;
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
-            <Breadcrumbs path={path} skeleton={skeleton} crumbs={4} />
+            <Breadcrumbs
+              path={path}
+              skeleton={skeleton}
+              crumbs={4}
+              disabled={breadcrumbsdisabled}
+            />
           </Col>
 
           <Col
@@ -298,10 +306,20 @@ export function OrderButton({
 }
 
 function checkAvailability({ error, data, materialType }) {
+  // @TODO use this:
+  /*
+  const { data, isLoading, error } = useData(
+      workFragments.detailsAllManifestations({ workId })
+  );
+  .. run through ALL manifestations - check if requestButton is true
+  .. it is checked in openformat ..
+   */
+
   if (error && !process.env.STORYBOOK_ACTIVE) {
     log(error, `availability check failed with error: ${error}`);
     return false;
   }
+
   // for now we only support ordering books
   const supportedMaterialTypes = ["Bog"];
   if (!includes(supportedMaterialTypes, materialType)) {
