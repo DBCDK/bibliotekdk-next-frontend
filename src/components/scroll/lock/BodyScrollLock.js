@@ -34,15 +34,17 @@ function scrollLock(shouldLockScroll) {
     return;
   }
 
+  const isLocked = body.classList.contains(styles.lockScroll);
+
   // Add "lock" class and add "fake" scrollY position to body
-  if (shouldLockScroll) {
+  if (shouldLockScroll && !isLocked) {
     scrollY = getScrollYPos();
     layout.style.marginTop = `-${scrollY}px`;
     body.classList.add(styles.lockScroll);
   }
   // Remove "lock", remove "fake" scrollY position
   // + Scroll back to the scrollY position - same as before the modal was triggered
-  else if (body.classList.contains(styles.lockScroll)) {
+  else if (!shouldLockScroll && isLocked) {
     body.classList.remove(styles.lockScroll);
     layout.style.marginTop = `auto`;
     window.scrollTo(0, scrollY);
