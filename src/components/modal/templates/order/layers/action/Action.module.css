@@ -25,7 +25,7 @@
 
 .action.hidden {
   /* ensure to hide the shadows */
-  transform: translateY(calc(200vh + 152px + 24px));
+  transform: translateY(calc(100% + 12px));
 }
 
 .action .top {
