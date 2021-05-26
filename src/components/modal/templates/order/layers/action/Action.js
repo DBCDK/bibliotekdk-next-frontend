@@ -13,6 +13,7 @@ import styles from "./Action.module.css";
  * Order Button
  */
 function Action({
+  topRef = null,
   onClick = null,
   validated,
   isVisible,
@@ -46,6 +47,9 @@ function Action({
   // check if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
 
+  // Validation status
+  const isValid = validated?.status;
+
   // Check for email validation and email error messages
   const hasEmail = validated?.details?.hasMail?.status;
   const message = hasTry && !hasEmail && validated?.details?.hasMail?.message;
@@ -55,7 +59,7 @@ function Action({
       className={`${styles.action} ${orderingClass} ${orderedClass} ${failedClass} ${hiddenClass}`}
       aria-hidden={!isVisible}
     >
-      <div className={styles.top}>
+      <div className={styles.top} ref={topRef}>
         {message && (
           <div className={styles.validationFail}>
             <Text type="text3">
@@ -78,7 +82,7 @@ function Action({
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}
           onClick={() => {
-            setShowProgress(true);
+            isValid && setShowProgress(true);
             onClick && onClick();
             callback && callback();
           }}
