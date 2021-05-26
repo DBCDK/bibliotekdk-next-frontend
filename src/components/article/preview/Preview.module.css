@@ -8,6 +8,7 @@
 .preview:hover {
   color: var(--blue) !important;
 }
+
 .preview h3 {
   word-break: break-word;
 }

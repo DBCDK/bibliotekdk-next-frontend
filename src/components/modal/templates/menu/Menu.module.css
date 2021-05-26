@@ -36,8 +36,7 @@
 .trigger .arrow {
   margin: 0;
   padding: 0;
-  width: 24px;
-  transform: scale(0.8);
+  width: 16px;
 }
 
 .menu.expanded .trigger span {
@@ -62,7 +61,7 @@
 
 /* imported arrow custom override */
 .menu .arrow div {
-  border-bottom: 15px solid var(--white);
+  border-bottom: 12px solid var(--white);
 }
 
 .outerWrap {
@@ -130,18 +129,18 @@ li.language {
 
 @keyframes shakeLeft {
   from {
-    transform: scale(0.8) translate(-10px, 0);
+    transform: translate(-10px, 0);
   }
   to {
-    transform: scale(0.8) translate(0, 0);
+    transform: translate(0, 0);
   }
 }
 
 @keyframes shakeRight {
   from {
-    transform: scale(0.8) translate(10px, 0);
+    transform: translate(10px, 0);
   }
   to {
-    transform: scale(0.8) translate(0, 0);
+    transform: translate(0, 0);
   }
 }

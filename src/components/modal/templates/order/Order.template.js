@@ -38,7 +38,7 @@ function Order({
   const [translated, setTranslated] = useState(false);
   const [activeLayer, setActiveLayer] = useState(null);
 
-  // Order is validated state
+  // Validation state
   const [validated, setValidated] = useState(null);
 
   // Selected pickup branch
@@ -46,8 +46,11 @@ function Order({
   let [pickupBranch, setPickupBranch] = useState();
   pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
 
-  // Email
+  // Email state
   const [mail, setMail] = useState(null);
+
+  // Sets if user has unsuccessfully tried to submit the order
+  const [hasTry, setHasTry] = useState(false);
 
   // Update modal url param
   useEffect(() => {
@@ -78,22 +81,39 @@ function Order({
     }
   }, [isVisible]);
 
-  // Update email
+  // Update email from user account
   useEffect(() => {
-    setMail({ value: user?.mail || "", valid: true });
+    const userMail = user?.mail;
+
+    if (userMail) {
+      const message = null;
+
+      setMail({
+        value: userMail,
+        valid: { status: true, message },
+      });
+    }
   }, [user?.mail]);
 
   // Update validation
   useEffect(() => {
-    const hasMail = !!mail?.valid;
+    const hasMail = !!mail?.valid?.status;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
 
     const status = hasMail && hasBranchId && hasPid;
-    const details = { hasMail, hasBranchId, hasPid };
+    const details = {
+      hasMail: {
+        status: hasMail,
+        value: mail?.value,
+        message: mail?.valid?.message,
+      },
+      hasBranchId: { status: hasBranchId },
+      hasPid: { status: hasPid },
+    };
 
-    setValidated({ status, details });
-  }, [mail, pid, pickupBranch]);
+    setValidated({ status, hasTry, details });
+  }, [mail, pid, pickupBranch, hasTry]);
 
   /**
    *  Function to handle the active layer in modal
@@ -102,10 +122,14 @@ function Order({
    */
   function handleLayer(layer) {
     if (layer !== Router.query.modal) {
-      Router.push({
-        pathname: Router.pathname,
-        query: { ...Router.query, modal: `order-${layer}` },
-      });
+      Router.push(
+        {
+          pathname: Router.pathname,
+          query: { ...Router.query, modal: `order-${layer}` },
+        },
+        null,
+        { shallow: true, scroll: false }
+      );
     }
   }
 
@@ -161,6 +185,8 @@ function Order({
               }}
               pickupBranch={pickupBranch}
               onMailChange={(value, valid) => setMail({ value, valid })}
+              mail={mail}
+              validated={validated}
               isLoading={isLoading}
             />
           </div>
@@ -186,7 +212,7 @@ function Order({
           </div>
         </div>
         <Action
-          isVisible={!translated}
+          isVisible={!translated && isVisible}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
@@ -197,6 +223,8 @@ function Order({
           onClick={() => {
             if (validated.status) {
               onSubmit && onSubmit(pid, pickupBranch, mail?.value);
+            } else {
+              setHasTry(true);
             }
           }}
         />

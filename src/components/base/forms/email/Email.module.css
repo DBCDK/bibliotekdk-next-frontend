@@ -1,6 +1,6 @@
 .email.valid {
 }
 
-.email.inValid {
+.email.invalid {
   border: 1px solid var(--error);
 }

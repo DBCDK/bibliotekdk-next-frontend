@@ -43,7 +43,7 @@
 
 /* Library */
 .library {
-  padding: var(--pt2) 0;
+  padding: var(--pt2) 0 var(--pt1) 0;
   display: flex;
   justify-content: space-between;
 }
@@ -52,6 +52,10 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+}
+
+.library .link .fullLink {
+  display: none;
 }
 
 .arrow {
@@ -72,13 +76,19 @@
   margin: var(--pt1) 0 0 0;
 }
 
-.message {
+.emailMessage {
   padding: var(--pt1) 0 0 0;
-  color: var(--gray);
+}
+
+.emailMessage.invalid {
+  color: var(--error);
+}
+
+.invalidInput {
+  border: 1px solid var(--error);
 }
 
 /*  */
-
 .edition,
 .pickup,
 .user {
@@ -90,5 +100,13 @@
   .pickup,
   .user {
     padding: var(--pt3) var(--pt6);
+  }
+
+  .library .link .fullLink {
+    display: block;
+  }
+
+  .library .link .shortLink {
+    display: none;
   }
 }

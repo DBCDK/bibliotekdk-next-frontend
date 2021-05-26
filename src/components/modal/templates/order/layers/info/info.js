@@ -20,13 +20,41 @@ export default function Info({
   onMailChange,
   isVisible,
   isLoading,
+  validated,
 }) {
+  const context = { context: "order" };
+
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
-  const { name, mail } = user;
+  // user props
+  const { name, mail: userMail } = user;
 
-  const context = { context: "order" };
+  // Only show validation if user has already tried to submit order (but validation failed)
+  const hasTry = validated?.hasTry;
+
+  // Get email messages (from validate object)
+  const emailStatus = validated?.details?.hasMail?.status;
+  const errorMessage = validated?.details?.hasMail?.message;
+
+  const libraryFallback = Translate({
+    context: "general",
+    label: "your-library",
+  });
+
+  // If user profile has an email, email field will be locked and this message shown
+  const lockedMessage = {
+    context: "order",
+    label: "info-email-message",
+    vars: [pickupBranch?.name || libraryFallback],
+  };
+
+  // Set email input message if any
+  const message = (hasTry && errorMessage) || (userMail && lockedMessage);
+
+  // Email validation class'
+  const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
+  const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
   return (
     <div className={`${styles.info} ${className}`}>
@@ -86,8 +114,11 @@ export default function Info({
               border={{ bottom: { keepVisible: !isLoading } }}
               tabIndex={isVisible ? "0" : "-1"}
             >
-              <Text type="text3">
+              <Text type="text3" className={styles.fullLink}>
                 {Translate({ ...context, label: "pickup-link" })}
+              </Text>
+              <Text type="text3" className={styles.shortLink}>
+                {Translate({ context: "general", label: "select" })}
               </Text>
             </Link>
             <Arrow
@@ -123,22 +154,21 @@ export default function Info({
             </Text>
           </label>
           <Email
-            disabled={isLoading}
+            invalidClass={customInvalidClass}
+            required={true}
+            disabled={isLoading || !!userMail}
             tabIndex={isVisible ? "0" : "-1"}
-            value={mail || ""}
+            value={userMail || ""}
             id="order-user-email"
             onBlur={(value, valid) => onMailChange(value, valid)}
-            readOnly={mail}
+            onMount={(value, valid) => onMailChange(value, valid)}
+            readOnly={!!userMail}
           />
-        </div>
-        <div className={styles.message}>
-          <Text type="text3">
-            {Translate({
-              ...context,
-              label: "order-message",
-              vars: [pickupBranch?.name],
-            })}
-          </Text>
+          {message && (
+            <div className={`${styles.emailMessage} ${validClass}`}>
+              <Text type="text3">{Translate(message)}</Text>
+            </div>
+          )}
         </div>
       </div>
     </div>

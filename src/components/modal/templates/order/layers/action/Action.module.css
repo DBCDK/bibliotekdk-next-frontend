@@ -2,7 +2,7 @@
 
 .action {
   width: 100%;
-  height: calc(200vh + 152px);
+  height: calc(200vh + 152px + 24px);
 
   position: absolute;
   top: 100%;
@@ -16,7 +16,7 @@
   transition-duration: 0.5s;
   transition-delay: 0.2s;
 
-  transform: translateY(-152px);
+  transform: translateY(-88px);
 }
 
 .action.hidden {
@@ -29,17 +29,22 @@
   height: 152px;
 }
 
-.action.validated {
+.top .message {
+  padding: 0 0 var(--pt1) 0;
+}
+
+.top .validationFail {
+  color: var(--error);
 }
 
 .action.ordering {
   /* add the buttons height */
-  transform: translateY(calc(-100vh - 152px - 32px));
+  transform: translateY(calc(-100vh - 152px - 24px));
 }
 
 .action.ordered,
 .action.failed {
-  transform: translateY(calc(-200vh - 152px - 32px));
+  transform: translateY(calc(-200vh - 152px - 24px));
 }
 
 .action.ordering .top,
@@ -154,6 +159,7 @@
 
 @media (min-width: 576px) {
   .action {
-    padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
+    transform: translateY(-152px);
+    padding: var(--pt3) var(--pt6) var(--pt4) var(--pt6);
   }
 }
