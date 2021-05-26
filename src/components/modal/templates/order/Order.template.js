@@ -261,12 +261,6 @@ export default function Wrap(props) {
 
   const [pid, setPid] = useState(null);
 
-  useEffect(() => {
-    if (order) {
-      setPid(order);
-    }
-  }, [order]);
-
   const workId = `work-of:${pid}`;
 
   // Fetch work data
@@ -282,6 +276,19 @@ export default function Wrap(props) {
   );
 
   const orderMutation = useMutate();
+
+  useEffect(() => {
+    if (order) {
+      setPid(order);
+    }
+  }, [order]);
+
+  useEffect(() => {
+    if (pid) {
+      // when new pid is selected, we reset order status
+      orderMutation.reset();
+    }
+  }, [pid]);
 
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
