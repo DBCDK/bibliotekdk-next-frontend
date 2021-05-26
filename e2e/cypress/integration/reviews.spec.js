@@ -17,14 +17,15 @@ describe("Overview", () => {
     cy.get("[data-cy=review-infomedia]").last().should("not.be.visible");
   });
 
+  //BETA-1 skip this test - material reviews are gone
   it(`Can tab through path`, () => {
     cy.get("body").tabs(3);
     cy.focused()
       .parent()
       .parent()
-      .should("have.attr", "data-cy", "review-material");
+      .should("have.attr", "data-cy", "review-infomedia");
     cy.tabs(1);
-    cy.focused().should("have.attr", "data-cy", "litteratursiden-link");
+    cy.focused().should("have.attr", "data-cy", "link");
   });
 
   // Slider is now infinite -> buttons will never get disabled

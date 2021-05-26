@@ -26,6 +26,12 @@
   color: var(--white);
 }
 
+.disabled{
+  color: var(--gray);
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Print styles */
 
 @media print {

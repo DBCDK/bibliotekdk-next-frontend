@@ -161,12 +161,18 @@ const BranchLinks = () => {
     music: { pathname: "/", query: {} },
     nodes: { pathname: "/", query: {} },
   };
+  // BETA-1 all these links are disabled .. should they be removed?
+  const footerlinksdisabled = true;
+
   return Object.keys(branch_links).map((key, index) => (
     <div key={key}>
       <Link
         href={branch_links[key]}
-        className={styles.footerlink}
+        className={`${
+          footerlinksdisabled ? styles.disabled : styles.footerlink
+        }`}
         dataCy="branchlink"
+        disabled={footerlinksdisabled}
       >
         <Text tag="span" type="text3">
           {Translate({
