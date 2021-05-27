@@ -109,4 +109,8 @@
   .library .link .shortLink {
     display: none;
   }
+
+  .emailMessage.valid {
+    display: none;
+  }
 }
