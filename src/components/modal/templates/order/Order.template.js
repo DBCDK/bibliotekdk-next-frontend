@@ -188,6 +188,10 @@ function Order({
     manifestations,
     (manifestation) => manifestation.pid === pid
   )[0];
+  const materialsSameType = filter(
+    manifestations,
+    (manifestation) => manifestation.materialType === material.materialType
+  );
 
   // status
   const isOrdering = orderIsLoading;
@@ -259,7 +263,12 @@ function Order({
           onClose={onClose}
           onClick={() => {
             if (validated.status) {
-              onSubmit && onSubmit(pid, pickupBranch, mail?.value);
+              onSubmit &&
+                onSubmit(
+                  materialsSameType.map((m) => m.pid),
+                  pickupBranch,
+                  mail?.value
+                );
             } else {
               setHasTry(true);
             }
@@ -371,9 +380,13 @@ export default function Wrap(props) {
       user={userData?.user || {}}
       pid={pid}
       order={orderMutation}
-      onSubmit={(pid, pickupBranch, email) => {
+      onSubmit={(pids, pickupBranch, email) => {
         orderMutation.post(
-          submitOrder({ pid, branchId: pickupBranch.branchId, email })
+          submitOrder({
+            pids,
+            branchId: pickupBranch.branchId,
+            email,
+          })
         );
       }}
       {...props}
