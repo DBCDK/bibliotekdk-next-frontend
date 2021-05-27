@@ -22,7 +22,7 @@
 }
 
 .about {
-  padding-right: var(--pt3);
+  padding-right: var(--pt2);
 }
 
 .ornament {
@@ -58,7 +58,7 @@
   padding-top: var(--pt2);
 }
 
-.disabledbutton{
+.disabledbutton {
   border: 1px solid black;
 }
 

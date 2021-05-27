@@ -19,6 +19,7 @@ function Input({
   type = "text",
   id,
   value = "",
+  placeholder = null,
   disabled = false,
   onChange,
   onBlur,
@@ -43,6 +44,7 @@ function Input({
       className={`${styles.input} ${readOnlyClass} ${className}`}
       type={type}
       value={val}
+      placeholder={placeholder}
       disabled={disabled}
       readOnly={readOnly}
       tabIndex={disabled ? "-1" : tabIndex}
@@ -59,6 +61,7 @@ Input.propTypes = {
   tabIndex: PropTypes.string,
   className: PropTypes.string,
   value: PropTypes.string,
+  placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   readOnly: PropTypes.bool,

@@ -49,8 +49,13 @@ export default function Info({
     vars: [pickupBranch?.name || libraryFallback],
   };
 
+  const messageFromLibrary = {
+    context: "order",
+    label: "order-message-library",
+  };
+
   // Set email input message if any
-  const message = (hasTry && errorMessage) || (userMail && lockedMessage);
+  const message = (hasTry && errorMessage) || messageFromLibrary;
 
   // Email validation class'
   const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
@@ -153,7 +158,17 @@ export default function Info({
               {Translate({ context: "general", label: "email" })}
             </Text>
           </label>
+
+          {userMail && lockedMessage && (
+            <div className={`${styles.emailMessage}`}>
+              <Text type="text3">{Translate(lockedMessage)}</Text>
+            </div>
+          )}
           <Email
+            placeholder={Translate({
+              context: "form",
+              label: "email-placeholder",
+            })}
             invalidClass={customInvalidClass}
             required={true}
             disabled={isLoading || !!userMail}
@@ -164,6 +179,7 @@ export default function Info({
             onMount={(value, valid) => onMailChange(value, valid)}
             readOnly={!!userMail}
           />
+
           {message && (
             <div className={`${styles.emailMessage} ${validClass}`}>
               <Text type="text3">{Translate(message)}</Text>

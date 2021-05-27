@@ -4,13 +4,13 @@ import filter from "lodash/filter";
 import { useState, useEffect, useRef } from "react";
 import merge from "lodash/merge";
 
-import useMutationObserver from "@rooks/use-mutation-observer";
+// import useMutationObserver from "@rooks/use-mutation-observer";
 
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
-import useWindowSize from "@/lib/useWindowSize";
+// import useWindowSize from "@/lib/useWindowSize";
 
 // Layers
 import Info from "./layers/info";
@@ -56,13 +56,13 @@ function Order({
   const [hasTry, setHasTry] = useState(false);
 
   // amount of space the Action layer takes up in the scrollable area
-  const [scrollOverlap, setScrollOverlap] = useState(0);
+  // const [scrollOverlap, setScrollOverlap] = useState(0);
 
   // actionLayer ref
-  const actionRef = useRef(null);
+  // const actionRef = useRef(null);
 
   // Check for ref changes
-  useMutationObserver(actionRef, () => handleScrollOverlap());
+  // useMutationObserver(actionRef, () => handleScrollOverlap());
 
   // Update modal url param
   useEffect(() => {
@@ -128,11 +128,11 @@ function Order({
   }, [mail, pid, pickupBranch, hasTry]);
 
   // keep track of scroll area
-  useEffect(() => {
-    if (actionRef) {
-      handleScrollOverlap();
-    }
-  }, [actionRef, useWindowSize()]);
+  // useEffect(() => {
+  //   if (actionRef) {
+  //     handleScrollOverlap();
+  //   }
+  // }, [actionRef, useWindowSize()]);
 
   /**
    *  Function to handle the active layer in modal
@@ -158,13 +158,14 @@ function Order({
    *
    * @param {string} layer
    */
-  function handleScrollOverlap() {
-    const cur = actionRef.current;
-    const h = cur.offsetHeight;
-    if (h !== scrollOverlap) {
-      setScrollOverlap(h);
-    }
-  }
+  // function handleScrollOverlap() {
+  //   console.log("handleScrollOverlap()....");
+  //   const cur = actionRef.current;
+  //   const h = cur.offsetHeight;
+  //   if (h !== scrollOverlap) {
+  //     setScrollOverlap(h);
+  //   }
+  // }
 
   // Work props
   const {
@@ -202,11 +203,11 @@ function Order({
   // Validated
   const validatedClass = validated?.status ? styles.validated : "";
 
+  // Order padding bottom, according to if the actionlayer is visible
+  const actionLayerVisible = !translated ? styles.padding : "";
+
   return (
-    <div
-      className={styles.order}
-      style={{ paddingBottom: `${scrollOverlap}px` }}
-    >
+    <div className={`${styles.order} ${actionLayerVisible}`}>
       <div className={styles.container}>
         <div
           className={`${styles.wrap} ${activePageClass} ${activeTranslatedClass}`}
@@ -254,8 +255,9 @@ function Order({
           </div>
         </div>
         <Action
-          topRef={actionRef}
-          isVisible={!translated && isVisible}
+          // topRef={actionRef}
+          // scrollOverlap={scrollOverlap}
+          isVisible={!translated}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
