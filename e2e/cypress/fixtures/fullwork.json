@@ -1,0 +1,600 @@
+{
+  "data": {
+    "work": {
+      "path": ["some", "path"],
+      "id": "work-of:870970-basis:51701763",
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
+      },
+      "seo": {
+        "title": "Hest, hest, tiger, tiger af Mette E. Neerlin",
+        "description": "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+      },
+      "materialTypes": [
+        {
+          "materialType": "Bog",
+          "manifestations": [
+            {
+              "pid": "870970-basis:51701763",
+              "content": [],
+              "creators": [
+                {
+                  "type": "aut",
+                  "functionSingular": "forfatter",
+                  "name": "Mette E. Neerlin"
+                }
+              ],
+              "datePublished": "2015",
+              "edition": "1. udgave",
+              "isbn": "9788763840439",
+              "materialType": "Bog",
+              "language": ["Dansk"],
+              "onlineAccess": null,
+              "physicalDescription": "127 sider",
+              "publisher": ["Høst"],
+              "availability": {
+                "willLend": true,
+                "expectedDelivery": "2021-05-27T00:00:00+02:00",
+                "orderPossible": true,
+                "orderPossibleReason": "owned_accepted"
+              }
+            },
+            {
+              "pid": "870970-basis:12345678",
+              "content": [],
+              "creators": [
+                {
+                  "type": "aut",
+                  "functionSingular": "forfatter",
+                  "name": "Mette E. Neerlin"
+                }
+              ],
+              "datePublished": "2015",
+              "edition": "1. udgave",
+              "isbn": "9788763840439",
+              "materialType": "Bog",
+              "language": ["Dansk"],
+              "onlineAccess": null,
+              "physicalDescription": "127 sider",
+              "publisher": ["Høst"],
+              "availability": {
+                "willLend": true,
+                "expectedDelivery": "2021-05-27T00:00:00+02:00",
+                "orderPossible": true,
+                "orderPossibleReason": "owned_accepted"
+              }
+            }
+          ]
+        },
+        {
+          "materialType": "Ebog",
+          "manifestations": [
+            {
+              "pid": "870970-basis:51796527",
+              "content": [],
+              "creators": [
+                {
+                  "type": "aut",
+                  "functionSingular": "forfatter",
+                  "name": "Mette E. Neerlin"
+                }
+              ],
+              "datePublished": "2015",
+              "edition": "",
+              "isbn": "9788763841757",
+              "materialType": "Ebog",
+              "language": ["Dansk"],
+              "onlineAccess": [
+                {
+                  "url": "https://ereolen.dk/ting/object/870970-basis:51796527",
+                  "note": "Adgang til lån hos eReolen.dk"
+                },
+                {
+                  "url": "https://ereolengo.dk/ting/object/870970-basis:51796527",
+                  "note": "Adgang til titlen på eReolen Go"
+                }
+              ],
+              "physicalDescription": "",
+              "publisher": ["Høst"],
+              "availability": {
+                "willLend": false,
+                "expectedDelivery": "",
+                "orderPossible": true,
+                "orderPossibleReason": "not_owned_no_ILL_loc"
+              }
+            }
+          ]
+        },
+        {
+          "materialType": "Lydbog (cd-mp3)",
+          "manifestations": [
+            {
+              "pid": "870970-basis:52988055",
+              "content": [],
+              "creators": [
+                {
+                  "type": "aut",
+                  "functionSingular": "forfatter",
+                  "name": "Mette E. Neerlin"
+                },
+                {
+                  "type": "dkind",
+                  "functionSingular": "indlæser",
+                  "name": "Joakim Lind Tranberg"
+                },
+                {
+                  "type": "trl",
+                  "functionSingular": "oversætter",
+                  "name": "Ninna Brenøe"
+                }
+              ],
+              "datePublished": "2017",
+              "edition": "",
+              "isbn": "9788764476163",
+              "materialType": "Lydbog (cd-mp3)",
+              "language": ["Dansk"],
+              "onlineAccess": null,
+              "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
+              "publisher": ["Biblioteksmedier"],
+              "availability": {
+                "willLend": false,
+                "expectedDelivery": "",
+                "orderPossible": true,
+                "orderPossibleReason": "not_owned_ILL_loc"
+              }
+            }
+          ]
+        },
+        {
+          "materialType": "Lydbog (net)",
+          "manifestations": [
+            {
+              "pid": "874310-katalog:DBB0044564",
+              "content": [],
+              "creators": [
+                {
+                  "type": "",
+                  "functionSingular": "",
+                  "name": "Mette E. Neerlin"
+                },
+                {
+                  "type": "",
+                  "functionSingular": "",
+                  "name": "Joakim Lind Tranberg"
+                }
+              ],
+              "datePublished": "2017",
+              "edition": "",
+              "isbn": null,
+              "materialType": "Lydbog (net)",
+              "language": ["Dansk"],
+              "onlineAccess": [
+                {
+                  "url": "https://nota.dk/bibliotek/bogid/44564",
+                  "note": ""
+                }
+              ],
+              "physicalDescription": "119793179 bytes",
+              "publisher": ["Nota"],
+              "availability": {
+                "willLend": false,
+                "expectedDelivery": "",
+                "orderPossible": true,
+                "orderPossibleReason": "not_owned_ILL_loc"
+              }
+            }
+          ]
+        }
+      ],
+      "manifestations": [
+        {
+          "content": [],
+          "creators": [
+            {
+              "type": "aut",
+              "functionSingular": "forfatter",
+              "name": "Mette E. Neerlin"
+            }
+          ],
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
+          },
+          "datePublished": "2015",
+          "dk5": [
+            {
+              "value": "86-096"
+            },
+            {
+              "value": "sk"
+            }
+          ],
+          "edition": "1. udgave",
+          "isbn": "9788763840439",
+          "materialType": "Bog",
+          "notes": [],
+          "language": ["Dansk"],
+          "originals": ["Originaludgave: 2015"],
+          "originalTitle": "",
+          "pid": "870970-basis:51701763",
+          "physicalDescription": "127 sider",
+          "publisher": ["Høst"],
+          "shelf": "skønlitteratur",
+          "title": "Hest, hest, tiger, tiger",
+          "availability": {
+            "willLend": true,
+            "expectedDelivery": "2021-05-27T00:00:00+02:00",
+            "orderPossible": true,
+            "orderPossibleReason": "owned_accepted"
+          }
+        },
+        {
+          "content": [],
+          "creators": [
+            {
+              "type": "aut",
+              "functionSingular": "forfatter",
+              "name": "Mette E. Neerlin"
+            }
+          ],
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
+          },
+          "datePublished": "2015",
+          "dk5": [
+            {
+              "value": "86-096"
+            },
+            {
+              "value": "sk"
+            }
+          ],
+          "edition": "1. udgave",
+          "isbn": "9788763840439",
+          "materialType": "Bog",
+          "notes": [],
+          "language": ["Dansk"],
+          "originals": ["Originaludgave: 2015"],
+          "originalTitle": "",
+          "pid": "870970-basis:12345678",
+          "physicalDescription": "127 sider",
+          "publisher": ["Høst"],
+          "shelf": "skønlitteratur",
+          "title": "Hest, hest, tiger, tiger",
+          "availability": {
+            "willLend": true,
+            "expectedDelivery": "2021-05-27T00:00:00+02:00",
+            "orderPossible": true,
+            "orderPossibleReason": "owned_accepted"
+          }
+        },
+        {
+          "content": [],
+          "creators": [
+            {
+              "type": "aut",
+              "functionSingular": "forfatter",
+              "name": "Mette E. Neerlin"
+            }
+          ],
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dd8bf4d55278a211a484"
+          },
+          "datePublished": "2015",
+          "dk5": [
+            {
+              "value": "86-096"
+            },
+            {
+              "value": "sk"
+            }
+          ],
+          "edition": "",
+          "isbn": "9788763841757",
+          "materialType": "Ebog",
+          "notes": ["Downloades i EPUB-format"],
+          "language": ["Dansk"],
+          "originals": ["Originaludgave: 2015"],
+          "originalTitle": "",
+          "pid": "870970-basis:51796527",
+          "physicalDescription": "",
+          "publisher": ["Høst"],
+          "shelf": null,
+          "title": "Hest, hest, tiger, tiger",
+          "availability": {
+            "willLend": false,
+            "expectedDelivery": "",
+            "orderPossible": true,
+            "orderPossibleReason": "not_owned_no_ILL_loc"
+          }
+        },
+        {
+          "content": [],
+          "creators": [
+            {
+              "type": "aut",
+              "functionSingular": "forfatter",
+              "name": "Mette E. Neerlin"
+            },
+            {
+              "type": "dkind",
+              "functionSingular": "indlæser",
+              "name": "Joakim Lind Tranberg"
+            },
+            {
+              "type": "trl",
+              "functionSingular": "oversætter",
+              "name": "Ninna Brenøe"
+            }
+          ],
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=83b84cd277eebbb15c07"
+          },
+          "datePublished": "2017",
+          "dk5": [
+            {
+              "value": "86-096"
+            },
+            {
+              "value": "sk"
+            }
+          ],
+          "edition": "",
+          "isbn": "9788764476163",
+          "materialType": "Lydbog (cd-mp3)",
+          "notes": [],
+          "language": ["Dansk"],
+          "originals": [
+            "Gengivelse af bogen",
+            "Indlæst efter 1. udgave. 2015. ISBN: 9788763840439",
+            "Bogens originaludgave: 2015"
+          ],
+          "originalTitle": "",
+          "pid": "870970-basis:52988055",
+          "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
+          "publisher": ["Biblioteksmedier"],
+          "shelf": "skønlitteratur",
+          "title": "Hest, hest, tiger, tiger",
+          "availability": {
+            "willLend": false,
+            "expectedDelivery": "",
+            "orderPossible": true,
+            "orderPossibleReason": "not_owned_ILL_loc"
+          }
+        },
+        {
+          "content": [],
+          "creators": [
+            {
+              "type": "",
+              "functionSingular": "",
+              "name": "Mette E. Neerlin"
+            },
+            {
+              "type": "",
+              "functionSingular": "",
+              "name": "Joakim Lind Tranberg"
+            }
+          ],
+          "cover": {
+            "detail": null
+          },
+          "datePublished": "2017",
+          "dk5": [
+            {
+              "value": "86-096"
+            },
+            {
+              "value": "sk"
+            }
+          ],
+          "edition": "",
+          "isbn": null,
+          "materialType": "Lydbog (net)",
+          "notes": [
+            "Mette E. Neerlin",
+            "Digital lydbog uden tekst",
+            "Indlæst i 2017",
+            "Indlæser: Joakim Lind Tranberg",
+            "Masternr.: 44564"
+          ],
+          "language": ["Dansk"],
+          "originals": [
+            "Indlæst efter udgaven: Kbh. : Høst, 2015",
+            "Kopieret efter udgaven: Ballerup : Biblioteksmedier, 2017",
+            "Originaludgave: 2015"
+          ],
+          "originalTitle": "",
+          "pid": "874310-katalog:DBB0044564",
+          "physicalDescription": "119793179 bytes",
+          "publisher": ["Nota"],
+          "shelf": null,
+          "title": "Hest, hest, tiger, tiger",
+          "availability": {
+            "willLend": false,
+            "expectedDelivery": "",
+            "orderPossible": true,
+            "orderPossibleReason": "not_owned_ILL_loc"
+          }
+        }
+      ],
+      "series": {
+        "title": "Krimiserien med Kate Burkholder",
+        "works": [
+          {
+            "id": "work-of:870970-basis:29341060",
+            "title": "Tvunget til tavshed",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29238669&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d16df4d4b51f096eaf7b"
+            },
+            "series": {
+              "part": 1
+            }
+          },
+          {
+            "id": "work-of:870970-basis:29869243",
+            "title": "Bøn om tavshed",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53581145&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=c1f42f44e3ee245818cf"
+            },
+            "series": {
+              "part": 2
+            }
+          },
+          {
+            "id": "work-of:870970-basis:51124723",
+            "title": "Bryd tavsheden",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51616987&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=d47bf1f94047dfbe5726"
+            },
+            "series": {
+              "part": 3
+            }
+          },
+          {
+            "id": "work-of:870970-basis:51294521",
+            "title": "Meldt savnet",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51610563&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=94c2af1e47c19dc08182"
+            },
+            "series": {
+              "part": 4
+            }
+          },
+          {
+            "id": "work-of:870970-basis:51772024",
+            "title": "Sidste åndedrag",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52074118&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f0c9535d6e2658a60882"
+            },
+            "series": {
+              "part": 5
+            }
+          },
+          {
+            "id": "work-of:870970-basis:51921798",
+            "title": "Døden venter",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51965906&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7946a6409caf04699f79"
+            },
+            "series": {
+              "part": 6
+            }
+          },
+          {
+            "id": "work-of:870970-basis:52649153",
+            "title": "Efter stormen",
+            "creators": [
+              {
+                "name": "Linda Castillo"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46099397&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=447e983b97a74dea140e"
+            },
+            "series": {
+              "part": 7
+            }
+          }
+        ]
+      },
+      "reviews": [
+        {
+          "__typename": "ReviewInfomedia",
+          "author": "Kirsten Aggerholm",
+          "date": "Årg. 68, nr. 7 (2015)",
+          "media": "Børn & bøger",
+          "rating": ""
+        },
+        {
+          "__typename": "ReviewInfomedia",
+          "author": "Anita Brask Rasmussen",
+          "date": "2015-12-19",
+          "media": "Information",
+          "rating": ""
+        },
+        {
+          "__typename": "ReviewInfomedia",
+          "author": "Steffen Larsen",
+          "date": "2015-11-25",
+          "media": "Politiken",
+          "rating": "5/6"
+        },
+        {
+          "__typename": "ReviewInfomedia",
+          "author": "Merete Reinholdt",
+          "date": "2015-08-15",
+          "media": "Berlingske tidende",
+          "rating": "5/6"
+        },
+        {
+          "__typename": "ReviewInfomedia",
+          "author": "Stine Reinholdt Hansen",
+          "date": "2015-05-13",
+          "media": "Weekendavisen",
+          "rating": ""
+        },
+        {
+          "__typename": "ReviewMatVurd",
+          "author": "Helle Laursen",
+          "date": "2015-04-22",
+          "all": [
+            {
+              "text": "At være Honey er ikke altid lige nemt. Hun klarer alligevel hverdagen med sin krævende famile, også selvom alting af og til bare bliver for meget. For 11-13 år",
+              "work": null
+            },
+            {
+              "text": "Honey bor på Nørrebro, hendes forældre er skilt, hendes storesøster er handicappet, og hun har selv lidt svært ved at sige nej, og kommer ofte til at lyve bare en lille bitte smule. Derudover er hun forelsket i Philip fra hendes klasse. Endelig synes hun ikke selv, at hun er ret pæn, for hun er født med læbeganespalte. En dag kommer hun til at tage bussen helt ud til Frederiksberg uden hun egentlig vil det. Her møder hun Marcel, der er en ældre mand, der ligger på hospice for at dø. Det ændrer Honeys liv, og hverdagen bliver for en tid helt anderledes",
+              "work": null
+            },
+            {
+              "text": "Det kan godt være, at du synes det lyder som en lidt trist og alvorlig bog, men det er det ikke. Historien om Honey og hendes familie er faktisk morsom. For selv om Honey ved, man ikke må lyve, kommer hun til det alligevel, hvilket ofte bliver pinligt, men også fører sjove ting med sig. Du kan ikke lade være med at synes om Honey og hendes ikke helt normale familie",
+              "work": null
+            },
+            {
+              "text": "Historien om Honey ligner Line Kyed Knudsens serie om pigen Stella, den første bog er ",
+              "work": {
+                "title": "Sugemærket",
+                "id": "work-of:870970-basis:28435797",
+                "creators": [
+                  {
+                    "name": "Line Kyed Knudsen"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

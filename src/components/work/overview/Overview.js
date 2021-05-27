@@ -298,7 +298,7 @@ export function OrderButton({
     <Button
       skeleton={buttonSkeleton}
       onClick={() => openOrderModal(pid)}
-      data_cy="button-order-overview"
+      data_cy="button-order-overview-enabled"
     >
       {Translate({ context: "general", label: "bestil" })}
     </Button>
