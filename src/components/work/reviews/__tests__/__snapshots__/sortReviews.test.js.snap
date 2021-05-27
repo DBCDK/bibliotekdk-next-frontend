@@ -18,7 +18,7 @@ Array [
         "work": null,
       },
       Object {
-        "text": "Den prisvindende illustrator Jim Kay har også illustreret Harry Potter-serien i et flot, stort format. Læs også ",
+        "text": "Den prisvindende illustrator Jim Kay har også illustreret Harry Potter-serien i et flot, stort format. Læs også ",
         "work": Object {
           "creators": Array [
             Object {
@@ -30,7 +30,7 @@ Array [
         },
       },
       Object {
-        "text": " om den 12-årige Maeve, der bliver lærling på en trolddomsskole",
+        "text": " om den 12-årige Maeve, der bliver lærling på en trolddomsskole",
         "work": null,
       },
     ],
@@ -90,13 +90,6 @@ Array [
   },
   Object {
     "__typename": "ReviewInfomedia",
-    "author": "Steffen Larsen",
-    "date": "2015-12-23",
-    "media": "Politiken",
-    "rating": "4/6",
-  },
-  Object {
-    "__typename": "ReviewInfomedia",
     "author": "Kari Sønsthagen",
     "date": "2015-10-06",
     "media": "Berlingske tidende",
@@ -104,23 +97,16 @@ Array [
   },
   Object {
     "__typename": "ReviewInfomedia",
-    "author": "Lars Tjalve",
-    "date": "1999-01-05",
-    "media": "Kristeligt dagblad",
-    "rating": "",
+    "author": "Steffen Larsen",
+    "date": "2015-12-23",
+    "media": "Politiken",
+    "rating": "4/6",
   },
   Object {
     "__typename": "ReviewInfomedia",
-    "author": "Marianne Gade",
-    "date": "1999-01-16",
-    "media": "Jyllands-posten",
-    "rating": "",
-  },
-  Object {
-    "__typename": "ReviewInfomedia",
-    "author": "Christian Monggꜳrd Christensen",
-    "date": "2000-01-15",
-    "media": "Information",
+    "author": "Tore Rye Andersen",
+    "date": "Årg. 29, nr. 4 (2015)",
+    "media": "Standart",
     "rating": "",
   },
   Object {
@@ -132,9 +118,23 @@ Array [
   },
   Object {
     "__typename": "ReviewInfomedia",
-    "author": "Tore Rye Andersen",
-    "date": "Årg. 29, nr. 4 (2015)",
-    "media": "Standart",
+    "author": "Christian Monggꜳrd Christensen",
+    "date": "2000-01-15",
+    "media": "Information",
+    "rating": "",
+  },
+  Object {
+    "__typename": "ReviewInfomedia",
+    "author": "Marianne Gade",
+    "date": "1999-01-16",
+    "media": "Jyllands-posten",
+    "rating": "",
+  },
+  Object {
+    "__typename": "ReviewInfomedia",
+    "author": "Lars Tjalve",
+    "date": "1999-01-05",
+    "media": "Kristeligt dagblad",
     "rating": "",
   },
 ]
