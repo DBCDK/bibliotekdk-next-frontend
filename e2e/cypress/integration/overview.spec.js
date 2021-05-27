@@ -45,7 +45,7 @@ describe("Overview", () => {
     });
   });
 
-  it(`Can click on 'add-to-basket' button`, () => {
+  it.skip(`Can click on 'add-to-basket' button`, () => {
     cy.get(`[data-cy=button-order-overview]`).click();
     cy.focused().should("have.attr", "data-cy", "button-order-overview");
     cy.on("window:alert", (str) => {
