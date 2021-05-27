@@ -3,6 +3,10 @@
   height: 100%;
 }
 
+.order.padding {
+  padding-bottom: 88px;
+}
+
 .container {
   height: 100%;
   overflow-x: hidden;
@@ -59,7 +63,7 @@
 }
 
 @media (min-width: 576px) {
-  .order {
+  .order.padding {
     padding-bottom: 152px;
   }
 }

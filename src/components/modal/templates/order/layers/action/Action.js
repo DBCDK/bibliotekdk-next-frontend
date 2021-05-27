@@ -13,7 +13,6 @@ import styles from "./Action.module.css";
  * Order Button
  */
 function Action({
-  topRef = null,
   onClick = null,
   validated,
   isVisible,
@@ -54,30 +53,25 @@ function Action({
   const hasEmail = validated?.details?.hasMail?.status;
   const message = hasTry && !hasEmail && validated?.details?.hasMail?.message;
 
+  const invalidClass = message ? styles.invalid : "";
+
   return (
     <div
       className={`${styles.action} ${orderingClass} ${orderedClass} ${failedClass} ${hiddenClass}`}
       aria-hidden={!isVisible}
     >
-      <div className={styles.top} ref={topRef}>
-        {message && (
-          <div className={styles.validationFail}>
-            <Text type="text3">
-              {Translate({
-                context: "order",
-                label: `action-${message.label}`,
-              })}
-            </Text>
-          </div>
-        )}
-        <div className={styles.message}>
+      <div className={styles.top}>
+        <div className={`${styles.message} ${invalidClass}`}>
           <Text type="text3">
             {Translate({
               ...context,
-              label: "order-message-library",
+              label: message
+                ? `action-${message.label}`
+                : "order-message-library",
             })}
           </Text>
         </div>
+
         <Button
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}
@@ -96,7 +90,7 @@ function Action({
           className={styles.loader}
           callback={() => setShowProgress(false)}
           start={isOrdering}
-          duration={2}
+          duration={1}
           delay={1}
         />
       </div>

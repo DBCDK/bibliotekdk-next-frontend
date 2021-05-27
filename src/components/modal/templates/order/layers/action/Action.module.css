@@ -5,15 +5,22 @@
   height: auto;
 
   position: absolute;
-  bottom: 0;
+  top: calc(100% - 88px);
   left: 0;
   z-index: 1;
   background-color: white;
 
   box-shadow: 0px -6px 12px rgba(0, 0, 0, 0.25);
-  transition-duration: 0.4s;
 
-  transform: translateY(200vh);
+  transition: transform 0.4s ease-out;
+  will-change: transform;
+
+  transform: translateY(0);
+}
+
+.action.hidden {
+  /* ensure to hide the shadows */
+  transform: translateY(calc(88px + 12px));
 }
 
 .top,
@@ -22,32 +29,27 @@
   padding: var(--pt2);
 }
 
-.action.hidden {
-  /* ensure to hide the shadows */
-  transform: translateY(calc(100% + 12px));
-}
-
-.action .top {
+.top {
   width: 100%;
-  height: auto;
+  height: 88px;
 }
 
 .top .message {
-  padding: 0 0 var(--pt1) 0;
+  display: none;
 }
 
-.top .validationFail {
+.top .message.invalid {
   color: var(--error);
 }
 
 .action.ordering {
   /* add the buttons height */
-  transform: translateY(100vh);
+  transform: translateY(-100vh);
 }
 
 .action.ordered,
 .action.failed {
-  transform: translateY(0);
+  transform: translateY(-200vh);
 }
 
 /* loader */
@@ -115,16 +117,12 @@
 .success .message,
 .success .orderNumber {
   padding: var(--pt3) 0 0 0;
+  text-align: center;
 }
 
 .success .message,
 .success .orderNumber {
   text-align: center;
-}
-
-.success .close {
-  position: absolute;
-  bottom: var(--pt15);
 }
 
 /* error */
@@ -157,7 +155,29 @@
   display: flex;
 }
 
+.success .close {
+  margin-top: var(--pt4);
+}
+
 @media (min-width: 576px) {
+  .action {
+    top: calc(100% - 152px);
+  }
+
+  .action.hidden {
+    /* ensure to hide the shadows */
+    transform: translateY(calc(152px + 12px));
+  }
+
+  .top {
+    height: 152px;
+  }
+
+  .top .message {
+    display: block;
+    padding: 0 0 var(--pt1) 0;
+  }
+
   .top,
   .loaderWrap {
     padding: var(--pt3) var(--pt6) var(--pt4) var(--pt6);
@@ -165,5 +185,11 @@
 
   .result {
     padding: var(--pt3) var(--pt10) var(--pt4) var(--pt10);
+  }
+
+  .success .close {
+    margin: 0;
+    position: absolute;
+    bottom: var(--pt15);
   }
 }

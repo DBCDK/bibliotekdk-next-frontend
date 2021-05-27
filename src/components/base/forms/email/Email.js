@@ -110,6 +110,7 @@ Email.propTypes = {
   onMount: PropTypes.func,
 
   // Input component props
+  placeholder: PropTypes.string,
   id: PropTypes.string,
   tabIndex: PropTypes.string,
   value: PropTypes.string,
