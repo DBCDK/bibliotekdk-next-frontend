@@ -13,7 +13,6 @@ import styles from "./Action.module.css";
  * Order Button
  */
 function Action({
-  topRef = null,
   onClick = null,
   validated,
   isVisible,
