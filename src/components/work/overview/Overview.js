@@ -219,7 +219,9 @@ export function OrderButton({
   if (!selectedMaterial) {
     return null;
   }
+
   const materialType = selectedMaterial.materialType;
+  const manifestations = selectedMaterial.manifestations;
 
   // TODO every manifestation for this type may have orderPossibe=true
   selectedMaterial = selectedMaterial.manifestations?.[0];
@@ -227,9 +229,10 @@ export function OrderButton({
 
   /* order button acts on following scenarios:
   1. material is accessible online (no user login) -> go to online url
-  2. user is not logged in -> go to login
-  3. material is available for logged in library -> prepare order button with parameters
-  4. material is not avialable -> disable
+  2. material can not be ordered - maybe it is too new or something else -> disable (with a reason?)
+  3. user is not logged in -> go to login
+  4. material is available for logged in library -> prepare order button with parameters
+  5. material is not available -> disable
    */
 
   if (selectedMaterial?.onlineAccess) {
@@ -251,6 +254,12 @@ export function OrderButton({
         })}
       </Button>
     );
+  }
+
+  // can material be ordered ?
+  if (!checkRequestButtonIsTrue({ manifestations })) {
+    // disabled button
+    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
   // is user logged in
   if (!user.isAuthenticated) {
@@ -282,16 +291,7 @@ export function OrderButton({
   // finished loading - materail can not be ordered - disable buttons
   if (!isLoading && !available) {
     // disabled button
-    return (
-      <Button
-        skeleton={buttonSkeleton}
-        disabled={true}
-        className={styles.disabledbutton}
-        data_cy="button-order-overview"
-      >
-        {Translate({ context: "overview", label: "Order-disabled" })}
-      </Button>
-    );
+    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
   // all is well - material can be ordered - order button
   return (
@@ -301,6 +301,37 @@ export function OrderButton({
       data_cy="button-order-overview"
     >
       {Translate({ context: "general", label: "bestil" })}
+    </Button>
+  );
+}
+
+function checkRequestButtonIsTrue({ manifestations }) {
+  if (!manifestations) {
+    return false;
+  }
+  // is order possible ?
+  let orderpossible = false;
+  manifestations.every((manifest) => {
+    if (manifest.admin?.requestButton) {
+      orderpossible = true;
+      // break every loop - only ONE manifestion needs to be orderable
+      return false;
+    }
+    // continue every loop
+    return true;
+  });
+  return orderpossible;
+}
+
+function DisabledReservationButton({ buttonSkeleton }) {
+  return (
+    <Button
+      skeleton={buttonSkeleton}
+      disabled={true}
+      className={styles.disabledbutton}
+      data_cy="button-order-overview"
+    >
+      {Translate({ context: "overview", label: "Order-disabled" })}
     </Button>
   );
 }

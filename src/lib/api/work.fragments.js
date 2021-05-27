@@ -89,6 +89,9 @@ export function details({ workId }) {
           materialTypes {
             materialType
             manifestations {
+              admin{
+                requestButton
+              }
               content
               creators {
                 type
