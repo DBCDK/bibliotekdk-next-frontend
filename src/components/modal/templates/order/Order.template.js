@@ -168,6 +168,7 @@ function Order({
 
   // Work props
   const {
+    cover,
     title = "...",
     creators = [{ name: "..." }],
     manifestations = [],
@@ -213,7 +214,12 @@ function Order({
           <div className={styles.left}>
             <Info
               isVisible={!translated}
-              material={{ title, creators, ...material }}
+              material={{
+                title,
+                creators,
+                ...material,
+                cover: { detail: material?.cover.detail || cover?.detail },
+              }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) => {

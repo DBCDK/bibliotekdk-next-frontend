@@ -129,6 +129,9 @@ export function detailsAllManifestations({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          cover {
+            detail
+          }
           path
           seo {
             title

@@ -17,6 +17,13 @@
   pointer-events: none;
 }
 
+/* Remove blurry cornors */
+.modal * {
+  -webkit-font-smoothing: antialised;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
 /* Modal */
 .modal {
   width: 100%;
@@ -54,6 +61,7 @@
 }
 
 .title {
+  backface-visibility: hidden;
 }
 
 .close {
