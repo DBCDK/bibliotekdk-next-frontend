@@ -1,21 +1,17 @@
 {
   "data": {
     "work": {
-      "path": ["some", "path"],
-      "id": "work-of:870970-basis:51701763",
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
-      },
-      "seo": {
-        "title": "Hest, hest, tiger, tiger af Mette E. Neerlin",
-        "description": "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-      },
       "materialTypes": [
         {
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
+          },
           "materialType": "Bog",
           "manifestations": [
             {
               "pid": "870970-basis:51701763",
+              "materialType": "Bog",
+              "admin": { "requestButton": true },
               "content": [],
               "creators": [
                 {
@@ -27,20 +23,15 @@
               "datePublished": "2015",
               "edition": "1. udgave",
               "isbn": "9788763840439",
-              "materialType": "Bog",
               "language": ["Dansk"],
               "onlineAccess": null,
               "physicalDescription": "127 sider",
-              "publisher": ["Høst"],
-              "availability": {
-                "willLend": true,
-                "expectedDelivery": "2021-05-27T00:00:00+02:00",
-                "orderPossible": true,
-                "orderPossibleReason": "owned_accepted"
-              }
+              "publisher": ["Høst"]
             },
             {
               "pid": "870970-basis:12345678",
+              "materialType": "Bog",
+              "admin": { "requestButton": true },
               "content": [],
               "creators": [
                 {
@@ -52,25 +43,23 @@
               "datePublished": "2015",
               "edition": "1. udgave",
               "isbn": "9788763840439",
-              "materialType": "Bog",
               "language": ["Dansk"],
               "onlineAccess": null,
               "physicalDescription": "127 sider",
-              "publisher": ["Høst"],
-              "availability": {
-                "willLend": true,
-                "expectedDelivery": "2021-05-27T00:00:00+02:00",
-                "orderPossible": true,
-                "orderPossibleReason": "owned_accepted"
-              }
+              "publisher": ["Høst"]
             }
           ]
         },
         {
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4db0b737fda36ad47c1e"
+          },
           "materialType": "Ebog",
           "manifestations": [
             {
               "pid": "870970-basis:51796527",
+              "materialType": "Ebog",
+              "admin": { "requestButton": false },
               "content": [],
               "creators": [
                 {
@@ -82,7 +71,6 @@
               "datePublished": "2015",
               "edition": "",
               "isbn": "9788763841757",
-              "materialType": "Ebog",
               "language": ["Dansk"],
               "onlineAccess": [
                 {
@@ -95,21 +83,20 @@
                 }
               ],
               "physicalDescription": "",
-              "publisher": ["Høst"],
-              "availability": {
-                "willLend": false,
-                "expectedDelivery": "",
-                "orderPossible": true,
-                "orderPossibleReason": "not_owned_no_ILL_loc"
-              }
+              "publisher": ["Høst"]
             }
           ]
         },
         {
+          "cover": {
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=03e7c28e16b63424064c"
+          },
           "materialType": "Lydbog (cd-mp3)",
           "manifestations": [
             {
               "pid": "870970-basis:52988055",
+              "materialType": "Lydbog (cd-mp3)",
+              "admin": { "requestButton": true },
               "content": [],
               "creators": [
                 {
@@ -131,25 +118,21 @@
               "datePublished": "2017",
               "edition": "",
               "isbn": "9788764476163",
-              "materialType": "Lydbog (cd-mp3)",
               "language": ["Dansk"],
               "onlineAccess": null,
               "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
-              "publisher": ["Biblioteksmedier"],
-              "availability": {
-                "willLend": false,
-                "expectedDelivery": "",
-                "orderPossible": true,
-                "orderPossibleReason": "not_owned_ILL_loc"
-              }
+              "publisher": ["Biblioteksmedier"]
             }
           ]
         },
         {
+          "cover": { "detail": null },
           "materialType": "Lydbog (net)",
           "manifestations": [
             {
               "pid": "874310-katalog:DBB0044564",
+              "materialType": "Lydbog (net)",
+              "admin": { "requestButton": false },
               "content": [],
               "creators": [
                 {
@@ -166,26 +149,55 @@
               "datePublished": "2017",
               "edition": "",
               "isbn": null,
-              "materialType": "Lydbog (net)",
               "language": ["Dansk"],
               "onlineAccess": [
-                {
-                  "url": "https://nota.dk/bibliotek/bogid/44564",
-                  "note": ""
-                }
+                { "url": "https://nota.dk/bibliotek/bogid/44564", "note": "" }
               ],
               "physicalDescription": "119793179 bytes",
-              "publisher": ["Nota"],
-              "availability": {
-                "willLend": false,
-                "expectedDelivery": "",
-                "orderPossible": true,
-                "orderPossibleReason": "not_owned_ILL_loc"
-              }
+              "publisher": ["Nota"]
             }
           ]
         }
       ],
+      "creators": [{ "type": "aut", "name": "Mette E. Neerlin" }],
+      "description": "Honeys forældre er skilt, hendes storesøster er handicappet, og hun er selv født med læbeganespalte. Hun er forelsket i Philip fra klassen og kommer nogle gange til at lyve en lille bitte smule. Ud over at sørge for sin familie, besøger hun ofte sin døende ven, Marcel",
+      "path": ["Bøger", "Fiktion", "skønlitteratur", "roman"],
+      "title": "Hest, hest, tiger, tiger",
+      "subjects": [
+        { "type": "DBCN", "value": "for 11 år" },
+        { "type": "not_specified", "value": "Roman" },
+        {
+          "type": "not_specified",
+          "value": "Materialeudvalget anbefaler 7. klasse."
+        },
+        { "type": "DBCS", "value": "forelskelse" },
+        { "type": "DBCN", "value": "for 12 år" },
+        { "type": "DBCN", "value": "for 13 år" },
+        { "type": "DBCS", "value": "skilsmisse" },
+        { "type": "dcterms:LCSH", "value": "Børnebøger" },
+        { "type": "not_specified", "value": "Dansk" },
+        { "type": "not_specified", "value": "Mellemtrin" },
+        { "type": "DK5", "value": "sk" },
+        { "type": "not_specified", "value": "5.-8. klasse" },
+        { "type": "not_specified", "value": "Humor" },
+        { "type": "DK5-Text", "value": "Skønlitteratur" },
+        { "type": "not_specified", "value": "Skilsmisse" },
+        { "type": "not_specified", "value": "Familien" },
+        { "type": "not_specified", "value": "Kærlighed" },
+        { "type": "DBCO", "value": "humor" },
+        { "type": "genre", "value": "humor" },
+        { "type": "DBCS", "value": "humor" },
+        { "type": "DBCS", "value": "familien" },
+        { "type": "DBCS", "value": "døden" },
+        { "type": "DBCN", "value": "mellemtrinudskoling" }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
+      },
+      "seo": {
+        "title": "Hest, hest, tiger, tiger af Mette E. Neerlin",
+        "description": "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+      },
       "manifestations": [
         {
           "content": [],
@@ -197,17 +209,10 @@
             }
           ],
           "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
           },
           "datePublished": "2015",
-          "dk5": [
-            {
-              "value": "86-096"
-            },
-            {
-              "value": "sk"
-            }
-          ],
+          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "1. udgave",
           "isbn": "9788763840439",
           "materialType": "Bog",
@@ -219,13 +224,7 @@
           "physicalDescription": "127 sider",
           "publisher": ["Høst"],
           "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger",
-          "availability": {
-            "willLend": true,
-            "expectedDelivery": "2021-05-27T00:00:00+02:00",
-            "orderPossible": true,
-            "orderPossibleReason": "owned_accepted"
-          }
+          "title": "Hest, hest, tiger, tiger"
         },
         {
           "content": [],
@@ -237,17 +236,10 @@
             }
           ],
           "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=05439398f3d3e232ca04"
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
           },
           "datePublished": "2015",
-          "dk5": [
-            {
-              "value": "86-096"
-            },
-            {
-              "value": "sk"
-            }
-          ],
+          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "1. udgave",
           "isbn": "9788763840439",
           "materialType": "Bog",
@@ -259,13 +251,7 @@
           "physicalDescription": "127 sider",
           "publisher": ["Høst"],
           "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger",
-          "availability": {
-            "willLend": true,
-            "expectedDelivery": "2021-05-27T00:00:00+02:00",
-            "orderPossible": true,
-            "orderPossibleReason": "owned_accepted"
-          }
+          "title": "Hest, hest, tiger, tiger"
         },
         {
           "content": [],
@@ -277,17 +263,10 @@
             }
           ],
           "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dd8bf4d55278a211a484"
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4db0b737fda36ad47c1e"
           },
           "datePublished": "2015",
-          "dk5": [
-            {
-              "value": "86-096"
-            },
-            {
-              "value": "sk"
-            }
-          ],
+          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "",
           "isbn": "9788763841757",
           "materialType": "Ebog",
@@ -299,13 +278,7 @@
           "physicalDescription": "",
           "publisher": ["Høst"],
           "shelf": null,
-          "title": "Hest, hest, tiger, tiger",
-          "availability": {
-            "willLend": false,
-            "expectedDelivery": "",
-            "orderPossible": true,
-            "orderPossibleReason": "not_owned_no_ILL_loc"
-          }
+          "title": "Hest, hest, tiger, tiger"
         },
         {
           "content": [],
@@ -327,17 +300,10 @@
             }
           ],
           "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=83b84cd277eebbb15c07"
+            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=03e7c28e16b63424064c"
           },
           "datePublished": "2017",
-          "dk5": [
-            {
-              "value": "86-096"
-            },
-            {
-              "value": "sk"
-            }
-          ],
+          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "",
           "isbn": "9788764476163",
           "materialType": "Lydbog (cd-mp3)",
@@ -353,40 +319,21 @@
           "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
           "publisher": ["Biblioteksmedier"],
           "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger",
-          "availability": {
-            "willLend": false,
-            "expectedDelivery": "",
-            "orderPossible": true,
-            "orderPossibleReason": "not_owned_ILL_loc"
-          }
+          "title": "Hest, hest, tiger, tiger"
         },
         {
           "content": [],
           "creators": [
-            {
-              "type": "",
-              "functionSingular": "",
-              "name": "Mette E. Neerlin"
-            },
+            { "type": "", "functionSingular": "", "name": "Mette E. Neerlin" },
             {
               "type": "",
               "functionSingular": "",
               "name": "Joakim Lind Tranberg"
             }
           ],
-          "cover": {
-            "detail": null
-          },
+          "cover": { "detail": null },
           "datePublished": "2017",
-          "dk5": [
-            {
-              "value": "86-096"
-            },
-            {
-              "value": "sk"
-            }
-          ],
+          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "",
           "isbn": null,
           "materialType": "Lydbog (net)",
@@ -408,125 +355,9 @@
           "physicalDescription": "119793179 bytes",
           "publisher": ["Nota"],
           "shelf": null,
-          "title": "Hest, hest, tiger, tiger",
-          "availability": {
-            "willLend": false,
-            "expectedDelivery": "",
-            "orderPossible": true,
-            "orderPossibleReason": "not_owned_ILL_loc"
-          }
+          "title": "Hest, hest, tiger, tiger"
         }
       ],
-      "series": {
-        "title": "Krimiserien med Kate Burkholder",
-        "works": [
-          {
-            "id": "work-of:870970-basis:29341060",
-            "title": "Tvunget til tavshed",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29238669&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=d16df4d4b51f096eaf7b"
-            },
-            "series": {
-              "part": 1
-            }
-          },
-          {
-            "id": "work-of:870970-basis:29869243",
-            "title": "Bøn om tavshed",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53581145&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=c1f42f44e3ee245818cf"
-            },
-            "series": {
-              "part": 2
-            }
-          },
-          {
-            "id": "work-of:870970-basis:51124723",
-            "title": "Bryd tavsheden",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51616987&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=d47bf1f94047dfbe5726"
-            },
-            "series": {
-              "part": 3
-            }
-          },
-          {
-            "id": "work-of:870970-basis:51294521",
-            "title": "Meldt savnet",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51610563&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=94c2af1e47c19dc08182"
-            },
-            "series": {
-              "part": 4
-            }
-          },
-          {
-            "id": "work-of:870970-basis:51772024",
-            "title": "Sidste åndedrag",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52074118&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f0c9535d6e2658a60882"
-            },
-            "series": {
-              "part": 5
-            }
-          },
-          {
-            "id": "work-of:870970-basis:51921798",
-            "title": "Døden venter",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51965906&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7946a6409caf04699f79"
-            },
-            "series": {
-              "part": 6
-            }
-          },
-          {
-            "id": "work-of:870970-basis:52649153",
-            "title": "Efter stormen",
-            "creators": [
-              {
-                "name": "Linda Castillo"
-              }
-            ],
-            "cover": {
-              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46099397&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=447e983b97a74dea140e"
-            },
-            "series": {
-              "part": 7
-            }
-          }
-        ]
-      },
       "reviews": [
         {
           "__typename": "ReviewInfomedia",
@@ -585,16 +416,106 @@
               "work": {
                 "title": "Sugemærket",
                 "id": "work-of:870970-basis:28435797",
-                "creators": [
-                  {
-                    "name": "Line Kyed Knudsen"
-                  }
-                ]
+                "creators": [{ "name": "Line Kyed Knudsen" }]
               }
             }
           ]
         }
-      ]
+      ],
+      "series": {
+        "title": "Krimiserien med Kate Burkholder",
+        "works": [
+          {
+            "id": "work-of:870970-basis:29341060",
+            "title": "Tvunget til tavshed",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=29238669&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=4d7a873c17689cfdb61c"
+            },
+            "series": { "part": 1 }
+          },
+          {
+            "id": "work-of:870970-basis:29869243",
+            "title": "Bøn om tavshed",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53581145&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=c58dddd76c348c13d035"
+            },
+            "series": { "part": 2 }
+          },
+          {
+            "id": "work-of:870970-basis:51124723",
+            "title": "Bryd tavsheden",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51616987&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=bac206df0ca9250f3f82"
+            },
+            "series": { "part": 3 }
+          },
+          {
+            "id": "work-of:870970-basis:51294521",
+            "title": "Meldt savnet",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51610563&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0a9e14d37e3d9a9a6166"
+            },
+            "series": { "part": 4 }
+          },
+          {
+            "id": "work-of:870970-basis:51772024",
+            "title": "Sidste åndedrag",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52074118&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=1b63c66ddff954886c03"
+            },
+            "series": { "part": 5 }
+          },
+          {
+            "id": "work-of:870970-basis:51921798",
+            "title": "Døden venter",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51965906&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=3336f1e0ade4f021f73c"
+            },
+            "series": { "part": 6 }
+          },
+          {
+            "id": "work-of:870970-basis:52649153",
+            "title": "Efter stormen",
+            "creators": [{ "name": "Linda Castillo" }],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46099397&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=19b96b62eccee9d161bb"
+            },
+            "series": { "part": 7 }
+          }
+        ]
+      }
+    },
+    "monitor": "OK",
+    "manifestation": {
+      "pid": "870970-basis:51701763",
+      "content": [],
+      "creators": [
+        {
+          "type": "aut",
+          "functionSingular": "forfatter",
+          "name": "Mette E. Neerlin"
+        }
+      ],
+      "datePublished": "2015",
+      "edition": "1. udgave",
+      "isbn": "9788763840439",
+      "materialType": "Bog",
+      "language": ["Dansk"],
+      "onlineAccess": null,
+      "physicalDescription": "127 sider",
+      "publisher": ["Høst"],
+      "availability": {
+        "willLend": true,
+        "expectedDelivery": "2021-05-27T00:00:00+02:00",
+        "orderPossible": true,
+        "orderPossibleReason": "owned_accepted"
+      }
     }
   }
 }
