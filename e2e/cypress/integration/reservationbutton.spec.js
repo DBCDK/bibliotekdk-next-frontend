@@ -70,7 +70,7 @@ function mockSubmitOrder() {
 }
 
 describe("Reservation button", () => {
-  it(`user logged in material available`, () => {
+  it.skip(`user logged in material available`, () => {
     mockFullWork();
     mockSubmitOrder();
     mockLogin();
