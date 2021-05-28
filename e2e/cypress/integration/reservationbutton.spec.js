@@ -48,6 +48,16 @@ function mockAvailability() {
   });
 }
 
+function mockUnAvailable() {
+  cy.fixture("manifestationunavailable.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("manifestation(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
 function mockSubmitOrder() {
   cy.fixture("submitorder.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
@@ -62,14 +72,13 @@ function mockSubmitOrder() {
 describe("Reservation button", () => {
   beforeEach(() => {
     mockFullWork();
-    mockAvailability();
     mockSubmitOrder();
     mockLogin();
-
-    cy.visit("/iframe.html?id=work-overview--reservation-button-active");
   });
 
   it(`user logged in material available`, () => {
+    mockAvailability();
+    cy.visit("/iframe.html?id=work-overview--reservation-button-active");
     cy.get("[data-cy=button-order-overview-enabled]")
       .contains("Bestil")
       .click({ force: true });
@@ -83,27 +92,7 @@ describe("Reservation button", () => {
   });
 
   it(`user logged in material unavailable`, () => {
-    cy.intercept("/graphql", (req) => {
-      if (req.body.query.includes("manifestation")) {
-        // mock the suggest response
-        if (req.body.query.includes("availability")) {
-          req.reply({
-            data: {
-              manifestation: {
-                materialType: "Bog",
-                availability: {
-                  orderPossible: false,
-                  orderPossibleReason: "not_owned_ILL_loc",
-                  willLend: false,
-                  expectedDelivery: "",
-                },
-              },
-            },
-            monitor: "OK",
-          });
-        }
-      }
-    });
+    mockUnAvailable();
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
     cy.get("[data-cy=button-order-overview]").should("be.disabled");
   });
