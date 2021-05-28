@@ -4,7 +4,7 @@ import { OverviewSkeleton, Overview } from "./Overview";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { OrderButton } from "./Overview";
 import useUser from "@/components/hooks/useUser";
-
+import fullwork from "../dummydata/fullwork.json";
 export default {
   title: "work/Overview",
 };
@@ -104,7 +104,7 @@ export function ReservationButtonInactive() {
  * @constructor
  */
 export function ReservationButtonActive() {
-  const data = dummy_workDataApi({ workId: "some-id" });
+  const data = fullwork.data;
   return (
     <div>
       <StoryTitle>user logged in - material reservable</StoryTitle>

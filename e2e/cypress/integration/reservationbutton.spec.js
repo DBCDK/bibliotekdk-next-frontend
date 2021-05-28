@@ -2,41 +2,81 @@
  * @file
  * Test functionality of reservation button - see also @overview.spec.js
  */
-describe("Reservation button", () => {
-  beforeEach(() => {
-    // Intercept requests to graphql
+
+function mockLogin() {
+  cy.intercept("/api/auth/session", {
+    body: {
+      user: {
+        uniqueId: "3ad8276b-43ed-430e-891d-3238996da656",
+        agencies: [
+          { agencyId: "190110", userId: "lkh@dbc.dk", userIdType: "LOCAL" },
+          { agencyId: "191977", userId: "10003", userIdType: "LOCAL" },
+          { agencyId: "191977", userId: "0102033696", userIdType: "CPR" },
+          { agencyId: "790900", userId: "C04122017435", userIdType: "LOCAL" },
+        ],
+      },
+      expires: "2021-06-26T07:00:09.408Z",
+      accessToken: "dummy-token",
+    },
+  });
+  cy.fixture("user.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
-      if (req.body.query.includes("manifestation")) {
-        // mock the suggest response
-        if (req.body.query.includes("availability")) {
-          req.alias = "apiMutation";
-          req.reply({
-            data: {
-              manifestation: {
-                materialType: "Bog",
-                availability: {
-                  orderPossible: true,
-                  orderPossibleReason: "not_owned_ILL_loc",
-                  willLend: true,
-                  expectedDelivery: "",
-                },
-              },
-            },
-            monitor: "OK",
-          });
-        }
+      if (req.body.query.includes("user {")) {
+        req.reply(fixture);
       }
     });
+  });
+}
+
+function mockFullWork() {
+  cy.fixture("fullwork.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("work(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
+function mockAvailability() {
+  cy.fixture("fullmanifestation.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("manifestation(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
+function mockSubmitOrder() {
+  cy.fixture("submitorder.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("submitOrder(")) {
+        req.reply(fixture);
+        req.alias = "submitOrder";
+      }
+    });
+  });
+}
+
+describe("Reservation button", () => {
+  beforeEach(() => {
+    mockFullWork();
+    mockAvailability();
+    mockSubmitOrder();
+    mockLogin();
 
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
   });
 
   it(`user logged in material available`, () => {
-    cy.get("[data-cy=button-order-overview]")
+    cy.get("[data-cy=button-order-overview-enabled]")
       .contains("Bestil")
       .click({ force: true });
 
-    cy.get("[data-cy=button-order-overview]").contains("Bestil").click();
+    cy.get("[data-cy=button-order-overview-enabled]")
+      .contains("Bestil")
+      .click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("order");
     });
@@ -45,7 +85,6 @@ describe("Reservation button", () => {
   it(`user logged in material unavailable`, () => {
     cy.intercept("/graphql", (req) => {
       if (req.body.query.includes("manifestation")) {
-        console.log("INTERCEPTED");
         // mock the suggest response
         if (req.body.query.includes("availability")) {
           req.reply({
@@ -68,4 +107,6 @@ describe("Reservation button", () => {
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
     cy.get("[data-cy=button-order-overview]").should("be.disabled");
   });
+
+  // @TODO more testing - request_button:false eg.
 });
