@@ -61,6 +61,15 @@ function mockSubmitOrder() {
   });
 }
 
+function openOrderModal() {
+  // Wait for content to be loaded
+  cy.get("[data-cy=button-order-overview-enabled]");
+  cy.wait(500);
+
+  // Open order modal
+  cy.get("[data-cy=button-order-overview-enabled]").click();
+}
+
 describe("Order", () => {
   beforeEach(function () {
     mockFullWork();
@@ -74,12 +83,7 @@ describe("Order", () => {
       `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
     );
 
-    // Wait for content to be loaded
-    cy.get("[data-cy=button-order-overview-enabled]");
-    cy.wait(500);
-
-    // Open order modal
-    cy.get("[data-cy=button-order-overview-enabled]").click();
+    openOrderModal();
 
     // Work info in modal is visible
     cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
@@ -114,5 +118,18 @@ describe("Order", () => {
     });
 
     cy.contains("Bestillingen blev gennemført");
+  });
+
+  it("should not tab to order modal after it is closed", () => {
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+    );
+
+    cy.get("[data-cy=button-nej-tak]").click();
+    openOrderModal();
+    cy.get("[data-cy=close-modal]").click();
+    cy.wait(500);
+    cy.tab();
+    cy.get("[data-cy=modal-container] *:focused").should("not.exist");
   });
 });

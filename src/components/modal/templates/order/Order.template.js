@@ -184,7 +184,7 @@ function Order({
         >
           <div className={styles.left}>
             <Info
-              isVisible={!translated}
+              isVisible={!translated && isVisible}
               material={{
                 title,
                 creators,
@@ -225,7 +225,7 @@ function Order({
           </div>
         </div>
         <Action
-          isVisible={!translated}
+          isVisible={!translated && isVisible}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
