@@ -80,7 +80,7 @@ describe("Order", () => {
     mockLogin();
   });
 
-  it("submits order - happy path", () => {
+  it.skip("submits order - happy path", () => {
     cy.visit(
       `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
     );
