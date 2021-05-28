@@ -136,7 +136,9 @@ export function Modal({
     if (isVisible && modalRef.current) {
       // Wait for animation to finish
       setTimeout(() => {
-        modalRef.current.focus();
+        if (modalRef.current) {
+          modalRef.current.focus();
+        }
       }, 200);
     }
   }, [isVisible, modalRef.current]);
