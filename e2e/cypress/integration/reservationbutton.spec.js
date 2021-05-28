@@ -31,7 +31,7 @@ describe("Reservation button", () => {
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
   });
 
-  it.skip(`user logged in material available`, () => {
+  it(`user logged in material available`, () => {
     cy.get("[data-cy=button-order-overview]")
       .contains("Bestil")
       .click({ force: true });
