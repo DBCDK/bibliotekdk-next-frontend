@@ -61,19 +61,8 @@ function mockSubmitOrder() {
   });
 }
 
-function preventAPIPassthrough() {
-  cy.intercept("/graphql", {
-    statusCode: 404,
-    body: "404 Not Found!",
-    headers: {
-      "x-not-found": "true",
-    },
-  });
-}
-
 describe("Order", () => {
   beforeEach(function () {
-    preventAPIPassthrough();
     mockFullWork();
     mockAvailability();
     mockSubmitOrder();
