@@ -70,13 +70,10 @@ function mockSubmitOrder() {
 }
 
 describe("Reservation button", () => {
-  beforeEach(() => {
+  it(`user logged in material available`, () => {
     mockFullWork();
     mockSubmitOrder();
     mockLogin();
-  });
-
-  it(`user logged in material available`, () => {
     mockAvailability();
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
     cy.get("[data-cy=button-order-overview-enabled]")
@@ -92,6 +89,9 @@ describe("Reservation button", () => {
   });
 
   it(`user logged in material unavailable`, () => {
+    mockFullWork();
+    mockSubmitOrder();
+    mockLogin();
     mockUnAvailable();
     cy.visit("/iframe.html?id=work-overview--reservation-button-active");
     cy.get("[data-cy=button-order-overview]").should("be.disabled");
