@@ -325,16 +325,13 @@ export default function Wrap(props) {
 
   useEffect(() => {
     if (order) {
+      // When order modal opens, we reset previous order status
+      // making it possible to order a manifestation multiple times
+      orderMutation.reset();
+
       setPid(order);
     }
   }, [order]);
-
-  useEffect(() => {
-    if (pid) {
-      // when new pid is selected, we reset order status
-      orderMutation.reset();
-    }
-  }, [pid]);
 
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
