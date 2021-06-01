@@ -1,1 +1,1 @@
-export { default } from "./Order.template";
+export { default, Order, OrderSkeleton } from "./Order.template";
