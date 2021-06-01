@@ -17,6 +17,7 @@ export default function Pagination({
   numPages = 4,
   isLoading,
 }) {
+  numPages = Math.min(10, numPages);
   return (
     <React.Fragment>
       {numPages > 1 && numPages > currentPage && (
