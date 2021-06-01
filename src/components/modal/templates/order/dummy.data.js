@@ -7,7 +7,8 @@ const work = {
   creators: [{ name: "Anders Matthesen" }],
   manifestations: [
     { pid: "some-pid", materialType: "Bog" },
-    { pid: "some-other-pid", materialType: "E-bog" },
+    { pid: "some-other-pid", materialType: "Bog" },
+    { pid: "some-other-pid-2", materialType: "E-bog" },
   ],
 };
 
@@ -15,7 +16,7 @@ const work = {
 const user = {
   name: "Låner Lånersen",
   agency: {
-    name: "Hovedbibliokeket",
+    name: "Hovedbiblioket",
     branches: [
       {
         branchId: "0",
