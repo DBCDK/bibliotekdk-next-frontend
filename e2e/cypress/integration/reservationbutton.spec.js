@@ -23,9 +23,15 @@ describe("Reservation button", () => {
 
   it(`user not logged in material available`, () => {
     cy.visit(
-      "/iframe.html?id=work-reservationbutton--reservation-button-inactive"
+      "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]").should("be.disabled");
+    cy.get("[data-cy=button-order-overview]")
+      .contains("Bestil (ikke logget ind)")
+      .should("be.visible")
+      .click();
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal("login");
+    });
   });
 
   // @TODO more testing - request_button:false eg.
