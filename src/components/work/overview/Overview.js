@@ -7,7 +7,6 @@ import merge from "lodash/merge";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import Button from "@/components/base/button";
 import Cover from "@/components/base/cover";
 import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
@@ -17,12 +16,11 @@ import Translate from "@/components/base/translate";
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Link from "@/components/base/link";
 
-import useUser from "@/components/hooks/useUser";
+import OrderButton from "@/components/work/reservationbutton/ReservationButton";
 
-import includes from "lodash/includes";
+import useUser from "@/components/hooks/useUser";
 // Translate Context
 const context = { context: "overview" };
 
@@ -50,7 +48,6 @@ export function Overview({
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
-
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes.forEach((m) => {
@@ -191,183 +188,6 @@ export function Overview({
 }
 
 /**
- * Seperat function for orderbutton
- * Check what kind of material (eg. online, not avialable etc)
- * and present appropiate button
- *
- * @param selectedMaterial
- * @param skeleton
- * @param funcs
- * @return {JSX.Element}
- * @constructor
- */
-export function OrderButton({
-  selectedMaterial,
-  onlineAccess,
-  login,
-  openOrderModal,
-  user,
-}) {
-  /*
-   onlineAccess={onOnlineAccess}
-                  login={login}
-                  openOrderModal={openOrderModal}
-   */
-
-  // The loan button is skeleton until we know if selected
-  // material is physical or online
-  if (!selectedMaterial) {
-    return null;
-  }
-
-  const materialType = selectedMaterial.materialType;
-  const manifestations = selectedMaterial.manifestations;
-
-  // TODO every manifestation for this type may have orderPossibe=true
-  selectedMaterial = selectedMaterial.manifestations?.[0];
-  let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
-
-  /* order button acts on following scenarios:
-  1. material is accessible online (no user login) -> go to online url
-  2. material can not be ordered - maybe it is too new or something else -> disable (with a reason?)
-  3. user is not logged in -> go to login
-  4. material is available for logged in library -> prepare order button with parameters
-  5. material is not available -> disable
-   */
-
-  if (selectedMaterial?.onlineAccess) {
-    return (
-      <Button
-        className={styles.externalLink}
-        skeleton={buttonSkeleton}
-        onClick={() => onlineAccess(selectedMaterial?.onlineAccess[0]?.url)}
-      >
-        <Icon src={"external.svg"} skeleton={buttonSkeleton} />
-        {Translate({
-          ...context,
-          label:
-            materialType === "Ebog"
-              ? "onlineAccessEbook"
-              : materialType?.includes("Lydbog")
-              ? "onlineAccessAudiobook"
-              : "onlineAccessUnknown",
-        })}
-      </Button>
-    );
-  }
-
-  // can material be ordered ?
-  if (!checkRequestButtonIsTrue({ manifestations })) {
-    // disabled button
-    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
-  }
-  // is user logged in
-  if (!user.isAuthenticated) {
-    // login button
-    return (
-      <Button
-        skeleton={buttonSkeleton}
-        onClick={() => login()}
-        data_cy="button-order-overview"
-      >
-        {Translate({ ...context, label: "Order (not logged in)" })}
-      </Button>
-    );
-  }
-
-  // user is logged in - check availability
-  const pid = selectedMaterial.pid;
-  const { data, isLoading, isSlow, error } = useData(
-    manifestationFragments.availability({ pid })
-  );
-
-  let available = false;
-  if (isLoading) {
-    buttonSkeleton = true;
-  } else {
-    available = checkAvailability({ error, data, materialType });
-  }
-
-  // finished loading - materail can not be ordered - disable buttons
-  if (!isLoading && !available) {
-    // disabled button
-    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
-  }
-  // all is well - material can be ordered - order button
-  return (
-    <Button
-      skeleton={buttonSkeleton}
-      onClick={() => openOrderModal(pid)}
-      data_cy="button-order-overview-enabled"
-    >
-      {Translate({ context: "general", label: "bestil" })}
-    </Button>
-  );
-}
-
-function checkRequestButtonIsTrue({ manifestations }) {
-  if (!manifestations) {
-    return false;
-  }
-  // is order possible ?
-  let orderpossible = false;
-  manifestations.every((manifest) => {
-    if (manifest.admin?.requestButton) {
-      orderpossible = true;
-      // break every loop - only ONE manifestion needs to be orderable
-      return false;
-    }
-    // continue every loop
-    return true;
-  });
-  return orderpossible;
-}
-
-function DisabledReservationButton({ buttonSkeleton }) {
-  return (
-    <Button
-      skeleton={buttonSkeleton}
-      disabled={true}
-      className={styles.disabledbutton}
-      data_cy="button-order-overview"
-    >
-      {Translate({ context: "overview", label: "Order-disabled" })}
-    </Button>
-  );
-}
-
-function checkAvailability({ error, data, materialType }) {
-  // @TODO use this:
-  /*
-  const { data, isLoading, error } = useData(
-      workFragments.detailsAllManifestations({ workId })
-  );
-  .. run through ALL manifestations - check if requestButton is true
-  .. it is checked in openformat ..
-   */
-
-  if (error && !process.env.STORYBOOK_ACTIVE) {
-    log(error, `availability check failed with error: ${error}`);
-    return false;
-  }
-
-  // for now we only support ordering books
-  const supportedMaterialTypes = ["Bog"];
-  if (!includes(supportedMaterialTypes, materialType)) {
-    return false;
-  }
-
-  // check availability response
-  // @TODO check with nanna or rikke to verify
-  return (
-    data &&
-    data.manifestation &&
-    data.manifestation.availability &&
-    data.manifestation.availability.orderPossible
-  );
-}
-
-/**
  * Skeleton/Loading version of component
  *
  * @param {Object} props Component props
@@ -457,7 +277,6 @@ export default function Wrap(props) {
   if (error || detailsError) {
     return <OverviewError />;
   }
-
   const merged = merge({}, covers.data, data, detailsData);
 
   return (

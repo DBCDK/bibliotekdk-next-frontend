@@ -165,7 +165,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     <Link
                       key={m.label}
                       href={m.href}
-                      disabled={`${linksdisabled}`}
+                      disabled={linksdisabled}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",

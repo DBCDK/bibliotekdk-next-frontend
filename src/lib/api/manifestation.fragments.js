@@ -6,7 +6,8 @@
 /**
  * availability
  */
-export function availability({ pid, agencyId }) {
+export function availability({ pid }) {
+  console.log("AVAILABILITY");
   return {
     // delay: 250,
     query: `query ($pid: String!) {
@@ -21,7 +22,7 @@ export function availability({ pid, agencyId }) {
       }
       monitor(name: "bibdknext_manifestations_availability")
     }`,
-    variables: { pid, agencyId },
+    variables: { pid },
     slowThreshold: 3000,
   };
 }
