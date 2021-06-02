@@ -28,7 +28,7 @@ export default function Info({
   const { title, creators, materialType, cover } = material;
 
   // user props
-  const { name, mail: userMail } = user;
+  const { name, mail: userMail, agency } = user;
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -46,7 +46,7 @@ export default function Info({
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [pickupBranch?.name || libraryFallback],
+    vars: [agency?.branches[0].name || libraryFallback],
   };
 
   const messageFromLibrary = {

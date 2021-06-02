@@ -1,11 +1,18 @@
 .pickup {
   background-color: white;
   padding: var(--pt2);
-  height: 100%;
-  overflow-y: auto;
 }
 .pickup h2 {
-  margin: var(--pt2) 0;
+  margin: 0 0 var(--pt2) 0;
+}
+
+.top {
+  margin-bottom: var(--pt2);
+}
+
+.scrollArea {
+  height: calc(100% - 20px);
+  overflow-y: auto;
 }
 
 .link > .arrow {
