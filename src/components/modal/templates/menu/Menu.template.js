@@ -41,6 +41,7 @@ function Menu({ isVisible = false, onLang = null }) {
 
   return (
     <div className={`${styles.menu} ${expandedClass}`} data-cy="menu-modal">
+      {/* BETA-1 - remove categories from menu
       <div
         className={styles.trigger}
         tabIndex={isVisible ? "0" : "-1"}
@@ -51,7 +52,7 @@ function Menu({ isVisible = false, onLang = null }) {
           }
         }}
       >
-        <Link
+         <Link
           onClick={(e) => e.preventDefault()}
           border={false}
           tabIndex={"-1"}
@@ -61,23 +62,30 @@ function Menu({ isVisible = false, onLang = null }) {
             prefix: "menu-link",
           })}
         >
+
           <Title type="title5">
             {Translate({ ...context, label: "categories" })}
           </Title>
           <AnimationLine />
         </Link>
+
         <span>
           <Arrow flip={expanded} className={styles.arrow} />
         </span>
+
       </div>
+      */}
       <div className={styles.outerWrap}>
         <div className={`${styles.wrap}`}>
           <ul aria-hidden={expanded}>
             {actions.map((a) => {
               const title = Translate({ ...context, label: a.label });
-
+              // BETA-1 hide non working menu items @see lib/Navigation.js
+              const style = a.hidden
+                ? { display: "none" }
+                : { display: "block" };
               return (
-                <li key={a.label}>
+                <li key={a.label} style={style}>
                   <Link
                     className={styles.link}
                     tabIndex={!expanded && isVisible ? "0" : "-1"}
