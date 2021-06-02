@@ -48,9 +48,6 @@ export function Overview({
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
-
-  console.log(allMaterialTypes, "ALL");
-
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes.forEach((m) => {
@@ -280,12 +277,8 @@ export default function Wrap(props) {
   if (error || detailsError) {
     return <OverviewError />;
   }
-
-  console.log(data, "ALLDATA");
-
   const merged = merge({}, covers.data, data, detailsData);
 
-  console.log(merged, "MERGES");
   return (
     <Overview
       {...merged.work}

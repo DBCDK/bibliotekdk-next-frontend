@@ -105,8 +105,6 @@ export function OrderButton({
   // finished loading - material can not be ordered - disable buttons
   let available = false;
   if (!availability.isLoading) {
-    console.log(availability, "AVAILAIBIBLI");
-
     available = checkAvailability({
       error: availability.error,
       data: availability.data,
@@ -166,7 +164,6 @@ function DisabledReservationButton({ buttonSkeleton }) {
 
 function checkAvailability({ error, data, materialType }) {
   if (error && !process.env.STORYBOOK_ACTIVE) {
-    console.log(error, "ERROR");
     console.log(`availability check failed with error: ${error}`, "ERROR");
     return false;
   }
@@ -188,8 +185,6 @@ function checkAvailability({ error, data, materialType }) {
 }
 
 export default function wrap(props) {
-  console.log({ ...props }, "PRPS");
-
   const { selectedMaterial, onlineAccess, login, openOrderModal, user } = props;
   let availability = { error: null, data: null, isLoading: false };
   if (user.isAuthenticated) {
