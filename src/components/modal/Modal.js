@@ -109,6 +109,7 @@ export function Modal({
   onLang = null,
   template = null,
   skeleton = false,
+  children = false,
 }) {
   // modal is visible
   const isVisible = !!template;
@@ -224,11 +225,19 @@ export function Modal({
           </div>
         </div>
         <div className={styles.content}>
-          <context.template
-            isVisible={isVisible}
-            onClose={onClose}
-            onLang={onLang}
-          />
+          {(children &&
+            React.cloneElement(children, {
+              isVisible,
+              onClose,
+              onLang,
+              ...children.props,
+            })) || (
+            <context.template
+              isVisible={isVisible}
+              onClose={onClose}
+              onLang={onLang}
+            />
+          )}
         </div>
       </dialog>
     </div>
@@ -270,7 +279,7 @@ export function ModalSkeleton(props) {
  *
  * @returns {component}
  */
-export default function Wrap({ router }) {
+export default function Wrap({ router, children = false }) {
   // On modal close
   const onClose = function onClose() {
     if (router) {
@@ -297,7 +306,11 @@ export default function Wrap({ router }) {
   // use only first level of modal name ("-"" seperated names is for modal layers)
   const template = param && param.split("-")[0];
 
-  return <Modal template={template} onClose={onClose} onLang={onLang} />;
+  return (
+    <Modal template={template} onClose={onClose} onLang={onLang}>
+      {children && children}
+    </Modal>
+  );
 }
 
 // PropTypes for component

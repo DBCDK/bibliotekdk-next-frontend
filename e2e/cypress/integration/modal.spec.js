@@ -2,9 +2,9 @@
  * @file
  * Test functionality of Header
  */
-describe("Suggester", () => {
+describe("Modal", () => {
   beforeEach(function () {
-    cy.visit("/iframe.html?id=modal-modal--show-modal");
+    cy.visit("/iframe.html?id=modal-menu--show-modal");
   });
 
   it(`Can show modal with menu template`, () => {

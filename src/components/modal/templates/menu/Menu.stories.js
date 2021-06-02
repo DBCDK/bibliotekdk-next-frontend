@@ -3,10 +3,10 @@ import { useState } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "@/components/base/button";
-import { Modal } from "./";
+import { Modal } from "@/components/modal";
 
 export default {
-  title: "modal/Modal",
+  title: "modal/Menu",
 };
 
 /**
@@ -48,38 +48,6 @@ export function MenuTemplate() {
       </StoryDescription>
 
       <Modal onClose={null} onLang={null} template={"menu"} />
-    </div>
-  );
-}
-
-/**
- * Basket template
- *
- */
-export function BasketTemplate() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Basket template</StoryTitle>
-      <StoryDescription>Modal template for the user basket</StoryDescription>
-
-      <Modal onClose={null} onLang={null} template={"basket"} />
-    </div>
-  );
-}
-
-/**
- * Basket template
- *
- */
-export function FilterTemplate() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Filter template</StoryTitle>
-      <StoryDescription>
-        Modal template for the find page filter functionality
-      </StoryDescription>
-
-      <Modal onClose={null} onLang={null} template={"filter"} />
     </div>
   );
 }

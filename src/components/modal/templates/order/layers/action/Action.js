@@ -30,7 +30,7 @@ function Action({
   const [showProgress, setShowProgress] = useState(false);
 
   // order data
-  const { data: orderData } = data.order;
+  const { data: orderData, isStory } = data.order;
 
   // branch data
   const branchName = data.pickupBranch?.name;
@@ -76,7 +76,7 @@ function Action({
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}
           onClick={() => {
-            isValid && setShowProgress(true);
+            isValid && !isStory && setShowProgress(true);
             onClick && onClick();
             callback && callback();
           }}

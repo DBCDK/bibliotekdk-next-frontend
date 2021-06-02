@@ -19,6 +19,7 @@ export function basic() {
         address
         postalCode
         agency (language: $language){
+          name
           branches {
             agencyId
             name

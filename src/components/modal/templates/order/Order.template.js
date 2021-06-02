@@ -15,7 +15,27 @@ import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
 import Action from "./layers/action";
 
+import data from "./dummy.data";
+
 import styles from "./Order.module.css";
+
+/**
+ *  Function to handle the active layer in modal
+ *
+ * @param {string} layer
+ */
+function handleLayer(layer) {
+  if (layer !== Router.query.modal) {
+    Router.push(
+      {
+        pathname: Router.pathname,
+        query: { ...Router.query, modal: `order-${layer}` },
+      },
+      null,
+      { shallow: true, scroll: false }
+    );
+  }
+}
 
 /**
  *  Order component function
@@ -24,14 +44,17 @@ import styles from "./Order.module.css";
  * @returns component
  */
 
-function Order({
+export function Order({
   pid,
   work,
   user,
   order,
+  query,
   isVisible,
   onClose,
   onSubmit,
+  onLayerChange,
+  onLayerClose,
   isLoading,
 }) {
   // layer state
@@ -54,7 +77,7 @@ function Order({
 
   // Update modal url param
   useEffect(() => {
-    const layer = Router.query.modal?.split("-")[1];
+    const layer = query?.modal?.split("-")[1];
     // If layer info (default) layer is requsted
     if (!layer) {
       setTranslated(false);
@@ -71,7 +94,7 @@ function Order({
         setTranslated(true);
       }
     }
-  }, [Router.query.modal]);
+  }, [query?.modal]);
 
   // Cleanup on modal close
   useEffect(() => {
@@ -115,24 +138,6 @@ function Order({
     setValidated({ status, hasTry, details });
   }, [mail, pid, pickupBranch, hasTry]);
 
-  /**
-   *  Function to handle the active layer in modal
-   *
-   * @param {string} layer
-   */
-  function handleLayer(layer) {
-    if (layer !== Router.query.modal) {
-      Router.push(
-        {
-          pathname: Router.pathname,
-          query: { ...Router.query, modal: `order-${layer}` },
-        },
-        null,
-        { shallow: true, scroll: false }
-      );
-    }
-  }
-
   // Work props
   const {
     cover,
@@ -156,6 +161,7 @@ function Order({
     manifestations,
     (manifestation) => manifestation.pid === pid
   )[0];
+
   const materialsSameType = filter(
     manifestations,
     (manifestation) => manifestation.materialType === material.materialType
@@ -189,13 +195,11 @@ function Order({
                 title,
                 creators,
                 ...material,
-                cover: { detail: material?.cover.detail || cover?.detail },
+                cover: { detail: material?.cover?.detail || cover?.detail },
               }}
               user={user}
               className={`${styles.page} ${styles[`page-info`]}`}
-              onLayerSelect={(layer) => {
-                handleLayer(layer);
-              }}
+              onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
               pickupBranch={pickupBranch}
               onMailChange={(value, valid) => setMail({ value, valid })}
               mail={mail}
@@ -208,7 +212,7 @@ function Order({
               isVisible={translated && activeLayer === "edition"}
               className={`${styles.page} ${styles[`page-edition`]}`}
               onChange={(val) => console.log(val + " selected")}
-              onClose={(e) => Router.back()}
+              onClose={onLayerClose}
             />
             <Pickup
               isVisible={translated && activeLayer === "pickup"}
@@ -217,9 +221,9 @@ function Order({
               onSelect={(branch) => {
                 setPickupBranch(branch);
                 // Give it some time to animate before closing
-                setTimeout(() => Router.back(), 300);
+                setTimeout(() => onLayerClose(), 300);
               }}
-              onClose={() => Router.back()}
+              onClose={onLayerClose}
               selected={pickupBranch}
             />
           </div>
@@ -251,34 +255,8 @@ function Order({
   );
 }
 
-function OrderSkeleton(props) {
-  const work = {
-    title: "...",
-    creators: [{ name: "..." }],
-    materialTypes: [{ pid: "some-pid", materialType: "Bog" }],
-  };
-
-  // User props
-  const user = {
-    agency: {
-      name: "",
-      branches: [
-        {
-          name: "some-library-branch",
-          postalAddress: "some-address",
-          postalCode: "1234",
-          city: "some-city",
-        },
-      ],
-    },
-  };
-
-  // order
-  const order = {
-    data: {},
-    error: false,
-    isLoading: false,
-  };
+export function OrderSkeleton(props) {
+  const { work, user, order } = data;
 
   return (
     <Order
@@ -349,6 +327,9 @@ export default function Wrap(props) {
       user={userData?.user || {}}
       pid={pid}
       order={orderMutation}
+      query={Router.query}
+      onLayerChange={(layer) => handleLayer(layer)}
+      onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch, email) => {
         orderMutation.post(
           submitOrder({
