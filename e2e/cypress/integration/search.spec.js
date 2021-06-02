@@ -14,11 +14,11 @@ describe("Search", () => {
     cy.url().should("include", "view=list");
 
     // click page 2, should be reflected in url
-    cy.get('[data-cy="page-2-button"]').click();
+    cy.get('[data-cy="page-2-button"]').click({ force: true });
     cy.url().should("include", "page=2");
 
     // click page 3, should be reflected in url
-    cy.get('[data-cy="page-3-button"]').click();
+    cy.get('[data-cy="page-3-button"]').click({ force: true });
     cy.url().should("include", "page=3");
   });
 

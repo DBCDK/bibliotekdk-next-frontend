@@ -91,7 +91,7 @@ describe("Header", () => {
   });
 
   it(`Check visible elemets for screensizes < 992`, () => {
-    cy.viewport(991, 700);
+    cy.viewport(990, 700);
 
     cy.get("[data-cy=header-materials]").should("not.be.visible");
     cy.get("[data-cy=header-top-actions]").should("not.be.visible");
