@@ -1,6 +1,8 @@
 .pickup {
   background-color: white;
   padding: var(--pt2);
+  height: 100%;
+  overflow-y: auto;
 }
 .pickup h2 {
   margin: var(--pt2) 0;
