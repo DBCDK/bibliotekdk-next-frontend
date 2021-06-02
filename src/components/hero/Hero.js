@@ -41,7 +41,8 @@ export default function Hero() {
               renderAsHtml: true,
             })}
           </Title>
-          <Link a={false} href="/artikel/bibliotek.dk/6" target="_self">
+
+          <Link a={false} href={"/artikel/bibliotek.dk/6"} target="_self">
             <Button
               className={styles.readmorebutton}
               type="primary"
