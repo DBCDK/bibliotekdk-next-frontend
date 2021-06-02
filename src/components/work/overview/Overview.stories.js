@@ -15,6 +15,7 @@ export default {
  */
 export function WorkOverview() {
   const data = dummy_workDataApi({ workId: "some-id" });
+  //const data = fullwork;
   const [type, setType] = useState();
   return (
     <div>
@@ -49,7 +50,7 @@ export function Loading() {
  * @return {JSX.Element}
  * @constructor
  */
-export function ReservationButtonOnlineAccess() {
+/*export function ReservationButtonOnlineAccess() {
   const data = dummy_workDataApi({ workId: "some-id" });
   return (
     <div>
@@ -70,14 +71,14 @@ export function ReservationButtonOnlineAccess() {
       />
     </div>
   );
-}
+}*/
 
 /**
  *
  * @return {JSX.Element}
  * @constructor
  */
-export function ReservationButtonInactive() {
+/*export function ReservationButtonInactive() {
   const data = dummy_workDataApi({ workId: "some-id" });
   return (
     <div>
@@ -96,14 +97,14 @@ export function ReservationButtonInactive() {
       />
     </div>
   );
-}
+}*/
 
 /**
  *
  * @return {JSX.Element}
  * @constructor
  */
-export function ReservationButtonActive() {
+/*export function ReservationButtonActive() {
   const data = fullwork.data;
   return (
     <div>
@@ -121,3 +122,7 @@ export function ReservationButtonActive() {
     </div>
   );
 }
+
+
+
+ */
