@@ -132,4 +132,11 @@ describe("Order", () => {
     cy.tab();
     cy.get("[data-cy=modal-container] *:focused").should("not.exist");
   });
+
+  it("should not show modal when a deep link is followed", () => {
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?order=870970-basis%3A51701763&modal=order`
+    );
+    cy.url().should("not.include", "modal=order");
+  });
 });
