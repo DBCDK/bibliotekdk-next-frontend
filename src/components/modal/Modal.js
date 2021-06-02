@@ -280,6 +280,29 @@ export function ModalSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap({ router, children = false }) {
+  // Get template name from query
+  const param = get(router, "query.modal", null);
+  // use only first level of modal name ("-"" seperated names is for modal layers)
+  const template = param && param.split("-")[0];
+
+  // We only allow a modal to be open, when user has explicitly
+  // performed an action to open the modal.
+  // Following a deep link into the site with open modal,
+  // will result in a router.replace
+  useEffect(() => {
+    if (template && router.isSsr) {
+      const query = { ...router.query };
+      delete query.modal;
+      router.replace({ pathname: router.pathname, query });
+    }
+  }, []);
+
+  // If content is rendered on server (or it is rendered for the first time in the browser),
+  // we know the user followed a deep link to a page with an open modal; we do not show it.
+  if (template && (typeof window === "undefined" || router.isSsr)) {
+    return null;
+  }
+
   // On modal close
   const onClose = function onClose() {
     if (router) {
@@ -300,11 +323,6 @@ export default function Wrap({ router, children = false }) {
       router.replace({ pathname, query }, null, { locale });
     }
   };
-
-  // Get template name from query
-  const param = get(router, "query.modal", null);
-  // use only first level of modal name ("-"" seperated names is for modal layers)
-  const template = param && param.split("-")[0];
 
   return (
     <Modal template={template} onClose={onClose} onLang={onLang}>
