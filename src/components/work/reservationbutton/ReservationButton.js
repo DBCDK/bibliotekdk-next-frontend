@@ -101,8 +101,7 @@ export function OrderButton({
     );
   }
   // user is logged in - check availability
-  // @see wrap function - if user is logged in the availability object
-  // finished loading - material can not be ordered - disable buttons
+  // @see wrap function - if user is logged in the availability object has
   let available = false;
   if (!availability.isLoading) {
     available = checkAvailability({
@@ -111,6 +110,7 @@ export function OrderButton({
       materialType: materialType,
     });
   }
+  // finished loading - material can not be ordered - disable buttons
   if (availability.isLoading || !available) {
     // disabled button
     return (
@@ -119,7 +119,6 @@ export function OrderButton({
   }
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
-
   return (
     <Button
       skeleton={buttonSkeleton}
