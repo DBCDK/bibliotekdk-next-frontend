@@ -7,7 +7,6 @@
 
 .top {
   padding-bottom: var(--pt2);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .scrollArea {
@@ -36,7 +35,7 @@
 @media (min-width: 576px) {
   .scrollArea {
     height: calc(100% - 42px);
-    padding: var(--pt4) var(--pt6);
+    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
   }
 
   .link > .arrow {
