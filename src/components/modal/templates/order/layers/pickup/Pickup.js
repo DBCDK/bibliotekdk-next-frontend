@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useInView } from "react-intersection-observer";
 
 import Link from "@/components/base/link";
 import Radio from "@/components/base/radio";
@@ -33,8 +34,17 @@ export default function Pickup({
     return null;
   }
 
+  // Observe when bottom of list i visible
+  const [ref, inView] = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
   // tabIndex
   const tabIndex = isVisible ? "0" : "-1";
+
+  // Add shadow to bottom of scroll area, if last element is not visible
+  const shadowClass = inView ? "" : styles.shadow;
 
   return (
     <div className={`${styles.pickup} ${className}`}>
@@ -57,35 +67,38 @@ export default function Pickup({
         </Link>
       </div>
 
-      <div className={styles.scrollArea}>
+      <div className={`${styles.scrollArea} ${shadowClass}`}>
         <Title type="title4" tag="h2">
           {agency.name || "Afhentningssted"}
         </Title>
 
         <Radio.Group enabled={isVisible}>
-          {agency.branches.map((branch, idx) => (
-            <Radio.Button
-              key={`${branch.branchId}-${idx}`}
-              selected={selected.branchId === branch.branchId}
-              onSelect={() => {
-                onSelect(branch);
-              }}
-              label={branch.name}
-              className={[styles.radiobutton, animations["on-hover"]].join(" ")}
-            >
-              <Text
-                type="text2"
-                className={[
-                  styles.library,
-                  animations["h-border-bottom"],
-                  animations["h-color-blue"],
-                ].join(" ")}
+          {agency.branches.map((branch, idx) => {
+            return (
+              <Radio.Button
+                key={`${branch.branchId}-${idx}`}
+                selected={selected.branchId === branch.branchId}
+                onSelect={() => onSelect(branch)}
+                label={branch.name}
+                className={[styles.radiobutton, animations["on-hover"]].join(
+                  " "
+                )}
               >
-                {branch.name}
-              </Text>
-            </Radio.Button>
-          ))}
+                <Text
+                  type="text2"
+                  className={[
+                    styles.library,
+                    animations["h-border-bottom"],
+                    animations["h-color-blue"],
+                  ].join(" ")}
+                >
+                  {branch.name}
+                </Text>
+              </Radio.Button>
+            );
+          })}
         </Radio.Group>
+        <div ref={ref} />
       </div>
     </div>
   );
