@@ -69,8 +69,13 @@ Input.propTypes = {
   readOnly: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
+  skeleton: PropTypes.bool,
 };
 
+/**
+ * Return loading version of component
+ *
+ */
 function SkeletonInput(props) {
   return (
     <div className={`${styles.input} ${styles.skeleton}`}>
@@ -79,6 +84,10 @@ function SkeletonInput(props) {
   );
 }
 
+/**
+ * Return default wrap
+ *
+ */
 export default function Wrap(props) {
   if (props.skeleton) {
     return <SkeletonInput />;
