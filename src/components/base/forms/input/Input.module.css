@@ -24,5 +24,17 @@
 .input.readOnly {
   background-color: var(--concrete);
   color: var(--gray);
+  -webkit-text-fill-color: var(--gray);
   cursor: not-allowed;
+}
+
+.input:disabled,
+.input:read-only {
+  color: var(--gray);
+  -webkit-text-fill-color: var(--gray);
+}
+
+.skeleton {
+  position: relative;
+  border: none;
 }

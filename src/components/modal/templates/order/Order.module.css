@@ -9,7 +9,7 @@
 
 .container {
   height: 100%;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .wrap {
@@ -17,6 +17,12 @@
   width: 200%;
   display: flex;
   transition-duration: 0.3s;
+}
+
+.wrap .left > div,
+.wrap .right > div {
+  /* height: 100%;
+  overflow-y: auto; */
 }
 
 .wrap.translated,
