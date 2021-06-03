@@ -33,3 +33,8 @@
   color: var(--gray);
   -webkit-text-fill-color: var(--gray);
 }
+
+.skeleton {
+  position: relative;
+  border: none;
+}

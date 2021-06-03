@@ -115,6 +115,7 @@ Email.propTypes = {
   tabIndex: PropTypes.string,
   value: PropTypes.string,
   readOnly: PropTypes.bool,
+  skeleton: PropTypes.bool,
 };
 
 export default Email;

@@ -178,6 +178,7 @@ export default function Info({
             onBlur={(value, valid) => onMailChange(value, valid)}
             onMount={(value, valid) => onMailChange(value, valid)}
             readOnly={!!userMail}
+            skeleton={isLoading}
           />
 
           {message && (

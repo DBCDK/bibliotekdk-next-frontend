@@ -1,7 +1,9 @@
 import PropTypes from "prop-types";
-import styles from "./Input.module.css";
-
 import { useState, useEffect } from "react";
+
+import Skeleton from "@/components/base/skeleton";
+
+import styles from "./Input.module.css";
 
 /**
  * The Component function
@@ -69,4 +71,18 @@ Input.propTypes = {
   onBlur: PropTypes.func,
 };
 
-export default Input;
+function SkeletonInput(props) {
+  return (
+    <div className={`${styles.input} ${styles.skeleton}`}>
+      <Skeleton />
+    </div>
+  );
+}
+
+export default function Wrap(props) {
+  if (props.skeleton) {
+    return <SkeletonInput />;
+  }
+
+  return <Input {...props} />;
+}
