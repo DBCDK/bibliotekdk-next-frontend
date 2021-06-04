@@ -1,5 +1,15 @@
 {
   "contexts": {
+    "feedback": {
+      "feed_back_text": {
+        "da": "Hjælp os med at gøre beta.bibliotek.dk bedre",
+        "en": "Help us improve beta.bibliotek.dk"
+      },
+      "feed_back_link_text": {
+        "da": "Svar på 2 spørgsmål",
+        "en": "Answer 2 questions"
+      }
+    },
     "cookiebox": {
       "title": {
         "da": "Cookies",
