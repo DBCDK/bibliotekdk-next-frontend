@@ -17,8 +17,7 @@ import { cyKey } from "@/utils/trim";
 import styles from "./Header.module.css";
 import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Feedback from "@/components/feedback";
+import { useEffect, useState } from "react";
 
 /**
  * The custom Header for help page
@@ -95,7 +94,6 @@ export function Header({
           </span>
         </Col>
       </Row>
-      <Feedback />
     </Container>
   );
 }
