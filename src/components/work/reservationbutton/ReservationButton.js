@@ -2,8 +2,6 @@ import Button from "@/components/base/button/Button";
 import styles from "@/components/work/overview/Overview.module.css";
 import Icon from "@/components/base/icon/Icon";
 import Translate from "@/components/base/translate";
-import { useData } from "@/lib/api/api";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import includes from "lodash/includes";
 
 // Translate Context
@@ -25,10 +23,6 @@ const context = { context: "overview" };
  *  onclick handler for reservation
  * @param user
  *  The user
- * @param available
- *  Is the material available or not (bool)
- * @param availabilityLoading
- *  Is availability loading (bool)
  * @return {JSX.Element}
  * @constructor
  */
@@ -38,7 +32,6 @@ export function OrderButton({
   login,
   openOrderModal,
   user,
-  availability = {},
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
@@ -83,7 +76,11 @@ export function OrderButton({
   }
 
   // can material be ordered ?
-  if (!checkRequestButtonIsTrue({ manifestations })) {
+  const supportedMaterialTypes = ["Bog"];
+  if (
+    !checkRequestButtonIsTrue({ manifestations }) ||
+    !includes(supportedMaterialTypes, materialType)
+  ) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
@@ -100,23 +97,7 @@ export function OrderButton({
       </Button>
     );
   }
-  // user is logged in - check availability
-  // @see wrap function - if user is logged in the availability object has
-  let available = false;
-  if (!availability.isLoading) {
-    available = checkAvailability({
-      error: availability.error,
-      data: availability.data,
-      materialType: materialType,
-    });
-  }
-  // finished loading - material can not be ordered - disable buttons
-  if (availability.isLoading || !available) {
-    // disabled button
-    return (
-      <DisabledReservationButton buttonSkeleton={availability.isLoading} />
-    );
-  }
+
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
   return (
@@ -161,47 +142,4 @@ function DisabledReservationButton({ buttonSkeleton }) {
   );
 }
 
-function checkAvailability({ error, data, materialType }) {
-  if (error && !process.env.STORYBOOK_ACTIVE) {
-    console.log(`availability check failed with error: ${error}`, "ERROR");
-    return false;
-  }
-
-  // for now we only support ordering books
-  const supportedMaterialTypes = ["Bog"];
-  if (!includes(supportedMaterialTypes, materialType)) {
-    return false;
-  }
-
-  // check availability response
-  // @TODO check with nanna or rikke to verify
-  return (
-    data &&
-    data.manifestation &&
-    data.manifestation.availability &&
-    data.manifestation.availability.orderPossible
-  );
-}
-
-export default function wrap(props) {
-  const { selectedMaterial, onlineAccess, login, openOrderModal, user } = props;
-  let availability = { error: null, data: null, isLoading: false };
-  if (user.isAuthenticated) {
-    // user is logged in - check && set availability
-    const pid = selectedMaterial.manifestations[0].pid;
-    const { data, error, isLoacing, isSlow } = (availability = useData(
-      manifestationFragments.availability({ pid })
-    ));
-  }
-
-  return (
-    <OrderButton
-      selectedMaterial={selectedMaterial}
-      onlineAccess={onlineAccess}
-      login={login}
-      openOrderModal={openOrderModal}
-      user={user}
-      availability={availability}
-    />
-  );
-}
+export default OrderButton;
