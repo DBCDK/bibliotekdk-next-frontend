@@ -784,6 +784,32 @@
         "en": "Write your email"
       }
     },
+    "metadata": {
+      "frontpage-title": {
+        "da": "Bibliotek.dk | Lån fra alle Danmarks biblioteker",
+        "en": "Bibliotek.dk | Loan from all of Denmark's libraries"
+      },
+      "frontpage-description": {
+        "da": "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv.",
+        "en": "One single entrance to all the country's libraries. Order here and pick up at your local library. Borrow and reserve books, articles, movies, music, games, etc."
+      },
+      "article-title": {
+        "da": "%s | Bibliotek.dk",
+        "en": "%s | Bibliotek.dk"
+      },
+      "help-title": {
+        "da": "Hjælp og vejledning | Bibliotek.dk",
+        "en": "Help and guidance | Bibliotek.dk"
+      },
+      "help-description": {
+        "da": "Find hjælp og vejledning til [bibliotek-dk] omkring fx bestilling, søgning og login.",
+        "en": "Find help and guidance for bibliotek.dk about eg ordering, searching and login."
+      },
+      "help-article-title": {
+        "da": "%s | Bibliotek.dk",
+        "en": "%s | Bibliotek.dk"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",

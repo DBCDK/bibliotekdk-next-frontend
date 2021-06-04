@@ -34,9 +34,17 @@ function BackButton() {
  */
 
 export default function Page() {
-  const pageTitle = "Hjælp og vejledninger | alfa.bibliotek.dk";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+  const context = { context: "metadata" };
+
+  const pageTitle = Translate({
+    ...context,
+    label: "help-title",
+  });
+
+  const pageDescription = Translate({
+    ...context,
+    label: "help-description",
+  });
 
   return (
     <React.Fragment>

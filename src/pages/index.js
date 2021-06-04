@@ -10,13 +10,17 @@ import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchAll } from "@/lib/api/api";
 import Header from "@/components/header/Header";
+import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
 
 const Index = () => {
-  const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+  const context = { context: "metadata" };
+  const pageTitle = Translate({ ...context, label: "frontpage-title" });
+  const pageDescription = Translate({
+    ...context,
+    label: "frontpage-description",
+  });
 
   const router = useRouter();
 

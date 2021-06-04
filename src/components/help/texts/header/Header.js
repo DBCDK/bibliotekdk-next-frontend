@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 import Head from "next/head";
 
 import { useData } from "@/lib/api/api";
-import * as articleFragments from "@/lib/api/article.fragments";
+import { helpText } from "@/lib/api/helptexts.fragments.js";
 
 import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
@@ -26,22 +26,29 @@ import Translate, { getLangcode } from "@/components/base/translate";
  *
  * @returns {component}
  */
-export default function Header({ articleId }) {
-  const language = getLangcode();
-  const data = useData(articleFragments.article({ articleId, language }));
+export default function Header({ helpTextId }) {
+  const langcode = { language: getLangcode() };
+  const args = { ...helpTextId, ...langcode };
 
-  const context = { context: "metadata" };
+  const { isLoading, data, error } = useData(helpText(args));
 
-  if (!data.data || !data.data.article || data.isLoading || data.error) {
+  if (!data || !data.helptext || isLoading || error) {
+    // @TODO some error here .. message for user .. log ??
     return null;
   }
 
-  const article = data.data.article;
+  console.log("data", data);
+
+  const context = { context: "metadata" };
+
+  const helptext = data.helptext;
+
+  console.log("article", helptext);
 
   const pageTitle = Translate({
     ...context,
-    label: "article-title",
-    vars: [article.title],
+    label: "help-article-title",
+    vars: [helptext.title],
   });
 
   return (
