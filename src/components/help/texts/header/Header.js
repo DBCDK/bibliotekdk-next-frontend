@@ -28,7 +28,7 @@ import Translate, { getLangcode } from "@/components/base/translate";
  */
 export default function Header({ helpTextId }) {
   const langcode = { language: getLangcode() };
-  const args = { ...helpTextId, ...langcode };
+  const args = { helpTextId, ...langcode };
 
   const { isLoading, data, error } = useData(helpText(args));
 
@@ -36,8 +36,6 @@ export default function Header({ helpTextId }) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
-
-  console.log("data", data);
 
   const context = { context: "metadata" };
 
@@ -51,22 +49,27 @@ export default function Header({ helpTextId }) {
     vars: [helptext.title],
   });
 
+  const pageDescription = Translate({
+    ...context,
+    label: "help-description",
+  });
+
   return (
     <Head>
-      <title>{article.title}</title>
-      <meta name="description" content={article.title}></meta>
-      <meta property="og:url" content={getCanonicalArticleUrl(article)} />
+      <title>{pageTitle}</title>
+      <meta name="description" content={pageDescription}></meta>
+      <meta property="og:url" content={getCanonicalArticleUrl(helptext)} />
       <meta property="og:type" content="website" />
-      <meta property="og:title" content={article.title} />
-      <meta property="og:description" content={article.fieldRubrik} />
-      {article.fieldImage && article.fieldImage.url && (
-        <meta property="og:image" content={article.fieldImage.url} />
+      <meta property="og:title" content={pageTitle} />
+      <meta property="og:description" content={pageDescription} />
+      {helptext.fieldImage?.url && (
+        <meta property="og:image" content={helptext.fieldImage?.url} />
       )}
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(getJSONLD(article)),
+          __html: JSON.stringify(getJSONLD(helptext)),
         }}
       />
       <link

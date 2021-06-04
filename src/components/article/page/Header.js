@@ -47,7 +47,7 @@ export default function Header({ articleId }) {
   return (
     <Head>
       <title>{article.title}</title>
-      <meta name="description" content={article.title}></meta>
+      <meta name="description" content={article.fieldRubrik}></meta>
       <meta property="og:url" content={getCanonicalArticleUrl(article)} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={article.title} />
