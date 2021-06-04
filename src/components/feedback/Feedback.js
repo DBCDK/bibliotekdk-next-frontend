@@ -7,27 +7,39 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Cookies from "js-cookie";
 
-export default function Feedback() {
+/**
+ *
+ * @param cookietime
+ * timeout for cookie (milliseconds) - defaults to one week
+ * @return {JSX.Element}
+ * @constructor
+ */
+export default function Feedback({ cookietime = 604800000 }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [showfeedback, setShowfeedback] = useState(true);
 
-  const cookiestate = parseCookie();
+  const cookie = Cookies.get("removefeedback");
+
   const handleCookie = (type) => {
     if (type === "click") {
-      if (!cookiestate.show) Cookies.set("showfeedback", `no ${Date.now()}`);
-      setShowfeedback(!showfeedback);
+      if (!cookie) {
+        Cookies.set("removefeedback", `${Date.now()}`);
+      }
+      setShowfeedback(false);
     }
     // page is loaded - check time
     if (type === "load") {
-      if (cookiestate.time) {
-        console.log(cookiestate.time);
-        // check if cookie was set more than a week ago
-        //if (Date.now() - cookiestate.time > 604800000) {
-        if (Date.now() - cookiestate.time > 5000) {
-          console.log("TIMER");
-          Cookies.remove("showfeedback");
-          setShowfeedback("true");
+      if (cookie) {
+        // check if cookie was set more than ({cookietime}) ago
+        if (Date.now() - cookie > cookietime) {
+          Cookies.remove("removefeedback");
+          setShowfeedback(true);
+        } else {
+          setShowfeedback(false);
+          setFeedbackOpen(false);
         }
+      } else {
+        setShowfeedback(true);
       }
     }
   };
@@ -40,9 +52,7 @@ export default function Feedback() {
     <div
       className={classNames(
         styles.feedbackwrap,
-        cookiestate.show === "no"
-          ? styles.feedbackhidden
-          : styles.feedbackclosed
+        !showfeedback ? styles.feedbackhidden : ""
       )}
     >
       <div

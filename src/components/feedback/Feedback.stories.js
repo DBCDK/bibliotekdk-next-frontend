@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import Hest from "./Feedback";
+import Feedb from "./Feedback";
 
 export default {
   title: "base/feedback",
@@ -14,7 +14,7 @@ export function Feedback() {
     <div style={{ height: "800px" }}>
       <StoryTitle>Feedback</StoryTitle>
       <StoryDescription>feedback</StoryDescription>
-      <Hest />
+      <Feedb cookietime={5000} />
     </div>
   );
 }
