@@ -36,6 +36,7 @@ import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
+import Feedback from "@/components/feedback";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -74,6 +75,7 @@ export default function MyApp({ Component, pageProps, router }) {
           <Notifications />
           <HelpHeader />
           <Component {...pageProps} />
+          <Feedback />
           <CookieBox />
           <Footer />
         </div>
