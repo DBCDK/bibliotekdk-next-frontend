@@ -16,7 +16,7 @@ import Cookies from "js-cookie";
  */
 export default function Feedback({ cookietime = 604800000 }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const [showfeedback, setShowfeedback] = useState(true);
+  const [showfeedback, setShowfeedback] = useState(false);
 
   const cookie = Cookies.get("removefeedback");
 
@@ -110,16 +110,4 @@ export default function Feedback({ cookietime = 604800000 }) {
       </div>
     </div>
   );
-}
-
-function parseCookie() {
-  const cookiedata = Cookies.get("showfeedback");
-  if (cookiedata) {
-    const parts = cookiedata.split(" ");
-    return {
-      show: parts[0],
-      time: parts[1],
-    };
-  }
-  return {};
 }
