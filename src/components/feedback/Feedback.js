@@ -57,6 +57,7 @@ export default function Feedback({
       // user already clicked the link - hopefully he/she also answered
       // the question - hide feedback for {cookietime}
       if (linkclicked) {
+        sessionStorage.removeItem("linkclicked");
         handleCookie("click");
       }
       if (Date.now() - timer > sessioneTime) {
