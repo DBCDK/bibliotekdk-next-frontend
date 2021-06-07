@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
  */
 export default function Feedback({
   cookietime = 604800000,
-  sessioneTime = 180000,
+  sessioneTime = 120000,
 }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [showfeedback, setShowfeedback] = useState(false);
