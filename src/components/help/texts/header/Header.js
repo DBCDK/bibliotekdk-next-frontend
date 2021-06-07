@@ -13,7 +13,7 @@ import Head from "next/head";
 import { useData } from "@/lib/api/api";
 import { helpText } from "@/lib/api/helptexts.fragments.js";
 
-import { getJSONLD } from "@/lib/jsonld/article";
+import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
 import Translate, { getLangcode } from "@/components/base/translate";
@@ -40,8 +40,6 @@ export default function Header({ helpTextId }) {
   const context = { context: "metadata" };
 
   const helptext = data.helptext;
-
-  console.log("article", helptext);
 
   const pageTitle = Translate({
     ...context,

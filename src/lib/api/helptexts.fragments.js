@@ -50,6 +50,8 @@ export function helpText({ helpTextId, language }) {
                     value
                     processed
                   }
+                  entityCreated
+          				entityChanged
                   fieldHelpTextGroup
                   fieldImage {
                     alt
