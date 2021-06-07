@@ -11,6 +11,7 @@
 .feedbackiconandtext{
     display: flex;
     padding-top: 20px;
+
 }
 
 .feedbackcloseicon{
@@ -31,10 +32,9 @@
 }
 
 .blue{
-    display: flex;
-    align-items: center;
     background-color: var(--blue);
     height: inherit;
+    cursor: pointer;
 }
 
 .textrotate {
@@ -42,13 +42,12 @@
     writing-mode: vertical-rl;
     color: var(--white);
     padding: 8px 3px 15px 3px;
-    cursor: pointer;
 }
 
 .feedbackicon {
-    margin-bottom: 15px;
     position: relative;
-    right: -5px;
+    right: -12px;
+    bottom: 5px;
 }
 
 .feedbackopen{
