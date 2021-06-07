@@ -1,7 +1,7 @@
 import Button from "@/components/base/button/Button";
 import styles from "@/components/work/overview/Overview.module.css";
 import Icon from "@/components/base/icon/Icon";
-import Translate from "@/components/base/translate";
+import Translate, { hasTranslation } from "@/components/base/translate";
 import includes from "lodash/includes";
 
 // Translate Context
@@ -45,6 +45,23 @@ export function OrderButton({
   selectedMaterial = selectedMaterial.manifestations?.[0];
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
+  // TODO change this when we have the workType
+  // use fallback for now
+  const workType = "fallback";
+
+  const workTypeTranslated = hasTranslation({
+    context: "workTypeDistinctForm",
+    label: workType,
+  })
+    ? Translate({
+        context: "workTypeDistinctForm",
+        label: workType,
+      })
+    : Translate({
+        context: "overview",
+        label: "fallback",
+      });
+
   /* order button acts on following scenarios:
   1. material is accessible online (no user login) -> go to online url
   2. material can not be ordered - maybe it is too new or something else -> disable (with a reason?)
@@ -62,15 +79,13 @@ export function OrderButton({
         onClick={() => onlineAccess(selectedMaterial?.onlineAccess[0]?.url)}
       >
         <Icon src={"external.svg"} skeleton={buttonSkeleton} />
-        {Translate({
-          ...context,
-          label:
-            materialType === "Ebog"
-              ? "onlineAccessEbook"
-              : materialType?.includes("Lydbog")
-              ? "onlineAccessAudiobook"
-              : "onlineAccessUnknown",
-        })}
+        {[
+          Translate({
+            context: "overview",
+            label: "goto",
+          }),
+          workTypeTranslated,
+        ].join(" ")}
       </Button>
     );
   }

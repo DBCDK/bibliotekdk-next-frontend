@@ -1,1 +1,7 @@
-export { default, months, lang, getLangcode } from "./Translate.js";
+export {
+  default,
+  months,
+  lang,
+  getLangcode,
+  hasTranslation,
+} from "./Translate.js";

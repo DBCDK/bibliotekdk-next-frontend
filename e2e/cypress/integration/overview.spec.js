@@ -66,7 +66,7 @@ describe("Overview", () => {
 
   it(`Can access external ebook`, () => {
     cy.get(`[data-cy=tag-ebog]`).click();
-    cy.get("[data-cy=button-cypress]").contains("Gå til e-bog");
+    cy.get("[data-cy=button-cypress]").contains("Gå til materialet");
     cy.get("[data-cy=button-cypress]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("https://ebookurl");
@@ -75,7 +75,7 @@ describe("Overview", () => {
 
   it(`Can access external audio book`, () => {
     cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
-    cy.get("[data-cy=button-cypress]").contains("Gå til lydbog");
+    cy.get("[data-cy=button-cypress]").contains("Gå til materialet");
     cy.get("[data-cy=button-cypress]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("https://audiobookurl");

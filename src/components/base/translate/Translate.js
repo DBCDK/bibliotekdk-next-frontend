@@ -232,6 +232,10 @@ function Translate({ context, label, vars = [], renderAsHtml = false }) {
   return result;
 }
 
+export function hasTranslation({ context, label }) {
+  return !!contexts?.[context]?.[label];
+}
+
 // PropTypes for component
 Translate.propTypes = {
   context: PropTypes.string,
