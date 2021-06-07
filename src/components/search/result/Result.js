@@ -114,7 +114,6 @@ export default function Wrap({
   onWorkClick,
   viewSelected,
   onPageChange,
-  onHitcountChange,
 }) {
   // settings
   const limit = 10; // limit
@@ -132,18 +131,11 @@ export default function Wrap({
     return <Result isLoading={true} />;
   }
 
-  const hitcount = data.search.hitcount;
-
-  // Hitcount change callback
-  if (onHitcountChange) {
-    onHitcountChange(hitcount);
-  }
-
   return (
     <Result
       q={q}
       page={page}
-      hitcount={hitcount}
+      hitcount={data.search.hitcount}
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
       viewSelected={viewSelected}

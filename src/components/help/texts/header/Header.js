@@ -79,5 +79,5 @@ export default function Header({ helpTextId }) {
 }
 
 Header.propTypes = {
-  articleId: PropTypes.string,
+  helpTextId: PropTypes.string,
 };

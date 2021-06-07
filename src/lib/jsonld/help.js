@@ -16,7 +16,7 @@ export function getJSONLD({
   fieldImage,
   body,
   entityCreated,
-  entityModified,
+  entityChanged,
 }) {
   const url = getCanonicalArticleUrl({ title, nid });
   const description = Translate({
@@ -33,7 +33,7 @@ export function getJSONLD({
     headline: title,
     image: [fieldImage],
     datePublished: entityCreated,
-    dateModified: entityModified,
+    dateModified: entityChanged,
     description,
     articleBody: body && body.value,
     author: {
