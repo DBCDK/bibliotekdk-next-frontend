@@ -119,6 +119,7 @@ describe("Search", () => {
         // This is live data and the hitcount number may change in future.
         // We expect NOT to have a undefined string/number in the description content.
         expect(value).to.not.have.string("undefined");
+        expect(value).to.not.have.string(" 0 ");
       });
   });
 });
