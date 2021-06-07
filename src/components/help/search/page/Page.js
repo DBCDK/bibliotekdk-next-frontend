@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Result from "@/components/help/search/result";
 import Faq from "@/components/help/faq/promoted";
 import HelpTextMenu from "@/components/help/menu";
+import Translate from "@/components/base/translate";
 
 import { useData } from "@/lib/api/api";
 import { helpTextSearch } from "@/lib/api/helptexts.fragments";
@@ -22,9 +23,16 @@ import styles from "./Page.module.css";
  *
  */
 export function Page({ result, isLoading, query }) {
-  const pageTitle = "Alle Artikler | alfa.bibliotek.dk";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+  const context = { context: "metadata" };
+
+  const pageTitle = Translate({
+    ...context,
+    label: "help-title",
+  });
+  const pageDescription = Translate({
+    ...context,
+    label: "help-description",
+  });
 
   return (
     <React.Fragment>

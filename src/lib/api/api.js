@@ -162,6 +162,9 @@ export async function fetchAll(queries, context) {
   const userAgent = context.req.headers["user-agent"];
   const isBot = require("isbot")(userAgent) || !!context.query.isBot;
 
+  // user session
+  const session = (await getSession(context)) || {};
+
   // Fetch all queries in parallel
   const initialData = {};
 
@@ -171,7 +174,10 @@ export async function fetchAll(queries, context) {
     (
       await Promise.all(
         queries.map(async (queryFunc) => {
-          const queryKey = generateKey(queryFunc(context.query));
+          const queryKey = generateKey({
+            ...queryFunc(context.query),
+            accessToken: session.accessToken,
+          });
           const queryRes = await fetcher(queryKey);
           return { queryKey, queryRes };
         })
@@ -185,6 +191,6 @@ export async function fetchAll(queries, context) {
     initialData,
     translations: await fetchTranslations(),
     allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
-    session: (await getSession(context)) || {},
+    session,
   };
 }

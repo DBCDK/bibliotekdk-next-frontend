@@ -102,4 +102,23 @@ describe("Search", () => {
     cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
     cy.get('[data-cy="fake-search-input"]').contains("harry potter");
   });
+
+  it(`renders hitcount data on server`, () => {
+    // we make a "request" instead of "visit" to see
+    // the actual html returned from the server
+    // set isBot=true to make sure data is loaded on server
+    cy.request(`${nextjsBaseUrl}/find?q=harry potter&isBot=true`)
+      .its("body")
+      .then((html) => {
+        const desc_regex = /<\s*meta name="description"[^>]*\/>/g;
+        const value_regex = /content=\"(.*?)\"/;
+
+        const metaDescription = html.match(desc_regex)[0];
+        const value = metaDescription.match(value_regex)[1];
+
+        // This is live data and the hitcount number may change in future.
+        // We expect NOT to have a undefined string/number in the description content.
+        expect(value).to.not.have.string("undefined");
+      });
+  });
 });

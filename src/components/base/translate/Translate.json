@@ -793,6 +793,18 @@
         "da": "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv.",
         "en": "One single entrance to all the country's libraries. Order here and pick up at your local library. Borrow and reserve books, articles, movies, music, games, etc."
       },
+      "find-title": {
+        "da": "Alle resultater med \"%s\" | Bibliotek.dk",
+        "en": "All results with \"%s\" | Bibliotek.dk"
+      },
+      "find-description": {
+        "da": "Bibliotekerne har i alt %s resultater med \"%s\". Bibliotek.dk er én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv.",
+        "en": "The libraries have a total of %s results with \"%s\". Bibliotek.dk is one single entrance to all the country's libraries. Order here and pick up at your local library. Borrow and reserve books, articles, movies, music, games, etc."
+      },
+      "all-articles-title": {
+        "da": "Alle artikler | Bibliotek.dk",
+        "en": "All articles | Bibliotek.dk"
+      },
       "article-title": {
         "da": "%s | Bibliotek.dk",
         "en": "%s | Bibliotek.dk"

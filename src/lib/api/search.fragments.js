@@ -4,6 +4,26 @@
  */
 
 /**
+ * Hitcount
+ *
+ * @param {object} params
+ * @param {string} params.q the query
+ */
+export function hitcount({ q }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($q: String!) {
+        search(q: $q, limit: 10, offset: 0) {
+          hitcount
+        }
+        monitor(name: "bibdknext_search_hitcount")
+      }`,
+    variables: { q },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Fast search
  *
  * @param {object} params
