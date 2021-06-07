@@ -16,6 +16,7 @@
 import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/api";
 import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
+import Header from "@/components/help/texts/header";
 
 import Page from "@/components/help/texts/page";
 
@@ -28,6 +29,7 @@ export default function HelptextPage() {
 
   return (
     <React.Fragment>
+      <Header helpTextId={helpTextId} />
       <Page helpTextId={helpTextId} />
     </React.Fragment>
   );

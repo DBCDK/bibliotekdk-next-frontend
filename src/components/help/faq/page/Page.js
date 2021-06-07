@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Faq from "@/components/help/faq/published";
 import HelpTextMenu from "@/components/help/menu";
 import Breadcrumbs from "@/components/base/breadcrumbs";
-import translate from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
 
@@ -18,9 +18,16 @@ import styles from "./Page.module.css";
  *
  */
 export default function Page() {
-  const pageTitle = "Ofte stillede spørgsmål | alfa.bibliotek.dk";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+  const context = { context: "metadata" };
+
+  const pageTitle = Translate({
+    ...context,
+    label: "help-title",
+  });
+  const pageDescription = Translate({
+    ...context,
+    label: "help-description",
+  });
 
   return (
     <React.Fragment>
@@ -46,7 +53,7 @@ export default function Page() {
               <HelpTextMenu className={styles.menu} />
               <Breadcrumbs
                 path={[
-                  translate({ context: "help", label: "help-breadcrumb" }),
+                  Translate({ context: "help", label: "help-breadcrumb" }),
                 ]}
                 href={{ pathname: "/hjaelp" }}
                 seperatorTail={true}

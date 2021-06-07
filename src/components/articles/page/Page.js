@@ -17,10 +17,16 @@ import styles from "./Page.module.css";
  */
 export default function Page() {
   const router = useRouter();
+  const context = { context: "metadata" };
 
-  const pageTitle = "Alle Artikler | alfa.bibliotek.dk";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+  const pageTitle = Translate({
+    ...context,
+    label: "all-articles-title",
+  });
+  const pageDescription = Translate({
+    ...context,
+    label: "frontpage-description",
+  });
 
   return (
     <React.Fragment>

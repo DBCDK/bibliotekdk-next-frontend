@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Searchbar from "@/components/search/searchbar";
+import Translate from "@/components/base/translate";
+import { useData } from "@/lib/api/api";
+import { hitcount } from "@/lib/api/search.fragments";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -19,11 +22,27 @@ import Header from "@/components/header/Header";
  */
 function Find() {
   const router = useRouter();
-  const [numPages, setNumPages] = useState(0);
   const { q, page = 1, view } = router.query;
-  const pageTitle = "Søg, find og lån fra alle Danmarks biblioteker";
-  const pageDescription =
-    "bibliotek.dk er din indgang til bibliotekernes fysiske og digitale materialer.";
+
+  //
+  // use the useData hook to fetch data
+  const hitcountResponse = useData(hitcount({ q }));
+
+  const hits = hitcountResponse?.data?.search?.hitcount || 0;
+
+  const context = { context: "metadata" };
+
+  const pageTitle = Translate({
+    ...context,
+    label: "find-title",
+    vars: [q],
+  });
+
+  const pageDescription = Translate({
+    ...context,
+    label: "find-description",
+    vars: [`${hits}`, q],
+  });
 
   /**
    * Updates URL query params
@@ -78,7 +97,6 @@ function Find() {
           q={q}
           page={parseInt(page, 10)}
           viewSelected={view}
-          updateNumPages={(pages) => setNumPages(pages)}
           onViewSelect={(view) => updateQueryParams({ view })}
           onPageChange={(page, scroll) =>
             updateQueryParams({ page }, { scroll })
@@ -98,7 +116,7 @@ function Find() {
   );
 }
 Find.getInitialProps = (ctx) => {
-  return fetchAll([], ctx);
+  return fetchAll([hitcount], ctx);
 };
 
 export default Find;
