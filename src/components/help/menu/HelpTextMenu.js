@@ -22,23 +22,11 @@ import { getLangcode } from "@/components/base/translate/Translate";
  * @constructor
  */
 function HelpTextGroups({ menus, groups, helpTextId, className }) {
-  // use state to handle clickevent on group
-  const [showGroups, setShowGroups] = useState(groups);
-  const rowClicked = (index) => {
-    let groupStates = [...groups];
+  const [expandedGroup, setExpandedGroup] = useState();
 
-    groupStates.forEach((group, idx) => {
-      if (idx !== index) {
-        group.open = false;
-      }
-    });
-    // toggle state of clicked group
-    groupStates[index].open = !groupStates[index].open;
-    // set new state(s)
-    setShowGroups(groupStates);
-  };
+  return groups.map((group, index) => {
+    const expanded = index === expandedGroup;
 
-  return showGroups.map((group, index) => {
     // find the active link if this is a direct entry
     let activelink = false;
 
@@ -47,17 +35,21 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
     );
 
     return (
-      <div key={`group-${index}`} className={className} data-cy="help-menu">
+      <div
+        key={`group-${group.name}-${index}`}
+        className={className}
+        data-cy="help-menu"
+      >
         <div
           tabIndex={0}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              rowClicked(index);
+              setExpandedGroup(index === expandedGroup ? null : index);
             }
           }}
           className={styles.helpgroup}
           onClick={() => {
-            rowClicked(index);
+            setExpandedGroup(index === expandedGroup ? null : index);
           }}
         >
           <Text type="text2" lines={30} key={`helpmenu-${index}`}>
@@ -66,7 +58,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
                 size={{ w: 1, h: 1 }}
                 src="arrowrightblue.svg"
                 className={classNames(
-                  group.open || activelink ? styles.helpiconrotate : ""
+                  expanded || activelink ? styles.helpiconrotate : ""
                 )}
               />
             </span>
@@ -75,9 +67,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
         </div>
         <div
           key={`dev-helpmenu-${index}`}
-          className={classNames(
-            group.open || activelink ? "" : styles.helphide
-          )}
+          className={classNames(expanded || activelink ? "" : styles.helphide)}
         >
           <HelptTextMenuLinks
             menuItems={menus}
@@ -101,7 +91,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
 export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const menus = helpTextParseMenu(helpTexts);
   const groups = Object.keys(menus).map((groupname, index) => {
-    return { name: groupname, open: false };
+    return { name: groupname };
   });
 
   return (
