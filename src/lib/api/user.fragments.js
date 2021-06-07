@@ -12,12 +12,24 @@ import { lang } from "@/components/base/translate";
 export function basic() {
   return {
     // delay: 1000, // for debugging
-    query: `query ($language: LanguageCode! ) {
+    query: `query {
       user {
         name
         mail
         address
         postalCode
+      }
+     }`,
+    variables: {},
+    slowThreshold: 3000,
+  };
+}
+
+export function orderPolicy({ pid }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($language: LanguageCode!, $pid: String! ) {
+      user {
         agency (language: $language){
           name
           branches {
@@ -28,11 +40,16 @@ export function basic() {
             postalCode
             branchId
             openingHours
+            orderPolicy(pid: $pid) {
+              orderPossible
+              orderPossibleReason
+              lookUpUrl
+            }
           }
         }
       }
      }`,
-    variables: { language: lang },
+    variables: { language: lang, pid },
     slowThreshold: 3000,
   };
 }

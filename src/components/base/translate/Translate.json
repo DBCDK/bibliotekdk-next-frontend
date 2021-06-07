@@ -721,6 +721,10 @@
       }
     },
     "order": {
+      "check-policy-fail": {
+        "da": "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet.",
+        "en": "The material cannot be ordered at this pickup location. Choose another."
+      },
       "no-specific-edition": {
         "da": "Udgave underordnet",
         "en": "Unspecified edition"
@@ -745,6 +749,7 @@
         "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
         "en": "You will be notified by your library when the material is ready for collection"
       },
+      
       "order-success": {
         "da": "Bestillingen blev gennemført",
         "en": "The order was completed"
