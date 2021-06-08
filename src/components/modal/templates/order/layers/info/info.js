@@ -147,12 +147,13 @@ export default function Info({
             lines={0}
           >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
         </div>
-        {(!pickupBranch?.pickupAllowed ||
-          !pickupBranch?.orderPolicy?.orderPossible) && (
-          <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
-            <Text type="text3">{Translate(orderNotPossibleMessage)}</Text>
-          </div>
-        )}
+        {pickupBranch &&
+          (!pickupBranch?.pickupAllowed ||
+            !pickupBranch?.orderPolicy?.orderPossible) && (
+            <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
+              <Text type="text3">{Translate(orderNotPossibleMessage)}</Text>
+            </div>
+          )}
       </div>
       <div className={styles.user}>
         <Title type="title5">
