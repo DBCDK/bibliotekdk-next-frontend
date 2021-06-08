@@ -14,7 +14,7 @@ export function Feedback() {
     <div style={{ height: "800px" }}>
       <StoryTitle>Feedback</StoryTitle>
       <StoryDescription>feedback</StoryDescription>
-      <Feedb cookietime={5000} sessioneTime={2000} />
+      <Feedb cookietime={5000} sessioneTime={3000} />
     </div>
   );
 }

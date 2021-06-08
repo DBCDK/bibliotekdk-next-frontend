@@ -43,14 +43,19 @@ export default function ResultRow({ data, onClick }) {
       onClick={onClick}
     >
       <Row className={styles.row}>
+        {/* BETA-1 - removed this column
         <Col className={styles.leftcol} xs={3}>
+
+
           <Breadcrumbs
             skeleton={!work.path}
             crumbs={work.path ? null : 4}
             path={work.path || []}
             link={false}
           />
+
         </Col>
+        */}
         <Col>
           <Title
             type="title5"
@@ -107,7 +112,8 @@ export default function ResultRow({ data, onClick }) {
               })}
           </div>
         </Col>
-        <Col xs={3}>
+        {/* BETA-1 changed column width 3->4 */}
+        <Col xs={4}>
           <Cover
             className={styles.cover}
             src={work.cover && work.cover.detail}

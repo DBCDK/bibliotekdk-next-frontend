@@ -75,12 +75,15 @@ export function Overview({
       <Container fluid>
         <Row className={`${styles.overview}`}>
           <Col xs={12} lg={3} className={styles.breadcrumbs}>
+            {/*
+            BETA-1 - removed breadcrumbs
             <Breadcrumbs
               path={path}
               skeleton={skeleton}
               crumbs={4}
               disabled={breadcrumbsdisabled}
             />
+            */}
           </Col>
 
           <Col
