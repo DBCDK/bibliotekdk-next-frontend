@@ -725,6 +725,10 @@
         "da": "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet.",
         "en": "The material cannot be ordered at this pickup location. Choose another."
       },
+      "check-policy-fail-2": {
+        "da": "Materialet kan kun bestilles til udvalgte afhentningssteder. Vælg fra listen eller hør mere på dit lokale bibliotek.",
+        "en": "The material can only be ordered at selected pickup locations. Choose from the list or contact your local library."
+      },
       "no-specific-edition": {
         "da": "Udgave underordnet",
         "en": "Unspecified edition"

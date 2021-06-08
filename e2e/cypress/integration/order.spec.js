@@ -100,7 +100,9 @@ describe("Order", () => {
     // Change pickup branch
     cy.get("[data-cy=text-vælg-afhentning]").click();
     cy.get("[data-cy=text-dbc-bibilioteksekspressen]").click();
-    cy.get('[data-cy="text-vsn-b.adresse"]').should("be.visible");
+    cy.get('[data-cy="text-vsn-b.adresse"]')
+      .scrollIntoView()
+      .should("be.visible");
     cy.get("[data-cy=text-dbc-bibilioteksekspressen]").should("be.visible");
 
     // Type email
@@ -138,5 +140,24 @@ describe("Order", () => {
       `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?order=870970-basis%3A51701763&modal=order`
     );
     cy.url().should("not.include", "modal=order");
+  });
+
+  it("should show message when checkorder policy fails", () => {
+    cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
+    cy.contains(
+      "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
+    );
+    cy.get("[data-cy=text-vælg-afhentning]").click();
+    cy.contains("Materialet kan kun bestilles til udvalgte afhentningssteder.");
+    cy.get("[data-cy=radio-button-0]").should(
+      "have.attr",
+      "aria-disabled",
+      "true"
+    );
+    cy.get("[data-cy=radio-button-1]").should(
+      "have.attr",
+      "aria-disabled",
+      "false"
+    );
   });
 });

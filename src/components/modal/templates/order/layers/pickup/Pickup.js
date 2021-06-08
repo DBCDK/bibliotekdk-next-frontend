@@ -5,11 +5,13 @@ import Link from "@/components/base/link";
 import Radio from "@/components/base/radio";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
+import Translate from "@/components/base/translate";
 
 import Arrow from "@/components/base/animation/arrow";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
+import { useMemo } from "react";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -33,6 +35,14 @@ export default function Pickup({
   if (!agency) {
     return null;
   }
+
+  const hasFailedPolicyCheck = useMemo(
+    () =>
+      !!agency.branches.find(
+        (branch) => branch?.orderPolicy?.orderPossible === false
+      ),
+    [agency]
+  );
 
   // Observe when bottom of list i visible
   const [ref, inView] = useInView({
@@ -65,13 +75,18 @@ export default function Pickup({
             className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
           />
         </Link>
+        {hasFailedPolicyCheck && (
+          <div className={styles.message}>
+            <Text type="text3">
+              {Translate({ context: "order", label: "check-policy-fail-2" })}
+            </Text>
+          </div>
+        )}
       </div>
-
       <div className={`${styles.scrollArea} ${shadowClass}`}>
         <Title type="title4" tag="h2">
           {agency.name || "Afhentningssted"}
         </Title>
-
         <Radio.Group enabled={isVisible}>
           {agency.branches.map((branch, idx) => {
             return (
@@ -83,6 +98,7 @@ export default function Pickup({
                 className={[styles.radiobutton, animations["on-hover"]].join(
                   " "
                 )}
+                disabled={!branch?.orderPolicy?.orderPossible}
               >
                 <Text
                   type="text2"

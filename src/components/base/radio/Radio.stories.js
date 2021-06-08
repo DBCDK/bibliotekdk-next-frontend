@@ -96,3 +96,27 @@ export function DisabledRadioGroup() {
     </div>
   );
 }
+
+export function DisabledPartialButtons() {
+  const [selected, setSelected] = useState(rows[1]);
+  return (
+    <div>
+      <StoryTitle>Radio Button Group</StoryTitle>
+      <StoryDescription>The second radio button is disabled.</StoryDescription>
+      <Radio.Group>
+        {rows.map((row, index) => (
+          <Radio.Button
+            key={row.title}
+            selected={selected.title === row.title}
+            onSelect={() => setSelected(row)}
+            label={row.title}
+            disabled={index === 1}
+          >
+            <b>{row.title}</b>
+            <p>{row.description}</p>
+          </Radio.Button>
+        ))}
+      </Radio.Group>
+    </div>
+  );
+}
