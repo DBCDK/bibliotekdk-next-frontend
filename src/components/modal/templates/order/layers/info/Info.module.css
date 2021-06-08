@@ -49,6 +49,10 @@
   justify-content: space-between;
 }
 
+.library > p {
+  padding-right: var(--pt2);
+}
+
 .library .link {
   display: flex;
   align-items: center;
