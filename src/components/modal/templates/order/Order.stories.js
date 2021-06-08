@@ -162,6 +162,11 @@ export function ManyPickupPoints() {
     postalAddress: `Filialvej ${i + 1}`,
     postalCode: "1234",
     city: "Filialby",
+    orderPolicy: {
+      orderPossible: true,
+      orderPossibleReason: "OWNED_ACCEPTED",
+      lookUpUrl: "https://some-lookup-url",
+    },
   }));
 
   const modifiedUser = {
