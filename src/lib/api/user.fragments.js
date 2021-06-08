@@ -19,6 +19,7 @@ export function basic() {
         address
         postalCode
       }
+      monitor(name: "bibdknext_user")
      }`,
     variables: {},
     slowThreshold: 3000,
@@ -48,6 +49,7 @@ export function orderPolicy({ pid }) {
           }
         }
       }
+      monitor(name: "bibdknext_orderpolicy")
      }`,
     variables: { language: lang, pid },
     slowThreshold: 3000,
