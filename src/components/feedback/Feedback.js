@@ -20,7 +20,6 @@ export default function Feedback({
   sessioneTime = 120000,
 }) {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const [showfeedback, setShowfeedback] = useState(false);
 
   const cookie = Cookies.get("removefeedback");
 
@@ -29,7 +28,7 @@ export default function Feedback({
       if (!cookie) {
         Cookies.set("removefeedback", `${Date.now()}`);
       }
-      setShowfeedback(false);
+      setFeedbackOpen(!feedbackOpen);
     }
     // page is loaded - check time
     if (type === "load") {
@@ -37,58 +36,31 @@ export default function Feedback({
         // check if cookie was set more than ({cookietime}) ago
         if (Date.now() - cookie > cookietime) {
           Cookies.remove("removefeedback");
-          setShowfeedback(true);
-        } else {
-          setShowfeedback(false);
-          setFeedbackOpen(false);
         }
       } else {
-        setShowfeedback(true);
-      }
-    }
-  };
-
-  const handleSessionTimer = () => {
-    const timer = sessionStorage.getItem("feedbackTimer");
-    if (!timer) {
-      sessionStorage.setItem("feedbackTimer", `${Date.now()}`);
-    } else {
-      const linkclicked = sessionStorage.getItem("linkclicked");
-      // user already clicked the link - hopefully he/she also answered
-      // the question - hide feedback for {cookietime}
-      if (linkclicked) {
-        sessionStorage.removeItem("linkclicked");
-        handleCookie("click");
-      }
-      if (Date.now() - timer > sessioneTime) {
-        setFeedbackOpen(true);
-        sessionStorage.removeItem("feedbackTimer");
+        setTimeout(
+          () => {
+            setFeedbackOpen(!feedbackOpen);
+          },
+          sessioneTime,
+          "feedbacktimer"
+        );
       }
     }
   };
 
   useEffect(() => {
     handleCookie("load");
-    handleSessionTimer();
-  });
+  }, []);
 
   return (
-    <div
-      data-cy="feedback-wrapper"
-      className={classNames(
-        styles.feedbackwrap,
-        !showfeedback ? styles.feedbackhidden : ""
-      )}
-    >
+    <div data-cy="feedback-wrapper" className={styles.feedbackwrap}>
       <div
         className={classNames(
           feedbackOpen ? styles.feedbackopen : styles.feedbackclosed
         )}
       >
-        <div
-          className={styles.feedbackiconandtext}
-          data-cy="feedback-link-text"
-        >
+        <div>
           <Icon
             data-cy="feedback-cookie-close"
             size={{ w: 4, h: 4 }}
@@ -97,15 +69,14 @@ export default function Feedback({
             className={styles.feedbackcloseicon}
             onClick={() => handleCookie("click")}
           />
-
+        </div>
+        <div className={styles.feedbacklink} data-cy="feedback-link-text">
           <Text type="text3" tag="span" className={styles.feedbacktext}>
             {Translate({
               context: "feedback",
               label: "feed_back_text",
             })}
           </Text>
-        </div>
-        <div className={styles.feedbacklink}>
           <Link
             href="https://forms.gle/1zgfCoQDmEJ9WQhj9"
             target="_blank"
@@ -125,8 +96,7 @@ export default function Feedback({
         data-cy="feedback-toggler"
         className={styles.blue}
         onClick={() => {
-          sessionStorage.removeItem("feedbackTimer");
-          setFeedbackOpen(!feedbackOpen);
+          handleCookie("click");
         }}
         data-cy="feedback-toggle"
       >
