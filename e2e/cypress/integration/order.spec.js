@@ -147,6 +147,7 @@ describe("Order", () => {
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
+    cy.get("[data-cy=button-godkend]").should("be.disabled");
     cy.get("[data-cy=text-vælg-afhentning]").click();
     cy.contains("Materialet kan kun bestilles til udvalgte afhentningssteder.");
     cy.get("[data-cy=radio-button-0]").should(
@@ -159,5 +160,7 @@ describe("Order", () => {
       "aria-disabled",
       "false"
     );
+    cy.get("[data-cy=radio-button-1]").click();
+    cy.get("[data-cy=button-godkend]").should("not.be.disabled");
   });
 });
