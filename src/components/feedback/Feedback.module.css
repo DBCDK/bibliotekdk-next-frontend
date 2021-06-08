@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     height: 115px;
-    max-width: 250px;
+    max-width: 225px;
     z-index: 101;
 
 }
@@ -19,9 +19,8 @@
 
 .feedbacklink {
     display: block;
-    /*position: relative;
-    top: -10px;*/
     text-align: center;
+    padding: 0 5px 0 5px;
 }
 
 .blue {
