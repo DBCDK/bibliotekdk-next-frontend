@@ -298,6 +298,9 @@ export default function Wrap(props) {
   const { data: userData, error: userDataError } = useData(
     userFragments.basic()
   );
+  const { data: orderPolicy, error: orderPolicyError } = useData(
+    pid && userFragments.orderPolicy({ pid })
+  );
 
   const orderMutation = useMutate();
 
@@ -320,11 +323,12 @@ export default function Wrap(props) {
   }
 
   const mergedWork = merge({}, covers.data, data);
+  const mergedUser = merge({}, userData, orderPolicy);
 
   return (
     <Order
       work={mergedWork?.work}
-      user={userData?.user || {}}
+      user={mergedUser?.user || {}}
       pid={pid}
       order={orderMutation}
       query={Router.query}

@@ -53,3 +53,16 @@
 .label {
   display: none
 }
+
+.disabledrow {
+  pointer-events: none;
+}
+.disabledrow {
+  color: var(--gray) !important;
+}
+.disabledrow .dot::after {
+  border-color: var(--gray) !important;
+}
+.disabledrow .dot::before {
+  background: var(--gray) !important;
+}

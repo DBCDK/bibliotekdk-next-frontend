@@ -24,6 +24,8 @@ export default function Info({
 }) {
   const context = { context: "order" };
 
+  const isLoadingBranches = !user?.agency;
+
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
@@ -47,6 +49,11 @@ export default function Info({
     context: "order",
     label: "info-email-message",
     vars: [agency?.name || libraryFallback],
+  };
+
+  const orderNotPossibleMessage = {
+    context: "order",
+    label: "check-policy-fail",
   };
 
   const messageFromLibrary = {
@@ -92,7 +99,6 @@ export default function Info({
           <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
         </div>
       </div>
-
       <div className={styles.pickup}>
         <div className={styles.title}>
           <Title type="title5">
@@ -100,7 +106,7 @@ export default function Info({
           </Title>
         </div>
         <div className={styles.library}>
-          <Text type="text1" skeleton={isLoading} lines={1}>
+          <Text type="text1" skeleton={isLoadingBranches} lines={1}>
             {pickupBranch?.name}
           </Text>
           <div
@@ -114,9 +120,9 @@ export default function Info({
           >
             <Link
               className={`${animations["on-focus"]}`}
-              disabled={isLoading}
+              disabled={isLoadingBranches}
               onClick={(e) => e.preventDefault()}
-              border={{ bottom: { keepVisible: !isLoading } }}
+              border={{ bottom: { keepVisible: !isLoadingBranches } }}
               tabIndex={isVisible ? "0" : "-1"}
             >
               <Text type="text3" className={styles.fullLink}>
@@ -132,17 +138,21 @@ export default function Info({
           </div>
         </div>
         <div className={styles.address}>
-          <Text type="text3" skeleton={isLoading} lines={2}>
+          <Text type="text3" skeleton={isLoadingBranches} lines={2}>
             {pickupBranch?.postalAddress}
           </Text>
           <Text
             type="text3"
-            skeleton={isLoading}
+            skeleton={isLoadingBranches}
             lines={0}
           >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
         </div>
+        {pickupBranch?.orderPolicy?.orderPossible === false && (
+          <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
+            <Text type="text3">{Translate(orderNotPossibleMessage)}</Text>
+          </div>
+        )}
       </div>
-
       <div className={styles.user}>
         <Title type="title5">
           {Translate({ ...context, label: "ordered-by" })}

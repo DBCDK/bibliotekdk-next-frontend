@@ -32,10 +32,18 @@
   box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
 }
 
+.message {
+  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+}
+
 @media (min-width: 576px) {
   .scrollArea {
     height: calc(100% - 42px);
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+
+  .message {
+    padding: var(--pt2) var(--pt6) 0 var(--pt6);
   }
 
   .link > .arrow {
