@@ -1,7 +1,7 @@
 .input {
   height: var(--pt7);
   width: 100%;
-  max-width: 450px;
+  max-width: 500px;
   border: 1px solid var(--gray);
   padding: 0 var(--pt2);
 
@@ -30,8 +30,8 @@
 
 .input:disabled,
 .input:read-only {
-  color: var(--gray);
-  -webkit-text-fill-color: var(--gray);
+  color: var(--mine-shaft);
+  -webkit-text-fill-color: var(--mine-shaft);
 }
 
 .skeleton {

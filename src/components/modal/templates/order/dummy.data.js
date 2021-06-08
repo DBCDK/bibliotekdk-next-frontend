@@ -16,7 +16,7 @@ const work = {
 const user = {
   name: "Låner Lånersen",
   agency: {
-    name: "Hovedbiblioket",
+    name: "Biblioteksby Bibliotekerne",
     branches: [
       {
         branchId: "0",
@@ -30,34 +30,34 @@ const user = {
         name: "Filial 1",
         postalAddress: "Filialvej 1",
         postalCode: "1234",
-        city: "Filialby",
+        city: "Biblioteksby",
       },
       {
         branchId: "2",
         name: "Filial 2",
         postalAddress: "Filialvej 2",
         postalCode: "1234",
-        city: "Filialby",
+        city: "Biblioteksby",
       },
       {
         branchId: "3",
         name: "Filial 3",
         postalAddress: "Filialvej 3",
-        postalCode: "1234",
+        postalCode: "2345",
         city: "Filialby",
       },
       {
         branchId: "4",
         name: "Filial 4",
         postalAddress: "Filialvej 4",
-        postalCode: "1234",
+        postalCode: "2345",
         city: "Filialby",
       },
       {
         branchId: "5",
         name: "Filial 5",
         postalAddress: "Filialvej 5",
-        postalCode: "1234",
+        postalCode: "3456",
         city: "Filialby",
       },
     ],

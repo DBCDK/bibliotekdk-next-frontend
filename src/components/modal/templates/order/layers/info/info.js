@@ -46,7 +46,7 @@ export default function Info({
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [agency?.branches[0].name || libraryFallback],
+    vars: [agency?.name || libraryFallback],
   };
 
   const messageFromLibrary = {
