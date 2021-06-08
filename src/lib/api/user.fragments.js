@@ -46,8 +46,8 @@ export function orderPolicy({ pid }) {
               orderPossibleReason
               lookUpUrl
             }
+            pickupAllowed
           }
-          pickupAllowed
         }
       }
       monitor(name: "bibdknext_orderpolicy")
