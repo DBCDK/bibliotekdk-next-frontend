@@ -29,6 +29,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
       {
         branchId: "1",
@@ -41,6 +42,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
       {
         branchId: "2",
@@ -53,6 +55,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
       {
         branchId: "3",
@@ -65,6 +68,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
       {
         branchId: "4",
@@ -77,6 +81,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
       {
         branchId: "5",
@@ -89,6 +94,7 @@ const user = {
           orderPossibleReason: "OWNED_ACCEPTED",
           lookUpUrl: "https://some-lookup-url",
         },
+        pickupAllowed: true,
       },
     ],
   },

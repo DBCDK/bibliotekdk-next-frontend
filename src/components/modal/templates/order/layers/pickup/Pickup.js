@@ -36,13 +36,27 @@ export default function Pickup({
     return null;
   }
 
-  const hasFailedPolicyCheck = useMemo(
-    () =>
-      !!agency.branches.find(
-        (branch) => branch?.orderPolicy?.orderPossible === false
-      ),
-    [agency]
-  );
+  const disAllowedBranches =
+    useMemo(
+      () =>
+        agency?.branches?.filter(
+          (branch) =>
+            !branch?.pickupAllowed || !branch?.orderPolicy?.orderPossible
+        ),
+      [agency]
+    ) || [];
+
+  const allowedBranches =
+    useMemo(
+      () =>
+        agency?.branches?.filter(
+          (branch) =>
+            branch?.pickupAllowed && branch?.orderPolicy?.orderPossible
+        ),
+      [agency]
+    ) || [];
+
+  const hasFailedPolicyCheck = disAllowedBranches.length > 0;
 
   // Observe when bottom of list i visible
   const [ref, inView] = useInView({
@@ -84,36 +98,76 @@ export default function Pickup({
         )}
       </div>
       <div className={`${styles.scrollArea} ${shadowClass}`}>
-        <Title type="title4" tag="h2">
-          {agency.name || "Afhentningssted"}
-        </Title>
-        <Radio.Group enabled={isVisible}>
-          {agency.branches.map((branch, idx) => {
-            return (
-              <Radio.Button
-                key={`${branch.branchId}-${idx}`}
-                selected={selected.branchId === branch.branchId}
-                onSelect={() => onSelect(branch)}
-                label={branch.name}
-                className={[styles.radiobutton, animations["on-hover"]].join(
-                  " "
-                )}
-                disabled={!branch?.orderPolicy?.orderPossible}
-              >
-                <Text
-                  type="text2"
-                  className={[
-                    styles.library,
-                    animations["h-border-bottom"],
-                    animations["h-color-blue"],
-                  ].join(" ")}
-                >
-                  {branch.name}
-                </Text>
-              </Radio.Button>
-            );
-          })}
-        </Radio.Group>
+        {allowedBranches.length > 0 && (
+          <>
+            <Title type="title4" tag="h2">
+              {agency.name || "Afhentningssted"}
+            </Title>
+            <Radio.Group enabled={isVisible} data-cy="allowed-branches">
+              {allowedBranches.map((branch, idx) => {
+                return (
+                  <Radio.Button
+                    key={`${branch.branchId}-${idx}`}
+                    selected={selected.branchId === branch.branchId}
+                    onSelect={() => onSelect(branch)}
+                    label={branch.name}
+                    className={[
+                      styles.radiobutton,
+                      animations["on-hover"],
+                    ].join(" ")}
+                    disabled={!branch?.orderPolicy?.orderPossible}
+                  >
+                    <Text
+                      type="text2"
+                      className={[
+                        styles.library,
+                        animations["h-border-bottom"],
+                        animations["h-color-blue"],
+                      ].join(" ")}
+                    >
+                      {branch.name}
+                    </Text>
+                  </Radio.Button>
+                );
+              })}
+            </Radio.Group>
+          </>
+        )}
+        {disAllowedBranches.length > 0 && (
+          <>
+            <Title type="title4" tag="h2" className={styles.disallowedTitle}>
+              {Translate({ context: "order", label: "pickup-not-allowed" })}
+            </Title>
+            <Radio.Group enabled={isVisible} data-cy="disallowed-branches">
+              {disAllowedBranches.map((branch, idx) => {
+                return (
+                  <Radio.Button
+                    key={`${branch.branchId}-${idx}`}
+                    selected={selected.branchId === branch.branchId}
+                    onSelect={() => onSelect(branch)}
+                    label={branch.name}
+                    className={[
+                      styles.radiobutton,
+                      animations["on-hover"],
+                    ].join(" ")}
+                    disabled={!branch?.orderPolicy?.orderPossible}
+                  >
+                    <Text
+                      type="text2"
+                      className={[
+                        styles.library,
+                        animations["h-border-bottom"],
+                        animations["h-color-blue"],
+                      ].join(" ")}
+                    >
+                      {branch.name}
+                    </Text>
+                  </Radio.Button>
+                );
+              })}
+            </Radio.Group>
+          </>
+        )}
         <div ref={ref} />
       </div>
     </div>

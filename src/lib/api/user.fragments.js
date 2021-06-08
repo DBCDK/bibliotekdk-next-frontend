@@ -46,6 +46,7 @@ export function orderPolicy({ pid }) {
               orderPossibleReason
               lookUpUrl
             }
+            pickupAllowed
           }
         }
       }

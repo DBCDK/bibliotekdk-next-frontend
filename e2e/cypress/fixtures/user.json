@@ -19,7 +19,8 @@
               "orderPossible": true,
               "orderPossibleReason": "OWNED_ACCEPTED",
               "lookUpUrl": "https://some-lookup-url"
-            }
+            },
+            "pickupAllowed": true
           },
           {
             "agencyId": "790900",
@@ -33,7 +34,8 @@
               "orderPossible": true,
               "orderPossibleReason": "OWNED_ACCEPTED",
               "lookUpUrl": "https://some-lookup-url"
-            }
+            },
+            "pickupAllowed": true
           },
           {
             "agencyId": "790900",
@@ -47,7 +49,8 @@
               "orderPossible": true,
               "orderPossibleReason": "OWNED_ACCEPTED",
               "lookUpUrl": "https://some-lookup-url"
-            }
+            },
+            "pickupAllowed": true
           }
         ]
       }

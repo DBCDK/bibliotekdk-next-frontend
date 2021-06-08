@@ -76,7 +76,7 @@ Button.propTypes = {
   _ref: PropTypes.func,
 };
 
-function Group({ children, enabled = true }) {
+function Group({ children, enabled = true, ...props }) {
   const childrenRef = useRef([]);
 
   useEffect(() => {
@@ -99,6 +99,7 @@ function Group({ children, enabled = true }) {
 
   return (
     <div
+      data-cy={props["data-cy"]}
       role="radiogroup"
       aria-labelledby="radio-label"
       className={`${styles.group} ${
