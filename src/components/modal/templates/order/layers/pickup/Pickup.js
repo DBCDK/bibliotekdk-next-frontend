@@ -115,7 +115,6 @@ export default function Pickup({
                       styles.radiobutton,
                       animations["on-hover"],
                     ].join(" ")}
-                    disabled={!branch?.orderPolicy?.orderPossible}
                   >
                     <Text
                       type="text2"
@@ -138,7 +137,7 @@ export default function Pickup({
             <Title type="title4" tag="h2" className={styles.disallowedTitle}>
               {Translate({ context: "order", label: "pickup-not-allowed" })}
             </Title>
-            <Radio.Group enabled={isVisible} data-cy="disallowed-branches">
+            <Radio.Group enabled={false} data-cy="disallowed-branches">
               {disAllowedBranches.map((branch, idx) => {
                 return (
                   <Radio.Button
@@ -150,7 +149,6 @@ export default function Pickup({
                       styles.radiobutton,
                       animations["on-hover"],
                     ].join(" ")}
-                    disabled={!branch?.orderPolicy?.orderPossible}
                   >
                     <Text
                       type="text2"
