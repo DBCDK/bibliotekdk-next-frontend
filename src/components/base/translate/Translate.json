@@ -751,6 +751,10 @@
         "da": "Vælg afhentning",
         "en": "Select pickup"
       },
+      "pickup-not-allowed": {
+        "da": "Afhentning ikke muligt på",
+        "en": "Pickup not allowed at"
+      },
       "ordered-by": {
         "da": "Bestilles af",
         "en": "Ordered by"

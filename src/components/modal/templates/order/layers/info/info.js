@@ -147,7 +147,8 @@ export default function Info({
             lines={0}
           >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
         </div>
-        {pickupBranch?.orderPolicy?.orderPossible === false && (
+        {(!pickupBranch?.pickupAllowed ||
+          !pickupBranch?.orderPolicy?.orderPossible) && (
           <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
             <Text type="text3">{Translate(orderNotPossibleMessage)}</Text>
           </div>

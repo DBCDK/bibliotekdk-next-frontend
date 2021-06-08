@@ -36,6 +36,10 @@
   padding: var(--pt2) var(--pt2) 0 var(--pt2);
 }
 
+.disallowedTitle {
+  padding-top: var(--pt4);
+}
+
 @media (min-width: 576px) {
   .scrollArea {
     height: calc(100% - 42px);

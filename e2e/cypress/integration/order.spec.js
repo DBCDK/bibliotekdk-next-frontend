@@ -142,7 +142,7 @@ describe("Order", () => {
     cy.url().should("not.include", "modal=order");
   });
 
-  it("should show message when checkorder policy fails", () => {
+  it("should handle failed checkorder and pickupAllowed=false", () => {
     cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
@@ -150,17 +150,23 @@ describe("Order", () => {
     cy.get("[data-cy=button-godkend]").should("be.disabled");
     cy.get("[data-cy=text-vælg-afhentning]").click();
     cy.contains("Materialet kan kun bestilles til udvalgte afhentningssteder.");
-    cy.get("[data-cy=radio-button-0]").should(
+    cy.contains("Afhentning ikke muligt på");
+    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-0]").should(
       "have.attr",
       "aria-disabled",
       "true"
     );
-    cy.get("[data-cy=radio-button-1]").should(
+    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-1]").should(
+      "have.attr",
+      "aria-disabled",
+      "true"
+    );
+    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").should(
       "have.attr",
       "aria-disabled",
       "false"
     );
-    cy.get("[data-cy=radio-button-1]").click();
+    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").click();
     cy.get("[data-cy=button-godkend]").should("not.be.disabled");
   });
 });
