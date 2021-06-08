@@ -73,6 +73,7 @@ function Action({
         </div>
 
         <Button
+          disabled={data?.pickupBranch?.orderPolicy?.orderPossible !== true}
           tabIndex={isVisible ? "0" : "-1"}
           skeleton={isLoading}
           onClick={() => {
