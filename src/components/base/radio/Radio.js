@@ -37,8 +37,8 @@ function Button({
       ref={_ref}
       role="radio"
       aria-checked={selected}
-      aria-disabled={disabled}
-      disabled={disabled}
+      aria-disabled={!!disabled}
+      disabled={!!disabled}
       onClick={() => {
         if (!disabled) {
           onSelect();
