@@ -108,7 +108,7 @@ export default function Pickup({
                 return (
                   <Radio.Button
                     key={`${branch.branchId}-${idx}`}
-                    selected={selected.branchId === branch.branchId}
+                    selected={selected?.branchId === branch.branchId}
                     onSelect={() => onSelect(branch)}
                     label={branch.name}
                     className={[
@@ -142,7 +142,7 @@ export default function Pickup({
                 return (
                   <Radio.Button
                     key={`${branch.branchId}-${idx}`}
-                    selected={selected.branchId === branch.branchId}
+                    selected={selected?.branchId === branch.branchId}
                     onSelect={() => onSelect(branch)}
                     label={branch.name}
                     className={[

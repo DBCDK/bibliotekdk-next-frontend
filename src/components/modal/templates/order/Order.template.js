@@ -67,7 +67,11 @@ export function Order({
   // Selected pickup branch
   // If none selected, use first branch in the list
   let [pickupBranch, setPickupBranch] = useState();
-  pickupBranch = pickupBranch ? pickupBranch : user?.agency?.branches[0];
+  pickupBranch = pickupBranch
+    ? user?.agency?.branches.find(
+        (branch) => pickupBranch.branchId === branch.branchId
+      )
+    : user?.agency?.branches[0];
 
   // Email state
   const [mail, setMail] = useState(null);
