@@ -33,7 +33,7 @@
 }
 
 .message {
-  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  padding: 0 0 var(--pt2) 0;
 }
 
 .disallowedTitle {

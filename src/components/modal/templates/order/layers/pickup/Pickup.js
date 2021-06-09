@@ -89,6 +89,8 @@ export default function Pickup({
             className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
           />
         </Link>
+      </div>
+      <div className={`${styles.scrollArea} ${shadowClass}`}>
         {hasFailedPolicyCheck && (
           <div className={styles.message}>
             <Text type="text3">
@@ -96,8 +98,6 @@ export default function Pickup({
             </Text>
           </div>
         )}
-      </div>
-      <div className={`${styles.scrollArea} ${shadowClass}`}>
         {allowedBranches.length > 0 && (
           <>
             <Title type="title4" tag="h2">
