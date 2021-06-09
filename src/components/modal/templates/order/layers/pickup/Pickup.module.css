@@ -46,10 +46,6 @@
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
   }
 
-  .message {
-    padding: var(--pt2) var(--pt6) 0 var(--pt6);
-  }
-
   .link > .arrow {
     margin-left: var(--pt6);
   }
