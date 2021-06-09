@@ -6,31 +6,49 @@
 }
 
 .media {
-  padding: var(--pt2) 0 0 0;
+  padding: 0 0 var(--pt2) 0;
 }
 
-.author {
-  padding: var(--pt2) var(--pt1) 0 0;
+.row {
+  width: 100%;
+  display: flex;
 }
 
-.author p,
-.author h3 {
+.left {
+  min-width: 24px;
+  padding: 2px 0 0 0;
+  flex-shrink: 2;
+}
+
+.right {
+  padding: 0;
+}
+
+.right p,
+.right h3 {
   display: inline;
 }
 
-.author p {
+.right p {
   white-space: nowrap;
+}
+
+.date {
+  padding: 0;
+}
+
+.rating {
+  padding: var(--pt2) 0 0 0;
 }
 
 .url {
   padding: var(--pt2) 0 0 0;
-  display: inline-flex;
   align-items: center;
-  /* margin-top: auto; */
 }
 
 .url a {
   margin: 0 0 0 var(--pt2);
+  vertical-align: bottom;
 }
 
 /* Skeleton */

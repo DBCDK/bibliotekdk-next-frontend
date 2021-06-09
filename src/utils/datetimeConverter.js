@@ -23,3 +23,23 @@ export function timestampToShortDate(timestamp) {
 
   return date + " " + month + ". " + year;
 }
+
+/**
+ * date
+ *
+ * @param {string} format: yyyy-mm-dd
+ *
+ * @returns {string} format: dd. mmm. yyyy
+ */
+export function dateToShortDate(date) {
+  const shortMonths = months({ label: "shortenedMonths" });
+
+  const array = date.split("-");
+
+  const y = array[0];
+  // remove leading zeros
+  const m = array[1].replace(/^0+/, "");
+  const d = array[2].replace(/^0+/, "");
+
+  return `${d}. ${shortMonths[m]}. ${y}`;
+}

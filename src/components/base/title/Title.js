@@ -42,7 +42,7 @@ export const Title = ({
         maxHeight: lines * parseInt(lineHeight, 10),
       });
     }
-  }, [lineHeight]);
+  }, [lineHeight, lines]);
 
   return (
     <Tag

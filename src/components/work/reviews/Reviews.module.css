@@ -7,6 +7,12 @@
 
 .SlideWrapper {
   height: auto;
+  padding-right: var(--pt3);
+  max-width: 75%;
+}
+
+.SlideWrapper:last-child {
+  max-width: 100%;
 }
 
 .button {
@@ -21,6 +27,8 @@
   position: absolute;
   z-index: 100;
   top: 40%;
+
+  display: none;
 }
 
 .button:hover {
@@ -62,9 +70,13 @@
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+  .SlideWrapper {
+    max-width: unset;
+  }
+
   /* Make buttons visible */
   .button {
-    /* display: inherit; */
+    display: inherit;
   }
 }

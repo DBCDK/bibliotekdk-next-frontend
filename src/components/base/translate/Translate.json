@@ -74,8 +74,8 @@
         "en": "All"
       },
       "by": {
-        "da": "Af",
-        "en": "By"
+        "da": "af",
+        "en": "by"
       },
       "from": {
         "da": "Fra",
@@ -204,6 +204,10 @@
       "your-library": {
         "da": "dit bibliotek",
         "en": "your library"
+      },
+      "lecturerStatement": {
+        "da": "Lektørudtalelse",
+        "en": "Lecturer statement"
       }
     },
     "articles": {
@@ -458,8 +462,8 @@
         "en": "Read review"
       },
       "materialReviewLinkText": {
-        "da": "Læs hele vurderingen",
-        "en": "Read the full assessment"
+        "da": "Læs hele bibliotekernes vurdering",
+        "en": "Read the entire library's assessment"
       },
       "materialTitle": {
         "da": "Bibliotekernes vurdering",

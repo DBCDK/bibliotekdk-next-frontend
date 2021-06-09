@@ -10,6 +10,8 @@ import Rating from "@/components/base/rating";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
+import { dateToShortDate } from "@/utils/datetimeConverter";
+
 import styles from "./InfomediaReview.module.css";
 
 /**
@@ -28,6 +30,67 @@ export function InfomediaReview({
 }) {
   // Translate Context
   const context = { context: "reviews" };
+
+  console.log("data", data);
+
+  return (
+    <Col xs={12} sm={6} md={4} className={`${styles.infomedia} ${className}`}>
+      <Row>
+        {data.media && (
+          <Col xs={12} className={styles.media}>
+            <Title type="title4" skeleton={skeleton}>
+              {data.media}
+            </Title>
+          </Col>
+        )}
+        <div className={styles.row}>
+          {data.author && (
+            <Col className={styles.left}>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({ context: "general", label: "by" })}
+              </Text>
+            </Col>
+          )}
+          <Col xs={12} className={styles.right}>
+            {data.author && <Text type="text2">{data.author}</Text>}
+            <Col className={styles.date}>
+              {!skeleton && (
+                <Text type="text3">d. {dateToShortDate(data.date)}</Text>
+              )}
+            </Col>
+            {data.rating && (
+              <Col xs={12} className={styles.rating}>
+                <Rating rating={data.rating} skeleton={skeleton} />
+              </Col>
+            )}
+          </Col>
+        </div>
+
+        <Col xs={12} className={styles.url}>
+          <Icon
+            src="chevron.svg"
+            size={{ w: 2, h: "auto" }}
+            skeleton={skeleton}
+          />
+          <Link
+            href={data.url}
+            target="_blank"
+            onFocus={onFocus}
+            disabled={!data.url}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          >
+            <Text type="text2" skeleton={skeleton}>
+              {Translate({
+                ...context,
+                label: "reviewLinkText",
+              })}
+            </Text>
+          </Link>
+        </Col>
+      </Row>
+    </Col>
+  );
+
   return (
     <Col
       xs={12}

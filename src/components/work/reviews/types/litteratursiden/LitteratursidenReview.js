@@ -1,12 +1,15 @@
 import PropTypes from "prop-types";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import { cyKey } from "@/utils/trim";
 
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Title from "@/components/base/title";
+import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
+
+import { dateToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./LitteratursidenReview.module.css";
 
@@ -31,36 +34,58 @@ export function LitteratursidenReview({
     <Col
       xs={12}
       sm={6}
-      xl={4}
+      md={4}
       className={`${styles.litteratursiden} ${className}`}
+      data-cy={cyKey({ prefix: "review", name: "litteratursiden" })}
     >
-      <Link
-        href={data.url}
-        onFocus={onFocus}
-        border={{ bottom: false }}
-        dataCy={cyKey({ name: "link", prefix: "litteratursiden" })}
-        target="_blank"
-      >
-        <div className={styles.media}>
+      <Row>
+        <Col xs={12} className={styles.media}>
           <Title type="title4" skeleton={skeleton}>
             {Translate({ ...context, label: "litteratursiden" })}
           </Title>
+        </Col>
+        <div className={styles.row}>
+          {data.author && (
+            <Col className={styles.left}>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({ context: "general", label: "by" })}
+              </Text>
+            </Col>
+          )}
+          {data.author && (
+            <Col xs={10} className={styles.author}>
+              {!skeleton && <Text type="text2">{data.author}</Text>}
+              <div className={styles.date}>
+                {!skeleton && (
+                  <Text type="text3">d. {dateToShortDate(data.date)}</Text>
+                )}
+              </div>
+            </Col>
+          )}
         </div>
 
-        {data.author && (
-          <div className={styles.author}>
-            <Text type="text3" skeleton={skeleton} lines={2}>
-              {`${Translate({ context: "general", label: "by" })} `}
+        <Col xs={12} className={styles.url}>
+          <Icon
+            src="chevron.svg"
+            size={{ w: 2, h: "auto" }}
+            skeleton={skeleton}
+          />
+          <Link
+            href={data.url}
+            target="_blank"
+            onFocus={onFocus}
+            disabled={!data.url}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          >
+            <Text type="text2" skeleton={skeleton}>
+              {Translate({
+                ...context,
+                label: "reviewLinkText",
+              })}
             </Text>
-            {!skeleton && (
-              <Title tag="h3" type="title4">
-                {data.author}
-              </Title>
-            )}
-            {!skeleton && <Text type="text3"> d. {data.date}</Text>}
-          </div>
-        )}
-      </Link>
+          </Link>
+        </Col>
+      </Row>
     </Col>
   );
 }
