@@ -34,6 +34,8 @@ const Index = () => {
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
+        <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
+        <link rel="alternate icon" href="favicon.ico" />
         <meta property="og:url" content="https://beta.bibliotek.dk/find" />
       </Head>
       <div>
