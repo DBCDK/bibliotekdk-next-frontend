@@ -1,6 +1,5 @@
 .materialReview {
   padding: 0;
-  align-self: center;
 
   /* Ensure link lines are visible */
   padding-bottom: var(--pt1);

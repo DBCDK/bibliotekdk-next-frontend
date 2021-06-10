@@ -31,10 +31,14 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("data", data);
-
   return (
-    <Col xs={12} sm={6} md={4} className={`${styles.infomedia} ${className}`}>
+    <Col
+      xs={12}
+      sm={6}
+      md={4}
+      className={`${styles.infomedia} ${className}`}
+      data-cy={cyKey({ prefix: "review", name: "infomedia" })}
+    >
       <Row>
         {data.media && (
           <Col xs={12} className={styles.media}>
@@ -88,62 +92,6 @@ export function InfomediaReview({
           </Link>
         </Col>
       </Row>
-    </Col>
-  );
-
-  return (
-    <Col
-      xs={12}
-      sm={6}
-      xl={4}
-      className={`${styles.infomedia} ${className}`}
-      data-cy={cyKey({ prefix: "review", name: "infomedia" })}
-    >
-      {data.rating && (
-        <div className={styles.rating}>
-          <Rating rating={data.rating} skeleton={skeleton} />
-        </div>
-      )}
-      {data.media && (
-        <div className={styles.media}>
-          <Title type="title4" skeleton={skeleton} lines={3}>
-            {data.media}
-          </Title>
-        </div>
-      )}
-      {!skeleton && data.author && (
-        <div className={styles.author}>
-          <Text type="text3">
-            {`${Translate({ context: "general", label: "by" })} `}
-          </Text>
-          <Title tag="h3" type="title4">
-            {data.author}
-          </Title>
-          <Text type="text3"> d. {data.date}</Text>
-        </div>
-      )}
-      {data.url && (
-        <div className={styles.url}>
-          <Icon
-            src="chevron.svg"
-            size={{ w: 2, h: "auto" }}
-            skeleton={skeleton}
-          />
-          <Link
-            href={data.url}
-            target="_blank"
-            border={{ bottom: !skeleton }}
-            onFocus={onFocus}
-            border={
-              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
-            }
-          >
-            <Title type="title4" skeleton={skeleton}>
-              {Translate({ ...context, label: "reviewLinkText" })}
-            </Title>
-          </Link>
-        </div>
-      )}
     </Col>
   );
 }

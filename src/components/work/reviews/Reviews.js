@@ -141,16 +141,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   const params = {
     slidesPerView: "auto",
     slidesPerGroup: 1,
-    pagination: {
-      el: ".swiper-pagination .hest",
-      renderBullet: (index, className) => {
-        console.log("i", index);
-
-        return (
-          '<span class="' + className + '">hest ' + (index + 1) + "</span>"
-        );
-      },
-    },
     on: {
       init: (swiper) => {
         // We update isBeginning and isEnd on init

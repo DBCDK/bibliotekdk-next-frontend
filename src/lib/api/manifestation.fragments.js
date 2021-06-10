@@ -7,7 +7,6 @@
  * availability
  */
 export function availability({ pid }) {
-  console.log("AVAILABILITY");
   return {
     // delay: 250,
     query: `query ($pid: String!) {
