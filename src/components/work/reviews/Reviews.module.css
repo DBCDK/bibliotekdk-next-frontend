@@ -9,6 +9,7 @@
   height: auto;
   padding-right: var(--pt3);
   max-width: 75%;
+  align-self: flex-start;
 }
 
 .SlideWrapper:last-child {

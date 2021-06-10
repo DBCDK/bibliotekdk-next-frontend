@@ -1,4 +1,5 @@
 .infomedia {
+  padding-top: var(--pt7);
   padding-bottom: var(--pt1);
   display: flex;
   flex-direction: column;

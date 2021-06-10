@@ -1,5 +1,6 @@
 .litteratursiden {
   padding-bottom: var(--pt1);
+  padding-top: var(--pt7);
   display: flex;
   align-self: center;
   justify-content: center;
