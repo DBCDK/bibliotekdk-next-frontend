@@ -32,14 +32,20 @@ export function timestampToShortDate(timestamp) {
  * @returns {string} format: dd. mmm. yyyy
  */
 export function dateToShortDate(date) {
-  const shortMonths = months({ label: "shortenedMonths" });
+  // Dates can have many formats
+  // example: "Årg. 68, nr. 7 (2015)"
+  try {
+    const shortMonths = months({ label: "shortenedMonths" });
 
-  const array = date.split("-");
+    const array = date.split("-");
 
-  const y = array[0];
-  // remove leading zeros
-  const m = array[1].replace(/^0+/, "");
-  const d = array[2].replace(/^0+/, "");
+    const y = array[0];
+    // remove leading zeros
+    const m = array[1].replace(/^0+/, "");
+    const d = array[2].replace(/^0+/, "");
 
-  return `${d}. ${shortMonths[m]}. ${y}`;
+    return `${d}. ${shortMonths[m]}. ${y}`;
+  } catch {
+    return date;
+  }
 }
