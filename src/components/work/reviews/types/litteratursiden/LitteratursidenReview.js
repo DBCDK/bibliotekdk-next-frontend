@@ -56,7 +56,7 @@ export function LitteratursidenReview({
             <Col xs={10} className={styles.author}>
               {!skeleton && <Text type="text2">{data.author}</Text>}
               <div className={styles.date}>
-                {!skeleton && (
+                {!skeleton && data.date && (
                   <Text type="text3">d. {dateToShortDate(data.date)}</Text>
                 )}
               </div>
@@ -102,6 +102,7 @@ export function LitteratursidenReviewSkeleton(props) {
   const data = {
     author: "Svend Svendsen",
     reviewType: "INFOMEDIA",
+    date: "2013-06-25",
     url: "http://",
   };
 
@@ -124,9 +125,9 @@ export function LitteratursidenReviewSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { data, isSkeleton } = props;
+  const { data, skeleton } = props;
 
-  if (isSkeleton) {
+  if (skeleton) {
     return <LitteratursidenReviewSkeleton />;
   }
 

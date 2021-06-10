@@ -175,6 +175,8 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     data[0] && data[0].reviewType === "MATERIALREVIEWS"
   );
 
+  console.log("Review", data, reviews);
+
   return (
     <Section
       className={`${styles.reviews} ${className}`}
@@ -234,21 +236,24 @@ export function ReviewsSkeleton(props) {
       author: "Svend Svendsen",
       media: "Jyllandsposten",
       rating: "4/5",
-      reviewType: "INFOMEDIA",
+      __typename: "ReviewInfomedia",
+      date: "2013-06-25",
       url: "http://",
     },
     {
       author: "Svend Svendsen",
       media: "Jyllandsposten",
       rating: "4/5",
-      reviewType: "INFOMEDIA",
+      __typename: "ReviewInfomedia",
+      date: "2013-06-25",
       url: "http://",
     },
     {
       author: "Svend Svendsen",
       media: "Jyllandsposten",
       rating: "4/5",
-      reviewType: "INFOMEDIA",
+      __typename: "ReviewInfomedia",
+      date: "2013-06-25",
       url: "http://",
     },
   ];

@@ -31,6 +31,8 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
+  console.log(data);
+
   return (
     <Col
       xs={12}
@@ -56,9 +58,13 @@ export function InfomediaReview({
             </Col>
           )}
           <Col xs={12} className={styles.right}>
-            {data.author && <Text type="text2">{data.author}</Text>}
+            {data.author && (
+              <Text type="text2" skeleton={skeleton} lines={1}>
+                {data.author}
+              </Text>
+            )}
             <Col className={styles.date}>
-              {!skeleton && (
+              {!skeleton && data.date && (
                 <Text type="text3">d. {dateToShortDate(data.date)}</Text>
               )}
             </Col>
@@ -110,6 +116,7 @@ export function InfomediaReviewSkeleton(props) {
     media: "Jyllandsposten",
     rating: "4/5",
     reviewType: "INFOMEDIA",
+    date: "2013-06-25",
     url: "http://",
   };
 

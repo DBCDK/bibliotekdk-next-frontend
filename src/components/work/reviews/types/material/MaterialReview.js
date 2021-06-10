@@ -44,7 +44,7 @@ export function MaterialReview({
           <Row>
             <Col xs={12} className={styles.date}>
               <Title type="title5" skeleton={skeleton}>
-                {dateToShortDate(data.date)}
+                {data.date && dateToShortDate(data.date)}
               </Title>
             </Col>
           </Row>
@@ -203,6 +203,7 @@ export function MaterialReviewSkeleton(props) {
     media: "Jyllandsposten",
     rating: "4/5",
     reviewType: "MATERIALREVIEW",
+    date: "2013-06-25",
     url: "http://",
   };
 

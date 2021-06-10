@@ -58,14 +58,14 @@
 .skeleton.custom div div div i div,
 .skeleton.custom div > div div,
 .skeleton.custom div span div div div {
-  background-color: var(--chamois);
+  background-color: var(--parchment);
 }
 
 .skeleton.custom div div::before {
   background: linear-gradient(
     to right,
     transparent 0%,
-    var(--parchment) 50%,
+    var(--chamois) 50%,
     transparent 100%
   );
 }

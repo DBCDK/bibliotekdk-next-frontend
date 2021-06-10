@@ -54,7 +54,5 @@
 
 /* Skeleton */
 
-.skeleton .url a {
-  pointer-events: none;
-  cursor: default;
+.skeleton {
 }
