@@ -81,6 +81,7 @@ export function getJSONLD({
           datePublished: entry.datePublished,
           identifier: entry.pid,
           url,
+          inLanguage: entry.inLanguage,
         };
         if (entry.title && title !== entry.title) {
           // only add name to manifestation if it differs from work
@@ -100,9 +101,6 @@ export function getJSONLD({
             "@type": "Organization",
             name: entry.publisher,
           };
-        }
-        if (entry.language && entry.language.length > 0) {
-          manifestation.inLanguage = entry.language;
         }
         const bookFormat = getSchemaOrgBookFormat(entry.materialType);
         if (bookFormat) {

@@ -15,6 +15,8 @@ import Cookies from "js-cookie";
 import { Provider } from "next-auth/client";
 import smoothscroll from "smoothscroll-polyfill";
 
+import Head from "next/head";
+
 import "@/scss/custom-bootstrap.scss";
 import "@/css/styles.css";
 
@@ -71,6 +73,10 @@ export default function MyApp({ Component, pageProps, router }) {
         <BodyScrollLock router={router} />
         <Modal router={router} />
         <div id="layout">
+          <Head>
+            <meta name="mobile-web-app-capable" content="yes"></meta>
+            <meta name="theme-color" content="#3333ff"></meta>
+          </Head>
           <Banner />
           <Notifications />
           <HelpHeader />
