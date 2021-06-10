@@ -23,6 +23,7 @@ import animations from "@/components/base/animation/animations.module.css";
  */
 function Button({
   children,
+  disabled,
   label,
   onSelect,
   selected,
@@ -36,15 +37,23 @@ function Button({
       ref={_ref}
       role="radio"
       aria-checked={selected}
-      onClick={onSelect}
+      aria-disabled={!!disabled}
+      disabled={!!disabled}
+      onClick={() => {
+        if (!disabled) {
+          onSelect();
+        }
+      }}
       onKeyDown={(e) => {
-        if ((e.key === "Enter" || e.key === " ") && onSelect) {
+        if ((e.key === "Enter" || e.key === " ") && onSelect && !disabled) {
           onSelect(e);
         }
       }}
       className={`${styles.row} ${animations["on-focus"]} ${
         animations["f-outline"]
-      } ${selected ? styles.selected : ""} ${className || ""}`}
+      } ${selected ? styles.selected : ""} ${className || ""} ${
+        disabled ? styles.disabledrow : ""
+      }`}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -59,6 +68,7 @@ function Button({
   );
 }
 Button.propTypes = {
+  disabled: PropTypes.bool,
   className: PropTypes.string,
   label: PropTypes.string,
   onSelect: PropTypes.func,
@@ -66,7 +76,7 @@ Button.propTypes = {
   _ref: PropTypes.func,
 };
 
-function Group({ children, enabled = true }) {
+function Group({ children, enabled = true, ...props }) {
   const childrenRef = useRef([]);
 
   useEffect(() => {
@@ -89,6 +99,7 @@ function Group({ children, enabled = true }) {
 
   return (
     <div
+      data-cy={props["data-cy"]}
       role="radiogroup"
       aria-labelledby="radio-label"
       className={`${styles.group} ${
@@ -113,6 +124,7 @@ function Group({ children, enabled = true }) {
         React.cloneElement(child, {
           _ref: (ref) => (childrenRef.current[index] = ref),
           "data-cy": "radio-button-" + index,
+          disabled: enabled === false || child.props.disabled,
         })
       )}
     </div>

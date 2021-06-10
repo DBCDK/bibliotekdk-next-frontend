@@ -24,6 +24,12 @@ const user = {
         postalAddress: "Biblioteksvej 1",
         postalCode: "1234",
         city: "Biblioteksby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
       {
         branchId: "1",
@@ -31,6 +37,12 @@ const user = {
         postalAddress: "Filialvej 1",
         postalCode: "1234",
         city: "Biblioteksby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
       {
         branchId: "2",
@@ -38,6 +50,12 @@ const user = {
         postalAddress: "Filialvej 2",
         postalCode: "1234",
         city: "Biblioteksby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
       {
         branchId: "3",
@@ -45,6 +63,12 @@ const user = {
         postalAddress: "Filialvej 3",
         postalCode: "2345",
         city: "Filialby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
       {
         branchId: "4",
@@ -52,6 +76,12 @@ const user = {
         postalAddress: "Filialvej 4",
         postalCode: "2345",
         city: "Filialby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
       {
         branchId: "5",
@@ -59,6 +89,12 @@ const user = {
         postalAddress: "Filialvej 5",
         postalCode: "3456",
         city: "Filialby",
+        orderPolicy: {
+          orderPossible: true,
+          orderPossibleReason: "OWNED_ACCEPTED",
+          lookUpUrl: "https://some-lookup-url",
+        },
+        pickupAllowed: true,
       },
     ],
   },

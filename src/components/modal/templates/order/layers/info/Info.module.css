@@ -49,6 +49,10 @@
   justify-content: space-between;
 }
 
+.library > p {
+  padding-right: var(--pt2);
+}
+
 .library .link {
   display: flex;
   align-items: center;
@@ -81,7 +85,10 @@
   padding: var(--pt1) 0 0 0;
 }
 
-.emailMessage.invalid {
+.invalid-pickup {
+  margin: var(--pt05) 0 0 0;
+}
+.invalid {
   color: var(--error);
 }
 

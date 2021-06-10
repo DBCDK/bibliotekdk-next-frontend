@@ -162,6 +162,12 @@ export function ManyPickupPoints() {
     postalAddress: `Filialvej ${i + 1}`,
     postalCode: "1234",
     city: "Filialby",
+    orderPolicy: {
+      orderPossible: true,
+      orderPossibleReason: "OWNED_ACCEPTED",
+      lookUpUrl: "https://some-lookup-url",
+    },
+    pickupAllowed: i < 20,
   }));
 
   const modifiedUser = {
@@ -253,6 +259,88 @@ export function Ordered() {
           user={user}
           pid={"some-pid"}
           order={modifiedOrder}
+          query={query}
+          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
+          onLayerClose={() => setQuery({ modal: "order" })}
+          onSubmit={(pids, pickupBranch, email) => {
+            alert(
+              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
+            );
+          }}
+        />
+      </Modal>
+    </div>
+  );
+}
+
+export function OrderPolicyFail() {
+  const [query, setQuery] = useState({ modal: "order" });
+
+  const { work, user, order } = data;
+
+  const modifiedUser = {
+    ...user,
+    agency: {
+      branches: [
+        {
+          agencyId: "715900",
+          name: "Bibliografen Bagsværd",
+          city: "Bagsværd",
+          postalAddress: "Bagsværd Hovedgade 116",
+          postalCode: "2880",
+          branchId: "715902",
+          openingHours:
+            "man.-fre.:10-18, lør.:10-14. \r\nSelvbetjening: man.-fre.:18-21, lør.:14-21, søn- og helligdage 12-21. Lukket 24.12.",
+          orderPolicy: {
+            orderPossible: false,
+            orderPossibleReason: "OWNED_OWN_CATALOGUE",
+            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+          },
+          pickupAllowed: true,
+        },
+        {
+          agencyId: "715900",
+          name: "Gladsaxe Bibliotekerne, Hovedbiblioteket",
+          city: "Søborg",
+          postalAddress: "Søborg Hovedgade 220",
+          postalCode: "2860",
+          branchId: "715900",
+          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
+          orderPolicy: {
+            orderPossible: true,
+            orderPossibleReason: "OWNED_ACCEPTED",
+            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+          },
+          pickupAllowed: true,
+        },
+        {
+          agencyId: "715900",
+          name: "Dummy",
+          city: "Søborg",
+          postalAddress: "Søborg Hovedgade 220",
+          postalCode: "2860",
+          branchId: "715907",
+          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
+          orderPolicy: null,
+          pickupAllowed: false,
+        },
+      ],
+    },
+  };
+
+  return (
+    <div style={{ height: "100vh" }}>
+      <StoryTitle>Order Template</StoryTitle>
+      <StoryDescription>
+        If user has a long list of pickup points
+      </StoryDescription>
+
+      <Modal onClose={null} onLang={null} template={"order"}>
+        <Order
+          work={work}
+          user={modifiedUser}
+          pid={"some-pid"}
+          order={order}
           query={query}
           onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
           onLayerClose={() => setQuery({ modal: "order" })}

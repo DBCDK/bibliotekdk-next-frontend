@@ -14,7 +14,13 @@
             "postalAddress": "B. Adresse",
             "postalCode": "1234",
             "branchId": "790900",
-            "openingHours": "VIP 4.9: Åbningstider<br>\r\nmandag<br>\r\ntirsdag<br>\r\nonsdag<br>\r\ntorsdag<br>\r\nfredag<br>\r\nlørdag"
+            "openingHours": "VIP 4.9: Åbningstider<br>\r\nmandag<br>\r\ntirsdag<br>\r\nonsdag<br>\r\ntorsdag<br>\r\nfredag<br>\r\nlørdag",
+            "orderPolicy": {
+              "orderPossible": true,
+              "orderPossibleReason": "OWNED_ACCEPTED",
+              "lookUpUrl": "https://some-lookup-url"
+            },
+            "pickupAllowed": true
           },
           {
             "agencyId": "790900",
@@ -23,7 +29,13 @@
             "postalAddress": null,
             "postalCode": null,
             "branchId": "790902",
-            "openingHours": null
+            "openingHours": null,
+            "orderPolicy": {
+              "orderPossible": true,
+              "orderPossibleReason": "OWNED_ACCEPTED",
+              "lookUpUrl": "https://some-lookup-url"
+            },
+            "pickupAllowed": true
           },
           {
             "agencyId": "790900",
@@ -32,7 +44,13 @@
             "postalAddress": "Vsn-B.adresse",
             "postalCode": "1234",
             "branchId": "790903",
-            "openingHours": null
+            "openingHours": null,
+            "orderPolicy": {
+              "orderPossible": true,
+              "orderPossibleReason": "OWNED_ACCEPTED",
+              "lookUpUrl": "https://some-lookup-url"
+            },
+            "pickupAllowed": true
           }
         ]
       }
