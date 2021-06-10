@@ -17,8 +17,6 @@ import Icon from "@/components/base/icon";
 
 import styles from "./Header.module.css";
 
-import LogoSvg from "@/public/icons/logo.svg";
-
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
@@ -26,6 +24,7 @@ import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
 import { externalUrls } from "@/lib/Navigation";
+import Logo from "@/components/base/logo/svgLogo";
 import { encodeTitleCreator } from "@/lib/utils";
 
 /**
@@ -156,6 +155,7 @@ export function Header({ className = "", router = null, story = null, user }) {
         <Container className={styles.header} fluid>
           <Row>
             <Col xs={2}>
+              {/*}
               <Link
                 className={styles.logoWrap}
                 border={false}
@@ -169,6 +169,8 @@ export function Header({ className = "", router = null, story = null, user }) {
                   <LogoSvg />
                 </Icon>
               </Link>
+              */}
+              <Logo fill={"var(--blue)"} text={"default_logo_text"} />
             </Col>
             <Col xs={{ span: 9, offset: 1 }}>
               <div className={styles.top}>

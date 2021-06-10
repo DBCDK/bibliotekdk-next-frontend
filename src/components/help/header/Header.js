@@ -17,7 +17,8 @@ import { cyKey } from "@/utils/trim";
 import styles from "./Header.module.css";
 import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Logo from "@/components/base/logo/svgLogo";
 
 /**
  * The custom Header for help page
@@ -39,19 +40,7 @@ export function Header({
     >
       <Row className={styles.row}>
         <Col xs={3}>
-          <Link
-            className={styles.logoWrap}
-            border={false}
-            href="/hjaelp"
-            dataCy={cyKey({
-              name: "logo",
-              prefix: "header-help",
-            })}
-          >
-            <Icon className={styles.logo} size={{ w: "auto", h: 5 }}>
-              <LogoSvg />
-            </Icon>
-          </Link>
+          <Logo fill={"var(--blue)"} text={"help_logo_text"} href="/hjaelp" />
         </Col>
         <Col xs={{ span: 12, order: 4 }} lg={{ span: 6, order: 2 }}>
           <div className={styles.inputwrapper}>
