@@ -1,0 +1,28 @@
+
+.logo {
+    display: inline-block;
+    cursor: pointer;
+}
+.wrapper{
+    display: flex ;
+    justify-content: space-between;
+
+}
+
+.logoWrap{
+    display: flex;
+}
+
+.logotxt{
+    font-size: 17px;
+    line-height: 22px;
+    font-family: var(--body-font-semibold);
+    margin-left: 8px;
+    transform: scale(1, 1.05);
+}
+
+.logotxt span{
+    display: block;
+    margin-bottom: -5px;
+}
+
