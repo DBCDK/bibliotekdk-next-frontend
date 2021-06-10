@@ -31,8 +31,6 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log(data);
-
   return (
     <Col
       xs={12}

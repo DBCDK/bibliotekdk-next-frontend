@@ -175,8 +175,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     data[0] && data[0].reviewType === "MATERIALREVIEWS"
   );
 
-  console.log("Review", data, reviews);
-
   return (
     <Section
       className={`${styles.reviews} ${className}`}
