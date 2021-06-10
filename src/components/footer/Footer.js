@@ -15,6 +15,7 @@ import Link from "@/components/base/link";
 import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 
 import styles from "./Footer.module.css";
+import Logo from "@/components/base/logo/svgLogo";
 
 /**
  * The logo @see icons/logowhite.svg
@@ -22,8 +23,7 @@ import styles from "./Footer.module.css";
  * @constructor
  */
 const FooterLogo = () => {
-  const src = "logowhite.svg";
-  return <Icon src={src} size={{ w: 15, h: "auto" }} />;
+  return <Logo fill={"var(--white)"} text={"default_logo_text"} />;
 };
 
 /**

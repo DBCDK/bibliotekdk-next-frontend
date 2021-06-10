@@ -1,5 +1,15 @@
 {
   "contexts": {
+    "logo": {
+      "default_logo_text": {
+        "da": "Bibliotek\ndk",
+        "en": "Bibliotek\ndk"
+      },
+      "help_logo_text": {
+        "da": "Hjælp & \nvejledninger",
+        "en": "Help & \ninstructions"
+      }
+    },
     "feedback": {
       "feed_back_text": {
         "da": "Hjælp os med at gøre beta.bibliotek.dk bedre",
