@@ -12,7 +12,7 @@ test("generateJSONLD", () => {
         cover: {
           detail: null,
         },
-        language: ["danglish"],
+        inLanguage: "da",
         physicalDescription: "xxvii, 123 sider, illustreret",
         datePublished: "2020",
         creators: [
