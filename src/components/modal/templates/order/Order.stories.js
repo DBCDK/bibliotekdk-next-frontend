@@ -167,6 +167,7 @@ export function ManyPickupPoints() {
       orderPossibleReason: "OWNED_ACCEPTED",
       lookUpUrl: "https://some-lookup-url",
     },
+    pickupAllowed: i < 20,
   }));
 
   const modifiedUser = {

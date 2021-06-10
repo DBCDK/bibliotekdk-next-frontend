@@ -4,6 +4,8 @@
  */
 
 import config from "@/config";
+import getConfig from "next/config";
+const nextJsConfig = getConfig();
 
 import Translate from "@/components/base/translate/Translate.json";
 
@@ -11,6 +13,10 @@ import Translate from "@/components/base/translate/Translate.json";
  * get translations from backend
  */
 export default async function fetchTranslations() {
+  if (nextJsConfig?.serverRuntimeConfig?.disableDrupalTranslate) {
+    return;
+  }
+
   // status flag
   let ok = true;
   // @TODO errorhandling
