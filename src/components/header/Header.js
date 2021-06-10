@@ -26,6 +26,7 @@ import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
 import { externalUrls } from "@/lib/Navigation";
+import { Logo } from "@/components/base/logo/Logo";
 
 /**
  * The Component function
@@ -141,6 +142,7 @@ export function Header({ className = "", router = null, story = null, user }) {
         <Container className={styles.header} fluid>
           <Row>
             <Col xs={2}>
+              {/*}
               <Link
                 className={styles.logoWrap}
                 border={false}
@@ -154,6 +156,8 @@ export function Header({ className = "", router = null, story = null, user }) {
                   <LogoSvg />
                 </Icon>
               </Link>
+              */}
+              <Logo />
             </Col>
             <Col xs={{ span: 9, offset: 1 }}>
               <div className={styles.top}>
