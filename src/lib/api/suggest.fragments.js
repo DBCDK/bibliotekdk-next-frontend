@@ -29,6 +29,9 @@ export function all({ q }) {
               cover {
                 thumbnail
               }
+              creators {
+                name
+              }
             }
           }
         }

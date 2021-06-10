@@ -332,8 +332,9 @@ export function Suggester({
           onSelect(suggestionValue, suggestion, entry.suggestionIndex);
 
         // Clear Query
-        onChange && onChange(isMobile ? "" : suggestionValue);
-        isMobile && setIntQuery("");
+        const shouldClear = isMobile || suggestion?.__typename === "Work";
+        onChange && onChange(shouldClear ? "" : suggestionValue);
+        shouldClear && setIntQuery("");
       }}
       renderSuggestionsContainer={(props) =>
         renderSuggestionsContainer(
@@ -371,6 +372,7 @@ export function Suggester({
  */
 export default function Wrap(props) {
   let { className } = props;
+
   const { onChange } = props;
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState();
@@ -402,7 +404,7 @@ export default function Wrap(props) {
       }}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect(suggestionValue);
+        props.onSelect(suggestionValue, suggestion);
         fetcher(
           collectSuggestClick({
             query,
@@ -423,5 +425,6 @@ export default function Wrap(props) {
 Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func,
+  onSelect: PropTypes.func,
   skeleton: PropTypes.bool,
 };
