@@ -26,6 +26,7 @@ import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
 import { externalUrls } from "@/lib/Navigation";
+import { encodeTitleCreator } from "@/lib/utils";
 
 /**
  * The Component function
@@ -118,21 +119,35 @@ export function Header({ className = "", router = null, story = null, user }) {
     ? styles.suggester__visible
     : "";
 
-  const doSearch = (query) => {
+  const doSearch = (query, suggestion) => {
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
 
-    router &&
-      router[routerFunc]({
-        pathname: "/find",
-        query: { q: query },
-      });
+    if (suggestion?.__typename === "Work") {
+      router &&
+        router[routerFunc]({
+          pathname: "/materiale/[title_author]/[workId]",
+          query: {
+            title_author: encodeTitleCreator(
+              suggestion.title,
+              suggestion.creators?.[0]?.name
+            ),
+            workId: suggestion.id,
+          },
+        });
+    } else {
+      router &&
+        router[routerFunc]({
+          pathname: "/find",
+          query: { q: query },
+        });
 
-    // Delay history update in list
-    setTimeout(() => {
-      setHistory(query);
-    }, 300);
+      // Delay history update in list
+      setTimeout(() => {
+        setHistory(query);
+      }, 300);
+    }
   };
 
   return (
