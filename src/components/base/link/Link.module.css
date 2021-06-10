@@ -34,6 +34,10 @@
   pointer-events: none;
 }
 
+.link.disabled > div hr {
+  transform: scale(0);
+}
+
 /* Real-hover */
 @media (hover: hover) {
   .border:hover:not(.disabled) {

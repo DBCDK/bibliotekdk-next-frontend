@@ -7,6 +7,7 @@ export function sortReviews(data) {
   3. reviews with stars (judgment)
   4. others
 */
+
   // Group data by reviewType
   const groups = groupBy(data, "__typename");
 

@@ -1,43 +1,40 @@
 .materialReview {
-  padding: 0 0 var(--pt1) 0;
-  align-self: center;
-}
+  padding: 0;
 
-.author,
-.type,
-.date {
+  /* Ensure link lines are visible */
   padding-bottom: var(--pt1);
-  align-self: center;
 }
 
 .author {
+  padding: var(--pt2) 0 0 0;
   display: flex;
-  align-items: center;
 }
 
-.author a {
-  margin: 0 0 0 var(--pt1);
+.author span {
+  display: flex;
+  align-self: flex-end;
 }
 
-.date {
-  color: var(--gray);
+.author span > p {
+  padding: 0 var(--pt1) 0 0;
 }
 
 .content {
   padding: var(--pt3) 0;
 }
 
-.url {
-  padding: var(--pt2) 0 0 0;
-  display: flex;
-  align-items: center;
-
-  /* align links in the bottom */
-  /* margin-top: auto; */
+.type {
+  padding-left: 0;
 }
 
-.url a {
-  margin: 0 0 0 var(--pt2);
+.url {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.url i {
+  display: none;
 }
 
 .skeleton hr {
@@ -50,22 +47,39 @@
   cursor: default;
 }
 
-.skeleton .url a {
-}
-
-.reviewTxt h1{
+.reviewTxt h1 {
   font-family: var(--title-font);
   display: inline;
 }
 
-.reviewTxt a{
+.reviewTxt a {
   color: var(--blue);
   font-family: var(--title-font);
 }
 
 @media (min-width: 1200px) {
-  .reviewTxt a, .reviewTxt h1 {
+  .reviewTxt a,
+  .reviewTxt h1 {
     font-size: var(--pt4);
     line-height: var(--pt5);
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .type {
+    padding: 0 0 0 var(--pt4);
+  }
+
+  .url a {
+    margin: 0 0 0 var(--pt2);
+  }
+
+  .url i {
+    display: block;
+  }
+
+  .author {
+    padding: 0;
   }
 }
