@@ -1,8 +1,13 @@
 .litteratursiden {
   padding-bottom: var(--pt1);
+  padding-top: var(--pt7);
   display: flex;
-  flex-direction: column;
   align-self: center;
+  justify-content: center;
+}
+
+.litteratursiden > div {
+  width: 100%;
 }
 
 .litteratursiden a {
@@ -14,16 +19,19 @@
 }
 
 .media {
-  padding: var(--pt2) 0 0 0;
+  padding: 0 0 var(--pt2) 0;
+}
+
+.row {
+  display: flex;
+}
+
+.left {
+  padding: 2px 0 0 0;
 }
 
 .author {
-  padding: var(--pt2) var(--pt1) 0 0;
-}
-
-.author p,
-.author h3 {
-  display: inline;
+  padding: 0;
 }
 
 .author p {
@@ -31,10 +39,9 @@
 }
 
 .url {
-  padding: var(--pt2) 0 0 0;
+  padding: var(--pt3) 0 0 0;
   display: inline-flex;
   align-items: center;
-  /* margin-top: auto; */
 }
 
 .url a {

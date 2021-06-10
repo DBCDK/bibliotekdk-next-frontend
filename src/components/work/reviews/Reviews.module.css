@@ -7,6 +7,13 @@
 
 .SlideWrapper {
   height: auto;
+  padding-right: var(--pt3);
+  max-width: 75%;
+  align-self: flex-start;
+}
+
+.SlideWrapper:last-child {
+  max-width: 100%;
 }
 
 .button {
@@ -21,6 +28,8 @@
   position: absolute;
   z-index: 100;
   top: 40%;
+
+  display: none;
 }
 
 .button:hover {
@@ -49,22 +58,26 @@
 .skeleton.custom div div div i div,
 .skeleton.custom div > div div,
 .skeleton.custom div span div div div {
-  background-color: var(--chamois);
+  background-color: var(--parchment);
 }
 
 .skeleton.custom div div::before {
   background: linear-gradient(
     to right,
     transparent 0%,
-    var(--parchment) 50%,
+    var(--chamois) 50%,
     transparent 100%
   );
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+  .SlideWrapper {
+    max-width: unset;
+  }
+
   /* Make buttons visible */
   .button {
-    /* display: inherit; */
+    display: inherit;
   }
 }

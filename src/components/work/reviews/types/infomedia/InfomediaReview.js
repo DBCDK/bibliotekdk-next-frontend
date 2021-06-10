@@ -10,6 +10,8 @@ import Rating from "@/components/base/rating";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
+import { dateToShortDate } from "@/utils/datetimeConverter";
+
 import styles from "./InfomediaReview.module.css";
 
 /**
@@ -28,39 +30,51 @@ export function InfomediaReview({
 }) {
   // Translate Context
   const context = { context: "reviews" };
+
   return (
     <Col
       xs={12}
       sm={6}
-      xl={4}
+      md={4}
       className={`${styles.infomedia} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "infomedia" })}
     >
-      {data.rating && (
-        <div className={styles.rating}>
-          <Rating rating={data.rating} skeleton={skeleton} />
+      <Row>
+        {data.media && (
+          <Col xs={12} className={styles.media}>
+            <Title type="title4" skeleton={skeleton}>
+              {data.media}
+            </Title>
+          </Col>
+        )}
+        <div className={styles.row}>
+          {data.author && (
+            <Col className={styles.left}>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({ context: "general", label: "by" })}
+              </Text>
+            </Col>
+          )}
+          <Col xs={12} className={styles.right}>
+            {data.author && (
+              <Text type="text2" skeleton={skeleton} lines={1}>
+                {data.author}
+              </Text>
+            )}
+            <Col className={styles.date}>
+              {!skeleton && data.date && (
+                <Text type="text3">d. {dateToShortDate(data.date)}</Text>
+              )}
+            </Col>
+            {data.rating && (
+              <Col xs={12} className={styles.rating}>
+                <Rating rating={data.rating} skeleton={skeleton} />
+              </Col>
+            )}
+          </Col>
         </div>
-      )}
-      {data.media && (
-        <div className={styles.media}>
-          <Title type="title4" skeleton={skeleton} lines={3}>
-            {data.media}
-          </Title>
-        </div>
-      )}
-      {!skeleton && data.author && (
-        <div className={styles.author}>
-          <Text type="text3">
-            {`${Translate({ context: "general", label: "by" })} `}
-          </Text>
-          <Title tag="h3" type="title4">
-            {data.author}
-          </Title>
-          <Text type="text3"> d. {data.date}</Text>
-        </div>
-      )}
-      {data.url && (
-        <div className={styles.url}>
+
+        <Col xs={12} className={styles.url}>
           <Icon
             src="chevron.svg"
             size={{ w: 2, h: "auto" }}
@@ -69,18 +83,19 @@ export function InfomediaReview({
           <Link
             href={data.url}
             target="_blank"
-            border={{ bottom: !skeleton }}
             onFocus={onFocus}
-            border={
-              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
-            }
+            disabled={!data.url}
+            border={{ top: false, bottom: { keepVisible: true } }}
           >
-            <Title type="title4" skeleton={skeleton}>
-              {Translate({ ...context, label: "reviewLinkText" })}
-            </Title>
+            <Text type="text2" skeleton={skeleton}>
+              {Translate({
+                ...context,
+                label: "reviewLinkText",
+              })}
+            </Text>
           </Link>
-        </div>
-      )}
+        </Col>
+      </Row>
     </Col>
   );
 }
@@ -99,6 +114,7 @@ export function InfomediaReviewSkeleton(props) {
     media: "Jyllandsposten",
     rating: "4/5",
     reviewType: "INFOMEDIA",
+    date: "2013-06-25",
     url: "http://",
   };
 

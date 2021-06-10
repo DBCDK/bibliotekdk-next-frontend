@@ -10,6 +10,10 @@ import Icon from "@/components/base/icon";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+import { dateToShortDate } from "@/utils/datetimeConverter";
+
 import styles from "./MaterialReview.module.css";
 
 /**
@@ -29,10 +33,6 @@ export function MaterialReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  const bib = "https://bibliotek.dk/";
-
-  // BETA-1 disable links to library assessment and review author
-  const disablebiblinks = true;
   return (
     <Col
       xs={12}
@@ -40,78 +40,79 @@ export function MaterialReview({
       data-cy={cyKey({ prefix: "review", name: "material" })}
     >
       <Row>
-        <Col xs={6} xl={4} className={styles.type}>
-          <Link
-            href={bib}
-            target="_blank"
-            border={
-              !skeleton && !disablebiblinks
-                ? { top: false, bottom: { keepVisible: true } }
-                : false
-            }
-            disabled={disablebiblinks}
-          >
-            <Text type="text3" skeleton={skeleton} lines={1}>
-              {Translate({ ...context, label: "materialTitle" })}
-            </Text>
-          </Link>
-        </Col>
-        <Col
-          xs={{ span: 12, order: 3 }}
-          xl={{ span: 4, order: 2 }}
-          className={styles.author}
-        >
-          <Text type="text3" skeleton={skeleton} lines={1}>
-            {Translate({ context: "general", label: "by" })}
-          </Text>
-          <Link
-            href={bib}
-            target="_blank"
-            border={
-              !skeleton && !disablebiblinks
-                ? { top: false, bottom: { keepVisible: true } }
-                : false
-            }
-            disabled={disablebiblinks}
-          >
-            <Text type="text3" skeleton={skeleton} lines={1}>
-              {data.author}
-            </Text>
-          </Link>
-        </Col>
-        <Col xs={6} xl={{ span: 4, order: 3 }} className={styles.date}>
-          <Text type="text3" skeleton={skeleton} lines={1}>
-            {data.date}
-          </Text>
+        <Col xs={12} md={10}>
+          <Row>
+            <Col xs={12} className={styles.date}>
+              <Title type="title5" skeleton={skeleton}>
+                {data.date && dateToShortDate(data.date)}
+              </Title>
+            </Col>
+          </Row>
+
+          <Col xs={12} className={styles.content}>
+            <LectorReview data={data} skeleton={skeleton} />
+          </Col>
+
+          <Col xs={12}>
+            <Row>
+              <Col xs={12} md={8}>
+                <Row>
+                  <Col className={styles.type}>
+                    <Text type="text3" skeleton={skeleton} lines={1}>
+                      {Translate({
+                        context: "general",
+                        label: "lecturerStatement",
+                      })}
+                    </Text>
+                  </Col>
+
+                  <Col xs={12} className={styles.url}>
+                    <Icon
+                      src="chevron.svg"
+                      size={{ w: 2, h: "auto" }}
+                      skeleton={skeleton}
+                    />
+                    <Link
+                      href={data.url}
+                      target="_blank"
+                      onFocus={onFocus}
+                      disabled={!data.url}
+                      border={{ top: false, bottom: { keepVisible: true } }}
+                    >
+                      <Text type="text2" skeleton={skeleton}>
+                        {Translate({
+                          ...context,
+                          label: "materialReviewLinkText",
+                        })}
+                      </Text>
+                    </Link>
+                  </Col>
+                </Row>
+              </Col>
+              <Col xs={12} md={4} className={styles.author}>
+                <span>
+                  <Text type="text3" skeleton={skeleton} lines={1}>
+                    {Translate({ context: "general", label: "by" })}
+                  </Text>
+                  <Link
+                    target="_blank"
+                    disabled={true}
+                    border={
+                      !skeleton
+                        ? { top: false, bottom: { keepVisible: true } }
+                        : false
+                    }
+                  >
+                    <Text type="text3" skeleton={skeleton} lines={1}>
+                      {data.author}
+                    </Text>
+                  </Link>
+                </span>
+              </Col>
+            </Row>
+          </Col>
         </Col>
       </Row>
-
-      <Col xs={12} className={styles.content}>
-        <LectorReview data={data} skeleton={skeleton} />
-      </Col>
-
-      {data.url && (
-        <Col xs={12} className={styles.url}>
-          <Icon
-            src="chevron.svg"
-            size={{ w: 2, h: "auto" }}
-            skeleton={skeleton}
-          />
-          <Link
-            href={data.url}
-            target="_blank"
-            onFocus={onFocus}
-            border={{ bottom: !skeleton }}
-            border={
-              !skeleton ? { top: false, bottom: { keepVisible: true } } : false
-            }
-          >
-            <Title type="title4" skeleton={skeleton} lines={1}>
-              {Translate({ ...context, label: "materialReviewLinkText" })}
-            </Title>
-          </Link>
-        </Col>
-      )}
     </Col>
   );
 }
@@ -127,8 +128,17 @@ export function MaterialReview({
  * @constructor
  */
 function LectorReview({ data, skeleton }) {
+  const breakpoint = useBreakpoint();
+  const isMobile =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
+
   return (
-    <Title type="title3" lines={5} skeleton={skeleton} clamp={true}>
+    <Title
+      type="title3"
+      lines={isMobile ? 5 : 3}
+      skeleton={skeleton}
+      clamp={true}
+    >
       {data.all &&
         data.all
           .map((paragraph) => paragraph)
@@ -193,6 +203,7 @@ export function MaterialReviewSkeleton(props) {
     media: "Jyllandsposten",
     rating: "4/5",
     reviewType: "MATERIALREVIEW",
+    date: "2013-06-25",
     url: "http://",
   };
 

@@ -18,7 +18,7 @@ describe("Overview", () => {
   });
 
   //BETA-1 skip this test - material reviews are gone
-  it(`Can tab through path`, () => {
+  it.skip(`Can tab through path`, () => {
     cy.get("body").tabs(3);
     cy.focused()
       .parent()
