@@ -21,11 +21,29 @@ function NewlineInText(text) {
   });
 }
 
+/**
+ * Return a svg with inline styling from parameter
+ * @param fill
+ * @return {JSX.Element}
+ * @constructor
+ */
 export function SvgParser({ fill = "var(--blue)" }) {
   // @TODO size is hardcoded - use var(--pt5) css prop instead
   return <Svg width="40" height="40" fill={fill}></Svg>;
 }
 
+/**
+ * Component is a svg and some text.
+ * @param text
+ *  LABEL of the text to show
+ * @param href
+ *  Where to go when clicke
+ * @param fill
+ *  Color of text and svg logo
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
 export default function Logo({
   text = "default_logo_txt",
   href = "/",
