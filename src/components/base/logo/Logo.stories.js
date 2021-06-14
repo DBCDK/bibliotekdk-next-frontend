@@ -28,7 +28,7 @@ export function BlueLogo() {
       <StoryTitle>Logo component</StoryTitle>
       <StoryDescription>Hjælp og vejledninger logo</StoryDescription>
       <div style={{ backgroundColor: "blue", padding: "20px" }}>
-        <Logo fill="var(--white)" text="help_logo_text" />
+        <Logo fill="var(--white)" text="help_logo_text" href="/hjaelp" />
       </div>
     </div>
   );
