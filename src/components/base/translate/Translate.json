@@ -218,6 +218,14 @@
       "lecturerStatement": {
         "da": "Lektørudtalelse",
         "en": "Lecturer statement"
+      },
+      "expand": {
+        "da": "Udvid",
+        "en": "Expand"
+      },
+      "collapse": {
+        "da": "Luk",
+        "en": "Collapse"
       }
     },
     "articles": {

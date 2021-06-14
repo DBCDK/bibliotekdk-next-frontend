@@ -107,6 +107,11 @@ export default function Feedback({
           <Icon
             size={{ w: 1, h: 1 }}
             src={`${feedbackOpen ? "arrowright.svg" : "arrowleft.svg"}`}
+            alt={
+              feedbackOpen
+                ? Translate({ context: "general", label: "collapse" })
+                : Translate({ context: "general", label: "expand" })
+            }
           />
         </span>
       </div>
