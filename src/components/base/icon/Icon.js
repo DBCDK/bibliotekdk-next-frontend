@@ -13,6 +13,7 @@ import styles from "./Icon.module.css";
  * @returns {component}
  */
 function Icon({
+  alt,
   src = "../",
   className = "",
   children = null,
@@ -65,7 +66,7 @@ function Icon({
       tabIndex={tabIndex}
       data-cy={props["data-cy"] || dataCy || ""}
     >
-      {children || <img src={`/icons/${src}`} />}
+      {children || <img src={`/icons/${src}`} alt={alt} />}
     </i>
   );
 }
@@ -110,6 +111,7 @@ export default function Container(props) {
 
 // PropTypes for Button component
 Container.propTypes = {
+  alt: PropTypes.string.isRequired,
   src: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([

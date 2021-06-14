@@ -10,6 +10,7 @@ import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { Container } from "react-bootstrap";
 import Icon from "@/components/base/icon/Icon";
 import { getLangcode } from "@/components/base/translate/Translate";
+import Translate from "@/components/base/translate";
 
 /**
  * list of notifications
@@ -43,6 +44,7 @@ export function Notifications({ notificationObject }) {
           size={{ w: "auto", h: "auto" }}
           className={styles.cancelicon}
           onClick={() => toggleNotification(index)}
+          alt={Translate({ context: "general", label: "close" })}
         />
         <BodyParser body={notification.fieldNotificationText.value} />
       </Container>
