@@ -20,7 +20,8 @@
 
 div.notification {
   text-align: center;
-  padding: var(--pt3) var(--pt3) 0 var(--pt3);
+  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  border-top: 1px solid var(--mine-shaft);
 }
 
 div.notification i{
