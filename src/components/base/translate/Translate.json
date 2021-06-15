@@ -600,6 +600,10 @@
       "historyClear": {
         "da": "Ryd",
         "en": "Clear"
+      },
+      "suggestions": {
+        "da": "Søgeforslag",
+        "en": "Search suggestions"
       }
     },
     "modal": {
