@@ -199,7 +199,6 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
 
   // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
-
   return (
     <div className={styles.input_wrap}>
       <span
@@ -214,7 +213,8 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
           <ArrowSvg />
         </Icon>
       </span>
-      <input {...props} />
+
+      <input {...props} title={placeholder} />
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => {
