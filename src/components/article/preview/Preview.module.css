@@ -31,3 +31,27 @@
   padding-bottom: var(--pt2);
   height: 20px;
 }
+
+/* Preview focus and hover */
+.preview:focus .arrow > div,
+.preview:hover .arrow > div {
+  border-left: 0px;
+  border-right: 0px;
+  width: 3px;
+}
+.preview:focus .arrow > div:nth-child(1),
+.preview:hover .arrow > div:nth-child(1) {
+  transform: translateX(15px) translateY(4px) rotate(90deg) scaleY(1.25);
+}
+.preview:focus .arrow > div:nth-child(2),
+.preview:hover .arrow > div:nth-child(2) {
+  transform: translateX(0px) translateY(4px) rotate(-90deg) scaleY(1.25);
+}
+.preview:focus .arrow > div:nth-child(3),
+.preview:hover .arrow > div:nth-child(3) {
+  transform: translateX(45px) translateY(4px) rotate(90deg) scaleY(1.25);
+}
+.preview:focus .arrow > div:nth-child(4),
+.preview:hover .arrow > div:nth-child(4) {
+  transform: translateX(30px) translateY(4px) rotate(90deg) scaleY(1.25);
+}
