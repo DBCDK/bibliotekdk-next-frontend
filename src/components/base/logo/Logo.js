@@ -1,34 +1,94 @@
-import styles from "./Logo.module.css";
-import { cyKey } from "@/utils/trim";
-import Icon from "@/components/base/icon/Icon";
-
+import Svg from "./singleLogo.svg";
+import PropTypes from "prop-types";
+import styles from "@/components/base/logo/Logo.module.css";
 import Link from "@/components/base/link";
-import Text from "@/components/base/text";
+import { cyKey } from "@/utils/trim";
+import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
-import React from "react";
-import { Title } from "@/components/base/title/Title";
-import LogoSvg from "./svgLogo";
+import classNames from "classnames/bind";
 
-function newlineInText(text) {
-  return text.split("\n").map((str) => <span>{str}</span>);
+/**
+ * Split given text in <spans>. Split by newline (\\n). We need
+ * TWO backslashes since drupal escapes by default.
+ * @param text
+ * @return {*}
+ * @constructor
+ */
+function NewlineInText(text) {
+  return text.split("\\n").map((str, index) => {
+    // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
+    return <span key={str + index}>{str.replace("\\", "")}</span>;
+  });
 }
-export function Logo() {
+
+/**
+ * Return a svg with inline styling from parameter
+ * @param fill
+ * @return {JSX.Element}
+ * @constructor
+ */
+export function SvgParser({ fill = "var(--blue)" }) {
+  // @TODO size is hardcoded - use var(--pt5) css prop instead
+  return <Svg width="40" height="40" fill={fill}></Svg>;
+}
+
+/**
+ * Component is a svg and some text.
+ * @param text
+ *  LABEL of the text to show
+ * @param href
+ *  Where to go when clicke
+ * @param fill
+ *  Color of text and svg logo
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
+export default function Logo({
+  text = "default_logo_txt",
+  href = "/",
+  fill = "var(--blue)",
+  ...props
+}) {
+  if (props.skeleton) {
+    return <Logo {...props} />;
+  }
+
+  const translated = Translate({ context: "logo", label: text });
+  let color = "default";
+  if (fill === "var(--white)") {
+    color = "white";
+  }
   return (
     <div className={styles.wrapper}>
       <Link
         className={styles.logoWrap}
         border={false}
-        href="/"
+        href={href}
         dataCy={cyKey({
           name: "logo",
         })}
       >
-        <LogoSvg />
+        <SvgParser fill={fill} />
 
-        <Text type="Text4" className={styles.logotxt} tag="span">
-          {newlineInText("Bibliotek\ndk")}
+        <Text
+          type="text4"
+          className={classNames(
+            styles.logotxt,
+            color === "white" ? styles.white : ""
+          )}
+          tag="span"
+        >
+          {NewlineInText(translated)}
         </Text>
       </Link>
     </div>
   );
 }
+
+// PropTypes for Button component
+Logo.propTypes = {
+  text: PropTypes.oneOf(["default_logo_text", "help_logo_text"]),
+  fill: PropTypes.oneOf(["var(--blue)", "var(--white)"]),
+  href: PropTypes.string,
+};

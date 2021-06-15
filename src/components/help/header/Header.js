@@ -18,7 +18,7 @@ import styles from "./Header.module.css";
 import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Logo from "@/components/base/logo/svgLogo";
+import Logo from "@/components/base/logo/Logo";
 
 /**
  * The custom Header for help page

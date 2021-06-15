@@ -2,12 +2,12 @@
   "contexts": {
     "logo": {
       "default_logo_text": {
-        "da": "Bibliotek\ndk",
-        "en": "Bibliotek\ndk"
+        "da": "Bibliotek\\ndk",
+        "en": "Bibliotek\\ndk"
       },
       "help_logo_text": {
-        "da": "Hjælp & \nvejledninger",
-        "en": "Help & \ninstructions"
+        "da": "Hjælp & \\nvejledninger",
+        "en": "Help & \\ninstructions"
       }
     },
     "feedback": {
