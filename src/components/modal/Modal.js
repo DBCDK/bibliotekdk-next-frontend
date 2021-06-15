@@ -196,13 +196,14 @@ export function Modal({
       >
         <div className={styles.top}>
           <div className={styles.wrap}>
-            <Title type="title4" className={styles.title}>
-              {context.title &&
-                Translate({
+            {context.title && (
+              <Title type="title4" className={styles.title}>
+                {Translate({
                   context: "modal",
                   label: `title-${context.title}`,
                 })}
-            </Title>
+              </Title>
+            )}
             <Icon
               dataCy="close-modal"
               tabIndex={isVisible ? "0" : "-1"}

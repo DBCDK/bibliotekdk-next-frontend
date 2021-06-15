@@ -62,6 +62,7 @@ export default function Feedback({
       >
         <div>
           <Icon
+            alt={Translate({ context: "general", label: "collapse" })}
             data-cy="feedback-cookie-close"
             size={{ w: 4, h: 4 }}
             src="close_white_bold.svg"
@@ -107,6 +108,11 @@ export default function Feedback({
           <Icon
             size={{ w: 1, h: 1 }}
             src={`${feedbackOpen ? "arrowright.svg" : "arrowleft.svg"}`}
+            alt={
+              feedbackOpen
+                ? Translate({ context: "general", label: "collapse" })
+                : Translate({ context: "general", label: "expand" })
+            }
           />
         </span>
       </div>

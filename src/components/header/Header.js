@@ -24,7 +24,7 @@ import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
 import { externalUrls } from "@/lib/Navigation";
-import Logo from "@/components/base/logo/svgLogo";
+import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
 
 /**

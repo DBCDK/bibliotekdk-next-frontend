@@ -15,7 +15,7 @@ import Link from "@/components/base/link";
 import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 
 import styles from "./Footer.module.css";
-import Logo from "@/components/base/logo/svgLogo";
+import Logo from "@/components/base/logo/Logo";
 
 /**
  * The logo @see icons/logowhite.svg

@@ -13,6 +13,7 @@ import styles from "./Icon.module.css";
  * @returns {component}
  */
 function Icon({
+  alt,
   src = "../",
   className = "",
   children = null,
@@ -111,6 +112,7 @@ export default function Container(props) {
 
 // PropTypes for Button component
 Container.propTypes = {
+  alt: PropTypes.string.isRequired,
   src: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([

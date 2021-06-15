@@ -21,13 +21,13 @@
 div.notification {
   text-align: center;
   padding: var(--pt2) var(--pt2) 0 var(--pt2);
-  border-top: 1px solid var(--mine-shaft);
+  border-bottom: 1px solid var(--mine-shaft);
 }
 
 div.notification i{
   float: right;
   position: relative;
-  top:5px;
+  top:var(--pt1);
   right: -20px;
 }
 
