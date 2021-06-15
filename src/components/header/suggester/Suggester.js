@@ -122,6 +122,7 @@ function renderSuggestionsContainer(
   return (
     <div
       {...containerProps}
+      aria-label={Translate({ ...context, label: "suggestions" })}
       className={`${containerProps.className} ${keepVisibleClass}`}
       data-cy={cyKey({ name: "container", prefix: "suggester" })}
     >
@@ -199,7 +200,6 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
 
   // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
-
   return (
     <div className={styles.input_wrap}>
       <span
@@ -214,7 +214,8 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
           <ArrowSvg />
         </Icon>
       </span>
-      <input {...props} />
+
+      <input {...props} title={placeholder} />
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => {
@@ -283,6 +284,24 @@ export function Suggester({
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
   }, [className]);
+
+  useEffect(() => {
+    // This is for accessibility only
+    // react-autosuggest doesn't seem to support
+    // aria-label on the wrapper div. Hence we do this..
+    const wrapper = document.getElementById("suggester-input")?.parentNode
+      ?.parentNode;
+
+    if (wrapper) {
+      wrapper.setAttribute(
+        "aria-label",
+        Translate({
+          ...context,
+          label: "placeholder",
+        })
+      );
+    }
+  }, []);
 
   // Default input props
   const inputProps = {

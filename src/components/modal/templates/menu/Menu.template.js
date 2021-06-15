@@ -96,7 +96,9 @@ function Menu({ isVisible = false, onLang = null }) {
                       prefix: "menu-link",
                     })}
                   >
-                    <Title type="title5">{title}</Title>
+                    <Title type="title5" tag="h2">
+                      {title}
+                    </Title>
                   </Link>
                 </li>
               );
@@ -133,7 +135,7 @@ function Menu({ isVisible = false, onLang = null }) {
                       prefix: "menu-link",
                     })}
                   >
-                    <Title type="title5">
+                    <Title type="title5" tag="h2">
                       {Translate({ context: "general", label: m.label })}
                     </Title>
                   </Link>

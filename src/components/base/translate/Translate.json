@@ -218,6 +218,14 @@
       "lecturerStatement": {
         "da": "Lektørudtalelse",
         "en": "Lecturer statement"
+      },
+      "expand": {
+        "da": "Udvid",
+        "en": "Expand"
+      },
+      "collapse": {
+        "da": "Luk",
+        "en": "Collapse"
       }
     },
     "articles": {
@@ -592,6 +600,10 @@
       "historyClear": {
         "da": "Ryd",
         "en": "Clear"
+      },
+      "suggestions": {
+        "da": "Søgeforslag",
+        "en": "Search suggestions"
       }
     },
     "modal": {

@@ -46,7 +46,13 @@ export default function Section({
 
   if (title) {
     title =
-      typeof title === "string" ? <Title type="title4">{title}</Title> : title;
+      typeof title === "string" ? (
+        <Title type="title4" tag="h2">
+          {title}
+        </Title>
+      ) : (
+        title
+      );
   }
 
   return (

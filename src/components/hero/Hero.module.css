@@ -2,8 +2,20 @@
   position: relative;
   height: 260px;
   padding-top: var(--pt4);
+  background: black;
 }
 
+.herobackground {
+  position: relative;
+}
+.gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(rgb(0, 0, 0, 0.3), transparent);
+}
 .heroicon {
   margin-top: var(--pt5);
   display: none;
