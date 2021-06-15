@@ -78,7 +78,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
 
   return manifestations.map((manifestation, index) => (
     <React.Fragment key={manifestation.pid}>
-      <div
+      <ul
         className={styles.pointer}
         data-cy={cyKey({ name: `${index}`, prefix: "bib-edition" })}
       >
@@ -98,7 +98,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
         >
           <ManifestationList manifestation={manifestation} />
         </Row>
-      </div>
+      </ul>
       <ManifestationRowFull manifestation={manifestation} index={index} />
       <Divider />
     </React.Fragment>

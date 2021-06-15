@@ -6,6 +6,7 @@ import Skeleton from "@/components/base/skeleton";
 import Icon from "@/components/base/icon";
 
 import styles from "./Tag.module.css";
+import Translate from "../../translate";
 
 /**
  * The Component function
@@ -24,6 +25,7 @@ function Tag({
   skeleton = false,
   tag = "button",
 }) {
+  const context = { context: "form" };
   const Tag = tag;
 
   const key = cyKey({ name: children, prefix: "tag" });
@@ -42,6 +44,10 @@ function Tag({
         bgColor="var(--blue)"
         src={"checkmark.svg"}
         skeleton={skeleton}
+        alt={Translate({
+          ...context,
+          label: selected ? "icon-label-selected" : "icon-label-not-selected",
+        })}
       />
     </Tag>
   );

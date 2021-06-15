@@ -24,6 +24,13 @@
 .bookmark:hover {
   /* bootstrap outline override */
   outline: none;
+
+  box-sizing: content-box;
+  border: 2px solid var(--blue);
+}
+
+.bookmark:hover i {
+  box-shadow: none;
 }
 
 /* 
@@ -44,6 +51,14 @@
 * focus
 *
 */
+.bookmark:focus {
+  box-sizing: content-box;
+  border: 2px solid var(--blue);
+}
+
+.bookmark:focus i {
+  box-shadow: none;
+}
 
 .bookmark:focus i svg path {
   stroke: blue;

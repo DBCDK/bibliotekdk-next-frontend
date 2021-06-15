@@ -442,6 +442,14 @@
       "remindsOf": {
         "da": "Minder om",
         "en": "Reminds of"
+      },
+      "arrow-left": {
+        "da": "forrige",
+        "en": "previous"
+      },
+      "arrow-right": {
+        "da": "næste",
+        "en": "next"
       }
     },
     "series": {
@@ -793,7 +801,6 @@
         "da": "Du får besked fra dit bibliotek når materialet er klar til afhentning",
         "en": "You will be notified by your library when the material is ready for collection"
       },
-      
       "order-success": {
         "da": "Bestillingen blev gennemført",
         "en": "The order was completed"
@@ -831,6 +838,14 @@
       "email-placeholder": {
         "da": "Skriv din e-mail",
         "en": "Write your email"
+      },
+      "icon-label-selected": {
+        "da": "valgt",
+        "en": "selected"
+      },
+      "icon-label-not-selected": {
+        "da": "ikke valgt",
+        "en": "not selected"
       }
     },
     "metadata": {
