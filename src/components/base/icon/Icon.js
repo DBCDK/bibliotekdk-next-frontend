@@ -23,6 +23,7 @@ function Icon({
   disabled = false,
   tabIndex = null,
   dataCy = null,
+  alt = null,
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -65,7 +66,7 @@ function Icon({
       tabIndex={tabIndex}
       data-cy={props["data-cy"] || dataCy || ""}
     >
-      {children || <img src={`/icons/${src}`} />}
+      {children || <img src={`/icons/${src}`} alt={alt} />}
     </i>
   );
 }

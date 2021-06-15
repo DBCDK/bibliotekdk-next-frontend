@@ -116,7 +116,7 @@
 
 .button.disabled,
 .button.disabled:hover {
-  color: var(--gray);
+  color: var(--mine-shaft);
 }
 
 /* 

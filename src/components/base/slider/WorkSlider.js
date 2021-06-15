@@ -15,6 +15,7 @@ import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
 import Icon from "@/components/base/icon";
+import Translate from "@/components/base/translate";
 
 /**
  * The left arrow React component
@@ -27,7 +28,7 @@ import Icon from "@/components/base/icon";
  */
 function ArrowLeft({ onClick, disabled, leftAdjust }) {
   return (
-    <label
+    <span
       className={`${styles.button} ${styles.left} ${
         leftAdjust && styles["left-adjust"]
       } ${disabled && styles.disabled}`}
@@ -38,8 +39,9 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
         src={"arrowleft.svg"}
         size={{ w: 5, h: 5 }}
         bgColor={"transparent"}
+        alt={Translate({ context: "recommendations", label: "arrow-left" })}
       />
-    </label>
+    </span>
   );
 }
 ArrowLeft.propTypes = {
@@ -58,7 +60,7 @@ ArrowLeft.propTypes = {
  */
 function ArrowRight({ onClick, disabled }) {
   return (
-    <label
+    <span
       className={`${styles.button} ${styles.right} ${
         disabled && styles.disabled
       }`}
@@ -69,8 +71,9 @@ function ArrowRight({ onClick, disabled }) {
         src={"arrowright.svg"}
         size={{ w: 5, h: 5 }}
         bgColor={"transparent"}
+        alt={Translate({ context: "recommendations", label: "arrow-right" })}
       />
-    </label>
+    </span>
   );
 }
 ArrowRight.propTypes = {

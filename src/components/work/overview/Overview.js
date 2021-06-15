@@ -121,6 +121,7 @@ export function Overview({
                   size={{ w: 7, h: "auto" }}
                   src={"ornament1.svg"}
                   skeleton={skeleton}
+                  alt=""
                 />
               </Col>
               <Col xs={12}>

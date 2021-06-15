@@ -79,6 +79,7 @@ export function InfomediaReview({
             src="chevron.svg"
             size={{ w: 2, h: "auto" }}
             skeleton={skeleton}
+            alt=""
           />
           <Link
             href={data.url}

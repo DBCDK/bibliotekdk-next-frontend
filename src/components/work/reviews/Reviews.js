@@ -51,7 +51,7 @@ function getTemplate(type) {
  */
 function ArrowLeft({ onClick, disabled, leftAdjust }) {
   return (
-    <label
+    <span
       className={`${styles.button} ${styles.left} ${
         leftAdjust && styles["left-adjust"]
       } ${disabled && styles.disabled}`}
@@ -62,8 +62,9 @@ function ArrowLeft({ onClick, disabled, leftAdjust }) {
         src={"arrowleft.svg"}
         size={{ w: 5, h: 5 }}
         bgColor={"transparent"}
+        alt={Translate({ context: "recommendations", label: "arrow-left" })}
       />
-    </label>
+    </span>
   );
 }
 
@@ -83,7 +84,7 @@ ArrowLeft.propTypes = {
  */
 function ArrowRight({ onClick, disabled }) {
   return (
-    <label
+    <span
       className={`${styles.button} ${styles.right} ${
         disabled && styles.disabled
       }`}
@@ -94,8 +95,9 @@ function ArrowRight({ onClick, disabled }) {
         src={"arrowright.svg"}
         size={{ w: 5, h: 5 }}
         bgColor={"transparent"}
+        alt={Translate({ context: "recommendations", label: "arrow-right" })}
       />
-    </label>
+    </span>
   );
 }
 
