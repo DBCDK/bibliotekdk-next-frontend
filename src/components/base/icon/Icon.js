@@ -24,7 +24,6 @@ function Icon({
   disabled = false,
   tabIndex = null,
   dataCy = null,
-  alt = null,
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
