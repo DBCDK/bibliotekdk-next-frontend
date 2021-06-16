@@ -211,6 +211,10 @@ export function Modal({
                 context: "general",
                 label: "close-modal-title",
               })}
+              alt={Translate({
+                context: "general",
+                label: "close-modal-title",
+              })}
               className={styles.close}
               // src="close_white.svg"
               size={2}
