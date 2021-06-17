@@ -1,8 +1,9 @@
 .containerback {
   position: relative;
   height: 260px;
-  padding-top: var(--pt4);
+  padding: var(--pt4);
   background: black;
+  margin-bottom: var(--pt5);
 }
 
 .herobackground {

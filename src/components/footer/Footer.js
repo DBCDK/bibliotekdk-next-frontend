@@ -7,7 +7,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import Icon from "@/components/base/icon";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Language from "@/components/base/language";
@@ -35,12 +34,16 @@ const FooterLogo = () => {
 const FirstColumn = () => {
   let label = Translate({ context: "footer", label: "hvad_er_bibliotek_dk" });
   return (
-    <div>
+    <div className={styles.about}>
       <Text type="text3" lines={1}>
         {label}
       </Text>
       <div className={styles.spacer}></div>
-      <Link href={POLICY_ARTICLE_PATH} className={styles.footerlink}>
+      <Link
+        border={{ bottom: { keepVisible: true } }}
+        href={POLICY_ARTICLE_PATH}
+        className={styles.footerlink}
+      >
         <Text tag="span" type="text3">
           {Translate({
             context: "general",
@@ -97,6 +100,7 @@ const ContactLinks = () => {
     return (
       <Link
         href={href}
+        border={{ bottom: { keepVisible: true } }}
         className={styles.footerlink}
         dataCy="contactlink"
         onClick={onClick}
@@ -181,6 +185,7 @@ const BranchLinks = () => {
     <div key={key}>
       <Link
         href={branch_links[key]}
+        border={{ bottom: { keepVisible: true } }}
         className={`${
           footerlinksdisabled ? styles.disabled : styles.footerlink
         }`}

@@ -174,4 +174,9 @@
   .suggestion:last-child {
     padding: var(--pt1) var(--pt2) var(--pt2) var(--pt2);
   }
+
+  /* only one suggestion in list*/
+  .suggestion:only-child {
+    padding: var(--pt2);
+  }
 }

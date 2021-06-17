@@ -45,6 +45,7 @@ const Index = () => {
           title="Bibliotek.dk tilbyder"
           matchTag="section 1"
           template="triple"
+          topSpace={false}
         />
         <ArticleSection
           title="Kan vi hjælpe?"

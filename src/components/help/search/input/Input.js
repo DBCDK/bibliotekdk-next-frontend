@@ -45,7 +45,10 @@ export default function Input({
           type="text"
           value={value}
           onChange={onChange}
-          placeholder="Søg i hjælp"
+          placeholder={Translate({
+            context: "help",
+            label: "help-search-placeholder",
+          })}
         ></input>
         <span
           className={`${styles.clear} ${value ? styles.visible : ""}`}
