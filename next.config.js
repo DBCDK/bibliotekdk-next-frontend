@@ -65,6 +65,11 @@ module.exports = {
         destination: "/hjaelp",
         permanent: true,
       },
+      {
+        source: "/was",
+        destination: "https://www.was.digst.dk/beta-bibliotek-dk",
+        permanent: false,
+      },
     ];
   },
   serverRuntimeConfig: {
