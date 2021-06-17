@@ -26,10 +26,20 @@
   color: var(--white);
 }
 
-.disabled{
+.disabled {
   color: var(--gray);
   cursor: default;
   pointer-events: none;
+}
+
+.about {
+  padding-top: var(--pt5);
+}
+
+@media (min-width: 768px) {
+  .about {
+    padding-top: 0;
+  }
 }
 
 /* Print styles */

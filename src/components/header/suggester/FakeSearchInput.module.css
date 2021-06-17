@@ -35,7 +35,7 @@
 }
 .fakebutton p {
   color: white;
-  font-weight: 500;
+  font-family: var(--body-font-medium);
   font-size: 20px;
   line-height: 54px;
   text-align: center;

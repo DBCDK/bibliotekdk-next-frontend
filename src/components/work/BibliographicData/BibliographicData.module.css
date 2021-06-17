@@ -7,11 +7,11 @@
 .pointer {
   cursor: pointer;
   padding: 4px 0 16px 0;
+  font-family: var(--body-font-semibold);
 }
 
 .pointer:hover {
   color: var(--blue);
-  font-weight: bold;
 }
 
 .pointer:hover + div + hr {
@@ -20,7 +20,6 @@
 }
 
 .pointer:focus {
-  font-weight: bold;
   transition: color 0.5s;
   color: var(--blue);
 }
@@ -41,7 +40,7 @@
 .fullmanifestation button {
   margin-top: var(--pt4);
   margin-bottom: var(--pt4);
-  font-weight: bold;
+  font-family: var(--body-font-semibold);
   transition: color 0.5s;
   color: var(--blue);
 }

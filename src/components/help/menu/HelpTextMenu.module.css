@@ -1,59 +1,56 @@
-.helpskeleton{
-    max-height: 250px;
+.helpskeleton {
+  max-height: 250px;
 }
 
 .helplink {
-    padding-left: var(--pt4);
+  padding-left: var(--pt4);
 }
-.helplink p{
-    white-space: normal;
+.helplink p {
+  white-space: normal;
 }
 
-.helpmenu{
-    display: none;
+.helpmenu {
+  display: none;
 }
 
 @media (min-width: 992px) {
-    .helpmenu {
-        display: block;
-    }
+  .helpmenu {
+    display: block;
+  }
 }
-
 
 .helpicongroup {
-    padding-right:var(--pt1);
+  padding-right: var(--pt1);
 }
 
-.helpiconlink{
-    padding-left:var(--pt1);
-    position: relative;
-    top: 2px;
+.helpiconlink {
+  padding-left: var(--pt1);
+  position: relative;
+  top: 2px;
 }
 
-.helpiconrotate{
-    transform: rotate(90deg);
-    position: relative;
-    top: 5px;
+.helpiconrotate {
+  transform: rotate(90deg);
+  position: relative;
+  top: 5px;
 }
 
 .helpgroup {
-    cursor: pointer;
+  cursor: pointer;
 }
 
-.helpgroup:hover{
-    text-decoration: underline;
+.helpgroup:hover {
+  text-decoration: underline;
 }
 
-.helpgroup:focus{
-    text-decoration: underline;
+.helpgroup:focus {
+  text-decoration: underline;
 }
 
-.helpactive p{
-    font-weight: bold;
+.helpactive p {
+  font-family: var(--body-font-semibold);
 }
 
 .helphide {
-    display: none;
+  display: none;
 }
-
-

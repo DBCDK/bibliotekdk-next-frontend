@@ -714,6 +714,10 @@
       "help-breadcrumb": {
         "da": "Hjælp",
         "en": "Help"
+      },
+      "help-search-placeholder": {
+        "da": "Søg i hjælp",
+        "en": "Search for help"
       }
     },
     "language": {

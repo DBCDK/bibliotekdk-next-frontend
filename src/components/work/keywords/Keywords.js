@@ -99,7 +99,11 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
               className={`${styles.keyword} ${sizeClass}`}
               key={`${k.type}-${key}`}
             >
-              <Link a href={url(k.value)}>
+              <Link
+                a
+                href={url(k.value)}
+                border={{ bottom: { keepVisible: true } }}
+              >
                 <Title type="title4" skeleton={skeleton}>
                   {val}
                 </Title>

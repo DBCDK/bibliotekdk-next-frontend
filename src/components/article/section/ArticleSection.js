@@ -108,6 +108,7 @@ export function ArticleSection({
   matchTag,
   template,
   color = false,
+  topSpace = true,
 }) {
   const context = getContext(template);
 
@@ -127,7 +128,7 @@ export function ArticleSection({
   }
 
   return (
-    <Section title={title} bgColor={backgroundColor} topSpace={true}>
+    <Section title={title} bgColor={backgroundColor} topSpace={topSpace}>
       <Template articles={articles} skeleton={skeleton} />
     </Section>
   );

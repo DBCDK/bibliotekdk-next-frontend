@@ -33,11 +33,9 @@
   max-width: 380px;
 }
 
-
 .row {
   margin: var(--pt2) 0;
   white-space: normal;
-  
 }
 .row h3 {
   color: var(--blue);
@@ -101,19 +99,17 @@
   width: 100%;
 }
 
-
 .search form {
   display: flex;
   margin-bottom: var(--pt4);
-  
 }
 
 .search h4 {
   margin-top: var(--pt2);
-  margin-bottom: var(--pt1)
+  margin-bottom: var(--pt1);
 }
 .row mark {
-  font-weight: 600;
+  font-family: var(--body-font-semibold);
   background-color: transparent;
   color: darker;
 }
@@ -122,7 +118,6 @@
   .search form {
     margin-bottom: var(--pt12);
   }
-
 }
 
 @media (min-width: 992px) {
