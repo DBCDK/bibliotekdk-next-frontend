@@ -26,6 +26,7 @@ import useUser from "../hooks/useUser";
 import { externalUrls } from "@/lib/Navigation";
 import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
+import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 /**
  * The Component function
@@ -215,6 +216,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                   ))}
                 </div>
               </div>
+              <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
                   onSubmit={(e) => {

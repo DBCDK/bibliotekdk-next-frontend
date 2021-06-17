@@ -1,0 +1,20 @@
+.skiptomainlink {
+    border: 0;
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    position: absolute;
+}
+
+.skiptomainlink:focus {
+    padding: 1rem;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: white;
+    z-index: 1;
+    width: auto;
+    height: auto;
+}

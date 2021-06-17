@@ -19,6 +19,7 @@ import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/logo/Logo";
+import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 /**
  * The custom Header for help page
@@ -83,6 +84,7 @@ export function Header({
           </span>
         </Col>
       </Row>
+      <SkipToMainAnchor />
     </Container>
   );
 }

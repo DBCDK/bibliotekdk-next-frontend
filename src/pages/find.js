@@ -24,7 +24,6 @@ function Find() {
   const router = useRouter();
   const { q, page = 1, view } = router.query;
 
-  //
   // use the useData hook to fetch data
   const hitcountResponse = useData(hitcount({ q }));
 

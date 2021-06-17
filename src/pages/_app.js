@@ -39,6 +39,7 @@ import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import Feedback from "@/components/feedback";
+import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -77,9 +78,11 @@ export default function MyApp({ Component, pageProps, router }) {
             <meta name="mobile-web-app-capable" content="yes"></meta>
             <meta name="theme-color" content="#3333ff"></meta>
           </Head>
+          <SkipToMainLink />
           <Banner />
           <Notifications />
           <HelpHeader />
+
           <Component {...pageProps} />
           <Feedback />
           <CookieBox />

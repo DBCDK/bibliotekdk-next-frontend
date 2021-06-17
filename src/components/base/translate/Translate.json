@@ -35,6 +35,10 @@
       }
     },
     "general": {
+      "SkipToMain": {
+        "da": "Gå til indhold",
+        "en": "Skip to content"
+      },
       "heroTxt": {
         "da": "Afhent lokalt<br /> eller tilgå digitalt",
         "en": "Pick up locally<br /> or access digitally"
