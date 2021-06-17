@@ -6,6 +6,7 @@ import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import classNames from "classnames/bind";
+import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * Split given text in <spans>. Split by newline (\\n). We need
@@ -62,7 +63,11 @@ export default function Logo({
   return (
     <div className={styles.wrapper}>
       <Link
-        className={styles.logoWrap}
+        className={[
+          styles.logoWrap,
+          animations["on-focus"],
+          animations["f-outline"],
+        ].join(" ")}
         border={false}
         href={href}
         dataCy={cyKey({
