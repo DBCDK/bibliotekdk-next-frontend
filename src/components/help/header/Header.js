@@ -72,7 +72,14 @@ export function Header({
                   label: "header-button-ask-short",
                 })}
               </Text>
-              <Icon size={2} src="bubble.svg" />
+              <Icon
+                size={2}
+                src="bubble.svg"
+                alt={Translate({
+                  context: "help",
+                  label: "header-button-ask-full",
+                })}
+              />
             </Link>
             <Language>
               <Link>
