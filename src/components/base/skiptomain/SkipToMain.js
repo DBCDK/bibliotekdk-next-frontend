@@ -15,6 +15,11 @@ export function SkipToMainLink() {
       onClick={(e) => {
         location.href = "#nav-main";
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.keyCode === 13) {
+          location.href = "#nav-main";
+        }
+      }}
     >
       <Text type="text4">
         {Translate({
