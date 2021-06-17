@@ -286,6 +286,10 @@
       "English": {
         "da": "Engelsk",
         "en": "English"
+      },
+      "accessibility": {
+        "da": "Tilgængelighedserklæring",
+        "en": "Accessibility statement"
       }
     },
     "bibliographic-data": {

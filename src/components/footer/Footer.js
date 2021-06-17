@@ -86,15 +86,21 @@ const ContactLinks = () => {
       query: {},
     },
     English: { pathname: "/", query: {} },
+    accessibility: {
+      pathname: "https://www.was.digst.dk/beta-bibliotek-dk",
+      query: {},
+      target: "_blank",
+    },
   };
 
-  const FooterLink = function ({ href, children, onClick }) {
+  const FooterLink = function ({ href, children, onClick, target = "_self" }) {
     return (
       <Link
         href={href}
         className={styles.footerlink}
         dataCy="contactlink"
         onClick={onClick}
+        target={target}
       >
         <Text tag="span" type="text3">
           {children}
@@ -104,8 +110,15 @@ const ContactLinks = () => {
   };
 
   return Object.keys(contact_links).map((key) => {
+    let href = {
+      pathname: contact_links[key].pathname,
+      query: contact_links[key].query,
+    };
+    let target = contact_links[key].target
+      ? contact_links[key].target
+      : "_self";
     let item = (
-      <FooterLink href={contact_links[key]}>
+      <FooterLink href={href} target={target}>
         {Translate({ context: "footer", label: `${key}` })}
       </FooterLink>
     );
