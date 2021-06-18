@@ -88,6 +88,10 @@ const ContactLinks = () => {
       pathname: "/artikel/privatlivspolitik/11",
       query: {},
     },
+    suppliers: {
+      pathname: "/artikel/leverandører/59",
+      query: {},
+    },
     English: { pathname: "/", query: {} },
     accessibility: {
       pathname: "https://www.was.digst.dk/beta-bibliotek-dk",
