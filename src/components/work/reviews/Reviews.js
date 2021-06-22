@@ -146,11 +146,18 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     on: {
       init: (swiper) => {
         // We update isBeginning and isEnd on init
-        setPosition({ isBeginning: swiper.isBeginning, isEnd: swiper.isEnd });
+        setPosition({
+          isBeginning: swiper.isBeginning,
+          isEnd: swiper.isEnd,
+          progress: swiper.progress,
+        });
       },
-      transitionStart: (swiper) => {
-        // We update isBeginning and isEnd when user interacts with swiper
-        setPosition({ isBeginning: swiper.isBeginning, isEnd: swiper.isEnd });
+      activeIndexChange: (swiper) => {
+        setPosition({
+          isBeginning: swiper.isBeginning,
+          isEnd: swiper.isEnd,
+          progress: swiper.progress,
+        });
       },
     },
   };
