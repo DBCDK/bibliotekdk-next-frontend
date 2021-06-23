@@ -7,10 +7,13 @@ import { notificationsQuery } from "@/lib/api/notification.fragment";
 import styles from "./Notifications.module.css";
 import classNames from "classnames/bind";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import Icon from "@/components/base/icon/Icon";
 import { getLangcode } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
+import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * list of notifications
@@ -38,15 +41,31 @@ export function Notifications({ notificationObject }) {
         sessionStorage.getItem("showme_" + index) === "no" ? styles.hidden : ""
       )}
     >
-      <Container>
-        <Icon
-          src={"close.svg"}
-          size={{ w: "auto", h: "auto" }}
-          className={styles.cancelicon}
-          onClick={() => toggleNotification(index)}
-          alt={Translate({ context: "general", label: "close" })}
-        />
-        <BodyParser body={notification.fieldNotificationText.value} />
+      <Container fluid>
+        <Row>
+          <Col>
+            <BodyParser body={notification.fieldNotificationText.value} />
+          </Col>
+          <Col xs={1}>
+            <Icon
+              src={"close.svg"}
+              size={{ w: "auto", h: "auto" }}
+              className={[
+                styles.cancelicon,
+                animations["on-focus"],
+                animations["f-outline"],
+              ].join(" ")}
+              onClick={() => toggleNotification(index)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.keyCode === 13) {
+                  toggleNotification(index);
+                }
+              }}
+              alt={Translate({ context: "general", label: "close" })}
+              tabIndex="0"
+            />
+          </Col>
+        </Row>
       </Container>
     </div>
   ));
