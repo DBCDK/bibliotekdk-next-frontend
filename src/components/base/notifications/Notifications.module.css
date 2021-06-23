@@ -24,6 +24,14 @@ div.notification {
   border-bottom: 1px solid var(--mine-shaft);
 }
 
+/* Small devices (landscape phones, 576px and down) */
+@media (max-width: 576px) {
+  div.notification{
+    text-align: left;
+  }
+}
+
+
 div.notification i{
   float: right;
   padding: var(--pt1);
