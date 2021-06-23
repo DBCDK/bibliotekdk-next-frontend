@@ -20,15 +20,13 @@
 
 div.notification {
   text-align: center;
-  padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  padding-top: var(--pt2);
   border-bottom: 1px solid var(--mine-shaft);
 }
 
 div.notification i{
   float: right;
-  position: relative;
-  top:var(--pt1);
-  right: -20px;
+  padding: var(--pt1);
 }
 
 div.notification .cancelicon:hover {
