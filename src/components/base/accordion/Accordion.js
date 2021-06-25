@@ -12,6 +12,7 @@ import styles from "./Accordion.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
 import BodyParser from "@/components/base/bodyparser";
+import { useContext } from "react";
 
 /**
  * The Component function
@@ -26,7 +27,7 @@ import BodyParser from "@/components/base/bodyparser";
  */
 
 export function Item({ title, children, eventKey }) {
-  const currentEventKey = React.useContext(AccordionContext);
+  const currentEventKey = useContext(AccordionContext);
 
   const onClick = useAccordionToggle(eventKey);
 

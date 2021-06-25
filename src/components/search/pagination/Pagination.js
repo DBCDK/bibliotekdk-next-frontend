@@ -19,7 +19,7 @@ export default function Pagination({
 }) {
   numPages = Math.min(10, numPages);
   return (
-    <React.Fragment>
+    <>
       {numPages > 1 && numPages > currentPage && (
         <div className={`${styles.pagination} ${styles.mobile}`}>
           <Button
@@ -96,7 +96,7 @@ export default function Pagination({
           <RightSvg />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 Pagination.propTypes = {

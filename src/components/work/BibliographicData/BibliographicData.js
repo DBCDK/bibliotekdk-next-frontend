@@ -4,7 +4,7 @@
  */
 import { Row, Collapse } from "react-bootstrap";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, Fragment } from "react";
 
 import Section from "@/components/base/section";
 import Divider from "@/components/base/divider";
@@ -77,7 +77,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   };
 
   return manifestations.map((manifestation, index) => (
-    <React.Fragment key={manifestation.pid}>
+    <Fragment key={manifestation.pid}>
       <ul
         className={styles.pointer}
         data-cy={cyKey({ name: `${index}`, prefix: "bib-edition" })}
@@ -101,7 +101,7 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
       </ul>
       <ManifestationRowFull manifestation={manifestation} index={index} />
       <Divider />
-    </React.Fragment>
+    </Fragment>
   ));
 }
 

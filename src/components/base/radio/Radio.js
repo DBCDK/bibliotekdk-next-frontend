@@ -5,7 +5,7 @@
  */
 import PropTypes from "prop-types";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Children, cloneElement } from "react";
 import styles from "./Radio.module.css";
 
 import animations from "@/components/base/animation/animations.module.css";
@@ -120,8 +120,8 @@ function Group({ children, enabled = true, ...props }) {
         }
       }}
     >
-      {React.Children.map(children, (child, index) =>
-        React.cloneElement(child, {
+      {Children.map(children, (child, index) =>
+        cloneElement(child, {
           _ref: (ref) => (childrenRef.current[index] = ref),
           "data-cy": "radio-button-" + index,
           disabled: enabled === false || child.props.disabled,

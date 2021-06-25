@@ -10,7 +10,7 @@ import styles from "./BibliographicData.module.css";
 
 export function ManifestationList({ manifestation = null }) {
   return (
-    <React.Fragment>
+    <>
       <Col key={manifestation.materialType} xs={12} md className={styles.right}>
         <div>
           <Title type="title4">{manifestation.materialType}</Title>
@@ -18,6 +18,6 @@ export function ManifestationList({ manifestation = null }) {
         </div>
         <ExpandIcon open={manifestation.open} />
       </Col>
-    </React.Fragment>
+    </>
   );
 }

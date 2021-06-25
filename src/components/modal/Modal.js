@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, cloneElement } from "react";
 import { get } from "lodash";
 import PropTypes from "prop-types";
 
@@ -231,7 +231,7 @@ export function Modal({
         </div>
         <div className={styles.content}>
           {(children &&
-            React.cloneElement(children, {
+            cloneElement(children, {
               isVisible,
               onClose,
               onLang,

@@ -63,11 +63,11 @@ const FirstColumn = () => {
 const SecondColumn = () => {
   let label = Translate({ context: "footer", label: "contact" });
   return (
-    <React.Fragment>
+    <>
       <Text type="text4">{label}</Text>
       <div className={styles.spacer}></div>
       <ContactLinks />
-    </React.Fragment>
+    </>
   );
 };
 
@@ -154,13 +154,13 @@ const ContactLinks = () => {
 const ThirdColumn = () => {
   let label = Translate({ context: "footer", label: "branches" });
   return (
-    <React.Fragment>
+    <>
       <Text type="text4" lines={1}>
         {label}
       </Text>
       <div className={styles.spacer}></div>
       <BranchLinks className={styles.padder} />
-    </React.Fragment>
+    </>
   );
 };
 

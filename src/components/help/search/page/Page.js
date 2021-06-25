@@ -35,7 +35,7 @@ export function Page({ result, isLoading, query }) {
   });
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
@@ -66,7 +66,7 @@ export function Page({ result, isLoading, query }) {
           <Faq className={styles.faq} />
         )}
       </main>
-    </React.Fragment>
+    </>
   );
 }
 Page.propTypes = {

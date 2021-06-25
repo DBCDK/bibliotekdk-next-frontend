@@ -29,7 +29,7 @@ export default function Page() {
   });
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
@@ -49,6 +49,6 @@ export default function Page() {
           <Articles />
         </Section>
       </main>
-    </React.Fragment>
+    </>
   );
 }

@@ -32,7 +32,7 @@ export function HelpText({ helptext }) {
   if (helptext.title && helptext.body) {
     const path = ["help", helptext.fieldHelpTextGroup];
     return (
-      <React.Fragment>
+      <>
         <div className={styles.helpbreadcrumb}>
           <Breadcrumbs path={path} href="/help" skeleton={false} />
         </div>
@@ -40,7 +40,7 @@ export function HelpText({ helptext }) {
           {helptext.title}
         </Title>
         <BodyParser body={helptext?.body?.value} />
-      </React.Fragment>
+      </>
     );
   } else {
     return null;

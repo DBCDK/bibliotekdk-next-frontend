@@ -59,7 +59,7 @@ export default function WorkPage() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Header workId={workId} />
       <Page
         workId={workId}
@@ -70,7 +70,7 @@ export default function WorkPage() {
         type={type}
         query={{ type }}
       />
-    </React.Fragment>
+    </>
   );
 }
 
