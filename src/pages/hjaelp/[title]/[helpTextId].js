@@ -28,10 +28,10 @@ export default function HelptextPage() {
   const { helpTextId } = router.query;
 
   return (
-    <React.Fragment>
+    <>
       <Header helpTextId={helpTextId} />
       <Page helpTextId={helpTextId} />
-    </React.Fragment>
+    </>
   );
 }
 

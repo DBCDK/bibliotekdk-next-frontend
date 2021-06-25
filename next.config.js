@@ -96,4 +96,9 @@ module.exports = {
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
   },
+  eslint: {
+    // Warning: Dangerously allow production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
 };

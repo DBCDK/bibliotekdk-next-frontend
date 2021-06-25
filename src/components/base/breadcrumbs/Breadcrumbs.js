@@ -68,7 +68,7 @@ function BreadcrumbSkeleton(props) {
   // className={`${props.className} ${styles.skeleton}`}
 
   return (
-    <React.Fragment>
+    <>
       <Breadcrumb
         {...props}
         className={`${props.className || ""} ${styles.skeleton}`}
@@ -80,7 +80,7 @@ function BreadcrumbSkeleton(props) {
         {"Crumb"}
       </Breadcrumb>
       {props.separator && <Separator />}
-    </React.Fragment>
+    </>
   );
 }
 

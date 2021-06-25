@@ -28,6 +28,7 @@ export default function Link({
   tabIndex = "0",
   tag = "a",
   disabled = false,
+  scroll = true,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -69,7 +70,7 @@ export default function Link({
 
   // Return the component
   return (
-    <NextLink href={href} shallow={true}>
+    <NextLink href={href} shallow={true} scroll={scroll}>
       {children}
     </NextLink>
   );
@@ -114,4 +115,5 @@ Link.propTypes = {
   tabIndex: PropTypes.string,
   tag: PropTypes.oneOf(["a", "span"]),
   disabled: PropTypes.bool,
+  scroll: PropTypes.bool,
 };

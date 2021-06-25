@@ -1,4 +1,4 @@
-import React from "react";
+import { cloneElement } from "react";
 import PropTypes from "prop-types";
 import Router from "next/router";
 
@@ -23,7 +23,7 @@ export default function Language({ children }) {
   };
 
   // Return the new copy of children including the new onClick
-  return React.cloneElement(children, { onClick: handleClick });
+  return cloneElement(children, { onClick: handleClick });
 }
 
 Language.propTypes = {

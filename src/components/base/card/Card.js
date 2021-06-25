@@ -92,7 +92,7 @@ export default function Card({
               })}
             </Text>
           ) : (
-            <React.Fragment>
+            <>
               <Text
                 className={`${styles.Title}`}
                 type="text1"
@@ -110,7 +110,7 @@ export default function Card({
               >
                 {creators[0] && creators[0].name}
               </Text>
-            </React.Fragment>
+            </>
           )}
         </div>
         <div className={styles.BottomLine} />

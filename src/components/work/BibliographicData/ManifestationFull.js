@@ -126,7 +126,7 @@ export function ManifestationFull({ manifestation }) {
   }, [manifestation]);
 
   return (
-    <React.Fragment>
+    <>
       <ColumnOne manifestation={manifestation} />
       <Col xs={12} md>
         <div className={styles.container}>
@@ -148,6 +148,6 @@ export function ManifestationFull({ manifestation }) {
           })}
         </div>
       </Col>
-    </React.Fragment>
+    </>
   );
 }

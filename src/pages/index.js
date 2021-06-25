@@ -25,7 +25,7 @@ const Index = () => {
   const router = useRouter();
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
@@ -60,7 +60,7 @@ const Index = () => {
         />
         <ArticleSection title={false} matchTag="section 4" template="single" />
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

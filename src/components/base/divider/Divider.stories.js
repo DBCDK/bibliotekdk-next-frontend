@@ -10,9 +10,9 @@ export default {
  */
 export function BibData() {
   return (
-    <React.Fragment>
+    <>
       <StoryTitle>Divider</StoryTitle>
       <Divider />
-    </React.Fragment>
+    </>
   );
 }

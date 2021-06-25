@@ -77,7 +77,7 @@ export default function Section({
             )}
             <Col
               xs={12}
-              lg={{ offset: title ? 1 : 0 }}
+              lg={{ offset: title ? 1 : 0, span: 9 }}
               data-cy={cyKey({ name: "content", prefix: "section" })}
               className={noContentDividerClass}
             >

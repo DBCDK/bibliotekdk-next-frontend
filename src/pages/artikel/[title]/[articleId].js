@@ -39,11 +39,11 @@ export default function ArticlePage() {
    */
 
   return (
-    <React.Fragment>
+    <>
       <Header router={router} />
       <ArticleHeader articleId={articleId} />
       <Page articleId={articleId} />
-    </React.Fragment>
+    </>
   );
 }
 
