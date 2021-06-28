@@ -3,85 +3,154 @@
     <url>
         <loc>https://beta.bibliotek.dk/</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>always</changefreq>
         <priority>1.00</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikler</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>always</changefreq>
         <priority>0.80</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/artikler"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>always</changefreq>
         <priority>0.80</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/help"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp/faq</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>always</changefreq>
         <priority>0.80</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/faq"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/bliv-laaner/43</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/digitale-bibliotekstilbud/5</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/er-du-studerende%3F/9</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/spoerg-en-bibliotekar/7</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/privatlivspolitik/11</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
-        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/privacy-policy/26"/>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/bibliotek.dk/6</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp/kontakt-os/25</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/contact-us/25"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/artikel/leverand%C3%B8rer/59</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.80</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp/hvad-finder-jeg-paa-beta.bibliotek.dk/28</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.64</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/hjaelp/what-does-beta.bibliotek.dk-contain/28"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp/saadan-soeger-du-i-bibliotek.dk/42</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.64</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/how-to-search-in-bibliotek.dk/42"/>
     </url>
     <url>
         <loc>https://beta.bibliotek.dk/hjaelp/ny-bruger/45</loc>
         <lastmod>2021-06-28T12:15:45+00:00</lastmod>
-        <priority>0.64</priority>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
         <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/new-at-bibliotek.dk/45"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/bliv-inspireret-af-bogbloggerne/35</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/brug-for-hjaelp/39</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/bibliotek.dk-(i-beta)---et-testsite/60</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/hvad-synes-anmelderne/44</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/ny-paa-bibliotek.dk/8</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/se-alle-udgaver/54</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/om-beta.bibliotek.dk/24</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/saadan-bestiller-du-materialer/47</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/privatlivspolitik---saadan-haandterer-vi-dine-data-/26</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/privacy-policy/26"/>
     </url>
 </urlset>
