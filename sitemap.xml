@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xhtml="http://www.w3.org/1999/xhtml" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://beta.bibliotek.dk/</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>1.00</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikler</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/artikler"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/help"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/faq</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/faq"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/bliv-laaner/43</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/digitale-bibliotekstilbud/5</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/er-du-studerende%3F/9</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/spoerg-en-bibliotekar/7</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/privatlivspolitik/11</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/privacy-policy/26"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/bibliotek.dk/6</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/kontakt-os/25</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/contact-us/25"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/artikel/leverand%C3%B8rer/59</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/hvad-finder-jeg-paa-beta.bibliotek.dk/28</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.64</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/hjaelp/what-does-beta.bibliotek.dk-contain/28"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/saadan-soeger-du-i-bibliotek.dk/42</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.64</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/how-to-search-in-bibliotek.dk/42"/>
+    </url>
+    <url>
+        <loc>https://beta.bibliotek.dk/hjaelp/ny-bruger/45</loc>
+        <lastmod>2021-06-28T12:15:45+00:00</lastmod>
+        <priority>0.64</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://beta.bibliotek.dk/en/hjaelp/new-at-bibliotek.dk/45"/>
+    </url>
+</urlset>
