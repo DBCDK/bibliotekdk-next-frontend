@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
@@ -247,6 +247,7 @@ function shouldRenderSuggestions(value, reason) {
 export function Suggester({
   className = "",
   query = "",
+  initialQuery = "", // router param
   suggestions = [],
   onChange = null,
   onClose = null,
@@ -254,7 +255,6 @@ export function Suggester({
   isMobile = false,
   skeleton = false,
   history = [],
-  isHistory = false,
   clearHistory = null,
 }) {
   // Make copy of all suggestion objects
@@ -268,17 +268,21 @@ export function Suggester({
    * Internal query state is needed for arrow navigation in suggester.
    * When using arrow up/down, the value changes in the inputfield, but we dont
    * want to trigger the query callback.
+   * The int(ernal)Query can differ from poth the initialQuery (router param) and the query prop)
    */
-  const [intQuery, setIntQuery] = useState(query);
+  const [intQuery, setIntQuery] = useState(initialQuery);
 
-  // If user did not type any search, show latest history search as suggestions
-  if (isMobile && (!query || query === "")) {
-    // Get history for latest user search (localStorage)
-    suggestions = history;
+  // Flag that history is used in suggester
+  const isHistory = !!(isMobile && initialQuery === "" && query === "");
 
-    // Flag that history is used in suggester
-    isHistory = true;
-  }
+  // clear queries
+  useEffect(() => {
+    if (isMobile && initialQuery === "") {
+      // clear internal query + onChange callback
+      setIntQuery("");
+      onChange && onChange("");
+    }
+  }, [isMobile, initialQuery]);
 
   // Create theme container with className prop
   useEffect(() => {
@@ -302,6 +306,8 @@ export function Suggester({
       );
     }
   }, []);
+
+  console.log("### isHistory", isHistory);
 
   // Default input props
   const inputProps = {
@@ -328,7 +334,7 @@ export function Suggester({
       focusInputOnSuggestionClick={false}
       alwaysRenderSuggestions={!!isMobile}
       // shouldRenderSuggestions={shouldRenderSuggestions}
-      suggestions={suggestions}
+      suggestions={isHistory ? history : suggestions}
       onSuggestionsClearRequested={() => {
         // clear internal and external query if mobile
         if (isMobile) {
@@ -391,8 +397,12 @@ export function Suggester({
  */
 export default function Wrap(props) {
   let { className } = props;
-
   const { onChange } = props;
+
+  const router = useRouter();
+
+  const initialQuery = router.query.q || "";
+
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState();
 
@@ -434,6 +444,7 @@ export default function Wrap(props) {
       }}
       className={className}
       skeleton={isLoading}
+      initialQuery={initialQuery}
       query={query}
       suggestions={(data && data.suggest && data.suggest.result) || []}
     />
