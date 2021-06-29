@@ -247,7 +247,6 @@ function shouldRenderSuggestions(value, reason) {
 export function Suggester({
   className = "",
   query = "",
-  initialQuery = "", // router param
   suggestions = [],
   onChange = null,
   onClose = null,
@@ -268,21 +267,20 @@ export function Suggester({
    * Internal query state is needed for arrow navigation in suggester.
    * When using arrow up/down, the value changes in the inputfield, but we dont
    * want to trigger the query callback.
-   * The int(ernal)Query can differ from poth the initialQuery (router param) and the query prop)
    */
-  const [intQuery, setIntQuery] = useState(initialQuery);
+  const [intQuery, setIntQuery] = useState(query);
 
   // Flag that history is used in suggester
-  const isHistory = !!(isMobile && initialQuery === "" && query === "");
+  const isHistory = !!(isMobile && query === "");
 
   // clear queries
   useEffect(() => {
-    if (isMobile && initialQuery === "") {
+    if (isMobile) {
       // clear internal query + onChange callback
       setIntQuery("");
       onChange && onChange("");
     }
-  }, [isMobile, initialQuery]);
+  }, [isMobile]);
 
   // Create theme container with className prop
   useEffect(() => {
@@ -306,8 +304,6 @@ export function Suggester({
       );
     }
   }, []);
-
-  console.log("### isHistory", isHistory);
 
   // Default input props
   const inputProps = {
@@ -403,7 +399,7 @@ export default function Wrap(props) {
 
   const initialQuery = router.query.q || "";
 
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState();
 
   const { data, isLoading, error } = useData(
@@ -444,7 +440,6 @@ export default function Wrap(props) {
       }}
       className={className}
       skeleton={isLoading}
-      initialQuery={initialQuery}
       query={query}
       suggestions={(data && data.suggest && data.suggest.result) || []}
     />
