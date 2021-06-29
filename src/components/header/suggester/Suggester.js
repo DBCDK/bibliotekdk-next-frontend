@@ -210,7 +210,7 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
           onClose();
         }}
       >
-        <Icon size={{ w: "auto", h: 2 }}>
+        <Icon size={{ w: "auto", h: 2 }} alt="">
           <ArrowSvg />
         </Icon>
       </span>
@@ -223,7 +223,7 @@ function renderInputComponent(inputProps, isMobile, onClose, onClear) {
           focusInput();
         }}
       >
-        <Icon size={{ w: "auto", h: 2 }}>
+        <Icon size={{ w: "auto", h: 2 }} alt="">
           <ClearSvg />
         </Icon>
       </span>

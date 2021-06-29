@@ -31,7 +31,12 @@ export function History({ className = "", data = {}, skeleton = false }) {
       data-cy={cyKey({ name: "history-element", prefix: "suggester" })}
     >
       <div className={styles.wrap}>
-        <Icon src="history.svg" bgColor="var(--iron)" skeleton={skeleton} />
+        <Icon
+          src="history.svg"
+          bgColor="var(--iron)"
+          skeleton={skeleton}
+          alt=""
+        />
       </div>
 
       <div className={styles.text}>

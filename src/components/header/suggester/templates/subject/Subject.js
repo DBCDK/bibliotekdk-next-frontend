@@ -32,7 +32,12 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
       data-cy={cyKey({ name: "subject-element", prefix: "suggester" })}
     >
       <div className={styles.wrap}>
-        <Icon src="search.svg" bgColor="var(--iron)" skeleton={skeleton} />
+        <Icon
+          src="search.svg"
+          bgColor="var(--iron)"
+          skeleton={skeleton}
+          alt=""
+        />
       </div>
 
       <div className={styles.text}>

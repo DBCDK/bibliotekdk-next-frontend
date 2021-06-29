@@ -56,7 +56,7 @@ export default function Searchbar({ query }) {
                       {Translate({ context: "search", label: "filters" })}
                     </Text>
                   </Link>
-                  <Icon size={2} src="chevron.svg" />
+                  <Icon size={2} src="chevron.svg" alt="" />
                 </span>
               </Col>
             </Row>

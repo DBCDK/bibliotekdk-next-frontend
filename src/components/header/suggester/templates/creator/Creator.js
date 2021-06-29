@@ -32,9 +32,14 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
     >
       <div className={styles.wrap}>
         {!skeleton && data.imageUrl ? (
-          <img src={data.imageUrl} />
+          <img src={data.imageUrl} alt="" />
         ) : (
-          <Icon src="login.svg" bgColor="var(--iron)" skeleton={skeleton} />
+          <Icon
+            src="login.svg"
+            bgColor="var(--iron)"
+            skeleton={skeleton}
+            alt=""
+          />
         )}
       </div>
       <div className={styles.text}>

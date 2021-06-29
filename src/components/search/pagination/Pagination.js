@@ -74,6 +74,7 @@ export default function Pagination({
               skeleton={isLoading}
               tabIndex="0"
               data-cy={`page-${page}-button`}
+              alt=""
             >
               <span>{page}</span>
             </Icon>
