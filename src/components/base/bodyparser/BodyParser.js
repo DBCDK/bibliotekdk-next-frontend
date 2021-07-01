@@ -43,10 +43,12 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
 
     // get dom element containing login links
     const timer = setTimeout(() => {
-      const href = articleBody.current.querySelectorAll(
-        "[href='https://login.bib.dk/login']"
-      );
-      if (href.length > 0) {
+      const href =
+        articleBody.current &&
+        articleBody.current.querySelectorAll(
+          "[href='https://login.bib.dk/login']"
+        );
+      if (href && href.length > 0) {
         href.forEach((ref) => {
           ref.href = "#";
           ref.addEventListener("click", function (e) {
