@@ -12,6 +12,7 @@ import { encodeString } from "@/lib/utils";
 import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLangcode } from "@/components/base/translate/Translate";
+import Translate from "@/components/base/translate";
 
 /**
  * Component to show helptext menu in groups
@@ -62,7 +63,9 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
                 )}
               />
             </span>
-            <span>{group.name}</span>
+            <span>
+              {Translate({ context: "helpmenu", label: `${group.name}` })}
+            </span>
           </Text>
         </div>
         <div
