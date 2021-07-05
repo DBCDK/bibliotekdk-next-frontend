@@ -33,7 +33,6 @@ export function Page({ result, isLoading, query }) {
     ...context,
     label: "help-description",
   });
-
   return (
     <React.Fragment>
       <Head>

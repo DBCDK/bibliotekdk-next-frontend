@@ -50,8 +50,8 @@ export function Sections({ className, data, skeleton }) {
         </Row>
       </Section>
 
-      {Object.keys(menus).map((s, i) => {
-        const links = menus[s];
+      {Object.keys(menus).map((group_name, i) => {
+        const links = menus[group_name];
 
         return (
           <Section
@@ -59,10 +59,10 @@ export function Sections({ className, data, skeleton }) {
             contentDivider={false}
             title={
               <Title type="title4" skeleton={skeleton}>
-                {s}
+                {Translate({ context: "helpmenu", label: `${group_name}` })}
               </Title>
             }
-            key={`${s}_${i}`}
+            key={`${group_name}_${i}`}
           >
             <Row className={styles.content}>
               <Col lg="8">

@@ -682,6 +682,48 @@
         "en": "Help and instructions"
       }
     },
+    "helpmenu": {
+      "Om bibliotek.dk": {
+        "da" : "Om bibliotek.dk",
+        "en" : "About bibliotek.dk"
+      },
+      "Søgning": {
+        "da": "Søgning",
+        "en": "Search"
+      },
+      "Bestilling": {
+        "da" : "Bestilling",
+        "en" : "Order"
+      },
+      "Login": {
+        "da": "Login",
+        "en": "Login"
+      },
+      "Profil": {
+        "da": "Profil",
+        "en": "Profile"
+      },
+      "Teknik": {
+        "da": "Teknik",
+        "en": "Technique"
+      },
+      "Mobil version": {
+        "da": "Mobil version",
+        "en": "Mobile version"
+      },
+      "Privatlivspolitik": {
+        "da": "Privatlivspolitik",
+        "en": "Privacy"
+      },
+      "Tilgængelighed": {
+        "da": "Tilgængelighed",
+        "en": "Accessibility"
+      },
+      "Kontakt": {
+        "da": "Kontakt",
+        "en": "Contact"
+      }
+    },
     "help": {
       "Help and guides": {
         "da": "Hjælp og vejledinger",
