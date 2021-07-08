@@ -28,6 +28,8 @@ import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
+import MaterialSelect from "@/components/base/select/Select";
+
 /**
  * The Component function
  *
@@ -53,6 +55,16 @@ export function Header({ className = "", router = null, story = null, user }) {
     { label: "games", href: "/#!" },
     { label: "music", href: "/#!" },
     { label: "nodes", href: "/#!" },
+  ];
+
+  const options = [
+    { value: "all", label: "all_materials" },
+    { value: "books", label: "books" },
+    { value: "articles", label: "articles" },
+    { value: "film", label: "film" },
+    { value: "games", label: "games" },
+    { value: "music", label: "music" },
+    { value: "nodes", label: "nodes" },
   ];
 
   // for beta1 - disable links above
@@ -119,12 +131,17 @@ export function Header({ className = "", router = null, story = null, user }) {
     ? styles.suggester__visible
     : "";
 
-  const doSearch = (query, suggestion) => {
+  const doSearch = ({ query, suggestion, materialtype }) => {
+    console.log(query, "SEARCH QUERY");
+    console.log(suggestion, "SEARCH suggestion");
+    console.log(materialtype, "SEARCH materialtype");
+
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
 
     if (suggestion?.__typename === "Work") {
+      console.log("DO-WORK");
       router &&
         router[routerFunc]({
           pathname: "/materiale/[title_author]/[workId]",
@@ -137,14 +154,19 @@ export function Header({ className = "", router = null, story = null, user }) {
           },
         });
     } else {
+      console.log("DO-SEARCHING");
+      const fisk = materialtype
+        ? { ...router.query, materialtype: materialtype, q: query }
+        : { ...router.query, q: query };
       router &&
         router[routerFunc]({
           pathname: "/find",
-          query: { q: query },
+          query: fisk,
         });
 
       // Delay history update in list
       setTimeout(() => {
+        console.log(query, "fisk");
         setHistory(query);
       }, 300);
     }
@@ -225,7 +247,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                       return;
                     }
 
-                    doSearch(query);
+                    doSearch({ query: query });
 
                     // view query in storybook
                     story && alert(`/find?q=${query}`);
@@ -241,6 +263,11 @@ export function Header({ className = "", router = null, story = null, user }) {
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
+                  <MaterialSelect
+                    options={options}
+                    searchFunc={doSearch}
+                    setquery={setQuery}
+                  />
                   <div
                     className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >

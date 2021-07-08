@@ -26,7 +26,7 @@ export default function Feedback({
   const handleCookie = (type) => {
     if (type === "click") {
       if (!cookie) {
-        Cookies.set("removefeedback", `${Date.now()}`);
+        Cookies.set("removefeedback", `${Date.now()}`, { sameSite: "lax" });
       }
       setFeedbackOpen(!feedbackOpen);
     }

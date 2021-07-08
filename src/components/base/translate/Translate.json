@@ -87,6 +87,10 @@
         "da": "Alle",
         "en": "All"
       },
+      "all_materials": {
+        "da": "Alle materialekategorier",
+        "en": "All materialcategories"
+      },
       "by": {
         "da": "af",
         "en": "by"
@@ -684,16 +688,16 @@
     },
     "helpmenu": {
       "Om bibliotek.dk": {
-        "da" : "Om bibliotek.dk",
-        "en" : "About bibliotek.dk"
+        "da": "Om bibliotek.dk",
+        "en": "About bibliotek.dk"
       },
       "Søgning": {
         "da": "Søgning",
         "en": "Search"
       },
       "Bestilling": {
-        "da" : "Bestilling",
-        "en" : "Order"
+        "da": "Bestilling",
+        "en": "Order"
       },
       "Login": {
         "da": "Login",
