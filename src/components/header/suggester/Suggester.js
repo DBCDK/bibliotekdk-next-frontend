@@ -270,6 +270,14 @@ export function Suggester({
    */
   const [intQuery, setIntQuery] = useState(query);
 
+  // Its a mess with internal states all over the place
+  // At some point look into it
+  useEffect(() => {
+    if (query !== intQuery) {
+      setIntQuery(query);
+    }
+  }, [query]);
+
   // Flag that history is used in suggester
   const isHistory = !!(isMobile && query === "");
 
@@ -405,6 +413,15 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(
     query && query !== selected && suggestFragments.all({ q: query })
   );
+
+  // Its a mess with internal states all over the place
+  // At some point look into it
+  // the URL param "q" should be the single source of truth
+  useEffect(() => {
+    if (router.query.q && router.query.q !== query) {
+      setQuery(router.query.q);
+    }
+  }, [router.query.q]);
 
   useEffect(() => {
     // Collect data
