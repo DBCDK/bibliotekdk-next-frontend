@@ -28,18 +28,29 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
-  it(`Should collect data when searching and clicking work`, () => {
+  it.only(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", "/graphql", (req) => {
-      if (req.body.query.startsWith("mutation")) {
-        req.alias = "apiMutation";
+      if (
+        req.body.query.startsWith("mutation") &&
+        req.body.variables?.input?.search
+      ) {
+        req.alias = "apiMutationOnSearch";
+      }
+    });
+    cy.intercept("POST", "/graphql", (req) => {
+      if (
+        req.body.query.startsWith("mutation") &&
+        req.body.variables?.input?.search_work
+      ) {
+        req.alias = "apiMutationOnSearchClick";
       }
     });
 
     cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
 
     // When search begin query should be logged
-    cy.wait("@apiMutation").then((interception) => {
+    cy.wait("@apiMutationOnSearch").then((interception) => {
       const data = interception.request.body.variables.input.search;
       expect(data.search_query).to.equal("harry potter");
       expect(data.session_id).to.equal("test");
@@ -53,7 +64,7 @@ describe("Search", () => {
     cy.get('[data-cy="result-row"]').first().click();
 
     // clicking the row should log
-    cy.wait("@apiMutation").then((interception) => {
+    cy.wait("@apiMutationOnSearchClick").then((interception) => {
       const data = interception.request.body.variables.input.search_work;
       expect(data.search_query).to.equal("harry potter");
       expect(data.search_query_hit).to.equal(1);
