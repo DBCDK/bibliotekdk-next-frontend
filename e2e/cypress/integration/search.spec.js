@@ -28,22 +28,15 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
-  it.only(`Should collect data when searching and clicking work`, () => {
+  it(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", "/graphql", (req) => {
-      if (
-        req.body.query.startsWith("mutation") &&
-        req.body.variables?.input?.search
-      ) {
-        req.alias = "apiMutationOnSearch";
-      }
-    });
-    cy.intercept("POST", "/graphql", (req) => {
-      if (
-        req.body.query.startsWith("mutation") &&
-        req.body.variables?.input?.search_work
-      ) {
-        req.alias = "apiMutationOnSearchClick";
+      if (req.body.query.startsWith("mutation")) {
+        if (req.body.variables?.input?.search) {
+          req.alias = "apiMutationOnSearch";
+        } else if (req.body.variables?.input?.search_work) {
+          req.alias = "apiMutationOnSearchClick";
+        }
       }
     });
 
