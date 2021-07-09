@@ -9,16 +9,18 @@
  * @param {object} params
  * @param {string} params.q the query
  */
-export function hitcount({ q }) {
+export function hitcount({ q, facets = null }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!) {
-        search(q: $q, limit: 10, offset: 0) {
+    query: `query ($q: String! ${facets ? `, $facets: [FacetFilter]` : ""}) {
+        search(q: $q, limit: 10, offset: 0 ${
+          facets ? `, facets: $facets` : ""
+        }) {
           hitcount
         }
         monitor(name: "bibdknext_search_hitcount")
       }`,
-    variables: { q },
+    variables: { q, facets },
     slowThreshold: 3000,
   };
 }
@@ -29,11 +31,15 @@ export function hitcount({ q }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function fast({ q, limit, offset }) {
+export function fast({ q, limit, offset, facets = null }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int) {
-        search(q: $q, limit: $limit, offset: $offset) {
+    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int ${
+      facets ? `, $facets: [FacetFilter]` : ""
+    }) {
+        search(q: $q, limit: $limit, offset: $offset ${
+          facets ? `, facets: $facets` : ""
+        }) {
           result {
             title
             creator {
@@ -44,7 +50,7 @@ export function fast({ q, limit, offset }) {
         }
         monitor(name: "bibdknext_search_fast")
       }`,
-    variables: { q, limit, offset },
+    variables: { q, limit, offset, facets },
     slowThreshold: 3000,
   };
 }
@@ -55,11 +61,15 @@ export function fast({ q, limit, offset }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function all({ q, limit, offset }) {
+export function all({ q, limit, offset, facets = null }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int) {
-        search(q: $q, limit: $limit, offset: $offset) {
+    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int ${
+      facets ? `, $facets: [FacetFilter]` : ""
+    }) {
+        search(q: $q, limit: $limit, offset: $offset ${
+          facets ? `, facets: $facets` : ""
+        }) {
           result {
             title
             work {
@@ -81,7 +91,7 @@ export function all({ q, limit, offset }) {
         }
         monitor(name: "bibdknext_search_all")
       }`,
-    variables: { q, limit, offset },
+    variables: { q, limit, offset, facets },
     slowThreshold: 3000,
   };
 }

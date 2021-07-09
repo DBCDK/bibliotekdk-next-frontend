@@ -59,9 +59,9 @@ export function Header({ className = "", router = null, story = null, user }) {
 
   const options = [
     { value: "all", label: "all_materials" },
-    { value: "books", label: "books" },
-    { value: "articles", label: "articles" },
-    { value: "film", label: "film" },
+    { value: "literature", label: "books" },
+    { value: "article", label: "articles" },
+    { value: "movie", label: "film" },
     { value: "games", label: "games" },
     { value: "music", label: "music" },
     { value: "nodes", label: "nodes" },
@@ -132,10 +132,6 @@ export function Header({ className = "", router = null, story = null, user }) {
     : "";
 
   const doSearch = ({ query, suggestion, materialtype }) => {
-    console.log(query, "SEARCH QUERY");
-    console.log(suggestion, "SEARCH suggestion");
-    console.log(materialtype, "SEARCH materialtype");
-
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
@@ -154,19 +150,20 @@ export function Header({ className = "", router = null, story = null, user }) {
           },
         });
     } else {
-      console.log("DO-SEARCHING");
-      const fisk = materialtype
+      console.log("DO-SEARCH");
+      console.log(materialtype, "MATTYPE");
+
+      const params = materialtype
         ? { ...router.query, materialtype: materialtype, q: query }
         : { ...router.query, q: query };
       router &&
         router[routerFunc]({
           pathname: "/find",
-          query: fisk,
+          query: params,
         });
 
       // Delay history update in list
       setTimeout(() => {
-        console.log(query, "fisk");
         setHistory(query);
       }, 300);
     }
@@ -263,11 +260,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <MaterialSelect
-                    options={options}
-                    searchFunc={doSearch}
-                    setquery={setQuery}
-                  />
+                  <MaterialSelect options={options} searchFunc={doSearch} />
                   <div
                     className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >

@@ -5,7 +5,7 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
-import { fast } from "@/lib/api/search.fragments";
+import { fast, fast_facets } from "@/lib/api/search.fragments";
 import Divider from "@/components/base/divider";
 import ViewSelector from "../viewselector";
 
@@ -14,6 +14,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
+import { useRouter } from "next/router";
 
 /**
  * Search result
@@ -118,8 +119,13 @@ export default function Wrap({
   // settings
   const limit = 10; // limit
 
+  const router = useRouter();
+  const { materialtype = null } = router.query;
+  const facet = materialtype ? [{ field: "type", value: materialtype }] : null;
   // use the useData hook to fetch data
-  const fastResponse = useData(q && fast({ q, offset: 0, limit }));
+  const fastResponse = useData(
+    q && fast({ q, offset: 0, limit, facets: facet })
+  );
 
   if (fastResponse.error) {
     return null;

@@ -6,7 +6,7 @@ import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon/Icon";
 import { useState } from "react";
 
-export default function SelectList({ setquery, searchFunc, options = [] }) {
+export default function SelectList({ searchFunc, options = [] }) {
   const router = useRouter();
 
   // check if materialtype is set in query parameters
@@ -37,7 +37,7 @@ export default function SelectList({ setquery, searchFunc, options = [] }) {
         <Text tag="span" type="text2">
           {Translate({
             context: "general",
-            label: selectedOption.value,
+            label: selectedOption.label,
           })}
           <Icon
             size={{ w: 1, h: 1 }}
