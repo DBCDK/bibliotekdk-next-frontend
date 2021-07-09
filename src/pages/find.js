@@ -23,8 +23,6 @@ import Header from "@/components/header/Header";
 function Find() {
   const router = useRouter();
   const { q, page = 1, view, materialtype = null } = router.query;
-
-  console.log(materialtype, "MATTYPE");
   const facets = materialtype ? [{ field: "type", value: materialtype }] : null;
 
   // use the useData hook to fetch data
