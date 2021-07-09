@@ -4,6 +4,15 @@ import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon/Icon";
 
+/**
+ * Show a 'select' list of available material filters.
+ *
+ * @param options
+ * @param onOptionClicked
+ * @param selectedMaterial
+ * @return {JSX.Element}
+ * @constructor
+ */
 export default function SelectList({
   options = [],
   onOptionClicked,
