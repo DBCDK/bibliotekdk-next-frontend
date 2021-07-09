@@ -1,3 +1,13 @@
+.dropdownwrap{
+}
+
+/** hide tablet and down **/
+@media (max-width: 992px) {
+    .dropdownwrap  {
+        display: none;
+    }
+}
+
 .dropdownitem{
     display: block;
     border-bottom: 1px solid var(--mine-shaft);
@@ -30,12 +40,8 @@
     background-color: var(--white);
 }
 
-.dropdownmenu:focus{
-    background-color: red;
-}
-
 .dropdowntoggle:focus{
-    border-color: var(--blue);
+    border-color:var(--blue);
 }
 
 .dropdowntoggle{

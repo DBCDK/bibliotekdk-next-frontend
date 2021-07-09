@@ -10,7 +10,7 @@ export default function SelectList({
   selectedMaterial,
 }) {
   return (
-    <Dropdown>
+    <Dropdown className={styles.dropdownwrap}>
       <Dropdown.Toggle
         variant="success"
         id="dropdown-basic"
