@@ -5,7 +5,7 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
-import { fast, fast_facets } from "@/lib/api/search.fragments";
+import { fast } from "@/lib/api/search.fragments";
 import Divider from "@/components/base/divider";
 import ViewSelector from "../viewselector";
 
