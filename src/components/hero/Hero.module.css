@@ -1,7 +1,7 @@
 .containerback {
   position: relative;
   height: 260px;
-  padding: var(--pt4);
+  padding-top: var(--pt4);
   background: black;
   margin-bottom: var(--pt5);
 }
