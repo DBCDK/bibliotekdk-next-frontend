@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import ResultRow from "../row";
 
 import { useData } from "@/lib/api/api";
-import { fast, all, fast_facets } from "@/lib/api/search.fragments";
+import { fast, all } from "@/lib/api/search.fragments";
 import { useRouter } from "next/router";
 
 /**
