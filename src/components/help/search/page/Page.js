@@ -83,7 +83,7 @@ Page.propTypes = {
 export default function Wrap() {
   const router = useRouter();
   const { q } = router.query;
-  const { isLoading, data } = useData(q && helpTextSearch(q));
+  const { isLoading, data } = useData(q && helpTextSearch({ q }));
 
   return <Page result={data?.help?.result} isLoading={isLoading} query={q} />;
 }

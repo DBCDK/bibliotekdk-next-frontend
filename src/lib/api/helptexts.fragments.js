@@ -1,4 +1,5 @@
 import { getLangcode } from "./fragments.utils";
+import { lang } from "@/components/base/translate";
 /**
  * Helptexts - published
  */
@@ -70,11 +71,11 @@ export function helpText({ helpTextId, language }) {
   };
 }
 
-export function helpTextSearch(q) {
+export function helpTextSearch({ q }) {
   return {
     delay: 100, // add small delay to avoid flicker when query is fast
-    query: `query ($q: String!) {
-              help(q: $q) {
+    query: `query ($q: String!, $language: LanguageCode) {
+              help(q: $q, language: $language) {
                 result {
                   body
                   group
@@ -85,7 +86,7 @@ export function helpTextSearch(q) {
               }
           monitor(name: "helptext_search")
         }`,
-    variables: { q },
+    variables: { q, language: lang },
     slowThreshold: 3000,
   };
 }

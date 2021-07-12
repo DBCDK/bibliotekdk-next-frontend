@@ -60,7 +60,9 @@ export function Result({ result = [], isLoading, query }) {
                 >
                   <span
                     dangerouslySetInnerHTML={{
-                      __html: doc.group || "indlæser",
+                      __html: doc.group
+                        ? Translate({ context: "helpmenu", label: doc.group })
+                        : "indlæser",
                     }}
                   />
                 </Text>
