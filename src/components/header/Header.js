@@ -209,6 +209,11 @@ export function Header({ className = "", router = null, story = null, user }) {
                       onClick={(e) => {
                         onOptionClicked(idx);
                       }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.keyCode === 13) {
+                          onOptionClicked(idx);
+                        }
+                      }}
                     >
                       <Text type="text3">
                         {Translate({ context: "general", label: m.label })}
