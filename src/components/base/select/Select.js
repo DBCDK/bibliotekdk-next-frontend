@@ -3,6 +3,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon/Icon";
+import { cyKey } from "@/utils/trim";
 
 /**
  * Show a 'select' list of available material filters.
@@ -21,6 +22,7 @@ export default function SelectList({
   return (
     <Dropdown className={styles.dropdownwrap}>
       <Dropdown.Toggle
+        data-cy={cyKey({ name: "material-selector", prefix: "header" })}
         variant="success"
         id="dropdown-basic"
         className={styles.dropdowntoggle}

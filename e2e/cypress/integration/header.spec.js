@@ -9,29 +9,32 @@ describe("Header", () => {
 
   // BETA-1 ... basket gone .. links disabled -> taborder fucked up ..  skip this test
   // @TODO enable this test
-  it.skip(`Can tab through all clickable elements`, () => {
+  it(`Can tab through all clickable elements`, () => {
     cy.viewport(1920, 1080);
 
     // logo
     cy.get("body").tab();
-    cy.focused().should("have.attr", "data-cy", "header-logo");
+    cy.focused().should("have.attr", "data-cy", "key-logo");
 
     // first element in section
     // BETA-1 outcommented
-    //cy.tabs(1);
-    //cy.focused().should("have.attr", "data-cy", "header-link-books");
+    cy.tabs(2);
+    cy.focused().should("have.attr", "data-cy", "header-link-books");
 
     // last element in section
-    cy.tabs(6);
-    cy.focused().should("have.attr", "data-cy", "header-link-nodes");
+    cy.tabs(4);
+    cy.focused().should("have.attr", "data-cy", "header-link-music");
 
     // first element in section
-    cy.tab();
+    cy.tabs(2);
     cy.focused().should("have.attr", "data-cy", "header-link-digitaloffers");
     // last element in section
     cy.tabs(2);
     cy.focused().should("have.attr", "data-cy", "header-link-becomeloaner");
 
+    // materialselector
+    cy.tab();
+    cy.focused().should("have.attr", "data-cy", "header-material-selector");
     // first element in section
     cy.tab();
     cy.focused().should("have.attr", "data-cy", "suggester-input");
@@ -43,17 +46,17 @@ describe("Header", () => {
     cy.tab();
     cy.focused().should("have.attr", "data-cy", "header-link-login");
     // last element in section
-    cy.tabs(2);
+    cy.tab();
     cy.focused().should("have.attr", "data-cy", "header-link-menu");
   });
 
-  it.skip("check url on top action elements", () => {
+  it("check url on top action elements", () => {
     // top actions only visible on BIG viewport
     cy.viewport(1920, 1080);
     cy.get("[data-cy=header-link-asklibrarian")
       .should("have.attr", "href")
       .should("not.be.empty")
-      .and("contain", "https://adm.biblioteksvagten.dk/");
+      .and("contain", "/artikel/spoerg-en-bibliotekar/7");
   });
 
   // Screen size
@@ -92,6 +95,7 @@ describe("Header", () => {
 
   it(`Check visible elemets for screensizes < 992`, () => {
     cy.viewport(990, 700);
+    cy.get("[data-cy=header-material-selector]").should("not.be.visible");
 
     cy.get("[data-cy=header-materials]").should("not.be.visible");
     cy.get("[data-cy=header-top-actions]").should("not.be.visible");
