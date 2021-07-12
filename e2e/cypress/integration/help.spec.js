@@ -31,6 +31,30 @@ describe("help", () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
   });
+  it(`Search: filter by language`, () => {
+    // Intercept help search requests
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("help(")) {
+        req.alias = "apiHelpRequest";
+      }
+    });
+
+    cy.visit(`${nextjsBaseUrl}/hjaelp`);
+
+    // Default should be danish
+    cy.get("#help-suggester-input").type("a");
+    cy.wait("@apiHelpRequest").then((interception) => {
+      const variables = interception.request.body.variables;
+      expect(variables).to.deep.equal({ q: "a", language: "da" });
+    });
+
+    // Change language to english
+    cy.get("[data-cy=text-en]").click();
+    cy.wait("@apiHelpRequest").then((interception) => {
+      const variables = interception.request.body.variables;
+      expect(variables).to.deep.equal({ q: "a", language: "en" });
+    });
+  });
 });
 
 describe("help menu", () => {
