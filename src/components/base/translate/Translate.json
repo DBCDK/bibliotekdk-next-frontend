@@ -325,6 +325,10 @@
         "da": "Beskrivelse",
         "en": "Description"
       },
+      "hostPublication": {
+        "da": "Findes i",
+        "en": "Available in"
+      },
       "physicalDescription": {
         "da": "Længde",
         "en": "physicalDescription"

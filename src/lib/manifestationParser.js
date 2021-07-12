@@ -64,6 +64,14 @@ const fields = () => [
     }),
   },
   {
+    dataField: "hostPublication",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "hostPublication",
+    }),
+    valueParser: (value) => [value.title, value.details].join(", "),
+  },
+  {
     dataField: "dk5",
     label: Translate({
       context: "bibliographic-data",
