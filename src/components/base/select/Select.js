@@ -45,6 +45,7 @@ export default function SelectList({
         {options.map((elem, idx) => {
           return (
             <Dropdown.Item
+              tabindex="-1"
               key={`materialdropdown-${elem.value}`}
               className={styles.dropdownitem}
               onClick={(e) => {
