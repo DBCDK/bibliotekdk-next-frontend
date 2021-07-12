@@ -22,10 +22,11 @@ import Header from "@/components/header/Header";
  */
 function Find() {
   const router = useRouter();
-  const { q, page = 1, view } = router.query;
+  const { q, page = 1, view, materialtype = null } = router.query;
+  const facets = materialtype ? [{ field: "type", value: materialtype }] : null;
 
   // use the useData hook to fetch data
-  const hitcountResponse = useData(hitcount({ q }));
+  const hitcountResponse = useData(hitcount({ q, facets }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 

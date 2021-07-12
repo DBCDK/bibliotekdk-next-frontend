@@ -1,0 +1,20 @@
+import { StoryTitle, StoryDescription } from "@/storybook";
+
+import Select from "@/components/base/select";
+
+export default {
+  title: "base/Select",
+};
+
+export function AList() {
+  const options = [
+    { value: "all", label: "all_materials" },
+    { value: "books", label: "books" },
+    { value: "articles", label: "articles" },
+    { value: "film", label: "film" },
+    { value: "games", label: "games" },
+    { value: "music", label: "music" },
+    { value: "nodes", label: "nodes" },
+  ];
+  return <Select options={options} />;
+}

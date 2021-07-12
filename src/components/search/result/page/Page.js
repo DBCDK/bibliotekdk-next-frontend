@@ -3,6 +3,7 @@ import ResultRow from "../row";
 
 import { useData } from "@/lib/api/api";
 import { fast, all } from "@/lib/api/search.fragments";
+import { useRouter } from "next/router";
 
 /**
  * Row representation of a search result entry
@@ -49,9 +50,15 @@ export default function Wrap({ q, page, onWorkClick }) {
   const limit = 10; // limit
   const offset = limit * (page - 1); // offset
 
+  const router = useRouter();
+  const { materialtype = null } = router.query;
+  const facet = materialtype ? [{ field: "type", value: materialtype }] : null;
   // use the useData hook to fetch data
-  const fastResponse = useData(q && fast({ q, limit, offset }));
-  const allResponse = useData(q && all({ q, limit, offset }));
+  // const facet = [{ field: "type", value: "movie" }];
+  //const facets = null;
+
+  const fastResponse = useData(q && fast({ q, limit, offset, facets: facet }));
+  const allResponse = useData(q && all({ q, limit, offset, facets: facet }));
 
   if (fastResponse.error || allResponse.error) {
     return null;

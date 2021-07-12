@@ -28,6 +28,8 @@ import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
+import MaterialSelect from "@/components/base/select/Select";
+
 /**
  * The Component function
  *
@@ -45,18 +47,8 @@ export function Header({ className = "", router = null, story = null, user }) {
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
 
-  const materials = [
-    { label: "books", href: "/#!" },
-    { label: "articles", href: "/#!" },
-    { label: "film", href: "/#!" },
-    { label: "ematerials", href: "/#!" },
-    { label: "games", href: "/#!" },
-    { label: "music", href: "/#!" },
-    { label: "nodes", href: "/#!" },
-  ];
-
   // for beta1 - disable links above
-  const linksdisabled = true;
+  const linksdisabled = false;
 
   const actions = [
     {
@@ -119,7 +111,42 @@ export function Header({ className = "", router = null, story = null, user }) {
     ? styles.suggester__visible
     : "";
 
-  const doSearch = (query, suggestion) => {
+  /**** Filter materials start **/
+  const materialFilters = [
+    { value: "all", label: "all_materials" },
+    { value: "literature", label: "books" },
+    { value: "article", label: "articles" },
+    { value: "movie", label: "film" },
+    { value: "game", label: "games" },
+    { value: "music", label: "music" },
+    { value: "sheetmusic", label: "nodes" },
+  ];
+  // check if materialtype is set in query parameters
+  const matparam = router.query.materialtype;
+  let index = 0;
+  if (matparam) {
+    index = materialFilters.findIndex(function (element, indx) {
+      return element.value === matparam;
+    });
+  }
+  index = index === -1 ? 0 : index;
+  const selectedMaterial = materialFilters[index];
+  // select function passsed to select list (@see components/base/select)
+  // simply push to router - the useData hook in /find page will register the change
+  // and update the result
+  const onOptionClicked = (idx) => {
+    router &&
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          materialtype: idx !== 0 ? materialFilters[idx].value : "",
+        },
+      });
+  };
+  /**** Filter materials end**/
+
+  const doSearch = ({ query, suggestion }) => {
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
@@ -137,10 +164,17 @@ export function Header({ className = "", router = null, story = null, user }) {
           },
         });
     } else {
+      const params = selectedMaterial.value
+        ? {
+            materialtype:
+              selectedMaterial.value !== "all" ? selectedMaterial.value : "",
+            q: query,
+          }
+        : { q: query };
       router &&
         router[routerFunc]({
           pathname: "/find",
-          query: { q: query },
+          query: params,
         });
 
       // Delay history update in list
@@ -156,21 +190,6 @@ export function Header({ className = "", router = null, story = null, user }) {
         <Container className={styles.header} fluid>
           <Row>
             <Col xs={2}>
-              {/*}
-              <Link
-                className={styles.logoWrap}
-                border={false}
-                href="/"
-                dataCy={cyKey({
-                  name: "logo",
-                  prefix: "header",
-                })}
-              >
-                <Icon className={styles.logo} size={{ w: 15, h: "auto" }}>
-                  <LogoSvg />
-                </Icon>
-              </Link>
-              */}
               <Logo fill={"var(--blue)"} text={"default_logo_text"} />
             </Col>
             <Col xs={{ span: 9, offset: 1 }}>
@@ -179,15 +198,17 @@ export function Header({ className = "", router = null, story = null, user }) {
                   className={styles.materials}
                   data-cy={cyKey({ name: "materials", prefix: "header" })}
                 >
-                  {materials.map((m) => (
+                  {materialFilters.map((m, idx) => (
                     <Link
-                      key={m.label}
-                      href={m.href}
+                      key={m.value}
                       disabled={linksdisabled}
                       dataCy={cyKey({
                         name: m.label,
                         prefix: "header-link",
                       })}
+                      onClick={(e) => {
+                        onOptionClicked(idx);
+                      }}
                     >
                       <Text type="text3">
                         {Translate({ context: "general", label: m.label })}
@@ -225,7 +246,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                       return;
                     }
 
-                    doSearch(query);
+                    doSearch({ query: query });
 
                     // view query in storybook
                     story && alert(`/find?q=${query}`);
@@ -241,6 +262,11 @@ export function Header({ className = "", router = null, story = null, user }) {
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
+                  <MaterialSelect
+                    options={materialFilters}
+                    onOptionClicked={onOptionClicked}
+                    selectedMaterial={selectedMaterial}
+                  />
                   <div
                     className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
