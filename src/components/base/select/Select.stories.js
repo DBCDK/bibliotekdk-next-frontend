@@ -16,5 +16,17 @@ export function AList() {
     { value: "music", label: "music" },
     { value: "nodes", label: "nodes" },
   ];
-  return <Select options={options} />;
+
+  const selectedMaterial = { value: "film", label: "film" };
+  const optionsclicked = (idx) => {
+    alert(options[idx].label);
+  };
+
+  return (
+    <Select
+      options={options}
+      selectedMaterial={selectedMaterial}
+      onOptionClicked={optionsclicked}
+    />
+  );
 }

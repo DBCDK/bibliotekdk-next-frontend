@@ -122,7 +122,7 @@ export function Header({ className = "", router = null, story = null, user }) {
     { value: "sheetmusic", label: "nodes" },
   ];
   // check if materialtype is set in query parameters
-  const matparam = router.query.materialtype;
+  const matparam = router && router.query.materialtype;
   let index = 0;
   if (matparam) {
     index = materialFilters.findIndex(function (element, indx) {
