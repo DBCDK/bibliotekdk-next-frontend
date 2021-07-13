@@ -1,5 +1,4 @@
 import { Row, Col } from "react-bootstrap";
-import { useRouter } from "next/router";
 
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import Translate from "@/components/base/translate";
@@ -11,6 +10,8 @@ import Icon from "@/components/base/icon";
 import Link from "@/components/base/link";
 
 import styles from "./Searchbar.module.css";
+import { MobileList } from "@/components/base/select/Select";
+import useMaterialFilters from "@/components/hooks/useMaterialFilters";
 
 /**
  * A Fake Search Input Field
@@ -24,7 +25,12 @@ import styles from "./Searchbar.module.css";
  * @returns {component}
  */
 export default function Searchbar({ query }) {
-  const router = useRouter();
+  // variables for the material filter
+  const {
+    selectedMaterial,
+    onOptionClicked,
+    materialFilters,
+  } = useMaterialFilters();
 
   return (
     <div className={styles.wrap}>
@@ -38,7 +44,15 @@ export default function Searchbar({ query }) {
             <Row>
               <Col xs={12}>
                 <FakeSearchInput query={query} />
+                <div>
+                  <MobileList
+                    options={materialFilters}
+                    selectedMaterial={selectedMaterial}
+                    onOptionClicked={onOptionClicked}
+                  />
+                </div>
               </Col>
+              {/* REMOVE for now - do not show if it does not work - TODO enable when time comes
               <Col xs={12} className={styles.filter}>
                 <span
                   className={styles.button}
@@ -56,9 +70,11 @@ export default function Searchbar({ query }) {
                       {Translate({ context: "search", label: "filters" })}
                     </Text>
                   </Link>
+
                   <Icon size={2} src="chevron.svg" alt="" />
                 </span>
               </Col>
+              */}
             </Row>
           </Col>
         </Row>

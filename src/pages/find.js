@@ -86,12 +86,16 @@ function Find() {
         <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
       </Head>
       <Header router={router} />
+
       <Searchbar query={q} />
 
+      {/*
       <QuickFilters
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
       />
+      */}
+
       {q && (
         <Result
           q={q}

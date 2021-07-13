@@ -61,3 +61,18 @@
     top:5px;
 }
 
+.materials{
+    overflow-y: hidden;
+
+    white-space: nowrap;
+    padding-top: var(--pt2);
+}
+
+.materials button {
+    margin: 0 var(--pt2) var(--pt2) 0;
+}
+
+.materials button:last-child {
+    margin: 0 0 var(--pt2) 0;
+}
+
