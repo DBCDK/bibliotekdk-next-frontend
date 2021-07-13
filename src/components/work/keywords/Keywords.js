@@ -68,7 +68,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
   const context = { context: "keywords" };
 
   // Include wanted subject types
-  const include = ["DBCS", null];
+  const include = ["DBCS", "DBCF", "DBCM", null];
   const filteredData = data.filter((s) => include.includes(s.type));
 
   // Remove entire keyword section when there are no keywords
