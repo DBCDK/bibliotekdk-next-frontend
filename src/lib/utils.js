@@ -1,4 +1,7 @@
-import config from "../config";
+import getConfig from "next/config";
+
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 /**
  * @file
@@ -45,7 +48,7 @@ export function encodeTitleCreator(title = "", creator = "") {
  * @returns {string} The canonical work URL
  */
 export function getCanonicalWorkUrl({ title, creators, id }) {
-  return `${config.externalBaseUrl}/${encodeTitleCreator(
+  return `${APP_URL}/${encodeTitleCreator(
     title,
     creators && creators[0] && creators[0].name
   )}/${id}`;
@@ -68,5 +71,5 @@ export function getArticlePath({ title, nid }) {
  * @returns {string} The canonical article URL
  */
 export function getCanonicalArticleUrl(props) {
-  return `${config.externalBaseUrl}/${getArticlePath(props)}`;
+  return `${APP_URL}/${getArticlePath(props)}`;
 }

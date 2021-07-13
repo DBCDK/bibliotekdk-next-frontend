@@ -95,5 +95,8 @@ module.exports = {
 
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
+    app: {
+      url: process.env.NEXTAUTH_URL,
+    },
   },
 };
