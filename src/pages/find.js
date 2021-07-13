@@ -26,7 +26,9 @@ function Find() {
   const { q, page = 1, view, materialtype = null } = router.query;
   const facets = materialtype ? [{ field: "type", value: materialtype }] : null;
 
-  const { canonical, alternate } = useCanonicalUrl({ preserveParams: ["q"] });
+  const { canonical, alternate } = useCanonicalUrl({
+    preserveParams: ["q", "materialtype"],
+  });
 
   // use the useData hook to fetch data
   const hitcountResponse = useData(hitcount({ q, facets }));
