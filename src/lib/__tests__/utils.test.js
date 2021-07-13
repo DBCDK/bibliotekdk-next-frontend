@@ -13,6 +13,7 @@ test("getCanonicalWorkUrl", () => {
     creators: [{ name: "En Forfatter" }],
   };
   const actual = getCanonicalWorkUrl(work);
-  const expected = "https://bibliotek.dk/en-bogtitel_en-forfatter/some-work-id";
+  const expected =
+    "http://localhost:3000/en-bogtitel_en-forfatter/some-work-id";
   expect(actual).toEqual(expected);
 });

@@ -16,7 +16,7 @@ Object {
       },
     ],
     "name": "Klodernes kamp",
-    "url": "https://bibliotek.dk/klodernes-kamp_h-g-wells/some-id",
+    "url": "http://localhost:3000/klodernes-kamp_h-g-wells/some-id",
     "workExample": Array [
       Object {
         "@id": "870970-basis:06442870",
@@ -32,7 +32,7 @@ Object {
         "identifier": "870970-basis:06442870",
         "image": null,
         "inLanguage": "da",
-        "url": "https://bibliotek.dk/klodernes-kamp_h-g-wells/some-id",
+        "url": "http://localhost:3000/klodernes-kamp_h-g-wells/some-id",
       },
     ],
   },
