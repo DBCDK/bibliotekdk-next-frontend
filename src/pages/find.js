@@ -14,6 +14,7 @@ import {
 } from "@/lib/api/datacollect.mutations";
 import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 /**
  * @file
@@ -24,6 +25,8 @@ function Find() {
   const router = useRouter();
   const { q, page = 1, view, materialtype = null } = router.query;
   const facets = materialtype ? [{ field: "type", value: materialtype }] : null;
+
+  const { canonical, alternate } = useCanonicalUrl({ preserveParams: ["q"] });
 
   // use the useData hook to fetch data
   const hitcountResponse = useData(hitcount({ q, facets }));
@@ -78,12 +81,14 @@ function Find() {
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
-        <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
+        <meta property="og:url" content={canonical.url} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-        <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
+        {alternate.map(({ locale, url }) => (
+          <link key={url} rel="alternate" hreflang={locale} href={url} />
+        ))}
       </Head>
       <Header router={router} />
 
