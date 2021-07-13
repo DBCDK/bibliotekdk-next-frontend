@@ -6,12 +6,14 @@ describe("Search", () => {
     cy.get('[data-cy="result-row"]').should("have.length", 10);
 
     // click grid view, should be reflected in url
+    /** PJO removed gridview and listview - they do not work yet .. if ever
     cy.get('[data-cy="grid-button"]').first().click();
     cy.url().should("include", "view=grid");
 
     // click list view, should be reflected in url
     cy.get('[data-cy="list-button"]').first().click();
     cy.url().should("include", "view=list");
+     **/
 
     // click page 2, should be reflected in url
     cy.get('[data-cy="page-2-button"]').click({ force: true });

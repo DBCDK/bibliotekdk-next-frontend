@@ -1,5 +1,5 @@
 /**
- * Hook for getting constant and function for use when filtering
+ * Hook for getting constants and function for use when filtering on materialtype
  */
 import { useRouter } from "next/router";
 
