@@ -15,8 +15,6 @@ import {
 import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
 
-import { MobileList } from "@/components/base/select/Select";
-
 /**
  * @file
  * This is the search page

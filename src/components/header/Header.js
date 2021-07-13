@@ -48,7 +48,7 @@ export function Header({ className = "", router = null, story = null, user }) {
   const [history, setHistory, clearHistory] = useHistory();
 
   // for beta1 - disable links above
-  const linksdisabled = true;
+  const linksdisabled = false;
 
   const actions = [
     {
