@@ -15,6 +15,8 @@ import {
 import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
 
+import useMaterialFilters from "@/components/hooks/useMaterialFilters";
+
 /**
  * @file
  * This is the search page
@@ -89,10 +91,12 @@ function Find() {
 
       <Searchbar query={q} />
 
+      {/*
       <QuickFilters
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
       />
+      */}
 
       {q && (
         <Result
