@@ -28,7 +28,7 @@ import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
-import MaterialSelect from "@/components/base/select/Select";
+import MaterialSelect, { MobileList } from "@/components/base/select/Select";
 
 /**
  * The Component function
@@ -48,7 +48,7 @@ export function Header({ className = "", router = null, story = null, user }) {
   const [history, setHistory, clearHistory] = useHistory();
 
   // for beta1 - disable links above
-  const linksdisabled = false;
+  const linksdisabled = true;
 
   const actions = [
     {
@@ -272,6 +272,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     onOptionClicked={onOptionClicked}
                     selectedMaterial={selectedMaterial}
                   />
+
                   <div
                     className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
@@ -304,6 +305,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                     <div className={styles.fill} />
                   </button>
                 </form>
+
                 <div
                   className={styles.actions}
                   data-cy={cyKey({

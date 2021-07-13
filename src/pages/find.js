@@ -15,6 +15,8 @@ import {
 import { fetchAll, fetcher } from "@/lib/api/api";
 import Header from "@/components/header/Header";
 
+import { MobileList } from "@/components/base/select/Select";
+
 /**
  * @file
  * This is the search page
@@ -86,12 +88,14 @@ function Find() {
         <meta property="og:url" content="https://alfa.bibliotek.dk/find" />
       </Head>
       <Header router={router} />
+
       <Searchbar query={q} />
 
       <QuickFilters
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
       />
+
       {q && (
         <Result
           q={q}
