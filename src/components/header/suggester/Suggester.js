@@ -31,6 +31,7 @@ import {
   collectSuggestPresented,
   collectSuggestClick,
 } from "@/lib/api/datacollect.mutations";
+import useMaterialFilters from "@/components/hooks/useMaterialFilters";
 
 // Context
 const context = { context: "suggester" };
@@ -410,8 +411,17 @@ export default function Wrap(props) {
   const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState();
 
+  const { selectedMaterial } = useMaterialFilters();
+
+  let worktype = null;
+  if (selectedMaterial.value !== "all") {
+    worktype = selectedMaterial.value;
+  }
+
   const { data, isLoading, error } = useData(
-    query && query !== selected && suggestFragments.all({ q: query })
+    query &&
+      query !== selected &&
+      suggestFragments.all({ q: query, worktype: worktype })
   );
 
   // Its a mess with internal states all over the place

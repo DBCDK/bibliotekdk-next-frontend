@@ -26,7 +26,6 @@ export function Work({ className = "", data = {}, skeleton = false }) {
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   const hasCover = !!(data.cover && data.cover.thumbnail);
-
   return (
     <div
       className={`${styles.work} ${className} ${skeletonClass}`}
@@ -48,14 +47,16 @@ export function Work({ className = "", data = {}, skeleton = false }) {
         >
           {data.highlight}
         </Text>
+        {/*
         <Text
           type="text3"
           className={styles.type}
           skeleton={skeleton}
           lines={0}
         >
-          {Translate({ ...context, label: "book" })}
+           {Translate({ ...context, label: "book" })}
         </Text>
+        */}
       </div>
     </div>
   );
