@@ -49,18 +49,6 @@ export default function Single({ articles, skeleton }) {
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
-  /**
-   * this one is to prevent warnings in console - @see https://nextjs.org/docs/api-reference/next/link
-   * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly onClick?: *, readonly href?: *}> & React.RefAttributes<unknown>>}
-   */
-  const SingleLinkButton = React.forwardRef(({ onClick, href }, ref) => {
-    return (
-      <Button type="secondary" size="medium" skeleton={skeleton}>
-        {btnLabel}
-      </Button>
-    );
-  });
-
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
@@ -81,7 +69,9 @@ export default function Single({ articles, skeleton }) {
               </span>
               <div />
               <Link a={false} href={{ pathname, query }} target={`${target}`}>
-                <SingleLinkButton />
+                <Button type="secondary" size="medium" skeleton={skeleton}>
+                  {btnLabel}
+                </Button>
               </Link>
             </Col>
             <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>

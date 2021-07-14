@@ -45,7 +45,16 @@ export default function Hero() {
           </Title>
 
           <Link a={false} href={"/artikel/bibliotek.dk/6"} target="_self">
-            <HeroButton />
+            <Button
+              className={styles.readmorebutton}
+              type="primary"
+              size="large"
+            >
+              {Translate({
+                context: "general",
+                label: "readMore",
+              })}
+            </Button>
           </Link>
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
@@ -54,17 +63,3 @@ export default function Hero() {
     </Container>
   );
 }
-/**
- * this one is to prevent warnings in console - @see https://nextjs.org/docs/api-reference/next/link
- * @type {React.ForwardRefExoticComponent<React.PropsWithoutRef<{readonly onClick?: *, readonly href?: *}> & React.RefAttributes<unknown>>}
- */
-const HeroButton = React.forwardRef(({ onClick, href }, ref) => {
-  return (
-    <Button className={styles.readmorebutton} type="primary" size="large">
-      {Translate({
-        context: "general",
-        label: "readMore",
-      })}
-    </Button>
-  );
-});
