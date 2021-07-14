@@ -36,7 +36,7 @@ function DesktopList({ options = [], onOptionClicked, selectedMaterial }) {
         {options.map((elem, idx) => {
           return (
             <Dropdown.Item
-              tabindex="-1"
+              tabIndex="-1"
               key={`materialdropdown-${elem.value}`}
               className={styles.dropdownitem}
               onClick={(e) => {
