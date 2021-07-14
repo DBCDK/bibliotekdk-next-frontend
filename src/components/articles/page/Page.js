@@ -9,6 +9,7 @@ import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 /**
  * The Articles page React component
@@ -18,6 +19,8 @@ import styles from "./Page.module.css";
 export default function Page() {
   const router = useRouter();
   const context = { context: "metadata" };
+
+  const { canonical, alternate } = useCanonicalUrl();
 
   const pageTitle = Translate({
     ...context,
@@ -33,11 +36,14 @@ export default function Page() {
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
-        <meta property="og:url" content="https://alfa.bibliotek.dk/artikler" />
+        <meta property="og:url" content={canonical.url} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:url" content="https://alfa.bibliotek.dk/artikler" />
+        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        {alternate.map(({ locale, url }) => (
+          <link key={url} rel="alternate" hreflang={locale} href={url} />
+        ))}
       </Head>
       <Header router={router} />
       <main>

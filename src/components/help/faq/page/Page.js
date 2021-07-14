@@ -10,6 +10,7 @@ import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 /**
  * The FAQ page
@@ -29,22 +30,21 @@ export default function Page() {
     label: "help-description",
   });
 
+  const { canonical, alternate } = useCanonicalUrl();
+
   return (
     <React.Fragment>
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
-        <meta
-          property="og:url"
-          content="https://alfa.bibliotek.dk/hjaelp/faq"
-        />
+        <meta property="og:url" content={canonical.url} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta
-          property="og:url"
-          content="https://alfa.bibliotek.dk/hjaelp/faq"
-        />
+        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        {alternate.map(({ locale, url }) => (
+          <link key={url} rel="alternate" hreflang={locale} href={url} />
+        ))}
       </Head>
       <main>
         <Container className={styles.top} fluid>

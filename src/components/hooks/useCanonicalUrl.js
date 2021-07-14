@@ -22,13 +22,15 @@ export default function useCanonicalUrl({ preserveParams = [] } = {}) {
     .map((param) => `${param}=${router.query[param]}`)
     .join("&");
 
+  const pathname = router.asPath.replace(/\?.*/, "");
+
   function createUrl(locale) {
     return {
       locale,
       url: [
         APP_URL,
         locale === router.defaultLocale ? "" : `/${locale}`,
-        router.pathname,
+        pathname,
         preserved ? `?${preserved}` : "",
       ].join(""),
     };
