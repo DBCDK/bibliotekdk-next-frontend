@@ -27,6 +27,7 @@ function DesktopList({ options = [], onOptionClicked, selectedMaterial }) {
             size={{ w: 1, h: 1 }}
             src="arrowrightblue.svg"
             className={styles.dropdownicon}
+            alt=""
           />
         </Text>
       </Dropdown.Toggle>
