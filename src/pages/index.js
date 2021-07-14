@@ -13,6 +13,7 @@ import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 const Index = () => {
   const context = { context: "metadata" };
@@ -24,12 +25,14 @@ const Index = () => {
 
   const router = useRouter();
 
+  const { canonical, alternate } = useCanonicalUrl();
+
   return (
     <React.Fragment>
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription}></meta>
-        <meta property="og:url" content="https://beta.bibliotek.dk/find" />
+        <meta property="og:url" content={canonical.url} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
@@ -37,7 +40,9 @@ const Index = () => {
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
         <link rel="alternate icon" href="favicon.ico" />
-        <meta property="og:url" content="https://beta.bibliotek.dk/find" />
+        {alternate.map(({ locale, url }) => (
+          <link key={url} rel="alternate" hreflang={locale} href={url} />
+        ))}
       </Head>
       <div>
         <Header router={router} />

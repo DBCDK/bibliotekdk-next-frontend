@@ -15,6 +15,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 
 import { getJSONLD } from "@/lib/jsonld/work";
 import { getCanonicalWorkUrl } from "@/lib/utils";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 /**
  * The work page React component
@@ -26,6 +27,7 @@ import { getCanonicalWorkUrl } from "@/lib/utils";
  */
 export default function Header({ workId }) {
   const details = useData(workFragments.detailsAllManifestations({ workId }));
+  const { canonical, alternate } = useCanonicalUrl();
 
   if (!details.data || details.isLoading || details.error) {
     return null;
@@ -39,7 +41,7 @@ export default function Header({ workId }) {
     <Head>
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription}></meta>
-      <meta property="og:url" content={getCanonicalWorkUrl(data.work)} />
+      <meta property="og:url" content={canonical.url} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
@@ -53,6 +55,9 @@ export default function Header({ workId }) {
           __html: JSON.stringify(jsonld),
         }}
       />
+      {alternate.map(({ locale, url }) => (
+        <link key={url} rel="alternate" hreflang={locale} href={url} />
+      ))}
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
     </Head>
   );
