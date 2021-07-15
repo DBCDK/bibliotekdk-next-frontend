@@ -37,7 +37,6 @@ export default function useCanonicalUrl({ preserveParams = [] } = {}) {
   }
   const canonical = createUrl(router.locale);
 
-  const alternate = router.locales.map((locale) => createUrl(locale));
-
+  const alternate = router.locales?.map((locale) => createUrl(locale)) || [];
   return { canonical, alternate };
 }
