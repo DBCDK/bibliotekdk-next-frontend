@@ -182,12 +182,25 @@ function renderSuggestion(suggestion, query, skeleton) {
  * Custom input field
  *
  */
-function renderInputComponent(inputProps, isMobile, onClose, onClear) {
+function renderInputComponent(
+  inputProps,
+  isMobile,
+  selectedMaterial,
+  onClose,
+  onClear
+) {
   // Set placeholder according to device type
-  const placeholder = Translate({
+  let placeholder = Translate({
     ...context,
     label: isMobile ? "placeholderMobile" : "placeholder",
   });
+
+  placeholder =
+    placeholder +
+    Translate({
+      context: "general",
+      label: selectedMaterial ? selectedMaterial.label : "all_materials",
+    });
 
   const props = {
     ...inputProps,
@@ -256,6 +269,7 @@ export function Suggester({
   skeleton = false,
   history = [],
   clearHistory = null,
+  selectedMaterial = null,
 }) {
   // Make copy of all suggestion objects
   // react-autosuggest will mutate these objects,
@@ -308,8 +322,14 @@ export function Suggester({
         "aria-label",
         Translate({
           ...context,
-          label: "placeholder",
-        })
+          label: isMobile ? "placeholderMobile" : "placeholder",
+        }) +
+          Translate({
+            context: "general",
+            label: selectedMaterial?.label
+              ? selectedMaterial.label
+              : "all_materials",
+          })
       );
     }
   }, []);
@@ -381,10 +401,16 @@ export function Suggester({
         renderSuggestion(suggestion, query, skeleton)
       }
       renderInputComponent={(inputProps) =>
-        renderInputComponent(inputProps, isMobile, onClose, () => {
-          setIntQuery("");
-          onChange && onChange("");
-        })
+        renderInputComponent(
+          inputProps,
+          isMobile,
+          selectedMaterial,
+          onClose,
+          () => {
+            setIntQuery("");
+            onChange && onChange("");
+          }
+        )
       }
       highlightFirstSuggestion={false}
       inputProps={inputProps}
@@ -469,6 +495,7 @@ export default function Wrap(props) {
       skeleton={isLoading}
       query={query}
       suggestions={(data && data.suggest && data.suggest.result) || []}
+      selectedMaterial={selectedMaterial}
     />
   );
 }
