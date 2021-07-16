@@ -20,7 +20,7 @@ export default function Page() {
   const router = useRouter();
   const context = { context: "metadata" };
 
-  const { canonical, alternate } = useCanonicalUrl();
+  const { canonical, alternate, root } = useCanonicalUrl();
 
   const pageTitle = Translate({
     ...context,
@@ -40,7 +40,10 @@ export default function Page() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        <meta
+          property="og:image"
+          content={`${root}/img/bibdk-og-cropped.jpg`}
+        />
         {alternate.map(({ locale, url }) => (
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}

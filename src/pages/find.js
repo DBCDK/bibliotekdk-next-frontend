@@ -25,7 +25,7 @@ function Find() {
   const router = useRouter();
   const { q, page = 1, view } = router.query;
 
-  const { canonical, alternate } = useCanonicalUrl({
+  const { canonical, alternate, root } = useCanonicalUrl({
     preserveParams: ["q", "materialtype"],
   });
 
@@ -86,7 +86,10 @@ function Find() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        <meta
+          property="og:image"
+          content={`${root}/img/bibdk-og-cropped.jpg`}
+        />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         {alternate.map(({ locale, url }) => (
           <link key={url} rel="alternate" hreflang={locale} href={url} />

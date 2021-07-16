@@ -35,7 +35,9 @@ export function Page({ result, isLoading, query }) {
     label: "help-description",
   });
 
-  const { canonical, alternate } = useCanonicalUrl({ preserveParams: ["q"] });
+  const { canonical, alternate, root } = useCanonicalUrl({
+    preserveParams: ["q"],
+  });
 
   return (
     <React.Fragment>
@@ -46,7 +48,10 @@ export function Page({ result, isLoading, query }) {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        <meta
+          property="og:image"
+          content={`${root}/img/bibdk-og-cropped.jpg`}
+        />
         {alternate.map(({ locale, url }) => (
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}

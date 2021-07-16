@@ -25,7 +25,7 @@ const Index = () => {
 
   const router = useRouter();
 
-  const { canonical, alternate } = useCanonicalUrl();
+  const { canonical, alternate, root } = useCanonicalUrl();
 
   return (
     <React.Fragment>
@@ -36,7 +36,10 @@ const Index = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content="/img/bibdk-og-cropped.jpg" />
+        <meta
+          property="og:image"
+          content={`${root}/img/bibdk-og-cropped.jpg`}
+        />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
         <link rel="alternate icon" href="favicon.ico" />
