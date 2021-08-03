@@ -9,8 +9,8 @@
  * @param {object} params
  * @param {string} params.q the query
  */
-export function hitcount({ q, materialtype }) {
-  const facets = materialtype ? [{ field: "type", value: materialtype }] : null;
+export function hitcount({ q, worktype }) {
+  const facets = worktype ? [{ field: "type", value: worktype }] : null;
 
   return {
     // delay: 1000, // for debugging

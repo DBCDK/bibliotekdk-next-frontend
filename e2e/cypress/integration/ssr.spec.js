@@ -230,10 +230,10 @@ describe("Server Side Rendering", () => {
     });
 
     it(`has correct alternate links`, () => {
-      getPageHead("/find?q=ost&materialtype=movie").then((res) => {
+      getPageHead("/find?q=ost&worktype=movie").then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find?q=ost&amp;materialtype=movie"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find?q=ost&amp;materialtype=movie"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find?q=ost&amp;worktype=movie"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find?q=ost&amp;worktype=movie"/>',
         ]);
       });
     });
@@ -253,7 +253,7 @@ describe("Server Side Rendering", () => {
           10
         );
         // Applying a filter should result in lower hitcount
-        getPageHead("/find?q=ost&materialtype=movie").then((filteredRes) => {
+        getPageHead("/find?q=ost&worktype=movie").then((filteredRes) => {
           const filteredHitcount = parseInt(
             filteredRes.description.match(/i alt (\d+) resultater/)[1],
             10
