@@ -51,8 +51,8 @@ export default function Wrap({ q, page, onWorkClick }) {
   const offset = limit * (page - 1); // offset
 
   const router = useRouter();
-  const { materialtype = null } = router.query;
-  const facet = materialtype ? [{ field: "type", value: materialtype }] : null;
+  const { worktype = null } = router.query;
+  const facet = worktype ? [{ field: "type", value: worktype }] : null;
   // use the useData hook to fetch data
   // const facet = [{ field: "type", value: "movie" }];
   //const facets = null;

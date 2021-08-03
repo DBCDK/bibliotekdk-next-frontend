@@ -26,7 +26,7 @@ function Find() {
   const { q, page = 1, view } = router.query;
 
   const { canonical, alternate, root } = useCanonicalUrl({
-    preserveParams: ["q", "materialtype"],
+    preserveParams: ["q", "worktype"],
   });
 
   // use the useData hook to fetch data

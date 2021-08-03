@@ -195,12 +195,19 @@ function renderInputComponent(
     label: isMobile ? "placeholderMobile" : "placeholder",
   });
 
-  placeholder =
-    placeholder +
-    Translate({
-      context: "general",
-      label: selectedMaterial ? selectedMaterial.label : "all_materials",
-    });
+  const isAll = selectedMaterial && selectedMaterial.value === "all";
+
+  placeholder = Translate({
+    context: "suggester",
+    label: isAll ? "placeholder" : "placeholderRelative",
+    vars: [
+      !isAll &&
+        Translate({
+          context: "general",
+          label: selectedMaterial.label,
+        }).toLowerCase(),
+    ],
+  });
 
   const props = {
     ...inputProps,

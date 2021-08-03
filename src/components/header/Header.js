@@ -139,7 +139,7 @@ export function Header({ className = "", router = null, story = null, user }) {
     } else {
       const params = selectedMaterial.value
         ? {
-            materialtype:
+            worktype:
               selectedMaterial.value !== "all" ? selectedMaterial.value : "",
             q: query,
           }
@@ -189,7 +189,11 @@ export function Header({ className = "", router = null, story = null, user }) {
                       }}
                     >
                       <Text type="text3">
-                        {Translate({ context: "general", label: m.label })}
+                        {Translate({
+                          context: "general",
+                          label:
+                            m.label === "all_materials" ? "frontpage" : m.label,
+                        })}
                       </Text>
                     </Link>
                   ))}

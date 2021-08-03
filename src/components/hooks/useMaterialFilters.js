@@ -1,5 +1,5 @@
 /**
- * Hook for getting constants and function for use when filtering on materialtype
+ * Hook for getting constants and function for use when filtering on worktype
  */
 import { useRouter } from "next/router";
 
@@ -15,8 +15,8 @@ function useMaterialFilters() {
     { value: "music", label: "music" },
     { value: "sheetmusic", label: "nodes" },
   ];
-  // check if materialtype is set in query parameters
-  const matparam = router && router.query.materialtype;
+  // check if worktype is set in query parameters
+  const matparam = router && router.query.worktype;
   let index = 0;
   if (matparam) {
     index = materialFilters.findIndex(function (element, indx) {
@@ -34,7 +34,7 @@ function useMaterialFilters() {
         pathname: router.pathname,
         query: {
           ...router.query,
-          materialtype: idx !== 0 ? materialFilters[idx].value : "",
+          worktype: idx !== 0 ? materialFilters[idx].value : "",
         },
       });
   };

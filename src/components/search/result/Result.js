@@ -45,6 +45,7 @@ export function Result({
       <Section
         contentDivider={null}
         titleDivider={<Divider className={styles.titledivider} />}
+        topSpace={true}
         title={
           <div className={styles.titlewrapper}>
             <Title type="title4">
@@ -120,8 +121,8 @@ export default function Wrap({
   const limit = 10; // limit
 
   const router = useRouter();
-  const { materialtype = null } = router.query;
-  const facet = materialtype ? [{ field: "type", value: materialtype }] : null;
+  const { worktype = null } = router.query;
+  const facet = worktype ? [{ field: "type", value: worktype }] : null;
   // use the useData hook to fetch data
   const fastResponse = useData(
     q && fast({ q, offset: 0, limit, facets: facet })

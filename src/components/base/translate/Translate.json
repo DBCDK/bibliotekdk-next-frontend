@@ -88,8 +88,8 @@
         "en": "All"
       },
       "all_materials": {
-        "da": "Alle materialekategorier",
-        "en": "All materialcategories"
+        "da": "Alle kategorier",
+        "en": "All categories"
       },
       "by": {
         "da": "af",
@@ -234,6 +234,10 @@
       "collapse": {
         "da": "Luk",
         "en": "Collapse"
+      },
+      "frontpage": {
+        "da": "Forside",
+        "en": "Front page"
       }
     },
     "articles": {
@@ -596,6 +600,10 @@
       "search": {
         "da": "Søg",
         "en": "Search"
+      },
+      "placeholderRelative": {
+        "da": "Søg i blandt %s",
+        "en": "Search among %s"
       },
       "placeholder": {
         "da": "Søg i bøger, film, musik og mere",
