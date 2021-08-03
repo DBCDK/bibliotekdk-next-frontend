@@ -195,19 +195,24 @@ function renderInputComponent(
     label: isMobile ? "placeholderMobile" : "placeholder",
   });
 
-  const isAll = selectedMaterial && selectedMaterial.value === "all";
+  // Doublecheck for selectedMaterial - In storybook suggester, selectedMaterial will be null and we therefor want to keep the previous placeholder)
+  if (selectedMaterial) {
+    const isAll = selectedMaterial.value === "all";
 
-  placeholder = Translate({
-    context: "suggester",
-    label: isAll ? "placeholder" : "placeholderRelative",
-    vars: [
-      !isAll &&
-        Translate({
-          context: "general",
-          label: selectedMaterial.label,
-        }).toLowerCase(),
-    ],
-  });
+    // Update placeholder if specific worktype is selected
+    if (!isAll) {
+      placeholder = Translate({
+        context: "suggester",
+        label: "placeholderRelative",
+        vars: [
+          Translate({
+            context: "general",
+            label: selectedMaterial.label,
+          }).toLowerCase(),
+        ],
+      });
+    }
+  }
 
   const props = {
     ...inputProps,
@@ -318,28 +323,30 @@ export function Suggester({
   }, [className]);
 
   useEffect(() => {
-    // This is for accessibility only
-    // react-autosuggest doesn't seem to support
-    // aria-label on the wrapper div. Hence we do this..
-    const wrapper = document.getElementById("suggester-input")?.parentNode
-      ?.parentNode;
+    if (selectedMaterial) {
+      // This is for accessibility only
+      // react-autosuggest doesn't seem to support
+      // aria-label on the wrapper div. Hence we do this..
+      const wrapper = document.getElementById("suggester-input")?.parentNode
+        ?.parentNode;
 
-    if (wrapper) {
-      wrapper.setAttribute(
-        "aria-label",
-        Translate({
-          ...context,
-          label: isMobile ? "placeholderMobile" : "placeholder",
-        }) +
+      if (wrapper) {
+        wrapper.setAttribute(
+          "aria-label",
           Translate({
-            context: "general",
-            label: selectedMaterial?.label
-              ? selectedMaterial.label
-              : "all_materials",
-          })
-      );
+            ...context,
+            label: isMobile ? "placeholderMobile" : "placeholder",
+          }) +
+            Translate({
+              context: "general",
+              label: selectedMaterial?.label
+                ? selectedMaterial.label
+                : "all_materials",
+            })
+        );
+      }
     }
-  }, []);
+  }, [selectedMaterial]);
 
   // Default input props
   const inputProps = {

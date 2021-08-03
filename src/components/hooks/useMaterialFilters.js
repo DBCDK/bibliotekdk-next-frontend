@@ -1,6 +1,7 @@
 /**
  * Hook for getting constants and function for use when filtering on worktype
  */
+
 import { useRouter } from "next/router";
 
 function useMaterialFilters() {
