@@ -4,12 +4,13 @@
  */
 import { Row, Collapse } from "react-bootstrap";
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 
 import Section from "@/components/base/section";
 import Divider from "@/components/base/divider";
 import { ManifestationList } from "./ManifestationList";
 import { ManifestationFull } from "./ManifestationFull";
+import { sortManifestations } from "./utils";
 import styles from "./BibliographicData.module.css";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
@@ -54,8 +55,12 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   // state for the onclick event
   const [manifestations, setManifestations] = useState(materialTypes);
 
+  const sortedMaterialTypes = useMemo(() => sortManifestations(materialTypes), [
+    materialTypes,
+  ]);
+
   useEffect(() => {
-    setManifestations(materialTypes);
+    setManifestations(sortedMaterialTypes);
   }, [materialTypes]);
 
   // onclick handler. set state of clicked manifestion (open/!open)
