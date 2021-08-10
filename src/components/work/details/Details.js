@@ -26,7 +26,7 @@ export function Details({
   className = "",
   data = {},
   skeleton = false,
-  subjects = null,
+  allsubjects = null,
 }) {
   // Translate Context
   const context = { context: "details" };
@@ -40,6 +40,20 @@ export function Details({
     data.language.filter((lang, index, self) => {
       return self.indexOf(lang) === index;
     });
+
+  // subjects also - to show genre and form
+  // Include wanted subject types
+  const include = ["DBCO", "genre", null];
+  // filter out other subjects
+  const subjects =
+    allsubjects && allsubjects.filter((s) => include.includes(s.type));
+  // filter out duplicates
+  const uniquesubjects =
+    subjects &&
+    subjects.filter(
+      (subject, index, self) =>
+        index === self.findIndex((unique) => unique.value === subject.value)
+    );
 
   return (
     <Section
@@ -125,9 +139,13 @@ export function Details({
         )}
       </Row>
 
-      {subjects && subjects.length > 0 && (
+      {uniquesubjects && uniquesubjects.length > 0 && (
         <Row className={styles.details}>
-          <Col xs={{ span: 6, offset: 0 }} md={{ span: 3, offset: 0 }}>
+          <Col
+            xs={{ span: 6, offset: 0 }}
+            md={{ span: 3, offset: 0 }}
+            data-cy="genre-form-container"
+          >
             <Text
               type="text3"
               className={styles.title}
@@ -137,9 +155,9 @@ export function Details({
               {Translate({ ...context, label: "genre/form" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {subjects.map((subject, index) => {
+              {uniquesubjects.map((subject, index) => {
                 // Trailing comma
-                const t = index + 1 === subjects.length ? "" : ", ";
+                const t = index + 1 === uniquesubjects.length ? "" : ", ";
                 return subject.value + t;
               })}
             </Text>
@@ -202,23 +220,11 @@ export default function Wrap(props) {
     data.work.materialTypes.find((element) => element.materialType === type) ||
     data.work.materialTypes[0];
 
-  // pass subjects also - to show genre and form
-  const allsubjects = data?.work?.subjects;
-  // Include wanted subject types
-  const include = ["DBCO", "genre", null];
-  // filter out other subjects
-  const subjects = allsubjects.filter((s) => include.includes(s.type));
-  // filter out duplicates
-  const uniquesubjects = subjects.filter(
-    (subject, index, self) =>
-      index === self.findIndex((unique) => unique.value === subject.value)
-  );
-
   return (
     <Details
       {...props}
       data={materialType?.manifestations?.[0]}
-      subjects={uniquesubjects}
+      allsubjects={data?.work?.subjects}
     />
   );
 }
