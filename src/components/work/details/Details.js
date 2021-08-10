@@ -151,10 +151,16 @@ export function Details({
               className={styles.title}
               skeleton={skeleton}
               lines={2}
+              dataCy="genre-form-title"
             >
               {Translate({ ...context, label: "genre/form" })}
             </Text>
-            <Text type="text4" skeleton={skeleton} lines={0}>
+            <Text
+              type="text4"
+              skeleton={skeleton}
+              lines={0}
+              dataCy="text-genre-form"
+            >
               {uniquesubjects.map((subject, index) => {
                 // Trailing comma
                 const t = index + 1 === uniquesubjects.length ? "" : ", ";
