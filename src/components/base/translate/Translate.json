@@ -448,6 +448,10 @@
       "contribution": {
         "da": "Bidrag",
         "en": "Contributions"
+      },
+      "genre/form": {
+        "da": "genre/form",
+        "en": "genre/form"
       }
     },
     "description": {

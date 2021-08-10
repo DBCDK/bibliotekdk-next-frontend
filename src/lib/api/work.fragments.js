@@ -86,6 +86,10 @@ export function details({ workId }) {
             title
             description
           }
+          subjects {
+            type
+            value
+          }          
           materialTypes {
             materialType
             manifestations {
@@ -108,7 +112,7 @@ export function details({ workId }) {
                 note
               }
               physicalDescription
-              publisher
+              publisher              
             }
           }
         }

@@ -9,6 +9,10 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Details.module.css";
+import { cyKey } from "@/utils/trim";
+import Link from "@/components/base/link";
+import Title from "@/components/base/title/Title";
+import { array } from "@storybook/addon-knobs";
 
 /**
  * The Component function
@@ -18,13 +22,24 @@ import styles from "./Details.module.css";
  *
  * @returns {component}
  */
-export function Details({ className = "", data = {}, skeleton = false }) {
+export function Details({
+  className = "",
+  data = {},
+  skeleton = false,
+  subjects = null,
+}) {
   // Translate Context
   const context = { context: "details" };
-
   const contributors =
     data.creators &&
     data.creators.filter((creator) => creator.type && creator.type !== "aut");
+
+  // filter out duplicate languages
+  const languages =
+    data.language &&
+    data.language.filter((lang, index, self) => {
+      return self.indexOf(lang) === index;
+    });
 
   return (
     <Section
@@ -44,7 +59,7 @@ export function Details({ className = "", data = {}, skeleton = false }) {
               {Translate({ ...context, label: "language" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.language && data.language.join(", ")}
+              {languages && languages.join(", ")}
             </Text>
           </Col>
         )}
@@ -109,6 +124,28 @@ export function Details({ className = "", data = {}, skeleton = false }) {
           </Col>
         )}
       </Row>
+
+      {subjects && subjects.length > 0 && (
+        <Row className={styles.details}>
+          <Col xs={{ span: 6, offset: 0 }} md={{ span: 3, offset: 0 }}>
+            <Text
+              type="text3"
+              className={styles.title}
+              skeleton={skeleton}
+              lines={2}
+            >
+              {Translate({ ...context, label: "genre/form" })}
+            </Text>
+            <Text type="text4" skeleton={skeleton} lines={0}>
+              {subjects.map((subject, index) => {
+                // Trailing comma
+                const t = index + 1 === subjects.length ? "" : ", ";
+                return subject.value + t;
+              })}
+            </Text>
+          </Col>
+        </Row>
+      )}
     </Section>
   );
 }
@@ -165,7 +202,25 @@ export default function Wrap(props) {
     data.work.materialTypes.find((element) => element.materialType === type) ||
     data.work.materialTypes[0];
 
-  return <Details {...props} data={materialType?.manifestations?.[0]} />;
+  // pass subjects also - to show genre and form
+  const allsubjects = data?.work?.subjects;
+  // Include wanted subject types
+  const include = ["DBCO", "genre", null];
+  // filter out other subjects
+  const subjects = allsubjects.filter((s) => include.includes(s.type));
+  // filter out duplicates
+  const uniquesubjects = subjects.filter(
+    (subject, index, self) =>
+      index === self.findIndex((unique) => unique.value === subject.value)
+  );
+
+  return (
+    <Details
+      {...props}
+      data={materialType?.manifestations?.[0]}
+      subjects={uniquesubjects}
+    />
+  );
 }
 
 // PropTypes for component
