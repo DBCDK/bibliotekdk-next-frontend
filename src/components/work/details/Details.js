@@ -9,10 +9,6 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Details.module.css";
-import { cyKey } from "@/utils/trim";
-import Link from "@/components/base/link";
-import Title from "@/components/base/title/Title";
-import { array } from "@storybook/addon-knobs";
 
 /**
  * The Component function
