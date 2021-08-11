@@ -42,7 +42,7 @@ const fields = () => [
       value.length > 1 &&
       value.map((creator, idx) => (
         <span key={`${creator.name}${idx}`}>
-          {manifestationLink({ name: creator.name })}
+          {creator.name}
           {creator.functionSingular && ` (${creator.functionSingular})`}
           <br />
         </span>
