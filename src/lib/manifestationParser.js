@@ -39,15 +39,14 @@ const fields = () => [
       label: "contributors",
     }),
     valueParser: (value) =>
-      value
-        .filter((creator, idx) => idx > 0)
-        .map((creator, idx) => (
-          <span key={`${creator.name}${idx}`}>
-            {creator.name}
-            {creator.functionSingular && ` (${creator.functionSingular})`}
-            <br />
-          </span>
-        )),
+      value.length > 1 &&
+      value.map((creator, idx) => (
+        <span key={`${creator.name}${idx}`}>
+          {manifestationLink({ name: creator.name })}
+          {creator.functionSingular && ` (${creator.functionSingular})`}
+          <br />
+        </span>
+      )),
   },
   {
     dataField: "publisher",
