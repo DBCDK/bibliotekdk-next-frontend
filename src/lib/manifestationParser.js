@@ -42,7 +42,7 @@ const fields = () => [
       value.length > 1 &&
       value.map((creator, idx) => (
         <span key={`${creator.name}${idx}`}>
-          {creator.name}
+          {manifestationLink({ name: creator.name })}
           {creator.functionSingular && ` (${creator.functionSingular})`}
           <br />
         </span>
@@ -112,7 +112,13 @@ const fields = () => [
       context: "bibliographic-data",
       label: "language",
     }),
-    valueParser: (value) => value.join(", "),
+    valueParser: (value) =>
+      // filter out duplicate languages
+      value
+        .filter((lang, index, self) => {
+          return self.indexOf(lang) === index;
+        })
+        .join(", "),
   },
   {
     dataField: "isbn",
@@ -134,12 +140,13 @@ const fields = () => [
       context: "bibliographic-data",
       label: "notes",
     }),
+
     valueParser: (value) =>
       value.map((note, idx) => (
-        <span key={`${note}${idx}`}>
+        <div key={`${note}${idx}`}>
           {note}
-          <br />
-        </span>
+          {value.length > idx + 1 && <div>&nbsp;</div>}
+        </div>
       )),
   },
   {
