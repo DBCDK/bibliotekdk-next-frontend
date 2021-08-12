@@ -68,7 +68,7 @@ describe("Overview", () => {
     cy.get(`[data-cy=tag-ebog]`).click();
     cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
     cy.get("[data-cy=button-gå-til-bogen]").click();
-    cy.contains("bogen tilgås online på ebookurl.dk");
+    cy.contains("Du bliver sendt til ebookurl.dk");
     cy.on("window:alert", (str) => {
       expect(str).to.equal("https://ebookurl.dk");
     });
@@ -78,7 +78,7 @@ describe("Overview", () => {
     cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
     cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
     cy.get("[data-cy=button-gå-til-bogen]").click();
-    cy.contains("bogen tilgås online på audiobookurl.dk");
+    cy.contains("Du bliver sendt til audiobookurl.dk");
     cy.on("window:alert", (str) => {
       expect(str).to.equal("https://audiobookurl.dk");
     });

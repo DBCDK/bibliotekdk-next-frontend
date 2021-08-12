@@ -217,7 +217,6 @@ export function Overview({
                 {onlineAccessUrl ? (
                   <Text type="text3" skeleton={skeleton} lines={1}>
                     {[
-                      workTypeTranslated,
                       Translate({ ...context, label: "onlineAccessAt" }),
                       getBaseUrl(onlineAccessUrl),
                     ].join(" ")}
