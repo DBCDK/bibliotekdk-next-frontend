@@ -146,6 +146,7 @@ export function detailsAllManifestations({ workId }) {
           }
           manifestations {
             inLanguage
+            usedLanguage
             content
             creators {
               type

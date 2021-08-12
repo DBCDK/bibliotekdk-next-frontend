@@ -106,12 +106,10 @@ const fields = () => [
       label: "physicalDescription",
     }),
   },
+    /*
   {
     dataField: "language",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "language",
-    }),
+    label: .join(", ")
     valueParser: (value) =>
       // filter out duplicate languages
       value
@@ -120,6 +118,7 @@ const fields = () => [
         })
         .join(", "),
   },
+     */
   {
     dataField: "isbn",
     label: Translate({
@@ -148,6 +147,14 @@ const fields = () => [
           {value.length > idx + 1 && <div>&nbsp;</div>}
         </div>
       )),
+  },
+  {
+    dataField: "usedLanguage",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "usedLanguage",
+    }),
+    valueParser: (value) => value.join(", "),
   },
   {
     dataField: "edition",
