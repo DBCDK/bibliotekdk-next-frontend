@@ -75,6 +75,10 @@ Array [
     "label": "Bidrag",
     "value": Array [
       <span>
+        some contributor
+        <br />
+      </span>,
+      <span>
         some other contributor
         <br />
       </span>,
