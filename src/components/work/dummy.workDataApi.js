@@ -34,7 +34,7 @@ export default function dummy_workDataApi({ workId }) {
             manifestations: [
               {
                 pid: "870970-basis:52849985",
-                onlineAccess: [{ url: "https://ebookurl", note: "" }],
+                onlineAccess: [{ url: "https://ebookurl.dk", note: "" }],
               },
             ],
           },
@@ -65,7 +65,7 @@ export default function dummy_workDataApi({ workId }) {
             manifestations: [
               {
                 pid: "870970-basis:54627890",
-                onlineAccess: [{ url: "https://audiobookurl", note: "" }],
+                onlineAccess: [{ url: "https://audiobookurl.dk", note: "" }],
               },
             ],
           },
@@ -77,6 +77,7 @@ export default function dummy_workDataApi({ workId }) {
             manifestations: [{ pid: "874310-katalog:DBB0106054" }],
           },
         ],
+        workTypes: ["literature"],
       },
     },
   };

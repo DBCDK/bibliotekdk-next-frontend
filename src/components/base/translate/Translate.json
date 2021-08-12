@@ -437,17 +437,9 @@
         "da": "Gå til",
         "en": "Get"
       },
-      "onlineAccessUnknown": {
-        "da": "Gå til produktet",
-        "en": "Get the material"
-      },
-      "onlineAccessEbook": {
-        "da": "Gå til e-bog",
-        "en": "Get the ebook"
-      },
-      "onlineAccessAudiobook": {
-        "da": "Gå til lydbog",
-        "en": "Get the audio book"
+      "onlineAccessAt": {
+        "da": "tilgås online på",
+        "en": "is accessed online at"
       },
       "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",

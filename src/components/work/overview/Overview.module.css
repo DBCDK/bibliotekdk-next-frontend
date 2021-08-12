@@ -52,6 +52,10 @@
 
 .info {
   padding-top: var(--pt2);
+  min-height: 60px;
+}
+.info p:first-letter {
+  text-transform: uppercase;
 }
 
 .disabledbutton {
