@@ -66,19 +66,21 @@ describe("Overview", () => {
 
   it(`Can access external ebook`, () => {
     cy.get(`[data-cy=tag-ebog]`).click();
-    cy.get("[data-cy=button-cypress]").contains("Gå til e-bog");
-    cy.get("[data-cy=button-cypress]").click();
+    cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
+    cy.get("[data-cy=button-gå-til-bogen]").click();
+    cy.contains("bogen tilgås online på ebookurl.dk");
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("https://ebookurl");
+      expect(str).to.equal("https://ebookurl.dk");
     });
   });
 
   it(`Can access external audio book`, () => {
     cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
-    cy.get("[data-cy=button-cypress]").contains("Gå til lydbog");
-    cy.get("[data-cy=button-cypress]").click();
+    cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
+    cy.get("[data-cy=button-gå-til-bogen]").click();
+    cy.contains("bogen tilgås online på audiobookurl.dk");
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("https://audiobookurl");
+      expect(str).to.equal("https://audiobookurl.dk");
     });
   });
 

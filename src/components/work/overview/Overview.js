@@ -11,7 +11,7 @@ import Cover from "@/components/base/cover";
 import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
 import Breadcrumbs from "@/components/base/breadcrumbs";
-import Translate from "@/components/base/translate";
+import Translate, { hasTranslation } from "@/components/base/translate";
 
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
@@ -23,6 +23,26 @@ import OrderButton from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 // Translate Context
 const context = { context: "overview" };
+
+/**
+ * Example:
+ *
+ * getBaseUrl("https://fjernleje.filmstriben.dk/some-movie");
+ * yields: "fjernleje.filmstriben.dk"
+ *
+ * @param {string} url
+ * @returns {string}
+ */
+function getBaseUrl(url) {
+  if (!url) {
+    return "";
+  }
+  const match = url.match(/(http|https):\/\/(www\.)?(.*?\..*?)(\/|\?|$)/i);
+  if (match) {
+    return match[3];
+  }
+  return url;
+}
 
 /**
  * The Component function
@@ -45,6 +65,7 @@ export function Overview({
   user = {},
   className = "",
   skeleton = false,
+  workTypes,
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
@@ -66,6 +87,22 @@ export function Overview({
   }
 
   const searchOnUrl = "/find?q=";
+
+  const onlineAccessUrl =
+    selectedMaterial?.manifestations?.[0].onlineAccess?.[0]?.url;
+  const workType = workTypes?.[0] || "fallback";
+  const workTypeTranslated = hasTranslation({
+    context: "workTypeDistinctForm",
+    label: workType,
+  })
+    ? Translate({
+        context: "workTypeDistinctForm",
+        label: workType,
+      })
+    : Translate({
+        context: "workTypeDistinctForm",
+        label: "fallback",
+      });
 
   // BETA-1 .. disable breadcrumb links
   const breadcrumbsdisabled = true;
@@ -173,15 +210,28 @@ export function Overview({
                   onlineAccess={onOnlineAccess}
                   login={login}
                   openOrderModal={openOrderModal}
+                  workTypeTranslated={workTypeTranslated}
                 />
               </Col>
               <Col xs={12} className={styles.info}>
-                <Text type="text3" skeleton={skeleton} lines={2}>
-                  {Translate({ ...context, label: "addToCart-line1" })}
-                </Text>
-                <Text type="text3" skeleton={skeleton} lines={0}>
-                  {Translate({ ...context, label: "addToCart-line2" })}
-                </Text>
+                {onlineAccessUrl ? (
+                  <Text type="text3" skeleton={skeleton} lines={1}>
+                    {[
+                      workTypeTranslated,
+                      Translate({ ...context, label: "onlineAccessAt" }),
+                      getBaseUrl(onlineAccessUrl),
+                    ].join(" ")}
+                  </Text>
+                ) : (
+                  <>
+                    <Text type="text3" skeleton={skeleton} lines={2}>
+                      {Translate({ ...context, label: "addToCart-line1" })}
+                    </Text>
+                    <Text type="text3" skeleton={skeleton} lines={0}>
+                      {Translate({ ...context, label: "addToCart-line2" })}
+                    </Text>
+                  </>
+                )}
               </Col>
             </Row>
           </Col>

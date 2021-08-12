@@ -115,6 +115,7 @@ export function details({ workId }) {
               publisher              
             }
           }
+          workTypes
         }
         monitor(name: "bibdknext_work_details")
       }`,

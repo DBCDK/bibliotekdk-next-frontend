@@ -390,6 +390,36 @@
         "en": "Note"
       }
     },
+    "workTypeDistinctForm": {
+      "literature": {
+        "da": "bogen",
+        "en": "the book"
+      },
+      "movie": {
+        "da": "filmen",
+        "en": "the movie"
+      },
+      "article": {
+        "da": "artiklen",
+        "en": "the article"
+      },
+      "music": {
+        "da": "musikken",
+        "en": "the music"
+      },
+      "game": {
+        "da": "spillet",
+        "en": "the game"
+      },
+      "sheetmusic": {
+        "da": "noden",
+        "en": "the sheet music"
+      },
+      "fallback": {
+        "da": "materialet",
+        "en": "the material"
+      }
+    },
     "overview": {
       "addToCart": {
         "da": "Læg i lånekurv",
@@ -403,17 +433,13 @@
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
       },
-      "onlineAccessUnknown": {
-        "da": "Gå til produktet",
-        "en": "Get the material"
+      "goto": {
+        "da": "Gå til",
+        "en": "Get"
       },
-      "onlineAccessEbook": {
-        "da": "Gå til e-bog",
-        "en": "Get the ebook"
-      },
-      "onlineAccessAudiobook": {
-        "da": "Gå til lydbog",
-        "en": "Get the audio book"
+      "onlineAccessAt": {
+        "da": "tilgås online på",
+        "en": "is accessed online at"
       },
       "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",
