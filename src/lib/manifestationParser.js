@@ -14,6 +14,7 @@ function manifestationLink({ name }) {
     />
   );
 }
+
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
   {
@@ -106,19 +107,6 @@ const fields = () => [
       label: "physicalDescription",
     }),
   },
-    /*
-  {
-    dataField: "language",
-    label: .join(", ")
-    valueParser: (value) =>
-      // filter out duplicate languages
-      value
-        .filter((lang, index, self) => {
-          return self.indexOf(lang) === index;
-        })
-        .join(", "),
-  },
-     */
   {
     dataField: "isbn",
     label: Translate({
