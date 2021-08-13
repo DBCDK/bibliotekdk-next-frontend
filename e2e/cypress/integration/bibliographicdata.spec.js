@@ -33,7 +33,7 @@ describe("bibliographic data", () => {
   });
   it("open edition - check creator link", () => {
     // get first edition
-    cy.get("[data-cy=bib-edition-0]").click();
+    cy.get("[data-cy=accordion-item]").first().click();
     cy.get("[data-cy=edition-data-af] span a")
       .should("have.attr", "href")
       .should("not.be.empty")
