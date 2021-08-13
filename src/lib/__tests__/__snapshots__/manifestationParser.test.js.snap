@@ -6,46 +6,63 @@ Array [
     "dataField": "notes",
     "label": "Note",
     "value": Array [
-      <span>
+      <div>
         Introduction, Barbara Larson;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Darwin, Burke, and the biological sublime, Barbara Larson;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Why is the peacock's tail so beautiful?, Laurence Shafe;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Cultural selection and the shape of time, Larry Silver;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         On mimicry in Darwin and surrealism, Jan Soffner;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Contemporary art and the aesthetics of natural selection, Ellen Levy;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         index
-        <br />
-      </span>,
+      </div>,
     ],
   },
 ]
@@ -75,11 +92,35 @@ Array [
     "label": "Bidrag",
     "value": Array [
       <span>
-        some contributor
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q=some contributor"
+        >
+          some contributor
+        </Link>
         <br />
       </span>,
       <span>
-        some other contributor
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q=some other contributor"
+        >
+          some other contributor
+        </Link>
         <br />
       </span>,
     ],
@@ -88,46 +129,63 @@ Array [
     "dataField": "notes",
     "label": "Note",
     "value": Array [
-      <span>
+      <div>
         Introduction, Barbara Larson;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Darwin, Burke, and the biological sublime, Barbara Larson;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Why is the peacock's tail so beautiful?, Laurence Shafe;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Cultural selection and the shape of time, Larry Silver;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         On mimicry in Darwin and surrealism, Jan Soffner;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         Contemporary art and the aesthetics of natural selection, Ellen Levy;
-        <br />
-      </span>,
-      <span>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
         index
-        <br />
-      </span>,
+      </div>,
     ],
   },
 ]
