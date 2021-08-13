@@ -25,7 +25,7 @@ import BodyParser from "@/components/base/bodyparser";
  * @returns {component}
  */
 
-export function Item({ title, children, eventKey }) {
+export function Item({ title, subTitle, children, eventKey }) {
   const currentEventKey = React.useContext(AccordionContext);
 
   const onClick = useAccordionToggle(eventKey);
@@ -56,16 +56,18 @@ export function Item({ title, children, eventKey }) {
         onClick={onClick}
         onKeyPress={handleKeypress}
       >
-        <Text
-          type="text2"
-          className={[
-            animations["h-color-blue"],
-            animations["h-border-bottom"],
-            animations["f-translate-right"],
-          ].join(" ")}
-        >
-          {title}
-        </Text>
+        <div className={animations["f-translate-right"]}>
+          <Text
+            type="text2"
+            className={[
+              animations["h-color-blue"],
+              animations["h-border-bottom"],
+            ].join(" ")}
+          >
+            {title}
+          </Text>
+          {subTitle && <Text type="text4">{subTitle}</Text>}
+        </div>
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse
@@ -80,6 +82,7 @@ export function Item({ title, children, eventKey }) {
 
 Item.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   eventKey: PropTypes.string.isRequired,
 };
@@ -107,6 +110,7 @@ export default function Accordion({
     data.map((a, i) => (
       <Item
         title={a.title}
+        subTitle={a.subTitle}
         key={`${a.title}_${i}`}
         eventKey={a.key || i.toString()}
       >
