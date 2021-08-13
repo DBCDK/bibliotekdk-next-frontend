@@ -305,6 +305,10 @@
       }
     },
     "bibliographic-data": {
+      "physicalDescriptionArticles": {
+        "da": "Sidetal",
+        "en": "Pagenumber"
+      },
       "usedLanguage": {
         "da": "Anvendt sprog",
         "en": "Used language"

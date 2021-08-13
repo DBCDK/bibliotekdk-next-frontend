@@ -72,6 +72,13 @@ const fields = () => [
     valueParser: (value) => [value.title, value.details].join(", "),
   },
   {
+    dataField: "physicalDescriptionArticles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "physicalDescriptionArticles",
+    }),
+  },
+  {
     dataField: "dk5",
     label: Translate({
       context: "bibliographic-data",
