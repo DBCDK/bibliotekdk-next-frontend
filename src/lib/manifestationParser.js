@@ -14,6 +14,7 @@ function manifestationLink({ name }) {
     />
   );
 }
+
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
   {
@@ -39,15 +40,14 @@ const fields = () => [
       label: "contributors",
     }),
     valueParser: (value) =>
-      value
-        .filter((creator, idx) => idx > 0)
-        .map((creator, idx) => (
-          <span key={`${creator.name}${idx}`}>
-            {creator.name}
-            {creator.functionSingular && ` (${creator.functionSingular})`}
-            <br />
-          </span>
-        )),
+      value.length > 1 &&
+      value.map((creator, idx) => (
+        <span key={`${creator.name}${idx}`}>
+          {manifestationLink({ name: creator.name })}
+          {creator.functionSingular && ` (${creator.functionSingular})`}
+          <br />
+        </span>
+      )),
   },
   {
     dataField: "publisher",
@@ -108,14 +108,6 @@ const fields = () => [
     }),
   },
   {
-    dataField: "language",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "language",
-    }),
-    valueParser: (value) => value.join(", "),
-  },
-  {
     dataField: "isbn",
     label: Translate({
       context: "bibliographic-data",
@@ -135,13 +127,22 @@ const fields = () => [
       context: "bibliographic-data",
       label: "notes",
     }),
+
     valueParser: (value) =>
       value.map((note, idx) => (
-        <span key={`${note}${idx}`}>
+        <div key={`${note}${idx}`}>
           {note}
-          <br />
-        </span>
+          {value.length > idx + 1 && <div>&nbsp;</div>}
+        </div>
       )),
+  },
+  {
+    dataField: "usedLanguage",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "usedLanguage",
+    }),
+    valueParser: (value) => value.join(", "),
   },
   {
     dataField: "edition",

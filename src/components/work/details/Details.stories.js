@@ -14,6 +14,7 @@ export function DetailsSection() {
   const workId = "some-id";
   const type = "Bog";
   const data = dummy_materialTypesApi({ workId, type });
+  const allsubjects = data[workId]?.subjects;
   return (
     <div>
       <StoryTitle>Detials section</StoryTitle>
@@ -21,7 +22,7 @@ export function DetailsSection() {
         Work details component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Details data={data[workId]} />
+      <Details data={data[workId]} allsubjects={allsubjects} />
     </div>
   );
 }

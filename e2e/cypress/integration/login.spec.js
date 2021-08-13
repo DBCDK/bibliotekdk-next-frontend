@@ -16,8 +16,9 @@ describe("Login", () => {
       `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423`
     );
 
+    // Try to comment out - seems like it waits too long
     // Wait for session to be fetched
-    cy.wait("@sessionRequest").then(() => {});
+    // cy.wait("@sessionRequest").then(() => {});
 
     // Intercept API request with bearer token
     cy.intercept({

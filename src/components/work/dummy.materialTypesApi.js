@@ -17,6 +17,11 @@ export default function getMaterialTypes({ workId, type }) {
               functionSingular: "illustrator",
               type: "ill",
             },
+            {
+              name: "some extra contributor",
+              functionSingular: "illustrator",
+              type: "ill",
+            },
           ],
           description:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
@@ -53,6 +58,9 @@ export default function getMaterialTypes({ workId, type }) {
             { type: "DBCS", value: "1980-1989" },
             { type: "DBCS", value: "1990-1999" },
             { type: "DBCS", value: "2000-2009" },
+            { type: "DBCO", value: "fiske og hest" },
+            { type: "DBCO", value: "fiske og hest" },
+            { type: "genre", value: "hund og kat" },
           ],
         },
         "Bog stor skrift": {

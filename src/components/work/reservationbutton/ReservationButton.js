@@ -1,6 +1,5 @@
 import Button from "@/components/base/button/Button";
 import styles from "@/components/work/overview/Overview.module.css";
-import Icon from "@/components/base/icon/Icon";
 import Translate from "@/components/base/translate";
 import includes from "lodash/includes";
 
@@ -32,6 +31,7 @@ export function OrderButton({
   login,
   openOrderModal,
   user,
+  workTypeTranslated,
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
@@ -61,16 +61,13 @@ export function OrderButton({
         skeleton={buttonSkeleton}
         onClick={() => onlineAccess(selectedMaterial?.onlineAccess[0]?.url)}
       >
-        <Icon src={"external.svg"} skeleton={buttonSkeleton} />
-        {Translate({
-          ...context,
-          label:
-            materialType === "Ebog"
-              ? "onlineAccessEbook"
-              : materialType?.includes("Lydbog")
-              ? "onlineAccessAudiobook"
-              : "onlineAccessUnknown",
-        })}
+        {[
+          Translate({
+            context: "overview",
+            label: "goto",
+          }),
+          workTypeTranslated,
+        ].join(" ")}
       </Button>
     );
   }

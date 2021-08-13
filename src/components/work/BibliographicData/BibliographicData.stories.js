@@ -1,5 +1,4 @@
 import { BibliographicData } from "./BibliographicData";
-import React, { useState } from "react";
 import dummy_workDataApi from "../dummy.workDataApi";
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 

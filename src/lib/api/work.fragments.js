@@ -86,6 +86,10 @@ export function details({ workId }) {
             title
             description
           }
+          subjects {
+            type
+            value
+          }          
           materialTypes {
             materialType
             manifestations {
@@ -108,9 +112,10 @@ export function details({ workId }) {
                 note
               }
               physicalDescription
-              publisher
+              publisher              
             }
           }
+          workTypes
         }
         monitor(name: "bibdknext_work_details")
       }`,
@@ -142,6 +147,7 @@ export function detailsAllManifestations({ workId }) {
           }
           manifestations {
             inLanguage
+            usedLanguage
             content
             creators {
               type

@@ -305,6 +305,10 @@
       }
     },
     "bibliographic-data": {
+      "usedLanguage": {
+        "da": "Anvendt sprog",
+        "en": "Used language"
+      },
       "storytitle": {
         "da": "Informationer og udgaver",
         "en": "information and editions"
@@ -390,6 +394,36 @@
         "en": "Note"
       }
     },
+    "workTypeDistinctForm": {
+      "literature": {
+        "da": "bogen",
+        "en": "the book"
+      },
+      "movie": {
+        "da": "filmen",
+        "en": "the movie"
+      },
+      "article": {
+        "da": "artiklen",
+        "en": "the article"
+      },
+      "music": {
+        "da": "musikken",
+        "en": "the music"
+      },
+      "game": {
+        "da": "spillet",
+        "en": "the game"
+      },
+      "sheetmusic": {
+        "da": "noden",
+        "en": "the sheet music"
+      },
+      "fallback": {
+        "da": "materialet",
+        "en": "the material"
+      }
+    },
     "overview": {
       "addToCart": {
         "da": "Læg i lånekurv",
@@ -403,17 +437,13 @@
         "da": "Digitale materialer bliver du sendt videre til",
         "en": "You will be forwarded to digital materials"
       },
-      "onlineAccessUnknown": {
-        "da": "Gå til produktet",
-        "en": "Get the material"
+      "goto": {
+        "da": "Gå til",
+        "en": "Get"
       },
-      "onlineAccessEbook": {
-        "da": "Gå til e-bog",
-        "en": "Get the ebook"
-      },
-      "onlineAccessAudiobook": {
-        "da": "Gå til lydbog",
-        "en": "Get the audio book"
+      "onlineAccessAt": {
+        "da": "Du bliver sendt til",
+        "en": "You will be sent to"
       },
       "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",
@@ -448,6 +478,10 @@
       "contribution": {
         "da": "Bidrag",
         "en": "Contributions"
+      },
+      "genre/form": {
+        "da": "genre/form",
+        "en": "genre/form"
       }
     },
     "description": {
