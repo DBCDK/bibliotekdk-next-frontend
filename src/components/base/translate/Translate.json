@@ -305,6 +305,10 @@
       }
     },
     "bibliographic-data": {
+      "usedLanguage": {
+        "da": "Anvendt sprog",
+        "en": "Used language"
+      },
       "storytitle": {
         "da": "Informationer og udgaver",
         "en": "information and editions"
