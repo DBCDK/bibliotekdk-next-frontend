@@ -26,11 +26,8 @@ import useMaterialFilters from "@/components/hooks/useMaterialFilters";
  */
 export default function Searchbar({ query }) {
   // variables for the material filter
-  const {
-    selectedMaterial,
-    onOptionClicked,
-    materialFilters,
-  } = useMaterialFilters();
+  const { selectedMaterial, onOptionClicked, materialFilters } =
+    useMaterialFilters();
 
   return (
     <div className={styles.wrap}>

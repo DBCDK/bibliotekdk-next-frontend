@@ -55,9 +55,10 @@ function WorkTypesRow({ materialTypes = null, onClick = null }) {
   // state for the onclick event
   const [manifestations, setManifestations] = useState(materialTypes);
 
-  const sortedMaterialTypes = useMemo(() => sortManifestations(materialTypes), [
-    materialTypes,
-  ]);
+  const sortedMaterialTypes = useMemo(
+    () => sortManifestations(materialTypes),
+    [materialTypes]
+  );
 
   useEffect(() => {
     setManifestations(sortedMaterialTypes);

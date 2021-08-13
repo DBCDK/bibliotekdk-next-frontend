@@ -113,11 +113,8 @@ export function Header({ className = "", router = null, story = null, user }) {
     : "";
 
   // variables for the material filter @see <MaterialSelect>
-  const {
-    selectedMaterial,
-    onOptionClicked,
-    materialFilters,
-  } = useMaterialFilters();
+  const { selectedMaterial, onOptionClicked, materialFilters } =
+    useMaterialFilters();
 
   const doSearch = ({ query, suggestion }) => {
     // If we are on mobile we replace

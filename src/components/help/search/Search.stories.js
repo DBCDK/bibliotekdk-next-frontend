@@ -20,16 +20,14 @@ export function ShowResults() {
           nid: 1,
           orgTitle: "Sådan søger du i bibliotek.dk",
           title: "Sådan <mark>søger</mark> du i bibliotek.dk",
-          body:
-            "... tilpasset materialetyperne, så vælger du Bøger, får du <mark>søgevalg</mark>, der passer til bøger, vælger du Film, får du <mark>søgevalg</mark>, der passer til film og så videre. Klik på <mark>Søg</mark> eller tryk på retur-knappen på tastaturet. Når ...",
+          body: "... tilpasset materialetyperne, så vælger du Bøger, får du <mark>søgevalg</mark>, der passer til bøger, vælger du Film, får du <mark>søgevalg</mark>, der passer til film og så videre. Klik på <mark>Søg</mark> eller tryk på retur-knappen på tastaturet. Når ...",
           group: "some-group",
         },
         {
           nid: 2,
           orgTitle: "Om Login",
           title: "Om Login",
-          body:
-            "... til at læse artikler hos Infomedia. Bestille kopier via linket Bestil kopi. Adgang til at gemme poster og <mark>søgninger</mark> i huskeliste. Du kan logge ind på fire forskellige måder. Klik på Log ind, så får du ...",
+          body: "... til at læse artikler hos Infomedia. Bestille kopier via linket Bestil kopi. Adgang til at gemme poster og <mark>søgninger</mark> i huskeliste. Du kan logge ind på fire forskellige måder. Klik på Log ind, så får du ...",
           group: "some-group",
         },
       ]}
