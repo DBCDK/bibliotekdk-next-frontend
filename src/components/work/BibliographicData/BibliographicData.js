@@ -22,7 +22,9 @@ import * as workFragments from "@/lib/api/work.fragments";
  *
  * @returns {component}
  */
-export function BibliographicData(props) {
+export function BibliographicData({ data }) {
+  const sortedMaterialTypes = useMemo(() => sortManifestations(data), [data]);
+
   return (
     <Section
       title={Translate({
@@ -33,65 +35,21 @@ export function BibliographicData(props) {
       topSpace={true}
     >
       <Accordion>
-        <WorkTypesRow materialTypes={props.data} />
+        {sortedMaterialTypes.map((manifestation, index) => {
+          return (
+            <Item
+              title={manifestation.materialType}
+              subTitle={manifestation.datePublished}
+              key={`${manifestation.title}_${index}`}
+              eventKey={index.toString()}
+            >
+              <ManifestationFull manifestation={manifestation} index={index} />
+            </Item>
+          );
+        })}
       </Accordion>
     </Section>
   );
-}
-
-/**
- * Run through manifestations (WorkTypes) - do a row for each
- * This is also where we handle state for each manifestation (open/closed)
- * @param materialTypes
- *   array of Manifestations from api
- * @param onClick
- *   callback for onclick
- * @returns {*}
- *   component
- * @constructor
- */
-function WorkTypesRow({ materialTypes = null, onClick = null }) {
-  // state for the onclick event
-  const [manifestations, setManifestations] = useState(materialTypes);
-
-  const sortedMaterialTypes = useMemo(() => sortManifestations(materialTypes), [
-    materialTypes,
-  ]);
-
-  useEffect(() => {
-    setManifestations(sortedMaterialTypes);
-  }, [materialTypes]);
-
-  // onclick handler. set state of clicked manifestion (open/!open)
-  const rowClicked = (index) => {
-    // copy the manifestations array
-    let ManifestationStates = manifestations.map((manifestation) => ({
-      ...manifestation,
-    }));
-    // close all manifestations except the one clicked
-    ManifestationStates.forEach((manifestation, idx) => {
-      if (idx !== index) {
-        manifestation.open = false;
-      }
-    });
-    // toggle state of clicked manifestation
-    ManifestationStates[index].open = !ManifestationStates[index].open;
-    // set new state(s)
-    setManifestations(ManifestationStates);
-  };
-
-  return manifestations.map((manifestation, index) => {
-    return (
-      <Item
-        title={manifestation.materialType}
-        subTitle={manifestation.datePublished}
-        key={`${manifestation.title}_${index}`}
-        eventKey={index.toString()}
-      >
-        <ManifestationFull manifestation={manifestation} index={index} />
-      </Item>
-    );
-  });
 }
 
 /**
