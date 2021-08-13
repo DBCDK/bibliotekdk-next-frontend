@@ -166,6 +166,7 @@ export function detailsAllManifestations({ workId }) {
               title
               details
             }
+            physicalDescriptionArticles
             isbn
             materialType
             notes

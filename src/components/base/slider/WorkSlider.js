@@ -161,9 +161,10 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     swiperRect && cardRect ? Math.floor(swiperRect.width / cardRect.width) : 1;
 
   // Generate hash to uniquely identify this list of works
-  const hash = useMemo(() => hashCode(works.map((work) => work.id).join("")), [
-    works,
-  ]);
+  const hash = useMemo(
+    () => hashCode(works.map((work) => work.id).join("")),
+    [works]
+  );
 
   // Update the swiper instance when slidesPerGroup changes
   useEffect(() => {

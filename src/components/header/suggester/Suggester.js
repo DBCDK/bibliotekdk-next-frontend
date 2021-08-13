@@ -327,8 +327,8 @@ export function Suggester({
       // This is for accessibility only
       // react-autosuggest doesn't seem to support
       // aria-label on the wrapper div. Hence we do this..
-      const wrapper = document.getElementById("suggester-input")?.parentNode
-        ?.parentNode;
+      const wrapper =
+        document.getElementById("suggester-input")?.parentNode?.parentNode;
 
       if (wrapper) {
         wrapper.setAttribute(

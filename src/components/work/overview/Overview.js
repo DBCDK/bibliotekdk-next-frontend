@@ -302,14 +302,8 @@ export function OverviewError() {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const {
-    workId,
-    type,
-    onTypeChange,
-    onOnlineAccess,
-    login,
-    openOrderModal,
-  } = props;
+  const { workId, type, onTypeChange, onOnlineAccess, login, openOrderModal } =
+    props;
 
   const user = useUser();
 
