@@ -59,7 +59,7 @@ export function Details({
     >
       <Row className={`${styles.details}`}>
         {data.language && (
-          <Col xs={6} md>
+          <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
               className={styles.title}
@@ -74,7 +74,7 @@ export function Details({
           </Col>
         )}
         {data.physicalDescription && (
-          <Col xs={6} md>
+          <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
               className={styles.title}
@@ -89,7 +89,7 @@ export function Details({
           </Col>
         )}
         {data.datePublished && (
-          <Col xs={6} md>
+          <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
               className={styles.title}
@@ -104,7 +104,7 @@ export function Details({
           </Col>
         )}
         {contributors && contributors.length > 0 && (
-          <Col xs={6} md>
+          <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
               className={styles.title}
@@ -133,10 +133,8 @@ export function Details({
             })}
           </Col>
         )}
-      </Row>
 
-      {uniquesubjects && uniquesubjects.length > 0 && (
-        <Row className={styles.details}>
+        {uniquesubjects && uniquesubjects.length > 0 && (
           <Col
             xs={{ span: 6, offset: 0 }}
             md={{ span: 3, offset: 0 }}
@@ -164,8 +162,8 @@ export function Details({
               })}
             </Text>
           </Col>
-        </Row>
-      )}
+        )}
+      </Row>
     </Section>
   );
 }
