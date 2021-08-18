@@ -13,6 +13,7 @@ import Menu from "./templates/menu";
 import Basket from "./templates/basket";
 import Filter from "./templates/filter";
 import Order from "./templates/order";
+import Options from "./templates/options";
 
 import CloseSvg from "@/public/icons/close.svg";
 
@@ -90,6 +91,8 @@ function getTemplate(template) {
       return Filter;
     case "order":
       return Order;
+    case "options":
+      return Options;
     default:
       return Menu;
   }
@@ -176,6 +179,8 @@ export function Modal({
 
   // Custom modal theme class
   const themeClass = styles[`${context.title}-theme`] || "";
+
+  console.log("themeClass", themeClass);
 
   return (
     <div

@@ -696,6 +696,10 @@
       "title-order": {
         "da": "Bestil",
         "en": "Order"
+      },
+      "title-options": {
+        "da": "Andre bestillingsmuligheder",
+        "en": "Other ordering options"
       }
     },
     "navigation": {

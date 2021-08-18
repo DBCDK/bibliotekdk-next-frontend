@@ -12,6 +12,7 @@ import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
 import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import AlternativeOptions from "./alternatives";
 
 import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
@@ -232,6 +233,9 @@ export function Overview({
                   </>
                 )}
               </Col>
+              <Col xs={12} className={styles.info}>
+                <AlternativeOptions />
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -302,8 +306,14 @@ export function OverviewError() {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type, onTypeChange, onOnlineAccess, login, openOrderModal } =
-    props;
+  const {
+    workId,
+    type,
+    onTypeChange,
+    onOnlineAccess,
+    login,
+    openOrderModal,
+  } = props;
 
   const user = useUser();
 
