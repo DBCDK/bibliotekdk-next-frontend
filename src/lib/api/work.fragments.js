@@ -178,6 +178,7 @@ export function detailsAllManifestations({ workId }) {
             publisher
             shelf
             title
+            volume
           }
         }
         monitor(name: "bibdknext_work_detailsallmanifestations")

@@ -36,9 +36,12 @@ export function BibliographicData({ data }) {
     >
       <Accordion>
         {sortedMaterialTypes.map((manifestation, index) => {
+          const volume = manifestation.volume
+            ? " (" + manifestation.volume + ")"
+            : "";
           return (
             <Item
-              title={manifestation.materialType}
+              title={`${manifestation.materialType + volume}`}
               subTitle={manifestation.datePublished}
               key={`${manifestation.title}_${index}`}
               eventKey={index.toString()}
