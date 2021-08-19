@@ -22,6 +22,21 @@ import Logo from "@/components/base/logo/Logo";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 /**
+ * Back to bibliotek.dk button
+ *
+ * @returns {component}
+ */
+function BackButton() {
+  return (
+    <div className={styles.backlink}>
+      <Link href="/" border={{ bottom: { keepVisible: true } }}>
+        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
+      </Link>
+    </div>
+  );
+}
+
+/**
  * The custom Header for help page
  *
  * @returns {component}
@@ -42,7 +57,9 @@ export function Header({
       <Row className={styles.row}>
         <Col xs={3}>
           <Logo fill={"var(--blue)"} text={"help_logo_text"} href="/hjaelp" />
+          <BackButton />
         </Col>
+
         <Col xs={{ span: 12, order: 4 }} lg={{ span: 6, order: 2 }}>
           <div className={styles.inputwrapper}>
             <Title type="title3">

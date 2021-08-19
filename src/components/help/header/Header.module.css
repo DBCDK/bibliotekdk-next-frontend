@@ -8,6 +8,21 @@
   align-items: center;
 }
 
+.backlink {
+  /* Same height as input field - used to align center*/
+  height: var(--pt7);
+  margin-top: var(--pt2);
+position: absolute;
+  /* Hide on mobile */
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .backlink {
+    display: block;
+  }
+}
+
 .right {
   display: flex;
 }

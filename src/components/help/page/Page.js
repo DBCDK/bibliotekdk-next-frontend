@@ -13,21 +13,6 @@ import Text from "@/components/base/text";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 /**
- * Back to bibliotek.dk button
- *
- * @returns {component}
- */
-function BackButton() {
-  return (
-    <div className={styles.back}>
-      <Link href="/" border={{ bottom: { keepVisible: true } }}>
-        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
-      </Link>
-    </div>
-  );
-}
-
-/**
  * The Articles page React component
  *
  * @returns {component}
@@ -68,15 +53,10 @@ export default function Page() {
       </Head>
       <main>
         <Container className={styles.top} fluid>
-          <Row>
-            <Col xs={12} lg={{ span: 3 }}>
-              <BackButton />
-            </Col>
-          </Row>
+          <Faq className={styles.faq} />
+          <Sections className={styles.sections} />
+          <Contact />
         </Container>
-        <Faq className={styles.faq} />
-        <Sections className={styles.sections} />
-        <Contact />
       </main>
     </React.Fragment>
   );
