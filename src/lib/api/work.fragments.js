@@ -145,6 +145,7 @@ export function detailsAllManifestations({ workId }) {
             title
             description
           }
+          workTypes
           manifestations {
             inLanguage
             usedLanguage

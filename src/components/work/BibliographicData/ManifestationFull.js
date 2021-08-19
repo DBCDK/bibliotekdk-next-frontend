@@ -34,7 +34,8 @@ function bibdkObjectUrl(pid) {
  * @returns {JSX.Element}
  * @constructor
  */
-function ColumnOne({ manifestation }) {
+function ColumnOne({ manifestation, worktypes }) {
+  const worktype = worktypes[0] ? worktypes[0] : "literature";
   let number_of_libraries = "63";
   return (
     <Col
@@ -51,6 +52,9 @@ function ColumnOne({ manifestation }) {
         {Translate({
           context: "bibliographic-data",
           label: "locationtitle",
+          vars: [
+            Translate({ context: "workTypeDistinctForm", label: worktype }),
+          ],
         })}
       </Text>
       <div>
@@ -118,7 +122,7 @@ function ColumnOne({ manifestation }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({ manifestation }) {
+export function ManifestationFull({ manifestation, worktype }) {
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
@@ -127,7 +131,7 @@ export function ManifestationFull({ manifestation }) {
 
   return (
     <Row>
-      <ColumnOne manifestation={manifestation} />
+      <ColumnOne manifestation={manifestation} worktypes={worktype} />
       <Col xs={12} md>
         <div className={styles.container}>
           {parsed.map(({ label, value }) => {

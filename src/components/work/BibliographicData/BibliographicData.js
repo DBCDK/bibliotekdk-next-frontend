@@ -22,8 +22,11 @@ import * as workFragments from "@/lib/api/work.fragments";
  *
  * @returns {component}
  */
-export function BibliographicData({ data }) {
-  const sortedMaterialTypes = useMemo(() => sortManifestations(data), [data]);
+export function BibliographicData({ work }) {
+  const sortedMaterialTypes = useMemo(
+    () => sortManifestations(work.manifestations),
+    [work]
+  );
 
   return (
     <Section
@@ -46,7 +49,10 @@ export function BibliographicData({ data }) {
               key={`${manifestation.title}_${index}`}
               eventKey={index.toString()}
             >
-              <ManifestationFull manifestation={manifestation} index={index} />
+              <ManifestationFull
+                manifestation={manifestation}
+                worktype={work.workTypes}
+              />
             </Item>
           );
         })}
@@ -75,7 +81,7 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  return <BibliographicData data={data.work.manifestations} />;
+  return <BibliographicData work={data.work} />;
 }
 
 // PropTypes for component
