@@ -35,7 +35,8 @@ function bibdkObjectUrl(pid) {
  * @constructor
  */
 function ColumnOne({ manifestation, worktypes }) {
-  const worktype = worktypes[0] ? worktypes[0] : "literature";
+  const worktype = worktypes && worktypes[0] ? worktypes[0] : "literature";
+
   let number_of_libraries = "63";
   return (
     <Col
