@@ -119,7 +119,7 @@ describe("Order", () => {
       });
     });
 
-    cy.contains("Bestillingen er gennemført");
+    cy.contains("Bestillingen blev gennemført");
   });
 
   it("should not tab to order modal after it is closed", () => {
