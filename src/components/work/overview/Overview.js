@@ -90,6 +90,9 @@ export function Overview({
 
   const onlineAccessUrl =
     selectedMaterial?.manifestations?.[0].onlineAccess?.[0]?.url;
+
+  console.log("onlineAccessUrl", onlineAccessUrl);
+
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
     context: "workTypeDistinctForm",
