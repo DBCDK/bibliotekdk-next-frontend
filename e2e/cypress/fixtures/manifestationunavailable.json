@@ -15,7 +15,7 @@
       "isbn": "9788763840439",
       "materialType": "Bog",
       "language": ["Dansk"],
-      "onlineAccess": null,
+      "onlineAccess": [],
       "physicalDescription": "127 sider",
       "publisher": ["Høst"],
       "availability": {
