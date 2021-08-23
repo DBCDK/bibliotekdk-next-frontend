@@ -98,7 +98,7 @@ describe("Order", () => {
       .should("be.visible");
 
     // Change pickup branch
-    cy.get("[data-cy=text-skift-afhentning]").click();
+    cy.get("[data-cy=text-vælg-afhentning]").click();
     cy.get("[data-cy=text-dbc-bibilioteksekspressen]").click();
     cy.get('[data-cy="text-vsn-b.adresse"]')
       .scrollIntoView()
