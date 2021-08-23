@@ -54,7 +54,7 @@ export function OrderButton({
    */
 
   // online access ?
-  if (selectedMaterial?.onlineAccess) {
+  if (selectedMaterial?.onlineAccess?.length > 0) {
     return (
       <Button
         className={styles.externalLink}
