@@ -7,6 +7,9 @@
             "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
           },
           "materialType": "Bog",
+          "workTypes": [
+            "literature"
+          ],
           "manifestations": [
             {
               "pid": "870970-basis:51701763",
