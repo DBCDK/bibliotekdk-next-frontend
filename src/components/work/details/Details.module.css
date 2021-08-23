@@ -15,6 +15,6 @@
   }
 
   .details > div {
-    margin-bottom: 0;
+    margin-bottom: var(--pt4);
   }
 }
