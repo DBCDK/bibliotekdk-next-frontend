@@ -1,0 +1,10 @@
+.options {
+  padding: var(--pt2);
+  overflow: hidden;
+}
+
+@media (min-width: 576px) {
+  .options {
+    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+  }
+}

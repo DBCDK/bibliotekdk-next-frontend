@@ -4,6 +4,8 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 
+import styles from "./Alternatives.module.css";
+
 export default function AlternativeOptions() {
   const router = useRouter();
   const context = { context: "alternative-options" };

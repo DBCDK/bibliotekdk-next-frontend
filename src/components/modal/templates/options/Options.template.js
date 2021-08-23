@@ -1,4 +1,6 @@
-function Filter() {
+import styles from "./Options.module.css";
+
+function Options() {
   return (
     <div>
       <p>...</p>
@@ -6,4 +8,6 @@ function Filter() {
   );
 }
 
-export default Filter;
+export default function Wrap(props) {
+  return <Options {...props} />;
+}
