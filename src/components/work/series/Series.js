@@ -26,7 +26,7 @@ export function Series({ isLoading, works = [] }) {
     <Section
       title={Translate({ ...context, label: "label" })}
       topSpace={true}
-      hide={true}
+      hide={false}
     >
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
