@@ -113,8 +113,11 @@ export function Header({ className = "", router = null, story = null, user }) {
     : "";
 
   // variables for the material filter @see <MaterialSelect>
-  const { selectedMaterial, onOptionClicked, materialFilters } =
-    useMaterialFilters();
+  const {
+    selectedMaterial,
+    onOptionClicked,
+    materialFilters,
+  } = useMaterialFilters();
 
   const doSearch = ({ query, suggestion }) => {
     // If we are on mobile we replace
@@ -154,6 +157,11 @@ export function Header({ className = "", router = null, story = null, user }) {
     }
   };
 
+  const frontpageTranslated = Translate({
+    context: "general",
+    label: "frontpage",
+  });
+
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
@@ -168,6 +176,9 @@ export function Header({ className = "", router = null, story = null, user }) {
                   className={styles.materials}
                   data-cy={cyKey({ name: "materials", prefix: "header" })}
                 >
+                  <Link href="/">
+                    <Text type="text3">{frontpageTranslated}</Text>
+                  </Link>
                   {materialFilters.map((m, idx) => (
                     <Link
                       key={m.value}
@@ -188,8 +199,7 @@ export function Header({ className = "", router = null, story = null, user }) {
                       <Text type="text3">
                         {Translate({
                           context: "general",
-                          label:
-                            m.label === "all_materials" ? "frontpage" : m.label,
+                          label: m.label,
                         })}
                       </Text>
                     </Link>

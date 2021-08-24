@@ -7,6 +7,7 @@
             "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
           },
           "materialType": "Bog",
+          "workTypes": ["literature"],
           "manifestations": [
             {
               "pid": "870970-basis:51701763",
@@ -24,7 +25,7 @@
               "edition": "1. udgave",
               "isbn": "9788763840439",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "127 sider",
               "publisher": ["Høst"]
             },
@@ -44,7 +45,7 @@
               "edition": "1. udgave",
               "isbn": "9788763840439",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "127 sider",
               "publisher": ["Høst"]
             }
@@ -75,10 +76,12 @@
               "onlineAccess": [
                 {
                   "url": "https://ereolen.dk/ting/object/870970-basis:51796527",
+                  "origin": "ereolen.dk",
                   "note": "Adgang til lån hos eReolen.dk"
                 },
                 {
                   "url": "https://ereolengo.dk/ting/object/870970-basis:51796527",
+                  "origin": "ereolen.dk",
                   "note": "Adgang til titlen på eReolen Go"
                 }
               ],
@@ -119,7 +122,7 @@
               "edition": "",
               "isbn": "9788764476163",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
               "publisher": ["Biblioteksmedier"]
             }
@@ -151,7 +154,11 @@
               "isbn": null,
               "language": ["Dansk"],
               "onlineAccess": [
-                { "url": "https://nota.dk/bibliotek/bogid/44564", "note": "" }
+                {
+                  "url": "https://nota.dk/bibliotek/bogid/44564",
+                  "origin": "nota.dk",
+                  "note": ""
+                }
               ],
               "physicalDescription": "119793179 bytes",
               "publisher": ["Nota"]
@@ -507,7 +514,7 @@
       "isbn": "9788763840439",
       "materialType": "Bog",
       "language": ["Dansk"],
-      "onlineAccess": null,
+      "onlineAccess": [],
       "physicalDescription": "127 sider",
       "publisher": ["Høst"],
       "availability": {

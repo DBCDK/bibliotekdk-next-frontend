@@ -18,7 +18,7 @@ describe("Header", () => {
 
     // first element in section
     // BETA-1 outcommented
-    cy.tabs(2);
+    cy.tabs(3);
     cy.focused().should("have.attr", "data-cy", "header-link-books");
 
     // last element in section

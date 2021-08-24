@@ -108,8 +108,16 @@ export function details({ workId }) {
               materialType
               language
               onlineAccess {
-                url
-                note
+                ... on UrlReference {
+                  url
+                  origin
+                  note
+                }
+                ... on HtmlContent {
+                  id
+                  origin
+                  html
+                }
               }
               physicalDescription
               publisher              
@@ -145,6 +153,7 @@ export function detailsAllManifestations({ workId }) {
             title
             description
           }
+          workTypes
           manifestations {
             inLanguage
             usedLanguage

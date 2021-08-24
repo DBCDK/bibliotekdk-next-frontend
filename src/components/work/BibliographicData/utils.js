@@ -1,4 +1,4 @@
-import { groupBy } from "lodash";
+import { groupBy, flatten } from "lodash";
 
 export function sortManifestations(manifestations) {
   // materialType type priority list
@@ -53,5 +53,5 @@ export function sortManifestations(manifestations) {
   });
 
   // Return flatten array of the result (not arrays in arrays)
-  return res.flat();
+  return flatten(res);
 }

@@ -24,7 +24,7 @@
               "edition": "1. udgave",
               "isbn": "9788763840439",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "127 sider",
               "publisher": ["Høst"]
             },
@@ -44,7 +44,7 @@
               "edition": "1. udgave",
               "isbn": "9788763840439",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "127 sider",
               "publisher": ["Høst"]
             }
@@ -75,10 +75,12 @@
               "onlineAccess": [
                 {
                   "url": "https://ereolen.dk/ting/object/870970-basis:51796527",
+                  "origin": "ereolen.dk",
                   "note": "Adgang til lån hos eReolen.dk"
                 },
                 {
                   "url": "https://ereolengo.dk/ting/object/870970-basis:51796527",
+                  "origin": "ereolen.dk",
                   "note": "Adgang til titlen på eReolen Go"
                 }
               ],
@@ -119,7 +121,7 @@
               "edition": "",
               "isbn": "9788764476163",
               "language": ["Dansk"],
-              "onlineAccess": null,
+              "onlineAccess": [],
               "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
               "publisher": ["Biblioteksmedier"]
             }
@@ -507,7 +509,7 @@
       "isbn": "9788763840439",
       "materialType": "Bog",
       "language": ["Dansk"],
-      "onlineAccess": null,
+      "onlineAccess": [],
       "physicalDescription": "127 sider",
       "publisher": ["Høst"],
       "availability": {
