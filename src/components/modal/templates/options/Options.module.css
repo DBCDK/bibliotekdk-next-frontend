@@ -3,6 +3,14 @@
   overflow: hidden;
 }
 
+.list {
+  list-style: none;
+}
+
+.item {
+  padding-bottom: var(--pt4);
+}
+
 @media (min-width: 576px) {
   .options {
     padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);

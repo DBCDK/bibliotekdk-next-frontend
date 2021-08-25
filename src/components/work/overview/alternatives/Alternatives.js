@@ -6,9 +6,11 @@ import Link from "@/components/base/link";
 
 import styles from "./Alternatives.module.css";
 
-export default function AlternativeOptions() {
+export default function AlternativeOptions({ onlineAccess = [] }) {
   const router = useRouter();
-  const context = { context: "alternative-options" };
+  const context = { context: "overview" };
+
+  const count = onlineAccess.length;
 
   return (
     <Link
@@ -22,7 +24,9 @@ export default function AlternativeOptions() {
         }
       }}
     >
-      <Text>Andre bestillingsmuligheder (2)</Text>
+      <Text>
+        {Translate({ ...context, label: "all-options-link", vars: [count] })}
+      </Text>
     </Link>
   );
 }

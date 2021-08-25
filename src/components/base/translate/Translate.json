@@ -456,6 +456,10 @@
       "Order-disabled": {
         "da": "Bestil (deaktiveret))",
         "en": "Order (disabled)"
+      },
+      "all-options-link": {
+        "da": "Alle bestillingsmuligheder (%s)",
+        "en": "All order options (%s)"
       }
     },
     "details": {
@@ -700,6 +704,24 @@
       "title-options": {
         "da": "Andre bestillingsmuligheder",
         "en": "Other ordering options"
+      }
+    },
+    "options": {
+      "online-link-title": {
+        "da": "Link til artikel",
+        "en": "Link to article"
+      },
+      "online-link-description": {
+        "da": "Artiklen læses online på %s",
+        "en": "The article is read online at %s"
+      },
+      "infomedia-link-title": {
+        "da": "Læs artikel (kræver bibliotekslogin)",
+        "en": "Read article (requires library login)"
+      },
+      "infomedia-link-description": {
+        "da": "Leveres af %s",
+        "en": "Provided by %s"
       }
     },
     "navigation": {
