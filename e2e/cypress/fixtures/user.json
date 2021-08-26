@@ -5,55 +5,53 @@
       "mail": null,
       "address": "Borgmesterskoven 45",
       "postalCode": "8660",
-      "agency": {
-        "branches": [
-          {
-            "agencyId": "790900",
-            "name": "DBCTestBibliotek",
-            "city": "Testby-test",
-            "postalAddress": "B. Adresse",
-            "postalCode": "1234",
-            "branchId": "790900",
-            "openingHours": "VIP 4.9: Åbningstider<br>\r\nmandag<br>\r\ntirsdag<br>\r\nonsdag<br>\r\ntorsdag<br>\r\nfredag<br>\r\nlørdag",
-            "orderPolicy": {
-              "orderPossible": true,
-              "orderPossibleReason": "OWNED_ACCEPTED",
-              "lookUpUrl": "https://some-lookup-url"
-            },
-            "pickupAllowed": true
+      "agency": [
+        {
+          "agencyId": "790900",
+          "name": "DBCTestBibliotek",
+          "city": "Testby-test",
+          "postalAddress": "B. Adresse",
+          "postalCode": "1234",
+          "branchId": "790900",
+          "openingHours": "VIP 4.9: Åbningstider<br>\r\nmandag<br>\r\ntirsdag<br>\r\nonsdag<br>\r\ntorsdag<br>\r\nfredag<br>\r\nlørdag",
+          "orderPolicy": {
+            "orderPossible": true,
+            "orderPossibleReason": "OWNED_ACCEPTED",
+            "lookUpUrl": "https://some-lookup-url"
           },
-          {
-            "agencyId": "790900",
-            "name": "DBCtest_2",
-            "city": null,
-            "postalAddress": null,
-            "postalCode": null,
-            "branchId": "790902",
-            "openingHours": null,
-            "orderPolicy": {
-              "orderPossible": true,
-              "orderPossibleReason": "OWNED_ACCEPTED",
-              "lookUpUrl": "https://some-lookup-url"
-            },
-            "pickupAllowed": true
+          "pickupAllowed": true
+        },
+        {
+          "agencyId": "790900",
+          "name": "DBCtest_2",
+          "city": null,
+          "postalAddress": null,
+          "postalCode": null,
+          "branchId": "790902",
+          "openingHours": null,
+          "orderPolicy": {
+            "orderPossible": true,
+            "orderPossibleReason": "OWNED_ACCEPTED",
+            "lookUpUrl": "https://some-lookup-url"
           },
-          {
-            "agencyId": "790900",
-            "name": "DBC-bibilioteksekspressen",
-            "city": "Vsn-testby",
-            "postalAddress": "Vsn-B.adresse",
-            "postalCode": "1234",
-            "branchId": "790903",
-            "openingHours": null,
-            "orderPolicy": {
-              "orderPossible": true,
-              "orderPossibleReason": "OWNED_ACCEPTED",
-              "lookUpUrl": "https://some-lookup-url"
-            },
-            "pickupAllowed": true
-          }
-        ]
-      }
+          "pickupAllowed": true
+        },
+        {
+          "agencyId": "790900",
+          "name": "DBC-bibilioteksekspressen",
+          "city": "Vsn-testby",
+          "postalAddress": "Vsn-B.adresse",
+          "postalCode": "1234",
+          "branchId": "790903",
+          "openingHours": null,
+          "orderPolicy": {
+            "orderPossible": true,
+            "orderPossibleReason": "OWNED_ACCEPTED",
+            "lookUpUrl": "https://some-lookup-url"
+          },
+          "pickupAllowed": true
+        }
+      ]
     }
   }
 }
