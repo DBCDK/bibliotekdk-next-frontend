@@ -39,7 +39,7 @@ export default function Pickup({
   const disAllowedBranches =
     useMemo(
       () =>
-        agency?.branches?.filter(
+        agency?.filter(
           (branch) =>
             !branch?.pickupAllowed || !branch?.orderPolicy?.orderPossible
         ),
@@ -49,7 +49,7 @@ export default function Pickup({
   const allowedBranches =
     useMemo(
       () =>
-        agency?.branches?.filter(
+        agency?.filter(
           (branch) =>
             branch?.pickupAllowed && branch?.orderPolicy?.orderPossible
         ),
@@ -173,7 +173,7 @@ export default function Pickup({
 }
 
 Pickup.propTypes = {
-  agency: PropTypes.object,
+  agency: PropTypes.array,
   className: PropTypes.string,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
