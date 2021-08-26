@@ -113,7 +113,7 @@ export function details({ workId }) {
                   origin
                   note
                 }
-                ... on HtmlContent {
+                ... on InfomediaContent {
                   id
                   origin
                   html
