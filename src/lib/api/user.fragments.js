@@ -33,20 +33,19 @@ export function orderPolicy({ pid }) {
       user {
         agency (language: $language){
           agencyName
-            agencyId
-            name
-            city
-            postalAddress
-            postalCode
-            branchId
-            openingHours
-            orderPolicy(pid: $pid) {
-              orderPossible
-              orderPossibleReason
-              lookUpUrl
-            }
-            pickupAllowed
-          
+          agencyId
+          name
+          city
+          postalAddress
+          postalCode
+          branchId
+          openingHours
+          orderPolicy(pid: $pid) {
+            orderPossible
+            orderPossibleReason
+            lookUpUrl
+          }
+          pickupAllowed
         }
       }
       monitor(name: "bibdknext_orderpolicy")
