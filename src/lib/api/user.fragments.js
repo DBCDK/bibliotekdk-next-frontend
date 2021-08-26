@@ -32,8 +32,7 @@ export function orderPolicy({ pid }) {
     query: `query ($language: LanguageCode!, $pid: String! ) {
       user {
         agency (language: $language){
-          name
-          branches {
+          agencyName
             agencyId
             name
             city
@@ -47,7 +46,7 @@ export function orderPolicy({ pid }) {
               lookUpUrl
             }
             pickupAllowed
-          }
+          
         }
       }
       monitor(name: "bibdknext_orderpolicy")
