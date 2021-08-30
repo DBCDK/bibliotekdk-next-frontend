@@ -699,6 +699,10 @@
       }
     },
     "navigation": {
+      "frontpage": {
+        "da": "Forside",
+        "en": "Front page"
+      },
       "categories": {
         "da": "Kategorier",
         "en": "Categories"

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Router from "next/router";
 import Text from "@/components/base/text/Text";
 import styles from "@/components/help/menu/HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
@@ -13,6 +14,25 @@ import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLangcode } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
+
+/**
+ * Other menu links
+ *
+ * @returns {component}
+ */
+function MenuLink({ label, href = "#!", active = false }) {
+  const activeClass = active ? styles.active : "";
+  const type = active ? "text1" : "text2";
+
+  return (
+    <div className={`${styles.link} ${activeClass}`}>
+      <Link href={href}>
+        <Text type={type}>{Translate({ context: "help", label })}</Text>
+        <Icon src="arrowrightblue.svg" size={[1]} />
+      </Link>
+    </div>
+  );
+}
 
 /**
  * Component to show helptext menu in groups
@@ -97,13 +117,19 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
     return { name: groupname };
   });
 
+  const isFaqPage = Router.pathname.includes("/faq");
+
   return (
-    <HelpTextGroups
-      {...props}
-      menus={menus}
-      helpTextId={helpTextId}
-      groups={groups}
-    />
+    <>
+      <MenuLink label="Help and guides" href="/hjaelp" />
+      <MenuLink label="faq-title" href="/hjaelp/faq" active={isFaqPage} />
+      <HelpTextGroups
+        {...props}
+        menus={menus}
+        helpTextId={helpTextId}
+        groups={groups}
+      />
+    </>
   );
 }
 

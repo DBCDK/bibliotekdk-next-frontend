@@ -52,8 +52,10 @@ export default function Action({
         children={children}
         alt={title}
       />
-      <Text type="text3">{title}</Text>
-      {animation && <AnimationLine />}
+      <div className={styles.wrap}>
+        <Text type="text3">{title}</Text>
+        {animation && <AnimationLine />}
+      </div>
     </Wrap>
   );
 }

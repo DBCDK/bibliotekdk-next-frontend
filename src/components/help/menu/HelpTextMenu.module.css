@@ -2,6 +2,24 @@
   max-height: 250px;
 }
 
+.link {
+  margin-bottom: var(--pt1);
+}
+
+.link a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.link img {
+  display: none;
+  margin: 0 0 0 var(--pt1);
+}
+
+.link.active img {
+  display: block;
+}
+
 .helplink {
   padding-left: var(--pt4);
 }

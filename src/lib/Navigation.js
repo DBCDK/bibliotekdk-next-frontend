@@ -11,6 +11,7 @@ export const materials = [
 //these are for various use - mostly the menu
 // BETA-1 - hide elements from menu - notice the {hidden:true} in actions - remove it to show links again
 export const actions = [
+  { label: "frontpage", href: "/", hidden: false },
   { label: "scientificArticles", href: "/artikler", hidden: true },
   {
     label: "askLibrarian",
