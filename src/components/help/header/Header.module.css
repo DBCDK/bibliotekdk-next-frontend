@@ -31,15 +31,7 @@
 }
 
 .ask {
-  position: relative;
-  padding-right: var(--pt3);
   margin-right: var(--pt3);
-}
-
-.ask i {
-  position: absolute;
-  top: calc(var(--pt2) * -1);
-  right: 0;
 }
 
 .ask .full,
@@ -99,8 +91,15 @@
 }
 
 @media (min-width: 364px) {
+  .ask {
+    position: relative;
+    padding-right: var(--pt3);
+  }
+
   .ask i {
-    top: calc(var(--pt05) * -1);
+    position: absolute;
+    top: calc(var(--pt1) * -1);
+    right: 0;
   }
 
   .ask .short {

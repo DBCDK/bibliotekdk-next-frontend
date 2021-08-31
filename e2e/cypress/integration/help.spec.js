@@ -41,6 +41,12 @@ describe("help", () => {
 
     cy.visit(`${nextjsBaseUrl}/hjaelp`);
 
+    cy.get("[data-cy=cookiebox]").then(($box) => {
+      if ($box.is(":visible")) {
+        cy.get("[data-cy=button-ok]").click();
+      }
+    });
+
     // Default should be danish
     cy.get("#help-suggester-input").type("a");
     cy.wait("@apiHelpRequest").then((interception) => {
@@ -49,7 +55,9 @@ describe("help", () => {
     });
 
     // Change language to english
-    cy.get("[data-cy=text-en]").click();
+    cy.get("[data-cy=header-menu]").click();
+
+    cy.get("[data-cy=menu-link-language]").click();
     cy.wait("@apiHelpRequest").then((interception) => {
       const variables = interception.request.body.variables;
       expect(variables).to.deep.equal({ q: "a", language: "en" });
@@ -62,7 +70,7 @@ describe("help menu", () => {
     cy.visit("/iframe.html?path=/story/help-menu--help-menu");
     cy.get("[data-cy=help-menu]").should("be.visible");
 
-    cy.tab();
+    cy.tabs(3);
     cy.focused().contains("Login");
 
     cy.tab();

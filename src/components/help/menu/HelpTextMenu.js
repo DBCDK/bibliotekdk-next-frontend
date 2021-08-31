@@ -26,10 +26,10 @@ function MenuLink({ label, href = "#!", active = false }) {
 
   return (
     <div className={`${styles.link} ${activeClass}`}>
-      <Link href={href}>
+      <Link href={href} dataCy="menu-fixed-links">
         <Text type={type}>{Translate({ context: "help", label })}</Text>
-        <Icon src="arrowrightblue.svg" size={[1]} />
       </Link>
+      <Icon src="arrowrightblue.svg" size={[1]} />
     </div>
   );
 }

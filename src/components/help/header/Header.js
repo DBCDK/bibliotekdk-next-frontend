@@ -89,6 +89,7 @@ export function Header({
               className={styles.menu}
               title={Translate({ context: "header", label: "menu" })}
               onClick={() => onMenuClick()}
+              dataCy="header-menu"
             />
           </span>
         </Col>

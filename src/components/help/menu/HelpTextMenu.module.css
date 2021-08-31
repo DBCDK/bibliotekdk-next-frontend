@@ -4,19 +4,16 @@
 
 .link {
   margin-bottom: var(--pt1);
-}
-
-.link a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
-.link img {
+.link i {
   display: none;
   margin: 0 0 0 var(--pt1);
 }
 
-.link.active img {
+.link.active i {
   display: block;
 }
 
