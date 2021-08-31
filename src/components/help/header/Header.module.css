@@ -8,19 +8,18 @@
   align-items: center;
 }
 
-.backlink {
-  /* Same height as input field - used to align center*/
-  height: var(--pt7);
-  margin-top: var(--pt2);
-position: absolute;
-  /* Hide on mobile */
-  display: none;
+.right span {
+  display: inline-flex;
+  align-items: center;
 }
 
-@media (min-width: 992px) {
-  .backlink {
-    display: block;
-  }
+.menu {
+  display: inline-flex;
+  flex-direction: row-reverse;
+}
+
+.menu i {
+  margin-left: var(--pt2);
 }
 
 .right {
@@ -32,15 +31,7 @@ position: absolute;
 }
 
 .ask {
-  position: relative;
-  padding-right: var(--pt3);
   margin-right: var(--pt3);
-}
-
-.ask i {
-  position: absolute;
-  top: calc(var(--pt2) * -1);
-  right: 0;
 }
 
 .ask .full,
@@ -100,16 +91,21 @@ position: absolute;
 }
 
 @media (min-width: 364px) {
+  .ask {
+    position: relative;
+    padding-right: var(--pt3);
+  }
+
   .ask i {
-    top: calc(var(--pt05) * -1);
+    position: absolute;
+    top: calc(var(--pt1) * -1);
+    right: 0;
   }
 
   .ask .short {
     display: block;
   }
 }
-
-
 
 @media (min-width: 992px) {
   .header {
