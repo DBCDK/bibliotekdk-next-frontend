@@ -9,11 +9,15 @@ import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
 
+import Translate from "@/components/base/translate";
+
 // Layers
 import Info from "./layers/info";
 import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
 import Action from "./layers/action";
+
+import { Top } from "@/components/modal";
 
 import data from "./dummy.data";
 
@@ -192,6 +196,14 @@ export function Order({
           className={`${styles.wrap} ${activePageClass} ${activeTranslatedClass}`}
         >
           <div className={styles.left}>
+            <Top
+              title={Translate({
+                context: "modal",
+                label: `title-order`,
+              })}
+              isVisible={isVisible}
+              handleClose={onClose}
+            />
             <Info
               isVisible={!translated && isVisible}
               material={{

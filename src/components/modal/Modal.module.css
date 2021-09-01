@@ -51,19 +51,20 @@
 }
 
 /* Top */
-.top {
-  color: var(--white);
-  padding: var(--pt3) var(--pt2);
-}
 
 .wrap {
   position: relative;
 }
 
+.top .wrap {
+  position: relative;
+  color: var(--white);
+}
+
 .title {
 }
 
-.close {
+.closeIcon {
   position: absolute;
   top: 0;
   right: calc(var(--pt1) * -1);
@@ -72,16 +73,16 @@
   cursor: pointer;
 }
 
-.close svg path {
+.closeIcon svg path {
   stroke: var(--white);
 }
 
-.close:focus-visible {
+.closeIcon:focus-visible {
   outline: solid 1px var(--white);
   outline-offset: var(--pt05);
 }
 
-.close:active {
+.closeIcon:active {
   outline: none;
 }
 
@@ -129,15 +130,15 @@
   color: var(--mine-shaft);
 }
 
-.modal.order-theme .top {
+.modal.order-theme .wrap {
   color: var(--blue);
 }
 
-.modal.order-theme .close svg path {
+.modal.order-theme .closeIcon svg path {
   stroke: var(--blue);
 }
 
-.modal.order-theme .close:focus-visible {
+.modal.order-theme .closeIcon:focus-visible {
   outline: solid 1px var(--mine-shaft);
 }
 
@@ -146,7 +147,7 @@
     padding: var(--pt10) var(--pt6) var(--pt3) var(--pt6);
   }
 
-  .close {
+  .closeIcon {
     top: calc(var(--pt1) * -1);
   }
 
@@ -157,8 +158,8 @@
 }
 
 @media (hover: hover) {
-  .close:hover svg,
-  .close:focus-visible svg {
+  .closeIcon:hover svg,
+  .closeIcon:focus-visible svg {
     animation: elastic 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
   }
 

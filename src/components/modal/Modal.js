@@ -7,6 +7,10 @@ import useKeyPress from "@/components/hooks/useKeypress";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
+
+import Arrow from "@/components/base/animation/arrow";
 
 // templates
 import Menu from "./templates/menu";
@@ -16,6 +20,7 @@ import Order from "./templates/order";
 
 import CloseSvg from "@/public/icons/close.svg";
 
+import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Modal.module.css";
 
 /**
@@ -95,6 +100,72 @@ function getTemplate(template) {
   }
 }
 
+export function Back({ isVisible, handleClose }) {
+  return (
+    <div className={styles.back}>
+      <div className={styles.wrap}>
+        <Link
+          border={false}
+          tabIndex={isVisible ? "0" : "-1"}
+          className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
+          onClick={() => handleClose()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.keyCode === 13) {
+              handleClose();
+            }
+          }}
+        >
+          <Arrow
+            flip
+            className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
+          />
+          <Text type="text3">Tilbage</Text>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export function Top({ title, isVisible, handleClose }) {
+  return (
+    <div className={styles.top}>
+      <div className={styles.close}>
+        <div className={styles.wrap}>
+          {title && (
+            <Title type="title4" className={styles.title}>
+              {title}
+            </Title>
+          )}
+
+          <Icon
+            dataCy="close-modal"
+            tabIndex={isVisible ? "0" : "-1"}
+            title={Translate({
+              context: "general",
+              label: "close-modal-title",
+            })}
+            alt={Translate({
+              context: "general",
+              label: "close-modal-title",
+            })}
+            className={styles.closeIcon}
+            // src="close_white.svg"
+            size={2}
+            onClick={() => handleClose()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                handleClose();
+              }
+            }}
+          >
+            <CloseSvg />
+          </Icon>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /**
  * The Component function
  *
@@ -108,6 +179,7 @@ export function Modal({
   onClose = null,
   onLang = null,
   template = null,
+  isLayer = false,
   skeleton = false,
   children = false,
 }) {
@@ -194,41 +266,6 @@ export function Modal({
         className={`${styles.modal} ${themeClass} ${visibleClass}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className={styles.top}>
-          <div className={styles.wrap}>
-            {context.title && (
-              <Title type="title4" className={styles.title}>
-                {Translate({
-                  context: "modal",
-                  label: `title-${context.title}`,
-                })}
-              </Title>
-            )}
-            <Icon
-              dataCy="close-modal"
-              tabIndex={isVisible ? "0" : "-1"}
-              title={Translate({
-                context: "general",
-                label: "close-modal-title",
-              })}
-              alt={Translate({
-                context: "general",
-                label: "close-modal-title",
-              })}
-              className={styles.close}
-              // src="close_white.svg"
-              size={2}
-              onClick={() => handleClose()}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.keyCode === 13) {
-                  handleClose();
-                }
-              }}
-            >
-              <CloseSvg />
-            </Icon>
-          </div>
-        </div>
         <div className={styles.content}>
           {(children &&
             React.cloneElement(children, {
@@ -238,6 +275,7 @@ export function Modal({
               ...children.props,
             })) || (
             <context.template
+              template={template}
               isVisible={isVisible}
               onClose={onClose}
               onLang={onLang}
@@ -289,6 +327,8 @@ export default function Wrap({ router, children = false }) {
   const param = get(router, "query.modal", null);
   // use only first level of modal name ("-"" seperated names is for modal layers)
   const template = param && param.split("-")[0];
+  // set layer for modal template
+  const isLayer = !!(param && param.split("-")[1]);
 
   // We only allow a modal to be open, when user has explicitly
   // performed an action to open the modal.
@@ -330,7 +370,12 @@ export default function Wrap({ router, children = false }) {
   };
 
   return (
-    <Modal template={template} onClose={onClose} onLang={onLang}>
+    <Modal
+      template={template}
+      isLayer={isLayer}
+      onClose={onClose}
+      onLang={onLang}
+    >
       {children && children}
     </Modal>
   );
