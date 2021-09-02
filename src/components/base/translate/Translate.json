@@ -241,6 +241,10 @@
       }
     },
     "articles": {
+      "deliveredBy": {
+        "da": "Artiklen er leveret af %s",
+        "en": "The article is delivered by %s"
+      },
       "printButton": {
         "da": "Print",
         "en": "Print"
@@ -256,6 +260,26 @@
       "read-more-btn": {
         "da": "Læs mere",
         "en": "Read more"
+      },
+      "readTime": {
+        "da": "Læsetid: %s min.",
+        "en": "%s min read"
+      },
+      "getAccess": {
+        "da": "Få adgang til hele artiklen",
+        "en": "Access the full article"
+      },
+      "accessWarning": {
+        "da": "OBS: Ikke alle biblioteker giver adgang til artikler fra Infomedia",
+        "en": "NOTE: Not all libraries provide access to Infomedia articles"
+      },
+      "libraryNoAccess": {
+        "da": "%s giver ikke adgang til at læse artiklen",
+        "en": "%s does not provide access to read the article"
+      },
+      "accessOpportunity": {
+        "da": "De fleste folkebiblioteker giver adgang til artikler fra Infomedia",
+        "en": "Most public libraries provide access to articles from Infomedia"
       }
     },
     "footer": {
