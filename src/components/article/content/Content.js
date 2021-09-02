@@ -123,12 +123,12 @@ function calcReadTime(htmlString) {
   const stripped = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
   const wordCount = stripped.split(/\s+/).length;
 
-  // Average reading speed is supposedly 238 words per minue
+  // Average reading speed is supposedly 238 words per minute
   // But we adjust it as needed
-  const wordsPerMinue = 225;
+  const wordsPerMinute = 225;
 
   // We round up to nearest minute
-  return Math.ceil(wordCount / wordsPerMinue);
+  return Math.ceil(wordCount / wordsPerMinute);
 }
 
 /**
