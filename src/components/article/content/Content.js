@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import { useData } from "@/lib/api/api";
@@ -17,25 +18,21 @@ import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLangcode } from "@/components/base/translate/Translate";
 
-function ArticleHeader({ article }) {
+function ArticleHeader({ article, skeleton }) {
   const context = { context: "articles" };
 
-  let creatorName =
-    article && article.entityOwner && article.entityOwner.name
-      ? article.entityOwner.name
-      : "Af redaktøren";
+  let category = (
+    article?.category?.slice(0, 2) ||
+    article?.fieldTags
+      ?.slice(0, 2)
+      .map((fieldTag, index) => fieldTag.entity.entityLabel) || ["Nyhed"]
+  ).join(", ");
 
-  if (creatorName === "admin") {
-    creatorName = "Af bibliotek.dk redaktionen";
-  }
-
-  let category =
-    article && article.fieldTags && article.fieldTags.entity
-      ? article.fieldTags
-          .slice(0, 1)
-          .map((fieldTag, index) => fieldTag.entity.entityLabel)
-          .join(", ")
-      : "Nyhed";
+  const readTime = useMemo(() => {
+    if (article?.body?.value) {
+      return calcReadTime(article?.body?.value);
+    }
+  }, [article?.body?.value]);
 
   return (
     <Row>
@@ -46,32 +43,52 @@ function ArticleHeader({ article }) {
         lg={{ span: 6, offset: 3 }}
       >
         <Row className={styles.test}>
+          {(skeleton || readTime) && (
+            <Col xs={6} md={"auto"}>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({
+                  ...context,
+                  label: "readTime",
+                  vars: [readTime],
+                })}
+              </Text>
+            </Col>
+          )}
           <Col xs={6} md={"auto"}>
-            <Text type="text3" dataCy="article-header-date">
-              {timestampToShortDate(article.entityCreated)}
+            <Text
+              type="text3"
+              dataCy="article-header-date"
+              skeleton={skeleton}
+              lines={1}
+            >
+              {typeof article?.entityCreated === "number"
+                ? timestampToShortDate(article?.entityCreated)
+                : article?.entityCreated}
             </Text>
           </Col>
           <Col xs={6} md={"auto"}>
-            <Text type="text3">{category}</Text>
+            <Text type="text3" skeleton={skeleton} lines={1}>
+              {category}
+            </Text>
           </Col>
           <Col xs={6} md={"auto"}>
-            <Text type="text3">{creatorName}</Text>
-          </Col>
-          <Col xs={6} md={"auto"}>
-            <Link
-              dataCy="article-print"
-              tag="span"
-              onClick={(e) => {
-                e.preventDefault();
-                if (typeof window !== "undefined") {
-                  window.print();
-                }
-              }}
-            >
-              <Text type="text3">
-                {Translate({ ...context, label: "printButton" })}
-              </Text>
-            </Link>
+            {!skeleton && (
+              <Link
+                dataCy="article-print"
+                tag="span"
+                border={{ bottom: { keepVisible: true } }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (typeof window !== "undefined") {
+                    window.print();
+                  }
+                }}
+              >
+                <Text type="text3">
+                  {Translate({ ...context, label: "printButton" })}
+                </Text>
+              </Link>
+            )}
           </Col>
         </Row>
       </Col>
@@ -94,6 +111,24 @@ function getOrientation({ width, height }) {
   } else {
     return "landscape";
   }
+}
+
+/**
+ *
+ * @param {*} htmlString
+ * @returns {number} time in minutes
+ */
+function calcReadTime(htmlString) {
+  // Strip HTML tags
+  const stripped = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
+  const wordCount = stripped.split(/\s+/).length;
+
+  // Average reading speed is supposedly 238 words per minute
+  // But we adjust it as needed
+  const wordsPerMinute = 225;
+
+  // We round up to nearest minute
+  return Math.ceil(wordCount / wordsPerMinute);
 }
 
 /**
@@ -158,28 +193,69 @@ export function Content({ className = "", data = {}, skeleton = false }) {
               xs={12}
               md={{ span: hasUrl ? 6 : 10, offset: hasUrl ? 0 : 1 }}
             >
-              <Title type="title3" skeleton={skeleton}>
-                {article.title}
-              </Title>
+              <div>
+                <Title type="title3" skeleton={skeleton}>
+                  {article.title}
+                </Title>
+                {article.paper && (
+                  <Text type="text3" skeleton={skeleton}>
+                    {article.paper}
+                  </Text>
+                )}
+                {article.deliveredBy && (
+                  <Text type="text3" skeleton={skeleton}>
+                    {Translate({
+                      ...context,
+                      label: "deliveredBy",
+                      vars: [article.deliveredBy],
+                    })}
+                  </Text>
+                )}
+              </div>
             </Col>
           </Row>
         </Col>
       </Row>
-      <ArticleHeader article={article} />
-      <Row>
-        <Col
-          className={styles.rubrik}
-          xs={12}
-          md={{ span: 10, offset: 1 }}
-          lg={{ span: 6, offset: 3 }}
-        >
-          <Title type="title4" skeleton={skeleton} lines={3}>
-            {article.fieldRubrik && (
-              <span dangerouslySetInnerHTML={{ __html: article.fieldRubrik }} />
+      <ArticleHeader article={article} skeleton={skeleton} />
+      {article.creators && (
+        <Row>
+          <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
+            <Text type="text3">
+              {Translate({
+                context: "bibliographic-data",
+                label: "creators",
+              })}
+            </Text>
+            {article.creators.map((creator) => (
+              <Text type="text4" key={creator.name}>
+                {creator.name}
+              </Text>
+            ))}
+          </Col>
+        </Row>
+      )}
+      {(article?.fieldRubrik || article?.subHeadLine) && (
+        <Row>
+          <Col
+            className={styles.rubrik}
+            xs={12}
+            md={{ span: 10, offset: 1 }}
+            lg={{ span: 6, offset: 3 }}
+          >
+            {article?.subHeadLine && (
+              <Title type="title4">{article?.subHeadLine}</Title>
             )}
-          </Title>
-        </Col>
-      </Row>
+            <Title type="title4" skeleton={skeleton} lines={3}>
+              {article.fieldRubrik && (
+                <span
+                  dangerouslySetInnerHTML={{ __html: article.fieldRubrik }}
+                />
+              )}
+            </Title>
+          </Col>
+        </Row>
+      )}
+
       <Row>
         <Col
           data-cy="article-body"
@@ -193,6 +269,12 @@ export function Content({ className = "", data = {}, skeleton = false }) {
             skeleton={skeleton}
             lines={10}
           />
+          {article?.disclaimer && (
+            <div className={styles.disclaimer}>
+              <img src={article?.disclaimer?.logo} alt="logo" />
+              <Text type="text3">{article?.disclaimer?.text}</Text>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>

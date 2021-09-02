@@ -36,6 +36,56 @@ export function ArticlePage() {
   );
 }
 
+export function InfomediaArticle() {
+  const data = {
+    article: {
+      title: "Titel på Infomedia-artikel",
+      subHeadLine: "Undertitel",
+      fieldRubrik: "Og en lil' rubrik er her",
+      entityCreated: "19. Marts 2021",
+      body: {
+        value:
+          '<p id="p1">Artiklens indhold er her</p><p id="p2"><em style="bold">Noget med fed</em></p><p id="p2"><em style="italic">Noget med kursiv</em></p>',
+      },
+      category: ["En kategori"],
+      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      paper: "Computerworld",
+      deliveredBy: "Infomedia",
+      disclaimer: {
+        logo: "/infomedia_logo.svg",
+        text:
+          "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
+      },
+    },
+  };
+
+  return (
+    <div>
+      <StoryTitle>InfomediaArticle Page</StoryTitle>
+      <Content data={data} />
+    </div>
+  );
+}
+
+export function InfomediaArticlePublicData() {
+  const data = {
+    article: {
+      title: "Titel på Infomedia-artikel",
+      entityCreated: "19. Marts 2021",
+      category: ["En kategori"],
+      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      deliveredBy: "Infomedia",
+    },
+  };
+
+  return (
+    <div>
+      <StoryTitle>InfomediaArticle Page</StoryTitle>
+      <Content data={data} />
+    </div>
+  );
+}
+
 export function Loading() {
   return (
     <div>

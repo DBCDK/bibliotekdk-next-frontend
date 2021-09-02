@@ -1,0 +1,12 @@
+.prompt button {
+  max-width: 320px;
+  margin: var(--pt3) 0;
+}
+.prompt h3 {
+  margin: var(--pt1) 0;
+}
+
+.prompt {
+  margin-top: var(--pt13);
+}
+

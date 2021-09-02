@@ -2,6 +2,7 @@
  * @file Contains GraphQL queries all taking a workId as variable
  *
  */
+import { lang } from "@/components/base/translate";
 
 /**
  * Basic work info that is fast to fetch
@@ -321,6 +322,40 @@ export function series({ workId }) {
     }
   `,
     variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Infomedia
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function infomediaArticlePublicInfo({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    query: `query ($workId: String!, $locale: String) {
+      work(id: $workId) {
+        workTypes
+        manifestations {
+          title
+          creators {
+            name
+          }
+          datePublished(locale: $locale, format: "LL")
+        }
+        subjects {
+          type
+          value
+        }
+      }
+      monitor(name: "bibdknext_work_infomedia_public")
+    }
+  `,
+    variables: { workId, locale: lang },
     slowThreshold: 3000,
   };
 }
