@@ -3,10 +3,8 @@ import { signIn } from "@dbcdk/login-nextjs/client";
 import Error from "next/error";
 import Header from "@/components/header/Header";
 import { fetchAll, useData } from "@/lib/api/api";
-import {
-  infomediaArticle,
-  infomediaArticlePublicInfo,
-} from "@/lib/api/work.fragments";
+import { infomediaArticlePublicInfo } from "@/lib/api/work.fragments";
+import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
 
 import {
