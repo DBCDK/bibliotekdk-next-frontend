@@ -6,4 +6,7 @@
   margin: var(--pt1) 0;
 }
 
+.prompt {
+  margin-top: var(--pt13);
+}
 

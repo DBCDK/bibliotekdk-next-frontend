@@ -18,7 +18,7 @@ import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLangcode } from "@/components/base/translate/Translate";
 
-function ArticleHeader({ article }) {
+function ArticleHeader({ article, skeleton }) {
   const context = { context: "articles" };
 
   let category = (
@@ -33,8 +33,6 @@ function ArticleHeader({ article }) {
       return calcReadTime(article?.body?.value);
     }
   }, [article?.body?.value]);
-
-  const skeleton = !article;
 
   return (
     <Row>
@@ -218,7 +216,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           </Row>
         </Col>
       </Row>
-      <ArticleHeader article={article} />
+      <ArticleHeader article={article} skeleton={skeleton} />
       {article.creators && (
         <Row>
           <Col xs={12} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
