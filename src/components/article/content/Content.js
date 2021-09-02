@@ -23,9 +23,10 @@ function ArticleHeader({ article, skeleton }) {
 
   let category = (
     article?.category?.slice(0, 2) ||
-    article?.fieldTags
-      ?.slice(0, 2)
-      .map((fieldTag, index) => fieldTag.entity.entityLabel) || ["Nyhed"]
+    (article?.fieldTags?.length > 0 &&
+      article?.fieldTags
+        ?.slice(0, 2)
+        .map((fieldTag, index) => fieldTag.entity.entityLabel)) || ["Nyhed"]
   ).join(", ");
 
   const readTime = useMemo(() => {
@@ -61,9 +62,7 @@ function ArticleHeader({ article, skeleton }) {
               skeleton={skeleton}
               lines={1}
             >
-              {typeof article?.entityCreated === "number"
-                ? timestampToShortDate(article?.entityCreated)
-                : article?.entityCreated}
+              {article?.entityCreated}
             </Text>
           </Col>
           <Col xs={6} md={"auto"}>
@@ -332,7 +331,14 @@ export default function Wrap(props) {
     return <ContentSkeleton {...props} data={null} />;
   }
 
-  return <Content {...props} data={data} />;
+  const parsed = {
+    article: {
+      ...data.article,
+      entityCreated: timestampToShortDate(data.article.entityCreated),
+    },
+  };
+
+  return <Content {...props} data={parsed} />;
 }
 
 // PropTypes for component
