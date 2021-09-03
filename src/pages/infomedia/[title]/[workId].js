@@ -16,6 +16,8 @@ import Translate from "@/components/base/translate";
 
 import LoginPrompt from "@/components/login/prompt";
 import { branchesForUser } from "@/lib/api/user.fragments";
+import Head from "next/head";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 export default function InfomediaArticle() {
   const router = useRouter();
@@ -26,10 +28,11 @@ export default function InfomediaArticle() {
   const { data: publicData, isLoading: isLoadingPublic } = useData(
     workId && infomediaArticlePublicInfo({ workId })
   );
-  const { data: privateData, error, isLoading: isLoadingPrivate } = useData(
+  const { data: privateData, isLoading: isLoadingPrivate } = useData(
     user.isAuthenticated && workId && infomediaArticle({ workId })
   );
   const { data: userData } = useData(user.isAuthenticated && branchesForUser());
+  const { canonical, alternate } = useCanonicalUrl();
 
   const workPublic = publicData?.work;
   const manifestationPublic = publicData?.work?.manifestations?.[0];
@@ -72,8 +75,31 @@ export default function InfomediaArticle() {
     };
   }
 
+  const deliveredByTranslated = Translate({
+    context: "articles",
+    label: "deliveredBy",
+    vars: [parsed?.article?.deliveredBy],
+  });
+
   return (
     <React.Fragment>
+      <Head>
+        <title>{parsed?.article?.title}</title>
+        <meta name="description" content={deliveredByTranslated}></meta>
+        <meta property="og:url" content={canonical.url} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={parsed?.article?.title} />
+        <meta property="og:description" content={deliveredByTranslated} />
+
+        {alternate.map(({ locale, url }) => (
+          <link key={url} rel="alternate" hreflang={locale} href={url} />
+        ))}
+
+        <link
+          rel="preconnect"
+          href="http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk"
+        ></link>
+      </Head>
       <Header router={router} />
       {workPublic === null ? (
         <Error statusCode={404} />
@@ -119,5 +145,5 @@ export default function InfomediaArticle() {
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
 InfomediaArticle.getInitialProps = (ctx) => {
-  return fetchAll([], ctx);
+  return fetchAll([infomediaArticlePublicInfo], ctx);
 };

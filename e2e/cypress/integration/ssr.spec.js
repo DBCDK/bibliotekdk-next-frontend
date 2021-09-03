@@ -263,5 +263,38 @@ describe("Server Side Rendering", () => {
         });
       });
     });
+
+    context(`/infomedia`, () => {
+      it(`has correct metadata`, () => {
+        getPageHead(
+          "/infomedia/et-statussymbol/work-of%3A870971-avis%3A39212099"
+        ).then((res) => {
+          expect(res.title).to.equal(
+            "Et statussymbol, vores største hovedpine og big business. Vi er blevet besat af den tredjedel af livet, vi sover væk"
+          );
+          expect(res.description).to.equal("Artiklen er leveret af Infomedia");
+          expect(res["og:url"]).to.equal(
+            "http://localhost:3000/infomedia/et-statussymbol/work-of%3A870971-avis%3A39212099"
+          );
+          expect(res["og:title"]).to.equal(
+            "Et statussymbol, vores største hovedpine og big business. Vi er blevet besat af den tredjedel af livet, vi sover væk"
+          );
+          expect(res["og:description"]).to.equal(
+            "Artiklen er leveret af Infomedia"
+          );
+        });
+      });
+
+      it(`has correct alternate links`, () => {
+        getPageHead(
+          "/infomedia/et-statussymbol/work-of%3A870971-avis%3A39212099"
+        ).then((res) => {
+          expect(res.alternate).to.deep.equal([
+            '<link rel="alternate" hreflang="da" href="http://localhost:3000/infomedia/et-statussymbol/work-of%3A870971-avis%3A39212099"/>',
+            '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/infomedia/et-statussymbol/work-of%3A870971-avis%3A39212099"/>',
+          ]);
+        });
+      });
+    });
   });
 });
