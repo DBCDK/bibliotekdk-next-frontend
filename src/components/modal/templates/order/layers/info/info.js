@@ -44,11 +44,13 @@ export default function Info({
     label: "your-library",
   });
 
+  console.log("bbbb", agency?.result && agency.result?.[0]?.name);
+
   // If user profile has an email, email field will be locked and this message shown
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [agency?.name || libraryFallback],
+    vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
   };
 
   const orderNotPossibleMessage = {
