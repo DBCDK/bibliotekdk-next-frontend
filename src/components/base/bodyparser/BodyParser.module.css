@@ -40,13 +40,16 @@
 .body h3,
 .body h4,
 .body h5,
-.body h6 {
+.body h6,
+.body em[style*="bold"]
+{
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font-semibold);
   font-weight: 400;
   padding-top: var(--pt3);
   padding-bottom: var(--pt1);
+  font-style: normal;
 }
 
 .body p {
@@ -101,3 +104,5 @@
     max-height: 375px;
   }
 }
+
+

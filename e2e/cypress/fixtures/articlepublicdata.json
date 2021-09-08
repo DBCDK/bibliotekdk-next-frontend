@@ -1,0 +1,31 @@
+{
+  "data": {
+    "work": {
+      "workTypes": ["article"],
+      "manifestations": [
+        {
+          "title": "Titel på Infomedia-artikel",
+          "creators": [
+            {
+              "name": "Gudrun Jensen"
+            },
+            {
+              "name": "Anders Andersen"
+            }
+          ],
+          "datePublished": "11. maj 2021"
+        }
+      ],
+      "subjects": [
+        {
+          "type": "DBCF",
+          "value": "turisme"
+        },
+        {
+          "type": "DBCO",
+          "value": "vejledninger"
+        }
+      ]
+    }
+  }
+}
