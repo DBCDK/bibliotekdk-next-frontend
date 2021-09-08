@@ -41,7 +41,7 @@ export default function Pickup({
   const allowedBranches =
     useMemo(
       () =>
-        agency?.filter(
+        agency?.result?.filter(
           (branch) =>
             branch?.pickupAllowed && branch?.orderPolicy?.orderPossible
         ),

@@ -49,6 +49,7 @@ function ColumnOne({ manifestation, worktypes }) {
       {manifestation.cover && (
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
+      {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({
           context: "bibliographic-data",
@@ -72,7 +73,7 @@ function ColumnOne({ manifestation, worktypes }) {
           href={bibdkObjectUrl(manifestation.pid)}
         />
       </div>
-      {/* --- BETA-1 commented out .. location (number of libraries), bookmark, basket
+
       <div>
         <Link
           children={

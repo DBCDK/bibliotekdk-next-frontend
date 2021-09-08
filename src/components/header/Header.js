@@ -187,11 +187,11 @@ export function Header({ className = "", router = null, story = null, user }) {
                           prefix: "header-link",
                         })}
                         onClick={(e) => {
-                          onOptionClicked(idx);
+                          onOptionClicked(idx + 1);
                         }}
                         onKeyDown={(e) => {
                           if (e.key === "Enter" || e.keyCode === 13) {
-                            onOptionClicked(idx);
+                            onOptionClicked(idx + 1);
                           }
                         }}
                       >
