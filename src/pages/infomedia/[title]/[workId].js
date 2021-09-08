@@ -26,9 +26,11 @@ export default function InfomediaArticle() {
   const { data: publicData, isLoading: isLoadingPublic } = useData(
     workId && infomediaArticlePublicInfo({ workId })
   );
-  const { data: privateData, error, isLoading: isLoadingPrivate } = useData(
-    user.isAuthenticated && workId && infomediaArticle({ workId })
-  );
+  const {
+    data: privateData,
+    error,
+    isLoading: isLoadingPrivate,
+  } = useData(user.isAuthenticated && workId && infomediaArticle({ workId }));
   const { data: userData } = useData(user.isAuthenticated && branchesForUser());
 
   const workPublic = publicData?.work;
@@ -36,7 +38,7 @@ export default function InfomediaArticle() {
   const article = privateData?.work?.manifestations?.[0].onlineAccess?.find(
     (article) => article.origin === "infomedia"
   );
-  const agencyName = userData?.user?.agency?.[0]?.agencyName;
+  const agencyName = userData?.user?.agency?.result?.[0]?.agencyName;
 
   // Set the public fields to be shown when not logged in/no access
   const parsed = {

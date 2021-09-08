@@ -52,20 +52,22 @@ export function orderPolicy({ pid }) {
     query: `query ($language: LanguageCode!, $pid: String! ) {
       user {
         agency (language: $language){
-          agencyName
-          agencyId
-          name
-          city
-          postalAddress
-          postalCode
-          branchId
-          openingHours
-          orderPolicy(pid: $pid) {
-            orderPossible
-            orderPossibleReason
-            lookUpUrl
+          result {
+            agencyName
+            agencyId
+            name
+            city
+            postalAddress
+            postalCode
+            branchId
+            openingHours
+            orderPolicy(pid: $pid) {
+              orderPossible
+              orderPossibleReason
+              lookUpUrl
+            }
+            pickupAllowed
           }
-          pickupAllowed
         }
       }
       monitor(name: "bibdknext_orderpolicy")

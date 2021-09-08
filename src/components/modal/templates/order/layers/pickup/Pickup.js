@@ -39,7 +39,7 @@ export default function Pickup({
   const disAllowedBranches =
     useMemo(
       () =>
-        agency?.filter(
+        agency?.result?.filter(
           (branch) =>
             !branch?.pickupAllowed || !branch?.orderPolicy?.orderPossible
         ),
@@ -49,7 +49,7 @@ export default function Pickup({
   const allowedBranches =
     useMemo(
       () =>
-        agency?.filter(
+        agency?.result?.filter(
           (branch) =>
             branch?.pickupAllowed && branch?.orderPolicy?.orderPossible
         ),
