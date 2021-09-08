@@ -70,7 +70,7 @@ export function Order({
     ? user?.agency?.result?.find(
         (branch) => pickupBranch.branchId === branch.branchId
       )
-    : user?.agency
+    : user?.agency?.result?.[0]
     ? user.agency?.result?.[0]
     : null;
 

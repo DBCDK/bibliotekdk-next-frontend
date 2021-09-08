@@ -280,50 +280,52 @@ export function OrderPolicyFail() {
 
   const modifiedUser = {
     ...user,
-    agency: [
-      {
-        agencyId: "715900",
-        name: "Bibliografen Bagsværd",
-        city: "Bagsværd",
-        postalAddress: "Bagsværd Hovedgade 116",
-        postalCode: "2880",
-        branchId: "715902",
-        openingHours:
-          "man.-fre.:10-18, lør.:10-14. \r\nSelvbetjening: man.-fre.:18-21, lør.:14-21, søn- og helligdage 12-21. Lukket 24.12.",
-        orderPolicy: {
-          orderPossible: false,
-          orderPossibleReason: "OWNED_OWN_CATALOGUE",
-          lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+    agency: {
+      result: [
+        {
+          agencyId: "715900",
+          name: "Bibliografen Bagsværd",
+          city: "Bagsværd",
+          postalAddress: "Bagsværd Hovedgade 116",
+          postalCode: "2880",
+          branchId: "715902",
+          openingHours:
+            "man.-fre.:10-18, lør.:10-14. \r\nSelvbetjening: man.-fre.:18-21, lør.:14-21, søn- og helligdage 12-21. Lukket 24.12.",
+          orderPolicy: {
+            orderPossible: false,
+            orderPossibleReason: "OWNED_OWN_CATALOGUE",
+            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+          },
+          pickupAllowed: true,
         },
-        pickupAllowed: true,
-      },
-      {
-        agencyId: "715900",
-        name: "Gladsaxe Bibliotekerne, Hovedbiblioteket",
-        city: "Søborg",
-        postalAddress: "Søborg Hovedgade 220",
-        postalCode: "2860",
-        branchId: "715900",
-        openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-        orderPolicy: {
-          orderPossible: true,
-          orderPossibleReason: "OWNED_ACCEPTED",
-          lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+        {
+          agencyId: "715900",
+          name: "Gladsaxe Bibliotekerne, Hovedbiblioteket",
+          city: "Søborg",
+          postalAddress: "Søborg Hovedgade 220",
+          postalCode: "2860",
+          branchId: "715900",
+          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
+          orderPolicy: {
+            orderPossible: true,
+            orderPossibleReason: "OWNED_ACCEPTED",
+            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
+          },
+          pickupAllowed: true,
         },
-        pickupAllowed: true,
-      },
-      {
-        agencyId: "715900",
-        name: "Dummy",
-        city: "Søborg",
-        postalAddress: "Søborg Hovedgade 220",
-        postalCode: "2860",
-        branchId: "715907",
-        openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-        orderPolicy: null,
-        pickupAllowed: false,
-      },
-    ],
+        {
+          agencyId: "715900",
+          name: "Dummy",
+          city: "Søborg",
+          postalAddress: "Søborg Hovedgade 220",
+          postalCode: "2860",
+          branchId: "715907",
+          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
+          orderPolicy: null,
+          pickupAllowed: false,
+        },
+      ],
+    },
   };
 
   return (
