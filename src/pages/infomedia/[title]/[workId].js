@@ -26,9 +26,11 @@ export default function InfomediaArticle() {
   const { data: publicData, isLoading: isLoadingPublic } = useData(
     workId && infomediaArticlePublicInfo({ workId })
   );
-  const { data: privateData, error, isLoading: isLoadingPrivate } = useData(
-    user.isAuthenticated && workId && infomediaArticle({ workId })
-  );
+  const {
+    data: privateData,
+    error,
+    isLoading: isLoadingPrivate,
+  } = useData(user.isAuthenticated && workId && infomediaArticle({ workId }));
   const { data: userData } = useData(user.isAuthenticated && branchesForUser());
 
   const workPublic = publicData?.work;
