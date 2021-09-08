@@ -38,7 +38,7 @@ export default function InfomediaArticle() {
   const article = privateData?.work?.manifestations?.[0].onlineAccess?.find(
     (article) => article.origin === "infomedia"
   );
-  const agencyName = userData?.user?.agency?.[0]?.agencyName;
+  const agencyName = userData?.user?.agency?.result?.[0]?.agencyName;
 
   // Set the public fields to be shown when not logged in/no access
   const parsed = {
