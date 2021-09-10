@@ -114,10 +114,10 @@ export function details({ workId }) {
                   origin
                   note
                 }
-                ... on InfomediaContent {
-                  id
-                  origin
-                  html
+                ... on InfomediaReference {
+                  infomediaId
+                  type
+                  pid
                 }
               }
               physicalDescription
