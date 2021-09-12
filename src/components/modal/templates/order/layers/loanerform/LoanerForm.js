@@ -226,7 +226,7 @@ export default function Wrap({ onSubmit, callbackUrl }) {
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
-  const { isAuthenticated } = useUser();
+  const { isAuthenticated, accessToken } = useUser();
   const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
   const { data: userData, isLoading: userIsLoading } = useData(
     isAuthenticated && branchesForUser()
@@ -265,7 +265,7 @@ export default function Wrap({ onSubmit, callbackUrl }) {
         <iframe
           style={{ display: "none" }}
           onLoad={() => setLoggedOut(true)}
-          src={`https://login.bib.dk/logout?access_token=${user.accessToken}`}
+          src={`https://login.bib.dk/logout?access_token=${accessToken}`}
         />
       )}
       {loggedInAgencyId && loggedInAgencyId === branch?.agencyId ? (
@@ -296,5 +296,5 @@ export default function Wrap({ onSubmit, callbackUrl }) {
 }
 Wrap.propTypes = {
   onSubmit: PropTypes.func,
-  callbackUrl: PropTypes.string,
+  callbackUrl: PropTypes.string.isRequired,
 };
