@@ -29,11 +29,9 @@ export function hitcount({ q, language, agencyId, limit, offset }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function search({ q, language, agencyId, limit = 10, offset }) {
-  console.log("q", q);
-
+export function search({ q, language = "da", agencyId, limit = 10, offset }) {
   return {
-    // delay: 200, // for debugging
+    delay: 200, // for debugging
     query: `query ($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String) {
         branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset) {
             hitcount

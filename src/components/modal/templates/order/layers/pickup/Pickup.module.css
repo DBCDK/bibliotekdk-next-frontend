@@ -48,6 +48,20 @@
   padding-top: var(--pt4);
 }
 
+.pickup mark {
+  background-color: transparent;
+  font-family: var(--body-font-semibold);
+}
+
+.alternativeMatch {
+  color: var(--gray);
+}
+
+.squeeze {
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt1);
+}
+
 @media (min-width: 576px) {
   .search {
     padding: 0 var(--pt6);

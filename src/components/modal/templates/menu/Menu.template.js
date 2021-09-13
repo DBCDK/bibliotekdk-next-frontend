@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { materials, actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
+import { Top } from "@/components/modal";
+
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -24,7 +26,7 @@ import styles from "./Menu.module.css";
  * @returns {component}
  */
 
-function Menu({ isVisible = false, onLang = null }) {
+function Menu({ isVisible = false, onClose, onLang = null }) {
   const context = { context: "navigation" };
 
   // Expanded status
@@ -40,8 +42,17 @@ function Menu({ isVisible = false, onLang = null }) {
   const expandedClass = expanded ? styles.expanded : "";
 
   return (
-    <div className={`${styles.menu} ${expandedClass}`} data-cy="menu-modal">
-      {/* BETA-1 - remove categories from menu
+    <>
+      <Top
+        title={Translate({
+          context: "modal",
+          label: `title-menu`,
+        })}
+        isVisible={isVisible}
+        handleClose={onClose}
+      />
+      <div className={`${styles.menu} ${expandedClass}`} data-cy="menu-modal">
+        {/* BETA-1 - remove categories from menu
       <div
         className={styles.trigger}
         tabIndex={isVisible ? "0" : "-1"}
@@ -75,77 +86,78 @@ function Menu({ isVisible = false, onLang = null }) {
 
       </div>
       */}
-      <div className={styles.outerWrap}>
-        <div className={`${styles.wrap}`}>
-          <ul aria-hidden={expanded}>
-            {actions.map((a) => {
-              const title = Translate({ ...context, label: a.label });
-              // BETA-1 hide non working menu items @see lib/Navigation.js
-              const style = a.hidden
-                ? { display: "none" }
-                : { display: "block" };
-              return (
-                <li key={a.label} style={style}>
-                  <Link
-                    className={styles.link}
-                    tabIndex={!expanded && isVisible ? "0" : "-1"}
-                    title={title}
-                    href={a.href}
-                    dataCy={cyKey({
-                      name: a.label,
-                      prefix: "menu-link",
-                    })}
-                  >
-                    <Title type="title5" tag="h2">
-                      {title}
-                    </Title>
-                  </Link>
-                </li>
-              );
-            })}
-            <li className={styles.language}>
-              <Link
-                onClick={(e) => {
-                  e.preventDefault();
-                  onLang && onLang();
-                }}
-                className={styles.link}
-                tabIndex={!expanded && isVisible ? "0" : "-1"}
-                dataCy={cyKey({
-                  name: "language",
-                  prefix: "menu-link",
-                })}
-              >
-                <Text type="text2">
-                  {Translate({ context: "general", label: "language" })}
-                </Text>
-              </Link>
-            </li>
-          </ul>
-          <ul aria-hidden={!expanded}>
-            {materials.map((m) => {
-              return (
-                <li key={m.label}>
-                  <Link
-                    className={styles.link}
-                    tabIndex={expanded && isVisible ? "0" : "-1"}
-                    href={m.href}
-                    dataCy={cyKey({
-                      name: m.label,
-                      prefix: "menu-link",
-                    })}
-                  >
-                    <Title type="title5" tag="h2">
-                      {Translate({ context: "general", label: m.label })}
-                    </Title>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+        <div className={styles.outerWrap}>
+          <div className={`${styles.wrap}`}>
+            <ul aria-hidden={expanded}>
+              {actions.map((a) => {
+                const title = Translate({ ...context, label: a.label });
+                // BETA-1 hide non working menu items @see lib/Navigation.js
+                const style = a.hidden
+                  ? { display: "none" }
+                  : { display: "block" };
+                return (
+                  <li key={a.label} style={style}>
+                    <Link
+                      className={styles.link}
+                      tabIndex={!expanded && isVisible ? "0" : "-1"}
+                      title={title}
+                      href={a.href}
+                      dataCy={cyKey({
+                        name: a.label,
+                        prefix: "menu-link",
+                      })}
+                    >
+                      <Title type="title5" tag="h2">
+                        {title}
+                      </Title>
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className={styles.language}>
+                <Link
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onLang && onLang();
+                  }}
+                  className={styles.link}
+                  tabIndex={!expanded && isVisible ? "0" : "-1"}
+                  dataCy={cyKey({
+                    name: "language",
+                    prefix: "menu-link",
+                  })}
+                >
+                  <Text type="text2">
+                    {Translate({ context: "general", label: "language" })}
+                  </Text>
+                </Link>
+              </li>
+            </ul>
+            <ul aria-hidden={!expanded}>
+              {materials.map((m) => {
+                return (
+                  <li key={m.label}>
+                    <Link
+                      className={styles.link}
+                      tabIndex={expanded && isVisible ? "0" : "-1"}
+                      href={m.href}
+                      dataCy={cyKey({
+                        name: m.label,
+                        prefix: "menu-link",
+                      })}
+                    >
+                      <Title type="title5" tag="h2">
+                        {Translate({ context: "general", label: m.label })}
+                      </Title>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

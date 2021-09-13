@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState, useMemo } from "react";
+import debounce from "lodash/debounce";
+import find from "lodash/find";
 
 import Link from "@/components/base/link";
 import List from "@/components/base/forms/list";
@@ -71,7 +73,7 @@ export function Pickup({
         </Text>
         <Search
           className={styles.input}
-          onChange={(value) => onChange(value)}
+          onChange={debounce((value) => onChange(value), 100)}
         />
       </div>
       <div className={`${styles.scrollArea} ${shadowClass}`}>
@@ -81,28 +83,59 @@ export function Pickup({
             data-cy="allowed-branches"
           >
             {data.result.map((branch, idx) => {
+              // Check for a highlight key matching on "name" prop
+              const matchName = find(branch.highlights, {
+                key: "name",
+              });
+              // If found, use matchned name (wraps match in <mark>...</mark>)
+              const title = matchName?.value || branch.name;
+
+              // If none found use a alternative match if any found
+              const matchOthers = !matchName
+                ? branch.highlights?.[0]?.value
+                : null;
+
+              const alternativeMatchClass = matchOthers ? styles.squeeze : "";
+
               return (
                 <List.Select
                   key={`${branch.branchId}-${idx}`}
                   selected={selected?.branchId === branch.branchId}
                   onSelect={() => onSelect(branch)}
                   label={branch.name}
-                  className={[styles.radiobutton, animations["on-hover"]].join(
-                    " "
-                  )}
+                  className={[
+                    styles.radiobutton,
+                    alternativeMatchClass,
+                    animations["on-hover"],
+                  ].join(" ")}
                 >
-                  <Text
-                    lines="1"
-                    skeleton={isLoading}
-                    type="text2"
-                    className={[
-                      styles.library,
-                      animations["h-border-bottom"],
-                      animations["h-color-blue"],
-                    ].join(" ")}
-                  >
-                    {branch.name}
-                  </Text>
+                  <>
+                    <Text
+                      lines="1"
+                      skeleton={isLoading}
+                      type="text2"
+                      className={[
+                        styles.library,
+                        animations["h-border-bottom"],
+                        animations["h-color-blue"],
+                      ].join(" ")}
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: title,
+                        }}
+                      />
+                    </Text>
+                    {matchOthers && (
+                      <Text type="text3" className={styles.alternativeMatch}>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: matchOthers,
+                          }}
+                        />
+                      </Text>
+                    )}
+                  </>
                 </List.Select>
               );
             })}
