@@ -121,3 +121,15 @@ export function ShowLoanerFormWithLoginSubmitting() {
     </div>
   );
 }
+
+/**
+ * Returns Loaner Form
+ *
+ */
+export function ShowLoanerFormSkeleton() {
+  return (
+    <div style={{ maxWidth: 450 }}>
+      <LoanerForm skeleton={true} />
+    </div>
+  );
+}
