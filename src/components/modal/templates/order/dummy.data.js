@@ -16,8 +16,8 @@ const work = {
 const user = {
   name: "Låner Lånersen",
   agency: {
-    name: "Biblioteksby Bibliotekerne",
-    branches: [
+    hitcount: 6,
+    result: [
       {
         branchId: "0",
         name: "Hovedbiblioteket",

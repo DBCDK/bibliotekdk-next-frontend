@@ -6,8 +6,9 @@
       "address": "Borgmesterskoven 45",
       "postalCode": "8660",
       "agency": {
-        "branches": [
+        "result": [
           {
+            "agencyName": "DBCs testbiblioteker",
             "agencyId": "790900",
             "name": "DBCTestBibliotek",
             "city": "Testby-test",
@@ -23,6 +24,7 @@
             "pickupAllowed": true
           },
           {
+            "agencyName": "DBCs testbiblioteker",
             "agencyId": "790900",
             "name": "DBCtest_2",
             "city": null,
@@ -38,6 +40,7 @@
             "pickupAllowed": true
           },
           {
+            "agencyName": "DBCs testbiblioteker",
             "agencyId": "790900",
             "name": "DBC-bibilioteksekspressen",
             "city": "Vsn-testby",

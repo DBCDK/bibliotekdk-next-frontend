@@ -26,14 +26,34 @@ export function basic() {
   };
 }
 
+/**
+ * get branches for logged in user
+ *
+ */
+export function branchesForUser() {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($language: LanguageCode! ) {
+      user {
+        agency (language: $language){
+          agencyName
+        }
+      }
+      monitor(name: "bibdknext_user_branches")
+     }`,
+    variables: { language: lang },
+    slowThreshold: 3000,
+  };
+}
+
 export function orderPolicy({ pid }) {
   return {
     // delay: 1000, // for debugging
     query: `query ($language: LanguageCode!, $pid: String! ) {
       user {
         agency (language: $language){
-          name
-          branches {
+          result {
+            agencyName
             agencyId
             name
             city

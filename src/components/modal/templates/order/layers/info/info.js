@@ -48,7 +48,7 @@ export default function Info({
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [agency?.name || libraryFallback],
+    vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
   };
 
   const orderNotPossibleMessage = {

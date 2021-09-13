@@ -14,27 +14,14 @@ import LogoSvg from "@/public/icons/logo_help.svg";
 
 import { cyKey } from "@/utils/trim";
 
+import BurgerIcon from "@/components/header/icons/burger";
+
 import styles from "./Header.module.css";
 import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/logo/Logo";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
-
-/**
- * Back to bibliotek.dk button
- *
- * @returns {component}
- */
-function BackButton() {
-  return (
-    <div className={styles.backlink}>
-      <Link href="/" border={{ bottom: { keepVisible: true } }}>
-        <Text>{Translate({ context: "help", label: "back-to-bib" })}</Text>
-      </Link>
-    </div>
-  );
-}
 
 /**
  * The custom Header for help page
@@ -47,6 +34,7 @@ export function Header({
   onQueryChange,
   onQueryClear,
   onQuerySubmit,
+  onMenuClick,
 }) {
   return (
     <Container
@@ -56,11 +44,10 @@ export function Header({
     >
       <Row className={styles.row}>
         <Col xs={3}>
-          <Logo fill={"var(--blue)"} text={"help_logo_text"} href="/hjaelp" />
-          <BackButton />
+          <Logo fill={"var(--blue)"} text={"default_logo_text"} />
         </Col>
 
-        <Col xs={{ span: 12, order: 4 }} lg={{ span: 6, order: 2 }}>
+        <Col xs={{ span: 12, order: 4 }} lg={{ span: 5, order: 2 }}>
           <div className={styles.inputwrapper}>
             <Title type="title3">
               {Translate({ context: "help", label: "help-title" })}
@@ -98,13 +85,12 @@ export function Header({
                 })}
               />
             </Link>
-            <Language>
-              <Link>
-                <Text type="text2">
-                  {Translate({ context: "language", label: "en-da" })}
-                </Text>
-              </Link>
-            </Language>
+            <BurgerIcon
+              className={styles.menu}
+              title={Translate({ context: "header", label: "menu" })}
+              onClick={() => onMenuClick()}
+              dataCy="header-menu"
+            />
           </span>
         </Col>
       </Row>
@@ -155,9 +141,17 @@ export default function Wrap() {
       );
     }
   };
+
   useEffect(() => {
     updateUrl();
   }, [query]);
+
+  function openMenuModal() {
+    router.push({
+      query: { ...router.query, modal: "menu" },
+    });
+  }
+
   if (!onHelp) {
     return null;
   }
@@ -169,6 +163,7 @@ export default function Wrap() {
       onQueryChange={(q) => setQuery(q)}
       onQueryClear={() => setQuery("")}
       onQuerySubmit={updateUrl}
+      onMenuClick={() => openMenuModal()}
     />
   );
 }

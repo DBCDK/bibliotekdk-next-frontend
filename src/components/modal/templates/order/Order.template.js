@@ -63,15 +63,16 @@ export function Order({
 
   // Validation state
   const [validated, setValidated] = useState(null);
-
   // Selected pickup branch
   // If none selected, use first branch in the list
   let [pickupBranch, setPickupBranch] = useState();
   pickupBranch = pickupBranch
-    ? user?.agency?.branches.find(
+    ? user?.agency?.result?.find(
         (branch) => pickupBranch.branchId === branch.branchId
       )
-    : user?.agency?.branches[0];
+    : user?.agency?.result?.[0]
+    ? user.agency?.result?.[0]
+    : null;
 
   // Email state
   const [mail, setMail] = useState(null);

@@ -11,6 +11,10 @@
   text-decoration: none;
 }
 
+.wrap {
+  position: relative;
+}
+
 .action p,
 .action > div hr {
   display: none;

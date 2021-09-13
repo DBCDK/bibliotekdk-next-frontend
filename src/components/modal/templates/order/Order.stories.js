@@ -153,7 +153,7 @@ export function ManyPickupPoints() {
   const { work, user, order } = data;
 
   // City main library
-  const main = user.agency.branches[0];
+  const main = user.agency.result[0];
 
   // Auto generated long pickup list
   const list = Array.from(Array(25).keys()).map((l, i) => ({
@@ -172,7 +172,7 @@ export function ManyPickupPoints() {
 
   const modifiedUser = {
     ...user,
-    agency: { branches: [main, ...list] },
+    agency: { result: [main, ...list] },
   };
 
   return (
@@ -281,7 +281,7 @@ export function OrderPolicyFail() {
   const modifiedUser = {
     ...user,
     agency: {
-      branches: [
+      result: [
         {
           agencyId: "715900",
           name: "Bibliografen Bagsværd",

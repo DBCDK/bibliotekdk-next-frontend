@@ -113,11 +113,8 @@ export function Header({ className = "", router = null, story = null, user }) {
     : "";
 
   // variables for the material filter @see <MaterialSelect>
-  const {
-    selectedMaterial,
-    onOptionClicked,
-    materialFilters,
-  } = useMaterialFilters();
+  const { selectedMaterial, onOptionClicked, materialFilters } =
+    useMaterialFilters();
 
   const doSearch = ({ query, suggestion }) => {
     // If we are on mobile we replace
@@ -179,31 +176,33 @@ export function Header({ className = "", router = null, story = null, user }) {
                   <Link href="/">
                     <Text type="text3">{frontpageTranslated}</Text>
                   </Link>
-                  {materialFilters.map((m, idx) => (
-                    <Link
-                      key={m.value}
-                      disabled={linksdisabled}
-                      dataCy={cyKey({
-                        name: m.label,
-                        prefix: "header-link",
-                      })}
-                      onClick={(e) => {
-                        onOptionClicked(idx);
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.keyCode === 13) {
-                          onOptionClicked(idx);
-                        }
-                      }}
-                    >
-                      <Text type="text3">
-                        {Translate({
-                          context: "general",
-                          label: m.label,
+                  {materialFilters
+                    .filter((filter) => filter.value !== "all")
+                    .map((m, idx) => (
+                      <Link
+                        key={m.value}
+                        disabled={linksdisabled}
+                        dataCy={cyKey({
+                          name: m.label,
+                          prefix: "header-link",
                         })}
-                      </Text>
-                    </Link>
-                  ))}
+                        onClick={(e) => {
+                          onOptionClicked(idx + 1);
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" || e.keyCode === 13) {
+                            onOptionClicked(idx + 1);
+                          }
+                        }}
+                      >
+                        <Text type="text3">
+                          {Translate({
+                            context: "general",
+                            label: m.label,
+                          })}
+                        </Text>
+                      </Link>
+                    ))}
                 </div>
                 <div
                   className={styles.actions}
