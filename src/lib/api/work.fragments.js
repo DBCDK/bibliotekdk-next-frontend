@@ -116,7 +116,6 @@ export function details({ workId }) {
                 }
                 ... on InfomediaReference {
                   infomediaId
-                  type
                   pid
                 }
               }
@@ -259,6 +258,10 @@ export function reviews({ workId }) {
               date
               media
               rating
+              reference{
+                infomediaId
+                pid
+              }
             }
             ... on ReviewLitteratursiden {
               author
