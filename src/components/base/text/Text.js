@@ -124,6 +124,6 @@ Container.propTypes = {
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf(["text1", "text2", "text3", "text4"]),
-  tag: PropTypes.oneOf(["p", "span", "div"]),
+  tag: PropTypes.oneOf(["p", "span", "div", "label"]),
   skeleton: PropTypes.bool,
 };

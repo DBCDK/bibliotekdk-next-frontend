@@ -36,7 +36,10 @@ export function branchesForUser() {
     query: `query ($language: LanguageCode! ) {
       user {
         agency (language: $language){
-          agencyName
+          result {
+            agencyId
+            agencyName
+          }
         }
       }
       monitor(name: "bibdknext_user_branches")
