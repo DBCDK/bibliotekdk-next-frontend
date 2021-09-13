@@ -114,6 +114,10 @@ export function details({ workId }) {
                   origin
                   note
                 }
+                ... on InfomediaReference {
+                  infomediaId
+                  pid
+                }
               }
               physicalDescription
               publisher              
@@ -254,6 +258,10 @@ export function reviews({ workId }) {
               date
               media
               rating
+              reference{
+                infomediaId
+                pid
+              }
             }
             ... on ReviewLitteratursiden {
               author
