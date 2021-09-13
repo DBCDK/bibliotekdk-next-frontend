@@ -24,7 +24,7 @@ export default function Info({
 }) {
   const context = { context: "order" };
 
-  const isLoadingBranches = !user?.agency;
+  const isLoadingBranches = !user?.agency && user.isAuthenticated;
 
   // Mateiral props
   const { title, creators, materialType, cover } = material;

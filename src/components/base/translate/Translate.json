@@ -921,6 +921,14 @@
         "da": "Afhentningssted",
         "en": "Pickup location"
       },
+      "pickup-search-title": {
+        "da": "Vælg afhentningssted",
+        "en": "Select pick-up location"
+      },
+      "pickup-search-description": {
+        "da": "Husk du skal være låner på biblioteket",
+        "en": "Remember you must be a loaner at the library"
+      },
       "pickup-link": {
         "da": "Vælg afhentning",
         "en": "Select pickup"

@@ -114,11 +114,6 @@ export function details({ workId }) {
                   origin
                   note
                 }
-                ... on InfomediaContent {
-                  id
-                  origin
-                  html
-                }
               }
               physicalDescription
               publisher              

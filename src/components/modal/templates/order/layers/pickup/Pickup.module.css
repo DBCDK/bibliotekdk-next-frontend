@@ -5,8 +5,16 @@
   margin: 0 0 var(--pt2) 0;
 }
 
-.top {
-  padding-bottom: var(--pt2);
+.search {
+  padding: 0 var(--pt2);
+}
+
+.search .input {
+  margin: var(--pt2) 0;
+}
+
+.search .title {
+  padding: var(--pt1) 0;
 }
 
 .scrollArea {
@@ -41,6 +49,10 @@
 }
 
 @media (min-width: 576px) {
+  .search {
+    padding: 0 var(--pt6);
+  }
+
   .scrollArea {
     height: calc(100% - 42px);
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);

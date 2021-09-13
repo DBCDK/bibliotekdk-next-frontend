@@ -1,11 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Radio from "@/components/base/radio";
+import Radio from "@/components/base/forms/radio";
 import animations from "@/components/base/animation/animations.module.css";
 import { useState } from "react";
 
 export default {
-  title: "base/Radio",
+  title: "base/Forms/Radio",
 };
 
 const rows = [

@@ -69,14 +69,14 @@ export function Order({
   const [validated, setValidated] = useState(null);
   // Selected pickup branch
   // If none selected, use first branch in the list
-  let [pickupBranch, setPickupBranch] = useState();
-  pickupBranch = pickupBranch
-    ? user?.agency?.result?.find(
-        (branch) => pickupBranch.branchId === branch.branchId
-      )
-    : user?.agency?.result?.[0]
-    ? user.agency?.result?.[0]
-    : null;
+  let [pickupBranch, setPickupBranch] = useState(null);
+
+  useEffect(() => {
+    if (!pickupBranch) {
+      // If user is logged in and no pickupBranch has been set
+      setPickupBranch(user?.agency?.result?.[0] || null);
+    }
+  }, [user?.agency]);
 
   // Email state
   const [mail, setMail] = useState(null);
@@ -315,6 +315,7 @@ export default function Wrap(props) {
   const { data: userData, error: userDataError } = useData(
     userFragments.basic()
   );
+
   const { data: orderPolicy, error: orderPolicyError } = useData(
     pid && userFragments.orderPolicy({ pid })
   );
@@ -335,7 +336,7 @@ export default function Wrap(props) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error || userDataError) {
+  if (error) {
     return <div>Error :( !!!!!</div>;
   }
 

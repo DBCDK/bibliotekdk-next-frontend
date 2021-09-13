@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
 
 import Link from "@/components/base/link";
-import Radio from "@/components/base/radio";
+import Radio from "@/components/base/forms/radio";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
@@ -11,7 +11,6 @@ import Arrow from "@/components/base/animation/arrow";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
-import { useMemo } from "react";
 
 /**
  * Make pickup branches selectable with Radio buttons

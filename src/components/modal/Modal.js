@@ -100,9 +100,9 @@ function getTemplate(template) {
   }
 }
 
-export function Back({ isVisible, handleClose }) {
+export function Back({ isVisible, handleClose, className }) {
   return (
-    <div className={styles.back}>
+    <div className={`${styles.back} ${className}`}>
       <div className={styles.wrap}>
         <Link
           border={false}
@@ -115,11 +115,18 @@ export function Back({ isVisible, handleClose }) {
             }
           }}
         >
-          <Arrow
-            flip
-            className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
-          />
-          <Text type="text3">Tilbage</Text>
+          <span className={styles.flex}>
+            <Arrow
+              flip
+              className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+            />
+            <Text
+              type="text3"
+              className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+            >
+              {Translate({ context: "general", label: "back" })}
+            </Text>
+          </span>
         </Link>
       </div>
     </div>

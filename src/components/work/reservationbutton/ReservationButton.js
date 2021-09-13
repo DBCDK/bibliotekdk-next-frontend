@@ -82,18 +82,18 @@ export function OrderButton({
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
   // is user logged in
-  if (!user.isAuthenticated) {
-    // login button
-    return (
-      <Button
-        skeleton={buttonSkeleton}
-        onClick={() => login()}
-        data_cy="button-order-overview"
-      >
-        {Translate({ ...context, label: "Order (not logged in)" })}
-      </Button>
-    );
-  }
+  // if (!user.isAuthenticated) {
+  //   // login button
+  //   return (
+  //     <Button
+  //       skeleton={buttonSkeleton}
+  //       onClick={() => login()}
+  //       data_cy="button-order-overview"
+  //     >
+  //       {Translate({ ...context, label: "Order (not logged in)" })}
+  //     </Button>
+  //   );
+  // }
 
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
