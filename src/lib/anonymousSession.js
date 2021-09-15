@@ -7,7 +7,7 @@ import nookies, { destroyCookie } from "nookies";
 import fetch from "isomorphic-unfetch";
 import jwt from "jsonwebtoken";
 import getConfig from "next/config";
-const { serverRuntimeConfig } = getConfig();
+const { serverRuntimeConfig = {} } = getConfig() || {};
 const { clientId, clientSecret, jwtSecret } = serverRuntimeConfig;
 
 // The cookie name
