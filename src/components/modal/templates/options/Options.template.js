@@ -20,8 +20,6 @@ import Skeleton from "@/components/base/skeleton";
  * @returns {component}
  */
 function getTemplate(props) {
-  console.log(props, "PROPS");
-
   if (props.infomediaId) {
     return <Infomedia props={props} />;
   }
@@ -30,7 +28,7 @@ function getTemplate(props) {
   }
 }
 
-export function Options({ data, title_author, isLoading }) {
+export function Options({ data, title_author, isLoading, workId }) {
   if (isLoading) {
     return <Skeleton lines={3} className={styles.skeleton} />;
   }
@@ -47,6 +45,7 @@ export function Options({ data, title_author, isLoading }) {
               ...i,
               title_author: title_author,
               className: styles.item,
+              workId,
             });
           })}
         </ul>
@@ -69,6 +68,11 @@ export default function Wrap(props) {
   }
 
   return (
-    <Options data={data} title_author={title_author} isLoading={isLoading} />
+    <Options
+      data={data}
+      title_author={title_author}
+      isLoading={isLoading}
+      workId={workId}
+    />
   );
 }

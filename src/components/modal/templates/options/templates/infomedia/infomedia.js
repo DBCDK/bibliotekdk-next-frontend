@@ -6,14 +6,9 @@ import Translate from "@/components/base/translate";
 import styles from "./infomedia.module.css";
 
 export function Infomedia({ props }) {
-  console.log(props, "INFOMEDIAPROPS");
-
-  const { infomediaId, pid, title_author, className } = { ...props };
-
+  const { infomediaId, pid, title_author, className, workId } = { ...props };
   const context = { context: "options" };
-
-  console.log(infomediaId, "INFOMEDIAID");
-  const url = infomediaUrl(pid, title_author);
+  const url = infomediaUrl(workId, title_author);
   return (
     <li className={`${className} ${styles.item}`}>
       <Link
@@ -36,9 +31,8 @@ export function Infomedia({ props }) {
   );
 }
 
-function infomediaUrl(pid, title) {
-  return `/infomedia/${title}/${pid}`;
-  return pid;
+function infomediaUrl(workId, title) {
+  return `/infomedia/${title}/${workId}`;
 }
 
 export default function wrap({ props }) {

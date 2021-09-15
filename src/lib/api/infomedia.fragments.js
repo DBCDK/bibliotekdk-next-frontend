@@ -12,7 +12,6 @@
  * @return {Object} a query object
  */
 export function infomediaArticle({ pid }) {
-  console.log(pid, "PID");
   return {
     // delay: 4000, // for debugging
     query: `query ($pid: String!) {
