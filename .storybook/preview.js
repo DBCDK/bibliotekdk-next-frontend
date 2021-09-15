@@ -6,12 +6,28 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
+import { AnonymousSessionContext } from "../src/components/hooks/useUser";
+import { APIStateContext } from "../src/lib/api/api";
 import { withNextRouter } from "storybook-addon-next-router";
 import { addDecorator } from "@storybook/react";
 
 // Make Next.js Link tags work in storybook by mocking the router
 // https://www.npmjs.com/package/storybook-addon-next-router
-addDecorator(
+export const decorators = [
+  (Story) => {
+    return (
+      <APIStateContext.Provider value={{}}>
+        <Story />
+      </APIStateContext.Provider>
+    );
+  },
+  (Story) => {
+    return (
+      <AnonymousSessionContext.Provider value={{ accessToken: "dummy-token" }}>
+        <Story />
+      </AnonymousSessionContext.Provider>
+    );
+  },
   withNextRouter({
     async replace(path) {
       alert(typeof path === "object" ? JSON.stringify(path) : path);
@@ -19,5 +35,5 @@ addDecorator(
     async push(path) {
       alert(typeof path === "object" ? JSON.stringify(path) : path);
     },
-  })
-);
+  }),
+];
