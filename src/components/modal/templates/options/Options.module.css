@@ -11,6 +11,12 @@
   padding-bottom: var(--pt4);
 }
 
+.skeleton{
+  padding:30px;
+  max-height: 200px;
+  position: relative;
+}
+
 @media (min-width: 576px) {
   .options {
     padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);

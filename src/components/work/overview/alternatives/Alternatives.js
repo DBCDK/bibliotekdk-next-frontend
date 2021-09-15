@@ -11,22 +11,29 @@ export default function AlternativeOptions({ onlineAccess = [] }) {
   const context = { context: "overview" };
 
   const count = onlineAccess.length;
-
-  return (
-    <Link
-      border={{ bottom: { keepVisible: true } }}
-      onClick={() => {
-        if (router) {
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, modal: "options" },
-          });
-        }
-      }}
-    >
-      <Text>
-        {Translate({ ...context, label: "all-options-link", vars: [count] })}
-      </Text>
-    </Link>
-  );
+  {
+    return (
+      count > 1 && (
+        <Link
+          border={{ bottom: { keepVisible: true } }}
+          onClick={() => {
+            if (router) {
+              router.push({
+                pathname: router.pathname,
+                query: { ...router.query, modal: "options" },
+              });
+            }
+          }}
+        >
+          <Text>
+            {Translate({
+              ...context,
+              label: "all-options-link",
+              vars: [count],
+            })}
+          </Text>
+        </Link>
+      )
+    );
+  }
 }

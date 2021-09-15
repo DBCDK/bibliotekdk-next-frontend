@@ -337,7 +337,7 @@ export function series({ workId }) {
  *
  * @return {Object} a query object
  */
-export function infomediaArticlePublicInfo({ workId }) {
+export function infomediaArticlePublicInfo({ workId, locale = "da" }) {
   return {
     // delay: 4000, // for debugging
     query: `query ($workId: String!, $locale: String) {

@@ -10,7 +10,11 @@ export default function Online({ url, origin, note, className }) {
 
   return (
     <li className={`${className} ${styles.item}`}>
-      <Link border={{ bottom: { keepVisible: true } }} href="">
+      <Link
+        border={{ bottom: { keepVisible: true } }}
+        href={url}
+        target="_blank"
+      >
         <Text type="text1">
           {Translate({ ...context, label: "online-link-title" })}
         </Text>

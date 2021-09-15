@@ -10,6 +10,7 @@ import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
 
 import styles from "./Options.module.css";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * Template selection function
@@ -19,56 +20,55 @@ import styles from "./Options.module.css";
  * @returns {component}
  */
 function getTemplate(props) {
-  if (props.html) {
-    return <Infomedia {...props} />;
+  console.log(props, "PROPS");
+
+  if (props.infomediaId) {
+    return <Infomedia props={props} />;
   }
   if (props.url) {
     return <Online {...props} />;
   }
 }
 
-function Options({ data }) {
-  console.log("data", data);
+export function Options({ data, title_author, isLoading }) {
+  if (isLoading) {
+    return <Skeleton lines={3} className={styles.skeleton} />;
+  }
 
   const onlineAccess =
-    data.work.materialTypes[0]?.manifestations[0]?.onlineAccess;
-
-  console.log("onlineAccess", onlineAccess);
+    data?.work?.materialTypes[0]?.manifestations[0]?.onlineAccess;
 
   return (
-    <div className={styles.options}>
-      <ul className={styles.list}>
-        {onlineAccess.map((i) => {
-          return getTemplate({ ...i, className: styles.item });
-        })}
-      </ul>
-    </div>
+    onlineAccess && (
+      <div className={styles.options}>
+        <ul className={styles.list}>
+          {onlineAccess.map((i) => {
+            return getTemplate({
+              ...i,
+              title_author: title_author,
+              className: styles.item,
+            });
+          })}
+        </ul>
+      </div>
+    )
   );
-}
-
-function OptionsSkeleton() {
-  return <Options data={[]} isLoading={true} />;
 }
 
 export default function Wrap(props) {
   // order pid
-  const { workId } = Router.query;
-
-  console.log("workId", workId);
+  const { workId, title_author } = Router.query;
 
   // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.details({ workId })
   );
 
-  if (isLoading) {
-    return "loading ...";
-    return <OptionSkeleton isSlow={isSlow} />;
-  }
-
   if (error) {
     return <div>Error :( !!!!!</div>;
   }
 
-  return <Options data={data} />;
+  return (
+    <Options data={data} title_author={title_author} isLoading={isLoading} />
+  );
 }
