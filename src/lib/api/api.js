@@ -12,6 +12,7 @@ import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import { getSession, useSession } from "next-auth/client";
 import useUser from "@/components/hooks/useUser";
+import { fetchAnonymousSession } from "../anonymousSession";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -163,7 +164,11 @@ export async function fetchAll(queries, context) {
   const isBot = require("isbot")(userAgent) || !!context.query.isBot;
 
   // user session
-  const session = (await getSession(context)) || {};
+  const session = await getSession(context);
+
+  // anonymous session
+  let anonSession =
+    !session?.accessToken && (await fetchAnonymousSession(context));
 
   // Fetch all queries in parallel
   const initialData = {};
@@ -176,7 +181,7 @@ export async function fetchAll(queries, context) {
         queries.map(async (queryFunc) => {
           const queryKey = generateKey({
             ...queryFunc(context.query),
-            accessToken: session.accessToken,
+            accessToken: session?.accessToken || anonSession?.accessToken,
           });
           const queryRes = await fetcher(queryKey);
           return { queryKey, queryRes };
@@ -192,5 +197,6 @@ export async function fetchAll(queries, context) {
     translations: await fetchTranslations(),
     allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
     session,
+    anonSession,
   };
 }

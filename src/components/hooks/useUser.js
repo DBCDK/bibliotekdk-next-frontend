@@ -1,5 +1,9 @@
 import { useSession } from "next-auth/client";
 import useSWR, { mutate } from "swr";
+import { createContext, useContext } from "react";
+
+// Context for storing anonymous session
+export const AnonymousSessionContext = createContext();
 
 /**
  * Mock used in storybook
@@ -39,7 +43,8 @@ export function useLoanerInfo() {
  */
 function useUser() {
   const [session] = useSession();
-  const accessToken = session?.accessToken;
+  const anonSession = useContext(AnonymousSessionContext);
+  const accessToken = session?.accessToken || anonSession?.accessToken;
 
   return {
     isAuthenticated: !!session?.user?.uniqueId,
