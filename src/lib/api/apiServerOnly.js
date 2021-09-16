@@ -1,9 +1,13 @@
 import nookies from "nookies";
+import getConfig from "next/config";
 import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import { getSession } from "next-auth/client";
-import { fetchAnonymousSession } from "../anonymousSession";
 import { generateKey, fetcher } from "@/lib/api/api";
+import fetch from "isomorphic-unfetch";
+
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 /**
  * Initializes session and fetches stuff from API
@@ -28,8 +32,13 @@ export async function fetchAll(queries, context) {
   const session = await getSession(context);
 
   // anonymous session
-  let anonSession =
-    !session?.accessToken && (await fetchAnonymousSession(context));
+  let anonSession;
+  if (!session?.accessToken) {
+    const anonSessionRes = await fetch(`${APP_URL}/api/auth/anonsession`, {
+      headers: context.req.headers,
+    });
+    anonSession = await anonSessionRes.json();
+  }
 
   // Fetch all queries in parallel
   const initialData = {};
