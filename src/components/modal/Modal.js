@@ -35,7 +35,6 @@ function handleTab(event, container) {
   );
 
   if (sequence.length < 1) {
-    console.log("UNDEFINED");
     return;
   }
 
@@ -179,8 +178,6 @@ export function Modal({
 
   // Custom modal theme class
   const themeClass = styles[`${context.title}-theme`] || "";
-
-  console.log("themeClass", themeClass);
 
   return (
     <div
