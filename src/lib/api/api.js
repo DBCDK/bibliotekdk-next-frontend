@@ -3,14 +3,10 @@
  * In this file we have functions related to data fetching.
  */
 import { createContext, useContext, useState } from "react";
-import nookies from "nookies";
 import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
-import fetchTranslations from "@/lib/api/backend";
-import { COOKIES_ALLOWED } from "@/components/cookiebox";
-import { getSession, useSession } from "next-auth/client";
 import useUser from "@/components/hooks/useUser";
 
 // TODO handle config better
@@ -29,7 +25,7 @@ export const APIStateContext = createContext();
  *
  * @return {string} Stringified representation of the input
  */
-function generateKey(query) {
+export function generateKey(query) {
   // Consider hashing the string to make
   // keys smaller
   return JSON.stringify(query);
@@ -147,50 +143,5 @@ export function useData(query) {
     error: error || data?.errors,
     isLoading: query && !data,
     isSlow: data ? false : isSlow,
-  };
-}
-
-export async function fetchAll(queries, context) {
-  // If we are in a browser, we return immidiately
-  // This prevents a roundtrip to the server
-  // and will make page changes feel faster
-  if (typeof window !== "undefined") {
-    return { initialState: {} };
-  }
-
-  // Detect if requester is a bot
-  const userAgent = context.req.headers["user-agent"];
-  const isBot = require("isbot")(userAgent) || !!context.query.isBot;
-
-  // user session
-  const session = (await getSession(context)) || {};
-
-  // Fetch all queries in parallel
-  const initialData = {};
-
-  // If user is a bot, we care about SSR, and fetch data now
-  // Otherwise, we show the page as fast as we can with skeleton elements
-  if (isBot) {
-    (
-      await Promise.all(
-        queries.map(async (queryFunc) => {
-          const queryKey = generateKey({
-            ...queryFunc(context.query),
-            accessToken: session.accessToken,
-          });
-          const queryRes = await fetcher(queryKey);
-          return { queryKey, queryRes };
-        })
-      )
-    ).forEach(({ queryKey, queryRes }) => {
-      initialData[queryKey] = queryRes;
-    });
-  }
-
-  return {
-    initialData,
-    translations: await fetchTranslations(),
-    allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
-    session,
   };
 }

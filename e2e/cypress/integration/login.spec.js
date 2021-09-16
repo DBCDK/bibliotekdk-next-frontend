@@ -12,13 +12,6 @@ describe("Login", () => {
       statusCode: 200,
       body: { accessToken: "dummy-access-token" },
     }).as("sessionRequest");
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423`
-    );
-
-    // Try to comment out - seems like it waits too long
-    // Wait for session to be fetched
-    // cy.wait("@sessionRequest").then(() => {});
 
     // Intercept API request with bearer token
     cy.intercept({
@@ -28,11 +21,15 @@ describe("Login", () => {
       },
     }).as("apiRequest");
 
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423`
+    );
+
     // Make sure api request with bearer token has been called
     cy.wait("@apiRequest");
   });
 
-  it(`should not send bearer token when not logged in`, () => {
+  it(`should use anonymous bearer token when not logged in`, () => {
     // Intercept API request
     cy.intercept(/.*graphql/).as("apiRequest");
 
@@ -40,8 +37,6 @@ describe("Login", () => {
       `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423`
     );
 
-    cy.wait("@apiRequest")
-      .its("request.headers.authorization")
-      .should("not.exist");
+    cy.wait("@apiRequest").its("request.headers.authorization").should("exist");
   });
 });

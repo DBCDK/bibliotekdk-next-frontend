@@ -14,7 +14,7 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchAll } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import Header from "@/components/help/texts/header";
 
