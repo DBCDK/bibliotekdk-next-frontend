@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { signIn } from "@dbcdk/login-nextjs/client";
 import Error from "next/error";
 import Header from "@/components/header/Header";
-import { fetchAll, useData } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import { infomediaArticlePublicInfo } from "@/lib/api/work.fragments";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
@@ -26,11 +27,9 @@ export default function InfomediaArticle() {
   const { data: publicData, isLoading: isLoadingPublic } = useData(
     workId && infomediaArticlePublicInfo({ workId })
   );
-  const {
-    data: privateData,
-    error,
-    isLoading: isLoadingPrivate,
-  } = useData(user.isAuthenticated && workId && infomediaArticle({ workId }));
+  const { data: privateData, error, isLoading: isLoadingPrivate } = useData(
+    user.isAuthenticated && workId && infomediaArticle({ workId })
+  );
   const { data: userData } = useData(user.isAuthenticated && branchesForUser());
 
   const workPublic = publicData?.work;

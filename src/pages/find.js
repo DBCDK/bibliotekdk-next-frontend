@@ -12,7 +12,9 @@ import {
   collectSearch,
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
-import { fetchAll, fetcher } from "@/lib/api/api";
+import { fetcher } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
+
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 

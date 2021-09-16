@@ -15,7 +15,7 @@
  */
 
 import { useRouter } from "next/router";
-import { fetchAll } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import Page from "@/components/work/page";

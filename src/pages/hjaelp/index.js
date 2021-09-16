@@ -10,7 +10,7 @@
  *
  */
 
-import { fetchAll } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments.js";
 import { promotedFaqs } from "@/lib/api/faq.fragments.js";
 
