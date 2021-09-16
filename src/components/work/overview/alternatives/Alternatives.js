@@ -10,7 +10,7 @@ export default function AlternativeOptions({ onlineAccess = [] }) {
   const router = useRouter();
   const context = { context: "overview" };
 
-  const count = onlineAccess.length;
+  const count = onlineAccess?.length;
   {
     return (
       count > 1 && (
