@@ -8,7 +8,7 @@ import ArticleSection from "@/components/article/section";
 import Hero from "@/components/hero";
 import Head from "next/head";
 import { promotedArticles } from "@/lib/api/article.fragments";
-import { fetchAll } from "@/lib/api/api";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
 

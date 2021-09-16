@@ -11,6 +11,8 @@ pipeline {
         DOCKER_COMPOSE_NAME = "compose-${IMAGE_NAME}-${BRANCH_NAME.toLowerCase()}"
         GITLAB_PRIVATE_TOKEN = credentials("metascrum-gitlab-api-token")
         GITLAB_ID = "704"
+        CLIENT_ID = credentials("bibdk_client_id")
+        CLIENT_SECRET = credentials("bibdk_client_secret")
 	}
     stages {
         stage('Build image') {

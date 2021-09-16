@@ -979,6 +979,22 @@
         "da": "Bestillingsnummer: %s",
         "en": "Order number: %s"
       },
+      "order-to": {
+        "da": "Bestil til %s",
+        "en": "Order for pickup at %s"
+      },
+      "order-to-description": {
+        "da": "For at bestille dertil skal du udfylde dine låneroplysninger",
+        "en": "To order there, you must fill in your loaner information"
+      },
+      "order-login-required": {
+        "da": "For at bestille dertil skal du logge ind via %s",
+        "en": "To order there, you must log in via %s"
+      },
+      "order-to-loaner-info": {
+        "da": "Udfyld lånerinfo",
+        "en": "Fill in the loaner info"
+      },
       "info-email-message": {
         "da": "Din mail er hentet fra %s",
         "en": "Your email has been retrieved from %s"
@@ -990,6 +1006,10 @@
       "action-wrong-email-field": {
         "da": "Du mangler at angive en korrekt e-mail",
         "en": "You need to enter a correct email"
+      },
+      "approve-loaner-info": {
+        "da": "Godkend låneroplysninger",
+        "en": "Approve loaner information"
       }
     },
     "form": {
@@ -1012,7 +1032,62 @@
       "icon-label-not-selected": {
         "da": "ikke valgt",
         "en": "not selected"
+      },
+      "userId-label": { "da": "Låner-id", "en": "Loaner-id" },
+      "pincode-label": { "da": "Pinkode", "en": "Pincode" },
+      "userName-label": { "da": "Navn", "en": "Name" },
+      "userAddress-label": { "da": "Adresse", "en": "Address" },
+      "userMail-label": { "da": "Email", "en": "Email" },
+      "cardno-label": { "da": "Lånerkortnummer", "en": "Loaner card number" },
+      "customId-label": { "da": "CustomId", "en": "CustomId" },
+      "userTelephone-label": { "da": "Telefonnummer", "en": "Phone number" },
+      "cpr-label": { "da": "CPR", "en": "CPR" },
+      "userDateOfBirth-label": { "da": "Fødselsdato", "en": "Date of birth" },
+      "barcode-label": { "da": "Stregkode", "en": "Barcode" },
+      "userId-placeholder": {
+        "da": "Skriv dit låner-id",
+        "en": "Enter your loaner-id"
+      },
+      "pincode-placeholder": {
+        "da": "Skriv din pinkode",
+        "en": "Enter your pincode"
+      },
+      "userName-placeholder": { "da": "Skriv dit navn", "en": "Enter your name" },
+      "userAddress-placeholder": {
+        "da": "Skriv din adresse",
+        "en": "Enter your address"
+      },
+      "userMail-placeholder": {
+        "da": "Skriv din e-mail",
+        "en": "Write your email"
+      },
+      "cardno-placeholder": {
+        "da": "Skriv dit lånerkortnummer",
+        "en": "Enter your loaner card number"
+      },
+      "customId-placeholder": { "da": "CustomId", "en": "CustomId" },
+      "userTelephone-placeholder": {
+        "da": "Skriv dit telefonnummer",
+        "en": "Enter your phone number"
+      },
+      "cpr-placeholder": { "da": "Skriv dit CPR", "en": "Enter your CPR" },
+      "userDateOfBirth-placeholder": {
+        "da": "Skriv din fødselsdato",
+        "en": "Enter your date of birth"
+      },
+      "barcode-placeholder": {
+        "da": "Indtast stregkode",
+        "en": "Enter barcode"
+      },
+      "pincode-explain": {
+        "da": "Pinkode/brugerkode. Den du bruger på biblioteket",
+        "en": "Pincode/password. The one you use on your library"
+      },
+      "error-missing-input": {
+        "da": "Udfyld venligst alle felter",
+        "en": "Please fill in all fields"
       }
+
     },
     "metadata": {
       "frontpage-title": {

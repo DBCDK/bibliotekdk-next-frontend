@@ -24,6 +24,7 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 
 import { APIStateContext } from "@/lib/api/api";
+import { AnonymousSessionContext } from "@/components/hooks/useUser";
 import {
   setLocale,
   setTranslations,
@@ -60,7 +61,6 @@ export default function MyApp({ Component, pageProps, router }) {
   setTranslations(pageProps.translations);
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
-
   return (
     <Provider
       session={pageProps.session}
@@ -69,26 +69,28 @@ export default function MyApp({ Component, pageProps, router }) {
         keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
       }}
     >
-      <APIStateContext.Provider value={pageProps.initialData}>
-        <Matomo allowCookies={allowCookies} />
-        <BodyScrollLock router={router} />
-        <Modal router={router} />
-        <div id="layout">
-          <Head>
-            <meta name="mobile-web-app-capable" content="yes"></meta>
-            <meta name="theme-color" content="#3333ff"></meta>
-          </Head>
-          <SkipToMainLink />
-          <Banner />
-          <Notifications />
-          <HelpHeader />
+      <AnonymousSessionContext.Provider value={pageProps.anonSession}>
+        <APIStateContext.Provider value={pageProps.initialData}>
+          <Matomo allowCookies={allowCookies} />
+          <BodyScrollLock router={router} />
+          <Modal router={router} />
+          <div id="layout">
+            <Head>
+              <meta name="mobile-web-app-capable" content="yes"></meta>
+              <meta name="theme-color" content="#3333ff"></meta>
+            </Head>
+            <SkipToMainLink />
+            <Banner />
+            <Notifications />
+            <HelpHeader />
 
-          <Component {...pageProps} />
-          <Feedback />
-          <CookieBox />
-          <Footer />
-        </div>
-      </APIStateContext.Provider>
+            <Component {...pageProps} />
+            <Feedback />
+            <CookieBox />
+            <Footer />
+          </div>
+        </APIStateContext.Provider>
+      </AnonymousSessionContext.Provider>
     </Provider>
   );
 }
