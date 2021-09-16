@@ -28,43 +28,10 @@ export function InfomediaArticle(infomediaData) {
   const router = useRouter();
   const workPublic = publicData?.data?.work;
   const manifestationPublic = publicData?.data?.work?.manifestations?.[0];
-  const article = privateData?.data?.infomediaContent[0];
+  const hasArticle = privateData?.data?.infomediaContent?.length > 0;
   const agencyName = agencies?.data?.user?.agency?.result?.[0]?.agencyName;
 
-  // Set the public fields to be shown when not logged in/no access
-  const parsed = {
-    article: {
-      creators: manifestationPublic?.creators,
-      title: manifestationPublic?.title,
-      entityCreated: manifestationPublic?.datePublished,
-      category: workPublic?.subjects
-        .filter(
-          (subject) => subject.type === "DBCO" || subject.type === "genre"
-        )
-        .map((subject) => subject.value),
-
-      deliveredBy: "Infomedia",
-    },
-  };
-
-  // If has access to article
-  if (article) {
-    parsed.article = {
-      ...parsed.article,
-      subHeadLine:
-        article?.subHeadLine !== article?.headLine && article?.subHeadLine,
-      fieldRubrik: article?.hedLine,
-      body: {
-        value: article?.text,
-      },
-      paper: article?.paper,
-      disclaimer: {
-        logo: "/infomedia_logo.svg",
-        text: article?.logo,
-      },
-    };
-  }
-
+  const articles = parseArticles(manifestationPublic, workPublic, privateData);
   return (
     <React.Fragment>
       <Header router={router} />
@@ -74,7 +41,10 @@ export function InfomediaArticle(infomediaData) {
         <ContentSkeleton />
       ) : (
         <>
-          <Content data={parsed} />
+          {articles.map((article) => (
+            <Content data={article} />
+          ))}
+
           {!user.isAuthenticated && (
             <LoginPrompt
               title={Translate({ context: "articles", label: "getAccess" })}
@@ -85,7 +55,7 @@ export function InfomediaArticle(infomediaData) {
               signIn={signIn}
             />
           )}
-          {user.isAuthenticated && workPublic && !article && (
+          {user.isAuthenticated && workPublic && !hasArticle && (
             <LoginPrompt
               title={Translate({
                 context: "articles",
@@ -103,6 +73,63 @@ export function InfomediaArticle(infomediaData) {
       )}
     </React.Fragment>
   );
+}
+
+/**
+ * Parse given manifestation for articles - always set metadata for article.
+ * If one or more infomedia articles are given -> merge it into the metadata.
+ *
+ * @param manifestationPublic
+ * @param workPublic
+ * @param privateData
+ * @return {*[]}
+ *  array of parsed articles
+ */
+function parseArticles(manifestationPublic, workPublic, privateData) {
+  const article = privateData?.data?.infomediaContent;
+
+  const returnArticles = [];
+  let articleindex = 0;
+  do {
+    const parsed = {
+      article: {
+        creators: manifestationPublic?.creators,
+        title: manifestationPublic?.title,
+        entityCreated: manifestationPublic?.datePublished,
+        category: workPublic?.subjects
+          .filter(
+            (subject) => subject.type === "DBCO" || subject.type === "genre"
+          )
+          .map((subject) => subject.value),
+
+        deliveredBy: "Infomedia",
+      },
+    };
+
+    // If has access to article
+    if (article) {
+      let currentArticle = article[articleindex];
+      parsed.article = {
+        ...parsed.article,
+        subHeadLine:
+          currentArticle?.subHeadLine !== currentArticle?.headLine &&
+          currentArticle?.subHeadLine,
+        fieldRubrik: currentArticle?.hedLine,
+        body: {
+          value: currentArticle?.text,
+        },
+        paper: currentArticle?.paper,
+        disclaimer: {
+          logo: "/infomedia_logo.svg",
+          text: currentArticle?.logo,
+        },
+      };
+    }
+    articleindex++;
+    returnArticles.push(parsed);
+  } while (article && article?.length > articleindex);
+
+  return returnArticles;
 }
 
 function parseForPid(workId) {
