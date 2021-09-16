@@ -7,7 +7,7 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
 import { useState, useEffect, useMemo } from "react";
 
-import { useData, fetcher } from "@/lib/api/api";
+import { useData, useFetcher } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 
 import { cyKey } from "@/utils/trim";
@@ -327,8 +327,8 @@ export function Suggester({
       // This is for accessibility only
       // react-autosuggest doesn't seem to support
       // aria-label on the wrapper div. Hence we do this..
-      const wrapper =
-        document.getElementById("suggester-input")?.parentNode?.parentNode;
+      const wrapper = document.getElementById("suggester-input")?.parentNode
+        ?.parentNode;
 
       if (wrapper) {
         wrapper.setAttribute(
@@ -445,6 +445,7 @@ export default function Wrap(props) {
   const { onChange } = props;
 
   const router = useRouter();
+  const fetcher = useFetcher();
 
   const initialQuery = router.query.q || "";
 

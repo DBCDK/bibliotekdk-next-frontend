@@ -12,7 +12,7 @@ import {
   collectSearch,
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
-import { fetcher } from "@/lib/api/api";
+import { useFetcher } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
 import Header from "@/components/header/Header";
@@ -25,6 +25,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  */
 function Find() {
   const router = useRouter();
+  const fetcher = useFetcher();
   const { q, page = 1, view } = router.query;
 
   const { canonical, alternate, root } = useCanonicalUrl({
