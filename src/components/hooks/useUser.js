@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/client";
 import useSWR, { mutate } from "swr";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
@@ -16,6 +16,8 @@ function useUserMock() {
 let loanerInfo = {};
 const loanerInfoKey = "loanerinfo";
 
+//
+let anonSession;
 /**
  * Hook for getting and storing loaner info
  */
@@ -43,7 +45,13 @@ export function useLoanerInfo() {
  */
 function useUser() {
   const [session] = useSession();
-  const anonSession = useContext(AnonymousSessionContext);
+  const anonSessionContext = useContext(AnonymousSessionContext);
+
+  // anonSessionContext becomes undefined when nextjs changes page without calling server
+  // we store the latest anon session we got from the server
+  if (anonSessionContext) {
+    anonSession = anonSessionContext;
+  }
   const accessToken = session?.accessToken || anonSession?.accessToken;
 
   return {
