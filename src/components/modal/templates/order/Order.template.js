@@ -1,5 +1,9 @@
 import Router from "next/router";
 import filter from "lodash/filter";
+import getConfig from "next/config";
+
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 import { useState, useEffect } from "react";
 import merge from "lodash/merge";
@@ -16,12 +20,29 @@ import Info from "./layers/info";
 import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
 import Action from "./layers/action";
+import LoanerForm from "./layers/loanerform";
 
 import { Top } from "@/components/modal";
 
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
+
+/**
+ *  Function to handle branch change
+ *
+ * @param {string} layer
+ */
+function handleRouterPush(query) {
+  Router.push(
+    {
+      pathname: Router.pathname,
+      query: { ...Router.query, ...query },
+    },
+    null,
+    { shallow: true, scroll: false }
+  );
+}
 
 /**
  *  Function to handle the active layer in modal
@@ -191,6 +212,8 @@ export function Order({
   // Order padding bottom, according to if the actionlayer is visible
   const actionLayerVisible = !translated ? styles.padding : "";
 
+  console.log("layer", activeLayer);
+
   return (
     <div className={`${styles.order} ${actionLayerVisible}`}>
       <div className={styles.container}>
@@ -233,15 +256,49 @@ export function Order({
             />
             <Pickup
               isVisible={translated && activeLayer === "pickup"}
-              agency={agency}
-              className={`${styles.page} ${styles[`page-library`]}`}
+              className={`${styles.page} ${styles[`page-pickup`]}`}
               onSelect={(branch) => {
-                setPickupBranch(branch);
+                console.log("branch", branch);
+
+                handleRouterPush({
+                  modal: `order-loanerform`,
+                  branch: branch.branchId,
+                });
+
+                console.log("#### Router", Router);
+
+                // setPickupBranch(branch);
+                // Push branchId to url
+                // if (pickupBranch?.agencyId !== branch.agencyId) {
+                //   // go to next form (if not logged in)
+
+                //   onLayerChange("loanerform");
+                // } else {
+                //   setPickupBranch(branch);
+                //   onLayerChange("info");
+                // }
+
                 // Give it some time to animate before closing
-                setTimeout(() => onLayerClose(), 300);
+                // setTimeout(() => onLayerClose(), 300);
               }}
+              onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
               onClose={onLayerClose}
+            />
+          </div>
+          <div className={styles.login}>
+            <LoanerForm
+              callbackUrl={`${APP_URL}${Router?.asPath?.replace(
+                "order-loanerform",
+                "order-info"
+              )}`}
+              isVisible={translated && activeLayer === "loanerform"}
               selected={pickupBranch}
+              className={`${styles.page} ${styles[`page-loanerform`]}`}
+              onClose={onLayerClose}
+              onPickupSelect={(branch) => {
+                setPickupBranch(branch);
+                onLayerChange("info");
+              }}
             />
           </div>
         </div>

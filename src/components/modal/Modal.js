@@ -341,19 +341,19 @@ export default function Wrap({ router, children = false }) {
   // performed an action to open the modal.
   // Following a deep link into the site with open modal,
   // will result in a router.replace
-  useEffect(() => {
-    if (template && router.isSsr) {
-      const query = { ...router.query };
-      delete query.modal;
-      router.replace({ pathname: router.pathname, query });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (template && router.isSsr) {
+  //     const query = { ...router.query };
+  //     delete query.modal;
+  //     router.replace({ pathname: router.pathname, query });
+  //   }
+  // }, []);
 
   // If content is rendered on server (or it is rendered for the first time in the browser),
   // we know the user followed a deep link to a page with an open modal; we do not show it.
-  if (template && (typeof window === "undefined" || router.isSsr)) {
-    return null;
-  }
+  // if (template && (typeof window === "undefined" || router.isSsr)) {
+  //   return null;
+  // }
 
   // On modal close
   const onClose = function onClose() {

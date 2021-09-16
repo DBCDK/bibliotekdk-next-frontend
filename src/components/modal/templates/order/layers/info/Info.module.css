@@ -1,6 +1,6 @@
 .info {
   position: relative;
-  height: 100%;
+  height: calc(100% - 80px);
   overflow-y: auto;
 }
 
@@ -104,6 +104,10 @@
 }
 
 @media (min-width: 576px) {
+  .info {
+    height: calc(100% - 136px);
+  }
+
   .edition,
   .pickup,
   .user {

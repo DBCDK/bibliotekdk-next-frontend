@@ -933,6 +933,10 @@
         "da": "Vælg afhentning",
         "en": "Select pickup"
       },
+      "pickup-input-placeholder": {
+        "da": "Søg efter afhentningssted",
+        "en": "Search for pickup location"
+      },
       "pickup-not-allowed": {
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"
@@ -1034,7 +1038,10 @@
         "da": "Skriv din pinkode",
         "en": "Enter your pincode"
       },
-      "userName-placeholder": { "da": "Skriv dit navn", "en": "Enter your name" },
+      "userName-placeholder": {
+        "da": "Skriv dit navn",
+        "en": "Enter your name"
+      },
       "userAddress-placeholder": {
         "da": "Skriv din adresse",
         "en": "Enter your address"
@@ -1069,7 +1076,6 @@
         "da": "Udfyld venligst alle felter",
         "en": "Please fill in all fields"
       }
-
     },
     "metadata": {
       "frontpage-title": {

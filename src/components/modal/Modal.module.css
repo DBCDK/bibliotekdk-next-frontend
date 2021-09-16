@@ -104,7 +104,8 @@
 .content {
   /* padding: var(--pt2); */
   color: var(--white);
-  height: calc(100% - 80px);
+  height: 100%;
+  /* height: calc(100% - 80px); */
   overflow-y: auto;
 }
 
@@ -171,7 +172,7 @@
 
   .content {
     /* padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6); */
-    height: calc(100% - 136px);
+    /* height: calc(100% - 136px); */
   }
 }
 

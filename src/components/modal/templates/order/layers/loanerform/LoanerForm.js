@@ -11,6 +11,8 @@ import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 
+import { Back } from "@/components/modal";
+
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
@@ -37,6 +39,8 @@ export function LoanerForm({
   submitting,
   skeleton,
   initial,
+  isVisible,
+  onClose,
 }) {
   const [state, setState] = useState(initial || {});
   const [errorCode, setErrorCode] = useState();
@@ -70,135 +74,142 @@ export function LoanerForm({
   }
 
   return (
-    <div className={styles.loanerform}>
-      <Title type="title4" tag="h3">
-        {Translate({
-          context: "order",
-          label: "order-to",
-          vars: [branch.name],
-        })}
-      </Title>
-      {branch.borrowerCheck ? (
-        <>
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-login-required",
-              vars: [branch.agencyName],
-            })}
-          </Text>
-          <Button
-            onClick={onLogin}
-            className={styles.loginbutton}
-            disabled={!!submitting}
+    <>
+      <Back
+        isVisible={isVisible}
+        handleClose={onClose}
+        className={styles.back}
+      />
+      <div className={styles.loanerform}>
+        <Title type="title4" tag="h3">
+          {Translate({
+            context: "order",
+            label: "order-to",
+            vars: [branch.name],
+          })}
+        </Title>
+        {branch.borrowerCheck ? (
+          <>
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-login-required",
+                vars: [branch.agencyName],
+              })}
+            </Text>
+            <Button
+              onClick={onLogin}
+              className={styles.loginbutton}
+              disabled={!!submitting}
+            >
+              {Translate({
+                context: "header",
+                label: "login",
+              })}
+            </Button>
+          </>
+        ) : (
+          <form
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const error = validateState();
+
+              setErrorCode(error);
+              if (!error) {
+                onSubmit(state);
+              }
+            }}
           >
-            {Translate({
-              context: "header",
-              label: "login",
-            })}
-          </Button>
-        </>
-      ) : (
-        <form
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const error = validateState();
-
-            setErrorCode(error);
-            if (!error) {
-              onSubmit(state);
-            }
-          }}
-        >
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-to-description",
-            })}
-          </Text>
-          <Title type="title4" tag="h4">
-            {Translate({
-              context: "order",
-              label: "order-to-loaner-info",
-            })}
-          </Title>
-          <div className={styles.fields}>
-            {requiredParameters?.map(({ userParameterType }) => {
-              const labelTranslation = {
-                context: "form",
-                label: `${userParameterType}-label`,
-              };
-              const placeholderTranslation = {
-                context: "form",
-                label: `${userParameterType}-placeholder`,
-              };
-              const explainTranslation = {
-                context: "form",
-                label: `${userParameterType}-explain`,
-              };
-              return (
-                <React.Fragment>
-                  <Text type="text1" tag="label">
-                    {hasTranslation(labelTranslation)
-                      ? Translate(labelTranslation)
-                      : userParameterType}
-                  </Text>
-                  {userParameterType === "userMail" ? (
-                    <Email
-                      onChange={(value, { message }) => {
-                        setState({ ...state, [userParameterType]: value });
-                        setEmailMessage(message);
-                      }}
-                      placeholder={
-                        hasTranslation(placeholderTranslation)
-                          ? Translate(placeholderTranslation)
-                          : ""
-                      }
-                    />
-                  ) : (
-                    <Input
-                      type={
-                        (userParameterType === "userId" ||
-                          userParameterType === "pincode" ||
-                          userParameterType === "cpr") &&
-                        "password"
-                      }
-                      onChange={(value) =>
-                        setState({ ...state, [userParameterType]: value })
-                      }
-                      placeholder={
-                        hasTranslation(placeholderTranslation)
-                          ? Translate(placeholderTranslation)
-                          : ""
-                      }
-                    />
-                  )}
-                  {hasTranslation(explainTranslation) && (
-                    <Text type="text3" className={styles.explain}>
-                      {Translate(explainTranslation)}
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-to-description",
+              })}
+            </Text>
+            <Title type="title4" tag="h4">
+              {Translate({
+                context: "order",
+                label: "order-to-loaner-info",
+              })}
+            </Title>
+            <div className={styles.fields}>
+              {requiredParameters?.map(({ userParameterType }) => {
+                const labelTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-label`,
+                };
+                const placeholderTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-placeholder`,
+                };
+                const explainTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-explain`,
+                };
+                return (
+                  <React.Fragment>
+                    <Text type="text1" tag="label">
+                      {hasTranslation(labelTranslation)
+                        ? Translate(labelTranslation)
+                        : userParameterType}
                     </Text>
-                  )}
-                </React.Fragment>
-              );
-            })}
-            {errorCode && (
-              <Text type="text3" className={styles.error}>
-                {Translate({ context: "form", label: errorCode })}
-              </Text>
-            )}
-          </div>
+                    {userParameterType === "userMail" ? (
+                      <Email
+                        onChange={(value, { message }) => {
+                          setState({ ...state, [userParameterType]: value });
+                          setEmailMessage(message);
+                        }}
+                        placeholder={
+                          hasTranslation(placeholderTranslation)
+                            ? Translate(placeholderTranslation)
+                            : ""
+                        }
+                      />
+                    ) : (
+                      <Input
+                        type={
+                          (userParameterType === "userId" ||
+                            userParameterType === "pincode" ||
+                            userParameterType === "cpr") &&
+                          "password"
+                        }
+                        onChange={(value) =>
+                          setState({ ...state, [userParameterType]: value })
+                        }
+                        placeholder={
+                          hasTranslation(placeholderTranslation)
+                            ? Translate(placeholderTranslation)
+                            : ""
+                        }
+                      />
+                    )}
+                    {hasTranslation(explainTranslation) && (
+                      <Text type="text3" className={styles.explain}>
+                        {Translate(explainTranslation)}
+                      </Text>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+              {errorCode && (
+                <Text type="text3" className={styles.error}>
+                  {Translate({ context: "form", label: errorCode })}
+                </Text>
+              )}
+            </div>
 
-          <Button onClick={() => {}}>
-            {Translate({
-              context: "order",
-              label: "approve-loaner-info",
-            })}
-          </Button>
-        </form>
-      )}
-    </div>
+            <Button onClick={() => {}}>
+              {Translate({
+                context: "order",
+                label: "approve-loaner-info",
+              })}
+            </Button>
+          </form>
+        )}
+      </div>
+    </>
   );
 }
 LoanerForm.propTypes = {
@@ -221,8 +232,10 @@ LoanerForm.propTypes = {
  *
  * @returns {component}
  */
-export default function Wrap({ onSubmit, callbackUrl }) {
-  const branchId = useRouter()?.query?.branch;
+export default function Wrap(props) {
+  const { selected = null, onSubmit, callbackUrl } = props;
+
+  const branchId = selected?.branchId || useRouter()?.query?.branch;
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
@@ -241,6 +254,8 @@ export default function Wrap({ onSubmit, callbackUrl }) {
 
   // When loggedOut is true, we redirect to the signIn page
   const [loggedOut, setLoggedOut] = useState(false);
+
+  console.log("callbackUrl", callbackUrl);
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {
@@ -272,6 +287,7 @@ export default function Wrap({ onSubmit, callbackUrl }) {
         <Text>User already logged in at {branch.agencyName}</Text>
       ) : (
         <LoanerForm
+          {...props}
           branch={branch}
           initial={loanerInfo}
           onLogin={() => {

@@ -129,9 +129,11 @@ function Select({
       >
         {children}
       </div>
-      <Arrow
-        className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
-      />
+      {!disabled && (
+        <Arrow
+          className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+        />
+      )}
       <div id="radio-label" className={styles.label}>
         {label}
       </div>

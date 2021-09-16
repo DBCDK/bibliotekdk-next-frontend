@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
-import { useEffect, useState, useMemo } from "react";
+import { useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
-import Link from "@/components/base/link";
 import List from "@/components/base/forms/list";
 import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
@@ -12,8 +11,6 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
 import { Back } from "@/components/modal";
-
-import Arrow from "@/components/base/animation/arrow";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
@@ -64,19 +61,24 @@ export function Pickup({
         handleClose={onClose}
         className={styles.back}
       />
-      <div className={styles.search}>
-        <Title type="title4" className={styles.title}>
-          {Translate({ ...context, label: "pickup-search-title" })}
-        </Title>
-        <Text type="text3" className={styles.description}>
-          {Translate({ ...context, label: "pickup-search-description" })}
-        </Text>
-        <Search
-          className={styles.input}
-          onChange={debounce((value) => onChange(value), 100)}
-        />
-      </div>
       <div className={`${styles.scrollArea} ${shadowClass}`}>
+        <div className={styles.search}>
+          <Title type="title4" className={styles.title}>
+            {Translate({ ...context, label: "pickup-search-title" })}
+          </Title>
+          <Text type="text3" className={styles.description}>
+            {Translate({ ...context, label: "pickup-search-description" })}
+          </Text>
+          <Search
+            placeholder={Translate({
+              ...context,
+              label: "pickup-input-placeholder",
+            })}
+            className={styles.input}
+            onChange={debounce((value) => onChange(value), 100)}
+          />
+        </div>
+
         {data?.result.length > 0 && (
           <List.Group
             enabled={!isLoading && isVisible}
@@ -103,6 +105,7 @@ export function Pickup({
                   selected={selected?.branchId === branch.branchId}
                   onSelect={() => onSelect(branch)}
                   label={branch.name}
+                  disabled={true}
                   className={[
                     styles.radiobutton,
                     alternativeMatchClass,
@@ -165,10 +168,12 @@ Pickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const [query, setQuery] = useState(null);
+  const { agency } = props;
+
+  const [query, setQuery] = useState("");
 
   const { data, isLoading, error } = useData(
-    libraryFragments.search({ q: query })
+    libraryFragments.search({ q: query || " " })
   );
 
   if (error) {
@@ -195,7 +200,7 @@ export default function Wrap(props) {
     <Pickup
       {...props}
       isLoading={isLoading}
-      data={isLoading ? dummyData : data?.branches}
+      data={isLoading ? dummyData : query === "" ? agency : data?.branches}
       onChange={(q) => setQuery(q)}
     />
   );
