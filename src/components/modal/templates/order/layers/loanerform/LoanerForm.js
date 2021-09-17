@@ -233,9 +233,10 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { selected = null, onSubmit, callbackUrl } = props;
+  const { onSubmit, callbackUrl } = props;
 
-  const branchId = selected?.branchId || useRouter()?.query?.branch;
+  const branchId = useRouter()?.query?.branch;
+
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
@@ -254,8 +255,6 @@ export default function Wrap(props) {
 
   // When loggedOut is true, we redirect to the signIn page
   const [loggedOut, setLoggedOut] = useState(false);
-
-  console.log("callbackUrl", callbackUrl);
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {

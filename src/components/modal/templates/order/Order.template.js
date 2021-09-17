@@ -1,6 +1,7 @@
 import Router from "next/router";
 import filter from "lodash/filter";
 import getConfig from "next/config";
+import find from "lodash/find";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -12,6 +13,8 @@ import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
+
+import useUser from "@/components/hooks/useUser";
 
 import Translate from "@/components/base/translate";
 
@@ -45,24 +48,6 @@ function handleRouterPush(query) {
 }
 
 /**
- *  Function to handle the active layer in modal
- *
- * @param {string} layer
- */
-function handleLayer(layer) {
-  if (layer !== Router.query.modal) {
-    Router.push(
-      {
-        pathname: Router.pathname,
-        query: { ...Router.query, modal: `order-${layer}` },
-      },
-      null,
-      { shallow: true, scroll: false }
-    );
-  }
-}
-
-/**
  *  Order component function
  *
  * @param {*} param0
@@ -80,7 +65,7 @@ export function Order({
   onSubmit,
   onLayerChange,
   onLayerClose,
-  isLoading,
+  isLoading = false,
 }) {
   // layer state
   const [translated, setTranslated] = useState(false);
@@ -93,9 +78,27 @@ export function Order({
   let [pickupBranch, setPickupBranch] = useState(null);
 
   useEffect(() => {
-    if (!pickupBranch) {
+    const userBranches = user?.agency?.result;
+
+    if (!pickupBranch && userBranches?.length > 0) {
       // If user is logged in and no pickupBranch has been set
-      setPickupBranch(user?.agency?.result?.[0] || null);
+
+      // Default branch select (first in row)
+      let defaultBranch = userBranches[0];
+
+      const queryBranchId = Router.query.branch;
+
+      if (queryBranchId) {
+        const match = find(userBranches, {
+          branchId: queryBranchId,
+        });
+
+        if (match) {
+          defaultBranch = match;
+        }
+      }
+
+      setPickupBranch(defaultBranch);
     }
   }, [user?.agency]);
 
@@ -212,8 +215,6 @@ export function Order({
   // Order padding bottom, according to if the actionlayer is visible
   const actionLayerVisible = !translated ? styles.padding : "";
 
-  console.log("layer", activeLayer);
-
   return (
     <div className={`${styles.order} ${actionLayerVisible}`}>
       <div className={styles.container}>
@@ -226,7 +227,7 @@ export function Order({
                 context: "modal",
                 label: `title-order`,
               })}
-              isVisible={isVisible}
+              isVisible={!translated && isVisible}
               handleClose={onClose}
             />
             <Info
@@ -257,29 +258,33 @@ export function Order({
             <Pickup
               isVisible={translated && activeLayer === "pickup"}
               className={`${styles.page} ${styles[`page-pickup`]}`}
+              agency={agency}
               onSelect={(branch) => {
-                console.log("branch", branch);
-
-                handleRouterPush({
-                  modal: `order-loanerform`,
-                  branch: branch.branchId,
-                });
-
-                console.log("#### Router", Router);
-
-                // setPickupBranch(branch);
-                // Push branchId to url
-                // if (pickupBranch?.agencyId !== branch.agencyId) {
-                //   // go to next form (if not logged in)
-
-                //   onLayerChange("loanerform");
-                // } else {
-                //   setPickupBranch(branch);
-                //   onLayerChange("info");
-                // }
-
-                // Give it some time to animate before closing
-                // setTimeout(() => onLayerClose(), 300);
+                // should send to loanerform
+                let loanerform = false;
+                // if branches has same agency
+                if (branch.agencyId === pickupBranch?.agencyId) {
+                  // and the new selected branch has borrowercheck
+                  if (branch.borrowerCheck) {
+                    // Set new branch without new log-in
+                    setPickupBranch(branch);
+                    handleRouterPush({
+                      modal: `order`,
+                      branch: branch.branchId,
+                    });
+                  } else {
+                    loanerform = true;
+                  }
+                } else {
+                  loanerform = true;
+                }
+                // send to next layer
+                if (loanerform) {
+                  handleRouterPush({
+                    modal: `order-loanerform`,
+                    branch: branch.branchId,
+                  });
+                }
               }}
               onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
               onClose={onLayerClose}
@@ -288,8 +293,8 @@ export function Order({
           <div className={styles.login}>
             <LoanerForm
               callbackUrl={`${APP_URL}${Router?.asPath?.replace(
-                "order-loanerform",
-                "order-info"
+                "-loanerform",
+                ""
               )}`}
               isVisible={translated && activeLayer === "loanerform"}
               selected={pickupBranch}
@@ -369,13 +374,18 @@ export default function Wrap(props) {
   const covers = useData(workFragments.covers({ workId }));
 
   // Fetch user data
-  const { data: userData, error: userDataError } = useData(
-    userFragments.basic()
-  );
+  const { isAuthenticated } = useUser();
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userDataError,
+  } = useData(isAuthenticated && userFragments.basic());
 
-  const { data: orderPolicy, error: orderPolicyError } = useData(
-    pid && userFragments.orderPolicy({ pid })
-  );
+  const {
+    data: orderPolicy,
+    isLoading: policyIsLoading,
+    error: orderPolicyError,
+  } = useData(pid && userFragments.orderPolicy({ pid }));
 
   const orderMutation = useMutate();
 
@@ -389,7 +399,7 @@ export default function Wrap(props) {
     }
   }, [order]);
 
-  if (isLoading) {
+  if (isLoading || userIsLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -400,14 +410,20 @@ export default function Wrap(props) {
   const mergedWork = merge({}, covers.data, data);
   const mergedUser = merge({}, userData, orderPolicy);
 
+  console.log("mergedUser", mergedUser);
+
   return (
     <Order
       work={mergedWork?.work}
-      user={mergedUser?.user || {}}
+      user={{ ...mergedUser?.user } || {}}
       pid={pid}
       order={orderMutation}
       query={Router.query}
-      onLayerChange={(layer) => handleLayer(layer)}
+      onLayerChange={(layer) =>
+        handleRouterPush({
+          modal: `order-${layer}`,
+        })
+      }
       onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch, email) => {
         orderMutation.post(

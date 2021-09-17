@@ -36,12 +36,17 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
         branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset) {
             hitcount
             result {
+               borrowerCheck
                 agencyName
                 branchId
                 agencyId
                 name
                 city
                 postalAddress
+                userParameters {
+                  userParameterType
+                  parameterRequired
+                }
                 pickupAllowed
                 highlights {
                     key

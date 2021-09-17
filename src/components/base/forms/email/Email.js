@@ -67,6 +67,8 @@ function Email(props) {
   // email valid / invalid status class
   const statusClass = valid ? validClass : invalidClass;
 
+  console.log("props", props);
+
   return (
     <Input
       {...props}

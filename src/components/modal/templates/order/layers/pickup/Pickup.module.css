@@ -58,6 +58,12 @@
   /* color: var(--gray); */
 }
 
+.disabled,
+.disabled mark,
+.disabled .alternativeMatch {
+  color: var(--gray);
+}
+
 .squeeze {
   padding-top: var(--pt1);
   padding-bottom: var(--pt1);

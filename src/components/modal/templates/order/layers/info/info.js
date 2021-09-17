@@ -24,7 +24,7 @@ export default function Info({
 }) {
   const context = { context: "order" };
 
-  const isLoadingBranches = !user?.agency && user.isAuthenticated;
+  const isLoadingBranches = isLoading || !user?.agency;
 
   // Mateiral props
   const { title, creators, materialType, cover } = material;
@@ -106,17 +106,17 @@ export default function Info({
           </Title>
         </div>
         <div className={styles.library}>
-          {pickupBranch && (
+          {(isLoadingBranches || pickupBranch) && (
             <Text type="text1" skeleton={isLoadingBranches} lines={1}>
               {pickupBranch?.name}
             </Text>
           )}
           <div
             className={`${styles.link} ${animations["on-hover"]} `}
-            onClick={() => onLayerSelect("pickup")}
+            onClick={() => !isLoadingBranches && onLayerSelect("pickup")}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
-                onLayerSelect("pickup");
+                !isLoadingBranches && onLayerSelect("pickup");
               }
             }}
           >
@@ -140,7 +140,7 @@ export default function Info({
           </div>
         </div>
 
-        {pickupBranch && (
+        {(isLoadingBranches || pickupBranch) && (
           <div className={styles.address}>
             <Text type="text3" skeleton={isLoadingBranches} lines={2}>
               {pickupBranch?.postalAddress}
@@ -161,13 +161,13 @@ export default function Info({
             </div>
           )}
       </div>
-      {pickupBranch && (
+      {(isLoadingBranches || pickupBranch) && (
         <div className={styles.user}>
           <Title type="title5">
             {Translate({ ...context, label: "ordered-by" })}
           </Title>
           <div className={styles.name}>
-            <Text type="text1" skeleton={isLoading} lines={1}>
+            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
               {name}
             </Text>
           </div>
@@ -178,9 +178,11 @@ export default function Info({
               </Text>
             </label>
 
-            {userMail && lockedMessage && (
+            {(isLoadingBranches || (userMail && lockedMessage)) && (
               <div className={`${styles.emailMessage}`}>
-                <Text type="text3">{Translate(lockedMessage)}</Text>
+                <Text type="text3" skeleton={isLoadingBranches} lines={1}>
+                  {Translate(lockedMessage)}
+                </Text>
               </div>
             )}
             <Email
@@ -197,7 +199,7 @@ export default function Info({
               onBlur={(value, valid) => onMailChange(value, valid)}
               onMount={(value, valid) => onMailChange(value, valid)}
               readOnly={!!userMail}
-              skeleton={isLoading}
+              skeleton={isLoadingBranches}
             />
 
             {message && (

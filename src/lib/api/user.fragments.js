@@ -64,10 +64,15 @@ export function orderPolicy({ pid }) {
             postalCode
             branchId
             openingHours
+            borrowerCheck
             orderPolicy(pid: $pid) {
               orderPossible
               orderPossibleReason
               lookUpUrl
+            }
+            userParameters {
+              userParameterType
+              parameterRequired
             }
             pickupAllowed
           }

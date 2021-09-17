@@ -97,7 +97,10 @@ export function Pickup({
                 ? branch.highlights?.[0]?.value
                 : null;
 
+              const disabled = !branch.pickupAllowed;
+
               const alternativeMatchClass = matchOthers ? styles.squeeze : "";
+              const disabledClass = disabled ? styles.disabled : "";
 
               return (
                 <List.Select
@@ -105,10 +108,16 @@ export function Pickup({
                   selected={selected?.branchId === branch.branchId}
                   onSelect={() => onSelect(branch)}
                   label={branch.name}
-                  disabled={true}
+                  disabled={disabled}
+                  // onDisabled={
+                  //   <Text lines="1" skeleton={isLoading} type="text3">
+                  //     {Translate({ ...context, label: "no-pickup" })}
+                  //   </Text>
+                  // }
                   className={[
                     styles.radiobutton,
                     alternativeMatchClass,
+                    disabledClass,
                     animations["on-hover"],
                   ].join(" ")}
                 >
@@ -196,11 +205,13 @@ export default function Wrap(props) {
     ],
   };
 
+  const branches = query === "" ? agency : data?.branches;
+
   return (
     <Pickup
       {...props}
       isLoading={isLoading}
-      data={isLoading ? dummyData : query === "" ? agency : data?.branches}
+      data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}
     />
   );

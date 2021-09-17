@@ -941,6 +941,10 @@
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"
       },
+      "no-pickup": {
+        "da": "Afhentning ikke muligt",
+        "en": "Pickup not allowed"
+      },
       "ordered-by": {
         "da": "Bestilles af",
         "en": "Ordered by"

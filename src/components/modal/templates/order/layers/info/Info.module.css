@@ -77,12 +77,8 @@
   padding: var(--pt2) 0 0 0;
 }
 
-.email input {
-  margin: var(--pt1) 0 0 0;
-}
-
 .emailMessage {
-  padding: var(--pt1) 0 0 0;
+  padding: var(--pt1) 0;
 }
 
 .invalid-pickup {

@@ -93,6 +93,7 @@ Radio.propTypes = {
 function Select({
   children,
   disabled,
+  onDisabled,
   label,
   onSelect,
   selected,
@@ -129,10 +130,12 @@ function Select({
       >
         {children}
       </div>
-      {!disabled && (
+      {!disabled ? (
         <Arrow
           className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
         />
+      ) : (
+        onDisabled
       )}
       <div id="radio-label" className={styles.label}>
         {label}

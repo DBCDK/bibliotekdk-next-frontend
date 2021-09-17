@@ -74,7 +74,7 @@ export default function Wrap({ workId }) {
     workFragments.detailsAllManifestations({ workId })
   );
 
-  if (error) {
+  if (error || !data) {
     return null;
   }
   if (isLoading) {

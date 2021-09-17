@@ -358,7 +358,15 @@ export default function Wrap({ router, children = false }) {
   // On modal close
   const onClose = function onClose() {
     if (router) {
-      router.back();
+      // router.back();
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { ...router.query, modal: null },
+        },
+        null,
+        { shallow: true, scroll: false }
+      );
     }
   };
 
