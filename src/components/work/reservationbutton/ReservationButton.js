@@ -5,6 +5,23 @@ import includes from "lodash/includes";
 
 // Translate Context
 const context = { context: "overview" };
+
+/**
+ * infomedia url is specific for this gui - set an url on the online access object
+ * @param onlineAccess
+ * @return {*}
+ */
+function addToInfomedia(onlineAccess) {
+  const addi = onlineAccess?.map((access) => {
+    if (access.infomediaId) {
+      access.url = `/infomedia/fisk/work-of:${access.pid}`;
+    }
+    return access;
+  });
+
+  return addi;
+}
+
 /**
  * Seperat function for orderbutton
  * Check what kind of material (eg. online, not avialable etc)
@@ -55,11 +72,12 @@ export function OrderButton({
 
   // online access ?
   if (selectedMaterial?.onlineAccess?.length > 0) {
+    const enrichedOnlineAccess = addToInfomedia(selectedMaterial?.onlineAccess);
     return (
       <Button
         className={styles.externalLink}
         skeleton={buttonSkeleton}
-        onClick={() => onlineAccess(selectedMaterial?.onlineAccess[0]?.url)}
+        onClick={() => onlineAccess(enrichedOnlineAccess[0].url)}
       >
         {[
           Translate({
@@ -72,12 +90,7 @@ export function OrderButton({
     );
   }
 
-  // can material be ordered ?
-  const supportedMaterialTypes = ["Bog"];
-  if (
-    !checkRequestButtonIsTrue({ manifestations }) ||
-    !includes(supportedMaterialTypes, materialType)
-  ) {
+  if (!checkRequestButtonIsTrue({ manifestations })) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }

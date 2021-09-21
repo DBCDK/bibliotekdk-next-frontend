@@ -453,6 +453,10 @@
       }
     },
     "overview": {
+      "label_infomediaAccess": {
+        "da": "Læs artikel fra infomedia (kræver login)",
+        "en": "Read infomedia article (requires login)"
+      },
       "addToCart": {
         "da": "Læg i lånekurv",
         "en": "Put in loan basket"

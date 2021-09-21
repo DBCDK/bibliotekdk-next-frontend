@@ -95,6 +95,8 @@ export function Overview({
 
   const onlineAccessUrl = onlineAccess && onlineAccess[0]?.url;
 
+  const onlineAccessInfomedia = onlineAccess && onlineAccess[0]?.infomediaId;
+
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
     context: "workTypeDistinctForm",
@@ -219,7 +221,11 @@ export function Overview({
                 />
               </Col>
               <Col xs={12} className={styles.info}>
-                {onlineAccessUrl ? (
+                {onlineAccessInfomedia ? (
+                  <Text type="text3" skeleton={skeleton} lines={1}>
+                    {Translate({ ...context, label: "label_infomediaAccess" })}
+                  </Text>
+                ) : onlineAccessUrl ? (
                   <Text type="text3" skeleton={skeleton} lines={1}>
                     {[
                       Translate({ ...context, label: "onlineAccessAt" }),
