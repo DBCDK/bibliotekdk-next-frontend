@@ -218,19 +218,20 @@ export function Overview({
                   login={login}
                   openOrderModal={openOrderModal}
                   workTypeTranslated={workTypeTranslated}
+                  title={title}
                 />
               </Col>
               <Col xs={12} className={styles.info}>
-                {onlineAccessInfomedia ? (
-                  <Text type="text3" skeleton={skeleton} lines={1}>
-                    {Translate({ ...context, label: "label_infomediaAccess" })}
-                  </Text>
-                ) : onlineAccessUrl ? (
+                {onlineAccessUrl ? (
                   <Text type="text3" skeleton={skeleton} lines={1}>
                     {[
                       Translate({ ...context, label: "onlineAccessAt" }),
                       getBaseUrl(onlineAccessUrl),
                     ].join(" ")}
+                  </Text>
+                ) : onlineAccessInfomedia ? (
+                  <Text type="text3" skeleton={skeleton} lines={1}>
+                    {Translate({ ...context, label: "label_infomediaAccess" })}
                   </Text>
                 ) : (
                   <>

@@ -11,10 +11,10 @@ const context = { context: "overview" };
  * @param onlineAccess
  * @return {*}
  */
-function addToInfomedia(onlineAccess) {
+function addToInfomedia(onlineAccess, title) {
   const addi = onlineAccess?.map((access) => {
     if (access.infomediaId) {
-      access.url = `/infomedia/fisk/work-of:${access.pid}`;
+      access.url = `/infomedia/${title}/work-of:${access.pid}`;
     }
     return access;
   });
@@ -49,6 +49,7 @@ export function OrderButton({
   openOrderModal,
   user,
   workTypeTranslated,
+  title,
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
@@ -60,6 +61,7 @@ export function OrderButton({
   const manifestations = selectedMaterial.manifestations;
 
   selectedMaterial = selectedMaterial.manifestations?.[0];
+
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
@@ -72,7 +74,10 @@ export function OrderButton({
 
   // online access ?
   if (selectedMaterial?.onlineAccess?.length > 0) {
-    const enrichedOnlineAccess = addToInfomedia(selectedMaterial?.onlineAccess);
+    const enrichedOnlineAccess = addToInfomedia(
+      selectedMaterial?.onlineAccess,
+      title
+    );
     return (
       <Button
         className={styles.externalLink}
