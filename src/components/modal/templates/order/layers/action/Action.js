@@ -32,6 +32,8 @@ function Action({
   // order data
   const { data: orderData, isStory } = data.order;
 
+  console.log("orderData.....>", orderData);
+
   // branch data
   const branchName = data.pickupBranch?.name;
 
@@ -41,7 +43,7 @@ function Action({
   const failedClass = isFailed && !showProgress ? styles.failed : "";
 
   // Order ors id on order success
-  const orsId = orderData?.submitOrder?.orsId;
+  const orderId = orderData?.submitOrder?.orderId;
 
   // check if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -120,18 +122,18 @@ function Action({
             })}
           </Text>
 
-          {orsId && (
+          {orderId && (
             <Text type="text2" className={styles.orderNumber}>
               {Translate({
                 ...context,
                 label: "order-success-id",
-                vars: [orsId],
+                vars: [orderId],
               })}
             </Text>
           )}
 
           <Button
-            tabIndex={isVisible && orsId ? "0" : "-1"}
+            tabIndex={isVisible && orderId ? "0" : "-1"}
             className={styles.close}
             skeleton={isLoading}
             onClick={onClose}

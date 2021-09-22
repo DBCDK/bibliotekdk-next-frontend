@@ -24,13 +24,13 @@ export default function Info({
 }) {
   const context = { context: "order" };
 
-  const isLoadingBranches = isLoading || !user?.agency;
+  const isLoadingBranches = isLoading || (user.name && !user?.agency);
 
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
   // user props
-  const { name, mail: userMail, agency } = user;
+  const { userName, userMail, agency } = user;
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -152,7 +152,6 @@ export default function Info({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
-
         {pickupBranch &&
           (!pickupBranch?.pickupAllowed ||
             !pickupBranch?.orderPolicy?.orderPossible) && (
@@ -161,14 +160,14 @@ export default function Info({
             </div>
           )}
       </div>
-      {(isLoadingBranches || pickupBranch) && (
+      {(isLoadingBranches || userName) && (
         <div className={styles.user}>
           <Title type="title5">
             {Translate({ ...context, label: "ordered-by" })}
           </Title>
           <div className={styles.name}>
             <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-              {name}
+              {userName}
             </Text>
           </div>
           <div className={styles.email}>
@@ -192,13 +191,12 @@ export default function Info({
               })}
               invalidClass={customInvalidClass}
               required={true}
-              disabled={isLoading || !!userMail}
+              disabled={isLoading}
               tabIndex={isVisible ? "0" : "-1"}
               value={userMail || ""}
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
               onMount={(value, valid) => onMailChange(value, valid)}
-              readOnly={!!userMail}
               skeleton={isLoadingBranches}
             />
 

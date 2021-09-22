@@ -43,10 +43,6 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
                 name
                 city
                 postalAddress
-                userParameters {
-                  userParameterType
-                  parameterRequired
-                }
                 pickupAllowed
                 highlights {
                     key

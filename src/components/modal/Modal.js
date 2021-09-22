@@ -359,10 +359,14 @@ export default function Wrap({ router, children = false }) {
   const onClose = function onClose() {
     if (router) {
       // router.back();
+
+      // Remove query modal param
+      delete router.query.modal;
+
       router.push(
         {
           pathname: router.pathname,
-          query: { ...router.query, modal: null },
+          query: router.query,
         },
         null,
         { shallow: true, scroll: false }

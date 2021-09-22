@@ -7,7 +7,7 @@ import fetch from "isomorphic-unfetch";
 import storybookConfig from "@/config";
 import getConfig from "next/config";
 import useSWR from "swr";
-import useUser from "@/components/hooks/useUser";
+import { useAccessToken } from "@/components/hooks/useUser";
 
 // TODO handle config better
 const nextJsConfig = getConfig();
@@ -76,8 +76,8 @@ export async function fetcher(queryStr) {
  */
 export function useMutate() {
   // The session may contain access token
-  const user = useUser();
-  const accessToken = user?.accessToken;
+  const accessToken = useAccessToken();
+
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -118,8 +118,7 @@ export function useMutate() {
  */
 export function useData(query) {
   // The session may contain access token
-  const user = useUser();
-  const accessToken = user?.accessToken;
+  const accessToken = useAccessToken();
 
   // The key for this query
   const key = query && generateKey({ ...query, accessToken } || "");

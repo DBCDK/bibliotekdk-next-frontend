@@ -2,14 +2,17 @@ import { useSession } from "next-auth/client";
 import useSWR, { mutate } from "swr";
 import { createContext, useContext, useMemo } from "react";
 
+import { useData } from "@/lib/api/api";
+import * as userFragments from "@/lib/api/user.fragments";
+
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
 /**
  * Mock used in storybook
  */
-function useUserMock() {
-  return { isAuthenticated: false, accessToken: "dummy-token" };
+function useAccessTokenMock() {
+  return "dummy-token";
 }
 
 // in memory object for storing loaner info for current user
@@ -21,15 +24,40 @@ let anonSession;
 /**
  * Hook for getting and storing loaner info
  */
-export function useLoanerInfo() {
+export default function useLoanerInfo() {
   // Fetch loaner info
   // Note that this is not fetching from API, but local in-memory object
   const { data } = useSWR(loanerInfoKey, () => loanerInfo, {
     initialData: loanerInfo,
   });
 
+  const [session] = useSession();
+
+  const isAuthenticated = !!session?.user?.uniqueId;
+
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userDataError,
+  } = useData(isAuthenticated && userFragments.basic());
+
+  let loggedInUser = {};
+  if (userData) {
+    const user = userData.user;
+    if (user.name) {
+      loggedInUser.userName = user.name;
+    }
+    if (user.mail) {
+      loggedInUser.userMail = user.mail;
+    }
+  }
+
   return {
-    loanerInfo: data,
+    authUser: userData,
+    isLoading: userIsLoading,
+    error: userDataError,
+    isAuthenticated,
+    loanerInfo: { ...data, ...loggedInUser },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfo = { ...loanerInfo, ...obj };
@@ -60,4 +88,24 @@ function useUser() {
   };
 }
 
-export default process.env.STORYBOOK_ACTIVE ? useUserMock : useUser;
+/**
+ * Hook for getting authenticated user
+ */
+function useAccessTokenImpl() {
+  const [session] = useSession();
+  const anonSessionContext = useContext(AnonymousSessionContext);
+
+  // anonSessionContext becomes undefined when nextjs changes page without calling server
+  // we store the latest anon session we got from the server
+  if (anonSessionContext) {
+    anonSession = anonSessionContext;
+  }
+
+  return session?.accessToken || anonSession?.accessToken;
+}
+
+const useAccessToken = process.env.STORYBOOK_ACTIVE
+  ? useAccessTokenMock
+  : useAccessTokenImpl;
+
+export { useAccessToken };

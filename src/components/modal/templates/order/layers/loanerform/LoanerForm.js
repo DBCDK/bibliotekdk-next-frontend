@@ -15,7 +15,10 @@ import { Back } from "@/components/modal";
 
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
-import { branchUserParameters } from "@/lib/api/branches.fragments";
+import {
+  branchUserParameters,
+  branchOrderPolicy,
+} from "@/lib/api/branches.fragments";
 import useUser, { useLoanerInfo } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
 
@@ -60,6 +63,11 @@ export function LoanerForm({
       }
     }
   }
+
+  useEffect(() => {
+    // Update initialstate if changed asyncronously
+    setState(initial);
+  }, [initial]);
 
   if (skeleton) {
     return (
@@ -135,7 +143,7 @@ export function LoanerForm({
               })}
             </Title>
             <div className={styles.fields}>
-              {requiredParameters?.map(({ userParameterType }) => {
+              {requiredParameters?.map(({ userParameterType, description }) => {
                 const labelTranslation = {
                   context: "form",
                   label: `${userParameterType}-label`,
@@ -148,15 +156,18 @@ export function LoanerForm({
                   context: "form",
                   label: `${userParameterType}-explain`,
                 };
+
                 return (
                   <React.Fragment>
                     <Text type="text1" tag="label">
-                      {hasTranslation(labelTranslation)
-                        ? Translate(labelTranslation)
-                        : userParameterType}
+                      {description ||
+                        (hasTranslation(labelTranslation)
+                          ? Translate(labelTranslation)
+                          : userParameterType)}
                     </Text>
                     {userParameterType === "userMail" ? (
                       <Email
+                        value={state.userMail}
                         onChange={(value, { message }) => {
                           setState({ ...state, [userParameterType]: value });
                           setEmailMessage(message);
@@ -169,9 +180,9 @@ export function LoanerForm({
                       />
                     ) : (
                       <Input
+                        value={state[userParameterType]}
                         type={
                           (userParameterType === "userId" ||
-                            userParameterType === "pincode" ||
                             userParameterType === "cpr") &&
                           "password"
                         }
@@ -179,9 +190,10 @@ export function LoanerForm({
                           setState({ ...state, [userParameterType]: value })
                         }
                         placeholder={
-                          hasTranslation(placeholderTranslation)
+                          description ||
+                          (hasTranslation(placeholderTranslation)
                             ? Translate(placeholderTranslation)
-                            : ""
+                            : "")
                         }
                       />
                     )}
@@ -235,16 +247,31 @@ LoanerForm.propTypes = {
 export default function Wrap(props) {
   const { onSubmit, callbackUrl } = props;
 
-  const branchId = useRouter()?.query?.branch;
+  const query = useRouter()?.query;
+
+  const branchId = query?.branch;
+  const pid = query?.pid;
+
+  console.log("pid", pid);
 
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
+
+  const { data: policyData, isLoading: policyIsLoading } = useData(
+    pid && branchOrderPolicy({ branchId, pid })
+  );
+
+  console.log("policyData", policyData);
+
   const { isAuthenticated, accessToken } = useUser();
+
   const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
+
   const { data: userData, isLoading: userIsLoading } = useData(
     isAuthenticated && branchesForUser()
   );
+
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
   const branch = data?.branches?.result?.[0];
   const skeleton = branchId && (userIsLoading || branchIsLoading);
@@ -299,7 +326,7 @@ export default function Wrap(props) {
           onSubmit={(info) => {
             updateLoanerInfo(info);
             if (onSubmit) {
-              onSubmit(info);
+              onSubmit(branch);
             }
           }}
           submitting={beginLogout || loggedOut}

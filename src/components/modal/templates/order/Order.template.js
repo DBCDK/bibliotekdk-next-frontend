@@ -14,7 +14,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
 
-import useUser from "@/components/hooks/useUser";
+import { useLoanerInfo } from "@/components/hooks/useUser";
 
 import Translate from "@/components/base/translate";
 
@@ -65,6 +65,7 @@ export function Order({
   onSubmit,
   onLayerChange,
   onLayerClose,
+  updateLoanerMail,
   isLoading = false,
 }) {
   // layer state
@@ -104,6 +105,8 @@ export function Order({
 
   // Email state
   const [mail, setMail] = useState(null);
+
+  console.log("updateLoanerMail", updateLoanerMail);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasTry, setHasTry] = useState(false);
@@ -197,12 +200,12 @@ export function Order({
 
   const materialsSameType = filter(
     manifestations,
-    (manifestation) => manifestation.materialType === material.materialType
+    (m) => m?.materialType === material.materialType && m?.admin?.requestButton
   );
 
   // status
   const isOrdering = orderIsLoading;
-  const isOrdered = orderData?.submitOrder?.status === "ok";
+  const isOrdered = orderData?.submitOrder?.orderId;
   const isFailed = !!orderError;
 
   // class'
@@ -297,12 +300,13 @@ export function Order({
                 ""
               )}`}
               isVisible={translated && activeLayer === "loanerform"}
-              selected={pickupBranch}
               className={`${styles.page} ${styles[`page-loanerform`]}`}
               onClose={onLayerClose}
-              onPickupSelect={(branch) => {
+              onSubmit={(branch) => {
                 setPickupBranch(branch);
-                onLayerChange("info");
+                handleRouterPush({
+                  modal: `order`,
+                });
               }}
             />
           </div>
@@ -374,12 +378,17 @@ export default function Wrap(props) {
   const covers = useData(workFragments.covers({ workId }));
 
   // Fetch user data
-  const { isAuthenticated } = useUser();
-  const {
-    data: userData,
-    isLoading: userIsLoading,
-    error: userDataError,
-  } = useData(isAuthenticated && userFragments.basic());
+  // const { isAuthenticated } = useUser();
+
+  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
+
+  console.log("loanerInfo", loanerInfo);
+
+  // const {
+  //   data: userData,
+  //   isLoading: userIsLoading,
+  //   error: userDataError,
+  // } = useData(isAuthenticated && userFragments.basic());
 
   const {
     data: orderPolicy,
@@ -399,7 +408,7 @@ export default function Wrap(props) {
     }
   }, [order]);
 
-  if (isLoading || userIsLoading) {
+  if (isLoading || policyIsLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -408,14 +417,12 @@ export default function Wrap(props) {
   }
 
   const mergedWork = merge({}, covers.data, data);
-  const mergedUser = merge({}, userData, orderPolicy);
-
-  console.log("mergedUser", mergedUser);
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
   return (
     <Order
       work={mergedWork?.work}
-      user={{ ...mergedUser?.user } || {}}
+      user={mergedUser || {}}
       pid={pid}
       order={orderMutation}
       query={Router.query}
@@ -426,11 +433,12 @@ export default function Wrap(props) {
       }
       onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch, email) => {
+        updateLoanerInfo({ userMail: email });
         orderMutation.post(
           submitOrder({
             pids,
             branchId: pickupBranch.branchId,
-            email,
+            userParameters: loanerInfo,
           })
         );
       }}

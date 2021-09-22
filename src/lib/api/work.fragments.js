@@ -155,6 +155,9 @@ export function detailsAllManifestations({ workId }) {
           }
           workTypes
           manifestations {
+            admin{
+              requestButton
+            }
             inLanguage
             usedLanguage
             content
