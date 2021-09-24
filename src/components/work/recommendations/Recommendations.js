@@ -8,7 +8,7 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
-import { useData, fetcher } from "@/lib/api/api";
+import { useData, useFetcher } from "@/lib/api/api";
 import { recommendations } from "@/lib/api/work.fragments";
 
 import Section from "@/components/base/section";
@@ -49,6 +49,7 @@ function parse(data) {
  */
 export default function Recommendations({ workId }) {
   const { data, isLoading } = useData(recommendations({ workId }));
+  const fetcher = useFetcher();
 
   const parsed = parse(data);
 

@@ -137,11 +137,13 @@
 *
 */
 
-.modal.order-theme {
+.modal.order-theme,
+.modal.options-theme {
   background-color: var(--white);
 }
 
-.modal.order-theme > * {
+.modal.order-theme > *,
+.modal.options-theme > * {
   color: var(--mine-shaft);
 }
 
@@ -153,7 +155,14 @@
   stroke: var(--blue);
 }
 
-.modal.order-theme .closeIcon:focus-visible {
+.modal.order-theme .closeIcon:focus-visible,
+.modal.order-theme .close svg path,
+.modal.options-theme .close svg path {
+  stroke: var(--blue);
+}
+
+.modal.order-theme .close:focus-visible,
+.modal.options-theme .close:focus-visible {
   outline: solid 1px var(--mine-shaft);
 }
 

@@ -118,7 +118,7 @@ export function LoanerForm({
           })}
         </Title>
 
-        {!orderPossible && (
+        {orderPossible && (
           <>
             <Text type="text2">
               {Translate({
@@ -139,7 +139,7 @@ export function LoanerForm({
           </>
         )}
 
-        {orderPossible && branch.borrowerCheck && (
+        {!orderPossible && branch.borrowerCheck && (
           <>
             <Text type="text2">
               {Translate({
@@ -161,7 +161,7 @@ export function LoanerForm({
           </>
         )}
 
-        {orderPossible && !branch.borrowerCheck && (
+        {!orderPossible && !branch.borrowerCheck && (
           <form
             noValidate
             onSubmit={(e) => {

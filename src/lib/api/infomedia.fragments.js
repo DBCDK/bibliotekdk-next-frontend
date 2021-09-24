@@ -11,20 +11,11 @@
  *
  * @return {Object} a query object
  */
-export function infomediaArticle({ workId }) {
+export function infomediaArticle({ pid }) {
   return {
     // delay: 4000, // for debugging
-    query: `query ($workId: String!) {
-      work(id: $workId) {
-        workTypes
-        manifestations {
-          title
-          creators {
-            name
-          }
-          onlineAccess {
-            __typename
-            ...on InfomediaContent {
+    query: `query ($pid: String!) {
+      infomediaContent(pid: $pid) {
               id
               dateLine
               origin
@@ -35,17 +26,11 @@ export function infomediaArticle({ workId }) {
               subHeadLine
               hedLine
             }
-          }
-        }
-        subjects {
-          type
-          value
-        }
-      }
+       
       monitor(name: "bibdknext_work_infomedia")
     }
   `,
-    variables: { workId },
+    variables: { pid },
     slowThreshold: 3000,
   };
 }

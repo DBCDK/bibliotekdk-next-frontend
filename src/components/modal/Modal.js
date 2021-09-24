@@ -17,6 +17,7 @@ import Menu from "./templates/menu";
 import Basket from "./templates/basket";
 import Filter from "./templates/filter";
 import Order from "./templates/order";
+import Options from "./templates/options";
 
 import CloseSvg from "@/public/icons/close.svg";
 
@@ -39,7 +40,6 @@ function handleTab(event, container) {
   );
 
   if (sequence.length < 1) {
-    console.log("UNDEFINED");
     return;
   }
 
@@ -95,6 +95,8 @@ function getTemplate(template) {
       return Filter;
     case "order":
       return Order;
+    case "options":
+      return Options;
     default:
       return Menu;
   }

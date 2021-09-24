@@ -18,73 +18,34 @@ import Translate from "@/components/base/translate";
 import LoginPrompt from "@/components/login/prompt";
 import { branchesForUser } from "@/lib/api/user.fragments";
 
-export default function InfomediaArticle() {
-  const router = useRouter();
-  const { workId } = router.query;
-
-  const user = useUser();
-
-  const { data: publicData, isLoading: isLoadingPublic } = useData(
-    workId && infomediaArticlePublicInfo({ workId })
-  );
+export function InfomediaArticle(infomediaData) {
   const {
-    data: privateData,
-    error,
-    isLoading: isLoadingPrivate,
-  } = useData(user.isAuthenticated && workId && infomediaArticle({ workId }));
-  const { data: userData } = useData(user.isAuthenticated && branchesForUser());
+    publicInf: publicData,
+    privateInf: privateData,
+    agencies,
+    user,
+  } = { ...infomediaData };
 
-  const workPublic = publicData?.work;
-  const manifestationPublic = publicData?.work?.manifestations?.[0];
-  const article = privateData?.work?.manifestations?.[0].onlineAccess?.find(
-    (article) => article.origin === "infomedia"
-  );
-  const agencyName = userData?.user?.agency?.result?.[0]?.agencyName;
+  const router = useRouter();
+  const workPublic = publicData?.data?.work;
+  const manifestationPublic = publicData?.data?.work?.manifestations?.[0];
+  const hasArticle = privateData?.data?.infomediaContent?.length > 0;
+  const agencyName = agencies?.data?.user?.agency?.result?.[0]?.agencyName;
 
-  // Set the public fields to be shown when not logged in/no access
-  const parsed = {
-    article: {
-      creators: manifestationPublic?.creators,
-      title: manifestationPublic?.title,
-      entityCreated: manifestationPublic?.datePublished,
-      category: workPublic?.subjects
-        .filter(
-          (subject) => subject.type === "DBCO" || subject.type === "genre"
-        )
-        .map((subject) => subject.value),
-
-      deliveredBy: "Infomedia",
-    },
-  };
-
-  // If has access to article
-  if (article) {
-    parsed.article = {
-      ...parsed.article,
-      subHeadLine:
-        article?.subHeadLine !== article?.headLine && article?.subHeadLine,
-      fieldRubrik: article?.hedLine,
-      body: {
-        value: article?.text,
-      },
-      paper: article?.paper,
-      disclaimer: {
-        logo: "/infomedia_logo.svg",
-        text: article?.logo,
-      },
-    };
-  }
-
+  const articles = parseArticles(manifestationPublic, workPublic, privateData);
   return (
     <React.Fragment>
       <Header router={router} />
       {workPublic === null ? (
         <Error statusCode={404} />
-      ) : isLoadingPublic || isLoadingPrivate ? (
+      ) : publicData.isLoadingPublic || privateData.isLoadingPrivate ? (
         <ContentSkeleton />
       ) : (
         <>
-          <Content data={parsed} />
+          {articles.map((article) => (
+            <Content data={article} />
+          ))}
+
           {!user.isAuthenticated && (
             <LoginPrompt
               title={Translate({ context: "articles", label: "getAccess" })}
@@ -95,7 +56,7 @@ export default function InfomediaArticle() {
               signIn={signIn}
             />
           )}
-          {user.isAuthenticated && workPublic && !article && (
+          {user.isAuthenticated && workPublic && !hasArticle && (
             <LoginPrompt
               title={Translate({
                 context: "articles",
@@ -116,11 +77,97 @@ export default function InfomediaArticle() {
 }
 
 /**
+ * Parse given manifestation for articles - always set metadata for article.
+ * If one or more infomedia articles are given -> merge it into the metadata.
+ *
+ * @param manifestationPublic
+ * @param workPublic
+ * @param privateData
+ * @return {*[]}
+ *  array of parsed articles
+ */
+function parseArticles(manifestationPublic, workPublic, privateData) {
+  const article = privateData?.data?.infomediaContent;
+
+  const returnArticles = [];
+  let articleindex = 0;
+  do {
+    const parsed = {
+      article: {
+        creators: manifestationPublic?.creators,
+        title: manifestationPublic?.title,
+        entityCreated: manifestationPublic?.datePublished,
+        category: workPublic?.subjects
+          .filter(
+            (subject) => subject.type === "DBCO" || subject.type === "genre"
+          )
+          .map((subject) => subject.value),
+
+        deliveredBy: "Infomedia",
+      },
+    };
+
+    // If has access to article
+    if (article) {
+      let currentArticle = article[articleindex];
+      parsed.article = {
+        ...parsed.article,
+        subHeadLine:
+          currentArticle?.subHeadLine !== currentArticle?.headLine &&
+          currentArticle?.subHeadLine,
+        fieldRubrik: currentArticle?.hedLine,
+        body: {
+          value: currentArticle?.text,
+        },
+        paper: currentArticle?.paper,
+        disclaimer: {
+          logo: "/infomedia_logo.svg",
+          text: currentArticle?.logo,
+        },
+      };
+    }
+    articleindex++;
+    returnArticles.push(parsed);
+  } while (article && article?.length > articleindex);
+
+  return returnArticles;
+}
+
+function parseForPid(workId) {
+  const parts = workId.split(":");
+  return `${parts[1]}:${parts[2]}`;
+}
+
+export default function wrap() {
+  const router = useRouter();
+  const { workId } = router.query;
+  const pid = parseForPid(workId);
+  const user = useUser();
+
+  const infomediaPublic = useData(
+    workId && infomediaArticlePublicInfo({ workId })
+  );
+  const infomediaPrivate = useData(
+    user.isAuthenticated && workId && infomediaArticle({ pid })
+  );
+  const userAgencise = useData(user.isAuthenticated && branchesForUser());
+
+  const infomediaData = {
+    privateInf: infomediaPrivate,
+    publicInf: infomediaPublic,
+    agencies: userAgencise,
+    user,
+  };
+
+  return InfomediaArticle(infomediaData);
+}
+
+/**
  * We use getInitialProps to let Next.js
  * fetch the data server side
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-InfomediaArticle.getInitialProps = (ctx) => {
+wrap.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };

@@ -144,3 +144,22 @@ export function useData(query) {
     isSlow: data ? false : isSlow,
   };
 }
+
+/**
+ * A custom React hook for using the fetcher
+ *
+ * @param {Object} obj - A query object.
+ */
+export function useFetcher() {
+  // The session may contain access token
+  const accessToken = useAccessToken();
+
+  async function doFetch(query) {
+    // The key for this query
+    const key = query && generateKey({ ...query, accessToken } || "");
+    const res = await fetcher(key);
+    return res;
+  }
+
+  return doFetch;
+}

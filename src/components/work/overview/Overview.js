@@ -12,8 +12,8 @@ import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
 import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate, { hasTranslation } from "@/components/base/translate";
+import AlternativeOptions from "./alternatives";
 
-import styles from "./Overview.module.css";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Link from "@/components/base/link";
@@ -21,6 +21,9 @@ import Link from "@/components/base/link";
 import OrderButton from "@/components/work/reservationbutton/ReservationButton";
 
 import useUser from "@/components/hooks/useUser";
+
+import styles from "./Overview.module.css";
+
 // Translate Context
 const context = { context: "overview" };
 
@@ -88,8 +91,9 @@ export function Overview({
 
   const searchOnUrl = "/find?q=";
 
-  const onlineAccessUrl =
-    selectedMaterial?.manifestations?.[0].onlineAccess?.[0]?.url;
+  const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
+
+  const onlineAccessUrl = onlineAccess && onlineAccess[0]?.url;
 
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
@@ -232,6 +236,9 @@ export function Overview({
                     </Text>
                   </>
                 )}
+              </Col>
+              <Col xs={12} className={styles.info}>
+                <AlternativeOptions onlineAccess={onlineAccess} />
               </Col>
             </Row>
           </Col>
