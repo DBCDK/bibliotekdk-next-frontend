@@ -238,6 +238,10 @@
       "frontpage": {
         "da": "Forside",
         "en": "Front page"
+      },
+      "select-another-library": {
+        "da": "Vælg et andet bibliotek",
+        "en": "LABEL mangler oversættelse"
       }
     },
     "articles": {
@@ -984,6 +988,10 @@
       "order-to-loaner-info": {
         "da": "Udfyld lånerinfo",
         "en": "Fill in the loaner info"
+      },
+      "order-not-possible": {
+        "da": "Biblioteket modtager ikke bestillinger på dette materiale gennem bibliotek.dk",
+        "en": "LABEL: mangler oversættelse"
       },
       "info-email-message": {
         "da": "Din mail er hentet fra %s",

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
+import merge from "lodash/merge";
 
 import { signIn } from "next-auth/client";
 
@@ -19,7 +20,7 @@ import {
   branchUserParameters,
   branchOrderPolicy,
 } from "@/lib/api/branches.fragments";
-import useUser, { useLoanerInfo } from "@/components/hooks/useUser";
+import useUser, { useAccessToken } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
 
 const ERRORS = {
@@ -71,15 +72,35 @@ export function LoanerForm({
 
   if (skeleton) {
     return (
-      <div className={styles.loanerform}>
-        <Title type="title4" tag="h3" skeleton={true} />
-        <Text type="text2" skeleton={true} lines={2} />
-      </div>
+      <>
+        <Back
+          isVisible={isVisible}
+          handleClose={onClose}
+          className={styles.back}
+        />
+        <div className={styles.loanerform}>
+          <Title type="title4" tag="h3" skeleton={!branch?.name}>
+            {Translate({
+              context: "order",
+              label: "order-to",
+              vars: [branch?.name || "-"],
+            })}
+          </Title>
+          <Text type="text2" skeleton={true} lines={2} />
+          <Button className={styles.loginbutton} skeleton={true}>
+            loading...
+          </Button>
+        </div>
+      </>
     );
   }
+
   if (!branch) {
     return null;
   }
+
+  // Order possible for branch
+  const orderPossible = branch.orderPolicy?.orderPossible;
 
   return (
     <>
@@ -96,7 +117,29 @@ export function LoanerForm({
             vars: [branch.name],
           })}
         </Title>
-        {branch.borrowerCheck ? (
+
+        {!orderPossible && (
+          <>
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-not-possible",
+              })}
+            </Text>
+            <Button
+              onClick={onClose}
+              className={styles.loginbutton}
+              disabled={!!submitting}
+            >
+              {Translate({
+                context: "general",
+                label: "select-another-library",
+              })}
+            </Button>
+          </>
+        )}
+
+        {orderPossible && branch.borrowerCheck && (
           <>
             <Text type="text2">
               {Translate({
@@ -116,7 +159,9 @@ export function LoanerForm({
               })}
             </Button>
           </>
-        ) : (
+        )}
+
+        {orderPossible && !branch.borrowerCheck && (
           <form
             noValidate
             onSubmit={(e) => {
@@ -167,9 +212,12 @@ export function LoanerForm({
                     </Text>
                     {userParameterType === "userMail" ? (
                       <Email
-                        value={state.userMail}
+                        value={state.userMail || ""}
                         onChange={(value, { message }) => {
-                          setState({ ...state, [userParameterType]: value });
+                          setState({
+                            ...state,
+                            [userParameterType]: value,
+                          });
                           setEmailMessage(message);
                         }}
                         placeholder={
@@ -187,7 +235,10 @@ export function LoanerForm({
                           "password"
                         }
                         onChange={(value) =>
-                          setState({ ...state, [userParameterType]: value })
+                          setState({
+                            ...state,
+                            [userParameterType]: value,
+                          })
                         }
                         placeholder={
                           description ||
@@ -250,31 +301,34 @@ export default function Wrap(props) {
   const query = useRouter()?.query;
 
   const branchId = query?.branch;
-  const pid = query?.pid;
+  const pid = query?.order;
 
-  console.log("pid", pid);
-
+  // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
 
+  // PolicyCheck in own request (sometimes slow)
   const { data: policyData, isLoading: policyIsLoading } = useData(
     pid && branchOrderPolicy({ branchId, pid })
   );
 
-  console.log("policyData", policyData);
+  const mergedData = merge({}, data, policyData);
 
-  const { isAuthenticated, accessToken } = useUser();
+  const { isAuthenticated } = useUser();
+  const accessToken = useAccessToken();
 
-  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
+  const { loanerInfo, updateLoanerInfo } = useUser();
 
+  // User branches fetch
   const { data: userData, isLoading: userIsLoading } = useData(
     isAuthenticated && branchesForUser()
   );
 
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
-  const branch = data?.branches?.result?.[0];
-  const skeleton = branchId && (userIsLoading || branchIsLoading);
+  const branch = mergedData?.branches?.result?.[0];
+  const skeleton =
+    branchId && (userIsLoading || branchIsLoading || policyIsLoading);
 
   // When beginLogout is true, we mount the iframe
   // that logs out the user

@@ -8,6 +8,11 @@ import * as userFragments from "@/lib/api/user.fragments";
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
+// in memory object for storing loaner info for current user
+let loanerInfo = {};
+let loanerInfoMock = {};
+const loanerInfoKey = "loanerinfo";
+
 /**
  * Mock used in storybook
  */
@@ -15,16 +20,40 @@ function useAccessTokenMock() {
   return "dummy-token";
 }
 
-// in memory object for storing loaner info for current user
-let loanerInfo = {};
-const loanerInfoKey = "loanerinfo";
+/**
+ * Mock used in storybook
+ */
+function useUserMock() {
+  const useUserMockKey = "useUserMock";
+
+  const { data } = useSWR(useUserMockKey, () => loanerInfoMock, {
+    initialData: loanerInfoMock,
+  });
+
+  const loggedInUser = { name: "Some Name", mail: "some@mail.dk" };
+
+  return {
+    authUser: loggedInUser,
+    isLoading: false,
+    error: null,
+    isAuthenticated: true,
+    loanerInfo: { ...data, ...loggedInUser },
+    updateLoanerInfo: (obj) => {
+      // Update global loaner info object
+      loanerInfoMock = { ...loanerInfoMock, ...obj };
+
+      // Broadcast update
+      mutate(useUserMockKey);
+    },
+  };
+}
 
 //
 let anonSession;
 /**
  * Hook for getting and storing loaner info
  */
-export default function useLoanerInfo() {
+function useUserImpl() {
   // Fetch loaner info
   // Note that this is not fetching from API, but local in-memory object
   const { data } = useSWR(loanerInfoKey, () => loanerInfo, {
@@ -53,7 +82,7 @@ export default function useLoanerInfo() {
   }
 
   return {
-    authUser: userData,
+    authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
@@ -71,22 +100,22 @@ export default function useLoanerInfo() {
 /**
  * Hook for getting authenticated user
  */
-function useUser() {
-  const [session] = useSession();
-  const anonSessionContext = useContext(AnonymousSessionContext);
+// export function useUser() {
+//   const [session] = useSession();
+//   const anonSessionContext = useContext(AnonymousSessionContext);
 
-  // anonSessionContext becomes undefined when nextjs changes page without calling server
-  // we store the latest anon session we got from the server
-  if (anonSessionContext) {
-    anonSession = anonSessionContext;
-  }
-  const accessToken = session?.accessToken || anonSession?.accessToken;
+//   // anonSessionContext becomes undefined when nextjs changes page without calling server
+//   // we store the latest anon session we got from the server
+//   if (anonSessionContext) {
+//     anonSession = anonSessionContext;
+//   }
+//   const accessToken = session?.accessToken || anonSession?.accessToken;
 
-  return {
-    isAuthenticated: !!session?.user?.uniqueId,
-    accessToken,
-  };
-}
+//   return {
+//     isAuthenticated: !!session?.user?.uniqueId,
+//     accessToken,
+//   };
+// }
 
 /**
  * Hook for getting authenticated user
@@ -103,6 +132,10 @@ function useAccessTokenImpl() {
 
   return session?.accessToken || anonSession?.accessToken;
 }
+
+const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
+
+export default useUser;
 
 const useAccessToken = process.env.STORYBOOK_ACTIVE
   ? useAccessTokenMock

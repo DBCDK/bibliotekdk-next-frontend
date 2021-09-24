@@ -73,11 +73,7 @@ export function OrderButton({
   }
 
   // can material be ordered ?
-  const supportedMaterialTypes = ["Bog"];
-  if (
-    !checkRequestButtonIsTrue({ manifestations }) ||
-    !includes(supportedMaterialTypes, materialType)
-  ) {
+  if (!checkRequestButtonIsTrue({ manifestations })) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }

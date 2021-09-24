@@ -17,6 +17,7 @@ export function branchUserParameters({ branchId }) {
         result {
           borrowerCheck
           name
+          branchId
           agencyName
           agencyId
           city

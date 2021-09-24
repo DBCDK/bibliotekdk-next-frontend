@@ -14,7 +14,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
 
-import { useLoanerInfo } from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/useUser";
 
 import Translate from "@/components/base/translate";
 
@@ -58,6 +58,7 @@ export function Order({
   pid,
   work,
   user,
+  authUser,
   order,
   query,
   isVisible,
@@ -65,7 +66,6 @@ export function Order({
   onSubmit,
   onLayerChange,
   onLayerClose,
-  updateLoanerMail,
   isLoading = false,
 }) {
   // layer state
@@ -105,8 +105,6 @@ export function Order({
 
   // Email state
   const [mail, setMail] = useState(null);
-
-  console.log("updateLoanerMail", updateLoanerMail);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasTry, setHasTry] = useState(false);
@@ -242,6 +240,7 @@ export function Order({
                 cover: { detail: material?.cover?.detail || cover?.detail },
               }}
               user={user}
+              authUser={authUser}
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
               pickupBranch={pickupBranch}
@@ -312,7 +311,7 @@ export function Order({
           </div>
         </div>
         <Action
-          isVisible={!translated && isVisible}
+          isVisible={!translated}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
@@ -377,18 +376,7 @@ export default function Wrap(props) {
 
   const covers = useData(workFragments.covers({ workId }));
 
-  // Fetch user data
-  // const { isAuthenticated } = useUser();
-
-  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
-
-  console.log("loanerInfo", loanerInfo);
-
-  // const {
-  //   data: userData,
-  //   isLoading: userIsLoading,
-  //   error: userDataError,
-  // } = useData(isAuthenticated && userFragments.basic());
+  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
 
   const {
     data: orderPolicy,
@@ -422,6 +410,7 @@ export default function Wrap(props) {
   return (
     <Order
       work={mergedWork?.work}
+      authUser={authUser}
       user={mergedUser || {}}
       pid={pid}
       order={orderMutation}

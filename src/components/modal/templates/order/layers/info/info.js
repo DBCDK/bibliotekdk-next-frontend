@@ -14,6 +14,7 @@ import styles from "./Info.module.css";
 export default function Info({
   material,
   user,
+  authUser,
   className,
   onLayerSelect,
   pickupBranch,
@@ -61,6 +62,9 @@ export default function Info({
     label: "order-message-library",
   };
 
+  // info skeleton loading class
+  const loadingClass = isLoadingBranches ? styles.skeleton : "";
+
   // Set email input message if any
   const message = (hasTry && errorMessage) || messageFromLibrary;
 
@@ -69,7 +73,7 @@ export default function Info({
   const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
   return (
-    <div className={`${styles.info} ${className}`}>
+    <div className={`${styles.info} ${loadingClass} ${className}`}>
       <div className={styles.edition}>
         <div className={styles.left}>
           <div className={styles.title}>
@@ -177,7 +181,7 @@ export default function Info({
               </Text>
             </label>
 
-            {(isLoadingBranches || (userMail && lockedMessage)) && (
+            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
               <div className={`${styles.emailMessage}`}>
                 <Text type="text3" skeleton={isLoadingBranches} lines={1}>
                   {Translate(lockedMessage)}
@@ -185,18 +189,20 @@ export default function Info({
               </div>
             )}
             <Email
+              className={styles.input}
               placeholder={Translate({
                 context: "form",
                 label: "email-placeholder",
               })}
               invalidClass={customInvalidClass}
               required={true}
-              disabled={isLoading}
+              disabled={isLoading || !!authUser?.mail}
               tabIndex={isVisible ? "0" : "-1"}
-              value={userMail || ""}
+              value={authUser?.mail || userMail || ""}
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
               onMount={(value, valid) => onMailChange(value, valid)}
+              readOnly={!!authUser?.mail}
               skeleton={isLoadingBranches}
             />
 

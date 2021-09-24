@@ -32,7 +32,7 @@ function Action({
   // order data
   const { data: orderData, isStory } = data.order;
 
-  console.log("orderData.....>", orderData);
+  console.log("### orderData", orderData);
 
   // branch data
   const branchName = data.pickupBranch?.name;
