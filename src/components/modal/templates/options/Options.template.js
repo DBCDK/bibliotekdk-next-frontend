@@ -8,6 +8,7 @@ import Link from "@/components/base/link";
 // templates
 import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
+import WebArchive from "./templates/webarchive";
 
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
@@ -20,6 +21,9 @@ import Skeleton from "@/components/base/skeleton";
  * @returns {component}
  */
 function getTemplate(props) {
+  if (props.type === "webArchive") {
+    return <WebArchive {...props} />;
+  }
   if (props.infomediaId) {
     return <Infomedia props={props} />;
   }
@@ -28,13 +32,21 @@ function getTemplate(props) {
   }
 }
 
-export function Options({ data, title_author, isLoading, workId }) {
+export function Options({ data, title_author, isLoading, workId, type }) {
   if (isLoading) {
     return <Skeleton lines={3} className={styles.skeleton} />;
   }
 
-  const onlineAccess =
-    data?.work?.materialTypes[0]?.manifestations[0]?.onlineAccess;
+  if (!type) {
+    // no type selected - get the first one
+    type = data?.work?.materialTypes?.[0].materialType;
+  }
+  // get the material by type
+  const currentMaterial = data?.work?.materialTypes?.find(
+    (material) => material.materialType === type
+  );
+
+  const onlineAccess = currentMaterial?.manifestations[0]?.onlineAccess;
 
   return (
     onlineAccess && (
@@ -43,6 +55,7 @@ export function Options({ data, title_author, isLoading, workId }) {
           {onlineAccess.map((i) => {
             return getTemplate({
               ...i,
+              materialType: type,
               title_author: title_author,
               className: styles.item,
               workId,
@@ -55,8 +68,7 @@ export function Options({ data, title_author, isLoading, workId }) {
 }
 
 export default function Wrap(props) {
-  // order pid
-  const { workId, title_author } = Router.query;
+  const { workId, title_author, type } = Router.query;
 
   // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
@@ -73,6 +85,7 @@ export default function Wrap(props) {
       title_author={title_author}
       isLoading={isLoading}
       workId={workId}
+      type={type}
     />
   );
 }

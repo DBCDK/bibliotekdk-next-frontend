@@ -736,8 +736,8 @@
     },
     "options": {
       "online-link-title": {
-        "da": "Link til artikel",
-        "en": "Link to article"
+        "da": "Link til %type",
+        "en": "Link to %type"
       },
       "online-link-description": {
         "da": "Artiklen læses online på %s",
@@ -750,6 +750,10 @@
       "infomedia-link-description": {
         "da": "Leveres af %s",
         "en": "Provided by %s"
+      },
+      "online-webarchive-description": {
+        "da": "Hent pdf fra DBC webarkiv",
+        "en": "Get pdf from DBC webarchive"
       }
     },
     "navigation": {

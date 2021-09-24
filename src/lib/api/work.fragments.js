@@ -79,10 +79,10 @@ export function details({ workId }) {
   return {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
-        work(id: $workId) {
-          cover {
-            detail
-          }
+          work(id: $workId) {
+            cover {
+              detail
+            }
           seo {
             title
             description
@@ -116,6 +116,11 @@ export function details({ workId }) {
                 }
                 ... on InfomediaReference {
                   infomediaId
+                  pid
+                }
+                ... on WebArchive {
+                  type
+                  url
                   pid
                 }
               }

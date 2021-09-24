@@ -45,6 +45,7 @@ export default function WorkPage({
           type={type}
           anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
+
         <Anchor.Menu />
         <Details
           workId={workId}

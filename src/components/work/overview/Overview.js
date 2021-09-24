@@ -24,27 +24,28 @@ import useUser from "@/components/hooks/useUser";
 
 import styles from "./Overview.module.css";
 
+import { ButtonTxt } from "@/components/work/reservationbutton/ReservationButton";
+
 // Translate Context
 const context = { context: "overview" };
 
 /**
- * Example:
- *
- * getBaseUrl("https://fjernleje.filmstriben.dk/some-movie");
- * yields: "fjernleje.filmstriben.dk"
- *
- * @param {string} url
- * @returns {string}
+ * infomedia url is specific for this gui - set an url on the online access object
+ * @param onlineAccess
+ * @return {*}
  */
-function getBaseUrl(url) {
-  if (!url) {
-    return "";
-  }
-  const match = url.match(/(http|https):\/\/(www\.)?(.*?\..*?)(\/|\?|$)/i);
-  if (match) {
-    return match[3];
-  }
-  return url;
+function addToOnlinAccess(onlineAccess, title) {
+  const addi = onlineAccess?.map((access) => {
+    if (access.infomediaId) {
+      access.url = `/infomedia/${title}/work-of:${access.pid}`;
+    }
+    // @TODO should the text on the button differ ??
+    // like access.buttonTxt = "fisk
+
+    return access;
+  });
+
+  return addi;
 }
 
 /**
@@ -91,11 +92,13 @@ export function Overview({
 
   const searchOnUrl = "/find?q=";
 
+  if (selectedMaterial?.manifestations?.[0].onlineAccess) {
+    const enrichedOnline = addToOnlinAccess(
+      selectedMaterial.manifestations[0].onlineAccess
+    );
+    selectedMaterial.manifestations[0].onlineAccess = enrichedOnline;
+  }
   const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
-
-  const onlineAccessUrl = onlineAccess && onlineAccess[0]?.url;
-
-  const onlineAccessInfomedia = onlineAccess && onlineAccess[0]?.infomediaId;
 
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
@@ -214,7 +217,7 @@ export function Overview({
                 <OrderButton
                   selectedMaterial={selectedMaterial}
                   user={user}
-                  onlineAccess={onOnlineAccess}
+                  onOnlineAccess={onOnlineAccess}
                   login={login}
                   openOrderModal={openOrderModal}
                   workTypeTranslated={workTypeTranslated}
@@ -222,27 +225,10 @@ export function Overview({
                 />
               </Col>
               <Col xs={12} className={styles.info}>
-                {onlineAccessUrl ? (
-                  <Text type="text3" skeleton={skeleton} lines={1}>
-                    {[
-                      Translate({ ...context, label: "onlineAccessAt" }),
-                      getBaseUrl(onlineAccessUrl),
-                    ].join(" ")}
-                  </Text>
-                ) : onlineAccessInfomedia ? (
-                  <Text type="text3" skeleton={skeleton} lines={1}>
-                    {Translate({ ...context, label: "label_infomediaAccess" })}
-                  </Text>
-                ) : (
-                  <>
-                    <Text type="text3" skeleton={skeleton} lines={2}>
-                      {Translate({ ...context, label: "addToCart-line1" })}
-                    </Text>
-                    <Text type="text3" skeleton={skeleton} lines={0}>
-                      {Translate({ ...context, label: "addToCart-line2" })}
-                    </Text>
-                  </>
-                )}
+                <ButtonTxt
+                  selectedMaterial={selectedMaterial}
+                  skeleton={skeleton}
+                />
               </Col>
               <Col xs={12} className={styles.info}>
                 <AlternativeOptions onlineAccess={onlineAccess} />
@@ -336,9 +322,11 @@ export default function Wrap(props) {
   if (isLoading) {
     return <OverviewSkeleton isSlow={isSlow} />;
   }
+
   if (error || detailsError) {
     return <OverviewError />;
   }
+
   const merged = merge({}, covers.data, data, detailsData);
 
   return (

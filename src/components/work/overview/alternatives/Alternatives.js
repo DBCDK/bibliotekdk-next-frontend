@@ -9,7 +9,6 @@ import styles from "./Alternatives.module.css";
 export default function AlternativeOptions({ onlineAccess = [] }) {
   const router = useRouter();
   const context = { context: "overview" };
-
   const count = onlineAccess?.length;
   {
     return (
