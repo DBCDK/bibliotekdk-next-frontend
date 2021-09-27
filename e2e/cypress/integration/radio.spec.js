@@ -3,7 +3,7 @@
  * Test functionality of Radio group
  */
 describe("Radio", () => {
-  it(`Tab leads to active element`, () => {
+  it.only(`Tab leads to active element`, () => {
     cy.visit("/iframe.html?id=base-radio--radio-group");
     cy.tab();
     cy.focused().contains("Second");

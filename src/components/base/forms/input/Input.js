@@ -25,6 +25,7 @@ function Input({
   disabled = false,
   onChange,
   onBlur,
+  dataCy = "input",
   readOnly = false,
 }) {
   const [val, setVal] = useState(value || "");
@@ -49,6 +50,7 @@ function Input({
       placeholder={placeholder}
       disabled={disabled}
       readOnly={readOnly}
+      data-cy={dataCy}
       tabIndex={disabled ? "-1" : tabIndex}
       onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => setVal(e.target.value)}
@@ -70,6 +72,7 @@ Input.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   skeleton: PropTypes.bool,
+  dataCy: PropTypes.string,
 };
 
 /**

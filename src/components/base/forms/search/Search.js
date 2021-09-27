@@ -56,6 +56,7 @@ Search.propTypes = {
   value: PropTypes.string,
   readOnly: PropTypes.bool,
   skeleton: PropTypes.bool,
+  dataCy: PropTypes.string,
 };
 
 export default Search;

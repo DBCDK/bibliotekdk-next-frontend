@@ -115,7 +115,6 @@ describe("Order", () => {
     cy.get("[data-cy=button-godkend]").click();
 
     cy.wait("@submitOrder").then((order) => {
-      console.log("###order", order);
       expect(order.request.body.variables.input).to.deep.equal({
         pickUpBranch: "790903",
         userParameters: {
@@ -136,6 +135,7 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-nej-tak]").click();
     openOrderModal();
+    cy.wait(500);
     cy.get("[data-cy=close-modal]").click();
     cy.tab();
     cy.get("[data-cy=modal-container] *:focused").should("not.exist");
@@ -148,31 +148,30 @@ describe("Order", () => {
     cy.url().should("include", "modal=order");
   });
 
-  it.only("should handle failed checkorder and pickupAllowed=false", () => {
+  it("should handle failed checkorder and pickupAllowed=false", () => {
     cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
+
     cy.get("[data-cy=button-godkend]").should("be.disabled");
+
     cy.get("[data-cy=text-vælg-afhentning]").click();
-    cy.contains("Materialet kan kun bestilles til udvalgte afhentningssteder.");
-    cy.contains("Afhentning ikke muligt på");
-    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-0]").should(
-      "have.attr",
-      "aria-disabled",
-      "true"
-    );
-    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-1]").should(
-      "have.attr",
-      "aria-disabled",
-      "true"
-    );
-    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").should(
+
+    cy.get("[data-cy=list-branches] [data-cy=list-button-0]").should(
       "have.attr",
       "aria-disabled",
       "false"
     );
-    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").click();
-    cy.get("[data-cy=button-godkend]").should("not.be.disabled");
+    cy.get("[data-cy=list-branches] [data-cy=list-button-1]").should(
+      "have.attr",
+      "aria-disabled",
+      "false"
+    );
+    cy.get("[data-cy=list-branches] [data-cy=list-button-2]").should(
+      "have.attr",
+      "aria-disabled",
+      "true"
+    );
   });
 });

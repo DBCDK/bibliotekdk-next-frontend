@@ -88,7 +88,7 @@ export function Order({
       // Default branch select (first in row)
       let defaultBranch = userBranches[0];
 
-      const queryBranchId = Router.query.branch;
+      const queryBranchId = query?.branch;
 
       if (queryBranchId) {
         const match = find(userBranches, {
@@ -243,7 +243,9 @@ export function Order({
               user={user}
               authUser={authUser}
               className={`${styles.page} ${styles[`page-info`]}`}
-              onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
+              onLayerSelect={(layer) =>
+                onLayerChange && onLayerChange({ modal: `order-${layer}` })
+              }
               pickupBranch={pickupBranch}
               onMailChange={(value, valid) => {
                 // update mail in loanerInfo
@@ -279,10 +281,11 @@ export function Order({
                   if (branch.borrowerCheck) {
                     // Set new branch without new log-in
                     setPickupBranch(branch);
-                    handleRouterPush({
-                      modal: `order`,
-                      branch: branch.branchId,
-                    });
+                    onLayerChange &&
+                      onLayerChange({
+                        modal: `order`,
+                        branch: branch.branchId,
+                      });
                   } else {
                     loanerform = true;
                   }
@@ -291,13 +294,16 @@ export function Order({
                 }
                 // send to next layer
                 if (loanerform) {
-                  handleRouterPush({
-                    modal: `order-loanerform`,
-                    branch: branch.branchId,
-                  });
+                  onLayerChange &&
+                    onLayerChange({
+                      modal: `order-loanerform`,
+                      branch: branch.branchId,
+                    });
                 }
               }}
-              onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
+              onLayerSelect={(layer) =>
+                onLayerChange && onLayerChange({ modal: `order-${layer}` })
+              }
               onClose={onLayerClose}
             />
           </div>
@@ -312,9 +318,10 @@ export function Order({
               onClose={onLayerClose}
               onSubmit={(branch) => {
                 setPickupBranch(branch);
-                handleRouterPush({
-                  modal: `order`,
-                });
+                onLayerChange &&
+                  onLayerChange({
+                    modal: `order`,
+                  });
               }}
             />
           </div>
@@ -423,11 +430,7 @@ export default function Wrap(props) {
       pid={pid}
       order={orderMutation}
       query={Router.query}
-      onLayerChange={(layer) =>
-        handleRouterPush({
-          modal: `order-${layer}`,
-        })
-      }
+      onLayerChange={(query) => handleRouterPush(query)}
       updateLoanerInfo={updateLoanerInfo}
       onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch) => {

@@ -71,6 +71,7 @@ export function Pickup({
           </Text>
           <Search
             tabIndex={tabIndex}
+            dataCy="pickup-search-input"
             placeholder={Translate({
               ...context,
               label: "pickup-input-placeholder",
@@ -81,10 +82,7 @@ export function Pickup({
         </div>
 
         {data?.result.length > 0 && (
-          <List.Group
-            enabled={!isLoading && isVisible}
-            data-cy="allowed-branches"
-          >
+          <List.Group enabled={!isLoading && isVisible} data-cy="list-branches">
             {data.result.map((branch, idx) => {
               // Check for a highlight key matching on "name" prop
               const matchName = find(branch.highlights, {

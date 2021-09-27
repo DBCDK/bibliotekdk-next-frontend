@@ -137,7 +137,7 @@ function Select({
       ) : (
         onDisabled
       )}
-      <div id="radio-label" className={styles.label}>
+      <div id="list-label" className={styles.label}>
         {label}
       </div>
     </div>
@@ -179,7 +179,7 @@ function Group({ children, enabled = true, ...props }) {
     <div
       data-cy={props["data-cy"]}
       role="radiogroup"
-      aria-labelledby="radio-label"
+      aria-labelledby="list-label"
       className={`${styles.group} ${
         enabled ? styles.enabled : styles.disabled
       }`}
@@ -201,7 +201,7 @@ function Group({ children, enabled = true, ...props }) {
       {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           _ref: (ref) => (childrenRef.current[index] = ref),
-          "data-cy": "radio-button-" + index,
+          "data-cy": "list-button-" + index,
           disabled: enabled === false || child.props.disabled,
         })
       )}
