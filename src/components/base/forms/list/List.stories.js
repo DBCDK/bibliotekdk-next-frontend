@@ -39,6 +39,29 @@ export function RadioGroup() {
     </div>
   );
 }
+export function SelectGroup() {
+  const [selected, setSelected] = useState({});
+  return (
+    <div>
+      <StoryTitle>Select Button Group</StoryTitle>
+      <StoryDescription>
+        Tab will focus selected element. use keys up/left to focus prev button,
+        and down/right to focus next button{" "}
+      </StoryDescription>
+      <List.Group>
+        {rows.map((row) => (
+          <List.Select
+            key={row.title}
+            onSelect={() => setSelected(alert(`${row.title} selected`))}
+            label={row.title}
+          >
+            <b>{row.title}</b>
+          </List.Select>
+        ))}
+      </List.Group>
+    </div>
+  );
+}
 export function RadioGroupNoInitialSelection() {
   const [selected, setSelected] = useState({});
   return (

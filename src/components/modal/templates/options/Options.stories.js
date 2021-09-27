@@ -16,7 +16,12 @@ export function OnlineUrl() {
       <StoryDescription>Option with url and infomedia</StoryDescription>
 
       <Modal onClose={null} onLang={null} template={"options"}>
-        <Options data={dummy_data.data} isLoading={false} />
+        <Options
+          data={dummy_data.data}
+          title_author="fiske_hest"
+          workId="work-of:870971-tsart:39160846"
+          isLoading={false}
+        />
       </Modal>
     </div>
   );

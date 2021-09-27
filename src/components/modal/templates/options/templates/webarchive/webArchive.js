@@ -3,9 +3,15 @@ import Link from "@/components/base/link";
 
 import Translate from "@/components/base/translate";
 
-import styles from "./online.module.css";
+import styles from "./webArchive.module.css";
 
-export default function Online({ url, origin, note, className, materialType }) {
+export default function WebArchive({
+  url,
+  origin,
+  note,
+  className,
+  materialType,
+}) {
   const context = { context: "options" };
 
   return (
@@ -16,11 +22,7 @@ export default function Online({ url, origin, note, className, materialType }) {
         target="_blank"
       >
         <Text type="text1">
-          {Translate({
-            ...context,
-            label: "online-link-title",
-            vars: [materialType],
-          })}
+          {Translate({ ...context, label: "online-webarchive-title" })}
         </Text>
       </Link>
       {note ? (
@@ -29,8 +31,7 @@ export default function Online({ url, origin, note, className, materialType }) {
         <Text type="text3">
           {Translate({
             ...context,
-            label: "online-link-description",
-            vars: [origin],
+            label: "online-webarchive-description",
           })}
         </Text>
       )}
