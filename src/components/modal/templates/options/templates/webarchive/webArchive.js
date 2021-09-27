@@ -22,7 +22,7 @@ export default function WebArchive({
         target="_blank"
       >
         <Text type="text1">
-          {Translate({ ...context, label: "online-link-title", vars: ["pdf"] })}
+          {Translate({ ...context, label: "online-webarchive-title" })}
         </Text>
       </Link>
       {note ? (

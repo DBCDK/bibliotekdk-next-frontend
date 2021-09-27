@@ -751,6 +751,10 @@
         "da": "Leveres af %s",
         "en": "Provided by %s"
       },
+      "online-webarchive-title": {
+        "da" : "Læs artikel som pdf",
+        "en" : "Get article as pdf"
+      },
       "online-webarchive-description": {
         "da": "Hent pdf fra DBC webarkiv",
         "en": "Get pdf from DBC webarchive"
