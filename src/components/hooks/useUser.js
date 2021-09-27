@@ -30,10 +30,11 @@ function useUserMock() {
     initialData: loanerInfoMock,
   });
 
-  const loggedInUser = { name: "Some Name", mail: "some@mail.dk" };
+  const authUser = { name: "Some Name", mail: "some@mail.dk" };
+  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
 
   return {
-    authUser: loggedInUser,
+    authUser,
     isLoading: false,
     error: null,
     isAuthenticated: true,
@@ -96,26 +97,6 @@ function useUserImpl() {
     },
   };
 }
-
-/**
- * Hook for getting authenticated user
- */
-// export function useUser() {
-//   const [session] = useSession();
-//   const anonSessionContext = useContext(AnonymousSessionContext);
-
-//   // anonSessionContext becomes undefined when nextjs changes page without calling server
-//   // we store the latest anon session we got from the server
-//   if (anonSessionContext) {
-//     anonSession = anonSessionContext;
-//   }
-//   const accessToken = session?.accessToken || anonSession?.accessToken;
-
-//   return {
-//     isAuthenticated: !!session?.user?.uniqueId,
-//     accessToken,
-//   };
-// }
 
 /**
  * Hook for getting authenticated user

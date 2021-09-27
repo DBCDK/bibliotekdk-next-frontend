@@ -110,10 +110,10 @@ export function Back({ isVisible, handleClose, className }) {
           border={false}
           tabIndex={isVisible ? "0" : "-1"}
           className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
-          onClick={() => handleClose()}
+          onClick={() => handleClose && handleClose()}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.keyCode === 13) {
-              handleClose();
+              handleClose && handleClose();
             }
           }}
         >
@@ -160,10 +160,10 @@ export function Top({ title, isVisible, handleClose }) {
             className={styles.closeIcon}
             // src="close_white.svg"
             size={2}
-            onClick={() => handleClose()}
+            onClick={() => handleClose && handleClose()}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
-                handleClose();
+                handleClose && handleClose();
               }
             }}
           >
@@ -263,7 +263,7 @@ export function Modal({
       data-cy="modal-dimmer"
       aria-hidden={true}
       className={`${styles.dimmer} ${className} ${visibleClass}`}
-      onClick={(e) => handleClose()}
+      onClick={() => handleClose()}
     >
       <dialog
         data-cy="modal-container"
@@ -357,6 +357,11 @@ export default function Wrap({ router, children = false }) {
   //   return null;
   // }
 
+  function handleClose() {
+    onClose && onClose();
+    document && document.activeElement.blur();
+  }
+
   // On modal close
   const onClose = function onClose() {
     if (router) {
@@ -394,7 +399,7 @@ export default function Wrap({ router, children = false }) {
     <Modal
       template={template}
       isLayer={isLayer}
-      onClose={onClose}
+      onClose={handleClose}
       onLang={onLang}
     >
       {children && children}

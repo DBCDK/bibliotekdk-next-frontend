@@ -70,6 +70,7 @@ export function Pickup({
             {Translate({ ...context, label: "pickup-search-description" })}
           </Text>
           <Search
+            tabIndex={tabIndex}
             placeholder={Translate({
               ...context,
               label: "pickup-input-placeholder",
@@ -109,11 +110,6 @@ export function Pickup({
                   onSelect={() => onSelect(branch)}
                   label={branch.name}
                   disabled={disabled}
-                  // onDisabled={
-                  //   <Text lines="1" skeleton={isLoading} type="text3">
-                  //     {Translate({ ...context, label: "no-pickup" })}
-                  //   </Text>
-                  // }
                   className={[
                     styles.radiobutton,
                     alternativeMatchClass,
@@ -126,6 +122,7 @@ export function Pickup({
                       lines="1"
                       skeleton={isLoading}
                       type="text2"
+                      dataCy={`text-${branch.name}`}
                       className={[
                         styles.library,
                         animations["h-border-bottom"],
@@ -184,10 +181,6 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(
     libraryFragments.search({ q: query || " " })
   );
-
-  if (error) {
-    return "some error occured :(";
-  }
 
   const dummyData = {
     hitcount: 5,

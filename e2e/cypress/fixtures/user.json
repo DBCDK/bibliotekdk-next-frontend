@@ -44,6 +44,7 @@
             "agencyId": "790900",
             "name": "DBC-bibilioteksekspressen",
             "city": "Vsn-testby",
+            "borrowerCheck": true,
             "postalAddress": "Vsn-B.adresse",
             "postalCode": "1234",
             "branchId": "790903",

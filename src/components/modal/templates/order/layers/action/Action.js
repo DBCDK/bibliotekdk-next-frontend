@@ -35,7 +35,7 @@ function Action({
   // branch data
   const branchName = data.pickupBranch?.name;
 
-  const hiddenClass = !isVisible ? styles.hidden : "";
+  const hiddenClass = !isVisible && !isOrdered ? styles.hidden : "";
   const orderingClass = isOrdering || showProgress ? styles.ordering : "";
   const orderedClass = isOrdered && !showProgress ? styles.ordered : "";
   const failedClass = isFailed && !showProgress ? styles.failed : "";

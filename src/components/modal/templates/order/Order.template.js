@@ -66,6 +66,7 @@ export function Order({
   onSubmit,
   onLayerChange,
   onLayerClose,
+  updateLoanerInfo,
   isLoading = false,
 }) {
   // layer state
@@ -244,7 +245,15 @@ export function Order({
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
               pickupBranch={pickupBranch}
-              onMailChange={(value, valid) => setMail({ value, valid })}
+              onMailChange={(value, valid) => {
+                // update mail in loanerInfo
+                valid &&
+                  !authUser?.mail &&
+                  updateLoanerInfo &&
+                  updateLoanerInfo({ userMail: value });
+                // update mail in state
+                setMail({ value, valid });
+              }}
               mail={mail}
               validated={validated}
               isLoading={isLoading}
@@ -311,7 +320,7 @@ export function Order({
           </div>
         </div>
         <Action
-          isVisible={!translated}
+          isVisible={!translated && isVisible}
           validated={validated}
           isOrdering={isOrdering}
           isOrdered={isOrdered}
@@ -324,8 +333,7 @@ export function Order({
               onSubmit &&
                 onSubmit(
                   materialsSameType.map((m) => m.pid),
-                  pickupBranch,
-                  mail?.value
+                  pickupBranch
                 );
             } else {
               setHasTry(true);
@@ -420,9 +428,11 @@ export default function Wrap(props) {
           modal: `order-${layer}`,
         })
       }
+      updateLoanerInfo={updateLoanerInfo}
       onLayerClose={() => Router.back()}
-      onSubmit={(pids, pickupBranch, email) => {
-        updateLoanerInfo({ userMail: email });
+      onSubmit={(pids, pickupBranch) => {
+        console.log("### loanerInfo onSubmit", loanerInfo);
+
         orderMutation.post(
           submitOrder({
             pids,
