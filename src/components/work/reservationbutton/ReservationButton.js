@@ -1,7 +1,6 @@
 import Button from "@/components/base/button/Button";
 import styles from "@/components/work/overview/Overview.module.css";
 import Translate from "@/components/base/translate";
-import includes from "lodash/includes";
 import Text from "@/components/base/text/Text";
 
 // Translate Context

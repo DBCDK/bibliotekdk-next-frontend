@@ -25,8 +25,8 @@ describe("Reservation button", () => {
     cy.visit(
       "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
     );
-    cy.get("[data-cy=button-order-overview]")
-      .contains("Bestil (ikke logget ind)")
+    cy.get("[data-cy=button-order-overview-enabled]")
+      .contains("Bestil")
       .should("be.visible")
       .click();
     cy.on("window:alert", (str) => {
