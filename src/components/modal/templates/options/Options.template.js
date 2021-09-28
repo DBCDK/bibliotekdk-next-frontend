@@ -14,6 +14,8 @@ import DigitalCopy from "./templates/digitalcopy";
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
 import { sortBy } from "lodash";
+import Translate from "@/components/base/translate";
+import { Top } from "@/components/modal";
 
 /**
  * Template selection function
@@ -62,23 +64,34 @@ export function Options({ data, title_author, isLoading, workId, type }) {
     currentMaterial?.manifestations[0]?.onlineAccess
   );
 
+  const onClose = () => Router.back();
+
   const orderedOnlineAccess = sortorder(onlineAccess);
 
   return (
     onlineAccess && (
-      <div className={styles.options}>
-        <ul className={styles.list}>
-          {orderedOnlineAccess.map((i) => {
-            return getTemplate({
-              ...i,
-              materialType: type,
-              title_author: title_author,
-              className: styles.item,
-              workId,
-            });
+      <>
+        <Top
+          title={Translate({
+            context: "modal",
+            label: `title-order`,
           })}
-        </ul>
-      </div>
+          handleClose={onClose}
+        />
+        <div className={styles.options}>
+          <ul className={styles.list}>
+            {orderedOnlineAccess.map((i) => {
+              return getTemplate({
+                ...i,
+                materialType: type,
+                title_author: title_author,
+                className: styles.item,
+                workId,
+              });
+            })}
+          </ul>
+        </div>
+      </>
     )
   );
 }
