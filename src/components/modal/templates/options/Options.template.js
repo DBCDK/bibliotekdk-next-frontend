@@ -9,9 +9,11 @@ import Link from "@/components/base/link";
 import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
 import WebArchive from "./templates/webarchive";
+import DigitalCopy from "./templates/digitalcopy";
 
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
+import { sortBy } from "lodash";
 
 /**
  * Template selection function
@@ -21,15 +23,25 @@ import Skeleton from "@/components/base/skeleton";
  * @returns {component}
  */
 function getTemplate(props) {
-  if (props.type === "webArchive") {
+  if (props.accessType === "webArchive") {
     return <WebArchive {...props} />;
   }
-  if (props.infomediaId) {
+  if (props.accessType === "infomedia") {
     return <Infomedia props={props} />;
   }
-  if (props.url) {
+  if (props.accessType === "online") {
     return <Online {...props} />;
   }
+  if (props.accessType === "digitalCopy") {
+    return <DigitalCopy {...props} />;
+  }
+}
+
+function sortorder(onlineaccess) {
+  const realorder = ["online", "webArchive", "infomedia", "digitalCopy"];
+  return sortBy(onlineaccess, function (item) {
+    return realorder.indexOf(item.accessType);
+  });
 }
 
 export function Options({ data, title_author, isLoading, workId, type }) {
@@ -46,13 +58,17 @@ export function Options({ data, title_author, isLoading, workId, type }) {
     (material) => material.materialType === type
   );
 
-  const onlineAccess = currentMaterial?.manifestations[0]?.onlineAccess;
+  const onlineAccess = addToOnlinAccess(
+    currentMaterial?.manifestations[0]?.onlineAccess
+  );
+
+  const orderedOnlineAccess = sortorder(onlineAccess);
 
   return (
     onlineAccess && (
       <div className={styles.options}>
         <ul className={styles.list}>
-          {onlineAccess.map((i) => {
+          {orderedOnlineAccess.map((i) => {
             return getTemplate({
               ...i,
               materialType: type,
@@ -65,6 +81,28 @@ export function Options({ data, title_author, isLoading, workId, type }) {
       </div>
     )
   );
+}
+
+/**
+ * infomedia url is specific for this gui - set an url on the online access object
+ * @param onlineAccess
+ * @return {*}
+ */
+function addToOnlinAccess(onlineAccess, title) {
+  const addi = onlineAccess?.map((access) => {
+    if (access.infomediaId) {
+      access.accessType = "infomedia";
+    } else if (access.issn) {
+      access.accessType = "digitalCopy";
+    } else if (access.type === "webArchive") {
+      access.accessType = "webArchive";
+    } else if (access.url) {
+      access.accessType = "online";
+    }
+    return access;
+  });
+
+  return addi;
 }
 
 export default function Wrap(props) {

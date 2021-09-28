@@ -9,6 +9,7 @@ import styles from "./Alternatives.module.css";
 export default function AlternativeOptions({ onlineAccess = [] }) {
   const router = useRouter();
   const context = { context: "overview" };
+
   const count = onlineAccess?.length;
   {
     return (
@@ -19,7 +20,10 @@ export default function AlternativeOptions({ onlineAccess = [] }) {
             if (router) {
               router.push({
                 pathname: router.pathname,
-                query: { ...router.query, modal: "options" },
+                query: {
+                  ...router.query,
+                  modal: "options",
+                },
               });
             }
           }}
