@@ -15,8 +15,6 @@ export default function DigitalCopy({
   materialType,
   workId,
 }) {
-  console.log(workId, "WORIKID");
-
   const context = { context: "options" };
   const router = useRouter();
   const user = useUser();
@@ -25,7 +23,9 @@ export default function DigitalCopy({
     if (!user.isAuthenticated) {
       signIn();
     } else {
-      console.log(router, "ROUTER");
+      alert("not implemented");
+      // @TODO do a order like:
+      /*
       Router.push(
         {
           pathname: Router.pathname,
@@ -33,12 +33,12 @@ export default function DigitalCopy({
             ...Router.query,
             order: "870971-tsart:36160780",
             modal: `order`,
-            showpickup: "fisk",
           },
         },
         null,
         { shallow: true, scroll: false }
       );
+       */
     }
   };
 
