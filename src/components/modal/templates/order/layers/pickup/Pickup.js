@@ -1,17 +1,23 @@
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
+import { useState } from "react";
+import debounce from "lodash/debounce";
+import find from "lodash/find";
 
-import Link from "@/components/base/link";
-import Radio from "@/components/base/radio";
+import List from "@/components/base/forms/list";
+import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
-import Arrow from "@/components/base/animation/arrow";
+import { Back } from "@/components/modal";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
-import { useMemo } from "react";
+
+import { useData } from "@/lib/api/api";
+
+import * as libraryFragments from "@/lib/api/library.fragments";
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -24,39 +30,17 @@ import { useMemo } from "react";
  * @param {object} props.selected The selected branch object
  * @param {function} props._ref
  */
-export default function Pickup({
-  agency,
+export function Pickup({
+  data,
   className,
   onClose,
   onSelect,
   selected,
   isVisible,
+  onChange,
+  isLoading,
 }) {
-  if (!agency) {
-    return null;
-  }
-
-  const disAllowedBranches =
-    useMemo(
-      () =>
-        agency?.result?.filter(
-          (branch) =>
-            !branch?.pickupAllowed || !branch?.orderPolicy?.orderPossible
-        ),
-      [agency]
-    ) || [];
-
-  const allowedBranches =
-    useMemo(
-      () =>
-        agency?.result?.filter(
-          (branch) =>
-            branch?.pickupAllowed && branch?.orderPolicy?.orderPossible
-        ),
-      [agency]
-    ) || [];
-
-  const hasFailedPolicyCheck = disAllowedBranches.length > 0;
+  const context = { context: "order" };
 
   // Observe when bottom of list i visible
   const [ref, inView] = useInView({
@@ -72,99 +56,97 @@ export default function Pickup({
 
   return (
     <div className={`${styles.pickup} ${className}`}>
-      <div className={styles.top}>
-        <Link
-          border={false}
-          onClick={onClose}
-          tabIndex={tabIndex}
-          className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.keyCode === 13) {
-              onClose();
-            }
-          }}
-        >
-          <Arrow
-            flip
-            className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${animations["f-outline"]}`}
-          />
-        </Link>
-      </div>
+      <Back
+        isVisible={isVisible}
+        handleClose={onClose}
+        className={styles.back}
+      />
       <div className={`${styles.scrollArea} ${shadowClass}`}>
-        {hasFailedPolicyCheck && (
-          <div className={styles.message}>
-            <Text type="text3">
-              {Translate({ context: "order", label: "check-policy-fail-2" })}
-            </Text>
-          </div>
-        )}
-        {allowedBranches.length > 0 && (
-          <>
-            <Title type="title4" tag="h2">
-              {agency.name || "Afhentningssted"}
-            </Title>
-            <Radio.Group enabled={isVisible} data-cy="allowed-branches">
-              {allowedBranches.map((branch, idx) => {
-                return (
-                  <Radio.Button
-                    key={`${branch.branchId}-${idx}`}
-                    selected={selected?.branchId === branch.branchId}
-                    onSelect={() => onSelect(branch)}
-                    label={branch.name}
-                    className={[
-                      styles.radiobutton,
-                      animations["on-hover"],
-                    ].join(" ")}
-                  >
+        <div className={styles.search}>
+          <Title type="title4" className={styles.title}>
+            {Translate({ ...context, label: "pickup-search-title" })}
+          </Title>
+          <Text type="text3" className={styles.description}>
+            {Translate({ ...context, label: "pickup-search-description" })}
+          </Text>
+          <Search
+            tabIndex={tabIndex}
+            dataCy="pickup-search-input"
+            placeholder={Translate({
+              ...context,
+              label: "pickup-input-placeholder",
+            })}
+            className={styles.input}
+            onChange={debounce((value) => onChange(value), 100)}
+          />
+        </div>
+
+        {data?.result.length > 0 && (
+          <List.Group enabled={!isLoading && isVisible} data-cy="list-branches">
+            {data.result.map((branch, idx) => {
+              // Check for a highlight key matching on "name" prop
+              const matchName = find(branch.highlights, {
+                key: "name",
+              });
+              // If found, use matchned name (wraps match in <mark>...</mark>)
+              const title = matchName?.value || branch.name;
+
+              // If none found use a alternative match if any found
+              const matchOthers = !matchName
+                ? branch.highlights?.[0]?.value
+                : null;
+
+              const disabled = !branch.pickupAllowed;
+
+              const alternativeMatchClass = matchOthers ? styles.squeeze : "";
+              const disabledClass = disabled ? styles.disabled : "";
+
+              return (
+                <List.Select
+                  key={`${branch.branchId}-${idx}`}
+                  selected={selected?.branchId === branch.branchId}
+                  onSelect={() => onSelect(branch)}
+                  label={branch.name}
+                  disabled={disabled}
+                  className={[
+                    styles.radiobutton,
+                    alternativeMatchClass,
+                    disabledClass,
+                    animations["on-hover"],
+                  ].join(" ")}
+                >
+                  <>
                     <Text
+                      lines="1"
+                      skeleton={isLoading}
                       type="text2"
+                      dataCy={`text-${branch.name}`}
                       className={[
                         styles.library,
                         animations["h-border-bottom"],
                         animations["h-color-blue"],
                       ].join(" ")}
                     >
-                      {branch.name}
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: title,
+                        }}
+                      />
                     </Text>
-                  </Radio.Button>
-                );
-              })}
-            </Radio.Group>
-          </>
-        )}
-        {disAllowedBranches.length > 0 && (
-          <>
-            <Title type="title4" tag="h2" className={styles.disallowedTitle}>
-              {Translate({ context: "order", label: "pickup-not-allowed" })}
-            </Title>
-            <Radio.Group enabled={false} data-cy="disallowed-branches">
-              {disAllowedBranches.map((branch, idx) => {
-                return (
-                  <Radio.Button
-                    key={`${branch.branchId}-${idx}`}
-                    selected={selected?.branchId === branch.branchId}
-                    onSelect={() => onSelect(branch)}
-                    label={branch.name}
-                    className={[
-                      styles.radiobutton,
-                      animations["on-hover"],
-                    ].join(" ")}
-                  >
-                    <Text
-                      type="text2"
-                      className={[
-                        styles.library,
-                        animations["h-border-bottom"],
-                        animations["h-color-blue"],
-                      ].join(" ")}
-                    >
-                      {branch.name}
-                    </Text>
-                  </Radio.Button>
-                );
-              })}
-            </Radio.Group>
-          </>
+                    {matchOthers && (
+                      <Text type="text3" className={styles.alternativeMatch}>
+                        <span
+                          dangerouslySetInnerHTML={{
+                            __html: matchOthers,
+                          }}
+                        />
+                      </Text>
+                    )}
+                  </>
+                </List.Select>
+              );
+            })}
+          </List.Group>
         )}
         <div ref={ref} />
       </div>
@@ -173,9 +155,63 @@ export default function Pickup({
 }
 
 Pickup.propTypes = {
-  agency: PropTypes.array,
+  data: PropTypes.object,
   className: PropTypes.string,
   onClose: PropTypes.func,
   onSelect: PropTypes.func,
   selected: PropTypes.object,
+  onChange: PropTypes.func,
+};
+
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function Wrap(props) {
+  const { agency } = props;
+
+  const [query, setQuery] = useState("");
+
+  const { data, isLoading, error } = useData(
+    libraryFragments.search({ q: query || " " })
+  );
+
+  const dummyData = {
+    hitcount: 5,
+    result: [
+      { name: "This is some branch name", branchId: "00" },
+      { name: "This is some other branch name", branchId: "01" },
+      { name: "This is also a branch name", branchId: "02" },
+      { name: "A branch name", branchId: "03" },
+      { name: "Also a bracndh name", branchId: "04" },
+      { name: "This is some branch name", branchId: "05" },
+      { name: "This is some other branch name", branchId: "06" },
+      { name: "This is also a branch name", branchId: "07" },
+      { name: "A branch name", branchId: "08" },
+      { name: "Also a bracndh name", branchId: "09" },
+    ],
+  };
+
+  const branches = query === "" ? agency : data?.branches;
+
+  return (
+    <Pickup
+      {...props}
+      isLoading={isLoading}
+      data={isLoading ? dummyData : branches}
+      onChange={(q) => setQuery(q)}
+    />
+  );
+}
+
+// PropTypes for component
+Wrap.propTypes = {
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  onChange: PropTypes.func,
+  onSelect: PropTypes.func,
+  skeleton: PropTypes.bool,
 };

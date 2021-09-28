@@ -238,6 +238,10 @@
       "frontpage": {
         "da": "Forside",
         "en": "Front page"
+      },
+      "select-another-library": {
+        "da": "Vælg et andet bibliotek",
+        "en": "LABEL mangler oversættelse"
       }
     },
     "articles": {
@@ -959,13 +963,29 @@
         "da": "Afhentningssted",
         "en": "Pickup location"
       },
+      "pickup-search-title": {
+        "da": "Vælg afhentningssted",
+        "en": "Select pick-up location"
+      },
+      "pickup-search-description": {
+        "da": "Husk du skal være låner på biblioteket",
+        "en": "Remember you must be a loaner at the library"
+      },
       "pickup-link": {
         "da": "Vælg afhentning",
         "en": "Select pickup"
       },
+      "pickup-input-placeholder": {
+        "da": "Søg efter afhentningssted",
+        "en": "Search for pickup location"
+      },
       "pickup-not-allowed": {
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"
+      },
+      "no-pickup": {
+        "da": "Afhentning ikke muligt",
+        "en": "Pickup not allowed"
       },
       "ordered-by": {
         "da": "Bestilles af",
@@ -1006,6 +1026,10 @@
       "order-to-loaner-info": {
         "da": "Udfyld lånerinfo",
         "en": "Fill in the loaner info"
+      },
+      "order-not-possible": {
+        "da": "Biblioteket modtager ikke bestillinger på dette materiale gennem bibliotek.dk",
+        "en": "LABEL: mangler oversættelse"
       },
       "info-email-message": {
         "da": "Din mail er hentet fra %s",
@@ -1064,7 +1088,10 @@
         "da": "Skriv din pinkode",
         "en": "Enter your pincode"
       },
-      "userName-placeholder": { "da": "Skriv dit navn", "en": "Enter your name" },
+      "userName-placeholder": {
+        "da": "Skriv dit navn",
+        "en": "Enter your name"
+      },
       "userAddress-placeholder": {
         "da": "Skriv din adresse",
         "en": "Enter your address"
@@ -1099,7 +1126,6 @@
         "da": "Udfyld venligst alle felter",
         "en": "Please fill in all fields"
       }
-
     },
     "metadata": {
       "frontpage-title": {

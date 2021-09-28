@@ -1,6 +1,6 @@
 .info {
   position: relative;
-  height: 100%;
+  height: calc(100% - 80px);
   overflow-y: auto;
 }
 
@@ -73,16 +73,21 @@
 .name {
   padding: var(--pt2) 0 0 0;
 }
+
 .email {
   padding: var(--pt2) 0 0 0;
 }
 
-.email input {
+.input {
   margin: var(--pt1) 0 0 0;
 }
 
 .emailMessage {
   padding: var(--pt1) 0 0 0;
+}
+
+.skeleton .emailMessage {
+  padding: var(--pt1) 0;
 }
 
 .invalid-pickup {
@@ -104,6 +109,10 @@
 }
 
 @media (min-width: 576px) {
+  .info {
+    height: calc(100% - 136px);
+  }
+
   .edition,
   .pickup,
   .user {

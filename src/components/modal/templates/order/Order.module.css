@@ -14,25 +14,26 @@
 
 .wrap {
   height: 100%;
-  width: 200%;
+  width: 300%;
   display: flex;
   transition-duration: 0.3s;
 }
 
-.wrap .left > div,
-.wrap .right > div {
-  /* height: 100%;
-  overflow-y: auto; */
+/* wrap contains 3 layers */
+.wrap.translated.active-edition,
+.wrap.translated.active-pickup {
+  transform: translateX(calc((100% / 3) * -1));
 }
 
-.wrap.translated,
-.wrap.translated {
-  transform: translateX(-50%);
+.wrap.translated.active-loanerform {
+  transform: translateX(calc((100% / 3) * -2));
 }
 
 .wrap .left,
-.wrap .right {
-  width: 50%;
+.wrap .right,
+.wrap .login {
+  width: calc(100% / 3);
+  height: 100%;
   position: relative;
 }
 
@@ -43,9 +44,13 @@
   position: relative;
 }
 
+.wrap .login .page {
+  /* height: calc(100% - 32px); */
+}
+
 .wrap .right .page {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 32px);
 
   position: absolute;
   right: 0;
@@ -61,10 +66,18 @@
   z-index: 1;
 }
 
-.wrap .page.page-library {
+.wrap .page.page-pickup {
 }
 
-.wrap.active-library .page.page-library {
+.wrap.active-pickup .page.page-pickup {
+  z-index: 1;
+}
+
+.wrap .page.page-loanerform {
+  background-color: red;
+}
+
+.wrap.active-loanerform .page.page-loanerform {
   z-index: 1;
 }
 

@@ -5,8 +5,12 @@
   margin: 0 0 var(--pt2) 0;
 }
 
-.top {
-  padding-bottom: var(--pt2);
+.search .input {
+  margin: var(--pt2) 0;
+}
+
+.search .title {
+  padding: var(--pt1) 0;
 }
 
 .scrollArea {
@@ -38,6 +42,31 @@
 
 .disallowedTitle {
   padding-top: var(--pt4);
+}
+
+.pickup mark {
+  background-color: transparent;
+  font-family: var(--body-font-semibold);
+}
+
+.alternativeMatch {
+  /* color: var(--gray); */
+}
+
+.alternativeMatch mark {
+  /* font-family: var(--body-font); */
+  /* color: var(--gray); */
+}
+
+.disabled,
+.disabled mark,
+.disabled .alternativeMatch {
+  color: var(--gray);
+}
+
+.squeeze {
+  padding-top: var(--pt1);
+  padding-bottom: var(--pt1);
 }
 
 @media (min-width: 576px) {

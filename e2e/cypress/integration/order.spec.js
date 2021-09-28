@@ -99,22 +99,27 @@ describe("Order", () => {
 
     // Change pickup branch
     cy.get("[data-cy=text-vælg-afhentning]").click();
-    cy.get("[data-cy=text-dbc-bibilioteksekspressen]").click();
+    cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
     cy.get('[data-cy="text-vsn-b.adresse"]')
       .scrollIntoView()
       .should("be.visible");
-    cy.get("[data-cy=text-dbc-bibilioteksekspressen]").should("be.visible");
 
     // Type email
     cy.get("#order-user-email").type("freja@dbc.dk");
+
+    // updating loanerinfo in background
+    cy.get("[data-cy=text-freja-damgaard]").click();
 
     // submit order
     cy.get("[data-cy=button-godkend]").click();
 
     cy.wait("@submitOrder").then((order) => {
       expect(order.request.body.variables.input).to.deep.equal({
-        email: "freja@dbc.dk",
         pickUpBranch: "790903",
+        userParameters: {
+          userMail: "freja@dbc.dk",
+          userName: "Freja Damgaard",
+        },
         pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
       });
     });
@@ -129,17 +134,17 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-nej-tak]").click();
     openOrderModal();
-    cy.get("[data-cy=close-modal]").click();
     cy.wait(500);
+    cy.get("[data-cy=close-modal]").click();
     cy.tab();
     cy.get("[data-cy=modal-container] *:focused").should("not.exist");
   });
 
-  it("should not show modal when a deep link is followed", () => {
+  it("should show modal when a deep link is followed", () => {
     cy.visit(
       `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?order=870970-basis%3A51701763&modal=order`
     );
-    cy.url().should("not.include", "modal=order");
+    cy.url().should("include", "modal=order");
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
@@ -147,26 +152,25 @@ describe("Order", () => {
     cy.contains(
       "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
     );
+
     cy.get("[data-cy=button-godkend]").should("be.disabled");
+
     cy.get("[data-cy=text-vælg-afhentning]").click();
-    cy.contains("Materialet kan kun bestilles til udvalgte afhentningssteder.");
-    cy.contains("Afhentning ikke muligt på");
-    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-0]").should(
-      "have.attr",
-      "aria-disabled",
-      "true"
-    );
-    cy.get("[data-cy=disallowed-branches] [data-cy=radio-button-1]").should(
-      "have.attr",
-      "aria-disabled",
-      "true"
-    );
-    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").should(
+
+    cy.get("[data-cy=list-branches] [data-cy=list-button-0]").should(
       "have.attr",
       "aria-disabled",
       "false"
     );
-    cy.get("[data-cy=allowed-branches] [data-cy=radio-button-0]").click();
-    cy.get("[data-cy=button-godkend]").should("not.be.disabled");
+    cy.get("[data-cy=list-branches] [data-cy=list-button-1]").should(
+      "have.attr",
+      "aria-disabled",
+      "false"
+    );
+    cy.get("[data-cy=list-branches] [data-cy=list-button-2]").should(
+      "have.attr",
+      "aria-disabled",
+      "true"
+    );
   });
 });

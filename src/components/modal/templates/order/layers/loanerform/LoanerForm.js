@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
+import merge from "lodash/merge";
 
 import { signIn } from "next-auth/client";
 
@@ -11,10 +12,15 @@ import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 
+import { Back } from "@/components/modal";
+
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
-import { branchUserParameters } from "@/lib/api/branches.fragments";
-import useUser, { useLoanerInfo } from "@/components/hooks/useUser";
+import {
+  branchUserParameters,
+  branchOrderPolicy,
+} from "@/lib/api/branches.fragments";
+import useUser, { useAccessToken } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
 
 const ERRORS = {
@@ -37,6 +43,8 @@ export function LoanerForm({
   submitting,
   skeleton,
   initial,
+  isVisible,
+  onClose,
 }) {
   const [state, setState] = useState(initial || {});
   const [errorCode, setErrorCode] = useState();
@@ -57,148 +65,214 @@ export function LoanerForm({
     }
   }
 
+  useEffect(() => {
+    // Update initialstate if changed asyncronously
+    setState(initial);
+  }, [initial]);
+
   if (skeleton) {
     return (
-      <div className={styles.loanerform}>
-        <Title type="title4" tag="h3" skeleton={true} />
-        <Text type="text2" skeleton={true} lines={2} />
-      </div>
+      <>
+        <Back
+          isVisible={isVisible}
+          handleClose={onClose}
+          className={styles.back}
+        />
+        <div className={styles.loanerform}>
+          <Title type="title4" tag="h3" skeleton={!branch?.name}>
+            {Translate({
+              context: "order",
+              label: "order-to",
+              vars: [branch?.name || "-"],
+            })}
+          </Title>
+          <Text type="text2" skeleton={true} lines={2} />
+          <Button className={styles.loginbutton} skeleton={true}>
+            loading...
+          </Button>
+        </div>
+      </>
     );
   }
+
   if (!branch) {
     return null;
   }
 
+  // Order possible for branch
+  const orderPossible = branch.orderPolicy?.orderPossible;
+
   return (
-    <div className={styles.loanerform}>
-      <Title type="title4" tag="h3">
-        {Translate({
-          context: "order",
-          label: "order-to",
-          vars: [branch.name],
-        })}
-      </Title>
-      {branch.borrowerCheck ? (
-        <>
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-login-required",
-              vars: [branch.agencyName],
-            })}
-          </Text>
-          <Button
-            onClick={onLogin}
-            className={styles.loginbutton}
-            disabled={!!submitting}
+    <>
+      <Back
+        isVisible={isVisible}
+        handleClose={onClose}
+        className={styles.back}
+      />
+      <div className={styles.loanerform}>
+        <Title type="title4" tag="h3">
+          {Translate({
+            context: "order",
+            label: "order-to",
+            vars: [branch.name],
+          })}
+        </Title>
+
+        {!orderPossible && (
+          <>
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-not-possible",
+              })}
+            </Text>
+            <Button
+              onClick={onClose}
+              className={styles.loginbutton}
+              disabled={!!submitting}
+            >
+              {Translate({
+                context: "general",
+                label: "select-another-library",
+              })}
+            </Button>
+          </>
+        )}
+
+        {orderPossible && branch.borrowerCheck && (
+          <>
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-login-required",
+                vars: [branch.agencyName],
+              })}
+            </Text>
+            <Button
+              onClick={onLogin}
+              className={styles.loginbutton}
+              disabled={!!submitting}
+            >
+              {Translate({
+                context: "header",
+                label: "login",
+              })}
+            </Button>
+          </>
+        )}
+
+        {orderPossible && !branch.borrowerCheck && (
+          <form
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              const error = validateState();
+
+              setErrorCode(error);
+              if (!error) {
+                onSubmit(state);
+              }
+            }}
           >
-            {Translate({
-              context: "header",
-              label: "login",
-            })}
-          </Button>
-        </>
-      ) : (
-        <form
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const error = validateState();
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-to-description",
+              })}
+            </Text>
+            <Title type="title4" tag="h4">
+              {Translate({
+                context: "order",
+                label: "order-to-loaner-info",
+              })}
+            </Title>
+            <div className={styles.fields}>
+              {requiredParameters?.map(({ userParameterType, description }) => {
+                const labelTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-label`,
+                };
+                const placeholderTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-placeholder`,
+                };
+                const explainTranslation = {
+                  context: "form",
+                  label: `${userParameterType}-explain`,
+                };
 
-            setErrorCode(error);
-            if (!error) {
-              onSubmit(state);
-            }
-          }}
-        >
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-to-description",
-            })}
-          </Text>
-          <Title type="title4" tag="h4">
-            {Translate({
-              context: "order",
-              label: "order-to-loaner-info",
-            })}
-          </Title>
-          <div className={styles.fields}>
-            {requiredParameters?.map(({ userParameterType }) => {
-              const labelTranslation = {
-                context: "form",
-                label: `${userParameterType}-label`,
-              };
-              const placeholderTranslation = {
-                context: "form",
-                label: `${userParameterType}-placeholder`,
-              };
-              const explainTranslation = {
-                context: "form",
-                label: `${userParameterType}-explain`,
-              };
-              return (
-                <React.Fragment>
-                  <Text type="text1" tag="label">
-                    {hasTranslation(labelTranslation)
-                      ? Translate(labelTranslation)
-                      : userParameterType}
-                  </Text>
-                  {userParameterType === "userMail" ? (
-                    <Email
-                      onChange={(value, { message }) => {
-                        setState({ ...state, [userParameterType]: value });
-                        setEmailMessage(message);
-                      }}
-                      placeholder={
-                        hasTranslation(placeholderTranslation)
-                          ? Translate(placeholderTranslation)
-                          : ""
-                      }
-                    />
-                  ) : (
-                    <Input
-                      type={
-                        (userParameterType === "userId" ||
-                          userParameterType === "pincode" ||
-                          userParameterType === "cpr") &&
-                        "password"
-                      }
-                      onChange={(value) =>
-                        setState({ ...state, [userParameterType]: value })
-                      }
-                      placeholder={
-                        hasTranslation(placeholderTranslation)
-                          ? Translate(placeholderTranslation)
-                          : ""
-                      }
-                    />
-                  )}
-                  {hasTranslation(explainTranslation) && (
-                    <Text type="text3" className={styles.explain}>
-                      {Translate(explainTranslation)}
+                return (
+                  <React.Fragment>
+                    <Text type="text1" tag="label">
+                      {description ||
+                        (hasTranslation(labelTranslation)
+                          ? Translate(labelTranslation)
+                          : userParameterType)}
                     </Text>
-                  )}
-                </React.Fragment>
-              );
-            })}
-            {errorCode && (
-              <Text type="text3" className={styles.error}>
-                {Translate({ context: "form", label: errorCode })}
-              </Text>
-            )}
-          </div>
+                    {userParameterType === "userMail" ? (
+                      <Email
+                        value={state.userMail || ""}
+                        onChange={(value, { message }) => {
+                          setState({
+                            ...state,
+                            [userParameterType]: value,
+                          });
+                          setEmailMessage(message);
+                        }}
+                        placeholder={
+                          hasTranslation(placeholderTranslation)
+                            ? Translate(placeholderTranslation)
+                            : ""
+                        }
+                      />
+                    ) : (
+                      <Input
+                        value={state[userParameterType]}
+                        type={
+                          (userParameterType === "userId" ||
+                            userParameterType === "cpr") &&
+                          "password"
+                        }
+                        onChange={(value) =>
+                          setState({
+                            ...state,
+                            [userParameterType]: value,
+                          })
+                        }
+                        placeholder={
+                          description ||
+                          (hasTranslation(placeholderTranslation)
+                            ? Translate(placeholderTranslation)
+                            : "")
+                        }
+                      />
+                    )}
+                    {hasTranslation(explainTranslation) && (
+                      <Text type="text3" className={styles.explain}>
+                        {Translate(explainTranslation)}
+                      </Text>
+                    )}
+                  </React.Fragment>
+                );
+              })}
+              {errorCode && (
+                <Text type="text3" className={styles.error}>
+                  {Translate({ context: "form", label: errorCode })}
+                </Text>
+              )}
+            </div>
 
-          <Button onClick={() => {}}>
-            {Translate({
-              context: "order",
-              label: "approve-loaner-info",
-            })}
-          </Button>
-        </form>
-      )}
-    </div>
+            <Button onClick={() => {}}>
+              {Translate({
+                context: "order",
+                label: "approve-loaner-info",
+              })}
+            </Button>
+          </form>
+        )}
+      </div>
+    </>
   );
 }
 LoanerForm.propTypes = {
@@ -221,19 +295,40 @@ LoanerForm.propTypes = {
  *
  * @returns {component}
  */
-export default function Wrap({ onSubmit, callbackUrl }) {
-  const branchId = useRouter()?.query?.branch;
+export default function Wrap(props) {
+  const { onSubmit, callbackUrl } = props;
+
+  const query = useRouter()?.query;
+
+  const branchId = query?.branch;
+  const pid = query?.order;
+
+  // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
-  const { isAuthenticated, accessToken } = useUser();
-  const { loanerInfo, updateLoanerInfo } = useLoanerInfo();
+
+  // PolicyCheck in own request (sometimes slow)
+  const { data: policyData, isLoading: policyIsLoading } = useData(
+    pid && branchOrderPolicy({ branchId, pid })
+  );
+
+  const mergedData = merge({}, data, policyData);
+
+  const { isAuthenticated } = useUser();
+  const accessToken = useAccessToken();
+
+  const { loanerInfo, updateLoanerInfo } = useUser();
+
+  // User branches fetch
   const { data: userData, isLoading: userIsLoading } = useData(
     isAuthenticated && branchesForUser()
   );
+
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
-  const branch = data?.branches?.result?.[0];
-  const skeleton = branchId && (userIsLoading || branchIsLoading);
+  const branch = mergedData?.branches?.result?.[0];
+  const skeleton =
+    branchId && (userIsLoading || branchIsLoading || policyIsLoading);
 
   // When beginLogout is true, we mount the iframe
   // that logs out the user
@@ -272,6 +367,7 @@ export default function Wrap({ onSubmit, callbackUrl }) {
         <Text>User already logged in at {branch.agencyName}</Text>
       ) : (
         <LoanerForm
+          {...props}
           branch={branch}
           initial={loanerInfo}
           onLogin={() => {
@@ -284,7 +380,7 @@ export default function Wrap({ onSubmit, callbackUrl }) {
           onSubmit={(info) => {
             updateLoanerInfo(info);
             if (onSubmit) {
-              onSubmit(info);
+              onSubmit(branch);
             }
           }}
           submitting={beginLogout || loggedOut}

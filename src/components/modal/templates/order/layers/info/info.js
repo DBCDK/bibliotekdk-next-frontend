@@ -14,6 +14,7 @@ import styles from "./Info.module.css";
 export default function Info({
   material,
   user,
+  authUser,
   className,
   onLayerSelect,
   pickupBranch,
@@ -24,13 +25,13 @@ export default function Info({
 }) {
   const context = { context: "order" };
 
-  const isLoadingBranches = !user?.agency;
+  const isLoadingBranches = isLoading || (user.name && !user?.agency);
 
   // Mateiral props
   const { title, creators, materialType, cover } = material;
 
   // user props
-  const { name, mail: userMail, agency } = user;
+  const { userName, userMail, agency } = user;
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -61,6 +62,9 @@ export default function Info({
     label: "order-message-library",
   };
 
+  // info skeleton loading class
+  const loadingClass = isLoadingBranches ? styles.skeleton : "";
+
   // Set email input message if any
   const message = (hasTry && errorMessage) || messageFromLibrary;
 
@@ -69,7 +73,7 @@ export default function Info({
   const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
   return (
-    <div className={`${styles.info} ${className}`}>
+    <div className={`${styles.info} ${loadingClass} ${className}`}>
       <div className={styles.edition}>
         <div className={styles.left}>
           <div className={styles.title}>
@@ -106,15 +110,17 @@ export default function Info({
           </Title>
         </div>
         <div className={styles.library}>
-          <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-            {pickupBranch?.name}
-          </Text>
+          {(isLoadingBranches || pickupBranch) && (
+            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
+              {pickupBranch?.name}
+            </Text>
+          )}
           <div
             className={`${styles.link} ${animations["on-hover"]} `}
-            onClick={() => onLayerSelect("pickup")}
+            onClick={() => !isLoadingBranches && onLayerSelect("pickup")}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
-                onLayerSelect("pickup");
+                !isLoadingBranches && onLayerSelect("pickup");
               }
             }}
           >
@@ -137,16 +143,19 @@ export default function Info({
             />
           </div>
         </div>
-        <div className={styles.address}>
-          <Text type="text3" skeleton={isLoadingBranches} lines={2}>
-            {pickupBranch?.postalAddress}
-          </Text>
-          <Text
-            type="text3"
-            skeleton={isLoadingBranches}
-            lines={0}
-          >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
-        </div>
+
+        {(isLoadingBranches || pickupBranch) && (
+          <div className={styles.address}>
+            <Text type="text3" skeleton={isLoadingBranches} lines={2}>
+              {pickupBranch?.postalAddress}
+            </Text>
+            <Text
+              type="text3"
+              skeleton={isLoadingBranches}
+              lines={0}
+            >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
+          </div>
+        )}
         {pickupBranch &&
           (!pickupBranch?.pickupAllowed ||
             !pickupBranch?.orderPolicy?.orderPossible) && (
@@ -155,51 +164,56 @@ export default function Info({
             </div>
           )}
       </div>
-      <div className={styles.user}>
-        <Title type="title5">
-          {Translate({ ...context, label: "ordered-by" })}
-        </Title>
-        <div className={styles.name}>
-          <Text type="text1" skeleton={isLoading} lines={1}>
-            {name}
-          </Text>
-        </div>
-        <div className={styles.email}>
-          <label htmlFor="order-user-email">
-            <Text type="text1">
-              {Translate({ context: "general", label: "email" })}
+      {(isLoadingBranches || userName) && (
+        <div className={styles.user}>
+          <Title type="title5">
+            {Translate({ ...context, label: "ordered-by" })}
+          </Title>
+          <div className={styles.name}>
+            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
+              {userName}
             </Text>
-          </label>
+          </div>
+          <div className={styles.email}>
+            <label htmlFor="order-user-email">
+              <Text type="text1">
+                {Translate({ context: "general", label: "email" })}
+              </Text>
+            </label>
 
-          {userMail && lockedMessage && (
-            <div className={`${styles.emailMessage}`}>
-              <Text type="text3">{Translate(lockedMessage)}</Text>
-            </div>
-          )}
-          <Email
-            placeholder={Translate({
-              context: "form",
-              label: "email-placeholder",
-            })}
-            invalidClass={customInvalidClass}
-            required={true}
-            disabled={isLoading || !!userMail}
-            tabIndex={isVisible ? "0" : "-1"}
-            value={userMail || ""}
-            id="order-user-email"
-            onBlur={(value, valid) => onMailChange(value, valid)}
-            onMount={(value, valid) => onMailChange(value, valid)}
-            readOnly={!!userMail}
-            skeleton={isLoading}
-          />
+            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
+              <div className={`${styles.emailMessage}`}>
+                <Text type="text3" skeleton={isLoadingBranches} lines={1}>
+                  {Translate(lockedMessage)}
+                </Text>
+              </div>
+            )}
+            <Email
+              className={styles.input}
+              placeholder={Translate({
+                context: "form",
+                label: "email-placeholder",
+              })}
+              invalidClass={customInvalidClass}
+              required={true}
+              disabled={isLoading || !!authUser?.mail}
+              tabIndex={isVisible ? "0" : "-1"}
+              value={authUser?.mail || userMail || ""}
+              id="order-user-email"
+              onBlur={(value, valid) => onMailChange(value, valid)}
+              onMount={(value, valid) => onMailChange(value, valid)}
+              readOnly={!!authUser?.mail}
+              skeleton={isLoadingBranches}
+            />
 
-          {message && (
-            <div className={`${styles.emailMessage} ${validClass}`}>
-              <Text type="text3">{Translate(message)}</Text>
-            </div>
-          )}
+            {message && (
+              <div className={`${styles.emailMessage} ${validClass}`}>
+                <Text type="text3">{Translate(message)}</Text>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

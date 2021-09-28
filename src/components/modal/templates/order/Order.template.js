@@ -1,5 +1,10 @@
 import Router from "next/router";
 import filter from "lodash/filter";
+import getConfig from "next/config";
+import find from "lodash/find";
+
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 import { useState, useEffect } from "react";
 import merge from "lodash/merge";
@@ -9,32 +14,37 @@ import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
 import { submitOrder } from "@/lib/api/order.mutations";
 
+import useUser from "@/components/hooks/useUser";
+
+import Translate from "@/components/base/translate";
+
 // Layers
 import Info from "./layers/info";
 import Edition from "./layers/edition";
 import Pickup from "./layers/pickup";
 import Action from "./layers/action";
+import LoanerForm from "./layers/loanerform";
+
+import { Top } from "@/components/modal";
 
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
 
 /**
- *  Function to handle the active layer in modal
+ *  Function to handle branch change
  *
  * @param {string} layer
  */
-function handleLayer(layer) {
-  if (layer !== Router.query.modal) {
-    Router.push(
-      {
-        pathname: Router.pathname,
-        query: { ...Router.query, modal: `order-${layer}` },
-      },
-      null,
-      { shallow: true, scroll: false }
-    );
-  }
+function handleRouterPush(query) {
+  Router.push(
+    {
+      pathname: Router.pathname,
+      query: { ...Router.query, ...query },
+    },
+    null,
+    { shallow: true, scroll: false }
+  );
 }
 
 /**
@@ -48,6 +58,7 @@ export function Order({
   pid,
   work,
   user,
+  authUser,
   order,
   query,
   isVisible,
@@ -55,7 +66,8 @@ export function Order({
   onSubmit,
   onLayerChange,
   onLayerClose,
-  isLoading,
+  updateLoanerInfo,
+  isLoading = false,
 }) {
   // layer state
   const [translated, setTranslated] = useState(false);
@@ -65,14 +77,32 @@ export function Order({
   const [validated, setValidated] = useState(null);
   // Selected pickup branch
   // If none selected, use first branch in the list
-  let [pickupBranch, setPickupBranch] = useState();
-  pickupBranch = pickupBranch
-    ? user?.agency?.result?.find(
-        (branch) => pickupBranch.branchId === branch.branchId
-      )
-    : user?.agency?.result?.[0]
-    ? user.agency?.result?.[0]
-    : null;
+  let [pickupBranch, setPickupBranch] = useState(null);
+
+  useEffect(() => {
+    const userBranches = user?.agency?.result;
+
+    if (!pickupBranch && userBranches?.length > 0) {
+      // If user is logged in and no pickupBranch has been set
+
+      // Default branch select (first in row)
+      let defaultBranch = userBranches[0];
+
+      const queryBranchId = query?.branch;
+
+      if (queryBranchId) {
+        const match = find(userBranches, {
+          branchId: queryBranchId,
+        });
+
+        if (match) {
+          defaultBranch = match;
+        }
+      }
+
+      setPickupBranch(defaultBranch);
+    }
+  }, [user?.agency]);
 
   // Email state
   const [mail, setMail] = useState(null);
@@ -169,12 +199,12 @@ export function Order({
 
   const materialsSameType = filter(
     manifestations,
-    (manifestation) => manifestation.materialType === material.materialType
+    (m) => m?.materialType === material.materialType && m?.admin?.requestButton
   );
 
   // status
   const isOrdering = orderIsLoading;
-  const isOrdered = orderData?.submitOrder?.status === "ok";
+  const isOrdered = orderData?.submitOrder?.orderId;
   const isFailed = !!orderError;
 
   // class'
@@ -194,6 +224,14 @@ export function Order({
           className={`${styles.wrap} ${activePageClass} ${activeTranslatedClass}`}
         >
           <div className={styles.left}>
+            <Top
+              title={Translate({
+                context: "modal",
+                label: `title-order`,
+              })}
+              isVisible={!translated && isVisible}
+              handleClose={onClose}
+            />
             <Info
               isVisible={!translated && isVisible}
               material={{
@@ -203,10 +241,21 @@ export function Order({
                 cover: { detail: material?.cover?.detail || cover?.detail },
               }}
               user={user}
+              authUser={authUser}
               className={`${styles.page} ${styles[`page-info`]}`}
-              onLayerSelect={(layer) => onLayerChange && onLayerChange(layer)}
+              onLayerSelect={(layer) =>
+                onLayerChange && onLayerChange({ modal: `order-${layer}` })
+              }
               pickupBranch={pickupBranch}
-              onMailChange={(value, valid) => setMail({ value, valid })}
+              onMailChange={(value, valid) => {
+                // update mail in loanerInfo
+                valid &&
+                  !authUser?.mail &&
+                  updateLoanerInfo &&
+                  updateLoanerInfo({ userMail: value });
+                // update mail in state
+                setMail({ value, valid });
+              }}
               mail={mail}
               validated={validated}
               isLoading={isLoading}
@@ -221,15 +270,59 @@ export function Order({
             />
             <Pickup
               isVisible={translated && activeLayer === "pickup"}
+              className={`${styles.page} ${styles[`page-pickup`]}`}
               agency={agency}
-              className={`${styles.page} ${styles[`page-library`]}`}
               onSelect={(branch) => {
-                setPickupBranch(branch);
-                // Give it some time to animate before closing
-                setTimeout(() => onLayerClose(), 300);
+                // should send to loanerform
+                let loanerform = false;
+                // if branches has same agency
+                if (branch.agencyId === pickupBranch?.agencyId) {
+                  // and the new selected branch has borrowercheck
+                  if (branch.borrowerCheck) {
+                    // Set new branch without new log-in
+                    setPickupBranch(branch);
+                    onLayerChange &&
+                      onLayerChange({
+                        modal: `order`,
+                        branch: branch.branchId,
+                      });
+                  } else {
+                    loanerform = true;
+                  }
+                } else {
+                  loanerform = true;
+                }
+                // send to next layer
+                if (loanerform) {
+                  onLayerChange &&
+                    onLayerChange({
+                      modal: `order-loanerform`,
+                      branch: branch.branchId,
+                    });
+                }
               }}
+              onLayerSelect={(layer) =>
+                onLayerChange && onLayerChange({ modal: `order-${layer}` })
+              }
               onClose={onLayerClose}
-              selected={pickupBranch}
+            />
+          </div>
+          <div className={styles.login}>
+            <LoanerForm
+              callbackUrl={`${APP_URL}${Router?.asPath?.replace(
+                "-loanerform",
+                ""
+              )}`}
+              isVisible={translated && activeLayer === "loanerform"}
+              className={`${styles.page} ${styles[`page-loanerform`]}`}
+              onClose={onLayerClose}
+              onSubmit={(branch) => {
+                setPickupBranch(branch);
+                onLayerChange &&
+                  onLayerChange({
+                    modal: `order`,
+                  });
+              }}
             />
           </div>
         </div>
@@ -247,8 +340,7 @@ export function Order({
               onSubmit &&
                 onSubmit(
                   materialsSameType.map((m) => m.pid),
-                  pickupBranch,
-                  mail?.value
+                  pickupBranch
                 );
             } else {
               setHasTry(true);
@@ -299,13 +391,13 @@ export default function Wrap(props) {
 
   const covers = useData(workFragments.covers({ workId }));
 
-  // Fetch user data
-  const { data: userData, error: userDataError } = useData(
-    userFragments.basic()
-  );
-  const { data: orderPolicy, error: orderPolicyError } = useData(
-    pid && userFragments.orderPolicy({ pid })
-  );
+  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
+
+  const {
+    data: orderPolicy,
+    isLoading: policyIsLoading,
+    error: orderPolicyError,
+  } = useData(pid && userFragments.orderPolicy({ pid }));
 
   const orderMutation = useMutate();
 
@@ -319,32 +411,36 @@ export default function Wrap(props) {
     }
   }, [order]);
 
-  if (isLoading) {
+  if (isLoading || policyIsLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error || userDataError) {
+  if (error) {
     return <div>Error :( !!!!!</div>;
   }
 
   const mergedWork = merge({}, covers.data, data);
-  const mergedUser = merge({}, userData, orderPolicy);
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
   return (
     <Order
       work={mergedWork?.work}
-      user={mergedUser?.user || {}}
+      authUser={authUser}
+      user={mergedUser || {}}
       pid={pid}
       order={orderMutation}
       query={Router.query}
-      onLayerChange={(layer) => handleLayer(layer)}
+      onLayerChange={(query) => handleRouterPush(query)}
+      updateLoanerInfo={updateLoanerInfo}
       onLayerClose={() => Router.back()}
-      onSubmit={(pids, pickupBranch, email) => {
+      onSubmit={(pids, pickupBranch) => {
+        console.log("### loanerInfo onSubmit", loanerInfo);
+
         orderMutation.post(
           submitOrder({
             pids,
             branchId: pickupBranch.branchId,
-            email,
+            userParameters: loanerInfo,
           })
         );
       }}

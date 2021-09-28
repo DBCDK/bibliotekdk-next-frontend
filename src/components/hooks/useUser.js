@@ -2,34 +2,92 @@ import { useSession } from "next-auth/client";
 import useSWR, { mutate } from "swr";
 import { createContext, useContext, useMemo } from "react";
 
+import { useData } from "@/lib/api/api";
+import * as userFragments from "@/lib/api/user.fragments";
+
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
+
+// in memory object for storing loaner info for current user
+let loanerInfo = {};
+let loanerInfoMock = {};
+const loanerInfoKey = "loanerinfo";
+
+/**
+ * Mock used in storybook
+ */
+function useAccessTokenMock() {
+  return "dummy-token";
+}
 
 /**
  * Mock used in storybook
  */
 function useUserMock() {
-  return { isAuthenticated: false, accessToken: "dummy-token" };
-}
+  const useUserMockKey = "useUserMock";
 
-// in memory object for storing loaner info for current user
-let loanerInfo = {};
-const loanerInfoKey = "loanerinfo";
+  const { data } = useSWR(useUserMockKey, () => loanerInfoMock, {
+    initialData: loanerInfoMock,
+  });
+
+  const authUser = { name: "Some Name", mail: "some@mail.dk" };
+  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
+
+  return {
+    authUser,
+    isLoading: false,
+    error: null,
+    isAuthenticated: true,
+    loanerInfo: { ...data, ...loggedInUser },
+    updateLoanerInfo: (obj) => {
+      // Update global loaner info object
+      loanerInfoMock = { ...loanerInfoMock, ...obj };
+
+      // Broadcast update
+      mutate(useUserMockKey);
+    },
+  };
+}
 
 //
 let anonSession;
 /**
  * Hook for getting and storing loaner info
  */
-export function useLoanerInfo() {
+function useUserImpl() {
   // Fetch loaner info
   // Note that this is not fetching from API, but local in-memory object
   const { data } = useSWR(loanerInfoKey, () => loanerInfo, {
     initialData: loanerInfo,
   });
 
+  const [session] = useSession();
+
+  const isAuthenticated = !!session?.user?.uniqueId;
+
+  const {
+    data: userData,
+    isLoading: userIsLoading,
+    error: userDataError,
+  } = useData(isAuthenticated && userFragments.basic());
+
+  let loggedInUser = {};
+  if (userData) {
+    const user = userData.user;
+    if (user.name) {
+      loggedInUser.userName = user.name;
+    }
+    if (user.mail) {
+      loggedInUser.userMail = user.mail;
+    }
+  }
+
   return {
-    loanerInfo: data,
+    authUser: userData?.user || {},
+    isLoading: userIsLoading,
+    error: userDataError,
+    isAuthenticated,
+    loanerInfo: { ...data, ...loggedInUser },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfo = { ...loanerInfo, ...obj };
@@ -43,7 +101,7 @@ export function useLoanerInfo() {
 /**
  * Hook for getting authenticated user
  */
-function useUser() {
+function useAccessTokenImpl() {
   const [session] = useSession();
   const anonSessionContext = useContext(AnonymousSessionContext);
 
@@ -52,12 +110,16 @@ function useUser() {
   if (anonSessionContext) {
     anonSession = anonSessionContext;
   }
-  const accessToken = session?.accessToken || anonSession?.accessToken;
 
-  return {
-    isAuthenticated: !!session?.user?.uniqueId,
-    accessToken,
-  };
+  return session?.accessToken || anonSession?.accessToken;
 }
 
-export default process.env.STORYBOOK_ACTIVE ? useUserMock : useUser;
+const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;
+
+export default useUser;
+
+const useAccessToken = process.env.STORYBOOK_ACTIVE
+  ? useAccessTokenMock
+  : useAccessTokenImpl;
+
+export { useAccessToken };

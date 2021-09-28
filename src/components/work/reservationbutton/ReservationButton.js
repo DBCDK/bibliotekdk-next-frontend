@@ -1,7 +1,6 @@
 import Button from "@/components/base/button/Button";
 import styles from "@/components/work/overview/Overview.module.css";
 import Translate from "@/components/base/translate";
-import includes from "lodash/includes";
 import Text from "@/components/base/text/Text";
 
 // Translate Context
@@ -111,19 +110,6 @@ export function OrderButton({
   if (!checkRequestButtonIsTrue({ manifestations })) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
-  }
-  // is user logged in
-  if (!user.isAuthenticated) {
-    // login button
-    return (
-      <Button
-        skeleton={buttonSkeleton}
-        onClick={() => login()}
-        data_cy="button-order-overview"
-      >
-        {Translate({ ...context, label: "Order (not logged in)" })}
-      </Button>
-    );
   }
 
   const pid = manifestations[0].pid;

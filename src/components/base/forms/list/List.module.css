@@ -51,7 +51,7 @@
   border-color: var(--blue);
 }
 .label {
-  display: none
+  display: none;
 }
 
 .disabledrow {

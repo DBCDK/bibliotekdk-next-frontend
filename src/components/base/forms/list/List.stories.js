@@ -1,11 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Radio from "@/components/base/radio";
+import List from "@/components/base/forms/list";
 import animations from "@/components/base/animation/animations.module.css";
 import { useState } from "react";
 
 export default {
-  title: "base/Radio",
+  title: "base/Forms/List",
 };
 
 const rows = [
@@ -23,9 +23,9 @@ export function RadioGroup() {
         Tab will focus selected element. use keys up/left to focus prev button,
         and down/right to focus next button{" "}
       </StoryDescription>
-      <Radio.Group>
+      <List.Group>
         {rows.map((row) => (
-          <Radio.Button
+          <List.Radio
             key={row.title}
             selected={selected.title === row.title}
             onSelect={() => setSelected(row)}
@@ -33,9 +33,32 @@ export function RadioGroup() {
           >
             <b>{row.title}</b>
             <p>{row.description}</p>
-          </Radio.Button>
+          </List.Radio>
         ))}
-      </Radio.Group>
+      </List.Group>
+    </div>
+  );
+}
+export function SelectGroup() {
+  const [selected, setSelected] = useState({});
+  return (
+    <div>
+      <StoryTitle>Select Button Group</StoryTitle>
+      <StoryDescription>
+        Tab will focus selected element. use keys up/left to focus prev button,
+        and down/right to focus next button{" "}
+      </StoryDescription>
+      <List.Group>
+        {rows.map((row) => (
+          <List.Select
+            key={row.title}
+            onSelect={() => setSelected(alert(`${row.title} selected`))}
+            label={row.title}
+          >
+            <b>{row.title}</b>
+          </List.Select>
+        ))}
+      </List.Group>
     </div>
   );
 }
@@ -48,9 +71,9 @@ export function RadioGroupNoInitialSelection() {
         Tab will focus selected element. use keys up/left to focus prev button,
         and down/right to focus next button{" "}
       </StoryDescription>
-      <Radio.Group>
+      <List.Group>
         {rows.map((row) => (
-          <Radio.Button
+          <List.Radio
             key={row.title}
             selected={selected.title === row.title}
             onSelect={() => setSelected(row)}
@@ -58,9 +81,9 @@ export function RadioGroupNoInitialSelection() {
           >
             <b>{row.title}</b>
             <p>{row.description}</p>
-          </Radio.Button>
+          </List.Radio>
         ))}
-      </Radio.Group>
+      </List.Group>
     </div>
   );
 }
@@ -73,9 +96,9 @@ export function DisabledRadioGroup() {
       <StoryDescription>
         One can't tab into group, or check/uncheck radio buttons
       </StoryDescription>
-      <Radio.Group enabled={false}>
+      <List.Group enabled={false}>
         {rows.map((row) => (
-          <Radio.Button
+          <List.Radio
             key={row.title}
             selected={selected.title === row.title}
             onSelect={() => setSelected(row)}
@@ -83,9 +106,9 @@ export function DisabledRadioGroup() {
           >
             <b>{row.title}</b>
             <p>{row.description}</p>
-          </Radio.Button>
+          </List.Radio>
         ))}
-      </Radio.Group>
+      </List.Group>
       <div
         style={{ marginTop: 24, display: "inline-block" }}
         tabIndex="0"
@@ -103,9 +126,9 @@ export function DisabledPartialButtons() {
     <div>
       <StoryTitle>Radio Button Group</StoryTitle>
       <StoryDescription>The second radio button is disabled.</StoryDescription>
-      <Radio.Group>
+      <List.Group>
         {rows.map((row, index) => (
-          <Radio.Button
+          <List.Radio
             key={row.title}
             selected={selected.title === row.title}
             onSelect={() => setSelected(row)}
@@ -114,9 +137,9 @@ export function DisabledPartialButtons() {
           >
             <b>{row.title}</b>
             <p>{row.description}</p>
-          </Radio.Button>
+          </List.Radio>
         ))}
-      </Radio.Group>
+      </List.Group>
     </div>
   );
 }

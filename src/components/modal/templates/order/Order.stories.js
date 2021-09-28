@@ -342,11 +342,11 @@ export function OrderPolicyFail() {
           pid={"some-pid"}
           order={order}
           query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
+          onLayerChange={(query) => setQuery(query)}
           onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
+          onSubmit={(pids, pickupBranch) => {
             alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
+              `Ordering "${pids}" to branch id "${pickupBranch.branchId}".`
             );
           }}
         />

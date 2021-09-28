@@ -6,7 +6,10 @@
 import PropTypes from "prop-types";
 
 import { useEffect, useRef } from "react";
-import styles from "./Radio.module.css";
+
+import Arrow from "@/components/base/animation/arrow";
+
+import styles from "./List.module.css";
 
 import animations from "@/components/base/animation/animations.module.css";
 
@@ -21,7 +24,7 @@ import animations from "@/components/base/animation/animations.module.css";
  * @param {boolean} props.selected
  * @param {function} props._ref
  */
-function Button({
+function Radio({
   children,
   disabled,
   label,
@@ -67,7 +70,80 @@ function Button({
     </div>
   );
 }
-Button.propTypes = {
+Radio.propTypes = {
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  label: PropTypes.string,
+  onSelect: PropTypes.func,
+  selected: PropTypes.bool,
+  _ref: PropTypes.func,
+};
+
+/**
+ * A custom Select Button displayed as a row
+ *
+ * @param {object} props
+ * @param {array} props.children
+ * @param {className} props.string
+ * @param {string} props.label the aria label for the radio button
+ * @param {function} props.onSelect
+ * @param {boolean} props.selected
+ * @param {function} props._ref
+ */
+function Select({
+  children,
+  disabled,
+  onDisabled,
+  label,
+  onSelect,
+  selected,
+  _ref,
+  className,
+  ...props
+}) {
+  return (
+    <div
+      data-cy={props["data-cy"]}
+      ref={_ref}
+      role="select"
+      aria-checked={selected}
+      aria-disabled={!!disabled}
+      disabled={!!disabled}
+      onClick={() => {
+        if (!disabled) {
+          onSelect();
+        }
+      }}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && onSelect && !disabled) {
+          onSelect(e);
+        }
+      }}
+      className={`${styles.row} ${animations["on-focus"]} ${
+        animations["f-outline"]
+      } ${selected ? styles.selected : ""} ${className || ""} ${
+        disabled ? styles.disabledrow : ""
+      }`}
+    >
+      <div
+        className={[styles.content, animations["f-translate-right"]].join(" ")}
+      >
+        {children}
+      </div>
+      {!disabled ? (
+        <Arrow
+          className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+        />
+      ) : (
+        onDisabled
+      )}
+      <div id="list-label" className={styles.label}>
+        {label}
+      </div>
+    </div>
+  );
+}
+Select.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   label: PropTypes.string,
@@ -84,12 +160,14 @@ function Group({ children, enabled = true, ...props }) {
     // either the checked or the first button
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
-      el.tabIndex = "-1";
-      if (
-        el.getAttribute("aria-checked") === "true" ||
-        el.getAttribute("aria-checked") === true
-      ) {
-        index = idx;
+      if (el) {
+        el.tabIndex = "-1";
+        if (
+          el.getAttribute("aria-checked") === "true" ||
+          el.getAttribute("aria-checked") === true
+        ) {
+          index = idx;
+        }
       }
     });
     if (childrenRef.current[index] && enabled) {
@@ -101,7 +179,7 @@ function Group({ children, enabled = true, ...props }) {
     <div
       data-cy={props["data-cy"]}
       role="radiogroup"
-      aria-labelledby="radio-label"
+      aria-labelledby="list-label"
       className={`${styles.group} ${
         enabled ? styles.enabled : styles.disabled
       }`}
@@ -123,7 +201,7 @@ function Group({ children, enabled = true, ...props }) {
       {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
           _ref: (ref) => (childrenRef.current[index] = ref),
-          "data-cy": "radio-button-" + index,
+          "data-cy": "list-button-" + index,
           disabled: enabled === false || child.props.disabled,
         })
       )}
@@ -133,5 +211,6 @@ function Group({ children, enabled = true, ...props }) {
 
 export default {
   Group,
-  Button,
+  Radio,
+  Select,
 };
