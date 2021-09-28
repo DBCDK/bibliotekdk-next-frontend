@@ -123,6 +123,9 @@ export function details({ workId }) {
                   url
                   pid
                 }
+                ... on DigitalCopy{
+                  issn
+                }
               }
               physicalDescription
               publisher              

@@ -30,25 +30,6 @@ import { ButtonTxt } from "@/components/work/reservationbutton/ReservationButton
 const context = { context: "overview" };
 
 /**
- * infomedia url is specific for this gui - set an url on the online access object
- * @param onlineAccess
- * @return {*}
- */
-function addToOnlinAccess(onlineAccess, title) {
-  const addi = onlineAccess?.map((access) => {
-    if (access.infomediaId) {
-      access.url = `/infomedia/${title}/work-of:${access.pid}`;
-    }
-    // @TODO should the text on the button differ ??
-    // like access.buttonTxt = "fisk
-
-    return access;
-  });
-
-  return addi;
-}
-
-/**
  * The Component function
  *
  * @param {obj} props
@@ -91,13 +72,6 @@ export function Overview({
   }
 
   const searchOnUrl = "/find?q=";
-
-  if (selectedMaterial?.manifestations?.[0].onlineAccess) {
-    const enrichedOnline = addToOnlinAccess(
-      selectedMaterial.manifestations[0].onlineAccess
-    );
-    selectedMaterial.manifestations[0].onlineAccess = enrichedOnline;
-  }
   const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
 
   const workType = workTypes?.[0] || "fallback";

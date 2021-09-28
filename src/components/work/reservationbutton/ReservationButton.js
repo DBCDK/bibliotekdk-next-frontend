@@ -24,6 +24,15 @@ export function ButtonTxt({ selectedMaterial, skeleton }) {
         ].join(" ")}
       </Text>
     );
+  } else if (online && onlineAccess[0].issn) {
+    return (
+      <Text type="text3" skeleton={skeleton} lines={2}>
+        {Translate({
+          context: "options",
+          label: "digital-copy-link-description",
+        })}
+      </Text>
+    );
   } else {
     return (
       <>
@@ -88,8 +97,11 @@ export function OrderButton({
   5. material is not available -> disable
    */
 
-  // online access ?
-  if (selectedMaterial?.onlineAccess?.length > 0) {
+  // online access ? - special handling of digital copy (onlineAccess[0].issn)
+  if (
+    selectedMaterial?.onlineAccess?.length > 0 &&
+    !selectedMaterial.onlineAccess[0].issn
+  ) {
     return (
       <Button
         className={styles.externalLink}
@@ -114,6 +126,21 @@ export function OrderButton({
 
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
+  // special case - digital copy
+  if (
+    selectedMaterial?.onlineAccess?.length > 0 &&
+    selectedMaterial.onlineAccess[0].issn
+  ) {
+    return (
+      <Button
+        skeleton={buttonSkeleton}
+        onClick={() => alert("not implemented")}
+        data_cy="button-order-overview-enabled"
+      >
+        {Translate({ context: "options", label: "digital-copy-link-title" })}
+      </Button>
+    );
+  }
 
   return (
     <Button

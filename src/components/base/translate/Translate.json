@@ -739,6 +739,14 @@
       }
     },
     "options": {
+      "digital-copy-link-title": {
+        "da": "Bestil digital kopi",
+        "en": "Order digital copy"
+      },
+      "digital-copy-link-description": {
+        "da" : "Leveres af det Kgl. bibliotek",
+        "en" : "Delivered by Royal Danish Library"
+      },
       "online-link-title": {
         "da": "Link til %type",
         "en": "Link to %type"
