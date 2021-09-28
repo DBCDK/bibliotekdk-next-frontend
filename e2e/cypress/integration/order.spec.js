@@ -109,7 +109,6 @@ describe("Order", () => {
 
     // updating loanerinfo in background
     cy.get("[data-cy=text-freja-damgaard]").click();
-    cy.wait(1000);
 
     // submit order
     cy.get("[data-cy=button-godkend]").click();
