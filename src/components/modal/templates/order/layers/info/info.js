@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import merge from "lodash/merge";
+
 import Link from "@/components/base/link";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -7,11 +10,17 @@ import Email from "@/components/base/forms/email";
 import Cover from "@/components/base/cover";
 import Arrow from "@/components/base/animation/arrow";
 
+import { useData } from "@/lib/api/api";
+
+import useUser from "@/components/hooks/useUser";
+
+import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+
 import animations from "@/components/base/animation/animations.module.css";
 
 import styles from "./Info.module.css";
 
-export default function Info({
+export function Info({
   material,
   user,
   authUser,
@@ -61,6 +70,15 @@ export default function Info({
     context: "order",
     label: "order-message-library",
   };
+
+  const LibrarySelect = Translate({
+    ...context,
+    label: pickupBranch ? "change-pickup-link" : "pickup-link",
+  });
+  const LibrarySelectShort = Translate({
+    context: "general",
+    label: pickupBranch ? "change" : "select",
+  });
 
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
@@ -132,10 +150,10 @@ export default function Info({
               tabIndex={isVisible ? "0" : "-1"}
             >
               <Text type="text3" className={styles.fullLink}>
-                {Translate({ ...context, label: "pickup-link" })}
+                {LibrarySelect}
               </Text>
               <Text type="text3" className={styles.shortLink}>
-                {Translate({ context: "general", label: "select" })}
+                {LibrarySelectShort}
               </Text>
             </Link>
             <Arrow
@@ -156,7 +174,8 @@ export default function Info({
             >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
           </div>
         )}
-        {pickupBranch &&
+        {!isLoadingBranches &&
+          pickupBranch &&
           (!pickupBranch?.pickupAllowed ||
             !pickupBranch?.orderPolicy?.orderPossible) && (
             <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
@@ -215,5 +234,46 @@ export default function Info({
         </div>
       )}
     </div>
+  );
+}
+
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function Wrap(props) {
+  // Get query from url, if no pid is found in props
+  const query = useRouter()?.query;
+
+  // authUser from useUser() is used if no authUser is found in props
+  const { authUser } = useUser();
+
+  // If not given in probs, component will try to fetch them
+  const { pickupBranch, pid = query?.order } = props;
+
+  // fetch orderPolicy if it doesnt exist
+  const shouldFetchOrderPolicy = pid && !pickupBranch?.orderPolicy;
+
+  // PolicyCheck in own request (sometimes slow)
+  const { data: policyData, isLoading: policyIsLoading } = useData(
+    shouldFetchOrderPolicy &&
+      branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
+  );
+
+  // If found, merge orderPolicy into pickupBranch
+  const orderPolicy = policyData?.branches?.result[0];
+  const mergedData = orderPolicy && merge({}, pickupBranch, orderPolicy);
+
+  return (
+    <Info
+      {...props}
+      isLoading={props.isLoading || policyIsLoading}
+      pickupBranch={mergedData || pickupBranch}
+      authUser={props.authUser || authUser}
+    />
   );
 }

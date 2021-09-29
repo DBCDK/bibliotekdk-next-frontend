@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { useRouter } from "next/router";
+import merge from "lodash/merge";
+
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 import Progress from "@/components/base/progress";
@@ -7,12 +10,15 @@ import Icon from "@/components/base/icon";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
+import { useData } from "@/lib/api/api";
+import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+
 import styles from "./Action.module.css";
 
 /**
  * Order Button
  */
-function Action({
+export function Action({
   onClick = null,
   validated,
   isVisible,
@@ -145,4 +151,41 @@ function Action({
   );
 }
 
-export default Action;
+/**
+ *  Default export function of the Component
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export default function Wrap(props) {
+  // Get query from props - fallback to url query
+  const query = props.query || useRouter()?.query;
+
+  // If not given in probs, component will try to fetch them
+  const pid = query?.order;
+
+  const { pickupBranch } = props.data;
+
+  // fetch orderPolicy if it doesnt exist
+  const shouldFetchOrderPolicy = pid && !pickupBranch?.orderPolicy;
+
+  // PolicyCheck in own request (sometimes slow)
+  const { data: policyData, isLoading: policyIsLoading } = useData(
+    shouldFetchOrderPolicy &&
+      branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
+  );
+
+  // If found, merge orderPolicy into pickupBranch
+  const orderPolicy = policyData?.branches?.result[0];
+  const mergedData = orderPolicy && merge({}, pickupBranch, orderPolicy);
+
+  return (
+    <Action
+      {...props}
+      isLoading={props.isLoading || policyIsLoading}
+      data={{ ...props.data, pickupBranch: mergedData || pickupBranch }}
+    />
+  );
+}

@@ -219,6 +219,10 @@
         "da": "Vælg",
         "en": "Select"
       },
+      "change": {
+        "da": "Skift",
+        "en": "LABEL mangler oversættelse"
+      },
       "your-library": {
         "da": "dit bibliotek",
         "en": "your library"
@@ -744,8 +748,8 @@
         "en": "Order digital copy"
       },
       "digital-copy-link-description": {
-        "da" : "Leveres af det Kgl. bibliotek",
-        "en" : "Delivered by Royal Danish Library"
+        "da": "Leveres af det Kgl. bibliotek",
+        "en": "Delivered by Royal Danish Library"
       },
       "online-link-title": {
         "da": "Link til %type",
@@ -764,8 +768,8 @@
         "en": "Provided by %s"
       },
       "online-webarchive-title": {
-        "da" : "Læs artikel som pdf",
-        "en" : "Get article as pdf"
+        "da": "Læs artikel som pdf",
+        "en": "Get article as pdf"
       },
       "online-webarchive-description": {
         "da": "Hent pdf fra DBC webarkiv",
@@ -982,6 +986,10 @@
       "pickup-link": {
         "da": "Vælg afhentning",
         "en": "Select pickup"
+      },
+      "change-pickup-link": {
+        "da": "Skift afhentning",
+        "en": "LABEL mangler oversættelse"
       },
       "pickup-input-placeholder": {
         "da": "Søg efter afhentningssted",

@@ -43,6 +43,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
                 name
                 city
                 postalAddress
+                postalCode
                 pickupAllowed
                 highlights {
                     key
