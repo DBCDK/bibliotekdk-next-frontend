@@ -17,6 +17,9 @@ export function ShowLoanerFormNoLogin() {
           name: "DBCTestBibliotek",
           agencyName: "DBC-Testbiblioteksvæsen",
           agencyId: "790900",
+          orderPolicy: {
+            orderPossible: true,
+          },
           userParameters: [
             {
               userParameterType: "cpr",
@@ -88,6 +91,9 @@ export function ShowLoanerFormWithLogin() {
           agencyId: "790900",
           userParameters: [],
           pickupAllowed: true,
+          orderPolicy: {
+            orderPossible: true,
+          },
         }}
         onSubmit={(data) => {
           console.log(data);
@@ -112,11 +118,41 @@ export function ShowLoanerFormWithLoginSubmitting() {
           agencyId: "790900",
           userParameters: [],
           pickupAllowed: true,
+          orderPolicy: {
+            orderPossible: true,
+          },
         }}
         onSubmit={(data) => {
           console.log(data);
         }}
         submitting={true}
+      />
+    </div>
+  );
+}
+
+/**
+ * Returns Loaner Form
+ *
+ */
+export function ShowLoanerFormWithOrderPolicyFalse() {
+  return (
+    <div style={{ maxWidth: 450 }}>
+      <LoanerForm
+        branch={{
+          borrowerCheck: true,
+          name: "DBCTestBibliotek",
+          agencyName: "DBC-Testbiblioteksvæsen",
+          agencyId: "790900",
+          userParameters: [],
+          pickupAllowed: true,
+          orderPolicy: {
+            orderPossible: false,
+          },
+        }}
+        onSubmit={(data) => {
+          console.log(data);
+        }}
       />
     </div>
   );
