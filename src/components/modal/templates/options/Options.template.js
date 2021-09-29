@@ -1,4 +1,4 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
@@ -10,6 +10,7 @@ import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
 import WebArchive from "./templates/webarchive";
 import DigitalCopy from "./templates/digitalcopy";
+import PhysicalCopy from "./templates/physical";
 
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
@@ -37,16 +38,60 @@ function getTemplate(props) {
   if (props.accessType === "digitalCopy") {
     return <DigitalCopy {...props} />;
   }
+  if (props.accessType === "physical") {
+    return <PhysicalCopy props={props} />;
+  }
 }
 
 function sortorder(onlineaccess) {
-  const realorder = ["online", "webArchive", "infomedia", "digitalCopy"];
+  const realorder = [
+    "online",
+    "webArchive",
+    "infomedia",
+    "digitalCopy",
+    "physical",
+  ];
   return sortBy(onlineaccess, function (item) {
     return realorder.indexOf(item.accessType);
   });
 }
 
-export function Options({ data, title_author, isLoading, workId, type }) {
+/**
+ * Enrich online access object with additinal info
+ * @param onlineAccess
+ *  Array of onlineaccess objects
+ * @parm orderPossible
+ *  Is it possible to order a physical copy?
+ * @return {*}
+ */
+function addToOnlinAccess(onlineAccess = [], orderPossible) {
+  const addi = onlineAccess?.map((access) => {
+    if (access.infomediaId) {
+      access.accessType = "infomedia";
+    } else if (access.issn) {
+      access.accessType = "digitalCopy";
+    } else if (access.type === "webArchive") {
+      access.accessType = "webArchive";
+    } else if (access.url) {
+      access.accessType = "online";
+    }
+    return access;
+  });
+  if (orderPossible === "true") {
+    addi.push({ accessType: "physical" });
+  }
+
+  return addi;
+}
+
+export function Options({
+  data,
+  title_author,
+  isLoading,
+  workId,
+  type,
+  orderPossible,
+}) {
   if (isLoading) {
     return <Skeleton lines={3} className={styles.skeleton} />;
   }
@@ -61,7 +106,8 @@ export function Options({ data, title_author, isLoading, workId, type }) {
   );
 
   const onlineAccess = addToOnlinAccess(
-    currentMaterial?.manifestations[0]?.onlineAccess
+    currentMaterial?.manifestations[0]?.onlineAccess,
+    orderPossible
   );
 
   const onClose = () => Router.back();
@@ -79,7 +125,7 @@ export function Options({ data, title_author, isLoading, workId, type }) {
           handleClose={onClose}
         />
         <div className={styles.options}>
-          <ul className={styles.list}>
+          <ul className={styles.list} key="options-ul">
             {orderedOnlineAccess.map((i) => {
               return getTemplate({
                 ...i,
@@ -96,31 +142,9 @@ export function Options({ data, title_author, isLoading, workId, type }) {
   );
 }
 
-/**
- * infomedia url is specific for this gui - set an url on the online access object
- * @param onlineAccess
- * @return {*}
- */
-function addToOnlinAccess(onlineAccess, title) {
-  const addi = onlineAccess?.map((access) => {
-    if (access.infomediaId) {
-      access.accessType = "infomedia";
-    } else if (access.issn) {
-      access.accessType = "digitalCopy";
-    } else if (access.type === "webArchive") {
-      access.accessType = "webArchive";
-    } else if (access.url) {
-      access.accessType = "online";
-    }
-    return access;
-  });
-
-  return addi;
-}
-
 export default function Wrap(props) {
-  const { workId, title_author, type } = Router.query;
-
+  const router = useRouter();
+  const { workId, title_author, type, orderPossible } = router.query;
   // Fetch work data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.details({ workId })
@@ -137,6 +161,7 @@ export default function Wrap(props) {
       isLoading={isLoading}
       workId={workId}
       type={type}
+      orderPossible={orderPossible}
     />
   );
 }

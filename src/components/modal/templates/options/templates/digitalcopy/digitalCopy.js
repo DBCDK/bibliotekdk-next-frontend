@@ -43,7 +43,7 @@ export default function DigitalCopy({
   };
 
   return (
-    <li className={`${className} ${styles.item}`}>
+    <li className={`${className} ${styles.item}`} key="options-digitalcopy">
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}

@@ -72,7 +72,6 @@ export function Overview({
   }
 
   const searchOnUrl = "/find?q=";
-  const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
 
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
@@ -205,7 +204,7 @@ export function Overview({
                 />
               </Col>
               <Col xs={12} className={styles.info}>
-                <AlternativeOptions onlineAccess={onlineAccess} />
+                <AlternativeOptions selectedMaterial={selectedMaterial} />
               </Col>
             </Row>
           </Col>

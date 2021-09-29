@@ -5,12 +5,16 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 
 import styles from "./Alternatives.module.css";
+import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/ReservationButton";
 
-export default function AlternativeOptions({ onlineAccess = [] }) {
-  const router = useRouter();
+export function AlternativeOptions({
+  onlineAccess = [],
+  requestButton = false,
+  router = null,
+}) {
   const context = { context: "overview" };
 
-  const count = onlineAccess?.length;
+  const count = onlineAccess?.length + (requestButton ? 1 : 0);
   {
     return (
       count > 1 && (
@@ -22,6 +26,7 @@ export default function AlternativeOptions({ onlineAccess = [] }) {
                 pathname: router.pathname,
                 query: {
                   ...router.query,
+                  orderPossible: requestButton,
                   modal: "options",
                 },
               });
@@ -39,4 +44,19 @@ export default function AlternativeOptions({ onlineAccess = [] }) {
       )
     );
   }
+}
+
+export default function wrap({ selectedMaterial }) {
+  const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
+  const manifestations = selectedMaterial?.manifestations;
+  const requestButton = checkRequestButtonIsTrue({ manifestations });
+  const router = useRouter();
+
+  return (
+    <AlternativeOptions
+      onlineAccess={onlineAccess}
+      requestButton={requestButton}
+      router={router}
+    />
+  );
 }

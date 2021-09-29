@@ -6,11 +6,13 @@ import Translate from "@/components/base/translate";
 import styles from "./infomedia.module.css";
 
 export function Infomedia({ props }) {
+  console.log(props, "PROPS");
+
   const { infomediaId, pid, title_author, className, workId } = { ...props };
   const context = { context: "options" };
   const url = infomediaUrl(workId, title_author);
   return (
-    <li className={`${className} ${styles.item}`}>
+    <li className={`${className} ${styles.item}`} key="options-infomedia">
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}
