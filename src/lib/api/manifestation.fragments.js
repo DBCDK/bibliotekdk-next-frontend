@@ -25,19 +25,3 @@ export function availability({ pid }) {
     slowThreshold: 3000,
   };
 }
-
-export function requestButton({ pid }) {
-  return {
-    // delay: 250,
-    query: `query ($pid: String!) {
-      manifestation(pid: $pid) {
-        admin {
-          requestButton
-        }
-      }
-      monitor(name: "bibdknext_manifestations_requestbutton")
-    }`,
-    variables: { pid },
-    slowThreshold: 3000,
-  };
-}
