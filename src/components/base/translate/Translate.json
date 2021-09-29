@@ -743,6 +743,14 @@
       }
     },
     "options": {
+      "order-physical-copy":{
+        "da": "Bestil fysisk eksemplar",
+        "en": "Order physical copy"
+      },
+      "order-physical-copy-description": {
+        "da": "Afhentes på dit lokale bibliotek",
+        "en": "Pickup at your local library"
+      },
       "digital-copy-link-title": {
         "da": "Bestil digital kopi",
         "en": "Order digital copy"

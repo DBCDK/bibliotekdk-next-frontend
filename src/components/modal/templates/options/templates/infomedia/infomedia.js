@@ -10,7 +10,7 @@ export function Infomedia({ props }) {
   const context = { context: "options" };
   const url = infomediaUrl(workId, title_author);
   return (
-    <li className={`${className} ${styles.item}`}>
+    <li className={`${className} ${styles.item}`} key="options-infomedia">
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}

@@ -9,7 +9,7 @@ export default function Online({ url, origin, note, className, materialType }) {
   const context = { context: "options" };
 
   return (
-    <li className={`${className} ${styles.item}`}>
+    <li className={`${className} ${styles.item}`} key="options-online">
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}

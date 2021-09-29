@@ -15,7 +15,7 @@ export default function WebArchive({
   const context = { context: "options" };
 
   return (
-    <li className={`${className} ${styles.item}`}>
+    <li className={`${className} ${styles.item}`} key="options-webarchive">
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}
