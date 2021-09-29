@@ -98,7 +98,7 @@ describe("Order", () => {
       .should("be.visible");
 
     // Change pickup branch
-    cy.get("[data-cy=text-vælg-afhentning]").click();
+    cy.get("[data-cy=text-skift-afhentning]").click();
     cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
     cy.get('[data-cy="text-vsn-b.adresse"]')
       .scrollIntoView()
@@ -155,7 +155,7 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-godkend]").should("be.disabled");
 
-    cy.get("[data-cy=text-vælg-afhentning]").click();
+    cy.get("[data-cy=text-skift-afhentning]").click();
 
     cy.get("[data-cy=list-branches] [data-cy=list-button-0]").should(
       "have.attr",

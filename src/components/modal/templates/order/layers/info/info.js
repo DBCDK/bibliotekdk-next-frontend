@@ -246,14 +246,16 @@ export function Info({
  * @returns {component}
  */
 export default function Wrap(props) {
-  // Get query from url, if no pid is found in props
-  const query = useRouter()?.query;
+  // Get query from props - fallback to url query
+  const query = props.query || useRouter()?.query;
+
+  // get pid/order from url
+  const pid = query?.order;
+
+  const { pickupBranch } = props;
 
   // authUser from useUser() is used if no authUser is found in props
   const { authUser } = useUser();
-
-  // If not given in probs, component will try to fetch them
-  const { pickupBranch, pid = query?.order } = props;
 
   // fetch orderPolicy if it doesnt exist
   const shouldFetchOrderPolicy = pid && !pickupBranch?.orderPolicy;
