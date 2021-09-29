@@ -6,6 +6,22 @@ import Text from "@/components/base/text/Text";
 // Translate Context
 const context = { context: "overview" };
 
+/**
+ * infomedia url is specific for this gui - set an url on the online access object
+ * @param onlineAccess
+ * @return {*}
+ */
+function addToInfomedia(onlineAccess, title) {
+  const addi = onlineAccess?.map((access) => {
+    if (access.infomediaId) {
+      access.url = `/infomedia/${title}/work-of:${access.pid}`;
+    }
+    return access;
+  });
+
+  return addi;
+}
+
 export function ButtonTxt({ selectedMaterial, skeleton }) {
   const onlineAccess = selectedMaterial?.manifestations?.[0]?.onlineAccess;
   const online = onlineAccess?.length > 0;
@@ -102,6 +118,10 @@ export function OrderButton({
     selectedMaterial?.onlineAccess?.length > 0 &&
     !selectedMaterial.onlineAccess[0].issn
   ) {
+    const enrichedOnlineAccess = addToInfomedia(
+      selectedMaterial.onlineAccess,
+      title
+    );
     return (
       <Button
         className={styles.externalLink}
@@ -173,7 +193,7 @@ function getBaseUrl(url) {
   return url;
 }
 
-function checkRequestButtonIsTrue({ manifestations }) {
+export function checkRequestButtonIsTrue({ manifestations }) {
   if (!manifestations) {
     return false;
   }
