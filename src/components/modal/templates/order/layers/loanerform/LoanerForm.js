@@ -65,11 +65,6 @@ export function LoanerForm({
     }
   }
 
-  useEffect(() => {
-    // Update initialstate if changed asyncronously
-    setState(initial);
-  }, [initial]);
-
   if (skeleton) {
     return (
       <>

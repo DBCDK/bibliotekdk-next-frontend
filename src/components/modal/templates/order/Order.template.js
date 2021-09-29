@@ -274,8 +274,8 @@ export function Order({
               onSelect={(branch) => {
                 // should send to loanerform
                 let loanerform = false;
-                // if branches has same agency
-                if (branch.agencyId === pickupBranch?.agencyId) {
+                // if selected branch has same origin as user agency
+                if (branch.agencyId === user?.agency?.result?.[0].agencyId) {
                   // and the new selected branch has borrowercheck
                   if (branch.borrowerCheck) {
                     // Set new branch without new log-in
