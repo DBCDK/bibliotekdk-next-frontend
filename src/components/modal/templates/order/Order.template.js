@@ -241,7 +241,6 @@ export function Order({
                 cover: { detail: material?.cover?.detail || cover?.detail },
               }}
               user={user}
-              authUser={authUser}
               className={`${styles.page} ${styles[`page-info`]}`}
               onLayerSelect={(layer) =>
                 onLayerChange && onLayerChange({ modal: `order-${layer}` })
@@ -434,8 +433,6 @@ export default function Wrap(props) {
       updateLoanerInfo={updateLoanerInfo}
       onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch) => {
-        console.log("### loanerInfo onSubmit", loanerInfo);
-
         orderMutation.post(
           submitOrder({
             pids,
