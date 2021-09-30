@@ -49,7 +49,7 @@
   border: 1px solid var(--gray);
   border-right: none;
   background-color: var(--white);
-  width: 125px;
+  min-width: 125px;
   height: 100%;
   text-align: left;
 }
