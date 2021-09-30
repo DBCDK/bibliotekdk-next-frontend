@@ -155,22 +155,7 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-godkend]").should("be.disabled");
 
-    cy.get("[data-cy=text-skift-afhentning]").click();
-
-    cy.get("[data-cy=list-branches] [data-cy=list-button-0]").should(
-      "have.attr",
-      "aria-disabled",
-      "false"
-    );
-    cy.get("[data-cy=list-branches] [data-cy=list-button-1]").should(
-      "have.attr",
-      "aria-disabled",
-      "false"
-    );
-    cy.get("[data-cy=list-branches] [data-cy=list-button-2]").should(
-      "have.attr",
-      "aria-disabled",
-      "true"
-    );
+    cy.get("[data-cy=text-vælg-afhentning]").click();
+    cy.contains("Afhentning ikke muligt på");
   });
 });

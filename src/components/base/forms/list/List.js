@@ -182,7 +182,7 @@ function Group({ children, enabled = true, ...props }) {
       aria-labelledby="list-label"
       className={`${styles.group} ${
         enabled ? styles.enabled : styles.disabled
-      }`}
+      } ${props.className}`}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement

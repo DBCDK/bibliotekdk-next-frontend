@@ -975,6 +975,18 @@
         "da": "Materialet kan kun bestilles til udvalgte afhentningssteder. Vælg fra listen eller hør mere på dit lokale bibliotek.",
         "en": "The material can only be ordered at selected pickup locations. Choose from the list or contact your local library."
       },
+      "check-policy-fail-3": {
+        "da": "Materialet kan ikke bestilles til det her afhentningssted",
+        "en": "The material cannot be ordered at this pickup location"
+      },
+      "check-policy-fail-loading": {
+        "da": "Tjekker status på materiale",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "check-policy-loading": {
+        "da": "Tjekker om der er flere mulige afhentningssteder ...",
+        "en": "LABEL: mangler oversættelse"
+      },
       "no-specific-edition": {
         "da": "Udgave underordnet",
         "en": "Unspecified edition"
@@ -1006,6 +1018,10 @@
       "pickup-not-allowed": {
         "da": "Afhentning ikke muligt på",
         "en": "Pickup not allowed at"
+      },
+      "ready-for-order": {
+        "da": "Klar til reservering",
+        "en": "Ready for order"
       },
       "no-pickup": {
         "da": "Afhentning ikke muligt",
