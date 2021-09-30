@@ -57,6 +57,7 @@ function Row({
   isLoading,
   disabled,
   includeArrows,
+  _ref,
 }) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
@@ -86,6 +87,7 @@ function Row({
         animations["on-hover"],
       ].join(" ")}
       includeArrows={includeArrows}
+      _ref={_ref}
     >
       <>
         <Text
