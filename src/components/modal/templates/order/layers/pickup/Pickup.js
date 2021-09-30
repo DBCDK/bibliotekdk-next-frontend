@@ -188,6 +188,11 @@ export function Pickup({
       )) ||
     [];
 
+  const hasMoreMessage =
+    allPoliciesLoaded &&
+    data?.hitcount > data?.result?.length &&
+    Translate({ ...context, label: "has-more-pickup" });
+
   return (
     <div className={`${styles.pickup} ${className}`}>
       {/* This only load order policies, does not render anything */}
@@ -255,6 +260,11 @@ export function Pickup({
         {!allPoliciesLoaded && (
           <Text type="text2" className={styles.loadingText}>
             {Translate({ ...context, label: "check-policy-loading" })}
+          </Text>
+        )}
+        {hasMoreMessage && (
+          <Text type="text2" className={styles.loadingText}>
+            {hasMoreMessage}
           </Text>
         )}
         {orderNotPossibleBranches.length > 0 && (

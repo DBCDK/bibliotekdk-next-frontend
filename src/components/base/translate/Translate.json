@@ -1003,6 +1003,10 @@
         "da": "Husk du skal være låner på biblioteket",
         "en": "Remember you must be a loaner at the library"
       },
+      "has-more-pickup": {
+        "da": "Fandt du ikke hvad du søgte? Prøv at søge mere specifikt.",
+        "en": "LABEL mangler oversættelse"
+      },
       "pickup-link": {
         "da": "Vælg afhentning",
         "en": "Select pickup"
