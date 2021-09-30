@@ -155,7 +155,7 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-godkend]").should("be.disabled");
 
-    cy.get("[data-cy=text-vælg-afhentning]").click();
+    cy.get("[data-cy=text-skift-afhentning]").click();
     cy.contains("Afhentning ikke muligt på");
   });
 });
