@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
@@ -18,6 +18,98 @@ import animations from "@/components/base/animation/animations.module.css";
 import { useData } from "@/lib/api/api";
 
 import * as libraryFragments from "@/lib/api/library.fragments";
+import { useRouter } from "next/router";
+import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+
+/**
+ * Special component responsible for loading order policy
+ * Will not render anything, but needs to be mounted
+ */
+function PolicyLoader({ branch, onLoad, pid }) {
+  const pickupAllowed = branch?.pickupAllowed;
+  let { data } = useData(
+    pickupAllowed &&
+      !branch?.orderPolicy &&
+      pid &&
+      branch?.branchId &&
+      branchOrderPolicy({ branchId: branch.branchId, pid })
+  );
+
+  const orderPolicy =
+    branch?.orderPolicy || data?.branches?.result?.[0]?.orderPolicy;
+
+  useEffect(() => {
+    if (orderPolicy || !pickupAllowed) {
+      onLoad({
+        pickupAllowed,
+        orderPossible: !pickupAllowed ? false : orderPolicy?.orderPossible,
+      });
+    }
+  }, [orderPolicy, pickupAllowed]);
+
+  return null;
+}
+
+function Row({ branch, selected, onSelect, isLoading, disabled }) {
+  // Check for a highlight key matching on "name" prop
+  const matchName = find(branch.highlights, {
+    key: "name",
+  });
+  // If found, use matchned name (wraps match in <mark>...</mark>)
+  const title = matchName?.value || branch.name;
+
+  // If none found use a alternative match if any found
+  const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
+
+  disabled = disabled || !branch.pickupAllowed;
+
+  const alternativeMatchClass = matchOthers ? styles.squeeze : "";
+  const disabledClass = disabled ? styles.disabled : "";
+
+  return (
+    <List.Select
+      selected={selected?.branchId === branch.branchId}
+      onSelect={() => onSelect(branch)}
+      label={branch.name}
+      disabled={disabled}
+      className={[
+        styles.radiobutton,
+        alternativeMatchClass,
+        disabledClass,
+        animations["on-hover"],
+      ].join(" ")}
+    >
+      <>
+        <Text
+          lines="1"
+          skeleton={isLoading}
+          type="text2"
+          dataCy={`text-${branch.name}`}
+          className={[
+            styles.library,
+            animations["h-border-bottom"],
+            animations["h-color-blue"],
+          ].join(" ")}
+        >
+          <span
+            dangerouslySetInnerHTML={{
+              __html: title,
+            }}
+          />
+        </Text>
+        {matchOthers && (
+          <Text type="text3" className={styles.alternativeMatch}>
+            <span
+              dangerouslySetInnerHTML={{
+                __html: matchOthers,
+              }}
+            />
+          </Text>
+        )}
+      </>
+    </List.Select>
+  );
+}
 
 /**
  * Make pickup branches selectable with Radio buttons
@@ -42,6 +134,9 @@ export function Pickup({
 }) {
   const context = { context: "order" };
 
+  const router = useRouter();
+  const pid = router.query.order;
+
   // Observe when bottom of list i visible
   const [ref, inView] = useInView({
     /* Optional options */
@@ -54,8 +149,53 @@ export function Pickup({
   // Add shadow to bottom of scroll area, if last element is not visible
   const shadowClass = inView ? "" : styles.shadow;
 
+  const loadedOrderPolicies = useRef({});
+  const render = useState()[1];
+
+  // Incrementally creates a list of allowed branches as policies load one by one,
+  // keeping the order of the original result
+  let allPoliciesLoaded = isLoading ? false : true;
+  const orderPossibleBranches =
+    data?.result?.filter((branch) => {
+      if (!allPoliciesLoaded) {
+        return false;
+      }
+      if (!loadedOrderPolicies.current[`${branch.branchId}_${pid}`]) {
+        allPoliciesLoaded = false;
+        return false;
+      }
+      return loadedOrderPolicies.current[`${branch.branchId}_${pid}`]
+        ?.orderPossible;
+    }) || [];
+
+  const orderNotPossibleBranches =
+    (allPoliciesLoaded &&
+      data?.result?.filter(
+        (branch) =>
+          !loadedOrderPolicies.current[`${branch.branchId}_${pid}`]
+            ?.orderPossible
+      )) ||
+    [];
+
   return (
     <div className={`${styles.pickup} ${className}`}>
+      {/* This only load order policies, does not render anything */}
+      {data?.result
+        ?.filter((branch) => branch.branchId)
+        .map((branch) => {
+          const key = `${branch.branchId}_${pid}`;
+          return (
+            <PolicyLoader
+              key={key}
+              branch={branch}
+              onLoad={(policy) => {
+                loadedOrderPolicies.current[key] = policy;
+                render({});
+              }}
+              pid={pid}
+            />
+          );
+        })}
       <Back
         isVisible={isVisible}
         handleClose={onClose}
@@ -81,73 +221,48 @@ export function Pickup({
           />
         </div>
 
-        {data?.result.length > 0 && (
-          <List.Group enabled={!isLoading && isVisible} data-cy="list-branches">
-            {data.result.map((branch, idx) => {
-              // Check for a highlight key matching on "name" prop
-              const matchName = find(branch.highlights, {
-                key: "name",
-              });
-              // If found, use matchned name (wraps match in <mark>...</mark>)
-              const title = matchName?.value || branch.name;
-
-              // If none found use a alternative match if any found
-              const matchOthers = !matchName
-                ? branch.highlights?.[0]?.value
-                : null;
-
-              const disabled = !branch.pickupAllowed;
-
-              const alternativeMatchClass = matchOthers ? styles.squeeze : "";
-              const disabledClass = disabled ? styles.disabled : "";
-
+        {orderPossibleBranches.length > 0 && (
+          <List.Group
+            enabled={!isLoading && isVisible}
+            data-cy="list-branches"
+            className={styles.orderPossibleGroup}
+          >
+            {orderPossibleBranches.map((branch, idx) => {
               return (
-                <List.Select
+                <Row
                   key={`${branch.branchId}-${idx}`}
-                  selected={selected?.branchId === branch.branchId}
-                  onSelect={() => onSelect(branch)}
-                  label={branch.name}
-                  disabled={disabled}
-                  className={[
-                    styles.radiobutton,
-                    alternativeMatchClass,
-                    disabledClass,
-                    animations["on-hover"],
-                  ].join(" ")}
-                >
-                  <>
-                    <Text
-                      lines="1"
-                      skeleton={isLoading}
-                      type="text2"
-                      dataCy={`text-${branch.name}`}
-                      className={[
-                        styles.library,
-                        animations["h-border-bottom"],
-                        animations["h-color-blue"],
-                      ].join(" ")}
-                    >
-                      <span
-                        dangerouslySetInnerHTML={{
-                          __html: title,
-                        }}
-                      />
-                    </Text>
-                    {matchOthers && (
-                      <Text type="text3" className={styles.alternativeMatch}>
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: matchOthers,
-                          }}
-                        />
-                      </Text>
-                    )}
-                  </>
-                </List.Select>
+                  branch={branch}
+                  selected={selected}
+                  onSelect={onSelect}
+                  isLoading={isLoading}
+                  // disabled={true}
+                />
               );
             })}
           </List.Group>
         )}
+        {!allPoliciesLoaded && (
+          <Text type="text2" className={styles.loadingText}>
+            {Translate({ ...context, label: "check-policy-loading" })}
+          </Text>
+        )}
+        {orderNotPossibleBranches.length > 0 && (
+          <>
+            <Text type="text1" className={styles.pickupNotAllowedTitle}>
+              {Translate({ ...context, label: "pickup-not-allowed" })}
+            </Text>
+            <ul>
+              {orderNotPossibleBranches.map((branch, idx) => {
+                return (
+                  <li key={`${branch.branchId}-${idx}`}>
+                    <Text type="text3">{branch.name}</Text>
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
+
         <div ref={ref} />
       </div>
     </div>
@@ -177,26 +292,26 @@ export default function Wrap(props) {
   const [query, setQuery] = useState("");
 
   const { data, isLoading, error } = useData(
-    libraryFragments.search({ q: query || " " })
+    libraryFragments.search({ q: query || "" })
   );
 
   const dummyData = {
     hitcount: 5,
     result: [
-      { name: "This is some branch name", branchId: "00" },
-      { name: "This is some other branch name", branchId: "01" },
-      { name: "This is also a branch name", branchId: "02" },
-      { name: "A branch name", branchId: "03" },
-      { name: "Also a bracndh name", branchId: "04" },
-      { name: "This is some branch name", branchId: "05" },
-      { name: "This is some other branch name", branchId: "06" },
-      { name: "This is also a branch name", branchId: "07" },
-      { name: "A branch name", branchId: "08" },
-      { name: "Also a bracndh name", branchId: "09" },
+      { name: "This is some branch name" },
+      { name: "This is some other branch name" },
+      { name: "This is also a branch name" },
+      { name: "A branch name" },
+      { name: "Also a bracndh name" },
+      { name: "This is some branch name" },
+      { name: "This is some other branch name" },
+      { name: "This is also a branch name" },
+      { name: "A branch name" },
+      { name: "Also a bracndh name" },
     ],
   };
 
-  const branches = query === "" ? agency : data?.branches;
+  const branches = !query ? agency : data?.branches;
 
   return (
     <Pickup
