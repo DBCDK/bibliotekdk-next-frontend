@@ -258,7 +258,8 @@ export default function Wrap(props) {
   const { authUser } = useUser();
 
   // fetch orderPolicy if it doesnt exist
-  const shouldFetchOrderPolicy = pid && !pickupBranch?.orderPolicy;
+  const shouldFetchOrderPolicy =
+    pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
 
   // PolicyCheck in own request (sometimes slow)
   const { data: policyData, isLoading: policyIsLoading } = useData(

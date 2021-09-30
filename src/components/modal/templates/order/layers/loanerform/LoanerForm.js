@@ -305,7 +305,7 @@ export default function Wrap(props) {
 
   // PolicyCheck in own request (sometimes slow)
   const { data: policyData, isLoading: policyIsLoading } = useData(
-    pid && branchOrderPolicy({ branchId, pid })
+    pid && branchId && branchOrderPolicy({ branchId, pid })
   );
 
   const mergedData = merge({}, data, policyData);

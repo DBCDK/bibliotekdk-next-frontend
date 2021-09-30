@@ -99,6 +99,7 @@ function Select({
   selected,
   _ref,
   className,
+  includeArrows,
   ...props
 }) {
   return (
@@ -131,9 +132,11 @@ function Select({
         {children}
       </div>
       {!disabled ? (
-        <Arrow
-          className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
-        />
+        includeArrows ? (
+          <Arrow
+            className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+          />
+        ) : null
       ) : (
         onDisabled
       )}
@@ -182,7 +185,7 @@ function Group({ children, enabled = true, ...props }) {
       aria-labelledby="list-label"
       className={`${styles.group} ${
         enabled ? styles.enabled : styles.disabled
-      }`}
+      } ${props.className}`}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement

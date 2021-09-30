@@ -1,0 +1,9 @@
+.textAboveButton{
+    padding-bottom: var(--pt2);
+}
+
+.info {
+    padding-top: var(--pt1);
+    height: auto;
+
+}

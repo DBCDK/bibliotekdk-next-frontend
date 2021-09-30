@@ -49,6 +49,26 @@
   font-family: var(--body-font-semibold);
 }
 
+.loadingText {
+  margin-top: var(--pt4);
+}
+
+.pickup li {
+  list-style-type: none;
+  margin-bottom: var(--pt05);
+}
+
+
+
+.pickupNotAllowedTitle {
+  margin-top: var(--pt6);
+  margin-bottom: var(--pt1);
+}
+
+.orderPossibleGroup {
+  margin-top: var(--pt4);
+}
+
 .alternativeMatch {
   /* color: var(--gray); */
 }
@@ -61,7 +81,12 @@
 .disabled,
 .disabled mark,
 .disabled .alternativeMatch {
-  color: var(--gray);
+  color: black !important;
+}
+
+.branchMessage {
+  padding-top: var(--pt05);
+  color: red;
 }
 
 .squeeze {
