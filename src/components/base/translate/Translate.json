@@ -738,12 +738,12 @@
         "en": "Order"
       },
       "title-options": {
-        "da": "Andre bestillingsmuligheder",
+        "da": "Alle bestillingsmuligheder",
         "en": "Other ordering options"
       }
     },
     "options": {
-      "order-physical-copy":{
+      "order-physical-copy": {
         "da": "Bestil fysisk eksemplar",
         "en": "Order physical copy"
       },

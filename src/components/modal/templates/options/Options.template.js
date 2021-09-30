@@ -120,7 +120,7 @@ export function Options({
         <Top
           title={Translate({
             context: "modal",
-            label: `title-order`,
+            label: `title-options`,
           })}
           handleClose={onClose}
         />

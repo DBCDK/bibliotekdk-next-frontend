@@ -365,19 +365,28 @@ export default function Wrap({ router, children = false }) {
   // On modal close
   const onClose = function onClose() {
     if (router) {
-      // router.back();
+      // console.log("router", router);
+      // console.log("Window.history", Window.history);
 
-      // Remove query modal param
-      delete router.query.modal;
+      router.back();
 
-      router.push(
-        {
-          pathname: router.pathname,
-          query: router.query,
-        },
-        null,
-        { shallow: true, scroll: false }
-      );
+      // // Remove query modal param
+      // delete router.query.modal;
+
+      // // if order-modal
+      // delete router.query.order;
+
+      // // if all order options
+      // delete router.query.orderPossible;
+
+      // router.push(
+      //   {
+      //     pathname: router.pathname,
+      //     query: router.query,
+      //   },
+      //   null,
+      //   { shallow: true, scroll: false }
+      // );
     }
   };
 
