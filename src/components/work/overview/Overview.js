@@ -197,12 +197,10 @@ export function Overview({
                   title={title}
                 />
               </Col>
-              <Col xs={12} className={styles.info}>
-                <ButtonTxt
-                  selectedMaterial={selectedMaterial}
-                  skeleton={skeleton}
-                />
-              </Col>
+              <ButtonTxt
+                selectedMaterial={selectedMaterial}
+                skeleton={skeleton}
+              />
               <Col xs={12} className={styles.info}>
                 <AlternativeOptions selectedMaterial={selectedMaterial} />
               </Col>

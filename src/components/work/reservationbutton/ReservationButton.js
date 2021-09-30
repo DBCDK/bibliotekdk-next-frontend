@@ -1,10 +1,13 @@
 import Button from "@/components/base/button/Button";
-import styles from "@/components/work/overview/Overview.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
+import styles from "./ReservationButton.module.css";
+import Col from "react-bootstrap/Col";
 
 // Translate Context
 const context = { context: "overview" };
+// the text on the button
+let buttonText = "";
 
 /**
  * infomedia url is specific for this gui - set an url on the online access object
@@ -22,42 +25,52 @@ function addToInfomedia(onlineAccess, title) {
   return addi;
 }
 
+/**
+ * Set texts BELOW reservation button - also sets the text IN the button
+ * For infomedia text is set ABOVE the button ( @see ReservationButton )
+ * @param selectedMaterial
+ * @param skeleton
+ * @return {JSX.Element|null}
+ * @constructor
+ */
 export function ButtonTxt({ selectedMaterial, skeleton }) {
   const onlineAccess = selectedMaterial?.manifestations?.[0]?.onlineAccess;
   const online = onlineAccess?.length > 0;
   if (online && onlineAccess[0].infomediaId) {
-    return (
-      <Text type="text3" skeleton={skeleton} lines={2}>
-        {Translate({ ...context, label: "label_infomediaAccess" })}
-      </Text>
-    );
+    return null;
   } else if (online && onlineAccess[0].url) {
     return (
-      <Text type="text3" skeleton={skeleton} lines={2}>
-        {[
-          Translate({ ...context, label: "onlineAccessAt" }),
-          getBaseUrl(onlineAccess[0].url),
-        ].join(" ")}
-      </Text>
+      <Col xs={12} className={styles.info}>
+        <Text type="text3" skeleton={skeleton} lines={2}>
+          {[
+            Translate({ ...context, label: "onlineAccessAt" }),
+            getBaseUrl(onlineAccess[0].url),
+          ].join(" ")}
+        </Text>
+      </Col>
     );
   } else if (online && onlineAccess[0].issn) {
     return (
-      <Text type="text3" skeleton={skeleton} lines={2}>
-        {Translate({
-          context: "options",
-          label: "digital-copy-link-description",
-        })}
-      </Text>
+      <Col xs={12} className={styles.info}>
+        <Text type="text3" skeleton={skeleton} lines={2}>
+          {Translate({
+            context: "options",
+            label: "digital-copy-link-description",
+          })}
+        </Text>
+      </Col>
     );
   } else {
     return (
       <>
-        <Text type="text3" skeleton={skeleton} lines={2}>
-          {Translate({ ...context, label: "addToCart-line1" })}
-        </Text>
-        <Text type="text3" skeleton={skeleton} lines={0}>
-          {Translate({ ...context, label: "addToCart-line2" })}
-        </Text>
+        <Col xs={12} className={styles.info}>
+          <Text type="text3" skeleton={skeleton} lines={2}>
+            {Translate({ ...context, label: "addToCart-line1" })}
+          </Text>
+          <Text type="text3" skeleton={skeleton} lines={0}>
+            {Translate({ ...context, label: "addToCart-line2" })}
+          </Text>
+        </Col>
       </>
     );
   }
@@ -123,19 +136,26 @@ export function OrderButton({
       title
     );
     return (
-      <Button
-        className={styles.externalLink}
-        skeleton={buttonSkeleton}
-        onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0].url)}
-      >
-        {[
-          Translate({
-            context: "overview",
-            label: "goto",
-          }),
-          workTypeTranslated,
-        ].join(" ")}
-      </Button>
+      <>
+        {selectedMaterial.onlineAccess[0].infomediaId && !user.isAuthenticated && (
+          <Text type="text3" className={styles.textAboveButton}>
+            {Translate({ ...context, label: "label_infomediaAccess" })}
+          </Text>
+        )}
+        <Button
+          className={styles.externalLink}
+          skeleton={buttonSkeleton}
+          onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0].url)}
+        >
+          {[
+            Translate({
+              context: "overview",
+              label: "goto",
+            }),
+            workTypeTranslated,
+          ].join(" ")}
+        </Button>
+      </>
     );
   }
 
