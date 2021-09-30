@@ -99,6 +99,7 @@ function Select({
   selected,
   _ref,
   className,
+  includeArrows,
   ...props
 }) {
   return (
@@ -131,9 +132,11 @@ function Select({
         {children}
       </div>
       {!disabled ? (
-        <Arrow
-          className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
-        />
+        includeArrows ? (
+          <Arrow
+            className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+          />
+        ) : null
       ) : (
         onDisabled
       )}

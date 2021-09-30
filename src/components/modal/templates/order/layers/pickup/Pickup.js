@@ -50,7 +50,14 @@ function PolicyLoader({ branch, onLoad, pid }) {
   return null;
 }
 
-function Row({ branch, selected, onSelect, isLoading, disabled }) {
+function Row({
+  branch,
+  selected,
+  onSelect,
+  isLoading,
+  disabled,
+  includeArrows,
+}) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
     key: "name",
@@ -78,6 +85,7 @@ function Row({ branch, selected, onSelect, isLoading, disabled }) {
         disabledClass,
         animations["on-hover"],
       ].join(" ")}
+      includeArrows={includeArrows}
     >
       <>
         <Text
@@ -131,6 +139,7 @@ export function Pickup({
   isVisible,
   onChange,
   isLoading,
+  includeArrows,
 }) {
   const context = { context: "order" };
 
@@ -235,7 +244,7 @@ export function Pickup({
                   selected={selected}
                   onSelect={onSelect}
                   isLoading={isLoading}
-                  // disabled={true}
+                  includeArrows={includeArrows}
                 />
               );
             })}
@@ -312,6 +321,7 @@ export default function Wrap(props) {
   };
 
   const branches = !query ? agency : data?.branches;
+  const includeArrows = !!query;
 
   return (
     <Pickup
@@ -319,6 +329,7 @@ export default function Wrap(props) {
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}
+      includeArrows={includeArrows}
     />
   );
 }
