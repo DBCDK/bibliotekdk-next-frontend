@@ -114,6 +114,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
                       ? Translate(placeholderTranslation)
                       : ""
                   }
+                  required
                 />
               ) : (
                 <Input
@@ -136,6 +137,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
                       ? Translate(placeholderTranslation)
                       : "")
                   }
+                  required
                 />
               )}
               {hasTranslation(explainTranslation) && (
