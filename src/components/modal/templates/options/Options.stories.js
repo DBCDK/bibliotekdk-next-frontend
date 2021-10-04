@@ -9,11 +9,11 @@ export default {
   title: "modal/Options",
 };
 
-export function OnlineUrl() {
+export function AllOptions() {
   return (
     <div style={{ height: "100vh" }}>
-      <StoryTitle>Url + Infomedia reference</StoryTitle>
-      <StoryDescription>Option with url and infomedia</StoryDescription>
+      <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
+      <StoryDescription>All options</StoryDescription>
 
       <Modal onClose={null} onLang={null} template={"options"}>
         <Options
