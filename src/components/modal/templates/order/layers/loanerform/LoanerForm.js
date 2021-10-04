@@ -366,11 +366,7 @@ export default function Wrap(props) {
           branch={branch}
           initial={loanerInfo}
           onLogin={() => {
-            if (loggedInAgencyId) {
-              setBeginLogout(true);
-            } else {
-              setLoggedOut(true);
-            }
+            setBeginLogout(true);
           }}
           onSubmit={(info) => {
             updateLoanerInfo(info);
