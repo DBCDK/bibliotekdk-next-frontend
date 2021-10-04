@@ -114,6 +114,14 @@ describe("Header", () => {
 
   // Suggester
   it(`Can submit suggester form from header`, () => {
+    cy.fixture("suggestions_morgenthaler.json").then((fixture) => {
+      cy.intercept("POST", "/graphql", (req) => {
+        if (req?.body?.query?.includes("suggest")) {
+          req.reply(fixture);
+        }
+      });
+    });
+
     // container get visible when user types.
     cy.get("[data-cy=suggester-input]").focus();
     cy.get("[data-cy=suggester-input]").type("peter ");
