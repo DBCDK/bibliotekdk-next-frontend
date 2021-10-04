@@ -367,19 +367,21 @@ export default function Wrap({ router, children = false }) {
     if (router) {
       // router.back();
 
+      const copy = { ...router.query };
+
       // Remove query modal param
-      delete router.query.modal;
+      delete copy.modal;
 
       // if order-modal
-      delete router.query.order;
+      delete copy.order;
 
       // if all order options
-      delete router.query.orderPossible;
+      delete copy.orderPossible;
 
       router.push(
         {
           pathname: router.pathname,
-          query: router.query,
+          query: copy,
         },
         null,
         { shallow: true, scroll: false }
