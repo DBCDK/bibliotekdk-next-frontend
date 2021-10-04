@@ -43,7 +43,12 @@ export function Rating({
         const typeClass = r.type === "star" ? styles.star : "";
 
         return (
-          <Icon skeleton={skeleton} size={{ w: 3, h: 3 }} key={`rating-${i}`}>
+          <Icon
+            skeleton={skeleton}
+            size={{ w: 3, h: 3 }}
+            key={`rating-${i}`}
+            alt="stars"
+          >
             <StarSvg className={`${typeClass} ${filledClass}`} />
           </Icon>
         );

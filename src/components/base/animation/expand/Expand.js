@@ -9,6 +9,7 @@ export default function Expand({ open, size = 3 }) {
       bgColor="var(--blue)"
       dataCy="expand-icon"
       className={`${styles.expandicon} ${open ? styles.opened : styles.closed}`}
+      alt="expand"
     >
       {/* Lines to be animated */}
       <div>

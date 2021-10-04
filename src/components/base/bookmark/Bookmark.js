@@ -56,6 +56,7 @@ function Bookmark({
         disabled={disabled}
         size={{ w: 5, h: 5 }}
         bgColor="var(--white)"
+        alt="bookmark"
       >
         <BookmarkSvg />
       </Icon>
