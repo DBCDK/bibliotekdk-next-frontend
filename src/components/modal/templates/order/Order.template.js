@@ -58,7 +58,6 @@ export function Order({
   pid,
   work,
   user,
-  authUser,
   order,
   query,
   isVisible,
@@ -249,7 +248,6 @@ export function Order({
               onMailChange={(value, valid) => {
                 // update mail in loanerInfo
                 valid &&
-                  !authUser?.mail &&
                   updateLoanerInfo &&
                   updateLoanerInfo({ userMail: value });
                 // update mail in state
@@ -390,7 +388,7 @@ export default function Wrap(props) {
 
   const covers = useData(workFragments.covers({ workId }));
 
-  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useUser();
 
   const {
     data: orderPolicy,
@@ -424,7 +422,6 @@ export default function Wrap(props) {
   return (
     <Order
       work={mergedWork?.work}
-      authUser={authUser}
       user={mergedUser || {}}
       pid={pid}
       order={orderMutation}
