@@ -23,17 +23,13 @@ export default function Online({ url, origin, note, className, materialType }) {
           })}
         </Text>
       </Link>
-      {note ? (
-        <Text type="text3">{note}</Text>
-      ) : (
-        <Text type="text3">
-          {Translate({
-            ...context,
-            label: "online-link-description",
-            vars: [origin],
-          })}
-        </Text>
-      )}
+      <Text type="text3">
+        {Translate({
+          ...context,
+          label: "online-link-description",
+          vars: [origin],
+        })}
+      </Text>
     </li>
   );
 }

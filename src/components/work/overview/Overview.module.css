@@ -52,7 +52,7 @@
 
 .info {
   padding-top: var(--pt1);
-  min-height: 60px;
+
 }
 .info p:first-letter {
   text-transform: uppercase;
@@ -84,7 +84,7 @@
 
 @media (min-width: 768px) {
   .overview {
-    padding: var(--pt8) 0 var(--pt14) 0;
+    padding: var(--pt8) 0 var(--pt7) 0;
   }
 
   .breadcrumbs {
