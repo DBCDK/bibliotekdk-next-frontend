@@ -87,7 +87,14 @@ function useUserImpl() {
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
-    loanerInfo: { ...data, ...loggedInUser },
+    loanerInfo: {
+      // for initial data
+      ...data,
+      // adds default loaner information for a loggedIn user
+      ...loggedInUser,
+      // override loggedInUser if loanerInfo gets updated
+      ...loanerInfo,
+    },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfo = { ...loanerInfo, ...obj };

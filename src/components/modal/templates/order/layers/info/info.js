@@ -75,10 +75,17 @@ export function Info({
     ...context,
     label: pickupBranch ? "change-pickup-link" : "pickup-link",
   });
+
   const LibrarySelectShort = Translate({
     context: "general",
     label: pickupBranch ? "change" : "select",
   });
+
+  // Used to assess whether the email field should be locked or not
+  const hasBorchk = pickupBranch?.borrowerCheck;
+
+  // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
+  const email = hasBorchk ? authUser.mail : userMail;
 
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
@@ -215,13 +222,13 @@ export function Info({
               })}
               invalidClass={customInvalidClass}
               required={true}
-              disabled={isLoading || !!authUser?.mail}
+              disabled={isLoading || (authUser?.mail && hasBorchk)}
               tabIndex={isVisible ? "0" : "-1"}
-              value={authUser?.mail || userMail || ""}
+              value={email || ""}
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
               onMount={(value, valid) => onMailChange(value, valid)}
-              readOnly={!!authUser?.mail}
+              readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
 

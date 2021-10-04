@@ -317,7 +317,7 @@ export default function Wrap(props) {
   );
 
   const dummyData = {
-    hitcount: 5,
+    hitcount: 10,
     result: [
       { name: "This is some branch name" },
       { name: "This is some other branch name" },

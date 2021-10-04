@@ -3,9 +3,11 @@
  * Test functionality of Order modal
  */
 
+import merge from "lodash/merge";
+
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-function mockLogin() {
+function mockLogin(customMock = {}) {
   cy.intercept("/api/auth/session", {
     body: {
       user: {
@@ -24,7 +26,7 @@ function mockLogin() {
   cy.fixture("user.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
       if (req.body.query.includes("user {")) {
-        req.reply(fixture);
+        req.reply(merge({}, fixture, customMock));
       }
     });
   });
@@ -44,6 +46,26 @@ function mockAvailability() {
   cy.fixture("fullmanifestation.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
       if (req.body.query.includes("manifestation(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
+function mockBranchUserParameters() {
+  cy.fixture("branchUserParameters.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("BranchUserParameters(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
+function mockBranchesSearch() {
+  cy.fixture("branches.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("branches(q:")) {
         req.reply(fixture);
       }
     });
@@ -75,7 +97,72 @@ describe("Order", () => {
     mockFullWork();
     mockAvailability();
     mockSubmitOrder();
-    mockLogin();
+
+    // manipulating the user mock for this specific test
+    const customMock = {
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+        },
+      },
+    };
+
+    mockLogin(customMock);
+  });
+
+  it("Should not lock emailfield for agencies with no borrowerCheck", () => {
+    // Custom mock
+    mockBranchesSearch();
+    mockBranchUserParameters();
+
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+    );
+
+    openOrderModal();
+
+    // Work info in modal is visible
+    cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
+
+    // cicero mail should default be inserted here
+    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
+    cy.get("#order-user-email").should("be.disabled");
+    // Change pickup branch
+    cy.get("[data-cy=text-skift-afhentning]").click();
+
+    cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
+    cy.tab().type("{enter}");
+
+    cy.get("[data-cy=input-customId]").type("Some class");
+    cy.get("[data-cy=input-userName]").should("have.value", "Freja Damgaard");
+
+    // cicero mail should default be inserted here
+    cy.get("[data-cy=input-userMail]").should("have.value", "cicero@mail.dk");
+
+    // user is allowed to enter an alternative mail
+    cy.get("[data-cy=input-userMail]").clear();
+    cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
+
+    cy.get("[data-cy=button-godkend-låneroplysninger]").click();
+
+    // cicero mail should now be replaced with the alternative mail
+    cy.get("#order-user-email").should("have.value", "freja@mail.dk");
+    cy.get("#order-user-email").should("not.be.disabled");
+
+    // submit order
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitOrder").then((order) => {
+      expect(order.request.body.variables.input).to.deep.equal({
+        pickUpBranch: "790904",
+        userParameters: {
+          customId: "Some class",
+          userMail: "freja@mail.dk",
+          userName: "Freja Damgaard",
+        },
+        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
+      });
+    });
   });
 
   it("submits order - happy path", () => {
@@ -104,8 +191,9 @@ describe("Order", () => {
       .scrollIntoView()
       .should("be.visible");
 
-    // Type email
-    cy.get("#order-user-email").type("freja@dbc.dk");
+    // cicero mail should default be inserted and locked here
+    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
+    cy.get("#order-user-email").should("be.disabled");
 
     // updating loanerinfo in background
     cy.get("[data-cy=text-freja-damgaard]").click();
@@ -117,7 +205,7 @@ describe("Order", () => {
       expect(order.request.body.variables.input).to.deep.equal({
         pickUpBranch: "790903",
         userParameters: {
-          userMail: "freja@dbc.dk",
+          userMail: "cicero@mail.dk",
           userName: "Freja Damgaard",
         },
         pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
