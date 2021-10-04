@@ -381,6 +381,7 @@ export default function Wrap({ router, children = false }) {
           pathname: router.pathname,
           query: router.query,
         },
+        null,
         { shallow: true, scroll: false }
       );
     }

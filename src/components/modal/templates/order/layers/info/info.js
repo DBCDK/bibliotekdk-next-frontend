@@ -84,7 +84,7 @@ export function Info({
   // Used to assess whether the email field should be locked or not
   const hasBorchk = pickupBranch?.borrowerCheck;
 
-  // email
+  // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   const email = hasBorchk ? authUser.mail : userMail;
 
   // info skeleton loading class
@@ -228,7 +228,7 @@ export function Info({
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
               onMount={(value, valid) => onMailChange(value, valid)}
-              readOnly={authUser?.mail && hasBorchk}
+              readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
 

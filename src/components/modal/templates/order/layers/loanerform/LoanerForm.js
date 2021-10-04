@@ -215,6 +215,7 @@ export function LoanerForm({
                           });
                           setEmailMessage(message);
                         }}
+                        dataCy={`input-${userParameterType}`}
                         placeholder={
                           hasTranslation(placeholderTranslation)
                             ? Translate(placeholderTranslation)
@@ -229,6 +230,7 @@ export function LoanerForm({
                             userParameterType === "cpr") &&
                           "password"
                         }
+                        dataCy={`input-${userParameterType}`}
                         onChange={(value) =>
                           setState({
                             ...state,
@@ -366,11 +368,7 @@ export default function Wrap(props) {
           branch={branch}
           initial={loanerInfo}
           onLogin={() => {
-            if (loggedInAgencyId) {
-              setBeginLogout(true);
-            } else {
-              setLoggedOut(true);
-            }
+            setBeginLogout(true);
           }}
           onSubmit={(info) => {
             updateLoanerInfo(info);
