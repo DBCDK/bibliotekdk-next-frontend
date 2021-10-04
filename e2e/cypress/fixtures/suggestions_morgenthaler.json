@@ -1,0 +1,14 @@
+{
+  "data": {
+    "suggest": {
+      "result": [
+        {
+          "__typename": "Creator",
+          "name": "Anders Morgenthaler",
+          "imageUrl": null
+        }
+      ]
+    },
+    "monitor": "OK"
+  }
+}
