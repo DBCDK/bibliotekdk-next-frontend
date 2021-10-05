@@ -206,14 +206,39 @@ export function Info({
                 {Translate({ context: "general", label: "email" })}
               </Text>
             </label>
-
             {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
               <div className={`${styles.emailMessage}`}>
-                <Text type="text3" skeleton={isLoadingBranches} lines={1}>
+                <Text
+                  type="text3"
+                  skeleton={isLoadingBranches}
+                  lines={1}
+                  tag="span"
+                  className={styles.userStatusLink}
+                >
                   {Translate(lockedMessage)}
+                  &nbsp;
                 </Text>
+                <Link
+                  href={pickupBranch?.userStatusUrl}
+                  target="_blank"
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                >
+                  <Text
+                    type="text3"
+                    skeleton={isLoadingBranches}
+                    lines={1}
+                    tag="span"
+                    className={styles.userStatusLink}
+                  >
+                    {Translate({
+                      context: "order",
+                      label: "change-email-link",
+                    })}
+                  </Text>
+                </Link>
               </div>
             )}
+
             <Email
               className={styles.input}
               placeholder={Translate({

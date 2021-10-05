@@ -1076,8 +1076,12 @@
         "en": "LABEL: mangler oversættelse"
       },
       "info-email-message": {
-        "da": "Din mail er hentet fra %s",
-        "en": "Your email has been retrieved from %s"
+        "da": "Du kan",
+        "en": "You can"
+      },
+      "change-email-link": {
+        "da": "ændre din email her",
+        "en": "change your email here"
       },
       "action-empty-email-field": {
         "da": "Du mangler at udfylde din e-mail",
