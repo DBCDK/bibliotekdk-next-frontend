@@ -75,6 +75,7 @@ export function orderPolicy({ pid }) {
               parameterRequired
             }
             pickupAllowed
+            userStatusUrl
           }
         }
       }

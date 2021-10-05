@@ -101,6 +101,10 @@
   border: 1px solid var(--error);
 }
 
+.userStatusLink{
+  display: inline;
+}
+
 /*  */
 .edition,
 .pickup,
