@@ -219,9 +219,7 @@ export function Info({
                 </Text>
                 <Link
                   href={
-                    pickupBranch?.userStatusUrl
-                      ? pickupBranch?.userStatusUrl
-                      : user.agency?.agencyUrl
+                    pickupBranch?.userStatusUrl || user?.agency?.agencyUrl || ""
                   }
                   target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
