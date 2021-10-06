@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 
 // Translation data obj - used as default and to get translations from backend
 import translation from "./Translate.json";
+
 export let lang = "da";
 export let contexts = {};
 
@@ -108,50 +109,50 @@ export function setTranslations(translations) {
 }
 
 /**
- * 
+ *
  * Documentaion:
- * 
+ *
  * Props of the translate component
- * 
+ *
  * @param {string} props.context
- *  Context prop could be the name of the main component (Module), where the translate function is called. 
- *  
- * Examples: 
+ *  Context prop could be the name of the main component (Module), where the translate function is called.
+ *
+ * Examples:
  *  "WorkSlider"
  *  "Footer"
  *  "Header"
- * 
+ *
  * @param {string} props.label
  *  Label should be the name of the translated text. Label should be uniqu name inside of the context.
- * 
- * Examples: 
+ *
+ * Examples:
  *  "submitButton"
  *  "submitHelpText"
  *  "contactName"
  *  "contactEmail"
- * 
+ *
  * @param {array} props.vars
- * Vars is a list of variabels, used to make the translated text more dynamic. 
+ * Vars is a list of variabels, used to make the translated text more dynamic.
  * Variabels in the translated text (%s) will get replaced (in the given order).
  * Also functions/Translate functions can be passed as a variable
- * 
+ *
  * Examples:
  *  [5] => "In cart: %s" = "In cart: 5"
  *  [3, books] => "Order %s %s" = "Order 3 books"
- * 
+ *
  * @param {bool} props.renderAsHtml
- * The translated json text can be rendered as html. 
- * Html tags can be set in the json translations, 
- * but also passed as variabels. 
- * 
- * Exampels: 
+ * The translated json text can be rendered as html.
+ * Html tags can be set in the json translations,
+ * but also passed as variabels.
+ *
+ * Exampels:
  *  [1] => "Order <strong>%s<strong> book" = "Order <strong>1<strong> book"
  *  [<span>3</span>] => Order %s books = "Order <span>3<span> books"
- * 
- * 
- * 
+ *
+ *
+ *
  * Use of the translate component
- * 
+ *
  * Examples:
  *
  * The componentWay:
@@ -162,9 +163,9 @@ export function setTranslations(translations) {
  *
  * The function-in-component way:
  * <Translate
-   context=''
-   label=''
-   vars={[x, y, Translate({context: '', label: ''})]}
+ context=''
+ label=''
+ vars={[x, y, Translate({context: '', label: ''})]}
  />
 
  /**
@@ -180,7 +181,7 @@ export function setTranslations(translations) {
  * @returns {string}
  *
  */
-function Translate({ context, label, vars = [], renderAsHtml = false }) {
+function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
   // hmm .. this is for test purposes:  cy- and jest-tests
   // use translation file for tests
   if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
@@ -230,6 +231,28 @@ function Translate({ context, label, vars = [], renderAsHtml = false }) {
   }
 
   return result;
+}
+
+/**
+ * Split given text in <spans>. Split by newline (\\n). We need
+ * TWO backslashes since drupal escapes by default.
+ * @param text
+ * @return {*}
+ * @constructor
+ */
+function NewlineInText(text) {
+  if (text.indexOf("\\n") > 0) {
+    return text.split("\\n").map((str, index) => {
+      // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
+      return <span key={str + index}>{str.replace("\\", "")}</span>;
+    });
+  }
+  return text;
+}
+
+function Translate({ context, label, vars = [], renderAsHtml = false }) {
+  const translated = DoTranslate({ context, label, vars, renderAsHtml });
+  return NewlineInText(translated);
 }
 
 export function hasTranslation({ context, label }) {

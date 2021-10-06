@@ -5,5 +5,9 @@
 .info {
     padding-top: var(--pt1);
     height: auto;
-
 }
+
+.info span{
+    display: block;
+}
+

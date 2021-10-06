@@ -9,20 +9,6 @@ import classNames from "classnames/bind";
 import animations from "@/components/base/animation/animations.module.css";
 
 /**
- * Split given text in <spans>. Split by newline (\\n). We need
- * TWO backslashes since drupal escapes by default.
- * @param text
- * @return {*}
- * @constructor
- */
-function NewlineInText(text) {
-  return text.split("\\n").map((str, index) => {
-    // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
-    return <span key={str + index}>{str.replace("\\", "")}</span>;
-  });
-}
-
-/**
  * Return a svg with inline styling from parameter
  * @param fill
  * @return {JSX.Element}
@@ -84,7 +70,7 @@ export default function Logo({
           )}
           tag="span"
         >
-          {NewlineInText(translated)}
+          {translated}
         </Text>
       </Link>
     </div>
