@@ -55,6 +55,7 @@ export function orderPolicy({ pid }) {
     query: `query ($language: LanguageCode!, $pid: String! ) {
       user {
         agency (language: $language){
+          agencyUrl
           result {
             agencyName
             agencyId

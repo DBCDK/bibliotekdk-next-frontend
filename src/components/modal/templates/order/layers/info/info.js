@@ -38,7 +38,6 @@ export function Info({
 
   // Mateiral props
   const { title, creators, materialType, cover } = material;
-
   // user props
   const { userName, userMail, agency } = user;
 
@@ -219,7 +218,11 @@ export function Info({
                   &nbsp;
                 </Text>
                 <Link
-                  href={pickupBranch?.userStatusUrl}
+                  href={
+                    pickupBranch?.userStatusUrl
+                      ? pickupBranch?.userStatusUrl
+                      : user.agency?.agencyUrl
+                  }
                   target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
