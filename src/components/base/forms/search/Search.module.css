@@ -1,13 +1,11 @@
 .search {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--gray);
-}
-
-.input {
-  border: none;
+  position: relative;
 }
 
 .icon {
-  margin: 0 var(--pt2) 0 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: var(--pt2);
+  margin: auto;
 }

@@ -3,4 +3,5 @@
 
 .email.invalid {
   border: 1px solid var(--error);
+  outline: 1px solid var(--error);
 }

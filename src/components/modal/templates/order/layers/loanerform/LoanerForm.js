@@ -207,6 +207,7 @@ export function LoanerForm({
                     </Text>
                     {userParameterType === "userMail" ? (
                       <Email
+                        invalid={errorCode && !state[userParameterType]}
                         value={state.userMail || ""}
                         onChange={(value, { message }) => {
                           setState({
@@ -224,6 +225,7 @@ export function LoanerForm({
                       />
                     ) : (
                       <Input
+                        invalid={errorCode && !state[userParameterType]}
                         value={state[userParameterType]}
                         type={
                           (userParameterType === "userId" ||
@@ -260,7 +262,7 @@ export function LoanerForm({
               )}
             </div>
 
-            <Button onClick={() => {}}>
+            <Button onClick={() => {}} tabIndex="0">
               {Translate({
                 context: "order",
                 label: "approve-loaner-info",
