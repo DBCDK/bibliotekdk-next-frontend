@@ -18,7 +18,7 @@
 }
 
 .noImage .right {
-  height: 300px;
+  min-height: 300px;
   padding: var(--pt2);
   display: flex;
   align-items: center;
@@ -106,7 +106,7 @@
 
   .right {
     padding: var(--pt3);
-    height: 300px;
+    min-height: 300px;
   }
 
   .info > div > div:first-child,
