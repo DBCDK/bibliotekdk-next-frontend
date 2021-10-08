@@ -240,8 +240,8 @@ function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
  * @return {*}
  * @constructor
  */
-function NewlineInText(text) {
-  if (text.indexOf("\\n") > 0) {
+function NewlineInText(text, renderAsHtml) {
+  if (!renderAsHtml && text.indexOf("\\n") > 0) {
     return text.split("\\n").map((str, index) => {
       // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
       return <span key={str + index}>{str.replace("\\", "")}</span>;
@@ -252,7 +252,7 @@ function NewlineInText(text) {
 
 function Translate({ context, label, vars = [], renderAsHtml = false }) {
   const translated = DoTranslate({ context, label, vars, renderAsHtml });
-  return NewlineInText(translated);
+  return NewlineInText(translated, renderAsHtml);
 }
 
 export function hasTranslation({ context, label }) {
