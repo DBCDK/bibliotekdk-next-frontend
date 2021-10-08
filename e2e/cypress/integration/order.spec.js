@@ -224,8 +224,8 @@ describe("Order", () => {
     openOrderModal();
     cy.wait(500);
     cy.get("[data-cy=close-modal]").click();
-    cy.tab();
-    cy.get("[data-cy=modal-container] *:focused").should("not.exist");
+    cy.get("body").tab();
+    cy.get("[data-cy=modal-container] *:focused").should("not.be.visible");
   });
 
   it("should show modal when a deep link is followed", () => {
