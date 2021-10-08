@@ -60,6 +60,8 @@ export function Info({
     vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
   };
 
+  const urlToEmailArticle = "/artikel/changeemail/67";
+
   const orderNotPossibleMessage = {
     context: "order",
     label: "check-policy-fail",
@@ -205,40 +207,6 @@ export function Info({
                 {Translate({ context: "general", label: "email" })}
               </Text>
             </label>
-            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
-              <div className={`${styles.emailMessage}`}>
-                <Text
-                  type="text3"
-                  skeleton={isLoadingBranches}
-                  lines={1}
-                  tag="span"
-                  className={styles.userStatusLink}
-                >
-                  {Translate(lockedMessage)}
-                  &nbsp;
-                </Text>
-                <Link
-                  href={
-                    pickupBranch?.userStatusUrl || user?.agency?.agencyUrl || ""
-                  }
-                  target="_blank"
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                >
-                  <Text
-                    type="text3"
-                    skeleton={isLoadingBranches}
-                    lines={1}
-                    tag="span"
-                    className={styles.userStatusLink}
-                  >
-                    {Translate({
-                      context: "order",
-                      label: "change-email-link",
-                    })}
-                  </Text>
-                </Link>
-              </div>
-            )}
 
             <Email
               className={styles.input}
@@ -257,6 +225,38 @@ export function Info({
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
+            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
+              <div className={`${styles.emailMessage}`}>
+                <Text
+                  type="text3"
+                  skeleton={isLoadingBranches}
+                  lines={1}
+                  tag="span"
+                  className={styles.userStatusLink}
+                >
+                  {Translate(lockedMessage)}
+                  &nbsp;
+                </Text>
+                <Link
+                  href={urlToEmailArticle}
+                  target="_blank"
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                >
+                  <Text
+                    type="text3"
+                    skeleton={isLoadingBranches}
+                    lines={1}
+                    tag="span"
+                    className={styles.userStatusLink}
+                  >
+                    {Translate({
+                      context: "order",
+                      label: "change-email-link",
+                    })}
+                  </Text>
+                </Link>
+              </div>
+            )}
 
             {message && (
               <div className={`${styles.emailMessage} ${validClass}`}>
