@@ -11,13 +11,14 @@ export function handleTab(event, container) {
   //
   event.preventDefault();
 
-  const el = container.querySelector("div.modal_page.current");
+  const el = container.querySelector("div.modal_page.page-current");
 
   // Search container for elements (tabindex prop)
   const sequence = Object.values(
-    el.querySelectorAll("input:not[tabindex=-1], button, textarea, a")
+    el.querySelectorAll(
+      "input:not([tabindex='-1']), button:not([tabindex='-1']), textarea:not([tabindex='-1']), a:not([tabindex='-1'])"
+    )
   );
-
   if (sequence.length < 1) {
     return;
   }

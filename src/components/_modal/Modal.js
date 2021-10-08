@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { handleTab } from "./utils";
 
 // styles
-import styles from "./Modal.modules.css";
+// import styles from "./Modal.modules.css";
 import "./styles.css";
 
 import useKeyPress from "@/components/hooks/useKeypress";
@@ -21,7 +21,7 @@ const ModalContext = createContext(null);
  * @param {string} className.content
  * @returns
  */
-function Container({ save, load, children, className = {} }) {
+function Container({ children, className = {} }) {
   const modal = useModal();
 
   // modal is visible
@@ -33,21 +33,10 @@ function Container({ save, load, children, className = {} }) {
   // Listen on escape keypress
   const escapeEvent = useKeyPress(isVisible && "Escape");
 
-  // Listen on tab keypress
-  // const tabEvent = useKeyPress(isVisible && "Tab");
-
   // Modal ref
   const modalRef = useRef(null);
 
-  // useEffect running on component mount
-  useEffect(() => {
-    if (load) {
-      const loadedStack = load();
-      modal.setStack(loadedStack);
-    }
-  }, []);
-
-  // Add event listeners
+  // Tab key handle (locks tab in visible modal)
   useEffect(() => {
     // If pressed key is our target key then set to true
     function downHandler(e) {
@@ -61,7 +50,7 @@ function Container({ save, load, children, className = {} }) {
       if (e.key === "Tab") {
       }
     }
-
+    // Add event listeners
     window.addEventListener("keydown", downHandler);
     window.addEventListener("keyup", upHandler);
     // Remove event listeners on cleanup
@@ -70,20 +59,6 @@ function Container({ save, load, children, className = {} }) {
       window.removeEventListener("keyup", upHandler);
     };
   }, []);
-
-  //  Closes the modal on Escape key
-  useEffect(() => {
-    if (isVisible && escapeEvent) {
-      modal.clear();
-    }
-  }, [escapeEvent]);
-
-  // Update and handle target on tab key press
-  // useEffect(() => {
-  //   if (isVisible && modalRef.current) {
-  //     handleTab(tabEvent, modalRef.current);
-  //   }
-  // }, [tabEvent]);
 
   // force modal focus (accessibility)
   useEffect(() => {
@@ -94,6 +69,13 @@ function Container({ save, load, children, className = {} }) {
       }, 200);
     }
   }, [isVisible]);
+
+  //  Closes the modal on Escape key
+  useEffect(() => {
+    if (isVisible && escapeEvent) {
+      modal.clear();
+    }
+  }, [escapeEvent]);
 
   return (
     <div
@@ -113,38 +95,23 @@ function Container({ save, load, children, className = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_wrap">
-          {React.Children.map(children, (child, i) => {
-            const id = child.props.id;
-            // Child is the current active page
-            const isCurrent = !!(id === modal.current()?.id);
+          {modal.stack.map((obj, i) => {
+            const id = obj.id;
 
-            // Default status className
-            let statusClass = "unStacked";
-            // This is the current active page in modal
-            if (isCurrent) {
-              statusClass = "current";
-            }
-            // If not current check if id exist in stack
-            else if (modal.index(id) >= 0) {
-              statusClass = "stacked";
-            }
+            const page = children.find((child) => {
+              if (child.props.id === id) {
+                return child;
+              }
+            });
 
-            // Get context from stack by id
-            const context = modal.get(id)?.context || {};
-
-            return (
-              <div
-                className={`modal_page ${statusClass} ${className.page || ""}`}
-              >
-                {React.cloneElement(child, {
-                  context,
-                  modal,
-                  active: isCurrent,
-                  "data-cy": `modal-page-${i}`,
-                  ...child.props,
-                })}
-              </div>
-            );
+            return React.cloneElement(page, {
+              modal,
+              context: obj.context,
+              active: obj.active,
+              className: className.page || "",
+              dataCy: `modal-page-${i}`,
+              ...page.props,
+            });
           })}
         </div>
       </dialog>
@@ -152,9 +119,51 @@ function Container({ save, load, children, className = {} }) {
   );
 }
 
+/**
+ * blah blah
+ *
+ * @param {obj} name
+ * @param {string} name.key
+ *
+ * @returns
+ *
+ */
+
 function Page(props) {
-  return <props.component {...props} />;
+  const [status, setStatus] = useState("page-after");
+  const { id, active, modal, className, dataCy } = props;
+
+  console.log("zzz index", modal.index(id), modal.index());
+
+  useEffect(() => {
+    // This is the current active page in modal
+    if (active) {
+      setStatus("page-current");
+    }
+    // If not current check if id exist in stack
+    else if (modal.index(id) >= modal.index()) {
+      setStatus("page-before");
+    }
+    // on component unmount
+    return () => setStatus("page-after");
+  }, [modal.stack]);
+
+  return (
+    <div className={`modal_page ${status} ${className}`} data-cy={dataCy}>
+      <props.component {...props} />
+    </div>
+  );
 }
+
+/**
+ * blah blah
+ *
+ * @param {obj} name
+ * @param {string} name.key
+ *
+ * @returns
+ *
+ */
 
 export function useModal() {
   const { stack, setStack, save } = useContext(ModalContext);
@@ -164,65 +173,172 @@ export function useModal() {
    */
   function _push(id, context = {}) {
     if (id) {
-      const copy = [...stack];
-      copy.push({ id, context });
+      let copy = [...stack];
+      // Skip "reset" on empty stack
+      if (stack.length > 0) {
+        const active = _index();
+        copy = copy.slice(0, active + 1);
+        copy = copy.map((obj) => ({ ...obj, active: false }));
+      }
+      // Push to stack
+      copy.push({ id, context, active: true });
       // custom save
       save && save(copy);
       // update locale state
       setStack(copy);
     }
   }
+
   /**
-   * Pop
+   * pop
+   *
+   * Removes itself and all items after
+   * Automatically sets a new active item (the item before the popped element)
+   *
    */
   function _pop() {
-    const copy = [...stack];
-    copy.pop();
+    let copy = [...stack];
+    const active = _index();
+
+    copy.splice(active, stack.length);
+
+    //  If none items left, run clear function
+    if (copy.length === 0) {
+      _clear();
+      return;
+    }
+
+    // Make previous item active
+    const lastIndex = copy.length - 1;
+    copy = copy.map((obj, i) => ({ ...obj, active: lastIndex === i }));
+
     // custom save
     save && save(copy);
-    // update locale state
+    // update locale stack state
     setStack(copy);
   }
 
   /**
-   * Clear
+   * clear
+   *
+   * Clears the stack
    */
   function _clear() {
     // custom save
     save && save([]);
-    // update locale state
+    // update locale stack state
     setStack([]);
   }
 
   /**
-   * Current (active)
-   * Returns the id and context for last (current/visible) element in stack
+   * current
+   *
+   * Returns the active item in stack
    *
    * @returns {obj}
    */
   function _current() {
-    return stack.at(-1);
+    const active = _index();
+    return stack[active];
   }
 
   /**
-   * Current (active)
-   * returns the index for the component with the given id
+   * index
    *
-   * @param {string} id
+   * Returns the index for the active element
+   * To search for an index, an id can passed to the function.
+   *
    * @returns {int}
    */
   function _index(id) {
-    return stack.findIndex((obj) => obj.id === id);
+    if (id) {
+      stack.findIndex((obj) => obj.id === id);
+    }
+
+    return stack.findIndex((obj) => obj.active === true);
   }
 
   /**
-   * Current (active)
+   * select
+   *
+   *
    */
-  function _get(id) {
-    const i = _index(id);
-    if (i >= 0) {
-      return stack[i];
+  function _select(index) {
+    let copy = [...stack];
+    // set active true on index match, others false.
+    copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
+
+    // custom save
+    save && save(copy);
+    // update locale stack state
+    setStack(copy);
+  }
+
+  /**
+   * Selects the next element in stack
+   * An id can be passed to the function. next() will then try
+   * to select the next element in stack matching the id.
+   *
+   * @param {string} id (optional)
+   * @returns {int}
+   */
+  function _next(id) {
+    const active = _index();
+
+    // No next element to select
+    if (active + 1 === stack.length) {
+      return;
     }
+
+    if (id) {
+      let copy = [...stack];
+      copy = copy.slice(active, stack.length);
+
+      // findIndex returns the first matching id || -1 if none found
+      const index = copy.findIndex((obj) => obj.id === id);
+
+      // index will be -1 on no match
+      if (index >= 0) {
+        _select(index);
+      }
+    }
+
+    // select next element
+    _select(active + 1);
+  }
+
+  /**
+   * Selects the previous element in stack
+   * An id can be passed to the function. prev() will then try
+   * to select the previous element in stack matching the id.
+   *
+   * @param {string} id (optional)
+   * @returns {int}
+   */
+  function _prev(id) {
+    const active = _index();
+
+    // No previous elements to select
+    if (active === 0) {
+      return;
+    }
+
+    if (id) {
+      let copy = [...stack];
+      copy = copy.slice(0, active);
+
+      // findIndex returns the first matching id || -1 if none found
+      // NOTE: reverse() flips the array order.
+      const index = copy.reverse().findIndex((obj) => obj.id === id);
+
+      // index will be -1 on no match
+      if (index >= 0) {
+        _select(index);
+      }
+    }
+
+    // select previous element
+    _select(active - 1);
   }
 
   return {
@@ -231,18 +347,38 @@ export function useModal() {
     clear: _clear,
     current: _current,
     index: _index,
-    get: _get,
+    select: _select,
+    next: _next,
+    prev: _prev,
     setStack,
     stack,
   };
 }
 
-function Provider(props) {
+/**
+ * blah blah
+ *
+ * @param {obj} name
+ * @param {string} name.key
+ *
+ * @returns
+ *
+ */
+
+function Provider({ children, load, save }) {
   const [stack, setStack] = useState([]);
 
+  // useEffect running on component mount
+  useEffect(() => {
+    if (load) {
+      const loadedStack = load();
+      setStack(loadedStack);
+    }
+  }, []);
+
   return (
-    <ModalContext.Provider value={{ stack, setStack, save: props.save }}>
-      {props.children}
+    <ModalContext.Provider value={{ stack, setStack, save }}>
+      {children}
     </ModalContext.Provider>
   );
 }

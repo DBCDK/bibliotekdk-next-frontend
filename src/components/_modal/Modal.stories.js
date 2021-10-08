@@ -18,11 +18,38 @@ const Link = ({ id, context = {} }) => {
   );
 };
 
-const Close = () => {
+const Pop = () => {
   const { pop } = useModal();
   return (
     <a href="#" tabIndex="0" onClick={() => pop()}>
-      x
+      I will pop the layer
+    </a>
+  );
+};
+
+const Prev = () => {
+  const { prev } = useModal();
+  return (
+    <a href="#" tabIndex="0" onClick={() => prev()}>
+      I will go to previous layer
+    </a>
+  );
+};
+
+const Next = () => {
+  const { next } = useModal();
+  return (
+    <a href="#" tabIndex="0" onClick={() => next()}>
+      I will go to next layer
+    </a>
+  );
+};
+
+const Clear = () => {
+  const { clear } = useModal();
+  return (
+    <a href="#" tabIndex="0" onClick={() => clear()}>
+      I will clear all layers
     </a>
   );
 };
@@ -38,13 +65,31 @@ const ExampleComponent = ({ context }) => {
 
   return (
     <div style={styles}>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        {title}
-        <Close />
+      {title}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          height: "100px",
+        }}
+      >
+        <Prev />
+        <Next />
+      </div>
+      <div>
+        <Pop />
+      </div>
+      <div>
+        <Clear />
       </div>
       <input tabIndex="0" type="text" placeholder="Help" />
       <div>
-        <Link id="Settings" context={{ title: "Change your settings" }} />
+        <a href="#" tabIndex="-1">
+          i'm not tabbable
+        </a>
+      </div>
+      <div>
+        <Link id="Settings" context={{ title: "Im a new layer" }} />
       </div>
     </div>
   );
@@ -61,7 +106,7 @@ export const Default = () => {
       save={(stack) => console.log("...saving changes in stack", stack)}
     >
       <div>
-        <Link id="Profile" context={{ title: "This is your profile" }} />
+        <Link id="Profile" context={{ title: "This is a Modal" }} />
         <Modal.Container>
           <Modal.Page id="Profile" component={ExampleComponent} />
           <Modal.Page id="Settings" component={ExampleComponent} />

@@ -90,31 +90,32 @@
   width: calc(100% / 3);
   height: 100%;
   overflow-y: auto;
+
   transition-duration: 0.3s;
 
   /* ensures pages is stacked top-left */
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
 
   /* Default color */
   color: black;
 }
 
-.modal_page.current {
+.modal_page.page-current {
   /* center of view (visible) */
-  transform: translateX(100%);
+  transform: translateX(-100%);
   z-index: 1;
 }
 
-.modal_page.unStacked {
+.modal_page.page-after {
   /* right of view (invisible) */
-  transform: translateX(200%);
+  transform: translateX(0);
   z-index: 0;
 }
 
-.modal_page.stacked {
+.modal_page.page-before {
   /* left of view (invisible) */
-  transform: translateX(0);
+  transform: translateX(-200%);
   z-index: 0;
 }
