@@ -135,8 +135,15 @@ export function OrderButton({
       selectedMaterial.onlineAccess,
       title
     );
+
     return (
       <>
+        {selectedMaterial.onlineAccess[0]?.accessType ===
+          "urlInternetRestricted" && (
+          <Text type="text3" className={styles.textAboveButton}>
+            {Translate({ ...context, label: "url_login_required" })}
+          </Text>
+        )}
         {selectedMaterial.onlineAccess[0].infomediaId && !user.isAuthenticated && (
           <Text type="text3" className={styles.textAboveButton}>
             {Translate({ ...context, label: "label_infomediaAccess" })}

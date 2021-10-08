@@ -461,6 +461,10 @@
       }
     },
     "overview": {
+      "url_login_required": {
+        "da" : "Login kræves for at læse artiklen",
+        "en" : "Login required to read article"
+      },
       "label_infomediaAccess": {
         "da": "Læs artikel fra infomedia (kræver login)",
         "en": "Read infomedia article (requires login)"
