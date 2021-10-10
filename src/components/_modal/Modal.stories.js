@@ -89,7 +89,13 @@ const ExampleComponent = ({ context }) => {
         </a>
       </div>
       <div>
+        <br />
+        <br />
         <Link id="Settings" context={{ title: "Im a new layer" }} />
+        <br />
+        <Link id="Order" context={{ title: "Im also a new layer" }} />
+        <br />
+        <Link id="Profile" context={{ title: "Im a new layer two" }} />
       </div>
     </div>
   );
@@ -107,9 +113,12 @@ export const Default = () => {
     >
       <div>
         <Link id="Profile" context={{ title: "This is a Modal" }} />
+        <br />
+        <Link id="Order" context={{ title: "This is also a Modal" }} />
         <Modal.Container>
           <Modal.Page id="Profile" component={ExampleComponent} />
           <Modal.Page id="Settings" component={ExampleComponent} />
+          <Modal.Page id="Order" component={ExampleComponent} />
         </Modal.Container>
       </div>
     </Modal.Provider>

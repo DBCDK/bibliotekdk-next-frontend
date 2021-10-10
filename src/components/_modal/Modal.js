@@ -95,21 +95,22 @@ function Container({ children, className = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_wrap">
-          {modal.stack.map((obj, i) => {
-            const id = obj.id;
-
+          {modal.stack.map((obj, index) => {
+            // Find component by id in container children
             const page = children.find((child) => {
-              if (child.props.id === id) {
+              if (child.props.id === obj.id) {
                 return child;
               }
             });
-
+            // Enrich page components with helpfull props
             return React.cloneElement(page, {
               modal,
+              // stack index
+              index,
               context: obj.context,
               active: obj.active,
               className: className.page || "",
-              dataCy: `modal-page-${i}`,
+              dataCy: `modal-page-${index}`,
               ...page.props,
             });
           })}
@@ -122,29 +123,33 @@ function Container({ children, className = {} }) {
 /**
  * blah blah
  *
- * @param {obj} name
- * @param {string} name.key
+ * @param {obj} props
+ * @param {string} props.index
+ * @param {string} props.active
+ * @param {string} props.modal
+ * @param {string} props.className
+ * @param {string} props.dataCy
  *
- * @returns
+ * @returns {component}
  *
  */
 
 function Page(props) {
   const [status, setStatus] = useState("page-after");
-  const { id, active, modal, className, dataCy } = props;
+  const { index, active, modal, className, dataCy } = props;
 
-  console.log("zzz index", modal.index(id), modal.index());
-
+  // Update the page position status
+  // This will positioning the pages left, right og in the center of the modal view.
   useEffect(() => {
-    // This is the current active page in modal
+    // Active will be true, if page is the current active in stack (center)
     if (active) {
       setStatus("page-current");
     }
-    // If not current check if id exist in stack
-    else if (modal.index(id) >= modal.index()) {
+    // If not current check if index is lower than the active index in stack (left)
+    else if (index < modal.index()) {
       setStatus("page-before");
     }
-    // on component unmount
+    // Pages will mount right, and on onmount be repositioned right
     return () => setStatus("page-after");
   }, [modal.stack]);
 
@@ -156,12 +161,19 @@ function Page(props) {
 }
 
 /**
- * blah blah
+ * UseModal hook
+ * contains the stack and utility functions to read and handle stack changes
  *
- * @param {obj} name
- * @param {string} name.key
+ * util help functions:
+ * push()
+ * pop()
+ * clear()
+ * index()
+ * select()
+ * next()
+ * prev()
  *
- * @returns
+ * @returns object
  *
  */
 
@@ -199,9 +211,8 @@ export function useModal() {
   function _pop() {
     let copy = [...stack];
     const active = _index();
-
+    // Remove all elements after active (Note the splice() func.)
     copy.splice(active, stack.length);
-
     //  If none items left, run clear function
     if (copy.length === 0) {
       _clear();
@@ -211,7 +222,6 @@ export function useModal() {
     // Make previous item active
     const lastIndex = copy.length - 1;
     copy = copy.map((obj, i) => ({ ...obj, active: lastIndex === i }));
-
     // custom save
     save && save(copy);
     // update locale stack state
@@ -228,18 +238,6 @@ export function useModal() {
     save && save([]);
     // update locale stack state
     setStack([]);
-  }
-
-  /**
-   * current
-   *
-   * Returns the active item in stack
-   *
-   * @returns {obj}
-   */
-  function _current() {
-    const active = _index();
-    return stack[active];
   }
 
   /**
@@ -267,7 +265,6 @@ export function useModal() {
     let copy = [...stack];
     // set active true on index match, others false.
     copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
-
     // custom save
     save && save(copy);
     // update locale stack state
@@ -284,7 +281,6 @@ export function useModal() {
    */
   function _next(id) {
     const active = _index();
-
     // No next element to select
     if (active + 1 === stack.length) {
       return;
@@ -293,10 +289,8 @@ export function useModal() {
     if (id) {
       let copy = [...stack];
       copy = copy.slice(active, stack.length);
-
       // findIndex returns the first matching id || -1 if none found
       const index = copy.findIndex((obj) => obj.id === id);
-
       // index will be -1 on no match
       if (index >= 0) {
         _select(index);
@@ -317,7 +311,6 @@ export function useModal() {
    */
   function _prev(id) {
     const active = _index();
-
     // No previous elements to select
     if (active === 0) {
       return;
@@ -326,11 +319,9 @@ export function useModal() {
     if (id) {
       let copy = [...stack];
       copy = copy.slice(0, active);
-
       // findIndex returns the first matching id || -1 if none found
       // NOTE: reverse() flips the array order.
       const index = copy.reverse().findIndex((obj) => obj.id === id);
-
       // index will be -1 on no match
       if (index >= 0) {
         _select(index);
@@ -345,7 +336,6 @@ export function useModal() {
     push: _push,
     pop: _pop,
     clear: _clear,
-    current: _current,
     index: _index,
     select: _select,
     next: _next,

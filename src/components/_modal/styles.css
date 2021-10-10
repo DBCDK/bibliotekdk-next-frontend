@@ -66,7 +66,6 @@
 .modal_dialog.visible {
   pointer-events: auto;
   transform: none;
-  transition: transform 330ms ease-out;
 }
 
 /* wrap */
@@ -91,9 +90,11 @@
   height: 100%;
   overflow-y: auto;
 
-  transition-duration: 0.3s;
+  /* animation */
+  transition: transform 330ms ease-out;
+  will-change: transform;
 
-  /* ensures pages is stacked top-left */
+  /* ensures pages is stacked top-right */
   position: absolute;
   right: 0;
   top: 0;
