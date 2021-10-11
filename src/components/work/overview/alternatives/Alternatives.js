@@ -33,7 +33,7 @@ export function AlternativeOptions({
             }
           }}
         >
-          <Text>
+          <Text tag="span">
             {Translate({
               ...context,
               label: "all-options-link",
