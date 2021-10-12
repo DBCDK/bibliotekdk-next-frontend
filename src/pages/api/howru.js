@@ -42,7 +42,10 @@ export default async function handler(req, res) {
     ...Object.entries(searchFragments).map(([name, func]) => ({
       service: `api-search-${name}`,
       handler: () =>
-        fetcher({ ...func({ q: "hest" }), accessToken: session?.accessToken }),
+        fetcher({
+          ...func({ q: "hest", limit: 10 }),
+          accessToken: session?.accessToken,
+        }),
     })),
   ];
 
