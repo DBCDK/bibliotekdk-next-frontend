@@ -49,6 +49,7 @@ export function LoanerForm({
   const [state, setState] = useState(initial || {});
   const [errorCode, setErrorCode] = useState();
   const [emailMessage, setEmailMessage] = useState();
+  const [allowSave, setAllowSave] = useState(!!initial);
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
@@ -147,6 +148,7 @@ export function LoanerForm({
               onClick={onLogin}
               className={styles.loginbutton}
               disabled={!!submitting}
+              tabIndex="0"
             >
               {Translate({
                 context: "header",
@@ -255,6 +257,7 @@ export function LoanerForm({
                   </React.Fragment>
                 );
               })}
+
               {errorCode && (
                 <Text type="text3" className={styles.error}>
                   {Translate({ context: "form", label: errorCode })}
@@ -264,8 +267,8 @@ export function LoanerForm({
 
             <Button onClick={() => {}} tabIndex="0">
               {Translate({
-                context: "order",
-                label: "approve-loaner-info",
+                context: "header",
+                label: "login",
               })}
             </Button>
           </form>
@@ -368,12 +371,15 @@ export default function Wrap(props) {
         <LoanerForm
           {...props}
           branch={branch}
-          initial={loanerInfo}
+          initial={loanerInfo.userParameters}
           onLogin={() => {
             setBeginLogout(true);
           }}
-          onSubmit={(info) => {
-            updateLoanerInfo(info);
+          onSubmit={async (info) => {
+            await updateLoanerInfo({
+              userParameters: info,
+              pickupBranch: branch.branchId,
+            });
             if (onSubmit) {
               onSubmit(branch);
             }

@@ -83,6 +83,28 @@ function mockSubmitOrder() {
   });
 }
 
+function mockSessionUserParameters() {
+  cy.fixture("sessionUserParametersNull.json").then((fixtureNull) => {
+    cy.fixture("sessionUserParameters.json").then((fixture) => {
+      cy.intercept("POST", "/graphql", (req) => {
+        if (req.body.query.includes("session {")) {
+          cy.returnUserParameters ? req.reply(fixture) : req.reply(fixtureNull);
+        }
+      });
+    });
+  });
+}
+
+function mockSubmitSessionUserParameters() {
+  cy.fixture("submitSessionUserParameters.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("submitSession")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
 function openOrderModal() {
   // Wait for content to be loaded
   cy.get("[data-cy=button-order-overview-enabled]");
@@ -111,9 +133,12 @@ describe("Order", () => {
   });
 
   it("Should not lock emailfield for agencies with no borrowerCheck", () => {
+    cy.returnUserParameters = false;
     // Custom mock
     mockBranchesSearch();
     mockBranchUserParameters();
+    mockSubmitSessionUserParameters();
+    mockSessionUserParameters();
 
     cy.visit(
       `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
@@ -131,6 +156,7 @@ describe("Order", () => {
     cy.get("[data-cy=text-skift-afhentning]").click();
 
     cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
+    cy.wait(1000);
     cy.tab().type("{enter}");
 
     cy.get("[data-cy=input-customId]").type("Some class");
@@ -143,7 +169,12 @@ describe("Order", () => {
     cy.get("[data-cy=input-userMail]").clear();
     cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
 
-    cy.get("[data-cy=button-godkend-låneroplysninger]").click();
+    // Intercept fetching user params, and return actual parameters
+    cy.wait(100).then(() => {
+      cy.returnUserParameters = true;
+    });
+
+    cy.get("[data-cy=button-log-ind]").click();
 
     // cicero mail should now be replaced with the alternative mail
     cy.get("#order-user-email").should("have.value", "freja@mail.dk");

@@ -1064,8 +1064,8 @@
         "en": "Order for pickup at %s"
       },
       "order-to-description": {
-        "da": "For at bestille dertil skal du udfylde dine låneroplysninger",
-        "en": "To order there, you must fill in your loaner information"
+        "da": "For at bestille skal du logge ind ved at udfylde dine låneroplysninger",
+        "en": "LABEL: mangler oversættelse"
       },
       "order-login-required": {
         "da": "For at bestille dertil skal du logge ind via %s",

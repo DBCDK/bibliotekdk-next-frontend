@@ -39,7 +39,8 @@ export function Info({
   // Mateiral props
   const { title, creators, materialType, cover } = material;
   // user props
-  const { userName, userMail, agency } = user;
+  const { agency } = user;
+  const { userName, userMail } = user?.userParameters || {};
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -87,6 +88,7 @@ export function Info({
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   const email = hasBorchk ? authUser.mail : userMail;
+  const name = hasBorchk ? authUser.name : userName;
 
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
@@ -191,14 +193,14 @@ export function Info({
             </div>
           )}
       </div>
-      {(isLoadingBranches || userName) && (
+      {(isLoadingBranches || name) && (
         <div className={styles.user}>
           <Title type="title5">
             {Translate({ ...context, label: "ordered-by" })}
           </Title>
           <div className={styles.name}>
             <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-              {userName}
+              {name}
             </Text>
           </div>
           <div className={styles.email}>
