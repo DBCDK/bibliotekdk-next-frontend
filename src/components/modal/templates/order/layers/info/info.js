@@ -225,7 +225,10 @@ export function Info({
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
-            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
+            {(isLoadingBranches ||
+              (authUser?.mail &&
+                lockedMessage &&
+                pickupBranch?.borrowerCheck)) && (
               <div className={`${styles.emailMessage}`}>
                 <Text
                   type="text3"
