@@ -413,7 +413,8 @@ export default function Wrap(props) {
   }
 
   if (error) {
-    return <div>Error :( !!!!!</div>;
+    console.log(error, "ERROR");
+    //return <div>Error :( !!!!!</div>;
   }
 
   const mergedWork = merge({}, covers.data, data);

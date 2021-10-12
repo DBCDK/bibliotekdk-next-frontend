@@ -27,6 +27,30 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
+export function LoginForm({ branch, onLogin, submitting }) {
+  return (
+    <>
+      <Text type="text2">
+        {Translate({
+          context: "order",
+          label: "order-login-required",
+          vars: [branch.agencyName],
+        })}
+      </Text>
+      <Button
+        onClick={onLogin}
+        className={styles.loginbutton}
+        disabled={!!submitting}
+      >
+        {Translate({
+          context: "header",
+          label: "login",
+        })}
+      </Button>
+    </>
+  );
+}
+
 /**
  * Will show either a signin button if the provided branch supports
  * borrowerCheck (supports login.bib.dk), and otherwise a loaner formular.
@@ -52,6 +76,7 @@ export function LoanerForm({
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -135,25 +160,11 @@ export function LoanerForm({
         )}
 
         {orderPossible && branch.borrowerCheck && (
-          <>
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "order-login-required",
-                vars: [branch.agencyName],
-              })}
-            </Text>
-            <Button
-              onClick={onLogin}
-              className={styles.loginbutton}
-              disabled={!!submitting}
-            >
-              {Translate({
-                context: "header",
-                label: "login",
-              })}
-            </Button>
-          </>
+          <LoginForm
+            branch={branch}
+            onLogin={onLogin}
+            submitting={submitting}
+          />
         )}
 
         {orderPossible && !branch.borrowerCheck && (
@@ -272,6 +283,7 @@ export function LoanerForm({
     </>
   );
 }
+
 LoanerForm.propTypes = {
   branch: PropTypes.object,
   onSubmit: PropTypes.func,

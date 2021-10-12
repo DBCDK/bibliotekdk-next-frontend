@@ -23,6 +23,39 @@ export function hitcount({ q, language, agencyId, limit, offset }) {
   };
 }
 
+export function pickupsearch({
+  q,
+  language = "da",
+  agencyId,
+  limit = 10,
+  offset,
+}) {
+  return {
+    delay: 200, // for debugging
+    query: `query ($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String) {
+        branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset) {
+            hitcount
+            result {
+                agencyName
+                branchId
+                agencyId
+                name
+                city
+                postalAddress
+                postalCode
+                highlights {
+                    key
+                    value
+                }
+            }
+          }
+          monitor(name: "bibdknext_library_pickupsearch")
+        }`,
+    variables: { q, agencyId, language, limit, offset },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Fast search
  *
