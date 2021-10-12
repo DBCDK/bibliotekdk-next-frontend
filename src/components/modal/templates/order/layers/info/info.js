@@ -60,7 +60,7 @@ export function Info({
     vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
   };
 
-  const urlToEmailArticle = "/artikel/changeemail/67";
+  const urlToEmailArticle = "/hjaelp/saadan-aendrer-du-din-mailadresse/68";
 
   const orderNotPossibleMessage = {
     context: "order",
