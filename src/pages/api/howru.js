@@ -1,9 +1,22 @@
 import { fetcher } from "@/lib/api/api";
+import fetch from "isomorphic-unfetch";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as searchFragments from "@/lib/api/search.fragments";
-import { fetchAnonymousSession } from "@/lib/anonymousSession";
+
+import getConfig from "next/config";
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 const upSince = new Date();
+
+let session;
+async function fetchSession() {
+  const anonSessionRes = await fetch(
+    `${APP_URL}/api/auth/anonsession?jwt=${session?.jwt}`
+  );
+  session = await anonSessionRes.json();
+  return session.session;
+}
 
 /**
  * The howru handler
@@ -11,7 +24,8 @@ const upSince = new Date();
  * We make requests for all our GraphQL fragments
  */
 export default async function handler(req, res) {
-  const session = await fetchAnonymousSession({ req, res });
+  const session = await fetchSession();
+
   // If any of the services fail, this is set to false
   let ok = true;
 
@@ -37,8 +51,9 @@ export default async function handler(req, res) {
     services.map(async (service) => {
       const res = { service: service.service };
       try {
-        const { error } = await service.handler();
-        if (error) {
+        const { error, errors } = await service.handler();
+
+        if (error || errors) {
           ok = false;
           res.ok = false;
         } else {
