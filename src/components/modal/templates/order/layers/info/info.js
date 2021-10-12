@@ -242,7 +242,6 @@ export function Info({
                 </Text>
                 <Link
                   href={urlToEmailArticle}
-                  target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
                   <Text
