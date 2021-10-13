@@ -102,10 +102,11 @@
 /* Content */
 .content {
   /* padding: var(--pt2); */
-  color: var(--white);
+  /*color: var(--white);*/
   height: 100%;
   /* height: calc(100% - 80px); */
   overflow-y: auto;
+  background-color: var(--white);
 }
 
 /* Dimmer */

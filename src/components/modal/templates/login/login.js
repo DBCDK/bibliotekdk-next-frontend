@@ -21,7 +21,7 @@ import { LoanerForm } from "@/components/modal/templates/order/layers/loanerform
 
 import * as libraryFragments from "@/lib/api/library.fragments";
 
-import UserParamsForm from "@/components/modal/templates/order/layers/loanerform/UserParamsForm";
+import LoginParamsForm from "@/components/modal/templates/login/LoginParamsForm";
 
 import { useRouter } from "next/router";
 import {
@@ -95,6 +95,8 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   );
 }
 
+function PickupList() {}
+
 /**
  * Make pickup branches selectable with Radio buttons
  *
@@ -140,7 +142,7 @@ export function LoginPickup({
       {pickupBranch?.borrowerCheck === true && <div>fisk</div>}
       {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
       {pickupBranch?.borrowerCheck === false && (
-        <UserParamsForm branch={pickupBranch} />
+        <LoginParamsForm branchId={pickupBranch.branchId} />
       )}
 
       {pickupBranch === null && (
