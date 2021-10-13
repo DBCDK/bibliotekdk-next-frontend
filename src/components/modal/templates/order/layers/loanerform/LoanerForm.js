@@ -188,26 +188,8 @@ export function LoanerForm({
   isVisible,
   onClose,
 }) {
-  const [state, setState] = useState(initial || {});
-  const [errorCode, setErrorCode] = useState();
   const [emailMessage, setEmailMessage] = useState();
   const [allowSave, setAllowSave] = useState(!!initial);
-  const requiredParameters = branch?.userParameters?.filter(
-    ({ parameterRequired }) => parameterRequired
-  );
-
-  function validateState() {
-    for (let i = 0; i < requiredParameters.length; i++) {
-      const { userParameterType } = requiredParameters[i];
-
-      if (!state[userParameterType]) {
-        return ERRORS.MISSING_INPUT;
-      }
-      if (emailMessage) {
-        return emailMessage.label;
-      }
-    }
-  }
 
   if (skeleton) {
     return (
