@@ -16,7 +16,7 @@ import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
 import { sortBy } from "lodash";
 import Translate from "@/components/base/translate";
-import { Top } from "@/components/modal";
+import { Top } from "@/components/_modal";
 
 /**
  * Template selection function

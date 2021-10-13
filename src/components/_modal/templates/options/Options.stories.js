@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import { Modal } from "@/components/modal";
-import { Options } from "@/components/modal/templates/options/Options.template";
+import { Modal } from "@/components/_modal";
+import { Options } from "@/components/_modal/templates/options/Options.template";
 import dummy_data from "./dummy_data.json";
 
 export default {

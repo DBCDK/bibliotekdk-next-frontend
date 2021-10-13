@@ -1,410 +1,421 @@
-import { useState, useEffect, useRef, createContext, useContext } from "react";
-
-// modal utils
-import { handleTab } from "./utils";
-
-// styles
-import "./styles.css";
+import { useState, useEffect, useRef } from "react";
+import { get } from "lodash";
+import PropTypes from "prop-types";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
-// context
-const ModalContext = createContext(null);
+import Translate from "@/components/base/translate";
+import Title from "@/components/base/title";
+import Icon from "@/components/base/icon";
+import Link from "@/components/base/link";
+import Text from "@/components/base/text";
+
+import Arrow from "@/components/base/animation/arrow";
+
+// templates
+import Menu from "./templates/menu";
+import Basket from "./templates/basket";
+import Filter from "./templates/filter";
+import Order from "./templates/order";
+import Options from "./templates/options";
+
+import CloseSvg from "@/public/icons/close.svg";
+
+import animations from "@/components/base/animation/animations.module.css";
+import styles from "./Modal.module.css";
 
 /**
+ * Function to trap Tab inside modal
  *
- * @param {obj} className
- * @param {string} className.dimmer
- * @param {string} className.modal
- * @param {string} className.content
- * @returns
+ * @param {obj} event current target element (focused element)
+ * @param {obj} container container to trap Tab in (modal)
+ *
+ * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
+ * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
  */
-function Container({ children, className = {} }) {
-  if (!children) {
-    return null;
+function handleTab(event, container) {
+  // Search container for elements (tabindex prop)
+  const sequence = Object.values(
+    container.querySelectorAll('[tabindex]:not([tabindex="-1"])')
+  );
+
+  if (sequence.length < 1) {
+    return;
   }
 
-  const modal = useModal();
+  const backward = event.shiftKey;
+  const first = sequence[0];
+  const last = sequence[sequence.length - 1];
 
-  // current status of the modal dialog
-  const [dialogStatus, setDialogStatus] = useState("closed");
+  // wrap around first to last, last to first
+  const source = backward ? first : last;
+  const target = backward ? last : first;
 
-  // modal ref
-  const modalRef = useRef(null);
+  if (source === event.target) {
+    target.focus();
+    return;
+  }
 
-  // modal has content and should be visible
-  const isVisible = modal.stack.length > 0;
+  // find current position in tabsequence
+  let currentIndex;
+  const found = sequence.some(function (element, index) {
+    if (element !== event.target) {
+      return false;
+    }
 
-  // active/visible modal class
-  const visibleClass = isVisible ? "modal_visible" : "";
+    currentIndex = index;
+    return true;
+  });
 
-  // Status is used as a class
-  const dialogStatusClass = `modal_${dialogStatus}`;
+  if (!found) {
+    // redirect to first as we're not in our tabsequence
+    first.focus();
+    return;
+  }
 
-  // Listen on escape keypress - will close the modal (accessibility)
+  // shift focus to previous/next element in the sequence
+  const offset = backward ? -1 : 1;
+  sequence[currentIndex + offset].focus();
+}
+
+/**
+ * Template selection function
+ *
+ * @param {string} template name of template
+ *
+ * @returns {component}
+ */
+function getTemplate(template) {
+  switch (template) {
+    case "menu":
+      return Menu;
+    case "basket":
+      return Basket;
+    case "filter":
+      return Filter;
+    case "order":
+      return Order;
+    case "options":
+      return Options;
+    default:
+      return Menu;
+  }
+}
+
+export function Back({ isVisible, handleClose, className }) {
+  return (
+    <div className={`${styles.back} ${className}`}>
+      <div className={styles.wrap}>
+        <Link
+          border={false}
+          tabIndex={isVisible ? "0" : "-1"}
+          className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
+          onClick={() => handleClose && handleClose()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.keyCode === 13) {
+              handleClose && handleClose();
+            }
+          }}
+        >
+          <span className={styles.flex}>
+            <Arrow
+              flip
+              className={`${styles.arrow} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+            />
+            <Text
+              type="text3"
+              className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+            >
+              {Translate({ context: "general", label: "back" })}
+            </Text>
+          </span>
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export function Top({ title, isVisible, handleClose }) {
+  return (
+    <div className={styles.top}>
+      <div className={styles.close}>
+        <div className={styles.wrap}>
+          {title && (
+            <Title type="title4" className={styles.title}>
+              {title}
+            </Title>
+          )}
+
+          <Icon
+            dataCy="close-modal"
+            tabIndex={isVisible ? "0" : "-1"}
+            title={Translate({
+              context: "general",
+              label: "close-modal-title",
+            })}
+            alt={Translate({
+              context: "general",
+              label: "close-modal-title",
+            })}
+            className={styles.closeIcon}
+            // src="close_white.svg"
+            size={2}
+            onClick={() => handleClose && handleClose()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                handleClose && handleClose();
+              }
+            }}
+          >
+            <CloseSvg />
+          </Icon>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+export function Modal({
+  className = "",
+  onClose = null,
+  onLang = null,
+  template = null,
+  isLayer = false,
+  skeleton = false,
+  children = false,
+}) {
+  // modal is visible
+  const isVisible = !!template;
+
+  // active modal class
+  const visibleClass = isVisible ? styles.visible : "";
+
+  // Listen on escape keypress
   const escapeEvent = useKeyPress(isVisible && "Escape");
 
-  // Tab key handle (locks tab in visible modal)
-  useEffect(() => {
-    // If tab key is pressed down
-    function downHandler(e) {
-      if (e.key === "Tab") {
-        handleTab(e, modalRef.current);
-      }
-    }
+  // Listen on tab keypress
+  const tabEvent = useKeyPress(isVisible && "Tab");
 
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, []);
+  // Modal ref
+  const modalRef = useRef(null);
 
-  useEffect(() => {
-    const dialog = modalRef.current;
-
-    if (dialog) {
-      // listener on dialog transition start
-      dialog.addEventListener("transitionstart", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpen = dialog.classList.contains("modal_open");
-          // set new dialog status state
-          setDialogStatus(isOpen ? "closing" : "opening");
-        }
-      });
-      // listener on dialog transition finished
-      dialog.addEventListener("transitionend", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpening = dialog.classList.contains("modal_opening");
-          // set new dialog status state
-          setDialogStatus(isOpening ? "open" : "closed");
-        }
-      });
-    }
-  }, []);
+  // Modal context state
+  const [context, setContext] = useState({
+    title: "",
+    template: getTemplate(),
+  });
 
   // force modal focus (accessibility)
   useEffect(() => {
     if (isVisible && modalRef.current) {
       // Wait for animation to finish
       setTimeout(() => {
-        modalRef.current.focus();
+        if (modalRef.current) {
+          modalRef.current.focus();
+        }
       }, 200);
     }
-  }, [isVisible]);
+  }, [isVisible, modalRef.current]);
 
-  //  Closes the modal on Escape key
+  //  Update modal context
+  useEffect(() => {
+    if (template) {
+      const copy = { ...context };
+      copy.title = template;
+      copy.template = getTemplate(template);
+      setContext(copy);
+    }
+  }, [template]);
+
+  //  Close chain on Escape key
   useEffect(() => {
     if (isVisible && escapeEvent) {
-      modal.clear();
+      handleClose();
     }
   }, [escapeEvent]);
 
+  // Update and handle target on tab key press
+  useEffect(() => {
+    if (isVisible && get(tabEvent, "target") && get(modalRef, "current")) {
+      handleTab(tabEvent, modalRef.current);
+    }
+  }, [tabEvent, modalRef.current]);
+
+  // Close functions
+  function handleClose() {
+    onClose && onClose();
+    document.activeElement.blur();
+  }
+
+  // Custom modal theme class
+  const themeClass = styles[`${context.title}-theme`] || "";
+
   return (
     <div
-      id="modal_dimmer"
       data-cy="modal-dimmer"
       aria-hidden={true}
-      className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
-      onClick={() => modal.clear()}
+      className={`${styles.dimmer} ${className} ${visibleClass}`}
+      onClick={() => handleClose()}
     >
       <dialog
-        id="modal_dialog"
         data-cy="modal-container"
         aria-modal="true"
         role="dialog"
         tabIndex={isVisible ? "0" : null}
-        ref={modalRef}
+        ref={isVisible ? modalRef : null}
         aria-hidden={!isVisible || null}
-        className={`modal_dialog ${
-          className.modal || ""
-        } ${visibleClass} ${dialogStatusClass}`}
+        className={`${styles.modal} ${themeClass} ${visibleClass}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal_wrap">
-          {modal.stack.map((obj, index) => {
-            // Find component by id in container children
-            const page = children.find((child) => {
-              if (child.props.id === obj.id) {
-                return child;
-              }
-            });
-            // Enrich page components with props
-            return React.cloneElement(page, {
-              modal,
-              // stack index
-              index,
-              context: obj.context,
-              active: obj.active,
-              className: className.page || "",
-              key: `modal-page-${index}`,
-              dataCy: `modal-page-${index}`,
-              ...page.props,
-            });
-          })}
+        <div className={styles.content}>
+          {(children &&
+            React.cloneElement(children, {
+              isVisible,
+              onClose,
+              onLang,
+              ...children.props,
+            })) || (
+            <context.template
+              template={template}
+              isVisible={isVisible}
+              onClose={onClose}
+              onLang={onLang}
+            />
+          )}
         </div>
       </dialog>
     </div>
   );
 }
 
+// PropTypes for Modal component
+Modal.propTypes = {
+  skeleton: PropTypes.bool,
+  template: PropTypes.string,
+  onClose: PropTypes.func,
+  onLang: PropTypes.func,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+};
+
 /**
- * blah blah
+ * Function to return skeleton (Loading) version of the Component
  *
  * @param {obj} props
- * @param {string} props.index
- * @param {string} props.active
- * @param {string} props.modal
- * @param {string} props.className
- * @param {string} props.dataCy
+ *  See propTypes for specific props and types
  *
  * @returns {component}
- *
  */
-
-function Page(props) {
-  const [status, setStatus] = useState("page-after");
-  const { index, active, modal, className, dataCy } = props;
-
-  // Update the page position status
-  // This will positioning the pages left, right og in the center of the modal view.
-  useEffect(() => {
-    // Active will be true, if page is the current active in stack (center)
-    if (active) {
-      setStatus("page-current");
-    }
-    // If not current check if index is lower than the active index in stack (left)
-    else if (index < modal.index()) {
-      setStatus("page-before");
-    }
-
-    // Pages will mount right, and on onmount be repositioned right
-    return () => setStatus("page-after");
-  }, [modal.stack]);
-
+export function ModalSkeleton(props) {
   return (
-    <div className={`modal_page ${status} ${className}`} data-cy={dataCy}>
-      <props.component {...props} />
-    </div>
+    <Modal
+      {...props}
+      className={`${props.className} ${styles.skeleton}`}
+      skeleton={true}
+    />
   );
 }
 
 /**
- * UseModal hook
- * contains the stack and utility functions to read and handle stack changes
+ *  Default export function of the Component
  *
- * util help functions:
- * push()
- * pop()
- * clear()
- * index()
- * select()
- * next()
- * prev()
+ * @param {obj} props
+ * See propTypes for specific props and types
  *
- * @returns object
- *
+ * @returns {component}
  */
+export default function Wrap({ router, children = false }) {
+  // Get template name from query
+  const param = get(router, "query.modal", null);
+  // use only first level of modal name ("-"" seperated names is for modal layers)
+  const template = param && param.split("-")[0];
+  // set layer for modal template
+  const isLayer = !!(param && param.split("-")[1]);
 
-export function useModal() {
-  const { stack, setStack, save } = useContext(ModalContext);
+  // We only allow a modal to be open, when user has explicitly
+  // performed an action to open the modal.
+  // Following a deep link into the site with open modal,
+  // will result in a router.replace
+  // useEffect(() => {
+  //   if (template && router.isSsr) {
+  //     const query = { ...router.query };
+  //     delete query.modal;
+  //     router.replace({ pathname: router.pathname, query });
+  //   }
+  // }, []);
 
-  /**
-   * Push
-   */
-  function _push(id, context = {}) {
-    if (id) {
-      let copy = [...stack];
-      // Skip "reset" on empty stack
-      if (stack.length > 0) {
-        const active = _index();
-        copy = copy.slice(0, active + 1);
-        copy = copy.map((obj) => ({ ...obj, active: false }));
-      }
-      // Push to stack
-      copy.push({ id, context, active: true });
-      // custom save
-      save && save(copy);
-      // update locale state
-      setStack(copy);
-    }
+  // If content is rendered on server (or it is rendered for the first time in the browser),
+  // we know the user followed a deep link to a page with an open modal; we do not show it.
+  // if (template && (typeof window === "undefined" || router.isSsr)) {
+  //   return null;
+  // }
+
+  function handleClose() {
+    onClose && onClose();
+    document && document.activeElement.blur();
   }
 
-  /**
-   * pop
-   *
-   * Removes itself and all items after
-   * Automatically sets a new active item (the item before the popped element)
-   *
-   */
-  function _pop() {
-    let copy = [...stack];
-    const active = _index();
-    // Remove all elements after active (Note the splice() func.)
-    copy.splice(active, stack.length);
-    //  If none items left, run clear function
-    if (copy.length === 0) {
-      _clear();
-      return;
+  // On modal close
+  const onClose = function onClose() {
+    if (router) {
+      // router.back();
+
+      const copy = { ...router.query };
+
+      // Remove query modal param
+      delete copy.modal;
+
+      // if order-modal
+      delete copy.order;
+
+      // if all order options
+      delete copy.orderPossible;
+
+      router.push(
+        {
+          pathname: router.pathname,
+          query: copy,
+        },
+        null,
+        { shallow: true, scroll: false }
+      );
     }
-
-    // Make previous item active
-    const lastIndex = copy.length - 1;
-    copy = copy.map((obj, i) => ({ ...obj, active: lastIndex === i }));
-    // custom save
-    save && save(copy);
-    // update locale stack state
-    setStack(copy);
-  }
-
-  /**
-   * clear
-   *
-   * Clears the stack
-   */
-  function _clear() {
-    // custom save
-    save && save([]);
-    // update locale stack state
-    setStack([]);
-  }
-
-  /**
-   * index
-   *
-   * Returns the index for the active element
-   * To search for an index, an id can passed to the function.
-   *
-   * @returns {int}
-   */
-  function _index(id) {
-    if (id) {
-      stack.findIndex((obj) => obj.id === id);
-    }
-
-    return stack.findIndex((obj) => obj.active === true);
-  }
-
-  /**
-   * select
-   *
-   *
-   */
-  function _select(index) {
-    let copy = [...stack];
-    // set active true on index match, others false.
-    copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
-    // custom save
-    save && save(copy);
-    // update locale stack state
-    setStack(copy);
-  }
-
-  /**
-   * Selects the next element in stack
-   * An id can be passed to the function. next() will then try
-   * to select the next element in stack matching the id.
-   *
-   * @param {string} id (optional)
-   * @returns {int}
-   */
-  function _next(id) {
-    const active = _index();
-    // No next element to select
-    if (active + 1 === stack.length) {
-      return;
-    }
-
-    if (id) {
-      let copy = [...stack];
-      copy = copy.slice(active, stack.length);
-      // findIndex returns the first matching id || -1 if none found
-      const index = copy.findIndex((obj) => obj.id === id);
-      // index will be -1 on no match
-      if (index >= 0) {
-        _select(index);
-      }
-    }
-
-    // select next element
-    _select(active + 1);
-  }
-
-  /**
-   * Selects the previous element in stack
-   * An id can be passed to the function. prev() will then try
-   * to select the previous element in stack matching the id.
-   *
-   * @param {string} id (optional)
-   * @returns {int}
-   */
-  function _prev(id) {
-    const active = _index();
-    // No previous elements to select
-    if (active === 0) {
-      return;
-    }
-
-    if (id) {
-      let copy = [...stack];
-      copy = copy.slice(0, active);
-      // findIndex returns the first matching id || -1 if none found
-      // NOTE: reverse() flips the array order.
-      const index = copy.reverse().findIndex((obj) => obj.id === id);
-      // index will be -1 on no match
-      if (index >= 0) {
-        _select(index);
-      }
-    }
-
-    // select previous element
-    _select(active - 1);
-  }
-
-  return {
-    push: _push,
-    pop: _pop,
-    clear: _clear,
-    index: _index,
-    select: _select,
-    next: _next,
-    prev: _prev,
-    setStack,
-    stack,
   };
-}
 
-/**
- * blah blah
- *
- * @param {obj} name
- * @param {string} name.key
- *
- * @returns
- *
- */
+  // On language select
+  const onLang = function onLang() {
+    if (router) {
+      const locale = router.locale === "da" ? "en" : "da";
+      const pathname = router.pathname;
+      const query = router.query;
 
-function Provider({ children, load, save }) {
-  const [stack, setStack] = useState([]);
+      // Force modal close on lang select
+      delete query.modal;
 
-  // useEffect running on component mount
-  useEffect(() => {
-    if (load) {
-      const loadedStack = load();
-      setStack(loadedStack);
+      router.replace({ pathname, query }, null, { locale });
     }
-  }, []);
+  };
 
   return (
-    <ModalContext.Provider value={{ stack, setStack, save }}>
-      {children}
-    </ModalContext.Provider>
+    <Modal
+      template={template}
+      isLayer={isLayer}
+      onClose={handleClose}
+      onLang={onLang}
+    >
+      {children && children}
+    </Modal>
   );
 }
 
-export default { Provider, Container, Page };
+// PropTypes for component
+Wrap.propTypes = {
+  router: PropTypes.object,
+};

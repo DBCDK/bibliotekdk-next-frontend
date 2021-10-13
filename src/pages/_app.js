@@ -35,12 +35,16 @@ import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/modal";
+import Pages from "@/components/modal/pages";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
+
+// will get deprecated soon
+import DeprecatedSoonModal from "@/components/_modal";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -71,24 +75,33 @@ export default function MyApp({ Component, pageProps, router }) {
     >
       <AnonymousSessionContext.Provider value={pageProps.anonSession}>
         <APIStateContext.Provider value={pageProps.initialData}>
-          <Matomo allowCookies={allowCookies} />
-          <BodyScrollLock router={router} />
-          <Modal router={router} />
-          <div id="layout">
-            <Head>
-              <meta name="mobile-web-app-capable" content="yes"></meta>
-              <meta name="theme-color" content="#3333ff"></meta>
-            </Head>
-            <SkipToMainLink />
-            <Banner />
-            <Notifications />
-            <HelpHeader />
+          <Modal.Provider
+            load={() => []}
+            save={(stack) => console.log("...saving changes in stack", stack)}
+          >
+            <Modal.Container>
+              <Modal.Page id="Menu" component={Pages.Menu} />
+            </Modal.Container>
 
-            <Component {...pageProps} />
-            <Feedback />
-            <CookieBox />
-            <Footer />
-          </div>
+            <Matomo allowCookies={allowCookies} />
+            <BodyScrollLock router={router} />
+            <DeprecatedSoonModal router={router} />
+            <div id="layout">
+              <Head>
+                <meta name="mobile-web-app-capable" content="yes"></meta>
+                <meta name="theme-color" content="#3333ff"></meta>
+              </Head>
+              <SkipToMainLink />
+              <Banner />
+              <Notifications />
+              <HelpHeader />
+
+              <Component {...pageProps} />
+              <Feedback />
+              <CookieBox />
+              <Footer />
+            </div>
+          </Modal.Provider>
         </APIStateContext.Provider>
       </AnonymousSessionContext.Provider>
     </Provider>

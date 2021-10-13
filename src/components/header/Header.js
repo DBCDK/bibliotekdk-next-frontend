@@ -15,7 +15,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 
-import styles from "./Header.module.css";
+import Modal, { useModal } from "@/components/modal";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
@@ -31,6 +31,8 @@ import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 import MaterialSelect, { MobileList } from "@/components/base/select/Select";
 import useMaterialFilters from "@/components/hooks/useMaterialFilters";
 
+import styles from "./Header.module.css";
+
 /**
  * The Component function
  *
@@ -41,6 +43,8 @@ import useMaterialFilters from "@/components/hooks/useMaterialFilters";
  */
 export function Header({ className = "", router = null, story = null, user }) {
   const context = { context: "header" };
+
+  const { push } = useModal();
 
   // Seach Query in suggester callback
   const [query, setQuery] = useState("");
@@ -91,14 +95,8 @@ export function Header({ className = "", router = null, story = null, user }) {
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => {
-        if (router) {
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, modal: "menu" },
-          });
-        }
-      },
+      onClick: () =>
+        push("Menu", { title: "title-menu", backgroundColor: "var(--blue)" }),
     },
   ];
 
