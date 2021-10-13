@@ -41,7 +41,7 @@ const options = {
 };
 export default (req, res) => {
   if (req.url.includes("signout")) {
-    destroyCookie(context, "anon.session", { path: "/" });
+    destroyCookie({ req, res }, "anon.session", { path: "/" });
   }
   return NextAuth(req, res, options);
 };
