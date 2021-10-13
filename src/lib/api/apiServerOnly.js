@@ -34,10 +34,22 @@ export async function fetchAll(queries, context) {
   // anonymous session
   let anonSession;
   if (!session?.accessToken) {
-    const anonSessionRes = await fetch(`${APP_URL}/api/auth/anonsession`, {
-      headers: context.req.headers,
-    });
-    anonSession = await anonSessionRes.json();
+    const ANONYMOUS_SESSION = "anon.session";
+    const jwt = nookies.get(context, { path: "/" })[ANONYMOUS_SESSION];
+    const anonSessionRes = await fetch(
+      `${APP_URL}/api/auth/anonsession?jwt=${jwt}`,
+      {
+        headers: context.req.headers,
+      }
+    );
+    const res = await anonSessionRes.json();
+    anonSession = res.session;
+    if (jwt !== res.jwt) {
+      nookies.set(context, ANONYMOUS_SESSION, res.jwt, {
+        path: "/",
+        httpOnly: true,
+      });
+    }
   }
 
   // Fetch all queries in parallel

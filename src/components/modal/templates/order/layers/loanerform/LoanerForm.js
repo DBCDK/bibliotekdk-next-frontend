@@ -151,38 +151,20 @@ export function UserParamsForm({ branch }) {
           </Text>
         )}
       </div>
-
-      <Button onClick={() => {}}>
+      <Text type="text3" className={styles.guestlogin}>
         {Translate({
           context: "order",
-          label: "approve-loaner-info",
-        })}
-      </Button>
-    </form>
-  );
-}
-
-export function LoginForm({ branch, onLogin, submitting }) {
-  return (
-    <>
-      <Text type="text2">
-        {Translate({
-          context: "order",
-          label: "order-login-required",
+          label: "order-guest-login-description",
           vars: [branch.agencyName],
         })}
       </Text>
-      <Button
-        onClick={onLogin}
-        className={styles.loginbutton}
-        disabled={!!submitting}
-      >
+      <Button onClick={() => {}} tabIndex="0">
         {Translate({
           context: "header",
           label: "login",
         })}
       </Button>
-    </>
+    </form>
   );
 }
 
@@ -206,9 +188,7 @@ export function LoanerForm({
   onClose,
 }) {
   const [emailMessage, setEmailMessage] = useState();
-  const requiredParameters = branch?.userParameters?.filter(
-    ({ parameterRequired }) => parameterRequired
-  );
+  const [allowSave, setAllowSave] = useState(!!initial);
 
   if (skeleton) {
     return (
@@ -278,11 +258,26 @@ export function LoanerForm({
           </>
         )}
         {orderPossible && branch.borrowerCheck && (
-          <LoginForm
-            branch={branch}
-            onLogin={onLogin}
-            submitting={submitting}
-          />
+          <>
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-login-required",
+                vars: [branch.agencyName],
+              })}
+            </Text>
+            <Button
+              onClick={onLogin}
+              className={styles.loginbutton}
+              disabled={!!submitting}
+              tabIndex="0"
+            >
+              {Translate({
+                context: "header",
+                label: "login",
+              })}
+            </Button>
+          </>
         )}
         {orderPossible && !branch.borrowerCheck && (
           <UserParamsForm branch={branch} />
@@ -389,12 +384,15 @@ export default function Wrap(props) {
         <LoanerForm
           {...props}
           branch={branch}
-          initial={loanerInfo}
+          initial={loanerInfo.userParameters}
           onLogin={() => {
             setBeginLogout(true);
           }}
-          onSubmit={(info) => {
-            updateLoanerInfo(info);
+          onSubmit={async (info) => {
+            await updateLoanerInfo({
+              userParameters: info,
+              pickupBranch: branch.branchId,
+            });
             if (onSubmit) {
               onSubmit(branch);
             }

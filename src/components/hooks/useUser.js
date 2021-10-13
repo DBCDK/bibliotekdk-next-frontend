@@ -1,15 +1,16 @@
 import { useSession } from "next-auth/client";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { createContext, useContext, useMemo } from "react";
+import merge from "lodash/merge";
 
-import { useData } from "@/lib/api/api";
+import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
+import * as sessionFragments from "@/lib/api/session.fragments";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
 // in memory object for storing loaner info for current user
-let loanerInfo = {};
 let loanerInfoMock = {};
 const loanerInfoKey = "loanerinfo";
 
@@ -26,7 +27,7 @@ function useAccessTokenMock() {
 function useUserMock() {
   const useUserMockKey = "useUserMock";
 
-  const { data } = useSWR(useUserMockKey, () => loanerInfoMock, {
+  const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
 
@@ -55,13 +56,12 @@ let anonSession;
  * Hook for getting and storing loaner info
  */
 function useUserImpl() {
-  // Fetch loaner info
-  // Note that this is not fetching from API, but local in-memory object
-  const { data } = useSWR(loanerInfoKey, () => loanerInfo, {
-    initialData: loanerInfo,
-  });
+  // Fetch loaner info from session
+  const { data, mutate } = useData(sessionFragments.session());
 
   const [session] = useSession();
+
+  const sessionMutate = useMutate();
 
   const isAuthenticated = !!session?.user?.uniqueId;
 
@@ -82,25 +82,33 @@ function useUserImpl() {
     }
   }
 
+  const loanerInfo = useMemo(() => {
+    const obj = {
+      ...data?.session,
+      userParameters: { ...loggedInUser, ...data?.session?.userParameters },
+    };
+    // delete all keys with no value
+    Object.keys(obj.userParameters).forEach((key) => {
+      if (!obj.userParameters[key]) {
+        delete obj.userParameters[key];
+      }
+    });
+    return obj;
+  }, [data?.session, loggedInUser]);
+
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
-    loanerInfo: {
-      // for initial data
-      ...data,
-      // adds default loaner information for a loggedIn user
-      ...loggedInUser,
-      // override loggedInUser if loanerInfo gets updated
-      ...loanerInfo,
-    },
-    updateLoanerInfo: (obj) => {
+    loanerInfo,
+    updateLoanerInfo: async (obj) => {
+      const newSession = merge({}, loanerInfo, obj);
       // Update global loaner info object
-      loanerInfo = { ...loanerInfo, ...obj };
+      await sessionMutate.post(sessionFragments.submitSession(newSession));
 
       // Broadcast update
-      mutate(loanerInfoKey);
+      await mutate();
     },
   };
 }

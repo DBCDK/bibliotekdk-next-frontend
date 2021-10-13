@@ -39,7 +39,9 @@ export function Info({
   // Mateiral props
   const { title, creators, materialType, cover } = material;
   // user props
-  const { userName, userMail, agency } = user;
+  const { agency } = user;
+  const { userName, userMail, userId, cpr, barcode, cardno, customId } =
+    user?.userParameters || {};
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -60,7 +62,7 @@ export function Info({
     vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
   };
 
-  const urlToEmailArticle = "/artikel/changeemail/67";
+  const urlToEmailArticle = "/hjaelp/saadan-aendrer-du-din-mailadresse/68";
 
   const orderNotPossibleMessage = {
     context: "order",
@@ -87,6 +89,9 @@ export function Info({
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   const email = hasBorchk ? authUser.mail : userMail;
+  const name = hasBorchk
+    ? authUser.name
+    : userName || customId || userId || cpr || cardno || barcode;
 
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
@@ -191,14 +196,14 @@ export function Info({
             </div>
           )}
       </div>
-      {(isLoadingBranches || userName) && (
+      {(isLoadingBranches || name) && (
         <div className={styles.user}>
           <Title type="title5">
             {Translate({ ...context, label: "ordered-by" })}
           </Title>
           <div className={styles.name}>
             <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-              {userName}
+              {name}
             </Text>
           </div>
           <div className={styles.email}>
@@ -225,7 +230,10 @@ export function Info({
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
-            {(isLoadingBranches || (authUser?.mail && lockedMessage)) && (
+            {(isLoadingBranches ||
+              (authUser?.mail &&
+                lockedMessage &&
+                pickupBranch?.borrowerCheck)) && (
               <div className={`${styles.emailMessage}`}>
                 <Text
                   type="text3"
@@ -239,7 +247,6 @@ export function Info({
                 </Text>
                 <Link
                   href={urlToEmailArticle}
-                  target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
                   <Text

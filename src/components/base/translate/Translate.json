@@ -1065,11 +1065,15 @@
       },
       "order-to-description": {
         "da": "For at bestille dertil skal du udfylde dine låneroplysninger",
-        "en": "To order there, you must fill in your loaner information"
+        "en": "LABEL: mangler oversættelse"
       },
       "order-login-required": {
         "da": "For at bestille dertil skal du logge ind via %s",
         "en": "To order there, you must log in via %s"
+      },
+      "order-guest-login-description": {
+        "da": "%s understøtter pt. kun gæstelogin, hvilket betyder at dine oplysninger gemmes i sessionen indtil du trykker log ud eller lukker browseren",
+        "en": "%s LABEL: mangler oversættelse"
       },
       "order-to-loaner-info": {
         "da": "Udfyld lånerinfo",

@@ -1,9 +1,8 @@
-import nookies from "nookies";
+import { destroyCookie } from "nookies";
 import NextAuth from "next-auth";
 import { adgangsplatformen, callbacks } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";
 import getConfig from "next/config";
-import { deleteAnonymousSession } from "@/lib/anonymousSession";
 const { serverRuntimeConfig } = getConfig();
 const { clientId, clientSecret } = serverRuntimeConfig;
 
@@ -42,7 +41,7 @@ const options = {
 };
 export default (req, res) => {
   if (req.url.includes("signout")) {
-    deleteAnonymousSession({ req, res });
+    destroyCookie(context, "anon.session", { path: "/" });
   }
   return NextAuth(req, res, options);
 };
