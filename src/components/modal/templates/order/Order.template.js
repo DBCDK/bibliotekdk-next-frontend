@@ -440,7 +440,6 @@ export default function Wrap(props) {
       updateLoanerInfo={updateLoanerInfo}
       onLayerClose={() => Router.back()}
       onSubmit={(pids, pickupBranch) => {
-        console.log("hej", loanerInfo.userParameters);
         orderMutation.post(
           submitOrder({
             pids,
