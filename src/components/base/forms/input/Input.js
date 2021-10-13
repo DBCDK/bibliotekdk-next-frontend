@@ -20,6 +20,7 @@ function Input({
   tabIndex = "0",
   type = "text",
   id,
+  invalid,
   value = "",
   placeholder = null,
   disabled = false,
@@ -40,11 +41,12 @@ function Input({
   }, [value]);
 
   const readOnlyClass = readOnly || disabled ? styles.readOnly : "";
+  const invalidClass = !readOnlyClass && invalid ? styles.error : "";
 
   return (
     <input
       id={id}
-      className={`${styles.input} ${readOnlyClass} ${className}`}
+      className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
       value={val}
       placeholder={placeholder}
@@ -65,6 +67,7 @@ Input.propTypes = {
   tabIndex: PropTypes.string,
   className: PropTypes.string,
   value: PropTypes.string,
+  invalid: PropTypes.bool,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,

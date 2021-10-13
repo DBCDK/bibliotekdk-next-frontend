@@ -30,6 +30,7 @@ import { Top } from "@/components/modal";
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
+import { branchUserParameters } from "@/lib/api/branches.fragments";
 
 /**
  *  Function to handle branch change
@@ -81,7 +82,9 @@ export function Order({
   useEffect(() => {
     const userBranches = user?.agency?.result;
 
-    if (!pickupBranch && userBranches?.length > 0) {
+    if (!pickupBranch && user?.pickupBranch) {
+      setPickupBranch(user?.pickupBranch);
+    } else if (!pickupBranch && userBranches?.length > 0) {
       // If user is logged in and no pickupBranch has been set
 
       // Default branch select (first in row)
@@ -198,7 +201,7 @@ export function Order({
 
   const materialsSameType = filter(
     manifestations,
-    (m) => m?.materialType === material.materialType && m?.admin?.requestButton
+    (m) => m?.materialType === material?.materialType && m?.admin?.requestButton
   );
 
   // status
@@ -249,7 +252,7 @@ export function Order({
                 // update mail in loanerInfo
                 valid &&
                   updateLoanerInfo &&
-                  updateLoanerInfo({ userMail: value });
+                  updateLoanerInfo({ userParameters: { userMail: value } });
                 // update mail in state
                 setMail({ value, valid });
               }}
@@ -396,6 +399,11 @@ export default function Wrap(props) {
     error: orderPolicyError,
   } = useData(pid && userFragments.orderPolicy({ pid }));
 
+  const { data: branch, isLoading: branchIsLoading } = useData(
+    loanerInfo?.pickupBranch &&
+      branchUserParameters({ branchId: loanerInfo.pickupBranch })
+  );
+
   const orderMutation = useMutate();
 
   useEffect(() => {
@@ -417,12 +425,14 @@ export default function Wrap(props) {
   }
 
   const mergedWork = merge({}, covers.data, data);
-  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
+    pickupBranch: branch?.branches?.result?.[0],
+  });
 
   return (
     <Order
       work={mergedWork?.work}
-      user={mergedUser || {}}
+      user={(!branchIsLoading && mergedUser) || {}}
       pid={pid}
       order={orderMutation}
       query={Router.query}
@@ -434,7 +444,7 @@ export default function Wrap(props) {
           submitOrder({
             pids,
             branchId: pickupBranch.branchId,
-            userParameters: loanerInfo,
+            userParameters: loanerInfo.userParameters,
           })
         );
       }}

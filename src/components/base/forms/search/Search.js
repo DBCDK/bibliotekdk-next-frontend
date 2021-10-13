@@ -3,7 +3,6 @@ import { useEffect } from "react";
 
 import Input from "@/components/base/forms/input";
 import Icon from "@/components/base/icon";
-import Translate from "@/components/base/translate";
 
 import styles from "./Search.module.css";
 

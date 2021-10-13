@@ -14,11 +14,17 @@
   -webkit-appearance: none;
 }
 
+.input:focus {
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+}
+
 .input.valid {
 }
 
 .input.error {
   border: 1px solid var(--error);
+  outline: 1px solid var(--error);
 }
 
 .input.readOnly {

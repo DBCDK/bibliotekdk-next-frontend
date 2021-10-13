@@ -1,0 +1,20 @@
+{
+  "data": {
+    "session": {
+      "userParameters": {
+        "cpr": null,
+        "userId": null,
+        "barcode": null,
+        "cardno": null,
+        "customId": "Some class",
+        "userDateOfBirth": null,
+        "userName": "Freja Damgaard",
+        "userAddress": null,
+        "userMail": "freja@mail.dk",
+        "userTelephone": null
+      },
+      "pickupBranch": null
+    },
+    "monitor": "OK"
+  }
+}
