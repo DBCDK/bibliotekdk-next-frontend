@@ -152,10 +152,17 @@ export function UserParamsForm({ branch }) {
         )}
       </div>
 
-      <Button onClick={() => {}}>
+      <Text type="text3" className={styles.guestlogin}>
         {Translate({
           context: "order",
-          label: "approve-loaner-info",
+          label: "order-guest-login-description",
+          vars: [branch.agencyName],
+        })}
+      </Text>
+      <Button onClick={() => {}} tabIndex="0">
+        {Translate({
+          context: "header",
+          label: "login",
         })}
       </Button>
     </form>
