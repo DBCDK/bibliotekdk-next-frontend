@@ -40,7 +40,8 @@ export function Info({
   const { title, creators, materialType, cover } = material;
   // user props
   const { agency } = user;
-  const { userName, userMail } = user?.userParameters || {};
+  const { userName, userMail, userId, cpr, barcode, cardno, customId } =
+    user?.userParameters || {};
 
   // Only show validation if user has already tried to submit order (but validation failed)
   const hasTry = validated?.hasTry;
@@ -88,7 +89,9 @@ export function Info({
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   const email = hasBorchk ? authUser.mail : userMail;
-  const name = hasBorchk ? authUser.name : userName;
+  const name = hasBorchk
+    ? authUser.name
+    : userName || customId || userId || cpr || cardno || barcode;
 
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
