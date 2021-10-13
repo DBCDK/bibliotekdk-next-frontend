@@ -43,6 +43,7 @@ export function pickupsearch({
                 city
                 postalAddress
                 postalCode
+                borrowerCheck
                 highlights {
                     key
                     value

@@ -13,6 +13,8 @@
   padding: var(--pt1) 0;
 }
 
+
+
 .scrollArea {
   padding: var(--pt2);
   height: calc(100% - 37px);

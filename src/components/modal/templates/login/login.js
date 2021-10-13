@@ -10,30 +10,29 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
-import { Back, Top } from "@/components/modal";
+import { Back } from "@/components/modal";
 
 import styles from "./login.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
 import { useData } from "@/lib/api/api";
 
+import { LoanerForm } from "@/components/modal/templates/order/layers/loanerform/LoanerForm";
+
 import * as libraryFragments from "@/lib/api/library.fragments";
+
+import UserParamsForm from "@/components/modal/templates/order/layers/loanerform/UserParamsForm";
+
 import { useRouter } from "next/router";
-import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+import {
+  branchOrderPolicy,
+  branchUserParameters,
+} from "@/lib/api/branches.fragments";
+import { handleRouterPush as onLayerChange } from "@/components/modal/templates/order/Order.template";
+import { pickupsearch } from "@/lib/api/library.fragments";
+import { branchesForUser } from "@/lib/api/user.fragments";
 
-import { LoginForm } from "@/components/modal/templates/order/layers/loanerform/LoanerForm";
-
-function Row({
-  branch,
-  selected,
-  onSelect,
-  isLoading,
-  disabled,
-  includeArrows,
-  _ref,
-}) {
-  console.log(branch, "BRANCH");
-
+function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
     key: "name",
@@ -44,14 +43,13 @@ function Row({
   // If none found use a alternative match if any found
   const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
 
-  disabled = disabled || !branch.pickupAllowed;
-
+  //disabled = disabled || !branch.pickupAllowed;
+  disabled = false;
   const alternativeMatchClass = matchOthers ? styles.squeeze : "";
   const disabledClass = disabled ? styles.disabled : "";
 
   return (
     <List.Select
-      selected={selected?.branchId === branch.branchId}
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
@@ -81,6 +79,7 @@ function Row({
               __html: title,
             }}
           />
+          fisk
         </Text>
         {matchOthers && (
           <Text type="text3" className={styles.alternativeMatch}>
@@ -110,80 +109,81 @@ function Row({
 export function LoginPickup({
   data,
   className,
-  onClose,
-  onSelect,
-  selected,
   isVisible,
   onChange,
   isLoading,
   includeArrows,
 }) {
   const context = { context: "order" };
+  const allBranches = data?.result;
 
-  const router = useRouter();
-  const pid = router.query.order;
+  let [pickupBranch, setPickupBranch] = useState(null);
 
-  // Observe when bottom of list i visible
-  const [ref, inView] = useInView({
-    /* Optional options */
-    threshold: 0,
-  });
+  const onSelect = (branch) => {
+    setPickupBranch(branch);
+  };
 
-  // tabIndex
-  const tabIndex = isVisible ? "0" : "-1";
-
-  // Add shadow to bottom of scroll area, if last element is not visible
-  const shadowClass = inView ? "" : styles.shadow;
-
-  const render = useState()[1];
-
-  const orderPossibleBranches = data?.result;
-  console.log(orderPossibleBranches, "BRANCHES");
+  const onBack = () => {
+    //alert("fisk");
+    setPickupBranch(null);
+  };
 
   return (
     <div className={`${styles.pickup} ${className}`}>
-      {/* This only load order policies, does not render anything */}
-      <Top />
-      <div className={`${styles.scrollArea} ${shadowClass}`}>
-        <div className={styles.search}>
-          <Title type="title4" className={styles.title}>
-            {Translate({ ...context, label: "pickup-search-title" })}
-          </Title>
-          <Text type="text3" className={styles.description}>
-            {Translate({ ...context, label: "pickup-search-description" })}
-          </Text>
-          <Search
-            tabIndex={tabIndex}
-            dataCy="pickup-search-input"
-            placeholder={Translate({
-              ...context,
-              label: "pickup-input-placeholder",
-            })}
-            className={styles.input}
-            onChange={debounce((value) => onChange(value), 100)}
-          />
+      <Back
+        isVisible={isVisible}
+        handleClose={onBack}
+        className={styles.back}
+      />
+
+      {/* a branch has been selected -> if borrowercheck -> show login */}
+      {pickupBranch?.borrowerCheck === true && <div>fisk</div>}
+      {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
+      {pickupBranch?.borrowerCheck === false && (
+        <UserParamsForm branch={pickupBranch} />
+      )}
+
+      {pickupBranch === null && (
+        <div className={`${styles.scrollArea} `}>
+          <div className={styles.search}>
+            <Title type="title4" className={styles.title}>
+              {Translate({ ...context, label: "pickup-search-title" })}
+            </Title>
+            <Text type="text3" className={styles.description}>
+              {Translate({ ...context, label: "pickup-search-description" })}
+            </Text>
+            <Search
+              tabIndex={0}
+              dataCy="pickup-search-input"
+              placeholder={Translate({
+                ...context,
+                label: "pickup-input-placeholder",
+              })}
+              className={styles.input}
+              onChange={debounce((value) => onChange(value), 100)}
+            />
+          </div>
+          {allBranches?.length > 0 && (
+            <List.Group
+              enabled={!isLoading && isVisible}
+              data-cy="list-branches"
+              className={styles.orderPossibleGroup}
+            >
+              {allBranches.map((branch, idx) => {
+                return (
+                  <Row
+                    key={`${branch.branchId}-${idx}`}
+                    branch={branch}
+                    onSelect={onSelect}
+                    isLoading={isLoading}
+                    includeArrows={includeArrows}
+                  />
+                );
+              })}
+            </List.Group>
+          )}
         </div>
-        {!isLoading && (
-          <List.Group
-            data-cy="list-branches"
-            className={styles.orderPossibleGroup}
-          >
-            {orderPossibleBranches?.map((branch, idx) => {
-              return (
-                <Row
-                  key={`${branch.branchId}-${idx}`}
-                  branch={branch}
-                  selected={selected}
-                  onSelect={onSelect}
-                  isLoading={isLoading}
-                  includeArrows={includeArrows}
-                />
-              );
-            })}
-          </List.Group>
-        )}
-        )}
-      </div>
+      )}
     </div>
   );
 }
@@ -206,16 +206,18 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  let { agency } = props;
+  const { agency } = props;
 
   const [query, setQuery] = useState("");
 
-  /* const { data, isLoading, error } = useData(
-    libraryFragments.search({ q: query || "" })
-  );*/
   const { data, isLoading, error } = useData(
     libraryFragments.pickupsearch({ q: query || "" })
   );
+
+  /*
+  const { data, isLoading, error } = useData(
+    libraryFragments.pickupsearch({ q: query || "" })
+  );*/
 
   const dummyData = {
     hitcount: 10,
@@ -235,7 +237,6 @@ export default function Wrap(props) {
 
   const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
-
   return (
     <LoginPickup
       {...props}

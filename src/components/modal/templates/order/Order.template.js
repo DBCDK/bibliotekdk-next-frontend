@@ -36,7 +36,7 @@ import styles from "./Order.module.css";
  *
  * @param {string} layer
  */
-function handleRouterPush(query) {
+export function handleRouterPush(query) {
   Router.push(
     {
       pathname: Router.pathname,

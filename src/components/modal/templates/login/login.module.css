@@ -5,6 +5,10 @@
     margin: 0 0 var(--pt2) 0;
 }
 
+.library{
+    color:black;
+}
+
 .search .input {
     margin: var(--pt2) 0;
 }
