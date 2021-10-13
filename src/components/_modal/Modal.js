@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
-import PropTypes from "prop-types";
 
 // modal utils
 import { handleTab } from "./utils";
 
 // styles
-// import styles from "./Modal.modules.css";
 import "./styles.css";
 
 import useKeyPress from "@/components/hooks/useKeypress";
@@ -22,42 +20,72 @@ const ModalContext = createContext(null);
  * @returns
  */
 function Container({ children, className = {} }) {
+  if (!children) {
+    return null;
+  }
+
   const modal = useModal();
 
-  // modal is visible
+  // current status of the modal dialog
+  const [dialogStatus, setDialogStatus] = useState("closed");
+
+  // modal ref
+  const modalRef = useRef(null);
+
+  // modal has content and should be visible
   const isVisible = modal.stack.length > 0;
 
-  // active modal class
-  const visibleClass = isVisible ? "visible" : "";
+  // active/visible modal class
+  const visibleClass = isVisible ? "modal_visible" : "";
 
-  // Listen on escape keypress
+  // Status is used as a class
+  const dialogStatusClass = `modal_${dialogStatus}`;
+
+  // Listen on escape keypress - will close the modal (accessibility)
   const escapeEvent = useKeyPress(isVisible && "Escape");
-
-  // Modal ref
-  const modalRef = useRef(null);
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
-    // If pressed key is our target key then set to true
+    // If tab key is pressed down
     function downHandler(e) {
       if (e.key === "Tab") {
         handleTab(e, modalRef.current);
       }
     }
 
-    // If released key is our target key then set to false
-    function upHandler(e) {
-      if (e.key === "Tab") {
-      }
-    }
     // Add event listeners
     window.addEventListener("keydown", downHandler);
-    window.addEventListener("keyup", upHandler);
     // Remove event listeners on cleanup
     return () => {
       window.removeEventListener("keydown", downHandler);
-      window.removeEventListener("keyup", upHandler);
     };
+  }, []);
+
+  useEffect(() => {
+    const dialog = modalRef.current;
+
+    if (dialog) {
+      // listener on dialog transition start
+      dialog.addEventListener("transitionstart", (event) => {
+        // only trigger on dialog transition
+        if (event.target === dialog) {
+          // Check current state
+          const isOpen = dialog.classList.contains("modal_open");
+          // set new dialog status state
+          setDialogStatus(isOpen ? "closing" : "opening");
+        }
+      });
+      // listener on dialog transition finished
+      dialog.addEventListener("transitionend", (event) => {
+        // only trigger on dialog transition
+        if (event.target === dialog) {
+          // Check current state
+          const isOpening = dialog.classList.contains("modal_opening");
+          // set new dialog status state
+          setDialogStatus(isOpening ? "open" : "closed");
+        }
+      });
+    }
   }, []);
 
   // force modal focus (accessibility)
@@ -79,19 +107,23 @@ function Container({ children, className = {} }) {
 
   return (
     <div
+      id="modal_dimmer"
       data-cy="modal-dimmer"
       aria-hidden={true}
       className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
       onClick={() => modal.clear()}
     >
       <dialog
+        id="modal_dialog"
         data-cy="modal-container"
         aria-modal="true"
         role="dialog"
         tabIndex={isVisible ? "0" : null}
         ref={modalRef}
         aria-hidden={!isVisible || null}
-        className={`modal_dialog ${className.modal || ""} ${visibleClass}`}
+        className={`modal_dialog ${
+          className.modal || ""
+        } ${visibleClass} ${dialogStatusClass}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_wrap">
@@ -102,7 +134,7 @@ function Container({ children, className = {} }) {
                 return child;
               }
             });
-            // Enrich page components with helpfull props
+            // Enrich page components with props
             return React.cloneElement(page, {
               modal,
               // stack index
@@ -110,6 +142,7 @@ function Container({ children, className = {} }) {
               context: obj.context,
               active: obj.active,
               className: className.page || "",
+              key: `modal-page-${index}`,
               dataCy: `modal-page-${index}`,
               ...page.props,
             });
@@ -149,6 +182,7 @@ function Page(props) {
     else if (index < modal.index()) {
       setStatus("page-before");
     }
+
     // Pages will mount right, and on onmount be repositioned right
     return () => setStatus("page-after");
   }, [modal.stack]);

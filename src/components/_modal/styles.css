@@ -1,5 +1,9 @@
 /* Dimmer */
 
+/* body::-webkit-scrollbar {
+  display: none;
+} */
+
 .modal_dimmer {
   display: flex;
   justify-content: flex-end;
@@ -28,7 +32,7 @@
   transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
 }
 
-.modal_dimmer.visible::after {
+.modal_dimmer.modal_visible::after {
   opacity: 1;
   pointer-events: auto;
   cursor: pointer;
@@ -63,7 +67,7 @@
   border: none;
 }
 
-.modal_dialog.visible {
+.modal_dialog.modal_visible {
   pointer-events: auto;
   transform: none;
 }
@@ -94,13 +98,17 @@
   transition: transform 330ms ease-out;
   will-change: transform;
 
-  /* ensures pages is stacked top-right */
+  /* ensures pages "spawn" position is stacked top-right */
   position: absolute;
   right: 0;
   top: 0;
 
   /* Default color */
   color: black;
+}
+
+.modal_dialog:not(.modal_open) .modal_page.page-current {
+  transition: none;
 }
 
 .modal_page.page-current {
