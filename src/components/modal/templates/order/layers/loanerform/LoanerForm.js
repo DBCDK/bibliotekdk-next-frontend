@@ -264,7 +264,13 @@ export function LoanerForm({
                 </Text>
               )}
             </div>
-
+            <Text type="text3" className={styles.guestlogin}>
+              {Translate({
+                context: "order",
+                label: "order-guest-login-description",
+                vars: [branch.agencyName],
+              })}
+            </Text>
             <Button onClick={() => {}} tabIndex="0">
               {Translate({
                 context: "header",
