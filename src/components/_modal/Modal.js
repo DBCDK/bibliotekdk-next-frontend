@@ -33,7 +33,7 @@ function Container({ children, className = {} }) {
   const modalRef = useRef(null);
 
   // modal has content and should be visible
-  const isVisible = modal.stack.length > 0;
+  const isVisible = modal.stack.length > 0 && modal.index() > -1;
 
   // active/visible modal class
   const visibleClass = isVisible ? "modal_visible" : "";
@@ -43,6 +43,26 @@ function Container({ children, className = {} }) {
 
   // Listen on escape keypress - will close the modal (accessibility)
   const escapeEvent = useKeyPress(isVisible && "Escape");
+
+  // Listen for history API events
+  useEffect(() => {
+    function historyListener(event) {
+      // Find modal page stamp in URL
+      try {
+        // Get the 'modal' URL param
+        let searchParams = new URLSearchParams(window.location.search);
+        const stamp = parseInt(searchParams.get("modal"));
+
+        // Find page in stack matching stamp
+        const index = modal.stack.findIndex((entry) => entry.stamp === stamp);
+
+        // If not found doSelect is called with -1 (which will close the modal)
+        modal._doSelect(index);
+      } catch (e) {}
+    }
+    window.addEventListener("popstate", historyListener);
+    return () => window.removeEventListener("popstate", historyListener);
+  }, [modal]);
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
@@ -101,7 +121,7 @@ function Container({ children, className = {} }) {
   //  Closes the modal on Escape key
   useEffect(() => {
     if (isVisible && escapeEvent) {
-      modal.clear();
+      modal.select(-1);
     }
   }, [escapeEvent]);
 
@@ -111,7 +131,7 @@ function Container({ children, className = {} }) {
       data-cy="modal-dimmer"
       aria-hidden={true}
       className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
-      onClick={() => modal.clear()}
+      onClick={() => modal.select(-1)}
     >
       <dialog
         id="modal_dialog"
@@ -226,8 +246,18 @@ export function useModal() {
         copy = copy.slice(0, active + 1);
         copy = copy.map((obj) => ({ ...obj, active: false }));
       }
+
+      // Create entry
+      const entry = { id, context, active: true, stamp: Date.now() };
+
       // Push to stack
-      copy.push({ id, context, active: true });
+      copy.push(entry);
+
+      // Push to history (URL)
+      let searchParams = new URLSearchParams(window.location.search);
+      searchParams.set("modal", entry.stamp);
+      window.history.pushState("", "", "?" + searchParams.toString());
+
       // custom save
       save && save(copy);
       // update locale state
@@ -242,25 +272,26 @@ export function useModal() {
    * Automatically sets a new active item (the item before the popped element)
    *
    */
-  function _pop() {
-    let copy = [...stack];
-    const active = _index();
-    // Remove all elements after active (Note the splice() func.)
-    copy.splice(active, stack.length);
-    //  If none items left, run clear function
-    if (copy.length === 0) {
-      _clear();
-      return;
-    }
+  // function _pop() {
+  //   _select()
+  //   let copy = [...stack];
+  //   const active = _index();
+  //   // Remove all elements after active (Note the splice() func.)
+  //   copy.splice(active, stack.length);
+  //   //  If none items left, run clear function
+  //   if (copy.length === 0) {
+  //     _clear();
+  //     return;
+  //   }
 
-    // Make previous item active
-    const lastIndex = copy.length - 1;
-    copy = copy.map((obj, i) => ({ ...obj, active: lastIndex === i }));
-    // custom save
-    save && save(copy);
-    // update locale stack state
-    setStack(copy);
-  }
+  //   // Make previous item active
+  //   const lastIndex = copy.length - 1;
+  //   copy = copy.map((obj, i) => ({ ...obj, active: lastIndex === i }));
+  //   // custom save
+  //   save && save(copy);
+  //   // update locale stack state
+  //   setStack(copy);
+  // }
 
   /**
    * clear
@@ -268,10 +299,12 @@ export function useModal() {
    * Clears the stack
    */
   function _clear() {
-    // custom save
-    save && save([]);
-    // update locale stack state
-    setStack([]);
+    _select(-1);
+
+    // // custom save
+    // save && save([]);
+    // // update locale stack state
+    // setStack([]);
   }
 
   /**
@@ -296,6 +329,20 @@ export function useModal() {
    *
    */
   function _select(index) {
+    const prevActive = _index();
+    const delta = index - prevActive;
+
+    // Update history
+    // This will trigger _doSelect
+    window.history.go(delta);
+  }
+
+  /**
+   * Update the actual stack to match current URL
+   *
+   *
+   */
+  function _doSelect(index) {
     let copy = [...stack];
     // set active true on index match, others false.
     copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
@@ -368,7 +415,7 @@ export function useModal() {
 
   return {
     push: _push,
-    pop: _pop,
+    pop: _prev,
     clear: _clear,
     index: _index,
     select: _select,
@@ -376,6 +423,7 @@ export function useModal() {
     prev: _prev,
     setStack,
     stack,
+    _doSelect,
   };
 }
 

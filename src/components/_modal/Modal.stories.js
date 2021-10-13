@@ -12,7 +12,14 @@ export default {
 const Link = ({ id, context = {} }) => {
   const { push } = useModal();
   return (
-    <a href="#" tabIndex="0" onClick={() => push(id, context)}>
+    <a
+      href="#"
+      tabIndex="0"
+      onClick={(e) => {
+        e.preventDefault();
+        push(id, context);
+      }}
+    >
       {id}
     </a>
   );
@@ -21,7 +28,14 @@ const Link = ({ id, context = {} }) => {
 const Pop = () => {
   const { pop } = useModal();
   return (
-    <a href="#" tabIndex="0" onClick={() => pop()}>
+    <a
+      href="#"
+      tabIndex="0"
+      onClick={(e) => {
+        e.preventDefault();
+        pop();
+      }}
+    >
       I will pop the layer
     </a>
   );
@@ -30,7 +44,14 @@ const Pop = () => {
 const Prev = () => {
   const { prev } = useModal();
   return (
-    <a href="#" tabIndex="0" onClick={() => prev()}>
+    <a
+      href="#"
+      tabIndex="0"
+      onClick={(e) => {
+        e.preventDefault();
+        prev();
+      }}
+    >
       I will go to previous layer
     </a>
   );
@@ -39,7 +60,14 @@ const Prev = () => {
 const Next = () => {
   const { next } = useModal();
   return (
-    <a href="#" tabIndex="0" onClick={() => next()}>
+    <a
+      href="#"
+      tabIndex="0"
+      onClick={(e) => {
+        e.preventDefault();
+        next();
+      }}
+    >
       I will go to next layer
     </a>
   );
@@ -48,7 +76,14 @@ const Next = () => {
 const Clear = () => {
   const { clear } = useModal();
   return (
-    <a href="#" tabIndex="0" onClick={() => clear()}>
+    <a
+      href="#"
+      tabIndex="0"
+      onClick={(e) => {
+        e.preventDefault();
+        clear();
+      }}
+    >
       I will clear all layers
     </a>
   );
@@ -111,6 +146,14 @@ export const Default = () => {
       load={() => []}
       save={(stack) => console.log("...saving changes in stack", stack)}
     >
+      <div
+        onClick={() => {
+          window.history.pushState("", "", "?hest=ost");
+          console.log("prut");
+        }}
+      >
+        prut
+      </div>
       <div>
         <Link id="Profile" context={{ title: "This is a Modal" }} />
         <br />
