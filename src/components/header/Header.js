@@ -79,7 +79,15 @@ export function Header({ className = "", router = null, story = null, user }) {
     {
       label: user.isAuthenticated ? "logout" : "login",
       icon: LoginIcon,
-      onClick: user.isAuthenticated ? signOut : signIn,
+      //onClick: user.isAuthenticated ? signOut : signIn,
+      onClick: () => {
+        if (router) {
+          router.push({
+            pathname: router.pathname,
+            query: { ...router.query, modal: "login" },
+          });
+        }
+      },
     },
     /*{
       label: "basket",

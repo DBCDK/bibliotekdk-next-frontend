@@ -26,6 +26,8 @@ export const APIStateContext = createContext();
  * @return {string} Stringified representation of the input
  */
 export function generateKey(query) {
+  console.log(query, "QUERY");
+
   // Consider hashing the string to make
   // keys smaller
   return JSON.stringify(query);

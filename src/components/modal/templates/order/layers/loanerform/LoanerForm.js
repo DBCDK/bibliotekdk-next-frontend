@@ -27,7 +27,9 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch }) {
+export function UserParamsForm({ branch, initial, onSubmit }) {
+  console.log(initial, "INIT");
+
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -42,11 +44,14 @@ export function UserParamsForm({ branch }) {
   }
 
   const [errorCode, setErrorCode] = useState();
-  const [state, setState] = useState({});
+  const [state, setState] = useState(initial || {});
+  const [emailMessage, setEmailMessage] = useState();
 
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
+  console.log(state, "STATE");
 
   return (
     <form
@@ -158,7 +163,7 @@ export function UserParamsForm({ branch }) {
           vars: [branch.agencyName],
         })}
       </Text>
-      <Button onClick={() => {}} tabIndex="0">
+      <Button onClick={onSubmit} tabIndex="0">
         {Translate({
           context: "header",
           label: "login",
@@ -187,7 +192,6 @@ export function LoanerForm({
   isVisible,
   onClose,
 }) {
-  const [emailMessage, setEmailMessage] = useState();
   const [allowSave, setAllowSave] = useState(!!initial);
 
   if (skeleton) {
@@ -280,7 +284,11 @@ export function LoanerForm({
           </>
         )}
         {orderPossible && !branch.borrowerCheck && (
-          <UserParamsForm branch={branch} />
+          <UserParamsForm
+            branch={branch}
+            initial={initial}
+            onSubmit={onSubmit}
+          />
         )}
       </div>
     </>

@@ -2,6 +2,8 @@
  * submits session data
  */
 export function submitSession(input) {
+  console.log(input, "SESSIONINPUT");
+
   return {
     // delay: 1000, // for debugging
     query: `mutation($input: SessionInput!) {
