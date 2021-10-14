@@ -27,7 +27,7 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch }) {
+export function UserParamsForm({ branch, initial, onSubmit }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -42,7 +42,8 @@ export function UserParamsForm({ branch }) {
   }
 
   const [errorCode, setErrorCode] = useState();
-  const [state, setState] = useState({});
+  const [state, setState] = useState(initial || {});
+  const [emailMessage, setEmailMessage] = useState();
 
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
@@ -188,7 +189,6 @@ export function LoanerForm({
   isVisible,
   onClose,
 }) {
-  const [emailMessage, setEmailMessage] = useState();
   const [allowSave, setAllowSave] = useState(!!initial);
 
   if (skeleton) {
@@ -284,7 +284,11 @@ export function LoanerForm({
         )}
 
         {orderPossible && !branch.borrowerCheck && (
-          <UserParamsForm branch={branch} />
+          <UserParamsForm
+            branch={branch}
+            initial={initial}
+            onSubmit={onSubmit}
+          />
         )}
       </div>
     </>
