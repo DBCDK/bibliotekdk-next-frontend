@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 
 // modal utils
-import { handleTab } from "./utils";
+import { handleTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -220,6 +220,10 @@ function Container({ children, className = {} }) {
       modal.select(-1);
     }
   }, [escapeEvent]);
+
+  useEffect(() => {
+    scrollLock(isVisible);
+  }, [modal.stack]);
 
   return (
     <div

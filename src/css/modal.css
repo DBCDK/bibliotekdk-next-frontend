@@ -1,8 +1,11 @@
-/* Dimmer */
+/* scrollLock on body */
 
-/* body::-webkit-scrollbar {
-  display: none;
-} */
+/* Class to prevent user from body-scrolling when a modal is open */
+.lockScroll {
+  height: 100vh;
+}
+
+/* Dimmer */
 
 .modal_dimmer {
   display: flex;
