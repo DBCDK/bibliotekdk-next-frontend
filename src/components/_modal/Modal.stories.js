@@ -87,7 +87,7 @@ const Clear = () => {
   );
 };
 
-export const Default = () => {
+export function Default() {
   const ExampleComponent = ({ context }) => {
     const { title } = context;
 
@@ -146,9 +146,9 @@ export const Default = () => {
       </div>
     </Modal.Provider>
   );
-};
+}
 
-export const Scroll = () => {
+export function Scroll() {
   const ExampleComponent = ({ context }) => {
     const { title } = context;
 
@@ -198,10 +198,7 @@ export const Scroll = () => {
     );
   };
   return (
-    <Modal.Provider
-      load={() => []}
-      save={(stack) => console.log("...saving changes in stack", stack)}
-    >
+    <Modal.Provider>
       <div>
         <Link id="Modal" context={{ title: "This is a long modal" }} />
         <Modal.Container>
@@ -210,4 +207,4 @@ export const Scroll = () => {
       </div>
     </Modal.Provider>
   );
-};
+}
