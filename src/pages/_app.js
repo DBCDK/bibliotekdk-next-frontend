@@ -44,7 +44,7 @@ import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 
 // will get deprecated soon
-import DeprecatedSoonModal from "@/components/_modal";
+import DeprecatedSoonModal from "@/components/old_modal";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {

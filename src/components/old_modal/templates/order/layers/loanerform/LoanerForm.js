@@ -12,7 +12,7 @@ import Input from "@/components/base/forms/input";
 import Button from "@/components/base/button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 
-import { Back } from "@/components/_modal";
+import { Back } from "@/components/old_modal";
 
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";

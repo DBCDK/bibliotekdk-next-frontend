@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { materials, actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
-import { Top } from "@/components/_modal";
+import { Top } from "@/components/old_modal";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
