@@ -41,10 +41,14 @@ import styles from "./Header.module.css";
  *
  * @returns {component}
  */
-export function Header({ className = "", router = null, story = null, user }) {
+export function Header({
+  className = "",
+  router = null,
+  story = null,
+  user,
+  modal,
+}) {
   const context = { context: "header" };
-
-  const { push } = useModal();
 
   // Seach Query in suggester callback
   const [query, setQuery] = useState("");
@@ -95,7 +99,7 @@ export function Header({ className = "", router = null, story = null, user }) {
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => push("Menu", { label: "title-menu" }),
+      onClick: () => modal.push("Menu", { label: "title-menu" }),
     },
   ];
 
@@ -349,12 +353,13 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const user = useUser();
+  const modal = useModal();
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} user={user} />;
+  return <Header {...props} user={user} modal={modal} />;
 }
 
 // PropTypes for component
