@@ -139,6 +139,33 @@ function Container({ children, className = {} }) {
     }
   }, []);
 
+  useEffect(() => {
+    const dialog = modalRef.current;
+
+    if (dialog) {
+      // listener on dialog transition start
+      dialog.addEventListener("transitionstart", (event) => {
+        // only trigger on dialog transition
+        if (event.target === dialog) {
+          // Check current state
+          const isOpen = dialog.classList.contains("modal_open");
+          // set new dialog status state
+          setDialogStatus(isOpen ? "closing" : "opening");
+        }
+      });
+      // listener on dialog transition finished
+      dialog.addEventListener("transitionend", (event) => {
+        // only trigger on dialog transition
+        if (event.target === dialog) {
+          // Check current state
+          const isOpening = dialog.classList.contains("modal_opening");
+          // set new dialog status state
+          setDialogStatus(isOpening ? "open" : "closed");
+        }
+      });
+    }
+  }, []);
+
   // Listen for changes to the stack, and store it in local storage
   useEffect(() => {
     if (didLoad.current) {
@@ -177,33 +204,6 @@ function Container({ children, className = {} }) {
     }
   }, [isVisible]);
 
-  useEffect(() => {
-    const dialog = modalRef.current;
-
-    if (dialog) {
-      // listener on dialog transition start
-      dialog.addEventListener("transitionstart", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpen = dialog.classList.contains("modal_open");
-          // set new dialog status state
-          setDialogStatus(isOpen ? "closing" : "opening");
-        }
-      });
-      // listener on dialog transition finished
-      dialog.addEventListener("transitionend", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpening = dialog.classList.contains("modal_opening");
-          // set new dialog status state
-          setDialogStatus(isOpening ? "open" : "closed");
-        }
-      });
-    }
-  }, []);
-
   // force modal focus (accessibility)
   useEffect(() => {
     if (isVisible && modalRef.current) {
@@ -221,6 +221,7 @@ function Container({ children, className = {} }) {
     }
   }, [escapeEvent]);
 
+  // check if body should lock on stack changes
   useEffect(() => {
     scrollLock(isVisible);
   }, [modal.stack]);
