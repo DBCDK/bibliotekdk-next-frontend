@@ -11,6 +11,60 @@ import useKeyPress from "@/components/hooks/useKeypress";
 // context
 const ModalContext = createContext(null);
 
+const LOCAL_STORAGE_KEY = "modal-v2";
+const URL_PAGE_UID_KEY = "modal";
+
+/**
+ * Get uid for current page
+ *
+ * @returns {string}
+ */
+function getPageUID() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const uid = searchParams.get(URL_PAGE_UID_KEY);
+  return uid;
+}
+
+/**
+ * Push page uid
+ *
+ * @param {string} uid
+ */
+function pushPageUID(uid) {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set(URL_PAGE_UID_KEY, uid);
+  window.history.pushState("", "", "?" + searchParams.toString());
+}
+
+/**
+ * Replace page uid
+ *
+ * @param {string} uid
+ */
+function replacePageUID(uid) {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set(URL_PAGE_UID_KEY, uid);
+  window.history.replaceState("", "", "?" + searchParams.toString());
+}
+
+/**
+ * Delete current page uid
+ */
+function deletePageUID() {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.delete(URL_PAGE_UID_KEY);
+  window.history.replaceState("", "", "?" + searchParams.toString());
+}
+
+/**
+ * Create uid for the page
+ *
+ * @returns {string}
+ */
+function createPageUID() {
+  return Date.now() + "";
+}
+
 /**
  *
  * @param {obj} className
@@ -32,6 +86,9 @@ function Container({ children, className = {} }) {
   // modal ref
   const modalRef = useRef(null);
 
+  // boolean stored in a ref, indicating if stack has been loaded from local storage
+  const didLoad = useRef(false);
+
   // modal has content and should be visible
   const isVisible = modal.stack.length > 0 && modal.index() > -1;
 
@@ -44,21 +101,52 @@ function Container({ children, className = {} }) {
   // Listen on escape keypress - will close the modal (accessibility)
   const escapeEvent = useKeyPress(isVisible && "Escape");
 
-  // Listen for history API events
+  // On mount, we try to load stack from local storage
   useEffect(() => {
-    function historyListener(event) {
-      // Find modal page stamp in URL
-      try {
-        // Get the 'modal' URL param
-        let searchParams = new URLSearchParams(window.location.search);
-        const stamp = parseInt(searchParams.get("modal"));
+    try {
+      // Load stack as string from local storage
+      const stackStr = localStorage.getItem(LOCAL_STORAGE_KEY);
 
-        // Find page in stack matching stamp
-        const index = modal.stack.findIndex((entry) => entry.stamp === stamp);
+      // Parse stack
+      const stack = JSON.parse(stackStr);
 
-        // If not found doSelect is called with -1 (which will close the modal)
-        modal._doSelect(index);
-      } catch (e) {}
+      // Get page uid
+      const uid = getPageUID();
+
+      // Traverse the loadedstack
+      stack.forEach((entry, index) => {
+        // One page may be active
+        entry.active = entry.uid === uid;
+
+        // Specify that the page has been loaded from local storage
+        // This is used for determining how to navigate the URL history (go or replace)
+        entry.loaded = true;
+      });
+
+      // And lets trigger a render of the loaded stack
+      modal.setStack(stack);
+    } finally {
+      // Queue updating the didLoad ref
+      setTimeout(() => {
+        didLoad.current = true;
+      }, 0);
+    }
+  }, []);
+
+  // Listen for changes to the stack, and store it in local storage
+  useEffect(() => {
+    if (didLoad.current) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(modal.stack));
+    }
+  }, [modal.stack]);
+
+  // Listen for history popstate events
+  useEffect(() => {
+    function historyListener() {
+      const uid = getPageUID();
+      // If not found doSelect is called with -1 (which will close the modal)
+      const index = modal.stack.findIndex((entry) => entry.uid === uid);
+      modal._doSelect(index);
     }
     window.addEventListener("popstate", historyListener);
     return () => window.removeEventListener("popstate", historyListener);
@@ -248,15 +336,13 @@ export function useModal() {
       }
 
       // Create entry
-      const entry = { id, context, active: true, stamp: Date.now() };
+      const entry = { id, context, active: true, uid: createPageUID() };
 
       // Push to stack
       copy.push(entry);
 
       // Push to history (URL)
-      let searchParams = new URLSearchParams(window.location.search);
-      searchParams.set("modal", entry.stamp);
-      window.history.pushState("", "", "?" + searchParams.toString());
+      pushPageUID(entry.uid);
 
       // custom save
       save && save(copy);
@@ -330,11 +416,33 @@ export function useModal() {
    */
   function _select(index) {
     const prevActive = _index();
-    const delta = index - prevActive;
 
-    // Update history
-    // This will trigger _doSelect
-    window.history.go(delta);
+    let shouldReplace = false;
+
+    // Check if some of the path is loaded from localstorage
+    // The path is every page located between "index" and "prevActive"
+    for (
+      let i = Math.min(prevActive, index);
+      i <= Math.max(prevActive, index);
+      i++
+    ) {
+      if (stack[i]?.loaded) {
+        shouldReplace = true;
+      }
+    }
+    if (shouldReplace) {
+      if (stack[index]) {
+        replacePageUID(stack[index].uid);
+      } else {
+        deletePageUID();
+      }
+      _doSelect(index);
+    } else {
+      // Update history
+      // This will trigger _doSelect
+      const delta = index - prevActive;
+      window.history.go(delta);
+    }
   }
 
   /**
@@ -437,19 +545,11 @@ export function useModal() {
  *
  */
 
-function Provider({ children, load, save }) {
+function Provider({ children }) {
   const [stack, setStack] = useState([]);
 
-  // useEffect running on component mount
-  useEffect(() => {
-    if (load) {
-      const loadedStack = load();
-      setStack(loadedStack);
-    }
-  }, []);
-
   return (
-    <ModalContext.Provider value={{ stack, setStack, save }}>
+    <ModalContext.Provider value={{ stack, setStack }}>
       {children}
     </ModalContext.Provider>
   );
