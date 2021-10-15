@@ -45,7 +45,6 @@ function Menu({ modal, context }) {
               <Link
                 className={`${styles.link}`}
                 title={title}
-                tabIndex={a.hidden ? "-1" : "0"}
                 href={a.href}
                 dataCy={cyKey({
                   name: a.label,

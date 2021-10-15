@@ -28,14 +28,20 @@ export function handleTab(event, container) {
   const select =
     ":not([aria-hidden='true']):not([tabindex='-1']):not([style*='display:none']):not([style*='display: none'])";
 
+  // build query with elements
   const query = elements.join(select + ", ") + select;
 
-  // // Search container for elements (tabindex prop)
-  const _sequence = Object.values(el.querySelectorAll(query));
+  // Find mathing elements according to elements and select string
+  const matchedElements = Object.values(el.querySelectorAll(query));
+
+  // Remove elements which parent is not visible
+  const visibleChildren = matchedElements.filter(
+    (el) => el.offsetParent !== null
+  );
 
   // Remove all elements which is display:none in computedStyles (css stylesheet)
   // OBS! Performance Warning! getComputedStyle func can be slow
-  const sequence = _sequence.filter(
+  const sequence = visibleChildren.filter(
     (el) => getComputedStyle(el).display !== "none"
   );
 
