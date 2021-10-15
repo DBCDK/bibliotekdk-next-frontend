@@ -10,7 +10,7 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
-import { Back } from "@/components/old_modal";
+import { Back } from "@/components/modal";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";

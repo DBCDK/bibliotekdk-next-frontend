@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "@/components/base/button";
-import { Modal } from "@/components/old_modal";
+import { Modal } from "@/components/modal";
 import { Order, OrderSkeleton } from "./Order.template.js";
 import data from "./dummy.data";
 

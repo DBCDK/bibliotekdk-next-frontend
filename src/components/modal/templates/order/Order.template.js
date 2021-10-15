@@ -25,7 +25,7 @@ import Pickup from "./layers/pickup";
 import Action from "./layers/action";
 import LoanerForm from "./layers/loanerform";
 
-import { Top } from "@/components/old_modal";
+import { Top } from "@/components/modal";
 
 import data from "./dummy.data";
 

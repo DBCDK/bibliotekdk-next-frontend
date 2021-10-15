@@ -1,7 +1,7 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { toColor } from "./utils.js";
 
-import Modal, { useModal } from "./";
+import Modal, { useModal } from ".";
 
 export default {
   title: "Modal2.0",

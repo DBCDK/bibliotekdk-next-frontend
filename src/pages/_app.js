@@ -34,8 +34,8 @@ import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
 import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
-import Modal from "@/components/modal";
-import Pages from "@/components/modal/pages";
+import Modal from "@/components/_modal";
+import Pages from "@/components/_modal/pages";
 import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
@@ -44,7 +44,7 @@ import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 
 // will get deprecated soon
-import DeprecatedSoonModal from "@/components/old_modal";
+import DeprecatedSoonModal from "@/components/modal";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {

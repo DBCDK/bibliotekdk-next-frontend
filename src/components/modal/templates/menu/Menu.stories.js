@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "@/components/base/button";
-import { Modal } from "@/components/old_modal";
+import { Modal } from "@/components/modal";
 
 export default {
   title: "modal/Menu",

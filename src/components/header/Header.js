@@ -15,7 +15,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 
-import { useModal } from "@/components/modal";
+import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
