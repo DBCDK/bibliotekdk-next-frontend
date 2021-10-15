@@ -1,0 +1,86 @@
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
+import { materials, actions } from "@/lib/Navigation";
+import { cyKey } from "@/utils/trim";
+
+import Top from "../base/top";
+
+import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+
+import Translate from "@/components/base/translate";
+
+import styles from "./Menu.module.css";
+
+/**
+ * The Component function
+ *
+ * @param {obj} props
+ * See propTypes for specific props and types
+ *
+ * @returns {component}
+ */
+
+function Menu({ modal, context }) {
+  return (
+    <div className={`${styles.menu}`} data-cy="menu-modal">
+      <Top.Main
+        className={{ title: styles.title, icon: styles.icon }}
+        label={context.label}
+        close={() => modal.clear()}
+      />
+      <ul>
+        {actions.map((a) => {
+          const title = Translate({
+            context: "navigation",
+            label: a.label,
+          });
+          // BETA-1 hide non working menu items @see lib/Navigation.js
+          const hiddenClass = a.hidden ? styles.hidden : "";
+          // Link tabIndex can also be removed when hiddenClass is no longer needed
+          return (
+            <li key={a.label} className={hiddenClass}>
+              <Link
+                className={`${styles.link}`}
+                title={title}
+                href={a.href}
+                dataCy={cyKey({
+                  name: a.label,
+                  prefix: "menu-link",
+                })}
+              >
+                <Title type="title5" tag="h2">
+                  {title}
+                </Title>
+              </Link>
+            </li>
+          );
+        })}
+        <li className={styles.language}>
+          <Link
+            onClick={(e) => {
+              e.preventDefault();
+              onLang && onLang();
+            }}
+            className={styles.link}
+          >
+            <Text type="text2">
+              {Translate({ context: "general", label: "language" })}
+            </Text>
+          </Link>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+// PropTypes for component
+Menu.propTypes = {
+  active: PropTypes.bool,
+  modal: PropTypes.object,
+  context: PropTypes.object,
+};
+
+export default Menu;

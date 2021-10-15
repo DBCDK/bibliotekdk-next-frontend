@@ -15,7 +15,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 
-import styles from "./Header.module.css";
+import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
@@ -31,6 +31,8 @@ import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 import MaterialSelect, { MobileList } from "@/components/base/select/Select";
 import useMaterialFilters from "@/components/hooks/useMaterialFilters";
 
+import styles from "./Header.module.css";
+
 /**
  * The Component function
  *
@@ -39,7 +41,13 @@ import useMaterialFilters from "@/components/hooks/useMaterialFilters";
  *
  * @returns {component}
  */
-export function Header({ className = "", router = null, story = null, user }) {
+export function Header({
+  className = "",
+  router = null,
+  story = null,
+  user,
+  modal,
+}) {
   const context = { context: "header" };
 
   // Seach Query in suggester callback
@@ -91,14 +99,7 @@ export function Header({ className = "", router = null, story = null, user }) {
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => {
-        if (router) {
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, modal: "menu" },
-          });
-        }
-      },
+      onClick: () => modal.push("Menu", { label: "title-menu" }),
     },
   ];
 
@@ -352,12 +353,13 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const user = useUser();
+  const modal = useModal();
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} user={user} />;
+  return <Header {...props} user={user} modal={modal} />;
 }
 
 // PropTypes for component

@@ -1,0 +1,52 @@
+.menu {
+  padding: var(--pt2);
+  background-color: var(--blue);
+  height: 100%;
+
+  /* scroll in modal */
+  overflow-y: auto;
+}
+
+/* passed to Top */
+.title {
+  color: var(--white);
+}
+/* passed to Top */
+.icon svg path {
+  stroke: var(--white);
+}
+
+.menu ul {
+  width: 100%;
+}
+
+.menu ul li {
+  list-style: none;
+  padding: var(--pt1) 0;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+li.language {
+  margin-top: var(--pt7);
+}
+
+/* Link component styles override */
+
+.link,
+.link:hover,
+.link:focus-within {
+  color: white !important;
+}
+.link div hr {
+  background-color: white;
+}
+
+@media (min-width: 576px) {
+  .menu {
+    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+  }
+}

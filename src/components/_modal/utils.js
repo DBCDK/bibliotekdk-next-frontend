@@ -8,17 +8,46 @@
  * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
  */
 export function handleTab(event, container) {
-  //
   event.preventDefault();
 
   const el = container.querySelector("div.modal_page.page-current");
 
-  // Search container for elements (tabindex prop)
-  const sequence = Object.values(
-    el.querySelectorAll(
-      "input:not([tabindex='-1']), button:not([tabindex='-1']), textarea:not([tabindex='-1']), a:not([tabindex='-1'])"
-    )
+  // elements we want
+  const elements = [
+    "a",
+    "input:not([type='hidden'])",
+    "button",
+    "textarea",
+    "[tabindex]",
+  ];
+
+  // Custom select string to tail after each element in list
+  // Dont select elements with display:none inline style
+  // Dont select hidden elements
+  // Dont select elements with tabindex -1
+  const select =
+    ":not([aria-hidden='true']):not([tabindex='-1']):not([style*='display:none']):not([style*='display: none'])";
+
+  // build query with elements
+  const query = elements.join(select + ", ") + select;
+
+  // Find mathing elements according to elements and select string
+  const matchedElements = Object.values(el.querySelectorAll(query));
+
+  // Remove elements which parent is not visible
+  const visibleChildren = matchedElements.filter(
+    (el) => el.offsetParent !== null
   );
+
+  // Remove all elements which is display:none in computedStyles (css stylesheet)
+  // OBS! Performance Warning! getComputedStyle func can be slow
+  const sequence = visibleChildren.filter(
+    (el) => getComputedStyle(el).display !== "none"
+  );
+
+  // Debug -> remove me in future
+  console.log("Debug", { sequence });
+
   if (sequence.length < 1) {
     return;
   }

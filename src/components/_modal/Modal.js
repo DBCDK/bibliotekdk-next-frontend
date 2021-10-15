@@ -3,9 +3,6 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 // modal utils
 import { handleTab } from "./utils";
 
-// styles
-import "./styles.css";
-
 import useKeyPress from "@/components/hooks/useKeypress";
 
 // context
@@ -78,6 +75,12 @@ function Container({ children, className = {} }) {
     return null;
   }
 
+  // If container only has 1 child, children is object
+  // We want children to always be handled as an array
+  if (!Array.isArray(children)) {
+    children = [children];
+  }
+
   const modal = useModal();
 
   // current status of the modal dialog
@@ -125,6 +128,9 @@ function Container({ children, className = {} }) {
 
       // And lets trigger a render of the loaded stack
       modal.setStack(stack);
+    } catch (e) {
+      // catch error
+      // will not be handled for now
     } finally {
       // Queue updating the didLoad ref
       setTimeout(() => {
@@ -154,20 +160,22 @@ function Container({ children, className = {} }) {
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
-    // If tab key is pressed down
-    function downHandler(e) {
-      if (e.key === "Tab") {
-        handleTab(e, modalRef.current);
+    if (isVisible) {
+      // If tab key is pressed down
+      function downHandler(e) {
+        if (e.key === "Tab") {
+          handleTab(e, modalRef.current);
+        }
       }
-    }
 
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, []);
+      // Add event listeners
+      window.addEventListener("keydown", downHandler);
+      // Remove event listeners on cleanup
+      return () => {
+        window.removeEventListener("keydown", downHandler);
+      };
+    }
+  }, [isVisible]);
 
   useEffect(() => {
     const dialog = modalRef.current;
@@ -234,7 +242,7 @@ function Container({ children, className = {} }) {
         } ${visibleClass} ${dialogStatusClass}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal_wrap">
+        <div className="modal_container">
           {modal.stack.map((obj, index) => {
             // Find component by id in container children
             const page = children.find((child) => {
@@ -252,7 +260,7 @@ function Container({ children, className = {} }) {
               className: className.page || "",
               key: `modal-page-${index}`,
               dataCy: `modal-page-${index}`,
-              ...page.props,
+              props: page.props,
             });
           })}
         </div>
@@ -276,8 +284,12 @@ function Container({ children, className = {} }) {
  */
 
 function Page(props) {
+  // page class status
   const [status, setStatus] = useState("page-after");
+  // props used on page
   const { index, active, modal, className, dataCy } = props;
+  // props we will pass to the component living on the page
+  const passedProps = { active, modal, context: props.context, ...props.props };
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -297,7 +309,7 @@ function Page(props) {
 
   return (
     <div className={`modal_page ${status} ${className}`} data-cy={dataCy}>
-      <props.component {...props} />
+      <props.component {...passedProps} />
     </div>
   );
 }
