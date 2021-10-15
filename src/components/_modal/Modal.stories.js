@@ -13,7 +13,7 @@ const Link = ({ id, context = {} }) => {
   const { push } = useModal();
   return (
     <a
-      href="#"
+      href=""
       tabIndex="0"
       onClick={(e) => {
         e.preventDefault();
@@ -29,7 +29,7 @@ const Pop = () => {
   const { pop } = useModal();
   return (
     <a
-      href="#"
+      href=""
       tabIndex="0"
       onClick={(e) => {
         e.preventDefault();
@@ -45,7 +45,7 @@ const Prev = () => {
   const { prev } = useModal();
   return (
     <a
-      href="#"
+      href=""
       tabIndex="0"
       onClick={(e) => {
         e.preventDefault();
@@ -61,7 +61,7 @@ const Next = () => {
   const { next } = useModal();
   return (
     <a
-      href="#"
+      href=""
       tabIndex="0"
       onClick={(e) => {
         e.preventDefault();
@@ -77,7 +77,7 @@ const Clear = () => {
   const { clear } = useModal();
   return (
     <a
-      href="#"
+      href=""
       tabIndex="0"
       onClick={(e) => {
         e.preventDefault();
@@ -119,7 +119,13 @@ const ExampleComponent = ({ context }) => {
       </div>
       <input tabIndex="0" type="text" placeholder="Help" />
       <div>
-        <a href="#" tabIndex="-1">
+        <a
+          href=""
+          tabIndex="-1"
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+        >
           i'm not tabbable
         </a>
       </div>
@@ -142,18 +148,7 @@ const ExampleComponent = ({ context }) => {
  */
 export const Default = () => {
   return (
-    <Modal.Provider
-      load={() => []}
-      save={(stack) => console.log("...saving changes in stack", stack)}
-    >
-      <div
-        onClick={() => {
-          window.history.pushState("", "", "?hest=ost");
-          console.log("prut");
-        }}
-      >
-        prut
-      </div>
+    <Modal.Provider>
       <div>
         <Link id="Profile" context={{ title: "This is a Modal" }} />
         <br />
