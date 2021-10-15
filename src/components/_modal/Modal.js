@@ -5,6 +5,31 @@ import { handleTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
+// Monkey patch
+// Intercept history push/replace
+if (typeof window !== "undefined") {
+  const pushState = history.pushState;
+
+  if (!pushState.patched) {
+    history.pushState = function (state) {
+      const res = pushState.apply(history, arguments);
+      window.dispatchEvent(new CustomEvent("custompopstate", {}));
+      return res;
+    };
+    history.pushState.patched = true;
+  }
+
+  const replaceState = history.pushState;
+  if (!replaceState.patched) {
+    history.replaceState = function (state) {
+      const res = replaceState.apply(history, arguments);
+      window.dispatchEvent(new CustomEvent("custompopstate", {}));
+      return res;
+    };
+    history.replaceState.patched = true;
+  }
+}
+
 // context
 const ModalContext = createContext(null);
 
@@ -182,7 +207,11 @@ function Container({ children, className = {} }) {
       modal._doSelect(index);
     }
     window.addEventListener("popstate", historyListener);
-    return () => window.removeEventListener("popstate", historyListener);
+    window.addEventListener("custompopstate", historyListener);
+    return () => {
+      window.removeEventListener("popstate", historyListener);
+      window.removeEventListener("custompopstate", historyListener);
+    };
   }, [modal]);
 
   // Tab key handle (locks tab in visible modal)
