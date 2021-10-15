@@ -28,6 +28,7 @@ function Input({
   onBlur,
   dataCy = "input",
   readOnly = false,
+  required,
 }) {
   const [val, setVal] = useState(value || "");
 
@@ -56,6 +57,7 @@ function Input({
       tabIndex={disabled ? "-1" : tabIndex}
       onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => setVal(e.target.value)}
+      required={required}
     />
   );
 }
