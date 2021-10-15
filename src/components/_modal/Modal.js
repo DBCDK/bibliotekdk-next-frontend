@@ -278,6 +278,11 @@ function Container({ children, className = {} }) {
       >
         <div className="modal_container">
           {modal.stack.map((obj, index) => {
+            // prevent render if modal/component is not visible
+            if (!obj.active) {
+              return null;
+            }
+
             // Find component by id in container children
             const page = children.find((child) => {
               if (child.props.id === obj.id) {
