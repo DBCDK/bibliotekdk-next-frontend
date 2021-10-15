@@ -77,17 +77,26 @@ export function Header({ className = "", router = null, story = null, user }) {
       },
     },
     {
-      label: user.isAuthenticated ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
       icon: LoginIcon,
       //onClick: user.isAuthenticated ? signOut : signIn,
-      onClick: () => {
-        if (router) {
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, modal: "login" },
-          });
-        }
-      },
+      onClick: user.isAuthenticated
+        ? // sign user out - either guest- or hejmdal-user
+          signOut
+        : user.isGuestUser
+        ? async (info) => {
+            alert("fisk");
+            await user.guestLogout();
+          }
+        : // open login modal
+          () => {
+            if (router) {
+              router.push({
+                pathname: router.pathname,
+                query: { ...router.query, modal: "login" },
+              });
+            }
+          },
     },
     /*{
       label: "basket",
@@ -360,7 +369,6 @@ function HeaderSkeleton(props) {
  */
 export default function Wrap(props) {
   const user = useUser();
-
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }

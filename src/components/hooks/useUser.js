@@ -52,6 +52,7 @@ function useUserMock() {
 
 //
 let anonSession;
+
 /**
  * Hook for getting and storing loaner info
  */
@@ -96,19 +97,28 @@ function useUserImpl() {
     return obj;
   }, [data?.session, loggedInUser]);
 
+  const isGuestUser = !!loanerInfo.userParameters;
+
   return {
     authUser: userData?.user || {},
     isLoading: userIsLoading,
     error: userDataError,
     isAuthenticated,
+    isGuestUser,
     loanerInfo,
     updateLoanerInfo: async (obj) => {
       const newSession = merge({}, loanerInfo, obj);
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
-
       // Broadcast update
       await mutate();
+    },
+    guestLogout: async () => {
+      // Delete global loaner info object
+      await sessionMutate.post(sessionFragments.deleteSession());
+      // Broadcast update
+      await mutate();
+      alert("fisk");
     },
   };
 }

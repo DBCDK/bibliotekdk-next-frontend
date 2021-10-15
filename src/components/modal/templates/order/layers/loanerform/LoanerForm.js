@@ -28,8 +28,6 @@ const ERRORS = {
 };
 
 export function UserParamsForm({ branch, initial, onSubmit }) {
-  console.log(initial, "INIT");
-
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -50,8 +48,6 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
-
-  console.log(state, "STATE");
 
   return (
     <form
@@ -163,7 +159,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
           vars: [branch.agencyName],
         })}
       </Text>
-      <Button onClick={onSubmit} tabIndex="0">
+      <Button onClick={() => {}} tabIndex="0">
         {Translate({
           context: "header",
           label: "login",
