@@ -108,3 +108,48 @@ export function toColor(
   hash = ((hash % colors.length) + colors.length) % colors.length;
   return colors[hash];
 }
+
+/**
+ * Function to get scrollY (scroll distance from top)
+ *
+ * @returns {int}
+ */
+function getScrollYPos() {
+  // Get scrollY (all browsers)
+  var doc = document.documentElement;
+  var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
+  return top;
+}
+
+/**
+ * Function to handle scrollLock on body
+ *
+ * @param {bool} shouldLockScroll
+ *
+ */
+let scrollY = 0;
+export function scrollLock(shouldLockScroll) {
+  const body = document.body;
+  const layout = document.getElementById("layout");
+
+  // We need booth
+  if (!body || !layout) {
+    return;
+  }
+
+  const isLocked = body.classList.contains("lockScroll");
+
+  // Add "lock" class and add "fake" scrollY position to body
+  if (shouldLockScroll && !isLocked) {
+    scrollY = getScrollYPos();
+    layout.style.marginTop = `-${scrollY}px`;
+    body.classList.add("lockScroll");
+  }
+  // Remove "lock", remove "fake" scrollY position
+  // + Scroll back to the scrollY position - same as before the modal was triggered
+  else if (!shouldLockScroll && isLocked) {
+    body.classList.remove("lockScroll");
+    layout.style.marginTop = `auto`;
+    window.scrollTo(0, scrollY);
+  }
+}

@@ -34,6 +34,7 @@ function scrollLock(shouldLockScroll) {
     return;
   }
 
+  // check if already locked
   const isLocked = body.classList.contains(styles.lockScroll);
 
   // Add "lock" class and add "fake" scrollY position to body
