@@ -24,6 +24,7 @@ function Icon({
   disabled = false,
   tabIndex = null,
   dataCy = null,
+  ariaHidden = true,
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -62,7 +63,7 @@ function Icon({
       className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
       onKeyDown={onKeyDown}
-      aria-hidden="true"
+      aria-hidden={ariaHidden}
       tabIndex={tabIndex}
       data-cy={props["data-cy"] || dataCy || ""}
     >

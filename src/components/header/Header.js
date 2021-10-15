@@ -15,7 +15,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 
-import Modal, { useModal } from "@/components/modal";
+import { useModal } from "@/components/modal";
 
 import LoginIcon from "./icons/login";
 import BasketIcon from "./icons/basket";
@@ -95,8 +95,7 @@ export function Header({ className = "", router = null, story = null, user }) {
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () =>
-        push("Menu", { title: "title-menu", backgroundColor: "var(--blue)" }),
+      onClick: () => push("Menu", { label: "title-menu" }),
     },
   ];
 

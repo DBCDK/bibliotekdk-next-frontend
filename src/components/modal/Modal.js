@@ -49,20 +49,22 @@ function Container({ children, className = {} }) {
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
-    // If tab key is pressed down
-    function downHandler(e) {
-      if (e.key === "Tab") {
-        handleTab(e, modalRef.current);
+    if (isVisible) {
+      // If tab key is pressed down
+      function downHandler(e) {
+        if (e.key === "Tab") {
+          handleTab(e, modalRef.current);
+        }
       }
-    }
 
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-  }, []);
+      // Add event listeners
+      window.addEventListener("keydown", downHandler);
+      // Remove event listeners on cleanup
+      return () => {
+        window.removeEventListener("keydown", downHandler);
+      };
+    }
+  }, [isVisible]);
 
   useEffect(() => {
     const dialog = modalRef.current;
@@ -129,7 +131,7 @@ function Container({ children, className = {} }) {
         } ${visibleClass} ${dialogStatusClass}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal_wrap">
+        <div className="modal_container">
           {modal.stack.map((obj, index) => {
             // Find component by id in container children
             const page = children.find((child) => {

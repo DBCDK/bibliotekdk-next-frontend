@@ -72,9 +72,9 @@
   transform: none;
 }
 
-/* wrap */
+/* container */
 
-.modal_wrap {
+.modal_container {
   width: 300%;
   transform: translateX(calc((100% / 3) * -1));
   color: black;
@@ -82,7 +82,7 @@
   position: relative;
 }
 
-.modal_wrap *:focus-visible {
+.modal_container *:focus-visible {
   outline: 2px solid black;
   outline-offset: 5px;
 }
@@ -92,7 +92,6 @@
 .modal_page {
   width: calc(100% / 3);
   height: 100%;
-  overflow-y: auto;
 
   /* animation */
   transition: transform 330ms ease-out;
@@ -102,9 +101,6 @@
   position: absolute;
   right: 0;
   top: 0;
-
-  /* Default color */
-  color: black;
 }
 
 .modal_dialog:not(.modal_open) .modal_page.page-current {

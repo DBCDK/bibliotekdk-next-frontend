@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { toColor } from "./utils.js";
 
@@ -54,58 +52,54 @@ const Clear = () => {
   );
 };
 
-const ExampleComponent = ({ context }) => {
-  const { title } = context;
+export const Default = () => {
+  const ExampleComponent = ({ context }) => {
+    const { title } = context;
 
-  const styles = {
-    padding: "24px",
-    height: "100%",
-    backgroundColor: toColor(title || "random"),
+    const styles = {
+      padding: "24px",
+      height: "100%",
+      backgroundColor: toColor(title || "random"),
+    };
+
+    return (
+      <div style={styles}>
+        {title}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            height: "100px",
+          }}
+        >
+          <Prev />
+          <Next />
+        </div>
+        <div>
+          <Pop />
+        </div>
+        <div>
+          <Clear />
+        </div>
+        <input tabIndex="0" type="text" placeholder="Help" />
+        <div>
+          <a href="#" tabIndex="-1">
+            i'm not tabbable
+          </a>
+        </div>
+        <div>
+          <br />
+          <br />
+          <Link id="Settings" context={{ title: "Im a new layer" }} />
+          <br />
+          <Link id="Order" context={{ title: "Im also a new layer" }} />
+          <br />
+          <Link id="Profile" context={{ title: "Im a new layer two" }} />
+        </div>
+      </div>
+    );
   };
 
-  return (
-    <div style={styles}>
-      {title}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          height: "100px",
-        }}
-      >
-        <Prev />
-        <Next />
-      </div>
-      <div>
-        <Pop />
-      </div>
-      <div>
-        <Clear />
-      </div>
-      <input tabIndex="0" type="text" placeholder="Help" />
-      <div>
-        <a href="#" tabIndex="-1">
-          i'm not tabbable
-        </a>
-      </div>
-      <div>
-        <br />
-        <br />
-        <Link id="Settings" context={{ title: "Im a new layer" }} />
-        <br />
-        <Link id="Order" context={{ title: "Im also a new layer" }} />
-        <br />
-        <Link id="Profile" context={{ title: "Im a new layer two" }} />
-      </div>
-    </div>
-  );
-};
-
-/**
- * Returns all Primary colors
- *
- */
-export const Default = () => {
   return (
     <Modal.Provider
       load={() => []}
@@ -119,6 +113,70 @@ export const Default = () => {
           <Modal.Page id="Profile" component={ExampleComponent} />
           <Modal.Page id="Settings" component={ExampleComponent} />
           <Modal.Page id="Order" component={ExampleComponent} />
+        </Modal.Container>
+      </div>
+    </Modal.Provider>
+  );
+};
+
+export const Scroll = () => {
+  const ExampleComponent = ({ context }) => {
+    const { title } = context;
+
+    const styles = {
+      padding: "24px",
+      height: "100%",
+      overflowY: "auto",
+      backgroundColor: toColor(title || "random"),
+    };
+
+    return (
+      <div style={styles}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            height: "100px",
+          }}
+        >
+          {title}
+          <Clear />
+        </div>
+
+        <div style={{ height: "2000px" }}>
+          <p>Modal content ...</p>
+
+          <div>
+            <a href="#">link</a>
+          </div>
+          <div>
+            <a href="#">link</a>
+          </div>
+          <div>
+            <a href="#">link</a>
+          </div>
+          <div>
+            <a href="#">link</a>
+          </div>
+          <div>
+            <a href="#">link</a>
+          </div>
+          <div>
+            <a href="#">link</a>
+          </div>
+        </div>
+      </div>
+    );
+  };
+  return (
+    <Modal.Provider
+      load={() => []}
+      save={(stack) => console.log("...saving changes in stack", stack)}
+    >
+      <div>
+        <Link id="Modal" context={{ title: "This is a long modal" }} />
+        <Modal.Container>
+          <Modal.Page id="Modal" component={ExampleComponent} />
         </Modal.Container>
       </div>
     </Modal.Provider>
