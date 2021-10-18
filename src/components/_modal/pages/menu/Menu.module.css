@@ -1,5 +1,5 @@
 .menu {
-  padding: var(--pt2);
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
   background-color: var(--blue);
   height: 100%;
 
@@ -8,11 +8,18 @@
 }
 
 /* passed to Top */
-.title {
+.title,
+.close,
+.back {
   color: var(--white);
 }
 /* passed to Top */
-.icon svg path {
+.close svg path {
+  stroke: var(--white);
+}
+/* passed to Top */
+.back svg path {
+  fill: var(--white);
   stroke: var(--white);
 }
 
@@ -47,6 +54,6 @@ li.language {
 
 @media (min-width: 576px) {
   .menu {
-    padding: var(--pt3) var(--pt6) var(--pt6) var(--pt6);
+    padding: 0 var(--pt6) var(--pt6) var(--pt6);
   }
 }

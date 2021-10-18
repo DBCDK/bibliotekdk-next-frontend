@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import { useModal } from "@/components/_modal";
 
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
@@ -10,32 +11,22 @@ import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/Re
 export function AlternativeOptions({
   onlineAccess = [],
   requestButton = false,
-  router = null,
+  modal = null,
+  context = {},
 }) {
-  const context = { context: "overview" };
-
   const count = onlineAccess?.length + (requestButton ? 1 : 0);
   {
     return (
       count > 1 && (
         <Link
           border={{ bottom: { keepVisible: true } }}
-          onClick={() => {
-            if (router) {
-              router.push({
-                pathname: router.pathname,
-                query: {
-                  ...router.query,
-                  orderPossible: requestButton,
-                  modal: "options",
-                },
-              });
-            }
-          }}
+          onClick={() =>
+            modal.push("Options", { ...context, label: "title-options" })
+          }
         >
           <Text tag="span">
             {Translate({
-              ...context,
+              context: "overview",
               label: "all-options-link",
               vars: [count],
             })}
@@ -50,13 +41,17 @@ export default function wrap({ selectedMaterial }) {
   const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
   const manifestations = selectedMaterial?.manifestations;
   const requestButton = checkRequestButtonIsTrue({ manifestations });
+  const modal = useModal();
   const router = useRouter();
+
+  const { workId, title_author, type, orderPossible } = router.query;
 
   return (
     <AlternativeOptions
       onlineAccess={onlineAccess}
       requestButton={requestButton}
-      router={router}
+      modal={modal}
+      context={{ workId, title_author, type, orderPossible }}
     />
   );
 }

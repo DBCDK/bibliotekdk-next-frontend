@@ -255,6 +255,9 @@ function Container({ children, className = {} }) {
     scrollLock(isVisible);
   }, [modal.stack]);
 
+  // Debug -> remove me in future
+  console.log("Debug: ", { stack: modal.stack });
+
   return (
     <div
       id="modal_dimmer"
@@ -279,9 +282,9 @@ function Container({ children, className = {} }) {
         <div className="modal_container">
           {modal.stack.map((obj, index) => {
             // prevent render if modal/component is not visible
-            if (!obj.active) {
-              return null;
-            }
+            // if (!obj.active) {
+            //   return null;
+            // }
 
             // Find component by id in container children
             const page = children.find((child) => {
@@ -357,7 +360,7 @@ function Page(props) {
  * UseModal hook
  * contains the stack and utility functions to read and handle stack changes
  *
- * util help functions:
+ * utils help functions:
  * push()
  * pop()
  * clear()

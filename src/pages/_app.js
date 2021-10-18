@@ -81,6 +81,7 @@ export default function MyApp({ Component, pageProps, router }) {
           >
             <Modal.Container>
               <Modal.Page id="Menu" component={Pages.Menu} />
+              <Modal.Page id="Options" component={Pages.Options} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />
