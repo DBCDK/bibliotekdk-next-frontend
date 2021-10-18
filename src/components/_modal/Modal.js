@@ -374,6 +374,11 @@ function Page(props) {
  */
 
 export function useModal() {
+  // if no context found
+  if (!useContext(ModalContext)) {
+    return null;
+  }
+
   const { stack, setStack, save } = useContext(ModalContext);
 
   /**
