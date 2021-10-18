@@ -1,0 +1,129 @@
+/* scrollLock on body */
+
+/* Class to prevent user from body-scrolling when a modal is open */
+.lockScroll {
+  height: 100vh;
+}
+
+/* Dimmer */
+
+.modal_dimmer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.modal_dimmer::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  will-change: opacity;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+}
+
+.modal_dimmer.modal_visible::after {
+  opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Modal */
+
+.modal_dialog * {
+  /* Smoothness */
+  -webkit-font-smoothing: antialised;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.modal_dialog {
+  width: 100%;
+  max-width: 576px;
+  height: 100%;
+  background-color: white;
+  position: relative;
+  z-index: 150;
+  box-shadow: -3px 0 5px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  /* animation */
+  transform: translateX(103%);
+  transition: transform 330ms ease-out;
+  will-change: transform;
+
+  /* Dialog override */
+  display: block;
+  border: none;
+}
+
+.modal_dialog.modal_visible {
+  pointer-events: auto;
+  transform: none;
+}
+
+/* container */
+
+.modal_container {
+  width: 300%;
+  transform: translateX(calc((100% / 3) * -1));
+  color: black;
+  height: 100%;
+  position: relative;
+}
+
+.modal_container *:focus-visible {
+  outline: 2px solid black;
+  outline-offset: 5px;
+}
+
+/* page */
+
+.modal_page {
+  width: calc(100% / 3);
+  height: 100%;
+
+  /* animation */
+  transition: transform 330ms ease-out;
+  will-change: transform;
+
+  /* ensures pages "spawn" position is stacked top-right */
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.modal_dialog:not(.modal_open) .modal_page.page-current {
+  transition: none;
+}
+
+.modal_page.page-current {
+  /* center of view (visible) */
+  transform: translateX(-100%);
+  z-index: 1;
+}
+
+.modal_page.page-after {
+  /* right of view (invisible) */
+  transform: translateX(0);
+  z-index: 0;
+}
+
+.modal_page.page-before {
+  /* left of view (invisible) */
+  transform: translateX(-200%);
+  z-index: 0;
+}

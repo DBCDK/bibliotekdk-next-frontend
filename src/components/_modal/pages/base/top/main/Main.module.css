@@ -1,0 +1,44 @@
+/* Top */
+
+.wrap {
+  position: relative;
+}
+
+.top {
+  padding: var(--pt3) 0;
+}
+
+/* close icon */
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: calc(var(--pt1) * -1);
+  padding: var(--pt1);
+  box-sizing: content-box;
+  cursor: pointer;
+}
+
+.icon svg path {
+  /* default as blue icon */
+  stroke: var(--blue);
+}
+
+.icon:focus-visible {
+  outline: solid 1px var(--white);
+  outline-offset: var(--pt05);
+}
+
+.icon:active {
+  outline: none;
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding: var(--pt10) 0 var(--pt3) 0;
+  }
+
+  .icon {
+    top: calc(var(--pt1) * -1);
+  }
+}

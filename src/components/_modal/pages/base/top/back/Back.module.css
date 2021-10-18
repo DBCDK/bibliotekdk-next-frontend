@@ -1,0 +1,22 @@
+.back {
+  padding: var(--pt3) var(--pt2);
+}
+
+.top .wrap {
+  position: relative;
+}
+
+.flex {
+  display: inline-flex;
+  align-items: center;
+}
+
+.flex p {
+  margin: 0 0 0 var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .back {
+    padding: var(--pt3) var(--pt6);
+  }
+}
