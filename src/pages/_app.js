@@ -75,10 +75,7 @@ export default function MyApp({ Component, pageProps, router }) {
     >
       <AnonymousSessionContext.Provider value={pageProps.anonSession}>
         <APIStateContext.Provider value={pageProps.initialData}>
-          <Modal.Provider
-            load={() => []}
-            save={(stack) => console.log("...saving changes in stack", stack)}
-          >
+          <Modal.Provider>
             <Modal.Container>
               <Modal.Page id="Menu" component={Pages.Menu} />
               <Modal.Page id="Options" component={Pages.Options} />

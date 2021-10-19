@@ -31,7 +31,7 @@ if (typeof window !== "undefined") {
 }
 
 // context
-const ModalContext = createContext(null);
+export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
 const URL_PAGE_UID_KEY = "modal";
@@ -292,6 +292,12 @@ function Container({ children, className = {} }) {
                 return child;
               }
             });
+
+            // No matching page was found
+            if (!page) {
+              return null;
+            }
+
             // Enrich page components with props
             return React.cloneElement(page, {
               modal,
@@ -374,11 +380,6 @@ function Page(props) {
  */
 
 export function useModal() {
-  // if no context found
-  if (!useContext(ModalContext)) {
-    return null;
-  }
-
   const { stack, setStack, save } = useContext(ModalContext);
 
   /**
