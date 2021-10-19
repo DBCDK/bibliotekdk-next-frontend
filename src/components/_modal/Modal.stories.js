@@ -9,6 +9,7 @@ export default {
 
 const Link = ({ id, context = {} }) => {
   const { push } = useModal();
+
   return (
     <a
       href=""
@@ -127,6 +128,15 @@ export function Default() {
           >
             i'm not tabbable
           </a>
+        </div>
+        <div>
+          <br />
+          <br />
+          <Link id="Profile" context={{ title: "This is a Modal" }} />
+          <br />
+          <Link id="Order" context={{ title: "This is also a Modal" }} />
+          <br />
+          <Link id="Settings" context={{ title: "This is also a Modal" }} />
         </div>
       </div>
     );

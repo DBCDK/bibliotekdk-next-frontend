@@ -26,8 +26,12 @@ import styles from "./Menu.module.css";
 function Menu({ modal, context }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
-      <Top.Main
-        className={{ title: styles.title, icon: styles.icon }}
+      <Top.Default
+        className={{
+          title: styles.title,
+          close: styles.close,
+          back: styles.back,
+        }}
         label={context.label}
         close={() => modal.clear()}
       />

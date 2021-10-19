@@ -31,7 +31,7 @@ if (typeof window !== "undefined") {
 }
 
 // context
-const ModalContext = createContext(null);
+export const ModalContext = createContext(null);
 
 const LOCAL_STORAGE_KEY = "modal-v2";
 const URL_PAGE_UID_KEY = "modal";
@@ -255,6 +255,9 @@ function Container({ children, className = {} }) {
     scrollLock(isVisible);
   }, [modal.stack]);
 
+  // Debug -> remove me in future
+  console.log("Debug: ", { stack: modal.stack });
+
   return (
     <div
       id="modal_dimmer"
@@ -279,9 +282,9 @@ function Container({ children, className = {} }) {
         <div className="modal_container">
           {modal.stack.map((obj, index) => {
             // prevent render if modal/component is not visible
-            if (!obj.active) {
-              return null;
-            }
+            // if (!obj.active) {
+            //   return null;
+            // }
 
             // Find component by id in container children
             const page = children.find((child) => {
@@ -289,6 +292,12 @@ function Container({ children, className = {} }) {
                 return child;
               }
             });
+
+            // No matching page was found
+            if (!page) {
+              return null;
+            }
+
             // Enrich page components with props
             return React.cloneElement(page, {
               modal,
@@ -357,7 +366,7 @@ function Page(props) {
  * UseModal hook
  * contains the stack and utility functions to read and handle stack changes
  *
- * util help functions:
+ * utils help functions:
  * push()
  * pop()
  * clear()

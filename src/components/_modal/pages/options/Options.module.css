@@ -1,0 +1,27 @@
+.options {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  height: 100%;
+
+  /* scroll in modal */
+  overflow-y: auto;
+}
+
+.list {
+  list-style: none;
+}
+
+.item {
+  padding-bottom: var(--pt4);
+}
+
+.skeleton {
+  padding: 30px;
+  max-height: 200px;
+  position: relative;
+}
+
+@media (min-width: 576px) {
+  .options {
+    padding: 0 var(--pt6) var(--pt6) var(--pt6);
+  }
+}

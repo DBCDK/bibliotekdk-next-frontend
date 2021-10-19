@@ -7,6 +7,7 @@ import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
 import { AnonymousSessionContext } from "../src/components/hooks/useUser";
+import { ModalContext } from "../src/components/_modal";
 import { APIStateContext } from "../src/lib/api/api";
 import { withNextRouter } from "storybook-addon-next-router";
 import { addDecorator } from "@storybook/react";
@@ -26,6 +27,13 @@ export const decorators = [
       <AnonymousSessionContext.Provider value={{ accessToken: "dummy-token" }}>
         <Story />
       </AnonymousSessionContext.Provider>
+    );
+  },
+  (Story) => {
+    return (
+      <ModalContext.Provider value={{}}>
+        <Story />
+      </ModalContext.Provider>
     );
   },
   withNextRouter({

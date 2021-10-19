@@ -14,7 +14,6 @@ export default function Back({ close, className }) {
       <div className={styles.wrap}>
         <Link
           border={false}
-          tabIndex={isVisible ? "0" : "-1"}
           className={`${styles.link} ${animations["on-hover"]} ${animations["on-focus"]}`}
           onClick={() => close && close()}
           onKeyDown={(e) => {

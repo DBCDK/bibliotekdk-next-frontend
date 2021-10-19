@@ -1,0 +1,47 @@
+/* Top */
+
+.top {
+  padding: var(--pt3) 0;
+}
+
+.top > .wrap {
+  flex-direction: row-reverse;
+}
+
+/* back */
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back .wrap p {
+  margin: 0 0 0 var(--pt1);
+}
+
+.close .wrap p {
+  margin: 0 var(--pt1) 0 0;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.icon svg path {
+  /* default as blue icon */
+  stroke: var(--blue);
+  fill: var(--blue);
+}
+
+.back .icon {
+}
+
+.title {
+  padding: var(--pt3) 0 0 0;
+}
+
+@media (min-width: 576px) {
+  .top {
+    padding: var(--pt5) 0 var(--pt3) 0;
+  }
+}

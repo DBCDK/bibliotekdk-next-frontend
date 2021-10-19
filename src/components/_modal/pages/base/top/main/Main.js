@@ -7,12 +7,17 @@ import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Main.module.css";
 
-export default function Main({ label, close, className }) {
+export default function Main({ label, close, className = {} }) {
+  const iconClass = `${animations["on-hover"]} ${animations["on-focus"]} ${animations["h-elastic"]} ${animations["f-elastic"]}`;
+
   return (
     <div className={styles.top}>
       <div className={styles.wrap}>
         {label && (
-          <Title type="title4" className={`${styles.title} ${className.title}`}>
+          <Title
+            type="title4"
+            className={`${styles.title} ${className.title || ""}`}
+          >
             {Translate({
               context: "modal",
               label,
@@ -32,7 +37,7 @@ export default function Main({ label, close, className }) {
             context: "general",
             label: "close-modal-title",
           })}
-          className={`${styles.icon} ${animations["on-hover"]} ${animations["on-focus"]} ${animations["h-elastic"]} ${animations["f-elastic"]} ${className.icon}`}
+          className={`${styles.icon} ${iconClass} ${className.icon || ""}`}
           size={2}
           onClick={() => close && close()}
           onKeyDown={(e) => {

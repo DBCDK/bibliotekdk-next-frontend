@@ -106,9 +106,18 @@
   top: 0;
 }
 
+/* when modal opens */
 .modal_dialog:not(.modal_open) .modal_page.page-current {
   transition: none;
 }
+
+/* when modal closes */
+.modal_dialog.modal_closing .modal_page.page-after {
+  transition: none;
+  transform: translateX(-100%);
+}
+
+/* default page positions */
 
 .modal_page.page-current {
   /* center of view (visible) */

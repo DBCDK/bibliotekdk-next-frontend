@@ -203,6 +203,10 @@
         "da": "Luk modal",
         "en": "Close modal"
       },
+      "back-modal-title": {
+        "da": "Gå tilbage i modal",
+        "en": "LABEL mangler oversættelse"
+      },
       "language": {
         "da": "English",
         "en": "Dansk"
@@ -462,8 +466,8 @@
     },
     "overview": {
       "url_login_required": {
-        "da" : "Login kræves for at læse artiklen",
-        "en" : "Login required to read article"
+        "da": "Login kræves for at læse artiklen",
+        "en": "Login required to read article"
       },
       "label_infomediaAccess": {
         "da": "Læs artikel fra infomedia (kræver login)",
