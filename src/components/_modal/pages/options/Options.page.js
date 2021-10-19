@@ -103,7 +103,7 @@ export function Options({ data, isLoading, modal, context }) {
   return (
     onlineAccess && (
       <div className={styles.options}>
-        <Top.Default label={context.label} close={() => modal.clear()} />
+        <Top.Default label={context.label} />
         <ul className={styles.list} key="options-ul">
           {orderedOnlineAccess.map((i) => {
             return getTemplate({

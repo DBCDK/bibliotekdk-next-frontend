@@ -1,0 +1,10 @@
+.edition {
+  background-color: white;
+  padding: var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .edition {
+    padding: var(--pt4) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

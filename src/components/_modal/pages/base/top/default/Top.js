@@ -13,15 +13,15 @@ import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Top.module.css";
 
-function Close({ className, close }) {
+function Close({ className, onClose }) {
   return (
     <Link
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
-      onClick={() => close && close()}
+      onClick={() => onClose && onClose()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
-          close && close();
+          onClose && onClose();
         }
       }}
     >
@@ -52,15 +52,15 @@ function Close({ className, close }) {
   );
 }
 
-function Back({ className, close }) {
+function Back({ className, onBack }) {
   return (
     <Link
       className={`${styles.back} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
-      onClick={() => close && close()}
+      onClick={() => onBack && onBack()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
-          close && close();
+          onBack && onBack();
         }
       }}
     >
@@ -106,11 +106,14 @@ export default function Top({ className = {}, label }) {
   const showBack = modal.index() > 0;
 
   return (
-    <div className={styles.top}>
+    <div className={`${styles.top} ${className.top || ""}`}>
       <div className={styles.wrap}>
-        <Close close={() => modal.clear()} className={className.close || ""} />
+        <Close
+          onClose={() => modal.clear()}
+          className={className.close || ""}
+        />
         {showBack && (
-          <Back close={() => modal.clear()} className={className.back || ""} />
+          <Back onBack={() => modal.prev()} className={className.back || ""} />
         )}
       </div>
       <div>

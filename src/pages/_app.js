@@ -77,8 +77,10 @@ export default function MyApp({ Component, pageProps, router }) {
         <APIStateContext.Provider value={pageProps.initialData}>
           <Modal.Provider>
             <Modal.Container>
-              <Modal.Page id="Menu" component={Pages.Menu} />
-              <Modal.Page id="Options" component={Pages.Options} />
+              <Modal.Page id="menu" component={Pages.Menu} />
+              <Modal.Page id="options" component={Pages.Options} />
+              <Modal.Page id="order" component={Pages.Order} />
+              <Modal.Page id="pickup" component={Pages.Pickup} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />

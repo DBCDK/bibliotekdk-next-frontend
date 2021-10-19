@@ -33,7 +33,6 @@ function Menu({ modal, context }) {
           back: styles.back,
         }}
         label={context.label}
-        close={() => modal.clear()}
       />
       <ul>
         {actions.map((a) => {

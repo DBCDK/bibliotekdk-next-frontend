@@ -1,0 +1,141 @@
+.order {
+  height: 100%;
+
+  /* scroll in modal */
+  overflow-y: auto;
+}
+
+/* .top is passed as className prop to Top component */
+.top,
+/*  */
+.edition,
+.pickup,
+.user {
+  padding: var(--pt2);
+}
+
+.edition {
+  background-color: var(--concrete);
+
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.edition .title,
+.pickup .title {
+  padding: 0 var(--pt2) 0 0;
+}
+
+.creators {
+  padding: var(--pt1) var(--pt2) 0 0;
+}
+
+.material {
+  padding: var(--pt2) 0 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.material span {
+  margin: 0 var(--pt2) 0 0;
+}
+
+.left {
+  flex-grow: 2;
+}
+
+.right {
+  flex-shrink: 2;
+}
+
+.right .cover {
+  max-height: 100px;
+}
+
+/* Library */
+.library {
+  padding: var(--pt2) 0 var(--pt1) 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.library > p {
+  padding-right: var(--pt2);
+}
+
+.library .link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.library .link .fullLink {
+  display: none;
+}
+
+.arrow {
+  margin: 0 0 0 var(--pt1);
+}
+/*  */
+
+/* User */
+
+.name {
+  padding: var(--pt2) 0 0 0;
+}
+
+.email {
+  padding: var(--pt2) 0 0 0;
+}
+
+.input {
+  margin: var(--pt1) 0 0 0;
+}
+
+.emailMessage {
+  padding: var(--pt1) 0 0 0;
+}
+
+.skeleton .emailMessage {
+  padding: var(--pt1) 0;
+}
+
+.invalid-pickup {
+  margin: var(--pt05) 0 0 0;
+}
+.invalid {
+  color: var(--error);
+}
+
+.invalidInput {
+  border: 1px solid var(--error);
+}
+
+.userStatusLink {
+  display: inline;
+}
+
+@media (min-width: 576px) {
+  .info {
+    height: calc(100% - 136px);
+  }
+
+  .top,
+  .edition,
+  .pickup,
+  .user {
+    padding: var(--pt3) var(--pt6);
+  }
+
+  .library .link .fullLink {
+    display: block;
+  }
+
+  .library .link .shortLink {
+    display: none;
+  }
+
+  .emailMessage.valid {
+    display: none;
+  }
+}

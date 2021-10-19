@@ -21,7 +21,7 @@ export function AlternativeOptions({
         <Link
           border={{ bottom: { keepVisible: true } }}
           onClick={() =>
-            modal.push("Options", { ...context, label: "title-options" })
+            modal.push("options", { ...context, label: "title-options" })
           }
         >
           <Text tag="span">
