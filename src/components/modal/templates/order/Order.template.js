@@ -37,7 +37,7 @@ import { branchUserParameters } from "@/lib/api/branches.fragments";
  *
  * @param {string} layer
  */
-export function handleRouterPush(query) {
+function handleRouterPush(query) {
   Router.push(
     {
       pathname: Router.pathname,
@@ -421,8 +421,7 @@ export default function Wrap(props) {
   }
 
   if (error) {
-    console.log(error, "ERROR");
-    //return <div>Error :( !!!!!</div>;
+    return <div>Error :( !!!!!</div>;
   }
 
   const mergedWork = merge({}, covers.data, data);
