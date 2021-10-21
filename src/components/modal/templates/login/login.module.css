@@ -3,6 +3,16 @@
     padding: var(--pt2);
 }
 
+.icon{
+    padding: var(--pt3);
+    float:right;
+
+}
+.icon:hover{
+    cursor:pointer
+;
+}
+
 .pickup {
     background-color: white;
 }

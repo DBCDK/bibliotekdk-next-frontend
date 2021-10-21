@@ -30,6 +30,8 @@ import { handleRouterPush as onLayerChange } from "@/components/modal/templates/
 import { pickupsearch } from "@/lib/api/library.fragments";
 import { branchesForUser } from "@/lib/api/user.fragments";
 import getConfig from "next/config";
+import Router from "next/router";
+import Icon from "@/components/base/icon/Icon";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -135,11 +137,24 @@ export function LoginPickup({
 
   return (
     <div className={`${styles.pickup} ${className}`}>
-      <Back
-        isVisible={isVisible}
-        handleClose={onBack}
-        className={styles.back}
-      />
+      {pickupBranch && (
+        <Back
+          isVisible={isVisible}
+          handleClose={onBack}
+          className={styles.back}
+        />
+      )}
+
+      {pickupBranch === null && (
+        <div
+          className={styles.icon}
+          onClick={() => {
+            Router.back();
+          }}
+        >
+          <Icon size={{ w: "auto", h: 3 }} src="close.svg" alt="luk" />
+        </div>
+      )}
 
       {/* a branch has been selected -> if borrowercheck -> show login */}
       {pickupBranch?.borrowerCheck === true && (
@@ -150,7 +165,12 @@ export function LoginPickup({
             onLogin={() => {
               onLogin(
                 "adgangsplatformen",
-                { callbackUrl: `${APP_URL}` },
+                {
+                  callbackUrl: `${APP_URL}${Router?.asPath}`.replace(
+                    "modal=login",
+                    ""
+                  ),
+                },
                 {
                   agency: pickupBranch?.agencyId,
                 }
