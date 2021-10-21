@@ -6,7 +6,6 @@ import useUser from "@/components/hooks/useUser";
 import getConfig from "next/config";
 
 export function LoginParamsForm({ branch, initial, onSubmit }) {
-  console.log("FISK");
   return (
     <div className={styles.loanerform}>
       <UserParamsForm branch={branch} initial={initial} onSubmit={onSubmit} />
