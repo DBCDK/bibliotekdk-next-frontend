@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { useInView } from "react-intersection-observer";
 import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
@@ -17,11 +16,10 @@ import animations from "@/components/base/animation/animations.module.css";
 
 import { useData } from "@/lib/api/api";
 
-import { LoanerForm } from "@/components/modal/templates/order/layers/loanerform/LoanerForm";
-
 import * as libraryFragments from "@/lib/api/library.fragments";
-
 import LoginParamsForm from "@/components/modal/templates/login/LoginParamsForm";
+import { LogInComponent } from "@/components/modal/templates/order/layers/loanerform/LoanerForm";
+import { signIn } from "next-auth/client";
 
 import { useRouter } from "next/router";
 import {
@@ -31,6 +29,7 @@ import {
 import { handleRouterPush as onLayerChange } from "@/components/modal/templates/order/Order.template";
 import { pickupsearch } from "@/lib/api/library.fragments";
 import { branchesForUser } from "@/lib/api/user.fragments";
+import getConfig from "next/config";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -115,6 +114,7 @@ export function LoginPickup({
   onChange,
   isLoading,
   includeArrows,
+  onLogin,
 }) {
   const context = { context: "order" };
   const allBranches = data?.result;
@@ -124,6 +124,9 @@ export function LoginPickup({
   const onSelect = (branch) => {
     setPickupBranch(branch);
   };
+
+  const APP_URL =
+    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
   const onBack = () => {
     //alert("fisk");
@@ -139,7 +142,23 @@ export function LoginPickup({
       />
 
       {/* a branch has been selected -> if borrowercheck -> show login */}
-      {pickupBranch?.borrowerCheck === true && <div>fisk</div>}
+      {pickupBranch?.borrowerCheck === true && (
+        <div className={styles.loanerform}>
+          <LogInComponent
+            branch={pickupBranch}
+            submitting={false}
+            onLogin={() => {
+              onLogin(
+                "adgangsplatformen",
+                { callbackUrl: `${APP_URL}` },
+                {
+                  agency: pickupBranch?.agencyId,
+                }
+              );
+            }}
+          />
+        </div>
+      )}
       {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
       {pickupBranch?.borrowerCheck === false && (
         <LoginParamsForm branchId={pickupBranch.branchId} />
@@ -246,6 +265,7 @@ export default function Wrap(props) {
       data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}
       includeArrows={includeArrows}
+      onLogin={signIn}
     />
   );
 }

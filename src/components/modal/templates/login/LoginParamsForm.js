@@ -3,8 +3,10 @@ import { useData } from "@/lib/api/api";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
 import styles from "@/components/modal/templates/order/layers/loanerform/LoanerForm.module.css";
 import useUser from "@/components/hooks/useUser";
+import getConfig from "next/config";
 
 export function LoginParamsForm({ branch, initial, onSubmit }) {
+  console.log("FISK");
   return (
     <div className={styles.loanerform}>
       <UserParamsForm branch={branch} initial={initial} onSubmit={onSubmit} />
@@ -13,6 +15,8 @@ export function LoginParamsForm({ branch, initial, onSubmit }) {
 }
 
 export default function wrap({ branchId }) {
+  const APP_URL =
+    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
@@ -26,6 +30,7 @@ export default function wrap({ branchId }) {
       userParameters: info,
       pickupBranch: branchId,
     });
+    window.location.href = APP_URL;
   };
 
   if (branchIsLoading) {

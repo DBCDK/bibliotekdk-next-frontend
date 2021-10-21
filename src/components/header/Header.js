@@ -85,7 +85,6 @@ export function Header({ className = "", router = null, story = null, user }) {
           signOut
         : user.isGuestUser
         ? async (info) => {
-            alert("fisk");
             await user.guestLogout();
           }
         : // open login modal

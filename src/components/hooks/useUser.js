@@ -97,7 +97,7 @@ function useUserImpl() {
     return obj;
   }, [data?.session, loggedInUser]);
 
-  const isGuestUser = !!loanerInfo.userParameters;
+  const isGuestUser = Object.keys(loanerInfo?.userParameters).length > 1;
 
   return {
     authUser: userData?.user || {},
@@ -118,7 +118,6 @@ function useUserImpl() {
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update
       await mutate();
-      alert("fisk");
     },
   };
 }

@@ -22,6 +22,7 @@ import {
 } from "@/lib/api/branches.fragments";
 import useUser, { useAccessToken } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
+import getConfig from "next/config";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -258,26 +259,11 @@ export function LoanerForm({
           </>
         )}
         {orderPossible && branch.borrowerCheck && (
-          <>
-            <Text type="text2">
-              {Translate({
-                context: "order",
-                label: "order-login-required",
-                vars: [branch.agencyName],
-              })}
-            </Text>
-            <Button
-              onClick={onLogin}
-              className={styles.loginbutton}
-              disabled={!!submitting}
-              tabIndex="0"
-            >
-              {Translate({
-                context: "header",
-                label: "login",
-              })}
-            </Button>
-          </>
+          <LogInComponent
+            branch={branch}
+            submitting={submitting}
+            onLogin={onLogin}
+          />
         )}
         {orderPossible && !branch.borrowerCheck && (
           <UserParamsForm
@@ -287,6 +273,31 @@ export function LoanerForm({
           />
         )}
       </div>
+    </>
+  );
+}
+
+export function LogInComponent({ branch, submitting, onLogin }) {
+  return (
+    <>
+      <Text type="text2">
+        {Translate({
+          context: "order",
+          label: "order-login-required",
+          vars: [branch.agencyName],
+        })}
+      </Text>
+      <Button
+        onClick={onLogin}
+        className={styles.loginbutton}
+        disabled={!!submitting}
+        tabIndex="0"
+      >
+        {Translate({
+          context: "header",
+          label: "login",
+        })}
+      </Button>
     </>
   );
 }
