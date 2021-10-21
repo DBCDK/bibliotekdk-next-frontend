@@ -560,6 +560,7 @@ export function useModal() {
    */
   function _prev(id) {
     const active = _index();
+
     // No previous elements to select
     if (active === 0) {
       return;

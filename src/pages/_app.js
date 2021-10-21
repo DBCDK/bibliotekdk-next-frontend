@@ -81,11 +81,13 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="options" component={Pages.Options} />
               <Modal.Page id="order" component={Pages.Order} />
               <Modal.Page id="pickup" component={Pages.Pickup} />
+              <Modal.Page id="loanerform" component={Pages.Loanerform} />
+              <Modal.Page id="receipt" component={Pages.Receipt} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
-            <DeprecatedSoonModal router={router} />
+            {false && <DeprecatedSoonModal router={router} />}
             <div id="layout">
               <Head>
                 <meta name="mobile-web-app-capable" content="yes"></meta>

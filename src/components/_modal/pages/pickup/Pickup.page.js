@@ -57,6 +57,7 @@ function Row({
   isLoading,
   disabled,
   includeArrows,
+  modal,
   _ref,
 }) {
   // Check for a highlight key matching on "name" prop
@@ -77,9 +78,7 @@ function Row({
   return (
     <List.Select
       selected={selected?.branchId === branch.branchId}
-      onSelect={() => {
-        onSelect(branch);
-      }}
+      onSelect={() => onSelect(branch, modal)}
       label={branch.name}
       disabled={disabled}
       className={[
@@ -193,7 +192,7 @@ export function Pickup({
 
   return (
     <div className={`${styles.pickup} ${shadowClass}`}>
-      <Top.Default label={context.label} />
+      <Top.Default title={context.label} />
       {/* This only load order policies, does not render anything */}
       {data?.result
         ?.filter((branch) => branch.branchId)
@@ -246,6 +245,7 @@ export function Pickup({
                 branch={branch}
                 selected={selected}
                 onSelect={onSelect}
+                modal={modal}
                 isLoading={isLoading}
                 includeArrows={includeArrows}
               />
@@ -310,8 +310,6 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(
     libraryFragments.search({ q: query || "" })
   );
-
-  console.log("data", data, isLoading);
 
   const dummyData = {
     hitcount: 10,

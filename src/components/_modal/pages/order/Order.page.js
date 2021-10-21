@@ -20,8 +20,7 @@ import Translate from "@/components/base/translate";
 
 import Top from "../base/top";
 
-import { useRouter } from "next/router";
-
+import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -34,13 +33,6 @@ import { branchOrderPolicy } from "@/lib/api/branches.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 
-// Layers
-import Info from "./layers/info";
-import Edition from "./layers/edition";
-import Pickup from "./layers/pickup";
-import Action from "./layers/action";
-import LoanerForm from "./layers/loanerform";
-
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
@@ -52,7 +44,6 @@ import { branchUserParameters } from "@/lib/api/branches.fragments";
  * @param {*} param0
  * @returns component
  */
-
 export function Order({
   pid,
   work,
@@ -145,7 +136,11 @@ export function Order({
     setValidated({ status, hasTry, details });
   }, [mail, pid, pickupBranch, hasTry]);
 
-  // functions
+  /**
+   *
+   * @param {*} value
+   * @param {*} valid
+   */
   function onMailChange(value, valid) {
     valid &&
       updateLoanerInfo &&
@@ -154,11 +149,12 @@ export function Order({
     setMail({ value, valid });
   }
 
-  function onPickupSelect(branch) {
-    console.log("### selected: ", branch);
-
-    console.log("### user: ", user);
-
+  /**
+   *
+   * @param {obj} branch
+   * @param {obj} modal
+   */
+  function onPickupSelect(branch, modal) {
     // should send to loanerform
     let loanerform = false;
     // if selected branch has same origin as user agency
@@ -166,17 +162,38 @@ export function Order({
       // and the new selected branch has borrowercheck
       if (branch.borrowerCheck) {
         // Set new branch without new log-in
+        updateLoanerInfo({ pickupBranch: branch.branchId });
         setPickupBranch(branch);
-        modal.clear();
+        modal.prev();
       } else {
         loanerform = true;
       }
     } else {
       loanerform = true;
     }
-    // send to next layer
+
+    // send to loanerform
     if (loanerform) {
-      modal.push("loanerform", { label: "title-loanerform" });
+      const branchId = branch.branchId;
+      const onSubmit = (branch) => {
+        updateLoanerInfo({ pickupBranch: branch.branchId });
+        setPickupBranch(branch);
+        modal.clear();
+      };
+
+      // Create Callback url
+      const path = `${APP_URL}${Router.asPath}`;
+      const id = modal.stack?.[modal.index() - 1].uid;
+      const sign = path.includes("?") ? "&" : "?";
+
+      const callbackUrl = `${path}${sign}modal=${id}`;
+
+      modal.push("loanerform", {
+        onSubmit,
+        callbackUrl,
+        branchId,
+        pid,
+      });
     }
   }
 
@@ -251,15 +268,27 @@ export function Order({
   const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
   const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
 
+  //
+  //
+  //
+  //
+  //
+
+  // Check for email validation and email error messages
+  const hasEmail = validated?.details?.hasMail?.status;
+  const actionMessage =
+    hasTry && !hasEmail && validated?.details?.hasMail?.message;
+
+  const invalidClass = actionMessage ? styles.invalid : "";
+
   return (
     <div className={`${styles.order} ${loadingClass}`}>
       <Top.Default
+        title={context.title}
         className={{
           top: styles.top,
         }}
-        label={context.label}
       />
-
       <div className={styles.edition}>
         <div className={styles.left}>
           <div className={styles.title}>
@@ -278,7 +307,7 @@ export function Order({
             <Tag tag="span" skeleton={isLoading}>
               {materialType}
             </Tag>
-            <Link onClick={() => onLayerSelect("edition")} disabled>
+            <Link onClick={() => {}} disabled>
               <Text type="text3" skeleton={isLoading} lines={1}>
                 {Translate({
                   context: "order",
@@ -312,7 +341,7 @@ export function Order({
               modal.push("pickup", {
                 pid,
                 initial: { agency },
-                onSelect: (branch) => onPickupSelect(branch),
+                onSelect: (branch, modal) => onPickupSelect(branch, modal),
               })
             }
             onKeyDown={(e) => {
@@ -321,7 +350,7 @@ export function Order({
                   modal.push("pickup", {
                     pid,
                     initial: { agency },
-                    onSelect: (branch) => onPickupSelect(branch),
+                    onSelect: (branch, modal) => onPickupSelect(branch, modal),
                   });
               }
             }}
@@ -453,38 +482,62 @@ export function Order({
           </div>
         </div>
       )}
+
+      <div className={styles.action}>
+        <div className={`${styles.message} ${invalidClass}`}>
+          <Text type="text3">
+            {Translate({
+              context: "order",
+              label: actionMessage
+                ? `action-${actionMessage.label}`
+                : "order-message-library",
+            })}
+          </Text>
+        </div>
+
+        <Button
+          disabled={pickupBranch?.orderPolicy?.orderPossible !== true}
+          skeleton={isLoading}
+          onClick={() => {
+            if (validated.status) {
+              onSubmit &&
+                onSubmit(
+                  materialsSameType.map((m) => m.pid),
+                  pickupBranch
+                );
+            } else {
+              setHasTry(true);
+            }
+          }}
+        >
+          {Translate({ context: "general", label: "accept" })}
+        </Button>
+      </div>
+
+      {/*<Action
+          isVisible={!translated && isVisible}
+          validated={validated}
+          isOrdering={isOrdering}
+          isOrdered={isOrdered}
+          data={{ pickupBranch, order }}
+          isFailed={isFailed}
+          isLoading={isLoading}
+          onClose={onClose}
+          onClick={() => {
+            if (validated.status) {
+              onSubmit &&
+                onSubmit(
+                  materialsSameType.map((m) => m.pid),
+                  pickupBranch
+                );
+            } else {
+              setHasTry(true);
+            }
+          }}
+        /> */}
     </div>
   );
 }
-
-// const old = (
-//   <Info
-//     isVisible={!translated && isVisible}
-//     material={{
-//       title,
-//       creators,
-//       ...material,
-//       cover: { detail: material?.cover?.detail || cover?.detail },
-//     }}
-//     user={user}
-//     className={`${styles.page} ${styles[`page-info`]}`}
-//     onLayerSelect={(layer) =>
-//       onLayerChange && onLayerChange({ modal: `order-${layer}` })
-//     }
-//     pickupBranch={pickupBranch}
-//      onMailChange={(value, valid) => {
-//      // update mail in loanerInfo
-//        valid &&
-//     updateLoanerInfo &&
-//     updateLoanerInfo({ userParameters: { userMail: value } });
-//   // update mail in state
-//   setMail({ value, valid });
-// }}
-//     mail={mail}
-//     validated={validated}
-//     isLoading={isLoading}
-//   />
-// );
 
 export function OrderSkeleton(props) {
   const { work, user, order } = data;
@@ -496,6 +549,7 @@ export function OrderSkeleton(props) {
       user={user}
       order={order}
       context={{ label: "title-order" }}
+      modal={{}}
       className={`${props.className} ${styles.skeleton}`}
       isLoading={true}
     />
@@ -512,8 +566,6 @@ export function OrderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  console.log("props", props);
-
   // context props
   const { pid: order, workId } = props.context;
 
@@ -529,17 +581,40 @@ export default function Wrap(props) {
 
   const { authUser, loanerInfo, updateLoanerInfo } = useUser();
 
+  // Fetch order policies for user agency branches
   const {
     data: orderPolicy,
     isLoading: policyIsLoading,
     error: orderPolicyError,
   } = useData(pid && userFragments.orderPolicy({ pid }));
 
+  // fetch branch details and user parameters
   const { data: branch, isLoading: branchIsLoading } = useData(
     loanerInfo?.pickupBranch &&
       branchUserParameters({ branchId: loanerInfo.pickupBranch })
   );
 
+  // Set default pickupbranch
+  const pickupBranch = branch?.branches?.result?.[0];
+
+  // Fetch order policies for selected pickupBranch (if pickupBranch differes from user agency branches)
+  // check if orderpolicy already exist for selected pickupbranch
+  const shouldFetchOrderPolicy =
+    pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
+
+  // Create policyCheck if it does not already exist
+  const { data: branchPolicyData, isLoading: branchPolicyIsLoading } = useData(
+    shouldFetchOrderPolicy &&
+      branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
+  );
+
+  // If found, merge fetched orderPolicy into pickupBranch
+  const pickupBranchOrderPolicy = branchPolicyData?.branches?.result[0];
+
+  const mergedPickupBranch =
+    pickupBranchOrderPolicy && merge({}, pickupBranch, pickupBranchOrderPolicy);
+
+  // Get order
   const orderMutation = useMutate();
 
   useEffect(() => {
@@ -552,7 +627,7 @@ export default function Wrap(props) {
     }
   }, [order]);
 
-  if (isLoading || policyIsLoading) {
+  if (isLoading || policyIsLoading || branchPolicyIsLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -562,7 +637,7 @@ export default function Wrap(props) {
 
   const mergedWork = merge({}, covers.data, data);
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
-    pickupBranch: branch?.branches?.result?.[0],
+    pickupBranch: mergedPickupBranch,
   });
 
   return (
@@ -572,7 +647,6 @@ export default function Wrap(props) {
       user={(!branchIsLoading && mergedUser) || {}}
       pid={order}
       order={orderMutation}
-      query={Router.query}
       updateLoanerInfo={updateLoanerInfo}
       onSubmit={(pids, pickupBranch) => {
         orderMutation.post(

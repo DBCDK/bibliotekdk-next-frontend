@@ -27,12 +27,12 @@ function Menu({ modal, context }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
       <Top.Default
+        title={Translate({ context: "modal", label: "title-menu" })}
         className={{
-          title: styles.title,
+          top: styles.top,
           close: styles.close,
           back: styles.back,
         }}
-        label={context.label}
       />
       <ul>
         {actions.map((a) => {

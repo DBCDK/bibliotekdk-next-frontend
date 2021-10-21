@@ -310,7 +310,12 @@ export default function Wrap(props) {
       onOnlineAccess={onOnlineAccess}
       login={login}
       openOrderModal={(pid) =>
-        modal.push("order", { label: "title-order", pid, workId, type })
+        modal.push("order", {
+          title: Translate({ context: "modal", label: "title-order" }),
+          pid,
+          workId,
+          type,
+        })
       }
       user={user}
     />

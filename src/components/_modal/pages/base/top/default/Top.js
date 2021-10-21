@@ -100,7 +100,7 @@ function Back({ className, onBack }) {
  * @param {func} props.close
  * @returns {component}
  */
-export default function Top({ className = {}, label }) {
+export default function Top({ className = {}, title }) {
   const modal = useModal();
 
   const showBack = modal.index() > 0;
@@ -117,15 +117,12 @@ export default function Top({ className = {}, label }) {
         )}
       </div>
       <div>
-        {label && (
+        {title && (
           <Title
             type="title4"
             className={`${styles.title} ${className.title || ""}`}
           >
-            {Translate({
-              context: "modal",
-              label,
-            })}
+            {title}
           </Title>
         )}
       </div>

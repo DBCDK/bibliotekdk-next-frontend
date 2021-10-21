@@ -96,6 +96,8 @@
   width: calc(100% / 3);
   height: 100%;
 
+  background-color: white;
+
   /* animation */
   transition: transform 330ms ease-out;
   will-change: transform;

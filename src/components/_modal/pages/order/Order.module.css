@@ -3,6 +3,8 @@
 
   /* scroll in modal */
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* .top is passed as className prop to Top component */
@@ -10,8 +12,13 @@
 /*  */
 .edition,
 .pickup,
-.user {
+.user,
+.action {
   padding: var(--pt2);
+}
+
+.action {
+  margin-top: auto;
 }
 
 .edition {
@@ -115,6 +122,16 @@
   display: inline;
 }
 
+/* action */
+
+.action .message {
+  display: none;
+}
+
+.action .message.invalid {
+  color: var(--error);
+}
+
 @media (min-width: 576px) {
   .info {
     height: calc(100% - 136px);
@@ -123,7 +140,8 @@
   .top,
   .edition,
   .pickup,
-  .user {
+  .user,
+  .action {
     padding: var(--pt3) var(--pt6);
   }
 
@@ -137,5 +155,12 @@
 
   .emailMessage.valid {
     display: none;
+  }
+
+  /* action */
+
+  .action .message {
+    display: block;
+    padding: 0 0 var(--pt1) 0;
   }
 }
