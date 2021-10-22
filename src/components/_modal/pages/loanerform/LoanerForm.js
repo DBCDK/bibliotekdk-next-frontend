@@ -191,6 +191,7 @@ export function LoanerForm({
   initial,
   isVisible,
   onClose,
+  doPolicyCheck,
   // modal props
   context,
   modal,
@@ -220,8 +221,12 @@ export function LoanerForm({
     return null;
   }
 
+  console.log(branch, "BRANCH");
+  console.log(doPolicyCheck, "DOPCHK");
   // Order possible for branch
-  const orderPossible = branch.orderPolicy?.orderPossible;
+  const orderPossible = doPolicyCheck
+    ? branch.orderPolicy?.orderPossible
+    : true;
 
   return (
     <div className={styles.loanerform}>
@@ -306,19 +311,27 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { onSubmit, branchId, pid, callbackUrl } = props.context;
+  console.log(props, "PROPS");
+
+  const { onSubmit, branchId, pid, callbackUrl, doPolicyCheck } = props.context;
+
+  console.log(doPolicyCheck, "WRAP");
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
 
+  let mergedData;
   // PolicyCheck in own request (sometimes slow)
-  const { data: policyData, isLoading: policyIsLoading } = useData(
-    pid && branchId && branchOrderPolicy({ branchId, pid })
-  );
-
-  const mergedData = merge({}, data, policyData);
+  if (doPolicyCheck !== false) {
+    const { data: policyData, isLoading: policyIsLoading } = useData(
+      pid && branchId && branchOrderPolicy({ branchId, pid })
+    );
+  } else {
+    mergedData = merge({}, data);
+    const policyIsLoading = false;
+  }
 
   const { isAuthenticated } = useUser();
   const accessToken = useAccessToken();
@@ -332,8 +345,7 @@ export default function Wrap(props) {
 
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
   const branch = mergedData?.branches?.result?.[0];
-  const skeleton =
-    branchId && (userIsLoading || branchIsLoading || policyIsLoading);
+  const skeleton = branchId && (userIsLoading || branchIsLoading);
 
   // When beginLogout is true, we mount the iframe
   // that logs out the user
@@ -389,6 +401,7 @@ export default function Wrap(props) {
           }}
           submitting={beginLogout || loggedOut}
           skeleton={skeleton}
+          doPolicyCheck={doPolicyCheck}
         />
       )}
     </>
