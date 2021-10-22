@@ -13,7 +13,7 @@ import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Top.module.css";
 
-function Close({ className, onClose }) {
+export function Close({ className, onClose }) {
   return (
     <Link
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
@@ -52,7 +52,7 @@ function Close({ className, onClose }) {
   );
 }
 
-function Back({ className, onBack }) {
+export function Back({ className, onBack }) {
   return (
     <Link
       className={`${styles.back} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
@@ -100,10 +100,10 @@ function Back({ className, onBack }) {
  * @param {func} props.close
  * @returns {component}
  */
-export default function Top({ className = {}, title }) {
+export default function Top({ className = {}, title, back = true }) {
   const modal = useModal();
 
-  const showBack = modal.index() > 0;
+  const showBack = back && modal.index() > 0;
 
   return (
     <div className={`${styles.top} ${className.top || ""}`}>

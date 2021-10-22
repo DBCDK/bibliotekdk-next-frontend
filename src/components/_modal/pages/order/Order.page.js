@@ -50,12 +50,7 @@ export function Order({
   user,
   authUser,
   order,
-  query,
-  isVisible,
-  onClose,
   onSubmit,
-  onLayerChange,
-  onLayerClose,
   updateLoanerInfo,
   isLoading = false,
   // new modal props
@@ -85,18 +80,6 @@ export function Order({
 
       // Default branch select (first in row)
       let defaultBranch = userBranches[0];
-
-      // const queryBranchId = query?.branch;
-
-      // if (queryBranchId) {
-      //   const match = find(userBranches, {
-      //     branchId: queryBranchId,
-      //   });
-
-      //   if (match) {
-      //     defaultBranch = match;
-      //   }
-      // }
 
       setPickupBranch(defaultBranch);
     }
@@ -135,6 +118,14 @@ export function Order({
 
     setValidated({ status, hasTry, details });
   }, [mail, pid, pickupBranch, hasTry]);
+
+  // An order has successfully been submitted
+  useEffect(() => {
+    if (order.isLoading) {
+      const index = modal.index();
+      modal.update(index, { order });
+    }
+  }, [order]);
 
   /**
    *
@@ -210,6 +201,12 @@ export function Order({
     manifestations,
     (manifestation) => manifestation.pid === pid
   )[0];
+
+  // Same type materiel
+  const materialsSameType = filter(
+    manifestations,
+    (m) => m?.materialType === material?.materialType && m?.admin?.requestButton
+  );
 
   const isLoadingBranches = isLoading || (user.name && !user?.agency);
 
@@ -500,6 +497,7 @@ export function Order({
           skeleton={isLoading}
           onClick={() => {
             if (validated.status) {
+              modal.push("receipt", { pid, order, pickupBranch });
               onSubmit &&
                 onSubmit(
                   materialsSameType.map((m) => m.pid),
@@ -513,28 +511,6 @@ export function Order({
           {Translate({ context: "general", label: "accept" })}
         </Button>
       </div>
-
-      {/*<Action
-          isVisible={!translated && isVisible}
-          validated={validated}
-          isOrdering={isOrdering}
-          isOrdered={isOrdered}
-          data={{ pickupBranch, order }}
-          isFailed={isFailed}
-          isLoading={isLoading}
-          onClose={onClose}
-          onClick={() => {
-            if (validated.status) {
-              onSubmit &&
-                onSubmit(
-                  materialsSameType.map((m) => m.pid),
-                  pickupBranch
-                );
-            } else {
-              setHasTry(true);
-            }
-          }}
-        /> */}
     </div>
   );
 }

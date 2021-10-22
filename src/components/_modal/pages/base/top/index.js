@@ -1,5 +1,5 @@
-import Main from "./main";
-import Back from "./back";
+import { Close } from "./default";
+import { Back } from "./default";
 import Default from "./default";
 
-export default { Default, Main, Back };
+export default { Default, Close, Back };

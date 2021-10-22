@@ -356,7 +356,11 @@ function Page(props) {
   }, [modal.stack]);
 
   return (
-    <div className={`modal_page ${status} ${className}`} data-cy={dataCy}>
+    <div
+      className={`modal_page ${status} ${className}`}
+      data-cy={dataCy}
+      aria-hidden={!active}
+    >
       <props.component {...passedProps} />
     </div>
   );
@@ -458,6 +462,8 @@ export function useModal() {
    *
    * Returns the index for the active element
    * To search for an index, an id can passed to the function.
+   *
+   * OBS!!! If an ID is given, function will return the index of the first found element (from position 0) with the given id
    *
    * @returns {int}
    */
@@ -582,9 +588,36 @@ export function useModal() {
     _select(active - 1);
   }
 
+  /**
+   * update a stack element context
+   *
+   * OBS!!!! skal der opdateres i localstorage stakken her?
+   *
+   * @param {*} index
+   * @param {*} context
+   */
+  function _update(index, context) {
+    if (!index) {
+      index = _index();
+    }
+
+    let copy = [...stack];
+    copy = copy.map((obj, i) => {
+      if (index === i) {
+        return { ...obj, context: { ...obj.context, ...context } };
+      }
+      return obj;
+    });
+
+    save && save(copy);
+    // update locale stack state
+    setStack(copy);
+  }
+
   return {
     push: _push,
     pop: _prev,
+    update: _update,
     clear: _clear,
     index: _index,
     select: _select,
