@@ -31,23 +31,14 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
 
   // If none found use a alternative match if any found
   const matchOthers = !matchName ? branch.highlights?.[0]?.value : null;
-
-  //disabled = disabled || !branch.pickupAllowed;
   disabled = false;
-  const alternativeMatchClass = matchOthers ? styles.squeeze : "";
-  const disabledClass = disabled ? styles.disabled : "";
 
   return (
     <List.Select
       onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
-      className={[
-        styles.radiobutton,
-        alternativeMatchClass,
-        disabledClass,
-        animations["on-hover"],
-      ].join(" ")}
+      className={[animations["on-hover"]].join(" ")}
       includeArrows={includeArrows}
       _ref={_ref}
     >
@@ -139,7 +130,7 @@ export function LoginPickup({
             <Title type="title4" className={styles.title}>
               {Translate({ ...context, label: "pickup-search-title" })}
             </Title>
-            <Text type="text3" className={styles.description}>
+            <Text type="text3">
               {Translate({ ...context, label: "pickup-search-description" })}
             </Text>
             <Search

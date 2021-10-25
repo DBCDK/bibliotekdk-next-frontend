@@ -3,27 +3,6 @@
     padding: var(--pt2);
 }
 
-.icon{
-    padding: var(--pt3);
-    float:right;
-
-}
-.icon:hover{
-    cursor:pointer
-;
-}
-
-.pickup {
-    background-color: white;
-}
-.pickup h2 {
-    margin: 0 0 var(--pt2) 0;
-}
-
-.library{
-    color:black;
-}
-
 .search .input {
     margin: var(--pt2) 0;
 }
@@ -44,45 +23,11 @@
     box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0);
 }
 
-.link > .arrow {
-    margin-left: var(--pt2);
-    outline-offset: var(--pt1);
-}
-
-.scrollArea.shadow {
-    -moz-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-    -webkit-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-    box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-}
 
 .message {
     padding: 0 0 var(--pt2) 0;
 }
 
-.disallowedTitle {
-    padding-top: var(--pt4);
-}
-
-.pickup mark {
-    background-color: transparent;
-    font-family: var(--body-font-semibold);
-}
-
-.loadingText {
-    margin-top: var(--pt4);
-}
-
-.pickup li {
-    list-style-type: none;
-    margin-bottom: var(--pt05);
-}
-
-
-
-.pickupNotAllowedTitle {
-    margin-top: var(--pt6);
-    margin-bottom: var(--pt1);
-}
 
 .orderPossibleGroup {
     margin-top: var(--pt4);
@@ -95,12 +40,6 @@
 .alternativeMatch mark {
     /* font-family: var(--body-font); */
     /* color: var(--gray); */
-}
-
-.disabled,
-.disabled mark,
-.disabled .alternativeMatch {
-    color: black !important;
 }
 
 .branchMessage {
