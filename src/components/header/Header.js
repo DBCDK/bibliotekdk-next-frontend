@@ -96,7 +96,7 @@ export function Header({
             await user.guestLogout();
           }
         : // open login modal
-          () => modal.push("login", { label: "title-menu" }),
+          () => modal.push("login"),
       //() => alert("fisk"),
     },
     /*{
