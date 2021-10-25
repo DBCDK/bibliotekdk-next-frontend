@@ -97,7 +97,7 @@ function useUserImpl() {
     return obj;
   }, [data?.session, loggedInUser]);
 
-  const isGuestUser = Object.keys(loanerInfo?.userParameters).length > 1;
+  const isGuestUser = Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},
@@ -105,6 +105,7 @@ function useUserImpl() {
     error: userDataError,
     isAuthenticated,
     loanerInfo,
+    isGuestUser,
     updateLoanerInfo: async (obj) => {
       const newSession = merge({}, loanerInfo, obj);
       // Update global loaner info object

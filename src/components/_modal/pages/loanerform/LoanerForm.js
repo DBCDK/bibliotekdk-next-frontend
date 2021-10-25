@@ -76,7 +76,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
         })}
       </Title>
       <div className={styles.fields}>
-        {requiredParameters?.map(({ userParameterType, description }) => {
+        {requiredParameters?.map(({ userParameterType, description }, idx) => {
           const labelTranslation = {
             context: "form",
             label: `${userParameterType}-label`,
@@ -91,7 +91,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
           };
 
           return (
-            <div>
+            <div key={idx}>
               <Text type="text1" tag="label">
                 {description ||
                   (hasTranslation(labelTranslation)
@@ -221,12 +221,9 @@ export function LoanerForm({
     return null;
   }
 
-  console.log(branch, "BRANCH");
-  console.log(doPolicyCheck, "DOPCHK");
   // Order possible for branch
-  const orderPossible = doPolicyCheck
-    ? branch.orderPolicy?.orderPossible
-    : true;
+  const orderPossible =
+    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
 
   return (
     <div className={styles.loanerform}>
@@ -311,27 +308,18 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  console.log(props, "PROPS");
-
   const { onSubmit, branchId, pid, callbackUrl, doPolicyCheck } = props.context;
-
-  console.log(doPolicyCheck, "WRAP");
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
     branchId && branchUserParameters({ branchId })
   );
 
-  let mergedData;
   // PolicyCheck in own request (sometimes slow)
-  if (doPolicyCheck !== false) {
-    const { data: policyData, isLoading: policyIsLoading } = useData(
-      pid && branchId && branchOrderPolicy({ branchId, pid })
-    );
-  } else {
-    mergedData = merge({}, data);
-    const policyIsLoading = false;
-  }
+  const { data: policyData, isLoading: policyIsLoading } = useData(
+    pid && branchId && branchOrderPolicy({ branchId, pid })
+  );
+  const mergedData = merge({}, data, policyData);
 
   const { isAuthenticated } = useUser();
   const accessToken = useAccessToken();
@@ -409,5 +397,5 @@ export default function Wrap(props) {
 }
 Wrap.propTypes = {
   onSubmit: PropTypes.func,
-  callbackUrl: PropTypes.string.isRequired,
+  callbackUrl: PropTypes.string,
 };

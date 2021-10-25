@@ -85,7 +85,7 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
       icon: LoginIcon,
       //onClick: user.isAuthenticated ? signOut : signIn,
       onClick: user.isAuthenticated
@@ -97,6 +97,7 @@ export function Header({
           }
         : // open login modal
           () => modal.push("login", { label: "title-menu" }),
+      //() => alert("fisk"),
     },
     /*{
       label: "basket",

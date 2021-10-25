@@ -10,30 +10,16 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
 import { Back } from "@/components/modal";
-
 import styles from "./Login.module.css";
 import animations from "@/components/base/animation/animations.module.css";
-
 import { useData } from "@/lib/api/api";
-
 import * as libraryFragments from "@/lib/api/library.fragments";
-import LoginParamsForm from "@/components/modal/templates/login/LoginParamsForm";
-
 import { signIn } from "next-auth/client";
-
-import { useRouter } from "next/router";
-import {
-  branchOrderPolicy,
-  branchUserParameters,
-} from "@/lib/api/branches.fragments";
-import { handleRouterPush as onLayerChange } from "@/components/modal/templates/order/Order.template";
-import { pickupsearch, search } from "@/lib/api/library.fragments";
-import { branchesForUser } from "@/lib/api/user.fragments";
 import getConfig from "next/config";
-import Router from "next/router";
-import Icon from "@/components/base/icon/Icon";
+
 import Top from "@/components/_modal/pages/base/top";
-import LoanerForm from "@/components/_modal/pages/loanerform/LoanerForm";
+import Router from "next/router";
+import useUser from "@/components/hooks/useUser";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -82,7 +68,6 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
               __html: title,
             }}
           />
-          fisk
         </Text>
         {matchOthers && (
           <Text type="text3" className={styles.alternativeMatch}>
@@ -118,58 +103,36 @@ export function LoginPickup({
   onChange,
   isLoading,
   includeArrows,
-  onLogin,
+  modal,
 }) {
   const context = { context: "order" };
   const allBranches = data?.result;
 
   let [pickupBranch, setPickupBranch] = useState(null);
 
-  const onSelect = (branch) => {
-    setPickupBranch(branch);
-  };
-
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
   const onBack = () => {
-    //alert("fisk");
     setPickupBranch(null);
   };
 
+  // show loanerform for selected bracnch
+  const onSelect = (branch) => {
+    modal.push("loanerform", {
+      branchId: branch.branchId,
+      doPolicyCheck: false,
+      onSubmit: (branch) => {
+        modal.clear();
+      },
+      callbackUrl: `${APP_URL}${Router.asPath}`,
+    });
+  };
+
   return (
-    <div className={`${styles.pickup} ${className}`}>
-      {pickupBranch && (
-        <Back
-          isVisible={isVisible}
-          handleClose={onBack}
-          className={styles.back}
-        />
-      )}
-
-      {pickupBranch === null && (
-        <Top.Default
-          title={Translate({ context: "modal", label: "title-menu" })}
-          className={{
-            top: styles.top,
-            close: styles.close,
-            back: styles.back,
-          }}
-        />
-      )}
-
-      {/* a branch has been selected -> if borrowercheck -> show login */}
-      {/*pickupBranch?.borrowerCheck === true && <div>Login</div>*/}
+    <div className={`${styles.loanerform} ${className}`}>
+      <Top.Default />
       {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
-      {pickupBranch && (
-        //<LoginParamsForm branchId={pickupBranch.branchId} />
-        <LoanerForm
-          {...{
-            context: { branchId: pickupBranch.branchId, doPolicyCheck: false },
-          }}
-        />
-      )}
-
       {pickupBranch === null && (
         <div className={`${styles.scrollArea} `}>
           <div className={styles.search}>
@@ -239,12 +202,6 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(
     libraryFragments.search({ q: query || "" })
   );
-
-  /*
-  const { data, isLoading, error } = useData(
-    libraryFragments.pickupsearch({ q: query || "" })
-  );*/
-
   const dummyData = {
     hitcount: 10,
     result: [

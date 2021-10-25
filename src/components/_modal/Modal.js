@@ -445,12 +445,12 @@ export function useModal() {
    * Clears the stack
    */
   function _clear() {
-    _select(-1);
+    //_select(-1);
 
-    // // custom save
-    // save && save([]);
+    // custom save
+    save && save([]);
     // // update locale stack state
-    // setStack([]);
+    setStack([]);
   }
 
   /**
