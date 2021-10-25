@@ -52,16 +52,14 @@
 /* result */
 
 .result {
-  transition: opacity position 0.3s linear;
-  transition-delay: 0.3s;
+  position: relative;
+  transition: 0.3s ease-out;
 
-  opacity: 0;
-  top: 20%;
+  top: 30%;
 }
 
 .receipt.ordered .container .result,
 .receipt.failed .container .result {
-  opacity: 1;
   top: 0;
 }
 
@@ -71,19 +69,21 @@
 .error {
   width: 100%;
   height: 100%;
-  position: relative;
+  display: flex;
+  position: absolute;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  display: none;
+  transition: opacity 0.75s ease-in;
 
-  transition: opacity 0.3s linear;
+  opacity: 0;
 }
 
 .receipt.ordered .container .result .success,
 .receipt.failed .container .result .error {
-  display: flex;
+  opacity: 1;
+  z-index: 1;
 }
 
 .success .check {

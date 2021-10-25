@@ -575,9 +575,15 @@ export function useModal() {
     if (id) {
       let copy = [...stack];
       copy = copy.slice(0, active);
+
       // findIndex returns the first matching id || -1 if none found
       // NOTE: reverse() flips the array order.
-      const index = copy.reverse().findIndex((obj) => obj.id === id);
+      const reversed = copy.reverse();
+
+      const index = copy.findIndex((obj) => obj.id === id);
+
+      // const indexInStack = reversed.length - 1 - index;
+
       // index will be -1 on no match
       if (index >= 0) {
         _select(index);
@@ -597,6 +603,8 @@ export function useModal() {
    * @param {*} context
    */
   function _update(index, context) {
+    console.log("update......", context);
+
     if (!index) {
       index = _index();
     }
@@ -608,6 +616,8 @@ export function useModal() {
       }
       return obj;
     });
+
+    console.log("copy", copy);
 
     save && save(copy);
     // update locale stack state
@@ -639,7 +649,7 @@ export function useModal() {
  *
  */
 
-function Provider({ children }) {
+export function Provider({ children }) {
   const [stack, setStack] = useState([]);
 
   return (

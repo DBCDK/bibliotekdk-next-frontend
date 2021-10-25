@@ -20,11 +20,12 @@ import styles from "./Receipt.module.css";
  * Order Button
  */
 export function Receipt({
-  callback,
   // modal props
   modal,
   context,
 }) {
+  console.log("context", context);
+
   // get props from context
   const { pickupBranch, order } = context;
 

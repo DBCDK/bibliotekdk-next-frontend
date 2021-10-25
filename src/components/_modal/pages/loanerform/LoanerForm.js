@@ -306,7 +306,9 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { onSubmit, branchId, pid, callbackUrl } = props.context;
+  const { modal, context } = props;
+
+  const { branchId, pid, callbackUrl } = context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -383,9 +385,9 @@ export default function Wrap(props) {
               userParameters: info,
               pickupBranch: branch.branchId,
             });
-            if (onSubmit) {
-              onSubmit(branch);
-            }
+
+            // Back to order
+            await modal.prev("order");
           }}
           submitting={beginLogout || loggedOut}
           skeleton={skeleton}
@@ -395,6 +397,5 @@ export default function Wrap(props) {
   );
 }
 Wrap.propTypes = {
-  onSubmit: PropTypes.func,
-  callbackUrl: PropTypes.string.isRequired,
+  context: { callbackUrl: PropTypes.string.isRequired },
 };

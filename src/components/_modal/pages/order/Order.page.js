@@ -71,19 +71,10 @@ export function Order({
   const [hasTry, setHasTry] = useState(false);
 
   useEffect(() => {
-    const userBranches = user?.agency?.result;
-
-    if (!pickupBranch && user?.pickupBranch) {
-      setPickupBranch(user?.pickupBranch);
-    } else if (!pickupBranch && userBranches?.length > 0) {
-      // If user is logged in and no pickupBranch has been set
-
-      // Default branch select (first in row)
-      let defaultBranch = userBranches[0];
-
-      setPickupBranch(defaultBranch);
+    if (user?.pickupBranch) {
+      setPickupBranch(user.pickupBranch);
     }
-  }, [user?.agency]);
+  }, [user.pickupBranch]);
 
   // Update email from user account
   useEffect(() => {
@@ -138,54 +129,6 @@ export function Order({
       updateLoanerInfo({ userParameters: { userMail: value } });
     // update mail in state
     setMail({ value, valid });
-  }
-
-  /**
-   *
-   * @param {obj} branch
-   * @param {obj} modal
-   */
-  function onPickupSelect(branch, modal) {
-    // should send to loanerform
-    let loanerform = false;
-    // if selected branch has same origin as user agency
-    if (branch.agencyId === user?.agency?.result?.[0].agencyId) {
-      // and the new selected branch has borrowercheck
-      if (branch.borrowerCheck) {
-        // Set new branch without new log-in
-        updateLoanerInfo({ pickupBranch: branch.branchId });
-        setPickupBranch(branch);
-        modal.prev();
-      } else {
-        loanerform = true;
-      }
-    } else {
-      loanerform = true;
-    }
-
-    // send to loanerform
-    if (loanerform) {
-      const branchId = branch.branchId;
-      const onSubmit = (branch) => {
-        updateLoanerInfo({ pickupBranch: branch.branchId });
-        setPickupBranch(branch);
-        modal.clear();
-      };
-
-      // Create Callback url
-      const path = `${APP_URL}${Router.asPath}`;
-      const id = modal.stack?.[modal.index() - 1].uid;
-      const sign = path.includes("?") ? "&" : "?";
-
-      const callbackUrl = `${path}${sign}modal=${id}`;
-
-      modal.push("loanerform", {
-        onSubmit,
-        callbackUrl,
-        branchId,
-        pid,
-      });
-    }
   }
 
   // Work props
@@ -338,7 +281,6 @@ export function Order({
               modal.push("pickup", {
                 pid,
                 initial: { agency },
-                onSelect: (branch, modal) => onPickupSelect(branch, modal),
               })
             }
             onKeyDown={(e) => {
@@ -347,7 +289,6 @@ export function Order({
                   modal.push("pickup", {
                     pid,
                     initial: { agency },
-                    onSelect: (branch, modal) => onPickupSelect(branch, modal),
                   });
               }
             }}
@@ -613,7 +554,7 @@ export default function Wrap(props) {
 
   const mergedWork = merge({}, covers.data, data);
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
-    pickupBranch: mergedPickupBranch,
+    pickupBranch: mergedPickupBranch || pickupBranch,
   });
 
   return (
