@@ -26,6 +26,44 @@ function addToInfomedia(onlineAccess, title) {
 }
 
 /**
+ * Find and return the manifestation we want.
+ * @param manifestations
+ * @return {*}
+ */
+function selectMaterial(manifestations) {
+  // check if onlineacces. if so get the first manifestation with an online url - if any
+  let selectedmanifestation;
+  let url;
+  manifestations?.every((manifest) => {
+    // outer loop -> manifestations
+    if (manifest.onlineAccess?.length > 0) {
+      // inner loop -> onlineaccess
+      manifest.onlineAccess.every((access) => {
+        if (access.url) {
+          url = access.url;
+          // we found an online access -> break inner loop
+          return false;
+        }
+        // continue inner loop
+        return true;
+      });
+      if (url) {
+        // outer loop -> check if url has been set - if so
+        // this is the manifestation we are looking for
+        selectedmanifestation = manifest;
+        // break outer loop
+        return false;
+      }
+    }
+    // continue outer loop
+    return true;
+  });
+  // if a manifestion with an url has been found it will be returned - if not
+  // return the first manifestation in array
+  return selectedmanifestation || manifestations?.[0];
+}
+
+/**
  * Set texts BELOW reservation button - also sets the text IN the button
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
  * @param selectedMaterial
@@ -34,7 +72,12 @@ function addToInfomedia(onlineAccess, title) {
  * @constructor
  */
 export function ButtonTxt({ selectedMaterial, skeleton }) {
-  const onlineAccess = selectedMaterial?.manifestations?.[0]?.onlineAccess;
+  // @TODO use function to find correct material
+
+  const manifestations = selectedMaterial?.manifestations;
+  selectedMaterial = selectMaterial(manifestations);
+
+  const onlineAccess = selectedMaterial?.onlineAccess;
   const online = onlineAccess?.length > 0;
   if (online && onlineAccess[0].infomediaId) {
     return null;
@@ -111,7 +154,7 @@ export function OrderButton({
     return null;
   }
   const manifestations = selectedMaterial.manifestations;
-  selectedMaterial = selectedMaterial.manifestations?.[0];
+  selectedMaterial = selectMaterial(manifestations);
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
