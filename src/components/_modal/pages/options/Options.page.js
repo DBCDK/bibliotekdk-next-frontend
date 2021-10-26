@@ -73,7 +73,7 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
     }
     return access;
   });
-  if (orderPossible === "true") {
+  if (orderPossible) {
     addi.push({ accessType: "physical" });
   }
 

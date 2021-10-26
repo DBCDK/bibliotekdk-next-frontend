@@ -76,7 +76,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
         })}
       </Title>
       <div className={styles.fields}>
-        {requiredParameters?.map(({ userParameterType, description }) => {
+        {requiredParameters?.map(({ userParameterType, description }, idx) => {
           const labelTranslation = {
             context: "form",
             label: `${userParameterType}-label`,
@@ -91,7 +91,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
           };
 
           return (
-            <div>
+            <div key={idx}>
               <Text type="text1" tag="label">
                 {description ||
                   (hasTranslation(labelTranslation)
@@ -191,6 +191,7 @@ export function LoanerForm({
   initial,
   isVisible,
   onClose,
+  doPolicyCheck,
   // modal props
   context,
   modal,
@@ -221,7 +222,8 @@ export function LoanerForm({
   }
 
   // Order possible for branch
-  const orderPossible = branch.orderPolicy?.orderPossible;
+  const orderPossible =
+    doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
 
   return (
     <div className={styles.loanerform}>
@@ -306,9 +308,7 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { modal, context } = props;
-
-  const { branchId, pid, callbackUrl } = context;
+  const { onSubmit, branchId, pid, callbackUrl, doPolicyCheck } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -319,7 +319,6 @@ export default function Wrap(props) {
   const { data: policyData, isLoading: policyIsLoading } = useData(
     pid && branchId && branchOrderPolicy({ branchId, pid })
   );
-
   const mergedData = merge({}, data, policyData);
 
   const { isAuthenticated } = useUser();
@@ -334,8 +333,7 @@ export default function Wrap(props) {
 
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
   const branch = mergedData?.branches?.result?.[0];
-  const skeleton =
-    branchId && (userIsLoading || branchIsLoading || policyIsLoading);
+  const skeleton = branchId && (userIsLoading || branchIsLoading);
 
   // When beginLogout is true, we mount the iframe
   // that logs out the user
@@ -391,11 +389,12 @@ export default function Wrap(props) {
           }}
           submitting={beginLogout || loggedOut}
           skeleton={skeleton}
+          doPolicyCheck={doPolicyCheck}
         />
       )}
     </>
   );
 }
 Wrap.propTypes = {
-  context: { callbackUrl: PropTypes.string.isRequired },
+  context: { callbackUrl: PropTypes.string },
 };
