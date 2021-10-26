@@ -24,8 +24,6 @@ export function Receipt({
   modal,
   context,
 }) {
-  console.log("context", context);
-
   // get props from context
   const { pickupBranch, order } = context;
 

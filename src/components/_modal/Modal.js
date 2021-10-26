@@ -603,8 +603,6 @@ export function useModal() {
    * @param {*} context
    */
   function _update(index, context) {
-    console.log("update......", context);
-
     if (!index) {
       index = _index();
     }
@@ -616,8 +614,6 @@ export function useModal() {
       }
       return obj;
     });
-
-    console.log("copy", copy);
 
     save && save(copy);
     // update locale stack state

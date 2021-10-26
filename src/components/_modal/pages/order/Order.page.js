@@ -215,7 +215,8 @@ export function Order({
   //
 
   // Check for email validation and email error messages
-  const hasEmail = validated?.details?.hasMail?.status;
+  const hasEmail = !!validated?.details?.hasMail?.status;
+
   const actionMessage =
     hasTry && !hasEmail && validated?.details?.hasMail?.message;
 
@@ -438,7 +439,15 @@ export function Order({
           skeleton={isLoading}
           onClick={() => {
             if (validated.status) {
-              modal.push("receipt", { pid, order, pickupBranch });
+              modal.push("receipt", {
+                pid,
+                order: {
+                  data: order.data,
+                  error: order.error,
+                  isLoading: order.isLoading,
+                },
+                pickupBranch,
+              });
               onSubmit &&
                 onSubmit(
                   materialsSameType.map((m) => m.pid),
@@ -489,49 +498,9 @@ export default function Wrap(props) {
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
 
-  // Fetch work data
-  const { data, isLoading, isSlow, error } = useData(
-    workFragments.detailsAllManifestations({ workId })
-  );
-
-  const covers = useData(workFragments.covers({ workId }));
-
-  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
-
-  // Fetch order policies for user agency branches
-  const {
-    data: orderPolicy,
-    isLoading: policyIsLoading,
-    error: orderPolicyError,
-  } = useData(pid && userFragments.orderPolicy({ pid }));
-
-  // fetch branch details and user parameters
-  const { data: branch, isLoading: branchIsLoading } = useData(
-    loanerInfo?.pickupBranch &&
-      branchUserParameters({ branchId: loanerInfo.pickupBranch })
-  );
-
-  // Set default pickupbranch
-  const pickupBranch = branch?.branches?.result?.[0];
-
-  // Fetch order policies for selected pickupBranch (if pickupBranch differes from user agency branches)
-  // check if orderpolicy already exist for selected pickupbranch
-  const shouldFetchOrderPolicy =
-    pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
-
-  // Create policyCheck if it does not already exist
-  const { data: branchPolicyData, isLoading: branchPolicyIsLoading } = useData(
-    shouldFetchOrderPolicy &&
-      branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
-  );
-
-  // If found, merge fetched orderPolicy into pickupBranch
-  const pickupBranchOrderPolicy = branchPolicyData?.branches?.result[0];
-
-  const mergedPickupBranch =
-    pickupBranchOrderPolicy && merge({}, pickupBranch, pickupBranchOrderPolicy);
-
-  // Get order
+  /**
+   * Order
+   */
   const orderMutation = useMutate();
 
   useEffect(() => {
@@ -539,12 +508,83 @@ export default function Wrap(props) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
-
       setPid(order);
     }
   }, [order]);
 
-  if (isLoading || policyIsLoading || branchPolicyIsLoading) {
+  /**
+   * Work data
+   */
+  const { data, isLoading, isSlow, error } = useData(
+    workFragments.detailsAllManifestations({ workId })
+  );
+
+  const covers = useData(workFragments.covers({ workId }));
+
+  const mergedWork = merge({}, covers.data, data);
+
+  /**
+   * User
+   */
+  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
+
+  /**
+   * Branches, details, policies, and userParams
+   */
+
+  // Fetch branches and order policies for (loggedIn) user
+  const {
+    data: orderPolicy,
+    isLoading: policyIsLoading,
+    error: orderPolicyError,
+  } = useData(pid && authUser.name && userFragments.orderPolicy({ pid }));
+
+  // scope
+  const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
+
+  // fetch user parameters for the selected pickup
+  // OBS! Pickup can differs from users own branches.
+  const { data: userParams, isLoading: userParamsIsLoading } = useData(
+    loanerInfo?.pickupBranch &&
+      branchUserParameters({ branchId: loanerInfo.pickupBranch })
+  );
+
+  // scope
+  const selectedBranch = userParams?.branches?.result?.[0];
+
+  // Fetch order policies for selected pickupBranch (if pickupBranch differes from user agency branches)
+  // check if orderpolicy already exist for selected pickupbranch
+  const shouldFetchOrderPolicy =
+    pid && selectedBranch?.branchId && !selectedBranch?.orderPolicy;
+
+  // Fetch Orderpolicy for selected branch, if not already exist
+  const { data: selectedBranchPolicyData, isLoading: branchPolicyIsLoading } =
+    useData(
+      shouldFetchOrderPolicy &&
+        branchOrderPolicy({ branchId: selectedBranch?.branchId, pid })
+    );
+
+  // scope
+  const pickupBranchOrderPolicy =
+    selectedBranchPolicyData?.branches?.result?.[0];
+
+  // If found, merge fetched orderPolicy into pickupBranch
+  const mergedSelectedBranch =
+    pickupBranchOrderPolicy &&
+    merge({}, selectedBranch, pickupBranchOrderPolicy);
+
+  // Merge user and branches
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
+    pickupBranch:
+      mergedSelectedBranch || selectedBranch || defaultUserPickupBranch || null,
+  });
+
+  if (
+    isLoading ||
+    policyIsLoading ||
+    userParamsIsLoading ||
+    branchPolicyIsLoading
+  ) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -552,16 +592,11 @@ export default function Wrap(props) {
     return <div>Error :( !!!!!</div>;
   }
 
-  const mergedWork = merge({}, covers.data, data);
-  const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
-    pickupBranch: mergedPickupBranch || pickupBranch,
-  });
-
   return (
     <Order
       work={mergedWork?.work}
       authUser={authUser}
-      user={(!branchIsLoading && mergedUser) || {}}
+      user={(!userParamsIsLoading && mergedUser) || {}}
       pid={order}
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
