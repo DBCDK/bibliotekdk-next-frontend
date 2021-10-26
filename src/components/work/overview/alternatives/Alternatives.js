@@ -51,7 +51,7 @@ export default function wrap({ selectedMaterial }) {
       onlineAccess={onlineAccess}
       requestButton={requestButton}
       modal={modal}
-      context={{ workId, title_author, type, orderPossible }}
+      context={{ workId, title_author, type, orderPossible: requestButton }}
     />
   );
 }
