@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { useRouter } from "next/router";
 import merge from "lodash/merge";
+
+import Top from "../base/top";
 
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
@@ -19,107 +20,97 @@ import styles from "./Receipt.module.css";
  * Order Button
  */
 export function Receipt({
-  onClick = null,
-  validated,
-  isVisible,
-  isOrdering,
-  isOrdered,
-  isFailed,
-  isLoading,
-  data,
-  onClose,
-  callback,
+  // modal props
+  modal,
+  context,
 }) {
-  const context = { context: "order" };
+  console.log("context", context);
+
+  // get props from context
+  const { pickupBranch, order } = context;
 
   // Loader callback status (set to true when loadingbar has finished loading)
-  const [showProgress, setShowProgress] = useState(false);
+  const [showProgress, setShowProgress] = useState(true);
 
-  // order data
-  const { data: orderData, isStory } = data.order;
+  // order
+  const {
+    data: orderData,
+    error: orderError,
+    isLoading: orderIsLoading,
+  } = order;
 
-  // branch data
-  const branchName = data.pickupBranch?.name;
+  // Define order status'
+  const isOrdering = orderIsLoading;
+  const isOrdered = !!orderData?.submitOrder?.orderId;
+  const isFailed = !!orderError;
 
-  const hiddenClass = !isVisible && !isOrdered ? styles.hidden : "";
+  // Define order status' class'
   const orderingClass = isOrdering || showProgress ? styles.ordering : "";
   const orderedClass = isOrdered && !showProgress ? styles.ordered : "";
   const failedClass = isFailed && !showProgress ? styles.failed : "";
 
+  // Branch name
+  const branchName = pickupBranch?.name;
+
   // Order ors id on order success
   const orderId = orderData?.submitOrder?.orderId;
 
-  // check if user has already tried to submit order (but validation failed)
-  const hasTry = validated?.hasTry;
-
-  // Validation status
-  const isValid = validated?.status;
-
-  // Check for email validation and email error messages
-  const hasEmail = validated?.details?.hasMail?.status;
-  const message = hasTry && !hasEmail && validated?.details?.hasMail?.message;
-
-  const invalidClass = message ? styles.invalid : "";
-
   return (
     <div
-      className={`${styles.action} ${orderingClass} ${orderedClass} ${failedClass} ${hiddenClass}`}
-      aria-hidden={!isVisible}
+      className={`${styles.receipt} ${orderingClass} ${orderedClass} ${failedClass}`}
     >
-      <div className={styles.loaderWrap}>
-        <Progress
-          className={styles.loader}
-          callback={() => setShowProgress(false)}
-          start={isOrdering}
-          duration={1}
-          delay={1}
-        />
-      </div>
-
-      <div className={styles.result}>
-        <div className={styles.success}>
-          <div className={styles.check}>
-            <Icon size={3} src="check.svg" />
-          </div>
-
-          <Title className={styles.title} type="title4">
-            {Translate({ ...context, label: "order-success" })}
-          </Title>
-
-          <Icon
-            className={styles.ornament}
-            size={{ w: 6, h: "auto" }}
-            src={"ornament1.svg"}
+      <div className={styles.container}>
+        <Top.Default className={{ top: styles.top }} back={false} />
+        <div className={`${styles.wrap} ${styles.progress}`}>
+          <Progress
+            className={styles.loader}
+            callback={() => setShowProgress(false)}
+            start={isOrdering}
+            duration={1}
+            delay={1}
           />
+        </div>
 
-          <Text type="text2" className={styles.message}>
-            {Translate({
-              ...context,
-              label: "order-success-message",
-              vars: [branchName],
-            })}
-          </Text>
+        <div className={`${styles.wrap} ${styles.result}`}>
+          <div className={styles.success}>
+            <div className={styles.check}>
+              <Icon size={3} src="check.svg" />
+            </div>
 
-          {orderId && (
-            <Text type="text2" className={styles.orderNumber}>
+            <Title className={styles.title} type="title4">
+              {Translate({ context: "order", label: "order-success" })}
+            </Title>
+
+            <Icon
+              className={styles.ornament}
+              size={{ w: 6, h: "auto" }}
+              src={"ornament1.svg"}
+            />
+
+            <Text type="text2" className={styles.message}>
               {Translate({
-                ...context,
-                label: "order-success-id",
-                vars: [orderId],
+                context: "order",
+                label: "order-success-message",
+                vars: [branchName],
               })}
             </Text>
-          )}
 
-          <Button
-            tabIndex={isVisible && orderId ? "0" : "-1"}
-            className={styles.close}
-            skeleton={isLoading}
-            onClick={onClose}
-          >
-            {Translate({ context: "general", label: "close" })}
-          </Button>
+            {orderId && (
+              <Text type="text2" className={styles.orderNumber}>
+                {Translate({
+                  context: "order",
+                  label: "order-success-id",
+                  vars: [orderId],
+                })}
+              </Text>
+            )}
+
+            <Button className={styles.close} onClick={() => modal.clear()}>
+              {Translate({ context: "general", label: "close" })}
+            </Button>
+          </div>
+          <div className={styles.error}>Some error occured :(</div>
         </div>
-        <div className={styles.error}>Some error occured :(</div>
       </div>
     </div>
   );
@@ -134,19 +125,13 @@ export function Receipt({
  * @returns {component}
  */
 export default function Wrap(props) {
-  // Get query from props - fallback to url query
-  const query = props.query || useRouter()?.query;
+  // fetch props from context
+  const { pid, pickupBranch } = props.context;
 
-  // If not given in probs, component will try to fetch them
-  const pid = query?.order;
-
-  const { pickupBranch } = props.data;
-
-  // fetch orderPolicy if it doesnt exist
+  // Fetch orderPolicy if it doesnt exist on pickupBranch
   const shouldFetchOrderPolicy =
     pid && pickupBranch?.branchId && !pickupBranch?.orderPolicy;
 
-  // PolicyCheck in own request (sometimes slow)
   const { data: policyData, isLoading: policyIsLoading } = useData(
     shouldFetchOrderPolicy &&
       branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
@@ -159,8 +144,8 @@ export default function Wrap(props) {
   return (
     <Receipt
       {...props}
-      isLoading={props.isLoading || policyIsLoading}
-      data={{ ...props.data, pickupBranch: mergedData || pickupBranch }}
+      isLoading={policyIsLoading}
+      context={{ ...props.context, pickupBranch: mergedData || pickupBranch }}
     />
   );
 }

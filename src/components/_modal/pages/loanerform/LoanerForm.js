@@ -383,9 +383,9 @@ export default function Wrap(props) {
               userParameters: info,
               pickupBranch: branch.branchId,
             });
-            if (onSubmit) {
-              onSubmit(branch);
-            }
+
+            // Back to order
+            await modal.prev("order");
           }}
           submitting={beginLogout || loggedOut}
           skeleton={skeleton}
@@ -396,6 +396,5 @@ export default function Wrap(props) {
   );
 }
 Wrap.propTypes = {
-  onSubmit: PropTypes.func,
-  callbackUrl: PropTypes.string,
+  context: { callbackUrl: PropTypes.string },
 };

@@ -1,8 +1,14 @@
+import Router from "next/router";
 import PropTypes from "prop-types";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
+
+import getConfig from "next/config";
+
+const APP_URL =
+  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 import List from "@/components/base/forms/list";
 import Search from "@/components/base/forms/search";
@@ -14,6 +20,8 @@ import Top from "../base/top";
 
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
+
+import useUser from "@/components/hooks/useUser";
 
 import { useData } from "@/lib/api/api";
 
@@ -57,7 +65,6 @@ function Row({
   isLoading,
   disabled,
   includeArrows,
-  modal,
   _ref,
 }) {
   // Check for a highlight key matching on "name" prop
@@ -78,7 +85,7 @@ function Row({
   return (
     <List.Select
       selected={selected?.branchId === branch.branchId}
-      onSelect={() => onSelect(branch, modal)}
+      onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
       className={[
@@ -128,24 +135,58 @@ function Row({
  * @param {object} props
  * @param {className} props.string
  * @param {function} props.onClose
- * @param {function} props.onSelect
  * @param {object} props.selected The selected branch object
  * @param {function} props._ref
  */
 export function Pickup({
   data,
-  onClose,
   selected,
   isVisible,
   onChange,
   isLoading,
   includeArrows,
+  updateLoanerInfo,
   // modal props
   context,
   modal,
 }) {
   // Get pid from modal context
-  const { pid, onSelect } = context;
+  const { pid } = context;
+
+  /**
+   *
+   * @param {obj} branch
+   * @param {obj} modal
+   */
+  function handleOnSelect(branch, modal) {
+    // Selected branch and (loggedIn) user branches has same agency
+    const sameOrigin =
+      branch.agencyId === context.initial?.agency?.result?.[0].agencyId;
+    // New selected branch has borrowercheck
+    const hasBorchk = branch.borrowerCheck;
+    // if selected branch has same origin as user agency
+    if (sameOrigin && hasBorchk) {
+      // Set new branch without new log-in
+      updateLoanerInfo({ pickupBranch: branch.branchId });
+      // update context at previous modal
+      modal.prev();
+      return;
+    }
+
+    // Create Callback url
+    const path = `${APP_URL}${Router.asPath}`;
+    const id = modal.stack?.[modal.index() - 1].uid;
+    const sign = path.includes("?") ? "&" : "?";
+
+    const callbackUrl = `${path}${sign}modal=${id}`;
+
+    // open loanerform
+    modal.push("loanerform", {
+      callbackUrl,
+      branchId: branch.branchId,
+      pid,
+    });
+  }
 
   // Observe when bottom of list i visible
   const [ref, inView] = useInView({
@@ -244,7 +285,7 @@ export function Pickup({
                 key={`${branch.branchId}-${idx}`}
                 branch={branch}
                 selected={selected}
-                onSelect={onSelect}
+                onSelect={(branch) => handleOnSelect(branch, modal)}
                 modal={modal}
                 isLoading={isLoading}
                 includeArrows={includeArrows}
@@ -307,6 +348,8 @@ export default function Wrap(props) {
 
   const [query, setQuery] = useState("");
 
+  const { updateLoanerInfo } = useUser();
+
   const { data, isLoading, error } = useData(
     libraryFragments.search({ q: query || "" })
   );
@@ -333,6 +376,7 @@ export default function Wrap(props) {
   return (
     <Pickup
       {...props}
+      updateLoanerInfo={(info) => updateLoanerInfo(info)}
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}
