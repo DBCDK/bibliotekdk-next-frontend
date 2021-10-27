@@ -14,6 +14,18 @@ export function submitSession(input) {
 }
 
 /**
+ * delete session data
+ */
+export function deleteSession() {
+  return {
+    query: `mutation {
+      deleteSession
+    }`,
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * get session data
  */
 export function session() {

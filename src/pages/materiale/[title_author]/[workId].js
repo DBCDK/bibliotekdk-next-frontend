@@ -54,7 +54,7 @@ export default function WorkPage() {
   function handleOrder(pid) {
     router.push({
       pathname: router.pathname,
-      query: { ...router.query, order: `${pid}`, modal: "order" },
+      query: { ...router.query, order: `${pid}` },
     });
   }
 

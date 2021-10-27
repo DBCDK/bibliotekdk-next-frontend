@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
+import Language from "@/components/base/language";
+
 import { materials, actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
@@ -27,13 +29,12 @@ function Menu({ modal, context }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
       <Top.Default
+        title={Translate({ context: "modal", label: "title-menu" })}
         className={{
-          title: styles.title,
+          top: styles.top,
           close: styles.close,
           back: styles.back,
         }}
-        label={context.label}
-        close={() => modal.clear()}
       />
       <ul>
         {actions.map((a) => {
@@ -63,17 +64,13 @@ function Menu({ modal, context }) {
           );
         })}
         <li className={styles.language}>
-          <Link
-            onClick={(e) => {
-              e.preventDefault();
-              onLang && onLang();
-            }}
-            className={styles.link}
-          >
-            <Text type="text2">
-              {Translate({ context: "general", label: "language" })}
-            </Text>
-          </Link>
+          <Language>
+            <Link className={styles.link} dataCy="menu-link-language">
+              <Text type="text2">
+                {Translate({ context: "general", label: "language" })}
+              </Text>
+            </Link>
+          </Language>
         </li>
       </ul>
     </div>

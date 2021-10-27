@@ -1,1 +1,1 @@
-export { default } from "./Top";
+export { default, Back, Close } from "./Top";

@@ -1,4 +1,4 @@
-import Router from "next/router";
+import { useModal } from "@/components/_modal";
 
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
@@ -279,6 +279,8 @@ export default function Wrap(props) {
 
   const user = useUser();
 
+  const modal = useModal();
+
   // use the useData hook to fetch data
   const { data, isLoading, isSlow, error } = useData(
     workFragments.basic({ workId })
@@ -307,7 +309,14 @@ export default function Wrap(props) {
       onTypeChange={onTypeChange}
       onOnlineAccess={onOnlineAccess}
       login={login}
-      openOrderModal={openOrderModal}
+      openOrderModal={(pid) =>
+        modal.push("order", {
+          title: Translate({ context: "modal", label: "title-order" }),
+          pid,
+          workId,
+          type,
+        })
+      }
       user={user}
     />
   );

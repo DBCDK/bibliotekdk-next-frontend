@@ -21,7 +21,10 @@ export function AlternativeOptions({
         <Link
           border={{ bottom: { keepVisible: true } }}
           onClick={() =>
-            modal.push("Options", { ...context, label: "title-options" })
+            modal.push("options", {
+              title: Translate({ context: "modal", label: "title-options" }),
+              ...context,
+            })
           }
         >
           <Text tag="span">

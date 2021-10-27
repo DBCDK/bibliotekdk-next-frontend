@@ -85,9 +85,19 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
       icon: LoginIcon,
-      onClick: user.isAuthenticated ? signOut : signIn,
+      //onClick: user.isAuthenticated ? signOut : signIn,
+      onClick: user.isAuthenticated
+        ? // sign user out - either guest- or hejmdal-user
+          signOut
+        : user.isGuestUser
+        ? async (info) => {
+            await user.guestLogout();
+          }
+        : // open login modal
+          () => modal.push("login"),
+      //() => alert("fisk"),
     },
     /*{
       label: "basket",
@@ -99,7 +109,7 @@ export function Header({
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => modal.push("Menu", { label: "title-menu" }),
+      onClick: () => modal.push("menu", { label: "title-menu" }),
     },
   ];
 

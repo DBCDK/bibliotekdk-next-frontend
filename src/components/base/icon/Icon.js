@@ -112,7 +112,7 @@ export default function Container(props) {
 
 // PropTypes for Button component
 Container.propTypes = {
-  alt: PropTypes.string.isRequired,
+  alt: PropTypes.string,
   src: PropTypes.string,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.oneOfType([

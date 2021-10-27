@@ -13,15 +13,16 @@ import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Top.module.css";
 
-function Close({ className, close }) {
+export function Close({ className, onClose }) {
   return (
     <Link
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
-      onClick={() => close && close()}
+      dataCy="close-modal"
+      onClick={() => onClose && onClose()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
-          close && close();
+          onClose && onClose();
         }
       }}
     >
@@ -34,7 +35,6 @@ function Close({ className, close }) {
         </Text>
         <Icon
           size={{ w: 2, h: "auto" }}
-          dataCy="close-modal"
           className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]} ${className}`}
           title={Translate({
             context: "general",
@@ -52,15 +52,15 @@ function Close({ className, close }) {
   );
 }
 
-function Back({ className, close }) {
+export function Back({ className, onBack }) {
   return (
     <Link
       className={`${styles.back} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
-      onClick={() => close && close()}
+      onClick={() => onBack && onBack()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
-          close && close();
+          onBack && onBack();
         }
       }}
     >
@@ -100,29 +100,29 @@ function Back({ className, close }) {
  * @param {func} props.close
  * @returns {component}
  */
-export default function Top({ className = {}, label }) {
+export default function Top({ className = {}, title, back = true }) {
   const modal = useModal();
 
-  const showBack = modal.index() > 0;
+  const showBack = back && modal.index() > 0;
 
   return (
-    <div className={styles.top}>
+    <div className={`${styles.top} ${className.top || ""}`}>
       <div className={styles.wrap}>
-        <Close close={() => modal.clear()} className={className.close || ""} />
+        <Close
+          onClose={() => modal.clear()}
+          className={className.close || ""}
+        />
         {showBack && (
-          <Back close={() => modal.clear()} className={className.back || ""} />
+          <Back onBack={() => modal.prev()} className={className.back || ""} />
         )}
       </div>
       <div>
-        {label && (
+        {title && (
           <Title
             type="title4"
             className={`${styles.title} ${className.title || ""}`}
           >
-            {Translate({
-              context: "modal",
-              label,
-            })}
+            {title}
           </Title>
         )}
       </div>

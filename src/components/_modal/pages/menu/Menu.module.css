@@ -8,11 +8,13 @@
 }
 
 /* passed to Top */
-.title,
-.close,
-.back {
+
+.top *,
+.top *:after {
   color: var(--white);
+  border-bottom-color: var(--white);
 }
+
 /* passed to Top */
 .close svg path {
   stroke: var(--white);

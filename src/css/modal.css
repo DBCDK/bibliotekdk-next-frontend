@@ -15,7 +15,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 150;
   overflow: hidden;
   pointer-events: none;
 }
@@ -95,6 +95,8 @@
 .modal_page {
   width: calc(100% / 3);
   height: 100%;
+
+  background-color: white;
 
   /* animation */
   transition: transform 330ms ease-out;

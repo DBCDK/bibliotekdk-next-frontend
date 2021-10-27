@@ -268,7 +268,7 @@ function Container({ children, className = {} }) {
     >
       <dialog
         id="modal_dialog"
-        data-cy="modal-container"
+        data-cy="modal-dialog"
         aria-modal="true"
         role="dialog"
         tabIndex={isVisible ? "0" : null}
@@ -356,7 +356,11 @@ function Page(props) {
   }, [modal.stack]);
 
   return (
-    <div className={`modal_page ${status} ${className}`} data-cy={dataCy}>
+    <div
+      className={`modal_page ${status} ${className}`}
+      data-cy={dataCy}
+      aria-hidden={!active}
+    >
       <props.component {...passedProps} />
     </div>
   );
@@ -445,12 +449,12 @@ export function useModal() {
    * Clears the stack
    */
   function _clear() {
-    _select(-1);
+    //_select(-1);
 
-    // // custom save
-    // save && save([]);
+    // custom save
+    save && save([]);
     // // update locale stack state
-    // setStack([]);
+    setStack([]);
   }
 
   /**
@@ -458,6 +462,8 @@ export function useModal() {
    *
    * Returns the index for the active element
    * To search for an index, an id can passed to the function.
+   *
+   * OBS!!! If an ID is given, function will return the index of the first found element (from position 0) with the given id
    *
    * @returns {int}
    */
@@ -560,6 +566,7 @@ export function useModal() {
    */
   function _prev(id) {
     const active = _index();
+
     // No previous elements to select
     if (active === 0) {
       return;
@@ -568,9 +575,15 @@ export function useModal() {
     if (id) {
       let copy = [...stack];
       copy = copy.slice(0, active);
+
       // findIndex returns the first matching id || -1 if none found
       // NOTE: reverse() flips the array order.
-      const index = copy.reverse().findIndex((obj) => obj.id === id);
+      const reversed = copy.reverse();
+
+      const index = copy.findIndex((obj) => obj.id === id);
+
+      // const indexInStack = reversed.length - 1 - index;
+
       // index will be -1 on no match
       if (index >= 0) {
         _select(index);
@@ -581,9 +594,36 @@ export function useModal() {
     _select(active - 1);
   }
 
+  /**
+   * update a stack element context
+   *
+   * OBS!!!! skal der opdateres i localstorage stakken her?
+   *
+   * @param {*} index
+   * @param {*} context
+   */
+  function _update(index, context) {
+    if (!index) {
+      index = _index();
+    }
+
+    let copy = [...stack];
+    copy = copy.map((obj, i) => {
+      if (index === i) {
+        return { ...obj, context: { ...obj.context, ...context } };
+      }
+      return obj;
+    });
+
+    save && save(copy);
+    // update locale stack state
+    setStack(copy);
+  }
+
   return {
     push: _push,
     pop: _prev,
+    update: _update,
     clear: _clear,
     index: _index,
     select: _select,
@@ -605,7 +645,7 @@ export function useModal() {
  *
  */
 
-function Provider({ children }) {
+export function Provider({ children }) {
   const [stack, setStack] = useState([]);
 
   return (

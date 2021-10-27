@@ -36,7 +36,7 @@ function Search(props) {
         onBlur={(value) => onBlur && onBlur(value)}
         onChange={(value) => onChange && onChange(value)}
       />
-      <Icon className={styles.icon} size={[2]} src="search.svg" />
+      <Icon className={styles.icon} size={{ w: 2, h: 2 }} src="search.svg" />
     </div>
   );
 }
