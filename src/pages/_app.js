@@ -44,7 +44,7 @@ import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 
 // will get deprecated soon
-import DeprecatedSoonModal from "@/components/modal";
+//import DeprecatedSoonModal from "@/components/modal";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -88,7 +88,7 @@ export default function MyApp({ Component, pageProps, router }) {
 
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
-            {false && <DeprecatedSoonModal router={router} />}
+            {/*false && <DeprecatedSoonModal router={router} />*/}
             <div id="layout">
               <Head>
                 <meta name="mobile-web-app-capable" content="yes"></meta>

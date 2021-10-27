@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import { Modal } from "@/components/modal";
-import { Options } from "@/components/modal/templates/options/Options.template";
+
+//import { Options } from "@/components/modal/templates/options/Options.template";
 import dummy_data from "./dummy_data.json";
 
 export default {
@@ -15,6 +15,7 @@ export function AllOptions() {
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
       <StoryDescription>All options</StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"options"}>
         <Options
           data={dummy_data.data}
@@ -23,6 +24,7 @@ export function AllOptions() {
           isLoading={false}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -39,9 +41,11 @@ export function Loading() {
         Skeleton version of the options template
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"options"}>
         <Options data={[]} isLoading={true} />
       </Modal>
+      */}
     </div>
   );
 }

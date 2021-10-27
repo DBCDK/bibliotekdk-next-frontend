@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "@/components/base/button";
-import { Modal } from "@/components/modal";
+//import { Modal } from "@/components/modal";
 import { Order, OrderSkeleton } from "./Order.page.js";
 import data from "./dummy.data";
 
@@ -32,7 +32,7 @@ export function ToggleOrder() {
       >
         {"Toggle order"}
       </Button>
-
+      {/*
       <Modal
         onClose={() => setQuery({ modal: null })}
         onLang={null}
@@ -53,6 +53,7 @@ export function ToggleOrder() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -71,6 +72,7 @@ export function Default() {
         User has an email attached to the account
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -87,6 +89,7 @@ export function Default() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -102,10 +105,11 @@ export function Loading() {
       <StoryDescription>
         Skeleton version of the order template
       </StoryDescription>
-
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <OrderSkeleton />
       </Modal>
+      */}
     </div>
   );
 }
@@ -126,7 +130,7 @@ export function NoEmail() {
         When user has no email attached to the account, they can enter one in
         the email field.
       </StoryDescription>
-
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -143,6 +147,7 @@ export function NoEmail() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -182,6 +187,7 @@ export function ManyPickupPoints() {
         If user has a long list of pickup points
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -198,6 +204,7 @@ export function ManyPickupPoints() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -216,6 +223,7 @@ export function Ordering() {
         Order in progress status (When user has clicked the "approve" button)
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -232,6 +240,7 @@ export function Ordering() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -253,6 +262,7 @@ export function Ordered() {
         When the order has successfully completed
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -269,6 +279,7 @@ export function Ordered() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }
@@ -335,6 +346,7 @@ export function OrderPolicyFail() {
         If user has a long list of pickup points
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"order"}>
         <Order
           work={work}
@@ -351,6 +363,7 @@ export function OrderPolicyFail() {
           }}
         />
       </Modal>
+      */}
     </div>
   );
 }

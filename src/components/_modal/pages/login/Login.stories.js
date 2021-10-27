@@ -3,7 +3,7 @@ import { useState } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "@/components/base/button";
-import { Modal } from "@/components/modal";
+//import { Modal } from "@/components/modal";
 
 export default {
   title: "modal/Menu",
@@ -25,12 +25,13 @@ export function ShowModal() {
       <Button type="secondary" size="small" onClick={() => setTemplate("menu")}>
         {"Toggle menu"}
       </Button>
-
+      {/*
       <Modal
         onClose={() => setTemplate(false)}
         onLang={() => alert("Language changed")}
         template={template}
       />
+      */}
     </div>
   );
 }
@@ -47,7 +48,9 @@ export function MenuTemplate() {
         Modal template for the menu, this is the default template
       </StoryDescription>
 
+      {/*
       <Modal onClose={null} onLang={null} template={"menu"} />
+      */}
     </div>
   );
 }
