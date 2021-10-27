@@ -12,16 +12,25 @@ import { lang } from "@/components/base/translate";
 export function basic() {
   return {
     // delay: 1000, // for debugging
-    query: `query {
+    query: `query ($language: LanguageCode! ) {
       user {
         name
         mail
         address
         postalCode
+        agency(language:$language)
+          {
+          result
+            {
+              branchId
+              agencyName
+              name
+            }
+          }
       }
       monitor(name: "bibdknext_user")
      }`,
-    variables: {},
+    variables: { language: lang },
     slowThreshold: 3000,
   };
 }

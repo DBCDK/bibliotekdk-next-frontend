@@ -52,6 +52,7 @@ function useUserMock() {
 
 //
 let anonSession;
+
 /**
  * Hook for getting and storing loaner info
  */
@@ -79,6 +80,9 @@ function useUserImpl() {
     }
     if (user.mail) {
       loggedInUser.userMail = user.mail;
+    }
+    if (user.agency && user.agency.result) {
+      loggedInUser.agencies = user.agency.result;
     }
   }
 
