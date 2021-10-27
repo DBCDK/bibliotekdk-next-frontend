@@ -54,7 +54,7 @@ describe("help", () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
   });
-  it.only(`Search: filter by language`, () => {
+  it(`Search: filter by language`, () => {
     // Intercept help search requests
     cy.intercept("POST", "/graphql", (req) => {
       if (req.body.query.includes("help(")) {
