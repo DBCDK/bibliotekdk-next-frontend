@@ -18,6 +18,7 @@ export function Close({ className, onClose }) {
     <Link
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
+      dataCy="close-modal"
       onClick={() => onClose && onClose()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
@@ -34,7 +35,6 @@ export function Close({ className, onClose }) {
         </Text>
         <Icon
           size={{ w: 2, h: "auto" }}
-          dataCy="close-modal"
           className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]} ${className}`}
           title={Translate({
             context: "general",

@@ -62,7 +62,7 @@ function scrollLock(shouldLockScroll) {
  */
 export default function BodyScrollLock({ router }) {
   // Query param targets to track
-  const targetList = ["modal", "suggester"];
+  const targetList = ["suggester"];
 
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query

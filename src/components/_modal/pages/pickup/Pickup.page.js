@@ -167,7 +167,7 @@ export function Pickup({
     // if selected branch has same origin as user agency
     if (sameOrigin && hasBorchk) {
       // Set new branch without new log-in
-      updateLoanerInfo({ pickupBranch: branch.branchId });
+      updateLoanerInfo({ pickupBranch: branch });
       // update context at previous modal
       modal.prev();
       return;

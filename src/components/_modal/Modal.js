@@ -268,7 +268,7 @@ function Container({ children, className = {} }) {
     >
       <dialog
         id="modal_dialog"
-        data-cy="modal-container"
+        data-cy="modal-dialog"
         aria-modal="true"
         role="dialog"
         tabIndex={isVisible ? "0" : null}

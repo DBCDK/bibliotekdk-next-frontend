@@ -10,6 +10,8 @@ import Text from "@/components/base/text";
 import Language from "@/components/base/language";
 import SearchInput from "@/components/help/search/input";
 
+import { useModal } from "@/components/_modal";
+
 import LogoSvg from "@/public/icons/logo_help.svg";
 
 import { cyKey } from "@/utils/trim";
@@ -117,6 +119,7 @@ Header.propTypes = {
  */
 export default function Wrap() {
   const router = useRouter();
+  const modal = useModal();
   const [query, setQuery] = useState(router.query.q);
   const onHelp = router.pathname.startsWith("/hjaelp");
   const onHelpfrontPage = router.pathname === "/hjaelp";
@@ -146,12 +149,6 @@ export default function Wrap() {
     updateUrl();
   }, [query]);
 
-  function openMenuModal() {
-    router.push({
-      query: { ...router.query, modal: "menu" },
-    });
-  }
-
   if (!onHelp) {
     return null;
   }
@@ -163,7 +160,7 @@ export default function Wrap() {
       onQueryChange={(q) => setQuery(q)}
       onQueryClear={() => setQuery("")}
       onQuerySubmit={updateUrl}
-      onMenuClick={() => openMenuModal()}
+      onMenuClick={() => modal.push("menu", { label: "title-menu" })}
     />
   );
 }

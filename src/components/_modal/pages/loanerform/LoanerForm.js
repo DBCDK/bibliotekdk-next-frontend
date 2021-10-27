@@ -381,11 +381,11 @@ export default function Wrap(props) {
           onSubmit={async (info) => {
             await updateLoanerInfo({
               userParameters: info,
-              pickupBranch: branch.branchId,
+              pickupBranch: branch,
             });
 
             // Back to order
-            await modal.prev("order");
+            props.modal.prev("order");
           }}
           submitting={beginLogout || loggedOut}
           skeleton={skeleton}

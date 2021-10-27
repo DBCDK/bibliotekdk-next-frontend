@@ -185,6 +185,7 @@ export function Order({
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
   const email = hasBorchk ? authUser.mail : userMail;
+
   const name = hasBorchk
     ? authUser.name
     : userName || customId || userId || cpr || cardno || barcode;
@@ -207,12 +208,6 @@ export function Order({
   // Email validation class'
   const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
   const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
-
-  //
-  //
-  //
-  //
-  //
 
   // Check for email validation and email error messages
   const hasEmail = !!validated?.details?.hasMail?.status;
