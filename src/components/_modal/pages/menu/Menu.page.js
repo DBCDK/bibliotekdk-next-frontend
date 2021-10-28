@@ -28,7 +28,7 @@ import styles from "./Menu.module.css";
 function Menu({ modal, context }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
-      <Top.Default
+      <Top
         title={Translate({ context: "modal", label: "title-menu" })}
         className={{
           top: styles.top,

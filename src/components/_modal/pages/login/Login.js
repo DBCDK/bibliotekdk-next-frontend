@@ -122,7 +122,7 @@ export function LoginPickup({
 
   return (
     <div className={`${styles.loanerform} ${className}`}>
-      <Top.Default />
+      <Top />
       {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
       {pickupBranch === null && (
         <div className={`${styles.scrollArea} `}>

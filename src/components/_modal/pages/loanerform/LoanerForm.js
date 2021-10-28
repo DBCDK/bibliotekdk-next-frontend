@@ -201,7 +201,7 @@ export function LoanerForm({
   if (skeleton) {
     return (
       <div className={styles.loanerform}>
-        <Top.Default />
+        <Top />
         <Title type="title4" tag="h3" skeleton={!branch?.name}>
           {Translate({
             context: "order",
@@ -227,7 +227,7 @@ export function LoanerForm({
 
   return (
     <div className={styles.loanerform}>
-      <Top.Default />
+      <Top />
       <Title type="title4" tag="h3">
         {Translate({
           context: "order",

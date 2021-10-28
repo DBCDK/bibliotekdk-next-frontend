@@ -1,5 +1,1 @@
-import { Close } from "./default";
-import { Back } from "./default";
-import Default from "./default";
-
-export default { Default, Close, Back };
+export { default, Back, Close } from "./Top";

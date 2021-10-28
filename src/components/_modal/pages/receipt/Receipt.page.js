@@ -58,7 +58,7 @@ export function Receipt({
       className={`${styles.receipt} ${orderingClass} ${orderedClass} ${failedClass}`}
     >
       <div className={styles.container}>
-        <Top.Default className={{ top: styles.top }} back={false} />
+        <Top className={{ top: styles.top }} back={false} />
         <div className={`${styles.wrap} ${styles.progress}`}>
           <Progress
             className={styles.loader}

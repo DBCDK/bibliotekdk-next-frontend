@@ -220,7 +220,7 @@ export function Order({
 
   return (
     <div className={`${styles.order} ${loadingClass}`}>
-      <Top.Default
+      <Top
         title={context.title}
         className={{
           top: styles.top,
@@ -572,12 +572,7 @@ export default function Wrap(props) {
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
-  if (
-    isLoading ||
-    policyIsLoading ||
-    userParamsIsLoading ||
-    branchPolicyIsLoading
-  ) {
+  if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -597,6 +592,12 @@ export default function Wrap(props) {
           defaultUserPickupBranch ||
           null,
       }}
+      isLoading={
+        isLoading ||
+        policyIsLoading ||
+        userParamsIsLoading ||
+        branchPolicyIsLoading
+      }
       pid={order}
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
