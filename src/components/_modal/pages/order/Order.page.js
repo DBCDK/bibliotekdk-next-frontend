@@ -280,10 +280,11 @@ export function Order({
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
-                modal.push("pickup", {
-                  pid,
-                  initial: { agency },
-                });
+                !isLoadingBranches &&
+                  modal.push("pickup", {
+                    pid,
+                    initial: { agency },
+                  });
               }
             }}
           >
@@ -598,9 +599,6 @@ export default function Wrap(props) {
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
       onSubmit={(pids, pickupBranch) => {
-        console.log(pickupBranch, "PICKUP");
-        console.log(pids, "pids");
-        console.log(loanerInfo, "USERPARAMS");
         orderMutation.post(
           submitOrder({
             pids,
