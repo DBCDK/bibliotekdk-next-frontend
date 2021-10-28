@@ -65,6 +65,7 @@ export default function MyApp({ Component, pageProps, router }) {
   setTranslations(pageProps.translations);
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
+
   return (
     <Provider
       session={pageProps.session}
@@ -75,7 +76,15 @@ export default function MyApp({ Component, pageProps, router }) {
     >
       <AnonymousSessionContext.Provider value={pageProps.anonSession}>
         <APIStateContext.Provider value={pageProps.initialData}>
-          <Modal.Provider>
+          <Modal.Provider
+            router={{
+              pathname: router.pathname,
+              query: router.query,
+              push: (obj) => router.push(obj),
+              replace: (obj) => router.replace(obj),
+              go: (index) => window.history.go(index),
+            }}
+          >
             <Modal.Container>
               <Modal.Page id="menu" component={Pages.Menu} />
               <Modal.Page id="options" component={Pages.Options} />
