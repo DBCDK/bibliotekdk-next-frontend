@@ -2,6 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { toColor } from "./utils.js";
 
 import Modal, { useModal } from ".";
+import { useState } from "react";
 
 export default {
   title: "Modal2.0",
@@ -143,18 +144,16 @@ export function Default() {
   };
 
   return (
-    <Modal.Provider>
-      <div>
-        <Link id="Profile" context={{ title: "This is a Modal" }} />
-        <br />
-        <Link id="Order" context={{ title: "This is also a Modal" }} />
-        <Modal.Container>
-          <Modal.Page id="Profile" component={ExampleComponent} />
-          <Modal.Page id="Settings" component={ExampleComponent} />
-          <Modal.Page id="Order" component={ExampleComponent} />
-        </Modal.Container>
-      </div>
-    </Modal.Provider>
+    <div>
+      <Link id="Profile" context={{ title: "This is a Modal" }} />
+      <br />
+      <Link id="Order" context={{ title: "This is also a Modal" }} />
+      <Modal.Container>
+        <Modal.Page id="Profile" component={ExampleComponent} />
+        <Modal.Page id="Settings" component={ExampleComponent} />
+        <Modal.Page id="Order" component={ExampleComponent} />
+      </Modal.Container>
+    </div>
   );
 }
 
@@ -207,14 +206,13 @@ export function Scroll() {
       </div>
     );
   };
+
   return (
-    <Modal.Provider>
-      <div>
-        <Link id="Modal" context={{ title: "This is a long modal" }} />
-        <Modal.Container>
-          <Modal.Page id="Modal" component={ExampleComponent} />
-        </Modal.Container>
-      </div>
-    </Modal.Provider>
+    <div>
+      <Link id="Modal" context={{ title: "This is a long modal" }} />
+      <Modal.Container>
+        <Modal.Page id="Modal" component={ExampleComponent} />
+      </Modal.Container>
+    </div>
   );
 }
