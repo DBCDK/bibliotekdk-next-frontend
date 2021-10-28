@@ -7,7 +7,7 @@ describe("Overview", () => {
     cy.visit("/iframe.html?id=modal-options--all-options");
   });
 
-  it(`Can tab through path`, () => {
+  it.skip(`Can tab through path`, () => {
     cy.get("body").tab();
     cy.focused().should(
       "have.attr",
