@@ -381,7 +381,7 @@ export default function Wrap(props) {
           onSubmit={async (info) => {
             await updateLoanerInfo({
               userParameters: info,
-              pickupBranch: branch,
+              pickupBranch: branch.branchId,
             });
 
             // Back to order

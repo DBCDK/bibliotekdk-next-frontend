@@ -48,6 +48,7 @@ export function Order({
   pid,
   work,
   user,
+  initial = {},
   authUser,
   order,
   onSubmit,
@@ -71,10 +72,10 @@ export function Order({
   const [hasTry, setHasTry] = useState(false);
 
   useEffect(() => {
-    if (user?.pickupBranch) {
-      setPickupBranch(user.pickupBranch);
+    if (initial.pickupBranch) {
+      setPickupBranch(initial.pickupBranch);
     }
-  }, [user.pickupBranch]);
+  }, [initial.pickupBranch]);
 
   // Update email from user account
   useEffect(() => {
@@ -569,10 +570,7 @@ export default function Wrap(props) {
     merge({}, selectedBranch, pickupBranchOrderPolicy);
 
   // Merge user and branches
-  const mergedUser = merge({}, loanerInfo, orderPolicy?.user, {
-    pickupBranch:
-      mergedSelectedBranch || selectedBranch || defaultUserPickupBranch || null,
-  });
+  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
   if (
     isLoading ||
@@ -592,6 +590,13 @@ export default function Wrap(props) {
       work={mergedWork?.work}
       authUser={authUser}
       user={(!userParamsIsLoading && mergedUser) || {}}
+      initial={{
+        pickupBranch:
+          mergedSelectedBranch ||
+          selectedBranch ||
+          defaultUserPickupBranch ||
+          null,
+      }}
       pid={order}
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
