@@ -6,6 +6,9 @@ import Button from "@/components/base/button";
 //import { Modal } from "@/components/modal";
 import { Order, OrderSkeleton } from "./Order.page.js";
 import data from "./dummy.data";
+import dummyData from "./dummy.data";
+import Modal, { useModal } from "@/components/_modal";
+import Pages from "@/components/_modal/pages";
 
 export default {
   title: "modal/Order",
@@ -65,6 +68,7 @@ export function Default() {
   const [query, setQuery] = useState({ modal: "order" });
 
   const { work, user, order } = data;
+  const pickupBranch = user.agency.result[0];
 
   const modifiedUser = { ...user, mail: "some@mail.dk" };
 
@@ -75,26 +79,25 @@ export function Default() {
         User has an email attached to the account
       </StoryDescription>
 
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={modifiedUser}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
+      <Order
+        context={{ label: "title-order" }}
+        initial={{
+          pickupBranch: pickupBranch,
+        }}
+        pid="some-pid"
+        work={dummyData.work}
+        user={modifiedUser}
+        authUser={modifiedUser}
+        order={order}
+        query={query}
+        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
+        onLayerClose={() => setQuery({ modal: "order" })}
+        onSubmit={(pids, pickupBranch, email) => {
+          alert(
+            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
+          );
+        }}
+      />
     </div>
   );
 }
@@ -110,12 +113,7 @@ export function Loading() {
       <StoryDescription>
         Skeleton version of the order template
       </StoryDescription>
-
-      {/*
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <OrderSkeleton />
-      </Modal>
-      */}
+      <OrderSkeleton />
     </div>
   );
 }
@@ -129,6 +127,7 @@ export function NoEmail() {
 
   const { work, user, order } = data;
 
+  const pickupBranch = user.agency.result[0];
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Missing account email</StoryTitle>
@@ -137,26 +136,25 @@ export function NoEmail() {
         the email field.
       </StoryDescription>
 
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
+      <Order
+        context={{ label: "title-order" }}
+        initial={{
+          pickupBranch: pickupBranch,
+        }}
+        pid="some-pid"
+        work={dummyData.work}
+        user={user}
+        authUser={user}
+        order={order}
+        query={query}
+        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
+        onLayerClose={() => setQuery({ modal: "order" })}
+        onSubmit={(pids, pickupBranch, email) => {
+          alert(
+            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
+          );
+        }}
+      />
     </div>
   );
 }
@@ -196,26 +194,25 @@ export function ManyPickupPoints() {
         If user has a long list of pickup points
       </StoryDescription>
 
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={modifiedUser}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
+      <Order
+        context={{ label: "title-order" }}
+        initial={{
+          pickupBranch: main,
+        }}
+        pid="some-pid"
+        work={dummyData.work}
+        order={order}
+        user={user}
+        authUser={user}
+        query={query}
+        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
+        onLayerClose={() => setQuery({ modal: "order" })}
+        onSubmit={(pids, pickupBranch, email) => {
+          alert(
+            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
+          );
+        }}
+      />
     </div>
   );
 }
@@ -354,33 +351,37 @@ export function OrderPolicyFail() {
     },
   };
 
+  // City main library
+  const main = modifiedUser.agency.result[0];
+
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Order Template</StoryTitle>
-      <StoryDescription>
-        If user has a long list of pickup points
-      </StoryDescription>
+      <StoryDescription>Order policy fail</StoryDescription>
 
-      {/*
+      <Modal.Container>
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+      </Modal.Container>
 
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={modifiedUser}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(query) => setQuery(query)}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}".`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
+      <Order
+        context={{ label: "title-order" }}
+        initial={{
+          pickupBranch: main,
+        }}
+        work={work}
+        user={modifiedUser}
+        authUser={modifiedUser}
+        pid={"some-pid"}
+        order={order}
+        query={query}
+        onLayerChange={(query) => setQuery(query)}
+        onLayerClose={() => setQuery({ modal: "order" })}
+        onSubmit={(pids, pickupBranch) => {
+          alert(`Ordering "${pids}" to branch id "${pickupBranch.branchId}".`);
+        }}
+        modal={modal}
+      />
     </div>
   );
 }

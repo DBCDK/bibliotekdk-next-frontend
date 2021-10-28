@@ -30,6 +30,7 @@ const user = {
           lookUpUrl: "https://some-lookup-url",
         },
         pickupAllowed: true,
+        borrowerCheck: true,
       },
       {
         branchId: "1",

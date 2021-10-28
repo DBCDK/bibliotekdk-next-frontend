@@ -139,7 +139,6 @@ export function Order({
     creators: workCreators = [{ name: "..." }],
     manifestations = [],
   } = work;
-
   // Material by pid
   const material = filter(
     manifestations,
@@ -153,7 +152,6 @@ export function Order({
   );
 
   const isLoadingBranches = isLoading || (user.name && !user?.agency);
-
   // Material props
   const {
     title = workTitle,
@@ -273,20 +271,19 @@ export function Order({
           )}
           <div
             className={`${styles.link} ${animations["on-hover"]} `}
-            onClick={() =>
+            onClick={() => {
               !isLoadingBranches &&
-              modal.push("pickup", {
-                pid,
-                initial: { agency },
-              })
-            }
+                modal.push("pickup", {
+                  pid,
+                  initial: { agency },
+                });
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
-                !isLoadingBranches &&
-                  modal.push("pickup", {
-                    pid,
-                    initial: { agency },
-                  });
+                modal.push("pickup", {
+                  pid,
+                  initial: { agency },
+                });
               }
             }}
           >
@@ -601,6 +598,9 @@ export default function Wrap(props) {
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
       onSubmit={(pids, pickupBranch) => {
+        console.log(pickupBranch, "PICKUP");
+        console.log(pids, "pids");
+        console.log(loanerInfo, "USERPARAMS");
         orderMutation.post(
           submitOrder({
             pids,
