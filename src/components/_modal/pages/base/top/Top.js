@@ -35,7 +35,7 @@ export function Close({ className, onClose }) {
         </Text>
         <Icon
           size={{ w: 2, h: "auto" }}
-          className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]} ${className}`}
+          className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
           title={Translate({
             context: "general",
             label: "close-modal-title",
@@ -68,7 +68,7 @@ export function Back({ className, onBack }) {
         <Icon
           size={{ w: 2, h: "auto" }}
           dataCy="back-modal"
-          className={`${styles.icon} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]} ${className}`}
+          className={`${styles.icon} ${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
           title={Translate({
             context: "general",
             label: "back-modal-title",
@@ -100,9 +100,12 @@ export function Back({ className, onBack }) {
  * @param {func} props.close
  * @returns {component}
  */
-export default function Top({ className = {}, title, back = true }) {
-  const modal = useModal();
-
+export default function Top({
+  modal = useModal(),
+  className = {},
+  title,
+  back = true,
+}) {
   const showBack = back && modal.index() > 0;
 
   return (

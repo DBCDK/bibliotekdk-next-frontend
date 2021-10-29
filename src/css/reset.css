@@ -66,6 +66,15 @@ a:hover {
   color: var(--blue);
 }
 
+/* ios disabled fields should look like normal */
+input:disabled,
+textarea:disabled,
+input:disabled::placeholder,
+textarea:disabled::placeholder {
+  -webkit-text-fill-color: var(--mine-shaft);
+  opacity: 1;
+}
+
 @media screen and (min-width: 576px) {
   body {
     font-size: 18px;

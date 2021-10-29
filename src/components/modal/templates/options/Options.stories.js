@@ -6,7 +6,7 @@ import { Options } from "@/components/modal/templates/options/Options.template";
 import dummy_data from "./dummy_data.json";
 
 export default {
-  title: "modal/Options",
+  title: "old modal/Options",
 };
 
 export function AllOptions() {

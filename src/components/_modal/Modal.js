@@ -95,7 +95,7 @@ function createPageUID() {
  * @param {string} className.content
  * @returns
  */
-function Container({ children, className = {} }) {
+function Container({ children, className = {}, mock = {} }) {
   if (!children) {
     return null;
   }
@@ -106,7 +106,10 @@ function Container({ children, className = {} }) {
     children = [children];
   }
 
-  const modal = useModal();
+  const _modal = useModal();
+
+  // include mocked functions
+  const modal = { ..._modal, ...mock };
 
   // current status of the modal dialog
   const [dialogStatus, setDialogStatus] = useState("closed");
@@ -246,7 +249,7 @@ function Container({ children, className = {} }) {
   //  Closes the modal on Escape key
   useEffect(() => {
     if (isVisible && escapeEvent) {
-      modal.select(-1);
+      modal.clear();
     }
   }, [escapeEvent]);
 
@@ -264,7 +267,7 @@ function Container({ children, className = {} }) {
       data-cy="modal-dimmer"
       aria-hidden={true}
       className={`modal_dimmer ${className.dimmer || ""} ${visibleClass}`}
-      onClick={() => modal.select(-1)}
+      onClick={() => modal.clear()}
     >
       <dialog
         id="modal_dialog"
@@ -300,7 +303,7 @@ function Container({ children, className = {} }) {
 
             // Enrich page components with props
             return React.cloneElement(page, {
-              modal,
+              modal: { ...modal, ...mock },
               // stack index
               index,
               context: obj.context,
@@ -308,6 +311,7 @@ function Container({ children, className = {} }) {
               className: className.page || "",
               key: `modal-page-${index}`,
               dataCy: `modal-page-${index}`,
+              mock: page.props.mock || {},
               props: page.props,
             });
           })}
@@ -335,9 +339,14 @@ function Page(props) {
   // page class status
   const [status, setStatus] = useState("page-after");
   // props used on page
-  const { index, active, modal, className, dataCy } = props;
+  const { index, active, modal, className, dataCy, mock } = props;
   // props we will pass to the component living on the page
-  const passedProps = { active, modal, context: props.context, ...props.props };
+  const passedProps = {
+    active,
+    modal: { ...modal, ...mock },
+    context: props.context,
+    ...props.props,
+  };
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -409,7 +418,7 @@ export function useModal() {
       pushPageUID(entry.uid);
 
       // custom save
-      save && save(copy);
+      // save && save(copy);
       // update locale state
       setStack(copy);
     }
@@ -449,12 +458,12 @@ export function useModal() {
    * Clears the stack
    */
   function _clear() {
-    //_select(-1);
+    _select(-1);
 
     // custom save
-    save && save([]);
+    // save && save([]);
     // // update locale stack state
-    setStack([]);
+    // setStack([]);
   }
 
   /**
@@ -521,7 +530,7 @@ export function useModal() {
     // set active true on index match, others false.
     copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
     // custom save
-    save && save(copy);
+    // save && save(copy);
     // update locale stack state
     setStack(copy);
   }
@@ -615,7 +624,7 @@ export function useModal() {
       return obj;
     });
 
-    save && save(copy);
+    // save && save(copy);
     // update locale stack state
     setStack(copy);
   }

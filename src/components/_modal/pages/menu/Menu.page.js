@@ -29,6 +29,7 @@ function Menu({ modal, context }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
       <Top
+        modal={modal}
         title={Translate({ context: "modal", label: "title-menu" })}
         className={{
           top: styles.top,

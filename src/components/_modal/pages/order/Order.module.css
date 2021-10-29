@@ -8,6 +8,11 @@
 }
 
 /* .top is passed as className prop to Top component */
+
+.top {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
 .top,
 /*  */
 .edition,
@@ -38,13 +43,26 @@
 }
 
 .material {
-  padding: var(--pt2) 0 0 0;
+  padding: var(--pt1) 0 0 0;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
+  flex-direction: row-reverse;
 }
 
-.material span {
-  margin: 0 var(--pt2) 0 0;
+.material a {
+  flex-grow: 2;
+  margin: 0 auto 0 0;
+}
+
+.material a p,
+.material div span {
+  margin: var(--pt1) var(--pt2) 0 0;
+}
+
+.material div {
+  margin: 0 auto 0 0;
 }
 
 .left {
@@ -125,7 +143,7 @@
 /* action */
 
 .action .message {
-  display: none;
+  padding: 0 0 var(--pt1) 0;
 }
 
 .action .message.invalid {
@@ -133,11 +151,10 @@
 }
 
 @media (min-width: 576px) {
-  .info {
-    height: calc(100% - 136px);
+  .top {
+    padding: var(--pt5) var(--pt6) var(--pt3) var(--pt6);
   }
 
-  .top,
   .edition,
   .pickup,
   .user,
@@ -158,9 +175,4 @@
   }
 
   /* action */
-
-  .action .message {
-    display: block;
-    padding: 0 0 var(--pt1) 0;
-  }
 }

@@ -8,7 +8,7 @@ import { Order, OrderSkeleton } from "./Order.template.js";
 import data from "./dummy.data";
 
 export default {
-  title: "modal/Order",
+  title: "old modal/Order",
 };
 
 /**

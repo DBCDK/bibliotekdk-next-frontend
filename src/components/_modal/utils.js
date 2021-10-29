@@ -12,6 +12,8 @@ export function handleTab(event, container) {
 
   const el = container.querySelector("div.modal_page.page-current");
 
+  console.log("el", el);
+
   // elements we want
   const elements = [
     "a",

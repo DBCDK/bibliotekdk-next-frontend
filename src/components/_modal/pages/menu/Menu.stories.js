@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 
-import { Order } from "./Order.page";
+import Menu from ".";
 import Modal, { useModal } from "@/components/_modal";
 
-import data from "./dummy.data";
-
 export default {
-  title: "Modal/Order",
+  title: "Modal/Menu",
 };
 
 export function Default() {
@@ -20,17 +18,13 @@ export function Default() {
     setStack([{ id: "menu", context, active: true }]);
   }, []);
 
-  const { work, user, order } = data;
-
-  const modifiedUser = { ...user, mail: "some@mail.dk" };
-
   return (
     <Modal.Container
       mock={{
         clear: () => alert("Luk"),
       }}
     >
-      <Modal.Page id="order" component={Order} />
+      <Modal.Page id="menu" component={Menu} />
     </Modal.Container>
   );
 }
