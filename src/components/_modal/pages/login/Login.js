@@ -119,6 +119,7 @@ export function LoginPickup({
       branchId: branch.branchId,
       doPolicyCheck: false,
       callbackUrl: callbackurl,
+      mode: "login",
     });
   };
 
