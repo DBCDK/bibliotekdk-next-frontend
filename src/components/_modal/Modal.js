@@ -559,6 +559,7 @@ export function useModal() {
       if (index >= 0) {
         _select(index);
       }
+      return;
     }
 
     // select previous element
