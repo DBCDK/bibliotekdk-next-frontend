@@ -109,10 +109,10 @@ export function LoginPickup({
     setPickupBranch(null);
   };
 
+  // remove all modal params from callbackurl - this is login context
   const regexp = /&modal=+[0-9]*/g;
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
 
-  //console.log(callbacku, "CALLBACK");
   // show loanerform for selected bracnch
   const onSelect = (branch) => {
     modal.push("loanerform", {

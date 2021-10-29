@@ -2,29 +2,31 @@ import { useState } from "react";
 
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
-//import { Options } from "@/components/modal/templates/options/Options.template";
 import dummy_data from "./dummy_data.json";
+import Modal, { useModal } from "@/components/_modal/Modal";
+import Pages from "@/components/_modal/pages";
+import { Options } from "./Options.page";
 
 export default {
   title: "modal/Options",
 };
 
 export function AllOptions() {
+  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
       <StoryDescription>All options</StoryDescription>
-
-      {/*
-      <Modal onClose={null} onLang={null} template={"options"}>
-        <Options
-          data={dummy_data.data}
-          title_author="fiske_hest"
-          workId="work-of:870971-tsart:39160846"
-          isLoading={false}
-        />
-      </Modal>
-      */}
+      <Options
+        data={dummy_data.data}
+        title_author="fiske_hest"
+        workId="work-of:870971-tsart:39160846"
+        isLoading={false}
+        context={{
+          title_author: "fiske_hest",
+          workId: "work-of:870971-tsart:39160846",
+        }}
+      />
     </div>
   );
 }
@@ -40,12 +42,15 @@ export function Loading() {
       <StoryDescription>
         Skeleton version of the options template
       </StoryDescription>
+      <Modal.Container>
+        <Modal.Page id="options" component={Pages.Options} />
+      </Modal.Container>
 
-      {/*
-      <Modal onClose={null} onLang={null} template={"options"}>
-        <Options data={[]} isLoading={true} />
-      </Modal>
-      */}
+      <Options
+        data={[]}
+        isLoading={true}
+        context={{ title_author: "fiske_hest" }}
+      />
     </div>
   );
 }
