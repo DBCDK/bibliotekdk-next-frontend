@@ -97,7 +97,6 @@ export function Header({
           }
         : // open login modal
           () => modal.push("login"),
-      //() => alert("fisk"),
     },
     /*{
       label: "basket",

@@ -43,9 +43,6 @@ import HelpHeader from "@/components/help/header";
 import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 
-// will get deprecated soon
-import DeprecatedSoonModal from "@/components/modal";
-
 // kick off the polyfill!
 if (typeof window !== "undefined") {
   smoothscroll.polyfill();
@@ -65,6 +62,7 @@ export default function MyApp({ Component, pageProps, router }) {
   setTranslations(pageProps.translations);
   // Restore scrollPosition on page change (where page using getServersideProps)
   useScrollRestoration(router);
+
   return (
     <Provider
       session={pageProps.session}
@@ -75,7 +73,15 @@ export default function MyApp({ Component, pageProps, router }) {
     >
       <AnonymousSessionContext.Provider value={pageProps.anonSession}>
         <APIStateContext.Provider value={pageProps.initialData}>
-          <Modal.Provider>
+          <Modal.Provider
+            router={{
+              pathname: router.pathname,
+              query: router.query,
+              push: (obj) => router.push(obj),
+              replace: (obj) => router.replace(obj),
+              go: (index) => window.history.go(index),
+            }}
+          >
             <Modal.Container>
               <Modal.Page id="menu" component={Pages.Menu} />
               <Modal.Page id="options" component={Pages.Options} />
@@ -88,7 +94,6 @@ export default function MyApp({ Component, pageProps, router }) {
 
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
-            {false && <DeprecatedSoonModal router={router} />}
             <div id="layout">
               <Head>
                 <meta name="mobile-web-app-capable" content="yes"></meta>

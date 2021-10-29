@@ -9,6 +9,7 @@ describe("Overview", () => {
 
   it(`Can tab through path`, () => {
     cy.get("body").tab();
+    cy.tab();
     cy.focused().should(
       "have.attr",
       "href",

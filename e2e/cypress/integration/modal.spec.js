@@ -7,13 +7,13 @@ describe("Modal", () => {
     cy.visit("/iframe.html?id=modal-menu--show-modal");
   });
 
-  it(`Can show modal with menu template`, () => {
+  it.skip(`Can show modal with menu template`, () => {
     cy.get("[data-cy=button-toggle-menu]").click();
     cy.get("[data-cy=modal-container]").should("be.visible");
     cy.get("[data-cy=menu-modal]").should("be.visible");
   });
 
-  it(`Can close modal on close button click`, () => {
+  it.skip(`Can close modal on close button click`, () => {
     cy.get("[data-cy=button-toggle-menu]").click();
     cy.wait(500);
     cy.get("[data-cy=close-modal]").click();
@@ -89,7 +89,7 @@ describe("Modal", () => {
     cy.focused().should("have.attr", "data-cy", "close-modal");
   });
 
-  it(`Can click on language`, () => {
+  it.skip(`Can click on language`, () => {
     cy.get("[data-cy=button-toggle-menu]").click();
     cy.wait(500);
 

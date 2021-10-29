@@ -173,16 +173,8 @@ export function Pickup({
       return;
     }
 
-    // Create Callback url
-    const path = `${APP_URL}${Router.asPath}`;
-    const id = modal.stack?.[modal.index() - 1].uid;
-    const sign = path.includes("?") ? "&" : "?";
-
-    const callbackUrl = `${path}${sign}modal=${id}`;
-
     // open loanerform
     modal.push("loanerform", {
-      callbackUrl,
       branchId: branch.branchId,
       pid,
     });
@@ -376,7 +368,9 @@ export default function Wrap(props) {
   return (
     <Pickup
       {...props}
-      updateLoanerInfo={(info) => updateLoanerInfo(info)}
+      updateLoanerInfo={(info) => {
+        updateLoanerInfo(info);
+      }}
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}

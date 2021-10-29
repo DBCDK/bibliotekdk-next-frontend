@@ -133,7 +133,6 @@ export function Order({
     creators: workCreators = [{ name: "..." }],
     manifestations = [],
   } = work;
-
   // Material by pid
   const material = filter(
     manifestations,
@@ -147,7 +146,6 @@ export function Order({
   );
 
   const isLoadingBranches = isLoading || (user.name && !user?.agency);
-
   // Material props
   const {
     title = workTitle,
@@ -264,13 +262,13 @@ export function Order({
           )}
           <div
             className={`${styles.link} ${animations["on-hover"]} `}
-            onClick={() =>
+            onClick={() => {
               !isLoadingBranches &&
-              modal.push("pickup", {
-                pid,
-                initial: { agency },
-              })
-            }
+                modal.push("pickup", {
+                  pid,
+                  initial: { agency },
+                });
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.keyCode === 13) {
                 !isLoadingBranches &&
@@ -361,7 +359,6 @@ export function Order({
               value={email || ""}
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
-              onMount={(value, valid) => onMailChange(value, valid)}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />

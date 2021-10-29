@@ -5,31 +5,6 @@ import { handleTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
-// Monkey patch
-// Intercept history push/replace
-if (typeof window !== "undefined") {
-  const pushState = history.pushState;
-
-  if (!pushState.patched) {
-    history.pushState = function (state) {
-      const res = pushState.apply(history, arguments);
-      window.dispatchEvent(new CustomEvent("custompopstate", {}));
-      return res;
-    };
-    history.pushState.patched = true;
-  }
-
-  const replaceState = history.pushState;
-  if (!replaceState.patched) {
-    history.replaceState = function (state) {
-      const res = replaceState.apply(history, arguments);
-      window.dispatchEvent(new CustomEvent("custompopstate", {}));
-      return res;
-    };
-    history.replaceState.patched = true;
-  }
-}
-
 // context
 export const ModalContext = createContext(null);
 
@@ -37,25 +12,18 @@ const LOCAL_STORAGE_KEY = "modal-v2";
 const URL_PAGE_UID_KEY = "modal";
 
 /**
- * Get uid for current page
- *
- * @returns {string}
- */
-function getPageUID() {
-  const searchParams = new URLSearchParams(window.location.search);
-  const uid = searchParams.get(URL_PAGE_UID_KEY);
-  return uid;
-}
-
-/**
  * Push page uid
  *
  * @param {string} uid
  */
-function pushPageUID(uid) {
-  const searchParams = new URLSearchParams(window.location.search);
-  searchParams.set(URL_PAGE_UID_KEY, uid);
-  window.history.pushState("", "", "?" + searchParams.toString());
+function pushPageUID(uid, router) {
+  router.push({
+    pathname: router.pathname,
+    query: {
+      ...router.query,
+      [URL_PAGE_UID_KEY]: uid,
+    },
+  });
 }
 
 /**
@@ -63,19 +31,29 @@ function pushPageUID(uid) {
  *
  * @param {string} uid
  */
-function replacePageUID(uid) {
-  const searchParams = new URLSearchParams(window.location.search);
-  searchParams.set(URL_PAGE_UID_KEY, uid);
-  window.history.replaceState("", "", "?" + searchParams.toString());
+function replacePageUID(uid, router) {
+  router.replace({
+    pathname: router.pathname,
+    query: {
+      ...router.query,
+      [URL_PAGE_UID_KEY]: uid,
+    },
+  });
 }
 
 /**
  * Delete current page uid
  */
-function deletePageUID() {
-  const searchParams = new URLSearchParams(window.location.search);
-  searchParams.delete(URL_PAGE_UID_KEY);
-  window.history.replaceState("", "", "?" + searchParams.toString());
+function deletePageUID(router) {
+  const query = {
+    ...router.query,
+  };
+  delete query[URL_PAGE_UID_KEY];
+
+  router.replace({
+    pathname: router.pathname,
+    query,
+  });
 }
 
 /**
@@ -111,6 +89,8 @@ function Container({ children, className = {}, mock = {} }) {
   // include mocked functions
   const modal = { ..._modal, ...mock };
 
+  const currentPageUid = modal.currentPageUid;
+
   // current status of the modal dialog
   const [dialogStatus, setDialogStatus] = useState("closed");
 
@@ -142,7 +122,7 @@ function Container({ children, className = {}, mock = {} }) {
       const stack = JSON.parse(stackStr);
 
       // Get page uid
-      const uid = getPageUID();
+      const uid = currentPageUid;
 
       // Traverse the loadedstack
       stack.forEach((entry, index) => {
@@ -203,19 +183,15 @@ function Container({ children, className = {}, mock = {} }) {
 
   // Listen for history popstate events
   useEffect(() => {
-    function historyListener() {
-      const uid = getPageUID();
-      // If not found doSelect is called with -1 (which will close the modal)
-      const index = modal.stack.findIndex((entry) => entry.uid === uid);
-      modal._doSelect(index);
+    if (!didLoad.current) {
+      return;
     }
-    window.addEventListener("popstate", historyListener);
-    window.addEventListener("custompopstate", historyListener);
-    return () => {
-      window.removeEventListener("popstate", historyListener);
-      window.removeEventListener("custompopstate", historyListener);
-    };
-  }, [modal]);
+    // If not found doSelect is called with -1 (which will close the modal)
+    const index = modal.stack.findIndex(
+      (entry) => entry.uid === currentPageUid
+    );
+    modal._doSelect(index);
+  }, [currentPageUid]);
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
@@ -393,7 +369,7 @@ function Page(props) {
  */
 
 export function useModal() {
-  const { stack, setStack, save } = useContext(ModalContext);
+  const { stack, setStack, save, router } = useContext(ModalContext);
 
   /**
    * Push
@@ -415,7 +391,7 @@ export function useModal() {
       copy.push(entry);
 
       // Push to history (URL)
-      pushPageUID(entry.uid);
+      pushPageUID(entry.uid, router);
 
       // custom save
       // save && save(copy);
@@ -460,9 +436,9 @@ export function useModal() {
   function _clear() {
     _select(-1);
 
-    // custom save
+    // // custom save
     // save && save([]);
-    // // update locale stack state
+    // // // update locale stack state
     // setStack([]);
   }
 
@@ -507,16 +483,16 @@ export function useModal() {
     }
     if (shouldReplace) {
       if (stack[index]) {
-        replacePageUID(stack[index].uid);
+        replacePageUID(stack[index].uid, router);
       } else {
-        deletePageUID();
+        deletePageUID(router);
       }
       _doSelect(index);
     } else {
       // Update history
       // This will trigger _doSelect
       const delta = index - prevActive;
-      window.history.go(delta);
+      router.go(delta);
     }
   }
 
@@ -586,17 +562,13 @@ export function useModal() {
       copy = copy.slice(0, active);
 
       // findIndex returns the first matching id || -1 if none found
-      // NOTE: reverse() flips the array order.
-      const reversed = copy.reverse();
-
-      const index = copy.findIndex((obj) => obj.id === id);
-
-      // const indexInStack = reversed.length - 1 - index;
+      const index = copy.map((page) => page.id).lastIndexOf(id);
 
       // index will be -1 on no match
       if (index >= 0) {
         _select(index);
       }
+      return;
     }
 
     // select previous element
@@ -630,6 +602,7 @@ export function useModal() {
   }
 
   return {
+    currentPageUid: router.query[URL_PAGE_UID_KEY],
     push: _push,
     pop: _prev,
     update: _update,
@@ -641,6 +614,7 @@ export function useModal() {
     setStack,
     stack,
     _doSelect,
+    _router: router,
   };
 }
 
@@ -654,11 +628,11 @@ export function useModal() {
  *
  */
 
-export function Provider({ children }) {
+export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
 
   return (
-    <ModalContext.Provider value={{ stack, setStack }}>
+    <ModalContext.Provider value={{ stack, setStack, router }}>
       {children}
     </ModalContext.Provider>
   );

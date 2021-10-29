@@ -108,7 +108,7 @@ function mockSubmitSessionUserParameters() {
 function openOrderModal() {
   // Wait for content to be loaded
   cy.get("[data-cy=button-order-overview-enabled]");
-  cy.wait(500);
+  cy.wait(1000);
 
   // Open order modal
   cy.get("[data-cy=button-order-overview-enabled]").click();
@@ -130,6 +130,57 @@ describe("Order", () => {
     };
 
     mockLogin(customMock);
+  });
+
+  it("submits order - happy path", () => {
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+    );
+
+    openOrderModal();
+    mockSubmitSessionUserParameters();
+    mockSessionUserParameters();
+
+    // Work info in modal is visible
+    cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
+
+    // Pickup branch is visible
+    cy.get('[data-cy="text-b.-adresse"]').should("be.visible");
+    cy.get("[data-cy=text-dbctestbibliotek]").should("be.visible");
+
+    // name of user is visible
+    cy.get("[data-cy=text-freja-damgaard]")
+      .scrollIntoView()
+      .should("be.visible");
+
+    // Change pickup branch
+    cy.get("[data-cy=text-skift-afhentning]").click();
+    cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
+    cy.get('[data-cy="text-b.-adresse"]').scrollIntoView().should("be.visible");
+
+    // cicero mail should default be inserted and locked here
+    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
+    cy.get("#order-user-email").should("be.disabled");
+
+    // updating loanerinfo in background
+    cy.get("[data-cy=text-freja-damgaard]").click();
+
+    // submit order
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
+        pickUpBranch: "790900",
+        userParameters: {
+          userMail: "cicero@mail.dk",
+          userName: "Freja Damgaard",
+        },
+      });
+    });
+
+    cy.contains("Bestillingen blev gennemført");
   });
 
   it("Should not lock emailfield for agencies with no borrowerCheck", () => {
@@ -184,68 +235,17 @@ describe("Order", () => {
     cy.get("[data-cy=button-godkend]").click();
 
     cy.wait("@submitOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
       expect(order.request.body.variables.input).to.deep.equal({
+        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
         pickUpBranch: "790904",
         userParameters: {
-          customId: "Some class",
           userMail: "freja@mail.dk",
           userName: "Freja Damgaard",
+          customId: "Some class",
         },
-        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
       });
     });
-  });
-
-  it.skip("submits order - happy path", () => {
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
-    );
-
-    openOrderModal();
-    mockSubmitSessionUserParameters();
-    mockSessionUserParameters();
-
-    // Work info in modal is visible
-    cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
-
-    // Pickup branch is visible
-    cy.get('[data-cy="text-b.-adresse"]').should("be.visible");
-    cy.get("[data-cy=text-dbctestbibliotek]").should("be.visible");
-
-    // name of user is visible
-    cy.get("[data-cy=text-freja-damgaard]")
-      .scrollIntoView()
-      .should("be.visible");
-
-    // Change pickup branch
-    cy.get("[data-cy=text-skift-afhentning]").click();
-    cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
-    cy.get('[data-cy="text-vsn-b.adresse"]')
-      .scrollIntoView()
-      .should("be.visible");
-
-    // cicero mail should default be inserted and locked here
-    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
-    cy.get("#order-user-email").should("be.disabled");
-
-    // updating loanerinfo in background
-    cy.get("[data-cy=text-freja-damgaard]").click();
-
-    // submit order
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitOrder").then((order) => {
-      expect(order.request.body.variables.input).to.deep.equal({
-        pickUpBranch: "790903",
-        userParameters: {
-          userMail: "cicero@mail.dk",
-          userName: "Freja Damgaard",
-        },
-        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
-      });
-    });
-
-    cy.contains("Bestillingen blev gennemført");
   });
 
   it("should not tab to order modal after it is closed", () => {
@@ -275,8 +275,6 @@ describe("Order", () => {
     );
 
     cy.get("[data-cy=button-godkend]").should("be.disabled");
-
     cy.get("[data-cy=text-skift-afhentning]").click();
-    cy.contains("Afhentning ikke muligt på");
   });
 });
