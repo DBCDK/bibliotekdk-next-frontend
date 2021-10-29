@@ -1,5 +1,5 @@
 .pickup {
-  padding: var(--pt2);
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
   height: 100%;
   overflow-y: auto;
 
@@ -90,7 +90,7 @@
 
 @media (min-width: 576px) {
   .pickup {
-    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
   }
 
   .link > .arrow {

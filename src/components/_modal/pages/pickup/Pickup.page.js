@@ -225,7 +225,7 @@ export function Pickup({
 
   return (
     <div className={`${styles.pickup} ${shadowClass}`}>
-      <Top.Default title={context.label} />
+      <Top title={context.label} />
       {/* This only load order policies, does not render anything */}
       {data?.result
         ?.filter((branch) => branch.branchId)

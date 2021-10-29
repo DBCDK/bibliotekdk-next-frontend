@@ -1,12 +1,6 @@
-import Router from "next/router";
-import filter from "lodash/filter";
-import getConfig from "next/config";
-import find from "lodash/find";
-
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
-
 import { useState, useEffect } from "react";
+
+import filter from "lodash/filter";
 import merge from "lodash/merge";
 
 import { useData, useMutate } from "@/lib/api/api";
@@ -192,17 +186,12 @@ export function Order({
   // info skeleton loading class
   const loadingClass = isLoadingBranches ? styles.skeleton : "";
 
-  const messageFromLibrary = {
-    context: "order",
-    label: "order-message-library",
-  };
-
   // Get email messages (from validate object)
   const emailStatus = validated?.details?.hasMail?.status;
   const errorMessage = validated?.details?.hasMail?.message;
 
   // Set email input message if any
-  const message = (hasTry && errorMessage) || messageFromLibrary;
+  const message = hasTry && errorMessage;
 
   // Email validation class'
   const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
@@ -218,7 +207,7 @@ export function Order({
 
   return (
     <div className={`${styles.order} ${loadingClass}`}>
-      <Top.Default
+      <Top
         title={context.title}
         className={{
           top: styles.top,
@@ -239,17 +228,19 @@ export function Order({
             </Text>
           </div>
           <div className={styles.material}>
-            <Tag tag="span" skeleton={isLoading}>
-              {materialType}
-            </Tag>
             <Link onClick={() => {}} disabled>
-              <Text type="text3" skeleton={isLoading} lines={1}>
+              <Text type="text3" skeleton={isLoading} lines={1} clamp>
                 {Translate({
                   context: "order",
                   label: "no-specific-edition",
                 })}
               </Text>
             </Link>
+            <div>
+              <Tag tag="span" skeleton={isLoading}>
+                {materialType}
+              </Tag>
+            </div>
           </div>
         </div>
         <div className={styles.right}>
@@ -569,12 +560,7 @@ export default function Wrap(props) {
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
-  if (
-    isLoading ||
-    policyIsLoading ||
-    userParamsIsLoading ||
-    branchPolicyIsLoading
-  ) {
+  if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
@@ -594,6 +580,12 @@ export default function Wrap(props) {
           defaultUserPickupBranch ||
           null,
       }}
+      isLoading={
+        isLoading ||
+        policyIsLoading ||
+        userParamsIsLoading ||
+        branchPolicyIsLoading
+      }
       pid={order}
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}

@@ -6,52 +6,12 @@ import Receipt from "./";
 import Modal, { useModal } from "@/components/_modal";
 
 export default {
-  title: "Modal2.0/Receipt",
-};
-
-const Link = ({ id, context = {} }) => {
-  const { push } = useModal();
-
-  return (
-    <a
-      href=""
-      onClick={(e) => {
-        e.preventDefault();
-        push(id, context);
-      }}
-    >
-      {id}
-    </a>
-  );
+  title: "Modal/Receipt",
 };
 
 export function Default() {
-  const { index, update } = useModal();
+  const { index, update, setStack } = useModal();
   const [order, setOrder] = useState({ isLoading: true });
-
-  // simulate order submit and callback
-  useEffect(() => {
-    if (order.isLoading) {
-      setTimeout(() => {
-        setOrder({
-          isLoading: false,
-          data: {
-            submitOrder: {
-              status: "not_owned_ILL_loc",
-              orderId: "1041538443",
-            },
-          },
-        });
-      }, 2000);
-    }
-  }, []);
-
-  //   update context
-  useEffect(() => {
-    if (!order.isLoading && order.data) {
-      update(index(), { order });
-    }
-  }, [order]);
 
   // dummy context for receipt
   const context = {
@@ -84,12 +44,35 @@ export function Default() {
     },
   };
 
+  // simulate order submit and callback
+  useEffect(() => {
+    setStack([{ id: "receipt", context, active: true }]);
+
+    if (order.isLoading) {
+      setTimeout(() => {
+        setOrder({
+          isLoading: false,
+          data: {
+            submitOrder: {
+              status: "not_owned_ILL_loc",
+              orderId: "1041538443",
+            },
+          },
+        });
+      }, 2000);
+    }
+  }, []);
+
+  //   update context
+  useEffect(() => {
+    if (!order.isLoading && order.data) {
+      update(index(), { order });
+    }
+  }, [order]);
+
   return (
-    <div>
-      <Link id="receipt" context={{ ...context }} />
-      <Modal.Container>
-        <Modal.Page id="receipt" component={Receipt} />
-      </Modal.Container>
-    </div>
+    <Modal.Container>
+      <Modal.Page id="receipt" component={Receipt} />
+    </Modal.Container>
   );
 }
