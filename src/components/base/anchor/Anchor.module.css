@@ -12,6 +12,11 @@
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
+  scrollbar-width: none;
+}
+
+.menu::-webkit-scrollbar {
+  display: none;
 }
 
 .menu.sticky {
@@ -42,6 +47,7 @@
   /* link styles override */
   height: 2px;
   margin-top: -2px;
+  color:red;
 }
 
 .menu .item:first-letter {
