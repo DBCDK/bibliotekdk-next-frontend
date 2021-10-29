@@ -553,12 +553,7 @@ export function useModal() {
       copy = copy.slice(0, active);
 
       // findIndex returns the first matching id || -1 if none found
-      // NOTE: reverse() flips the array order.
-      const reversed = copy.reverse();
-
-      const index = copy.findIndex((obj) => obj.id === id);
-
-      // const indexInStack = reversed.length - 1 - index;
+      const index = copy.map((page) => page.id).lastIndexOf(id);
 
       // index will be -1 on no match
       if (index >= 0) {

@@ -368,7 +368,6 @@ export function Order({
               value={email || ""}
               id="order-user-email"
               onBlur={(value, valid) => onMailChange(value, valid)}
-              onMount={(value, valid) => onMailChange(value, valid)}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />

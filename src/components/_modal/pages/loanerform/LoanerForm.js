@@ -202,7 +202,7 @@ export function LoanerForm({
     return (
       <div className={styles.loanerform}>
         <Top.Default />
-        <Title type="title4" tag="h3" skeleton={!branch?.name}>
+        <Title type="title4" tag="h3" skeleton={true}>
           {Translate({
             context: "order",
             label: "order-to",
@@ -308,10 +308,8 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  console.log(props, "PROPS");
-
-  const { onSubmit, branchId, pid, callbackUrl, doPolicyCheck, mode } =
-    props.context;
+  const { active } = props;
+  const { branchId, pid, doPolicyCheck, mode } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -336,7 +334,22 @@ export default function Wrap(props) {
 
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
   const branch = mergedData?.branches?.result?.[0];
-  const skeleton = branchId && (userIsLoading || branchIsLoading);
+  const skeleton =
+    (branchId && (userIsLoading || branchIsLoading)) ||
+    loggedInAgencyId === branch?.agencyId;
+
+  async function onSubmit(info) {
+    await updateLoanerInfo({
+      userParameters: info,
+      pickupBranch: branch.branchId,
+    });
+    if (mode === "login") {
+      props.modal.clear();
+    } else {
+      // Back to order
+      props.modal.prev("order");
+    }
+  }
 
   // When beginLogout is true, we mount the iframe
   // that logs out the user
@@ -347,13 +360,23 @@ export default function Wrap(props) {
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {
-      signIn(
-        "adgangsplatformen",
-        { callbackUrl },
-        { agency: branch?.agencyId }
-      );
+      (async () => {
+        signIn("adgangsplatformen", {}, { agency: branch?.agencyId });
+      })();
     }
   }, [loggedOut]);
+
+  // Handle if user just logged in via adgangsplatform
+  useEffect(() => {
+    if (
+      !userIsLoading &&
+      active &&
+      loggedInAgencyId &&
+      loggedInAgencyId === branch?.agencyId
+    ) {
+      onSubmit();
+    }
+  }, [loggedInAgencyId, branch?.agencyId, userIsLoading, active]);
 
   if (!branchId) {
     return null;
@@ -371,36 +394,22 @@ export default function Wrap(props) {
           src={`https://login.bib.dk/logout?access_token=${accessToken}`}
         />
       )}
-      {loggedInAgencyId && loggedInAgencyId === branch?.agencyId ? (
-        <Text>User already logged in at {branch.agencyName}</Text>
-      ) : (
-        <LoanerForm
-          {...props}
-          branch={branch}
-          initial={loanerInfo.userParameters}
-          onLogin={() => {
-            setBeginLogout(true);
-          }}
-          onSubmit={async (info) => {
-            await updateLoanerInfo({
-              userParameters: info,
-              pickupBranch: branch.branchId,
-            });
-            if (mode === "login") {
-              props.modal.clear();
-            } else {
-              // Back to order
-              props.modal.prev("order");
-            }
-          }}
-          submitting={beginLogout || loggedOut}
-          skeleton={skeleton}
-          doPolicyCheck={doPolicyCheck}
-        />
-      )}
+
+      <LoanerForm
+        {...props}
+        branch={branch}
+        initial={loanerInfo.userParameters}
+        onLogin={() => {
+          setBeginLogout(true);
+        }}
+        onSubmit={onSubmit}
+        submitting={beginLogout || loggedOut}
+        skeleton={skeleton}
+        doPolicyCheck={doPolicyCheck}
+      />
     </>
   );
 }
 Wrap.propTypes = {
-  context: { callbackUrl: PropTypes.string },
+  context: {},
 };
