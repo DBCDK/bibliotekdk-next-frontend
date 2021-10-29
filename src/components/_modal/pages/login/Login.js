@@ -109,15 +109,16 @@ export function LoginPickup({
     setPickupBranch(null);
   };
 
+  const regexp = /&modal=+[0-9]*/g;
+  const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
+
+  //console.log(callbacku, "CALLBACK");
   // show loanerform for selected bracnch
   const onSelect = (branch) => {
     modal.push("loanerform", {
       branchId: branch.branchId,
       doPolicyCheck: false,
-      onSubmit: (branch) => {
-        modal.clear();
-      },
-      callbackUrl: `${APP_URL}${Router.asPath}`,
+      callbackUrl: callbackurl,
     });
   };
 
