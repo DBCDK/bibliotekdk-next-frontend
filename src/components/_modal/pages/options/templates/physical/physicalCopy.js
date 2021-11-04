@@ -22,34 +22,19 @@ function parseForPid(workId) {
  * @return {JSX.Element}
  * @constructor
  */
-export function PhysicalCopy({ props }) {
-  const { workId, className, router } = { ...props };
-
+export function PhysicalCopy({ props, onOrder = () => {} }) {
+  const { workId, className, modal, materialType: type } = { ...props };
   const pid = parseForPid(workId);
 
   const context = { context: "options" };
-  const onClickToris = () => {
-    if (router) {
-      router.push(
-        {
-          pathname: router.pathname,
-          query: {
-            ...router.query,
-            order: `${pid}`,
-            modal: `order`,
-          },
-        },
-        null,
-        { shallow: true, scroll: false }
-      );
-    } else {
-      alert("fisk");
-    }
-  };
-
   return (
     <li className={`${className} ${styles.item}`} key="options-physicalcopy">
-      <Link border={{ bottom: { keepVisible: true } }} onClick={onClickToris}>
+      <Link
+        border={{ bottom: { keepVisible: true } }}
+        onClick={() => {
+          onOrder(pid);
+        }}
+      >
         <Text type="text1">
           {Translate({
             ...context,
@@ -73,7 +58,18 @@ export function PhysicalCopy({ props }) {
  * @return {JSX.Element}
  */
 export default function wrap({ props }) {
-  const router = useRouter();
-  const params = { ...props, router: { ...router } };
-  return <PhysicalCopy props={params} />;
+  const { modal, workId, materialType: type } = { ...props };
+  return (
+    <PhysicalCopy
+      props={props}
+      onOrder={(pid) =>
+        modal.push("order", {
+          title: Translate({ context: "modal", label: "title-order" }),
+          pid,
+          workId,
+          type,
+        })
+      }
+    />
+  );
 }

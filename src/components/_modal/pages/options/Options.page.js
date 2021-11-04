@@ -112,6 +112,7 @@ export function Options({ data, isLoading, modal, context }) {
               title_author: context.title_author,
               className: styles.item,
               workId: context.workId,
+              modal: modal,
             });
           })}
         </ul>
