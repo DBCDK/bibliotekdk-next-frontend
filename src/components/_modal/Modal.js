@@ -195,22 +195,23 @@ function Container({ children, className = {}, mock = {} }) {
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
-    if (isVisible) {
-      // If tab key is pressed down
-      function downHandler(e) {
-        if (e.key === "Tab") {
-          handleTab(e, modalRef.current);
-        }
-      }
+    // If tab key is pressed down
+    function downHandler(e) {
+      const modalTarget = !!modalRef.current.contains(e.target);
 
-      // Add event listeners
-      window.addEventListener("keydown", downHandler);
-      // Remove event listeners on cleanup
-      return () => {
-        window.removeEventListener("keydown", downHandler);
-      };
+      if (e.key === "Tab") {
+        isVisible && modalTarget && handleTab(e, modalRef.current);
+      }
     }
-  }, [isVisible]);
+    // if (isVisible) {
+    // Add event listeners
+    window.addEventListener("keydown", downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+    // }
+  }, []);
 
   // force modal focus (accessibility)
   useEffect(() => {
@@ -232,6 +233,18 @@ function Container({ children, className = {}, mock = {} }) {
   // check if body should lock on stack changes
   useEffect(() => {
     scrollLock(isVisible);
+  }, [modal.stack]);
+
+  // Blur foucs on modal stack change
+  // Prevents enter click on a focused element on previous modal page
+  useEffect(() => {
+    if (isVisible && modalRef.current) {
+      if (document) {
+        setTimeout(() => {
+          document.activeElement.blur();
+        }, 200);
+      }
+    }
   }, [modal.stack]);
 
   // Debug -> remove me in future
