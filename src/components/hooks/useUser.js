@@ -84,18 +84,38 @@ function useUserImpl() {
   }
 
   const loanerInfo = useMemo(() => {
+    const sessionCopy = data?.session;
+
+    // delete all keys with no value
+    if (sessionCopy) {
+      Object.keys(sessionCopy?.userParameters).forEach((key) => {
+        if (!sessionCopy?.userParameters[key]) {
+          delete sessionCopy?.userParameters[key];
+        }
+      });
+    }
+
     const obj = {
       ...data?.session,
-      userParameters: { ...loggedInUser, ...data?.session?.userParameters },
+      userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
-    // delete all keys with no value
-    Object.keys(obj.userParameters).forEach((key) => {
-      if (!obj.userParameters[key]) {
-        delete obj.userParameters[key];
-      }
-    });
+
     return obj;
   }, [data?.session, loggedInUser]);
+
+  // const loanerInfo = useMemo(() => {
+  //   const obj = {
+  //     ...data?.session,
+  //     userParameters: { ...loggedInUser, ...data?.session?.userParameters },
+  //   };
+  //   // delete all keys with no value
+  //   Object.keys(obj.userParameters).forEach((key) => {
+  //     if (!obj.userParameters[key]) {
+  //       delete obj.userParameters[key];
+  //     }
+  //   });
+  //   return obj;
+  // }, [data?.session, loggedInUser]);
 
   const isGuestUser = Object.keys(loanerInfo?.userParameters).length > 0;
 

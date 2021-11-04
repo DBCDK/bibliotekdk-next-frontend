@@ -99,13 +99,17 @@
   background-color: white;
 
   /* animation */
-  transition: transform 330ms ease-out;
-  will-change: transform;
+  transition: transform 330ms ease-out, box-shadow 500ms ease-out;
+  will-change: transform, box-shadow;
 
   /* ensures pages "spawn" position is stacked top-right */
   position: absolute;
   right: 0;
   top: 0;
+
+  -moz-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0);
 }
 
 /* when modal opens */
@@ -137,4 +141,28 @@
   /* left of view (invisible) */
   transform: translateX(-200%);
   z-index: 0;
+}
+
+/* .page_bottom {
+  height: 5px;
+  background-color: purple !important;
+} */
+
+.page_content {
+  height: 100%;
+  overflow-y: auto;
+
+  /* animation */
+  transition-duration: 0.5s;
+}
+
+.modal_page.page-shadow {
+  -moz-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
+}
+
+/* Set 100% height to user component */
+.page_content > *:first-child {
+  min-height: 100%;
 }

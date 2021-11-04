@@ -75,8 +75,6 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   );
 }
 
-function PickupList() {}
-
 /**
  * Make pickup branches selectable with Radio buttons
  *
@@ -100,14 +98,8 @@ export function LoginPickup({
   const context = { context: "order" };
   const allBranches = data?.result;
 
-  let [pickupBranch, setPickupBranch] = useState(null);
-
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
-
-  const onBack = () => {
-    setPickupBranch(null);
-  };
 
   // remove all modal params from callbackurl - this is login context
   const regexp = /&modal=+[0-9]*/g;
@@ -124,48 +116,39 @@ export function LoginPickup({
   };
 
   return (
-    <div className={`${styles.loanerform} ${className}`}>
+    <div className={`${styles.login} ${className}`}>
       <Top />
-      {/* a branch has been selected -> if no borrowercheck -> show loanerform */}
-      {pickupBranch === null && (
-        <div className={`${styles.scrollArea} `}>
-          <div className={styles.search}>
-            <Title type="title4" className={styles.title}>
-              {Translate({ ...context, label: "pickup-search-title" })}
-            </Title>
-            <Text type="text3">
-              {Translate({ ...context, label: "pickup-search-description" })}
-            </Text>
-            <Search
-              dataCy="pickup-search-input"
-              placeholder={Translate({
-                ...context,
-                label: "pickup-input-placeholder",
-              })}
-              className={styles.input}
-              onChange={debounce((value) => onChange(value), 100)}
-            />
-          </div>
-          {allBranches?.length > 0 && (
-            <List.Group
-              enabled={!isLoading && isVisible}
-              data-cy="list-branches"
-              className={styles.orderPossibleGroup}
-            >
-              {allBranches.map((branch, idx) => {
-                return (
-                  <Row
-                    key={`${branch.branchId}-${idx}`}
-                    branch={branch}
-                    onSelect={onSelect}
-                    isLoading={isLoading}
-                    includeArrows={includeArrows}
-                  />
-                );
-              })}
-            </List.Group>
-          )}
-        </div>
+      <div className={styles.search}>
+        <Title type="title4" className={styles.title}>
+          {Translate({ ...context, label: "pickup-search-title" })}
+        </Title>
+        <Text type="text3">
+          {Translate({ ...context, label: "pickup-search-description" })}
+        </Text>
+        <Search
+          dataCy="pickup-search-input"
+          placeholder={Translate({
+            ...context,
+            label: "pickup-input-placeholder",
+          })}
+          className={styles.input}
+          onChange={debounce((value) => onChange(value), 100)}
+        />
+      </div>
+      {allBranches?.length > 0 && (
+        <List.Group enabled={!isLoading && isVisible} data-cy="list-branches">
+          {allBranches.map((branch, idx) => {
+            return (
+              <Row
+                key={`${branch.branchId}-${idx}`}
+                branch={branch}
+                onSelect={onSelect}
+                isLoading={isLoading}
+                includeArrows={includeArrows}
+              />
+            );
+          })}
+        </List.Group>
       )}
     </div>
   );

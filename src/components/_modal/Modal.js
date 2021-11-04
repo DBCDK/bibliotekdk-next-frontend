@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 
+import { useInView } from "react-intersection-observer";
+
 // modal utils
 import { handleTab, scrollLock } from "./utils";
 
@@ -239,10 +241,12 @@ function Container({ children, className = {}, mock = {} }) {
   // Prevents enter click on a focused element on previous modal page
   useEffect(() => {
     if (isVisible && modalRef.current) {
-      if (document) {
-        setTimeout(() => {
-          document.activeElement.blur();
-        }, 200);
+      if (modal.stack.length > 1) {
+        if (document) {
+          setTimeout(() => {
+            document.activeElement.blur();
+          }, 200);
+        }
       }
     }
   }, [modal.stack]);
@@ -327,6 +331,7 @@ function Container({ children, className = {}, mock = {} }) {
 function Page(props) {
   // page class status
   const [status, setStatus] = useState("page-after");
+
   // props used on page
   const { index, active, modal, className, dataCy, mock } = props;
   // props we will pass to the component living on the page
@@ -336,6 +341,15 @@ function Page(props) {
     context: props.context,
     ...props.props,
   };
+
+  // Observe when bottom of list i visible
+  const [ref, inView] = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
+  // Add shadow to bottom of scroll area, if last element is not visible
+  const shadowClass = inView ? "" : "page-shadow";
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -355,11 +369,14 @@ function Page(props) {
 
   return (
     <div
-      className={`modal_page ${status} ${className}`}
+      className={`modal_page ${shadowClass} ${status} ${className}`}
       data-cy={dataCy}
       aria-hidden={!active}
     >
-      <props.component {...passedProps} />
+      <div className={`page_content`}>
+        <props.component {...passedProps} />
+        <div ref={ref} className="page_bottom" />
+      </div>
     </div>
   );
 }

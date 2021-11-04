@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import debounce from "lodash/debounce";
+
 import filter from "lodash/filter";
 import merge from "lodash/merge";
 
@@ -73,7 +75,7 @@ export function Order({
 
   // Update email from user account
   useEffect(() => {
-    const userMail = user?.mail;
+    const userMail = user.userParameters?.userMail;
 
     if (userMail) {
       const message = null;
@@ -83,7 +85,7 @@ export function Order({
         valid: { status: true, message },
       });
     }
-  }, [user?.mail]);
+  }, [user?.userParameters]);
 
   // Update validation
   useEffect(() => {
@@ -107,8 +109,9 @@ export function Order({
 
   // An order has successfully been submitted
   useEffect(() => {
-    if (order.isLoading) {
+    if (order?.isLoading) {
       const index = modal.index();
+      // debounce(() => , 100);
       modal.update(index, { order });
     }
   }, [order]);
@@ -476,34 +479,44 @@ export function OrderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  // context props
-  const { pid: order, workId } = props.context;
+  // context
+  const { context } = props;
 
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
 
+  const orderMutation = useMutate();
+
+  // const [order, setOrder] = useState(orderMutation);
+
   /**
    * Order
    */
-  const orderMutation = useMutate();
+
+  // useEffect(() => {
+  //   console.log("update.......", orderMutation);
+  //   if (orderMutation.data) {
+  //     // setOrder(orderMutation);
+  //   }
+  // }, [orderMutation]);
 
   useEffect(() => {
-    if (order) {
+    if (context.pid) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
-      setPid(order);
+      setPid(context.pid);
     }
-  }, [order]);
+  }, [context.pid]);
 
   /**
    * Work data
    */
   const { data, isLoading, isSlow, error } = useData(
-    workFragments.detailsAllManifestations({ workId })
+    workFragments.detailsAllManifestations({ workId: context.workId })
   );
 
-  const covers = useData(workFragments.covers({ workId }));
+  const covers = useData(workFragments.covers({ workId: context.workId }));
 
   const mergedWork = merge({}, covers.data, data);
 
@@ -586,7 +599,7 @@ export default function Wrap(props) {
         userParamsIsLoading ||
         branchPolicyIsLoading
       }
-      pid={order}
+      pid={context.pid}
       order={orderMutation}
       updateLoanerInfo={updateLoanerInfo}
       onSubmit={(pids, pickupBranch) => {

@@ -1,20 +1,14 @@
 .order {
-  height: 100%;
-
   /* scroll in modal */
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
 
 /* .top is passed as className prop to Top component */
-
 .top {
-  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+  padding: var(--pt3) var(--pt2) var(--pt2) var(--pt2);
 }
 
-.top,
-/*  */
 .edition,
 .pickup,
 .user,
