@@ -38,7 +38,7 @@ export function InfomediaArticle(infomediaData) {
       <Header router={router} />
       {workPublic === null ? (
         <Error statusCode={404} />
-      ) : publicData.isLoadingPublic || privateData.isLoadingPrivate ? (
+      ) : publicData.isLoading || privateData.isLoading ? (
         <ContentSkeleton />
       ) : (
         <>
