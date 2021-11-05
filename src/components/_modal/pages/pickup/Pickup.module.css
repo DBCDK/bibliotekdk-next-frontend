@@ -18,12 +18,6 @@
   outline-offset: var(--pt1);
 }
 
-/* .pickup.shadow {
-  -moz-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-  -webkit-box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-  box-shadow: inset 0 -24px 24px -24px rgba(0, 0, 0, 0.75);
-} */
-
 .message {
   padding: 0 0 var(--pt2) 0;
 }

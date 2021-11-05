@@ -1,6 +1,4 @@
-import Router from "next/router";
 import PropTypes from "prop-types";
-import { useInView } from "react-intersection-observer";
 import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
@@ -180,15 +178,6 @@ export function Pickup({
     });
   }
 
-  // Observe when bottom of list i visible
-  const [ref, inView] = useInView({
-    /* Optional options */
-    threshold: 0,
-  });
-
-  // Add shadow to bottom of scroll area, if last element is not visible
-  const shadowClass = inView ? "" : styles.shadow;
-
   const loadedOrderPolicies = useRef({});
   const render = useState()[1];
 
@@ -224,7 +213,7 @@ export function Pickup({
     Translate({ context: "order", label: "has-more-pickup" });
 
   return (
-    <div className={`${styles.pickup} ${shadowClass}`}>
+    <div className={`${styles.pickup}`}>
       <Top title={context.label} />
       {/* This only load order policies, does not render anything */}
       {data?.result
@@ -312,8 +301,6 @@ export function Pickup({
           </ul>
         </>
       )}
-
-      <div ref={ref} />
     </div>
   );
 }
