@@ -22,7 +22,32 @@ export function helpTextParseMenu(helpTexts) {
     }
   });
 
-  return structuredHelpTexts;
+  // order by fixed array
+  const sortedHelpText = {};
+  for (let index = 0; index < sortOrder().length; index++) {
+    if (structuredHelpTexts[sortOrder()[index]]) {
+      sortedHelpText[sortOrder()[index]] =
+        structuredHelpTexts[sortOrder()[index]];
+    }
+  }
+  // some elements are not in fixed array - eg if a new is added in backend
+  // merge not included elements
+  return { ...sortedHelpText, ...structuredHelpTexts };
+}
+
+function sortOrder() {
+  return [
+    "Søgning",
+    "Bestilling",
+    "Login",
+    "Privatlivspolitik",
+    "Om bibliotek.dk",
+    "Personlige data",
+    "Profil",
+    "Teknik",
+    "Mobil version",
+    "Tilgængelighed",
+  ];
 }
 
 /**
