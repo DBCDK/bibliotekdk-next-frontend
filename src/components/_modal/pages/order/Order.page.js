@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 
-import debounce from "lodash/debounce";
-
 import filter from "lodash/filter";
 import merge from "lodash/merge";
 
@@ -109,12 +107,12 @@ export function Order({
 
   // An order has successfully been submitted
   useEffect(() => {
-    if (order?.isLoading) {
+    if (order.data && order.isLoading) {
       const index = modal.index();
       // debounce(() => , 100);
       modal.update(index, { order });
     }
-  }, [order]);
+  }, [order.data, order.isLoading]);
 
   /**
    *
@@ -180,7 +178,7 @@ export function Order({
   const hasBorchk = pickupBranch?.borrowerCheck;
 
   // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  const email = hasBorchk ? authUser.mail : userMail;
+  let email = hasBorchk ? authUser.mail || userMail : userMail;
 
   const name = hasBorchk
     ? authUser.name
@@ -361,6 +359,8 @@ export function Order({
               disabled={isLoading || (authUser?.mail && hasBorchk)}
               value={email || ""}
               id="order-user-email"
+              // onMount updates email error message (missing email error)
+              onMount={(value, valid) => setMail({ value, valid })}
               onBlur={(value, valid) => onMailChange(value, valid)}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
@@ -381,6 +381,7 @@ export function Order({
                   &nbsp;
                 </Text>
                 <Link
+                  disabled={isLoadingBranches}
                   href={urlToEmailArticle}
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
@@ -487,19 +488,9 @@ export default function Wrap(props) {
 
   const orderMutation = useMutate();
 
-  // const [order, setOrder] = useState(orderMutation);
-
   /**
    * Order
    */
-
-  // useEffect(() => {
-  //   console.log("update.......", orderMutation);
-  //   if (orderMutation.data) {
-  //     // setOrder(orderMutation);
-  //   }
-  // }, [orderMutation]);
-
   useEffect(() => {
     if (context.pid) {
       // When order modal opens, we reset previous order status

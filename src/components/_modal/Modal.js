@@ -243,9 +243,9 @@ function Container({ children, className = {}, mock = {} }) {
     if (isVisible && modalRef.current) {
       if (modal.stack.length > 1) {
         if (document) {
-          setTimeout(() => {
-            document.activeElement.blur();
-          }, 200);
+          // setTimeout(() => {
+          document.activeElement.blur();
+          // }, 200);
         }
       }
     }

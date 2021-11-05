@@ -19,7 +19,13 @@ export default function Language({ children }) {
     const pathname = Router.pathname;
     const query = Router.query;
 
-    Router.replace({ pathname, query }, null, { locale });
+    const copy = { ...query };
+
+    // remove modal key from query
+    // this will close the modal after language change
+    delete copy.modal;
+
+    Router.push({ pathname, query: copy }, null, { locale });
   };
 
   // Return the new copy of children including the new onClick
