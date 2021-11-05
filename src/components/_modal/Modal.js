@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 
+import { useInView } from "react-intersection-observer";
+
 // modal utils
 import { handleTab, scrollLock } from "./utils";
 
@@ -195,22 +197,23 @@ function Container({ children, className = {}, mock = {} }) {
 
   // Tab key handle (locks tab in visible modal)
   useEffect(() => {
-    if (isVisible) {
-      // If tab key is pressed down
-      function downHandler(e) {
-        if (e.key === "Tab") {
-          handleTab(e, modalRef.current);
-        }
-      }
+    // If tab key is pressed down
+    function downHandler(e) {
+      const modalTarget = !!modalRef.current.contains(e.target);
 
-      // Add event listeners
-      window.addEventListener("keydown", downHandler);
-      // Remove event listeners on cleanup
-      return () => {
-        window.removeEventListener("keydown", downHandler);
-      };
+      if (e.key === "Tab") {
+        isVisible && modalTarget && handleTab(e, modalRef.current);
+      }
     }
-  }, [isVisible]);
+    // if (isVisible) {
+    // Add event listeners
+    window.addEventListener("keydown", downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+    // }
+  }, []);
 
   // force modal focus (accessibility)
   useEffect(() => {
@@ -232,6 +235,20 @@ function Container({ children, className = {}, mock = {} }) {
   // check if body should lock on stack changes
   useEffect(() => {
     scrollLock(isVisible);
+  }, [modal.stack]);
+
+  // Blur foucs on modal stack change
+  // Prevents enter click on a focused element on previous modal page
+  useEffect(() => {
+    if (isVisible && modalRef.current) {
+      if (modal.stack.length > 1) {
+        if (document) {
+          // setTimeout(() => {
+          document.activeElement.blur();
+          // }, 200);
+        }
+      }
+    }
   }, [modal.stack]);
 
   // Debug -> remove me in future
@@ -314,6 +331,7 @@ function Container({ children, className = {}, mock = {} }) {
 function Page(props) {
   // page class status
   const [status, setStatus] = useState("page-after");
+
   // props used on page
   const { index, active, modal, className, dataCy, mock } = props;
   // props we will pass to the component living on the page
@@ -323,6 +341,15 @@ function Page(props) {
     context: props.context,
     ...props.props,
   };
+
+  // Observe when bottom of list i visible
+  const [ref, inView] = useInView({
+    /* Optional options */
+    threshold: 0,
+  });
+
+  // Add shadow to bottom of scroll area, if last element is not visible
+  const shadowClass = inView ? "" : "page-shadow";
 
   // Update the page position status
   // This will positioning the pages left, right og in the center of the modal view.
@@ -342,11 +369,14 @@ function Page(props) {
 
   return (
     <div
-      className={`modal_page ${status} ${className}`}
+      className={`modal_page ${shadowClass} ${status} ${className}`}
       data-cy={dataCy}
       aria-hidden={!active}
     >
-      <props.component {...passedProps} />
+      <div className={`page_content`}>
+        <props.component {...passedProps} />
+        <div ref={ref} className="page_bottom" />
+      </div>
     </div>
   );
 }

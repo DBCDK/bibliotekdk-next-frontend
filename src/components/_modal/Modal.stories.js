@@ -133,11 +133,11 @@ export function Default() {
         <div>
           <br />
           <br />
-          <Link id="Profile" context={{ title: "This is a Modal" }} />
+          <Link id="modal1" context={{ title: "This is a Modal" }} />
           <br />
-          <Link id="Order" context={{ title: "This is also a Modal" }} />
+          <Link id="modal2" context={{ title: "This is also a Modal" }} />
           <br />
-          <Link id="Settings" context={{ title: "This is also a Modal" }} />
+          <Link id="modal3" context={{ title: "This is also a Modal" }} />
         </div>
       </div>
     );
@@ -145,13 +145,13 @@ export function Default() {
 
   return (
     <div>
-      <Link id="Profile" context={{ title: "This is a Modal" }} />
+      <Link id="modal1" context={{ title: "This is a Modal" }} />
       <br />
-      <Link id="Order" context={{ title: "This is also a Modal" }} />
+      <Link id="modal2" context={{ title: "This is also a Modal" }} />
       <Modal.Container>
-        <Modal.Page id="Profile" component={ExampleComponent} />
-        <Modal.Page id="Settings" component={ExampleComponent} />
-        <Modal.Page id="Order" component={ExampleComponent} />
+        <Modal.Page id="modal1" component={ExampleComponent} />
+        <Modal.Page id="modal2" component={ExampleComponent} />
+        <Modal.Page id="modal3" component={ExampleComponent} />
       </Modal.Container>
     </div>
   );
