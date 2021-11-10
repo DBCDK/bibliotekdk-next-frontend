@@ -8,133 +8,124 @@ export default {
 export function Default() {
   const rows = [
     {
-      title: "Harry Potter og de vises sten",
-      work: {
-        id: "some-id-1",
-        cover: {
-          detail:
-            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
-        },
-        creators: [
-          {
-            name: "Joanne K. Rowling",
-          },
-        ],
-        materialTypes: [
-          {
-            materialType: "Bog",
-          },
-          {
-            materialType: "Diskette",
-          },
-          {
-            materialType: "Ebog",
-          },
-          {
-            materialType: "Lydbog (bånd)",
-          },
-          {
-            materialType: "Lydbog (cd)",
-          },
-          {
-            materialType: "Lydbog (cd-mp3)",
-          },
-          {
-            materialType: "Lydbog (net)",
-          },
-          {
-            materialType: "Punktskrift",
-          },
-        ],
-        path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-        title: "Harry Potter og De Vises Sten",
+      id: "some-id-1",
+      cover: {
+        detail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
       },
+      creators: [
+        {
+          name: "Joanne K. Rowling",
+        },
+      ],
+      materialTypes: [
+        {
+          materialType: "Bog",
+        },
+        {
+          materialType: "Diskette",
+        },
+        {
+          materialType: "Ebog",
+        },
+        {
+          materialType: "Lydbog (bånd)",
+        },
+        {
+          materialType: "Lydbog (cd)",
+        },
+        {
+          materialType: "Lydbog (cd-mp3)",
+        },
+        {
+          materialType: "Lydbog (net)",
+        },
+        {
+          materialType: "Punktskrift",
+        },
+      ],
+      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
+      title: "Harry Potter og De Vises Sten",
     },
     {
+      id: "some-id-2",
+      cover: {
+        detail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22677780&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=01f2186198e525d002a2",
+      },
+      creators: [
+        {
+          name: "Joanne K. Rowling",
+        },
+      ],
+      materialTypes: [
+        {
+          materialType: "Bog",
+        },
+        {
+          materialType: "Diskette",
+        },
+        {
+          materialType: "Ebog",
+        },
+        {
+          materialType: "Lydbog (bånd)",
+        },
+        {
+          materialType: "Lydbog (cd)",
+        },
+        {
+          materialType: "Lydbog (cd-mp3)",
+        },
+        {
+          materialType: "Lydbog (net)",
+        },
+        {
+          materialType: "Punktskrift",
+        },
+      ],
+      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
       title: "Harry Potter og Hemmelighedernes Kammer",
-      work: {
-        id: "some-id-2",
-        cover: {
-          detail:
-            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22677780&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=01f2186198e525d002a2",
-        },
-        creators: [
-          {
-            name: "Joanne K. Rowling",
-          },
-        ],
-        materialTypes: [
-          {
-            materialType: "Bog",
-          },
-          {
-            materialType: "Diskette",
-          },
-          {
-            materialType: "Ebog",
-          },
-          {
-            materialType: "Lydbog (bånd)",
-          },
-          {
-            materialType: "Lydbog (cd)",
-          },
-          {
-            materialType: "Lydbog (cd-mp3)",
-          },
-          {
-            materialType: "Lydbog (net)",
-          },
-          {
-            materialType: "Punktskrift",
-          },
-        ],
-        path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-        title: "Harry Potter og Hemmelighedernes Kammer",
-      },
     },
     {
-      title: "Harry Potter og Fønixordenen",
-      work: {
-        id: "some-id-3",
-        cover: {
-          detail:
-            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24880605&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=87f28c0762bb189c72bb",
-        },
-        creators: [
-          {
-            name: "Joanne K. Rowling",
-          },
-        ],
-        materialTypes: [
-          {
-            materialType: "Bog",
-          },
-          {
-            materialType: "Diskette",
-          },
-          {
-            materialType: "Ebog",
-          },
-          {
-            materialType: "Lydbog (bånd)",
-          },
-          {
-            materialType: "Lydbog (cd)",
-          },
-          {
-            materialType: "Lydbog (cd-mp3)",
-          },
-          {
-            materialType: "Lydbog (net)",
-          },
-          {
-            materialType: "Punktskrift",
-          },
-        ],
-        path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-        title: "Harry Potter og Fønixordenen",
+      id: "some-id-3",
+      cover: {
+        detail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24880605&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=87f28c0762bb189c72bb",
       },
+      creators: [
+        {
+          name: "Joanne K. Rowling",
+        },
+      ],
+      materialTypes: [
+        {
+          materialType: "Bog",
+        },
+        {
+          materialType: "Diskette",
+        },
+        {
+          materialType: "Ebog",
+        },
+        {
+          materialType: "Lydbog (bånd)",
+        },
+        {
+          materialType: "Lydbog (cd)",
+        },
+        {
+          materialType: "Lydbog (cd-mp3)",
+        },
+        {
+          materialType: "Lydbog (net)",
+        },
+        {
+          materialType: "Punktskrift",
+        },
+      ],
+      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
+      title: "Harry Potter og Fønixordenen",
     },
   ];
   return (
