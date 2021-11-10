@@ -10,17 +10,15 @@
  * @param {string} params.q the query
  */
 export function hitcount({ q, worktype }) {
-  const facets = worktype ? [{ field: "type", value: worktype }] : null;
-
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $facets: [FacetFilter]) {
-        search(q: $q, limit: 10, offset: 0, facets: $facets) {
-          hitcount
-        }
-        monitor(name: "bibdknext_search_hitcount")
-      }`,
-    variables: { q, facets },
+    query: `query ($q: String!, $filters: SearchFilters) {
+              search(q: {all: $q}, filters: $filters) {
+                hitcount
+              }
+              monitor(name: "bibdknext_search_hitcount")
+            }`,
+    variables: { q, filters: { workType: worktype ? [worktype] : [] } },
     slowThreshold: 3000,
   };
 }
@@ -34,23 +32,25 @@ export function hitcount({ q, worktype }) {
 export function fast({ q, limit, offset, facets = null }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int ${
-      facets ? `, $facets: [FacetFilter]` : ""
-    }) {
-        search(q: $q, limit: $limit, offset: $offset ${
-          facets ? `, facets: $facets` : ""
-        }) {
-          result {
-            title
-            creator {
-              name
-            }
-          }
-          hitcount
-        }
-        monitor(name: "bibdknext_search_fast")
-      }`,
-    variables: { q, limit, offset, facets },
+    query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
+              search(q: {all: $q}, filters: $filters) {
+                works(limit: $limit, offset: $offset) {
+                  id
+                  title
+                  creators {
+                    name
+                  }
+                }
+                hitcount
+              }
+              monitor(name: "bibdknext_search_fast")
+            }`,
+    variables: {
+      q,
+      limit,
+      offset,
+      filters: { workType: facets?.[0] ? [facets?.[0]?.value] : [] },
+    },
     slowThreshold: 3000,
   };
 }
@@ -64,34 +64,32 @@ export function fast({ q, limit, offset, facets = null }) {
 export function all({ q, limit, offset, facets = null }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int ${
-      facets ? `, $facets: [FacetFilter]` : ""
-    }) {
-        search(q: $q, limit: $limit, offset: $offset ${
-          facets ? `, facets: $facets` : ""
-        }) {
-          result {
-            title
-            work {
-              cover {
-                detail
+    query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
+              search(q: {all: $q}, filters: $filters) {
+                works(limit: $limit, offset: $offset) {
+                  id
+                  cover {
+                    detail
+                  }
+                  creators {
+                    name
+                  }
+                  materialTypes {
+                    materialType
+                  }
+                  path
+                  title
+                }
+                hitcount
               }
-              creators {
-                name
-              }
-              id,
-              materialTypes {
-                materialType
-              }
-              path
-              title
-            }
-          }
-          hitcount
-        }
-        monitor(name: "bibdknext_search_all")
-      }`,
-    variables: { q, limit, offset, facets },
+              monitor(name: "bibdknext_search_all")
+            }`,
+    variables: {
+      q,
+      limit,
+      offset,
+      filters: { workType: facets?.[0] ? [facets?.[0]?.value] : [] },
+    },
     slowThreshold: 3000,
   };
 }

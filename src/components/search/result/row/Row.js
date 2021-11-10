@@ -20,10 +20,9 @@ import styles from "./Row.module.css";
  * @param {object} props.data
  */
 export default function ResultRow({ data, onClick }) {
-  const { title, creator, work = {} } = data;
-  const creatorName =
-    (work.creators && work.creators[0] && work.creators[0].name) ||
-    (creator && creator.name);
+  const { title } = data;
+  const work = data;
+  const creatorName = work.creators?.[0]?.name;
   return (
     <Link
       a={true}
@@ -68,10 +67,10 @@ export default function ResultRow({ data, onClick }) {
           <Text
             type="text3"
             className={styles.creator}
-            skeleton={!work.creators && !creator}
+            skeleton={!work.creators}
             lines={1}
           >
-            {!work.creators && !creator ? "skeleton" : creatorName || " "}
+            {creatorName || " "}
           </Text>
           <div className={styles.materials}>
             <Text
