@@ -1,0 +1,64 @@
+.wrap {
+  position: relative;
+  display: inline-block;
+  width: var(--pt2);
+  height: var(--pt2);
+  background-color: white;
+  cursor: pointer;
+  /* -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; */
+}
+
+.wrap.readOnly {
+  pointer-events: none;
+}
+
+.wrap:hover {
+  background-color: var(--concrete);
+}
+
+.wrap:focus-within .border {
+  border: 1px solid var(--blue);
+}
+
+/* disabled */
+
+.wrap.disabled .border {
+  border: 1px solid var(--gray);
+}
+
+.wrap.disabled {
+  background-color: var(--iron);
+}
+
+/*  */
+
+.border,
+.bg {
+  width: 100%;
+  height: 100%;
+}
+
+.border {
+  padding: 2px;
+  border: 1px solid var(--gray);
+}
+
+.input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.input:checked ~ .border {
+  border: 1px solid var(--blue);
+}
+
+.input:checked ~ .border .bg {
+  background-color: var(--blue);
+}

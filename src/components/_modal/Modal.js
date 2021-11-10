@@ -613,18 +613,19 @@ export function useModal() {
    * @param {*} index
    * @param {*} context
    */
-  function _update(index, context) {
-    if (!index) {
-      index = _index();
-    }
-
+  function _update(index = _index(), context) {
     let copy = [...stack];
     copy = copy.map((obj, i) => {
       if (index === i) {
-        return { ...obj, context: { ...obj.context, ...context } };
+        return {
+          ...obj,
+          context: { ...obj.context, ...context, _update: true },
+        };
       }
       return obj;
     });
+
+    console.log("hest update", copy);
 
     // save && save(copy);
     // update locale stack state

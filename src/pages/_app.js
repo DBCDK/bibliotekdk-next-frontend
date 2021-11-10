@@ -90,6 +90,7 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="loanerform" component={Pages.Loanerform} />
               <Modal.Page id="receipt" component={Pages.Receipt} />
               <Modal.Page id="login" component={Pages.Login} />
+              <Modal.Page id="filter" component={Pages.Filter} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />

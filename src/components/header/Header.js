@@ -108,7 +108,7 @@ export function Header({
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => modal.push("menu", { label: "title-menu" }),
+      onClick: () => modal.push("menu"),
     },
   ];
 

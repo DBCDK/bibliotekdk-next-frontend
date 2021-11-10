@@ -1,0 +1,37 @@
+.filter {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+.category {
+  padding: 0 0 var(--pt4) 0;
+}
+
+.select > div {
+  width: 100%;
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+}
+
+.wrap .term {
+  margin-left: var(--pt1);
+}
+
+.wrap .count {
+  margin-left: auto;
+}
+
+.submit {
+  margin-top: auto;
+}
+
+@media (min-width: 576px) {
+  .filter {
+    padding: 0 var(--pt6) var(--pt6) var(--pt6);
+  }
+}

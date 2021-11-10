@@ -102,12 +102,10 @@ function Find() {
 
       <Searchbar query={q} />
 
-      {/*
       <QuickFilters
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
       />
-      */}
 
       {q && (
         <Result

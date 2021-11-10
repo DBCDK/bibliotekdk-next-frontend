@@ -665,6 +665,14 @@
         "da": "Filtrer",
         "en": "Filters"
       },
+      "filtersResultText": {
+        "da": "Mest relevante resultater",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "showAllFilters": {
+        "da": "Vis alle filtre",
+        "en": "LABEL: mangler oversættelse"
+      },
       "noResults": {
         "da": "Din søgning giver ingen resultater",
         "en": "Your search returned no results"
@@ -728,6 +736,48 @@
         "en": "Search suggestions"
       }
     },
+    "facets": {
+      "label-workType": {
+        "da": "Materialekategori",
+        "en": ""
+      },
+      "label-language": {
+        "da": "Sprog",
+        "en": ""
+      },
+      "label-materialType": {
+        "da": "Format",
+        "en": ""
+      },
+      "label-fictiveCharacter": {
+        "da": "Fiktive karaktere",
+        "en": ""
+      },
+      "label-genre": {
+        "da": "Genre",
+        "en": ""
+      },
+      "label-audience": {
+        "da": "Børn/voksen",
+        "en": ""
+      },
+      "label-accessType": {
+        "da": "Tilgængelig",
+        "en": ""
+      },
+      "label-fictionNonfiction": {
+        "da": "Skøn-/faglitteratur",
+        "en": ""
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": ""
+      },
+      "label-creator": {
+        "da": "Kunstner",
+        "en": ""
+      }
+    },
     "modal": {
       "title-menu": {
         "da": "Menu",
@@ -738,8 +788,8 @@
         "en": "Basket"
       },
       "title-filter": {
-        "da": "Filtrer og sorter",
-        "en": "Filter and sort"
+        "da": "Filtrer",
+        "en": "Filters"
       },
       "title-order": {
         "da": "Bestil",

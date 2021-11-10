@@ -1,26 +1,57 @@
 import PropTypes from "prop-types";
+import { Container, Row, Col } from "react-bootstrap";
 
 import Section from "@/components/base/section";
-import styles from "./QuickFilters.module.css";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate";
 import ViewSelector from "../viewselector";
+
+import { useModal } from "@/components/_modal";
+
+import styles from "./QuickFilters.module.css";
 
 /**
  * The quick filters section
  *
  */
-export default function QuickFilters({ onViewSelect, viewSelected }) {
+export function QuickFilters({ modal, onViewSelect, viewSelected }) {
   return (
-    <Section contentDivider={null} titleDivider={null} title={null}>
-      <div className={styles.quickfilters}>
-        <ViewSelector
+    <Container fluid>
+      <Row>
+        <Col xs={12} lg={{ offset: 3 }}>
+          <div className={styles.quickfilters}>
+            {/* <ViewSelector
           className={styles.viewselector}
           onViewSelect={onViewSelect}
           viewSelected={viewSelected}
-        />
-      </div>
-    </Section>
+        /> */}
+
+            <Text type="text2">
+              {Translate({ context: "search", label: "filtersResultText" })}
+            </Text>
+
+            <Link
+              onClick={() => modal.push("filter")}
+              border={{ bottom: { keepVisible: true } }}
+            >
+              <Text type="text3">
+                {Translate({ context: "search", label: "showAllFilters" })}
+              </Text>
+            </Link>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
+
+export default function Wrap(props) {
+  const modal = useModal();
+
+  return <QuickFilters modal={modal} {...props} />;
+}
+
 QuickFilters.propTypes = {
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,
