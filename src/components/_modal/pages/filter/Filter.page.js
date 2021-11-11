@@ -13,6 +13,8 @@ import Checkbox from "@/components/base/forms/checkbox";
 
 import Translate from "@/components/base/translate";
 
+import useFilters from "@/components/hooks/useFilters";
+
 import response from "./dummy.data";
 
 import animations from "@/components/base/animation/animations.module.css";
@@ -22,6 +24,11 @@ function SelectedFilter({ isLoading, modal, context }) {
   const { facet } = context;
 
   const [terms, setTerms] = useState([]);
+
+  // Reset on facet (page) change
+  useEffect(() => {
+    setTerms([]);
+  }, [facet]);
 
   function handleTermSelect(title) {
     let copy = [...terms];
@@ -100,8 +107,11 @@ function SelectedFilter({ isLoading, modal, context }) {
         disabled={terms.length === 0}
         skeleton={isLoading}
         onClick={() => {
+          // previous selected
+          const selected = modal.stack?.[0]?.context?.selected || {};
+
           modal.update(0, {
-            selected: { [facet.name]: terms },
+            selected: { ...selected, [facet.name]: terms },
           });
 
           // Hack-alert (multiple setState calls after eachother)
@@ -186,6 +196,7 @@ export function Filter(props) {
           <Button
             skeleton={isLoading}
             onClick={() => {
+              console.log("hest 1 selected", selected);
               onSubmit && onSubmit(selected);
               modal.clear();
             }}
@@ -203,5 +214,18 @@ export default function Wrap(props) {
   // dummy data
   const data = response.data;
 
-  return <Filter data={data} {...props} />;
+  const [filters, setFilters] = useFilters();
+
+  console.log("filters", filters);
+
+  return (
+    <Filter
+      data={data}
+      onSubmit={(selected) => {
+        console.log("hest 2 selected", selected);
+        setFilters(selected);
+      }}
+      {...props}
+    />
+  );
 }

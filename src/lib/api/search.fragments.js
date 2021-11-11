@@ -62,8 +62,6 @@ export function fast({ q, limit, offset, facets = null }) {
  * @param {string} params.workId the work id
  */
 export function all({ q, limit, offset, facets = null }) {
-  console.log("fff", { q, limit, offset, facets });
-
   return {
     // delay: 1000, // for debugging
     query: `query ($q: String!, $limit: PaginationLimit!, $offset: Int ${
