@@ -92,15 +92,7 @@ describe("help menu", () => {
   it(`Help menu - tab & click`, () => {
     cy.visit("/iframe.html?path=/story/help-menu--help-menu");
     cy.get("[data-cy=help-menu]").should("be.visible");
-
-    cy.tabs(3);
-    cy.focused().contains("Login");
-
-    cy.tab();
-    cy.focused().contains("Søgning");
-
-    cy.get("[data-cy=link][tabindex=0]").should("not.be.visible");
-    cy.focused().click();
-    cy.get("[data-cy=link][tabindex=0]").should("be.visible");
+    cy.get("[data-cy=help-menu]").contains("Søgning");
+    cy.get("[data-cy=help-menu]").contains("Login");
   });
 });

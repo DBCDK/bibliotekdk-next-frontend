@@ -23,7 +23,7 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
         <ResultRow
           data={row}
           key={`${row.title}_${index}`}
-          onClick={onWorkClick && (() => onWorkClick(index, row.work))}
+          onClick={onWorkClick && (() => onWorkClick(index, row))}
         />
       ))}
     </>
@@ -70,7 +70,7 @@ export default function Wrap({ q, page, onWorkClick }) {
     return <ResultPage isLoading={true} />;
   }
 
-  return <ResultPage rows={data.search.result} onWorkClick={onWorkClick} />;
+  return <ResultPage rows={data.search.works} onWorkClick={onWorkClick} />;
 }
 Wrap.propTypes = {
   q: PropTypes.string,

@@ -79,7 +79,7 @@ export default function Feedback({
             })}
           </Text>
           <Link
-            href="https://forms.gle/1zgfCoQDmEJ9WQhj9"
+            href="https://forms.gle/2UPQZo898s7wo3sa7"
             target="_blank"
             border={{ top: false, bottom: { keepVisible: true } }}
             onClick={() => sessionStorage.setItem("linkclicked", true)}
