@@ -13,6 +13,7 @@ import Bookmark from "@/components/base/bookmark";
 import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import AlternativeOptions from "./alternatives";
+import Localizations from "./localizations";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -51,6 +52,7 @@ export function Overview({
   className = "",
   skeleton = false,
   workTypes,
+  workId = "",
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
@@ -204,6 +206,12 @@ export function Overview({
               <Col xs={12} className={styles.info}>
                 <AlternativeOptions selectedMaterial={selectedMaterial} />
               </Col>
+              <Col xs={12} className={styles.info}>
+                <Localizations
+                  selectedMaterial={selectedMaterial}
+                  workId={workId}
+                />
+              </Col>
             </Row>
           </Col>
         </Row>
@@ -318,6 +326,7 @@ export default function Wrap(props) {
         })
       }
       user={user}
+      workId={workId}
     />
   );
 }
