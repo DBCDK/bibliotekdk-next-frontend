@@ -103,7 +103,8 @@ function useUserImpl() {
     return obj;
   }, [data?.session, loggedInUser]);
 
-  const isGuestUser = Object.keys(loanerInfo?.userParameters).length > 0;
+  const isGuestUser =
+    !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
 
   return {
     authUser: userData?.user || {},

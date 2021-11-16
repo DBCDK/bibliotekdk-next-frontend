@@ -465,6 +465,10 @@
       }
     },
     "overview": {
+      "label_library_no_holdings": {
+        "da": "Ingen biblioteker har pt. materialet.",
+        "en": "No localizations in libraries."
+      },
       "label_library_holdings": {
         "da": "Findes på %s biblioteker",
         "en": "Located at %s libraries"

@@ -13,7 +13,7 @@ import Bookmark from "@/components/base/bookmark";
 import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import AlternativeOptions from "./alternatives";
-import Localizations from "./localizations";
+import LocalizationsLink from "./localizationslink";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -207,7 +207,7 @@ export function Overview({
                 <AlternativeOptions selectedMaterial={selectedMaterial} />
               </Col>
               <Col xs={12} className={styles.info}>
-                <Localizations
+                <LocalizationsLink
                   selectedMaterial={selectedMaterial}
                   workId={workId}
                 />
