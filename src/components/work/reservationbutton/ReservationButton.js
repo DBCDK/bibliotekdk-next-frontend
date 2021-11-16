@@ -212,7 +212,12 @@ export function OrderButton({
     );
   }
 
-  if (!checkRequestButtonIsTrue({ manifestations }) || type === "Tidsskrift") {
+  const notToBeOrdered = ["Periodikum", "Årbog", "Tidsskrift", "Avis"];
+
+  if (
+    !checkRequestButtonIsTrue({ manifestations }) ||
+    notToBeOrdered.includes(type)
+  ) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
