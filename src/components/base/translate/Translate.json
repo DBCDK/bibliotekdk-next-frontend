@@ -673,6 +673,10 @@
         "da": "Vis alle filtre",
         "en": "LABEL: mangler oversættelse"
       },
+      "showXResults": {
+        "da": "Vis %s resultater",
+        "en": "Show %s results"
+      },
       "noResults": {
         "da": "Din søgning giver ingen resultater",
         "en": "Your search returned no results"

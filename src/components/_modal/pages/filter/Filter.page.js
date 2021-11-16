@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import merge from "lodash/merge";
+
 import Top from "../base/top";
 
 import { cyKey } from "@/utils/trim";
@@ -17,32 +19,51 @@ import useFilters from "@/components/hooks/useFilters";
 
 import response from "./dummy.data";
 
+import { useData } from "@/lib/api/api";
+import { facets, hitcount } from "@/lib/api/search.fragments";
+
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 
-function SelectedFilter({ isLoading, modal, context }) {
+function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
+  // Selected terms
+  // const [terms, setTerms] = useState([]);
+
+  // facet ("category") selected
   const { facet } = context;
 
-  const [terms, setTerms] = useState([]);
-
   // Reset on facet (page) change
-  useEffect(() => {
-    setTerms([]);
-  }, [facet]);
+  // useEffect(() => {
+  //   setTerms([]);
+  // }, [facet]);
 
+  // update selected terms in main-modal context
+  // useEffect(() => {
+  // if (modal.stack && facet) {
+  //   // previous selected
+  //   const selected = modal.stack?.[0]?.context?.selected || {};
+  //   modal.update(0, {
+  //     selected: { ...selected, [facet.name]: terms },
+  //   });
+  // }
+  // if (facet && onSelect) {
+  //   onSelect({ [facet.name]: terms });
+  // }
+  // }, [terms]);
+
+  // handle term select
   function handleTermSelect(title) {
     let copy = [...terms];
-
     const index = copy.indexOf(title);
-
     // remove if already exist
     if (index > -1) {
       delete copy.splice(index, 1);
     } else {
       copy.push(title);
     }
+    // setTerms(copy);
 
-    setTerms(copy);
+    onSelect({ [facet.name]: copy });
   }
 
   return (
@@ -104,18 +125,22 @@ function SelectedFilter({ isLoading, modal, context }) {
         })}
       </List.Group>
       <Button
-        disabled={terms.length === 0}
+        // disabled={terms.length === 0}
         skeleton={isLoading}
         onClick={() => {
           // previous selected
-          const selected = modal.stack?.[0]?.context?.selected || {};
+          // const selected = modal.stack?.[0]?.context?.selected || {};
 
-          modal.update(0, {
-            selected: { ...selected, [facet.name]: terms },
-          });
+          // modal.update(0, {
+          //   selected: { ...selected, [facet.name]: terms },
+          // });
 
           // Hack-alert (multiple setState calls after eachother)
-          setTimeout(() => modal.prev(), 100);
+          // setTimeout(() => modal.prev(), 100);
+          modal.prev();
+
+          // const uid = modal.stack?.[0]?.uid;
+          // onChange && onChange({ [facet.name]: terms, modal: [uid] });
         }}
         className={styles.submit}
       >
@@ -135,11 +160,16 @@ function SelectedFilter({ isLoading, modal, context }) {
  */
 
 export function Filter(props) {
-  const { data, onSubmit, isLoading, modal, context } = props;
+  const { data, selected, onSubmit, isLoading, modal, context } = props;
 
+  console.log("selected", selected);
+
+  // facet data
   const facets = data?.search?.facets || [];
+  const hitcount = data?.search?.hitcount || null;
 
-  const { facet, selected } = context;
+  // Facet will contain a specific selected facet/category, if any selected
+  const { facet } = context;
 
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
@@ -153,13 +183,13 @@ export function Filter(props) {
         }
       />
       {facet ? (
-        <SelectedFilter {...props} />
+        <SelectedFilter terms={selected?.[facet.name] || []} {...props} />
       ) : (
         <>
           <List.Group
             enabled={!isLoading}
             data-cy="list-facets"
-            className={styles.orderPossibleGroup}
+            className={styles.list}
           >
             {facets.map((facet, idx) => {
               const title = Translate({
@@ -167,42 +197,51 @@ export function Filter(props) {
                 label: `label-${facet.name}`,
               });
 
+              const selectedTerms = selected?.[facet.name];
+
               return (
                 <List.Select
                   key={`${facet.name}-${idx}`}
                   selected={false}
                   onSelect={() => modal.push("filter", { facet })}
                   label={facet.name}
-                  className={animations["on-hover"]}
+                  className={`${styles.item} ${animations["on-hover"]}`}
                   includeArrows={true}
                 >
-                  <Text
-                    lines="1"
-                    skeleton={isLoading}
-                    type="text3"
-                    dataCy={`text-${facet.name}`}
-                    className={[
-                      styles.facet,
-                      animations["h-border-bottom"],
-                      animations["h-color-blue"],
-                    ].join(" ")}
-                  >
-                    {title}
-                  </Text>
+                  <span>
+                    <Text
+                      lines={1}
+                      skeleton={isLoading}
+                      type="text1"
+                      dataCy={`text-${facet.name}`}
+                      className={[
+                        styles.facet,
+                        animations["h-border-bottom"],
+                        animations["h-color-blue"],
+                      ].join(" ")}
+                    >
+                      {title}
+                    </Text>
+                    {selectedTerms && (
+                      <Text type="text3" className={styles.selected}>
+                        {selectedTerms.join(", ")}
+                      </Text>
+                    )}
+                  </span>
                 </List.Select>
               );
             })}
           </List.Group>
           <Button
             skeleton={isLoading}
-            onClick={() => {
-              console.log("hest 1 selected", selected);
-              onSubmit && onSubmit(selected);
-              modal.clear();
-            }}
+            onClick={() => onSubmit && onSubmit(["modal"])}
             className={styles.submit}
           >
-            {Translate({ context: "general", label: "accept" })}
+            {Translate({
+              context: "search",
+              label: "showXResults",
+              vars: [hitcount],
+            })}
           </Button>
         </>
       )}
@@ -210,20 +249,54 @@ export function Filter(props) {
   );
 }
 
-export default function Wrap(props) {
+export function FilterSkeleton() {
   // dummy data
-  const data = response.data;
-
-  const [filters, setFilters] = useFilters();
-
-  console.log("filters", filters);
+  const dummy = response.data;
 
   return (
     <Filter
-      data={data}
-      onSubmit={(selected) => {
-        console.log("hest 2 selected", selected);
-        setFilters(selected);
+      isLoading={true}
+      data={dummy}
+      selected={{}}
+      modal={{}}
+      context={{}}
+    />
+  );
+}
+
+export default function Wrap(props) {
+  const { context, active } = props;
+
+  // get search query from context
+  const { q } = context;
+
+  // connected filters hook
+  const { filters, setFilters, getQuery, setQuery } = useFilters();
+
+  // hitcount according to selected filters
+  const { data: hitcountData } = useData(q && hitcount({ q, filters }));
+
+  // facets according to query filters
+  const { data, isLoading } = useData(q && facets({ q, filters }));
+
+  // useEffect(() => {}, [active]);
+
+  // merge data
+  const mergedData = merge({}, data, hitcountData);
+
+  if (isLoading) {
+    return <FilterSkeleton {...props} />;
+  }
+
+  return (
+    <Filter
+      data={mergedData}
+      selected={{ ...getQuery(), ...filters }}
+      onSelect={(selected) => {
+        setFilters({ ...filters, ...selected });
+      }}
+      onSubmit={(excluded) => {
+        setQuery(excluded);
       }}
       {...props}
     />

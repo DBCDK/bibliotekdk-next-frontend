@@ -6,6 +6,9 @@ import Searchbar from "@/components/search/searchbar";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
+
+import { useModal } from "@/components/_modal";
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import {
@@ -24,6 +27,8 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  *
  */
 function Find() {
+  const modal = useModal();
+
   const router = useRouter();
   const fetcher = useFetcher();
   const { q, page = 1, view } = router.query;
@@ -105,6 +110,7 @@ function Find() {
       <QuickFilters
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
+        onFiltersClick={() => modal.push("filter", { q })}
       />
 
       {q && (

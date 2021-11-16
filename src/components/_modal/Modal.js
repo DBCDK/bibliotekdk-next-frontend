@@ -625,8 +625,6 @@ export function useModal() {
       return obj;
     });
 
-    console.log("hest update", copy);
-
     // save && save(copy);
     // update locale stack state
     setStack(copy);

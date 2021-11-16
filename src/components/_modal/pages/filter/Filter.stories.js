@@ -19,9 +19,7 @@ export function Default() {
   const context = {};
 
   // submit function
-  function onSubmit(selected) {
-    console.log("onSubmit", { selected });
-  }
+  function onSubmit(selected) {}
 
   // simulate order submit and callback
   useEffect(() => {

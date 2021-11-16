@@ -7,15 +7,18 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import ViewSelector from "../viewselector";
 
-import { useModal } from "@/components/_modal";
-
 import styles from "./QuickFilters.module.css";
 
 /**
  * The quick filters section
  *
  */
-export function QuickFilters({ modal, onViewSelect, viewSelected }) {
+export function QuickFilters({
+  modal,
+  onFiltersClick,
+  onViewSelect,
+  viewSelected,
+}) {
   return (
     <Container fluid>
       <Row>
@@ -32,7 +35,7 @@ export function QuickFilters({ modal, onViewSelect, viewSelected }) {
             </Text>
 
             <Link
-              onClick={() => modal.push("filter")}
+              onClick={() => onFiltersClick()}
               border={{ bottom: { keepVisible: true } }}
             >
               <Text type="text3">
@@ -47,9 +50,7 @@ export function QuickFilters({ modal, onViewSelect, viewSelected }) {
 }
 
 export default function Wrap(props) {
-  const modal = useModal();
-
-  return <QuickFilters modal={modal} {...props} />;
+  return <QuickFilters {...props} />;
 }
 
 QuickFilters.propTypes = {

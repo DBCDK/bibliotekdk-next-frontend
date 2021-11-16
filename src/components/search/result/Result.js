@@ -5,7 +5,9 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
-import { fast } from "@/lib/api/search.fragments";
+import { hitcount } from "@/lib/api/search.fragments";
+import useFilters from "@/components/hooks/useFilters";
+
 import Divider from "@/components/base/divider";
 import ViewSelector from "../viewselector";
 
@@ -117,16 +119,10 @@ export default function Wrap({
   viewSelected,
   onPageChange,
 }) {
-  // settings
-  const limit = 10; // limit
+  const { getQuery } = useFilters();
 
-  const router = useRouter();
-  const { worktype = null } = router.query;
-  const facet = worktype ? [{ field: "type", value: worktype }] : null;
   // use the useData hook to fetch data
-  const fastResponse = useData(
-    q && fast({ q, offset: 0, limit, facets: facet })
-  );
+  const fastResponse = useData(q && hitcount({ q, filters: getQuery() }));
 
   if (fastResponse.error) {
     return null;

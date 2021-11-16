@@ -1,8 +1,24 @@
 .filter {
-  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+.list .item span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list .item span .selected {
+  padding: 0 var(--pt2);
+  max-width: 40%;
+  color: var(--gray);
+
+  /* dots overflow */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .category {

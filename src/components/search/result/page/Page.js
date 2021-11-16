@@ -3,6 +3,9 @@ import ResultRow from "../row";
 
 import { useData } from "@/lib/api/api";
 import { fast, all } from "@/lib/api/search.fragments";
+
+import useFilters from "@/components/hooks/useFilters";
+
 import { useRouter } from "next/router";
 
 /**
@@ -50,15 +53,20 @@ export default function Wrap({ q, page, onWorkClick }) {
   const limit = 10; // limit
   const offset = limit * (page - 1); // offset
 
-  const router = useRouter();
-  const { worktype = null } = router.query;
-  const facet = worktype ? [{ field: "type", value: worktype }] : null;
+  // const router = useRouter();
+  // const { worktype = null } = router.query;
+  // const facet = worktype ? [{ field: "type", value: worktype }] : null;
   // use the useData hook to fetch data
   // const facet = [{ field: "type", value: "movie" }];
   //const facets = null;
 
-  const fastResponse = useData(q && fast({ q, limit, offset, facets: facet }));
-  const allResponse = useData(q && all({ q, limit, offset, facets: facet }));
+  const { getQuery } = useFilters();
+
+  const filters = getQuery();
+
+  // use the useData hook to fetch data
+  const fastResponse = useData(q && fast({ q, offset: 0, limit, filters }));
+  const allResponse = useData(q && all({ q, limit, offset, filters }));
 
   if (fastResponse.error || allResponse.error) {
     return null;

@@ -1,8 +1,13 @@
 /**
- * Hook for getting constants and function for use when filtering on worktype
+ * Hook for filter sync cross components
+ *
+ * OBS! useFilters hook is SWR connected and will trigger an update
+ * on all connected components.
  */
 
+import { useEffect } from "react";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 // current supported filters
 const allFilters = [
@@ -18,48 +23,104 @@ const allFilters = [
   "workType",
 ];
 
+// Global state
+let locale = {};
+
+// Custom fetcher
+const fetcher = () => locale;
+
 function useFilters() {
+  // router
   const router = useRouter();
+  // SWR
+  const { data: _filters, mutate: _setFilters } = useSWR("filters", fetcher, {
+    initialData: {},
+  });
 
   /**
-   * Filters from query
+   * Restore filters by query params
    *
-   * @returns {object}
    */
-  const filters = {};
-  router &&
-    Object.entries(router.query).forEach(([key, val]) => {
+  useEffect(() => {
+    if (router) {
+      // set locale object
+      locale = getQuery();
+      // update locale state (swr)
+      _setFilters(locale);
+    }
+  }, []);
+
+  /**
+   * Update locale filters
+   *
+   * @param filters
+   *
+   */
+  const setFilters = (include = {}) => {
+    const params = {};
+    Object.entries(include).forEach(([key, val]) => {
       if (allFilters.includes(key)) {
-        filters[key] = [val];
+        console.log("setFilters => val", val);
+
+        params[key] = val;
       }
     });
 
+    // set locale object
+    locale = params;
+
+    // update locale state (swr)
+    _setFilters(locale);
+  };
+
   /**
-   * Updates filters in router
+   * Get filters from query params
+   *
+   * @param exclude params
    *
    */
-  const setFilters = (filters) => {
+  const getQuery = () => {
+    const filters = {};
+    Object.entries(router.query).forEach(([key, val]) => {
+      if (allFilters.includes(key) && val) {
+        filters[key] = val && val.split(",");
+      }
+    });
+    return filters;
+  };
+
+  /**
+   * Set filters in query params
+   *
+   * @param exclude params
+   *
+   */
+  const setQuery = (exclude = []) => {
+    const include = _filters;
     const params = {};
-    Object.entries(filters).forEach(([key, val]) => {
+    // include
+    Object.entries(include).forEach(([key, val]) => {
       if (allFilters.includes(key)) {
         params[key] = val.join();
       }
     });
 
-    console.log("setFilters => params", params);
+    // exclude tags
+    const copy = { ...router.query };
+    exclude.forEach((param) => delete copy[param]);
 
-    false &&
-      router &&
+    // update router
+    router &&
       router.push({
         pathname: router.pathname,
         query: {
-          ...router.query,
+          ...copy,
           ...params,
         },
       });
   };
 
-  return [filters, setFilters];
+  return { filters: _filters, setFilters, getQuery, setQuery };
 }
 
 export default useFilters;
