@@ -1,16 +1,16 @@
 /**
- * Hook for filter sync cross components
+ * Hook for filter sync across components
  *
  * OBS! useFilters hook is SWR connected and will trigger an update
- * on all connected components.
+ * on connected components.
  */
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
-// current supported filters
-const allFilters = [
+// current supported filter types
+const types = [
   "accessType",
   "audience",
   "creator",
@@ -29,13 +29,27 @@ let locale = {};
 // Custom fetcher
 const fetcher = () => locale;
 
+/**
+ * function to build the default (empty) filters object
+ *
+ * @returns {object}
+ */
+
+function buildFilters() {
+  const params = {};
+  types.forEach((type) => (params[type] = []));
+  return params;
+}
+
 function useFilters() {
   // router
   const router = useRouter();
   // SWR
   const { data: _filters, mutate: _setFilters } = useSWR("filters", fetcher, {
-    initialData: {},
+    initialData: buildFilters(),
   });
+
+  const base = buildFilters();
 
   /**
    * Restore filters by query params
@@ -59,15 +73,13 @@ function useFilters() {
   const setFilters = (include = {}) => {
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
-      if (allFilters.includes(key)) {
-        console.log("setFilters => val", val);
-
+      if (types.includes(key)) {
         params[key] = val;
       }
     });
 
     // set locale object
-    locale = params;
+    locale = { ...base, ...params };
 
     // update locale state (swr)
     _setFilters(locale);
@@ -82,11 +94,12 @@ function useFilters() {
   const getQuery = () => {
     const filters = {};
     Object.entries(router.query).forEach(([key, val]) => {
-      if (allFilters.includes(key) && val) {
+      if (types.includes(key) && val) {
         filters[key] = val && val.split(",");
       }
     });
-    return filters;
+
+    return { ...base, ...filters };
   };
 
   /**
@@ -96,31 +109,47 @@ function useFilters() {
    *
    */
   const setQuery = (exclude = []) => {
-    const include = _filters;
+    /**
+     * ensure all filters is represented, if not, the router update
+     * can get messed up by not removing all non-represented filters.
+     */
+    const include = { ...base, ..._filters };
+
     const params = {};
     // include
     Object.entries(include).forEach(([key, val]) => {
-      if (allFilters.includes(key)) {
+      if (types.includes(key)) {
         params[key] = val.join();
       }
     });
 
-    // exclude tags
-    const copy = { ...router.query };
-    exclude.forEach((param) => delete copy[param]);
+    // query params
+    const query = { ...router.query };
+
+    // merge current query params and new filters
+    const merged = { ...query, ...params };
+
+    // remove empty params
+    Object.entries(merged).forEach(([key, val]) => {
+      console.log("val", val);
+
+      if (val.length === 0 || val === "") {
+        delete merged[key];
+      }
+    });
+
+    // exclude tags from query
+    exclude.forEach((param) => delete merged[param]);
 
     // update router
     router &&
       router.push({
         pathname: router.pathname,
-        query: {
-          ...copy,
-          ...params,
-        },
+        query: merged,
       });
   };
 
-  return { filters: _filters, setFilters, getQuery, setQuery };
+  return { filters: _filters, setFilters, getQuery, setQuery, types };
 }
 
 export default useFilters;

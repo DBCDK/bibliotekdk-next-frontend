@@ -26,30 +26,8 @@ import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 
 function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
-  // Selected terms
-  // const [terms, setTerms] = useState([]);
-
-  // facet ("category") selected
+  // selected facet ("category")
   const { facet } = context;
-
-  // Reset on facet (page) change
-  // useEffect(() => {
-  //   setTerms([]);
-  // }, [facet]);
-
-  // update selected terms in main-modal context
-  // useEffect(() => {
-  // if (modal.stack && facet) {
-  //   // previous selected
-  //   const selected = modal.stack?.[0]?.context?.selected || {};
-  //   modal.update(0, {
-  //     selected: { ...selected, [facet.name]: terms },
-  //   });
-  // }
-  // if (facet && onSelect) {
-  //   onSelect({ [facet.name]: terms });
-  // }
-  // }, [terms]);
 
   // handle term select
   function handleTermSelect(title) {
@@ -61,10 +39,11 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
     } else {
       copy.push(title);
     }
-    // setTerms(copy);
 
     onSelect({ [facet.name]: copy });
   }
+
+  console.log("Selected => render...");
 
   return (
     <>
@@ -98,7 +77,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
                   tabIndex="-1"
                 />
                 <Text
-                  lines="1"
+                  lines={1}
                   skeleton={isLoading}
                   type="text3"
                   dataCy={`text-${title}`}
@@ -111,7 +90,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
                   {title}
                 </Text>
                 <Text
-                  lines="1"
+                  lines={1}
                   skeleton={isLoading}
                   type="text3"
                   dataCy={`text-${count}`}
@@ -128,19 +107,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         // disabled={terms.length === 0}
         skeleton={isLoading}
         onClick={() => {
-          // previous selected
-          // const selected = modal.stack?.[0]?.context?.selected || {};
-
-          // modal.update(0, {
-          //   selected: { ...selected, [facet.name]: terms },
-          // });
-
-          // Hack-alert (multiple setState calls after eachother)
-          // setTimeout(() => modal.prev(), 100);
           modal.prev();
-
-          // const uid = modal.stack?.[0]?.uid;
-          // onChange && onChange({ [facet.name]: terms, modal: [uid] });
         }}
         className={styles.submit}
       >
@@ -158,11 +125,9 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
  *
  * @returns {component}
  */
-
 export function Filter(props) {
-  const { data, selected, onSubmit, isLoading, modal, context } = props;
-
-  console.log("selected", selected);
+  const { data, selected, onSubmit, onClear, isLoading, modal, context } =
+    props;
 
   // facet data
   const facets = data?.search?.facets || [];
@@ -171,21 +136,36 @@ export function Filter(props) {
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
 
+  console.log("Filter => render...");
+
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
-      <Top
-        title={
-          !facet &&
-          Translate({
-            context: "modal",
-            label: "title-filter",
-          })
-        }
-      />
+      <Top />
       {facet ? (
         <SelectedFilter terms={selected?.[facet.name] || []} {...props} />
       ) : (
         <>
+          <span className={styles.wrap}>
+            <Title type="title4" className={styles.title}>
+              {Translate({
+                context: "modal",
+                label: "title-filter",
+              })}
+            </Title>
+            <Link
+              className={styles.clear}
+              onClick={() => onClear && onClear()}
+              border={{ bottom: { keepVisible: true } }}
+            >
+              <Text type="text3">
+                {Translate({
+                  context: "general",
+                  label: "clearAll",
+                })}
+              </Text>
+            </Link>
+          </span>
+
           <List.Group
             enabled={!isLoading}
             data-cy="list-facets"
@@ -234,7 +214,7 @@ export function Filter(props) {
           </List.Group>
           <Button
             skeleton={isLoading}
-            onClick={() => onSubmit && onSubmit(["modal"])}
+            onClick={() => onSubmit && onSubmit()}
             className={styles.submit}
           >
             {Translate({
@@ -265,7 +245,22 @@ export function FilterSkeleton() {
 }
 
 export default function Wrap(props) {
-  const { context, active } = props;
+  const { modal, context } = props;
+
+  /**
+   * Restore selections from query, on modal close
+   *
+   * Prevents: If user checks/unchecks selections and closing the modal
+   * without updating the url (clicking the button)
+   *
+   */
+  const restoreOnClose = true;
+
+  useEffect(() => {
+    if (modal.isVisible) {
+      restoreOnClose && setFilters(getQuery());
+    }
+  }, [modal.isVisible]);
 
   // get search query from context
   const { q } = context;
@@ -279,10 +274,10 @@ export default function Wrap(props) {
   // facets according to query filters
   const { data, isLoading } = useData(q && facets({ q, filters }));
 
-  // useEffect(() => {}, [active]);
-
   // merge data
   const mergedData = merge({}, data, hitcountData);
+
+  console.log("Wrap => render...");
 
   if (isLoading) {
     return <FilterSkeleton {...props} />;
@@ -291,13 +286,16 @@ export default function Wrap(props) {
   return (
     <Filter
       data={mergedData}
-      selected={{ ...getQuery(), ...filters }}
+      selected={filters}
       onSelect={(selected) => {
+        // Updates selected filter in useFilters
         setFilters({ ...filters, ...selected });
       }}
-      onSubmit={(excluded) => {
-        setQuery(excluded);
+      onSubmit={() => {
+        // exclude modal param -> will close the modal on submit
+        setQuery(["modal"]);
       }}
+      onClear={() => setFilters({})}
       {...props}
     />
   );

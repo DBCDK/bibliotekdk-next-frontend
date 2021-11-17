@@ -250,6 +250,10 @@
       "select-another-library": {
         "da": "Vælg et andet bibliotek",
         "en": "LABEL mangler oversættelse"
+      },
+      "clearAll": {
+        "da": "Ryd alt",
+        "en": "LABEL: mangler oversættelse"
       }
     },
     "articles": {

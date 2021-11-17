@@ -16,7 +16,6 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
-import { useRouter } from "next/router";
 
 /**
  * Search result

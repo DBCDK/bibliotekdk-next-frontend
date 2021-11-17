@@ -6,8 +6,6 @@ import { fast, all } from "@/lib/api/search.fragments";
 
 import useFilters from "@/components/hooks/useFilters";
 
-import { useRouter } from "next/router";
-
 /**
  * Row representation of a search result entry
  *

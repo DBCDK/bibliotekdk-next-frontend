@@ -4,6 +4,15 @@
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
 }
 
+.filter > .wrap {
+  align-items: baseline;
+  padding: 0 0 var(--pt3) 0;
+}
+
+.clear {
+  margin-left: var(--pt2);
+}
+
 .list .item span {
   display: flex;
   align-items: center;
@@ -22,7 +31,7 @@
 }
 
 .category {
-  padding: 0 0 var(--pt4) 0;
+  padding: 0 0 var(--pt3) 0;
 }
 
 .select > div {

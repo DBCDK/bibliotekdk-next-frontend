@@ -103,7 +103,7 @@ function Container({ children, className = {}, mock = {} }) {
   const didLoad = useRef(false);
 
   // modal has content and should be visible
-  const isVisible = modal.stack.length > 0 && modal.index() > -1;
+  const isVisible = modal.isVisible;
 
   // active/visible modal class
   const visibleClass = isVisible ? "modal_visible" : "";
@@ -297,6 +297,7 @@ function Container({ children, className = {}, mock = {} }) {
             // Enrich page components with props
             return React.cloneElement(page, {
               modal: { ...modal, ...mock },
+
               // stack index
               index,
               context: obj.context,
@@ -400,6 +401,9 @@ function Page(props) {
 
 export function useModal() {
   const { stack, setStack, save, router } = useContext(ModalContext);
+
+  // modal is visible
+  const _isVisible = stack.length > 0 && _index() > -1;
 
   /**
    * Push
@@ -631,6 +635,7 @@ export function useModal() {
   }
 
   return {
+    // public functions
     currentPageUid: router.query[URL_PAGE_UID_KEY],
     push: _push,
     pop: _prev,
@@ -642,6 +647,8 @@ export function useModal() {
     prev: _prev,
     setStack,
     stack,
+    isVisible: _isVisible,
+    // privat functions
     _doSelect,
     _router: router,
   };

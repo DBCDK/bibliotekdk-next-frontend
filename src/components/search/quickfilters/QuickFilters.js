@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 
+import useFilters from "@/components/hooks/useFilters";
+
 import Section from "@/components/base/section";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -19,6 +21,12 @@ export function QuickFilters({
   onViewSelect,
   viewSelected,
 }) {
+  const { getQuery } = useFilters();
+
+  const filters = getQuery();
+
+  console.log("quick filters", filters);
+
   return (
     <Container fluid>
       <Row>
