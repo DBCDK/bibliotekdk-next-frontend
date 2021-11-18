@@ -39,6 +39,44 @@ export function branchUserParameters({ branchId }) {
 }
 
 /**
+ * Get Holdings for a branch.
+ * @param branchId
+ * @param pids
+ * @return {{variables: {branchId, pids}, slowThreshold: number, query: string}}
+ */
+export function branchHoldings({ branchId, pids }) {
+  return {
+    query: `query {
+        branches(branchId: $branchId){
+          result{
+            name
+            branchId
+            agencyId
+            holdingStatus(pids: $pids){
+                  branchId
+                  willLend 
+                  expectedDelivery 
+                  localHoldingsId 
+                  circulationRule
+                  issueId
+                  department
+                  issueText
+                  location
+                  note
+                  readyForLoan
+                  status
+                  subLocation
+            }
+          }
+        }
+      monitor(name: "bibdknext_branch_holdings")
+     }`,
+    variables: { branchId, pids },
+    slowThreshold: 3000,
+  };
+}
+
+/**
  * Get orderPolicy for a branch
  */
 export function branchOrderPolicy({ branchId, pid }) {

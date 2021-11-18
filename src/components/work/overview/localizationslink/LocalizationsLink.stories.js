@@ -14,29 +14,32 @@ export default {
 export function LocalizationlinkWithLocalizationsUserLoggedIn() {
   const modal = useModal();
 
-  const context = {
-    //title: Translate({ context: "modal", label: "title-order" }),
-    title: "fisk",
-    workId: "work-of:870970-basis:01362984",
-    //materialType: selectedMaterial.materialType,
-    materialType: "hest",
+  /*const openLocalizationsModal = () => {
+    modal.push("localizations", { ...context, ...selectedLocalizations });
+  };*/
+
+  const alertopener = () => {
+    alert("LOCALIZATIONS");
   };
 
-  const openLocalizationsModal = () => {
-    modal.push("localizations", context);
-  };
+  console.log(selectedLocalizations, "SELECTED");
 
   return (
     <div>
-      <StoryTitle>Localizations - user logged in - with modal</StoryTitle>
+      <StoryTitle>Localizations - user not logged in </StoryTitle>
       <StoryDescription>
         link shows total number of localizations for selected material
       </StoryDescription>
 
-      <LocalizationsLink count="1" opener={openLocalizationsModal} user={{}} />
-      <Modal.Container>
+      <LocalizationsLink
+        localizations={selectedLocalizations.localizations || {}}
+        opener={alertopener}
+        user={{}}
+      />
+      {/*<Modal.Container>
         <Modal.Page id="localizations" component={Localizations} />
       </Modal.Container>
+      */}
     </div>
   );
 }
@@ -52,6 +55,7 @@ export function LocalizationlinkWithLocalizations() {
   const openalert = () => {
     alert("LOCALIZATIONS");
   };
+
   return (
     <div>
       <StoryTitle>Localizations - not logged in</StoryTitle>

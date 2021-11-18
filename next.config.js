@@ -90,8 +90,7 @@ module.exports = {
         : false,
     api: {
       url:
-        process.env.NEXT_PUBLIC_API_URL ||
-        "https://alfa-api.stg.bibliotek.dk/graphql",
+        process.env.NEXT_PUBLIC_API_URL || "http://172.17.33.14:5000/graphql",
 
       timeout: process.env.API_TIMEOUT_MS || 150,
     },

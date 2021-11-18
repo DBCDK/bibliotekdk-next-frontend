@@ -7,9 +7,8 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
 
-export function LocalizationsLink({ count, opener, user }) {
-  console.log(user, "USER");
-
+export function LocalizationsLink({ localizations, opener, user }) {
+  const count = localizations?.count?.toString() || "0";
   if (count === "0") {
     return (
       <div>
@@ -50,12 +49,16 @@ export default function wrap({ selectedMaterial, workId }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const user = useUser();
 
+  // get pids from selected materialtype - to look for detailed holdings
+  console.log(selectedMaterial, "SELECTED");
+
   const modal = useModal();
   const openLocalizationsModal = () => {
     modal.push("localizations", {
       title: Translate({ context: "modal", label: "title-order" }),
       workId,
       materialType: selectedMaterial.materialType,
+      pids: [],
     });
   };
   const selectedLocalizations = data?.work?.materialTypes?.filter(
@@ -67,7 +70,7 @@ export default function wrap({ selectedMaterial, workId }) {
   }
   return (
     <LocalizationsLink
-      count={selectedLocalizations?.localizations?.count.toString() || "0"}
+      localizations={selectedLocalizations?.localizations || "0"}
       opener={openLocalizationsModal}
       user={user}
     />
