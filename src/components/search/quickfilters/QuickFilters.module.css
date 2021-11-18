@@ -2,6 +2,15 @@
   display: none;
 }
 
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.link i {
+  margin-right: var(--pt1);
+}
+
 .quickfilters {
   width: 100%;
   display: flex;

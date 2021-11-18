@@ -87,10 +87,6 @@
         "da": "Alle",
         "en": "All"
       },
-      "all_materials": {
-        "da": "Alle kategorier",
-        "en": "All categories"
-      },
       "by": {
         "da": "af",
         "en": "by"
@@ -665,16 +661,24 @@
         "da": "Se flere",
         "en": "More"
       },
-      "filters": {
-        "da": "Filtrer",
-        "en": "Filters"
-      },
       "filtersResultText": {
         "da": "Mest relevante resultater",
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFilters": {
         "da": "Vis alle filtre",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "showAllFiltersCount": {
+        "da": "Vis alle filtre (%s)",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "filters": {
+        "da": "Filtre",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "filtersCount": {
+        "da": "Filtre (%s)",
         "en": "LABEL: mangler oversættelse"
       },
       "showXResults": {
@@ -784,6 +788,34 @@
       "label-creator": {
         "da": "Kunstner",
         "en": ""
+      },
+      "label-all": {
+        "da": "Alle materialekategorier",
+        "en": "All categories"
+      },
+      "label-literature": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "label-article": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "label-movie": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "label-game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "label-music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "label-sheetmusic": {
+        "da": "Noder",
+        "en": "Sheet music"
       }
     },
     "modal": {

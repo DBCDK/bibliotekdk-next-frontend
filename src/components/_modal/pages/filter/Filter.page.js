@@ -43,8 +43,6 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
     onSelect({ [facet.name]: copy });
   }
 
-  console.log("Selected => render...");
-
   return (
     <>
       <Text type="text1" className={styles.category}>
@@ -135,8 +133,6 @@ export function Filter(props) {
 
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
-
-  console.log("Filter => render...");
 
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
@@ -277,8 +273,6 @@ export default function Wrap(props) {
   // merge data
   const mergedData = merge({}, data, hitcountData);
 
-  console.log("Wrap => render...");
-
   if (isLoading) {
     return <FilterSkeleton {...props} />;
   }
@@ -293,7 +287,7 @@ export default function Wrap(props) {
       }}
       onSubmit={() => {
         // exclude modal param -> will close the modal on submit
-        setQuery(["modal"]);
+        setQuery(undefined, ["modal"]);
       }}
       onClear={() => setFilters({})}
       {...props}

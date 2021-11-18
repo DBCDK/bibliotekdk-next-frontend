@@ -75,3 +75,13 @@
 .materials button:last-child {
   margin: 0 0 var(--pt2) 0;
 }
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--pt2);
+}
+
+.link i {
+  margin-right: var(--pt1);
+}

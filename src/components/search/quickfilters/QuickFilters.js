@@ -3,11 +3,10 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import useFilters from "@/components/hooks/useFilters";
 
-import Section from "@/components/base/section";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
+import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
-import ViewSelector from "../viewselector";
 
 import styles from "./QuickFilters.module.css";
 
@@ -21,14 +20,12 @@ export function QuickFilters({
   onViewSelect,
   viewSelected,
 }) {
-  const { getQuery } = useFilters();
+  const { getCount } = useFilters();
 
-  const filters = getQuery();
-
-  console.log("quick filters", filters);
+  const count = getCount().toString();
 
   return (
-    <Container fluid>
+    <Container fluid className={styles.section}>
       <Row>
         <Col xs={12} lg={{ offset: 3 }}>
           <div className={styles.quickfilters}>
@@ -43,12 +40,24 @@ export function QuickFilters({
             </Text>
 
             <Link
+              className={styles.link}
               onClick={() => onFiltersClick()}
-              border={{ bottom: { keepVisible: true } }}
+              border={false}
             >
-              <Text type="text3">
-                {Translate({ context: "search", label: "showAllFilters" })}
-              </Text>
+              <Icon src="settings.svg" size={2} />
+              <Link
+                onClick={(e) => e.preventDefault()}
+                border={{ bottom: { keepVisible: true } }}
+              >
+                <Text type="text3">
+                  {Translate({
+                    context: "search",
+                    label:
+                      count === "0" ? "showAllFilters" : "showAllFiltersCount",
+                    vars: count === "0" ? null : [count],
+                  })}
+                </Text>
+              </Link>
             </Link>
           </div>
         </Col>

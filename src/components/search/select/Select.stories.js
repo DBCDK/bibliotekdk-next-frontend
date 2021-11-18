@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Select from "@/components/base/select";
+import Select from "@/components/search/select";
 
 export default {
   title: "base/Select",

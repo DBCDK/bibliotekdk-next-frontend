@@ -23,6 +23,16 @@ const types = [
   "workType",
 ];
 
+// Worktypes for work type selections
+const workTypes = [
+  "literature",
+  "article",
+  "movie",
+  "game",
+  "music",
+  "sheetmusic",
+];
+
 // Global state
 let locale = {};
 
@@ -49,6 +59,7 @@ function useFilters() {
     initialData: buildFilters(),
   });
 
+  // represent all filters: All type names as key and empty array as value
   const base = buildFilters();
 
   /**
@@ -90,6 +101,8 @@ function useFilters() {
    *
    * @param exclude params
    *
+   * @returns {object}
+   *
    */
   const getQuery = () => {
     const filters = {};
@@ -108,12 +121,12 @@ function useFilters() {
    * @param exclude params
    *
    */
-  const setQuery = (exclude = []) => {
+  const setQuery = (include = _filters, exclude = []) => {
     /**
      * ensure all filters is represented, if not, the router update
      * can get messed up by not removing all non-represented filters.
      */
-    const include = { ...base, ..._filters };
+    include = { ...base, ...include };
 
     const params = {};
     // include
@@ -131,9 +144,7 @@ function useFilters() {
 
     // remove empty params
     Object.entries(merged).forEach(([key, val]) => {
-      console.log("val", val);
-
-      if (val.length === 0 || val === "") {
+      if (val === "") {
         delete merged[key];
       }
     });
@@ -149,7 +160,33 @@ function useFilters() {
       });
   };
 
-  return { filters: _filters, setFilters, getQuery, setQuery, types };
+  /**
+   * Count active filters in query (!OBS: Query filters only)
+   *
+   * @returns {int}
+   */
+  function getCount() {
+    const filters = getQuery();
+
+    let count = 0;
+    Object.values(filters).map((value) => {
+      if (value.length > 0) {
+        value.forEach((v) => count++);
+      }
+    });
+
+    return count;
+  }
+
+  return {
+    filters: _filters,
+    setFilters,
+    getQuery,
+    setQuery,
+    getCount,
+    types,
+    workTypes,
+  };
 }
 
 export default useFilters;
