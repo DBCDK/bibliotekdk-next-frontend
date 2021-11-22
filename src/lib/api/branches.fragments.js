@@ -46,28 +46,33 @@ export function branchUserParameters({ branchId }) {
  */
 export function branchHoldings({ branchId, pids }) {
   return {
-    query: `query {
-        branches(branchId: $branchId){
-          result{
-            name
-            branchId
-            agencyId
-            holdingStatus(pids: $pids){
-                  branchId
-                  willLend 
-                  expectedDelivery 
-                  localHoldingsId 
-                  circulationRule
-                  issueId
-                  department
-                  issueText
-                  location
-                  note
-                  readyForLoan
-                  status
-                  subLocation
-            }
-          }
+    query: `query BranchHoldings($branchId: String!, $pids: [String]){
+              branches(branchId:$branchId){
+              result{
+                name
+                agencyId
+                holdingStatus(pids:$pids){
+                  count
+                  lamp{color message}
+                  holdingItems
+                    {
+                      branch
+                      branchId
+                      willLend 
+                      expectedDelivery 
+                      localHoldingsId 
+                      circulationRule
+                      issueId
+                      department
+                      issueText
+                      location
+                      note
+                      readyForLoan
+                      status
+                      subLocation
+                    }
+                }
+              }
         }
       monitor(name: "bibdknext_branch_holdings")
      }`,

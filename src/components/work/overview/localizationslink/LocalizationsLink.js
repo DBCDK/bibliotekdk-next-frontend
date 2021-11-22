@@ -49,8 +49,8 @@ export default function wrap({ selectedMaterial, workId }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const user = useUser();
 
-  // get pids from selected materialtype - to look for detailed holdings
-  console.log(selectedMaterial, "SELECTED");
+  // get pids from selected material to look up detailed holdings
+  const pids = selectedMaterial?.manifestations?.map((mani) => mani.pid);
 
   const modal = useModal();
   const openLocalizationsModal = () => {
@@ -58,7 +58,7 @@ export default function wrap({ selectedMaterial, workId }) {
       title: Translate({ context: "modal", label: "title-order" }),
       workId,
       materialType: selectedMaterial.materialType,
-      pids: [],
+      pids: pids,
     });
   };
   const selectedLocalizations = data?.work?.materialTypes?.filter(

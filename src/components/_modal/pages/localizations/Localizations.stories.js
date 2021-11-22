@@ -5,6 +5,13 @@ export default {
   title: "modal/Localizations",
 };
 
+const dummybranch = {
+  name: "Gjern Bibliotek",
+  branchId: "774000",
+  agencyUrl: "http://dummybibliotek.dk",
+  agencyName: "Silkeborg Biblioteker",
+};
+
 const dummylocalizations = {
   work: {
     materialTypes: [
@@ -110,75 +117,37 @@ export function ShowLocalzationsNotLoggedIn() {
   );
 }
 
-export function LocalizationItemGreen() {
-  const dummyBrances = {
+export function LocalizationItemLoading() {
+  const greatGatsby = {
     data: {
       branches: {
         result: [
           {
             name: "Hovedbiblioteket, Krystalgade",
-            branchId: "710100",
-          },
-          {
-            name: "Blågårdens Bibliotek",
-            branchId: "710104",
-          },
-          {
-            name: "Brønshøj Bibliotek",
-            branchId: "710105",
-          },
-          {
-            name: "Christianshavns Bibliotek",
-            branchId: "710106",
-          },
-          {
-            name: "Husum Bibliotek",
-            branchId: "710107",
-          },
-          {
-            name: "Islands Brygge Bibliotek",
-            branchId: "710108",
-          },
-          {
-            name: "Øbro Jagtvej Bibliotek",
-            branchId: "710109",
-          },
-          {
-            name: "Biblioteket Rentemestervej",
-            branchId: "710110",
-          },
-          {
-            name: "Nørrebro Bibliotek",
-            branchId: "710111",
-          },
-          {
-            name: "Solvang Bibliotek",
-            branchId: "710112",
-          },
-        ],
-      },
-    },
-  };
-  const dummyDetailed = {
-    data: {
-      holdingStatus: {
-        branchId: "710100",
-        count: 3,
-        holdingStatus: [
-          {
-            willLend: "true",
-            expectedDelivery: "2021-11-16",
-            localHoldingsId: "29317038",
-          },
-          {
-            willLend: "true",
-            expectedDelivery: "2021-11-16",
-            localHoldingsId: "51980247",
-          },
-          {
-            willLend: "true",
-            expectedDelivery: "2021-11-16",
-            localHoldingsId: "54871910",
+            agencyId: "710100",
+            holdingStatus: {
+              count: 1,
+              message: "this is a message",
+              lamp: "green",
+              holdingItems: [
+                {
+                  branch: "Hovedbiblioteket",
+                  branchId: "710100",
+                  willLend: "true",
+                  expectedDelivery: "2021-11-19",
+                  localHoldingsId: "22137298",
+                  circulationRule: "Standard",
+                  issueId: "",
+                  department: "Voksen",
+                  issueText: "",
+                  location: "Fjernmagasin, skal reserveres",
+                  note: "",
+                  readyForLoan: "0",
+                  status: "OnShelf",
+                  subLocation: "Skønlitteratur",
+                },
+              ],
+            },
           },
         ],
       },
@@ -186,8 +155,57 @@ export function LocalizationItemGreen() {
   };
   return (
     <LocalizationItem
-      branch={dummyBrances.result[0]}
-      detailedHoldings={dummyDetailed.data}
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={true}
+    />
+  );
+}
+
+export function LocalizationItemGreen() {
+  const greatGatsby = {
+    data: {
+      branches: {
+        result: [
+          {
+            name: "Hovedbiblioteket, Krystalgade",
+            agencyId: "710100",
+            holdingStatus: {
+              count: 1,
+              lamp: {
+                color: "green",
+                message: "at_home",
+              },
+              holdingItems: [
+                {
+                  branch: "Hovedbiblioteket",
+                  branchId: "710100",
+                  willLend: "true",
+                  expectedDelivery: "2021-11-19",
+                  localHoldingsId: "22137298",
+                  circulationRule: "Standard",
+                  issueId: "",
+                  department: "Voksen",
+                  issueText: "",
+                  location: "Fjernmagasin, skal reserveres",
+                  note: "",
+                  readyForLoan: "0",
+                  status: "OnShelf",
+                  subLocation: "Skønlitteratur",
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  };
+
+  return (
+    <LocalizationItem
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={false}
     />
   );
 }
