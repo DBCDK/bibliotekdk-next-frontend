@@ -22,15 +22,7 @@ import Top from "@/components/_modal/pages/base/top";
 import Router from "next/router";
 import useUser from "@/components/hooks/useUser";
 
-function Row({
-  branch,
-  onSelect,
-  isLoading,
-  disabled,
-  includeArrows,
-  _ref,
-  callbackUrl,
-}) {
+function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
   const matchName = find(branch.highlights, {
     key: "name",
@@ -44,7 +36,7 @@ function Row({
 
   return (
     <List.Select
-      onSelect={() => (onSelect ? onSelect(branch, callbackUrl) : {})}
+      onSelect={() => onSelect(branch)}
       label={branch.name}
       disabled={disabled}
       className={[animations["on-hover"]].join(" ")}
@@ -101,10 +93,9 @@ export function LoginPickup({
   onChange,
   isLoading,
   includeArrows,
-  onSelect,
-  title,
-  description,
+  modal,
 }) {
+  const context = { context: "order" };
   const allBranches = data?.result;
 
   const APP_URL =
@@ -114,20 +105,30 @@ export function LoginPickup({
   const regexp = /&modal=+[0-9]*/g;
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
 
+  // show loanerform for selected bracnch
+  const onSelect = (branch) => {
+    modal.push("loanerform", {
+      branchId: branch.branchId,
+      doPolicyCheck: false,
+      callbackUrl: callbackurl,
+      mode: "login",
+    });
+  };
+
   return (
     <div className={`${styles.login} ${className}`}>
       <Top />
       <div className={styles.search}>
-        {title && (
-          <Title type="title4" className={styles.title}>
-            {Translate(title)}
-          </Title>
-        )}
-        {description && <Text type="text3">{Translate(description)}</Text>}
+        <Title type="title4" className={styles.title}>
+          {Translate({ ...context, label: "pickup-search-title" })}
+        </Title>
+        <Text type="text3">
+          {Translate({ ...context, label: "pickup-search-description" })}
+        </Text>
         <Search
           dataCy="pickup-search-input"
           placeholder={Translate({
-            context: "order",
+            ...context,
             label: "pickup-input-placeholder",
           })}
           className={styles.input}
@@ -139,7 +140,6 @@ export function LoginPickup({
           {allBranches.map((branch, idx) => {
             return (
               <Row
-                callbackUrl={callbackurl}
                 key={`${branch.branchId}-${idx}`}
                 branch={branch}
                 onSelect={onSelect}
@@ -161,8 +161,6 @@ LoginPickup.propTypes = {
   onSelect: PropTypes.func,
   selected: PropTypes.object,
   onChange: PropTypes.func,
-  title: PropTypes.object,
-  description: PropTypes.object,
 };
 
 /**
@@ -174,7 +172,7 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency, modal } = props;
+  const { agency } = props;
 
   const [query, setQuery] = useState("");
 
@@ -197,17 +195,6 @@ export default function Wrap(props) {
     ],
   };
 
-  // show loanerform for selected bracnch
-  const onSelect = (branch, callbackurl) => {
-    modal.push("loanerform", {
-      branchId: branch.branchId,
-      doPolicyCheck: false,
-      callbackUrl: callbackurl,
-      mode: "login",
-    });
-  };
-
-  const context = {};
   const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
   return (
@@ -218,9 +205,6 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       includeArrows={includeArrows}
       onLogin={signIn}
-      onSelect={onSelect}
-      title={{ context: "order", label: "pickup-search-title" }}
-      description={{ context: "order", label: "pickup-search-description" }}
     />
   );
 }
