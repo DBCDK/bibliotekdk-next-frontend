@@ -3,6 +3,19 @@
  *
  */
 
+const allFilters = {
+  accessType: [],
+  audience: [],
+  creator: [],
+  fictionNonfiction: [],
+  fictiveCharacter: [],
+  genre: [],
+  language: [],
+  materialType: [],
+  subject: [],
+  workType: [],
+};
+
 /**
  * Hitcount
  *
@@ -10,6 +23,8 @@
  * @param {string} params.q the query
  */
 export function hitcount({ q, filters = {} }) {
+  const merged = { ...allFilters, ...filters };
+
   return {
     // delay: 1000, // for debugging
     query: `query ($q: String!, $filters: SearchFilters) {
@@ -18,7 +33,7 @@ export function hitcount({ q, filters = {} }) {
               }
               monitor(name: "bibdknext_search_hitcount")
             }`,
-    variables: { q, filters },
+    variables: { q, filters: merged },
     slowThreshold: 3000,
   };
 }
