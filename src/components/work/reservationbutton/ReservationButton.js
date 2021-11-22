@@ -153,6 +153,9 @@ export function OrderButton({
   if (!selectedMaterial) {
     return null;
   }
+
+  const type = selectedMaterial.materialType;
+
   const manifestations = selectedMaterial.manifestations;
   selectedMaterial = selectMaterial(manifestations);
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
@@ -209,7 +212,12 @@ export function OrderButton({
     );
   }
 
-  if (!checkRequestButtonIsTrue({ manifestations })) {
+  const notToBeOrdered = ["Periodikum", "Årbog", "Tidsskrift", "Avis"];
+
+  if (
+    !checkRequestButtonIsTrue({ manifestations }) ||
+    notToBeOrdered.includes(type)
+  ) {
     // disabled button
     return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
   }
