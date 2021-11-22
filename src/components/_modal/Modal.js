@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useInView } from "react-intersection-observer";
 
 // modal utils
-import { handleTab, scrollLock } from "./utils";
+import { handleTab, preventTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -199,21 +199,26 @@ function Container({ children, className = {}, mock = {} }) {
   useEffect(() => {
     // If tab key is pressed down
     function downHandler(e) {
-      const modalTarget = !!modalRef.current.contains(e.target);
-
       if (e.key === "Tab") {
-        isVisible && modalTarget && handleTab(e, modalRef.current);
+        isVisible && handleTab(e, modalRef.current);
       }
     }
-    // if (isVisible) {
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-    // }
-  }, []);
+    if (isVisible) {
+      // Add event listeners
+      window.addEventListener("keydown", downHandler);
+      // Remove event listeners on cleanup
+      return () => {
+        window.removeEventListener("keydown", downHandler);
+      };
+    }
+  }, [isVisible]);
+
+  // Tab key handle (locks tab in visible modal)
+  useEffect(() => {
+    if (!isVisible) {
+      preventTab(modalRef.current);
+    }
+  }, [isVisible]);
 
   // force modal focus (accessibility)
   useEffect(() => {

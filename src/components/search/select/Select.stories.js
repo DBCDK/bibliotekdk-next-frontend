@@ -1,32 +1,32 @@
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { useState } from "react";
 
-import Select from "@/components/search/select";
+import { Desktop as Select } from "@/components/search/select/Select";
 
 export default {
   title: "base/Select",
 };
 
 export function AList() {
-  const options = [
-    { value: "all", label: "all_materials" },
-    { value: "books", label: "books" },
-    { value: "articles", label: "articles" },
-    { value: "film", label: "film" },
-    { value: "games", label: "games" },
-    { value: "music", label: "music" },
-    { value: "nodes", label: "nodes" },
-  ];
+  const [state, setState] = useState("all");
 
-  const selectedMaterial = { value: "film", label: "film" };
-  const optionsclicked = (idx) => {
-    alert(options[idx].label);
-  };
+  const options = [
+    "literature",
+    "article",
+    "movie",
+    "game",
+    "music",
+    "sheetmusic",
+  ];
 
   return (
     <Select
-      options={options}
-      selectedMaterial={selectedMaterial}
-      onOptionClicked={optionsclicked}
+      options={["all", ...options]}
+      onSelect={(elem) => {
+        setState(elem);
+        // alert(elem);
+      }}
+      selected={state}
+      count={3}
     />
   );
 }

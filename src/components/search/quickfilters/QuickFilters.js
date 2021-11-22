@@ -42,6 +42,11 @@ export function QuickFilters({
             <Link
               className={styles.link}
               onClick={() => onFiltersClick()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.keyCode === 13) {
+                  onFiltersClick();
+                }
+              }}
               border={false}
             >
               <Icon src="settings.svg" size={2} />

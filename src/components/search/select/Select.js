@@ -12,7 +12,7 @@ import { cyKey } from "@/utils/trim";
 
 import styles from "./Select.module.css";
 
-function Desktop({ options = [], onSelect, selected }) {
+export function Desktop({ options = [], onSelect, selected }) {
   return (
     <Dropdown className={styles.dropdownwrap}>
       <Dropdown.Toggle
@@ -83,6 +83,11 @@ export function Mobile({
       <Link
         className={styles.link}
         onClick={() => onFilterClick()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            onFiltersClick();
+          }
+        }}
         border={false}
       >
         <Icon src="settings.svg" size={2} />

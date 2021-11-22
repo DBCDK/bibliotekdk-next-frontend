@@ -104,9 +104,9 @@ function useFilters() {
    * @returns {object}
    *
    */
-  const getQuery = () => {
+  const getQuery = (query = router.query) => {
     const filters = {};
-    Object.entries(router.query).forEach(([key, val]) => {
+    Object.entries(query).forEach(([key, val]) => {
       if (types.includes(key) && val) {
         filters[key] = val && val.split(",");
       }

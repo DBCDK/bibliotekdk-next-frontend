@@ -35,7 +35,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
     const index = copy.indexOf(title);
     // remove if already exist
     if (index > -1) {
-      delete copy.splice(index, 1);
+      copy.splice(index, 1);
     } else {
       copy.push(title);
     }
@@ -45,6 +45,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
 
   return (
     <>
+      <Top modal={modal} back={true} />
       <Text type="text1" className={styles.category}>
         {Translate({
           context: "facets",
@@ -136,11 +137,11 @@ export function Filter(props) {
 
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
-      <Top />
       {facet ? (
         <SelectedFilter terms={selected?.[facet.name] || []} {...props} />
       ) : (
         <>
+          <Top modal={modal} back={false} />
           <span className={styles.wrap}>
             <Title type="title4" className={styles.title}>
               {Translate({

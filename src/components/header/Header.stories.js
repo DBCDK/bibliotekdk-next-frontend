@@ -2,6 +2,8 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { useState } from "react";
 import { Header } from "./Header";
 
+import useFilters from "@/components/hooks/useFilters";
+
 export default {
   title: "layout/Header",
 };
@@ -16,11 +18,22 @@ export function NavHeader() {
 
   const story = { suggesterVisibleMobile, setSuggesterVisibleMobile };
 
+  const filters = useFilters();
+
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
       <StoryDescription>Full header component</StoryDescription>
-      <Header story={story} user={{ isAuthenticated: false }} />
+      <Header
+        story={story}
+        user={{ isAuthenticated: false }}
+        filters={{
+          ...filters,
+          getQuery: () => ({
+            workType: "all",
+          }),
+        }}
+      />
     </div>
   );
 }
@@ -35,13 +48,24 @@ export function NavHeaderUserLoggedIn() {
 
   const story = { suggesterVisibleMobile, setSuggesterVisibleMobile };
 
+  const filters = useFilters();
+
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
       <StoryDescription>
         Full header component - with user logged in
       </StoryDescription>
-      <Header story={story} user={{ isAuthenticated: true }} />
+      <Header
+        story={story}
+        user={{ isAuthenticated: true }}
+        filters={{
+          ...filters,
+          getQuery: () => ({
+            workType: "all",
+          }),
+        }}
+      />
     </div>
   );
 }

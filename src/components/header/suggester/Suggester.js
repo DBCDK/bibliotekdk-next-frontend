@@ -198,7 +198,7 @@ function renderInputComponent(
 
   // Doublecheck for selectedMaterial - In storybook suggester, selectedMaterial will be null and we therefor want to keep the previous placeholder)
   if (selectedMaterial) {
-    const isAll = selectedMaterial.value === "all";
+    const isAll = selectedMaterial === "all";
 
     // Update placeholder if specific worktype is selected
     if (!isAll) {
@@ -207,8 +207,8 @@ function renderInputComponent(
         label: "placeholderRelative",
         vars: [
           Translate({
-            context: "general",
-            label: selectedMaterial.label,
+            context: "facets",
+            label: `label-${selectedMaterial}`,
           }).toLowerCase(),
         ],
       });
@@ -339,10 +339,8 @@ export function Suggester({
             label: isMobile ? "placeholderMobile" : "placeholder",
           }) +
             Translate({
-              context: "general",
-              label: selectedMaterial?.label
-                ? selectedMaterial.label
-                : "all_materials",
+              context: "facets",
+              label: `label-${selectedMaterial}`,
             })
         );
       }
