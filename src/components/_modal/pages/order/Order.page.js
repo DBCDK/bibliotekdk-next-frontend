@@ -6,7 +6,10 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
-import { submitOrder } from "@/lib/api/order.mutations";
+import {
+  submitOrder,
+  submitPeriodicaArticleOrder,
+} from "@/lib/api/order.mutations";
 
 import useUser from "@/components/hooks/useUser";
 
@@ -45,6 +48,8 @@ export function Order({
   initial = {},
   authUser,
   order,
+  articleOrder,
+  onArticleSubmit,
   onSubmit,
   updateLoanerInfo,
   isLoading = false,
@@ -107,12 +112,30 @@ export function Order({
 
   // An order has successfully been submitted
   useEffect(() => {
-    if (order.data && order.isLoading) {
+    if (articleOrder?.data && articleOrder?.isLoading) {
+      const index = modal.index();
+      // debounce(() => , 100);
+      modal.update(index, { articleOrder });
+    } else if (order.data && order.isLoading) {
       const index = modal.index();
       // debounce(() => , 100);
       modal.update(index, { order });
     }
-  }, [order.data, order.isLoading]);
+  }, [
+    order.data,
+    order.isLoading,
+    articleOrder?.data,
+    articleOrder?.isLoading,
+  ]);
+
+  const availableAsDigitalCopy =
+    pickupBranch?.borrowerCheck &&
+    pickupBranch?.digitalCopyAccess &&
+    work?.manifestations?.find((m) =>
+      m?.onlineAccess?.find((entry) => entry.issn)
+    );
+
+  const isArticle = work?.workTypes?.includes("article");
 
   /**
    *
@@ -229,30 +252,60 @@ export function Order({
             </Text>
           </div>
           <div className={styles.material}>
-            <Link onClick={() => {}} disabled>
-              <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                {Translate({
-                  context: "order",
-                  label: "no-specific-edition",
-                })}
-              </Text>
-            </Link>
+            {!isArticle && (
+              <Link onClick={() => {}} disabled>
+                <Text type="text3" skeleton={isLoading} lines={1} clamp>
+                  {Translate({
+                    context: "order",
+                    label: "no-specific-edition",
+                  })}
+                </Text>
+              </Link>
+            )}
+
             <div>
               <Tag tag="span" skeleton={isLoading}>
                 {materialType}
               </Tag>
             </div>
           </div>
+          {availableAsDigitalCopy && (
+            <div className={styles.digitalcopy}>
+              <Text type="text4">
+                {Translate({
+                  context: "order",
+                  label: "will-order-digital-copy",
+                })}
+              </Text>
+
+              <Link
+                disabled={false}
+                href={"/hjaelp/digital-artikelservice/70"}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
+                <Text type="text3">
+                  {Translate({
+                    context: "order",
+                    label: "will-order-digital-copy-delivered-by",
+                  })}
+                </Text>
+              </Link>
+            </div>
+          )}
         </div>
         <div className={styles.right}>
           <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
         </div>
       </div>
-
       <div className={styles.pickup}>
         <div className={styles.title}>
           <Title type="title5">
-            {Translate({ context: "order", label: "pickup-title" })}
+            {Translate({
+              context: "order",
+              label: availableAsDigitalCopy
+                ? "pickup-title-digital-copy"
+                : "pickup-title",
+            })}
           </Title>
         </div>
         <div className={styles.library}>
@@ -289,7 +342,11 @@ export function Order({
               <Text type="text3" className={styles.fullLink}>
                 {Translate({
                   context: "order",
-                  label: pickupBranch ? "change-pickup-link" : "pickup-link",
+                  label: availableAsDigitalCopy
+                    ? "change-pickup-digital-copy-link"
+                    : pickupBranch
+                    ? "change-pickup-link"
+                    : "pickup-link",
                 })}
               </Text>
               <Text type="text3" className={styles.shortLink}>
@@ -409,7 +466,6 @@ export function Order({
           </div>
         </div>
       )}
-
       <div className={styles.action}>
         <div className={`${styles.message} ${invalidClass}`}>
           <Text type="text3">
@@ -417,11 +473,12 @@ export function Order({
               context: "order",
               label: actionMessage
                 ? `action-${actionMessage.label}`
+                : availableAsDigitalCopy
+                ? "will-order-digital-copy-details"
                 : "order-message-library",
             })}
           </Text>
         </div>
-
         <Button
           disabled={pickupBranch?.orderPolicy?.orderPossible !== true}
           skeleton={isLoading}
@@ -434,13 +491,22 @@ export function Order({
                   error: order.error,
                   isLoading: order.isLoading,
                 },
+                articleOrder: {
+                  data: articleOrder?.data,
+                  error: articleOrder?.error,
+                  isLoading: articleOrder?.isLoading,
+                },
                 pickupBranch,
               });
-              onSubmit &&
-                onSubmit(
-                  materialsSameType.map((m) => m.pid),
-                  pickupBranch
-                );
+              if (availableAsDigitalCopy) {
+                onArticleSubmit(pid, pickupBranch.branchId);
+              } else {
+                onSubmit &&
+                  onSubmit(
+                    materialsSameType.map((m) => m.pid),
+                    pickupBranch
+                  );
+              }
             } else {
               setHasTry(true);
             }
@@ -462,6 +528,7 @@ export function OrderSkeleton(props) {
       work={work}
       user={user}
       order={order}
+      articleOrder={order}
       context={{ label: "title-order" }}
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
@@ -487,6 +554,7 @@ export default function Wrap(props) {
   const [pid, setPid] = useState(null);
 
   const orderMutation = useMutate();
+  const articleOrderMutation = useMutate();
 
   /**
    * Order
@@ -592,7 +660,16 @@ export default function Wrap(props) {
       }
       pid={context.pid}
       order={orderMutation}
+      articleOrder={articleOrderMutation}
       updateLoanerInfo={updateLoanerInfo}
+      onArticleSubmit={(pid, pickUpBranch) => {
+        articleOrderMutation.post(
+          submitPeriodicaArticleOrder({
+            pid,
+            pickUpBranch,
+          })
+        );
+      }}
       onSubmit={(pids, pickupBranch) => {
         orderMutation.post(
           submitOrder({

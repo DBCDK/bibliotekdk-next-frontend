@@ -42,6 +42,16 @@ function mockFullWork() {
   });
 }
 
+function mockArticleWork() {
+  cy.fixture("fullarticlework.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("work(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
 function mockAvailability() {
   cy.fixture("fullmanifestation.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
@@ -66,6 +76,7 @@ function mockBranchesSearch() {
   cy.fixture("branches.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
       if (req.body.query.includes("branches(q:")) {
+        console.log(fixture);
         req.reply(fixture);
       }
     });
@@ -78,6 +89,17 @@ function mockSubmitOrder() {
       if (req.body.query.includes("submitOrder(")) {
         req.reply(fixture);
         req.alias = "submitOrder";
+      }
+    });
+  });
+}
+
+function mockSubmitPeriodicaArticleOrder() {
+  cy.fixture("submitPeriodicaArticleOrder.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("submitPeriodicaArticleOrder(")) {
+        req.reply(fixture);
+        req.alias = "submitPeriodicaArticleOrder";
       }
     });
   });
@@ -276,5 +298,94 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-godkend]").should("be.disabled");
     cy.get("[data-cy=text-skift-afhentning]").click();
+  });
+});
+
+describe("Order periodica article", () => {
+  beforeEach(function () {
+    mockArticleWork();
+    mockAvailability();
+    mockSubmitOrder();
+    mockSubmitPeriodicaArticleOrder();
+  });
+
+  it("should order indexed periodica article as digital copy", () => {
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+    );
+
+    // Special message because this article is in KBs article service
+    cy.contains("Artiklen sendes til din email");
+
+    openOrderModal();
+
+    cy.get(".modal_container [data-cy=text-digital-kopi]").should("be.visible");
+    cy.contains("Dit bibliotek");
+    cy.get(".modal_container [data-cy=text-digital-kopi]")
+      .scrollIntoView()
+      .should("be.visible");
+
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitPeriodicaArticleOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pid: "870971-tsart:33261853",
+        pickUpBranch: "790900",
+      });
+    });
+
+    cy.contains("Du vil modtage en email fra Det Kgl. Bibliotek med artiklen");
+  });
+
+  it("should order indexed periodica article as physical copy", () => {
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+          agency: {
+            result: [
+              {
+                digitalCopyAccess: false,
+              },
+            ],
+          },
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+    );
+
+    openOrderModal();
+
+    // Check that text match a physical order
+    cy.contains("Afhentningssted");
+    cy.contains(
+      "Du får besked fra dit bibliotek når materialet er klar til afhentning"
+    );
+
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pids: ["870971-tsart:33261853"],
+        pickUpBranch: "790900",
+        userParameters: {
+          userMail: "cicero@mail.dk",
+          userName: "Freja Damgaard",
+        },
+      });
+    });
+
+    cy.contains("Bestillingen blev gennemført");
   });
 });

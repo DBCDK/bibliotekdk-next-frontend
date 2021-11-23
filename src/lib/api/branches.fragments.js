@@ -29,6 +29,7 @@ export function branchUserParameters({ branchId }) {
             description
           }
           pickupAllowed
+          digitalCopyAccess
         }
       }
       monitor(name: "bibdknext_branch_user_parameters")

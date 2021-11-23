@@ -22,3 +22,20 @@ export function submitOrder({ pids, branchId, userParameters }) {
     },
   };
 }
+
+export function submitPeriodicaArticleOrder({ pid, pickUpBranch }) {
+  return {
+    query: `mutation($input: PeriodicaArticleOrder!) {
+        submitPeriodicaArticleOrder(input: $input) {
+          status
+        }
+      }
+      `,
+    variables: {
+      input: {
+        pid,
+        pickUpBranch,
+      },
+    },
+  };
+}

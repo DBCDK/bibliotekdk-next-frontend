@@ -14,30 +14,31 @@ export function AlternativeOptions({
   modal = null,
   context = {},
 }) {
-  const count = onlineAccess?.length + (requestButton ? 1 : 0);
-  {
-    return (
-      count > 1 && (
-        <Link
-          border={{ bottom: { keepVisible: true } }}
-          onClick={() =>
-            modal.push("options", {
-              title: Translate({ context: "modal", label: "title-options" }),
-              ...context,
-            })
-          }
-        >
-          <Text tag="span">
-            {Translate({
-              context: "overview",
-              label: "all-options-link",
-              vars: [count],
-            })}
-          </Text>
-        </Link>
-      )
-    );
-  }
+  const count =
+    onlineAccess?.filter((entry) => !entry.issn).length +
+    (requestButton ? 1 : 0);
+
+  return (
+    count > 1 && (
+      <Link
+        border={{ bottom: { keepVisible: true } }}
+        onClick={() =>
+          modal.push("options", {
+            title: Translate({ context: "modal", label: "title-options" }),
+            ...context,
+          })
+        }
+      >
+        <Text tag="span">
+          {Translate({
+            context: "overview",
+            label: "all-options-link",
+            vars: [count],
+          })}
+        </Text>
+      </Link>
+    )
+  );
 }
 
 export default function wrap({ selectedMaterial }) {

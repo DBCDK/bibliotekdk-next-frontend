@@ -62,16 +62,17 @@ function sortorder(onlineaccess) {
  */
 function addToOnlinAccess(onlineAccess = [], orderPossible) {
   const addi = onlineAccess?.map((access) => {
-    if (access.infomediaId) {
-      access.accessType = "infomedia";
-    } else if (access.issn) {
-      access.accessType = "digitalCopy";
-    } else if (access.type === "webArchive") {
-      access.accessType = "webArchive";
-    } else if (access.url) {
-      access.accessType = "online";
+    const copy = { ...access };
+    if (copy.infomediaId) {
+      copy.accessType = "infomedia";
+    } else if (copy.issn) {
+      copy.accessType = "digitalCopy";
+    } else if (copy.type === "webArchive") {
+      copy.accessType = "webArchive";
+    } else if (copy.url) {
+      copy.accessType = "online";
     }
-    return access;
+    return copy;
   });
   if (orderPossible) {
     addi.push({ accessType: "physical" });
@@ -96,7 +97,7 @@ export function Options({ data, isLoading, modal, context }) {
   const onlineAccess = addToOnlinAccess(
     currentMaterial?.manifestations[0]?.onlineAccess,
     context.orderPossible
-  );
+  ).filter((access) => !access.issn);
 
   const orderedOnlineAccess = sortorder(onlineAccess);
 
