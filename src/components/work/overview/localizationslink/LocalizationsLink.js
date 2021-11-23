@@ -7,7 +7,26 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
 
-export function LocalizationsLink({ localizations, opener, user }) {
+export function LocalizationsLink({
+  materialType,
+  localizations,
+  opener,
+  user,
+}) {
+  const nolinktoholding = [
+    "Lydbog (bånd)",
+    "Lydbog (net)",
+    "Ebog",
+    "Punktskrift",
+    "Artikel",
+  ];
+
+  if (nolinktoholding.includes(materialType)) {
+    return null;
+  }
+
+  // @TODO
+
   const count = localizations?.count?.toString() || "0";
   if (count === "0") {
     return (
@@ -23,7 +42,7 @@ export function LocalizationsLink({ localizations, opener, user }) {
   }
 
   return (
-    <div>
+    <span>
       <Link
         onClick={() => opener()}
         border={{ top: false, bottom: { keepVisible: true } }}
@@ -36,7 +55,7 @@ export function LocalizationsLink({ localizations, opener, user }) {
           })}
         </Text>
       </Link>
-    </div>
+    </span>
   );
 }
 
@@ -70,6 +89,7 @@ export default function wrap({ selectedMaterial, workId }) {
   }
   return (
     <LocalizationsLink
+      materialType={selectedMaterial.materialType}
       localizations={selectedLocalizations?.localizations || "0"}
       opener={openLocalizationsModal}
       user={user}

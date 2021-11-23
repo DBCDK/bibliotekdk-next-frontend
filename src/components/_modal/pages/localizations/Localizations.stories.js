@@ -4,6 +4,43 @@ import { LocalizationItem } from "./LocalizationItem";
 export default {
   title: "modal/Localizations",
 };
+const greatGatsby = {
+  data: {
+    branches: {
+      result: [
+        {
+          name: "Hovedbiblioteket, Krystalgade",
+          agencyId: "710100",
+          holdingStatus: {
+            count: 1,
+            lamp: {
+              color: "green",
+              message: "at_home",
+            },
+            holdingItems: [
+              {
+                branch: "Hovedbiblioteket",
+                branchId: "710100",
+                willLend: "true",
+                expectedDelivery: "2021-11-19",
+                localHoldingsId: "22137298",
+                circulationRule: "Standard",
+                issueId: "",
+                department: "Voksen",
+                issueText: "",
+                location: "Fjernmagasin, skal reserveres",
+                note: "",
+                readyForLoan: "0",
+                status: "OnShelf",
+                subLocation: "Skønlitteratur",
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+};
 
 const dummybranch = {
   name: "Gjern Bibliotek",
@@ -118,40 +155,10 @@ export function ShowLocalzationsNotLoggedIn() {
 }
 
 export function LocalizationItemLoading() {
-  const greatGatsby = {
-    data: {
-      branches: {
-        result: [
-          {
-            name: "Hovedbiblioteket, Krystalgade",
-            agencyId: "710100",
-            holdingStatus: {
-              count: 1,
-              message: "this is a message",
-              lamp: "green",
-              holdingItems: [
-                {
-                  branch: "Hovedbiblioteket",
-                  branchId: "710100",
-                  willLend: "true",
-                  expectedDelivery: "2021-11-19",
-                  localHoldingsId: "22137298",
-                  circulationRule: "Standard",
-                  issueId: "",
-                  department: "Voksen",
-                  issueText: "",
-                  location: "Fjernmagasin, skal reserveres",
-                  note: "",
-                  readyForLoan: "0",
-                  status: "OnShelf",
-                  subLocation: "Skønlitteratur",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    color: "green",
+    message: "at_home",
   };
   return (
     <LocalizationItem
@@ -163,44 +170,56 @@ export function LocalizationItemLoading() {
 }
 
 export function LocalizationItemGreen() {
-  const greatGatsby = {
-    data: {
-      branches: {
-        result: [
-          {
-            name: "Hovedbiblioteket, Krystalgade",
-            agencyId: "710100",
-            holdingStatus: {
-              count: 1,
-              lamp: {
-                color: "green",
-                message: "at_home",
-              },
-              holdingItems: [
-                {
-                  branch: "Hovedbiblioteket",
-                  branchId: "710100",
-                  willLend: "true",
-                  expectedDelivery: "2021-11-19",
-                  localHoldingsId: "22137298",
-                  circulationRule: "Standard",
-                  issueId: "",
-                  department: "Voksen",
-                  issueText: "",
-                  location: "Fjernmagasin, skal reserveres",
-                  note: "",
-                  readyForLoan: "0",
-                  status: "OnShelf",
-                  subLocation: "Skønlitteratur",
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    color: "green",
+    message: "at_home",
   };
+  return (
+    <LocalizationItem
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={false}
+    />
+  );
+}
 
+export function LocalizationItemRed() {
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    message: "not_for_loan",
+    color: "red",
+  };
+  return (
+    <LocalizationItem
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={false}
+    />
+  );
+}
+
+export function LocalizationItemYellow() {
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    color: "yellow",
+    message: "22-11-2021",
+  };
+  return (
+    <LocalizationItem
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={false}
+    />
+  );
+}
+
+export function LocalizationItemNoHolding() {
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    message: "no_holdings",
+    color: "white",
+  };
   return (
     <LocalizationItem
       branch={dummybranch}

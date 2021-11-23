@@ -3,11 +3,26 @@ import * as branchFragments from "@/lib/api/branches.fragments";
 import Text from "@/components/base/text/Text";
 import styles from "./Localizations.module.css";
 import Divider from "@/components/base/divider";
+import Translate from "@/components/base/translate";
+import Link from "@/components/base/link";
 
+/**
+ * Loading component
+ * @return {JSX.Element}
+ * @constructor
+ */
 function ItemSkeleton() {
   return <div className={styles.waitforme}></div>;
 }
 
+/**
+ * Localization overview for given branch with given holdings
+ * @param branch
+ * @param holdings
+ * @param isLoading
+ * @return {JSX.Element}
+ * @constructor
+ */
 export function LocalizationItem({ branch, holdings, isLoading }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
@@ -17,20 +32,84 @@ export function LocalizationItem({ branch, holdings, isLoading }) {
     holdings?.branches?.result[0];
 
   const color = branchHoldings?.holdingStatus?.lamp?.color;
+  const message = branchHoldings?.holdingStatus?.lamp?.message;
+  const firstholding = branchHoldings?.holdingStatus?.holdingItems?.find(
+    (item) => item.expectedDelivery
+  );
+
+  // expected delivery date
+  const expectedDelivery =
+    color === "yellow" && firstholding.expectedDelivery
+      ? firstholding.expectedDelivery
+      : "";
+
+  const messages = (color, branch) => {
+    const translated = {
+      red: Translate({
+        context: "holdings",
+        label: "label_not_for_loan",
+      }),
+      green: Translate({
+        context: "holdings",
+        label: "label_at_home",
+      }),
+      yellow: Translate({
+        context: "holdings",
+        label: "label_on_loan",
+        vars: [expectedDelivery],
+      }),
+      white: Translate({
+        context: "holdings",
+        label: "label_no_holdings",
+      }),
+      none: Translate({
+        context: "holdings",
+        label: "label_unknown_status",
+        vars: [branch.agencyUrl],
+      }),
+    };
+
+    return translated[color];
+  };
+
+  const blinkingcolors = ["red", "green", "yellow"];
+
   return (
     <div className={styles.itemwrap}>
       <div>
-        <Text type="text2">{branch.agencyName}</Text>
-        <Text type="text3">{branch.name}</Text>
+        <Text type="text2">{branch.name}</Text>
+        <Text type="text3">{branch.agencyName}</Text>
       </div>
       <div className={styles.item}>
         {isLoading && <ItemSkeleton />}
         {!isLoading && (
           <>
-            <div className={styles[`${color}`]}></div>
-            <Text type="text3" tag="span" className={styles.inline}>
-              {branchHoldings?.holdingStatus?.lamp?.message}
+            {blinkingcolors.includes(color) && (
+              <div className={styles[`${color}`]}></div>
+            )}
+            <Text
+              type="text3"
+              tag="span"
+              className={blinkingcolors.includes(color) ? styles.inline : ""}
+            >
+              {messages(color, branch)}
             </Text>
+            {color === "none" && branch.branchWebsiteUrl && (
+              <span>
+                <Link
+                  href={branch?.branchWebsiteUrl}
+                  target="_blank"
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                >
+                  <Text type="text3" tag="span">
+                    {Translate({
+                      context: "holdings",
+                      label: "label_check_local_library",
+                    })}
+                  </Text>
+                </Link>
+              </span>
+            )}
           </>
         )}
       </div>
@@ -50,34 +129,35 @@ export default function wrap({ props }) {
     })
   );
   const dummyData = {
-    result: [
-      {
-        name: "Silkeborg Bibliotek",
-        branchId: "774000",
-        agencyId: "774000",
-        holdingStatus: {
+    branches: {
+      agencyUrl: "http://bibliotek.kk.dk/",
+      result: [
+        {
+          agencyUrl: "no Url",
+          name: "Silkeborg Bibliotek",
           branchId: "774000",
-          willLend: "true",
-          expectedDelivery: "2021-11-18",
-          localHoldingsId: "29317038",
-          circulationRule: "Udlån 28 dage",
-          issueId: "",
-          department: "Børn",
-          issueText: "",
-          location: "Skønlitteratur",
-          note: "",
-          readyForLoan: "0",
-          status: "OnLoan",
-          subLocation: "Fantasy",
+          agencyId: "774000",
+          holdingStatus: {
+            branchId: "774000",
+            willLend: "true",
+            expectedDelivery: "2021-11-18",
+            localHoldingsId: "29317038",
+            circulationRule: "Udlån 28 dage",
+            issueId: "",
+            department: "Børn",
+            issueText: "",
+            location: "Skønlitteratur",
+            note: "",
+            readyForLoan: "0",
+            status: "OnLoan",
+            subLocation: "Fantasy",
+          },
         },
-      },
-    ],
+      ],
+    },
   };
-  //const data = null;
-  //const isLoading = true;
 
   const holdingsData = holdingsLoading ? dummyData : data;
-
   return (
     <LocalizationItem
       branch={branch}

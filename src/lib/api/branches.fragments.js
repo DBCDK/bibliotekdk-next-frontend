@@ -48,9 +48,11 @@ export function branchHoldings({ branchId, pids }) {
   return {
     query: `query BranchHoldings($branchId: String!, $pids: [String]){
               branches(branchId:$branchId){
+              agencyUrl
               result{
                 name
                 agencyId
+                branchWebsiteUrl
                 holdingStatus(pids:$pids){
                   count
                   lamp{color message}

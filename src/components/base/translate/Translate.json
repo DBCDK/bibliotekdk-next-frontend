@@ -464,6 +464,40 @@
         "en": "the material"
       }
     },
+    "holdings": {
+      "label_localizations_title": {
+        "da": "Se hvor materialet er",
+        "en": "Where is the material located"
+      },
+      "label_localization_description": {
+        "da": "Husk at uanset hvilket bibliotek, der har materialet, så kan du bestille det hjem. Bibliotek.dk skaffer det først ledige materiale, som du kan låne, og leverer det til dit ønskede afhentningssted.",
+        "en": "Notice No matter which library that has the material you can order it to whichever library where you wish to pick it up"
+      },
+      "label_not_for_loan": {
+        "da": "Udlånes ikke",
+        "en": "Not for loan"
+      },
+      "label_at_home": {
+        "da": "På hylden",
+        "en": "On shelf"
+      },
+      "label_on_loan": {
+        "da": "Udlånt indtil %s",
+        "en": "On loan expected home %s"
+      },
+      "label_unknown_status": {
+        "da": "Ikke muligt at se status på Bibliotek.dk",
+        "en": "Status not available on Bibliotek.dk"
+      },
+      "label_check_local_library": {
+        "da": "Tjek bibliotekets egen hjemmeside",
+        "en": "See local library"
+      },
+      "label_no_holdings" : {
+        "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
+        "en": "Library does not have the material, But you can still order for pickup at this library"
+      }
+    },
     "overview": {
       "label_library_no_holdings": {
         "da": "Ingen biblioteker har pt. materialet.",
@@ -1137,17 +1171,50 @@
         "da": "ikke valgt",
         "en": "not selected"
       },
-      "userId-label": { "da": "Låner-id", "en": "Loaner-id" },
-      "pincode-label": { "da": "Pinkode", "en": "Pincode" },
-      "userName-label": { "da": "Navn", "en": "Name" },
-      "userAddress-label": { "da": "Adresse", "en": "Address" },
-      "userMail-label": { "da": "Email", "en": "Email" },
-      "cardno-label": { "da": "Lånerkortnummer", "en": "Loaner card number" },
-      "customId-label": { "da": "CustomId", "en": "CustomId" },
-      "userTelephone-label": { "da": "Telefonnummer", "en": "Phone number" },
-      "cpr-label": { "da": "CPR", "en": "CPR" },
-      "userDateOfBirth-label": { "da": "Fødselsdato", "en": "Date of birth" },
-      "barcode-label": { "da": "Stregkode", "en": "Barcode" },
+      "userId-label": {
+        "da": "Låner-id",
+        "en": "Loaner-id"
+      },
+      "pincode-label": {
+        "da": "Pinkode",
+        "en": "Pincode"
+      },
+      "userName-label": {
+        "da": "Navn",
+        "en": "Name"
+      },
+      "userAddress-label": {
+        "da": "Adresse",
+        "en": "Address"
+      },
+      "userMail-label": {
+        "da": "Email",
+        "en": "Email"
+      },
+      "cardno-label": {
+        "da": "Lånerkortnummer",
+        "en": "Loaner card number"
+      },
+      "customId-label": {
+        "da": "CustomId",
+        "en": "CustomId"
+      },
+      "userTelephone-label": {
+        "da": "Telefonnummer",
+        "en": "Phone number"
+      },
+      "cpr-label": {
+        "da": "CPR",
+        "en": "CPR"
+      },
+      "userDateOfBirth-label": {
+        "da": "Fødselsdato",
+        "en": "Date of birth"
+      },
+      "barcode-label": {
+        "da": "Stregkode",
+        "en": "Barcode"
+      },
       "userId-placeholder": {
         "da": "Skriv dit låner-id",
         "en": "Enter your loaner-id"
@@ -1172,12 +1239,18 @@
         "da": "Skriv dit lånerkortnummer",
         "en": "Enter your loaner card number"
       },
-      "customId-placeholder": { "da": "CustomId", "en": "CustomId" },
+      "customId-placeholder": {
+        "da": "CustomId",
+        "en": "CustomId"
+      },
       "userTelephone-placeholder": {
         "da": "Skriv dit telefonnummer",
         "en": "Enter your phone number"
       },
-      "cpr-placeholder": { "da": "Skriv dit CPR", "en": "Enter your CPR" },
+      "cpr-placeholder": {
+        "da": "Skriv dit CPR",
+        "en": "Enter your CPR"
+      },
       "userDateOfBirth-placeholder": {
         "da": "Skriv din fødselsdato",
         "en": "Enter your date of birth"

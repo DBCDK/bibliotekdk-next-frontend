@@ -9,6 +9,7 @@ import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
 import Search from "@/components/base/forms/search";
 import LocalizationItem from "./LocalizationItem";
+import Text from "@/components/base/text/Text";
 
 export function Localizations({ context, branchData, isLoading, onChange }) {
   const allBranches = branchData?.result;
@@ -16,6 +17,22 @@ export function Localizations({ context, branchData, isLoading, onChange }) {
   return (
     <div data-cy="localizations-modal" className={styles.wrapper}>
       <Top />
+
+      <div>
+        <Text type="text1" className={styles.title}>
+          {Translate({
+            context: "holdings",
+            label: "label_localizations_title",
+          })}
+        </Text>
+
+        <Text type="text3" className={styles.description}>
+          {Translate({
+            context: "holdings",
+            label: "label_localization_description",
+          })}
+        </Text>
+      </div>
 
       <Search
         dataCy="pickup-search-input"
@@ -34,6 +51,7 @@ export function Localizations({ context, branchData, isLoading, onChange }) {
               {allBranches.map((branch, idx) => {
                 return (
                   <LocalizationItem
+                    key={branch.branchId}
                     props={{
                       ...context,
                       branch: branch,
@@ -53,13 +71,6 @@ export default function wrap({ context }) {
   const { workId, agency, pids } = { ...context };
 
   const [query, setQuery] = useState("");
-  // we know there is one or more localizations
-  // use the useData hook to fetch data
-  const {
-    data: localizations,
-    isLoading: lcalizationsIsLoading,
-    isSlow,
-  } = useData(workFragments.localizations({ workId }));
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })

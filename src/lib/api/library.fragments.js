@@ -35,6 +35,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
     query: `query ($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String) {
         branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset) {
             hitcount
+            agencyUrl
             result {
                borrowerCheck
                 agencyName
@@ -45,6 +46,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
                 postalAddress
                 postalCode
                 pickupAllowed
+                branchWebsiteUrl
                 highlights {
                     key
                     value
