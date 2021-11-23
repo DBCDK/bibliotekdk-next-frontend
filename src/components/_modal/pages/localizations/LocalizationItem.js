@@ -26,10 +26,7 @@ function ItemSkeleton() {
 export function LocalizationItem({ branch, holdings, isLoading }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
-  const branchHoldings =
-    holdings?.branches?.result &&
-    holdings?.branches?.result[0] &&
-    holdings?.branches?.result[0];
+  const branchHoldings = holdings?.branches?.result?.[0];
 
   const color = branchHoldings?.holdingStatus?.lamp?.color;
   const message = branchHoldings?.holdingStatus?.lamp?.message;
