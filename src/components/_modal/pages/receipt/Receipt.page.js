@@ -25,7 +25,7 @@ export function Receipt({
   context,
 }) {
   // get props from context
-  const { pickupBranch, order } = context;
+  const { pickupBranch, order, articleOrder } = context;
 
   // Loader callback status (set to true when loadingbar has finished loading)
   const [showProgress, setShowProgress] = useState(true);
@@ -37,10 +37,22 @@ export function Receipt({
     isLoading: orderIsLoading,
   } = order;
 
+  const {
+    data: articleOrderData,
+    error: articleOrderError,
+    isLoading: articleOrderIsLoading,
+  } = articleOrder;
+
   // Define order status'
-  const isOrdering = orderIsLoading;
-  const isOrdered = !!orderData?.submitOrder?.orderId;
-  const isFailed = !!orderError;
+  const isOrdering = orderIsLoading || articleOrderIsLoading;
+  const isOrdered =
+    !!orderData?.submitOrder?.orderId ||
+    articleOrderData?.submitPeriodicaArticleOrder?.status === "OK";
+  const isFailed =
+    !!orderError ||
+    !!articleOrderError ||
+    (articleOrderData?.submitPeriodicaArticleOrder?.status &&
+      articleOrderData?.submitPeriodicaArticleOrder?.status !== "OK");
 
   // Define order status' class'
   const orderingClass = isOrdering || showProgress ? styles.ordering : "";
@@ -86,11 +98,16 @@ export function Receipt({
             />
 
             <Text type="text2" className={styles.message}>
-              {Translate({
-                context: "order",
-                label: "order-success-message",
-                vars: [branchName],
-              })}
+              {articleOrderData
+                ? Translate({
+                    context: "order",
+                    label: "order-success-message-digital-copy",
+                  })
+                : Translate({
+                    context: "order",
+                    label: "order-success-message",
+                    vars: [branchName],
+                  })}
             </Text>
 
             {orderId && (

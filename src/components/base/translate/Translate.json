@@ -806,7 +806,7 @@
         "en": "Order digital copy"
       },
       "digital-copy-link-description": {
-        "da": "Leveres af det Kgl. bibliotek",
+        "da": "Artiklen sendes til din email, hvis dit bibliotek har abonnement",
         "en": "Delivered by Royal Danish Library"
       },
       "online-link-title": {
@@ -1041,9 +1041,25 @@
         "da": "Udgave underordnet",
         "en": "Unspecified edition"
       },
+      "will-order-digital-copy": {
+        "da": "Digital kopi",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "will-order-digital-copy-delivered-by": {
+        "da": "Leveres via digital artikelservice",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "will-order-digital-copy-details": {
+        "da": "Artiklen sendes af Det Kgl. Bibliotek til din email",
+        "en": "LABEL: mangler oversættelse"
+      },
       "pickup-title": {
         "da": "Afhentningssted",
         "en": "Pickup location"
+      },
+      "pickup-title-digital-copy": {
+        "da": "Dit bibliotek",
+        "en": "LABEL: mangler oversættelse"
       },
       "pickup-search-title": {
         "da": "Vælg afhentningssted",
@@ -1063,6 +1079,10 @@
       },
       "change-pickup-link": {
         "da": "Skift afhentning",
+        "en": "LABEL mangler oversættelse"
+      },
+      "change-pickup-digital-copy-link": {
+        "da": "Skift bibliotek",
         "en": "LABEL mangler oversættelse"
       },
       "pickup-input-placeholder": {
@@ -1100,6 +1120,10 @@
       "order-success-message": {
         "da": "Du vil få besked når materialet er klar til afhentning på %s",
         "en": "You will be notified when the material is ready for collection at %s"
+      },
+      "order-success-message-digital-copy": {
+        "da": "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen",
+        "en": "LABEL mangler oversættelse"
       },
       "order-success-id": {
         "da": "Bestillingsnummer: %s",
