@@ -667,6 +667,8 @@ export default function Wrap(props) {
           submitPeriodicaArticleOrder({
             pid,
             pickUpBranch,
+            userName: loanerInfo?.userParameters?.userName,
+            userMail: loanerInfo?.userParameters?.userMail,
           })
         );
       }}

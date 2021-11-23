@@ -23,7 +23,12 @@ export function submitOrder({ pids, branchId, userParameters }) {
   };
 }
 
-export function submitPeriodicaArticleOrder({ pid, pickUpBranch }) {
+export function submitPeriodicaArticleOrder({
+  pid,
+  pickUpBranch,
+  userName,
+  userMail,
+}) {
   return {
     query: `mutation($input: PeriodicaArticleOrder!) {
         submitPeriodicaArticleOrder(input: $input) {
@@ -35,6 +40,8 @@ export function submitPeriodicaArticleOrder({ pid, pickUpBranch }) {
       input: {
         pid,
         pickUpBranch,
+        userName,
+        userMail,
       },
     },
   };

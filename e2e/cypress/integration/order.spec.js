@@ -339,6 +339,8 @@ describe("Order periodica article", () => {
       expect(order.request.body.variables.input).to.deep.equal({
         pid: "870971-tsart:33261853",
         pickUpBranch: "790900",
+        userName: "Freja Damgaard",
+        userMail: "cicero@mail.dk",
       });
     });
 
