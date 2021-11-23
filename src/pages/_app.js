@@ -91,6 +91,7 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="receipt" component={Pages.Receipt} />
               <Modal.Page id="login" component={Pages.Login} />
               <Modal.Page id="filter" component={Pages.Filter} />
+              <Modal.Page id="localizations" component={Pages.Localizations} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />

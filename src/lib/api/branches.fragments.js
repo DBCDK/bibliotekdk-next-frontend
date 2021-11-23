@@ -29,11 +29,57 @@ export function branchUserParameters({ branchId }) {
             description
           }
           pickupAllowed
+          digitalCopyAccess
         }
       }
       monitor(name: "bibdknext_branch_user_parameters")
      }`,
     variables: { branchId, language: lang },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Get Holdings for a branch.
+ * @param branchId
+ * @param pids
+ * @return {{variables: {branchId, pids}, slowThreshold: number, query: string}}
+ */
+export function branchHoldings({ branchId, pids }) {
+  return {
+    query: `query BranchHoldings($branchId: String!, $pids: [String]){
+              branches(branchId:$branchId){
+              agencyUrl
+              result{
+                name
+                agencyId
+                branchWebsiteUrl
+                holdingStatus(pids:$pids){
+                  count
+                  lamp{color message}
+                  holdingItems
+                    {
+                      branch
+                      branchId
+                      willLend 
+                      expectedDelivery 
+                      localHoldingsId 
+                      circulationRule
+                      issueId
+                      department
+                      issueText
+                      location
+                      note
+                      readyForLoan
+                      status
+                      subLocation
+                    }
+                }
+              }
+        }
+      monitor(name: "bibdknext_branch_holdings")
+     }`,
+    variables: { branchId, pids },
     slowThreshold: 3000,
   };
 }

@@ -225,20 +225,6 @@ export function OrderButton({
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
   // special case - digital copy
-  if (
-    selectedMaterial?.onlineAccess?.length > 0 &&
-    selectedMaterial.onlineAccess[0].issn
-  ) {
-    return (
-      <Button
-        skeleton={buttonSkeleton}
-        onClick={() => alert("not implemented")}
-        data_cy="button-order-overview-enabled"
-      >
-        {Translate({ context: "options", label: "digital-copy-link-title" })}
-      </Button>
-    );
-  }
 
   return (
     <Button
