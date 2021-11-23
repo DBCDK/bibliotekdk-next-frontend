@@ -87,10 +87,6 @@
         "da": "Alle",
         "en": "All"
       },
-      "all_materials": {
-        "da": "Alle kategorier",
-        "en": "All categories"
-      },
       "by": {
         "da": "af",
         "en": "by"
@@ -250,6 +246,10 @@
       "select-another-library": {
         "da": "Vælg et andet bibliotek",
         "en": "LABEL mangler oversættelse"
+      },
+      "clearAll": {
+        "da": "Ryd alt",
+        "en": "LABEL: mangler oversættelse"
       }
     },
     "articles": {
@@ -703,9 +703,29 @@
         "da": "Se flere",
         "en": "More"
       },
+      "filtersResultText": {
+        "da": "Mest relevante resultater",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "showAllFilters": {
+        "da": "Vis alle filtre",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "showAllFiltersCount": {
+        "da": "Vis alle filtre (%s)",
+        "en": "LABEL: mangler oversættelse"
+      },
       "filters": {
-        "da": "Filtrer",
-        "en": "Filters"
+        "da": "Filtre",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "filtersCount": {
+        "da": "Filtre (%s)",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "showXResults": {
+        "da": "Vis %s resultater",
+        "en": "Show %s results"
       },
       "noResults": {
         "da": "Din søgning giver ingen resultater",
@@ -770,6 +790,76 @@
         "en": "Search suggestions"
       }
     },
+    "facets": {
+      "label-workType": {
+        "da": "Materialekategori",
+        "en": ""
+      },
+      "label-language": {
+        "da": "Sprog",
+        "en": ""
+      },
+      "label-materialType": {
+        "da": "Format",
+        "en": ""
+      },
+      "label-fictiveCharacter": {
+        "da": "Fiktive karaktere",
+        "en": ""
+      },
+      "label-genre": {
+        "da": "Genre",
+        "en": ""
+      },
+      "label-audience": {
+        "da": "Børn/voksen",
+        "en": ""
+      },
+      "label-accessType": {
+        "da": "Tilgængelig",
+        "en": ""
+      },
+      "label-fictionNonfiction": {
+        "da": "Skøn-/faglitteratur",
+        "en": ""
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": ""
+      },
+      "label-creator": {
+        "da": "Kunstner",
+        "en": ""
+      },
+      "label-all": {
+        "da": "Alle materialekategorier",
+        "en": "All categories"
+      },
+      "label-literature": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "label-article": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "label-movie": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "label-game": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "label-music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "label-sheetmusic": {
+        "da": "Noder",
+        "en": "Sheet music"
+      }
+    },
     "modal": {
       "title-menu": {
         "da": "Menu",
@@ -780,8 +870,8 @@
         "en": "Basket"
       },
       "title-filter": {
-        "da": "Filtrer og sorter",
-        "en": "Filter and sort"
+        "da": "Filtrer",
+        "en": "Filters"
       },
       "title-order": {
         "da": "Bestil",

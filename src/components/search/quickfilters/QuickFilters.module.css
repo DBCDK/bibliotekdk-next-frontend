@@ -1,12 +1,25 @@
+.section {
+  display: none;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.link i {
+  margin-right: var(--pt1);
+}
+
 .quickfilters {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  margin: var(--pt3) 0;
+  justify-content: space-between;
+  padding: var(--pt2) 0;
 }
 
-@media (max-width: 767px) {
-  .quickfilters {
-    display: none;
+@media (min-width: 767px) {
+  .section {
+    display: block;
   }
 }

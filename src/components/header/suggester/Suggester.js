@@ -7,6 +7,8 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
 import { useState, useEffect, useMemo } from "react";
 
+import useFilters from "@/components/hooks/useFilters";
+
 import { useData, useFetcher } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 
@@ -31,7 +33,6 @@ import {
   collectSuggestPresented,
   collectSuggestClick,
 } from "@/lib/api/datacollect.mutations";
-import useMaterialFilters from "@/components/hooks/useMaterialFilters";
 
 // Context
 const context = { context: "suggester" };
@@ -197,7 +198,7 @@ function renderInputComponent(
 
   // Doublecheck for selectedMaterial - In storybook suggester, selectedMaterial will be null and we therefor want to keep the previous placeholder)
   if (selectedMaterial) {
-    const isAll = selectedMaterial.value === "all";
+    const isAll = selectedMaterial === "all";
 
     // Update placeholder if specific worktype is selected
     if (!isAll) {
@@ -206,8 +207,8 @@ function renderInputComponent(
         label: "placeholderRelative",
         vars: [
           Translate({
-            context: "general",
-            label: selectedMaterial.label,
+            context: "facets",
+            label: `label-${selectedMaterial}`,
           }).toLowerCase(),
         ],
       });
@@ -327,8 +328,8 @@ export function Suggester({
       // This is for accessibility only
       // react-autosuggest doesn't seem to support
       // aria-label on the wrapper div. Hence we do this..
-      const wrapper = document.getElementById("suggester-input")?.parentNode
-        ?.parentNode;
+      const wrapper =
+        document.getElementById("suggester-input")?.parentNode?.parentNode;
 
       if (wrapper) {
         wrapper.setAttribute(
@@ -338,10 +339,8 @@ export function Suggester({
             label: isMobile ? "placeholderMobile" : "placeholder",
           }) +
             Translate({
-              context: "general",
-              label: selectedMaterial?.label
-                ? selectedMaterial.label
-                : "all_materials",
+              context: "facets",
+              label: `label-${selectedMaterial}`,
             })
         );
       }
@@ -446,23 +445,17 @@ export default function Wrap(props) {
 
   const router = useRouter();
   const fetcher = useFetcher();
+  const { filters } = useFilters();
 
   const initialQuery = router.query.q || "";
 
   const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState();
 
-  const { selectedMaterial } = useMaterialFilters();
-
-  let worktype = null;
-  if (selectedMaterial.value !== "all") {
-    worktype = selectedMaterial.value;
-  }
+  const worktype = filters.workType?.[0] || null;
 
   const { data, isLoading, error } = useData(
-    query &&
-      query !== selected &&
-      suggestFragments.all({ q: query, worktype: worktype })
+    query && query !== selected && suggestFragments.all({ q: query, worktype })
   );
 
   // Its a mess with internal states all over the place
@@ -510,7 +503,7 @@ export default function Wrap(props) {
       skeleton={isLoading}
       query={query}
       suggestions={(data && data.suggest && data.suggest.result) || []}
-      selectedMaterial={selectedMaterial}
+      selectedMaterial={worktype}
     />
   );
 }
