@@ -52,7 +52,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           label: `label-${facet.name}`,
         })}
       </Text>
-      <List.Group enabled={!isLoading} data-cy="list-facets">
+      <List.Group enabled={!isLoading} data-cy="list-terms">
         {facet?.values.map((term, idx) => {
           const title = term.term;
           const count = term.count;
@@ -153,6 +153,7 @@ export function Filter(props) {
               })}
             </Title>
             <Link
+              dataCy="clear-all-filters"
               className={styles.clear}
               onClick={() => onClear && onClear()}
               border={{ bottom: { keepVisible: true } }}
@@ -220,6 +221,7 @@ export function Filter(props) {
               .filter((c) => c)}
           </List.Group>
           <Button
+            dataCy="vis-resultater"
             skeleton={isLoading}
             onClick={() => onSubmit && onSubmit()}
             className={styles.submit}
@@ -288,6 +290,9 @@ export default function Wrap(props) {
     return <FilterSkeleton {...props} />;
   }
 
+  // Dont clear the workType filter onClear
+  const excludeOnClear = { workType: filters.workType };
+
   return (
     <Filter
       data={mergedData}
@@ -300,7 +305,7 @@ export default function Wrap(props) {
         // exclude modal param -> will close the modal on submit
         setQuery(undefined, ["modal"]);
       }}
-      onClear={() => setFilters({})}
+      onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
     />
   );

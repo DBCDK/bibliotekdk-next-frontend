@@ -40,6 +40,7 @@ export function QuickFilters({
             </Text>
 
             <Link
+              dataCy="view-all-filters"
               className={styles.link}
               onClick={() => onFiltersClick()}
               onKeyDown={(e) => {

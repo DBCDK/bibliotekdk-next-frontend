@@ -55,6 +55,7 @@ export function Close({ className, onClose }) {
 export function Back({ className, onBack }) {
   return (
     <Link
+      dataCy="modal-back"
       className={`${styles.back} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
       border={false}
       onClick={() => onBack && onBack()}
