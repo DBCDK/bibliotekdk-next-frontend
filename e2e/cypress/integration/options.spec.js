@@ -28,9 +28,5 @@ describe("Overview", () => {
       "href",
       "/infomedia/fiske_hest/work-of:870971-tsart:39160846"
     );
-    cy.tab();
-    cy.focused()
-      .next("p")
-      .should("have.attr", "data-cy", "text-leveres-af-det-kgl.-bibliotek");
   });
 });
