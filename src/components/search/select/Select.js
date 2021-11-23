@@ -143,7 +143,7 @@ function Wrap({ children }) {
       setQuery(param);
     },
     selected,
-    count: getCount(),
+    count: getCount(["workType"]),
   });
 }
 

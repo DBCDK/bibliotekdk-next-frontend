@@ -135,6 +135,9 @@ export function Filter(props) {
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
 
+  // excluded categories
+  const excluded = ["workType"];
+
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
       {facet ? (
@@ -168,46 +171,53 @@ export function Filter(props) {
             data-cy="list-facets"
             className={styles.list}
           >
-            {facets.map((facet, idx) => {
-              const title = Translate({
-                context: "facets",
-                label: `label-${facet.name}`,
-              });
+            {facets
+              .map((facet, idx) => {
+                // exclude unwanted categories (see excluded array)
+                if (excluded.includes(facet.name)) {
+                  return null;
+                }
 
-              const selectedTerms = selected?.[facet.name];
+                const title = Translate({
+                  context: "facets",
+                  label: `label-${facet.name}`,
+                });
 
-              return (
-                <List.Select
-                  key={`${facet.name}-${idx}`}
-                  selected={false}
-                  onSelect={() => modal.push("filter", { facet })}
-                  label={facet.name}
-                  className={`${styles.item} ${animations["on-hover"]}`}
-                  includeArrows={true}
-                >
-                  <span>
-                    <Text
-                      lines={1}
-                      skeleton={isLoading}
-                      type="text1"
-                      dataCy={`text-${facet.name}`}
-                      className={[
-                        styles.facet,
-                        animations["h-border-bottom"],
-                        animations["h-color-blue"],
-                      ].join(" ")}
-                    >
-                      {title}
-                    </Text>
-                    {selectedTerms && (
-                      <Text type="text3" className={styles.selected}>
-                        {selectedTerms.join(", ")}
+                const selectedTerms = selected?.[facet.name];
+
+                return (
+                  <List.Select
+                    key={`${facet.name}-${idx}`}
+                    selected={false}
+                    onSelect={() => modal.push("filter", { facet })}
+                    label={facet.name}
+                    className={`${styles.item} ${animations["on-hover"]}`}
+                    includeArrows={true}
+                  >
+                    <span>
+                      <Text
+                        lines={1}
+                        skeleton={isLoading}
+                        type="text1"
+                        dataCy={`text-${facet.name}`}
+                        className={[
+                          styles.facet,
+                          animations["h-border-bottom"],
+                          animations["h-color-blue"],
+                        ].join(" ")}
+                      >
+                        {title}
                       </Text>
-                    )}
-                  </span>
-                </List.Select>
-              );
-            })}
+                      {selectedTerms && (
+                        <Text type="text3" className={styles.selected}>
+                          {selectedTerms.join(", ")}
+                        </Text>
+                      )}
+                    </span>
+                  </List.Select>
+                );
+              })
+              .filter((c) => c)}
           </List.Group>
           <Button
             skeleton={isLoading}

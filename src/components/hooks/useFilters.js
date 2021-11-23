@@ -51,6 +51,21 @@ function buildFilters() {
   return params;
 }
 
+/**
+ * useFilters hook
+ *
+ * @returns {object}
+ *
+ * filters
+ * setFilters
+ * getQuery
+ * setQuery
+ * getCount
+ * types
+ * workTypes
+ *
+ */
+
 function useFilters() {
   // router
   const router = useRouter();
@@ -78,7 +93,7 @@ function useFilters() {
   /**
    * Update locale filters
    *
-   * @param filters
+   * @param {object} include
    *
    */
   const setFilters = (include = {}) => {
@@ -99,7 +114,7 @@ function useFilters() {
   /**
    * Get filters from query params
    *
-   * @param exclude params
+   * @param {object} query (defaults to router.query)
    *
    * @returns {object}
    *
@@ -118,8 +133,8 @@ function useFilters() {
   /**
    * Set filters in query params
    *
-   * @param exclude params
-   *
+   * @param {object} include
+   * @param {array} exclude
    */
   const setQuery = (include = _filters, exclude = []) => {
     /**
@@ -163,15 +178,21 @@ function useFilters() {
   /**
    * Count active filters in query (!OBS: Query filters only)
    *
+   * @param exclude params
+   *
    * @returns {int}
    */
-  function getCount() {
+  function getCount(exclude = []) {
     const filters = getQuery();
 
     let count = 0;
-    Object.values(filters).map((value) => {
-      if (value.length > 0) {
-        value.forEach((v) => count++);
+    Object.entries(filters).map(([key, value]) => {
+      // exluded keys
+      if (!exclude.includes(key)) {
+        // if there is an actual value
+        if (value.length > 0) {
+          value.forEach(() => count++);
+        }
       }
     });
 

@@ -22,7 +22,7 @@ export function QuickFilters({
 }) {
   const { getCount } = useFilters();
 
-  const count = getCount().toString();
+  const count = getCount(["workType"]).toString();
 
   return (
     <Container fluid className={styles.section}>
