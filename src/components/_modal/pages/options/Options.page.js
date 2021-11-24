@@ -23,19 +23,19 @@ import Top from "../base/top";
  */
 function getTemplate(props) {
   if (props.accessType === "webArchive") {
-    return <WebArchive {...props} />;
+    return <WebArchive {...props} key={props.listkey} />;
   }
   if (props.accessType === "infomedia") {
     return <Infomedia props={props} />;
   }
   if (props.accessType === "online") {
-    return <Online {...props} />;
+    return <Online {...props} key={props.listkey} />;
   }
   if (props.accessType === "digitalCopy") {
-    return <DigitalCopy {...props} />;
+    return <DigitalCopy {...props} key={props.listkey} />;
   }
   if (props.accessType === "physical") {
-    return <PhysicalCopy props={props} />;
+    return <PhysicalCopy props={props} key={props.listkey} />;
   }
 }
 
@@ -105,14 +105,15 @@ export function Options({ data, isLoading, modal, context }) {
       <div className={styles.options}>
         <Top title={context.title} />
         <ul className={styles.list} key="options-ul">
-          {orderedOnlineAccess.map((i) => {
+          {orderedOnlineAccess.map((access, index) => {
             return getTemplate({
-              ...i,
+              ...access,
               materialType: type,
               title_author: context.title_author,
               className: styles.item,
               workId: context.workId,
               modal: modal,
+              listkey: access.accessType + "-" + index,
             });
           })}
         </ul>

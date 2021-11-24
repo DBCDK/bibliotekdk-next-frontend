@@ -28,7 +28,7 @@ export function PhysicalCopy({ props, onOrder = () => {} }) {
 
   const context = { context: "options" };
   return (
-    <li className={`${className} ${styles.item}`} key="options-physicalcopy">
+    <li className={`${className} ${styles.item}`}>
       <Link
         border={{ bottom: { keepVisible: true } }}
         onClick={() => {
