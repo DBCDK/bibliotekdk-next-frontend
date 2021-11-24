@@ -230,7 +230,7 @@ export function OrderButton({
     <Button
       skeleton={buttonSkeleton}
       onClick={() => openOrderModal(pid)}
-      data_cy="button-order-overview-enabled"
+      dataCy="button-order-overview-enabled"
     >
       {Translate({ context: "general", label: "bestil" })}
     </Button>
@@ -281,7 +281,7 @@ function DisabledReservationButton({ buttonSkeleton }) {
       skeleton={buttonSkeleton}
       disabled={true}
       className={styles.disabledbutton}
-      data_cy="button-order-overview"
+      dataCy="button-order-overview"
     >
       {Translate({ context: "overview", label: "Order-disabled" })}
     </Button>

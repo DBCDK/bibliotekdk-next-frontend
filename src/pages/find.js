@@ -7,7 +7,7 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 
-import useFilters from "@/components/hooks/useFilters";
+import useFilters, { getQuery } from "@/components/hooks/useFilters";
 
 import { useModal } from "@/components/_modal";
 
@@ -19,6 +19,8 @@ import {
 } from "@/lib/api/datacollect.mutations";
 import { useFetcher } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
+
+import merge from "lodash/merge";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -142,8 +144,14 @@ function Find() {
     </>
   );
 }
+
 Find.getInitialProps = (ctx) => {
-  return fetchAll([hitcount], ctx);
+  // Build a filters object based on the context query
+  const queryFilters = getQuery(ctx.query);
+
+  // Appends a custom query filters object containing all materialfilters
+  // The filters object can now be read by the search.fragments
+  return fetchAll([hitcount], ctx, { filters: queryFilters });
 };
 
 export default Find;

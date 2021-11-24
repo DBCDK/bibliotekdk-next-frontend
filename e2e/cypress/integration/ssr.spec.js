@@ -246,7 +246,7 @@ describe("Server Side Rendering", () => {
         expect(hitcount).to.be.greaterThan(0);
       });
     });
-    it.skip(`Applying a filter results in lower hitcount`, () => {
+    it(`Applying a filter results in lower hitcount`, () => {
       getPageHead("/find?q=ost").then((res) => {
         const hitcount = parseInt(
           res.description.match(/i alt (\d+) resultater/)[1],

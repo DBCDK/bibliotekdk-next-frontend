@@ -16,7 +16,7 @@ const APP_URL =
  * @param {*} context
  * @returns
  */
-export async function fetchAll(queries, context) {
+export async function fetchAll(queries, context, customQueryVariables) {
   // If we are in a browser, we return immidiately
   // This prevents a roundtrip to the server
   // and will make page changes feel faster
@@ -62,7 +62,7 @@ export async function fetchAll(queries, context) {
       await Promise.all(
         queries.map(async (queryFunc) => {
           const queryKey = generateKey({
-            ...queryFunc(context.query),
+            ...queryFunc({ ...context.query, ...customQueryVariables }),
             accessToken: session?.accessToken || anonSession?.accessToken,
           });
           const queryRes = await fetcher(queryKey);

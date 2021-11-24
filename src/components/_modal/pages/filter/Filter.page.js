@@ -52,7 +52,11 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           label: `label-${facet.name}`,
         })}
       </Text>
-      <List.Group enabled={!isLoading} data-cy="list-facets">
+      <List.Group
+        className={styles.group}
+        enabled={!isLoading}
+        data-cy="list-terms"
+      >
         {facet?.values.map((term, idx) => {
           const title = term.term;
           const count = term.count;
@@ -102,6 +106,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           );
         })}
       </List.Group>
+
       <Button
         // disabled={terms.length === 0}
         skeleton={isLoading}
@@ -153,6 +158,7 @@ export function Filter(props) {
               })}
             </Title>
             <Link
+              dataCy="clear-all-filters"
               className={styles.clear}
               onClick={() => onClear && onClear()}
               border={{ bottom: { keepVisible: true } }}
@@ -169,7 +175,7 @@ export function Filter(props) {
           <List.Group
             enabled={!isLoading}
             data-cy="list-facets"
-            className={styles.list}
+            className={styles.group}
           >
             {facets
               .map((facet, idx) => {
@@ -178,12 +184,18 @@ export function Filter(props) {
                   return null;
                 }
 
+                // remove Empty categories
+                if (facet.values.length === 0) {
+                  return null;
+                }
+
+                // selected terms in this category
+                const selectedTerms = selected?.[facet.name];
+
                 const title = Translate({
                   context: "facets",
                   label: `label-${facet.name}`,
                 });
-
-                const selectedTerms = selected?.[facet.name];
 
                 return (
                   <List.Select
@@ -220,6 +232,7 @@ export function Filter(props) {
               .filter((c) => c)}
           </List.Group>
           <Button
+            dataCy="vis-resultater"
             skeleton={isLoading}
             onClick={() => onSubmit && onSubmit()}
             className={styles.submit}
@@ -288,6 +301,9 @@ export default function Wrap(props) {
     return <FilterSkeleton {...props} />;
   }
 
+  // Dont clear the workType filter onClear
+  const excludeOnClear = { workType: filters.workType };
+
   return (
     <Filter
       data={mergedData}
@@ -300,7 +316,7 @@ export default function Wrap(props) {
         // exclude modal param -> will close the modal on submit
         setQuery(undefined, ["modal"]);
       }}
-      onClear={() => setFilters({})}
+      onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
     />
   );
