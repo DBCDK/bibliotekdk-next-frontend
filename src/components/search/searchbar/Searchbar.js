@@ -1,17 +1,13 @@
 import { Row, Col } from "react-bootstrap";
 
-import { openMobileSuggester } from "@/components/header/suggester/Suggester";
-import Translate from "@/components/base/translate";
+import { useModal } from "@/components/_modal";
+
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 
 import Section from "@/components/base/section";
-import Text from "@/components/base/text";
-import Icon from "@/components/base/icon";
-import Link from "@/components/base/link";
 
 import styles from "./Searchbar.module.css";
-import { MobileList } from "@/components/base/select/Select";
-import useMaterialFilters from "@/components/hooks/useMaterialFilters";
+import { MobileMaterialSelect } from "@/components/search/select";
 
 /**
  * A Fake Search Input Field
@@ -25,9 +21,8 @@ import useMaterialFilters from "@/components/hooks/useMaterialFilters";
  * @returns {component}
  */
 export default function Searchbar({ query }) {
-  // variables for the material filter
-  const { selectedMaterial, onOptionClicked, materialFilters } =
-    useMaterialFilters();
+  // modal
+  const modal = useModal();
 
   return (
     <div className={styles.wrap}>
@@ -42,36 +37,11 @@ export default function Searchbar({ query }) {
               <Col xs={12}>
                 <FakeSearchInput query={query} />
                 <div>
-                  <MobileList
-                    options={materialFilters}
-                    selectedMaterial={selectedMaterial}
-                    onOptionClicked={onOptionClicked}
+                  <MobileMaterialSelect
+                    onFilterClick={() => modal.push("filter", { q: query })}
                   />
                 </div>
               </Col>
-              {/* REMOVE for now - do not show if it does not work - TODO enable when time comes
-              <Col xs={12} className={styles.filter}>
-                <span
-                  className={styles.button}
-                  onClick={() => {
-                    if (router) {
-                      router.push({
-                        pathname: router.pathname,
-                        query: { ...router.query, modal: "filter" },
-                      });
-                    }
-                  }}
-                >
-                  <Link onClick={(e) => e.preventDefault()}>
-                    <Text type="text3">
-                      {Translate({ context: "search", label: "filters" })}
-                    </Text>
-                  </Link>
-
-                  <Icon size={2} src="chevron.svg" alt="" />
-                </span>
-              </Col>
-              */}
             </Row>
           </Col>
         </Row>

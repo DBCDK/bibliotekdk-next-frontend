@@ -5,6 +5,7 @@ import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
 import Login from "./login";
+import Filter from "./filter";
 import Localizations from "./localizations";
 
 export default {
@@ -15,5 +16,6 @@ export default {
   Loanerform,
   Receipt,
   Login,
+  Filter,
   Localizations,
 };

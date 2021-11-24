@@ -1,26 +1,80 @@
 import PropTypes from "prop-types";
+import { Container, Row, Col } from "react-bootstrap";
 
-import Section from "@/components/base/section";
+import useFilters from "@/components/hooks/useFilters";
+
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import Icon from "@/components/base/icon";
+import Translate from "@/components/base/translate";
+
 import styles from "./QuickFilters.module.css";
-import ViewSelector from "../viewselector";
 
 /**
  * The quick filters section
  *
  */
-export default function QuickFilters({ onViewSelect, viewSelected }) {
+export function QuickFilters({
+  modal,
+  onFiltersClick,
+  onViewSelect,
+  viewSelected,
+}) {
+  const { getCount } = useFilters();
+
+  const count = getCount(["workType"]).toString();
+
   return (
-    <Section contentDivider={null} titleDivider={null} title={null}>
-      <div className={styles.quickfilters}>
-        <ViewSelector
+    <Container fluid className={styles.section}>
+      <Row>
+        <Col xs={12} lg={{ offset: 3 }}>
+          <div className={styles.quickfilters}>
+            {/* <ViewSelector
           className={styles.viewselector}
           onViewSelect={onViewSelect}
           viewSelected={viewSelected}
-        />
-      </div>
-    </Section>
+        /> */}
+
+            <Text type="text2">
+              {Translate({ context: "search", label: "filtersResultText" })}
+            </Text>
+
+            <Link
+              className={styles.link}
+              onClick={() => onFiltersClick()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.keyCode === 13) {
+                  onFiltersClick();
+                }
+              }}
+              border={false}
+            >
+              <Icon src="settings.svg" size={2} />
+              <Link
+                onClick={(e) => e.preventDefault()}
+                border={{ bottom: { keepVisible: true } }}
+              >
+                <Text type="text3">
+                  {Translate({
+                    context: "search",
+                    label:
+                      count === "0" ? "showAllFilters" : "showAllFiltersCount",
+                    vars: count === "0" ? null : [count],
+                  })}
+                </Text>
+              </Link>
+            </Link>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
+
+export default function Wrap(props) {
+  return <QuickFilters {...props} />;
+}
+
 QuickFilters.propTypes = {
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,

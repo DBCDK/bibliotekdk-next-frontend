@@ -1,3 +1,5 @@
+export function preventTab(container) {}
+
 /**
  * Function to trap Tab inside modal
  *
@@ -7,6 +9,7 @@
  * https://medium.com/@islam.sayed8/trap-focus-inside-a-modal-aa5230326c1b
  * https://medium.com/@seif_ghezala/how-to-create-an-accessible-react-modal-5b87e6a27503
  */
+
 export function handleTab(event, container) {
   event.preventDefault();
 

@@ -44,7 +44,7 @@ describe("Modal", () => {
 
   // BETA-1 elements removed tab-order fucked up - skip
   // @ TODO enable
-  it(`Tab is trapped in Menu modal`, () => {
+  it(`Tab is trapped in Menu modal 2`, () => {
     cy.get("[data-cy=button-toggle-menu]").click();
     cy.wait(500);
 

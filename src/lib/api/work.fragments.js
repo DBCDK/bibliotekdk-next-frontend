@@ -189,6 +189,26 @@ export function detailsAllManifestations({ workId }) {
             materialType
             notes
             language
+            onlineAccess {
+              ... on UrlReference {
+                url
+                origin
+                note
+                accessType
+              }
+              ... on InfomediaReference {
+                infomediaId
+                pid
+              }
+              ... on WebArchive {
+                type
+                url
+                pid
+              }
+              ... on DigitalCopy{
+                issn
+              }
+            }
             originals
             originalTitle
             pid

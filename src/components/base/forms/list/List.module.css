@@ -24,6 +24,10 @@
   border-color: var(--blue);
 }
 
+.row .content {
+  width: 100%;
+}
+
 /* Radio button animation */
 .row > .dot::before,
 .row > .dot::after {

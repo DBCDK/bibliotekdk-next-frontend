@@ -373,6 +373,7 @@ export function OrderPolicyFail() {
         user={modifiedUser}
         authUser={modifiedUser}
         pid={"some-pid"}
+        articleOrder={order}
         order={order}
         query={query}
         onLayerChange={(query) => setQuery(query)}

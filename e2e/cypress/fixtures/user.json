@@ -22,7 +22,8 @@
               "orderPossibleReason": "OWNED_ACCEPTED",
               "lookUpUrl": "https://some-lookup-url"
             },
-            "pickupAllowed": true
+            "pickupAllowed": true,
+            "digitalCopyAccess": true
           },
           {
             "agencyName": "DBCs testbiblioteker",

@@ -106,7 +106,7 @@ export default function Top({
   title,
   back = true,
 }) {
-  const showBack = back && modal.index() > 0;
+  const showBack = back && modal.index?.() > 0;
 
   return (
     <div className={`${styles.top} ${className.top || ""}`}>

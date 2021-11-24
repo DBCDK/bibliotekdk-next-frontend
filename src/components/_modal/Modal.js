@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useInView } from "react-intersection-observer";
 
 // modal utils
-import { handleTab, scrollLock } from "./utils";
+import { handleTab, preventTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -103,7 +103,7 @@ function Container({ children, className = {}, mock = {} }) {
   const didLoad = useRef(false);
 
   // modal has content and should be visible
-  const isVisible = modal.stack.length > 0 && modal.index() > -1;
+  const isVisible = modal.isVisible;
 
   // active/visible modal class
   const visibleClass = isVisible ? "modal_visible" : "";
@@ -199,21 +199,26 @@ function Container({ children, className = {}, mock = {} }) {
   useEffect(() => {
     // If tab key is pressed down
     function downHandler(e) {
-      const modalTarget = !!modalRef.current.contains(e.target);
-
       if (e.key === "Tab") {
-        isVisible && modalTarget && handleTab(e, modalRef.current);
+        isVisible && handleTab(e, modalRef.current);
       }
     }
-    // if (isVisible) {
-    // Add event listeners
-    window.addEventListener("keydown", downHandler);
-    // Remove event listeners on cleanup
-    return () => {
-      window.removeEventListener("keydown", downHandler);
-    };
-    // }
-  }, []);
+    if (isVisible) {
+      // Add event listeners
+      window.addEventListener("keydown", downHandler);
+      // Remove event listeners on cleanup
+      return () => {
+        window.removeEventListener("keydown", downHandler);
+      };
+    }
+  }, [isVisible]);
+
+  // Tab key handle (locks tab in visible modal)
+  useEffect(() => {
+    if (!isVisible) {
+      preventTab(modalRef.current);
+    }
+  }, [isVisible]);
 
   // force modal focus (accessibility)
   useEffect(() => {
@@ -297,6 +302,7 @@ function Container({ children, className = {}, mock = {} }) {
             // Enrich page components with props
             return React.cloneElement(page, {
               modal: { ...modal, ...mock },
+
               // stack index
               index,
               context: obj.context,
@@ -400,6 +406,9 @@ function Page(props) {
 
 export function useModal() {
   const { stack, setStack, save, router } = useContext(ModalContext);
+
+  // modal is visible
+  const _isVisible = stack.length > 0 && _index() > -1;
 
   /**
    * Push
@@ -613,15 +622,14 @@ export function useModal() {
    * @param {*} index
    * @param {*} context
    */
-  function _update(index, context) {
-    if (!index) {
-      index = _index();
-    }
-
+  function _update(index = _index(), context) {
     let copy = [...stack];
     copy = copy.map((obj, i) => {
       if (index === i) {
-        return { ...obj, context: { ...obj.context, ...context } };
+        return {
+          ...obj,
+          context: { ...obj.context, ...context, _update: true },
+        };
       }
       return obj;
     });
@@ -632,6 +640,7 @@ export function useModal() {
   }
 
   return {
+    // public functions
     currentPageUid: router.query[URL_PAGE_UID_KEY],
     push: _push,
     pop: _prev,
@@ -643,6 +652,8 @@ export function useModal() {
     prev: _prev,
     setStack,
     stack,
+    isVisible: _isVisible,
+    // privat functions
     _doSelect,
     _router: router,
   };

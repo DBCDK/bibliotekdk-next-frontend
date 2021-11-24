@@ -3,13 +3,28 @@
  *
  */
 
+const allFilters = {
+  accessType: [],
+  audience: [],
+  creator: [],
+  fictionNonfiction: [],
+  fictiveCharacter: [],
+  genre: [],
+  language: [],
+  materialType: [],
+  subject: [],
+  workType: [],
+};
+
 /**
  * Hitcount
  *
  * @param {object} params
  * @param {string} params.q the query
  */
-export function hitcount({ q, worktype }) {
+export function hitcount({ q, filters = {} }) {
+  const merged = { ...allFilters, ...filters };
+
   return {
     // delay: 1000, // for debugging
     query: `query ($q: String!, $filters: SearchFilters) {
@@ -18,7 +33,7 @@ export function hitcount({ q, worktype }) {
               }
               monitor(name: "bibdknext_search_hitcount")
             }`,
-    variables: { q, filters: { workType: worktype ? [worktype] : [] } },
+    variables: { q, filters: merged },
     slowThreshold: 3000,
   };
 }
@@ -29,7 +44,7 @@ export function hitcount({ q, worktype }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function fast({ q, limit, offset, facets = null }) {
+export function fast({ q, limit, offset, filters = {} }) {
   return {
     // delay: 1000, // for debugging
     query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
@@ -49,7 +64,7 @@ export function fast({ q, limit, offset, facets = null }) {
       q,
       limit,
       offset,
-      filters: { workType: facets?.[0] ? [facets?.[0]?.value] : [] },
+      filters,
     },
     slowThreshold: 3000,
   };
@@ -61,7 +76,7 @@ export function fast({ q, limit, offset, facets = null }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function all({ q, limit, offset, facets = null }) {
+export function all({ q, limit, offset, filters = {} }) {
   return {
     // delay: 1000, // for debugging
     query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
@@ -88,7 +103,36 @@ export function all({ q, limit, offset, facets = null }) {
       q,
       limit,
       offset,
-      filters: { workType: facets?.[0] ? [facets?.[0]?.value] : [] },
+      filters,
+    },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Detailed search response
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function facets({ q, filters = {} }) {
+  return {
+    // delay: 1000, // for debugging
+    query: `query ($q: String!, $filters: SearchFilters) {
+              search(q: {all: $q}, filters: $filters) {
+                facets(facets: [workType, language, materialType, fictiveCharacter, genre, audience, accessType, fictionNonfiction, subject, creator]) {
+                  name
+                  values(limit: 100) {
+                    term
+                    count
+                  }
+                }
+              }
+              monitor(name: "bibdknext_search_facets")
+            }`,
+    variables: {
+      q,
+      filters,
     },
     slowThreshold: 3000,
   };

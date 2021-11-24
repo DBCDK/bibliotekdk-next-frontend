@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { signIn, signOut } from "@dbcdk/login-nextjs/client";
 
 import useHistory from "@/components/hooks/useHistory";
+import useFilters from "@/components/hooks/useFilters";
 
 import { cyKey } from "@/utils/trim";
 
@@ -13,23 +14,20 @@ import Suggester, { focusInput, blurInput } from "./suggester/";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
-import Icon from "@/components/base/icon";
 
 import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
-import BasketIcon from "./icons/basket";
+// import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import useUser from "../hooks/useUser";
 
-import { externalUrls } from "@/lib/Navigation";
 import Logo from "@/components/base/logo/Logo";
 import { encodeTitleCreator } from "@/lib/utils";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
-import MaterialSelect, { MobileList } from "@/components/base/select/Select";
-import useMaterialFilters from "@/components/hooks/useMaterialFilters";
+import { DesktopMaterialSelect } from "@/components/search/select";
 
 import styles from "./Header.module.css";
 
@@ -47,6 +45,7 @@ export function Header({
   story = null,
   user,
   modal,
+  filters,
 }) {
   const context = { context: "header" };
 
@@ -55,6 +54,12 @@ export function Header({
 
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
+
+  // worktype filter param
+  const { workType } = filters.getQuery();
+
+  // specific material worktype selected
+  const selectedMaterial = workType[0] || "all";
 
   // for beta1 - disable links above
   const linksdisabled = false;
@@ -108,7 +113,7 @@ export function Header({
     {
       label: "menu",
       icon: BurgerIcon,
-      onClick: () => modal.push("menu", { label: "title-menu" }),
+      onClick: () => modal.push("menu"),
     },
   ];
 
@@ -121,10 +126,6 @@ export function Header({
   const suggesterVisibleMobileClass = suggesterVisibleMobile
     ? styles.suggester__visible
     : "";
-
-  // variables for the material filter @see <MaterialSelect>
-  const { selectedMaterial, onOptionClicked, materialFilters } =
-    useMaterialFilters();
 
   const doSearch = ({ query, suggestion }) => {
     // If we are on mobile we replace
@@ -144,13 +145,14 @@ export function Header({
           },
         });
     } else {
-      const params = selectedMaterial.value
-        ? {
-            worktype:
-              selectedMaterial.value !== "all" ? selectedMaterial.value : "",
-            q: query,
-          }
-        : { q: query };
+      const params = {
+        workType: selectedMaterial !== "all" ? selectedMaterial : null,
+        q: query,
+      };
+
+      //  remove dead params
+      Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
+
       router &&
         router[routerFunc]({
           pathname: "/find",
@@ -186,33 +188,31 @@ export function Header({
                   <Link href="/">
                     <Text type="text3">{frontpageTranslated}</Text>
                   </Link>
-                  {materialFilters
-                    .filter((filter) => filter.value !== "all")
-                    .map((m, idx) => (
-                      <Link
-                        key={m.value}
-                        disabled={linksdisabled}
-                        dataCy={cyKey({
-                          name: m.label,
-                          prefix: "header-link",
+                  {filters.workTypes.map((m) => (
+                    <Link
+                      key={m}
+                      disabled={linksdisabled}
+                      dataCy={cyKey({
+                        name: m,
+                        prefix: "header-link",
+                      })}
+                      onClick={() => {
+                        filters.setQuery({ workType: [m] });
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.keyCode === 13) {
+                          filters.setQuery({ workType: [m] });
+                        }
+                      }}
+                    >
+                      <Text type="text3">
+                        {Translate({
+                          context: "facets",
+                          label: `label-${m}`,
                         })}
-                        onClick={(e) => {
-                          onOptionClicked(idx + 1);
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter" || e.keyCode === 13) {
-                            onOptionClicked(idx + 1);
-                          }
-                        }}
-                      >
-                        <Text type="text3">
-                          {Translate({
-                            context: "general",
-                            label: m.label,
-                          })}
-                        </Text>
-                      </Link>
-                    ))}
+                      </Text>
+                    </Link>
+                  ))}
                 </div>
                 <div
                   className={styles.actions}
@@ -260,12 +260,7 @@ export function Header({
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <MaterialSelect
-                    options={materialFilters}
-                    onOptionClicked={onOptionClicked}
-                    selectedMaterial={selectedMaterial}
-                  />
-
+                  <DesktopMaterialSelect />
                   <div
                     className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
@@ -363,12 +358,13 @@ function HeaderSkeleton(props) {
 export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
+  const filters = useFilters();
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} user={user} modal={modal} />;
+  return <Header {...props} user={user} modal={modal} filters={filters} />;
 }
 
 // PropTypes for component

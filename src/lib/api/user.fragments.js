@@ -77,6 +77,7 @@ export function orderPolicy({ pid }) {
             }
             pickupAllowed
             userStatusUrl
+            digitalCopyAccess
           }
         }
       }
