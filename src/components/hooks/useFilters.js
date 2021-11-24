@@ -7,7 +7,6 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Router from "next/router";
 import useSWR from "swr";
 
 // current supported filter types

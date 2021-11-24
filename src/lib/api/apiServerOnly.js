@@ -6,10 +6,6 @@ import { getSession } from "next-auth/client";
 import { generateKey, fetcher } from "@/lib/api/api";
 import fetch from "isomorphic-unfetch";
 
-import merge from "lodash/merge";
-
-import { getQuery } from "@/components/hooks/useFilters";
-
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
@@ -20,20 +16,13 @@ const APP_URL =
  * @param {*} context
  * @returns
  */
-export async function fetchAll(queries, context) {
+export async function fetchAll(queries, context, customQueryVariables) {
   // If we are in a browser, we return immidiately
   // This prevents a roundtrip to the server
   // and will make page changes feel faster
   if (typeof window !== "undefined") {
     return { initialState: {} };
   }
-
-  // Build a filters object based on the context query
-  const queryFilters = getQuery(context.query);
-
-  // Appends a filters object containing all materialfilters
-  // The filters object can now be read by the search.fragments
-  context = merge({}, context, { query: { filters: queryFilters } });
 
   // Detect if requester is a bot
   const userAgent = context.req.headers["user-agent"];
@@ -73,7 +62,7 @@ export async function fetchAll(queries, context) {
       await Promise.all(
         queries.map(async (queryFunc) => {
           const queryKey = generateKey({
-            ...queryFunc(context.query),
+            ...queryFunc({ ...context.query, ...customQueryVariables }),
             accessToken: session?.accessToken || anonSession?.accessToken,
           });
           const queryRes = await fetcher(queryKey);
