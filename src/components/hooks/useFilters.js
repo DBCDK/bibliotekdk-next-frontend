@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 // current supported filter types
-const types = [
+export const types = [
   "accessType",
   "audience",
   "creator",
@@ -24,7 +24,7 @@ const types = [
 ];
 
 // Worktypes for work type selections
-const workTypes = [
+export const workTypes = [
   "literature",
   "article",
   "movie",
@@ -45,10 +45,31 @@ const fetcher = () => locale;
  * @returns {object}
  */
 
-function buildFilters() {
+export function buildFilters() {
   const params = {};
   types.forEach((type) => (params[type] = []));
   return params;
+}
+
+/**
+ * Get filters from query params
+ *
+ * @param {object} query (defaults to router.query)
+ *
+ * @returns {object}
+ *
+ */
+export function getQuery(query) {
+  const base = buildFilters();
+
+  const filters = {};
+  Object.entries(query).forEach(([key, val]) => {
+    if (types.includes(key) && val) {
+      filters[key] = val && val.split(",");
+    }
+  });
+
+  return { ...base, ...filters };
 }
 
 /**
@@ -84,7 +105,7 @@ function useFilters() {
   useEffect(() => {
     if (router) {
       // set locale object
-      locale = getQuery();
+      locale = _getQuery();
       // update locale state (swr)
       _setFilters(locale);
     }
@@ -119,16 +140,7 @@ function useFilters() {
    * @returns {object}
    *
    */
-  const getQuery = (query = router.query) => {
-    const filters = {};
-    Object.entries(query).forEach(([key, val]) => {
-      if (types.includes(key) && val) {
-        filters[key] = val && val.split(",");
-      }
-    });
-
-    return { ...base, ...filters };
-  };
+  const _getQuery = (query = router.query) => getQuery(query);
 
   /**
    * Set filters in query params
@@ -183,7 +195,7 @@ function useFilters() {
    * @returns {int}
    */
   function getCount(exclude = []) {
-    const filters = getQuery();
+    const filters = _getQuery();
 
     let count = 0;
     Object.entries(filters).map(([key, value]) => {
@@ -202,7 +214,7 @@ function useFilters() {
   return {
     filters: _filters,
     setFilters,
-    getQuery,
+    getQuery: _getQuery,
     setQuery,
     getCount,
     types,
