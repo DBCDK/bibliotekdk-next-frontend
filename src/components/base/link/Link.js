@@ -28,6 +28,7 @@ export default function Link({
   tabIndex = "0",
   tag = "a",
   disabled = false,
+  ariaLabel = "",
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -53,6 +54,7 @@ export default function Link({
         onFocus={onFocus}
         className={`${styles.link} ${animationClass} ${disabledClass} ${className}`}
         tabIndex={disabled ? "-1" : tabIndex}
+        aria-label={ariaLabel}
       >
         {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
@@ -114,4 +116,5 @@ Link.propTypes = {
   tabIndex: PropTypes.string,
   tag: PropTypes.oneOf(["a", "span"]),
   disabled: PropTypes.bool,
+  ariaLabel: PropTypes.string,
 };

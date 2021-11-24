@@ -6,6 +6,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
+import { cyKey } from "@/utils/trim";
 
 export function LocalizationsLink({
   materialType,
@@ -25,13 +26,15 @@ export function LocalizationsLink({
     return null;
   }
 
-  // @TODO
+  // @TODO - if user is logged in - show localizations for logged in library
 
   const count = localizations?.count?.toString() || "0";
+  const localizationKey = cyKey({ name: "nolocalizations", prefix: "text" });
+  const localizationLinkKey = cyKey({ name: "localizations", prefix: "link" });
   if (count === "0") {
     return (
       <div>
-        <Text type="text3">
+        <Text type="text3" dataCy={localizationKey}>
           {Translate({
             context: "overview",
             label: "label_library_no_holdings",
@@ -46,6 +49,8 @@ export function LocalizationsLink({
       <Link
         onClick={() => opener()}
         border={{ top: false, bottom: { keepVisible: true } }}
+        dataCy={localizationLinkKey}
+        ariaLabel="open localizations"
       >
         <Text type="text3">
           {Translate({

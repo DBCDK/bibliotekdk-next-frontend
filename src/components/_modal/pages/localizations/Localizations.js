@@ -55,6 +55,7 @@ export function Localizations({ context, branchData, isLoading, onChange }) {
                     props={{
                       ...context,
                       branch: branch,
+                      index: { idx },
                     }}
                   />
                 );

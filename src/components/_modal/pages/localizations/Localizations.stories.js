@@ -1,5 +1,7 @@
 import { Localizations } from "./Localizations";
 import { LocalizationItem } from "./LocalizationItem";
+import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
+import useUser from "@/components/hooks/useUser";
 
 export default {
   title: "modal/Localizations",
@@ -131,11 +133,10 @@ const dummylocalizations = {
  * Returns Localizations
  *
  */
-export function ShowLocalzationsNotLoggedIn() {
+export function LocalizationLink() {
   const type = "Bog";
 
   const props = {
-    //title: Translate({ context: "modal", label: "title-order" }),
     title: "fisk",
     workId: "work-of:870970-basis:01362984",
     //materialType: selectedMaterial.materialType,
@@ -147,10 +148,17 @@ export function ShowLocalzationsNotLoggedIn() {
   )[0];
 
   const context = { ...props, ...selectedLocalizations };
-  const alertopener = () => {};
+  const alertopener = () => {
+    alert("localizations");
+  };
+  const user = useUser();
 
   return (
-    <Localizations context={context} isLoading={false} onChange={alertopener} />
+    <LocalizationsLink
+      opener={alertopener}
+      localizations={selectedLocalizations.localizations}
+      user={user}
+    />
   );
 }
 
@@ -165,6 +173,7 @@ export function LocalizationItemLoading() {
       branch={dummybranch}
       holdings={greatGatsby.data}
       isLoading={true}
+      index={0}
     />
   );
 }
