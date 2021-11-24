@@ -6,6 +6,10 @@ import { getSession } from "next-auth/client";
 import { generateKey, fetcher } from "@/lib/api/api";
 import fetch from "isomorphic-unfetch";
 
+import merge from "lodash/merge";
+
+import { getQuery } from "@/components/hooks/useFilters";
+
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
@@ -23,6 +27,13 @@ export async function fetchAll(queries, context) {
   if (typeof window !== "undefined") {
     return { initialState: {} };
   }
+
+  // Build a filters object based on the context query
+  const queryFilters = getQuery(context.query);
+
+  // Appends a filters object containing all materialfilters
+  // The filters object can now be read by the search.fragments
+  context = merge({}, context, { query: { filters: queryFilters } });
 
   // Detect if requester is a bot
   const userAgent = context.req.headers["user-agent"];
