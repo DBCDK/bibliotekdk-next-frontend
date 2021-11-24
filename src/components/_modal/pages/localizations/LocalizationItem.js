@@ -5,14 +5,27 @@ import styles from "./Localizations.module.css";
 import Divider from "@/components/base/divider";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import { cyKey } from "@/utils/trim";
 
 /**
  * Loading component
  * @return {JSX.Element}
  * @constructor
  */
-function ItemSkeleton() {
-  return <div className={styles.waitforme}></div>;
+function ItemSkeleton({ index }) {
+  const skeletonKey = cyKey({
+    name: index + "-localizationloader",
+    prefix: "blinking",
+  });
+  return (
+    <div
+      data-cy={skeletonKey}
+      className={styles.waitforme}
+      role="progressbar"
+      aria-live="polite"
+      aria-busy="true"
+    ></div>
+  );
 }
 
 /**
@@ -23,7 +36,7 @@ function ItemSkeleton() {
  * @return {JSX.Element}
  * @constructor
  */
-export function LocalizationItem({ branch, holdings, isLoading }) {
+export function LocalizationItem({ branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
   const branchHoldings = holdings?.branches?.result?.[0];
@@ -78,21 +91,23 @@ export function LocalizationItem({ branch, holdings, isLoading }) {
         <Text type="text3">{branch.agencyName}</Text>
       </div>
       <div className={styles.item}>
-        {isLoading && <ItemSkeleton />}
+        {isLoading && <ItemSkeleton index={index} />}
         {!isLoading && (
           <>
             {blinkingcolors.includes(color) && (
               <div className={styles[`${color}`]}></div>
             )}
-            <Text
-              type="text3"
-              tag="span"
-              className={blinkingcolors.includes(color) ? styles.inline : ""}
-            >
-              {messages(color, branch)}
-            </Text>
+            <span aria-live="polite" aria-busy="false">
+              <Text
+                type="text3"
+                tag="span"
+                className={blinkingcolors.includes(color) ? styles.inline : ""}
+              >
+                {messages(color, branch)}
+              </Text>
+            </span>
             {color === "none" && branch.branchWebsiteUrl && (
-              <span>
+              <span aria-live="polite" aria-busy="false">
                 <Link
                   href={branch?.branchWebsiteUrl}
                   target="_blank"
@@ -116,7 +131,7 @@ export function LocalizationItem({ branch, holdings, isLoading }) {
 }
 
 export default function wrap({ props }) {
-  const { branch, pids } = { ...props };
+  const { branch, pids, index } = { ...props };
   // @TODO .. what do we need here
   // .. we need detailed holdings to show expected delivery
   const { data, isLoading: holdingsLoading } = useData(
@@ -160,6 +175,7 @@ export default function wrap({ props }) {
       branch={branch}
       holdings={holdingsData}
       isLoading={holdingsLoading}
+      index={index}
     />
   );
 }

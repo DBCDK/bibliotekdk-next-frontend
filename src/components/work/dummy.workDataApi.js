@@ -14,6 +14,7 @@ export default function dummy_workDataApi({ workId }) {
             manifestations: [
               { pid: "870970-basis:06442870", onlineAccess: null },
             ],
+            count: "53",
           },
           {
             materialType: "Bog stor skrift",
