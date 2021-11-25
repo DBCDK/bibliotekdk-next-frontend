@@ -108,7 +108,7 @@ export function Mobile({
         const isSelected = selected === elem;
 
         return (
-          <Tag key={elem} selected={isSelected} onClick={() => onSelect()}>
+          <Tag key={elem} selected={isSelected} onClick={() => onSelect(elem)}>
             {Translate({
               context: "facets",
               label: `label-${elem}`,
