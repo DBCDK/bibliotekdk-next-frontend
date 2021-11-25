@@ -22,7 +22,7 @@ import * as workFragments from "@/lib/api/work.fragments";
  *
  * @returns {component}
  */
-export function BibliographicData({ work }) {
+export function BibliographicData({ work, workId }) {
   const sortedMaterialTypes = useMemo(
     () => sortManifestations(work.manifestations),
     [work]
@@ -51,7 +51,8 @@ export function BibliographicData({ work }) {
             >
               <ManifestationFull
                 manifestation={manifestation}
-                worktype={work.workTypes}
+                work={work}
+                workId={workId}
               />
             </Item>
           );
@@ -81,7 +82,7 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  return <BibliographicData work={data.work} />;
+  return <BibliographicData work={data.work} workId={workId} />;
 }
 
 // PropTypes for component

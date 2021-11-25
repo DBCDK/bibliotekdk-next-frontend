@@ -13,6 +13,7 @@ import Translate from "@/components/base/translate";
 import { parseManifestation } from "@/lib/manifestationParser";
 import styles from "./BibliographicData.module.css";
 import { cyKey } from "@/utils/trim";
+import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 
 /**
  * bibliotek.dk object url
@@ -49,6 +50,7 @@ function ColumnOne({ manifestation, worktypes }) {
       {manifestation.cover && (
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
+      <LocalizationsLink />
       {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({
@@ -124,7 +126,8 @@ function ColumnOne({ manifestation, worktypes }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({ manifestation, worktype }) {
+export function ManifestationFull({ manifestation, work, workId }) {
+  const worktype = work.workTypes;
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
@@ -155,5 +158,15 @@ export function ManifestationFull({ manifestation, worktype }) {
         </div>
       </Col>
     </Row>
+  );
+}
+
+export default function wrap({ manifestation, work, workId }) {
+  return (
+    <ManifestationFull
+      manifestation={manifestation}
+      work={work}
+      workId={workId}
+    />
   );
 }
