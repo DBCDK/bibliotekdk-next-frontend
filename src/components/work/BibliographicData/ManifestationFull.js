@@ -14,6 +14,8 @@ import { parseManifestation } from "@/lib/manifestationParser";
 import styles from "./BibliographicData.module.css";
 import { cyKey } from "@/utils/trim";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
+import { useModal } from "@/components/_modal";
+import useUser from "@/components/hooks/useUser";
 
 /**
  * bibliotek.dk object url
@@ -35,7 +37,7 @@ function bibdkObjectUrl(pid) {
  * @returns {JSX.Element}
  * @constructor
  */
-function ColumnOne({ manifestation, worktypes }) {
+function ColumnOne({ manifestation, worktypes, localizations, opener }) {
   const worktype = worktypes && worktypes[0] ? worktypes[0] : "literature";
 
   let number_of_libraries = "63";
@@ -50,7 +52,15 @@ function ColumnOne({ manifestation, worktypes }) {
       {manifestation.cover && (
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
-      <LocalizationsLink />
+      <div>
+        <span>
+          <LocalizationsLink
+            opener={opener}
+            localizations={{ count: localizations?.length || "0" }}
+            materialType={manifestation.materialType}
+          />
+        </span>
+      </div>
       {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({
@@ -126,7 +136,13 @@ function ColumnOne({ manifestation, worktypes }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({ manifestation, work, workId }) {
+export function ManifestationFull({
+  manifestation,
+  work,
+  allLocalizations,
+  opener,
+  user,
+}) {
   const worktype = work.workTypes;
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
@@ -134,9 +150,29 @@ export function ManifestationFull({ manifestation, work, workId }) {
     return parseManifestation(manifestation);
   }, [manifestation]);
 
+  // find localizations for this manifestation
+  const manifestationLocalizationType =
+    allLocalizations?.work?.materialTypes.find(
+      (type) => type.materialType === manifestation.materialType
+    );
+  const manifestationLocalizations = [];
+  manifestationLocalizationType?.localizations?.agencies?.map((agency) => {
+    const maniholding = agency.holdingItems.find(
+      (holding) => holding.localizationPid === manifestation.pid
+    );
+    if (maniholding) {
+      manifestationLocalizations.push(maniholding);
+    }
+  });
+
   return (
     <Row>
-      <ColumnOne manifestation={manifestation} worktypes={worktype} />
+      <ColumnOne
+        manifestation={manifestation}
+        worktypes={worktype}
+        localizations={manifestationLocalizations}
+        opener={opener}
+      />
       <Col xs={12} md>
         <div className={styles.container}>
           {parsed.map(({ label, value }) => {
@@ -161,12 +197,27 @@ export function ManifestationFull({ manifestation, work, workId }) {
   );
 }
 
-export default function wrap({ manifestation, work, workId }) {
+export default function wrap({ manifestation, work, workId, localizations }) {
+  const modal = useModal();
+  const openLocalizationsModal = () => {
+    modal.push("localizations", {
+      title: Translate({ context: "modal", label: "title-order" }),
+      workId,
+      materialType: manifestation.materialType,
+      pids: [manifestation.pid],
+    });
+  };
+
+  const user = useUser();
+
   return (
     <ManifestationFull
       manifestation={manifestation}
       work={work}
       workId={workId}
+      allLocalizations={localizations}
+      opener={openLocalizationsModal}
+      user={user}
     />
   );
 }

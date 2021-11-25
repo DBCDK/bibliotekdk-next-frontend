@@ -7,7 +7,7 @@ import React, { useEffect, useState, useMemo } from "react";
 
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
-import { ManifestationFull } from "./ManifestationFull";
+import ManifestationFull from "./ManifestationFull";
 import { sortManifestations } from "./utils";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
@@ -22,12 +22,11 @@ import * as workFragments from "@/lib/api/work.fragments";
  *
  * @returns {component}
  */
-export function BibliographicData({ work, workId }) {
+export function BibliographicData({ work, workId, localizations }) {
   const sortedMaterialTypes = useMemo(
     () => sortManifestations(work.manifestations),
     [work]
   );
-
   return (
     <Section
       title={Translate({
@@ -53,6 +52,7 @@ export function BibliographicData({ work, workId }) {
                 manifestation={manifestation}
                 work={work}
                 workId={workId}
+                localizations={localizations}
               />
             </Item>
           );
@@ -75,14 +75,25 @@ export default function Wrap({ workId }) {
     workFragments.detailsAllManifestations({ workId })
   );
 
+  // use the useData hook to fetch data
+  const { data: localizationData, isLoading: localizationsLoading } = useData(
+    workFragments.localizations({ workId })
+  );
+
   if (error || !data) {
     return null;
   }
-  if (isLoading) {
+  if (isLoading || localizationsLoading) {
     return null;
   }
 
-  return <BibliographicData work={data.work} workId={workId} />;
+  return (
+    <BibliographicData
+      work={data.work}
+      workId={workId}
+      localizations={localizationData}
+    />
+  );
 }
 
 // PropTypes for component

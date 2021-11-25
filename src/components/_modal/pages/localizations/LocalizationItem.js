@@ -140,6 +140,7 @@ export default function wrap({ props }) {
       pids: pids,
     })
   );
+
   const dummyData = {
     branches: {
       agencyUrl: "http://bibliotek.kk.dk/",
