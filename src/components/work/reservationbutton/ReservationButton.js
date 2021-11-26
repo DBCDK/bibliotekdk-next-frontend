@@ -31,6 +31,8 @@ function addToInfomedia(onlineAccess, title) {
  * @return {*}
  */
 function selectMaterial(manifestations) {
+  console.log(manifestations, "MANIFESTATIONS");
+
   // check if onlineacces. if so get the first manifestation with an online url - if any
   let selectedmanifestation;
   let url;
@@ -126,38 +128,51 @@ export function ButtonTxt({ selectedMaterial, skeleton }) {
  *
  * @param selectedMaterial
  *  Partial work - filtered by the materialtype selected by user (eg. bog)
- * @param skeleton
- *  show skeleton or not (bool)
- * @param login
- *  onclick handler if user is not logged in
  * @param onOnlineAccess
  *  onclick handler for online access
  * @param openOrderModal
  *  onclick handler for reservation
+ *  @param workTypeTranslated
+ *   translated worktype
+ *  @param title
+ *
  * @param user
  *  The user
+ * @param singlemanifestion
  * @return {JSX.Element}
  * @constructor
  */
 export function OrderButton({
   selectedMaterial,
   onOnlineAccess,
-  login,
   openOrderModal,
   user,
   workTypeTranslated,
   title,
+  singleManifestion = false,
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
   if (!selectedMaterial) {
     return null;
   }
+  if (singleManifestion) {
+    console.log("FISK");
+  }
 
   const type = selectedMaterial.materialType;
 
   const manifestations = selectedMaterial.manifestations;
-  selectedMaterial = selectMaterial(manifestations);
+  if (!singleManifestion) {
+    selectedMaterial = selectMaterial(manifestations);
+  }
+
+  // QUICK DECISION: if this is single manifestation AND the manifestation can NOT be ordered
+  // we show no Reservation button - @TODO should we show online accesss etc. ???
+  if (singleManifestion && !checkRequestButtonIsTrue({ manifestations })) {
+    return null;
+  }
+
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:

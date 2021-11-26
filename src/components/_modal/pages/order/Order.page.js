@@ -550,6 +550,8 @@ export default function Wrap(props) {
   // context
   const { context } = props;
 
+  console.log(context, "CONTEXT");
+
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
 
