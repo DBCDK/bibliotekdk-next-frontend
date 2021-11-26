@@ -63,7 +63,6 @@
   /* animation */
   transform: translateX(103%);
   transition: transform 330ms ease-out;
-  will-change: transform;
 
   /* Dialog override */
   display: block;
@@ -104,7 +103,7 @@
 
   /* animation */
   transition: transform 330ms ease-out, box-shadow 500ms ease-out;
-  will-change: transform, box-shadow;
+  will-change: box-shadow;
 
   /* ensures pages "spawn" position is stacked top-right */
   position: absolute;
