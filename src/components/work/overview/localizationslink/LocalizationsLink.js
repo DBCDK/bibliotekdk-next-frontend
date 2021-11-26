@@ -20,6 +20,7 @@ export function LocalizationsLink({
     "Ebog",
     "Punktskrift",
     "Artikel",
+    "Tidsskriftsartikel",
   ];
 
   if (nolinktoholding.includes(materialType)) {
