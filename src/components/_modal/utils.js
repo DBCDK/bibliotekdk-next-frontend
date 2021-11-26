@@ -7,6 +7,7 @@ const elements = [
   "[tabindex]",
 ];
 
+// currently not in use
 export function tabVisibility(container, isVisible) {
   // build query with elements
   const query = elements.join(", ");

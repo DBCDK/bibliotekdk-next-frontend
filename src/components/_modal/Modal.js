@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useInView } from "react-intersection-observer";
 
 // modal utils
-import { handleTab, tabVisibility, scrollLock } from "./utils";
+import { handleTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -212,13 +212,6 @@ function Container({ children, className = {}, mock = {} }) {
       };
     }
   }, [isVisible]);
-
-  // Prevent tab to a closed modal
-  useEffect(() => {
-    if (modalRef.current) {
-      tabVisibility(modalRef.current, isVisible);
-    }
-  }, [modal.stack]);
 
   // force modal focus (accessibility)
   useEffect(() => {
