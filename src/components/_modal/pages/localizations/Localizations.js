@@ -37,7 +37,7 @@ export function Localizations({ context, branchData, isLoading, onChange }) {
       <Search
         dataCy="pickup-search-input"
         placeholder={Translate({
-          ...context,
+          context: "order",
           label: "pickup-input-placeholder",
         })}
         className={styles.input}
