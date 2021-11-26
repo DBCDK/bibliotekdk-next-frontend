@@ -37,6 +37,7 @@ function Button({
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
       aria-disabled={disabled}
+      disabled={disabled}
       tabIndex={tabIndex}
     >
       {children}

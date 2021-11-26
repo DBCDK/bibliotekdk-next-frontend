@@ -17,7 +17,7 @@ describe("Filter", () => {
 
     cy.tab();
     cy.focused().contains("Luk");
-    cy.tabs(4);
+    cy.tabs(5);
     cy.focused().contains("Luk");
   });
 
