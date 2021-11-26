@@ -70,6 +70,11 @@
   border: none;
 }
 
+.modal_dialog.modal_closed {
+  /* hide tabbable elements */
+  content-visibility: hidden;
+}
+
 .modal_dialog.modal_visible {
   pointer-events: auto;
   transform: none;
@@ -91,7 +96,6 @@
 }
 
 /* page */
-
 .modal_page {
   width: calc(100% / 3);
   height: 100%;

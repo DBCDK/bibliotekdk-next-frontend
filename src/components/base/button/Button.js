@@ -25,7 +25,7 @@ function Button({
   size = "large",
   onClick = null,
   disabled = false,
-  tabIndex = null,
+  tabIndex = "0",
   dataCy = null,
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
@@ -36,6 +36,7 @@ function Button({
       data-cy={key}
       className={`${styles.button} ${className} ${styles[size]} ${styles[type]} ${disabledStyle}`}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
+      aria-disabled={disabled}
       disabled={disabled}
       tabIndex={tabIndex}
     >

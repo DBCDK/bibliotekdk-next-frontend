@@ -1,4 +1,34 @@
-export function preventTab(container) {}
+// elements we want
+const elements = [
+  "a",
+  "input:not([type='hidden'])",
+  "button",
+  "textarea",
+  "[tabindex]",
+];
+
+// currently not in use
+export function tabVisibility(container, isVisible) {
+  // build query with elements
+  const query = elements.join(", ");
+
+  // Find mathing elements according to elements and select string
+  const matchedElements = Object.values(container.querySelectorAll(query));
+
+  matchedElements.forEach((el) => {
+    const tabIndex = el.getAttribute("tabindex") || false;
+    const savedTabIndex = el.getAttribute("data-tabindex") || false;
+
+    el.setAttribute(
+      "tabindex",
+      isVisible ? savedTabIndex || tabIndex || "0" : "-1"
+    );
+
+    if (!savedTabIndex) {
+      el.setAttribute("data-tabindex", tabIndex);
+    }
+  });
+}
 
 /**
  * Function to trap Tab inside modal
@@ -15,21 +45,12 @@ export function handleTab(event, container) {
 
   const el = container.querySelector("div.modal_page.page-current");
 
-  // elements we want
-  const elements = [
-    "a",
-    "input:not([type='hidden'])",
-    "button",
-    "textarea",
-    "[tabindex]",
-  ];
-
   // Custom select string to tail after each element in list
   // Dont select elements with display:none inline style
   // Dont select hidden elements
   // Dont select elements with tabindex -1
   const select =
-    ":not([aria-hidden='true']):not([tabindex='-1']):not([style*='display:none']):not([style*='display: none'])";
+    ":not([aria-hidden='true']):not([tabindex='-1']):not([style*='display:none']):not([style*='display: none']):not([disabled])";
 
   // build query with elements
   const query = elements.join(select + ", ") + select;

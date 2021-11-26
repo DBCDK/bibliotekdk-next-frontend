@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useInView } from "react-intersection-observer";
 
 // modal utils
-import { handleTab, preventTab, scrollLock } from "./utils";
+import { handleTab, scrollLock } from "./utils";
 
 import useKeyPress from "@/components/hooks/useKeypress";
 
@@ -213,13 +213,6 @@ function Container({ children, className = {}, mock = {} }) {
     }
   }, [isVisible]);
 
-  // Tab key handle (locks tab in visible modal)
-  useEffect(() => {
-    if (!isVisible) {
-      preventTab(modalRef.current);
-    }
-  }, [isVisible]);
-
   // force modal focus (accessibility)
   useEffect(() => {
     if (isVisible && modalRef.current) {
@@ -274,7 +267,7 @@ function Container({ children, className = {}, mock = {} }) {
         role="dialog"
         tabIndex={isVisible ? "0" : null}
         ref={modalRef}
-        aria-hidden={!isVisible || null}
+        aria-hidden={!isVisible}
         className={`modal_dialog ${
           className.modal || ""
         } ${visibleClass} ${dialogStatusClass}`}
