@@ -70,6 +70,11 @@
   border: none;
 }
 
+.modal_dialog.modal_closed {
+  /* hide tabbable elements */
+  content-visibility: hidden;
+}
+
 .modal_dialog.modal_visible {
   pointer-events: auto;
   transform: none;
@@ -88,14 +93,6 @@
 .modal_container *:focus-visible {
   /* outline: 2px solid black !important;
   outline-offset: 5px; */
-}
-
-.modal_dialog.modal_closed {
-  content-visibility: hidden;
-}
-
-.modal_dialog {
-  content-visibility: visible;
 }
 
 /* page */
