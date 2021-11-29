@@ -1,6 +1,7 @@
 import Menu from "./menu";
 import Options from "./options";
 import Order from "./order";
+import PeriodicaForm from "./periodicaform";
 import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
@@ -12,6 +13,7 @@ export default {
   Menu,
   Options,
   Order,
+  PeriodicaForm,
   Pickup,
   Loanerform,
   Receipt,

@@ -52,6 +52,16 @@ function mockArticleWork() {
   });
 }
 
+function mockPeriodicaWork() {
+  cy.fixture("fullperiodicawork.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("work(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
 function mockAvailability() {
   cy.fixture("fullmanifestation.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
@@ -391,5 +401,58 @@ describe("Order periodica article", () => {
     });
 
     cy.contains("Bestillingen blev gennemført");
+  });
+});
+
+describe("Order full physical periodica volume", () => {
+  beforeEach(function () {
+    mockPeriodicaWork();
+    mockAvailability();
+    mockSubmitOrder();
+    mockSubmitPeriodicaArticleOrder();
+  });
+
+  it("should order indexed periodica article as digital copy", () => {
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+    );
+
+    openOrderModal();
+
+    // Try to order without filling out form
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.contains("For at bestille skal du vælge udgave eller artikel");
+
+    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+    cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+    cy.get('[data-cy="button-gem"]').click();
+
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pids: ["870970-basis:06150179"],
+        pickUpBranch: "790900",
+        userParameters: {
+          userMail: "cicero@mail.dk",
+          userName: "Freja Damgaard",
+        },
+        publicationDate: "1992",
+        volume: "8",
+      });
+    });
   });
 });

@@ -28,6 +28,7 @@ export function basic({ workId }) {
             }
           }
           path
+          fullTitle
           title
           subjects{
             type
@@ -151,6 +152,7 @@ export function detailsAllManifestations({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          fullTitle
           cover {
             detail
           }

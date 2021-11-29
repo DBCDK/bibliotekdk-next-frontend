@@ -225,7 +225,7 @@ export function OrderButton({
     );
   }
 
-  const notToBeOrdered = ["Periodikum", "Årbog", "Tidsskrift", "Avis"];
+  const notToBeOrdered = [];
 
   if (
     !checkRequestButtonIsTrue({ manifestations }) ||

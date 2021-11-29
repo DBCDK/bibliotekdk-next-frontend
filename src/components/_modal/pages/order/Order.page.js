@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import filter from "lodash/filter";
 import merge from "lodash/merge";
@@ -35,6 +35,32 @@ import data from "./dummy.data";
 import styles from "./Order.module.css";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
 
+function LinkArrow({ onClick, disabled, children, className = "" }) {
+  return (
+    <div
+      className={`${styles.link} ${animations["on-hover"]} ${className}`}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.keyCode === 13) {
+          onClick(e);
+        }
+      }}
+    >
+      <Link
+        className={`${animations["on-focus"]}`}
+        disabled={disabled}
+        onClick={(e) => e.preventDefault()}
+        border={{ bottom: { keepVisible: !disabled } }}
+      >
+        {children}
+      </Link>
+      <Arrow
+        className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
+      />
+    </div>
+  );
+}
+
 /**
  *  Order component function
  *
@@ -58,18 +84,27 @@ export function Order({
   modal,
   singleManifestation = false,
 }) {
-  // Validation state
-  const [validated, setValidated] = useState(null);
-
   // Selected pickup branch
   // If none selected, use first branch in the list
   const [pickupBranch, setPickupBranch] = useState(null);
 
   // Email state
-  const [mail, setMail] = useState(null);
+  let [mail, setMail] = useState(null);
 
   // Sets if user has unsuccessfully tried to submit the order
   const [hasTry, setHasTry] = useState(false);
+
+  const availableAsDigitalCopy =
+    pickupBranch?.borrowerCheck &&
+    pickupBranch?.digitalCopyAccess &&
+    work?.manifestations?.find((m) =>
+      m?.onlineAccess?.find((entry) => entry.issn)
+    );
+
+  const isArticle = work?.workTypes?.includes("article");
+  const isPeriodicaLike =
+    work?.workTypes?.includes("periodica") ||
+    !!work?.manifestations?.find((m) => m.materialType === "Årbog");
 
   useEffect(() => {
     if (initial.pickupBranch) {
@@ -91,13 +126,16 @@ export function Order({
     }
   }, [user?.userParameters]);
 
-  // Update validation
-  useEffect(() => {
+  const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
+    const requireYear = !!isPeriodicaLike;
+    const hasYear = !!context?.periodicaForm?.year;
 
-    const status = hasMail && hasBranchId && hasPid;
+    const status =
+      hasMail && hasBranchId && hasPid && (requireYear ? hasYear : true);
+
     const details = {
       hasMail: {
         status: hasMail,
@@ -106,10 +144,14 @@ export function Order({
       },
       hasBranchId: { status: hasBranchId },
       hasPid: { status: hasPid },
+      requireYear: {
+        status: hasYear,
+        message: requireYear && !hasYear && { label: "require-year" },
+      },
     };
 
-    setValidated({ status, hasTry, details });
-  }, [mail, pid, pickupBranch, hasTry]);
+    return { status, hasTry, details };
+  }, [mail, pid, pickupBranch, hasTry, context?.periodicaForm?.year]);
 
   // An order has successfully been submitted
   useEffect(() => {
@@ -128,15 +170,6 @@ export function Order({
     articleOrder?.data,
     articleOrder?.isLoading,
   ]);
-
-  const availableAsDigitalCopy =
-    pickupBranch?.borrowerCheck &&
-    pickupBranch?.digitalCopyAccess &&
-    work?.manifestations?.find((m) =>
-      m?.onlineAccess?.find((entry) => entry.issn)
-    );
-
-  const isArticle = work?.workTypes?.includes("article");
 
   /**
    *
@@ -233,7 +266,9 @@ export function Order({
   const hasEmail = !!validated?.details?.hasMail?.status;
 
   const actionMessage =
-    hasTry && !hasEmail && validated?.details?.hasMail?.message;
+    hasTry &&
+    (validated?.details?.requireYear?.message ||
+      (!hasEmail && validated?.details?.hasMail?.message));
 
   const invalidClass = actionMessage ? styles.invalid : "";
 
@@ -249,7 +284,7 @@ export function Order({
         <div className={styles.left}>
           <div className={styles.title}>
             <Text type="text1" skeleton={isLoading} lines={1}>
-              {title}
+              {work?.fullTitle}
             </Text>
           </div>
           <div className={styles.creators}>
@@ -271,7 +306,7 @@ export function Order({
             </div>
           )}
           <div className={styles.material}>
-            {!isArticle && !singleManifestation && (
+            {!isArticle && !isPeriodicaLike && !singleManifestation && (
               <Link onClick={() => {}} disabled>
                 <Text type="text3" skeleton={isLoading} lines={1} clamp>
                   {Translate({
@@ -298,6 +333,41 @@ export function Order({
               </Tag>
             </div>
           </div>
+          {context?.periodicaForm && (
+            <div className={styles.periodicasummary}>
+              <Text type="text4">
+                {Translate({
+                  context: "general",
+                  label: "article",
+                })}
+              </Text>
+              {Object.entries(context?.periodicaForm).map(([key, value]) => (
+                <Text type="text3" key={key}>
+                  {Translate({
+                    context: "order-periodica",
+                    label: `label-${key}`,
+                  })}
+                  : {value}
+                </Text>
+              ))}
+            </div>
+          )}
+          {isPeriodicaLike && (
+            <LinkArrow
+              onClick={() => {
+                modal.push("periodicaform");
+              }}
+              disabled={false}
+              className={styles.periodicaformlink}
+            >
+              <Text type="text3">
+                {Translate({
+                  context: "order-periodica",
+                  label: "title",
+                })}
+              </Text>
+            </LinkArrow>
+          )}
           {availableAsDigitalCopy && (
             <div className={styles.digitalcopy}>
               <Text type="text4">
@@ -343,8 +413,7 @@ export function Order({
               {pickupBranch?.name}
             </Text>
           )}
-          <div
-            className={`${styles.link} ${animations["on-hover"]} `}
+          <LinkArrow
             onClick={() => {
               !isLoadingBranches &&
                 modal.push("pickup", {
@@ -352,43 +421,25 @@ export function Order({
                   initial: { agency },
                 });
             }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.keyCode === 13) {
-                !isLoadingBranches &&
-                  modal.push("pickup", {
-                    pid,
-                    initial: { agency },
-                  });
-              }
-            }}
+            disabled={isLoadingBranches}
           >
-            <Link
-              className={`${animations["on-focus"]}`}
-              disabled={isLoadingBranches}
-              onClick={(e) => e.preventDefault()}
-              border={{ bottom: { keepVisible: !isLoadingBranches } }}
-            >
-              <Text type="text3" className={styles.fullLink}>
-                {Translate({
-                  context: "order",
-                  label: availableAsDigitalCopy
-                    ? "change-pickup-digital-copy-link"
-                    : pickupBranch
-                    ? "change-pickup-link"
-                    : "pickup-link",
-                })}
-              </Text>
-              <Text type="text3" className={styles.shortLink}>
-                {Translate({
-                  context: "general",
-                  label: pickupBranch ? "change" : "select",
-                })}
-              </Text>
-            </Link>
-            <Arrow
-              className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
-            />
-          </div>
+            <Text type="text3" className={styles.fullLink}>
+              {Translate({
+                context: "order",
+                label: availableAsDigitalCopy
+                  ? "change-pickup-digital-copy-link"
+                  : pickupBranch
+                  ? "change-pickup-link"
+                  : "pickup-link",
+              })}
+            </Text>
+            <Text type="text3" className={styles.shortLink}>
+              {Translate({
+                context: "general",
+                label: pickupBranch ? "change" : "select",
+              })}
+            </Text>
+          </LinkArrow>
         </div>
 
         {(isLoadingBranches || pickupBranch) && (
@@ -530,7 +581,12 @@ export function Order({
               if (availableAsDigitalCopy) {
                 onArticleSubmit(pid, pickupBranch.branchId);
               } else {
-                onSubmit && onSubmit(orderPids, pickupBranch);
+                onSubmit &&
+                  onSubmit(
+                    materialsSameType.map((m) => m.pid),
+                    pickupBranch,
+                    context?.periodicaForm
+                  );
               }
             } else {
               setHasTry(true);
@@ -696,12 +752,14 @@ export default function Wrap(props) {
           })
         );
       }}
-      onSubmit={(pids, pickupBranch) => {
+      onSubmit={(pids, pickupBranch, periodicaForm) => {
         orderMutation.post(
           submitOrder({
             pids,
             branchId: pickupBranch.branchId,
             userParameters: loanerInfo.userParameters,
+            publicationDate: periodicaForm?.year,
+            volume: periodicaForm?.volume,
           })
         );
       }}

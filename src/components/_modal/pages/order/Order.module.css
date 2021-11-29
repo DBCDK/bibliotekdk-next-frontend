@@ -86,13 +86,13 @@
   padding-right: var(--pt2);
 }
 
-.library .link {
+.link {
   display: flex;
   align-items: center;
   cursor: pointer;
 }
 
-.library .link .fullLink {
+.link .fullLink {
   display: none;
 }
 
@@ -138,6 +138,10 @@
   display: inline;
 }
 
+.periodicasummary{
+  margin-top: var(--pt2);
+}
+
 /* action */
 
 .action .message {
@@ -147,6 +151,8 @@
 .action .message.invalid {
   color: var(--error);
 }
+
+
 
 @media (min-width: 576px) {
   .top {
@@ -160,12 +166,15 @@
     padding: var(--pt3) var(--pt6);
   }
 
-  .library .link .fullLink {
+  .link .fullLink {
     display: block;
   }
 
-  .library .link .shortLink {
+  .link .shortLink {
     display: none;
+  }
+  .periodicaformlink{
+    margin-top: var(--pt2);
   }
 
   .emailMessage.valid {
