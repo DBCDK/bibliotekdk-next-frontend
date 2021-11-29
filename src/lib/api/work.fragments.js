@@ -292,7 +292,7 @@ export function reviews({ workId }) {
                 pid
               }
             }
-            ... on ReviewLitteratursiden {
+            ... on ReviewExternalMedia {
               author
               date
               url
