@@ -16,6 +16,7 @@ import { cyKey } from "@/utils/trim";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 
 /**
  * bibliotek.dk object url
@@ -37,10 +38,28 @@ function bibdkObjectUrl(pid) {
  * @returns {JSX.Element}
  * @constructor
  */
-function ColumnOne({ manifestation, worktypes, localizations, opener }) {
+function ColumnOne({
+  manifestation,
+  worktypes,
+  localizations,
+  openOrderModal,
+  opener,
+  user,
+}) {
   const worktype = worktypes && worktypes[0] ? worktypes[0] : "literature";
 
   let number_of_libraries = "63";
+
+  /**
+   * NOTES - params for reservationbutton
+   * selectedMaterial={selectedMaterial}
+   *                   user={user}
+   *                   onOnlineAccess={onOnlineAccess}
+   *                   login={login}
+   *                   openOrderModal={openOrderModal}
+   *                   workTypeTranslated={workTypeTranslated}
+   *                   title={title}
+   */
   return (
     <Col
       key={"col1" + manifestation.pid}
@@ -52,6 +71,19 @@ function ColumnOne({ manifestation, worktypes, localizations, opener }) {
       {manifestation.cover && (
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
+      <div>
+        <ReservationButton
+          user={user}
+          openOrderModal={openOrderModal}
+          selectedMaterial={{
+            manifestations: [manifestation],
+            onlineAccess: [],
+          }}
+          singleManifestion={true}
+          type="secondary"
+          size="small"
+        />
+      </div>
       <div>
         <span>
           <LocalizationsLink
@@ -141,6 +173,7 @@ export function ManifestationFull({
   work,
   allLocalizations,
   opener,
+  openOrderModal,
   user,
 }) {
   const worktype = work.workTypes;
@@ -171,7 +204,10 @@ export function ManifestationFull({
         manifestation={manifestation}
         worktypes={worktype}
         localizations={manifestationLocalizations}
+        openOrderModal={openOrderModal}
         opener={opener}
+        user={user}
+        work={work}
       />
       <Col xs={12} md>
         <div className={styles.container}>
@@ -208,6 +244,16 @@ export default function wrap({ manifestation, work, workId, localizations }) {
     });
   };
 
+  const openOrderModal = (pid) => {
+    modal.push("order", {
+      title: Translate({ context: "modal", label: "title-order" }),
+      pid,
+      workId,
+      type: manifestation.materialType,
+      orderType: "singleManifestation",
+    });
+  };
+
   const user = useUser();
 
   return (
@@ -217,6 +263,7 @@ export default function wrap({ manifestation, work, workId, localizations }) {
       workId={workId}
       allLocalizations={localizations}
       opener={openLocalizationsModal}
+      openOrderModal={openOrderModal}
       user={user}
     />
   );

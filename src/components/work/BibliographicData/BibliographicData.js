@@ -83,7 +83,7 @@ export default function Wrap({ workId }) {
   if (error || !data) {
     return null;
   }
-  if (isLoading || localizationsLoading) {
+  if (isLoading) {
     return null;
   }
 
