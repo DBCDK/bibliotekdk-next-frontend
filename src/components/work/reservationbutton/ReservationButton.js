@@ -241,6 +241,7 @@ export function OrderButton({
   // all is well - material can be ordered - order button
 
   let buttonTxt;
+
   if (singleManifestion) {
     buttonTxt = Translate({
       context: "order",
@@ -253,7 +254,7 @@ export function OrderButton({
     <Button
       skeleton={buttonSkeleton}
       onClick={() => openOrderModal(pid)}
-      dataCy="button-order-overview-enabled"
+      dataCy={`button-order-overview-enabled${singleManifestion ? pid : ""}`}
       type={type}
       size={size}
     >
