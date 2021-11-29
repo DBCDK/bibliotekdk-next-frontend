@@ -31,7 +31,7 @@ export function timestampToShortDate(timestamp) {
  *
  * @returns {string} format: dd. mmm. yyyy
  */
-export function dateToShortDate(date) {
+export function dateToShortDate(date, prefix = "") {
   // Dates can have many formats
   // example: "Årg. 68, nr. 7 (2015)"
 
@@ -46,7 +46,7 @@ export function dateToShortDate(date) {
     const d = array[2].replace(/^0+/, "");
 
     // month array starts at position 0, so we substracts m with 1
-    return `${d}. ${shortMonths[m - 1]}. ${y}`;
+    return `${prefix}${d}. ${shortMonths[m - 1]}. ${y}`;
   } catch {
     return date;
   }

@@ -13,7 +13,7 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 
 import InfomediaReview from "./types/infomedia";
-import LitteratursidenReview from "./types/litteratursiden";
+import ExternalReview from "./types/external";
 import MaterialReview from "./types/material";
 
 import { sortReviews } from "./utils";
@@ -31,8 +31,8 @@ function getTemplate(type) {
   switch (type) {
     case "ReviewMatVurd":
       return MaterialReview;
-    case "ReviewLitteratursiden":
-      return LitteratursidenReview;
+    case "ReviewExternalMedia":
+      return ExternalReview;
     case "ReviewInfomedia":
       return InfomediaReview;
     default:

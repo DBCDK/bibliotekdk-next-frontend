@@ -295,6 +295,7 @@ export function reviews({ workId }) {
             ... on ReviewExternalMedia {
               author
               date
+              media
               url
             }
             ... on ReviewMatVurd {
