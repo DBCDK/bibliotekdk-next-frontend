@@ -11,7 +11,7 @@ import Translate from "@/components/base/translate";
 
 import { dateToShortDate } from "@/utils/datetimeConverter";
 
-import styles from "./LitteratursidenReview.module.css";
+import styles from "./ExternalReview.module.css";
 
 /**
  * The Component function
@@ -21,7 +21,7 @@ import styles from "./LitteratursidenReview.module.css";
  *
  * @returns {component}
  */
-export function LitteratursidenReview({
+export function ExternalReview({
   className = "",
   data = [],
   onFocus = null,
@@ -39,11 +39,13 @@ export function LitteratursidenReview({
       data-cy={cyKey({ prefix: "review", name: "litteratursiden" })}
     >
       <Row>
-        <Col xs={12} className={styles.media}>
-          <Title type="title4" skeleton={skeleton}>
-            {Translate({ ...context, label: "litteratursiden" })}
-          </Title>
-        </Col>
+        {data.media && (
+          <Col xs={12} className={styles.media}>
+            <Title type="title4" skeleton={skeleton}>
+              {data.media}
+            </Title>
+          </Col>
+        )}
         <div className={styles.row}>
           {data.author && (
             <Col className={styles.left}>
@@ -57,35 +59,37 @@ export function LitteratursidenReview({
               {!skeleton && <Text type="text2">{data.author}</Text>}
               <div className={styles.date}>
                 {!skeleton && data.date && (
-                  <Text type="text3">d. {dateToShortDate(data.date)}</Text>
+                  <Text type="text3">{dateToShortDate(data.date, "d. ")}</Text>
                 )}
               </div>
             </Col>
           )}
         </div>
 
-        <Col xs={12} className={styles.url}>
-          <Icon
-            src="chevron.svg"
-            size={{ w: 2, h: "auto" }}
-            skeleton={skeleton}
-            alt=""
-          />
-          <Link
-            href={data.url}
-            target="_blank"
-            onFocus={onFocus}
-            disabled={!data.url}
-            border={{ top: false, bottom: { keepVisible: true } }}
-          >
-            <Text type="text2" skeleton={skeleton}>
-              {Translate({
-                ...context,
-                label: "reviewLinkText",
-              })}
-            </Text>
-          </Link>
-        </Col>
+        {data.url && (
+          <Col xs={12} className={styles.url}>
+            <Icon
+              src="chevron.svg"
+              size={{ w: 2, h: "auto" }}
+              skeleton={skeleton}
+              alt=""
+            />
+            <Link
+              href={data.url}
+              target="_blank"
+              onFocus={onFocus}
+              disabled={!data.url}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              <Text type="text2" skeleton={skeleton}>
+                {Translate({
+                  ...context,
+                  label: "reviewLinkText",
+                })}
+              </Text>
+            </Link>
+          </Col>
+        )}
       </Row>
     </Col>
   );
@@ -99,16 +103,17 @@ export function LitteratursidenReview({
  *
  * @returns {component}
  */
-export function LitteratursidenReviewSkeleton(props) {
+export function ExternalReviewSkeleton(props) {
   const data = {
     author: "Svend Svendsen",
     reviewType: "INFOMEDIA",
     date: "2013-06-25",
+    media: "Litteratursiden.dk online",
     url: "http://",
   };
 
   return (
-    <LitteratursidenReview
+    <ExternalReview
       {...props}
       data={data}
       className={`${props.className} ${styles.skeleton}`}
@@ -129,10 +134,10 @@ export default function Wrap(props) {
   const { data, skeleton } = props;
 
   if (skeleton) {
-    return <LitteratursidenReviewSkeleton />;
+    return <ExternalReviewSkeleton />;
   }
 
-  return <LitteratursidenReview {...props} data={data} />;
+  return <ExternalReview {...props} data={data} />;
 }
 
 // PropTypes for component

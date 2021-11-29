@@ -63,7 +63,7 @@ export function InfomediaReview({
             )}
             <Col className={styles.date}>
               {!skeleton && data.date && (
-                <Text type="text3">d. {dateToShortDate(data.date)}</Text>
+                <Text type="text3">{dateToShortDate(data.date, "d. ")}</Text>
               )}
             </Col>
             {data.rating && (

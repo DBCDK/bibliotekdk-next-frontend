@@ -15,7 +15,7 @@ import {
 import {
   LitteratursidenReview,
   LitteratursidenReviewSkeleton,
-} from "./types/litteratursiden/LitteratursidenReview.js";
+} from "./types/external/ExternalReview.js";
 
 export default {
   title: "work/Reviews",
@@ -37,7 +37,7 @@ export function ReviewsSlider() {
       url: "http://",
     },
     {
-      __typename: "ReviewLitteratursiden",
+      __typename: "ReviewExternalMedia",
       author: "Didrik Pedersen",
       date: "2013-06-25",
       media: "",

@@ -83,9 +83,10 @@ Array [
     "date": "1998-10-06",
   },
   Object {
-    "__typename": "ReviewLitteratursiden",
+    "__typename": "ReviewExternalMedia",
     "author": "Arne Larsen",
     "date": "2015-10-09",
+    "media": "Litteratursiden.dk online",
     "url": "https://litteratursiden.dk/boeger/harry-potter-og-de-vises-sten-0",
   },
   Object {
