@@ -72,6 +72,19 @@ function ColumnOne({
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
       <div>
+        <ReservationButton
+          user={user}
+          openOrderModal={openOrderModal}
+          selectedMaterial={{
+            manifestations: [manifestation],
+            onlineAccess: [],
+          }}
+          singleManifestion={true}
+          type="secondary"
+          size="small"
+        />
+      </div>
+      <div>
         <span>
           <LocalizationsLink
             opener={opener}
@@ -79,18 +92,6 @@ function ColumnOne({
             materialType={manifestation.materialType}
           />
         </span>
-
-        <div className={styles.reservationbutton}>
-          <ReservationButton
-            user={user}
-            openOrderModal={openOrderModal}
-            selectedMaterial={{
-              manifestations: [manifestation],
-              onlineAccess: [],
-            }}
-            singleManifestion={true}
-          />
-        </div>
       </div>
       {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
       <Text className={styles.locationtitle} type="text1" lines={1}>

@@ -38,17 +38,13 @@
 }
 
 .fullmanifestation button {
-  margin-top: var(--pt4);
-  margin-bottom: var(--pt4);
+  margin-top: var(--pt1);
+  margin-bottom: var(--pt1);
   font-family: var(--body-font-semibold);
   transition: color 0.5s;
   color: var(--blue);
 }
 
-.fullmanifestation .reservationbutton{
-  max-width: 100px;
-  max-height: 20px;
-}
 
 .column {
   margin-bottom: var(--pt1);

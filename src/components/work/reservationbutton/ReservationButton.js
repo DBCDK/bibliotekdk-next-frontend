@@ -31,8 +31,6 @@ function addToInfomedia(onlineAccess, title) {
  * @return {*}
  */
 function selectMaterial(manifestations) {
-  console.log(manifestations, "MANIFESTATIONS");
-
   // check if onlineacces. if so get the first manifestation with an online url - if any
   let selectedmanifestation;
   let url;
@@ -150,17 +148,16 @@ export function OrderButton({
   workTypeTranslated,
   title,
   singleManifestion = false,
+  type = "primary",
+  size = "large",
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
   if (!selectedMaterial) {
     return null;
   }
-  if (singleManifestion) {
-    console.log("FISK");
-  }
 
-  const type = selectedMaterial.materialType;
+  const materialType = selectedMaterial.materialType;
 
   const manifestations = selectedMaterial.manifestations;
   if (!singleManifestion) {
@@ -214,6 +211,7 @@ export function OrderButton({
           className={styles.externalLink}
           skeleton={buttonSkeleton}
           onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0].url)}
+          type={type}
         >
           {[
             Translate({
@@ -231,23 +229,35 @@ export function OrderButton({
 
   if (
     !checkRequestButtonIsTrue({ manifestations }) ||
-    notToBeOrdered.includes(type)
+    notToBeOrdered.includes(materialType)
   ) {
     // disabled button
-    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
+    return (
+      <DisabledReservationButton buttonSkeleton={buttonSkeleton} type={type} />
+    );
   }
 
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
-  // special case - digital copy
 
+  let buttonTxt;
+  if (singleManifestion) {
+    buttonTxt = Translate({
+      context: "order",
+      label: "specific-edition",
+    });
+  } else {
+    buttonTxt = Translate({ context: "general", label: "bestil" });
+  }
   return (
     <Button
       skeleton={buttonSkeleton}
       onClick={() => openOrderModal(pid)}
       dataCy="button-order-overview-enabled"
+      type={type}
+      size={size}
     >
-      {Translate({ context: "general", label: "bestil" })}
+      {buttonTxt}
     </Button>
   );
 }
@@ -290,13 +300,14 @@ export function checkRequestButtonIsTrue({ manifestations }) {
   return orderpossible;
 }
 
-function DisabledReservationButton({ buttonSkeleton }) {
+function DisabledReservationButton({ buttonSkeleton, type }) {
   return (
     <Button
       skeleton={buttonSkeleton}
       disabled={true}
       className={styles.disabledbutton}
       dataCy="button-order-overview"
+      type={type}
     >
       {Translate({ context: "overview", label: "Order-disabled" })}
     </Button>

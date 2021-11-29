@@ -259,6 +259,17 @@ export function Order({
               )}
             </Text>
           </div>
+          {singleManifestation && (
+            <div>
+              <Text type="text3" skeleton={isLoading} lines={1}>
+                {material.datePublished},&nbsp;
+                {material.publisher &&
+                  material.publisher.map((pub, index) => pub)}
+                &nbsp;
+                {material.edition && "," + material.edition}
+              </Text>
+            </div>
+          )}
           <div className={styles.material}>
             {!isArticle && !singleManifestation && (
               <Link onClick={() => {}} disabled>

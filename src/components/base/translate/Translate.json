@@ -1108,8 +1108,8 @@
     },
     "order": {
       "specific-edition": {
-        "da": "Bestil denne udgave",
-        "en": "Order this edition"
+        "da": "Bestil udgave",
+        "en": "Order edition"
       },
       "check-policy-fail": {
         "da": "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet.",
