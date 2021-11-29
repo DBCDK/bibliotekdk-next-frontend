@@ -404,7 +404,7 @@ describe("Order periodica article", () => {
   });
 });
 
-describe("Order full physical periodica volume", () => {
+describe("Order periodica volume", () => {
   beforeEach(function () {
     mockPeriodicaWork();
     mockAvailability();
@@ -412,7 +412,7 @@ describe("Order full physical periodica volume", () => {
     mockSubmitPeriodicaArticleOrder();
   });
 
-  it("should order indexed periodica article as digital copy", () => {
+  it("should order full physical periodica volume", () => {
     mockLogin({
       data: {
         user: {
