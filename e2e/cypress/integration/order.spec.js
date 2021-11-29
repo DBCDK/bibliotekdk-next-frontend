@@ -128,6 +128,7 @@ function mockSubmitSessionUserParameters() {
 }
 
 function openOrderModal() {
+  cy.wait(1000);
   // Wait for content to be loaded
   cy.get("[data-cy=button-order-overview-enabled]");
   cy.wait(1000);
@@ -321,6 +322,7 @@ describe("Order periodica article", () => {
       `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
     );
 
+    cy.wait(3000);
     // Special message because this article is in KBs article service
     cy.contains("Artiklen sendes til din email");
 

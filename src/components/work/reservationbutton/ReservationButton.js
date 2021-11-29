@@ -126,27 +126,30 @@ export function ButtonTxt({ selectedMaterial, skeleton }) {
  *
  * @param selectedMaterial
  *  Partial work - filtered by the materialtype selected by user (eg. bog)
- * @param skeleton
- *  show skeleton or not (bool)
- * @param login
- *  onclick handler if user is not logged in
  * @param onOnlineAccess
  *  onclick handler for online access
  * @param openOrderModal
  *  onclick handler for reservation
+ *  @param workTypeTranslated
+ *   translated worktype
+ *  @param title
+ *
  * @param user
  *  The user
+ * @param singlemanifestion
  * @return {JSX.Element}
  * @constructor
  */
 export function OrderButton({
   selectedMaterial,
   onOnlineAccess,
-  login,
   openOrderModal,
   user,
   workTypeTranslated,
   title,
+  singleManifestion = false,
+  type = "primary",
+  size = "large",
 }) {
   // The loan button is skeleton until we know if selected
   // material is physical or online
@@ -154,10 +157,19 @@ export function OrderButton({
     return null;
   }
 
-  const type = selectedMaterial.materialType;
+  const materialType = selectedMaterial.materialType;
 
   const manifestations = selectedMaterial.manifestations;
-  selectedMaterial = selectMaterial(manifestations);
+  if (!singleManifestion) {
+    selectedMaterial = selectMaterial(manifestations);
+  }
+
+  // QUICK DECISION: if this is single manifestation AND the manifestation can NOT be ordered
+  // we show no Reservation button - @TODO should we show online accesss etc. ???
+  if (singleManifestion && !checkRequestButtonIsTrue({ manifestations })) {
+    return null;
+  }
+
   let buttonSkeleton = typeof selectedMaterial?.onlineAccess === "undefined";
 
   /* order button acts on following scenarios:
@@ -199,6 +211,7 @@ export function OrderButton({
           className={styles.externalLink}
           skeleton={buttonSkeleton}
           onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0].url)}
+          type={type}
         >
           {[
             Translate({
@@ -216,23 +229,36 @@ export function OrderButton({
 
   if (
     !checkRequestButtonIsTrue({ manifestations }) ||
-    notToBeOrdered.includes(type)
+    notToBeOrdered.includes(materialType)
   ) {
     // disabled button
-    return <DisabledReservationButton buttonSkeleton={buttonSkeleton} />;
+    return (
+      <DisabledReservationButton buttonSkeleton={buttonSkeleton} type={type} />
+    );
   }
 
   const pid = manifestations[0].pid;
   // all is well - material can be ordered - order button
-  // special case - digital copy
 
+  let buttonTxt;
+
+  if (singleManifestion) {
+    buttonTxt = Translate({
+      context: "order",
+      label: "specific-edition",
+    });
+  } else {
+    buttonTxt = Translate({ context: "general", label: "bestil" });
+  }
   return (
     <Button
       skeleton={buttonSkeleton}
       onClick={() => openOrderModal(pid)}
-      dataCy="button-order-overview-enabled"
+      dataCy={`button-order-overview-enabled${singleManifestion ? pid : ""}`}
+      type={type}
+      size={size}
     >
-      {Translate({ context: "general", label: "bestil" })}
+      {buttonTxt}
     </Button>
   );
 }
@@ -275,13 +301,14 @@ export function checkRequestButtonIsTrue({ manifestations }) {
   return orderpossible;
 }
 
-function DisabledReservationButton({ buttonSkeleton }) {
+function DisabledReservationButton({ buttonSkeleton, type }) {
   return (
     <Button
       skeleton={buttonSkeleton}
       disabled={true}
       className={styles.disabledbutton}
       dataCy="button-order-overview"
+      type={type}
     >
       {Translate({ context: "overview", label: "Order-disabled" })}
     </Button>
