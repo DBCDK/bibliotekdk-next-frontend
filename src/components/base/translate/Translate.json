@@ -1107,6 +1107,10 @@
       }
     },
     "order": {
+      "specific-edition": {
+        "da": "Bestil denne udgave",
+        "en": "Order this edition"
+      },
       "check-policy-fail": {
         "da": "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet.",
         "en": "The material cannot be ordered at this pickup location. Choose another."

@@ -56,6 +56,7 @@ export function Order({
   // new modal props
   context,
   modal,
+  singleManifestation = false,
 }) {
   // Validation state
   const [validated, setValidated] = useState(null);
@@ -169,6 +170,13 @@ export function Order({
     (m) => m?.materialType === material?.materialType && m?.admin?.requestButton
   );
 
+  let orderPids;
+  if (singleManifestation) {
+    orderPids = [pid];
+  } else {
+    orderPids = materialsSameType.map((m) => m.pid);
+  }
+
   const isLoadingBranches = isLoading || (user.name && !user?.agency);
   // Material props
   const {
@@ -252,12 +260,22 @@ export function Order({
             </Text>
           </div>
           <div className={styles.material}>
-            {!isArticle && (
+            {!isArticle && !singleManifestation && (
               <Link onClick={() => {}} disabled>
                 <Text type="text3" skeleton={isLoading} lines={1} clamp>
                   {Translate({
                     context: "order",
                     label: "no-specific-edition",
+                  })}
+                </Text>
+              </Link>
+            )}
+            {singleManifestation && (
+              <Link onClick={() => {}} disabled>
+                <Text type="text3" skeleton={isLoading} lines={1} clamp>
+                  {Translate({
+                    context: "order",
+                    label: "specific-edition",
                   })}
                 </Text>
               </Link>
@@ -501,11 +519,7 @@ export function Order({
               if (availableAsDigitalCopy) {
                 onArticleSubmit(pid, pickupBranch.branchId);
               } else {
-                onSubmit &&
-                  onSubmit(
-                    materialsSameType.map((m) => m.pid),
-                    pickupBranch
-                  );
+                onSubmit && onSubmit(orderPids, pickupBranch);
               }
             } else {
               setHasTry(true);
@@ -549,9 +563,6 @@ export function OrderSkeleton(props) {
 export default function Wrap(props) {
   // context
   const { context } = props;
-
-  console.log(context, "CONTEXT");
-
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
 
@@ -683,6 +694,9 @@ export default function Wrap(props) {
           })
         );
       }}
+      singleManifestation={
+        context.orderType && context.orderType === "singleManifestation"
+      }
       {...props}
     />
   );
