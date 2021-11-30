@@ -118,7 +118,9 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "reviews" };
 
-  const reviews = useMemo(() => sortReviews(data), [data]);
+  const workId = data.id;
+  const title = data.title;
+  const reviews = useMemo(() => sortReviews(data.reviews), [data.reviews]);
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -207,6 +209,8 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
                 // when tabbing through.
                 swiperRef.current.swiper.slideTo(idx);
               }}
+              title={title}
+              workId={workId}
             />
           );
         })}
@@ -293,7 +297,8 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Reviews {...props} data={data.work.reviews} />;
+  // we need a workid
+  return <Reviews {...props} data={data.work} />;
 }
 
 // PropTypes for component
