@@ -402,7 +402,12 @@ function Page(props) {
  */
 
 export function useModal() {
-  const { setStack, save, router } = useContext(ModalContext);
+  const { setStack: _setStack, save, router } = useContext(ModalContext);
+
+  function setStack(stack) {
+    _stack = stack;
+    _setStack(_stack);
+  }
 
   // modal is visible
   const _isVisible = _stack.length > 0 && _index() > -1;
@@ -432,8 +437,7 @@ export function useModal() {
       // custom save
       // save && save(copy);
       // update locale state
-      _stack = copy;
-      setStack(_stack);
+      setStack(copy);
     }
   }
 
@@ -546,8 +550,7 @@ export function useModal() {
     // save && save(copy);
     // update locale stack state
 
-    _stack = copy;
-    setStack(_stack);
+    setStack(copy);
   }
 
   /**
@@ -635,8 +638,7 @@ export function useModal() {
     });
     // save && save(copy);
     // update locale stack state
-    _stack = copy;
-    setStack(_stack);
+    setStack(copy);
   }
 
   return {
