@@ -40,6 +40,7 @@ const context = { context: "overview" };
  */
 export function Overview({
   title = "...",
+  fullTitle = "...",
   creators = [{ name: "..." }],
   path = [],
   materialTypes = [],
@@ -135,7 +136,7 @@ export function Overview({
             <Row>
               <Col xs={12}>
                 <Title type="title3" skeleton={skeleton}>
-                  {title}
+                  {fullTitle}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>

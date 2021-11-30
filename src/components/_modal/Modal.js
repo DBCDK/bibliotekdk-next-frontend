@@ -67,6 +67,9 @@ function createPageUID() {
   return Date.now() + "";
 }
 
+// Global stack object
+let _stack = [];
+
 /**
  *
  * @param {obj} className
@@ -137,7 +140,8 @@ function Container({ children, className = {}, mock = {} }) {
       });
 
       // And lets trigger a render of the loaded stack
-      modal.setStack(stack);
+      _stack = stack;
+      modal.setStack(_stack);
     } catch (e) {
       // catch error
       // will not be handled for now
@@ -398,19 +402,19 @@ function Page(props) {
  */
 
 export function useModal() {
-  const { stack, setStack, save, router } = useContext(ModalContext);
+  const { setStack, save, router } = useContext(ModalContext);
 
   // modal is visible
-  const _isVisible = stack.length > 0 && _index() > -1;
+  const _isVisible = _stack.length > 0 && _index() > -1;
 
   /**
    * Push
    */
   function _push(id, context = {}) {
     if (id) {
-      let copy = [...stack];
+      let copy = [..._stack];
       // Skip "reset" on empty stack
-      if (stack.length > 0) {
+      if (_stack.length > 0) {
         const active = _index();
         copy = copy.slice(0, active + 1);
         copy = copy.map((obj) => ({ ...obj, active: false }));
@@ -428,7 +432,8 @@ export function useModal() {
       // custom save
       // save && save(copy);
       // update locale state
-      setStack(copy);
+      _stack = copy;
+      setStack(_stack);
     }
   }
 
@@ -486,10 +491,10 @@ export function useModal() {
    */
   function _index(id) {
     if (id) {
-      stack.findIndex((obj) => obj.id === id);
+      return _stack.findIndex((obj) => obj.id === id);
     }
 
-    return stack.findIndex((obj) => obj.active === true);
+    return _stack.findIndex((obj) => obj.active === true);
   }
 
   /**
@@ -509,13 +514,13 @@ export function useModal() {
       i <= Math.max(prevActive, index);
       i++
     ) {
-      if (stack[i]?.loaded) {
+      if (_stack[i]?.loaded) {
         shouldReplace = true;
       }
     }
     if (shouldReplace) {
-      if (stack[index]) {
-        replacePageUID(stack[index].uid, router);
+      if (_stack[index]) {
+        replacePageUID(_stack[index].uid, router);
       } else {
         deletePageUID(router);
       }
@@ -534,13 +539,15 @@ export function useModal() {
    *
    */
   function _doSelect(index) {
-    let copy = [...stack];
+    let copy = [..._stack];
     // set active true on index match, others false.
     copy = copy.map((obj, i) => ({ ...obj, active: index === i }));
     // custom save
     // save && save(copy);
     // update locale stack state
-    setStack(copy);
+
+    _stack = copy;
+    setStack(_stack);
   }
 
   /**
@@ -554,13 +561,13 @@ export function useModal() {
   function _next(id) {
     const active = _index();
     // No next element to select
-    if (active + 1 === stack.length) {
+    if (active + 1 === _stack.length) {
       return;
     }
 
     if (id) {
-      let copy = [...stack];
-      copy = copy.slice(active, stack.length);
+      let copy = [..._stack];
+      copy = copy.slice(active, _stack.length);
       // findIndex returns the first matching id || -1 if none found
       const index = copy.findIndex((obj) => obj.id === id);
       // index will be -1 on no match
@@ -590,7 +597,7 @@ export function useModal() {
     }
 
     if (id) {
-      let copy = [...stack];
+      let copy = [..._stack];
       copy = copy.slice(0, active);
 
       // findIndex returns the first matching id || -1 if none found
@@ -616,7 +623,7 @@ export function useModal() {
    * @param {*} context
    */
   function _update(index = _index(), context) {
-    let copy = [...stack];
+    let copy = [..._stack];
     copy = copy.map((obj, i) => {
       if (index === i) {
         return {
@@ -626,10 +633,10 @@ export function useModal() {
       }
       return obj;
     });
-
     // save && save(copy);
     // update locale stack state
-    setStack(copy);
+    _stack = copy;
+    setStack(_stack);
   }
 
   return {
@@ -644,7 +651,7 @@ export function useModal() {
     next: _next,
     prev: _prev,
     setStack,
-    stack,
+    stack: _stack,
     isVisible: _isVisible,
     // privat functions
     _doSelect,

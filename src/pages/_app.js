@@ -86,6 +86,7 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="menu" component={Pages.Menu} />
               <Modal.Page id="options" component={Pages.Options} />
               <Modal.Page id="order" component={Pages.Order} />
+              <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
               <Modal.Page id="pickup" component={Pages.Pickup} />
               <Modal.Page id="loanerform" component={Pages.Loanerform} />
               <Modal.Page id="receipt" component={Pages.Receipt} />

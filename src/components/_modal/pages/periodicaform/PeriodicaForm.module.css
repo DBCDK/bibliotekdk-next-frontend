@@ -1,0 +1,41 @@
+.periodicaform {
+  max-width: 600px;
+  padding: var(--pt2);
+
+  height: 100%;
+
+  /* scroll in modal */
+  overflow-y: auto;
+}
+.invalid input {
+  border: solid 1px var(--error);
+  outline: solid 1px var(--error);
+}
+.errormessage {
+  color: var(--error);
+}
+.bottom {
+  margin-top: var(--pt8);
+}
+.periodicaform input {
+  margin-top: var(--pt1);
+}
+.periodicaform button {
+  margin-top: var(--pt1);
+}
+.periodicaform .required {
+  display: inline-block;
+  color: var(--error);
+}
+.requiredtext {
+  margin-top: var(--pt2);
+}
+.periodicaform form p,
+.periodicaform form label {
+  margin-top: var(--pt3);
+}
+@media (min-width: 576px) {
+  .periodicaform {
+    padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);
+  }
+}

@@ -115,6 +115,10 @@
         "da": "Gem ændringerne",
         "en": "Save changes"
       },
+      "article": {
+        "da": "Artikel",
+        "en": "Article"
+      },
       "articles": {
         "da": "Artikler",
         "en": "Articles"
@@ -493,7 +497,7 @@
         "da": "Tjek bibliotekets egen hjemmeside",
         "en": "See local library"
       },
-      "label_no_holdings" : {
+      "label_no_holdings": {
         "da": "Biblioteket har ikke materialet \\n Men du kan bestille materialet til afhentning på biblioteket",
         "en": "Library does not have the material, But you can still order for pickup at this library"
       }
@@ -1106,6 +1110,32 @@
         "en": "Editions"
       }
     },
+    "order-periodica": {
+      "title": {
+        "da": "Vælg udgave eller artikel",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "description": {
+        "da": "Angiv den udgave, som du er interesseret i.",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "label-year": {
+        "da": "År",
+        "en": "Year"
+      },
+      "label-volume": {
+        "da": "Hæfte, nummer eller bind",
+        "en": "Volume"
+      },
+      "placeholder-year": {
+        "da": "Skriv årstal",
+        "en": "Enter year"
+      },
+      "placeholder-volume": {
+        "da": "Hæfte, nummer eller bind",
+        "en": "Enter volume"
+      }
+    },
     "order": {
       "specific-edition": {
         "da": "Bestil udgave",
@@ -1263,6 +1293,10 @@
         "da": "Du mangler at angive en korrekt e-mail",
         "en": "You need to enter a correct email"
       },
+      "action-require-year": {
+        "da": "For at bestille skal du vælge udgave eller artikel",
+        "en": "LABEL: mangler oversættelse"
+      },
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",
         "en": "Approve loaner information"
@@ -1384,6 +1418,14 @@
       "error-missing-input": {
         "da": "Udfyld venligst alle felter",
         "en": "Please fill in all fields"
+      },
+      "error-missing-required": {
+        "da": "Udfyld alle felter der er markeret med ",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "required": {
+        "da": "skal udfyldes",
+        "en": "is required"
       }
     },
     "metadata": {
