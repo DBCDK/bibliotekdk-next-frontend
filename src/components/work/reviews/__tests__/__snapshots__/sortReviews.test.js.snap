@@ -87,7 +87,22 @@ Array [
     "author": "Arne Larsen",
     "date": "2015-10-09",
     "media": "Litteratursiden.dk online",
+    "rating": "3/6",
     "url": "https://litteratursiden.dk/boeger/harry-potter-og-de-vises-sten-0",
+  },
+  Object {
+    "__typename": "ReviewInfomedia",
+    "author": "Steffen Larsen",
+    "date": "2015-12-23",
+    "media": "Politiken",
+    "rating": "4/6",
+  },
+  Object {
+    "__typename": "ReviewInfomedia",
+    "author": "Kari Sønsthagen",
+    "date": "2015-10-06",
+    "media": "Berlingske tidende",
+    "rating": "6/6",
   },
   Object {
     "__typename": "ReviewInfomedia",
@@ -124,18 +139,5 @@ Array [
     "media": "Standart",
     "rating": "",
   },
-    Object {
-      "__typename": "ReviewInfomedia",
-      "author": "Steffen Larsen",
-      "date": "2015-12-23",
-      "media": "Politiken",
-      "rating": "4/6",
-    },
-    Object {
-      "__typename": "ReviewInfomedia",
-      "author": "Kari Sønsthagen",
-      "date": "2015-10-06",
-      "media": "Berlingske tidende",
-      "rating": "6/6",
-    },
-  ];
+]
+`;

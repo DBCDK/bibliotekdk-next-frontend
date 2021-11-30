@@ -27,7 +27,13 @@
 }
 
 .left {
+  min-width: 24px;
   padding: 2px 0 0 0;
+  flex-shrink: 2;
+}
+
+.right {
+  padding: 0;
 }
 
 .author {
@@ -36,6 +42,10 @@
 
 .author p {
   white-space: nowrap;
+}
+
+.rating {
+  padding: var(--pt2) 0 0 0;
 }
 
 .url {

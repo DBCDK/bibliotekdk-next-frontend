@@ -7,6 +7,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
+import Rating from "@/components/base/rating";
 import Translate from "@/components/base/translate";
 
 import { dateToShortDate } from "@/utils/datetimeConverter";
@@ -54,16 +55,27 @@ export function ExternalReview({
               </Text>
             </Col>
           )}
-          {data.author && (
-            <Col xs={10} className={styles.author}>
-              {!skeleton && <Text type="text2">{data.author}</Text>}
-              <div className={styles.date}>
-                {!skeleton && data.date && (
-                  <Text type="text3">{dateToShortDate(data.date, "d. ")}</Text>
-                )}
-              </div>
-            </Col>
-          )}
+
+          <Col xs={12} className={styles.right}>
+            {data.author && (
+              <Col xs={10} className={styles.author}>
+                {!skeleton && <Text type="text2">{data.author}</Text>}
+                <div className={styles.date}>
+                  {!skeleton && data.date && (
+                    <Text type="text3">
+                      {dateToShortDate(data.date, "d. ")}
+                    </Text>
+                  )}
+                </div>
+              </Col>
+            )}
+
+            {data.rating && (
+              <Col xs={12} className={styles.rating}>
+                <Rating rating={data.rating} skeleton={skeleton} />
+              </Col>
+            )}
+          </Col>
         </div>
 
         {data.url && (

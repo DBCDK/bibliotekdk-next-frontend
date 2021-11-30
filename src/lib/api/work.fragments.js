@@ -300,6 +300,7 @@ export function reviews({ workId }) {
               author
               date
               media
+              rating
               url
             }
             ... on ReviewMatVurd {
