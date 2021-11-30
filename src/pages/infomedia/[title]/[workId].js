@@ -23,6 +23,7 @@ export function InfomediaArticle(infomediaData) {
     publicInf: publicData,
     privateInf: privateData,
     agencies,
+    rating,
     user,
   } = { ...infomediaData };
 
@@ -42,9 +43,10 @@ export function InfomediaArticle(infomediaData) {
         <ContentSkeleton />
       ) : (
         <>
-          {articles.map((article) => (
-            <Content data={article} />
-          ))}
+          {articles.map((article) => {
+            article.rating = rating || null;
+            return <Content data={article} />;
+          })}
 
           {!user.isAuthenticated && (
             <LoginPrompt
@@ -140,8 +142,14 @@ function parseForPid(workId) {
 
 export default function wrap() {
   const router = useRouter();
-  const { workId } = router.query;
-  const pid = parseForPid(workId);
+  const { workId, review, rating } = router.query;
+  let pid;
+  if (review) {
+    pid = review;
+  } else {
+    pid = parseForPid(workId);
+  }
+
   const user = useUser();
 
   const infomediaPublic = useData(
@@ -156,6 +164,7 @@ export default function wrap() {
     privateInf: infomediaPrivate,
     publicInf: infomediaPublic,
     agencies: userAgencise,
+    rating: rating || null,
     user,
   };
 
