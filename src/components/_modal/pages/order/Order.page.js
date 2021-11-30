@@ -582,11 +582,7 @@ export function Order({
                 onArticleSubmit(pid, pickupBranch.branchId);
               } else {
                 onSubmit &&
-                  onSubmit(
-                    materialsSameType.map((m) => m.pid),
-                    pickupBranch,
-                    context?.periodicaForm
-                  );
+                  onSubmit(orderPids, pickupBranch, context?.periodicaForm);
               }
             } else {
               setHasTry(true);
@@ -758,7 +754,7 @@ export default function Wrap(props) {
             pids,
             branchId: pickupBranch.branchId,
             userParameters: loanerInfo.userParameters,
-            publicationDate: periodicaForm?.year,
+            publicationDateOfComponent: periodicaForm?.year,
             volume: periodicaForm?.volume,
           })
         );
