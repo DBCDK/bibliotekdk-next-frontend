@@ -17,6 +17,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
 import { getLangcode } from "@/components/base/translate/Translate";
+import { Rating } from "@/components/base/rating/Rating";
 
 function ArticleHeader({ article, skeleton }) {
   const context = { context: "articles" };
@@ -230,6 +231,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 {creator.name}
               </Text>
             ))}
+            {data.rating && (
+              <div className={styles.rating}>
+                <Rating rating={data.rating} skeleton={false} />
+              </div>
+            )}
           </Col>
         </Row>
       )}

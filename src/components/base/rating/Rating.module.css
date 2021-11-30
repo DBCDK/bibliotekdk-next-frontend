@@ -3,8 +3,8 @@
 }
 
 .star.filled path {
-  fill: var(--mine-shaft);
-  stroke: var(--mine-shaft);
+  fill: var(--blue);
+  stroke: var(--blue);
 }
 
 .skeleton i {

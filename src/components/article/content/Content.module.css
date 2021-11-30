@@ -1,6 +1,9 @@
 .content {
 }
 
+.rating{
+  padding: var(--pt2) 0 var(--pt2) 0;
+}
 
 
 .body {
