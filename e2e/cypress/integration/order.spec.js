@@ -450,7 +450,7 @@ describe("Order periodica volume", () => {
           userMail: "cicero@mail.dk",
           userName: "Freja Damgaard",
         },
-        publicationDate: "1992",
+        publicationDateOfComponent: "1992",
         volume: "8",
       });
     });

@@ -8,7 +8,7 @@ export function submitOrder({
   pids,
   branchId,
   userParameters,
-  publicationDate,
+  publicationDateOfComponent,
   volume,
 }) {
   return {
@@ -24,7 +24,7 @@ export function submitOrder({
         pids,
         pickUpBranch: branchId,
         userParameters,
-        publicationDate,
+        publicationDateOfComponent,
         volume,
       },
     },

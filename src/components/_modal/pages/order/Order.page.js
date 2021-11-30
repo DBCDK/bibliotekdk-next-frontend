@@ -758,7 +758,7 @@ export default function Wrap(props) {
             pids,
             branchId: pickupBranch.branchId,
             userParameters: loanerInfo.userParameters,
-            publicationDate: periodicaForm?.year,
+            publicationDateOfComponent: periodicaForm?.year,
             volume: periodicaForm?.volume,
           })
         );
