@@ -2,6 +2,12 @@
   line-height: 0;
 }
 
+.star:not(.filled) path {
+  stroke: var(--gray);
+  fill: var(--gray);
+  opacity: 0.6;
+}
+
 .star.filled path {
   fill: var(--blue);
   stroke: var(--blue);
