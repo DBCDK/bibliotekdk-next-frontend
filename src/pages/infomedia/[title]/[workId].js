@@ -44,8 +44,7 @@ export function InfomediaArticle(infomediaData) {
       ) : (
         <>
           {articles.map((article) => {
-            article.rating = rating || null;
-            return <Content data={article} />;
+            return <Content data={{ ...article, rating }} />;
           })}
 
           {!user.isAuthenticated && (
