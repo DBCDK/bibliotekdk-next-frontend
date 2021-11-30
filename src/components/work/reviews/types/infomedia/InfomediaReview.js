@@ -13,6 +13,7 @@ import Translate from "@/components/base/translate";
 import { dateToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./InfomediaReview.module.css";
+import { encodeString } from "@/lib/utils";
 
 /**
  * The Component function
@@ -26,10 +27,18 @@ export function InfomediaReview({
   className = "",
   data = [],
   onFocus,
+  title,
+  workId,
   skeleton = false,
 }) {
   // Translate Context
   const context = { context: "reviews" };
+
+  // make an url for infomedia page
+  const reviewPid = data.reference[0].pid;
+  const urlTxt = encodeString("Anmeldelse_" + title);
+  const infomediaUrl = `/infomedia/${urlTxt}/${workId}?review=${reviewPid}`;
+  data.url = infomediaUrl;
 
   return (
     <Col
@@ -83,7 +92,7 @@ export function InfomediaReview({
           />
           <Link
             href={data.url}
-            target="_blank"
+            target="_self"
             onFocus={onFocus}
             disabled={!data.url}
             border={{ top: false, bottom: { keepVisible: true } }}

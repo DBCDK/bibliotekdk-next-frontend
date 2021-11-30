@@ -280,6 +280,8 @@ export function reviews({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          id
+          title
           reviews {
             __typename
             ... on ReviewInfomedia {
