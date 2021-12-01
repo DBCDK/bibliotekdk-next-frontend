@@ -47,8 +47,8 @@ export default function WorkPage() {
     );
   }
 
-  function handleOnOnlineAccess(url) {
-    window.open(url, "_blank");
+  function handleOnOnlineAccess(url, target = "_blank") {
+    window.open(url, target);
   }
 
   function handleOrder(pid) {

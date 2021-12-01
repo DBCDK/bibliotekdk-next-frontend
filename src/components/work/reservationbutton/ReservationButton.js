@@ -210,7 +210,9 @@ export function OrderButton({
         <Button
           className={styles.externalLink}
           skeleton={buttonSkeleton}
-          onClick={() => onOnlineAccess(selectedMaterial.onlineAccess[0].url)}
+          onClick={() =>
+            onOnlineAccess(selectedMaterial.onlineAccess[0].url, "_self")
+          }
           type={type}
         >
           {[
