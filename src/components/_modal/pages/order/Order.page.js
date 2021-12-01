@@ -94,17 +94,17 @@ export function Order({
   // Sets if user has unsuccessfully tried to submit the order
   const [hasTry, setHasTry] = useState(false);
 
-  const availableAsDigitalCopy =
-    pickupBranch?.borrowerCheck &&
-    pickupBranch?.digitalCopyAccess &&
-    work?.manifestations?.find((m) =>
-      m?.onlineAccess?.find((entry) => entry.issn)
-    );
-
   const isArticle = work?.workTypes?.includes("article");
   const isPeriodicaLike =
     work?.workTypes?.includes("periodica") ||
     !!work?.manifestations?.find((m) => m.materialType === "Årbog");
+
+  const availableAsDigitalCopy =
+    pickupBranch?.digitalCopyAccess &&
+    work?.manifestations?.find((m) =>
+      m?.onlineAccess?.find((entry) => entry.issn)
+    ) &&
+    (isPeriodicaLike ? !!context?.periodicaForm?.titleOfComponent : true);
 
   useEffect(() => {
     if (initial.pickupBranch) {
@@ -131,7 +131,7 @@ export function Order({
     const hasBranchId = !!pickupBranch?.branchId;
     const hasPid = !!pid;
     const requireYear = !!isPeriodicaLike;
-    const hasYear = !!context?.periodicaForm?.year;
+    const hasYear = !!context?.periodicaForm?.publicationDateOfComponent;
 
     const status =
       hasMail && hasBranchId && hasPid && (requireYear ? hasYear : true);
@@ -151,7 +151,13 @@ export function Order({
     };
 
     return { status, hasTry, details };
-  }, [mail, pid, pickupBranch, hasTry, context?.periodicaForm?.year]);
+  }, [
+    mail,
+    pid,
+    pickupBranch,
+    hasTry,
+    context?.periodicaForm?.publicationDateOfComponent,
+  ]);
 
   // An order has successfully been submitted
   useEffect(() => {
@@ -333,14 +339,39 @@ export function Order({
               </Tag>
             </div>
           </div>
-          {context?.periodicaForm && (
-            <div className={styles.periodicasummary}>
+          {availableAsDigitalCopy && (
+            <div className={styles.digitalcopy}>
               <Text type="text4">
                 {Translate({
-                  context: "general",
-                  label: "article",
+                  context: "order",
+                  label: "will-order-digital-copy",
                 })}
               </Text>
+
+              <Link
+                disabled={false}
+                href={"/hjaelp/digital-artikelservice/67"}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
+                <Text type="text3">
+                  {Translate({
+                    context: "order",
+                    label: "will-order-digital-copy-delivered-by",
+                  })}
+                </Text>
+              </Link>
+            </div>
+          )}
+          {context?.periodicaForm && (
+            <div className={styles.periodicasummary}>
+              {!availableAsDigitalCopy && (
+                <Text type="text4">
+                  {Translate({
+                    context: "general",
+                    label: "article",
+                  })}
+                </Text>
+              )}
               {Object.entries(context?.periodicaForm).map(([key, value]) => (
                 <Text type="text3" key={key}>
                   {Translate({
@@ -367,29 +398,6 @@ export function Order({
                 })}
               </Text>
             </LinkArrow>
-          )}
-          {availableAsDigitalCopy && (
-            <div className={styles.digitalcopy}>
-              <Text type="text4">
-                {Translate({
-                  context: "order",
-                  label: "will-order-digital-copy",
-                })}
-              </Text>
-
-              <Link
-                disabled={false}
-                href={"/hjaelp/digital-artikelservice/70"}
-                border={{ top: false, bottom: { keepVisible: true } }}
-              >
-                <Text type="text3">
-                  {Translate({
-                    context: "order",
-                    label: "will-order-digital-copy-delivered-by",
-                  })}
-                </Text>
-              </Link>
-            </div>
           )}
         </div>
         <div className={styles.right}>
@@ -579,7 +587,11 @@ export function Order({
                 pickupBranch,
               });
               if (availableAsDigitalCopy) {
-                onArticleSubmit(pid, pickupBranch.branchId);
+                onArticleSubmit(
+                  pid,
+                  pickupBranch.branchId,
+                  context?.periodicaForm
+                );
               } else {
                 onSubmit &&
                   onSubmit(orderPids, pickupBranch, context?.periodicaForm);
@@ -738,24 +750,24 @@ export default function Wrap(props) {
       order={orderMutation}
       articleOrder={articleOrderMutation}
       updateLoanerInfo={updateLoanerInfo}
-      onArticleSubmit={(pid, pickUpBranch) => {
+      onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) => {
         articleOrderMutation.post(
           submitPeriodicaArticleOrder({
             pid,
             pickUpBranch,
             userName: loanerInfo?.userParameters?.userName,
             userMail: loanerInfo?.userParameters?.userMail,
+            ...periodicaForm,
           })
         );
       }}
-      onSubmit={(pids, pickupBranch, periodicaForm) => {
+      onSubmit={(pids, pickupBranch, periodicaForm = {}) => {
         orderMutation.post(
           submitOrder({
             pids,
             branchId: pickupBranch.branchId,
             userParameters: loanerInfo.userParameters,
-            publicationDateOfComponent: periodicaForm?.year,
-            volume: periodicaForm?.volume,
+            ...periodicaForm,
           })
         );
       }}

@@ -1119,7 +1119,11 @@
         "da": "Angiv den udgave, som du er interesseret i.",
         "en": "LABEL: mangler oversættelse"
       },
-      "label-year": {
+      "specific-article": {
+        "da": "Kun interesseret i en bestemt artikel?",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "label-publicationDateOfComponent": {
         "da": "År",
         "en": "Year"
       },
@@ -1127,13 +1131,37 @@
         "da": "Hæfte, nummer eller bind",
         "en": "Volume"
       },
-      "placeholder-year": {
+      "label-authorOfComponent": {
+        "da": "Artiklens forfatter",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "label-titleOfComponent": {
+        "da": "Artiklens titel",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "label-pagination": {
+        "da": "Sidetal",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "placeholder-publicationDateOfComponent": {
         "da": "Skriv årstal",
         "en": "Enter year"
       },
       "placeholder-volume": {
         "da": "Hæfte, nummer eller bind",
         "en": "Enter volume"
+      },
+      "placeholder-authorOfComponent": {
+        "da": "Skriv artiklens forfatter",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "placeholder-titleOfComponent": {
+        "da": "Forår og efterår i botanikerens have",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "placeholder-pagination": {
+        "da": "150-154",
+        "en": "LABEL: mangler oversættelse"
       }
     },
     "order": {

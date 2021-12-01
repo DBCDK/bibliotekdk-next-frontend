@@ -417,6 +417,13 @@ describe("Order periodica volume", () => {
       data: {
         user: {
           mail: "cicero@mail.dk",
+          agency: {
+            result: [
+              {
+                digitalCopyAccess: true,
+              },
+            ],
+          },
         },
       },
     });
@@ -452,6 +459,122 @@ describe("Order periodica volume", () => {
         },
         publicationDateOfComponent: "1992",
         volume: "8",
+      });
+    });
+  });
+
+  it("should order physical non-indexed article from periodica volume", () => {
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+          agency: {
+            result: [
+              {
+                digitalCopyAccess: false,
+              },
+            ],
+          },
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+    );
+
+    openOrderModal();
+
+    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+    cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+    cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
+
+    cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
+
+    cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
+      "some title"
+    );
+
+    cy.get('[placeholder="150-154"]').type("100-104");
+
+    cy.get('[data-cy="button-gem"]').click();
+
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pids: ["870970-basis:06150179"],
+        pickUpBranch: "790900",
+        userParameters: {
+          userMail: "cicero@mail.dk",
+          userName: "Freja Damgaard",
+        },
+        publicationDateOfComponent: "1992",
+        volume: "8",
+        authorOfComponent: "Test Testesen",
+        titleOfComponent: "some title",
+        pagination: "100-104",
+      });
+    });
+  });
+
+  it("should order non-indexed article from periodica volume as digital copy", () => {
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+          agency: {
+            result: [
+              {
+                digitalCopyAccess: true,
+              },
+            ],
+          },
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+    );
+
+    openOrderModal();
+
+    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+    cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+    cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
+
+    cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
+
+    cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
+      "some title"
+    );
+
+    cy.get('[placeholder="150-154"]').type("100-104");
+
+    cy.get('[data-cy="button-gem"]').click();
+
+    cy.get("[data-cy=button-godkend]").click();
+
+    cy.wait("@submitPeriodicaArticleOrder").then((order) => {
+      console.log(order.request.body.variables.input, "INPUT");
+      expect(order.request.body.variables.input).to.deep.equal({
+        pid: "870970-basis:06150179",
+        pickUpBranch: "790900",
+        userName: "Freja Damgaard",
+        userMail: "cicero@mail.dk",
+        publicationDateOfComponent: "1992",
+        volume: "8",
+        authorOfComponent: "Test Testesen",
+        titleOfComponent: "some title",
+        pagination: "100-104",
       });
     });
   });

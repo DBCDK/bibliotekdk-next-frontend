@@ -9,24 +9,66 @@ import { useState } from "react";
 
 import styles from "./PeriodicaForm.module.css";
 
-export function PeriodicaForm({ modal, context }) {
-  const fields = [{ key: "year", required: true }, { key: "volume" }];
+// TODO create jsdoc and proptypes
 
-  const [state, setState] = useState({ year: "", volume: "" });
+function Field({ label, required, value, onChange, hasTry }) {
+  return (
+    <div className={hasTry && required && !value?.trim() ? styles.invalid : ""}>
+      <Text type="text1" tag="label">
+        {Translate({
+          context: "order-periodica",
+          label: `label-${label}`,
+        })}
+        {required && <span className={styles.required}>&nbsp;*</span>}
+      </Text>
+      <Input
+        key={label}
+        value={value}
+        type={"text"}
+        dataCy={`input-${label}`}
+        onChange={onChange}
+        placeholder={Translate({
+          context: "order-periodica",
+          label: `placeholder-${label}`,
+        })}
+        required={required}
+      />
+    </div>
+  );
+}
+
+export function PeriodicaForm({ modal }) {
+  const fields = [
+    { key: "publicationDateOfComponent", required: true },
+    { key: "volume" },
+  ];
+  const articleFields = [
+    { key: "authorOfComponent" },
+    { key: "titleOfComponent", required: true },
+    { key: "pagination" },
+  ];
+
+  const [state, setState] = useState({});
   const [hasTry, setHasTry] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   function validate() {
     let result = true;
     fields.forEach(({ key, required }) => {
-      if (required && !state[key].trim()) {
+      if (required && !state?.[key]?.trim()) {
         result = false;
       }
     });
+    if (expanded) {
+      articleFields.forEach(({ key, required }) => {
+        if (required && !state?.[key]?.trim()) {
+          result = false;
+        }
+      });
+    }
     return result;
   }
   const isValid = validate();
-
-  console.log({ isValid });
 
   return (
     <div className={styles.periodicaform}>
@@ -58,47 +100,71 @@ export function PeriodicaForm({ modal, context }) {
           e.preventDefault();
           e.stopPropagation();
           if (isValid) {
+            const periodicaForm = {};
+            // Process in order
+            fields.forEach(({ key }) => {
+              const val = state?.[key]?.trim();
+              if (val) {
+                periodicaForm[key] = val;
+              }
+            });
+            if (expanded) {
+              articleFields.forEach(({ key }) => {
+                const val = state?.[key]?.trim();
+                if (val) {
+                  periodicaForm[key] = val;
+                }
+              });
+            }
             // Change context for previous page
-            modal.update(modal.index("order"), { periodicaForm: state });
+            modal.update(modal.index("order"), { periodicaForm });
             modal.prev("order");
           }
         }}
       >
         {fields.map(({ key, required }) => {
           return (
-            <div
+            <Field
               key={key}
-              className={
-                hasTry && required && !state[key]?.trim() ? styles.invalid : ""
+              label={key}
+              required={required}
+              value={state[key]}
+              hasTry={hasTry}
+              onChange={(value) =>
+                setState({
+                  ...state,
+                  [key]: value,
+                })
               }
-            >
-              <Text type="text1" tag="label">
-                {Translate({
-                  context: "order-periodica",
-                  label: `label-${key}`,
-                })}
-                {required && <span className={styles.required}>&nbsp;*</span>}
-              </Text>
-              <Input
+            />
+          );
+        })}
+        <div tabIndex="0" onClick={() => setExpanded(!expanded)}>
+          <Text type="text2">
+            {Translate({
+              context: "order-periodica",
+              label: `specific-article`,
+            })}
+          </Text>
+        </div>
+        {expanded &&
+          articleFields.map(({ key, required }) => {
+            return (
+              <Field
                 key={key}
+                label={key}
+                required={required}
                 value={state[key]}
-                type={"text"}
-                dataCy={`input-year`}
+                hasTry={hasTry}
                 onChange={(value) =>
                   setState({
                     ...state,
                     [key]: value,
                   })
                 }
-                placeholder={Translate({
-                  context: "order-periodica",
-                  label: `placeholder-${key}`,
-                })}
-                required={required}
               />
-            </div>
-          );
-        })}
+            );
+          })}
 
         <div className={styles.bottom}>
           {hasTry && !isValid && (
