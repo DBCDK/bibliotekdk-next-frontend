@@ -10,6 +10,9 @@ export function submitOrder({
   userParameters,
   publicationDateOfComponent,
   volume,
+  authorOfComponent,
+  titleOfComponent,
+  pagination,
 }) {
   return {
     query: `mutation ($input: SubmitOrderInput!){
@@ -26,6 +29,9 @@ export function submitOrder({
         userParameters,
         publicationDateOfComponent,
         volume,
+        authorOfComponent,
+        titleOfComponent,
+        pagination,
       },
     },
   };
@@ -36,6 +42,11 @@ export function submitPeriodicaArticleOrder({
   pickUpBranch,
   userName,
   userMail,
+  publicationDateOfComponent,
+  volume,
+  authorOfComponent,
+  titleOfComponent,
+  pagination,
 }) {
   return {
     query: `mutation($input: PeriodicaArticleOrder!) {
@@ -50,6 +61,11 @@ export function submitPeriodicaArticleOrder({
         pickUpBranch,
         userName,
         userMail,
+        publicationDateOfComponent,
+        volume,
+        authorOfComponent,
+        titleOfComponent,
+        pagination,
       },
     },
   };

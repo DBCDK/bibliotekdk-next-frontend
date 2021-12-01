@@ -174,7 +174,12 @@
                   }
                 }
               ],
-              "onlineAccess": [],
+              "onlineAccess": [
+                {
+                  "__typename": "DigitalCopy",
+                  "issn": "09021620"
+                }
+              ],
               "originals": [],
               "originalTitle": "",
               "pid": "870970-basis:06150179",
@@ -339,7 +344,10 @@
           "materialType": "Tidsskrift",
           "notes": [],
           "language": ["Dansk"],
-          "onlineAccess": [],
+          "onlineAccess": [{
+            "__typename": "DigitalCopy",
+            "issn": "09021620"
+          }],
           "originals": [],
           "originalTitle": "",
           "pid": "870970-basis:06150179",
