@@ -7,6 +7,7 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
 import { cyKey } from "@/utils/trim";
+import styles from "./LocalizationsLink.module.css";
 
 export function LocalizationsLink({
   materialType,
@@ -46,22 +47,20 @@ export function LocalizationsLink({
   }
 
   return (
-    <span>
-      <Link
-        onClick={() => opener()}
-        border={{ top: false, bottom: { keepVisible: true } }}
-        dataCy={localizationLinkKey}
-        ariaLabel="open localizations"
-      >
-        <Text type="text3">
-          {Translate({
-            context: "overview",
-            label: "label_library_holdings",
-            vars: [count],
-          })}
-        </Text>
-      </Link>
-    </span>
+    <Link
+      onClick={() => opener()}
+      border={{ top: false, bottom: { keepVisible: true } }}
+      dataCy={localizationLinkKey}
+      ariaLabel="open localizations"
+    >
+      <Text type="text3" className={styles.linkstyle}>
+        {Translate({
+          context: "overview",
+          label: "label_library_holdings",
+          vars: [count],
+        })}
+      </Text>
+    </Link>
   );
 }
 
