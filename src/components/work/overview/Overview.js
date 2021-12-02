@@ -41,7 +41,7 @@ const context = { context: "overview" };
 export function Overview({
   title = "...",
   fullTitle = "...",
-  creators = [{ name: "..." }],
+  creators = [{ name: "Mrs. Jane Do" }],
   path = [],
   materialTypes = [],
   type,
@@ -153,6 +153,7 @@ export function Overview({
                     <span key={`${c.name}-${i}`}>
                       <Link
                         children={c.name}
+                        disabled={skeleton}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
                       >

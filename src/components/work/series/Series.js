@@ -57,6 +57,8 @@ export default function Container({ workId }) {
 
   const works = data && data.work && data.work.series && data.work.series.works;
 
+  console.log("works", works);
+
   return <Series isLoading={isLoading} works={works} />;
 }
 Container.propTypes = {

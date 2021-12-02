@@ -380,6 +380,7 @@ function Page(props) {
         <props.component {...passedProps} />
         <div ref={ref} className="page_bottom" />
       </div>
+      <div className="content_shadow" />
     </div>
   );
 }
