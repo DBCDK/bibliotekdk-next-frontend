@@ -123,6 +123,10 @@
         "da": "Artikler",
         "en": "Articles"
       },
+      "volume": {
+        "da": "Udgave",
+        "en": "Volume"
+      },
       "film": {
         "da": "Film",
         "en": "Film"

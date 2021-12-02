@@ -99,16 +99,17 @@ export function Order({
     work?.workTypes?.includes("periodica") ||
     !!work?.manifestations?.find((m) => m.materialType === "Årbog");
 
+  const isArticleRequest =
+    !!context?.periodicaForm?.titleOfComponent ||
+    !!context?.periodicaForm?.authorOfComponent ||
+    !!context?.periodicaForm?.pagination;
+
   const availableAsDigitalCopy =
     pickupBranch?.digitalCopyAccess &&
     work?.manifestations?.find((m) =>
       m?.onlineAccess?.find((entry) => entry.issn)
     ) &&
-    (isPeriodicaLike
-      ? !!context?.periodicaForm?.titleOfComponent ||
-        !!context?.periodicaForm?.authorOfComponent ||
-        !!context?.periodicaForm?.pagination
-      : true);
+    (isPeriodicaLike ? isArticleRequest : true);
 
   useEffect(() => {
     if (initial.pickupBranch) {
@@ -336,7 +337,6 @@ export function Order({
                 </Text>
               </Link>
             )}
-
             <div>
               <Tag tag="span" skeleton={isLoading}>
                 {materialType}
@@ -352,12 +352,21 @@ export function Order({
                 })}
               </Text>
             </div>
-          ) : context?.periodicaForm ? (
+          ) : isArticleRequest ? (
             <div className={styles.articletype}>
               <Text type="text4">
                 {Translate({
                   context: "general",
                   label: "article",
+                })}
+              </Text>
+            </div>
+          ) : context?.periodicaForm ? (
+            <div className={styles.articletype}>
+              <Text type="text4">
+                {Translate({
+                  context: "general",
+                  label: "volume",
                 })}
               </Text>
             </div>
@@ -550,28 +559,34 @@ export function Order({
       )}
       <div className={styles.action}>
         <div className={`${styles.message} ${invalidClass}`}>
-          <Text type="text3">
-            {Translate({
-              context: "order",
-              label: actionMessage
-                ? `action-${actionMessage.label}`
-                : availableAsDigitalCopy
-                ? "will-order-digital-copy-details"
-                : "order-message-library",
-            })}
-          </Text>
-          <Link
-            disabled={false}
-            href={"/hjaelp/digital-artikelservice/67"}
-            border={{ top: false, bottom: { keepVisible: true } }}
-          >
+          {actionMessage ? (
             <Text type="text3">
               {Translate({
                 context: "order",
-                label: "will-order-digital-copy-delivered-by",
+                label: `action-${actionMessage.label}`,
               })}
             </Text>
-          </Link>
+          ) : availableAsDigitalCopy ? (
+            <Link
+              disabled={false}
+              href={"/hjaelp/digital-artikelservice/67"}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              <Text type="text3">
+                {Translate({
+                  context: "order",
+                  label: "will-order-digital-copy-delivered-by",
+                })}
+              </Text>
+            </Link>
+          ) : (
+            <Text type="text3">
+              {Translate({
+                context: "order",
+                label: "order-message-library",
+              })}
+            </Text>
+          )}
         </div>
         <Button
           disabled={pickupBranch?.orderPolicy?.orderPossible !== true}
