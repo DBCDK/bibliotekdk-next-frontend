@@ -17,6 +17,8 @@ import { LocalizationsLink } from "@/components/work/overview/localizationslink/
 import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import { useData } from "@/lib/api/api";
+import { localizationsQuery } from "@/lib/api/localizations.fragments";
 
 /**
  * bibliotek.dk object url
@@ -42,24 +44,11 @@ function ColumnOne({
   manifestation,
   worktypes,
   localizations,
+  localizationsLoading,
   openOrderModal,
   opener,
   user,
 }) {
-  const worktype = worktypes && worktypes[0] ? worktypes[0] : "literature";
-
-  let number_of_libraries = "63";
-
-  /**
-   * NOTES - params for reservationbutton
-   * selectedMaterial={selectedMaterial}
-   *                   user={user}
-   *                   onOnlineAccess={onOnlineAccess}
-   *                   login={login}
-   *                   openOrderModal={openOrderModal}
-   *                   workTypeTranslated={workTypeTranslated}
-   *                   title={title}
-   */
   return (
     <Col
       key={"col1" + manifestation.pid}
@@ -88,8 +77,10 @@ function ColumnOne({
         <span>
           <LocalizationsLink
             opener={opener}
-            localizations={{ count: localizations?.length || "0" }}
+            localizations={localizations?.localizations}
+            isLoading={localizationsLoading}
             materialType={manifestation.materialType}
+            user={user}
           />
         </span>
       </div>
@@ -171,7 +162,8 @@ function ColumnOne({
 export function ManifestationFull({
   manifestation,
   work,
-  allLocalizations,
+  localizations,
+  localizationsLoading,
   opener,
   openOrderModal,
   user,
@@ -183,27 +175,13 @@ export function ManifestationFull({
     return parseManifestation(manifestation);
   }, [manifestation]);
 
-  // find localizations for this manifestation
-  const manifestationLocalizationType =
-    allLocalizations?.work?.materialTypes.find(
-      (type) => type.materialType === manifestation.materialType
-    );
-  const manifestationLocalizations = [];
-  manifestationLocalizationType?.localizations?.agencies?.map((agency) => {
-    const maniholding = agency.holdingItems.find(
-      (holding) => holding.localizationPid === manifestation.pid
-    );
-    if (maniholding) {
-      manifestationLocalizations.push(maniholding);
-    }
-  });
-
   return (
     <Row>
       <ColumnOne
         manifestation={manifestation}
         worktypes={worktype}
-        localizations={manifestationLocalizations}
+        localizations={localizations}
+        localizationsLoading={localizationsLoading}
         openOrderModal={openOrderModal}
         opener={opener}
         user={user}
@@ -233,7 +211,7 @@ export function ManifestationFull({
   );
 }
 
-export default function wrap({ manifestation, work, workId, localizations }) {
+export default function wrap({ manifestation, work, workId }) {
   const modal = useModal();
   const openLocalizationsModal = () => {
     modal.push("localizations", {
@@ -254,6 +232,12 @@ export default function wrap({ manifestation, work, workId, localizations }) {
     });
   };
 
+  const pids = [manifestation.pid];
+
+  const { data: localizations, isLoading: localizationsLoading } = useData(
+    localizationsQuery({ pids })
+  );
+
   const user = useUser();
 
   return (
@@ -261,7 +245,8 @@ export default function wrap({ manifestation, work, workId, localizations }) {
       manifestation={manifestation}
       work={work}
       workId={workId}
-      allLocalizations={localizations}
+      localizations={localizations}
+      localizationsLoading={localizationsLoading}
       opener={openLocalizationsModal}
       openOrderModal={openOrderModal}
       user={user}

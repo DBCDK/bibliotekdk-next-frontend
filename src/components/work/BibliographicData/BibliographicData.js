@@ -22,7 +22,7 @@ import * as workFragments from "@/lib/api/work.fragments";
  *
  * @returns {component}
  */
-export function BibliographicData({ work, workId, localizations }) {
+export function BibliographicData({ work, workId }) {
   const sortedMaterialTypes = useMemo(
     () => sortManifestations(work.manifestations),
     [work]
@@ -52,7 +52,6 @@ export function BibliographicData({ work, workId, localizations }) {
                 manifestation={manifestation}
                 work={work}
                 workId={workId}
-                localizations={localizations}
               />
             </Item>
           );
@@ -75,11 +74,6 @@ export default function Wrap({ workId }) {
     workFragments.detailsAllManifestations({ workId })
   );
 
-  // use the useData hook to fetch data
-  const { data: localizationData, isLoading: localizationsLoading } = useData(
-    workFragments.localizations({ workId })
-  );
-
   if (error || !data) {
     return null;
   }
@@ -87,13 +81,7 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  return (
-    <BibliographicData
-      work={data.work}
-      workId={workId}
-      localizations={localizationData}
-    />
-  );
+  return <BibliographicData work={data.work} workId={workId} />;
 }
 
 // PropTypes for component

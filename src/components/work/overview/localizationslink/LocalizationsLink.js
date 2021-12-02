@@ -14,7 +14,12 @@ export function LocalizationsLink({
   localizations,
   opener,
   user,
+  isLoading,
 }) {
+  if (isLoading) {
+    return <Skeleton lines={1} className={styles.skeletonstyle} />;
+  }
+
   const nolinktoholding = [
     "Lydbog (bånd)",
     "Lydbog (net)",
@@ -89,15 +94,13 @@ export default function wrap({ selectedMaterial, workId }) {
     (mat) => mat.materialType === selectedMaterial.materialType
   )[0];
 
-  if (isLoading) {
-    return <Skeleton lines={1} />;
-  }
   return (
     <LocalizationsLink
       materialType={selectedMaterial.materialType}
       localizations={selectedLocalizations?.localizations || "0"}
       opener={openLocalizationsModal}
       user={user}
+      isLoading={isLoading}
     />
   );
 }
