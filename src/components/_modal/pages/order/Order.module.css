@@ -145,7 +145,7 @@
 /* action */
 
 .action .message {
-  padding: 0 0 var(--pt1) 0;
+  padding: 0 0 var(--pt2) 0;
 }
 
 .action .message.invalid {
