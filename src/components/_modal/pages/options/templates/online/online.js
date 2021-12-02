@@ -19,7 +19,7 @@ export default function Online({ url, origin, note, className, materialType }) {
           {Translate({
             ...context,
             label: "online-link-title",
-            vars: [materialType],
+            vars: [materialType?.toLowerCase()],
           })}
         </Text>
       </Link>
