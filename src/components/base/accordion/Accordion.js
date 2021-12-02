@@ -25,10 +25,16 @@ import BodyParser from "@/components/base/bodyparser";
  * @returns {component}
  */
 
-export function Item({ title, subTitle, children, eventKey }) {
+export function Item({ title, subTitle, children, eventKey, onChange }) {
   const currentEventKey = React.useContext(AccordionContext);
 
-  const onClick = useAccordionToggle(eventKey);
+  const isCurrentEventKey = !!(currentEventKey === eventKey);
+
+  const onClick = useAccordionToggle(eventKey, () => {
+    if (onChange) {
+      onChange(!isCurrentEventKey);
+    }
+  });
 
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
@@ -36,8 +42,6 @@ export function Item({ title, subTitle, children, eventKey }) {
       onClick();
     }
   };
-
-  const isCurrentEventKey = !!(currentEventKey === eventKey);
 
   if (typeof children === "string") {
     children = <Text type="text2">{children}</Text>;

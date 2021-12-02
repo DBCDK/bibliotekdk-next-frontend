@@ -30,10 +30,23 @@
 .requiredtext {
   margin-top: var(--pt2);
 }
-.periodicaform form p,
 .periodicaform form label {
   margin-top: var(--pt3);
 }
+.accordion {
+  /* margin-top: var(--pt4); */
+  margin-top: var(--pt6);
+}
+.accordion > div {
+  /* border: 0 !important; */
+}
+.accordioncontent div:first-child label {
+  margin-top: 0;
+}
+.accordioncontent div:last-child input {
+  margin-bottom: var(--pt4);
+}
+
 @media (min-width: 576px) {
   .periodicaform {
     padding: var(--pt2) var(--pt6) var(--pt4) var(--pt6);

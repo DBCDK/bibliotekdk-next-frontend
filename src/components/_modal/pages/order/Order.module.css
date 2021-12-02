@@ -36,7 +36,7 @@
   padding: var(--pt1) var(--pt2) 0 0;
 }
 
-.digitalcopy {
+.articletype {
   margin-top: var(--pt2);
 }
 
@@ -139,7 +139,7 @@
 }
 
 .periodicasummary{
-  margin-top: var(--pt2);
+  /* margin-top: var(--pt2); */
 }
 
 /* action */

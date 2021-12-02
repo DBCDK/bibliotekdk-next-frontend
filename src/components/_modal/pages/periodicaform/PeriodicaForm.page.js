@@ -2,10 +2,11 @@ import Top from "@/components/_modal/pages/base/top";
 import Input from "@/components/base/forms/input";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
+import Accordion, { Item } from "@/components/base/accordion";
 
 import Translate from "@/components/base/translate";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./PeriodicaForm.module.css";
 
@@ -37,20 +38,26 @@ function Field({ label, required, value, onChange, hasTry }) {
   );
 }
 
-export function PeriodicaForm({ modal }) {
+export function PeriodicaForm({ modal, context, active }) {
   const fields = [
     { key: "publicationDateOfComponent", required: true },
     { key: "volume" },
   ];
   const articleFields = [
     { key: "authorOfComponent" },
-    { key: "titleOfComponent", required: true },
+    { key: "titleOfComponent" },
     { key: "pagination" },
   ];
 
-  const [state, setState] = useState({});
+  const [state, setState] = useState(context?.periodicaForm || {});
   const [hasTry, setHasTry] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    if (active) {
+      setHasTry(false);
+    }
+  }, [active]);
 
   function validate() {
     let result = true;
@@ -95,7 +102,7 @@ export function PeriodicaForm({ modal }) {
         })}
       </Text>
       <form
-        // novalidate="novalidate"
+        noValidate
         onSubmit={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -139,32 +146,37 @@ export function PeriodicaForm({ modal }) {
             />
           );
         })}
-        <div tabIndex="0" onClick={() => setExpanded(!expanded)}>
-          <Text type="text2">
-            {Translate({
+        <Accordion className={styles.accordion}>
+          <Item
+            title={Translate({
               context: "order-periodica",
               label: `specific-article`,
             })}
-          </Text>
-        </div>
-        {expanded &&
-          articleFields.map(({ key, required }) => {
-            return (
-              <Field
-                key={key}
-                label={key}
-                required={required}
-                value={state[key]}
-                hasTry={hasTry}
-                onChange={(value) =>
-                  setState({
-                    ...state,
-                    [key]: value,
-                  })
-                }
-              />
-            );
-          })}
+            key={"0"}
+            eventKey={"0"}
+            onChange={setExpanded}
+          >
+            <div className={styles.accordioncontent}>
+              {articleFields.map(({ key, required }) => {
+                return (
+                  <Field
+                    key={key}
+                    label={key}
+                    required={required}
+                    value={state[key]}
+                    hasTry={hasTry}
+                    onChange={(value) =>
+                      setState({
+                        ...state,
+                        [key]: value,
+                      })
+                    }
+                  />
+                );
+              })}
+            </div>
+          </Item>
+        </Accordion>
 
         <div className={styles.bottom}>
           {hasTry && !isValid && (

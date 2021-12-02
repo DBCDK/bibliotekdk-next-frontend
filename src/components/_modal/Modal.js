@@ -305,7 +305,7 @@ function Container({ children, className = {}, mock = {} }) {
               context: obj.context,
               active: obj.active,
               className: className.page || "",
-              key: `modal-page-${index}`,
+              key: `modal-page-${index}-${obj.id}`,
               dataCy: `modal-page-${index}`,
               mock: page.props.mock || {},
               props: page.props,

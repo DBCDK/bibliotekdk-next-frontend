@@ -104,7 +104,11 @@ export function Order({
     work?.manifestations?.find((m) =>
       m?.onlineAccess?.find((entry) => entry.issn)
     ) &&
-    (isPeriodicaLike ? !!context?.periodicaForm?.titleOfComponent : true);
+    (isPeriodicaLike
+      ? !!context?.periodicaForm?.titleOfComponent ||
+        !!context?.periodicaForm?.authorOfComponent ||
+        !!context?.periodicaForm?.pagination
+      : true);
 
   useEffect(() => {
     if (initial.pickupBranch) {
@@ -339,39 +343,27 @@ export function Order({
               </Tag>
             </div>
           </div>
-          {availableAsDigitalCopy && (
-            <div className={styles.digitalcopy}>
+          {availableAsDigitalCopy ? (
+            <div className={styles.articletype}>
               <Text type="text4">
                 {Translate({
                   context: "order",
                   label: "will-order-digital-copy",
                 })}
               </Text>
-
-              <Link
-                disabled={false}
-                href={"/hjaelp/digital-artikelservice/67"}
-                border={{ top: false, bottom: { keepVisible: true } }}
-              >
-                <Text type="text3">
-                  {Translate({
-                    context: "order",
-                    label: "will-order-digital-copy-delivered-by",
-                  })}
-                </Text>
-              </Link>
             </div>
-          )}
+          ) : context?.periodicaForm ? (
+            <div className={styles.articletype}>
+              <Text type="text4">
+                {Translate({
+                  context: "general",
+                  label: "article",
+                })}
+              </Text>
+            </div>
+          ) : null}
           {context?.periodicaForm && (
             <div className={styles.periodicasummary}>
-              {!availableAsDigitalCopy && (
-                <Text type="text4">
-                  {Translate({
-                    context: "general",
-                    label: "article",
-                  })}
-                </Text>
-              )}
               {Object.entries(context?.periodicaForm).map(([key, value]) => (
                 <Text type="text3" key={key}>
                   {Translate({
@@ -386,7 +378,9 @@ export function Order({
           {isPeriodicaLike && (
             <LinkArrow
               onClick={() => {
-                modal.push("periodicaform");
+                modal.push("periodicaform", {
+                  periodicaForm: context?.periodicaForm,
+                });
               }}
               disabled={false}
               className={styles.periodicaformlink}
@@ -566,6 +560,18 @@ export function Order({
                 : "order-message-library",
             })}
           </Text>
+          <Link
+            disabled={false}
+            href={"/hjaelp/digital-artikelservice/67"}
+            border={{ top: false, bottom: { keepVisible: true } }}
+          >
+            <Text type="text3">
+              {Translate({
+                context: "order",
+                label: "will-order-digital-copy-delivered-by",
+              })}
+            </Text>
+          </Link>
         </div>
         <Button
           disabled={pickupBranch?.orderPolicy?.orderPossible !== true}
