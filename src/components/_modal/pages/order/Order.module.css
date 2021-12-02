@@ -152,6 +152,9 @@
   color: var(--error);
 }
 
+.periodicaformlink{
+  margin-top: var(--pt2);
+}
 
 
 @media (min-width: 576px) {
@@ -173,10 +176,7 @@
   .link .shortLink {
     display: none;
   }
-  .periodicaformlink{
-    margin-top: var(--pt2);
-  }
-
+  
   .emailMessage.valid {
     display: none;
   }
