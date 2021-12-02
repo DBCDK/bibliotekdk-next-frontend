@@ -5,6 +5,5 @@ describe("Series", () => {
 
   it(`Should have some elements`, () => {
     cy.get("a").should("have.length", 7);
-    cy.get("a").eq(2).contains("3. del");
   });
 });
