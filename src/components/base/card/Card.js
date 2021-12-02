@@ -45,13 +45,13 @@ export default function Card({
   onFocus,
   onClick,
   id,
-  series,
   skeleton,
   title,
 }) {
   if (skeleton) {
     return <SkeletonCard />;
   }
+
   return (
     <Link
       a={false}
@@ -78,40 +78,23 @@ export default function Card({
           <Cover src={cover.detail} size="fill" />
         </div>
         <div>
-          {series ? (
-            <Text
-              className={`${styles.Title}`}
-              type="text2"
-              lines={4}
-              clamp={true}
-            >
-              {translate({
-                context: "series",
-                label: "part",
-                vars: [series.part, title],
-              })}
-            </Text>
-          ) : (
-            <React.Fragment>
-              <Text
-                className={`${styles.Title}`}
-                type="text1"
-                lines={2}
-                clamp={true}
-              >
-                {title}
-              </Text>
+          <Text
+            className={`${styles.Title}`}
+            type="text1"
+            lines={2}
+            clamp={true}
+          >
+            {title}
+          </Text>
 
-              <Text
-                className={`${styles.Creator}`}
-                type="text2"
-                lines={2}
-                clamp={true}
-              >
-                {creators[0] && creators[0].name}
-              </Text>
-            </React.Fragment>
-          )}
+          <Text
+            className={`${styles.Creator}`}
+            type="text2"
+            lines={2}
+            clamp={true}
+          >
+            {creators[0] && creators[0].name}
+          </Text>
         </div>
         <div className={styles.BottomLine} />
       </a>

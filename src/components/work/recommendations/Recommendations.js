@@ -64,6 +64,7 @@ export default function Recommendations({ workId }) {
     <Section
       title={Translate({ ...context, label: "remindsOf" })}
       topSpace={true}
+      dataCy="section-recommend"
     >
       <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>

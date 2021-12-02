@@ -26,7 +26,10 @@ describe("Recommender data collect", () => {
   });
   it(`Should collect data for recommender`, () => {
     // When a recommendation is clicked data should be logged
-    cy.get("[data-cy=text-sidste-sporvogn-til-elysian-fields]").click();
+    cy.wait(500);
+    cy.get(
+      "[data-cy=section-recommend] [data-cy=text-sidste-sporvogn-til-elysian-fields]"
+    ).click();
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.recommender_click;
 
