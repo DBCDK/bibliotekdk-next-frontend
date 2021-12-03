@@ -333,8 +333,6 @@ describe("Order periodica article", () => {
     );
 
     cy.wait(3000);
-    // Special message because this article is in KBs article service
-    cy.contains("Artiklen sendes til din email");
 
     openOrderModal();
 
