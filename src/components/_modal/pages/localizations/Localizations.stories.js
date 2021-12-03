@@ -2,6 +2,8 @@ import { Localizations } from "./Localizations";
 import { LocalizationItem } from "./LocalizationItem";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import useUser from "@/components/hooks/useUser";
+import Modal, { useModal } from "@/components/_modal";
+import { useEffect, useState } from "react";
 
 export default {
   title: "modal/Localizations",
@@ -13,6 +15,7 @@ const greatGatsby = {
         {
           name: "Hovedbiblioteket, Krystalgade",
           agencyId: "710100",
+
           holdingStatus: {
             count: 1,
             lamp: {
@@ -49,6 +52,7 @@ const dummybranch = {
   branchId: "774000",
   agencyUrl: "http://dummybibliotek.dk",
   agencyName: "Silkeborg Biblioteker",
+  branchWebsiteUrl: "http://www.aub.aau.dk/",
 };
 
 const dummylocalizations = {
@@ -129,6 +133,34 @@ const dummylocalizations = {
   monitor: "OK",
 };
 
+const dummySearch = {
+  data: {
+    branches: {
+      hitcount: 7,
+      result: [
+        {
+          agencyId: "717500",
+          name: "Rødovre Bibliotek",
+          agencyName: "Rødovre Bibliotek",
+          branchId: "717500",
+        },
+        {
+          agencyId: "717500",
+          name: "Islev Bibliotek: Trekanten",
+          agencyName: "Rødovre Bibliotek",
+          branchId: "717501",
+        },
+        {
+          agencyId: "710100",
+          name: "Nørrebro Bibliotek",
+          agencyName: "Københavns Biblioteker",
+          branchId: "710111",
+        },
+      ],
+    },
+  },
+};
+
 /**
  * Returns Localizations
  *
@@ -148,9 +180,7 @@ export function LocalizationLink() {
   )[0];
 
   const context = { ...props, ...selectedLocalizations };
-  const alertopener = () => {
-    alert("localizations");
-  };
+  const alertopener = () => {};
   const user = useUser();
 
   return (
@@ -223,6 +253,21 @@ export function LocalizationItemYellow() {
   );
 }
 
+export function LocalizationItemUnknown() {
+  const holdings = greatGatsby.data;
+  holdings.branches.result[0].holdingStatus.lamp = {
+    message: "no_holdings",
+    color: "none",
+  };
+  return (
+    <LocalizationItem
+      branch={dummybranch}
+      holdings={greatGatsby.data}
+      isLoading={false}
+    />
+  );
+}
+
 export function LocalizationItemNoHolding() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
@@ -235,5 +280,45 @@ export function LocalizationItemNoHolding() {
       holdings={greatGatsby.data}
       isLoading={false}
     />
+  );
+}
+
+export function LocalizationsList() {
+  const type = "Bog";
+
+  const props = {
+    title: "fisk",
+    workId: "work-of:870970-basis:01362984",
+    //materialType: selectedMaterial.materialType,
+    materialType: type,
+  };
+
+  const selectedLocalizations = dummylocalizations?.work?.materialTypes?.filter(
+    (mat) => mat.materialType === type
+  )[0];
+
+  const context = { ...props, ...selectedLocalizations };
+  const alertopener = () => {};
+  const user = useUser();
+  const modal = useModal();
+  // simulate order submit and callback
+  useEffect(() => {
+    modal.setStack([{ id: "localizations", context, active: true }]);
+  }, []);
+  return (
+    <Modal.Container
+      mock={{
+        clear: () => alert("Luk"),
+      }}
+    >
+      <Modal.Page
+        id="localizations"
+        component={Localizations}
+        branchData={dummySearch.data.branches}
+        onChange={alertopener}
+        isLoading={false}
+        testing={true}
+      />
+    </Modal.Container>
   );
 }

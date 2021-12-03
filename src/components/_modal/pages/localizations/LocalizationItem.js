@@ -46,7 +46,6 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
   const firstholding = branchHoldings?.holdingStatus?.holdingItems?.find(
     (item) => item.expectedDelivery
   );
-
   // expected delivery date
   const expectedDelivery =
     color === "yellow" && firstholding.expectedDelivery
@@ -85,7 +84,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
   const blinkingcolors = ["red", "green", "yellow"];
 
   return (
-    <div className={styles.itemwrap}>
+    <div className={styles.itemwrap} data-cy={`holdings-item-${index.idx}`}>
       <div>
         <Text type="text2">{branch.name}</Text>
         <Text type="text3">{branch.agencyName}</Text>
@@ -131,15 +130,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
 }
 
 export default function wrap({ props }) {
-  const { branch, pids, index } = { ...props };
-  // @TODO .. what do we need here
-  // .. we need detailed holdings to show expected delivery
-  const { data, isLoading: holdingsLoading } = useData(
-    branchFragments.branchHoldings({
-      branchId: branch.branchId,
-      pids: pids,
-    })
-  );
+  const { branch, pids, index, testing } = { ...props };
 
   const dummyData = {
     branches: {
@@ -170,12 +161,131 @@ export default function wrap({ props }) {
     },
   };
 
-  const holdingsData = holdingsLoading ? dummyData : data;
+  const dummyHoldings = {
+    717500: {
+      branches: {
+        agencyUrl: "http://www.rdb.dk",
+        result: [
+          {
+            name: "Rødovre Bibliotek",
+            agencyId: "717500",
+            branchWebsiteUrl: "http://www.rdb.dk",
+            holdingStatus: {
+              count: 1,
+              lamp: {
+                color: "green",
+                message: "at_home",
+              },
+              holdingItems: [
+                {
+                  branch: "Rødovre hovedbibliotek",
+                  branchId: "717500",
+                  willLend: "true",
+                  expectedDelivery: "2021-12-03",
+                  localHoldingsId: "22137298",
+                  circulationRule: "Månedslån vok A",
+                  issueId: "",
+                  department: "VOKSNE",
+                  issueText: "",
+                  location: "KÆLDER",
+                  note: "",
+                  readyForLoan: "1",
+                  status: "OnShelf",
+                  subLocation: "",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      monitor: "OK",
+    },
+    717501: {
+      branches: {
+        agencyUrl:
+          "https://www.genvej.gentofte.bibnet.dk/sites/RKB/pub/patronstatus.html",
+        result: [
+          {
+            name: "Islev Bibliotek: Trekanten",
+            agencyId: "717500",
+            branchWebsiteUrl: "http://www.rdb.dk",
+            holdingStatus: {
+              count: 0,
+              lamp: {
+                color: "white",
+                message: "no_holdings",
+              },
+              holdingItems: [],
+            },
+          },
+        ],
+      },
+      monitor: "OK",
+    },
+    710111: {
+      branches: {
+        agencyUrl: "http://bibliotek.kk.dk/",
+        result: [
+          {
+            name: "Nørrebro Bibliotek",
+            agencyId: "710100",
+            branchId: "710111",
+            branchWebsiteUrl: "http://bibliotek.kk.dk/biblioteker/norrebro",
+            holdingStatus: {
+              count: 1,
+              lamp: {
+                color: "yellow",
+                message: "2021-12-03",
+              },
+              holdingItems: [
+                {
+                  branch: "Nørrebro",
+                  branchId: "710111",
+                  willLend: "true",
+                  expectedDelivery: "2021-12-03",
+                  localHoldingsId: "22137298",
+                  circulationRule: "Standard",
+                  issueId: "",
+                  department: "Voksen",
+                  issueText: "",
+                  location: "",
+                  note: "",
+                  readyForLoan: "0",
+                  status: "OnLoan",
+                  subLocation: "Skønlitteratur",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      monitor: "OK",
+    },
+  };
+
+  console.log(props, "PROPS");
+
+  // @TODO .. what do we need here
+  // .. we need detailed holdings to show expected delivery
+
+  const { data, isLoading } = !testing
+    ? useData(
+        branchFragments.branchHoldings({
+          branchId: branch.branchId,
+          pids: pids,
+        })
+      )
+    : {
+        data: dummyHoldings[branch.branchId],
+        isLoading: false,
+      };
+
+  const holdingsData = isLoading ? dummyData : data;
   return (
     <LocalizationItem
       branch={branch}
       holdings={holdingsData}
-      isLoading={holdingsLoading}
+      isLoading={isLoading}
       index={index}
     />
   );

@@ -24,4 +24,13 @@ describe("Localization link", () => {
       .should("have.attr", "aria-live")
       .should("equal", "polite");
   });
+  it("Localizations list with holdings", () => {
+    cy.visit("/iframe.html?id=modal-localizations--localizations-list");
+    cy.get('[data-cy="pickup-search-input"]').should("be.visible");
+
+    // there is 3 holdingsitems
+    cy.get('[data-cy="holdings-item-0"]').should("be.visible");
+    cy.get('[data-cy="holdings-item-1"]').should("be.visible");
+    cy.get('[data-cy="holdings-item-2"]').should("be.visible");
+  });
 });

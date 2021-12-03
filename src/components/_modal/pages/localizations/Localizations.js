@@ -1,19 +1,23 @@
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./Localizations.module.css";
 import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
-
 import { useState } from "react";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
 import Search from "@/components/base/forms/search";
 import LocalizationItem from "./LocalizationItem";
+
 import Text from "@/components/base/text/Text";
 
-export function Localizations({ context, branchData, isLoading, onChange }) {
+export function Localizations({
+  context,
+  branchData,
+  isLoading,
+  onChange,
+  testing = false,
+}) {
   const allBranches = branchData?.result;
-
   return (
     <div data-cy="localizations-modal" className={styles.wrapper}>
       <Top />
@@ -56,6 +60,7 @@ export function Localizations({ context, branchData, isLoading, onChange }) {
                       ...context,
                       branch: branch,
                       index: { idx },
+                      testing: testing,
                     }}
                   />
                 );

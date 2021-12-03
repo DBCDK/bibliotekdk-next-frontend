@@ -53,6 +53,7 @@ export function branchHoldings({ branchId, pids }) {
               result{
                 name
                 agencyId
+                branchId
                 branchWebsiteUrl
                 holdingStatus(pids:$pids){
                   count
