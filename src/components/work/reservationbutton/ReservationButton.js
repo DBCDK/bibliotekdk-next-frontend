@@ -3,6 +3,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
+import { getIsPeriodicaLike } from "@/lib/utils";
 
 // Translate Context
 const context = { context: "overview" };
@@ -71,7 +72,7 @@ function selectMaterial(manifestations) {
  * @return {JSX.Element|null}
  * @constructor
  */
-export function ButtonTxt({ selectedMaterial, skeleton }) {
+export function ButtonTxt({ selectedMaterial, skeleton, work }) {
   // @TODO use function to find correct material
 
   const manifestations = selectedMaterial?.manifestations;
@@ -79,6 +80,8 @@ export function ButtonTxt({ selectedMaterial, skeleton }) {
 
   const onlineAccess = selectedMaterial?.onlineAccess;
   const online = onlineAccess?.length > 0;
+  const isPeriodicaLike = getIsPeriodicaLike(work);
+
   if (online && onlineAccess[0].infomediaId) {
     return null;
   } else if (online && onlineAccess[0].url) {
@@ -92,13 +95,13 @@ export function ButtonTxt({ selectedMaterial, skeleton }) {
         </Text>
       </Col>
     );
-  } else if (online && onlineAccess[0].issn) {
+  } else if (isPeriodicaLike) {
     return (
       <Col xs={12} className={styles.info}>
         <Text type="text3" skeleton={skeleton} lines={2}>
           {Translate({
             context: "options",
-            label: "digital-copy-link-description",
+            label: "periodica-link-description",
           })}
         </Text>
       </Col>

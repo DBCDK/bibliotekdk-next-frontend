@@ -907,6 +907,10 @@
         "da": "Artiklen sendes til din email, hvis dit bibliotek har abonnement",
         "en": "Delivered by Royal Danish Library"
       },
+      "periodica-link-description": {
+        "da": "Du kan bestille en artikel eller et bestemt eksemplar",
+        "en": "LABEL mangler oversættelse"
+      },
       "online-link-title": {
         "da": "Link til %s",
         "en": "Link to %s"

@@ -34,6 +34,7 @@ import data from "./dummy.data";
 
 import styles from "./Order.module.css";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
+import { getIsPeriodicaLike } from "@/lib/utils";
 
 function LinkArrow({ onClick, disabled, children, className = "" }) {
   return (
@@ -95,9 +96,7 @@ export function Order({
   const [hasTry, setHasTry] = useState(false);
 
   const isArticle = work?.workTypes?.includes("article");
-  const isPeriodicaLike =
-    work?.workTypes?.includes("periodica") ||
-    !!work?.manifestations?.find((m) => m.materialType === "Årbog");
+  const isPeriodicaLike = getIsPeriodicaLike(work);
 
   const isArticleRequest =
     !!context?.periodicaForm?.titleOfComponent ||

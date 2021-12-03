@@ -73,3 +73,19 @@ export function getArticlePath({ title, nid }) {
 export function getCanonicalArticleUrl(props) {
   return `${APP_URL}/${getArticlePath(props)}`;
 }
+
+/**
+ * Handle this work as a periodica
+ *
+ * @param {object} work
+ * @returns {boolean}
+ */
+export function getIsPeriodicaLike(work) {
+  return (
+    work?.workTypes?.includes("periodica") ||
+    !!work?.materialTypes?.find(({ manifestations }) =>
+      manifestations?.find((m) => m.materialType === "Årbog")
+    ) ||
+    !!work?.manifestations?.find((m) => m.materialType === "Årbog")
+  );
+}

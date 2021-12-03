@@ -54,6 +54,7 @@ export function Overview({
   skeleton = false,
   workTypes,
   workId = "",
+  work,
 }) {
   // Save copy of all materialTypes (Temporary)
   const allMaterialTypes = materialTypes;
@@ -204,6 +205,7 @@ export function Overview({
               <ButtonTxt
                 selectedMaterial={selectedMaterial}
                 skeleton={skeleton}
+                work={work}
               />
               <Col xs={12} className={styles.info}>
                 <AlternativeOptions selectedMaterial={selectedMaterial} />
@@ -314,6 +316,7 @@ export default function Wrap(props) {
 
   return (
     <Overview
+      work={merged.work}
       {...merged.work}
       type={type}
       onTypeChange={onTypeChange}
