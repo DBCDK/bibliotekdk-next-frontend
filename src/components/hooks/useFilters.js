@@ -33,39 +33,31 @@ export const workTypes = [
   "sheetmusic",
 ];
 
-// exclude by selected workType
-export const excludedTypes = {
-  literature: ["fictiveCharacter", "workType"],
-  article: [
+// included categories/facets by selected workType
+export const includedTypes = {
+  literature: [
+    "accessType",
     "audience",
-    "fictionNonfiction",
-    "fictiveCharacter",
-    "genre",
-    "workType",
-  ],
-  movie: ["fictionNonfiction", "fictiveCharacter", "workType"],
-  game: [
     "creator",
     "fictionNonfiction",
-    "fictiveCharacter",
+    "genre",
     "language",
+    "materialType",
     "subject",
-    "workType",
   ],
-  music: [
-    "fictionNonfiction",
-    "fictiveCharacter",
-    "language",
-    "subject",
-    "workType",
-  ],
-  sheetmusic: [
+  article: ["accessType", "creator", "language", "materialType", "subject"],
+  movie: [
+    "accessType",
     "audience",
-    "fictionNonfiction",
-    "fictiveCharacter",
+    "creator",
+    "genre",
     "language",
-    "workType",
+    "materialType",
+    "subject",
   ],
+  game: ["accessType", "audience", "genre", "materialType"],
+  music: ["accessType", "audience", "creator", "genre", "materialType"],
+  sheetmusic: ["accessType", "creator", "genre", "materialType", "subject"],
 };
 
 // Global state

@@ -13,7 +13,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 
 import Translate from "@/components/base/translate";
 
-import useFilters, { excludedTypes } from "@/components/hooks/useFilters";
+import useFilters, { includedTypes } from "@/components/hooks/useFilters";
 
 import response from "./dummy.data";
 
@@ -185,7 +185,7 @@ export function Filter(props) {
                   return null;
                 }
                 // Exclude irrelevant worktype categories
-                if (workType && excludedTypes[workType].includes(facet.name)) {
+                if (workType && !includedTypes[workType].includes(facet.name)) {
                   return null;
                 }
                 // remove Empty categories
