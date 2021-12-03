@@ -33,6 +33,41 @@ export const workTypes = [
   "sheetmusic",
 ];
 
+// exclude by selected workType
+export const excludedTypes = {
+  literature: ["fictiveCharacter", "workType"],
+  article: [
+    "audience",
+    "fictionNonfiction",
+    "fictiveCharacter",
+    "genre",
+    "workType",
+  ],
+  movie: ["fictionNonfiction", "fictiveCharacter", "workType"],
+  game: [
+    "creator",
+    "fictionNonfiction",
+    "fictiveCharacter",
+    "language",
+    "subject",
+    "workType",
+  ],
+  music: [
+    "fictionNonfiction",
+    "fictiveCharacter",
+    "language",
+    "subject",
+    "workType",
+  ],
+  sheetmusic: [
+    "audience",
+    "fictionNonfiction",
+    "fictiveCharacter",
+    "language",
+    "workType",
+  ],
+};
+
 // Global state
 let locale = {};
 
@@ -45,9 +80,16 @@ const fetcher = () => locale;
  * @returns {object}
  */
 
-export function buildFilters() {
+export function buildFilters(query = {}) {
+  const { workType } = query;
+
   const params = {};
-  types.forEach((type) => (params[type] = []));
+  types.forEach((type) => {
+    // if (!workType || !excludedTypes[workType].includes(type)) {
+    params[type] = [];
+    // }
+  });
+
   return params;
 }
 
@@ -60,12 +102,17 @@ export function buildFilters() {
  *
  */
 export function getQuery(query) {
-  const base = buildFilters();
+  const base = buildFilters(query);
+
+  // const { workType } = query;
 
   const filters = {};
   Object.entries(query).forEach(([key, val]) => {
     if (types.includes(key) && val) {
+      // Only set type values if a workType is not selected or not excluded for workType
+      // if (!workType || !excludedTypes[workType].includes(key)) {
       filters[key] = val && val.split(",");
+      // }
     }
   });
 
@@ -92,11 +139,11 @@ function useFilters() {
   const router = useRouter();
   // SWR
   const { data: _filters, mutate: _setFilters } = useSWR("filters", fetcher, {
-    initialData: buildFilters(),
+    initialData: buildFilters(router.query),
   });
 
   // represent all filters: All type names as key and empty array as value
-  const base = buildFilters();
+  const base = buildFilters(router.query);
 
   /**
    * Restore filters by query params
