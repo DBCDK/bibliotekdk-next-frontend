@@ -104,4 +104,15 @@ describe("Filter", () => {
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
   });
+
+  it(`Only show 4 specific filters on workType 'game'`, () => {
+    cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
+
+    cy.get("[data-cy=view-all-filters]").click();
+    cy.get("[data-cy=filter-modal]").should("be.visible");
+
+    cy.wait(1000);
+
+    cy.get("[data-cy=list-facets]").children().should("have.length", 4);
+  });
 });
