@@ -16,7 +16,7 @@ export function Infomedia({ props }) {
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}
-        target="_blank"
+        target="_self"
       >
         <Text type="text1">
           {Translate({ ...context, label: "infomedia-link-title" })}
