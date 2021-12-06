@@ -19,6 +19,7 @@ function addToInfomedia(onlineAccess, title) {
   const addi = onlineAccess?.map((access) => {
     if (access.infomediaId) {
       access.url = `/infomedia/${title}/work-of:${access.pid}`;
+      access.accessType = "infomedia";
     }
     return access;
   });
@@ -196,6 +197,10 @@ export function OrderButton({
       selectedMaterial.onlineAccess,
       title
     );
+    // if this is an infomedia article it should open in same window
+    const urlTarget = selectedMaterial.onlineAccess[0]?.infomediaId
+      ? "_self"
+      : "_blank";
 
     return (
       <>
@@ -214,7 +219,7 @@ export function OrderButton({
           className={styles.externalLink}
           skeleton={buttonSkeleton}
           onClick={() =>
-            onOnlineAccess(selectedMaterial.onlineAccess[0].url, "_self")
+            onOnlineAccess(selectedMaterial.onlineAccess[0].url, urlTarget)
           }
           type={type}
         >
