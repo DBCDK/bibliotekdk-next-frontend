@@ -51,7 +51,7 @@ describe("Filter", () => {
     cy.get("[data-cy=vis-resultater]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal(
-        `{"pathname":"/","query":{"genre":"krimi","language":"dan,eng"}}`
+        `{"pathname":"/","query":{"language":"dan,eng","genre":"krimi"}}`
       );
     });
   });
@@ -95,7 +95,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
     cy.get("[data-cy=button-gem]").click();
 
-    cy.get("[data-cy=list-facets] [data-cy=list-button-1]").click();
+    cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.get("[data-cy=button-gem]").click();
