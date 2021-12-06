@@ -3,6 +3,8 @@
  *
  */
 
+import { types } from "@/components/hooks/useFilters";
+
 /**
  * Hitcount
  *
@@ -100,12 +102,12 @@ export function all({ q, limit, offset, filters = {} }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function facets({ q, filters = {} }) {
+export function facets({ q, filters = {}, facets = types }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $filters: SearchFilters) {
+    query: `query ($q: String!, $filters: SearchFilters, $facets: [FacetField!]!) {
               search(q: {all: $q}, filters: $filters) {
-                facets(facets: [workType, language, materialType, fictiveCharacter, genre, audience, accessType, fictionNonfiction, subject, creator]) {
+                facets(facets: $facets) {
                   name
                   values(limit: 100) {
                     term
@@ -118,6 +120,7 @@ export function facets({ q, filters = {} }) {
     variables: {
       q,
       filters,
+      facets,
     },
     slowThreshold: 3000,
   };

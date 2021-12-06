@@ -184,10 +184,6 @@ export function Filter(props) {
                 if (excluded.includes(facet.name)) {
                   return null;
                 }
-                // Exclude irrelevant worktype categories
-                if (workType && !includedTypes[workType].includes(facet.name)) {
-                  return null;
-                }
                 // remove Empty categories
                 if (facet.values.length === 0) {
                   return null;
@@ -295,11 +291,20 @@ export default function Wrap(props) {
   // connected filters hook
   const { filters, setFilters, getQuery, setQuery } = useFilters();
 
+  // extract selected workType, if any
+  const workType = filters.workType?.[0];
+
+  // Exclude irrelevant worktype categories
+  // undefined will result in a include-all fallback at the fragment api call function.
+  const facetFilters = (workType && includedTypes[workType]) || undefined;
+
   // hitcount according to selected filters
   const { data: hitcountData } = useData(q && hitcount({ q, filters }));
 
   // facets according to query filters
-  const { data, isLoading } = useData(q && facets({ q, filters }));
+  const { data, isLoading } = useData(
+    q && facets({ q, filters, facets: facetFilters })
+  );
 
   // merge data
   const mergedData = merge({}, data, hitcountData);

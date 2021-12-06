@@ -11,19 +11,19 @@ import useSWR from "swr";
 
 // current supported filter types
 export const types = [
+  "materialType",
   "accessType",
-  "audience",
+  "subject",
   "creator",
   "fictionNonfiction",
-  "fictiveCharacter",
-  "genre",
   "language",
-  "materialType",
-  "subject",
+  "genre",
+  "audience",
+  "fictiveCharacter",
   "workType",
 ];
 
-// Worktypes for work type selections
+// Visible Worktypes for work type selections
 export const workTypes = [
   "literature",
   "article",
@@ -36,28 +36,28 @@ export const workTypes = [
 // included categories/facets by selected workType
 export const includedTypes = {
   literature: [
+    "materialType",
     "accessType",
-    "audience",
+    "subject",
     "creator",
     "fictionNonfiction",
-    "genre",
     "language",
-    "materialType",
-    "subject",
-  ],
-  article: ["accessType", "creator", "language", "materialType", "subject"],
-  movie: [
-    "accessType",
+    "genre",
     "audience",
-    "creator",
-    "genre",
-    "language",
-    "materialType",
-    "subject",
   ],
-  game: ["accessType", "audience", "genre", "materialType"],
-  music: ["accessType", "audience", "creator", "genre", "materialType"],
-  sheetmusic: ["accessType", "creator", "genre", "materialType", "subject"],
+  article: ["materialType", "accessType", "subject", "creator", "language"],
+  movie: [
+    "materialType",
+    "accessType",
+    "subject",
+    "creator",
+    "language",
+    "genre",
+    "audience",
+  ],
+  game: ["materialType", "accessType", "genre", "audience"],
+  music: ["accessType", "creator", "genre", "audience"],
+  sheetmusic: ["materialType", "accessType", "subject", "creator", "genre"],
 };
 
 // Global state
