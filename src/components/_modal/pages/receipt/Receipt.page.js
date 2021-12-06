@@ -23,13 +23,13 @@ export function Receipt({
   // modal props
   modal,
   context,
+  policyIsLoading,
 }) {
   // get props from context
   const { pickupBranch, order, articleOrder } = context;
 
   // Loader callback status (set to true when loadingbar has finished loading)
   const [showProgress, setShowProgress] = useState(true);
-
   // order
   const {
     data: orderData,
@@ -44,7 +44,7 @@ export function Receipt({
   } = articleOrder;
 
   // Define order status'
-  const isOrdering = orderIsLoading || articleOrderIsLoading;
+  const isOrdering = orderIsLoading || articleOrderIsLoading || policyIsLoading;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.submitPeriodicaArticleOrder?.status === "OK";
@@ -159,7 +159,7 @@ export default function Wrap(props) {
   return (
     <Receipt
       {...props}
-      isLoading={policyIsLoading}
+      policyIsLoading={policyIsLoading}
       context={{ ...props.context, pickupBranch: mergedData || pickupBranch }}
     />
   );
