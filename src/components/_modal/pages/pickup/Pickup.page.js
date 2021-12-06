@@ -34,9 +34,7 @@ import { branchOrderPolicy } from "@/lib/api/branches.fragments";
 function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
   const pickupAllowed = branch?.pickupAllowed;
   let { data } = useData(
-    pickupAllowed &&
-      !branch?.orderPolicy &&
-      pid &&
+    pid &&
       branch?.branchId &&
       branchOrderPolicy({ branchId: branch.branchId, pid })
   );
@@ -57,7 +55,7 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
           : orderPolicy?.orderPossible,
       });
     }
-  }, [orderPolicy, pickupAllowed]);
+  }, [digitalCopyAccess, orderPolicy, pickupAllowed]);
 
   return null;
 }
