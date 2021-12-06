@@ -99,6 +99,7 @@ export function branchOrderPolicy({ branchId, pid }) {
             orderPossibleReason
             lookUpUrl
           }
+          digitalCopyAccess
         }
       }
       monitor(name: "bibdknext_branch_orderPolicy")

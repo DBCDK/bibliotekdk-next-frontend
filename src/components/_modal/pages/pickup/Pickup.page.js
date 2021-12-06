@@ -31,12 +31,10 @@ import { branchOrderPolicy } from "@/lib/api/branches.fragments";
  * Special component responsible for loading order policy
  * Will not render anything, but needs to be mounted
  */
-function PolicyLoader({ branch, onLoad, pid }) {
+function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
   const pickupAllowed = branch?.pickupAllowed;
   let { data } = useData(
-    pickupAllowed &&
-      !branch?.orderPolicy &&
-      pid &&
+    pid &&
       branch?.branchId &&
       branchOrderPolicy({ branchId: branch.branchId, pid })
   );
@@ -44,14 +42,20 @@ function PolicyLoader({ branch, onLoad, pid }) {
   const orderPolicy =
     branch?.orderPolicy || data?.branches?.result?.[0]?.orderPolicy;
 
+  const digitalCopyAccess = data?.branches?.result?.[0]?.digitalCopyAccess;
+
   useEffect(() => {
     if (orderPolicy || !pickupAllowed) {
       onLoad({
         pickupAllowed,
-        orderPossible: !pickupAllowed ? false : orderPolicy?.orderPossible,
+        orderPossible: requireDigitalAccess
+          ? digitalCopyAccess
+          : !pickupAllowed
+          ? false
+          : orderPolicy?.orderPossible,
       });
     }
-  }, [orderPolicy, pickupAllowed]);
+  }, [digitalCopyAccess, orderPolicy, pickupAllowed]);
 
   return null;
 }
@@ -149,7 +153,7 @@ export function Pickup({
   modal,
 }) {
   // Get pid from modal context
-  const { pid } = context;
+  const { pid, requireDigitalAccess } = context;
 
   /**
    *
@@ -160,6 +164,7 @@ export function Pickup({
     // Selected branch and (loggedIn) user branches has same agency
     const sameOrigin =
       branch.agencyId === context.initial?.agency?.result?.[0].agencyId;
+
     // New selected branch has borrowercheck
     const hasBorchk = branch.borrowerCheck;
     // if selected branch has same origin as user agency
@@ -229,6 +234,7 @@ export function Pickup({
                 render({});
               }}
               pid={pid}
+              requireDigitalAccess={requireDigitalAccess}
             />
           );
         })}

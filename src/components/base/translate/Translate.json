@@ -1139,6 +1139,14 @@
         "da": "Afhentes på dit lokale bibliotek",
         "en": "Pickup at your local library"
       },
+      "order-combined-copy": {
+        "da": "Bestil eksemplar",
+        "en": "Order copy"
+      },
+      "order-combined-copy-description": {
+        "da": "Materialet sendes til din email eller afhentes på dit bibliotek",
+        "en": "LABEL: mangler oversættelse"
+      },
       "digital-copy-link-title": {
         "da": "Bestil digital kopi",
         "en": "Order digital copy"
