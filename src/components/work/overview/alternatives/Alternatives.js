@@ -14,9 +14,10 @@ export function AlternativeOptions({
   modal = null,
   context = {},
 }) {
+  // digitalcopy and physical (requestButton) are counted as one
   const count =
     onlineAccess?.filter((entry) => !entry.issn).length +
-    (requestButton ? 1 : 0);
+    (requestButton || onlineAccess?.find((entry) => entry.issn) ? 1 : 0);
 
   return (
     count > 1 && (

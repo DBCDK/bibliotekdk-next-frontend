@@ -233,7 +233,8 @@ export function OrderButton({
   const notToBeOrdered = [];
 
   if (
-    !checkRequestButtonIsTrue({ manifestations }) ||
+    (!checkRequestButtonIsTrue({ manifestations }) &&
+      !checkDigitalCopy({ manifestations })) ||
     notToBeOrdered.includes(materialType)
   ) {
     // disabled button
@@ -289,21 +290,15 @@ function getBaseUrl(url) {
 }
 
 export function checkRequestButtonIsTrue({ manifestations }) {
-  if (!manifestations) {
-    return false;
-  }
-  // is order possible ?
-  let orderpossible = false;
-  manifestations.every((manifest) => {
-    if (manifest.admin?.requestButton) {
-      orderpossible = true;
-      // break every loop - only ONE manifestion needs to be orderable
-      return false;
-    }
-    // continue every loop
-    return true;
-  });
-  return orderpossible;
+  return !!manifestations?.find(
+    (manifestation) => manifestation?.admin?.requestButton
+  );
+}
+
+function checkDigitalCopy({ manifestations }) {
+  return !!manifestations?.find((manifestation) =>
+    manifestation?.onlineAccess?.find((access) => access?.issn)
+  );
 }
 
 function DisabledReservationButton({ buttonSkeleton, type }) {
