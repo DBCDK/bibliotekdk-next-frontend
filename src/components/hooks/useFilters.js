@@ -11,19 +11,19 @@ import useSWR from "swr";
 
 // current supported filter types
 export const types = [
+  "materialType",
   "accessType",
-  "audience",
+  "subject",
   "creator",
   "fictionNonfiction",
-  "fictiveCharacter",
-  "genre",
   "language",
-  "materialType",
-  "subject",
+  "genre",
+  "audience",
+  "fictiveCharacter",
   "workType",
 ];
 
-// Worktypes for work type selections
+// Visible Worktypes for work type selections
 export const workTypes = [
   "literature",
   "article",
@@ -32,6 +32,33 @@ export const workTypes = [
   "music",
   "sheetmusic",
 ];
+
+// included categories/facets by selected workType
+export const includedTypes = {
+  literature: [
+    "materialType",
+    "accessType",
+    "subject",
+    "creator",
+    "fictionNonfiction",
+    "language",
+    "genre",
+    "audience",
+  ],
+  article: ["materialType", "accessType", "subject", "creator", "language"],
+  movie: [
+    "materialType",
+    "accessType",
+    "subject",
+    "creator",
+    "language",
+    "genre",
+    "audience",
+  ],
+  game: ["materialType", "accessType", "genre", "audience"],
+  music: ["accessType", "creator", "genre", "audience"],
+  sheetmusic: ["materialType", "accessType", "subject", "creator", "genre"],
+};
 
 // Global state
 let locale = {};

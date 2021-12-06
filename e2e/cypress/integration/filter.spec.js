@@ -51,7 +51,7 @@ describe("Filter", () => {
     cy.get("[data-cy=vis-resultater]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal(
-        `{"pathname":"/","query":{"genre":"krimi","language":"dan,eng"}}`
+        `{"pathname":"/","query":{"language":"dan,eng","genre":"krimi"}}`
       );
     });
   });
@@ -95,7 +95,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
     cy.get("[data-cy=button-gem]").click();
 
-    cy.get("[data-cy=list-facets] [data-cy=list-button-1]").click();
+    cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.get("[data-cy=button-gem]").click();
@@ -103,5 +103,16 @@ describe("Filter", () => {
     cy.get("[data-cy=vis-resultater]").click();
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
+  });
+
+  it(`Only show 4 specific filters on workType 'game'`, () => {
+    cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
+
+    cy.get("[data-cy=view-all-filters]").click();
+    cy.get("[data-cy=filter-modal]").should("be.visible");
+
+    cy.wait(1000);
+
+    cy.get("[data-cy=list-facets]").children().should("have.length", 4);
   });
 });

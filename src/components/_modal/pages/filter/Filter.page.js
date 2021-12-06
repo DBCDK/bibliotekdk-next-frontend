@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import merge from "lodash/merge";
 
 import Top from "../base/top";
-
-import { cyKey } from "@/utils/trim";
 
 import Title from "@/components/base/title";
 import List from "@/components/base/forms/list";
@@ -15,7 +13,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 
 import Translate from "@/components/base/translate";
 
-import useFilters from "@/components/hooks/useFilters";
+import useFilters, { includedTypes } from "@/components/hooks/useFilters";
 
 import response from "./dummy.data";
 
@@ -140,8 +138,11 @@ export function Filter(props) {
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
 
-  // excluded categories
+  // Global excluded categories
   const excluded = ["workType"];
+
+  // extract workType if any selected
+  const workType = selected.workType?.[0];
 
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
@@ -183,7 +184,6 @@ export function Filter(props) {
                 if (excluded.includes(facet.name)) {
                   return null;
                 }
-
                 // remove Empty categories
                 if (facet.values.length === 0) {
                   return null;
@@ -192,9 +192,12 @@ export function Filter(props) {
                 // selected terms in this category
                 const selectedTerms = selected?.[facet.name];
 
+                // Get workType specific title if set, else fallback title
                 const title = Translate({
                   context: "facets",
-                  label: `label-${facet.name}`,
+                  label: workType
+                    ? `label-${workType}-${facet.name}`
+                    : `label-${facet.name}`,
                 });
 
                 return (
@@ -288,11 +291,20 @@ export default function Wrap(props) {
   // connected filters hook
   const { filters, setFilters, getQuery, setQuery } = useFilters();
 
+  // extract selected workType, if any
+  const workType = filters.workType?.[0];
+
+  // Exclude irrelevant worktype categories
+  // undefined will result in a include-all fallback at the fragment api call function.
+  const facetFilters = (workType && includedTypes[workType]) || undefined;
+
   // hitcount according to selected filters
   const { data: hitcountData } = useData(q && hitcount({ q, filters }));
 
   // facets according to query filters
-  const { data, isLoading } = useData(q && facets({ q, filters }));
+  const { data, isLoading } = useData(
+    q && facets({ q, filters, facets: facetFilters })
+  );
 
   // merge data
   const mergedData = merge({}, data, hitcountData);
