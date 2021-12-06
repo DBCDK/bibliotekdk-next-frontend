@@ -9,8 +9,7 @@ import OrderLink from "./templates/orderlink";
 
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
-import { add, sortBy } from "lodash";
-import Translate from "@/components/base/translate";
+import { sortBy } from "lodash";
 import Top from "../base/top";
 
 /**
