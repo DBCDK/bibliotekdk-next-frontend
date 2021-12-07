@@ -59,8 +59,20 @@
   padding-bottom: var(--pt3);
 }
 
+.group.terms {
+  padding-bottom: var(--pt9);
+}
+
 .submit {
   margin-top: auto;
+}
+
+.submit.sticky {
+  position: fixed;
+  left: var(--pt2);
+  top: 100vh;
+  transform: translateY(calc(-100% - var(--pt2)));
+  width: calc(100% - var(--pt4));
 }
 
 @media (min-width: 576px) {
@@ -68,7 +80,13 @@
     padding: 0 var(--pt6) var(--pt6) var(--pt6);
   }
 
-  .group {
-    padding-bottom: var(--pt8);
+  .group.terms {
+    padding-bottom: var(--pt13);
+  }
+
+  .submit.sticky {
+    left: var(--pt6);
+    transform: translateY(calc(-100% - var(--pt6)));
+    width: calc(100% - var(--pt14));
   }
 }

@@ -51,7 +51,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         })}
       </Text>
       <List.Group
-        className={styles.group}
+        className={`${styles.group} ${styles.terms}`}
         enabled={!isLoading}
         data-cy="list-terms"
       >
@@ -111,7 +111,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         onClick={() => {
           modal.prev();
         }}
-        className={styles.submit}
+        className={`${styles.submit} ${styles.sticky}`}
       >
         {Translate({ context: "general", label: "save" })}
       </Button>
