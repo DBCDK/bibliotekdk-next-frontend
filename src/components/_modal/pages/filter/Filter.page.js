@@ -43,7 +43,8 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
 
   return (
     <>
-      <Top modal={modal} back={true} />
+      <Top modal={modal} back sticky />
+
       <Text type="text1" className={styles.category}>
         {Translate({
           context: "facets",
@@ -108,9 +109,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
       <Button
         // disabled={terms.length === 0}
         skeleton={isLoading}
-        onClick={() => {
-          modal.prev();
-        }}
+        onClick={() => modal.prev()}
         className={`${styles.submit} ${styles.sticky}`}
       >
         {Translate({ context: "general", label: "save" })}
@@ -238,7 +237,7 @@ export function Filter(props) {
             dataCy="vis-resultater"
             skeleton={isLoading}
             onClick={() => onSubmit && onSubmit()}
-            className={styles.submit}
+            className={`${styles.submit} ${styles.sticky}`}
           >
             {Translate({
               context: "search",

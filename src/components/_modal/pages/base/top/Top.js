@@ -106,12 +106,15 @@ export default function Top({
   className = {},
   title,
   back = true,
+  sticky = false,
 }) {
   const showBack = back && modal.index?.() > 0;
 
+  const stickyClass = sticky ? styles.sticky : "";
+
   return (
-    <div className={`${styles.top} ${className.top || ""}`}>
-      <div className={styles.wrap}>
+    <div className={`${styles.top} ${stickyClass} ${className.top || ""}`}>
+      <div className={`${styles.wrap}`}>
         <Close
           onClose={() => modal.clear()}
           className={className.close || ""}
