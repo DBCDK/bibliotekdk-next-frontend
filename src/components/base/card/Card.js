@@ -87,14 +87,16 @@ export default function Card({
             {title}
           </Text>
 
-          <Text
-            className={`${styles.Creator}`}
-            type="text2"
-            lines={2}
-            clamp={true}
-          >
-            {creators[0] && creators[0].name}
-          </Text>
+          {creators.length > 0 && (
+            <Text
+              className={`${styles.Creator}`}
+              type="text2"
+              lines={2}
+              clamp={true}
+            >
+              {creators[0] && creators[0].name}
+            </Text>
+          )}
         </div>
         <div className={styles.BottomLine} />
       </a>
