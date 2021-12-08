@@ -5,13 +5,11 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
 import WebArchive from "./templates/webarchive";
-import DigitalCopy from "./templates/digitalcopy";
-import PhysicalCopy from "./templates/physical";
+import OrderLink from "./templates/orderlink";
 
 import styles from "./Options.module.css";
 import Skeleton from "@/components/base/skeleton";
 import { sortBy } from "lodash";
-import Translate from "@/components/base/translate";
 import Top from "../base/top";
 
 /**
@@ -32,10 +30,13 @@ function getTemplate(props) {
     return <Online {...props} key={props.listkey} />;
   }
   if (props.accessType === "digitalCopy") {
-    return <DigitalCopy {...props} key={props.listkey} />;
+    return <OrderLink props={props} key={props.listkey} digitalOnly />;
   }
   if (props.accessType === "physical") {
-    return <PhysicalCopy props={props} key={props.listkey} />;
+    return <OrderLink props={props} key={props.listkey} />;
+  }
+  if (props.accessType === "combined") {
+    return <OrderLink props={props} key={props.listkey} combined />;
   }
 }
 
@@ -46,6 +47,7 @@ function sortorder(onlineaccess) {
     "infomedia",
     "digitalCopy",
     "physical",
+    "combined",
   ];
   return sortBy(onlineaccess, function (item) {
     return realorder.indexOf(item.accessType);
@@ -61,12 +63,13 @@ function sortorder(onlineaccess) {
  * @return {*}
  */
 function addToOnlinAccess(onlineAccess = [], orderPossible) {
-  const addi = onlineAccess?.map((access) => {
+  let addi = onlineAccess?.map((access) => {
     const copy = { ...access };
     if (copy.infomediaId) {
       copy.accessType = "infomedia";
     } else if (copy.issn) {
-      copy.accessType = "digitalCopy";
+      // We combine physical and digital into single entry
+      copy.accessType = orderPossible ? "combined" : "digitalCopy";
     } else if (copy.type === "webArchive") {
       copy.accessType = "webArchive";
     } else if (copy.url) {
@@ -74,7 +77,10 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
     }
     return copy;
   });
-  if (orderPossible) {
+  if (
+    orderPossible &&
+    !addi.find((access) => access.accessType === "combined")
+  ) {
     addi.push({ accessType: "physical" });
   }
 
@@ -97,7 +103,7 @@ export function Options({ data, isLoading, modal, context }) {
   const onlineAccess = addToOnlinAccess(
     currentMaterial?.manifestations[0]?.onlineAccess,
     context.orderPossible
-  ).filter((access) => !access.issn);
+  );
 
   const orderedOnlineAccess = sortorder(onlineAccess);
 

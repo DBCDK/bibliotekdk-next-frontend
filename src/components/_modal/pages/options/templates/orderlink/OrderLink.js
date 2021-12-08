@@ -3,7 +3,7 @@ import Link from "@/components/base/link";
 
 import Translate from "@/components/base/translate";
 
-import styles from "./physicalCopy.module.css";
+import styles from "./OrderLink.module.css";
 import { useRouter } from "next/router";
 
 /**
@@ -22,8 +22,14 @@ function parseForPid(workId) {
  * @return {JSX.Element}
  * @constructor
  */
-export function PhysicalCopy({ props, onOrder = () => {} }) {
+export function OrderLink({
+  props,
+  onOrder = () => {},
+  combined,
+  digitalOnly,
+}) {
   const { workId, className, modal, materialType: type } = { ...props };
+
   const pid = parseForPid(workId);
 
   const context = { context: "options" };
@@ -38,14 +44,22 @@ export function PhysicalCopy({ props, onOrder = () => {} }) {
         <Text type="text1">
           {Translate({
             ...context,
-            label: "order-physical-copy",
+            label: digitalOnly
+              ? "digital-copy-link-title"
+              : combined
+              ? "order-combined-copy"
+              : "order-physical-copy",
           })}
         </Text>
       </Link>
       <Text type="text3">
         {Translate({
           ...context,
-          label: "order-physical-copy-description",
+          label: digitalOnly
+            ? "digital-copy-link-description"
+            : combined
+            ? "order-combined-copy-description"
+            : "order-physical-copy-description",
         })}
       </Text>
     </li>
@@ -57,10 +71,10 @@ export function PhysicalCopy({ props, onOrder = () => {} }) {
  * @param props
  * @return {JSX.Element}
  */
-export default function wrap({ props }) {
+export default function wrap({ props, combined, digitalOnly }) {
   const { modal, workId, materialType: type } = { ...props };
   return (
-    <PhysicalCopy
+    <OrderLink
       props={props}
       onOrder={(pid) =>
         modal.push("order", {
@@ -70,6 +84,8 @@ export default function wrap({ props }) {
           type,
         })
       }
+      combined={combined}
+      digitalOnly={digitalOnly}
     />
   );
 }

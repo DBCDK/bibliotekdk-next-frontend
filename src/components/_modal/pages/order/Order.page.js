@@ -103,13 +103,24 @@ export function Order({
     !!context?.periodicaForm?.authorOfComponent ||
     !!context?.periodicaForm?.pagination;
 
+  const isPhysical = !!work?.manifestations?.find(
+    (m) => m?.admin?.requestButton
+  );
+  const isDigitalCopy = !!work?.manifestations?.find((m) =>
+    m?.onlineAccess?.find((entry) => entry.issn)
+  );
+
+  const availableAsPhysicalCopy =
+    pickupBranch?.pickupAllowed &&
+    pickupBranch?.orderPolicy?.orderPossible &&
+    isPhysical;
+
   const availableAsDigitalCopy =
     pickupBranch?.digitalCopyAccess &&
-    work?.manifestations?.find((m) =>
-      m?.onlineAccess?.find((entry) => entry.issn)
-    ) &&
+    isDigitalCopy &&
     (isPeriodicaLike ? isArticleRequest : true);
 
+  const requireDigitalAccess = isDigitalCopy && !isPhysical;
   useEffect(() => {
     if (initial.pickupBranch) {
       setPickupBranch(initial.pickupBranch);
@@ -429,6 +440,7 @@ export function Order({
                 modal.push("pickup", {
                   pid,
                   initial: { agency },
+                  requireDigitalAccess,
                 });
             }}
             disabled={isLoadingBranches}
@@ -466,8 +478,8 @@ export function Order({
         )}
         {!isLoadingBranches &&
           pickupBranch &&
-          (!pickupBranch?.pickupAllowed ||
-            !pickupBranch?.orderPolicy?.orderPossible) && (
+          !availableAsPhysicalCopy &&
+          !availableAsDigitalCopy && (
             <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
               <Text type="text3">
                 {Translate({
@@ -588,7 +600,7 @@ export function Order({
           )}
         </div>
         <Button
-          disabled={pickupBranch?.orderPolicy?.orderPossible !== true}
+          disabled={!availableAsDigitalCopy && !availableAsPhysicalCopy}
           skeleton={isLoading}
           onClick={() => {
             if (validated.status) {

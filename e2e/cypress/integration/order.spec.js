@@ -52,6 +52,16 @@ function mockArticleWork() {
   });
 }
 
+function mockArticleWorkNoPhysical() {
+  cy.fixture("fullarticleworknophysical.json").then((fixture) => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req.body.query.includes("work(")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
 function mockPeriodicaWork() {
   cy.fixture("fullperiodicawork.json").then((fixture) => {
     cy.intercept("POST", "/graphql", (req) => {
@@ -314,13 +324,13 @@ describe("Order", () => {
 
 describe("Order periodica article", () => {
   beforeEach(function () {
-    mockArticleWork();
     mockAvailability();
     mockSubmitOrder();
     mockSubmitPeriodicaArticleOrder();
   });
 
   it("should order indexed periodica article as digital copy", () => {
+    mockArticleWork();
     mockLogin({
       data: {
         user: {
@@ -358,6 +368,7 @@ describe("Order periodica article", () => {
   });
 
   it("should order indexed periodica article as physical copy", () => {
+    mockArticleWork();
     mockLogin({
       data: {
         user: {
@@ -399,6 +410,35 @@ describe("Order periodica article", () => {
     });
 
     cy.contains("Bestillingen blev gennemført");
+  });
+
+  it("should not order indexed periodica article as physical copy when not available as physical copy", () => {
+    mockArticleWorkNoPhysical();
+    mockLogin({
+      data: {
+        user: {
+          mail: "cicero@mail.dk",
+          agency: {
+            result: [
+              {
+                digitalCopyAccess: false,
+              },
+            ],
+          },
+        },
+      },
+    });
+    cy.visit(
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+    );
+
+    openOrderModal();
+
+    cy.contains(
+      "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
+    );
+
+    cy.get("[data-cy=button-godkend]").should("be.disabled");
   });
 });
 
