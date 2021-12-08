@@ -80,7 +80,7 @@ describe("Filter", () => {
     });
   });
 
-  it(`Can access filters on website`, () => {
+  it.skip(`Can access filters on website`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=hest`);
 
     cy.get("[data-cy=view-all-filters]").click();
