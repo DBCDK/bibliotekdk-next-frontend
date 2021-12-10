@@ -33,6 +33,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 function Find() {
   const modal = useModal();
 
+  // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const { getQuery } = useFilters();
 
   const filters = getQuery();

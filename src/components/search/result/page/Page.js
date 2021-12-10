@@ -51,16 +51,7 @@ export default function Wrap({ q, page, onWorkClick }) {
   const limit = 10; // limit
   const offset = limit * (page - 1); // offset
 
-  // const router = useRouter();
-  // const { worktype = null } = router.query;
-  // const facet = worktype ? [{ field: "type", value: worktype }] : null;
-  // use the useData hook to fetch data
-  // const facet = [{ field: "type", value: "movie" }];
-  //const facets = null;
-
-  const { getQuery } = useFilters();
-
-  const filters = getQuery();
+  const { filters } = useFilters();
 
   // use the useData hook to fetch data
   const fastResponse = useData(q && fast({ q, offset: 0, limit, filters }));

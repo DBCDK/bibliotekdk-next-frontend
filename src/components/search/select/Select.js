@@ -140,7 +140,7 @@ function Wrap({ children }) {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
       const param = elem === "all" ? {} : { workType: [elem] };
-      setQuery(param);
+      setQuery({ include: param });
     },
     selected,
     count: getCount(["workType"]),

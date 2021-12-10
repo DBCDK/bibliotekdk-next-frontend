@@ -118,10 +118,10 @@ export default function Wrap({
   viewSelected,
   onPageChange,
 }) {
-  const { getQuery } = useFilters();
+  const { filters } = useFilters();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(q && hitcount({ q, filters: getQuery() }));
+  const fastResponse = useData(q && hitcount({ q, filters }));
 
   if (fastResponse.error) {
     return null;

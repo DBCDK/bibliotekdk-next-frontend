@@ -105,15 +105,6 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           );
         })}
       </List.Group>
-
-      <Button
-        // disabled={terms.length === 0}
-        skeleton={isLoading}
-        onClick={() => modal.prev()}
-        className={`${styles.submit} ${styles.sticky}`}
-      >
-        {Translate({ context: "general", label: "save" })}
-      </Button>
     </>
   );
 }
@@ -237,7 +228,7 @@ export function Filter(props) {
             dataCy="vis-resultater"
             skeleton={isLoading}
             onClick={() => onSubmit && onSubmit()}
-            className={`${styles.submit} ${styles.sticky}`}
+            className={styles.submit}
           >
             {Translate({
               context: "search",
@@ -269,18 +260,10 @@ export function FilterSkeleton() {
 export default function Wrap(props) {
   const { modal, context } = props;
 
-  /**
-   * Restore selections from query, on modal close
-   *
-   * Prevents: If user checks/unchecks selections and closing the modal
-   * without updating the url (clicking the button)
-   *
-   */
-  const restoreOnClose = true;
-
+  // update query params when modal closes
   useEffect(() => {
-    if (modal.isVisible) {
-      restoreOnClose && setFilters(getQuery());
+    if (!modal.isVisible && modal.hasBeenVisible) {
+      setQuery({ exclude: ["modal"] });
     }
   }, [modal.isVisible]);
 
@@ -288,7 +271,7 @@ export default function Wrap(props) {
   const { q } = context;
 
   // connected filters hook
-  const { filters, setFilters, getQuery, setQuery } = useFilters();
+  const { filters, setFilters, setQuery, getQuery } = useFilters();
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
@@ -325,7 +308,7 @@ export default function Wrap(props) {
       }}
       onSubmit={() => {
         // exclude modal param -> will close the modal on submit
-        setQuery(undefined, ["modal"]);
+        setQuery({ exclude: ["modal"] });
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
