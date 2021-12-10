@@ -52,20 +52,30 @@ export function LocalizationsLink({
   }
 
   return (
-    <Link
-      onClick={() => opener()}
-      border={{ top: false, bottom: { keepVisible: true } }}
-      dataCy={localizationLinkKey}
-      ariaLabel="open localizations"
-    >
-      <Text type="text3" className={styles.linkstyle}>
+    <>
+      <Text type="text3" className={styles.linkstyle} tag="span">
         {Translate({
           context: "overview",
           label: "label_library_holdings",
           vars: [count],
         })}
+        &nbsp;-&nbsp;
       </Text>
-    </Link>
+      <Link
+        onClick={() => opener()}
+        border={{ top: false, bottom: { keepVisible: true } }}
+        dataCy={localizationLinkKey}
+        ariaLabel="open localizations"
+      >
+        <Text type="text3" className={styles.linkstyle}>
+          {Translate({
+            context: "overview",
+            label: "check_branch_holding",
+            vars: [count],
+          })}
+        </Text>
+      </Link>
+    </>
   );
 }
 

@@ -507,6 +507,10 @@
       }
     },
     "overview": {
+      "check_branch_holding": {
+        "da": "Se om den er hjemme på dit bibliotek",
+        "en": "Check your library"
+      },
       "label_library_no_holdings": {
         "da": "Ingen biblioteker har pt. materialet.",
         "en": "No localizations in libraries."
