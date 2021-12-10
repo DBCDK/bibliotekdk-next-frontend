@@ -27,7 +27,7 @@ function getTemplate(props) {
     return <Infomedia props={props} />;
   }
   if (props.accessType === "online") {
-    return <Online {...props} key={props.listkey} />;
+    return <Online props={props} key={props.listkey} />;
   }
   if (props.accessType === "digitalCopy") {
     return <OrderLink props={props} key={props.listkey} digitalOnly />;
@@ -92,23 +92,20 @@ export function Options({ data, isLoading, modal, context }) {
     return <Skeleton lines={3} className={styles.skeleton} />;
   }
 
+  const { orderPossible, onlineAccess } = { ...context };
+
   // no type selected - get the first one
   const type = context.type || data?.work?.materialTypes?.[0].materialType;
 
-  // get the material by type
-  const currentMaterial = data?.work?.materialTypes?.find(
-    (material) => material.materialType === type
-  );
-
-  const onlineAccess = addToOnlinAccess(
-    currentMaterial?.manifestations[0]?.onlineAccess,
+  const addiOnlineAccess = addToOnlinAccess(
+    onlineAccess,
     context.orderPossible
   );
 
-  const orderedOnlineAccess = sortorder(onlineAccess);
+  const orderedOnlineAccess = sortorder(addiOnlineAccess);
 
   return (
-    onlineAccess && (
+    orderedOnlineAccess && (
       <div className={styles.options}>
         <Top title={context.title} />
         <ul className={styles.list} key="options-ul">

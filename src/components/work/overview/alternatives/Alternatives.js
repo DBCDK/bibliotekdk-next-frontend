@@ -8,16 +8,12 @@ import Link from "@/components/base/link";
 import styles from "./Alternatives.module.css";
 import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/ReservationButton";
 
-export function AlternativeOptions({
-  onlineAccess = [],
-  requestButton = false,
-  modal = null,
-  context = {},
-}) {
-  // digitalcopy and physical (requestButton) are counted as one
+export function AlternativeOptions({ modal = null, context = {} }) {
+  const { orderPossible, onlineAccess } = { ...context };
+  // digitalcopy and physical (orderPossible) are counted as one
   const count =
     onlineAccess?.filter((entry) => !entry.issn).length +
-    (requestButton || onlineAccess?.find((entry) => entry.issn) ? 1 : 0);
+    (orderPossible || onlineAccess?.find((entry) => entry.issn) ? 1 : 0);
 
   return (
     count > 1 && (
@@ -43,20 +39,35 @@ export function AlternativeOptions({
 }
 
 export default function wrap({ selectedMaterial }) {
-  const onlineAccess = selectedMaterial?.manifestations?.[0].onlineAccess;
   const manifestations = selectedMaterial?.manifestations;
   const requestButton = checkRequestButtonIsTrue({ manifestations });
   const modal = useModal();
   const router = useRouter();
 
-  const { workId, title_author, type, orderPossible } = router.query;
+  const allOnline = [];
+  // run through manifestions to get ALL onlineaccess
+  manifestations?.forEach((manifestation) => {
+    manifestation?.onlineAccess?.forEach((element) => allOnline.push(element));
+  });
+  //  filter out duplicates - @TODO - should we filter on url ?
+  let seen = {};
+  const onlineAccess = allOnline.filter(function (item) {
+    return seen.hasOwnProperty(item.accessType)
+      ? false
+      : (seen[item.accessType] = true);
+  });
+  const { workId, title_author, type } = router.query;
 
   return (
     <AlternativeOptions
-      onlineAccess={onlineAccess}
-      requestButton={requestButton}
       modal={modal}
-      context={{ workId, title_author, type, orderPossible: requestButton }}
+      context={{
+        workId,
+        title_author,
+        type,
+        orderPossible: requestButton,
+        onlineAccess,
+      }}
     />
   );
 }
