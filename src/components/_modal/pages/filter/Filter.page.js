@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import merge from "lodash/merge";
 
@@ -28,14 +28,14 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
   const { facet } = context;
 
   // handle term select
-  function handleTermSelect(title) {
+  function handleTermSelect(key) {
     let copy = [...terms];
-    const index = copy.indexOf(title);
+    const index = copy.indexOf(key);
     // remove if already exist
     if (index > -1) {
       copy.splice(index, 1);
     } else {
-      copy.push(title);
+      copy.push(key);
     }
 
     onSelect({ [facet.name]: copy });
@@ -58,15 +58,16 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
       >
         {facet?.values.map((term, idx) => {
           const title = term.term;
+          const key = term.key;
           const count = term.count;
 
-          const isCheked = terms.includes(title);
+          const isCheked = terms.includes(key);
 
           return (
             <List.Select
-              key={`${title}-${idx}`}
+              key={`${key}-${idx}`}
               selected={false}
-              onSelect={() => handleTermSelect(title)}
+              onSelect={() => handleTermSelect(key)}
               label={title}
               className={`${styles.select} ${animations["on-hover"]}`}
               includeArrows={false}
@@ -106,6 +107,28 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         })}
       </List.Group>
     </>
+  );
+}
+
+/**
+ *
+ * function to build selected filters
+ *
+ * @param {array} facet
+ * @param {array} selected
+ *
+ * @returns {component}
+ */
+function Selected({ facet, selected }) {
+  const match = useMemo(
+    () => selected.map((s) => facet.values.find((f) => f.key === s)),
+    [facet, selected]
+  );
+
+  return (
+    <Text type="text3" className={styles.selected}>
+      {match.map((m) => m.term).join(", ")}
+    </Text>
   );
 }
 
@@ -214,9 +237,7 @@ export function Filter(props) {
                         {title}
                       </Text>
                       {selectedTerms && (
-                        <Text type="text3" className={styles.selected}>
-                          {selectedTerms.join(", ")}
-                        </Text>
+                        <Selected facet={facet} selected={selectedTerms} />
                       )}
                     </span>
                   </List.Select>
@@ -271,7 +292,7 @@ export default function Wrap(props) {
   const { q } = context;
 
   // connected filters hook
-  const { filters, setFilters, setQuery, getQuery } = useFilters();
+  const { filters, setFilters, setQuery } = useFilters();
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
@@ -287,6 +308,8 @@ export default function Wrap(props) {
   const { data, isLoading } = useData(
     q && facets({ q, filters, facets: facetFilters })
   );
+
+  console.log("hest data", data);
 
   // merge data
   const mergedData = merge({}, data, hitcountData);

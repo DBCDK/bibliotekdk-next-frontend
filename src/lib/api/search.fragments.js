@@ -111,6 +111,7 @@ export function facets({ q, filters = {}, facets = types }) {
                   name
                   values(limit: 100) {
                     term
+                    key
                     count
                   }
                 }
