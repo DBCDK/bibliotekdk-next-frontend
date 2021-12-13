@@ -28,6 +28,9 @@ export function AllOptions() {
           title_author: "fiske_hest",
           workId: "work-of:870971-tsart:39160846",
           orderPossible: true,
+          onlineAccess:
+            dummy_data.data.work.materialTypes[0].manifestations[0]
+              .onlineAccess,
         }}
       />
     </div>
