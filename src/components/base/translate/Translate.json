@@ -34,6 +34,12 @@
         "en": "Privacy policy"
       }
     },
+    "tooltip": {
+      "tooltip_change_email": {
+        "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
+        "en": "To change your email address - log on your library homepage and change your email in profile settings"
+      }
+    },
     "general": {
       "SkipToMain": {
         "da": "Gå til indhold",
