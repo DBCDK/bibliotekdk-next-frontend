@@ -315,8 +315,6 @@ export default function Wrap(props) {
   // merge data
   const mergedData = merge({}, data, hitcountData);
 
-  console.log("wwwwwww mergedData", mergedData);
-
   if (isLoading) {
     return <FilterSkeleton {...props} />;
   }
@@ -329,8 +327,6 @@ export default function Wrap(props) {
       data={mergedData}
       selected={filters}
       onSelect={(selected) => {
-        console.log("wwwww selected", selected);
-
         // Updates selected filter in useFilters
         setFilters({ ...filters, ...selected });
       }}
