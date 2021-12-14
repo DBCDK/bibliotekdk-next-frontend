@@ -14,6 +14,7 @@ describe("Filter", () => {
 
   it(`Tab is trapped inside modal`, () => {
     cy.visit("/iframe.html?id=modal-filter--default");
+    cy.wait(1000);
     cy.tab();
     cy.focused().contains("Luk");
     cy.tabs(4);
