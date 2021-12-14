@@ -97,7 +97,8 @@ describe("Filter", () => {
   it(`Only show 4 specific filters on workType 'game'`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
 
-    cy.get("[data-cy=view-all-filters]").click({ scrollBehavior: false });
+    cy.get("[data-cy=view-all-filters]").scrollIntoView();
+    cy.get("[data-cy=view-all-filters]").click();
     cy.get("[data-cy=filter-modal]").should("be.visible");
 
     cy.wait(1000);
