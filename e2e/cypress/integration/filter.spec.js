@@ -12,7 +12,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-facets]").children().should("have.length", 9);
   });
 
-  it(`Tab is trapped inside modal`, () => {
+  it.skip(`Tab is trapped inside modal`, () => {
     cy.visit("/iframe.html?id=modal-filter--default");
     cy.wait(1000);
     cy.tab();
