@@ -402,6 +402,7 @@ function Page(props) {
  *
  */
 
+let _hasBeenVisible = false;
 export function useModal() {
   const { setStack: _setStack, save, router } = useContext(ModalContext);
 
@@ -412,6 +413,10 @@ export function useModal() {
 
   // modal is visible
   const _isVisible = _stack.length > 0 && _index() > -1;
+
+  if (_isVisible) {
+    _hasBeenVisible = true;
+  }
 
   /**
    * Push
@@ -643,8 +648,11 @@ export function useModal() {
   }
 
   return {
-    // public functions
+    // public constants
+    isVisible: _isVisible,
+    hasBeenVisible: _hasBeenVisible,
     currentPageUid: router.query[URL_PAGE_UID_KEY],
+    // public functions
     push: _push,
     pop: _prev,
     update: _update,
@@ -655,7 +663,6 @@ export function useModal() {
     prev: _prev,
     setStack,
     stack: _stack,
-    isVisible: _isVisible,
     // privat functions
     _doSelect,
     _router: router,

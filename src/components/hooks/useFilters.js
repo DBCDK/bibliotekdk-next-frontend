@@ -9,6 +9,25 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
+/**
+ *
+ * Settings
+ *
+ *
+ */
+
+// Global state
+let locale = {};
+
+// Custom fetcher
+const fetcher = () => locale;
+
+// reset on q(uery) change
+const resetOnQueryChange = true;
+
+// reset if selected workType changed
+const resetOnWorkTypeChange = true;
+
 // current supported filter types
 export const types = [
   "materialType",
@@ -33,7 +52,8 @@ export const workTypes = [
   "sheetmusic",
 ];
 
-// included categories/facets by selected workType
+// Included categories/facets by selected workType
+// This list works as a sorted whitelist
 export const includedTypes = {
   literature: [
     "materialType",
@@ -60,11 +80,12 @@ export const includedTypes = {
   sheetmusic: ["materialType", "accessType", "subject", "creator", "genre"],
 };
 
-// Global state
-let locale = {};
-
-// Custom fetcher
-const fetcher = () => locale;
+/**
+ *
+ *
+ *
+ *
+ */
 
 /**
  * function to build the default (empty) filters object
@@ -127,7 +148,6 @@ function useFilters() {
 
   /**
    * Restore filters by query params
-   *
    */
   useEffect(() => {
     if (router) {
@@ -137,6 +157,30 @@ function useFilters() {
       _setFilters(locale);
     }
   }, []);
+
+  /**
+   * Reset filters on (q)uery change
+   */
+  useEffect(() => {
+    if (resetOnQueryChange) {
+      // set locale object
+      locale = _getQuery();
+      // update locale state (swr)
+      _setFilters(locale);
+    }
+  }, [router.query.q]);
+
+  /**
+   * Reset filters on workType change
+   */
+  useEffect(() => {
+    if (resetOnWorkTypeChange) {
+      // set locale object
+      locale = _getQuery();
+      // update locale state (swr)
+      _setFilters(locale);
+    }
+  }, [router.query.workType]);
 
   /**
    * Update locale filters
@@ -175,7 +219,7 @@ function useFilters() {
    * @param {object} include
    * @param {array} exclude
    */
-  const setQuery = (include = _filters, exclude = []) => {
+  const setQuery = ({ include = _filters, exclude = [] }) => {
     /**
      * ensure all filters is represented, if not, the router update
      * can get messed up by not removing all non-represented filters.

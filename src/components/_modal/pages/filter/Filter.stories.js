@@ -40,7 +40,7 @@ export function Default() {
         data={data}
         selected={filters}
         onSelect={(selected) => setFilters({ ...filters, ...selected })}
-        onSubmit={() => setQuery(undefined, ["modal"])}
+        onSubmit={() => setQuery({ exclude: ["modal"] })}
         onClear={() => setFilters({})}
       />
     </Modal.Container>

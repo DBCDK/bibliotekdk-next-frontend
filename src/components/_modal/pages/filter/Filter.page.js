@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import merge from "lodash/merge";
 
@@ -30,6 +30,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
   // handle term select
   function handleTermSelect(title) {
     let copy = [...terms];
+
     const index = copy.indexOf(title);
     // remove if already exist
     if (index > -1) {
@@ -58,13 +59,14 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
       >
         {facet?.values.map((term, idx) => {
           const title = term.term;
+          const key = term.key;
           const count = term.count;
 
           const isCheked = terms.includes(title);
 
           return (
             <List.Select
-              key={`${title}-${idx}`}
+              key={`${key}-${idx}`}
               selected={false}
               onSelect={() => handleTermSelect(title)}
               label={title}
@@ -105,16 +107,29 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           );
         })}
       </List.Group>
-
-      <Button
-        // disabled={terms.length === 0}
-        skeleton={isLoading}
-        onClick={() => modal.prev()}
-        className={`${styles.submit} ${styles.sticky}`}
-      >
-        {Translate({ context: "general", label: "save" })}
-      </Button>
     </>
+  );
+}
+
+/**
+ *
+ * function to build selected filters
+ *
+ * @param {array} facet
+ * @param {array} selected
+ *
+ * @returns {component}
+ */
+function Selected({ facet, selected }) {
+  const match = useMemo(
+    () => selected.map((s) => facet.values.find((f) => f.key === s)),
+    [facet, selected]
+  );
+
+  return (
+    <Text type="text3" className={styles.selected}>
+      {selected.join(", ")}
+    </Text>
   );
 }
 
@@ -222,7 +237,7 @@ export function Filter(props) {
                       >
                         {title}
                       </Text>
-                      {selectedTerms && (
+                      {selectedTerms?.length > 0 && (
                         <Text type="text3" className={styles.selected}>
                           {selectedTerms.join(", ")}
                         </Text>
@@ -237,7 +252,7 @@ export function Filter(props) {
             dataCy="vis-resultater"
             skeleton={isLoading}
             onClick={() => onSubmit && onSubmit()}
-            className={`${styles.submit} ${styles.sticky}`}
+            className={styles.submit}
           >
             {Translate({
               context: "search",
@@ -269,18 +284,10 @@ export function FilterSkeleton() {
 export default function Wrap(props) {
   const { modal, context } = props;
 
-  /**
-   * Restore selections from query, on modal close
-   *
-   * Prevents: If user checks/unchecks selections and closing the modal
-   * without updating the url (clicking the button)
-   *
-   */
-  const restoreOnClose = true;
-
+  // update query params when modal closes
   useEffect(() => {
-    if (modal.isVisible) {
-      restoreOnClose && setFilters(getQuery());
+    if (!modal.isVisible && modal.hasBeenVisible) {
+      setQuery({ exclude: ["modal"] });
     }
   }, [modal.isVisible]);
 
@@ -288,7 +295,7 @@ export default function Wrap(props) {
   const { q } = context;
 
   // connected filters hook
-  const { filters, setFilters, getQuery, setQuery } = useFilters();
+  const { filters, setFilters, setQuery } = useFilters();
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
@@ -325,7 +332,7 @@ export default function Wrap(props) {
       }}
       onSubmit={() => {
         // exclude modal param -> will close the modal on submit
-        setQuery(undefined, ["modal"]);
+        setQuery({ exclude: ["modal"] });
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}

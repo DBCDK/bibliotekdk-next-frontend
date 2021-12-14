@@ -40,14 +40,10 @@
   padding: var(--pt3) 0 0 0;
 }
 
-.top.sticky {
-  /* box-shadow: var(--shadow-effect); */
-}
-
 .sticky {
   position: sticky;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   background-color: white;
   z-index: 2;

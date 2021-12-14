@@ -62,14 +62,8 @@
 
 .submit {
   margin-top: auto;
-}
-
-.submit.sticky {
-  position: sticky;
-  left: 0;
-  bottom: var(--pt2);
-  width: 100%;
-  z-index: 10;
+  position: relative;
+  z-index: 3;
 }
 
 @media (min-width: 576px) {
@@ -79,9 +73,5 @@
 
   .group.terms {
     padding-bottom: var(--pt6);
-  }
-
-  .submit.sticky {
-    bottom: var(--pt6);
   }
 }
