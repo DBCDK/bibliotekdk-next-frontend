@@ -94,7 +94,7 @@ describe("Filter", () => {
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
   });
 
-  it(`Only show 4 specific filters on workType 'game'`, () => {
+  it.skip(`Only show 4 specific filters on workType 'game'`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
 
     cy.get("[data-cy=view-all-filters]").scrollIntoView();
