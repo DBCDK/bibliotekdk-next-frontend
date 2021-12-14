@@ -62,6 +62,8 @@
 
 .submit {
   margin-top: auto;
+  position: relative;
+  z-index: 3;
 }
 
 @media (min-width: 576px) {

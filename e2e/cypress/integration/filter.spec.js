@@ -65,7 +65,7 @@ describe("Filter", () => {
     });
   });
 
-  it.skip(`Can access filters on website`, () => {
+  it(`Can access filters on website`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=hest`);
 
     cy.get("[data-cy=view-all-filters]").click();
@@ -94,7 +94,7 @@ describe("Filter", () => {
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
   });
 
-  it.skip(`Only show 4 specific filters on workType 'game'`, () => {
+  it(`Only show 4 specific filters on workType 'game'`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
 
     cy.get("[data-cy=view-all-filters]").scrollIntoView();
