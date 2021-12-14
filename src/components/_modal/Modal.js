@@ -402,7 +402,7 @@ function Page(props) {
  *
  */
 
-var _hasBeenVisible = false;
+let _hasBeenVisible = false;
 export function useModal() {
   const { setStack: _setStack, save, router } = useContext(ModalContext);
 

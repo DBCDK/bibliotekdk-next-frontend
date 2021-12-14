@@ -21,37 +21,22 @@ describe("Filter", () => {
     cy.focused().contains("Luk");
   });
 
-  it(`Can select filters with both back-button and save-button`, () => {
-    cy.visit("/iframe.html?id=modal-filter--default");
-
-    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
-    cy.get("[data-cy=modal-back]").click();
-    cy.get("[data-cy=list-button-0]").should("contain.text", "dan, eng");
-
-    cy.get("[data-cy=list-facets] [data-cy=list-button-3]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=button-gem]").click();
-    cy.get("[data-cy=list-button-0]").should("contain.text", "krimi");
-  });
-
   it(`Can update filters in query`, () => {
     cy.visit("/iframe.html?id=modal-filter--default");
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
-    cy.get("[data-cy=button-gem]").click();
+    cy.get("[data-cy=modal-back]").click();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-3]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=button-gem]").click();
+    cy.get("[data-cy=modal-back]").click();
 
     cy.get("[data-cy=vis-resultater]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal(
-        `{"pathname":"/","query":{"language":"dan,eng","genre":"krimi"}}`
+        `{"pathname":"/","query":{"language":"Dansk,Engelsk","genre":"krimi"}}`
       );
     });
   });
@@ -64,7 +49,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
-    cy.get("[data-cy=button-gem]").click();
+    cy.get("[data-cy=modal-back]").click();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-1]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
@@ -80,7 +65,7 @@ describe("Filter", () => {
     });
   });
 
-  it.skip(`Can access filters on website`, () => {
+  it(`Can access filters on website`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=hest`);
 
     cy.get("[data-cy=view-all-filters]").click();
@@ -93,12 +78,16 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
-    cy.get("[data-cy=button-gem]").click();
+    cy.get("[data-cy=modal-back]").click();
+
+    cy.get("[data-cy=list-facets] [data-cy=list-button-2]").scrollIntoView();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click();
+
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
-    cy.get("[data-cy=button-gem]").click();
+    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
+
+    cy.get("[data-cy=modal-back]").click();
 
     cy.get("[data-cy=vis-resultater]").click();
 

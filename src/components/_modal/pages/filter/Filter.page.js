@@ -28,14 +28,15 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
   const { facet } = context;
 
   // handle term select
-  function handleTermSelect(key) {
+  function handleTermSelect(title) {
     let copy = [...terms];
-    const index = copy.indexOf(key);
+
+    const index = copy.indexOf(title);
     // remove if already exist
     if (index > -1) {
       copy.splice(index, 1);
     } else {
-      copy.push(key);
+      copy.push(title);
     }
 
     onSelect({ [facet.name]: copy });
@@ -61,13 +62,13 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
           const key = term.key;
           const count = term.count;
 
-          const isCheked = terms.includes(key);
+          const isCheked = terms.includes(title);
 
           return (
             <List.Select
               key={`${key}-${idx}`}
               selected={false}
-              onSelect={() => handleTermSelect(key)}
+              onSelect={() => handleTermSelect(title)}
               label={title}
               className={`${styles.select} ${animations["on-hover"]}`}
               includeArrows={false}
@@ -127,7 +128,7 @@ function Selected({ facet, selected }) {
 
   return (
     <Text type="text3" className={styles.selected}>
-      {match.map((m) => m.term).join(", ")}
+      {selected.join(", ")}
     </Text>
   );
 }
@@ -236,8 +237,10 @@ export function Filter(props) {
                       >
                         {title}
                       </Text>
-                      {selectedTerms && (
-                        <Selected facet={facet} selected={selectedTerms} />
+                      {selectedTerms?.length > 0 && (
+                        <Text type="text3" className={styles.selected}>
+                          {selectedTerms.join(", ")}
+                        </Text>
                       )}
                     </span>
                   </List.Select>
@@ -309,10 +312,10 @@ export default function Wrap(props) {
     q && facets({ q, filters, facets: facetFilters })
   );
 
-  console.log("hest data", data);
-
   // merge data
   const mergedData = merge({}, data, hitcountData);
+
+  console.log("wwwwwww mergedData", mergedData);
 
   if (isLoading) {
     return <FilterSkeleton {...props} />;
@@ -326,6 +329,8 @@ export default function Wrap(props) {
       data={mergedData}
       selected={filters}
       onSelect={(selected) => {
+        console.log("wwwww selected", selected);
+
         // Updates selected filter in useFilters
         setFilters({ ...filters, ...selected });
       }}
