@@ -73,26 +73,42 @@ describe("Filter", () => {
 
     cy.wait(1000);
 
-    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
+    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click({
+      force: true,
+    });
     cy.get("[data-cy=modal-back]").click();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-2]").scrollIntoView();
     cy.wait(500);
 
-    cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click();
+    cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click({
+      force: true,
+    });
 
-    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
+    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click({
+      force: true,
+    });
 
     cy.wait(500);
     cy.get("[data-cy=modal-back]").click();
     cy.wait(500);
 
-    cy.get("[data-cy=vis-resultater]").click();
+    cy.get("[data-cy=vis-resultater]").click({ force: true });
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
   });
@@ -142,8 +158,12 @@ describe("Filter", () => {
     cy.wait(500);
 
     cy.get("[data-cy=view-all-filters]").click({ force: true });
-    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
+    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click({
+      force: true,
+    });
     cy.get("[data-cy=modal-back]").click();
     cy.get("[data-cy=vis-resultater]").click();
 
