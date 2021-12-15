@@ -40,6 +40,7 @@ export function Desktop({ options = [], onSelect, selected }) {
           return (
             <Dropdown.Item
               tabIndex="-1"
+              data-cy={`item-${elem}`}
               key={`materialdropdown-${elem}`}
               className={styles.dropdownitem}
               onClick={() => {
