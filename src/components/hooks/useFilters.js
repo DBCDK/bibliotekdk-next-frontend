@@ -184,7 +184,7 @@ function useFilters() {
   useEffect(() => {
     if (resetOnQueryChange) {
       // check if current value differs from previous
-      if (prevQuery && prevQuery !== curQuery) {
+      if (prevQuery) {
         // set locale object
         locale = curWorkType ? { workType: [curWorkType] } : {};
         // update locale state (swr)
