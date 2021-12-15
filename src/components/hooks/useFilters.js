@@ -1,5 +1,5 @@
 /**
- * Hook for filter sync across components
+ * Hook for filter sync across components 🤯
  *
  * OBS! useFilters hook is SWR connected and will trigger an update
  * on connected components.
@@ -7,7 +7,10 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+
 import useSWR from "swr";
+
+import usePrevious from "./usePrevious";
 
 /**
  *
@@ -18,6 +21,9 @@ import useSWR from "swr";
 
 // Global state
 let locale = {};
+
+// Global useFilters hook initialization
+let initialized = false;
 
 // Custom fetcher
 const fetcher = () => locale;
@@ -143,14 +149,28 @@ function useFilters() {
     initialData: buildFilters(),
   });
 
+  // current query q
+  const curQuery = router.query.q;
+
+  // current workType
+  const curWorkType = router.query.workType;
+
+  // Previous query q
+  const prevQuery = usePrevious(curQuery);
+
+  // Previous workType
+  const prevWorkType = usePrevious(curWorkType);
+
   // represent all filters: All type names as key and empty array as value
   const base = buildFilters();
 
   /**
-   * Restore filters by query params
+   * Restore filters from query params
    */
   useEffect(() => {
-    if (router) {
+    if (!initialized) {
+      // set initialized true, this prevents multiple mount call (multiple instances of hook)
+      initialized = true;
       // set locale object
       locale = _getQuery();
       // update locale state (swr)
@@ -163,24 +183,30 @@ function useFilters() {
    */
   useEffect(() => {
     if (resetOnQueryChange) {
-      // set locale object
-      locale = _getQuery();
-      // update locale state (swr)
-      _setFilters(locale);
+      // check if current value differs from previous
+      if (prevQuery) {
+        // set locale object
+        locale = curWorkType ? { workType: [curWorkType] } : {};
+        // update locale state (swr)
+        _setFilters(locale);
+      }
     }
-  }, [router.query.q]);
+  }, [curQuery]);
 
   /**
    * Reset filters on workType change
    */
   useEffect(() => {
     if (resetOnWorkTypeChange) {
-      // set locale object
-      locale = _getQuery();
-      // update locale state (swr)
-      _setFilters(locale);
+      // check if current value differs from previous
+      if (prevWorkType !== curWorkType) {
+        // set locale object
+        locale = curWorkType ? { workType: [curWorkType] } : {};
+        // update locale state (swr)
+        _setFilters(locale);
+      }
     }
-  }, [router.query.workType]);
+  }, [curWorkType]);
 
   /**
    * Update locale filters
