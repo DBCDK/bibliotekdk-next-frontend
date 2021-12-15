@@ -165,7 +165,7 @@ function useFilters() {
   const base = buildFilters();
 
   /**
-   * Get filters from Query
+   * Restore filters from query params
    */
   useEffect(() => {
     if (!initialized) {
