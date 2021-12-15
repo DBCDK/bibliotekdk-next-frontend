@@ -165,6 +165,7 @@ describe("Filter", () => {
       force: true,
     });
     cy.get("[data-cy=modal-back]").click();
+    cy.wait(500);
     cy.get("[data-cy=vis-resultater]").click();
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(1)");
