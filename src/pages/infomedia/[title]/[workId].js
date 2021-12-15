@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { signIn } from "@dbcdk/login-nextjs/client";
 import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
@@ -17,6 +16,7 @@ import Translate from "@/components/base/translate";
 
 import LoginPrompt from "@/components/login/prompt";
 import { branchesForUser } from "@/lib/api/user.fragments";
+import { useModal } from "@/components/_modal";
 
 export function InfomediaArticle(infomediaData) {
   const {
@@ -25,7 +25,8 @@ export function InfomediaArticle(infomediaData) {
     agencies,
     rating,
     user,
-  } = { ...infomediaData };
+    modal,
+  } = infomediaData;
 
   const router = useRouter();
   const workPublic = publicData?.data?.work;
@@ -60,7 +61,7 @@ export function InfomediaArticle(infomediaData) {
                 context: "articles",
                 label: "accessWarning",
               })}
-              signIn={signIn}
+              signIn={() => modal.push("login")}
             />
           )}
           {user.isAuthenticated && workPublic && !hasArticle && (
@@ -74,7 +75,7 @@ export function InfomediaArticle(infomediaData) {
                 context: "articles",
                 label: "accessOpportunity",
               })}
-              signIn={signIn}
+              signIn={() => modal.push("login")}
             />
           )}
         </>
@@ -146,6 +147,7 @@ function parseForPid(workId) {
 }
 
 export default function wrap() {
+  const modal = useModal();
   const router = useRouter();
   const { workId, review: reviewPid } = router.query;
   const pid = reviewPid ? reviewPid : parseForPid(workId);
@@ -175,6 +177,7 @@ export default function wrap() {
     agencies: userAgencise,
     rating: rating || null,
     user,
+    modal,
   };
 
   return InfomediaArticle(infomediaData);
