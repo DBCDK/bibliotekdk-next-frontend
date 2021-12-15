@@ -36,9 +36,8 @@ export function InfomediaReview({
 
   // make an url for infomedia page
   const reviewPid = data?.reference?.[0]?.pid;
-  const rating = data.rating;
   const urlTxt = encodeString("Anmeldelse_" + title);
-  const infomediaUrl = `/infomedia/${urlTxt}/${workId}?review=${reviewPid}&rating=${rating}`;
+  const infomediaUrl = `/infomedia/${urlTxt}/${workId}?review=${reviewPid}`;
   data.url = infomediaUrl;
 
   return (

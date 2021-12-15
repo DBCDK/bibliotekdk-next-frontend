@@ -4,7 +4,7 @@ import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import { infomediaArticlePublicInfo } from "@/lib/api/work.fragments";
+import { infomediaArticlePublicInfo, reviews } from "@/lib/api/work.fragments";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
 
@@ -34,6 +34,7 @@ export function InfomediaArticle(infomediaData) {
   const agencyName = agencies?.data?.user?.agency?.result?.[0]?.agencyName;
 
   const articles = parseArticles(manifestationPublic, workPublic, privateData);
+
   return (
     <React.Fragment>
       <Header router={router} />
@@ -43,8 +44,13 @@ export function InfomediaArticle(infomediaData) {
         <ContentSkeleton />
       ) : (
         <>
-          {articles.map((article) => {
-            return <Content data={{ ...article, rating }} />;
+          {articles.map((article, idx) => {
+            return (
+              <Content
+                key={`${article?.title}_${idx}`}
+                data={{ ...article, rating }}
+              />
+            );
           })}
 
           {!user.isAuthenticated && (
@@ -141,19 +147,23 @@ function parseForPid(workId) {
 
 export default function wrap() {
   const router = useRouter();
-  const { workId, review, rating } = router.query;
-  let pid;
-  if (review) {
-    pid = review;
-  } else {
-    pid = parseForPid(workId);
-  }
+  const { workId, review: reviewPid } = router.query;
+  const pid = reviewPid ? reviewPid : parseForPid(workId);
 
   const user = useUser();
 
   const infomediaPublic = useData(
     workId && infomediaArticlePublicInfo({ workId })
   );
+
+  // This article may be a review, so we fetch the rating
+  const allReviews = useData(reviewPid && workId && reviews({ workId }));
+  const review = allReviews?.data?.work?.reviews?.find(
+    (review) =>
+      !!review?.reference?.find((reference) => reference.pid === reviewPid)
+  );
+  const rating = review?.rating;
+
   const infomediaPrivate = useData(
     user.isAuthenticated && workId && infomediaArticle({ pid })
   );
