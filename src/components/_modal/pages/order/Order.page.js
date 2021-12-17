@@ -35,6 +35,7 @@ import data from "./dummy.data";
 import styles from "./Order.module.css";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
 import { getIsPeriodicaLike } from "@/lib/utils";
+import TjoolTjip from "@/components/base/tjooltjip";
 
 function LinkArrow({ onClick, disabled, children, className = "" }) {
   return (
@@ -505,6 +506,16 @@ export function Order({
               <Text type="text1">
                 {Translate({ context: "general", label: "email" })}
               </Text>
+              {(isLoadingBranches ||
+                (authUser?.mail &&
+                  lockedMessage &&
+                  pickupBranch?.borrowerCheck)) && (
+                <TjoolTjip
+                  placement="right"
+                  labelToTranslate="tooltip_change_email"
+                  customClass={styles.tooltip}
+                />
+              )}
             </label>
 
             <Email
@@ -524,41 +535,6 @@ export function Order({
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
-            {(isLoadingBranches ||
-              (authUser?.mail &&
-                lockedMessage &&
-                pickupBranch?.borrowerCheck)) && (
-              <div className={`${styles.emailMessage}`}>
-                <Text
-                  type="text3"
-                  skeleton={isLoadingBranches}
-                  lines={1}
-                  tag="span"
-                  className={styles.userStatusLink}
-                >
-                  {Translate(lockedMessage)}
-                  &nbsp;
-                </Text>
-                <Link
-                  disabled={isLoadingBranches}
-                  href={urlToEmailArticle}
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                >
-                  <Text
-                    type="text3"
-                    skeleton={isLoadingBranches}
-                    lines={1}
-                    tag="span"
-                    className={styles.userStatusLink}
-                  >
-                    {Translate({
-                      context: "order",
-                      label: "change-email-link",
-                    })}
-                  </Text>
-                </Link>
-              </div>
-            )}
 
             {message && (
               <div className={`${styles.emailMessage} ${validClass}`}>

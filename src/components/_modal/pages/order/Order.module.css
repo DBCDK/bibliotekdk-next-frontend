@@ -119,6 +119,12 @@
   padding: var(--pt1) 0 0 0;
 }
 
+.tooltip{
+  position: relative;
+  top: var(--pt05);
+  margin-left: var(--pt1);
+}
+
 .skeleton .emailMessage {
   padding: var(--pt1) 0;
 }
