@@ -60,7 +60,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         {facet?.values.map((term, idx) => {
           const title = term.term;
           const key = term.key;
-          const count = term.count;
+          const count = term.count || "-";
 
           const isCheked = terms.includes(title);
 
