@@ -2,4 +2,6 @@
     padding: var(--pt1) var(--pt1);
 }
 
-
+.tooltipcursor{
+    cursor: pointer;
+}

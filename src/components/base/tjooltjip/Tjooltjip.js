@@ -14,6 +14,7 @@ export default function TjoolTjip({
     <span className={`${styles.inline} ${customClass ? customClass : ""}`}>
       <OverlayTrigger
         placement={placement}
+        rootClose
         trigger="click"
         overlay={
           <Popover id={`tooltip-${labelToTranslate}`}>
@@ -33,6 +34,7 @@ export default function TjoolTjip({
           alt="info"
           data-cy="tooltip-icon"
           size={3}
+          className={styles.tooltipcursor}
         ></Icon>
       </OverlayTrigger>
     </span>
