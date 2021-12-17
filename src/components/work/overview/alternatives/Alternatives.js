@@ -10,6 +10,7 @@ import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/Re
 
 export function AlternativeOptions({ modal = null, context = {} }) {
   const { orderPossible, onlineAccess } = { ...context };
+
   // digitalcopy and physical (orderPossible) are counted as one
   const count =
     onlineAccess?.filter((entry) => !entry.issn).length +
@@ -49,13 +50,19 @@ export default function wrap({ selectedMaterial }) {
   manifestations?.forEach((manifestation) => {
     manifestation?.onlineAccess?.forEach((element) => allOnline.push(element));
   });
-  //  filter out duplicates - @TODO - should we filter on url ?
+
+  //  filter out duplicates
   let seen = {};
   const onlineAccess = allOnline.filter(function (item) {
-    return seen.hasOwnProperty(item.accessType)
-      ? false
-      : (seen[item.accessType] = true);
+    // No duplicate url or issn
+    const key = item.url || item.issn;
+    if (seen[key]) {
+      return false;
+    }
+    seen[key] = true;
+    return true;
   });
+
   const { workId, title_author, type } = router.query;
 
   return (
