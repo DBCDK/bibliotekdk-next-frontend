@@ -6,7 +6,7 @@ export default {
   title: "base/Tooltips",
 };
 
-export function TooltipWithHeader() {
+export function SimpleTooltip() {
   return (
     <div>
       <StoryTitle>simple tooltip</StoryTitle>

@@ -5,9 +5,13 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
 
-export default function TjoolTjip({ placement = "bottom", labelToTranslate }) {
+export default function TjoolTjip({
+  placement = "bottom",
+  labelToTranslate,
+  customClass,
+}) {
   return (
-    <div className="progress-wrapper">
+    <span className={`${styles.inline} ${customClass ? customClass : ""}`}>
       <OverlayTrigger
         placement={placement}
         trigger="click"
@@ -17,16 +21,21 @@ export default function TjoolTjip({ placement = "bottom", labelToTranslate }) {
               className={styles.tooltipcontainer}
               data-cy="popover-container"
             >
-              <Text type="text3" lines={2} tag="span">
+              <Text type="text3" lines={2}>
                 {Translate({ context: "tooltip", label: labelToTranslate })}
               </Text>
             </div>
           </Popover>
         }
       >
-        <Icon src="questionmark.svg" alt="info"></Icon>
+        <Icon
+          src="questionmark.svg"
+          alt="info"
+          data-cy="tooltip-icon"
+          size={3}
+        ></Icon>
       </OverlayTrigger>
-    </div>
+    </span>
   );
 }
 
