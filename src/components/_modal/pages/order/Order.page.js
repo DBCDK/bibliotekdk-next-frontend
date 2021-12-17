@@ -503,7 +503,7 @@ export function Order({
           </div>
           <div className={styles.email}>
             <label htmlFor="order-user-email">
-              <Text type="text1">
+              <Text type="text1" className={styles.textinline}>
                 {Translate({ context: "general", label: "email" })}
               </Text>
               {(isLoadingBranches ||
