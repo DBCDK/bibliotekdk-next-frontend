@@ -1,6 +1,4 @@
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-
 import Icon from "@/components/base/icon";
 import styles from "./TjoolTjip.module.css";
 import Text from "@/components/base/text";
@@ -14,8 +12,11 @@ export default function TjoolTjip({ placement = "bottom", labelToTranslate }) {
         placement={placement}
         trigger="click"
         overlay={
-          <Popover>
-            <div className={styles.tooltipcontainer}>
+          <Popover id={`tooltip-${labelToTranslate}`}>
+            <div
+              className={styles.tooltipcontainer}
+              data-cy="popover-container"
+            >
               <Text type="text3" lines={2} tag="span">
                 {Translate({ context: "tooltip", label: labelToTranslate })}
               </Text>
