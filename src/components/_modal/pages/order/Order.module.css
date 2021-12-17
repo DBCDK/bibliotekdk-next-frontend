@@ -121,7 +121,7 @@
 
 .tooltip{
   position: relative;
-  top: 5px;
+  top: var(--pt05);
   margin-left: var(--pt1);
 }
 
