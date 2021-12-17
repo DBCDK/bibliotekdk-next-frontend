@@ -1,5 +1,5 @@
 .tooltipcontainer {
-    padding: .375rem .75rem;
+    padding: var(--pt1) var(--pt1);
 }
 
 
