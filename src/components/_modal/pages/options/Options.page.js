@@ -90,7 +90,7 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
 // quickfix - @TODO do a proper fix
 function specialSort(a, b) {
   // fjernleje should be on top
-  if (b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+  if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
     return 1;
   }
   return 0;
