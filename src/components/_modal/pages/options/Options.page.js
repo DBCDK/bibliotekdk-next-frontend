@@ -87,6 +87,15 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
   return addi;
 }
 
+// quickfix - @TODO do a proper fix
+function specialSort(a, b) {
+  // fjernleje should be on top
+  if (b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+    return 1;
+  }
+  return 0;
+}
+
 export function Options({ data, isLoading, modal, context }) {
   if (isLoading) {
     return <Skeleton lines={3} className={styles.skeleton} />;
@@ -101,8 +110,8 @@ export function Options({ data, isLoading, modal, context }) {
     onlineAccess,
     context.orderPossible
   );
-
-  const orderedOnlineAccess = sortorder(addiOnlineAccess);
+  // quickfix - sort links from filmstriben - we want fjernleje on top
+  const orderedOnlineAccess = sortorder(addiOnlineAccess).sort(specialSort);
 
   return (
     orderedOnlineAccess && (
