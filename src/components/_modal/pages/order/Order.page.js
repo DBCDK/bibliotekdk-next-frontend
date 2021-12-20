@@ -541,6 +541,23 @@ export function Order({
                 <Text type="text3">{Translate(message)}</Text>
               </div>
             )}
+            {(isLoadingBranches ||
+              (authUser?.mail &&
+                lockedMessage &&
+                pickupBranch?.borrowerCheck)) && (
+              <div className={`${styles.emailMessage}`}>
+                <Text
+                  type="text3"
+                  skeleton={isLoadingBranches}
+                  lines={1}
+                  tag="span"
+                  className={styles.userStatusLink}
+                >
+                  {Translate(lockedMessage)}
+                  &nbsp;
+                </Text>
+              </div>
+            )}
           </div>
         </div>
       )}

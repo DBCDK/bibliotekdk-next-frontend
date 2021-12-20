@@ -1,7 +1,17 @@
 .tooltipcontainer {
     padding: var(--pt1) var(--pt1);
+    max-width: 240px;
 }
 
 .tooltipcursor{
     cursor: pointer;
 }
+
+.tooltipwrap{
+
+}
+
+.tooltipwrap:focus{
+    border-bottom:1px solid var(--blue);
+}
+
