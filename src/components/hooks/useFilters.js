@@ -10,8 +10,6 @@ import { useRouter } from "next/router";
 
 import useSWR from "swr";
 
-import usePrevious from "./usePrevious";
-
 /**
  *
  * Settings
@@ -27,12 +25,6 @@ let initialized = false;
 
 // Custom fetcher
 const fetcher = () => locale;
-
-// reset on q(uery) change
-const resetOnQueryChange = true;
-
-// reset if selected workType changed
-const resetOnWorkTypeChange = true;
 
 // current supported filter types
 export const types = [
@@ -149,23 +141,11 @@ function useFilters() {
     initialData: buildFilters(),
   });
 
-  // current query q
-  const curQuery = router.query.q;
-
-  // current workType
-  const curWorkType = router.query.workType;
-
-  // Previous query q
-  const prevQuery = usePrevious(curQuery);
-
-  // Previous workType
-  const prevWorkType = usePrevious(curWorkType);
-
   // represent all filters: All type names as key and empty array as value
   const base = buildFilters();
 
   /**
-   * Restore filters from query params
+   * Restore filters and query from query params
    */
   useEffect(() => {
     const q = _getQuery();
@@ -178,37 +158,7 @@ function useFilters() {
       // update locale state (swr)
       _setFilters(locale);
     }
-  }, []);
-
-  /**
-   * Reset filters on (q)uery change
-   */
-  useEffect(() => {
-    if (resetOnQueryChange) {
-      // check if current value differs from previous
-      if (prevQuery) {
-        // set locale object
-        locale = curWorkType ? { workType: [curWorkType] } : {};
-        // update locale state (swr)
-        _setFilters(locale);
-      }
-    }
-  }, [curQuery]);
-
-  /**
-   * Reset filters on workType change
-   */
-  useEffect(() => {
-    if (resetOnWorkTypeChange) {
-      // check if current value differs from previous
-      if (prevWorkType !== curWorkType) {
-        // set locale object
-        locale = curWorkType ? { workType: [curWorkType] } : {};
-        // update locale state (swr)
-        _setFilters(locale);
-      }
-    }
-  }, [curWorkType]);
+  }, [router.query]);
 
   /**
    * Update locale filters

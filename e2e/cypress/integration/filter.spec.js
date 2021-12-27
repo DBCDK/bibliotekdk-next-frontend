@@ -194,7 +194,9 @@ describe("Filter", () => {
   });
 
   it(`Restore filters when browser's back button is used`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=katte&materialType=avisartikel`);
+    cy.visit(
+      `${nextjsBaseUrl}/find?q=katte&workType=article&materialType=avisartikel`
+    );
 
     cy.log("Open and close filters modal");
     viewAllFilters();
