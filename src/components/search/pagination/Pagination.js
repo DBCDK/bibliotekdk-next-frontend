@@ -6,7 +6,9 @@ import LeftSvg from "@/public/icons/arrowleft.svg";
 import RightSvg from "@/public/icons/arrowright.svg";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
+import { useEffect, useState } from "react";
 
+const MAX_VISIBLE_PAGES = 10;
 /**
  * Pagination buttons
  *
@@ -17,7 +19,16 @@ export default function Pagination({
   numPages = 4,
   isLoading,
 }) {
-  numPages = Math.min(10, numPages);
+  const [offset, setOffset] = useState(1);
+
+  useEffect(() => {
+    if (currentPage - offset >= MAX_VISIBLE_PAGES) {
+      setOffset(currentPage - (MAX_VISIBLE_PAGES - 1));
+    } else if (currentPage - offset < 0) {
+      setOffset(currentPage);
+    }
+  }, [currentPage]);
+
   return (
     <React.Fragment>
       {numPages > 1 && numPages > currentPage && (
@@ -54,32 +65,34 @@ export default function Pagination({
           <LeftSvg />
         </div>
 
-        {Array.apply(null, Array(numPages)).map((v, index) => {
-          const page = index + 1;
-          return (
-            <Icon
-              key={index}
-              size={{ w: 4, h: 4 }}
-              bgColor={"var(--blue)"}
-              skeleton={false}
-              className={
-                !isLoading && page === currentPage ? styles.selected : ""
-              }
-              onClick={onChange && (() => onChange(page))}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && onChange) {
-                  onChange(page);
+        {Array.apply(null, Array(Math.min(numPages, MAX_VISIBLE_PAGES))).map(
+          (v, index) => {
+            const page = offset + index;
+            return (
+              <Icon
+                key={index}
+                size={{ w: 4, h: 4 }}
+                bgColor={"var(--blue)"}
+                skeleton={false}
+                className={
+                  !isLoading && page === currentPage ? styles.selected : ""
                 }
-              }}
-              skeleton={isLoading}
-              tabIndex="0"
-              data-cy={`page-${page}-button`}
-              alt=""
-            >
-              <span>{page}</span>
-            </Icon>
-          );
-        })}
+                onClick={onChange && (() => onChange(page))}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && onChange) {
+                    onChange(page);
+                  }
+                }}
+                skeleton={isLoading}
+                tabIndex="0"
+                data-cy={`page-${page}-button`}
+                alt=""
+              >
+                <span>{page}</span>
+              </Icon>
+            );
+          }
+        )}
         <div
           className={`${styles.arrow} ${
             !isLoading && currentPage < numPages ? "" : styles.hidden
