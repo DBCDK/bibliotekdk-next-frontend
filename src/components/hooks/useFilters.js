@@ -168,11 +168,13 @@ function useFilters() {
    * Restore filters from query params
    */
   useEffect(() => {
-    if (!initialized) {
-      // set initialized true, this prevents multiple mount call (multiple instances of hook)
-      initialized = true;
+    const q = _getQuery();
+    const initQuery = JSON.stringify(q);
+    if (initialized !== initQuery) {
+      // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
+      initialized = initQuery;
       // set locale object
-      locale = _getQuery();
+      locale = q;
       // update locale state (swr)
       _setFilters(locale);
     }
