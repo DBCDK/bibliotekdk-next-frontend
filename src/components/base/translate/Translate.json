@@ -661,6 +661,10 @@
         "da": "Læs anmeldelse",
         "en": "Read review"
       },
+      "alternateReviewLinkText": {
+        "da": "Læs på DBC webarkiv",
+        "en": "Read review on DBC webarchive"
+      },
       "materialReviewLinkText": {
         "da": "Læs hele bibliotekernes vurdering",
         "en": "Read the entire library's assessment"
