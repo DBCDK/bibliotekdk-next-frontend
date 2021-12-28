@@ -306,6 +306,10 @@
       "accessOpportunity": {
         "da": "De fleste folkebiblioteker giver adgang til artikler fra Infomedia",
         "en": "Most public libraries provide access to articles from Infomedia"
+      },
+      "accessOpportunity2": {
+        "da": "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement. ",
+        "en": "LABEL: mangler oversættelse"
       }
     },
     "footer": {

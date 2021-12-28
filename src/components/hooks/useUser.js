@@ -113,6 +113,7 @@ function useUserImpl() {
     isAuthenticated,
     loanerInfo,
     isGuestUser,
+    isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
       const newSession = merge({}, loanerInfo, obj);
       // Update global loaner info object
