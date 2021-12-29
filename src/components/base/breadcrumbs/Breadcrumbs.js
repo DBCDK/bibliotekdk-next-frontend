@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 
 import styles from "./Breadcrumbs.module.css";
+import React from "react";
 
 function Separator() {
   return (

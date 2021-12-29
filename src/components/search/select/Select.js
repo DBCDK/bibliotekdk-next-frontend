@@ -11,6 +11,7 @@ import Translate from "@/components/base/translate";
 import { cyKey } from "@/utils/trim";
 
 import styles from "./Select.module.css";
+import React from "react";
 
 export function Desktop({ options = [], onSelect, selected }) {
   return (
