@@ -1,4 +1,5 @@
-import { groupBy, flatten } from "lodash";
+import groupBy from "lodash/groupBy";
+import flatten from "lodash/flatten";
 
 export function sortManifestations(manifestations) {
   // materialType type priority list
