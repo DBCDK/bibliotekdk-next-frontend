@@ -41,11 +41,16 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
   // data has holdings for ONE agency only - filtered holdingsitem
   const branchHoldings = holdings?.branches?.result?.[0];
 
+  console.log(holdings, "HOLGINGS");
+  console.log(branch, "BRANCH");
+
   const color = branchHoldings?.holdingStatus?.lamp?.color;
   const message = branchHoldings?.holdingStatus?.lamp?.message;
   const firstholding = branchHoldings?.holdingStatus?.holdingItems?.find(
     (item) => item.expectedDelivery
   );
+
+  const showLink = message === "loc_no_holding";
   // expected delivery date
   const expectedDelivery =
     color === "yellow" && firstholding.expectedDelivery
@@ -57,6 +62,10 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
       red: Translate({
         context: "holdings",
         label: "label_not_for_loan",
+      }),
+      loc_no_holding: Translate({
+        context: "holdings",
+        label: "label_localizaion_no_holdings",
       }),
       green: Translate({
         context: "holdings",
@@ -102,13 +111,13 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
                 tag="span"
                 className={blinkingcolors.includes(color) ? styles.inline : ""}
               >
-                {messages(color, branch)}
+                {messages(message, branch)}
               </Text>
             </span>
-            {color === "none" && branch.branchWebsiteUrl && (
+            {showLink && branch.branchCatalogueUrl && (
               <span aria-live="polite" aria-busy="false">
                 <Link
-                  href={branch?.branchWebsiteUrl}
+                  href={branch?.branchCatalogueUrl}
                   target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
@@ -130,7 +139,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
 }
 
 export default function wrap({ props }) {
-  const { branch, pids, index, testing } = { ...props };
+  const { branch, pids, index, testing, branchId } = { ...props };
 
   const dummyData = {
     branches: {

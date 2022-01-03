@@ -58,9 +58,9 @@ export function Localizations({
                     key={branch.branchId}
                     props={{
                       ...context,
-                      branch: branch,
                       index: { idx },
                       testing: testing,
+                      branchId: branch.branchId,
                     }}
                   />
                 );
