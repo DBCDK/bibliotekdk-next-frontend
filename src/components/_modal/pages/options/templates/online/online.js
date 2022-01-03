@@ -10,11 +10,11 @@ export default function Online({ props }) {
 
   return (
     <li className={`${className} ${styles.item}`}>
-      {note && <Text type="text3">{note}</Text>}
       <Link
         border={{ bottom: { keepVisible: true } }}
         href={url}
         target="_blank"
+        className={styles.onlinelink}
       >
         <Text type="text1">
           {Translate({
@@ -24,7 +24,7 @@ export default function Online({ props }) {
           })}
         </Text>
       </Link>
-
+      {note && <Text type="text3">{note}</Text>}
       <Text type="text3">
         {Translate({
           context: "options",

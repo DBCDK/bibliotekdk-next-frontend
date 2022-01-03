@@ -1,5 +1,10 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
+function viewAllFilters() {
+  cy.get("[data-cy=view-all-filters]").click({ force: true });
+  // wait for transition to end
+  cy.get(".modal_open").should("be.visible");
+}
 describe("Filter", () => {
   beforeEach(function () {});
 
@@ -69,10 +74,7 @@ describe("Filter", () => {
   it.skip(`Can access filters on website`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=hest`);
 
-    cy.get("[data-cy=view-all-filters]").click({ force: true });
-    cy.get("[data-cy=filter-modal]").should("be.visible");
-
-    cy.wait(1000);
+    viewAllFilters();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
       force: true,
@@ -117,10 +119,7 @@ describe("Filter", () => {
   it(`Only show 4 specific filters on workType 'game'`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
 
-    cy.get("[data-cy=view-all-filters]").click({ force: true });
-    cy.get("[data-cy=filter-modal]").should("be.visible");
-
-    cy.wait(1000);
+    viewAllFilters();
 
     cy.get("[data-cy=list-facets]").children().should("have.length", 4);
   });
@@ -149,9 +148,7 @@ describe("Filter", () => {
       `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4%2Cplaystation+3%2Cplaystation+2&accessType=physical`
     );
 
-    cy.get("[data-cy=view-all-filters]").click({ force: true });
-
-    cy.wait(1000);
+    viewAllFilters();
     cy.get("[data-cy=clear-all-filters]").click();
 
     cy.wait(500);
@@ -195,5 +192,26 @@ describe("Filter", () => {
       .type("{enter}");
 
     cy.get("[data-cy=view-all-filters]").should("not.contain.text", "(3)");
+  });
+
+  it(`Restore filters when browser's back button is used`, () => {
+    cy.visit(
+      `${nextjsBaseUrl}/find?q=katte&workType=article&materialType=avisartikel`
+    );
+
+    cy.log("Open and close filters modal");
+    viewAllFilters();
+    cy.get("[data-cy=close-modal]").click();
+
+    cy.log("Ensure that 10 newspaper articles are on the first page");
+    cy.get('a [data-cy="text-avisartikel"]').should("have.length", 10);
+
+    cy.log("Visit article page and go back");
+    cy.get('a [data-cy="text-avisartikel"]').first().click();
+    cy.contains("Informationer og udgaver");
+    cy.go("back");
+
+    cy.log("We should still have 10 newspaper articles are on the first page");
+    cy.get('a [data-cy="text-avisartikel"]').should("have.length", 10);
   });
 });

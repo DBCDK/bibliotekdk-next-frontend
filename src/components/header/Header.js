@@ -197,11 +197,11 @@ export function Header({
                         prefix: "header-link",
                       })}
                       onClick={() => {
-                        filters.setQuery({ workType: [m] });
+                        filters.setQuery({ include: { workType: [m] } });
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.keyCode === 13) {
-                          filters.setQuery({ workType: [m] });
+                          filters.setQuery({ include: { workType: [m] } });
                         }
                       }}
                     >

@@ -21,7 +21,12 @@ import styles from "./Prompt.module.css";
  *
  * @returns {component}
  */
-export default function LoginPrompt({ title, description, signIn }) {
+export default function LoginPrompt({
+  title,
+  description,
+  buttonText = Translate({ context: "header", label: "login" }),
+  signIn,
+}) {
   return (
     <Container className={styles.prompt} fluid>
       <Row>
@@ -32,7 +37,7 @@ export default function LoginPrompt({ title, description, signIn }) {
           </Title>
           <Text type="text3">{description}</Text>
           <Button type="primary" size="large" onClick={signIn}>
-            {Translate({ context: "header", label: "login" })}
+            {buttonText}
           </Button>
           <Divider />
         </Col>

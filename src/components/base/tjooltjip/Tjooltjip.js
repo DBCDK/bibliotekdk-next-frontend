@@ -4,17 +4,31 @@ import styles from "./TjoolTjip.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 export default function TjoolTjip({
   placement = "bottom",
   labelToTranslate,
   customClass,
 }) {
+  const [show, setShow] = useState(false);
+  const toggle = (e) => {
+    setShow(!show);
+  };
+  const close = (e) => {
+    setShow(false);
+  };
+
   return (
-    <span className={`${styles.inline} ${customClass ? customClass : ""}`}>
+    <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
+        show={show}
+        trigger={["focus"]}
+        delayShow={300}
+        delayHide={150}
         placement={placement}
-        trigger="click"
+        rootClose={true}
+        onToggle={close}
         overlay={
           <Popover id={`tooltip-${labelToTranslate}`}>
             <div
@@ -28,12 +42,24 @@ export default function TjoolTjip({
           </Popover>
         }
       >
-        <Icon
-          src="questionmark.svg"
-          alt="info"
-          data-cy="tooltip-icon"
-          size={3}
-        ></Icon>
+        <span
+          tabIndex="0"
+          onClick={() => toggle()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              toggle();
+            }
+          }}
+          className={styles.tooltipwrap}
+        >
+          <Icon
+            src="questionmark.svg"
+            alt="info"
+            data-cy="tooltip-icon"
+            size={3}
+            className={styles.tooltipcursor}
+          ></Icon>
+        </span>
       </OverlayTrigger>
     </span>
   );

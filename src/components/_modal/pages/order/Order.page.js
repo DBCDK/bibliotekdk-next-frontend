@@ -503,7 +503,7 @@ export function Order({
           </div>
           <div className={styles.email}>
             <label htmlFor="order-user-email">
-              <Text type="text1">
+              <Text type="text1" className={styles.textinline}>
                 {Translate({ context: "general", label: "email" })}
               </Text>
               {(isLoadingBranches ||
@@ -539,6 +539,23 @@ export function Order({
             {message && (
               <div className={`${styles.emailMessage} ${validClass}`}>
                 <Text type="text3">{Translate(message)}</Text>
+              </div>
+            )}
+            {(isLoadingBranches ||
+              (authUser?.mail &&
+                lockedMessage &&
+                pickupBranch?.borrowerCheck)) && (
+              <div className={`${styles.emailMessage}`}>
+                <Text
+                  type="text3"
+                  skeleton={isLoadingBranches}
+                  lines={1}
+                  tag="span"
+                  className={styles.userStatusLink}
+                >
+                  {Translate(lockedMessage)}
+                  &nbsp;
+                </Text>
               </div>
             )}
           </div>

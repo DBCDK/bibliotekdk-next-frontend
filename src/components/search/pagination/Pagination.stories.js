@@ -16,7 +16,11 @@ export function Default() {
         Pagination for results at the search page
       </StoryDescription>
       <div style={{ maxWidth: "800px", margin: "auto" }}>
-        <Pagination currentPage={currentPage} onChange={setCurrentPage} />
+        <Pagination
+          currentPage={currentPage}
+          numPages={15}
+          onChange={setCurrentPage}
+        />
       </div>
     </div>
   );
