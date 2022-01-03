@@ -23,9 +23,9 @@ import { facets, hitcount } from "@/lib/api/search.fragments";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 
-function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
+function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
   // selected facet ("category")
-  const { facet } = context;
+  const { name, values } = data;
 
   // handle term select
   function handleTermSelect(title) {
@@ -39,7 +39,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
       copy.push(title);
     }
 
-    onSelect({ [facet.name]: copy });
+    onSelect({ [name]: copy });
   }
 
   return (
@@ -49,7 +49,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
       <Text type="text1" className={styles.category}>
         {Translate({
           context: "facets",
-          label: `label-${facet.name}`,
+          label: `label-${name}`,
         })}
       </Text>
       <List.Group
@@ -57,7 +57,7 @@ function SelectedFilter({ isLoading, terms, onSelect, modal, context }) {
         enabled={!isLoading}
         data-cy="list-terms"
       >
-        {facet?.values.map((term, idx) => {
+        {values.map((term, idx) => {
           const title = term.term;
           const key = term.key;
           const count = term.count || "-";
@@ -150,7 +150,7 @@ export function Filter(props) {
   const hitcount = data?.search?.hitcount || null;
 
   // Facet will contain a specific selected facet/category, if any selected
-  const { facet } = context;
+  const { facet, q } = context;
 
   // Global excluded categories
   const excluded = ["workType"];
@@ -158,10 +158,17 @@ export function Filter(props) {
   // extract workType if any selected
   const workType = selected.workType?.[0];
 
+  // currently
+  const selectedFacet = facet && facets.find((obj) => obj.name === facet?.name);
+
   return (
     <div className={`${styles.filter}`} data-cy="filter-modal">
       {facet ? (
-        <SelectedFilter terms={selected?.[facet.name] || []} {...props} />
+        <SelectedFilter
+          {...props}
+          terms={selected?.[facet.name] || []}
+          data={selectedFacet}
+        />
       ) : (
         <>
           <Top modal={modal} back={false} />
@@ -218,7 +225,7 @@ export function Filter(props) {
                   <List.Select
                     key={`${facet.name}-${idx}`}
                     selected={false}
-                    onSelect={() => modal.push("filter", { facet })}
+                    onSelect={() => modal.push("filter", { facet, q })}
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
