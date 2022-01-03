@@ -25,7 +25,14 @@ import styles from "./Filter.module.css";
 
 function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
   // selected facet ("category")
-  const { name, values } = data;
+  // const { name, values } = data;
+
+  const name = data?.name;
+  const values = data?.values || [];
+
+  if (!name) {
+    return null;
+  }
 
   // handle term select
   function handleTermSelect(title) {
