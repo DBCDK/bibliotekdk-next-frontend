@@ -55,6 +55,7 @@ export function branchHoldings({ branchId, pids }) {
                 agencyId
                 branchId
                 branchWebsiteUrl
+                branchCatalogueUrl
                 holdingStatus(pids:$pids){
                   count
                   lamp{color message}

@@ -161,7 +161,7 @@ function useFilters() {
   // Previous workType
   const prevWorkType = usePrevious(curWorkType);
 
-  // represent all filters: All type names as key and empty array as value
+  // rep  resent all filters: All type names as key and empty array as value
   const base = buildFilters();
 
   /**
