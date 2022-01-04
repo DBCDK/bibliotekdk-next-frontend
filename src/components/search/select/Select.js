@@ -91,7 +91,11 @@ export function Mobile({
         }}
         border={false}
       >
-        <Icon src="settings.svg" size={2} />
+        <Icon
+          src="settings.svg"
+          alt={Translate({ context: "search", label: "filtersImageAlt" })}
+          size={2}
+        />
         <Link
           onClick={(e) => e.preventDefault()}
           border={{ bottom: { keepVisible: true } }}

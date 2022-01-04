@@ -24,6 +24,7 @@ export function Checkbox({
   disabled = false,
   onChange,
   dataCy = "checkbox",
+  ariaLabel = false,
   readOnly = false,
   required,
 }) {
@@ -67,6 +68,7 @@ export function Checkbox({
       <div className={styles.border}>
         <div className={styles.bg} />
       </div>
+      <div className={styles.label}>{ariaLabel}</div>
     </label>
   );
 }

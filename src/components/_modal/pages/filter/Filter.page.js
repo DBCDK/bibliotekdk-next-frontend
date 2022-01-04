@@ -60,6 +60,7 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
         })}
       </Text>
       <List.Group
+        label={Translate({ context: "facets", label: "terms-group-label" })}
         className={`${styles.group} ${styles.terms}`}
         enabled={!isLoading}
         data-cy="list-terms"
@@ -79,15 +80,22 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
               label={title}
               className={`${styles.select} ${animations["on-hover"]}`}
               includeArrows={false}
+              labelledBy={`checkbox-item-${name}-${idx}`}
             >
               <div className={styles.wrap}>
                 <Checkbox
                   checked={isCheked}
                   id={`checkbox-${title}`}
+                  ariaLabel={Translate({
+                    context: "facets",
+                    label: "checkbox-aria-label",
+                    vars: [title],
+                  })}
                   readOnly
                   tabIndex="-1"
                 />
                 <Text
+                  id={`checkbox-item-${name}-${idx}`}
                   lines={1}
                   skeleton={isLoading}
                   type="text3"
@@ -205,6 +213,10 @@ export function Filter(props) {
             enabled={!isLoading}
             data-cy="list-facets"
             className={styles.group}
+            label={Translate({
+              context: "facets",
+              label: "facets-group-label",
+            })}
           >
             {facets
               .map((facet, idx) => {
@@ -236,9 +248,11 @@ export function Filter(props) {
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
+                    labelledBy={`checkbox-item-${facet.name}`}
                   >
                     <span>
                       <Text
+                        id={`checkbox-item-${facet.name}`}
                         lines={1}
                         skeleton={isLoading}
                         type="text1"
