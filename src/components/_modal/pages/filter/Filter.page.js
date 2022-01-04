@@ -60,6 +60,7 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
         })}
       </Text>
       <List.Group
+        label={Translate({ context: "facets", label: "terms-group-label" })}
         className={`${styles.group} ${styles.terms}`}
         enabled={!isLoading}
         data-cy="list-terms"
@@ -79,6 +80,7 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
               label={title}
               className={`${styles.select} ${animations["on-hover"]}`}
               includeArrows={false}
+              labelledBy={`checkbox-item-${name}-${idx}`}
             >
               <div className={styles.wrap}>
                 <Checkbox
@@ -89,6 +91,7 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
                   tabIndex="-1"
                 />
                 <Text
+                  id={`checkbox-item-${name}-${idx}`}
                   lines={1}
                   skeleton={isLoading}
                   type="text3"
@@ -204,9 +207,12 @@ export function Filter(props) {
 
           <List.Group
             enabled={!isLoading}
-            data-cy="list-facets"
+            data-cy="facets"
             className={styles.group}
-            id="facet-list"
+            label={Translate({
+              context: "facets",
+              label: "facets-group-label",
+            })}
           >
             {facets
               .map((facet, idx) => {
@@ -238,9 +244,11 @@ export function Filter(props) {
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
+                    labelledBy={`checkbox-item-${facet.name}`}
                   >
                     <span>
                       <Text
+                        id={`checkbox-item-${facet.name}`}
                         lines={1}
                         skeleton={isLoading}
                         type="text1"

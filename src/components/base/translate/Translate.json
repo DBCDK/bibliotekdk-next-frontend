@@ -1128,6 +1128,14 @@
       "label-sheetmusic": {
         "da": "Noder",
         "en": "Sheet music"
+      },
+      "facets-group-label": {
+        "da": "Liste med filtre",
+        "en": "List with filters"
+      },
+      "terms-group-label": {
+        "da": "Liste med termer",
+        "en": "List with Terms"
       }
     },
     "modal": {

@@ -73,9 +73,7 @@ export function Checkbox({
       <div className={styles.border}>
         <div className={styles.bg} />
       </div>
-      <div aria-labelledby={`label-${id}`} className={styles.label}>
-        {ariaLabel}
-      </div>
+      <div className={styles.label}>{ariaLabel}</div>
     </label>
   );
 }
