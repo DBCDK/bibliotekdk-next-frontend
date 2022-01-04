@@ -484,8 +484,8 @@
     },
     "holdings": {
       "label_localizaion_no_holdings": {
-        "da": "Måske på hylden. Er hjemme på mindst en afdeling biblioteket",
-        "en": "May be on shelf. At home in a branch or two"
+        "da": "Ikke på hylden. Er hjemme på en anden afdeling af %s",
+        "en": "Ikke be on shelf. At home at another branch of %s"
       },
       "label_localizations_title": {
         "da": "Se hvor materialet er",

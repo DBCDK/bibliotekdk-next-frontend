@@ -28,16 +28,26 @@ function ItemSkeleton({ index }) {
   );
 }
 
-function parseBranchLookupUrl(branch, pids) {
-  if (branch.branchCatalogueUrl) {
-    if (branch.branchId.startsWith("7")) {
-      return `${branch.branchCatalogueUrl}ting/object/${pids[0]}`;
-    }
+function parseBranchLookupUrl(branch, holdings, localIds) {
+  // (strpos($lookupUrl, '_IDNR_') !== FALSE) ? str_replace('_IDNR_', $localIdentifier, $lookupUrl) : $lookupUrl . $localIdentifier,
+
+  console.log(localIds, "LOCALIDS");
+
+  const lookupUrl = holdings.lookupUrl || null;
+  const localIdentifier = (localIds && localIds[0]?.localIdentifier) || null;
+  if (!lookupUrl || !localIds) {
+    return branch.branchWebsiteUrl || branch.agencyUrl || null;
   }
-  if (!branch.branchCatalogueUrl && branch.branchWebsiteUrl) {
-    return branch.branchWebsiteUrl;
+
+  const itemLink =
+    lookupUrl &&
+    lookupUrl.indexOf("_IDNR_") !== -1 &&
+    lookupUrl.replace("_IDNR_", localIds.localIdentifier);
+  if (!itemLink) {
+    return lookupUrl + localIdentifier;
   }
-  return null;
+
+  return itemLink;
 }
 
 /**
@@ -54,34 +64,32 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
   const branchHoldings = holdings?.branches?.result?.[0];
   console.log(branchHoldings, "BRANCHHOLDING");
 
-  //console.log(holdings, "HOLGINGS");
-  //console.log(branch, "BRANCH");
-
   const color = branchHoldings?.holdingStatus?.lamp?.color;
-  const message = branchHoldings?.holdingStatus?.lamp?.message;
+  const label = branchHoldings?.holdingStatus?.lamp?.message;
   const firstholding = branchHoldings?.holdingStatus?.holdingItems?.find(
     (item) => item.expectedDelivery
   );
 
-  const showLink =
-    message === "loc_no_holding" && parseBranchLookupUrl(branch, pids);
+  console.log(color, "COLOR");
+
+  const lookupurl = parseBranchLookupUrl(
+    branch,
+    branchHoldings,
+    branchHoldings.holdingStatus.agencyHoldings
+  );
+  const showLink = label === "loc_no_holding" && lookupurl;
   // expected delivery date
   const expectedDelivery =
-    color === "yellow" && firstholding.expectedDelivery
+    color === "yellow" && firstholding?.expectedDelivery
       ? firstholding.expectedDelivery
       : "";
 
-  console.log(message, "MESSAGE");
-  console.log(
-    showLink,
-    branch,
-    branch.branchCatalogueUrl,
-    branch.branchId,
-    branch.branchWebsiteUrl,
-    "URL"
-  );
-  const messages = (color, branch) => {
+  const messages = (label, branch) => {
     const translated = {
+      no_loc_no_holding: Translate({
+        context: "holdings",
+        label: "label_no_holdings",
+      }),
       red: Translate({
         context: "holdings",
         label: "label_not_for_loan",
@@ -89,12 +97,13 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
       loc_no_holding: Translate({
         context: "holdings",
         label: "label_localizaion_no_holdings",
+        vars: [branchHoldings.agencyName],
       }),
-      green: Translate({
+      loc_holding: Translate({
         context: "holdings",
         label: "label_at_home",
       }),
-      yellow: Translate({
+      loc_no_hold_expect: Translate({
         context: "holdings",
         label: "label_on_loan",
         vars: [expectedDelivery],
@@ -110,10 +119,10 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
       }),
     };
 
-    return translated[color];
+    return translated[label];
   };
 
-  const blinkingcolors = ["red", "green", "yellow"];
+  const blinkingcolors = ["red", "green", "yellow", "none"];
 
   return (
     <div className={styles.itemwrap} data-cy={`holdings-item-${index.idx}`}>
@@ -134,13 +143,13 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
                 tag="span"
                 className={blinkingcolors.includes(color) ? styles.inline : ""}
               >
-                {messages(message, branch)}
+                {messages(label, branch)}
               </Text>
             </span>
             {showLink && (
-              <span aria-live="polite" aria-busy="false">
+              <div aria-live="polite" aria-busy="false">
                 <Link
-                  href={parseBranchLookupUrl(branch, pids)}
+                  href={lookupurl}
                   target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
@@ -151,7 +160,7 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
                     })}
                   </Text>
                 </Link>
-              </span>
+              </div>
             )}
           </>
         )}
