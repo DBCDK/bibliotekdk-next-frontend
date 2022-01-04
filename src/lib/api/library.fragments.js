@@ -47,6 +47,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
                 postalCode
                 pickupAllowed
                 branchWebsiteUrl
+                branchCatalogueUrl
                 highlights {
                     key
                     value
