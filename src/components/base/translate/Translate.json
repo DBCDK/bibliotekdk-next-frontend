@@ -1136,6 +1136,10 @@
       "terms-group-label": {
         "da": "Liste med termer",
         "en": "List with Terms"
+      },
+      "checkbox-aria-label": {
+        "da": "Tjekboks for %s",
+        "en": "Checkbox for %s"
       }
     },
     "modal": {

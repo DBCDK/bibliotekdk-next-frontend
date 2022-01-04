@@ -86,7 +86,11 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
                 <Checkbox
                   checked={isCheked}
                   id={`checkbox-${title}`}
-                  ariaLabel={`Checkbox for ${title}`}
+                  ariaLabel={Translate({
+                    context: "facets",
+                    label: "checkbox-aria-label",
+                    vars: [title],
+                  })}
                   readOnly
                   tabIndex="-1"
                 />

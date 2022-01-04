@@ -43,13 +43,8 @@ export function Checkbox({
   const readOnlyClass = readOnly ? styles.readOnly : "";
   const invalidClass = !disabledClass && invalid ? styles.error : "";
 
-  // escape id
-  // labelledby throws on spaced names/ids
-  id = id.split(" ").join("-");
-
   return (
     <label
-      id={`label-${id}`}
       htmlFor={id}
       className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${invalidClass} ${className}`}
     >
