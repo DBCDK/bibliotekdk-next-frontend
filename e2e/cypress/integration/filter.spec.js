@@ -70,15 +70,13 @@ describe("Filter", () => {
     });
   });
 
+  // Der er filtre som ikke længere vil være der - skal rettes før det tages i brug i prod
   it(`Can access filters on website`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=hest`);
 
     viewAllFilters();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
-      force: true,
-    });
-    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click({
       force: true,
     });
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click({
@@ -88,6 +86,9 @@ describe("Filter", () => {
       force: true,
     });
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click({
+      force: true,
+    });
+    cy.get("[data-cy=list-terms] [data-cy=list-button-4]").click({
       force: true,
     });
     cy.get("[data-cy=modal-back]").click();

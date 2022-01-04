@@ -30,6 +30,10 @@ export default function Input({
   onSubmit,
   className = "",
 }) {
+  const placeholder = Translate({
+    context: "help",
+    label: "help-search-placeholder",
+  });
   return (
     <form
       className={`${styles.form} ${className}`}
@@ -49,6 +53,7 @@ export default function Input({
             context: "help",
             label: "help-search-placeholder",
           })}
+          aria-label={placeholder}
         ></input>
         <span
           className={`${styles.clear} ${value ? styles.visible : ""}`}

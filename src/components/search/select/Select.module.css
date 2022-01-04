@@ -41,7 +41,8 @@
 }
 
 .dropdowntoggle:focus {
-  border-color: var(--blue);
+  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
 }
 
 .dropdowntoggle {
