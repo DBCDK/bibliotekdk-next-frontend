@@ -28,6 +28,18 @@ function ItemSkeleton({ index }) {
   );
 }
 
+function parseBranchLookupUrl(branch, pids) {
+  if (branch.branchCatalogueUrl) {
+    if (branch.branchId.startsWith("7")) {
+      return `${branch.branchCatalogueUrl}ting/object/${pids[0]}`;
+    }
+  }
+  if (!branch.branchCatalogueUrl && branch.branchWebsiteUrl) {
+    return branch.branchWebsiteUrl;
+  }
+  return null;
+}
+
 /**
  * Localization overview for given branch with given holdings
  * @param branch
@@ -36,13 +48,14 @@ function ItemSkeleton({ index }) {
  * @return {JSX.Element}
  * @constructor
  */
-export function LocalizationItem({ branch, holdings, isLoading, index }) {
+export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
   const branchHoldings = holdings?.branches?.result?.[0];
+  console.log(branchHoldings, "BRANCHHOLDING");
 
-  console.log(holdings, "HOLGINGS");
-  console.log(branch, "BRANCH");
+  //console.log(holdings, "HOLGINGS");
+  //console.log(branch, "BRANCH");
 
   const color = branchHoldings?.holdingStatus?.lamp?.color;
   const message = branchHoldings?.holdingStatus?.lamp?.message;
@@ -50,13 +63,23 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
     (item) => item.expectedDelivery
   );
 
-  const showLink = message === "loc_no_holding";
+  const showLink =
+    message === "loc_no_holding" && parseBranchLookupUrl(branch, pids);
   // expected delivery date
   const expectedDelivery =
     color === "yellow" && firstholding.expectedDelivery
       ? firstholding.expectedDelivery
       : "";
 
+  console.log(message, "MESSAGE");
+  console.log(
+    showLink,
+    branch,
+    branch.branchCatalogueUrl,
+    branch.branchId,
+    branch.branchWebsiteUrl,
+    "URL"
+  );
   const messages = (color, branch) => {
     const translated = {
       red: Translate({
@@ -114,10 +137,10 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
                 {messages(message, branch)}
               </Text>
             </span>
-            {showLink && branch.branchCatalogueUrl && (
+            {showLink && (
               <span aria-live="polite" aria-busy="false">
                 <Link
-                  href={branch?.branchCatalogueUrl}
+                  href={parseBranchLookupUrl(branch, pids)}
                   target="_blank"
                   border={{ top: false, bottom: { keepVisible: true } }}
                 >
@@ -280,18 +303,19 @@ export default function wrap({ props }) {
   const { data, isLoading } = !testing
     ? useData(
         branchFragments.branchHoldings({
-          branchId: branch.branchId,
+          branchId: branchId,
           pids: pids,
         })
       )
     : {
-        data: dummyHoldings[branch.branchId],
+        data: dummyHoldings[branchId],
         isLoading: false,
       };
 
   const holdingsData = isLoading ? dummyData : data;
   return (
     <LocalizationItem
+      pids={pids}
       branch={branch}
       holdings={holdingsData}
       isLoading={isLoading}

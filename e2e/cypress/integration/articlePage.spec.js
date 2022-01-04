@@ -155,6 +155,20 @@ describe("ArticlePage", () => {
           }
         });
       });
+      cy.fixture("branchUserParameters.json").then((fixture) => {
+        cy.intercept("POST", "/graphql", (req) => {
+          if (req?.body?.variables?.branchId) {
+            req.reply(fixture);
+          }
+        });
+      });
+      cy.fixture("sessionUserParameters.json").then((fixture) => {
+        cy.intercept("POST", "/graphql", (req) => {
+          if (req.body.query.includes("session {")) {
+            req.reply(fixture);
+          }
+        });
+      });
 
       // Will mock user data
       cy.login();
@@ -163,11 +177,9 @@ describe("ArticlePage", () => {
         `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846`
       );
 
+      cy.contains("Testbiblioteker giver ikke adgang til at læse artiklen");
       cy.contains(
-        "DBCs testbiblioteker giver ikke adgang til at læse artiklen"
-      );
-      cy.contains(
-        "De fleste folkebiblioteker giver adgang til artikler fra Infomedia"
+        "Er du bruger ved et andet bibliotek? Så log ind der og se om de har abonnement."
       );
     });
 

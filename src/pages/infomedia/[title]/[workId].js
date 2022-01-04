@@ -15,14 +15,14 @@ import {
 import Translate from "@/components/base/translate";
 
 import LoginPrompt from "@/components/login/prompt";
-import { branchesForUser } from "@/lib/api/user.fragments";
 import { useModal } from "@/components/_modal";
+import { branchUserParameters } from "@/lib/api/branches.fragments";
 
 export function InfomediaArticle(infomediaData) {
   const {
     publicInf: publicData,
     privateInf: privateData,
-    agencies,
+    agencyName,
     rating,
     user,
     modal,
@@ -32,7 +32,6 @@ export function InfomediaArticle(infomediaData) {
   const workPublic = publicData?.data?.work;
   const manifestationPublic = publicData?.data?.work?.manifestations?.[0];
   const hasArticle = privateData?.data?.infomediaContent?.length > 0;
-  const agencyName = agencies?.data?.user?.agency?.result?.[0]?.agencyName;
 
   const articles = parseArticles(manifestationPublic, workPublic, privateData);
 
@@ -54,7 +53,7 @@ export function InfomediaArticle(infomediaData) {
             );
           })}
 
-          {!user.isAuthenticated && (
+          {!user.isLoggedIn && (
             <LoginPrompt
               title={Translate({ context: "articles", label: "getAccess" })}
               description={Translate({
@@ -64,7 +63,7 @@ export function InfomediaArticle(infomediaData) {
               signIn={() => modal.push("login")}
             />
           )}
-          {user.isAuthenticated && workPublic && !hasArticle && (
+          {user.isLoggedIn && workPublic && !hasArticle && (
             <LoginPrompt
               title={Translate({
                 context: "articles",
@@ -73,7 +72,11 @@ export function InfomediaArticle(infomediaData) {
               })}
               description={Translate({
                 context: "articles",
-                label: "accessOpportunity",
+                label: "accessOpportunity2",
+              })}
+              buttonText={Translate({
+                context: "order",
+                label: "change-pickup-digital-copy-link",
               })}
               signIn={() => modal.push("login")}
             />
@@ -153,6 +156,7 @@ export default function wrap() {
   const pid = reviewPid ? reviewPid : parseForPid(workId);
 
   const user = useUser();
+  const pickupBranch = user?.loanerInfo?.pickupBranch;
 
   const infomediaPublic = useData(
     workId && infomediaArticlePublicInfo({ workId })
@@ -169,12 +173,14 @@ export default function wrap() {
   const infomediaPrivate = useData(
     user.isAuthenticated && workId && infomediaArticle({ pid })
   );
-  const userAgencise = useData(user.isAuthenticated && branchesForUser());
+  const branchRes = useData(
+    pickupBranch && branchUserParameters({ branchId: pickupBranch })
+  );
 
   const infomediaData = {
     privateInf: infomediaPrivate,
     publicInf: infomediaPublic,
-    agencies: userAgencise,
+    agencyName: branchRes?.data?.branches?.result?.[0]?.agencyName,
     rating: rating || null,
     user,
     modal,

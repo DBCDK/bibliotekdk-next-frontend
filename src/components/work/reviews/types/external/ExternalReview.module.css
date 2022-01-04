@@ -57,6 +57,9 @@
 .url a {
   margin: 0 0 0 var(--pt2);
 }
+.alternateUrl {
+  padding-top: var(--pt2);
+}
 
 /* Skeleton */
 

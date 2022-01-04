@@ -102,6 +102,30 @@ export function ExternalReview({
             </Link>
           </Col>
         )}
+        {data.alternateUrl && (
+          <Col xs={12} className={`${styles.url} ${styles.alternateUrl}`}>
+            <Icon
+              src="chevron.svg"
+              size={{ w: 2, h: "auto" }}
+              skeleton={skeleton}
+              alt=""
+            />
+            <Link
+              href={data.alternateUrl}
+              target="_blank"
+              onFocus={onFocus}
+              disabled={!data.alternateUrl}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              <Text type="text2" skeleton={skeleton}>
+                {Translate({
+                  ...context,
+                  label: "alternateReviewLinkText",
+                })}
+              </Text>
+            </Link>
+          </Col>
+        )}
       </Row>
     </Col>
   );

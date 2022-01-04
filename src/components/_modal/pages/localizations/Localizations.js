@@ -61,6 +61,7 @@ export function Localizations({
                       index: { idx },
                       testing: testing,
                       branchId: branch.branchId,
+                      branch: branch,
                     }}
                   />
                 );

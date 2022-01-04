@@ -302,6 +302,7 @@ export function reviews({ workId }) {
               media
               rating
               url
+              alternateUrl
             }
             ... on ReviewMatVurd {
               author

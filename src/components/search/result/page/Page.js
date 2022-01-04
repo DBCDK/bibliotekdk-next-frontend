@@ -54,7 +54,7 @@ export default function Wrap({ q, page, onWorkClick }) {
   const { filters } = useFilters();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(q && fast({ q, offset: 0, limit, filters }));
+  const fastResponse = useData(q && fast({ q, offset, limit, filters }));
   const allResponse = useData(q && all({ q, limit, offset, filters }));
 
   if (fastResponse.error || allResponse.error) {
