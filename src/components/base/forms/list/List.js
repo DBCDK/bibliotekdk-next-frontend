@@ -95,6 +95,7 @@ function Select({
   disabled,
   onDisabled,
   label,
+  labelledBy,
   onSelect,
   selected,
   _ref,
@@ -140,7 +141,7 @@ function Select({
       ) : (
         onDisabled
       )}
-      <div id="list-label" className={styles.label}>
+      <div aria-labelledby={labelledBy} className={styles.label}>
         {label}
       </div>
     </div>
@@ -155,7 +156,7 @@ Select.propTypes = {
   _ref: PropTypes.func,
 };
 
-function Group({ children, enabled = true, ...props }) {
+function Group({ children, enabled = true, id = "group", ...props }) {
   const childrenRef = useRef([]);
 
   useEffect(() => {
@@ -182,7 +183,7 @@ function Group({ children, enabled = true, ...props }) {
     <div
       data-cy={props["data-cy"]}
       role="radiogroup"
-      aria-labelledby="list-label"
+      id={id}
       className={`${styles.group} ${
         enabled ? styles.enabled : styles.disabled
       } ${props.className}`}
@@ -203,6 +204,7 @@ function Group({ children, enabled = true, ...props }) {
     >
       {React.Children.map(children, (child, index) =>
         React.cloneElement(child, {
+          labelledBy: id,
           _ref: (ref) => (childrenRef.current[index] = ref),
           "data-cy": "list-button-" + index,
           disabled: enabled === false || child.props.disabled,

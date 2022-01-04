@@ -749,6 +749,10 @@
         "da": "Filtre (%s)",
         "en": "LABEL: mangler oversættelse"
       },
+      "filtersImageAlt": {
+        "da": "Åben filtre",
+        "en": "Open filters"
+      },
       "showXResults": {
         "da": "Vis %s resultater",
         "en": "Show %s results"

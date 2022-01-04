@@ -84,6 +84,7 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
                 <Checkbox
                   checked={isCheked}
                   id={`checkbox-${title}`}
+                  ariaLabel={`Checkbox for ${title}`}
                   readOnly
                   tabIndex="-1"
                 />
@@ -205,6 +206,7 @@ export function Filter(props) {
             enabled={!isLoading}
             data-cy="list-facets"
             className={styles.group}
+            id="facet-list"
           >
             {facets
               .map((facet, idx) => {

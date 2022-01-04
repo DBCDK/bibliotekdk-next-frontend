@@ -50,7 +50,11 @@ export function QuickFilters({
               }}
               border={false}
             >
-              <Icon src="settings.svg" size={2} />
+              <Icon
+                src="settings.svg"
+                size={2}
+                alt={Translate({ context: "search", label: "filtersImageAlt" })}
+              />
               <Link
                 onClick={(e) => e.preventDefault()}
                 border={{ bottom: { keepVisible: true } }}

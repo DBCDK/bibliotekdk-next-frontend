@@ -62,3 +62,7 @@
 .input:checked ~ .border .bg {
   background-color: var(--blue);
 }
+
+.label {
+  display: none;
+}

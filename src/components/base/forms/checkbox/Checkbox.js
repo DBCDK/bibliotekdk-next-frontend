@@ -24,6 +24,7 @@ export function Checkbox({
   disabled = false,
   onChange,
   dataCy = "checkbox",
+  ariaLabel = false,
   readOnly = false,
   required,
 }) {
@@ -42,8 +43,13 @@ export function Checkbox({
   const readOnlyClass = readOnly ? styles.readOnly : "";
   const invalidClass = !disabledClass && invalid ? styles.error : "";
 
+  // escape id
+  // labelledby throws on spaced names/ids
+  id = id.split(" ").join("-");
+
   return (
     <label
+      id={`label-${id}`}
       htmlFor={id}
       className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${invalidClass} ${className}`}
     >
@@ -66,6 +72,9 @@ export function Checkbox({
       />
       <div className={styles.border}>
         <div className={styles.bg} />
+      </div>
+      <div aria-labelledby={`label-${id}`} className={styles.label}>
+        {ariaLabel}
       </div>
     </label>
   );
