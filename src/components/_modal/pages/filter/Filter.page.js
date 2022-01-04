@@ -211,7 +211,7 @@ export function Filter(props) {
 
           <List.Group
             enabled={!isLoading}
-            data-cy="facets"
+            data-cy="list-facets"
             className={styles.group}
             label={Translate({
               context: "facets",
