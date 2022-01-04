@@ -95,19 +95,9 @@ export function MaterialReview({
                   <Text type="text3" skeleton={skeleton} lines={1}>
                     {Translate({ context: "general", label: "by" })}
                   </Text>
-                  <Link
-                    target="_blank"
-                    disabled={true}
-                    border={
-                      !skeleton
-                        ? { top: false, bottom: { keepVisible: true } }
-                        : false
-                    }
-                  >
-                    <Text type="text3" skeleton={skeleton} lines={1}>
-                      {data.author}
-                    </Text>
-                  </Link>
+                  <Text type="text3" skeleton={skeleton} lines={1}>
+                    {data.author}
+                  </Text>
                 </span>
               </Col>
             </Row>

@@ -26,6 +26,7 @@ function Text({
   onClick = null,
   dataCy = null,
   tabIndex = null,
+  id,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -54,6 +55,7 @@ function Text({
 
   return (
     <Tag
+      id={id}
       ref={el}
       className={`${styles.text} ${styles[type]} ${className} ${
         clamp && styles.clamp
@@ -115,6 +117,7 @@ export default function Container(props) {
 
 // PropTypes for the component
 Container.propTypes = {
+  id: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.array,

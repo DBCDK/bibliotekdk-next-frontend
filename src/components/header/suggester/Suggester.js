@@ -180,23 +180,17 @@ function renderSuggestion(suggestion, query, skeleton) {
 }
 
 /**
- * Custom input field
+ * Returns placeholder for suggester input field
  *
+ * @param {boolean} isMobile
+ * @param {string} selectedMaterial
+ * @returns {string}
  */
-function renderInputComponent(
-  inputProps,
-  isMobile,
-  selectedMaterial,
-  onClose,
-  onClear
-) {
-  // Set placeholder according to device type
+function getPlaceholder(isMobile, selectedMaterial) {
   let placeholder = Translate({
     ...context,
     label: isMobile ? "placeholderMobile" : "placeholder",
   });
-
-  // Doublecheck for selectedMaterial - In storybook suggester, selectedMaterial will be null and we therefor want to keep the previous placeholder)
   if (selectedMaterial) {
     const isAll = selectedMaterial === "all";
 
@@ -214,7 +208,21 @@ function renderInputComponent(
       });
     }
   }
+  return placeholder;
+}
 
+/**
+ * Custom input field
+ *
+ */
+function renderInputComponent(
+  inputProps,
+  isMobile,
+  selectedMaterial,
+  onClose,
+  onClear
+) {
+  const placeholder = getPlaceholder(isMobile, selectedMaterial);
   const props = {
     ...inputProps,
     id: "suggester-input",
@@ -284,6 +292,8 @@ export function Suggester({
   clearHistory = null,
   selectedMaterial = null,
 }) {
+  const placeholder = getPlaceholder(isMobile, selectedMaterial);
+
   // Make copy of all suggestion objects
   // react-autosuggest will mutate these objects,
   // and data from swr must not be mutated (may lead to endless loop)
@@ -324,28 +334,16 @@ export function Suggester({
   }, [className]);
 
   useEffect(() => {
-    if (selectedMaterial) {
-      // This is for accessibility only
-      // react-autosuggest doesn't seem to support
-      // aria-label on the wrapper div. Hence we do this..
-      const wrapper =
-        document.getElementById("suggester-input")?.parentNode?.parentNode;
+    // This is for accessibility only
+    // react-autosuggest doesn't seem to support
+    // aria-label on the wrapper div. Hence we do this..
+    const wrapper =
+      document.getElementById("suggester-input")?.parentNode?.parentNode;
 
-      if (wrapper) {
-        wrapper.setAttribute(
-          "aria-label",
-          Translate({
-            ...context,
-            label: isMobile ? "placeholderMobile" : "placeholder",
-          }) +
-            Translate({
-              context: "facets",
-              label: `label-${selectedMaterial}`,
-            })
-        );
-      }
+    if (wrapper) {
+      wrapper.setAttribute("aria-label", placeholder);
     }
-  }, [selectedMaterial]);
+  }, [placeholder]);
 
   // Default input props
   const inputProps = {

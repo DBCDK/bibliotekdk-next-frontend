@@ -77,9 +77,10 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
       </Title>
       <div className={styles.fields}>
         {requiredParameters?.map(({ userParameterType, description }, idx) => {
+          const labelKey = `${userParameterType}-label`;
           const labelTranslation = {
             context: "form",
-            label: `${userParameterType}-label`,
+            label: labelKey,
           };
           const placeholderTranslation = {
             context: "form",
@@ -92,7 +93,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
 
           return (
             <div key={idx}>
-              <Text type="text1" tag="label">
+              <Text type="text1" tag="label" id={labelKey}>
                 {description ||
                   (hasTranslation(labelTranslation)
                     ? Translate(labelTranslation)
@@ -115,6 +116,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
                       : ""
                   }
                   required
+                  aria-labelledby={labelKey}
                 />
               ) : (
                 <Input
@@ -139,6 +141,7 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
                       : "")
                   }
                   required
+                  aria-labelledby={labelKey}
                 />
               )}
               {hasTranslation(explainTranslation) && (
