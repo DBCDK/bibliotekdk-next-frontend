@@ -13,12 +13,13 @@ import styles from "./PeriodicaForm.module.css";
 // TODO create jsdoc and proptypes
 
 function Field({ label, required, value, onChange, hasTry }) {
+  const labelKey = `label-${label}`;
   return (
     <div className={hasTry && required && !value?.trim() ? styles.invalid : ""}>
-      <Text type="text1" tag="label">
+      <Text id={labelKey} type="text1" tag="label">
         {Translate({
           context: "order-periodica",
-          label: `label-${label}`,
+          label: labelKey,
         })}
         {required && <span className={styles.required}>&nbsp;*</span>}
       </Text>
@@ -33,6 +34,7 @@ function Field({ label, required, value, onChange, hasTry }) {
           label: `placeholder-${label}`,
         })}
         required={required}
+        aria-labelledby={labelKey}
       />
     </div>
   );

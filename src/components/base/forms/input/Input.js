@@ -29,6 +29,8 @@ function Input({
   dataCy = "input",
   readOnly = false,
   required,
+  "aria-labelledby": ariaLabelledby,
+  "aria-label": ariaLabel,
 }) {
   const [val, setVal] = useState(value || "");
 
@@ -58,6 +60,8 @@ function Input({
       onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => setVal(e.target.value)}
       required={required}
+      aria-labelledby={ariaLabelledby}
+      aria-label={ariaLabel}
     />
   );
 }
@@ -78,6 +82,8 @@ Input.propTypes = {
   onBlur: PropTypes.func,
   skeleton: PropTypes.bool,
   dataCy: PropTypes.string,
+  "aria-labelledby": PropTypes.string,
+  "aria-label": PropTypes.string,
 };
 
 /**

@@ -35,6 +35,7 @@ function Search(props) {
         className={styles.input}
         onBlur={(value) => onBlur && onBlur(value)}
         onChange={(value) => onChange && onChange(value)}
+        aria-label={props.placeholder}
       />
       <Icon className={styles.icon} size={{ w: 2, h: 2 }} src="search.svg" />
     </div>
