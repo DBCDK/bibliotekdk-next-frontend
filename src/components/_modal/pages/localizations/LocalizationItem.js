@@ -29,10 +29,6 @@ function ItemSkeleton({ index }) {
 }
 
 function parseBranchLookupUrl(branch, holdings, localIds) {
-  // (strpos($lookupUrl, '_IDNR_') !== FALSE) ? str_replace('_IDNR_', $localIdentifier, $lookupUrl) : $lookupUrl . $localIdentifier,
-
-  console.log(localIds, "LOCALIDS");
-
   const lookupUrl = holdings.lookupUrl || null;
   const localIdentifier = (localIds && localIds[0]?.localIdentifier) || null;
   if (!lookupUrl || !localIds) {
@@ -62,15 +58,11 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
   const branchHoldings = holdings?.branches?.result?.[0];
-  console.log(branchHoldings, "BRANCHHOLDING");
-
   const color = branchHoldings?.holdingStatus?.lamp?.color;
   const label = branchHoldings?.holdingStatus?.lamp?.message;
   const firstholding = branchHoldings?.holdingStatus?.holdingItems?.find(
     (item) => item.expectedDelivery
   );
-
-  console.log(color, "COLOR");
 
   const lookupurl = parseBranchLookupUrl(
     branch,
