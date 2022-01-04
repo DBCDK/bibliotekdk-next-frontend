@@ -24,7 +24,7 @@ export function Checkbox({
   disabled = false,
   onChange,
   dataCy = "checkbox",
-  ariaLabel = false,
+  ariaLabel = "Some explaining label",
   readOnly = false,
   required,
 }) {
@@ -76,6 +76,7 @@ export function Checkbox({
 // PropTypes for component
 Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
+  ariaLabel: PropTypes.string.isRequired,
   tabIndex: PropTypes.string,
   className: PropTypes.string,
   checked: PropTypes.bool,
