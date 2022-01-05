@@ -212,23 +212,24 @@ function Container({ children, className = {}, mock = {} }) {
     modal._doSelect(index);
   }, [currentPageUid]);
 
-  // Tab key handle (locks tab in visible modal)
+  // Only allow tab on the page if the modal is not transitioning
   useEffect(() => {
     // If tab key is pressed down
     function downHandler(e) {
       if (e.key === "Tab") {
-        isVisible && handleTab(e, modalRef.current);
+        if (dialogStatus === "opening" || dialogStatus === "closing") {
+          e.preventDefault();
+        }
+        dialogStatus === "open" && handleTab(e, modalRef.current);
       }
     }
-    if (isVisible) {
-      // Add event listeners
-      window.addEventListener("keydown", downHandler);
-      // Remove event listeners on cleanup
-      return () => {
-        window.removeEventListener("keydown", downHandler);
-      };
-    }
-  }, [isVisible]);
+    // Add event listeners
+    window.addEventListener("keydown", downHandler);
+    // Remove event listeners on cleanup
+    return () => {
+      window.removeEventListener("keydown", downHandler);
+    };
+  }, [dialogStatus]);
 
   // force modal focus (accessibility)
   useEffect(() => {

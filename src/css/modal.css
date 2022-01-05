@@ -70,7 +70,7 @@
 }
 
 .modal_dialog.modal_closed {
-  /* hide tabbable elements */
+  /* hide tabbable elements on modal is closed */
   content-visibility: hidden;
 }
 
