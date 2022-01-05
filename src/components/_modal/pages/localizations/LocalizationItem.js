@@ -296,8 +296,6 @@ export default function wrap({ props }) {
     },
   };
 
-  console.log(props, "PROPS");
-
   // @TODO .. what do we need here
   // .. we need detailed holdings to show expected delivery
 
