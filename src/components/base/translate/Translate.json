@@ -483,6 +483,10 @@
       }
     },
     "holdings": {
+      "label_localizaion_no_holdings": {
+        "da": "Ikke på hylden. Er hjemme på en anden afdeling af %s",
+        "en": "Ikke be on shelf. At home at another branch of %s"
+      },
       "label_localizations_title": {
         "da": "Se hvor materialet er",
         "en": "Where is the material located"

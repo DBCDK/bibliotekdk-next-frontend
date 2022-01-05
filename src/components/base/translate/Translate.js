@@ -245,7 +245,7 @@ function NewlineInText(text, renderAsHtml) {
     return text.split("\\n").map((str, index) => {
       // on mobile devices one of the slashes is shown - make sure it it NOT there (replace)
       return (
-        <span key={str + index} style={{ display: "block" }}>
+        <span key={str + index} style={index > 0 ? { display: "block" } : {}}>
           {str.replace("\\", "")}
         </span>
       );

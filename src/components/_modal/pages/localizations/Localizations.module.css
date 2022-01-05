@@ -71,6 +71,14 @@
     display: inline-block;
 }
 
+.none{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--gray);
+    display: inline-block;
+}
+
 @-webkit-keyframes blinking {
     0% {
         background-color: #27AE60;

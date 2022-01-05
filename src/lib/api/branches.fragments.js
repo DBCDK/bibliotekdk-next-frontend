@@ -51,13 +51,21 @@ export function branchHoldings({ branchId, pids }) {
               branches(branchId:$branchId){
               agencyUrl
               result{
+                agencyName
                 name
                 agencyId
                 branchId
                 branchWebsiteUrl
+                branchCatalogueUrl
+                lookupUrl
                 holdingStatus(pids:$pids){
                   count
                   lamp{color message}
+                agencyHoldings{
+                    localisationPid
+                    localIdentifier
+                    agencyId                    
+                  }
                   holdingItems
                     {
                       branch
