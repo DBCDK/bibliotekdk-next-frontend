@@ -27,6 +27,7 @@ export function LocalizationsLink({
     "Punktskrift",
     "Artikel",
     "Tidsskriftsartikel",
+    "Film (net)",
   ];
 
   if (nolinktoholding.includes(materialType)) {
