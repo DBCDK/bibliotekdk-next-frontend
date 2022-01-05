@@ -678,6 +678,7 @@ export default function Wrap(props) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
+      articleOrderMutation.reset();
       setPid(context.pid);
     }
   }, [context.pid]);
