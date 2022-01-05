@@ -55,7 +55,7 @@ export function Receipt({
       articleOrderData?.submitPeriodicaArticleOrder?.status !== "OK");
 
   // Define order status' class'
-  const orderingClass = isOrdering && delay ? styles.ordering : "";
+  const orderingClass = isOrdering ? styles.ordering : "";
   const orderedClass = isOrdered && !delay ? styles.ordered : "";
   const failedClass = isFailed && !delay ? styles.failed : "";
 
