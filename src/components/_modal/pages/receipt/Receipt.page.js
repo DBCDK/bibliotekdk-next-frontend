@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import merge from "lodash/merge";
 
@@ -27,8 +27,8 @@ export function Receipt({
   // get props from context
   const { pickupBranch, order, articleOrder } = context;
 
-  // Loader callback status (set to true when loadingbar has finished loading)
-  const [showProgress, setShowProgress] = useState(true);
+  // Always show a 1s loader animation before receipt is visible.
+  const [delay, setDelay] = useState(true);
 
   // order
   const {
@@ -44,7 +44,7 @@ export function Receipt({
   } = articleOrder;
 
   // Define order status'
-  const isOrdering = orderIsLoading || articleOrderIsLoading;
+  const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
     articleOrderData?.submitPeriodicaArticleOrder?.status === "OK";
@@ -55,15 +55,18 @@ export function Receipt({
       articleOrderData?.submitPeriodicaArticleOrder?.status !== "OK");
 
   // Define order status' class'
-  const orderingClass = isOrdering || showProgress ? styles.ordering : "";
-  const orderedClass = isOrdered && !showProgress ? styles.ordered : "";
-  const failedClass = isFailed && !showProgress ? styles.failed : "";
+  const orderingClass = isOrdering ? styles.ordering : "";
+  const orderedClass = isOrdered && !delay ? styles.ordered : "";
+  const failedClass = isFailed && !delay ? styles.failed : "";
 
   // Branch name
   const branchName = pickupBranch?.name;
 
   // Order ors id on order success
   const orderId = orderData?.submitOrder?.orderId;
+
+  // Loading animation duration
+  const duration = articleOrderIsLoading ? 10 : 1;
 
   return (
     <div
@@ -74,9 +77,9 @@ export function Receipt({
         <div className={`${styles.wrap} ${styles.progress}`}>
           <Progress
             className={styles.loader}
-            callback={() => setShowProgress(false)}
             start={isOrdering}
-            duration={1}
+            callback={() => setDelay(false)}
+            duration={duration}
             delay={1}
           />
         </div>

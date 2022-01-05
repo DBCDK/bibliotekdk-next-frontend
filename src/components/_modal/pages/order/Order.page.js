@@ -177,14 +177,15 @@ export function Order({
 
   // An order has successfully been submitted
   useEffect(() => {
-    if (articleOrder?.data && articleOrder?.isLoading) {
-      const index = modal.index();
-      // debounce(() => , 100);
-      modal.update(index, { articleOrder });
-    } else if (order.data && order.isLoading) {
-      const index = modal.index();
-      // debounce(() => , 100);
-      modal.update(index, { order });
+    if (modal && modal.isVisible) {
+      // call update if data or isLoading is changed
+      if (articleOrder?.isLoading || articleOrder?.data) {
+        const index = modal.index();
+        modal.update(index, { articleOrder });
+      } else if (order.isLoading || order.data) {
+        const index = modal.index();
+        modal.update(index, { order });
+      }
     }
   }, [
     order.data,
@@ -677,6 +678,7 @@ export default function Wrap(props) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
+      articleOrderMutation.reset();
       setPid(context.pid);
     }
   }, [context.pid]);
