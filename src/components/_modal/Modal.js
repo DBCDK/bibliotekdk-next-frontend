@@ -97,7 +97,10 @@ function Container({ children, className = {}, mock = {} }) {
   const currentPageUid = modal.currentPageUid;
 
   // current status of the modal dialog
-  const [dialogStatus, setDialogStatus] = useState("closed");
+  const [dialogStatus, setDialogStatus] = useState(
+    // The initial state
+    modal.isVisible ? "open" : "closed"
+  );
 
   // modal ref
   const modalRef = useRef(null);
@@ -154,31 +157,41 @@ function Container({ children, className = {}, mock = {} }) {
   }, []);
 
   useEffect(() => {
+    // Return immediately if dialogStatus is already assigned the correct state
+    if (
+      (!isVisible && dialogStatus === "closed") ||
+      (isVisible && dialogStatus === "open")
+    ) {
+      return;
+    }
     const dialog = modalRef.current;
 
-    if (dialog) {
-      // listener on dialog transition start
-      dialog.addEventListener("transitionstart", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpen = dialog.classList.contains("modal_open");
-          // set new dialog status state
-          setDialogStatus(isOpen ? "closing" : "opening");
-        }
-      });
-      // listener on dialog transition finished
-      dialog.addEventListener("transitionend", (event) => {
-        // only trigger on dialog transition
-        if (event.target === dialog) {
-          // Check current state
-          const isOpening = dialog.classList.contains("modal_opening");
-          // set new dialog status state
-          setDialogStatus(isOpening ? "open" : "closed");
-        }
-      });
+    // isVisible just changed, hence we know a transition has just started
+    if (isVisible) {
+      setDialogStatus("opening");
+    } else {
+      setDialogStatus("closing");
     }
-  }, []);
+
+    // when transition is done we set the final dialog state
+    function onTransitionEnd(event) {
+      if (event.target === dialog) {
+        if (isVisible) {
+          setDialogStatus("open");
+        } else {
+          setDialogStatus("closed");
+        }
+      }
+    }
+
+    // add the listener
+    dialog.addEventListener("transitionend", onTransitionEnd);
+
+    // return the cleanup function that removes the listener
+    return () => {
+      dialog.removeEventListener("transitionend", onTransitionEnd);
+    };
+  }, [isVisible]);
 
   // Listen for changes to the stack, and store it in local storage
   useEffect(() => {
