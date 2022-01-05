@@ -159,10 +159,6 @@ export default function Wrap(props) {
   const orderPolicy = policyData?.branches?.result[0];
   const mergedData = orderPolicy && merge({}, pickupBranch, orderPolicy);
 
-  console.log("############# wrap render");
-
-  console.log("### props", { props });
-
   return (
     <Receipt
       {...props}
