@@ -298,8 +298,9 @@ describe("Order", () => {
 
     cy.get("[data-cy=button-nej-tak]").click();
     openOrderModal();
-    cy.wait(500);
+    cy.wait(1000);
     cy.get("[data-cy=close-modal]").click();
+    cy.wait(1000);
     cy.get("body").tab();
     cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
   });
