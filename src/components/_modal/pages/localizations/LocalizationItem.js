@@ -29,7 +29,11 @@ function ItemSkeleton({ index }) {
 }
 
 function parseBranchLookupUrl(branch, holdings, localIds) {
+  if (!holdings) {
+    return branch.branchWebsiteUrl || branch.agencyUrl || null;
+  }
   const lookupUrl = holdings.lookupUrl || null;
+
   const localIdentifier = (localIds && localIds[0]?.localIdentifier) || null;
   if (!lookupUrl || !localIds) {
     return branch.branchWebsiteUrl || branch.agencyUrl || null;
@@ -38,7 +42,8 @@ function parseBranchLookupUrl(branch, holdings, localIds) {
   const itemLink =
     lookupUrl &&
     lookupUrl.indexOf("_IDNR_") !== -1 &&
-    lookupUrl.replace("_IDNR_", localIds.localIdentifier);
+    lookupUrl.replace("_IDNR_", localIdentifier);
+
   if (!itemLink) {
     return lookupUrl + localIdentifier;
   }
@@ -67,7 +72,7 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
   const lookupurl = parseBranchLookupUrl(
     branch,
     branchHoldings,
-    branchHoldings.holdingStatus.agencyHoldings
+    branchHoldings?.holdingStatus?.agencyHoldings
   );
   const showLink = label === "loc_no_holding" && lookupurl;
   // expected delivery date
@@ -81,10 +86,6 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
       no_loc_no_holding: Translate({
         context: "holdings",
         label: "label_no_holdings",
-      }),
-      red: Translate({
-        context: "holdings",
-        label: "label_not_for_loan",
       }),
       loc_no_holding: Translate({
         context: "holdings",
@@ -100,14 +101,9 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
         label: "label_on_loan",
         vars: [expectedDelivery],
       }),
-      white: Translate({
+      loc_hold_no_loan: Translate({
         context: "holdings",
-        label: "label_no_holdings",
-      }),
-      none: Translate({
-        context: "holdings",
-        label: "label_unknown_status",
-        vars: [branch.agencyUrl],
+        label: "label_not_for_loan",
       }),
     };
 
