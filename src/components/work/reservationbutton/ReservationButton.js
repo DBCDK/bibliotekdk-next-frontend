@@ -70,6 +70,17 @@ function selectMaterial(manifestations) {
   return selectedmanifestation || manifestations?.[0];
 }
 
+// quickfix - @TODO do a proper fix - this one ONLY handles sortorder of filmstriben
+function specialSort(a, b) {
+  // fjernleje should be on top
+  if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+    return 1;
+  } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+    return -1;
+  }
+  return 0;
+}
+
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
@@ -81,11 +92,18 @@ function selectMaterial(manifestations) {
 export function ButtonTxt({ selectedMaterial, skeleton, work }) {
   // @TODO use function to find correct material
 
+  if (!selectedMaterial?.manifestations) {
+    return null;
+  }
   const manifestations = selectedMaterial?.manifestations;
   selectedMaterial = selectMaterial(manifestations);
 
-  const onlineAccess = selectedMaterial?.onlineAccess;
+  let onlineAccess = selectedMaterial?.onlineAccess;
+
   const online = onlineAccess?.length > 0;
+  if (online) {
+    onlineAccess = onlineAccess.sort(specialSort);
+  }
   const isPeriodicaLike = getIsPeriodicaLike(work);
 
   if (online && onlineAccess[0].infomediaId) {
