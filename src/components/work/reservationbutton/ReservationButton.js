@@ -71,7 +71,7 @@ function specialSort(a, b) {
   if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
     return 1;
   } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
-    return 1;
+    return -1;
   }
   return 0;
 }
@@ -94,6 +94,7 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
   selectedMaterial = selectMaterial(manifestations);
 
   let onlineAccess = selectedMaterial?.onlineAccess;
+
   const online = onlineAccess?.length > 0;
   if (online) {
     onlineAccess = onlineAccess.sort(specialSort);
