@@ -92,6 +92,8 @@ function specialSort(a, b) {
   // fjernleje should be on top
   if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
     return 1;
+  } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+    return 1;
   }
   return 0;
 }
