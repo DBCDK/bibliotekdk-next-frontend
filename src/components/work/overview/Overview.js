@@ -75,6 +75,12 @@ export function Overview({
     }
   }
 
+  console.log("overview", {
+    materialTypes,
+    allMaterialTypes,
+    materialTypesMap,
+  });
+
   const searchOnUrl = "/find?q=";
 
   const workType = workTypes?.[0] || "fallback";

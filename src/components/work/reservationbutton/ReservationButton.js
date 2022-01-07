@@ -37,6 +37,11 @@ function selectMaterial(manifestations) {
   let selectedmanifestation;
   let url;
   manifestations?.every((manifest) => {
+    // Select manifestation if requestButton is true (physical order is allowed)
+    if (checkRequestButtonIsTrue({ manifestations: [manifest] })) {
+      selectedmanifestation = manifest;
+      return false;
+    }
     // outer loop -> manifestations
     if (manifest.onlineAccess?.length > 0) {
       // inner loop -> onlineaccess

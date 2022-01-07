@@ -149,7 +149,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: (value) => value.join(", "),
+    valueParser: (value) => value.join(". "),
   },
   {
     dataField: "edition",
