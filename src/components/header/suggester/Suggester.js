@@ -62,7 +62,7 @@ const theme = {
 export function openMobileSuggester() {
   Router.push({
     pathname: Router.pathname,
-    query: { ...outer.query, suggester: true },
+    query: { ...Router.query, suggester: true },
   });
   // ios devices require focus to be called
   // while executing the click event
