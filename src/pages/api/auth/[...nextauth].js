@@ -37,6 +37,21 @@ const options = {
   debug: false,
   callbacks: {
     ...callbacks,
+    // We override jwt token creator for now
+    async jwt(token, user, account, profile) {
+      if (user) {
+        token = {
+          accessToken: account.accessToken,
+          attributes: profile.attributes,
+          profile,
+        };
+      }
+      // We don't need the agencies set them to empty arrays
+      // to avoid exceeding the size limit of the jwt token
+      token.attributes.agencies = [];
+      token.profile.attributes.agencies = [];
+      return token;
+    },
   },
 };
 export default (req, res) => {
