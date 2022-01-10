@@ -116,12 +116,12 @@ describe("Filter", () => {
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
   });
 
-  it(`Only show 4 specific filters on workType 'game'`, () => {
+  it(`Only show 5 specific filters on workType 'game'`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
 
     viewAllFilters();
 
-    cy.get("[data-cy=list-facets]").children().should("have.length", 4);
+    cy.get("[data-cy=list-facets]").children().should("have.length", 5);
   });
 
   it(`Can clear selected filters`, () => {
