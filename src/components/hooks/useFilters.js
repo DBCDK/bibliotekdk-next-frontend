@@ -62,6 +62,7 @@ export const includedTypes = {
     "language",
     "genre",
     "audience",
+    "fictiveCharacter",
   ],
   article: ["materialType", "accessType", "subject", "creator", "language"],
   movie: [
@@ -72,9 +73,10 @@ export const includedTypes = {
     "language",
     "genre",
     "audience",
+    "fictiveCharacter",
   ],
-  game: ["materialType", "accessType", "genre", "audience"],
-  music: ["accessType", "creator", "genre", "audience"],
+  game: ["materialType", "accessType", "genre", "audience", "fictiveCharacter"],
+  music: ["materialType", "accessType", "creator", "genre", "audience"],
   sheetmusic: ["materialType", "accessType", "subject", "creator", "genre"],
 };
 
