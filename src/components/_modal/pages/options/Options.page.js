@@ -94,7 +94,12 @@ function specialSort(a, b) {
     return 1;
   } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
     return -1;
+  } else if (b.url && b.url.indexOf("dfi.dk") !== -1) {
+    return -1;
+  } else if (a.url && a.url.indexOf("dfi.dk") !== -1) {
+    return 1;
   }
+
   return 0;
 }
 

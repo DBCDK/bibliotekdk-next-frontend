@@ -41,7 +41,8 @@ function selectMaterial(manifestations) {
     if (manifest.onlineAccess?.length > 0) {
       // inner loop -> onlineaccess
       manifest.onlineAccess.every((access) => {
-        if (access.url) {
+        // dfi.dk is not a 'real' online url
+        if (access.url && access.url.indexOf("dfi.dk") === -1) {
           url = access.url;
           // we found an online access -> break inner loop
           return false;
@@ -72,6 +73,10 @@ function specialSort(a, b) {
     return 1;
   } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
     return -1;
+  } else if (b.url && b.url.indexOf("dfi.dk") !== -1) {
+    return -1;
+  } else if (a.url && a.url.indexOf("dfi.dk") !== -1) {
+    return 1;
   }
   return 0;
 }
