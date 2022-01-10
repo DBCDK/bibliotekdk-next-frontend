@@ -28,6 +28,7 @@ import { encodeTitleCreator } from "@/lib/utils";
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 import { DesktopMaterialSelect } from "@/components/search/select";
+import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 
@@ -78,11 +79,7 @@ export function Header({
       label: "search",
       icon: SearchIcon,
       onClick: () => {
-        router &&
-          router.push({
-            pathname: router.pathname,
-            query: { ...router.query, suggester: true },
-          });
+        openMobileSuggester();
         story && story.setSuggesterVisibleMobile(true);
         setTimeout(() => {
           focusInput();
