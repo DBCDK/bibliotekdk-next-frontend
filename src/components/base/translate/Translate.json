@@ -878,7 +878,7 @@
         "en": "Format"
       },
       "label-literature-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-literature-genre": {
@@ -918,7 +918,7 @@
         "en": "Format"
       },
       "label-article-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-article-genre": {
@@ -958,7 +958,7 @@
         "en": "Format"
       },
       "label-movie-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-movie-genre": {
@@ -974,16 +974,16 @@
         "en": "Physical/digital"
       },
       "label-movie-fictionNonfiction": {
-        "da": "Skøn-/faglitteratur",
-        "en": "Fiction/Non-fiction"
+        "da": "Spillefilm/dokumentar",
+        "en": "Feature film/documentary"
       },
       "label-movie-subject": {
         "da": "Emne",
         "en": "Subject"
       },
       "label-movie-creator": {
-        "da": "Forfatter",
-        "en": "Author"
+        "da": "Instruktør/medvirkende",
+        "en": "Director/contributor"
       },
       "label-game-workType": {
         "da": "Materialekategori",
@@ -998,7 +998,7 @@
         "en": "Format"
       },
       "label-game-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-game-genre": {
@@ -1038,7 +1038,7 @@
         "en": "Format"
       },
       "label-music-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-music-genre": {
@@ -1062,8 +1062,8 @@
         "en": "Subject"
       },
       "label-music-creator": {
-        "da": "Forfatter",
-        "en": "Author"
+        "da": "Kunstner/medvirkende",
+        "en": "Artist/performer"
       },
       "label-sheetmusic-workType": {
         "da": "Materialekategori",
@@ -1078,7 +1078,7 @@
         "en": "Format"
       },
       "label-sheetmusic-fictiveCharacter": {
-        "da": "Fiktive karakterer",
+        "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
       "label-sheetmusic-genre": {
@@ -1102,8 +1102,8 @@
         "en": "Subject"
       },
       "label-sheetmusic-creator": {
-        "da": "Forfatter",
-        "en": "Author"
+        "da": "Komponist",
+        "en": "Composer"
       },
       "label-all": {
         "da": "Alle materialekategorier",

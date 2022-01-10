@@ -23,7 +23,7 @@ import { facets, hitcount } from "@/lib/api/search.fragments";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 
-function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
+function SelectedFilter({ isLoading, data, terms, workType, onSelect, modal }) {
   // selected facet ("category")
   // const { name, values } = data;
 
@@ -49,15 +49,18 @@ function SelectedFilter({ isLoading, data, terms, onSelect, modal }) {
     onSelect({ [name]: copy });
   }
 
+  // Get workType specific title if set, else fallback to title
+  const category = Translate({
+    context: "facets",
+    label: workType ? `label-${workType}-${name}` : `label-${name}`,
+  });
+
   return (
     <>
       <Top modal={modal} back sticky />
 
       <Text type="text1" className={styles.category}>
-        {Translate({
-          context: "facets",
-          label: `label-${name}`,
-        })}
+        {category}
       </Text>
       <List.Group
         label={Translate({ context: "facets", label: "terms-group-label" })}
@@ -182,6 +185,7 @@ export function Filter(props) {
         <SelectedFilter
           {...props}
           terms={selected?.[facet.name] || []}
+          workType={workType}
           data={selectedFacet}
         />
       ) : (
