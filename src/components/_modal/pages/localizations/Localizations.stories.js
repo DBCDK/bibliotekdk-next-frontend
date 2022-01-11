@@ -212,13 +212,23 @@ export function LocalizationItemGreen() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
     color: "green",
-    message: "at_home",
+    message: "loc_holding",
+  };
+
+  const props = {
+    holdings: holdings,
+    index: 0,
+    testing: true,
+    branchId: dummybranch.branchId,
+    branch: { dummybranch },
   };
   return (
     <LocalizationItem
+      pids={[]}
       branch={dummybranch}
-      holdings={greatGatsby.data}
+      holdings={holdings}
       isLoading={false}
+      index={0}
     />
   );
 }
@@ -226,14 +236,16 @@ export function LocalizationItemGreen() {
 export function LocalizationItemRed() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
-    message: "not_for_loan",
+    message: "loc_hold_no_loan",
     color: "red",
   };
   return (
     <LocalizationItem
+      pids={[]}
       branch={dummybranch}
-      holdings={greatGatsby.data}
+      holdings={holdings}
       isLoading={false}
+      index={0}
     />
   );
 }
@@ -242,13 +254,15 @@ export function LocalizationItemYellow() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
     color: "yellow",
-    message: "22-11-2021",
+    message: "loc_no_hold_expect",
   };
   return (
     <LocalizationItem
+      pids={[]}
       branch={dummybranch}
-      holdings={greatGatsby.data}
+      holdings={holdings}
       isLoading={false}
+      index={0}
     />
   );
 }
@@ -256,14 +270,16 @@ export function LocalizationItemYellow() {
 export function LocalizationItemUnknown() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
-    message: "no_holdings",
+    message: "no_loc_no_holding",
     color: "none",
   };
   return (
     <LocalizationItem
+      pids={[]}
       branch={dummybranch}
-      holdings={greatGatsby.data}
+      holdings={holdings}
       isLoading={false}
+      index={0}
     />
   );
 }
@@ -271,14 +287,16 @@ export function LocalizationItemUnknown() {
 export function LocalizationItemNoHolding() {
   const holdings = greatGatsby.data;
   holdings.branches.result[0].holdingStatus.lamp = {
-    message: "no_holdings",
-    color: "white",
+    message: "loc_no_holding",
+    color: "none",
   };
   return (
     <LocalizationItem
+      pids={[]}
       branch={dummybranch}
-      holdings={greatGatsby.data}
+      holdings={holdings}
       isLoading={false}
+      index={0}
     />
   );
 }
