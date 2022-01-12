@@ -25,7 +25,7 @@ export function Receipt({
   context,
 }) {
   // get props from context
-  const { pickupBranch, order, articleOrder } = context;
+  const { pickupBranch, order = {}, articleOrder = {} } = context;
 
   // Always show a 1s loader animation before receipt is visible.
   const [delay, setDelay] = useState(true);
