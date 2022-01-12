@@ -118,14 +118,22 @@ export function ArticleSection({
 
   articles = parseArticles(articles, matchTag, numberOfArticles);
 
-  // Check if amount of articles matches the template requirement
-  if (articles.length !== numberOfArticles) {
+  if (articles.length < 1) {
     console.log(
       `OBS! Articles tagged with "${matchTag}", does not match the minimum level for the current template. ${numberOfArticles} is required ${articles.length} found.`
     );
     // prevent mount
     return null;
   }
+
+  // Check if amount of articles matches the template requirement
+  /*if (articles.length !== numberOfArticles) {
+    console.log(
+      `OBS! Articles tagged with "${matchTag}", does not match the minimum level for the current template. ${numberOfArticles} is required ${articles.length} found.`
+    );
+    // prevent mount
+    return null;
+  }*/
 
   return (
     <Section title={title} bgColor={backgroundColor} topSpace={topSpace}>
