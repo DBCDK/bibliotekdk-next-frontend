@@ -87,13 +87,13 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
   return addi;
 }
 
-// quickfix - @TODO do a proper fix
+// quickfix dfi is not a 'real' url - @TODO do a proper fix
 function specialSort(a, b) {
   // fjernleje should be on top
-  if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
-    return 1;
-  } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
+  if (b.url && b.url.indexOf("dfi.dk") !== -1) {
     return -1;
+  } else if (a.url && a.url.indexOf("dfi.dk") !== -1) {
+    return 1;
   }
   return 0;
 }

@@ -28,7 +28,7 @@ function addToInfomedia(onlineAccess, title) {
 }
 
 /**
- * Find and return the manifestation we want.
+ * Find and return the manifestation we want on the reservation button.
  * @param manifestations
  * @return {*}
  */
@@ -41,7 +41,8 @@ function selectMaterial(manifestations) {
     if (manifest.onlineAccess?.length > 0) {
       // inner loop -> onlineaccess
       manifest.onlineAccess.every((access) => {
-        if (access.url) {
+        // "dfi.dk" is not a 'real' onlineaccess
+        if (access.url && access.url.indexOf("dfi.dk") === -1) {
           url = access.url;
           // we found an online access -> break inner loop
           return false;
@@ -65,17 +66,6 @@ function selectMaterial(manifestations) {
   return selectedmanifestation || manifestations?.[0];
 }
 
-// quickfix - @TODO do a proper fix - this one ONLY handles sortorder of filmstriben
-function specialSort(a, b) {
-  // fjernleje should be on top
-  if (b.url && b.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
-    return 1;
-  } else if (a.url && a.url.indexOf("filmstriben.dk/fjernleje") !== -1) {
-    return -1;
-  }
-  return 0;
-}
-
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
@@ -97,7 +87,7 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
 
   const online = onlineAccess?.length > 0;
   if (online) {
-    onlineAccess = onlineAccess.sort(specialSort);
+    onlineAccess = onlineAccess;
   }
   const isPeriodicaLike = getIsPeriodicaLike(work);
 
