@@ -31,10 +31,6 @@ import React from "react";
 export default function Single({ articles, skeleton }) {
   const context = { context: "articles" };
   const article = articles[0];
-
-  if (!articles[0]) {
-    return "No article found";
-  }
   // extract image from article
   const image = article && article.fieldImage;
 

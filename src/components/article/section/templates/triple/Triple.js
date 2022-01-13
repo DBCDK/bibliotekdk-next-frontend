@@ -19,11 +19,6 @@ import styles from "./Triple.module.css";
  *
  */
 export default function Triple({ articles, skeleton }) {
-  if (articles.length < 1) {
-    return null;
-    //return "Less than 3 articles found";
-  }
-
   return (
     <Row>
       {articles.map((article, index) => (

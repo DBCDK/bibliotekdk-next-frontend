@@ -19,10 +19,6 @@ import styles from "./Double.module.css";
  *
  */
 export default function Double({ articles, skeleton }) {
-  if (articles.length < 2) {
-    return "Less than 2 articles found";
-  }
-
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   return (
