@@ -58,7 +58,6 @@ function SelectedFilter({ isLoading, data, terms, workType, onSelect, modal }) {
   return (
     <>
       <Top modal={modal} back sticky />
-
       <Text type="text1" className={styles.category}>
         {category}
       </Text>
@@ -324,7 +323,7 @@ export default function Wrap(props) {
   }, [modal.isVisible]);
 
   // get search query from context
-  const { q } = context;
+  const { q, facet } = context;
 
   // connected filters hook
   const { filters, setFilters, setQuery } = useFilters();
@@ -339,9 +338,18 @@ export default function Wrap(props) {
   // hitcount according to selected filters
   const { data: hitcountData } = useData(q && hitcount({ q, filters }));
 
+  // On a specific filter category page we make sure to remove filters from within that category.
+  // This will make sure facet hitcounts won't change, when you select/unselect filters.
+  const filtersForCategory = facet ? { ...filters, [facet?.name]: [] } : null;
+
   // facets according to query filters
   const { data, isLoading } = useData(
-    q && facets({ q, filters, facets: facetFilters })
+    q &&
+      facets({
+        q,
+        filters: filtersForCategory || filters,
+        facets: facetFilters,
+      })
   );
 
   // merge data
