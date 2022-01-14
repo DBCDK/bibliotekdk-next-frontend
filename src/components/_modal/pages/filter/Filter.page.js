@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import merge from "lodash/merge";
 
@@ -23,14 +23,40 @@ import { facets, hitcount } from "@/lib/api/search.fragments";
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
 
-function SelectedFilter({ isLoading, data, terms, workType, onSelect, modal }) {
-  // selected facet ("category")
-  // const { name, values } = data;
-
+function SelectedFilter({
+  isLoading,
+  data,
+  terms,
+  workType,
+  onSelect,
+  modal,
+  active,
+}) {
   const name = data?.name;
   const values = data?.values || [];
 
-  if (!name) {
+  const [orderedValues, setOrderedValues] = useState(null);
+
+  useEffect(() => {
+    if (!name || !active) {
+      return;
+    }
+    const selectedWithHits = values?.filter(
+      (value) => terms.includes(value.term) || terms.includes(value.key)
+    );
+    const selectedNoHits = terms
+      ?.filter?.(
+        (term) =>
+          !values?.find?.((value) => value.key === term || value.term === term)
+      )
+      .map((term) => ({ term, key: term, count: "-" }));
+    const nonSelected = values?.filter(
+      (value) => !(terms.includes(value.term) || terms.includes(value.key))
+    );
+    setOrderedValues([...selectedWithHits, ...selectedNoHits, ...nonSelected]);
+  }, [name, active]);
+
+  if (!name || !orderedValues) {
     return null;
   }
 
@@ -58,7 +84,6 @@ function SelectedFilter({ isLoading, data, terms, workType, onSelect, modal }) {
   return (
     <>
       <Top modal={modal} back sticky />
-
       <Text type="text1" className={styles.category}>
         {category}
       </Text>
@@ -68,7 +93,7 @@ function SelectedFilter({ isLoading, data, terms, workType, onSelect, modal }) {
         enabled={!isLoading}
         data-cy="list-terms"
       >
-        {values.map((term, idx) => {
+        {orderedValues?.map((term, idx) => {
           const title = term.term;
           const key = term.key;
           const count = term.count || "-";
@@ -324,7 +349,7 @@ export default function Wrap(props) {
   }, [modal.isVisible]);
 
   // get search query from context
-  const { q } = context;
+  const { q, facet } = context;
 
   // connected filters hook
   const { filters, setFilters, setQuery } = useFilters();
@@ -339,9 +364,21 @@ export default function Wrap(props) {
   // hitcount according to selected filters
   const { data: hitcountData } = useData(q && hitcount({ q, filters }));
 
+  // On a specific filter category page we make sure to remove filters from within that category.
+  // This will make sure facet hitcounts won't change, when you select/unselect filters.
+  const filtersForCategory =
+    facet && filters?.[facet?.name]
+      ? { ...filters, [facet?.name]: [] }
+      : filters;
+
   // facets according to query filters
   const { data, isLoading } = useData(
-    q && facets({ q, filters, facets: facetFilters })
+    q &&
+      facets({
+        q,
+        filters: filtersForCategory,
+        facets: facetFilters,
+      })
   );
 
   // merge data
