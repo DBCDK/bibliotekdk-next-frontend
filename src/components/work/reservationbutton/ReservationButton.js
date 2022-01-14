@@ -7,8 +7,6 @@ import { getIsPeriodicaLike } from "@/lib/utils";
 
 // Translate Context
 const context = { context: "overview" };
-// the text on the button
-let buttonText = "";
 
 /**
  * infomedia url is specific for this gui - set an url on the online access object
@@ -29,6 +27,7 @@ function addToInfomedia(onlineAccess, title) {
 
 /**
  * Find and return the manifestation we want on the reservation button.
+ * If manifestation has an online url it is the preferred - for easy access
  * @param manifestations
  * @return {*}
  */
@@ -41,7 +40,7 @@ function selectMaterial(manifestations) {
     if (manifest.onlineAccess?.length > 0) {
       // inner loop -> onlineaccess
       manifest.onlineAccess.every((access) => {
-        // "dfi.dk" is not a 'real' onlineaccess
+        // special case: "dfi.dk" is not a 'real' onlineaccess
         if (access.url && access.url.indexOf("dfi.dk") === -1) {
           url = access.url;
           // we found an online access -> break inner loop
@@ -86,9 +85,6 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
   let onlineAccess = selectedMaterial?.onlineAccess;
 
   const online = onlineAccess?.length > 0;
-  if (online) {
-    onlineAccess = onlineAccess;
-  }
   const isPeriodicaLike = getIsPeriodicaLike(work);
 
   if (online && onlineAccess[0].infomediaId) {
@@ -115,26 +111,25 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
         </Text>
       </Col>
     );
-  } else {
+  } else if (checkRequestButtonIsTrue({ manifestations })) {
     return (
       <>
         <Col xs={12} className={styles.info}>
           <Text type="text3" skeleton={skeleton} lines={2}>
             {Translate({ ...context, label: "addToCart-line1" })}
           </Text>
-          <Text type="text3" skeleton={skeleton} lines={0}>
-            {Translate({ ...context, label: "addToCart-line2" })}
-          </Text>
         </Col>
       </>
     );
+  } else {
+    return null;
   }
 }
 
 /**
  * Seperat function for orderbutton
  * Check what kind of material (eg. online, not avialable etc)
- * and present appropiate button
+ * and present appropriate button
  *
  * @param selectedMaterial
  *  Partial work - filtered by the materialtype selected by user (eg. bog)
@@ -169,8 +164,6 @@ export function OrderButton({
     return null;
   }
 
-  const materialType = selectedMaterial.materialType;
-
   const manifestations = selectedMaterial.manifestations;
   if (!singleManifestion) {
     selectedMaterial = selectMaterial(manifestations);
@@ -191,9 +184,8 @@ export function OrderButton({
     c. infomedia access (needs login)
     d. digital copy (needs login)
   2. material can not be ordered - maybe it is too new or something else -> disable (with a reason?)
-  3. user is not logged in -> go to login
-  4. material is available for logged in library -> prepare order button with parameters
-  5. material is not available -> disable
+  3. material is available for logged in library -> prepare order button with parameters
+  4. material is not available -> disable
    */
 
   // online access ? - special handling of digital copy (onlineAccess[0].issn)
@@ -201,10 +193,6 @@ export function OrderButton({
     selectedMaterial?.onlineAccess?.length > 0 &&
     !selectedMaterial.onlineAccess[0].issn
   ) {
-    const enrichedOnlineAccess = addToInfomedia(
-      selectedMaterial.onlineAccess,
-      title
-    );
     // if this is an infomedia article it should open in same window
     const urlTarget = selectedMaterial.onlineAccess[0]?.infomediaId
       ? "_self"
@@ -212,12 +200,14 @@ export function OrderButton({
 
     return (
       <>
+        {/* Check if internet access requires a login */}
         {selectedMaterial.onlineAccess[0]?.accessType ===
           "urlInternetRestricted" && (
           <Text type="text3" className={styles.textAboveButton}>
             {Translate({ ...context, label: "url_login_required" })}
           </Text>
         )}
+        {/* Check if user is authenticated to view infomedia article */}
         {selectedMaterial.onlineAccess[0].infomediaId && !user.isAuthenticated && (
           <Text type="text3" className={styles.textAboveButton}>
             {Translate({ ...context, label: "label_infomediaAccess" })}
@@ -243,25 +233,23 @@ export function OrderButton({
     );
   }
 
-  const notToBeOrdered = [];
-
+  /* No online access - check if work can be ordered  */
   if (
-    (!checkRequestButtonIsTrue({ manifestations }) &&
-      !checkDigitalCopy({ manifestations })) ||
-    notToBeOrdered.includes(materialType)
+    !checkRequestButtonIsTrue({ manifestations }) &&
+    !checkDigitalCopy({ manifestations })
   ) {
-    // disabled button
+    // order is not possible/allowed - disable
     return (
       <DisabledReservationButton buttonSkeleton={buttonSkeleton} type={type} />
     );
   }
 
+  // All is well - material can be ordered - order button
   const pid = manifestations[0].pid;
-  // all is well - material can be ordered - order button
-
   let buttonTxt;
 
   if (singleManifestion) {
+    // request is for a specific edition
     buttonTxt = Translate({
       context: "order",
       label: "specific-edition",
@@ -302,18 +290,37 @@ function getBaseUrl(url) {
   return url;
 }
 
+/**
+ * Check if work can be ordered - run through given manifestations - if one
+ * is reservable -> return true, if not return false
+ * @param manifestations
+ * @return {boolean}
+ */
 export function checkRequestButtonIsTrue({ manifestations }) {
   return !!manifestations?.find(
     (manifestation) => manifestation?.admin?.requestButton
   );
 }
 
+/**
+ * Check if order of digital copy is an option - if one af the manifestions in work
+ * has an issn (International Standard Serial Number) return true, if not return false
+ * @param manifestations
+ * @return {boolean}
+ */
 function checkDigitalCopy({ manifestations }) {
   return !!manifestations?.find((manifestation) =>
     manifestation?.onlineAccess?.find((access) => access?.issn)
   );
 }
 
+/**
+ * If order is not possible - show a disabled reservation button
+ * @param buttonSkeleton
+ * @param type
+ * @return {JSX.Element}
+ * @constructor
+ */
 function DisabledReservationButton({ buttonSkeleton, type }) {
   return (
     <Button
