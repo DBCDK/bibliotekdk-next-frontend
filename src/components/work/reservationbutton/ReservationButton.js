@@ -193,6 +193,8 @@ export function OrderButton({
     selectedMaterial?.onlineAccess?.length > 0 &&
     !selectedMaterial.onlineAccess[0].issn
   ) {
+    // add url to infomedia - if any
+    addToInfomedia(selectedMaterial.onlineAccess, title);
     // if this is an infomedia article it should open in same window
     const urlTarget = selectedMaterial.onlineAccess[0]?.infomediaId
       ? "_self"
