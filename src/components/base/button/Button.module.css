@@ -31,7 +31,7 @@
 
 .button.primary.disabled {
   background-color: var(--concrete);
-  border: 2px solid var(--gray);
+  border: 2px solid var(--iron);
 }
 
 /* Secondary */
