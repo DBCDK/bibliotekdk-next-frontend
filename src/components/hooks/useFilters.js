@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 
 import useSWR from "swr";
 
+const URL_FACET_DELIMITER = "__";
+
 /**
  *
  * Settings
@@ -113,7 +115,7 @@ export function getQuery(query) {
   const filters = {};
   Object.entries(query).forEach(([key, val]) => {
     if (types.includes(key) && val) {
-      filters[key] = val && val.split(",");
+      filters[key] = val && val.split(URL_FACET_DELIMITER);
     }
   });
 
@@ -210,7 +212,7 @@ function useFilters() {
     // include
     Object.entries(include).forEach(([key, val]) => {
       if (types.includes(key)) {
-        params[key] = val.join();
+        params[key] = val.join(URL_FACET_DELIMITER);
       }
     });
 
