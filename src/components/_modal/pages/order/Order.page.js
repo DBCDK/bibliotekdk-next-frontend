@@ -75,6 +75,7 @@ export function Order({
   user,
   initial = {},
   authUser,
+  isAuthenticated,
   order,
   articleOrder,
   onArticleSubmit,
@@ -424,9 +425,10 @@ export function Order({
           <Title type="title5">
             {Translate({
               context: "order",
-              label: availableAsDigitalCopy
-                ? "pickup-title-digital-copy"
-                : "pickup-title",
+              label:
+                availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
+                  ? "pickup-title-digital-copy"
+                  : "pickup-title",
             })}
           </Title>
         </div>
@@ -450,11 +452,12 @@ export function Order({
             <Text type="text3" className={styles.fullLink}>
               {Translate({
                 context: "order",
-                label: availableAsDigitalCopy
-                  ? "change-pickup-digital-copy-link"
-                  : pickupBranch
-                  ? "change-pickup-link"
-                  : "pickup-link",
+                label:
+                  availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
+                    ? "change-pickup-digital-copy-link"
+                    : pickupBranch
+                    ? "change-pickup-link"
+                    : "pickup-link",
               })}
             </Text>
             <Text type="text3" className={styles.shortLink}>
@@ -697,7 +700,13 @@ export default function Wrap(props) {
   /**
    * User
    */
-  const { authUser, loanerInfo, updateLoanerInfo } = useUser();
+  const {
+    authUser,
+    loanerInfo,
+    updateLoanerInfo,
+    isAuthenticated,
+    isGuestUser,
+  } = useUser();
 
   /**
    * Branches, details, policies, and userParams
@@ -759,6 +768,7 @@ export default function Wrap(props) {
     <Order
       work={mergedWork?.work}
       authUser={authUser}
+      isAuthenticated={isAuthenticated || isGuestUser}
       user={(!userParamsIsLoading && mergedUser) || {}}
       initial={{
         pickupBranch:

@@ -67,7 +67,7 @@ export function Overview({
   // Either use type from props, or from local state
   const selectedMaterial = materialTypesMap[type] || materialTypes[0] || false;
 
-  // Handle slectedMaterial
+  // Handle selectedMaterial
   function handleSelectedMaterial(material) {
     // Update query param callback
     if (type !== material.materialType) {
