@@ -212,13 +212,17 @@ export function ManifestationFull({
 }
 
 export default function wrap({ manifestation, work, workId }) {
+  console.log(manifestation, "FULLMANIFESTATION");
   const modal = useModal();
+  const pid = manifestation.hostPublicationPid
+    ? manifestation.hostPublicationPid
+    : manifestation.pid;
   const openLocalizationsModal = () => {
     modal.push("localizations", {
       title: Translate({ context: "modal", label: "title-order" }),
       workId,
       materialType: manifestation.materialType,
-      pids: [manifestation.pid],
+      pids: [pid],
     });
   };
 
@@ -232,10 +236,8 @@ export default function wrap({ manifestation, work, workId }) {
     });
   };
 
-  const pids = [manifestation.pid];
-
   const { data: localizations, isLoading: localizationsLoading } = useData(
-    localizationsQuery({ pids })
+    localizationsQuery({ pids: [pid] })
   );
 
   const user = useUser();

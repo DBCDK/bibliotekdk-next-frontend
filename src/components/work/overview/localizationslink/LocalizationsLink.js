@@ -90,7 +90,9 @@ export default function wrap({ selectedMaterial, workId }) {
   const user = useUser();
 
   // get pids from selected material to look up detailed holdings
-  const pids = selectedMaterial?.manifestations?.map((mani) => mani.pid);
+  const pids = selectedMaterial?.manifestations?.map((mani) =>
+    mani.hostPublicationPid ? mani.hostPublicationPid : mani.pid
+  );
 
   const modal = useModal();
   const openLocalizationsModal = () => {
@@ -101,6 +103,7 @@ export default function wrap({ selectedMaterial, workId }) {
       pids: pids,
     });
   };
+
   const selectedLocalizations = data?.work?.materialTypes?.filter(
     (mat) => mat.materialType === selectedMaterial.materialType
   )[0];
