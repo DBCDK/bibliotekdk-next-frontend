@@ -89,10 +89,7 @@ export default function wrap({ selectedMaterial, workId }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   const user = useUser();
 
-  // get pids from selected material to look up detailed holdings
-  const pids = selectedMaterial?.manifestations?.map((mani) =>
-    mani.hostPublicationPid ? mani.hostPublicationPid : mani.pid
-  );
+  const pids = selectedMaterial?.manifestations?.map((mani) => mani.pid);
 
   const modal = useModal();
   const openLocalizationsModal = () => {

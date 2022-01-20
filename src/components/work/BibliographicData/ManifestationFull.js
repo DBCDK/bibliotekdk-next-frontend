@@ -212,11 +212,8 @@ export function ManifestationFull({
 }
 
 export default function wrap({ manifestation, work, workId }) {
-  console.log(manifestation, "FULLMANIFESTATION");
   const modal = useModal();
-  const pid = manifestation.hostPublicationPid
-    ? manifestation.hostPublicationPid
-    : manifestation.pid;
+  const pid = manifestation.pid;
   const openLocalizationsModal = () => {
     modal.push("localizations", {
       title: Translate({ context: "modal", label: "title-order" }),
