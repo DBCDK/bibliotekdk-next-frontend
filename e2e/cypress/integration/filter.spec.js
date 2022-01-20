@@ -124,9 +124,56 @@ describe("Filter", () => {
     cy.get("[data-cy=list-facets]").children().should("have.length", 5);
   });
 
+  it(`Can parse facet containing ","`, () => {
+    cy.intercept("POST", "/graphql", (req) => {
+      if (req?.body?.query?.includes?.("facets")) {
+        req.reply({
+          data: {
+            search: {
+              facets: [
+                {
+                  name: "subject",
+                  values: [{ term: "test, test", key: "test, test", count: 7 }],
+                },
+              ],
+            },
+            monitor: "OK",
+          },
+        });
+      }
+    });
+
+    cy.visit(`${nextjsBaseUrl}/find?q=dronningen`);
+
+    viewAllFilters();
+
+    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
+      force: true,
+    });
+
+    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click({
+      force: true,
+    });
+
+    cy.get("body").type("{esc}");
+
+    viewAllFilters();
+    cy.contains("Emne");
+    cy.wait(1000);
+
+    cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click({
+      force: true,
+    });
+    cy.wait(1000);
+
+    cy.get("[data-cy=list-terms] [data-cy=list-button-0]").contains(
+      "test, test"
+    );
+  });
+
   it(`Can clear selected filters`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4%2Cplaystation+3%2Cplaystation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(4)");
@@ -145,7 +192,7 @@ describe("Filter", () => {
 
   it(`Cleared filters will not get restored onMount`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4%2Cplaystation+3%2Cplaystation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     viewAllFilters();
