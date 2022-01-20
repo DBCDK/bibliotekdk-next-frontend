@@ -10,7 +10,11 @@ import { useRouter } from "next/router";
 
 import useSWR from "swr";
 
-const URL_FACET_DELIMITER = "__";
+const URL_FACET_DELIMITER = ",";
+const DELIMITER_ENCODING = "__";
+
+const URL_FACET_DELIMITER_REGEX = new RegExp(URL_FACET_DELIMITER, "g");
+const DELIMITER_ENCODING_REGEX = new RegExp(DELIMITER_ENCODING, "g");
 
 /**
  *
@@ -115,7 +119,11 @@ export function getQuery(query) {
   const filters = {};
   Object.entries(query).forEach(([key, val]) => {
     if (types.includes(key) && val) {
-      filters[key] = val && val.split(URL_FACET_DELIMITER);
+      filters[key] =
+        val &&
+        val
+          .split(URL_FACET_DELIMITER)
+          .map((v) => v.replace(DELIMITER_ENCODING_REGEX, URL_FACET_DELIMITER));
     }
   });
 
@@ -212,7 +220,9 @@ function useFilters() {
     // include
     Object.entries(include).forEach(([key, val]) => {
       if (types.includes(key)) {
-        params[key] = val.join(URL_FACET_DELIMITER);
+        params[key] = val
+          .map((v) => v.replace(URL_FACET_DELIMITER_REGEX, DELIMITER_ENCODING))
+          .join(URL_FACET_DELIMITER);
       }
     });
 

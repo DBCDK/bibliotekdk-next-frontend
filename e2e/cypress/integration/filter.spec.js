@@ -41,7 +41,7 @@ describe("Filter", () => {
     cy.get("[data-cy=vis-resultater]").click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal(
-        `{"pathname":"/","query":{"language":"Dansk__Engelsk","genre":"krimi"}}`
+        `{"pathname":"/","query":{"language":"Dansk,Engelsk","genre":"krimi"}}`
       );
     });
   });
@@ -173,7 +173,7 @@ describe("Filter", () => {
 
   it(`Can clear selected filters`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4__playstation+3__playstation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(4)");
@@ -192,7 +192,7 @@ describe("Filter", () => {
 
   it(`Cleared filters will not get restored onMount`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4__playstation+3__playstation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     viewAllFilters();
