@@ -38,7 +38,7 @@ export function refWorks(pid) {
   };
 }
 
-export function ris({ pid }) {
+export function ris(pid) {
   return {
     // delay: 250,
     query: `query ($pid: String!) {
