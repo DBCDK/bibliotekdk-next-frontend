@@ -1,8 +1,10 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 function viewAllFilters() {
+  cy.wait(1000);
   cy.get("[data-cy=view-all-filters]").click({ force: true });
   // wait for transition to end
+  cy.wait(1000);
   cy.get(".modal_open").should("be.visible");
 }
 describe("Filter", () => {
