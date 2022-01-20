@@ -106,7 +106,6 @@ export function details({ workId }) {
               isbn
               materialType
               language
-              hostPublicationPid 
               onlineAccess {
                 ... on UrlReference {
                   url
@@ -187,7 +186,6 @@ export function detailsAllManifestations({ workId }) {
               title
               details
             }
-            hostPublicationPid
             physicalDescriptionArticles
             isbn
             materialType
@@ -339,9 +337,6 @@ export function localizations({ workId }) {
         work(id:$workId){
           materialTypes{
           materialType
-          manifestations{
-            hostPublicationPid
-          }
           localizations {
             count
             agencies{
