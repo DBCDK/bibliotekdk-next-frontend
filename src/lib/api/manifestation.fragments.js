@@ -25,3 +25,29 @@ export function availability({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+export function refWorks(pid) {
+  return {
+    // delay: 250,
+    query: `query ($pid: String!) {
+        refWorks(pid:$pid)
+      monitor(name: "bibdknext_manifestation_refworks")
+    }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+export function ris({ pid }) {
+  return {
+    // delay: 250,
+    query: `query ($pid: String!) {
+      {
+        ris(pid:$pid)
+      }
+      monitor(name: "bibdknext_manifestation_ris")
+    }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
