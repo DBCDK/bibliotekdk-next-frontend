@@ -14,8 +14,8 @@ import { types } from "@/components/hooks/useFilters";
 export function hitcount({ q, filters = {} }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $filters: SearchFilters) {
-              search(q: {all: $q}, filters: $filters) {
+    query: `query ($q: SearchQuery!, $filters: SearchFilters) {
+              search(q: $q, filters: $filters) {
                 hitcount
               }
               monitor(name: "bibdknext_search_hitcount")
@@ -34,8 +34,8 @@ export function hitcount({ q, filters = {} }) {
 export function fast({ q, limit, offset, filters = {} }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
-              search(q: {all: $q}, filters: $filters) {
+    query: `query ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
+              search(q: $q, filters: $filters) {
                 works(limit: $limit, offset: $offset) {
                   id
                   title
@@ -66,8 +66,8 @@ export function fast({ q, limit, offset, filters = {} }) {
 export function all({ q, limit, offset, filters = {} }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
-              search(q: {all: $q}, filters: $filters) {
+    query: `query ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
+              search(q: $q, filters: $filters) {
                 works(limit: $limit, offset: $offset) {
                   id
                   cover {
@@ -105,8 +105,8 @@ export function all({ q, limit, offset, filters = {} }) {
 export function facets({ q, filters = {}, facets = types }) {
   return {
     // delay: 1000, // for debugging
-    query: `query ($q: String!, $filters: SearchFilters, $facets: [FacetField!]!) {
-              search(q: {all: $q}, filters: $filters) {
+    query: `query ($q: SearchQuery!, $filters: SearchFilters, $facets: [FacetField!]!) {
+              search(q: $q, filters: $filters) {
                 facets(facets: $facets) {
                   name
                   values(limit: 100) {

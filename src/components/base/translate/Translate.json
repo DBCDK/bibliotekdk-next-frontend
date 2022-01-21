@@ -776,6 +776,10 @@
       "noQueryResolution": {
         "da": "Søg eksempelvis på 'bestil'",
         "en": ""
+      },
+      "advancedSearchLink": {
+        "da": "Flere søgemuligheder",
+        "en": "LABEL: mangler oversættelse"
       }
     },
     "suggester": {

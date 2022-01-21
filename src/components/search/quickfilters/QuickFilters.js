@@ -17,6 +17,7 @@ import styles from "./QuickFilters.module.css";
 export function QuickFilters({
   modal,
   onFiltersClick,
+  onSearchClick,
   onViewSelect,
   viewSelected,
 }) {
@@ -39,36 +40,63 @@ export function QuickFilters({
               {Translate({ context: "search", label: "filtersResultText" })}
             </Text>
 
-            <Link
-              dataCy="view-all-filters"
-              className={styles.link}
-              onClick={() => onFiltersClick()}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.keyCode === 13) {
-                  onFiltersClick();
-                }
-              }}
-              border={false}
-            >
-              <Icon
-                src="settings.svg"
-                size={2}
-                alt={Translate({ context: "search", label: "filtersImageAlt" })}
-              />
+            <div className={styles.links}>
               <Link
-                onClick={(e) => e.preventDefault()}
-                border={{ bottom: { keepVisible: true } }}
+                tabIndex="-1"
+                dataCy="advanced-search"
+                className={styles.link}
+                onClick={() => onSearchClick()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.keyCode === 13) {
+                    onSearchClick();
+                  }
+                }}
+                border={false}
               >
-                <Text type="text3">
-                  {Translate({
-                    context: "search",
-                    label:
-                      count === "0" ? "showAllFilters" : "showAllFiltersCount",
-                    vars: count === "0" ? null : [count],
-                  })}
-                </Text>
+                <Icon src="search_blue.svg" size={2} />
+                <Link
+                  onClick={(e) => e.preventDefault()}
+                  border={{ bottom: { keepVisible: true } }}
+                >
+                  <Text type="text3">
+                    {Translate({
+                      context: "search",
+                      label: "advancedSearchLink",
+                    })}
+                  </Text>
+                </Link>
               </Link>
-            </Link>
+
+              <Link
+                tabIndex="-1"
+                dataCy="view-all-filters"
+                className={styles.link}
+                onClick={() => onFiltersClick()}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.keyCode === 13) {
+                    onFiltersClick();
+                  }
+                }}
+                border={false}
+              >
+                <Icon src="settings.svg" size={2} />
+                <Link
+                  onClick={(e) => e.preventDefault()}
+                  border={{ bottom: { keepVisible: true } }}
+                >
+                  <Text type="text3">
+                    {Translate({
+                      context: "search",
+                      label:
+                        count === "0"
+                          ? "showAllFilters"
+                          : "showAllFiltersCount",
+                      vars: count === "0" ? null : [count],
+                    })}
+                  </Text>
+                </Link>
+              </Link>
+            </div>
           </div>
         </Col>
       </Row>

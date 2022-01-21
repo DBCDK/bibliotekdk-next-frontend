@@ -120,6 +120,7 @@ function Find() {
         viewSelected={view}
         onViewSelect={(view) => updateQueryParams({ view })}
         onFiltersClick={() => modal.push("filter", { q })}
+        onSearchClick={() => modal.push("search", { q })}
       />
 
       {q && (

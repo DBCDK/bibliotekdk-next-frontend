@@ -43,7 +43,7 @@ export default async function handler(req, res) {
       service: `api-search-${name}`,
       handler: () =>
         fetcher({
-          ...func({ q: "hest", limit: 10 }),
+          ...func({ q: { all: "hest" }, limit: 10 }),
           accessToken: session?.accessToken,
         }),
     })),
