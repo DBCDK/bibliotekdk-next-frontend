@@ -14,6 +14,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import Translate from "@/components/base/translate";
 
 import useFilters, { includedTypes } from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import response from "./dummy.data";
 
@@ -193,7 +194,7 @@ export function Filter(props) {
   const hitcount = data?.search?.hitcount || null;
 
   // Facet will contain a specific selected facet/category, if any selected
-  const { facet, q } = context;
+  const { facet } = context;
 
   // Global excluded categories
   const excluded = ["workType"];
@@ -273,7 +274,7 @@ export function Filter(props) {
                   <List.Select
                     key={`${facet.name}-${idx}`}
                     selected={false}
-                    onSelect={() => modal.push("filter", { facet, q })}
+                    onSelect={() => modal.push("filter", { facet })}
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
                     includeArrows={true}
@@ -349,10 +350,16 @@ export default function Wrap(props) {
   }, [modal.isVisible]);
 
   // get search query from context
-  const { q, facet } = context;
+  const { facet } = context;
 
   // connected filters hook
   const { filters, setFilters, setQuery } = useFilters();
+
+  // connected q hook
+  const { hasQuery, getQuery } = useQ();
+
+  // Get q object
+  const q = getQuery();
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
@@ -362,7 +369,7 @@ export default function Wrap(props) {
   const facetFilters = (workType && includedTypes[workType]) || undefined;
 
   // hitcount according to selected filters
-  const { data: hitcountData } = useData(q && hitcount({ q, filters }));
+  const { data: hitcountData } = useData(hasQuery && hitcount({ q, filters }));
 
   // On a specific filter category page we make sure to remove filters from within that category.
   // This will make sure facet hitcounts won't change, when you select/unselect filters.
@@ -373,7 +380,7 @@ export default function Wrap(props) {
 
   // facets according to query filters
   const { data, isLoading } = useData(
-    q &&
+    hasQuery &&
       facets({
         q,
         filters: filtersForCategory,

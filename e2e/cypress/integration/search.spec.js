@@ -2,7 +2,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 describe("Search", () => {
   it(`Should show search results`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="result-row"]').should("have.length", 10);
 
     // click grid view, should be reflected in url
@@ -25,7 +25,7 @@ describe("Search", () => {
   });
 
   it(`Should link to work page`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="result-row"]').first().click();
     cy.url().should("include", "/materiale");
   });
@@ -42,12 +42,12 @@ describe("Search", () => {
       }
     });
 
-    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
 
     // When search begin query should be logged
     cy.wait("@apiMutationOnSearch").then((interception) => {
       const data = interception.request.body.variables.input.search;
-      expect(data.search_query).to.equal("harry potter");
+      expect(data.search_query).to.equal("{all: harry potter}");
       expect(data.session_id).to.equal("test");
       expect(interception.response.body.errors).to.be.undefined;
     });
@@ -61,7 +61,7 @@ describe("Search", () => {
     // clicking the row should log
     cy.wait("@apiMutationOnSearchClick").then((interception) => {
       const data = interception.request.body.variables.input.search_work;
-      expect(data.search_query).to.equal("harry potter");
+      expect(data.search_query).to.equal("{all: harry potter}");
       expect(data.search_query_hit).to.equal(1);
       expect(data.search_query_work).to.contain("work-of:");
       expect(data.session_id).to.equal("test");
@@ -100,21 +100,21 @@ describe("Search", () => {
   });
 
   it(`Desktop: Fake searchfield not visible`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
   });
 
   it(`Mobile: Has searchfield including query`, () => {
     cy.viewport(411, 731);
-    cy.visit(`${nextjsBaseUrl}/find?q=harry potter`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="fake-search-input"]').contains("harry potter");
   });
 
-  it(`renders hitcount data on server`, () => {
+  it.only(`renders hitcount data on server`, () => {
     // we make a "request" instead of "visit" to see
     // the actual html returned from the server
     // set isBot=true to make sure data is loaded on server
-    cy.request(`${nextjsBaseUrl}/find?q=harry potter&isBot=true`)
+    cy.request(`${nextjsBaseUrl}/find?q.all=harry potter&isBot=true`)
       .its("body")
       .then((html) => {
         const desc_regex = /<\s*meta name="description"[^>]*\/>/g;

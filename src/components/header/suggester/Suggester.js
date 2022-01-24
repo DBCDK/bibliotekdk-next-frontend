@@ -449,7 +449,7 @@ export default function Wrap(props) {
   const fetcher = useFetcher();
   const { filters } = useFilters();
 
-  const initialQuery = router.query.q || "";
+  const initialQuery = router.query["q.all"] || "";
 
   const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState();
@@ -464,10 +464,11 @@ export default function Wrap(props) {
   // At some point look into it
   // the URL param "q" should be the single source of truth
   useEffect(() => {
-    if (router.query.q && router.query.q !== query) {
-      setQuery(router.query.q);
+    const all = router.query["q.all"];
+    if (all && all !== query) {
+      setQuery(all);
     }
-  }, [router.query.q]);
+  }, [router.query["q.all"]]);
 
   useEffect(() => {
     // Collect data

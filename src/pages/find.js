@@ -8,6 +8,7 @@ import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 
 import useFilters, { getQuery } from "@/components/hooks/useFilters";
+import useQ, { types as typesQ } from "@/components/hooks/useQ";
 
 import { useModal } from "@/components/_modal";
 
@@ -19,8 +20,6 @@ import {
 } from "@/lib/api/datacollect.mutations";
 import { useFetcher } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-
-import merge from "lodash/merge";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -34,35 +33,39 @@ function Find() {
   const modal = useModal();
 
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
-  const { getQuery } = useFilters();
+  const filters = useFilters().getQuery();
+  const q = useQ().getQuery();
 
-  const filters = getQuery();
+  console.log("####### q", q);
 
   const router = useRouter();
   const fetcher = useFetcher();
-  const { q, page = 1, view } = router.query;
+  const { page = 1, view } = router.query;
 
+  // Add worktype and all q types to useCanonicalUrl func
   const { canonical, alternate, root } = useCanonicalUrl({
-    preserveParams: ["q", "workType"],
+    preserveParams: ["workType", ...typesQ.map((t) => `q.${t}`)],
   });
 
   // use the useData hook to fetch data
-  const hitcountResponse = useData(hitcount({ q, filters }));
+  const hitcountResponse = useData(hitcount({ q: q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
+
+  console.log("####### hits", hits);
 
   const context = { context: "metadata" };
 
   const pageTitle = Translate({
     ...context,
     label: "find-title",
-    vars: [q],
+    vars: [q?.all],
   });
 
   const pageDescription = Translate({
     ...context,
     label: "find-description",
-    vars: [`${hits}`, q],
+    vars: [`${hits}`, q?.all],
   });
 
   /**
@@ -85,14 +88,14 @@ function Find() {
   // Sideeffects to be run when search query changes
   useEffect(() => {
     // Check that q is set and not the empty string
-    if (q) {
+    if (q.all) {
       fetcher(
         collectSearch({
-          search_query: q,
+          search_query: q.all,
         })
       );
     }
-  }, [q]);
+  }, [q.all]);
 
   return (
     <>
@@ -114,7 +117,7 @@ function Find() {
       </Head>
       <Header router={router} />
 
-      <Searchbar query={q} />
+      <Searchbar q={q} />
 
       <QuickFilters
         viewSelected={view}
