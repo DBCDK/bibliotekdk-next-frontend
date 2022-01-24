@@ -17,7 +17,7 @@ function parseRis(response) {
  * @param accessToken
  * @return {Promise<*>}
  */
-async function getRis(pid, accessToken) {
+export async function getRis(pid, accessToken) {
   const querystr = ris(pid);
   const paramsForApi = { ...querystr, accessToken };
   const response = await fetcher(paramsForApi);
