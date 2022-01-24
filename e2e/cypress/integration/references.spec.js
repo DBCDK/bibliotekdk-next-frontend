@@ -2,8 +2,8 @@
  * @file
  * Test functionality of reference systems
  */
-describe("Localization link", () => {
-  it(`Localization link present`, () => {
+describe("References", () => {
+  it(`Reference links present`, () => {
     cy.visit("/iframe.html?id=modal-references--reference-links");
 
     const links = ["refworks", "endnote", "file"];
