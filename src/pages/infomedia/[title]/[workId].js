@@ -26,6 +26,7 @@ export function InfomediaArticle(infomediaData) {
     rating,
     user,
     modal,
+    reviewAuthor,
   } = infomediaData;
 
   const router = useRouter();
@@ -48,7 +49,7 @@ export function InfomediaArticle(infomediaData) {
             return (
               <Content
                 key={`${article?.title}_${idx}`}
-                data={{ ...article, rating }}
+                data={{ ...article, rating, reviewAuthor }}
               />
             );
           })}
@@ -168,7 +169,9 @@ export default function wrap() {
     (review) =>
       !!review?.reference?.find((reference) => reference.pid === reviewPid)
   );
+
   const rating = review?.rating;
+  const reviewAuther = review?.author;
 
   const infomediaPrivate = useData(
     user.isAuthenticated && workId && infomediaArticle({ pid })
@@ -182,6 +185,7 @@ export default function wrap() {
     publicInf: infomediaPublic,
     agencyName: branchRes?.data?.branches?.result?.[0]?.agencyName,
     rating: rating || null,
+    reviewAuthor: reviewAuther || null,
     user,
     modal,
   };
