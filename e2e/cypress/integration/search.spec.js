@@ -62,15 +62,10 @@ describe("Search", () => {
     cy.wait("@apiMutationOnSearchClick").then((interception) => {
       const data = interception.request.body.variables.input.search_work;
 
-      console.log("data.search_query", data.search_query);
-
       expect(data.search_query).to.equal("harry potter");
       expect(data.search_query_hit).to.equal(1);
       expect(data.search_query_work).to.contain("work-of:");
       expect(data.session_id).to.equal("test");
-
-      console.log(interception.response.body.errors);
-
       expect(interception.response.body.errors).to.be.undefined;
     });
   });
