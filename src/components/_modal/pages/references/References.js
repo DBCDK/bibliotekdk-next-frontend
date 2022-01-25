@@ -1,6 +1,8 @@
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
+import Top from "@/components/_modal/pages/base/top";
+import styles from "./References.module.css";
 
 const onlinelinks = (pid) => {
   const selfurl = "http://localhost:3000";
@@ -11,21 +13,36 @@ const onlinelinks = (pid) => {
   };
 };
 
-export default function References({ pid }) {
+export function References(pid) {
   const links = onlinelinks(pid);
   const linkslist = Object.keys(links).map((onlinekey) => (
-    <li>
+    <li className={styles.list}>
       <Link
         dataCy={onlinekey}
         border={{ bottom: { keepVisible: true } }}
         href={links[onlinekey]}
         target="_blank"
       >
-        <Text type="text1">
+        <Text type="text3">
           {Translate({ context: "references", label: `${onlinekey}_label` })}
         </Text>
       </Link>
     </li>
   ));
-  return <ul>{linkslist}</ul>;
+  return (
+    <div className={styles.options}>
+      <Top
+        title={Translate({
+          context: "references",
+          label: "label_references_title",
+        })}
+      />
+      <ul>{linkslist}</ul>
+    </div>
+  );
+}
+
+export default function wrap({ context }) {
+  const { pids } = { ...context };
+  return References(pids[0]);
 }
