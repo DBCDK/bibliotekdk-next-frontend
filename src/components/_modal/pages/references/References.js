@@ -43,6 +43,6 @@ export function References(pid) {
 }
 
 export default function wrap({ context }) {
-  const { pids } = { ...context };
+  const { pids } = context;
   return References(pids[0]);
 }

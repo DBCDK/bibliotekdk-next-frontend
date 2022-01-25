@@ -19,7 +19,6 @@ import useUser from "@/components/hooks/useUser";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { useData } from "@/lib/api/api";
 import { localizationsQuery } from "@/lib/api/localizations.fragments";
-import References from "@/components/_modal/pages/references";
 
 /**
  * bibliotek.dk object url

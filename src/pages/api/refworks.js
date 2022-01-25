@@ -1,7 +1,7 @@
 import { refWorks } from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
 
-import { getAnonToken } from "@/lib/api/apiServerOnly";
+import { getAnonSession } from "@/lib/api/apiServerOnly";
 import { getSession } from "next-auth/client";
 
 /**
@@ -33,7 +33,7 @@ async function getRefWorks(pid, accessToken) {
  */
 export async function getAccessToken(context) {
   const session = await getSession(context);
-  const anonSession = await getAnonToken(context);
+  const anonSession = await getAnonSession(context);
   const accessToken = session?.accessToken || anonSession?.accessToken;
 
   return accessToken;

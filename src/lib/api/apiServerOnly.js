@@ -32,7 +32,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
   let anonSession;
   let session = await getSession(context);
   if (!session?.accessToken) {
-    anonSession = await getAnonToken(context);
+    anonSession = await getAnonSession(context);
   }
 
   // Fetch all queries in parallel
@@ -66,7 +66,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
   };
 }
 
-export async function getAnonToken(context) {
+export async function getAnonSession(context) {
   // anonymous session
   let anonSession;
   const ANONYMOUS_SESSION = "anon.session";
