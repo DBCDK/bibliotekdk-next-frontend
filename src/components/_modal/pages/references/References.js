@@ -3,14 +3,16 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text/Text";
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./References.module.css";
-import config from "@/config";
+import getConfig from "next/config";
 
 const onlinelinks = (pid) => {
-  const selfurl = config.externalBaseUrl;
+  const APP_URL =
+    getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+
   return {
-    refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${selfurl}/api/refworks?pid=${pid}`,
-    endnote: `http://www.myendnoteweb.com/EndNoteWeb.html?func=directExport&partnerName=bibliotek.dk&dataIdentifier=1&dataRequestUrl=${selfurl}/api/ris?pid=${pid}`,
-    file: `${selfurl}/api/risdownload?pid=${pid}`,
+    refworks: `http://www.refworks.com/express/ExpressImport.asp?vendor=bibliotek.dk&filter=RefWorks Tagged Format&encoding=28591&url=${APP_URL}/api/refworks?pid=${pid}`,
+    endnote: `http://www.myendnoteweb.com/EndNoteWeb.html?func=directExport&partnerName=bibliotek.dk&dataIdentifier=1&dataRequestUrl=${APP_URL}/api/ris?pid=${pid}`,
+    file: `${APP_URL}/api/risdownload?pid=${pid}`,
   };
 };
 
