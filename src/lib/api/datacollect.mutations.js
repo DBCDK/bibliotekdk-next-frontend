@@ -141,6 +141,8 @@ export function collectSearchWorkClick({
   search_query_hit,
   search_query_work,
 }) {
+  console.log("search_query", search_query);
+
   return {
     query: `mutation ($input: DataCollectInput!) {
       data_collect(input: $input)

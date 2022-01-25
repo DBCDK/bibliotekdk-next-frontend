@@ -50,6 +50,8 @@ function Find() {
     preserveParams: ["workType", ...typesQ.map((t) => `q.${t}`)],
   });
 
+  console.log("dddddddd", { canonical, alternate, root });
+
   // use the useData hook to fetch data
   const hitcountResponse = useData(hitcount({ q: q, filters }));
 
@@ -138,7 +140,7 @@ function Find() {
           onWorkClick={(index, work) => {
             fetcher(
               collectSearchWorkClick({
-                search_query: q,
+                search_query: q.all,
                 search_query_hit: index + 1,
                 search_query_work: work.id,
               })

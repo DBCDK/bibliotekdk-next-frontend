@@ -184,7 +184,7 @@ function useQ() {
   /**
    * Boolean to check if q contains a value
    */
-  const obj = getQuery();
+  const obj = _getQuery();
   const _hasQuery = !!(obj.all || obj.creator || obj.title || obj.subject);
 
   return {

@@ -3,7 +3,7 @@
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 
-const searchOnUrl = "/find?q=";
+const searchOnUrl = "/find?q.all=";
 
 function manifestationLink({ name }) {
   return (

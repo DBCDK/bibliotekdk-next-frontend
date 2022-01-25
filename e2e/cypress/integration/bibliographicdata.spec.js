@@ -37,6 +37,6 @@ describe("bibliographic data", () => {
     cy.get("[data-cy=edition-data-af] span a")
       .should("have.attr", "href")
       .should("not.be.empty")
-      .and("contain", "/find?q=Lucinda%20Riley");
+      .and("contain", "/find?q.all=Lucinda%20Riley");
   });
 });
