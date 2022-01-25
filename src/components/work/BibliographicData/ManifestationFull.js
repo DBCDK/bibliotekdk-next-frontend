@@ -92,7 +92,10 @@ function ColumnOne({
             border={{ bottom: { keepVisible: true } }}
             onClick={() =>
               modal.push("references", {
-                title: Translate({ context: "modal", label: "title-order" }),
+                title: Translate({
+                  context: "references",
+                  label: "label_references_title",
+                }),
                 pids: [manifestation.pid],
               })
             }
