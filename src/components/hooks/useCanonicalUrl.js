@@ -16,15 +16,11 @@ const APP_URL =
  * @returns {object}
  */
 export default function useCanonicalUrl({ preserveParams = [] } = {}) {
-  console.log("preserveParams", preserveParams);
-
   const router = useRouter();
   const preserved = preserveParams
     .filter((param) => router.query[param])
     .map((param) => `${param}=${router.query[param]}`)
     .join("&");
-
-  console.log("preserved", preserved);
 
   const pathname = router.asPath.replace(/\?.*/, "");
 

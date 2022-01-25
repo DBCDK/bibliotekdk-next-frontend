@@ -50,8 +50,6 @@ function Find() {
     preserveParams: ["workType", ...typesQ.map((t) => `q.${t}`)],
   });
 
-  console.log("dddddddd", { canonical, alternate, root });
-
   // use the useData hook to fetch data
   const hitcountResponse = useData(hitcount({ q: q, filters }));
 
