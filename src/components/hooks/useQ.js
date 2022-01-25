@@ -1,14 +1,14 @@
 /**
- * Hook for filter sync across components 🤯
+ * Hook for q search param sync across components 🤯
  *
- * OBS! useFilters hook is SWR connected and will trigger an update
+ * OBS! useQ hook is SWR connected and will trigger an update
  * on connected components.
  */
 
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-import useSWR from "swr";
+// import useSWR from "swr";
 
 /**
  *
@@ -18,13 +18,13 @@ import useSWR from "swr";
  */
 
 // Global state
-let locale = {};
+// let locale = {};
 
 // Global useQ hook initialization
-let initialized = false;
+// let initialized = false;
 
 // Custom fetcher
-const fetcher = () => locale;
+// const fetcher = () => locale;
 
 // current supported filter types
 export const types = ["all", "creator", "subject", "title"];
@@ -44,7 +44,7 @@ export function buildQ() {
 }
 
 /**
- * Get filters from query params
+ * Get all q types from query params
  *
  * @param {object} query (defaults to router.query)
  *
@@ -71,8 +71,10 @@ export const getQuery = (query = {}) => {
  *
  * @returns {object}
  *
- * getQ
- * setQ
+ * setQuery
+ * getQuery
+ * hasQuery
+ * types
  *
  */
 
@@ -81,9 +83,9 @@ function useQ() {
   const router = useRouter();
 
   // SWR
-  const { data: _q, mutate: _setQ } = useSWR("q", fetcher, {
-    initialData: buildQ(),
-  });
+  //   const { data: _q, mutate: _setQ } = useSWR("q", fetcher, {
+  //     initialData: buildQ(),
+  //   });
 
   // represent all q: All type names as key and empty array as value
   const base = buildQ();
@@ -91,18 +93,18 @@ function useQ() {
   /**
    * Restore q from query params
    */
-  useEffect(() => {
-    const q = getQuery();
-    const initQuery = JSON.stringify(q);
-    if (initialized !== initQuery) {
-      // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
-      initialized = initQuery;
-      // set locale object
-      locale = q;
-      // update locale state (swr)
-      _setQ(locale);
-    }
-  }, [router.query]);
+  //   useEffect(() => {
+  //     const q = getQuery();
+  //     const initQuery = JSON.stringify(q);
+  //     if (initialized !== initQuery) {
+  //       // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
+  //       initialized = initQuery;
+  //       // set locale object
+  //       locale = q;
+  //       // update locale state (swr)
+  //       _setQ(locale);
+  //     }
+  //   }, [router.query]);
 
   /**
    * Update locale q
@@ -110,20 +112,20 @@ function useQ() {
    * @param {object} include
    *
    */
-  const q = (include = {}) => {
-    const params = {};
-    Object.entries(include).forEach(([key, val]) => {
-      if (types.includes(key)) {
-        params[key] = val;
-      }
-    });
+  //   const q = (include = {}) => {
+  //     const params = {};
+  //     Object.entries(include).forEach(([key, val]) => {
+  //       if (types.includes(key)) {
+  //         params[key] = val;
+  //       }
+  //     });
 
-    // set locale object
-    locale = { ...base, ...params };
+  //     // set locale object
+  //     locale = { ...base, ...params };
 
-    // update locale state (swr)
-    _setQ(locale);
-  };
+  //     // update locale state (swr)
+  //     _setQ(locale);
+  //   };
 
   /**
    * Get filters from query params
@@ -137,7 +139,7 @@ function useQ() {
   const _getQuery = (query = router.query) => getQuery(query);
 
   /**
-   * Set filters in query params
+   * Set q types in query params
    *
    * @param {object} include
    * @param {array} exclude
@@ -188,9 +190,11 @@ function useQ() {
   const _hasQuery = !!(obj.all || obj.creator || obj.title || obj.subject);
 
   return {
-    q,
+    // functions
+    // q,
     getQuery: _getQuery,
     setQuery,
+    // constants
     hasQuery: _hasQuery,
     types,
   };
