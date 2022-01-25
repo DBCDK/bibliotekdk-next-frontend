@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
-import References from "@/components/_modal/pages/references/References";
+import { References } from "@/components/_modal/pages/references/References";
 
 export default {
   title: "modal/References",
