@@ -7,8 +7,13 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 
-import useFilters, { getQuery } from "@/components/hooks/useFilters";
-import useQ, { types as typesQ } from "@/components/hooks/useQ";
+import useFilters, {
+  getQuery as getQueryFilters,
+} from "@/components/hooks/useFilters";
+import useQ, {
+  types as typesQ,
+  getQuery as getQueryQ,
+} from "@/components/hooks/useQ";
 
 import { useModal } from "@/components/_modal";
 
@@ -36,8 +41,6 @@ function Find() {
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
 
-  console.log("####### q", q);
-
   const router = useRouter();
   const fetcher = useFetcher();
   const { page = 1, view } = router.query;
@@ -51,8 +54,6 @@ function Find() {
   const hitcountResponse = useData(hitcount({ q: q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
-
-  console.log("####### hits", hits);
 
   const context = { context: "metadata" };
 
@@ -151,11 +152,12 @@ function Find() {
 
 Find.getInitialProps = (ctx) => {
   // Build a filters object based on the context query
-  const queryFilters = getQuery(ctx.query);
-
+  const queryFilters = getQueryFilters(ctx.query);
+  // Get correct structured q params from query
+  const queryQ = getQueryQ(ctx.query);
   // Appends a custom query filters object containing all materialfilters
   // The filters object can now be read by the search.fragments
-  return fetchAll([hitcount], ctx, { filters: queryFilters });
+  return fetchAll([hitcount], ctx, { filters: queryFilters, q: queryQ });
 };
 
 export default Find;

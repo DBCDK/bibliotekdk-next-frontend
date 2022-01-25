@@ -110,7 +110,7 @@ describe("Search", () => {
     cy.get('[data-cy="fake-search-input"]').contains("harry potter");
   });
 
-  it.only(`renders hitcount data on server`, () => {
+  it(`renders hitcount data on server`, () => {
     // we make a "request" instead of "visit" to see
     // the actual html returned from the server
     // set isBot=true to make sure data is loaded on server

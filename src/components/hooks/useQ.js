@@ -51,7 +51,7 @@ export function buildQ() {
  * @returns {object}
  *
  */
-const getQuery = (query) => {
+export const getQuery = (query = {}) => {
   const base = buildQ();
 
   const params = {};

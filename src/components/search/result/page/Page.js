@@ -60,6 +60,8 @@ export default function Wrap({ page, onWorkClick }) {
   const fastResponse = useData(hasQuery && fast({ q, offset, limit, filters }));
   const allResponse = useData(hasQuery && all({ q, limit, offset, filters }));
 
+  console.log("###########", { fastResponse, allResponse });
+
   if (fastResponse.error || allResponse.error) {
     return null;
   }
