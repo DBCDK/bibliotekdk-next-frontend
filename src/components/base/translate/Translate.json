@@ -452,12 +452,12 @@
         "en": "Note"
       }
     },
-    "references" : {
+    "references": {
       "label_references_title": {
         "da": "Download til referencesystemer",
         "en": "Download to referencesystems"
       },
-      "refworks_label" : {
+      "refworks_label": {
         "da": "Download til RefWorks",
         "en": "Download with RefWorks"
       },
@@ -1188,6 +1188,10 @@
       "title-options": {
         "da": "Alle bestillingsmuligheder",
         "en": "Other ordering options"
+      },
+      "title-search": {
+        "da": "Flere søgemuligheder",
+        "en": "Label: mangler oversættelse"
       }
     },
     "options": {

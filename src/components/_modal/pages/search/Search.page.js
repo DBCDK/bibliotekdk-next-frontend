@@ -5,21 +5,22 @@ import merge from "lodash/merge";
 import Top from "../base/top";
 
 import Title from "@/components/base/title";
-import List from "@/components/base/forms/list";
+import Label from "@/components/base/forms/label";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
-import Checkbox from "@/components/base/forms/checkbox";
+import Input from "@/components/base/forms/input";
 
 import Translate from "@/components/base/translate";
 
 import useFilters, { includedTypes } from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import { useData } from "@/lib/api/api";
 import { facets, hitcount } from "@/lib/api/search.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
-import styles from "./Filter.module.css";
+import styles from "./Search.module.css";
 
 /**
  * The Component function
@@ -29,10 +30,55 @@ import styles from "./Filter.module.css";
  *
  * @returns {component}
  */
-export function Search(props) {
+export function Search({
+  data,
+  isLoading,
+  workType,
+  onSubmit,
+  onChange,
+  onClear,
+  modal,
+  context,
+}) {
   return (
     <div className={`${styles.search}`} data-cy="search-modal">
       <Top modal={modal} back={false} />
+      <span className={styles.wrap}>
+        <Title type="title4" className={styles.title}>
+          {Translate({
+            context: "modal",
+            label: "title-search",
+          })}
+        </Title>
+        <Link
+          dataCy="clear-all-search"
+          className={styles.clear}
+          onClick={() => onClear && onClear()}
+          border={{ bottom: { keepVisible: true } }}
+        >
+          <Text type="text3">
+            {Translate({
+              context: "general",
+              label: "clearAll",
+            })}
+          </Text>
+        </Link>
+      </span>
+
+      <div className={styles.content}>
+        <Label for="search-title" skeleton={isLoading}>
+          titel
+        </Label>
+        <Input id="search-title" />
+        <Label for="search-creator" skeleton={isLoading}>
+          forfatter
+        </Label>
+        <Input id="search-creator" />
+        <Label for="search-subject" skeleton={isLoading}>
+          emne
+        </Label>
+        <Input id="search-subject" />
+      </div>
 
       <Button
         dataCy="vis-resultater"
@@ -43,18 +89,11 @@ export function Search(props) {
         {Translate({
           context: "search",
           label: "showXResults",
-          vars: [hitcount],
+          vars: [data.hitcount],
         })}
       </Button>
     </div>
   );
-}
-
-export function FilterSkeleton() {
-  // dummy data
-  const dummy = {};
-
-  return <Search isLoading={true} data={dummy} modal={{}} context={{}} />;
 }
 
 export default function Wrap(props) {
@@ -68,61 +107,31 @@ export default function Wrap(props) {
   }, [modal.isVisible]);
 
   // get search query from context
-  const { q, facet } = context;
+  const { facet } = context;
+
+  // connect useQ hook
+  const { q, setQ, setQuery } = useQ();
+
+  console.log("q", q);
 
   // connected filters hook
-  const { filters, setFilters, setQuery } = useFilters();
+  const { filters } = useFilters();
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
 
-  // Exclude irrelevant worktype categories
-  // undefined will result in a include-all fallback at the fragment api call function.
-  const facetFilters = (workType && includedTypes[workType]) || undefined;
-
   // hitcount according to selected filters
-  const { data: hitcountData } = useData(q && hitcount({ q, filters }));
-
-  // On a specific filter category page we make sure to remove filters from within that category.
-  // This will make sure facet hitcounts won't change, when you select/unselect filters.
-  const filtersForCategory =
-    facet && filters?.[facet?.name]
-      ? { ...filters, [facet?.name]: [] }
-      : filters;
-
-  // facets according to query filters
-  const { data, isLoading } = useData(
-    q &&
-      facets({
-        q,
-        filters: filtersForCategory,
-        facets: facetFilters,
-      })
-  );
-
-  // merge data
-  const mergedData = merge({}, data, hitcountData);
-
-  if (isLoading) {
-    return <FilterSkeleton {...props} />;
-  }
-
-  // Dont clear the workType filter onClear
-  const excludeOnClear = { workType: filters.workType };
+  const { data, isLoading } = useData(q && hitcount({ q, filters }));
 
   return (
-    <Filter
-      data={mergedData}
+    <Search
+      data={{ hitcount: data?.search?.hitcount }}
+      workType={workType}
+      isLoading={isLoading}
       selected={filters}
-      onSelect={(selected) => {
-        // Updates selected filter in useFilters
-        setFilters({ ...filters, ...selected });
-      }}
-      onSubmit={() => {
-        // exclude modal param -> will close the modal on submit
-        setQuery({ exclude: ["modal"] });
-      }}
-      onClear={() => setFilters({ ...excludeOnClear })}
+      onChange={(selected) => setQ({ ...q, ...selected })}
+      onSubmit={() => setQuery({ exclude: ["modal"] })}
+      onClear={() => setQ({})}
       {...props}
     />
   );
