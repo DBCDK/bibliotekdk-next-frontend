@@ -75,7 +75,7 @@ export function Overview({
     }
   }
 
-  const searchOnUrl = "/find?q.all=";
+  const searchOnUrl = "/find?q.creator=";
 
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({

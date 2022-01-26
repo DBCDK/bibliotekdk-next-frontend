@@ -22,7 +22,8 @@ import styles from "./Keywords.module.css";
  * @returns {string}
  */
 function url(keyword) {
-  return `/find?q.all=${keyword}`;
+  return `/find?q.subject=${keyword}`;
+
   //return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
 }
 
