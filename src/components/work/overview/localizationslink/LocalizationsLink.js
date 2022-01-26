@@ -21,7 +21,6 @@ export function LocalizationsLink({
   }
 
   const nolinktoholding = [
-    "Lydbog (bånd)",
     "Lydbog (net)",
     "Ebog",
     "Punktskrift",
