@@ -7,7 +7,13 @@ import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 
-import useFilters, { getQuery } from "@/components/hooks/useFilters";
+import useFilters, {
+  getQuery as getQueryFilters,
+} from "@/components/hooks/useFilters";
+import useQ, {
+  types as typesQ,
+  getQuery as getQueryQ,
+} from "@/components/hooks/useQ";
 
 import { useModal } from "@/components/_modal";
 
@@ -19,8 +25,6 @@ import {
 } from "@/lib/api/datacollect.mutations";
 import { useFetcher } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-
-import merge from "lodash/merge";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -34,20 +38,20 @@ function Find() {
   const modal = useModal();
 
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
-  const { getQuery } = useFilters();
-
-  const filters = getQuery();
+  const filters = useFilters().getQuery();
+  const q = useQ().getQuery();
 
   const router = useRouter();
   const fetcher = useFetcher();
-  const { q, page = 1, view } = router.query;
+  const { page = 1, view } = router.query;
 
+  // Add worktype and all q types to useCanonicalUrl func
   const { canonical, alternate, root } = useCanonicalUrl({
-    preserveParams: ["q", "workType"],
+    preserveParams: ["workType", ...typesQ.map((t) => `q.${t}`)],
   });
 
   // use the useData hook to fetch data
-  const hitcountResponse = useData(hitcount({ q, filters }));
+  const hitcountResponse = useData(hitcount({ q: q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
@@ -56,13 +60,13 @@ function Find() {
   const pageTitle = Translate({
     ...context,
     label: "find-title",
-    vars: [q],
+    vars: [q?.all],
   });
 
   const pageDescription = Translate({
     ...context,
     label: "find-description",
-    vars: [`${hits}`, q],
+    vars: [`${hits}`, q?.all],
   });
 
   /**
@@ -85,14 +89,14 @@ function Find() {
   // Sideeffects to be run when search query changes
   useEffect(() => {
     // Check that q is set and not the empty string
-    if (q) {
+    if (q.all) {
       fetcher(
         collectSearch({
-          search_query: q,
+          search_query: q.all,
         })
       );
     }
-  }, [q]);
+  }, [q.all]);
 
   return (
     <>
@@ -114,7 +118,7 @@ function Find() {
       </Head>
       <Header router={router} />
 
-      <Searchbar query={q} />
+      <Searchbar q={q} />
 
       <QuickFilters
         viewSelected={view}
@@ -135,7 +139,7 @@ function Find() {
           onWorkClick={(index, work) => {
             fetcher(
               collectSearchWorkClick({
-                search_query: q,
+                search_query: q.all,
                 search_query_hit: index + 1,
                 search_query_work: work.id,
               })
@@ -149,11 +153,12 @@ function Find() {
 
 Find.getInitialProps = (ctx) => {
   // Build a filters object based on the context query
-  const queryFilters = getQuery(ctx.query);
-
+  const queryFilters = getQueryFilters(ctx.query);
+  // Get correct structured q params from query
+  const queryQ = getQueryQ(ctx.query);
   // Appends a custom query filters object containing all materialfilters
   // The filters object can now be read by the search.fragments
-  return fetchAll([hitcount], ctx, { filters: queryFilters });
+  return fetchAll([hitcount], ctx, { filters: queryFilters, q: queryQ });
 };
 
 export default Find;

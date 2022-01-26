@@ -8,6 +8,7 @@ import Receipt from "./receipt";
 import Login from "./login";
 import Filter from "./filter";
 import Localizations from "./localizations";
+import References from "./references";
 
 export default {
   Menu,
@@ -20,4 +21,5 @@ export default {
   Login,
   Filter,
   Localizations,
+  References,
 };

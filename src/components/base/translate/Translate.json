@@ -452,6 +452,24 @@
         "en": "Note"
       }
     },
+    "references" : {
+      "label_references_title": {
+        "da": "Download til referencesystemer",
+        "en": "Download to referencesystems"
+      },
+      "refworks_label" : {
+        "da": "Download til RefWorks",
+        "en": "Download with RefWorks"
+      },
+      "endnote_label": {
+        "da": "Download til EndNoteWeb",
+        "en": "Download with EndNoteWeb"
+      },
+      "file_label": {
+        "da": "Download fil i RIS format",
+        "en": "Download file in RIS format"
+      }
+    },
     "workTypeDistinctForm": {
       "literature": {
         "da": "bogen",

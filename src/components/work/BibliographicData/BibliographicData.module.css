@@ -83,6 +83,10 @@
   padding-right: var(--pt5);
 }
 
+.linkstyle{
+  display: contents;
+}
+
 @media (min-width: 768px) {
   .container {
     column-count: 2;

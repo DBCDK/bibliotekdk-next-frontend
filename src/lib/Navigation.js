@@ -20,7 +20,6 @@ export const actions = [
   },
   { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
   { label: "digitalOffers", href: "/artikel/digitale-bibliotekstilbud/5" },
-  { label: "forStudents", href: "/artikel/er-du-studerende%3F/9" },
   { label: "useTheLibraries", href: "/#!", hidden: true },
   { label: "mySearches", href: "/#!", hidden: true },
   { label: "helpCenter", href: "/hjaelp" },

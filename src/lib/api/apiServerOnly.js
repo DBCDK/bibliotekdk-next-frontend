@@ -29,27 +29,10 @@ export async function fetchAll(queries, context, customQueryVariables) {
   const isBot = require("isbot")(userAgent) || !!context.query.isBot;
 
   // user session
-  const session = await getSession(context);
-
-  // anonymous session
   let anonSession;
+  let session = await getSession(context);
   if (!session?.accessToken) {
-    const ANONYMOUS_SESSION = "anon.session";
-    const jwt = nookies.get(context, { path: "/" })[ANONYMOUS_SESSION];
-    const anonSessionRes = await fetch(
-      `${APP_URL}/api/auth/anonsession?jwt=${jwt}`,
-      {
-        headers: context.req.headers,
-      }
-    );
-    const res = await anonSessionRes.json();
-    anonSession = res.session;
-    if (jwt !== res.jwt) {
-      nookies.set(context, ANONYMOUS_SESSION, res.jwt, {
-        path: "/",
-        httpOnly: true,
-      });
-    }
+    anonSession = await getAnonSession(context);
   }
 
   // Fetch all queries in parallel
@@ -81,4 +64,27 @@ export async function fetchAll(queries, context, customQueryVariables) {
     session,
     anonSession,
   };
+}
+
+export async function getAnonSession(context) {
+  // anonymous session
+  let anonSession;
+  const ANONYMOUS_SESSION = "anon.session";
+  const jwt = nookies.get(context, { path: "/" })[ANONYMOUS_SESSION];
+  const anonSessionRes = await fetch(
+    `${APP_URL}/api/auth/anonsession?jwt=${jwt}`,
+    {
+      headers: context.req.headers,
+    }
+  );
+  const res = await anonSessionRes.json();
+  anonSession = res.session;
+  if (jwt !== res.jwt) {
+    nookies.set(context, ANONYMOUS_SESSION, res.jwt, {
+      path: "/",
+      httpOnly: true,
+    });
+  }
+
+  return anonSession;
 }

@@ -55,7 +55,7 @@ describe("Modal", () => {
     cy.focused().should("have.attr", "data-cy", "close-modal");
 
     // Tab to last element in modal
-    cy.tabs(7);
+    cy.tabs(6);
     cy.focused().should("have.attr", "data-cy", "menu-link-language");
     /*
     // Next tab will send the tab order back to start

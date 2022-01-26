@@ -132,7 +132,7 @@ describe("Header", () => {
     cy.get("[data-cy=header-searchbutton]").click();
 
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`/find?q=Anders Morgenthaler`);
+      expect(str).to.equal(`/find?q.all=Anders Morgenthaler`);
     });
   });
 
@@ -144,7 +144,7 @@ describe("Header", () => {
     cy.get("[data-cy=suggester-input]").type("matthesen");
     cy.get("[data-cy=suggester-input]").type("{enter}");
     cy.on("window:alert", (str) => {
-      expect(str).to.equal(`/find?q=matthesen`);
+      expect(str).to.equal(`/find?q.all=matthesen`);
     });
     cy.get("[data-cy=suggester-input]").should(
       "not.have.class",

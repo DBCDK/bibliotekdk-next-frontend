@@ -49,6 +49,7 @@ function ColumnOne({
   opener,
   user,
 }) {
+  const modal = useModal();
   return (
     <Col
       key={"col1" + manifestation.pid}
@@ -84,6 +85,30 @@ function ColumnOne({
           />
         </span>
       </div>
+      <div>
+        <span>
+          <Link
+            border={{ bottom: { keepVisible: true } }}
+            onClick={() =>
+              modal.push("references", {
+                title: Translate({
+                  context: "references",
+                  label: "label_references_title",
+                }),
+                pids: [manifestation.pid],
+              })
+            }
+          >
+            <Text type="text3" className={styles.linkstyle}>
+              {Translate({
+                context: "references",
+                label: "label_references_title",
+              })}
+            </Text>
+          </Link>
+        </span>
+      </div>
+
       {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
       <Text className={styles.locationtitle} type="text1" lines={1}>
         {Translate({

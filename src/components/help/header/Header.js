@@ -7,14 +7,9 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
-import Language from "@/components/base/language";
 import SearchInput from "@/components/help/search/input";
 
 import { useModal } from "@/components/_modal";
-
-import LogoSvg from "@/public/icons/logo_help.svg";
-
-import { cyKey } from "@/utils/trim";
 
 import BurgerIcon from "@/components/header/icons/burger";
 
