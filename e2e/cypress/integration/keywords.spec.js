@@ -37,7 +37,7 @@ describe("Keywords", () => {
 
   it(`Can visit keywords`, () => {
     const tag = "barndom";
-    const url = `/find?q.all=${tag}`;
+    const url = `/find?q.subject=${tag}`;
 
     // Get selected tag
     const item = cy.get(`[data-cy=keyword-${tag}]`).children();
