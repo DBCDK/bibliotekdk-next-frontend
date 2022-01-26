@@ -20,7 +20,7 @@ import { MobileMaterialSelect } from "@/components/search/select";
  *
  * @returns {component}
  */
-export default function Searchbar({ query }) {
+export default function Searchbar({ q }) {
   // modal
   const modal = useModal();
 
@@ -35,10 +35,10 @@ export default function Searchbar({ query }) {
           <Col xs={12} md={{ span: 8, offset: 2 }}>
             <Row>
               <Col xs={12}>
-                <FakeSearchInput query={query} />
+                <FakeSearchInput q={q} />
                 <div>
                   <MobileMaterialSelect
-                    onFilterClick={() => modal.push("filter", { q: query })}
+                    onFilterClick={() => modal.push("filter", { q })}
                   />
                 </div>
               </Col>

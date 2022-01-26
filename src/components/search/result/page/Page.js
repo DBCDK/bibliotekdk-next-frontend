@@ -5,6 +5,7 @@ import { useData } from "@/lib/api/api";
 import { fast, all } from "@/lib/api/search.fragments";
 
 import useFilters from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 /**
  * Row representation of a search result entry
@@ -46,16 +47,18 @@ ResultPage.propTypes = {
  *
  * @returns {component}
  */
-export default function Wrap({ q, page, onWorkClick }) {
+export default function Wrap({ page, onWorkClick }) {
   // settings
   const limit = 10; // limit
   const offset = limit * (page - 1); // offset
 
   const { filters } = useFilters();
+  const { hasQuery, getQuery } = useQ();
+  const q = getQuery();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(q && fast({ q, offset, limit, filters }));
-  const allResponse = useData(q && all({ q, limit, offset, filters }));
+  const fastResponse = useData(hasQuery && fast({ q, offset, limit, filters }));
+  const allResponse = useData(hasQuery && all({ q, limit, offset, filters }));
 
   if (fastResponse.error || allResponse.error) {
     return null;

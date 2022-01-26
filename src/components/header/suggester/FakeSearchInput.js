@@ -14,8 +14,8 @@ import Translate from "@/components/base/translate";
  *
  * @returns {component}
  */
-export default function FakeSearchInput({ query = "", className }) {
-  const hasQuery = query && query !== "";
+export default function FakeSearchInput({ q, className }) {
+  const hasQuery = q?.all && q.all !== "";
   const hasQueryClass = hasQuery ? styles.hasQuery : "";
 
   return (
@@ -32,7 +32,7 @@ export default function FakeSearchInput({ query = "", className }) {
       <div className={styles.fakeinput} data-cy="fake-search-input">
         <Text type="text2" className={styles.placeholder}>
           {hasQuery
-            ? query
+            ? q.all
             : Translate({
                 context: "suggester",
                 label: "placeholder",
@@ -40,7 +40,7 @@ export default function FakeSearchInput({ query = "", className }) {
         </Text>
         <Text type="text2" className={styles.placeholderxs}>
           {hasQuery
-            ? query
+            ? q.all
             : Translate({
                 context: "suggester",
                 label: "placeholderMobile",

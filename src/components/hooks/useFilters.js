@@ -148,6 +148,7 @@ export function getQuery(query) {
 function useFilters() {
   // router
   const router = useRouter();
+
   // SWR
   const { data: _filters, mutate: _setFilters } = useSWR("filters", fetcher, {
     initialData: buildFilters(),

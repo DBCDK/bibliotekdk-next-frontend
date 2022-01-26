@@ -74,7 +74,7 @@ describe("Filter", () => {
 
   // Der er filtre som ikke længere vil være der - skal rettes før det tages i brug i prod
   it(`Can access filters on website`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=hest`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=hest`);
 
     viewAllFilters();
 
@@ -119,7 +119,7 @@ describe("Filter", () => {
   });
 
   it(`Only show 5 specific filters on workType 'game'`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q=lego&workType=game`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=lego&workType=game`);
 
     viewAllFilters();
 
@@ -145,7 +145,7 @@ describe("Filter", () => {
       }
     });
 
-    cy.visit(`${nextjsBaseUrl}/find?q=dronningen`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=dronningen`);
 
     viewAllFilters();
 
@@ -175,7 +175,7 @@ describe("Filter", () => {
 
   it(`Can clear selected filters`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q.all=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(4)");
@@ -194,7 +194,7 @@ describe("Filter", () => {
 
   it(`Cleared filters will not get restored onMount`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
+      `${nextjsBaseUrl}/find?q.all=marvel&materialType=playstation+4,playstation+3,playstation+2&accessType=physical`
     );
 
     viewAllFilters();
@@ -220,7 +220,7 @@ describe("Filter", () => {
 
   it(`Clear filters on workType change`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=Batman&materialType=tegneserie&accessType=Fysisk&language=Dansk`
+      `${nextjsBaseUrl}/find?q.all=Batman&materialType=tegneserie&accessType=Fysisk&language=Dansk`
     );
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(3)");
@@ -231,7 +231,7 @@ describe("Filter", () => {
 
   it(`Clear filters on query change`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=Batman&materialType=tegneserie&accessType=Fysisk&language=Dansk`
+      `${nextjsBaseUrl}/find?q.all=Batman&materialType=tegneserie&accessType=Fysisk&language=Dansk`
     );
 
     cy.get("[data-cy=view-all-filters]").should("contain.text", "(3)");
@@ -245,7 +245,7 @@ describe("Filter", () => {
 
   it(`Restore filters when browser's back button is used`, () => {
     cy.visit(
-      `${nextjsBaseUrl}/find?q=katte&workType=article&materialType=avisartikel`
+      `${nextjsBaseUrl}/find?q.all=katte&workType=article&materialType=avisartikel`
     );
 
     cy.log("Open and close filters modal");

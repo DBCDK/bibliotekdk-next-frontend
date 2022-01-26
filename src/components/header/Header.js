@@ -79,7 +79,7 @@ export function Header({
       label: "search",
       icon: SearchIcon,
       onClick: () => {
-        openMobileSuggester();
+        !story && openMobileSuggester();
         story && story.setSuggesterVisibleMobile(true);
         setTimeout(() => {
           focusInput();
@@ -144,7 +144,7 @@ export function Header({
     } else {
       const params = {
         workType: selectedMaterial !== "all" ? selectedMaterial : null,
-        q: query,
+        "q.all": query,
       };
 
       //  remove dead params
@@ -244,7 +244,7 @@ export function Header({
                     doSearch({ query: query });
 
                     // view query in storybook
-                    story && alert(`/find?q=${query}`);
+                    story && alert(`/find?q.all=${query}`);
 
                     // Remove suggester in storybook
                     story && story.setSuggesterVisibleMobile(false);
