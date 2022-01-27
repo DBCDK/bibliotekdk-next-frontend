@@ -30,6 +30,12 @@ export function References(pid) {
           {Translate({ context: "references", label: `${onlinekey}_label` })}
         </Text>
       </Link>
+      <Text type="text3">
+        {Translate({
+          context: "references",
+          label: `${onlinekey}_description_label`,
+        })}
+      </Text>
     </li>
   ));
   return (

@@ -461,13 +461,25 @@
         "da": "Download til RefWorks",
         "en": "Download with RefWorks"
       },
+      "refworks_description_label" : {
+        "da": "Link til import i RefWorks",
+        "en": "Link to import with RefWorks"
+      },
       "endnote_label": {
         "da": "Download til EndNoteWeb",
         "en": "Download with EndNoteWeb"
       },
+      "endnote_description_label": {
+        "da": "Link til import i EndNoteWeb",
+        "en": "Link to import with EndNoteWeb"
+      },
       "file_label": {
         "da": "Download fil i RIS format",
         "en": "Download file in RIS format"
+      },
+      "file_description_label": {
+        "da": "Til import i EndNote, Zotero, Mendeley og ReferenceManager",
+        "en": "Download file for EndNote, Zotero, Mendeley and ReferenceManager"
       }
     },
     "workTypeDistinctForm": {

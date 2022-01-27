@@ -74,19 +74,19 @@ function ColumnOne({
           size="small"
         />
       </div>
-      <div>
-        <span>
-          <LocalizationsLink
-            opener={opener}
-            localizations={localizations?.localizations}
-            isLoading={localizationsLoading}
-            materialType={manifestation.materialType}
-            user={user}
-          />
-        </span>
-      </div>
-      <div>
-        <span>
+      <div className={styles.addilinks}>
+        <div>
+          <span>
+            <LocalizationsLink
+              opener={opener}
+              localizations={localizations?.localizations}
+              isLoading={localizationsLoading}
+              materialType={manifestation.materialType}
+              user={user}
+            />
+          </span>
+        </div>
+        <div>
           <Link
             border={{ bottom: { keepVisible: true } }}
             onClick={() =>
@@ -106,7 +106,7 @@ function ColumnOne({
               })}
             </Text>
           </Link>
-        </span>
+        </div>
       </div>
 
       {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
