@@ -7,7 +7,7 @@ function viewAllFilters() {
   cy.wait(1000);
   cy.get(".modal_open").should("be.visible");
   // Wait for facets to load
-  cy.contains(/vis \d* resultater/i);
+  cy.contains(/vis\s*\d*\s*resultater/i);
   cy.wait(500);
 }
 
@@ -118,7 +118,7 @@ describe("Filter", () => {
 
     cy.get("[data-cy=vis-resultater]").click({ force: true });
 
-    cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
+    cy.get("[data-cy=view-all-filters]").should("contain.text", "(5)");
   });
 
   it(`Only show 5 specific filters on workType 'game'`, () => {
