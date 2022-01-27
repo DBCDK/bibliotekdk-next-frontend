@@ -96,6 +96,14 @@ function useQ() {
   useEffect(() => {
     const q = _getQuery();
     const initQuery = JSON.stringify(q);
+
+    console.log("useQ => useEffect", {
+      q,
+      initQuery,
+      initialized,
+      equal: initialized === initQuery,
+    });
+
     if (initialized !== initQuery) {
       // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
       initialized = initQuery;
@@ -113,8 +121,12 @@ function useQ() {
    *
    */
   const setQ = (include = {}) => {
+    console.log("useQ => setQ => include", include);
+
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
+      // strip q keys to match types
+      key = key.replace("q.", "");
       if (types.includes(key)) {
         params[key] = val;
       }
@@ -122,6 +134,8 @@ function useQ() {
 
     // set locale object
     locale = { ...base, ...params };
+
+    console.log("useQ => setQ => locale", locale);
 
     // update locale state (swr)
     _setQ(locale);
@@ -191,10 +205,11 @@ function useQ() {
 
   return {
     // functions
-    q: _q,
+    setQ,
     getQuery: _getQuery,
     setQuery,
     // constants
+    q: _q,
     hasQuery: _hasQuery,
     types,
   };

@@ -1,6 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
-
-import merge from "lodash/merge";
+import { useEffect } from "react";
 
 import Top from "../base/top";
 
@@ -13,11 +11,11 @@ import Input from "@/components/base/forms/input";
 
 import Translate from "@/components/base/translate";
 
-import useFilters, { includedTypes } from "@/components/hooks/useFilters";
+import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
 import { useData } from "@/lib/api/api";
-import { facets, hitcount } from "@/lib/api/search.fragments";
+import { hitcount } from "@/lib/api/search.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Search.module.css";
@@ -31,6 +29,7 @@ import styles from "./Search.module.css";
  * @returns {component}
  */
 export function Search({
+  q,
   data,
   isLoading,
   workType,
@@ -40,6 +39,34 @@ export function Search({
   modal,
   context,
 }) {
+  // Get workType specific labels if set, else fallback to a general text
+  const labelTitle = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-title` : `label-title`,
+  });
+  const labelCreator = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-creator` : `label-creator`,
+  });
+  const labelSubject = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-subject` : `label-subject`,
+  });
+
+  // Get workType specific placeholders if set, else fallback to a general text
+  const placeholderTitle = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-title` : `label-title`,
+  });
+  const placeholderCreator = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-creator` : `label-creator`,
+  });
+  const placeholderSubject = Translate({
+    context: "search",
+    label: workType ? `label-${workType}-subject` : `label-subject`,
+  });
+
   return (
     <div className={`${styles.search}`} data-cy="search-modal">
       <Top modal={modal} back={false} />
@@ -65,20 +92,37 @@ export function Search({
         </Link>
       </span>
 
-      <div className={styles.content}>
+      <form>
         <Label for="search-title" skeleton={isLoading}>
-          titel
+          {labelTitle}
         </Label>
-        <Input id="search-title" />
+        <Input
+          id="search-title"
+          value={q.title}
+          placeholder={placeholderTitle}
+          onBlur={(val) => {
+            q.title !== val && onChange({ title: val });
+          }}
+        />
         <Label for="search-creator" skeleton={isLoading}>
-          forfatter
+          {labelCreator}
         </Label>
-        <Input id="search-creator" />
+        <Input
+          id="search-creator"
+          value={q.creator}
+          placeholder={placeholderCreator}
+          onBlur={(val) => q.creator !== val && onChange({ creator: val })}
+        />
         <Label for="search-subject" skeleton={isLoading}>
-          emne
+          {labelSubject}
         </Label>
-        <Input id="search-subject" />
-      </div>
+        <Input
+          id="search-subject"
+          value={q.subject}
+          placeholder={placeholderSubject}
+          onBlur={(val) => q.subject !== val && onChange({ subject: val })}
+        />
+      </form>
 
       <Button
         dataCy="vis-resultater"
@@ -89,7 +133,7 @@ export function Search({
         {Translate({
           context: "search",
           label: "showXResults",
-          vars: [data.hitcount],
+          vars: [`${data.hitcount}`],
         })}
       </Button>
     </div>
@@ -106,13 +150,8 @@ export default function Wrap(props) {
     }
   }, [modal.isVisible]);
 
-  // get search query from context
-  const { facet } = context;
-
   // connect useQ hook
-  const { q, setQ, setQuery } = useQ();
-
-  console.log("q", q);
+  const { q, setQ, setQuery, hasQuery } = useQ();
 
   // connected filters hook
   const { filters } = useFilters();
@@ -121,15 +160,18 @@ export default function Wrap(props) {
   const workType = filters.workType?.[0];
 
   // hitcount according to selected filters
-  const { data, isLoading } = useData(q && hitcount({ q, filters }));
+  const { data, isLoading } = useData(hasQuery && hitcount({ q, filters }));
 
   return (
     <Search
+      q={q}
       data={{ hitcount: data?.search?.hitcount }}
       workType={workType}
       isLoading={isLoading}
-      selected={filters}
-      onChange={(selected) => setQ({ ...q, ...selected })}
+      onChange={(selected) => {
+        console.log("onChange", q, selected, { ...q, ...selected });
+        setQ({ ...q, ...selected });
+      }}
       onSubmit={() => setQuery({ exclude: ["modal"] })}
       onClear={() => setQ({})}
       {...props}

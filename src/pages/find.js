@@ -51,7 +51,7 @@ function Find() {
   });
 
   // use the useData hook to fetch data
-  const hitcountResponse = useData(hitcount({ q: q, filters }));
+  const hitcountResponse = useData(hitcount({ q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
@@ -129,7 +129,6 @@ function Find() {
 
       {q && (
         <Result
-          q={q}
           page={parseInt(page, 10)}
           viewSelected={view}
           onViewSelect={(view) => updateQueryParams({ view })}

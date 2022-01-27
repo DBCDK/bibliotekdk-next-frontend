@@ -798,6 +798,174 @@
       "advancedSearchLink": {
         "da": "Flere søgemuligheder",
         "en": "LABEL: mangler oversættelse"
+      },
+      "label-title": {
+        "da": "Titel",
+        "en": ""
+      },
+      "label-literature-title": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "label-article-title": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "label-movie-title": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "label-game-title": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "label-music-title": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "label-sheetmusic-title": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "label-creator": {
+        "da": "Forfatter",
+        "en": ""
+      },
+      "label-literature-creator": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "label-article-creator": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "label-movie-creator": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "label-game-creator": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "label-music-creator": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "label-sheetmusic-creator": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "label-subject": {
+        "da": "Emne",
+        "en": ""
+      },
+      "label-literature-subject": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "label-article-subject": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "label-movie-subject": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "label-game-subject": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "label-music-subject": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "label-sheetmusic-subject": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "placeholder-title": {
+        "da": "Materialets titel eller dele af titlen",
+        "en": ""
+      },
+      "placeholder-literature-title": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "placeholder-article-title": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "placeholder-movie-title": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "placeholder-game-title": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "placeholder-music-title": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "placeholder-sheetmusic-title": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "placeholder-creator": {
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": ""
+      },
+      "placeholder-literature-creator": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "placeholder-article-creator": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "placeholder-movie-creator": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "placeholder-game-creator": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "placeholder-music-creator": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "placeholder-sheetmusic-creator": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "placeholder-subject": {
+        "da": "Et eller flere emner",
+        "en": ""
+      },
+      "placeholder-literature-subject": {
+        "da": "Bøger",
+        "en": "Books"
+      },
+      "placeholder-article-subject": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "placeholder-movie-subject": {
+        "da": "Film",
+        "en": "Film"
+      },
+      "placeholder-game-subject": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "placeholder-music-subject": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "placeholder-sheetmusic-subject": {
+        "da": "Noder",
+        "en": "Sheet music"
       }
     },
     "suggester": {

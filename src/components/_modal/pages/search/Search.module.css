@@ -19,6 +19,15 @@
   margin-left: var(--pt2);
 }
 
+.search form label {
+  display: block;
+  padding: 0 0 var(--pt1) 0;
+}
+
+.search form input {
+  margin: 0 0 var(--pt3) 0;
+}
+
 @media (min-width: 576px) {
   .search {
     padding: 0 var(--pt6) var(--pt6) var(--pt6);
