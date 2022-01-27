@@ -64,6 +64,10 @@
   max-height: 100%;
 }
 
+.addilinks a{
+  margin-bottom: var(--pt2);
+}
+
 .locationtitle {
   margin-bottom: var(--pt1);
 }

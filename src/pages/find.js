@@ -89,14 +89,14 @@ function Find() {
   // Sideeffects to be run when search query changes
   useEffect(() => {
     // Check that q is set and not the empty string
-    if (q.all) {
+    if (q && Object.values(q)?.length > 0) {
       fetcher(
         collectSearch({
-          search_query: q.all,
+          search_request: { q, filters },
         })
       );
     }
-  }, [q.all]);
+  }, [JSON.stringify({ q, filters })]);
 
   return (
     <>
@@ -138,7 +138,7 @@ function Find() {
           onWorkClick={(index, work) => {
             fetcher(
               collectSearchWorkClick({
-                search_query: q.all,
+                search_request: { q, filters },
                 search_query_hit: index + 1,
                 search_query_work: work.id,
               })

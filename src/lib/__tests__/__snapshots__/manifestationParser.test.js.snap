@@ -82,7 +82,7 @@ Array [
           "top": false,
         }
       }
-      href="/find?q.all=some contributor"
+      href="/find?q.creator=some contributor"
     >
       some contributor
     </Link>,
@@ -101,7 +101,7 @@ Array [
               "top": false,
             }
           }
-          href="/find?q.all=some contributor"
+          href="/find?q.creator=some contributor"
         >
           some contributor
         </Link>
@@ -117,7 +117,7 @@ Array [
               "top": false,
             }
           }
-          href="/find?q.all=some other contributor"
+          href="/find?q.creator=some other contributor"
         >
           some other contributor
         </Link>
