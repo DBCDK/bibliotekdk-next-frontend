@@ -37,7 +37,6 @@ export function Search({
   onChange,
   onClear,
   modal,
-  context,
 }) {
   // Get workType specific labels if set, else fallback to a general text
   const labelTitle = Translate({
@@ -141,7 +140,7 @@ export function Search({
 }
 
 export default function Wrap(props) {
-  const { modal, context } = props;
+  const { modal } = props;
 
   // update query params when modal closes
   useEffect(() => {
@@ -151,7 +150,7 @@ export default function Wrap(props) {
   }, [modal.isVisible]);
 
   // connect useQ hook
-  const { q, setQ, setQuery, hasQuery } = useQ();
+  const { q, setQ, clearQ, setQuery, hasQuery } = useQ();
 
   // connected filters hook
   const { filters } = useFilters();
@@ -168,12 +167,9 @@ export default function Wrap(props) {
       data={{ hitcount: data?.search?.hitcount }}
       workType={workType}
       isLoading={isLoading}
-      onChange={(selected) => {
-        console.log("onChange", q, selected, { ...q, ...selected });
-        setQ({ ...q, ...selected });
-      }}
+      onChange={(selected) => setQ({ ...q, ...selected })}
       onSubmit={() => setQuery({ exclude: ["modal"] })}
-      onClear={() => setQ({})}
+      onClear={() => clearQ({ exclude: ["all"] })}
       {...props}
     />
   );

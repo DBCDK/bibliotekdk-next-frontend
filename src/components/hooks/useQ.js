@@ -38,6 +38,7 @@ export const types = ["all", "creator", "subject", "title"];
 export function buildQ() {
   return {};
 
+  // not set empty q types as default base for now
   const params = {};
   types.forEach((type) => (params[type] = ""));
   return params;
@@ -56,6 +57,11 @@ export const getQuery = (query = {}) => {
 
   const params = {};
   Object.entries(query).forEach(([key, val]) => {
+    // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
+    // Will not convert if a q.all already exist in query
+    if (key === "q" && !query["q.all"]) {
+      key = "q.all";
+    }
     // strip q keys to match types
     key = key.replace("q.", "");
     if (types.includes(key) && val) {
@@ -71,6 +77,9 @@ export const getQuery = (query = {}) => {
  *
  * @returns {object}
  *
+ * q
+ * setQ
+ * clearQ
  * setQuery
  * getQuery
  * hasQuery
@@ -96,14 +105,6 @@ function useQ() {
   useEffect(() => {
     const q = _getQuery();
     const initQuery = JSON.stringify(q);
-
-    console.log("useQ => useEffect", {
-      q,
-      initQuery,
-      initialized,
-      equal: initialized === initQuery,
-    });
-
     if (initialized !== initQuery) {
       // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
       initialized = initQuery;
@@ -121,8 +122,6 @@ function useQ() {
    *
    */
   const setQ = (include = {}) => {
-    console.log("useQ => setQ => include", include);
-
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
       // strip q keys to match types
@@ -135,10 +134,25 @@ function useQ() {
     // set locale object
     locale = { ...base, ...params };
 
-    console.log("useQ => setQ => locale", locale);
-
     // update locale state (swr)
     _setQ(locale);
+  };
+
+  /**
+   * Clear the locale q
+   *
+   * @param {object} include
+   *
+   */
+  const clearQ = ({ exclude = [] }) => {
+    const params = {};
+    types.forEach((type) => {
+      if (!exclude.includes(type)) {
+        params[type] = "";
+      }
+    });
+
+    setQ({ ..._q, ...params });
   };
 
   /**
@@ -206,6 +220,7 @@ function useQ() {
   return {
     // functions
     setQ,
+    clearQ,
     getQuery: _getQuery,
     setQuery,
     // constants

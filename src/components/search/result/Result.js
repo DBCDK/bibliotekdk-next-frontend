@@ -93,7 +93,7 @@ export function Result({
 }
 
 Result.propTypes = {
-  q: PropTypes.string,
+  q: PropTypes.object,
   page: PropTypes.number,
   isLoading: PropTypes.bool,
   hitcount: PropTypes.number,
@@ -148,7 +148,6 @@ export default function Wrap({
 }
 
 Wrap.propTypes = {
-  q: PropTypes.object,
   page: PropTypes.number,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,

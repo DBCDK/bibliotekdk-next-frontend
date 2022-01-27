@@ -72,7 +72,6 @@ export default function Wrap({ page, onWorkClick }) {
   return <ResultPage rows={data.search.works} onWorkClick={onWorkClick} />;
 }
 Wrap.propTypes = {
-  q: PropTypes.string,
   page: PropTypes.number,
   onWorkClick: PropTypes.func,
 };
