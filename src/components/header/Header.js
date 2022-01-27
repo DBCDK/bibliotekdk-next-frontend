@@ -142,12 +142,14 @@ export function Header({
           },
         });
     } else {
-      const queryKey =
-        suggestion?.__typename === "Creator"
-          ? "q.creator"
-          : suggestion?.__typename === "Subject"
-          ? "q.subject"
-          : "q.all";
+      let queryKey;
+      if (suggestion?.__typename === "Creator") {
+        queryKey = "q.creator";
+      } else if (suggestion?.__typename === "Subject") {
+        queryKey = "q.subject";
+      } else {
+        queryKey = "q.all";
+      }
 
       const params = {
         workType: selectedMaterial !== "all" ? selectedMaterial : null,
