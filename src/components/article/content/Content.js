@@ -226,11 +226,17 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 label: "creators",
               })}
             </Text>
-            {article.creators.map((creator) => (
-              <Text type="text4" key={creator.name}>
-                {creator.name}
+            {data.reviewAuthor ? (
+              <Text type="text4" key={data.reviewAuthor}>
+                {data.reviewAuthor}
               </Text>
-            ))}
+            ) : (
+              article.creators.map((creator) => (
+                <Text type="text4" key={creator.name}>
+                  {creator.name}
+                </Text>
+              ))
+            )}
             {data.rating && (
               <div className={styles.rating}>
                 <Rating rating={data.rating} skeleton={false} />
