@@ -1,5 +1,6 @@
 import Divider from "./Divider";
 import { StoryTitle } from "@/storybook";
+import React from "react";
 
 export default {
   title: "base/Divider (<hr>)",

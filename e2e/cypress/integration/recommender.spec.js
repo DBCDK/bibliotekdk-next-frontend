@@ -1,4 +1,4 @@
-const { before } = require("lodash");
+const before = require("lodash/before");
 
 /**
  * @file

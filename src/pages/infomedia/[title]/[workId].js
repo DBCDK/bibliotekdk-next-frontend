@@ -1,3 +1,4 @@
+import React from "react";
 import { useRouter } from "next/router";
 import Error from "next/error";
 import Header from "@/components/header/Header";

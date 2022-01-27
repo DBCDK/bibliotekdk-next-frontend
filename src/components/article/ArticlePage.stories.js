@@ -53,8 +53,7 @@ export function InfomediaArticle() {
       deliveredBy: "Infomedia",
       disclaimer: {
         logo: "/infomedia_logo.svg",
-        text:
-          "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
+        text: "Alt materiale i Infomedia er omfattet af lov om ophavsret og må ikke kopieres uden særlig tilladelse.",
       },
     },
   };

@@ -7,10 +7,10 @@ import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
 import { AnonymousSessionContext } from "../src/components/hooks/useUser";
+import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";
 import { APIStateContext } from "../src/lib/api/api";
-import { withNextRouter } from "storybook-addon-next-router";
 import { addDecorator } from "@storybook/react";
 import { useState } from "react";
 
@@ -70,12 +70,16 @@ export const decorators = [
       </ModalContextProvider>
     );
   },
-  withNextRouter({
+];
+
+export const parameters = {
+  nextRouter: {
+    Provider: RouterContext.Provider,
     async replace(path) {
       alert(typeof path === "object" ? JSON.stringify(path) : path);
     },
     async push(path) {
       alert(typeof path === "object" ? JSON.stringify(path) : path);
     },
-  }),
-];
+  },
+};

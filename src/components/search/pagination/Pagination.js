@@ -6,7 +6,7 @@ import LeftSvg from "@/public/icons/arrowleft.svg";
 import RightSvg from "@/public/icons/arrowright.svg";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const MAX_VISIBLE_PAGES = 10;
 /**

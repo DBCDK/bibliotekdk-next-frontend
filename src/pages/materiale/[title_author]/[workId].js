@@ -21,6 +21,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
+import React from "react";
 
 /**
  * Renders the WorkPage component

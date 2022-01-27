@@ -14,6 +14,7 @@ import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import React from "react";
 
 const Index = () => {
   const context = { context: "metadata" };
