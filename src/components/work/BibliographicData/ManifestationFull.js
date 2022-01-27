@@ -88,6 +88,7 @@ function ColumnOne({
         </div>
         <div>
           <Link
+            dataCy="link-references"
             border={{ bottom: { keepVisible: true } }}
             onClick={() =>
               modal.push("references", {

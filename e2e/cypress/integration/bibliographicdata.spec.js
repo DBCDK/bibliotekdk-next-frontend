@@ -39,4 +39,12 @@ describe("bibliographic data", () => {
       .should("not.be.empty")
       .and("contain", "/find?q.creator=Lucinda%20Riley");
   });
+
+  it("open edition - check link to references", () => {
+    // get first edition
+    cy.get("[data-cy=accordion-item]").first().click();
+    cy.get("[data-cy=link-references] p")
+      .first()
+      .should("have.text", "Download til referencesystemer");
+  });
 });
