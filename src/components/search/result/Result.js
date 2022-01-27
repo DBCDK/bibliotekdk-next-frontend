@@ -130,7 +130,7 @@ export default function Wrap({
   const data = fastResponse.data;
 
   if (fastResponse.isLoading || !data) {
-    return <Result isLoading={true} />;
+    return <Result page={page} isLoading={true} />;
   }
 
   return (
