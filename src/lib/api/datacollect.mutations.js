@@ -113,7 +113,7 @@ export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function collectSearch({ search_query }) {
+export function collectSearch({ search_request }) {
   return {
     query: `mutation ($input: DataCollectInput!) {
       data_collect(input: $input)
@@ -122,7 +122,7 @@ export function collectSearch({ search_query }) {
     variables: {
       input: {
         search: {
-          search_query,
+          search_request,
           session_id,
         },
       },
@@ -137,7 +137,7 @@ export function collectSearch({ search_query }) {
  * @param {string} params.workId the work id
  */
 export function collectSearchWorkClick({
-  search_query,
+  search_request,
   search_query_hit,
   search_query_work,
 }) {
@@ -149,7 +149,7 @@ export function collectSearchWorkClick({
     variables: {
       input: {
         search_work: {
-          search_query,
+          search_request,
           search_query_hit,
           search_query_work,
           session_id,
