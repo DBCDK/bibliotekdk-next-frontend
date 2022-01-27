@@ -142,9 +142,18 @@ export function Header({
           },
         });
     } else {
+      let queryKey;
+      if (suggestion?.__typename === "Creator") {
+        queryKey = "q.creator";
+      } else if (suggestion?.__typename === "Subject") {
+        queryKey = "q.subject";
+      } else {
+        queryKey = "q.all";
+      }
+
       const params = {
         workType: selectedMaterial !== "all" ? selectedMaterial : null,
-        "q.all": query,
+        [queryKey]: query,
       };
 
       //  remove dead params
