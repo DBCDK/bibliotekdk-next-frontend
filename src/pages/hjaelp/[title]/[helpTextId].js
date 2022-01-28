@@ -19,6 +19,7 @@ import { helpText, publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import Header from "@/components/help/texts/header";
 
 import Page from "@/components/help/texts/page";
+import React from "react";
 
 /**
  * Renders the help text component

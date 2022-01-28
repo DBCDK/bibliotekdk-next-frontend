@@ -10,6 +10,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import React from "react";
 
 /**
  * The Articles page React component

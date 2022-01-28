@@ -2,6 +2,7 @@
  * @file
  * Test functionality of bibliographic data
  */
+
 describe.skip("fisk", () => {
   before(function () {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
@@ -46,5 +47,13 @@ describe("bibliographic data", () => {
     cy.get("[data-cy=link-references] p")
       .first()
       .should("have.text", "Download til referencesystemer");
+  });
+
+  it("Full manifestation - check localizationlink", () => {
+    cy.visit("/iframe.html?id=work-bibliographic-data--full-manifestation");
+    cy.get("[data-cy=link-localizations] p").should(
+      "have.text",
+      "Se om den er hjemme på dit bibliotek"
+    );
   });
 });

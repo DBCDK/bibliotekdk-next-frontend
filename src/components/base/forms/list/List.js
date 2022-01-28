@@ -5,7 +5,7 @@
  */
 import PropTypes from "prop-types";
 
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import Arrow from "@/components/base/animation/arrow";
 

@@ -6,6 +6,16 @@ function viewAllFilters() {
   // wait for transition to end
   cy.wait(1000);
   cy.get(".modal_open").should("be.visible");
+  // Wait for facets to load
+  cy.contains(/vis\s*\d*\s*resultater/i);
+  cy.wait(500);
+}
+
+function modalBack() {
+  cy.get("[data-cy=modal-back]").click();
+  // Wait for facets to load
+  cy.contains(/vis\s*\d*\s*resultater/i);
+  cy.wait(500);
 }
 describe("Filter", () => {
   beforeEach(function () {});
@@ -34,11 +44,11 @@ describe("Filter", () => {
     cy.get("[data-cy=list-facets] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-3]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
 
     cy.get("[data-cy=vis-resultater]").click();
     cy.on("window:alert", (str) => {
@@ -56,12 +66,12 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click();
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-1]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
 
     cy.get("[data-cy=clear-all-filters]").click();
 
@@ -90,14 +100,9 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-3]").click({
       force: true,
     });
-    cy.get("[data-cy=list-terms] [data-cy=list-button-4]").click({
-      force: true,
-    });
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
 
     cy.get("[data-cy=list-facets] [data-cy=list-button-2]").scrollIntoView();
-    cy.wait(500);
-
     cy.get("[data-cy=list-facets] [data-cy=list-button-2]").click({
       force: true,
     });
@@ -109,13 +114,11 @@ describe("Filter", () => {
       force: true,
     });
 
-    cy.wait(500);
-    cy.get("[data-cy=modal-back]").click();
-    cy.wait(500);
+    modalBack();
 
     cy.get("[data-cy=vis-resultater]").click({ force: true });
 
-    cy.get("[data-cy=view-all-filters]").should("contain.text", "(6)");
+    cy.get("[data-cy=view-all-filters]").should("contain.text", "(5)");
   });
 
   it(`Only show 5 specific filters on workType 'game'`, () => {
@@ -211,7 +214,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click({
       force: true,
     });
-    cy.get("[data-cy=modal-back]").click();
+    modalBack();
     cy.wait(500);
     cy.get("[data-cy=vis-resultater]").click();
 

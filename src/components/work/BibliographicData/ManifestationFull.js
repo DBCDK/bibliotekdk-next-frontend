@@ -50,6 +50,7 @@ function ColumnOne({
   user,
 }) {
   const modal = useModal();
+
   return (
     <Col
       key={"col1" + manifestation.pid}

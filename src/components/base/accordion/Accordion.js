@@ -12,6 +12,7 @@ import styles from "./Accordion.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
 import BodyParser from "@/components/base/bodyparser";
+import React from "react";
 
 /**
  * The Component function

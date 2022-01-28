@@ -1,5 +1,75 @@
 import { BibliographicData } from "./BibliographicData";
 import dummyWorkManifestationsApi from "../dummyWorkManifestationsApi.json";
+import { ManifestationFull } from "@/components/work/BibliographicData/ManifestationFull";
+
+const localizations = {
+  localizations: {
+    count: 6,
+    agencies: [
+      {
+        agencyId: "800022",
+        holdingItems: [
+          {
+            localizationPid: "800010-katalog:99122237439705763",
+            codes: "",
+            localIdentifier: "99122237439705763",
+          },
+        ],
+      },
+      {
+        agencyId: "739000",
+        holdingItems: [
+          {
+            localizationPid: "870970-basis:28940483",
+            codes: "",
+            localIdentifier: "28940483",
+          },
+        ],
+      },
+      {
+        agencyId: "800015",
+        holdingItems: [
+          {
+            localizationPid: "800010-katalog:99122237439705763",
+            codes: "d",
+            localIdentifier: "99122237439705763",
+          },
+        ],
+      },
+      {
+        agencyId: "911010",
+        holdingItems: [
+          {
+            localizationPid: "870970-basis:28940483",
+            codes: "g",
+            localIdentifier: "28940483",
+          },
+        ],
+      },
+      {
+        agencyId: "774600",
+        holdingItems: [
+          {
+            localizationPid: "870970-basis:28940483",
+            codes: "",
+            localIdentifier: "28940483",
+          },
+        ],
+      },
+      {
+        agencyId: "715500",
+        holdingItems: [
+          {
+            localizationPid: "870970-basis:28940483",
+            codes: "",
+            localIdentifier: "28940483",
+          },
+        ],
+      },
+    ],
+  },
+  monitor: "OK",
+};
 
 export default {
   title: "work/Bibliographic data",
@@ -75,4 +145,45 @@ export function Article() {
   };
 
   return <BibliographicData work={data.work} />;
+}
+
+/**
+ * NOTE
+ * <ManifestationFull
+ *       manifestation={manifestation}
+ *       work={work}
+ *       workId={workId}
+ *       localizations={localizations}
+ *       localizationsLoading={localizationsLoading}
+ *       opener={openLocalizationsModal}
+ *       openOrderModal={openOrderModal}
+ *       user={user}
+ *     />
+ *
+ */
+
+/**
+ * Return a full manifestation
+ * @return {JSX.Element}
+ * @constructor
+ */
+export function FullManifestation() {
+  const data = dummyWorkManifestationsApi;
+  const work = data.work;
+  const manifestation = work.manifestations[0];
+  const alertopener = () => {
+    alert("open");
+  };
+  return (
+    <ManifestationFull
+      manifestation={manifestation}
+      work={work}
+      workId={work.workId}
+      localizations={localizations}
+      localizationsLoading={false}
+      opener={alertopener}
+      openOrderModal={alertopener}
+      user={{}}
+    />
+  );
 }
