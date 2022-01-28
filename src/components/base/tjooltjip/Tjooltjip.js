@@ -11,24 +11,13 @@ export default function TjoolTjip({
   labelToTranslate,
   customClass,
 }) {
-  const [show, setShow] = useState(false);
-  const toggle = (e) => {
-    setShow(!show);
-  };
-  const close = (e) => {
-    setShow(false);
-  };
-
   return (
     <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
-        show={show}
         trigger={["focus"]}
         delayShow={300}
         delayHide={150}
         placement={placement}
-        rootClose={true}
-        onToggle={close}
         overlay={
           <Popover id={`tooltip-${labelToTranslate}`}>
             <div
@@ -42,16 +31,7 @@ export default function TjoolTjip({
           </Popover>
         }
       >
-        <span
-          tabIndex="0"
-          onClick={() => toggle()}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              toggle();
-            }
-          }}
-          className={styles.tooltipwrap}
-        >
+        <span tabIndex="0" className={styles.tooltipwrap}>
           <Icon
             src="questionmark.svg"
             alt="info"
