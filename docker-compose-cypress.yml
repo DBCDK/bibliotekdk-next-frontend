@@ -15,7 +15,7 @@ services:
     command: npm run start
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: docker.dbc.dk/cypress:old-202139
+    image: docker.dbc.dk/cypress:16
     volumes:
       - './e2e:/app/e2e'
     depends_on:
