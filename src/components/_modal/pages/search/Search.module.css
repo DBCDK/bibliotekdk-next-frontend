@@ -28,6 +28,12 @@
   margin: 0 0 var(--pt3) 0;
 }
 
+.submit {
+  margin-top: auto;
+  position: relative;
+  z-index: 3;
+}
+
 @media (min-width: 576px) {
   .search {
     padding: 0 var(--pt6) var(--pt6) var(--pt6);

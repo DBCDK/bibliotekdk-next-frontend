@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 
 import useFilters from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
@@ -21,9 +22,11 @@ export function QuickFilters({
   onViewSelect,
   viewSelected,
 }) {
-  const { getCount } = useFilters();
+  const { getCount: getFiltersCount } = useFilters();
+  const { getCount: getQCount } = useQ();
 
-  const count = getCount(["workType"]).toString();
+  const countFilters = getFiltersCount(["workType"]).toString();
+  const countQ = getQCount(["all"]).toString();
 
   return (
     <Container fluid className={styles.section}>
@@ -61,7 +64,11 @@ export function QuickFilters({
                   <Text type="text3">
                     {Translate({
                       context: "search",
-                      label: "advancedSearchLink",
+                      label:
+                        countQ === "0"
+                          ? "advancedSearchLink"
+                          : "advancedSearchLinkCount",
+                      vars: countQ === "0" ? null : [countQ],
                     })}
                   </Text>
                 </Link>
@@ -88,10 +95,10 @@ export function QuickFilters({
                     {Translate({
                       context: "search",
                       label:
-                        count === "0"
+                        countFilters === "0"
                           ? "showAllFilters"
                           : "showAllFiltersCount",
-                      vars: count === "0" ? null : [count],
+                      vars: countFilters === "0" ? null : [countFilters],
                     })}
                   </Text>
                 </Link>

@@ -50,7 +50,7 @@ function LabelSkeleton(props) {
     <Label
       {...props}
       lines={1}
-      className={`${props.className} ${styles.skeleton}`}
+      className={`${props.className || ""} ${styles.skeleton}`}
     />
   );
 }
@@ -63,7 +63,7 @@ function LabelSkeleton(props) {
  *
  * @returns {component}
  */
-export default function Container(props) {
+export default function Wrap(props) {
   if (props.skeleton) {
     return <LabelSkeleton {...props} />;
   }
@@ -72,7 +72,7 @@ export default function Container(props) {
 }
 
 // PropTypes for the component
-Container.propTypes = {
+Wrap.propTypes = {
   for: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.string,

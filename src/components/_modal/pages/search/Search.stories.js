@@ -5,8 +5,6 @@ import Modal, { useModal } from "@/components/_modal";
 
 import useFilters from "@/components/hooks/useFilters";
 
-import response from "./dummy.data";
-
 export default {
   title: "Modal/Filter",
 };

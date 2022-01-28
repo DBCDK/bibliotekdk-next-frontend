@@ -35,9 +35,7 @@ export const types = ["all", "creator", "subject", "title"];
  * @returns {object}
  */
 
-export function buildQ() {
-  return {};
-
+function buildQ() {
   // not set empty q types as default base for now
   const params = {};
   types.forEach((type) => (params[type] = ""));
@@ -53,23 +51,24 @@ export function buildQ() {
  *
  */
 export const getQuery = (query = {}) => {
-  const base = buildQ();
-
   const params = {};
   Object.entries(query).forEach(([key, val]) => {
-    // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
-    // Will not convert if a q.all already exist in query
-    if (key === "q" && !query["q.all"]) {
-      key = "q.all";
-    }
-    // strip q keys to match types
-    key = key.replace("q.", "");
-    if (types.includes(key) && val) {
-      params[key] = val;
+    // remove empty key values
+    if (val && val !== "") {
+      // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
+      // Will not convert if a q.all already exist in query
+      if (key === "q" && !query["q.all"]) {
+        key = "q.all";
+      }
+      // strip q keys to match types
+      key = key.replace("q.", "");
+      if (types.includes(key) && val) {
+        params[key] = val;
+      }
     }
   });
 
-  return { ...base, ...params };
+  return params;
 };
 
 /**
@@ -93,14 +92,11 @@ function useQ() {
 
   // SWR
   const { data: _q, mutate: _setQ } = useSWR("q", fetcher, {
-    initialData: buildQ(),
+    initialData: {},
   });
 
-  // represent all q: All type names as key and empty array as value
-  const base = buildQ();
-
   /**
-   * Restore q from query params
+   * Restore filters and query from query params
    */
   useEffect(() => {
     const q = _getQuery();
@@ -124,15 +120,18 @@ function useQ() {
   const setQ = (include = {}) => {
     const params = {};
     Object.entries(include).forEach(([key, val]) => {
-      // strip q keys to match types
-      key = key.replace("q.", "");
-      if (types.includes(key)) {
-        params[key] = val;
+      // remove empty key values
+      if (val && val !== "") {
+        // strip q keys to match types
+        key = key.replace("q.", "");
+        if (types.includes(key)) {
+          params[key] = val;
+        }
       }
     });
 
     // set locale object
-    locale = { ...base, ...params };
+    locale = { ...params };
 
     // update locale state (swr)
     _setQ(locale);
@@ -141,18 +140,19 @@ function useQ() {
   /**
    * Clear the locale q
    *
-   * @param {object} include
+   * @param {object} exclude
    *
    */
   const clearQ = ({ exclude = [] }) => {
-    const params = {};
+    const copy = { ..._q };
+    // Remove all types from q (except excluded)
     types.forEach((type) => {
       if (!exclude.includes(type)) {
-        params[type] = "";
+        delete copy[type];
       }
     });
-
-    setQ({ ..._q, ...params });
+    // update q by setQ func
+    setQ(copy);
   };
 
   /**
@@ -173,11 +173,10 @@ function useQ() {
    * @param {array} exclude
    */
   const setQuery = ({ include = _q, exclude = [] }) => {
-    /**
-     * ensure all filters is represented, if not, the router update
-     * can get messed up by not removing all non-represented filters.
-     */
-    include = { ...base, ...include };
+    // include all q types (empty types)
+    const base = buildQ();
+
+    include = { ...base, ..._q };
 
     const params = {};
     // include
@@ -212,6 +211,28 @@ function useQ() {
   };
 
   /**
+   * Count active q params in query
+   *
+   * @param exclude params
+   *
+   * @returns {int}
+   */
+  function getCount(exclude = []) {
+    const q = _getQuery();
+
+    let count = 0;
+    Object.entries(q).map(([key, val]) => {
+      // exluded keys
+      if (!exclude.includes(key)) {
+        // if there is an actual value
+        count++;
+      }
+    });
+
+    return count;
+  }
+
+  /**
    * Boolean to check if q contains a value
    */
   const obj = _getQuery();
@@ -223,6 +244,7 @@ function useQ() {
     clearQ,
     getQuery: _getQuery,
     setQuery,
+    getCount,
     // constants
     q: _q,
     hasQuery: _hasQuery,
