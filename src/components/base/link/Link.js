@@ -29,6 +29,7 @@ export default function Link({
   tag = "a",
   disabled = false,
   ariaLabel = "",
+  scroll = true,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -71,7 +72,7 @@ export default function Link({
 
   // Return the component
   return (
-    <NextLink href={href} shallow={true}>
+    <NextLink href={href} shallow={true} scroll={scroll}>
       {children}
     </NextLink>
   );
