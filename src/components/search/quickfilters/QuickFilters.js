@@ -46,7 +46,6 @@ export function QuickFilters({
             <div className={styles.links}>
               <Link
                 tabIndex="-1"
-                dataCy="advanced-search"
                 className={styles.link}
                 onClick={() => onSearchClick()}
                 onKeyDown={(e) => {
@@ -58,6 +57,7 @@ export function QuickFilters({
               >
                 <Icon src="search_blue.svg" size={2} />
                 <Link
+                  dataCy="view-all-advanced-search"
                   onClick={(e) => e.preventDefault()}
                   border={{ bottom: { keepVisible: true } }}
                 >
@@ -76,7 +76,6 @@ export function QuickFilters({
 
               <Link
                 tabIndex="-1"
-                dataCy="view-all-filters"
                 className={styles.link}
                 onClick={() => onFiltersClick()}
                 onKeyDown={(e) => {
@@ -88,6 +87,7 @@ export function QuickFilters({
               >
                 <Icon src="settings.svg" size={2} />
                 <Link
+                  dataCy="view-all-filters"
                   onClick={(e) => e.preventDefault()}
                   border={{ bottom: { keepVisible: true } }}
                 >
