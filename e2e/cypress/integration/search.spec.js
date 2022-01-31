@@ -179,7 +179,7 @@ describe("Search", () => {
     });
   });
 
-  it(`All buttons should be tabbable`, () => {
+  it.only(`Should have a hitcount with real data`, () => {
     cy.visit(`${nextjsBaseUrl}`);
 
     cy.get("[data-cy=suggester-input]").type("Harry");
@@ -199,5 +199,10 @@ describe("Search", () => {
     cy.get("[data-cy=search-button-submit]").should("not.include.text", "0");
     cy.get("[data-cy=search-button-submit]").click();
     cy.get("[data-cy=section-title]").should("not.include.text", "0");
+
+    cy.url().should(
+      "include",
+      "/find?q.all=Harry&q.creator=Joanne+K.+Rowling&q.subject=magi&q.title=Harry+Potter+og+De+Vises+Sten"
+    );
   });
 });
