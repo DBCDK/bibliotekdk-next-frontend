@@ -74,6 +74,7 @@ export function Edition({
   context,
   material,
   showOrderTxt = true,
+  modal = {},
 }) {
   const {
     cover: workCover,
@@ -448,7 +449,7 @@ export function Order({
   return (
     <div className={`${styles.order} ${loadingClass}`}>
       <Top
-        title={context.title}
+        title={context?.title}
         className={{
           top: styles.top,
         }}
@@ -464,6 +465,7 @@ export function Order({
         isArticleRequest={isArticleRequest}
         context={context}
         material={material}
+        modal={modal}
       />
 
       <div className={styles.pickup}>
