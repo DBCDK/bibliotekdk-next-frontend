@@ -63,6 +63,152 @@ function LinkArrow({ onClick, disabled, children, className = "" }) {
   );
 }
 
+export function Edition({
+  isLoading,
+  work,
+  singleManifestation = false,
+  isArticle = false,
+  isPeriodicaLike = false,
+  availableAsDigitalCopy = false,
+  isArticleRequest = false,
+  context,
+  material,
+  showOrderTxt = true,
+}) {
+  const {
+    cover: workCover,
+    title: workTitle = "...",
+    creators: workCreators = [{ name: "..." }],
+    manifestations = [],
+  } = work;
+
+  const {
+    title = workTitle,
+    creators = workCreators,
+    cover = workCover,
+    materialType,
+  } = material;
+
+  return (
+    <div className={styles.edition}>
+      <div className={styles.left}>
+        <div className={styles.title}>
+          <Text type="text1" skeleton={isLoading} lines={1}>
+            {work?.fullTitle}
+          </Text>
+        </div>
+        <div className={styles.creators}>
+          <Text type="text3" skeleton={isLoading} lines={1}>
+            {creators.map((c, i) =>
+              creators.length > i + 1 ? c.name + ", " : c.name
+            )}
+          </Text>
+        </div>
+        {singleManifestation && (
+          <div>
+            <Text type="text3" skeleton={isLoading} lines={1}>
+              {material.datePublished},&nbsp;
+              {material.publisher &&
+                material.publisher.map((pub, index) => pub)}
+              &nbsp;
+              {material.edition && "," + material.edition}
+            </Text>
+          </div>
+        )}
+        <div className={styles.material}>
+          {!isArticle && !isPeriodicaLike && !singleManifestation && (
+            <Link onClick={() => {}} disabled>
+              <Text type="text3" skeleton={isLoading} lines={1} clamp>
+                {Translate({
+                  context: "order",
+                  label: "no-specific-edition",
+                })}
+              </Text>
+            </Link>
+          )}
+          {singleManifestation && showOrderTxt && (
+            <Link onClick={() => {}} disabled>
+              <Text type="text3" skeleton={isLoading} lines={1} clamp>
+                {Translate({
+                  context: "order",
+                  label: "specific-edition",
+                })}
+              </Text>
+            </Link>
+          )}
+          <div>
+            <Tag tag="span" skeleton={isLoading}>
+              {materialType}
+            </Tag>
+          </div>
+        </div>
+        {availableAsDigitalCopy ? (
+          <div className={styles.articletype}>
+            <Text type="text4">
+              {Translate({
+                context: "order",
+                label: "will-order-digital-copy",
+              })}
+            </Text>
+          </div>
+        ) : isArticleRequest ? (
+          <div className={styles.articletype}>
+            <Text type="text4">
+              {Translate({
+                context: "general",
+                label: "article",
+              })}
+            </Text>
+          </div>
+        ) : context?.periodicaForm ? (
+          <div className={styles.articletype}>
+            <Text type="text4">
+              {Translate({
+                context: "general",
+                label: "volume",
+              })}
+            </Text>
+          </div>
+        ) : null}
+        {context?.periodicaForm && (
+          <div className={styles.periodicasummary}>
+            {Object.entries(context?.periodicaForm).map(([key, value]) => (
+              <Text type="text3" key={key}>
+                {Translate({
+                  context: "order-periodica",
+                  label: `label-${key}`,
+                })}
+                : {value}
+              </Text>
+            ))}
+          </div>
+        )}
+        {isPeriodicaLike && (
+          <LinkArrow
+            onClick={() => {
+              modal.push("periodicaform", {
+                periodicaForm: context?.periodicaForm,
+              });
+            }}
+            disabled={false}
+            className={styles.periodicaformlink}
+          >
+            <Text type="text3">
+              {Translate({
+                context: "order-periodica",
+                label: "title",
+              })}
+            </Text>
+          </LinkArrow>
+        )}
+      </div>
+      <div className={styles.right}>
+        <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
+      </div>
+    </div>
+  );
+}
+
 /**
  *  Order component function
  *
@@ -304,122 +450,19 @@ export function Order({
           top: styles.top,
         }}
       />
-      <div className={styles.edition}>
-        <div className={styles.left}>
-          <div className={styles.title}>
-            <Text type="text1" skeleton={isLoading} lines={1}>
-              {work?.fullTitle}
-            </Text>
-          </div>
-          <div className={styles.creators}>
-            <Text type="text3" skeleton={isLoading} lines={1}>
-              {creators.map((c, i) =>
-                creators.length > i + 1 ? c.name + ", " : c.name
-              )}
-            </Text>
-          </div>
-          {singleManifestation && (
-            <div>
-              <Text type="text3" skeleton={isLoading} lines={1}>
-                {material.datePublished},&nbsp;
-                {material.publisher &&
-                  material.publisher.map((pub, index) => pub)}
-                &nbsp;
-                {material.edition && "," + material.edition}
-              </Text>
-            </div>
-          )}
-          <div className={styles.material}>
-            {!isArticle && !isPeriodicaLike && !singleManifestation && (
-              <Link onClick={() => {}} disabled>
-                <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                  {Translate({
-                    context: "order",
-                    label: "no-specific-edition",
-                  })}
-                </Text>
-              </Link>
-            )}
-            {singleManifestation && (
-              <Link onClick={() => {}} disabled>
-                <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                  {Translate({
-                    context: "order",
-                    label: "specific-edition",
-                  })}
-                </Text>
-              </Link>
-            )}
-            <div>
-              <Tag tag="span" skeleton={isLoading}>
-                {materialType}
-              </Tag>
-            </div>
-          </div>
-          {availableAsDigitalCopy ? (
-            <div className={styles.articletype}>
-              <Text type="text4">
-                {Translate({
-                  context: "order",
-                  label: "will-order-digital-copy",
-                })}
-              </Text>
-            </div>
-          ) : isArticleRequest ? (
-            <div className={styles.articletype}>
-              <Text type="text4">
-                {Translate({
-                  context: "general",
-                  label: "article",
-                })}
-              </Text>
-            </div>
-          ) : context?.periodicaForm ? (
-            <div className={styles.articletype}>
-              <Text type="text4">
-                {Translate({
-                  context: "general",
-                  label: "volume",
-                })}
-              </Text>
-            </div>
-          ) : null}
-          {context?.periodicaForm && (
-            <div className={styles.periodicasummary}>
-              {Object.entries(context?.periodicaForm).map(([key, value]) => (
-                <Text type="text3" key={key}>
-                  {Translate({
-                    context: "order-periodica",
-                    label: `label-${key}`,
-                  })}
-                  : {value}
-                </Text>
-              ))}
-            </div>
-          )}
-          {isPeriodicaLike && (
-            <LinkArrow
-              onClick={() => {
-                modal.push("periodicaform", {
-                  periodicaForm: context?.periodicaForm,
-                });
-              }}
-              disabled={false}
-              className={styles.periodicaformlink}
-            >
-              <Text type="text3">
-                {Translate({
-                  context: "order-periodica",
-                  label: "title",
-                })}
-              </Text>
-            </LinkArrow>
-          )}
-        </div>
-        <div className={styles.right}>
-          <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
-        </div>
-      </div>
+
+      <Edition
+        isLoading={isLoading}
+        work={work}
+        singleManifestation={singleManifestation}
+        isArticle={isArticle}
+        isPeriodicaLike={isPeriodicaLike}
+        availableAsDigitalCopy={availableAsDigitalCopy}
+        isArticleRequest={isArticleRequest}
+        context={context}
+        material={material}
+      />
+
       <div className={styles.pickup}>
         <div className={styles.title}>
           <Title type="title5">

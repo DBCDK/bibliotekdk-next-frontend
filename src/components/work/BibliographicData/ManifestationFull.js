@@ -48,6 +48,7 @@ function ColumnOne({
   openOrderModal,
   opener,
   user,
+  work,
 }) {
   const modal = useModal();
 
@@ -98,6 +99,8 @@ function ColumnOne({
                   label: "label_references_title",
                 }),
                 pids: [manifestation.pid],
+                work: work,
+                manifestation: manifestation,
               })
             }
           >
@@ -110,72 +113,6 @@ function ColumnOne({
           </Link>
         </div>
       </div>
-
-      {/* --- BETA-1 commented out .. link to bibliotek.dk, location (number of libraries), bookmark, basket
-      <Text className={styles.locationtitle} type="text1" lines={1}>
-        {Translate({
-          context: "bibliographic-data",
-          label: "locationtitle",
-          vars: [
-            Translate({ context: "workTypeDistinctForm", label: worktype }),
-          ],
-        })}
-      </Text>
-      <div>
-        <Link
-          children={
-            <Text type="text3" lines={2}>
-              {Translate({
-                context: "bibliographic-data",
-                label: "editionlink",
-              })}
-            </Text>
-          }
-          className={styles.column}
-          href={bibdkObjectUrl(manifestation.pid)}
-        />
-      </div>
-
-      <div>
-        <Link
-          children={
-            <Text type="text3" lines={2}>
-              {Translate({
-                context: "bibliographic-data",
-                label: "bookmark",
-              })}
-            </Text>
-          }
-          className={styles.column}
-          href={{ pathname: "http://google.dk", query: {} }}
-        />
-      </div>
-      <div>
-        <Link
-          children={
-            <Text type="text3" lines={2}>
-              {Translate({
-                context: "bibliographic-data",
-                label: "library-locations",
-                vars: [number_of_libraries],
-              })}
-            </Text>
-          }
-          className={styles.column}
-          href={{ pathname: "http://google.dk", query: {} }}
-        />
-      </div>
-
-
-      <Button
-        type={"secondary"}
-        size={"small"}
-        children={Translate({
-          context: "overview",
-          label: "addToCart",
-        })}
-      />
-      */}
     </Col>
   );
 }

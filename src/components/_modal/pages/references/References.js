@@ -4,6 +4,7 @@ import Text from "@/components/base/text/Text";
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./References.module.css";
 import getConfig from "next/config";
+import { Edition } from "@/components/_modal/pages/order/Order.page";
 
 const onlinelinks = (pid) => {
   const APP_URL =
@@ -16,8 +17,10 @@ const onlinelinks = (pid) => {
   };
 };
 
-export function References(pid) {
-  const links = onlinelinks(pid);
+export function References(context) {
+  const { pids, work, manifestation } = context;
+
+  const links = onlinelinks(pids[0]);
   const linkslist = Object.keys(links).map((onlinekey) => (
     <li className={styles.list}>
       <Link
@@ -46,12 +49,18 @@ export function References(pid) {
           label: "label_references_title",
         })}
       />
+      <Edition
+        material={manifestation}
+        work={work}
+        isLoading={false}
+        context={context}
+        showOrderTxt={false}
+      />
       <ul>{linkslist}</ul>
     </div>
   );
 }
 
 export default function wrap({ context }) {
-  const { pids } = context;
-  return References(pids[0]);
+  return References(context);
 }
