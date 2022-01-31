@@ -406,7 +406,7 @@ export function Order({
   const lockedMessage = {
     context: "order",
     label: "info-email-message",
-    vars: [(agency?.result && agency.result?.[0]?.name) || libraryFallback],
+    vars: [agency?.result?.[0]?.agencyName || libraryFallback],
   };
 
   const urlToEmailArticle = "/hjaelp/saadan-aendrer-du-din-mailadresse/68";

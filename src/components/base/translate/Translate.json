@@ -1630,7 +1630,7 @@
         "en": "LABEL: mangler oversættelse"
       },
       "info-email-message": {
-        "da": "Du kan",
+        "da": "Du kan %s",
         "en": "You can"
       },
       "change-email-link": {
