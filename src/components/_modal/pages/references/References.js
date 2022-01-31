@@ -49,13 +49,16 @@ export function References(context) {
           label: "label_references_title",
         })}
       />
-      <Edition
-        material={manifestation}
-        work={work}
-        isLoading={false}
-        context={context}
-        showOrderTxt={false}
-      />
+      <div className={styles.item}>
+        <Edition
+          material={manifestation}
+          work={work}
+          isLoading={false}
+          context={context}
+          showOrderTxt={false}
+          singleManifestation={true}
+        />
+      </div>
       <ul>{linkslist}</ul>
     </div>
   );

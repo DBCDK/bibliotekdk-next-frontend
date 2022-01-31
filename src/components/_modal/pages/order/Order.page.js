@@ -116,16 +116,19 @@ export function Edition({
           </div>
         )}
         <div className={styles.material}>
-          {!isArticle && !isPeriodicaLike && !singleManifestation && (
-            <Link onClick={() => {}} disabled>
-              <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                {Translate({
-                  context: "order",
-                  label: "no-specific-edition",
-                })}
-              </Text>
-            </Link>
-          )}
+          {!isArticle &&
+            !isPeriodicaLike &&
+            !singleManifestation &&
+            showOrderTxt && (
+              <Link onClick={() => {}} disabled>
+                <Text type="text3" skeleton={isLoading} lines={1} clamp>
+                  {Translate({
+                    context: "order",
+                    label: "no-specific-edition",
+                  })}
+                </Text>
+              </Link>
+            )}
           {singleManifestation && showOrderTxt && (
             <Link onClick={() => {}} disabled>
               <Text type="text3" skeleton={isLoading} lines={1} clamp>
