@@ -4,13 +4,14 @@ import styles from "./TjoolTjip.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useRef } from "react";
 
 export default function TjoolTjip({
   placement = "bottom",
   labelToTranslate,
   customClass,
 }) {
+  const spanRef = useRef();
   return (
     <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
@@ -31,7 +32,16 @@ export default function TjoolTjip({
           </Popover>
         }
       >
-        <span tabIndex="0" className={styles.tooltipwrap}>
+        <span
+          ref={spanRef}
+          tabIndex="0"
+          className={styles.tooltipwrap}
+          onKeyUp={(e) => {
+            if (e.code === "Escape") {
+              spanRef?.current?.blur?.();
+            }
+          }}
+        >
           <Icon
             src="questionmark.svg"
             alt="info"
