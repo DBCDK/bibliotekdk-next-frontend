@@ -42,13 +42,15 @@ export function References({ context }) {
     </li>
   ));
   return (
-    <div className={styles.options}>
-      <Top
-        title={Translate({
-          context: "references",
-          label: "label_references_title",
-        })}
-      />
+    <div>
+      <div className={styles.options}>
+        <Top
+          title={Translate({
+            context: "references",
+            label: "label_references_title",
+          })}
+        />
+      </div>
       <div className={styles.item}>
         <Edition
           material={manifestation}
@@ -59,7 +61,8 @@ export function References({ context }) {
           singleManifestation={true}
         />
       </div>
-      <ul>{linkslist}</ul>
+
+      <ul className={styles.options}>{linkslist}</ul>
     </div>
   );
 }
