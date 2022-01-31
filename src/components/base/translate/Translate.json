@@ -20,6 +20,12 @@
         "en": "Answer 2 questions"
       }
     },
+    "login": {
+      "login-search-title":{
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      } 
+    },
     "cookiebox": {
       "title": {
         "da": "Cookies",

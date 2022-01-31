@@ -120,7 +120,7 @@ export function LoginPickup({
       <Top />
       <div className={styles.search}>
         <Title type="title4" className={styles.title}>
-          {Translate({ ...context, label: "pickup-search-title" })}
+          {Translate({ context: "login", label: "login-search-title" })}
         </Title>
         <Text type="text3">
           {Translate({ ...context, label: "pickup-search-description" })}
