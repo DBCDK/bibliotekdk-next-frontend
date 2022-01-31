@@ -16,7 +16,11 @@ import useQ from "@/components/hooks/useQ";
 export function ResultPage({ rows, onWorkClick, isLoading }) {
   if (isLoading) {
     // Create some skeleton rows
-    rows = [{}, {}, {}];
+    rows = [{}, {}, {}, {}, {}, {}];
+  }
+
+  if (!rows) {
+    return null;
   }
 
   return (
@@ -63,13 +67,13 @@ export default function Wrap({ page, onWorkClick }) {
     return null;
   }
 
-  const data = allResponse.data || fastResponse.data;
+  const data = allResponse.data || fastResponse.data || {};
 
-  if (fastResponse.isLoading || !data) {
+  if (fastResponse.isLoading) {
     return <ResultPage isLoading={true} />;
   }
 
-  return <ResultPage rows={data.search.works} onWorkClick={onWorkClick} />;
+  return <ResultPage rows={data.search?.works} onWorkClick={onWorkClick} />;
 }
 Wrap.propTypes = {
   page: PropTypes.number,

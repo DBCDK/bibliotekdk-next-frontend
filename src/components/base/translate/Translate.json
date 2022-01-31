@@ -461,7 +461,7 @@
         "da": "Download til RefWorks",
         "en": "Download with RefWorks"
       },
-      "refworks_description_label" : {
+      "refworks_description_label": {
         "da": "Link til import i RefWorks",
         "en": "Link to import with RefWorks"
       },
@@ -817,171 +817,171 @@
       },
       "label-title": {
         "da": "Titel",
-        "en": ""
+        "en": "Title"
       },
       "label-literature-title": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Bog titel",
+        "en": "Book title"
       },
       "label-article-title": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Artikel titel",
+        "en": "Article title"
       },
       "label-movie-title": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Film titel",
+        "en": "Film title"
       },
       "label-game-title": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Spil titel",
+        "en": "Game title"
       },
       "label-music-title": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Musik titel",
+        "en": "Music title"
       },
       "label-sheetmusic-title": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Node titel",
+        "en": "Sheet music title"
       },
       "label-creator": {
         "da": "Forfatter",
-        "en": ""
+        "en": "Creator"
       },
       "label-literature-creator": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Bog forfatter",
+        "en": "Book creator"
       },
       "label-article-creator": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Artikel forfatter",
+        "en": "Article creator"
       },
       "label-movie-creator": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Film forfatter",
+        "en": "Film creator"
       },
       "label-game-creator": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Spil forfatter",
+        "en": "Games creator"
       },
       "label-music-creator": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Musik forfatter",
+        "en": "Music creator"
       },
       "label-sheetmusic-creator": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Node forfatter",
+        "en": "Sheet music creator"
       },
       "label-subject": {
         "da": "Emne",
-        "en": ""
+        "en": "Subject"
       },
       "label-literature-subject": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Bog emne",
+        "en": "Books subject"
       },
       "label-article-subject": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Artikel emne",
+        "en": "Article subject"
       },
       "label-movie-subject": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Film emne",
+        "en": "Film subject"
       },
       "label-game-subject": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Spil emne",
+        "en": "Games subject"
       },
       "label-music-subject": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Musik emne",
+        "en": "Music subject"
       },
       "label-sheetmusic-subject": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Node emne",
+        "en": "Sheet music subject"
       },
       "placeholder-title": {
         "da": "Materialets titel eller dele af titlen",
-        "en": ""
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-literature-title": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-article-title": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-movie-title": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-game-title": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-music-title": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-sheetmusic-title": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Materialets titel eller dele af titlen",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-creator": {
         "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
-        "en": ""
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-literature-creator": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-article-creator": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-movie-creator": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-game-creator": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-music-creator": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-sheetmusic-creator": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Fx forfatter, kunstner, instruktør eller andet ophav",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-subject": {
         "da": "Et eller flere emner",
-        "en": ""
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-literature-subject": {
-        "da": "Bøger",
-        "en": "Books"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-article-subject": {
-        "da": "Artikler",
-        "en": "Articles"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-movie-subject": {
-        "da": "Film",
-        "en": "Film"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-game-subject": {
-        "da": "Spil",
-        "en": "Games"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-music-subject": {
-        "da": "Musik",
-        "en": "Music"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       },
       "placeholder-sheetmusic-subject": {
-        "da": "Noder",
-        "en": "Sheet music"
+        "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
       }
     },
     "suggester": {

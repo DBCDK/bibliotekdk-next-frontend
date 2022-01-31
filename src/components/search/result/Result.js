@@ -128,9 +128,9 @@ export default function Wrap({
     return null;
   }
 
-  const data = fastResponse.data;
+  const data = fastResponse.data || {};
 
-  if (fastResponse.isLoading || !data) {
+  if (fastResponse.isLoading) {
     return <Result page={page} isLoading={true} />;
   }
 
@@ -138,7 +138,7 @@ export default function Wrap({
     <Result
       q={q}
       page={page}
-      hitcount={data.search.hitcount}
+      hitcount={data.search?.hitcount}
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
       viewSelected={viewSelected}
