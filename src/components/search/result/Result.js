@@ -7,6 +7,7 @@ import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import Divider from "@/components/base/divider";
 import ViewSelector from "../viewselector";
@@ -92,7 +93,7 @@ export function Result({
 }
 
 Result.propTypes = {
-  q: PropTypes.string,
+  q: PropTypes.object,
   page: PropTypes.number,
   isLoading: PropTypes.bool,
   hitcount: PropTypes.number,
@@ -111,7 +112,6 @@ Result.propTypes = {
  * @returns {component}
  */
 export default function Wrap({
-  q,
   page,
   onViewSelect,
   onWorkClick,
@@ -119,17 +119,18 @@ export default function Wrap({
   onPageChange,
 }) {
   const { filters } = useFilters();
+  const { q, hasQuery } = useQ();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(q && hitcount({ q, filters }));
+  const fastResponse = useData(hasQuery && hitcount({ q, filters }));
 
   if (fastResponse.error) {
     return null;
   }
 
-  const data = fastResponse.data;
+  const data = fastResponse.data || {};
 
-  if (fastResponse.isLoading || !data) {
+  if (fastResponse.isLoading) {
     return <Result page={page} isLoading={true} />;
   }
 
@@ -137,7 +138,7 @@ export default function Wrap({
     <Result
       q={q}
       page={page}
-      hitcount={data.search.hitcount}
+      hitcount={data.search?.hitcount}
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
       viewSelected={viewSelected}
@@ -147,7 +148,6 @@ export default function Wrap({
 }
 
 Wrap.propTypes = {
-  q: PropTypes.object,
   page: PropTypes.number,
   viewSelected: PropTypes.string,
   onViewSelect: PropTypes.func,

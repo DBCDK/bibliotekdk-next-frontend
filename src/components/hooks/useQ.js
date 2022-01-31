@@ -5,10 +5,10 @@
  * on connected components.
  */
 
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-// import useSWR from "swr";
+import useSWR from "swr";
 
 /**
  *
@@ -18,13 +18,13 @@ import { useRouter } from "next/router";
  */
 
 // Global state
-// let locale = {};
+let locale = {};
 
 // Global useQ hook initialization
-// let initialized = false;
+let initialized = false;
 
 // Custom fetcher
-// const fetcher = () => locale;
+const fetcher = () => locale;
 
 // current supported filter types
 export const types = ["all", "creator", "subject", "title"];
@@ -35,9 +35,8 @@ export const types = ["all", "creator", "subject", "title"];
  * @returns {object}
  */
 
-export function buildQ() {
-  return {};
-
+function buildQ() {
+  // not set empty q types as default base for now
   const params = {};
   types.forEach((type) => (params[type] = ""));
   return params;
@@ -52,18 +51,24 @@ export function buildQ() {
  *
  */
 export const getQuery = (query = {}) => {
-  const base = buildQ();
-
   const params = {};
   Object.entries(query).forEach(([key, val]) => {
-    // strip q keys to match types
-    key = key.replace("q.", "");
-    if (types.includes(key) && val) {
-      params[key] = val;
+    // remove empty key values
+    if (val && val !== "") {
+      // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
+      // Will not convert if a q.all already exist in query
+      if (key === "q" && !query["q.all"]) {
+        key = "q.all";
+      }
+      // strip q keys to match types
+      key = key.replace("q.", "");
+      if (types.includes(key) && val) {
+        params[key] = val;
+      }
     }
   });
 
-  return { ...base, ...params };
+  return params;
 };
 
 /**
@@ -71,6 +76,9 @@ export const getQuery = (query = {}) => {
  *
  * @returns {object}
  *
+ * q
+ * setQ
+ * clearQ
  * setQuery
  * getQuery
  * hasQuery
@@ -83,49 +91,69 @@ function useQ() {
   const router = useRouter();
 
   // SWR
-  //   const { data: _q, mutate: _setQ } = useSWR("q", fetcher, {
-  //     initialData: buildQ(),
-  //   });
-
-  // represent all q: All type names as key and empty array as value
-  const base = buildQ();
+  const { data: _q, mutate: _setQ } = useSWR("q", fetcher, {
+    initialData: {},
+  });
 
   /**
-   * Restore q from query params
+   * Restore filters and query from query params
    */
-  //   useEffect(() => {
-  //     const q = getQuery();
-  //     const initQuery = JSON.stringify(q);
-  //     if (initialized !== initQuery) {
-  //       // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
-  //       initialized = initQuery;
-  //       // set locale object
-  //       locale = q;
-  //       // update locale state (swr)
-  //       _setQ(locale);
-  //     }
-  //   }, [router.query]);
+  useEffect(() => {
+    const q = _getQuery();
+    const initQuery = JSON.stringify(q);
+    if (initialized !== initQuery) {
+      // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
+      initialized = initQuery;
+      // set locale object
+      locale = q;
+      // update locale state (swr)
+      _setQ(locale);
+    }
+  }, [router.query]);
 
   /**
-   * Update locale q
+   * Update the locale q
    *
    * @param {object} include
    *
    */
-  //   const q = (include = {}) => {
-  //     const params = {};
-  //     Object.entries(include).forEach(([key, val]) => {
-  //       if (types.includes(key)) {
-  //         params[key] = val;
-  //       }
-  //     });
+  const setQ = (include = {}) => {
+    const params = {};
+    Object.entries(include).forEach(([key, val]) => {
+      // remove empty key values
+      if (val && val !== "") {
+        // strip q keys to match types
+        key = key.replace("q.", "");
+        if (types.includes(key)) {
+          params[key] = val;
+        }
+      }
+    });
 
-  //     // set locale object
-  //     locale = { ...base, ...params };
+    // set locale object
+    locale = { ...params };
 
-  //     // update locale state (swr)
-  //     _setQ(locale);
-  //   };
+    // update locale state (swr)
+    _setQ(locale);
+  };
+
+  /**
+   * Clear the locale q
+   *
+   * @param {object} exclude
+   *
+   */
+  const clearQ = ({ exclude = [] }) => {
+    const copy = { ..._q };
+    // Remove all types from q (except excluded)
+    types.forEach((type) => {
+      if (!exclude.includes(type)) {
+        delete copy[type];
+      }
+    });
+    // update q by setQ func
+    setQ(copy);
+  };
 
   /**
    * Get filters from query params
@@ -145,11 +173,10 @@ function useQ() {
    * @param {array} exclude
    */
   const setQuery = ({ include = _q, exclude = [] }) => {
-    /**
-     * ensure all filters is represented, if not, the router update
-     * can get messed up by not removing all non-represented filters.
-     */
-    include = { ...base, ...include };
+    // include all q types (empty types)
+    const base = buildQ();
+
+    include = { ...base, ..._q };
 
     const params = {};
     // include
@@ -184,6 +211,28 @@ function useQ() {
   };
 
   /**
+   * Count active q params in query
+   *
+   * @param exclude params
+   *
+   * @returns {int}
+   */
+  function getCount(exclude = []) {
+    const q = _getQuery();
+
+    let count = 0;
+    Object.entries(q).map(([key, val]) => {
+      // exluded keys
+      if (!exclude.includes(key)) {
+        // if there is an actual value
+        count++;
+      }
+    });
+
+    return count;
+  }
+
+  /**
    * Boolean to check if q contains a value
    */
   const obj = _getQuery();
@@ -191,10 +240,13 @@ function useQ() {
 
   return {
     // functions
-    // q,
+    setQ,
+    clearQ,
     getQuery: _getQuery,
     setQuery,
+    getCount,
     // constants
+    q: _q,
     hasQuery: _hasQuery,
     types,
   };
