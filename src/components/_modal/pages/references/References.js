@@ -17,7 +17,7 @@ const onlinelinks = (pid) => {
   };
 };
 
-export function References(context) {
+export function References({ context }) {
   const { pids, work, manifestation } = context;
 
   const links = onlinelinks(pids[0]);
@@ -65,5 +65,5 @@ export function References(context) {
 }
 
 export default function wrap({ context }) {
-  return References(context);
+  return <References context={context} />;
 }
