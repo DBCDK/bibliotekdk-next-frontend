@@ -2,12 +2,18 @@
   display: none;
 }
 
-.link {
+.links {
   display: flex;
   align-items: center;
 }
 
-.link i {
+.links > a {
+  display: flex;
+  align-items: center;
+  margin-left: var(--pt2);
+}
+
+.links > a i {
   margin-right: var(--pt1);
 }
 

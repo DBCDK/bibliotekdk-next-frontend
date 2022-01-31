@@ -9,6 +9,7 @@ import Login from "./login";
 import Filter from "./filter";
 import Localizations from "./localizations";
 import References from "./references";
+import Search from "./search";
 
 export default {
   Menu,
@@ -22,4 +23,5 @@ export default {
   Filter,
   Localizations,
   References,
+  Search,
 };

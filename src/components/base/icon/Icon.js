@@ -13,7 +13,7 @@ import styles from "./Icon.module.css";
  * @returns {component}
  */
 function Icon({
-  alt,
+  alt = "",
   src = "../",
   className = "",
   children = null,
