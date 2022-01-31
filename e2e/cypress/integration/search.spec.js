@@ -179,7 +179,7 @@ describe("Search", () => {
     });
   });
 
-  it.only(`Should have a hitcount with real data`, () => {
+  it(`Should have a hitcount with real data`, () => {
     cy.visit(`${nextjsBaseUrl}`);
 
     cy.get("[data-cy=suggester-input]").type("Harry");
