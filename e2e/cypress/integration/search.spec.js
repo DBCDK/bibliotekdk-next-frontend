@@ -130,4 +130,79 @@ describe("Search", () => {
         expect(value).to.not.have.string(" 0 ");
       });
   });
+
+  it(`All buttons should be tabbable`, () => {
+    cy.visit("/iframe.html?id=modal-search--default&viewMode=story");
+
+    cy.wait(1000);
+    cy.tab();
+    cy.focused().contains("Luk");
+    cy.tabs(6);
+    cy.focused().contains("Luk");
+  });
+
+  it(`Can submit all input fields`, () => {
+    cy.visit("/iframe.html?id=modal-search--default&viewMode=story");
+
+    cy.wait(500);
+
+    cy.get("[data-cy=search-input-title]").type("Some title");
+    cy.get("[data-cy=search-input-creator]").type("Some creator");
+    cy.get("[data-cy=search-input-subject]").type("Some subject");
+
+    cy.get("[data-cy=search-button-submit]").click();
+
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal(
+        `{"pathname":"/","query":{"q.creator":"Some creator","q.subject":"Some subject","q.title":"Some title"}}`
+      );
+    });
+  });
+
+  it(`Can clear all input fields`, () => {
+    cy.visit("/iframe.html?id=modal-search--default&viewMode=story");
+
+    cy.wait(500);
+
+    cy.get("[data-cy=search-input-title]").type("Some title");
+    cy.get("[data-cy=search-input-creator]").type("Some creator");
+    cy.get("[data-cy=search-input-subject]").type("Some subject");
+
+    cy.get("[data-cy=clear-all-search]").click();
+
+    cy.wait(500);
+
+    cy.get("[data-cy=search-button-submit]").click();
+
+    cy.on("window:alert", (str) => {
+      expect(str).to.equal(`{"pathname":"/","query":{}}`);
+    });
+  });
+
+  it.only(`Should have a hitcount with real data`, () => {
+    cy.visit(`${nextjsBaseUrl}`);
+
+    cy.get("[data-cy=suggester-input]").type("Harry");
+    cy.get("[data-cy=header-searchbutton]").click();
+    cy.get("[data-cy=view-all-advanced-search]").click();
+
+    cy.wait(500);
+
+    cy.get("[data-cy=search-input-title]").type(
+      "Harry Potter og De Vises Sten"
+    );
+    cy.get("[data-cy=search-input-creator]").type("Joanne K. Rowling");
+    cy.get("[data-cy=search-input-subject]").type("magi").blur();
+
+    cy.wait(500);
+
+    cy.get("[data-cy=search-button-submit]").should("not.include.text", "0");
+    cy.get("[data-cy=search-button-submit]").click();
+    cy.get("[data-cy=section-title]").should("not.include.text", "0");
+
+    cy.url().should(
+      "include",
+      "/find?q.all=Harry&q.creator=Joanne+K.+Rowling&q.subject=magi&q.title=Harry+Potter+og+De+Vises+Sten"
+    );
+  });
 });

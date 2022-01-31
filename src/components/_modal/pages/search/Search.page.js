@@ -68,7 +68,7 @@ export function Search({
 
   return (
     <div className={`${styles.search}`} data-cy="search-modal">
-      <Top modal={modal} back={false} />
+      <Top modal={modal} />
       <span className={styles.wrap}>
         <Title type="title4" className={styles.title}>
           {Translate({
@@ -97,6 +97,7 @@ export function Search({
         </Label>
         <Input
           id="search-title"
+          dataCy="search-input-title"
           value={q.title}
           placeholder={placeholderTitle}
           onBlur={(val) => {
@@ -108,6 +109,7 @@ export function Search({
         </Label>
         <Input
           id="search-creator"
+          dataCy="search-input-creator"
           value={q.creator}
           placeholder={placeholderCreator}
           onBlur={(val) => q.creator !== val && onChange({ creator: val })}
@@ -117,6 +119,7 @@ export function Search({
         </Label>
         <Input
           id="search-subject"
+          dataCy="search-input-subject"
           value={q.subject}
           placeholder={placeholderSubject}
           onBlur={(val) => q.subject !== val && onChange({ subject: val })}
@@ -124,7 +127,7 @@ export function Search({
       </form>
 
       <Button
-        dataCy="vis-resultater"
+        dataCy="search-button-submit"
         skeleton={isLoading}
         onClick={() => onSubmit && onSubmit()}
         className={styles.submit}
