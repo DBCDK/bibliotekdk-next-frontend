@@ -107,7 +107,12 @@ export function Edition({
         </div>
         {singleManifestation && (
           <div>
-            <Text type="text3" skeleton={isLoading} lines={1}>
+            <Text
+              type="text3"
+              skeleton={isLoading}
+              lines={1}
+              dataCy="additional_edition_info"
+            >
               {material.datePublished},&nbsp;
               {material.publisher &&
                 material.publisher.map((pub, index) => pub)}

@@ -24,19 +24,43 @@ export function referenceLinks() {
 }
 
 export function editionSingleManifestation() {
-  /** NOTE
-   * <div className={styles.item}>
-   *         <Edition
-   *           material={manifestation}
-   *           work={work}
-   *           isLoading={false}
-   *           context={context}
-   *           showOrderTxt={false}
-   *           singleManifestation={true}
-   *         />
-   *       </div>
-   */
   const work = dummywork.work;
   const manifestation = dummywork.work.manifestations[0];
-  return <div>fisk</div>;
+  return (
+    <Edition
+      material={manifestation}
+      work={work}
+      isLoading={false}
+      showOrderTxt={false}
+      singleManifestation={true}
+    />
+  );
+}
+
+export function editionAnyManifestation() {
+  const work = dummywork.work;
+  const manifestation = dummywork.work.manifestations[0];
+  return (
+    <Edition
+      material={manifestation}
+      work={work}
+      isLoading={false}
+      showOrderTxt={false}
+      singleManifestation={false}
+    />
+  );
+}
+
+export function editionAnyManifestationWithOrderTxt() {
+  const work = dummywork.work;
+  const manifestation = dummywork.work.manifestations[0];
+  return (
+    <Edition
+      material={manifestation}
+      work={work}
+      isLoading={false}
+      showOrderTxt={true}
+      singleManifestation={false}
+    />
+  );
 }
