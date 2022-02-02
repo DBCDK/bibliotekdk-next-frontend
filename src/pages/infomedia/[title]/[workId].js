@@ -18,6 +18,7 @@ import Translate from "@/components/base/translate";
 import LoginPrompt from "@/components/login/prompt";
 import { useModal } from "@/components/_modal";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
+import { LOGIN_PURPOSE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 export function InfomediaArticle(infomediaData) {
   const {
@@ -62,7 +63,9 @@ export function InfomediaArticle(infomediaData) {
                 context: "articles",
                 label: "accessWarning",
               })}
-              signIn={() => modal.push("login")}
+              signIn={() =>
+                modal.push("login", { purpose: LOGIN_PURPOSE.SUBSCRIPTION })
+              }
             />
           )}
           {user.isLoggedIn && workPublic && !hasArticle && (
@@ -80,7 +83,9 @@ export function InfomediaArticle(infomediaData) {
                 context: "order",
                 label: "change-pickup-digital-copy-link",
               })}
-              signIn={() => modal.push("login")}
+              signIn={() =>
+                modal.push("login", { purpose: LOGIN_PURPOSE.SUBSCRIPTION })
+              }
             />
           )}
         </>

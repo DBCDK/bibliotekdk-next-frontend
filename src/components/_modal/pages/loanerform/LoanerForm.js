@@ -27,7 +27,13 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit }) {
+export const LOGIN_PURPOSE = {
+  ORDER_PHYSICAL: "orderPhysical",
+  SUBSCRIPTION: "subscription",
+  PLAIN_LOGIN: "plainLogin",
+};
+
+export function UserParamsForm({ branch, initial, onSubmit, purpose }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -65,8 +71,9 @@ export function UserParamsForm({ branch, initial, onSubmit }) {
     >
       <Text type="text2">
         {Translate({
-          context: "order",
-          label: "order-to-description",
+          context: "login",
+          label: `${purpose}-description`,
+          vars: [branch?.agencyName || branch?.name],
         })}
       </Text>
       <Title type="title4" tag="h4">
@@ -197,9 +204,8 @@ export function LoanerForm({
   doPolicyCheck,
   // modal props
   context,
-  modal,
 }) {
-  const [allowSave, setAllowSave] = useState(!!initial);
+  const { purpose = LOGIN_PURPOSE.PLAIN_LOGIN } = context || {};
 
   if (skeleton) {
     return (
@@ -233,8 +239,8 @@ export function LoanerForm({
       <Top />
       <Title type="title4" tag="h3">
         {Translate({
-          context: "order",
-          label: "order-to",
+          context: "login",
+          label: `${purpose}-title`,
           vars: [branch.name],
         })}
       </Title>
@@ -264,8 +270,8 @@ export function LoanerForm({
         <>
           <Text type="text2">
             {Translate({
-              context: "order",
-              label: "order-login-required",
+              context: "login",
+              label: `${purpose}-description`,
               vars: [branch.agencyName],
             })}
           </Text>
@@ -284,7 +290,12 @@ export function LoanerForm({
       )}
 
       {orderPossible && !branch.borrowerCheck && (
-        <UserParamsForm branch={branch} initial={initial} onSubmit={onSubmit} />
+        <UserParamsForm
+          branch={branch}
+          initial={initial}
+          onSubmit={onSubmit}
+          purpose={purpose}
+        />
       )}
     </div>
   );

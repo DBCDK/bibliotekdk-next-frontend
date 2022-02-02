@@ -36,6 +36,7 @@ import styles from "./Order.module.css";
 import { branchUserParameters } from "@/lib/api/branches.fragments";
 import { getIsPeriodicaLike } from "@/lib/utils";
 import TjoolTjip from "@/components/base/tjooltjip";
+import { LOGIN_PURPOSE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 function LinkArrow({ onClick, disabled, children, className = "" }) {
   return (
@@ -498,6 +499,9 @@ export function Order({
                   pid,
                   initial: { agency },
                   requireDigitalAccess,
+                  purpose: isDigitalCopy
+                    ? LOGIN_PURPOSE.SUBSCRIPTION
+                    : LOGIN_PURPOSE.ORDER_PHYSICAL,
                 });
             }}
             disabled={isLoadingBranches}

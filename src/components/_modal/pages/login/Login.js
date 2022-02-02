@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
@@ -20,7 +20,8 @@ import getConfig from "next/config";
 
 import Top from "@/components/_modal/pages/base/top";
 import Router from "next/router";
-import useUser from "@/components/hooks/useUser";
+
+import { LOGIN_PURPOSE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -94,9 +95,10 @@ export function LoginPickup({
   isLoading,
   includeArrows,
   modal,
+  context,
 }) {
-  const context = { context: "order" };
   const allBranches = data?.result;
+  const { purpose = LOGIN_PURPOSE.PLAIN_LOGIN } = context || {};
 
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -112,6 +114,7 @@ export function LoginPickup({
       doPolicyCheck: false,
       callbackUrl: callbackurl,
       mode: "login",
+      purpose,
     });
   };
 
@@ -120,15 +123,15 @@ export function LoginPickup({
       <Top />
       <div className={styles.search}>
         <Title type="title4" className={styles.title}>
-          {Translate({ context: "login", label: "login-search-title" })}
+          {Translate({ context: "order", label: "pickup-search-title-2" })}
         </Title>
         <Text type="text3">
-          {Translate({ ...context, label: "pickup-search-description" })}
+          {Translate({ context: "order", label: "pickup-search-description" })}
         </Text>
         <Search
           dataCy="pickup-search-input"
           placeholder={Translate({
-            ...context,
+            context: "order",
             label: "pickup-input-placeholder",
           })}
           className={styles.input}
