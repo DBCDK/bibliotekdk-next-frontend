@@ -27,7 +27,7 @@ import * as libraryFragments from "@/lib/api/library.fragments";
 
 import { branchOrderPolicy } from "@/lib/api/branches.fragments";
 
-import { LOGIN_PURPOSE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 /**
  * Special component responsible for loading order policy
@@ -155,11 +155,7 @@ export function Pickup({
   modal,
 }) {
   // Get pid from modal context
-  const {
-    pid,
-    requireDigitalAccess,
-    purpose = LOGIN_PURPOSE.PLAIN_LOGIN,
-  } = context;
+  const { pid, requireDigitalAccess, mode = LOGIN_MODE.PLAIN_LOGIN } = context;
 
   /**
    *
@@ -186,7 +182,7 @@ export function Pickup({
     modal.push("loanerform", {
       branchId: branch.branchId,
       pid,
-      purpose,
+      mode,
     });
   }
 
@@ -251,7 +247,7 @@ export function Pickup({
           {Translate({
             context: "order",
             label:
-              purpose === LOGIN_PURPOSE.ORDER_PHYSICAL
+              mode === LOGIN_MODE.ORDER_PHYSICAL
                 ? "pickup-search-title"
                 : "pickup-search-title-2",
           })}

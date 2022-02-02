@@ -21,7 +21,7 @@ import getConfig from "next/config";
 import Top from "@/components/_modal/pages/base/top";
 import Router from "next/router";
 
-import { LOGIN_PURPOSE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { LOGIN_MODE as LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -98,7 +98,7 @@ export function LoginPickup({
   context,
 }) {
   const allBranches = data?.result;
-  const { purpose = LOGIN_PURPOSE.PLAIN_LOGIN } = context || {};
+  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
 
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -113,8 +113,8 @@ export function LoginPickup({
       branchId: branch.branchId,
       doPolicyCheck: false,
       callbackUrl: callbackurl,
-      mode: "login",
-      purpose,
+      mode,
+      clear: true,
     });
   };
 

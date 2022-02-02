@@ -27,13 +27,13 @@ const ERRORS = {
   MISSING_INPUT: "error-missing-input",
 };
 
-export const LOGIN_PURPOSE = {
+export const LOGIN_MODE = {
   ORDER_PHYSICAL: "orderPhysical",
   SUBSCRIPTION: "subscription",
   PLAIN_LOGIN: "plainLogin",
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, purpose }) {
+export function UserParamsForm({ branch, initial, onSubmit, mode }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -72,7 +72,7 @@ export function UserParamsForm({ branch, initial, onSubmit, purpose }) {
       <Text type="text2">
         {Translate({
           context: "login",
-          label: `${purpose}-description`,
+          label: `${mode}-description`,
           vars: [branch?.agencyName || branch?.name],
         })}
       </Text>
@@ -205,7 +205,7 @@ export function LoanerForm({
   // modal props
   context,
 }) {
-  const { purpose = LOGIN_PURPOSE.PLAIN_LOGIN } = context || {};
+  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
 
   if (skeleton) {
     return (
@@ -240,7 +240,7 @@ export function LoanerForm({
       <Title type="title4" tag="h3">
         {Translate({
           context: "login",
-          label: `${purpose}-title`,
+          label: `${mode}-title`,
           vars: [branch.name],
         })}
       </Title>
@@ -271,7 +271,7 @@ export function LoanerForm({
           <Text type="text2">
             {Translate({
               context: "login",
-              label: `${purpose}-description`,
+              label: `${mode}-description`,
               vars: [branch.agencyName],
             })}
           </Text>
@@ -294,7 +294,7 @@ export function LoanerForm({
           branch={branch}
           initial={initial}
           onSubmit={onSubmit}
-          purpose={purpose}
+          mode={mode}
         />
       )}
     </div>
@@ -323,7 +323,7 @@ LoanerForm.propTypes = {
  */
 export default function Wrap(props) {
   const { active } = props;
-  const { branchId, pid, doPolicyCheck, mode } = props.context;
+  const { branchId, pid, doPolicyCheck, mode, clear } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -357,7 +357,7 @@ export default function Wrap(props) {
       userParameters: info,
       pickupBranch: branch.branchId,
     });
-    if (mode === "login") {
+    if (clear) {
       props.modal.clear();
     } else {
       // Back to order

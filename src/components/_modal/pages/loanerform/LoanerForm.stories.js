@@ -1,5 +1,5 @@
 import { LoanerForm } from "./LoanerForm";
-import { LOGIN_PURPOSE } from "./LoanerForm";
+import { LOGIN_MODE } from "./LoanerForm";
 
 export default {
   title: "modal/Order/LoanerForm",
@@ -181,7 +181,7 @@ export function ShowLoanerFormPurposeOrder() {
         onSubmit={(data) => {
           console.log(data);
         }}
-        context={{ purpose: LOGIN_PURPOSE.ORDER_PHYSICAL }}
+        context={{ mode: LOGIN_MODE.ORDER_PHYSICAL }}
       />
     </div>
   );
@@ -205,7 +205,7 @@ export function ShowLoanerFormPurposeSubscription() {
         onSubmit={(data) => {
           console.log(data);
         }}
-        context={{ purpose: LOGIN_PURPOSE.SUBSCRIPTION }}
+        context={{ mode: LOGIN_MODE.SUBSCRIPTION }}
       />
     </div>
   );
