@@ -20,12 +20,6 @@
         "en": "Answer 2 questions"
       }
     },
-    "login": {
-      "login-search-title":{
-        "da": "Vælg bibliotek",
-        "en": "Select library"
-      } 
-    },
     "cookiebox": {
       "title": {
         "da": "Cookies",
@@ -1727,6 +1721,10 @@
         "da": "Vælg afhentningssted",
         "en": "Select pick-up location"
       },
+      "pickup-search-title-2": {
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      },
       "pickup-search-description": {
         "da": "Husk du skal være låner på biblioteket",
         "en": "Remember you must be a loaner at the library"
@@ -1748,7 +1746,7 @@
         "en": "LABEL mangler oversættelse"
       },
       "pickup-input-placeholder": {
-        "da": "Søg efter afhentningssted",
+        "da": "Søg på bibliotekets navn, adresse, postnr",
         "en": "Search for pickup location"
       },
       "pickup-not-allowed": {
@@ -1838,6 +1836,32 @@
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",
         "en": "Approve loaner information"
+      }
+    },
+    "login": {
+      "orderPhysical-title": {
+        "da": "Bestil til %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-title": {
+        "da": "Dit bibliotek har abonnement",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "plainLogin-title": {
+        "da": "Log ind",
+        "en": "Sign in"
+      },
+      "orderPhysical-description": {
+        "da": "For at gennemføre bestillingen skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-description": {
+        "da": "For at få adgang skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "plainLogin-description": {
+        "da": "Du skal bruge dine låneroplysninger fra %s",
+        "en": "LABEL: mangler oversættelse %s"
       }
     },
     "form": {

@@ -27,6 +27,8 @@ import * as libraryFragments from "@/lib/api/library.fragments";
 
 import { branchOrderPolicy } from "@/lib/api/branches.fragments";
 
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+
 /**
  * Special component responsible for loading order policy
  * Will not render anything, but needs to be mounted
@@ -153,7 +155,7 @@ export function Pickup({
   modal,
 }) {
   // Get pid from modal context
-  const { pid, requireDigitalAccess } = context;
+  const { pid, requireDigitalAccess, mode = LOGIN_MODE.PLAIN_LOGIN } = context;
 
   /**
    *
@@ -180,6 +182,7 @@ export function Pickup({
     modal.push("loanerform", {
       branchId: branch.branchId,
       pid,
+      mode,
     });
   }
 
@@ -241,7 +244,13 @@ export function Pickup({
 
       <div className={styles.search}>
         <Title type="title4" className={styles.title}>
-          {Translate({ context: "order", label: "pickup-search-title" })}
+          {Translate({
+            context: "order",
+            label:
+              mode === LOGIN_MODE.ORDER_PHYSICAL
+                ? "pickup-search-title"
+                : "pickup-search-title-2",
+          })}
         </Title>
         <Text type="text3" className={styles.description}>
           {Translate({
