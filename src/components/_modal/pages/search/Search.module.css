@@ -24,7 +24,7 @@
   padding: 0 0 var(--pt1) 0;
 }
 
-.search form input {
+.search form .element {
   margin: 0 0 var(--pt3) 0;
 }
 

@@ -11,7 +11,6 @@ import styles from "./Checkbox.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
  * @returns {component}
  */

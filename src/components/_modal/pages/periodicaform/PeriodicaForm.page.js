@@ -139,10 +139,10 @@ export function PeriodicaForm({ modal, context, active }) {
               required={required}
               value={state[key]}
               hasTry={hasTry}
-              onChange={(value) =>
+              onChange={(e) =>
                 setState({
                   ...state,
-                  [key]: value,
+                  [key]: e?.target?.value,
                 })
               }
             />

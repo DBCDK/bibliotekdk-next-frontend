@@ -14,7 +14,7 @@ import styles from "./Email.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * Get you value like <Email onChange={(value, valid) => console.log(value, valid)} ... />
+ * Get you value like <Email onChange={(e, valid) => console.log(e?.target?.value, valid)} ... />
  *
  * @returns {component}
  */
@@ -72,24 +72,26 @@ function Email(props) {
       {...props}
       type="email"
       className={`${className} ${styles.email} ${statusClass}`}
-      onBlur={(value) => {
+      onBlur={(e) => {
         if (onBlur) {
+          const value = e?.target?.value;
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
-          onBlur(value, {
+          onBlur(e, {
             status: valid,
             message: getLabel(value, valid),
           });
         }
       }}
-      onChange={(value) => {
+      onChange={(e) => {
         if (onChange) {
+          const value = e?.target?.value;
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
 
-          onChange(value, {
+          onChange(e, {
             status: valid,
             message: getLabel(value, valid),
           });

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 import Top from "../base/top";
 
@@ -8,6 +8,7 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import Input from "@/components/base/forms/input";
+import Suggester from "@/components/base/suggester";
 
 import Translate from "@/components/base/translate";
 
@@ -19,6 +20,24 @@ import { hitcount } from "@/lib/api/search.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Search.module.css";
+
+const Provider = ({ children }) => {
+  console.log("Suggester props", children.props);
+
+  const data = [
+    { value: "hest" },
+    { value: "kat" },
+    { value: "hund" },
+    { value: "ko" },
+    { value: "fisk" },
+  ];
+
+  const Component = React.cloneElement(children, { data });
+
+  console.log("Component props", Component.props);
+
+  return Component;
+};
 
 /**
  * The Component function
@@ -95,15 +114,26 @@ export function Search({
         <Label for="search-title" skeleton={isLoading}>
           {labelTitle}
         </Label>
-        <Input
-          id="search-title"
-          dataCy="search-input-title"
-          value={q.title}
-          placeholder={placeholderTitle}
-          onBlur={(val) => {
-            q.title !== val && onChange({ title: val });
-          }}
-        />
+        <div className={styles.element}>
+          <Provider>
+            <Suggester id="advanced-search-title">
+              <Input
+                id="search-title"
+                dataCy="search-input-title"
+                value={q.title}
+                placeholder={placeholderTitle}
+                onChange={(e) => {
+                  const val = e?.target?.value;
+                  // onInputChange({ title: val });
+                }}
+                // onBlur={(e) => {
+                //   const val = e?.target?.value;
+                //   q.title !== val && onChange({ title: val });
+                // }}
+              />
+            </Suggester>
+          </Provider>
+        </div>
         <Label for="search-creator" skeleton={isLoading}>
           {labelCreator}
         </Label>
@@ -112,7 +142,10 @@ export function Search({
           dataCy="search-input-creator"
           value={q.creator}
           placeholder={placeholderCreator}
-          onBlur={(val) => q.creator !== val && onChange({ creator: val })}
+          onBlur={(e) => {
+            const val = e?.target?.value;
+            q.creator !== val && onChange({ creator: val });
+          }}
         />
         <Label for="search-subject" skeleton={isLoading}>
           {labelSubject}
@@ -122,7 +155,10 @@ export function Search({
           dataCy="search-input-subject"
           value={q.subject}
           placeholder={placeholderSubject}
-          onBlur={(val) => q.subject !== val && onChange({ subject: val })}
+          onBlur={(e) => {
+            const val = e?.target?.value;
+            q.subject !== val && onChange({ subject: val });
+          }}
         />
       </form>
 

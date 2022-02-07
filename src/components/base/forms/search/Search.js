@@ -12,7 +12,7 @@ import styles from "./Search.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * Get you value like <Search onChange={(value) => console.log(value)} ... />
+ * Get you value like <Search onChange={(e) => console.log(e.target.value)} ... />
  *
  * @returns {component}
  */
@@ -33,8 +33,8 @@ function Search(props) {
         {...props}
         type="input"
         className={styles.input}
-        onBlur={(value) => onBlur && onBlur(value)}
-        onChange={(value) => onChange && onChange(value)}
+        onBlur={(e) => onBlur && onBlur(e?.target?.value)}
+        onChange={(e) => onChange && onChange(e?.target?.value)}
         aria-label={props.placeholder}
       />
       <Icon className={styles.icon} size={{ w: 2, h: 2 }} src="search.svg" />

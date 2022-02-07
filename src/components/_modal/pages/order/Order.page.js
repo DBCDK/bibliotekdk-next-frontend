@@ -588,7 +588,7 @@ export function Order({
               id="order-user-email"
               // onMount updates email error message (missing email error)
               onMount={(value, valid) => setMail({ value, valid })}
-              onBlur={(value, valid) => onMailChange(value, valid)}
+              onBlur={(e, valid) => onMailChange(e?.target?.value, valid)}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
