@@ -42,6 +42,7 @@ import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import Feedback from "@/components/feedback";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
+import { enableDataCollect } from "@/lib/useDataCollect";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -55,6 +56,9 @@ export default function MyApp({ Component, pageProps, router }) {
     typeof window === "undefined"
       ? pageProps.allowCookies
       : !!Cookies.get(COOKIES_ALLOWED);
+
+  // Enable data collect, when cookies are approved
+  enableDataCollect(allowCookies);
 
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
