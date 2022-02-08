@@ -170,8 +170,6 @@ export function OrderButton({
     selectedMaterial = selectMaterial(manifestations);
   }
 
-  console.log(selectedMaterial, "SELECTED");
-
   // QUICK DECISION: if this is single manifestation AND the manifestation can NOT be ordered
   // we show no Reservation button - @TODO should we show online accesss etc. ???
   if (singleManifestion && !checkRequestButtonIsTrue({ manifestations })) {
