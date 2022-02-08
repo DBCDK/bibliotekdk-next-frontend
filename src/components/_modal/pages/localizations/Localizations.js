@@ -9,6 +9,7 @@ import Search from "@/components/base/forms/search";
 import LocalizationItem from "./LocalizationItem";
 
 import Text from "@/components/base/text/Text";
+import Title from "@/components/base/title";
 
 export function Localizations({
   context,
@@ -23,12 +24,12 @@ export function Localizations({
       <Top />
 
       <div>
-        <Text type="text1" className={styles.title}>
+        <Title type="title4" className={styles.title}>
           {Translate({
             context: "holdings",
             label: "label_localizations_title",
           })}
-        </Text>
+        </Title>
 
         <Text type="text3" className={styles.description}>
           {Translate({
