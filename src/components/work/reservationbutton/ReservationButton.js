@@ -4,6 +4,7 @@ import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
 import { getIsPeriodicaLike } from "@/lib/utils";
+import { preferredOnline } from "@/lib/Navigation";
 
 // Translate Context
 const context = { context: "overview" };
@@ -169,6 +170,8 @@ export function OrderButton({
     selectedMaterial = selectMaterial(manifestations);
   }
 
+  console.log(selectedMaterial, "SELECTED");
+
   // QUICK DECISION: if this is single manifestation AND the manifestation can NOT be ordered
   // we show no Reservation button - @TODO should we show online accesss etc. ???
   if (singleManifestion && !checkRequestButtonIsTrue({ manifestations })) {
@@ -240,9 +243,17 @@ export function OrderButton({
     !checkRequestButtonIsTrue({ manifestations }) &&
     !checkDigitalCopy({ manifestations })
   ) {
+    // if we prefer online material button text should be different
+    let onlinedisable = preferredOnline.includes(
+      manifestations[0].materialType
+    );
     // order is not possible/allowed - disable
     return (
-      <DisabledReservationButton buttonSkeleton={buttonSkeleton} type={type} />
+      <DisabledReservationButton
+        buttonSkeleton={buttonSkeleton}
+        type={type}
+        onlinedisable={onlinedisable}
+      />
     );
   }
 
@@ -323,7 +334,10 @@ function checkDigitalCopy({ manifestations }) {
  * @return {JSX.Element}
  * @constructor
  */
-function DisabledReservationButton({ buttonSkeleton, type }) {
+function DisabledReservationButton({ buttonSkeleton, type, onlinedisable }) {
+  const text = onlinedisable
+    ? Translate({ context: "overview", label: "Order-online-disabled" })
+    : Translate({ context: "overview", label: "Order-disabled" });
   return (
     <Button
       skeleton={buttonSkeleton}
@@ -332,7 +346,7 @@ function DisabledReservationButton({ buttonSkeleton, type }) {
       dataCy="button-order-overview"
       type={type}
     >
-      {Translate({ context: "overview", label: "Order-disabled" })}
+      {text}
     </Button>
   );
 }
