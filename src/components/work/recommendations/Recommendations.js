@@ -8,14 +8,14 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
-import { useData, useFetcher } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
 import { recommendations } from "@/lib/api/work.fragments";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
 import Translate from "@/components/base/translate";
 
-import { collectRecommenderClick } from "@/lib/api/datacollect.mutations";
+import useDataCollect from "@/lib/useDataCollect";
 
 import styles from "./Recommendations.module.css";
 
@@ -49,7 +49,7 @@ function parse(data) {
  */
 export default function Recommendations({ workId }) {
   const { data, isLoading } = useData(recommendations({ workId }));
-  const fetcher = useFetcher();
+  const dataCollect = useDataCollect();
 
   const parsed = parse(data);
 
@@ -72,15 +72,13 @@ export default function Recommendations({ workId }) {
             skeleton={isLoading}
             works={parsed}
             onWorkClick={(work, shownWorks, index) => {
-              fetcher(
-                collectRecommenderClick({
-                  recommender_based_on: workId,
-                  recommender_click_hit: index + 1,
-                  recommender_click_work: work.id,
-                  recommender_click_reader: work.reader,
-                  recommender_shown_recommendations: shownWorks,
-                })
-              );
+              dataCollect.collectRecommenderClick({
+                recommender_based_on: workId,
+                recommender_click_hit: index + 1,
+                recommender_click_work: work.id,
+                recommender_click_reader: work.reader,
+                recommender_shown_recommendations: shownWorks,
+              });
             }}
             data-cy="recommender"
           />
