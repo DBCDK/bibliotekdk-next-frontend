@@ -55,7 +55,7 @@ describe("Overview", () => {
   });
 
   it(`Can click on button tag`, () => {
-    const tag = "tag-ebog";
+    const tag = "tag-e-bog";
     const tag2 = "tag-bog";
 
     cy.get(`[data-cy=${tag}]`).children("i").should("not.be.visible");
@@ -65,7 +65,7 @@ describe("Overview", () => {
   });
 
   it(`Can access external ebook`, () => {
-    cy.get(`[data-cy=tag-ebog]`).click();
+    cy.get(`[data-cy=tag-e-bog]`).click();
     cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
     cy.get("[data-cy=button-gå-til-bogen]").click();
     cy.contains("Du bliver sendt til ebookurl.dk");
