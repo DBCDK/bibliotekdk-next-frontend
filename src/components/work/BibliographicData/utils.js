@@ -5,7 +5,7 @@ export function sortManifestations(manifestations) {
   // materialType type priority list
   const groupOrder = [
     "Bog",
-    "Ebog",
+    "E-bog",
     "Lydbog (net)",
     "Lydbog (cd-mp3)",
     "Lydbog (cd)",

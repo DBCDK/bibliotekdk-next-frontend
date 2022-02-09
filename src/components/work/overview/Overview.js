@@ -240,7 +240,7 @@ export function OverviewSkeleton(props) {
       },
     },
     {
-      materialType: "Ebog",
+      materialType: "E-bog",
       cover: {
         detail: null,
       },

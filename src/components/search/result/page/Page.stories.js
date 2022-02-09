@@ -26,7 +26,7 @@ export function Default() {
           materialType: "Diskette",
         },
         {
-          materialType: "Ebog",
+          materialType: "E-bog",
         },
         {
           materialType: "Lydbog (bånd)",
@@ -66,7 +66,7 @@ export function Default() {
           materialType: "Diskette",
         },
         {
-          materialType: "Ebog",
+          materialType: "E-bog",
         },
         {
           materialType: "Lydbog (bånd)",
@@ -106,7 +106,7 @@ export function Default() {
           materialType: "Diskette",
         },
         {
-          materialType: "Ebog",
+          materialType: "E-bog",
         },
         {
           materialType: "Lydbog (bånd)",

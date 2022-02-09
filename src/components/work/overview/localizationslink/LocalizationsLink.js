@@ -22,7 +22,7 @@ export function LocalizationsLink({
 
   const nolinktoholding = [
     "Lydbog (net)",
-    "Ebog",
+    "E-bog",
     "Punktskrift",
     "Artikel",
     "Tidsskriftsartikel",
