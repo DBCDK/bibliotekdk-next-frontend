@@ -242,9 +242,10 @@ export function OrderButton({
     !checkDigitalCopy({ manifestations })
   ) {
     // if we prefer online material button text should be different
-    let onlinedisable = preferredOnline.includes(
-      manifestations[0].materialType
-    );
+    let onlinedisable =
+      manifestations &&
+      manifestations[0] &&
+      preferredOnline.includes(manifestations[0].materialType);
     // order is not possible/allowed - disable
     return (
       <DisabledReservationButton
