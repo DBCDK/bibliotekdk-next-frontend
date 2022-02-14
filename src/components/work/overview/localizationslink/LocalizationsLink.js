@@ -8,6 +8,7 @@ import Link from "@/components/base/link";
 import useUser from "@/components/hooks/useUser";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
+import { preferredOnline } from "@/lib/Navigation";
 
 export function LocalizationsLink({
   materialType,
@@ -20,16 +21,8 @@ export function LocalizationsLink({
     return <Skeleton lines={1} className={styles.skeletonstyle} />;
   }
 
-  const nolinktoholding = [
-    "Lydbog (net)",
-    "E-bog",
-    "Punktskrift",
-    "Artikel",
-    "Tidsskriftsartikel",
-    "Film (net)",
-  ];
-
-  if (nolinktoholding.includes(materialType)) {
+  // @see lib/Navigation.js :: preferredOnline
+  if (preferredOnline.includes(materialType)) {
     return null;
   }
 

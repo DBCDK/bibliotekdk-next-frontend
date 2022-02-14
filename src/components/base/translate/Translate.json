@@ -20,6 +20,12 @@
         "en": "Answer 2 questions"
       }
     },
+    "login": {
+      "login-search-title": {
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      }
+    },
     "cookiebox": {
       "title": {
         "da": "Cookies",
@@ -594,6 +600,10 @@
       "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",
         "en": "Order (not logged in)"
+      },
+      "Order-online-disabled": {
+        "da": "Er ikke tilgængelig",
+        "en": "Not available"
       },
       "Order-disabled": {
         "da": "Bestil (deaktiveret))",
