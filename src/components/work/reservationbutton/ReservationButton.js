@@ -330,6 +330,7 @@ function checkDigitalCopy({ manifestations }) {
  * If order is not possible - show a disabled reservation button
  * @param buttonSkeleton
  * @param type
+ * @param onlinedisable
  * @return {JSX.Element}
  * @constructor
  */

@@ -32,7 +32,7 @@ export const externalUrls = {
 
 export const preferredOnline = [
   "Lydbog (net)",
-  "Ebog",
+  "E-bog",
   "Punktskrift",
   "Artikel",
   "Tidsskriftsartikel",
