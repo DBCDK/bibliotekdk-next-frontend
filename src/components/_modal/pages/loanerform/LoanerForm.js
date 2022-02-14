@@ -425,5 +425,5 @@ export default function Wrap(props) {
   );
 }
 Wrap.propTypes = {
-  context: {},
+  context: PropTypes.object,
 };

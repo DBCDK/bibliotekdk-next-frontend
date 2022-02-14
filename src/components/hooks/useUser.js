@@ -50,9 +50,6 @@ function useUserMock() {
   };
 }
 
-//
-let anonSession;
-
 /**
  * Hook for getting and storing loaner info
  */
@@ -131,6 +128,7 @@ function useUserImpl() {
   };
 }
 
+let anonSession;
 /**
  * Hook for getting authenticated user
  */
@@ -142,6 +140,11 @@ function useAccessTokenImpl() {
   // we store the latest anon session we got from the server
   if (anonSessionContext) {
     anonSession = anonSessionContext;
+  }
+
+  if (!anonSession?.accessToken && !session?.accessToken && window) {
+    // no idea what is going on - we lost the session - try a reload
+    window.location.reload();
   }
 
   return session?.accessToken || anonSession?.accessToken;
