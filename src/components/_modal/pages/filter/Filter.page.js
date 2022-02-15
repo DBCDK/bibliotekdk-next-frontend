@@ -36,25 +36,86 @@ function SelectedFilter({
   const name = data?.name;
   const values = data?.values || [];
 
+  /**
+   * Sort alphabetically by term
+   * @param a
+   * @param b
+   * @returns {boolean}
+   */
+  const sortAlphabetically = (a, b) => {
+    // only handle language filters
+    if (name !== "language") {
+      return 0;
+    }
+    return a.term > b.term;
+  };
+
+  /**
+   * Remove value.teŕms defined in remove array
+   * @param value
+   * @returns {boolean}
+   */
+  const removeLanguages = (value) => {
+    // only handle language filters
+    if (name !== "language") {
+      return true;
+    }
+    const languagesToRemove = ["Miscellaneous", "Sproget kan ikke bestemmes"];
+    return !languagesToRemove.includes(value?.term);
+  };
+
+  const findMaxElemeent = (inputarray, topcount) => {
+    let topThree = [];
+    for (let i = 0; i < inputarray.length; i++) {
+      topThree.push(inputarray[i]); // add index to output array
+      if (topThree.length > topcount) {
+        topThree.sort(function (a, b) {
+          return b.count - a.count;
+        }); // descending sort the output array
+        topThree.pop(); // remove the last index (index of smallest element in output array)
+      }
+    }
+    return topThree;
+  };
+
   const [orderedValues, setOrderedValues] = useState(null);
 
   useEffect(() => {
     if (!name || !active) {
       return;
     }
-    const selectedWithHits = values?.filter(
+
+    // remove languages ("Miscellaneous", "Sproget kan ikke bestemmes")
+    const valuecopy = values.filter(removeLanguages);
+
+    // selected facets
+    const selectedWithHits = valuecopy?.filter(
       (value) => terms.includes(value.term) || terms.includes(value.key)
     );
-    const selectedNoHits = terms
-      ?.filter?.(
-        (term) =>
-          !values?.find?.((value) => value.key === term || value.term === term)
-      )
-      .map((term) => ({ term, key: term, count: "-" }));
-    const nonSelected = values?.filter(
-      (value) => !(terms.includes(value.term) || terms.includes(value.key))
+
+    // find the three elements with the highest facet count. filter out selected facet - they are on top
+    const topThree = findMaxElemeent(
+      valuecopy.filter((el) => !selectedWithHits.includes(el)),
+      3
     );
-    setOrderedValues([...selectedWithHits, ...selectedNoHits, ...nonSelected]);
+
+    // the rest of the facets
+    const selectedNoHits = valuecopy
+      .filter((el) => !selectedWithHits.includes(el))
+      .filter((el) => !topThree.includes(el))
+      .sort(sortAlphabetically);
+
+    const nonSelected = valuecopy
+      .filter((el) => !selectedWithHits.includes(el))
+      .filter((el) => !topThree.includes(el))
+      .filter((el) => !selectedNoHits.includes(el));
+
+    setOrderedValues([
+      ...selectedWithHits,
+      ...topThree,
+      ...selectedNoHits,
+      ...nonSelected,
+    ]);
   }, [name, active]);
 
   if (!name || !orderedValues) {
