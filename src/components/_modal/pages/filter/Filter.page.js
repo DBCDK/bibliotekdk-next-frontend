@@ -70,7 +70,7 @@ function SelectedFilter({
    * @param topcount
    * @returns {*[]}
    */
-  const findHighestElements = (inputarray, topcount) => {
+  const findLargestElements = (inputarray, topcount) => {
     let topThree = [];
     for (let idx = 0; idx < inputarray.length; idx++) {
       topThree.push(inputarray[idx]); // add to output
@@ -98,7 +98,7 @@ function SelectedFilter({
     );
 
     // find the three elements with the highest facet count. filter out selected facet - they are on top
-    const topThree = findHighestElements(
+    const topThree = findLargestElements(
       valuecopy.filter((el) => !selectedWithHits.includes(el)),
       3
     );
