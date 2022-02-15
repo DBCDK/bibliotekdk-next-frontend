@@ -64,15 +64,19 @@ function SelectedFilter({
     return !languagesToRemove.includes(value?.term);
   };
 
-  const findMaxElemeent = (inputarray, topcount) => {
+  /**
+   * Find the {topcount} elements with the highest count values.
+   * @param inputarray
+   * @param topcount
+   * @returns {*[]}
+   */
+  const findHighestElements = (inputarray, topcount) => {
     let topThree = [];
-    for (let i = 0; i < inputarray.length; i++) {
-      topThree.push(inputarray[i]); // add index to output array
+    for (let idx = 0; idx < inputarray.length; idx++) {
+      topThree.push(inputarray[idx]); // add to output
       if (topThree.length > topcount) {
-        topThree.sort(function (a, b) {
-          return b.count - a.count;
-        }); // descending sort the output array
-        topThree.pop(); // remove the last index (index of smallest element in output array)
+        topThree.sort((a, b) => b.count - a.count); // sort descendign
+        topThree.pop(); // remove last (smallest) element
       }
     }
     return topThree;
@@ -94,7 +98,7 @@ function SelectedFilter({
     );
 
     // find the three elements with the highest facet count. filter out selected facet - they are on top
-    const topThree = findMaxElemeent(
+    const topThree = findHighestElements(
       valuecopy.filter((el) => !selectedWithHits.includes(el)),
       3
     );
