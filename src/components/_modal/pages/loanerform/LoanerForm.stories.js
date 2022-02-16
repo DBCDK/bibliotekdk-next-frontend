@@ -77,6 +77,32 @@ export function ShowLoanerFormNoLogin() {
   );
 }
 
+export function ShowLoanerFormDigitalAccess() {
+  return (
+    <div style={{ maxWidth: 450 }}>
+      <LoanerForm
+        branch={{
+          borrowerCheck: true,
+          name: "DBCTestBibliotek",
+          agencyName: "DBC-Testbiblioteksvæsen",
+          agencyId: "790900",
+          userParameters: [],
+          pickupAllowed: true,
+          orderPolicy: {
+            orderPossible: true,
+          },
+          digitalAccess: true,
+        }}
+        context={{ mode: LOGIN_MODE.SUBSCRIPTION }}
+        onSubmit={(data) => {
+          console.log(data);
+        }}
+        digitalCopyAccess={true}
+      />
+    </div>
+  );
+}
+
 /**
  * Returns Loaner Form
  *
