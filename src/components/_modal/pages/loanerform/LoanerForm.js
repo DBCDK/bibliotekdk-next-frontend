@@ -251,7 +251,7 @@ export function LoanerForm({
           context: "login",
           label: `${mode}-title`,
           vars: [branch.name],
-        })}{" "}
+        })}
       </Title>
 
       {!orderPossible && (
