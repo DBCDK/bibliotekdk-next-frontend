@@ -12,7 +12,6 @@ import fetch from "isomorphic-unfetch";
 export const AnonymousSessionContext = createContext();
 
 import getConfig from "next/config";
-import nookies, { parseCookies, setCookie, destroyCookie } from "nookies";
 import { log } from "dbc-node-logger";
 
 // in memory object for storing loaner info for current user
@@ -180,7 +179,7 @@ function useAccessTokenImpl() {
       // get anonymous session
       fetchAnonymous().catch(() => log.error("NO anonymous session"));
       // only do it once
-      return () => done = true; 
+      return () => done = true;
     }
   }, [anonSession?.accessToken]);
 
