@@ -26,6 +26,16 @@
         "en": "Select library"
       }
     },
+    "errorpages": {
+      "404_not_found_title": {
+        "da": "Siden blev ikke fundet",
+        "en": "Page not found"
+      },
+      "404_not_found_description": {
+        "da": "Vi kunne ikke finde siden du leder efter. Prøv at lede efter noget andet",
+        "en": "We could not find the page you are looking for - try something else"
+      }
+    },
     "cookiebox": {
       "title": {
         "da": "Cookies",
