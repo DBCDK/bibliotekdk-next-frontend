@@ -12,7 +12,6 @@ import fetch from "isomorphic-unfetch";
 export const AnonymousSessionContext = createContext();
 
 import getConfig from "next/config";
-import { log } from "dbc-node-logger";
 
 // in memory object for storing loaner info for current user
 let loanerInfoMock = {};
