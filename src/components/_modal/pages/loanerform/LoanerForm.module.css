@@ -38,6 +38,11 @@
 .guestlogin {
   color: var(--blue);
 }
+.inline{
+  display: inline-block;
+  margin-right: var(--pt2);
+  margin-top: var(--pt2);
+}
 
 @media (min-width: 576px) {
   .loanerform {

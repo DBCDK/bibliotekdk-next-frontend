@@ -22,6 +22,7 @@ import {
 } from "@/lib/api/branches.fragments";
 import useUser, { useAccessToken } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
+import TjoolTjip from "@/components/base/tjooltjip";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -30,6 +31,7 @@ const ERRORS = {
 export const LOGIN_MODE = {
   ORDER_PHYSICAL: "orderPhysical",
   SUBSCRIPTION: "subscription",
+  DIGITAL_COPY: "digitalCopy",
   PLAIN_LOGIN: "plainLogin",
 };
 
@@ -204,8 +206,15 @@ export function LoanerForm({
   doPolicyCheck,
   // modal props
   context,
+  digitalCopyAccess,
 }) {
-  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  let { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+
+  if (mode === LOGIN_MODE.SUBSCRIPTION) {
+    mode = digitalCopyAccess
+      ? LOGIN_MODE.DIGITAL_COPY
+      : LOGIN_MODE.ORDER_PHYSICAL;
+  }
 
   if (skeleton) {
     return (
@@ -268,13 +277,28 @@ export function LoanerForm({
 
       {orderPossible && branch.borrowerCheck && (
         <>
-          <Text type="text2">
+          <Text type="text2" tag="span" className={styles.inline}>
             {Translate({
               context: "login",
               label: `${mode}-description`,
               vars: [branch.agencyName],
             })}
           </Text>
+          {mode === LOGIN_MODE.DIGITAL_COPY && (
+            <span>
+              <TjoolTjip labelToTranslate="tooltip_digtital_copy" />
+              {/* we also need description for physical ordering here
+              @TODO - is this text ALWAYS shown now ?? - refactor if so */}
+              <Text type="text2">
+                {Translate({
+                  context: "login",
+                  label: "orderPhysical-description",
+                  vars: [branch.agencyName],
+                })}
+              </Text>
+            </span>
+          )}
+
           <Button
             onClick={onLogin}
             className={styles.loginbutton}
@@ -396,6 +420,8 @@ export default function Wrap(props) {
     return null;
   }
 
+  const digitalCopyAccess = branch?.digitalCopyAccess;
+
   return (
     <>
       {beginLogout && (
@@ -420,10 +446,11 @@ export default function Wrap(props) {
         submitting={beginLogout || loggedOut}
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
+        digitalCopyAccess={digitalCopyAccess}
       />
     </>
   );
 }
 Wrap.propTypes = {
-  context: {},
+  context: PropTypes.object,
 };

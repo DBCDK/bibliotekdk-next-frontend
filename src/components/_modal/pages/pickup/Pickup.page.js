@@ -177,7 +177,6 @@ export function Pickup({
       modal.prev();
       return;
     }
-
     // open loanerform
     modal.push("loanerform", {
       branchId: branch.branchId,

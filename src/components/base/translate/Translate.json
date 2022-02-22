@@ -44,6 +44,10 @@
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
         "en": "To change your email address - log on your library homepage and change your email in profile settings"
+      },
+      "tooltip_digtital_copy": {
+        "da": "Dit bibliotek skal have abonnement på tjenesten Digital Artikelservice, for at du kan bestille digitale kopier af Det Kgl. Biblioteks artikler.",
+        "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
       }
     },
     "general": {
@@ -1855,6 +1859,14 @@
       },
       "subscription-title": {
         "da": "Dit bibliotek har abonnement",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "digitalCopy-title": {
+        "da": "Dit bibliotek abonnerer på Digital Artikelservice",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "digitalCopy-description": {
+        "da": "Du vil få artiklen tilsendt som digital kopi på mail",
         "en": "LABEL: mangler oversættelse"
       },
       "plainLogin-title": {
