@@ -165,7 +165,7 @@ function useAccessTokenImpl() {
   // @USEFFECT HERE - sometimes we lose our anonymous token - try to fix it here
   useEffect(() => {
     let done = false;
-    // only get the seseeion if we lost the accesstoken
+    // only get the session if we lost the accesstoken
     if (!anonSession?.accessToken) {
       const fetchAnonymous = async () => {
         // get anonymous session
@@ -177,7 +177,7 @@ function useAccessTokenImpl() {
       };
 
       // get anonymous session
-      fetchAnonymous().catch(() => log.error("NO anonymous session"));
+      fetchAnonymous().catch(()=>console.log("ERROR: No session"));
       // only do it once
       return () => done = true;
     }
