@@ -12,9 +12,11 @@ const config = {
     timeout: process.env.API_TIMEOUT_MS || 150,
   },
   backend: {
-    url: process.env.NEXT_BACKEND_API_URL || "http://localhost:7070",
+    url:
+      process.env.NEXT_BACKEND_API_URL ||
+      "http://bibdk-backend-www-develop.frontend-features.svc.cloud.dbc.dk",
     timeout: process.env.API_TIMEOUT_MS || 150,
-    cacheKey: process.env.NEXT_BACKEND_CACHE_KEY || "beta",
+    cacheKey: process.env.NEXT_BACKEND_CACHE_KEY || "alfa",
   },
 };
 
