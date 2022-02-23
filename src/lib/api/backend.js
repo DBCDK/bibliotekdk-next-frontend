@@ -21,7 +21,7 @@ export default async function fetchTranslations() {
 
   const cacheKey = config.backend.cacheKey;
 
-  const params = {translations:Translate, cachekey:cacheKey}
+  const params = { translations: Translate, cachekey: cacheKey };
   // status flag
   let ok = true;
   // @TODO errorhandling
@@ -31,8 +31,8 @@ export default async function fetchTranslations() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(Translate),
 
+      body: JSON.stringify(params),
     });
 
     const result = await response.json().catch((error) => {
