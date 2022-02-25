@@ -36,18 +36,24 @@ function SelectedFilter({
   const name = data?.name;
   const values = data?.values || [];
 
+  const [sortOrder, setSortOrder] = useState("numerical");
+
   /**
-   * Sort alphabetically by term
+   * Sort alphabetically by term OR numerical by count - depending on sortOrder chosen
    * @param a
    * @param b
    * @returns {boolean}
    */
-  const sortAlphabetically = (a, b) => {
+  const sortFilters = (a, b) => {
     // only handle language filters
-    if (name !== "language") {
+    /*if (name !== "language") {
       return 0;
+    }*/
+    if (sortOrder === "numerical") {
+      return a.count < b.count ? 1 : -1;
+    } else {
+      return a.term > b.term ? 1 : -1;
     }
-    return a.term > b.term;
   };
 
   /**
@@ -64,24 +70,6 @@ function SelectedFilter({
     return !languagesToRemove.includes(value?.term);
   };
 
-  /**
-   * Find the {topcount} elements with the highest count values.
-   * @param inputarray
-   * @param topcount
-   * @returns {*[]}
-   */
-  const findLargestElements = (inputarray, topcount) => {
-    let topThree = [];
-    for (let idx = 0; idx < inputarray.length; idx++) {
-      topThree.push(inputarray[idx]); // add to output
-      if (topThree.length > topcount) {
-        topThree.sort((a, b) => b.count - a.count); // sort descendign
-        topThree.pop(); // remove last (smallest) element
-      }
-    }
-    return topThree;
-  };
-
   const [orderedValues, setOrderedValues] = useState(null);
 
   useEffect(() => {
@@ -96,31 +84,18 @@ function SelectedFilter({
     const selectedWithHits = valuecopy?.filter(
       (value) => terms.includes(value.term) || terms.includes(value.key)
     );
-
-    // find the three elements with the highest facet count. filter out selected facet - they are on top
-    const topThree = findLargestElements(
-      valuecopy.filter((el) => !selectedWithHits.includes(el)),
-      3
-    );
-
     // the rest of the facets
-    const selectedNoHits = valuecopy
-      .filter((el) => !selectedWithHits.includes(el))
-      .filter((el) => !topThree.includes(el))
-      .sort(sortAlphabetically);
+    const selectedNoHits = valuecopy.filter(
+      (el) => !selectedWithHits.includes(el)
+    );
+    selectedNoHits.sort(sortFilters);
 
     const nonSelected = valuecopy
       .filter((el) => !selectedWithHits.includes(el))
-      .filter((el) => !topThree.includes(el))
       .filter((el) => !selectedNoHits.includes(el));
 
-    setOrderedValues([
-      ...selectedWithHits,
-      ...topThree,
-      ...selectedNoHits,
-      ...nonSelected,
-    ]);
-  }, [name, active]);
+    setOrderedValues([...selectedWithHits, ...selectedNoHits, ...nonSelected]);
+  }, [name, active, sortOrder]);
 
   if (!name || !orderedValues) {
     return null;
@@ -150,9 +125,29 @@ function SelectedFilter({
   return (
     <>
       <Top modal={modal} back sticky />
-      <Text type="text1" className={styles.category}>
-        {category}
-      </Text>
+      <div>
+        <Text type="text1" className={styles.category}>
+          {category}
+        </Text>
+        <Link
+          dataCy={`${category}-SORT`}
+          border={{ top: false, bottom: { keepVisible: true } }}
+          onClick={() => {
+            alert(sortOrder);
+            setSortOrder(
+              sortOrder === "numerical" ? "alphabetically" : "numerical"
+            );
+          }}
+          className={styles.sortlink}
+        >
+          <Text type="text3">
+            {Translate({
+              context: "facets",
+              label: `label-sortorder-${sortOrder}`,
+            })}
+          </Text>
+        </Link>
+      </div>
       <List.Group
         label={Translate({ context: "facets", label: "terms-group-label" })}
         className={`${styles.group} ${styles.terms}`}

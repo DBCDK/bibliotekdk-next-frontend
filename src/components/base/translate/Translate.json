@@ -1055,6 +1055,14 @@
       }
     },
     "facets": {
+      "label-sortorder-numerical": {
+        "da": "Sorter alfabetisk",
+        "en": "Sort alphabetically"
+      },
+      "label-sortorder-alphabetically": {
+        "da": "Sorter efter antal",
+        "en": "Sort by numbers"
+      },
       "label-workType": {
         "da": "Materialekategori",
         "en": "Material category"
