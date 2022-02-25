@@ -40,9 +40,12 @@
   display: inline-block;
 }
 
+.divflex{
+  display: flex;
+}
+
 .sortlink{
-  float: right;
-  font-style: normal;
+  margin-left:auto;
 }
 
 .select > div {

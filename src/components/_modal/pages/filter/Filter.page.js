@@ -124,7 +124,7 @@ function SelectedFilter({
   return (
     <>
       <Top modal={modal} back sticky />
-      <div>
+      <div className={styles.divflex}>
         <Text type="text1" className={styles.category}>
           {category}
         </Text>
