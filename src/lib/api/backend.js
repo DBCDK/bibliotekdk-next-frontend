@@ -17,10 +17,7 @@ export default async function fetchTranslations() {
     return;
   }
 
-  console.log("FETCHING");
-
   const cacheKey = config.backend.cacheKey;
-
   const params = { translations: Translate, cachekey: cacheKey };
   // status flag
   let ok = true;
