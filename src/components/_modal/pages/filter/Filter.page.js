@@ -85,10 +85,9 @@ function SelectedFilter({
       (value) => terms.includes(value.term) || terms.includes(value.key)
     );
     // the rest of the facets
-    const selectedNoHits = valuecopy.filter(
-      (el) => !selectedWithHits.includes(el)
-    );
-    selectedNoHits.sort(sortFilters);
+    const selectedNoHits = valuecopy
+      .filter((el) => !selectedWithHits.includes(el))
+      .sort(sortFilters);
 
     const nonSelected = valuecopy
       .filter((el) => !selectedWithHits.includes(el))
@@ -133,7 +132,6 @@ function SelectedFilter({
           dataCy={`${category}-SORT`}
           border={{ top: false, bottom: { keepVisible: true } }}
           onClick={() => {
-            alert(sortOrder);
             setSortOrder(
               sortOrder === "numerical" ? "alphabetically" : "numerical"
             );
