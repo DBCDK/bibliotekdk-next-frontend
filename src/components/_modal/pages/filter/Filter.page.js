@@ -52,7 +52,7 @@ function SelectedFilter({
     if (sortOrder === "numerical") {
       return a.count < b.count ? 1 : -1;
     } else {
-      return a.term > b.term ? 1 : -1;
+      return a.term.toLowerCase() > b.term.toLowerCase() ? 1 : -1;
     }
   };
 
@@ -71,6 +71,10 @@ function SelectedFilter({
   };
 
   const [orderedValues, setOrderedValues] = useState(null);
+
+  // do not show the link to sort alphabetically/numerically if there are
+  // less than 2 filter values
+  const showSort = values?.length > 2;
 
   useEffect(() => {
     if (!name || !active) {
@@ -128,23 +132,25 @@ function SelectedFilter({
         <Text type="text1" className={styles.category}>
           {category}
         </Text>
-        <Link
-          dataCy={`${category}-SORT`}
-          border={{ top: false, bottom: { keepVisible: true } }}
-          onClick={() => {
-            setSortOrder(
-              sortOrder === "numerical" ? "alphabetically" : "numerical"
-            );
-          }}
-          className={styles.sortlink}
-        >
-          <Text type="text3">
-            {Translate({
-              context: "facets",
-              label: `label-sortorder-${sortOrder}`,
-            })}
-          </Text>
-        </Link>
+        {showSort && (
+          <Link
+            dataCy={`${category}-SORT`}
+            border={{ top: false, bottom: { keepVisible: true } }}
+            onClick={() => {
+              setSortOrder(
+                sortOrder === "numerical" ? "alphabetically" : "numerical"
+              );
+            }}
+            className={styles.sortlink}
+          >
+            <Text type="text3">
+              {Translate({
+                context: "facets",
+                label: `label-sortorder-${sortOrder}`,
+              })}
+            </Text>
+          </Link>
+        )}
       </div>
       <List.Group
         label={Translate({ context: "facets", label: "terms-group-label" })}
