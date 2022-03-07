@@ -21,11 +21,9 @@ export function Default() {
   const [state, setState] = useState({ q: "", data: dummy });
 
   function updateState(q) {
-    console.log("updateState q", q);
     const data = dummy.filter((d) => {
       return d.value.includes(q.toLowerCase());
     });
-
     setState({ data, q });
   }
 

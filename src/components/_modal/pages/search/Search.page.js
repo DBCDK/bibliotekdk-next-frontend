@@ -18,26 +18,13 @@ import useQ from "@/components/hooks/useQ";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 
+import { all, work, subject, creator } from "@/lib/api/suggest.fragments";
+
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Search.module.css";
 
-const Provider = ({ children }) => {
-  console.log("Suggester props", children.props);
-
-  const data = [
-    { value: "hest" },
-    { value: "kat" },
-    { value: "hund" },
-    { value: "ko" },
-    { value: "fisk" },
-  ];
-
-  const Component = React.cloneElement(children, { data });
-
-  console.log("Component props", Component.props);
-
-  return Component;
-};
+import TitleSuggester from "./Search.suggester";
+// import { Provider } from "./Search.suggester";
 
 /**
  * The Component function
@@ -54,6 +41,7 @@ export function Search({
   workType,
   onSubmit,
   onChange,
+  onBlur,
   onClear,
   modal,
 }) {
@@ -114,8 +102,13 @@ export function Search({
         <Label for="search-title" skeleton={isLoading}>
           {labelTitle}
         </Label>
+
         <div className={styles.element}>
-          <Provider>
+          <TitleSuggester type="title" />
+          {/* <Provider
+            type="title"
+            loader={(val) => all({ q: val || "", workType })}
+          >
             <Suggester id="advanced-search-title">
               <Input
                 id="search-title"
@@ -124,16 +117,13 @@ export function Search({
                 placeholder={placeholderTitle}
                 onChange={(e) => {
                   const val = e?.target?.value;
-                  // onInputChange({ title: val });
+                  q.title !== val && onChange(val);
                 }}
-                // onBlur={(e) => {
-                //   const val = e?.target?.value;
-                //   q.title !== val && onChange({ title: val });
-                // }}
               />
             </Suggester>
-          </Provider>
+          </Provider> */}
         </div>
+
         <Label for="search-creator" skeleton={isLoading}>
           {labelCreator}
         </Label>
@@ -207,6 +197,7 @@ export default function Wrap(props) {
       workType={workType}
       isLoading={isLoading}
       onChange={(selected) => setQ({ ...q, ...selected })}
+      onBlur={(selected) => setQ({ ...q, ...selected })}
       onSubmit={() => setQuery({ exclude: ["modal"] })}
       onClear={() => clearQ({ exclude: ["all"] })}
       {...props}

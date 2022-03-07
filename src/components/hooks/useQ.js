@@ -249,6 +249,7 @@ function useQ() {
     q: _q,
     hasQuery: _hasQuery,
     types,
+    base: buildQ(),
   };
 }
 

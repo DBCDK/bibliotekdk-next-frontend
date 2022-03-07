@@ -122,6 +122,8 @@ function renderSuggestion(suggestion, query, skeleton) {
  *
  */
 function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
+  console.log("q inputProps", inputProps);
+
   // Enrich input components with props
   const input = React.cloneElement(inputComponent, inputProps);
 
@@ -163,6 +165,7 @@ function Suggester({
   skeleton = false,
   onClear = null,
   onSelect = null,
+  onChange = null,
 }) {
   // Make copy of all suggestion objects
   // react-autosuggest will mutate these objects,
@@ -188,7 +191,8 @@ function Suggester({
       // Only run onChange update on e.type change
       // Supported in all browsers
       if (e.type === "change") {
-        children?.props?.onChange(e);
+        onChange && onChange(e);
+        children?.props?.onChange?.(e);
         setState({ q: e.target.value, _q: null });
       }
     },
@@ -265,6 +269,8 @@ export default function Wrap(props) {
   if (skeleton) {
     className = `${className} ${styles.skeleton}`;
   }
+
+  console.log("q children", children);
 
   return (
     <Suggester
