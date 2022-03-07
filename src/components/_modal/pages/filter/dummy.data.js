@@ -66,7 +66,7 @@ const data = {
           name: "materialType",
           values: [
             {
-              term: "ebog",
+              term: "e-bog",
               key: "ebog",
               count: 432386,
             },

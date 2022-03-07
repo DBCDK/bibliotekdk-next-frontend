@@ -59,7 +59,6 @@ export async function fetchAll(queries, context, customQueryVariables) {
 
   return {
     initialData,
-    translations: await fetchTranslations(),
     allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
     session,
     anonSession,

@@ -42,6 +42,10 @@ describe("Search", () => {
       }
     });
 
+    // Allow cookies
+    cy.visit(`${nextjsBaseUrl}`);
+    cy.get("[data-cy=button-ok]").click();
+
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
 
     // When search begin query should be logged

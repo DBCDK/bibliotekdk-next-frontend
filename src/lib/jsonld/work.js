@@ -18,7 +18,7 @@ function getSchemaOrgBookFormat(materialType) {
 
   materialType = materialType.toLowerCase();
 
-  if (materialType.includes("ebog")) {
+  if (materialType.includes("e-bog")) {
     return "http://schema.org/EBook";
   } else if (materialType.includes("lydbog")) {
     return "http://schema.org/AudiobookFormat";

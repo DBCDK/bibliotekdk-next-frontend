@@ -21,10 +21,20 @@
       }
     },
     "login": {
-      "login-search-title":{
+      "login-search-title": {
         "da": "Vælg bibliotek",
         "en": "Select library"
-      } 
+      }
+    },
+    "errorpages": {
+      "404_not_found_title": {
+        "da": "Siden blev ikke fundet",
+        "en": "Page not found"
+      },
+      "404_not_found_description": {
+        "da": "Vi kunne ikke finde siden du leder efter. Prøv at lede efter noget andet",
+        "en": "We could not find the page you are looking for - try something else"
+      }
     },
     "cookiebox": {
       "title": {
@@ -44,6 +54,10 @@
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
         "en": "To change your email address - log on your library homepage and change your email in profile settings"
+      },
+      "tooltip_digtital_copy": {
+        "da": "Dit bibliotek skal have abonnement på tjenesten Digital Artikelservice, for at du kan bestille digitale kopier af Det Kgl. Biblioteks artikler.",
+        "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
       }
     },
     "general": {
@@ -168,7 +182,7 @@
         "en": "Books"
       },
       "ebook": {
-        "da": "Ebog",
+        "da": "E-bog",
         "en": "Ebook"
       },
       "audiobook": {
@@ -600,6 +614,10 @@
       "Order (not logged in)": {
         "da": "Bestil (ikke logget ind)",
         "en": "Order (not logged in)"
+      },
+      "Order-online-disabled": {
+        "da": "Er ikke tilgængelig",
+        "en": "Not available"
       },
       "Order-disabled": {
         "da": "Bestil (deaktiveret))",
@@ -1037,6 +1055,14 @@
       }
     },
     "facets": {
+      "label-sortorder-numerical": {
+        "da": "Sorter alfabetisk",
+        "en": "Sort alphabetically"
+      },
+      "label-sortorder-alphabetically": {
+        "da": "Sorter efter antal",
+        "en": "Sort by numbers"
+      },
       "label-workType": {
         "da": "Materialekategori",
         "en": "Material category"
@@ -1727,6 +1753,10 @@
         "da": "Vælg afhentningssted",
         "en": "Select pick-up location"
       },
+      "pickup-search-title-2": {
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      },
       "pickup-search-description": {
         "da": "Husk du skal være låner på biblioteket",
         "en": "Remember you must be a loaner at the library"
@@ -1748,7 +1778,7 @@
         "en": "LABEL mangler oversættelse"
       },
       "pickup-input-placeholder": {
-        "da": "Søg efter afhentningssted",
+        "da": "Søg på bibliotekets navn, adresse, postnr",
         "en": "Search for pickup location"
       },
       "pickup-not-allowed": {
@@ -1838,6 +1868,40 @@
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",
         "en": "Approve loaner information"
+      }
+    },
+    "login": {
+      "orderPhysical-title": {
+        "da": "Bestil til %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-title": {
+        "da": "Dit bibliotek har abonnement",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "digitalCopy-title": {
+        "da": "Dit bibliotek abonnerer på Digital Artikelservice",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "digitalCopy-description": {
+        "da": "Du vil få artiklen tilsendt som digital kopi på mail",
+        "en": "LABEL: mangler oversættelse"
+      },
+      "plainLogin-title": {
+        "da": "Log ind",
+        "en": "Sign in"
+      },
+      "orderPhysical-description": {
+        "da": "For at gennemføre bestillingen skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "subscription-description": {
+        "da": "For at få adgang skal du logge ind ved %s",
+        "en": "LABEL: mangler oversættelse %s"
+      },
+      "plainLogin-description": {
+        "da": "Du skal bruge dine låneroplysninger fra %s",
+        "en": "LABEL: mangler oversættelse %s"
       }
     },
     "form": {

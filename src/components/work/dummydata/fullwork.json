@@ -54,11 +54,11 @@
           "cover": {
             "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4db0b737fda36ad47c1e"
           },
-          "materialType": "Ebog",
+          "materialType": "E-bog",
           "manifestations": [
             {
               "pid": "870970-basis:51796527",
-              "materialType": "Ebog",
+              "materialType": "E-bog",
               "admin": { "requestButton": false },
               "content": [],
               "creators": [
@@ -198,7 +198,7 @@
       },
       "seo": {
         "title": "Hest, hest, tiger, tiger af Mette E. Neerlin",
-        "description": "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+        "description": "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
       },
       "manifestations": [
         {
@@ -271,7 +271,7 @@
           "dk5": [{ "value": "86-096" }, { "value": "sk" }],
           "edition": "",
           "isbn": "9788763841757",
-          "materialType": "Ebog",
+          "materialType": "E-bog",
           "notes": ["Downloades i EPUB-format"],
           "language": ["Dansk"],
           "originals": ["Originaludgave: 2015"],

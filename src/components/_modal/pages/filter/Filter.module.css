@@ -37,6 +37,15 @@
 
 .category {
   padding: 0 0 var(--pt3) 0;
+  display: inline-block;
+}
+
+.divflex{
+  display: flex;
+}
+
+.sortlink{
+  margin-left:auto;
 }
 
 .select > div {

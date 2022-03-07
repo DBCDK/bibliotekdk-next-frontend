@@ -103,7 +103,7 @@ export default function getMaterialTypes({ workId, type }) {
             { type: "DBCS", value: "barndom" },
           ],
         },
-        Ebog: {
+        "E-bog": {
           pid: "870970-basis:52849985",
           cover: {
             detail:
@@ -128,7 +128,7 @@ export default function getMaterialTypes({ workId, type }) {
             "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
             "index",
           ],
-          materialType: "Ebog",
+          materialType: "E-bog",
           subjects: [
             { type: "DBCS", value: "far-søn-forholdet" },
             { type: "DBCS", value: "døden" },

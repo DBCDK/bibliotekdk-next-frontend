@@ -196,13 +196,27 @@ function Group({
           (el) => el === document.activeElement
         );
         if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+          e.preventDefault();
           const prevIndex =
             index > 0 ? index - 1 : childrenRef.current.length - 1;
           childrenRef.current[prevIndex].focus();
+          childrenRef.current[prevIndex].scrollIntoView({ block: "center" });
         } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+          e.preventDefault();
           const nextIndex =
             index < childrenRef.current.length - 1 ? index + 1 : 0;
           childrenRef.current[nextIndex].focus();
+          childrenRef.current[nextIndex].scrollIntoView({ block: "center" });
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          const index = 0;
+          childrenRef.current[index].focus();
+          childrenRef.current[index].scrollIntoView({ block: "center" });
+        } else if (e.key === "End") {
+          e.preventDefault();
+          const index = childrenRef.current.length - 1;
+          childrenRef.current[index].focus();
+          childrenRef.current[index].scrollIntoView({ block: "center" });
         }
       }}
     >

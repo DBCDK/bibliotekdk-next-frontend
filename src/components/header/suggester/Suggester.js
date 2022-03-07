@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo } from "react";
 
 import useFilters from "@/components/hooks/useFilters";
 
-import { useData, useFetcher } from "@/lib/api/api";
+import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 
 import { cyKey } from "@/utils/trim";
@@ -29,10 +29,8 @@ import Subject from "./templates/subject";
 import History from "./templates/history";
 
 import styles from "./Suggester.module.css";
-import {
-  collectSuggestPresented,
-  collectSuggestClick,
-} from "@/lib/api/datacollect.mutations";
+
+import useDataCollect from "@/lib/useDataCollect";
 
 // Context
 const context = { context: "suggester" };
@@ -446,7 +444,7 @@ export default function Wrap(props) {
   const { onChange } = props;
 
   const router = useRouter();
-  const fetcher = useFetcher();
+  const dataCollect = useDataCollect();
   const { filters } = useFilters();
 
   const initialQuery = router.query["q.all"] || "";
@@ -474,9 +472,10 @@ export default function Wrap(props) {
     // Collect data
     // User is presented with suggestions
     if (query && data?.suggest?.result) {
-      fetcher(
-        collectSuggestPresented({ query, suggestions: data.suggest.result })
-      );
+      dataCollect.collectSuggestPresented({
+        query,
+        suggestions: data.suggest.result,
+      });
     }
   }, [data]);
 
@@ -494,13 +493,11 @@ export default function Wrap(props) {
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
         props.onSelect({ query: suggestionValue, suggestion: suggestion });
-        fetcher(
-          collectSuggestClick({
-            query,
-            suggestion,
-            suggest_query_hit: suggestionIndex + 1,
-          })
-        );
+        dataCollect.collectSuggestClick({
+          query,
+          suggestion,
+          suggest_query_hit: suggestionIndex + 1,
+        });
       }}
       className={className}
       skeleton={isLoading}

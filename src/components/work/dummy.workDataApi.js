@@ -27,7 +27,7 @@ export default function dummy_workDataApi({ workId }) {
             ],
           },
           {
-            materialType: "Ebog",
+            materialType: "E-bog",
             cover: {
               detail:
                 "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=7e911def9923337c6605",

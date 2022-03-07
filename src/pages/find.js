@@ -23,8 +23,9 @@ import {
   collectSearch,
   collectSearchWorkClick,
 } from "@/lib/api/datacollect.mutations";
-import { useFetcher } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
+
+import useDataCollect from "@/lib/useDataCollect";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -40,9 +41,9 @@ function Find() {
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
-
+  const dataCollect = useDataCollect();
   const router = useRouter();
-  const fetcher = useFetcher();
+
   const { page = 1, view } = router.query;
 
   // Add worktype and all q types to useCanonicalUrl func
@@ -90,11 +91,9 @@ function Find() {
   useEffect(() => {
     // Check that q is set and not the empty string
     if (q && Object.values(q)?.length > 0) {
-      fetcher(
-        collectSearch({
-          search_request: { q, filters },
-        })
-      );
+      dataCollect.collectSearch({
+        search_request: { q, filters },
+      });
     }
   }, [JSON.stringify({ q, filters })]);
 
@@ -136,13 +135,11 @@ function Find() {
             updateQueryParams({ page }, { scroll })
           }
           onWorkClick={(index, work) => {
-            fetcher(
-              collectSearchWorkClick({
-                search_request: { q, filters },
-                search_query_hit: index + 1,
-                search_query_work: work.id,
-              })
-            );
+            dataCollect.collectSearchWorkClick({
+              search_request: { q, filters },
+              search_query_hit: index + 1,
+              search_query_work: work.id,
+            });
           }}
         />
       )}

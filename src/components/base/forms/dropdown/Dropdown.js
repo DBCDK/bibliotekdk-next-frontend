@@ -58,9 +58,9 @@ function Dropdown({
         <BootstrapDropdown.Item
           as="span"
           className={styles.item}
-          onClick={() => setSelected("Ebog")}
+          onClick={() => setSelected("E-bog")}
         >
-          Ebog
+          E-bog
         </BootstrapDropdown.Item>
         <BootstrapDropdown.Item
           as="span"

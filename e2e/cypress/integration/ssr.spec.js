@@ -76,7 +76,7 @@ describe("Server Side Rendering", () => {
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res.description).to.equal(
-          "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"
@@ -85,7 +85,7 @@ describe("Server Side Rendering", () => {
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res["og:description"]).to.equal(
-          "Lån Hest, hest, tiger, tiger som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:image"]).to.exist;
       });

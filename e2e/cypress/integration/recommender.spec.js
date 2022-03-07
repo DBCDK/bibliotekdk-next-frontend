@@ -8,6 +8,10 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
 describe("Recommender data collect", () => {
   beforeEach(() => {
+    // Allow cookies
+    cy.visit(`${nextjsBaseUrl}`);
+    cy.get("[data-cy=button-ok]").click();
+
     // Intercept requests to graphql
     cy.fixture("recommendations.json").then((recommendationsFixture) => {
       cy.intercept("POST", "/graphql", (req) => {

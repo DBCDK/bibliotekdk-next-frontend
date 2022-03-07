@@ -4,6 +4,7 @@ import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
 import { getIsPeriodicaLike } from "@/lib/utils";
+import { preferredOnline } from "@/lib/Navigation";
 
 // Translate Context
 const context = { context: "overview" };
@@ -240,9 +241,18 @@ export function OrderButton({
     !checkRequestButtonIsTrue({ manifestations }) &&
     !checkDigitalCopy({ manifestations })
   ) {
+    // if we prefer online material button text should be different
+    let onlinedisable =
+      manifestations &&
+      manifestations[0] &&
+      preferredOnline.includes(manifestations[0].materialType);
     // order is not possible/allowed - disable
     return (
-      <DisabledReservationButton buttonSkeleton={buttonSkeleton} type={type} />
+      <DisabledReservationButton
+        buttonSkeleton={buttonSkeleton}
+        type={type}
+        onlinedisable={onlinedisable}
+      />
     );
   }
 
@@ -320,10 +330,14 @@ function checkDigitalCopy({ manifestations }) {
  * If order is not possible - show a disabled reservation button
  * @param buttonSkeleton
  * @param type
+ * @param onlinedisable
  * @return {JSX.Element}
  * @constructor
  */
-function DisabledReservationButton({ buttonSkeleton, type }) {
+function DisabledReservationButton({ buttonSkeleton, type, onlinedisable }) {
+  const text = onlinedisable
+    ? Translate({ context: "overview", label: "Order-online-disabled" })
+    : Translate({ context: "overview", label: "Order-disabled" });
   return (
     <Button
       skeleton={buttonSkeleton}
@@ -332,7 +346,7 @@ function DisabledReservationButton({ buttonSkeleton, type }) {
       dataCy="button-order-overview"
       type={type}
     >
-      {Translate({ context: "overview", label: "Order-disabled" })}
+      {text}
     </Button>
   );
 }

@@ -36,26 +36,69 @@ function SelectedFilter({
   const name = data?.name;
   const values = data?.values || [];
 
+  const [sortOrder, setSortOrder] = useState("numerical");
+
+  /**
+   * Sort alphabetically by term OR numerical by count - depending on sortOrder chosen
+   * @param a
+   * @param b
+   * @returns {boolean}
+   */
+  const sortFilters = (a, b) => {
+    // only handle language filters
+    /*if (name !== "language") {
+      return 0;
+    }*/
+    if (sortOrder === "numerical") {
+      return a.count < b.count ? 1 : -1;
+    } else {
+      return a.term.toLowerCase() > b.term.toLowerCase() ? 1 : -1;
+    }
+  };
+
+  /**
+   * Remove value.teŕms defined in remove array
+   * @param value
+   * @returns {boolean}
+   */
+  const removeLanguages = (value) => {
+    // only handle language filters
+    if (name !== "language") {
+      return true;
+    }
+    const languagesToRemove = ["Miscellaneous", "Sproget kan ikke bestemmes"];
+    return !languagesToRemove.includes(value?.term);
+  };
+
   const [orderedValues, setOrderedValues] = useState(null);
+
+  // do not show the link to sort alphabetically/numerically if there are
+  // less than 2 filter values
+  const showSort = values?.length > 2;
 
   useEffect(() => {
     if (!name || !active) {
       return;
     }
-    const selectedWithHits = values?.filter(
+
+    // remove languages ("Miscellaneous", "Sproget kan ikke bestemmes")
+    const valuecopy = values.filter(removeLanguages);
+
+    // selected facets
+    const selectedWithHits = valuecopy?.filter(
       (value) => terms.includes(value.term) || terms.includes(value.key)
     );
-    const selectedNoHits = terms
-      ?.filter?.(
-        (term) =>
-          !values?.find?.((value) => value.key === term || value.term === term)
-      )
-      .map((term) => ({ term, key: term, count: "-" }));
-    const nonSelected = values?.filter(
-      (value) => !(terms.includes(value.term) || terms.includes(value.key))
-    );
+    // the rest of the facets
+    const selectedNoHits = valuecopy
+      .filter((el) => !selectedWithHits.includes(el))
+      .sort(sortFilters);
+
+    const nonSelected = valuecopy
+      .filter((el) => !selectedWithHits.includes(el))
+      .filter((el) => !selectedNoHits.includes(el));
+
     setOrderedValues([...selectedWithHits, ...selectedNoHits, ...nonSelected]);
-  }, [name, active]);
+  }, [name, active, sortOrder]);
 
   if (!name || !orderedValues) {
     return null;
@@ -85,9 +128,30 @@ function SelectedFilter({
   return (
     <>
       <Top modal={modal} back sticky />
-      <Text type="text1" className={styles.category}>
-        {category}
-      </Text>
+      <div className={styles.divflex}>
+        <Text type="text1" className={styles.category}>
+          {category}
+        </Text>
+        {showSort && (
+          <Link
+            dataCy={`${category}-SORT`}
+            border={{ top: false, bottom: { keepVisible: true } }}
+            onClick={() => {
+              setSortOrder(
+                sortOrder === "numerical" ? "alphabetically" : "numerical"
+              );
+            }}
+            className={styles.sortlink}
+          >
+            <Text type="text3">
+              {Translate({
+                context: "facets",
+                label: `label-sortorder-${sortOrder}`,
+              })}
+            </Text>
+          </Link>
+        )}
+      </div>
       <List.Group
         label={Translate({ context: "facets", label: "terms-group-label" })}
         className={`${styles.group} ${styles.terms}`}

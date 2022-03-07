@@ -118,6 +118,10 @@ describe("Suggester", () => {
 
 describe("Suggester data collect", () => {
   it(`Should collect data for suggester`, () => {
+    // Allow cookies
+    cy.visit(`${nextjsBaseUrl}`);
+    cy.get("[data-cy=button-ok]").click();
+
     // Intercept requests to graphql
     cy.intercept("POST", "/graphql", (req) => {
       if (req.body.query.startsWith("mutation")) {
