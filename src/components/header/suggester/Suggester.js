@@ -225,6 +225,7 @@ function renderInputComponent(
   onClear
 ) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
+
   const props = {
     ...inputProps,
     id: "suggester-input",

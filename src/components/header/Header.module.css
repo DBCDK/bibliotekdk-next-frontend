@@ -156,6 +156,11 @@
   color: white;
 }
 
+.showexpandedlink{
+  padding-right: var(--pt4);
+  float: right;
+}
+
 @media (max-width: 991px) {
   .search > * {
     display: none;

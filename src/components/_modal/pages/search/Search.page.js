@@ -8,7 +8,6 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import Input from "@/components/base/forms/input";
-import Suggester from "@/components/base/suggester";
 
 import Translate from "@/components/base/translate";
 
@@ -17,13 +16,8 @@ import useQ from "@/components/hooks/useQ";
 
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
-
-import { all, work, subject, creator } from "@/lib/api/suggest.fragments";
-
-import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Search.module.css";
 
-import TitleSuggester from "./Search.suggester";
 // import { Provider } from "./Search.suggester";
 
 /**
@@ -102,27 +96,6 @@ export function Search({
         <Label for="search-title" skeleton={isLoading}>
           {labelTitle}
         </Label>
-
-        <div className={styles.element}>
-          <TitleSuggester type="title" />
-          {/* <Provider
-            type="title"
-            loader={(val) => all({ q: val || "", workType })}
-          >
-            <Suggester id="advanced-search-title">
-              <Input
-                id="search-title"
-                dataCy="search-input-title"
-                value={q.title}
-                placeholder={placeholderTitle}
-                onChange={(e) => {
-                  const val = e?.target?.value;
-                  q.title !== val && onChange(val);
-                }}
-              />
-            </Suggester>
-          </Provider> */}
-        </div>
 
         <Label for="search-creator" skeleton={isLoading}>
           {labelCreator}

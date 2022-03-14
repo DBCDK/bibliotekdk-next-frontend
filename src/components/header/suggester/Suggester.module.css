@@ -72,6 +72,8 @@
 
 .suggestions_container {
   display: none;
+  position: relative;
+  z-index: 2;
 }
 
 .suggestions_container__open {
@@ -147,7 +149,7 @@
     border: none;
 
     position: relative;
-    z-index: 1;
+    z-index: 3;
     top: auto;
     left: auto;
   }

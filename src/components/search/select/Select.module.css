@@ -38,6 +38,8 @@
 .dropdownmenu {
   border: 1px solid var(--blue);
   background-color: var(--white);
+  z-index:1;
+
 }
 
 .dropdowntoggle:focus {

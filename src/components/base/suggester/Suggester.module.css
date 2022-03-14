@@ -1,4 +1,5 @@
 .container {
+  width: 100%;
   max-width: 500px;
   position: relative;
 }
@@ -52,10 +53,10 @@
 }
 
 .suggestions_container {
-  background-color: white;
   position: absolute;
   width: 100%;
   z-index: 0;
+  background-color: var(--white);
 }
 
 .suggestions_container__open {
@@ -69,6 +70,7 @@
   height: auto;
   max-height: 50vh;
   padding: 0;
+  z-index: 1;
 }
 
 .suggestions_list {

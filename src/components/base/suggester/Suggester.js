@@ -122,8 +122,6 @@ function renderSuggestion(suggestion, query, skeleton) {
  *
  */
 function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
-  console.log("q inputProps", inputProps);
-
   // Enrich input components with props
   const input = React.cloneElement(inputComponent, inputProps);
 
@@ -269,8 +267,6 @@ export default function Wrap(props) {
   if (skeleton) {
     className = `${className} ${styles.skeleton}`;
   }
-
-  console.log("q children", children);
 
   return (
     <Suggester

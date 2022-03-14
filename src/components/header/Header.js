@@ -21,6 +21,7 @@ import LoginIcon from "./icons/login";
 // import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
@@ -31,6 +32,7 @@ import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
+import { MoreOptionsLink } from "@/components/search/quickfilters/QuickFilters";
 
 /**
  * The Component function
@@ -158,7 +160,6 @@ export function Header({
 
       //  remove dead params
       Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
-
       router &&
         router[routerFunc]({
           pathname: "/find",
@@ -327,6 +328,9 @@ export function Header({
                   })}
                 </div>
               </div>
+            </Col>
+            <Col xs={{ span: 9, offset: 3 }}>
+              <ExpandedSearch router={router} />
             </Col>
           </Row>
         </Container>

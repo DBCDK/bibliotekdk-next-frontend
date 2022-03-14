@@ -11,6 +11,39 @@ import Translate from "@/components/base/translate";
 
 import styles from "./QuickFilters.module.css";
 
+export function MoreOptionsLink({ countQ, onSearchClick, type }) {
+  /*const onSearchClick = () => {
+    alert("SEARCH");
+  };*/
+
+  return (
+    <Link
+      tabIndex="-1"
+      className={styles.link}
+      onClick={() => onSearchClick()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.keyCode === 13) {
+          onSearchClick();
+        }
+      }}
+      border={{ bottom: { keepVisible: true } }}
+    >
+      <span>
+        <Icon src="search_blue.svg" size={2} />
+      </span>
+
+      <Text type="text3" tag="span">
+        {Translate({
+          context: "search",
+          label:
+            countQ === "0" ? "advancedSearchLink" : "advancedSearchLinkCount",
+          vars: countQ === "0" ? null : [countQ],
+        })}
+      </Text>
+    </Link>
+  );
+}
+
 /**
  * The quick filters section
  *
@@ -18,9 +51,9 @@ import styles from "./QuickFilters.module.css";
 export function QuickFilters({
   modal,
   onFiltersClick,
-  onSearchClick,
   onViewSelect,
   viewSelected,
+  onSearchClick,
 }) {
   const { getCount: getFiltersCount } = useFilters();
   const { getCount: getQCount } = useQ();
@@ -41,39 +74,10 @@ export function QuickFilters({
 
             <Text type="text2">
               {Translate({ context: "search", label: "filtersResultText" })}
+              ZEBRA
             </Text>
 
             <div className={styles.links}>
-              <Link
-                tabIndex="-1"
-                className={styles.link}
-                onClick={() => onSearchClick()}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.keyCode === 13) {
-                    onSearchClick();
-                  }
-                }}
-                border={false}
-              >
-                <Icon src="search_blue.svg" size={2} />
-                <Link
-                  dataCy="view-all-advanced-search"
-                  onClick={(e) => e.preventDefault()}
-                  border={{ bottom: { keepVisible: true } }}
-                >
-                  <Text type="text3">
-                    {Translate({
-                      context: "search",
-                      label:
-                        countQ === "0"
-                          ? "advancedSearchLink"
-                          : "advancedSearchLinkCount",
-                      vars: countQ === "0" ? null : [countQ],
-                    })}
-                  </Text>
-                </Link>
-              </Link>
-
               <Link
                 tabIndex="-1"
                 className={styles.link}
@@ -100,6 +104,7 @@ export function QuickFilters({
                           : "showAllFiltersCount",
                       vars: countFilters === "0" ? null : [countFilters],
                     })}
+                    FISKHEST
                   </Text>
                 </Link>
               </Link>

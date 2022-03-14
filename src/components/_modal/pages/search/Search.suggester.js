@@ -1,7 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-
-import Input from "@/components/base/forms/input";
-import Suggester from "@/components/base/suggester";
+import { TitleSuggester } from "@/components/header/advancedsearch/AdvancedSearch";
 
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
@@ -17,26 +15,7 @@ const dummy = [
   { value: "fisk" },
 ];
 
-export function TitleSuggester({ q, onChange, data }) {
-  return (
-    <Suggester id="advanced-search-title" data={data}>
-      <Input
-        id="search-title"
-        dataCy="search-input-title"
-        value={q.title}
-        placeholder={"hej"}
-        onChange={(e) => {
-          const val = e?.target?.value;
-          onChange(val);
-          // onChange prop
-          // props?.onChange?.(e);
-        }}
-      />
-    </Suggester>
-  );
-}
-
-export default function Wrap({ type = "title" }) {
+/*export default function Wrap({ type = "title" }) {
   const { q: _q, base } = useQ();
   const { filters } = useFilters();
   const [state, setState] = useState({ ...base, ..._q });
@@ -67,7 +46,7 @@ export default function Wrap({ type = "title" }) {
       }}
     />
   );
-}
+}*/
 
 // export function Provider({ type = "title", loader, children }) {
 //   const { q: _q, base } = useQ();
