@@ -52,18 +52,18 @@ const Index = () => {
         <Header router={router} />
         <Hero />
         <ArticleSection
-          title="Bibliotek.dk tilbyder"
+          title={Translate({ context: "index", label: "section1" })}
           matchTag="section 1"
           template="triple"
           topSpace={false}
         />
         <ArticleSection
-          title="Kan vi hjælpe?"
+          title={Translate({ context: "index", label: "section2" })}
           matchTag="section 2"
           template="triple"
         />
         <ArticleSection
-          title="Nyheder"
+          title={Translate({ context: "index", label: "section3" })}
           matchTag="section 3"
           template="double"
         />

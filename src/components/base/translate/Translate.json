@@ -1,5 +1,19 @@
 {
   "contexts": {
+    "index": {
+      "section1": {
+        "da": "Bibliotek.dk tilbyder",
+        "en": "From Bibliotek.dk to you"
+      },
+      "section2": {
+        "da": "Kan vi hjælpe?",
+        "en": "Label: mangler oversættelse"
+      },
+      "section3": {
+        "da": "Nyheder",
+        "en": "Label: mangler oversættelse"
+      }
+    },
     "logo": {
       "default_logo_text": {
         "da": "Bibliotek\\ndk",
