@@ -1,13 +1,16 @@
-.hideexpanded {
-    display: none;
-}
 
-.showexpanded {
-    margin-left:auto;
+.linkshowmore{
 }
-
-.flexnav{
+.linkshowless{
+    margin:auto;
+}
+.hide{
+    display:none;
+}
+.flexnav {
     display: flex;
+    width: 100%;
+    padding-right: var(--pt4);
 }
 
 .flex {
@@ -17,13 +20,12 @@
     flex-wrap: wrap;
 }
 
-.iconinline{
+.iconinline {
     margin-right: var(--pt1);
 }
 
-.marginauto{
-    margin: auto;
-    width: 35%;
+.marginauto {
+    margin-left: auto;
 }
 
 .suggesterright {
@@ -31,9 +33,8 @@
     width: 100%;
 }
 
-.button{
+.button {
     position: relative;
-    height: 100%;
     padding: var(--pt2) var(--pt4);
     background-color: transparent;
     color: var(--blue);
@@ -45,11 +46,11 @@
     overflow: hidden;
 }
 
-.suggestionswrap{
+.suggestionswrap {
     width: 100%;
 }
 
-.buttoninline{
+.buttoninline {
     padding: var(--pt2) var(--pt5) var(--pt2) var(--pt15);
 }
 

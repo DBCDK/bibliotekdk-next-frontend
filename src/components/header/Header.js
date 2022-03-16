@@ -251,6 +251,8 @@ export function Header({
                       return;
                     }
 
+                    setQuery(query);
+
                     doSearch({ query: query });
 
                     // view query in storybook
@@ -329,8 +331,8 @@ export function Header({
                 </div>
               </div>
             </Col>
-            <Col xs={{ span: 9, offset: 3 }}>
-              <ExpandedSearch router={router} />
+            <Col xs={{ span: 7, offset: 3 }}>
+              <ExpandedSearch router={router} headerQuery={query} />
             </Col>
           </Row>
         </Container>

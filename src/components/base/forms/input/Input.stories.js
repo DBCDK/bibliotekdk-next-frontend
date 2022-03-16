@@ -48,9 +48,7 @@ export function OnChange() {
       <StoryDescription>
         Input onChange function trigger (console.logs value)
       </StoryDescription>
-      <Input
-        onChange={(e) => console.log(("input", { value: e.target.value }))}
-      />
+      <Input onChange={(value) => console.log(("input", { value }))} />
     </div>
   );
 }
@@ -66,9 +64,7 @@ export function OnBlur() {
       <StoryDescription>
         Input onBlur function trigger (console.logs value)
       </StoryDescription>
-      <Input
-        onBlur={(e) => console.log(("input", { value: e.target.value }))}
-      />
+      <Input onBlur={(value) => console.log(("input", { value }))} />
     </div>
   );
 }

@@ -33,8 +33,8 @@ export function ValidationOnChange() {
       </StoryDescription>
       <Email
         value="invalid@mail."
-        onChange={(e, valid) =>
-          console.log(("email input", { value: e?.target?.value, valid }))
+        onChange={(value, valid) =>
+          console.log(("email input", { value, valid }))
         }
       />
     </div>
@@ -53,8 +53,8 @@ export function ValidationOnBlur() {
         Validating input onBlur (console.logs response)
       </StoryDescription>
       <Email
-        onBlur={(e, valid) =>
-          console.log(("email input", { value: e?.target?.value, valid }))
+        onBlur={(value, valid) =>
+          console.log(("email input", { value, valid }))
         }
       />
     </div>

@@ -89,6 +89,7 @@ function highlightMatch(suggestion, query) {
  *
  */
 function renderSuggestionsContainer(containerProps, children) {
+  console.log(containerProps, children, "CONTAINER");
   return (
     <div
       {...containerProps}
@@ -107,6 +108,8 @@ function renderSuggestionsContainer(containerProps, children) {
 function renderSuggestion(suggestion, query, skeleton) {
   // Add to suggestion object
   const highlight = highlightMatch(suggestion.value, query);
+
+  console.log(suggestion, "SUGGESTIONSINGLE");
 
   return (
     <div className={styles.suggestion}>
@@ -164,6 +167,7 @@ function Suggester({
   onClear = null,
   onSelect = null,
   onChange = null,
+  initialValue = "",
 }) {
   // Make copy of all suggestion objects
   // react-autosuggest will mutate these objects,
@@ -183,16 +187,16 @@ function Suggester({
 
   // Default input props
   const inputProps = {
-    value: state._q || state.q,
+    value: initialValue === "" ? "" : state._q || state.q,
     // onChange func. is required by autosuggest
     onChange: (e) => {
       // Only run onChange update on e.type change
       // Supported in all browsers
-      if (e.type === "change") {
-        onChange && onChange(e);
-        children?.props?.onChange?.(e);
-        setState({ q: e.target.value, _q: null });
-      }
+      //if (e.type === "change") {
+      onChange && onChange(e);
+      children?.props?.onChange?.(e);
+      setState({ q: e, _q: null });
+      //}
     },
   };
 
@@ -218,9 +222,11 @@ function Suggester({
         setState({ q: suggestionValue, _q: null });
         // blurInput(id);
       }}
-      renderSuggestionsContainer={(props) =>
-        renderSuggestionsContainer(props.containerProps, props.children)
-      }
+      renderSuggestionsContainer={(props) => {
+        /*console.log("FISK");
+        console.log(props, "PROPS");*/
+        renderSuggestionsContainer(props.containerProps, props.children);
+      }}
       getSuggestionValue={(suggestion) => suggestion.value}
       renderSuggestion={(suggestion, { query }) =>
         renderSuggestion(suggestion, query, skeleton)

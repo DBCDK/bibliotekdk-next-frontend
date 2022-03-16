@@ -2,7 +2,7 @@ import Suggester from "@/components/base/suggester/Suggester";
 import Input from "@/components/base/forms/input/Input";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useData } from "@/lib/api/api";
 import { all } from "@/lib/api/suggest.fragments";
 import styles from "./ExpandedSearch.module.css";
@@ -11,24 +11,106 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon/Icon";
 import Text from "@/components/base/text/Text";
+import Collapse from "react-bootstrap/Collapse";
 
-function ExpandedSearch({ q, onChange, data, doSearch }) {
-  const [showExpandedSearch, setShowExpandedSearch] = useState(false);
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
+/*
+function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  const expandClick = () => {
+    setCollapseOpen(!collapseOpen);
+  };
   return (
-    <div>
-      <div
-        className={
-          showExpandedSearch ? styles.showexpanded : styles.hideexpanded
-        }
-      >
-        <div className={styles.flex}>
-          <TitleSuggester data={data} q={q} onChange={onChange} />
+    <div className={styles.flexnav}>
+      <Collapse in={collapseOpen} className={styles.wrapper}>
+        <div className={styles.wrapper}>
+          <div className={styles.flex} id="example-collapse-text">
+            <TitleSuggester
+              data={data}
+              q={q}
+              onChange={onChange}
+              value={state["title"]}
+            />
+            <CreatorSuggester
+              data={data}
+              q={q}
+              onChange={onChange}
+              value={state["creator"]}
+            />
+            <SubjectSuggester
+              data={data}
+              q={q}
+              onChange={onChange}
+              value={state["subject"]}
+            />
+          </div>
 
-          <CreatorSuggester data={data} q={q} onChange={onChange} />
-          <SubjectSuggester data={data} q={q} onChange={onChange} />
+          <div className={styles.flexnav}>
+            <div className={styles.buttoninline}>
+              <button
+                type="button"
+                onClick={() => {
+                  doSearch();
+                }}
+                data-cy={cyKey({
+                  name: "searchbutton",
+                  prefix: "header",
+                })}
+                className={styles.button}
+              >
+                <span>{Translate({ context: "header", label: "search" })}</span>
+              </button>
+            </div>
+            <span className={!collapseOpen ? styles.hide : styles.linkshowless}>
+              <MoreOptionsLink onSearchClick={expandClick} />
+            </span>
+          </div>
         </div>
+      </Collapse>
+      <div
+        className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}
+      >
+        <MoreOptionsLink onSearchClick={expandClick} type="showmore" />
+      </div>
+    </div>
+  );
+}
+ */
 
-        <div className={styles.flexnav}>
+function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
+  //const [showExpandedSearch, setShowExpandedSearch] = useState(false);
+  const [collapseOpen, setCollapseOpen] = useState(false);
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.flex} id="example-collapse-text">
+        <TitleSuggester
+          data={data}
+          q={q}
+          onChange={onChange}
+          value={state["title"]}
+        />
+        <CreatorSuggester
+          data={data}
+          q={q}
+          onChange={onChange}
+          value={state["creator"]}
+        />
+        <SubjectSuggester
+          data={data}
+          q={q}
+          onChange={onChange}
+          value={state["subject"]}
+        />
+      </div>
+
+      {/*<div className={styles.flexnav}>
           <div className={styles.buttoninline}>
             <button
               type="button"
@@ -48,34 +130,37 @@ function ExpandedSearch({ q, onChange, data, doSearch }) {
             <MoreOptionsLink
               countQ={0}
               onSearchClick={() => {
-                setShowExpandedSearch(!showExpandedSearch);
+                setCollapseOpen(!collapseOpen);
+                //onClear();
+                //setShowExpandedSearch(!showExpandedSearch);
               }}
               type="showless"
             />
           </div>
-        </div>
-      </div>
+        </div>*/}
+      {/*
       <div className={styles.flex}>
-        <div
-          className={
-            showExpandedSearch ? styles.hideexpanded : styles.showexpanded
-          }
-        >
+        <div className={`${styles.expand} `}>
           <MoreOptionsLink
             onSearchClick={() => {
-              setShowExpandedSearch(!showExpandedSearch);
+              setCollapseOpen(!collapseOpen);
+              //setShowExpandedSearch(!showExpandedSearch);
             }}
             type="showmore"
           />
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 }
 
 function MoreOptionsLink({ onSearchClick, type }) {
   return (
-    <div className={styles.flex}>
+    <span
+      className={
+        type === "showmore" ? styles.linkshowmore : styles.linkshowless
+      }
+    >
       <Link
         tabIndex="-1"
         onClick={() => onSearchClick()}
@@ -103,11 +188,11 @@ function MoreOptionsLink({ onSearchClick, type }) {
           })}
         </Text>
       </Link>
-    </div>
+    </span>
   );
 }
 
-export function TitleSuggester({ q, onChange, data }) {
+function TitleSuggester({ q, onChange, data, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
@@ -120,22 +205,27 @@ export function TitleSuggester({ q, onChange, data }) {
         onClear={() => {
           onChange("", "title");
         }}
+        initialValue={value}
       >
         <Input
           id="search-title"
           dataCy="search-input-title"
           placeholder={"title"}
           onChange={(e) => {
-            const val = e?.target?.value;
+            const val = e;
             onChange(val, "title");
+            /*if (e.key === "Enter") {
+              document.activeElement.blur();
+            }*/
           }}
         />
       </Suggester>
+      FISK
     </div>
   );
 }
 
-export function CreatorSuggester({ q, onChange, data }) {
+function CreatorSuggester({ q, onChange, data, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> CREATOR:</div>
@@ -149,6 +239,7 @@ export function CreatorSuggester({ q, onChange, data }) {
           onChange("", "creator");
         }}
         className={styles.suggestionswrap}
+        initialValue={value}
       >
         <Input
           id="search-creator"
@@ -157,6 +248,9 @@ export function CreatorSuggester({ q, onChange, data }) {
           onChange={(e) => {
             const val = e?.target?.value;
             onChange(val, "creator");
+            if (e.key === "Enter") {
+              document.activeElement.blur();
+            }
           }}
         />
       </Suggester>
@@ -164,9 +258,9 @@ export function CreatorSuggester({ q, onChange, data }) {
   );
 }
 
-export function SubjectSuggester({ q, onChange, data }) {
+function SubjectSuggester({ q, onChange, data, value = "" }) {
   return (
-    <>
+    <div className={styles.suggesterright}>
       <div className={styles.labelinline}> SUBJECT:</div>
       <Suggester
         id="advanced-search-subject"
@@ -174,9 +268,14 @@ export function SubjectSuggester({ q, onChange, data }) {
         onSelect={(e) => {
           onChange(e, "subject");
         }}
-        onClear={() => {
+        onClear={(e) => {
           onChange("", "subject");
         }}
+        onChange={(e) => {
+          const val = e?.target?.value;
+          onChange(val, "subject");
+        }}
+        initialValue={value}
       >
         <Input
           id="search-subject"
@@ -185,72 +284,111 @@ export function SubjectSuggester({ q, onChange, data }) {
           onChange={(e) => {
             const val = e?.target?.value;
             onChange(val, "subject");
+            if (e.key === "Enter") {
+              document.activeElement.blur();
+            }
           }}
         />
       </Suggester>
-    </>
+    </div>
   );
 }
 
-function cleanParams(params) {
+function cleanParams(params, headerQuery) {
   const ret = {};
-  Object.entries(params).forEach(([key, value]) =>
-    value ? (ret[`q.${key}`] = value) : ""
-  );
-  console.log(ret, "PARAMS");
+  Object.entries(params).forEach(([key, value]) => {
+    if (key === "all" && value !== headerQuery) {
+      headerQuery ? (ret[`q.${key}`] = headerQuery) : "";
+    } else {
+      value ? (ret[`q.${key}`] = value) : "";
+    }
+  });
   return ret;
 }
 
-export default function Wrap({ router = null, show }) {
+function cleanInitial(initial, headerQuery) {
+  const ret = {};
+  Object.entries(initial).forEach(([key, value]) => {
+    if (key === "all" && value !== headerQuery) {
+      headerQuery ? (ret[key] = headerQuery) : "";
+    } else {
+      value ? (ret[key] = value) : "";
+    }
+  });
+  return ret;
+}
+
+export default function Wrap({ router = null, headerQuery }) {
   const { q: _q, base } = useQ();
-
-  console.log(_q, "Q");
-
   const { filters } = useFilters();
 
-  console.log(filters, "FILTERS");
+  if (!headerQuery && _q.all) {
+    headerQuery = _q.all;
+  }
 
-  const [state, setState] = useState({ ...base, ..._q });
+  let initial = { ...base, ..._q };
+
+  const [state, setState] = useState({ ...initial });
+  useEffect(() => {
+    setState({ ...initial });
+    console.log(initial, "IONITIINTIKA");
+  }, [_q]);
+
   const [type, setType] = useState("title");
 
   // extract selected workType, if any
   const workType = filters.workType?.[0] || null;
 
-  const q = state[type];
+  const suggest_q = state[type];
 
   // use the useData hook to fetch data
-  const { data, isLoading, error } = useData(all({ q, workType }));
+  const { data, isLoading, error } = useData(all({ q: suggest_q, workType }));
 
   const filtered = data?.suggest?.result?.map((obj) => ({
     value: obj.value || obj.title || obj.name,
   }));
 
-  // const params = { ["q.all"]: "fisk" };
-  const stateValues = cleanParams(state);
+  const stateValues = cleanParams(state, headerQuery);
   const paramValues = { ...stateValues, ...filters };
+
+  if (error) {
+    return null;
+  }
+  const onChange = (val, type) => {
+    setType(type);
+    setState({ ...initial, [type]: val });
+  };
+
+  const onClear = () => {
+    const clearState = { ...state, creator: "", subject: "", title: "" };
+    const stateValues = cleanParams(clearState, headerQuery);
+    //const paramValues = { ...stateValues, ...filters };
+    router &&
+      router["push"]({
+        query: stateValues,
+      });
+  };
+
   const doSearch = () => {
     router &&
-      Object.keys(paramValues).length > 0 &&
+      Object.keys(stateValues).length > 0 &&
       router["push"]({
         pathname: "/find",
         query: paramValues,
       });
   };
 
-  if (error) {
-    return null;
-  }
+  console.log(filtered, "EXPAND DATA");
 
   return (
     <ExpandedSearch
       data={filtered}
-      q={q}
-      onChange={(val, type) => {
-        setType(type);
-        setState({ ...state, [type]: val });
-      }}
+      q={suggest_q}
+      onChange={onChange}
+      //onChange={() => alert("fisk")}
       doSearch={doSearch}
-      show={show}
+      state={state}
+      onClear={onClear}
     />
   );
 }

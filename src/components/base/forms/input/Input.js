@@ -11,7 +11,7 @@ import styles from "./Input.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * Get you value like <Input onChange={(e) => console.log(e.target.value)} ... />
+ * Get you value like <Input onChange={(value) => console.log(value)} ... />
  *
  * @returns {component}
  */
@@ -31,9 +31,14 @@ function Input({
   required,
   "aria-labelledby": ariaLabelledby,
   "aria-label": ariaLabel,
-  ...props
 }) {
   const [val, setVal] = useState(value || "");
+
+  console.log(val, "INPUTVAL");
+
+  useEffect(() => {
+    onChange && onChange(val);
+  }, [val]);
 
   // Update value if undefined/null at first render
   useEffect(() => {
@@ -45,7 +50,6 @@ function Input({
 
   return (
     <input
-      {...props}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
@@ -55,9 +59,8 @@ function Input({
       readOnly={readOnly}
       data-cy={dataCy}
       tabIndex={disabled ? "-1" : tabIndex}
-      onBlur={(e) => onBlur && onBlur(e)}
+      onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => {
-        onChange && onChange(e);
         setVal(e.target.value);
       }}
       required={required}

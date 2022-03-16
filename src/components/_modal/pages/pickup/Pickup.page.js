@@ -264,7 +264,7 @@ export function Pickup({
             label: "pickup-input-placeholder",
           })}
           className={styles.input}
-          onChange={debounce((e) => onChange(e?.target?.value), 100)}
+          onChange={debounce((value) => onChange(value), 100)}
         />
       </div>
 
