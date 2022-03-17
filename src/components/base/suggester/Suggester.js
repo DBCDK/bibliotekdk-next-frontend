@@ -177,11 +177,6 @@ function Suggester({
    * want to trigger the query callback.
    */
   const [state, setState] = useState({ q, _q: null });
-
-  console.log(data, "SUGGESTERDAT");
-  console.log(state._q, "Q");
-  console.log(state.q, "Q");
-
   // Create theme container with className prop
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
@@ -189,17 +184,17 @@ function Suggester({
 
   // Default input props
   const inputProps = {
-    value: state._q || state.q,
+    value:
+      //initialValue === "" && !state._q && !state.q ? "" : state._q || state.q,
+      initialValue === "" ? "" : state._q || state.q,
     // onChange func. is required by autosuggest
     onChange: (e) => {
       // Only run onChange update on e.type change
       // Supported in all browsers
-      console.log(e, "E");
-      console.log(children, "CHILDRED");
       if (e.type === "change") {
         onChange && onChange(e);
         children?.props?.onChange?.(e);
-        //setState({ q: e.target.value, _q: null });
+        setState({ q: e.target.value, _q: null });
       }
     },
   };

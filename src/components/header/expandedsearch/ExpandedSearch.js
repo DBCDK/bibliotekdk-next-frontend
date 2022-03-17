@@ -21,7 +21,6 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-/*
 function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
   const [collapseOpen, setCollapseOpen] = useState(false);
   const expandClick = () => {
@@ -37,12 +36,14 @@ function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
               q={q}
               onChange={onChange}
               value={state["title"]}
+              doSearch={doSearch}
             />
             <CreatorSuggester
               data={data}
               q={q}
               onChange={onChange}
               value={state["creator"]}
+              doSearch={doSearch}
             />
             <SubjectSuggester
               data={data}
@@ -79,77 +80,6 @@ function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
       >
         <MoreOptionsLink onSearchClick={expandClick} type="showmore" />
       </div>
-    </div>
-  );
-}
- */
-
-function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
-  //const [showExpandedSearch, setShowExpandedSearch] = useState(false);
-  const [collapseOpen, setCollapseOpen] = useState(false);
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.flex} id="example-collapse-text">
-        <TitleSuggester
-          data={data}
-          q={q}
-          onChange={onChange}
-          value={state["title"]}
-        />
-        <CreatorSuggester
-          data={data}
-          q={q}
-          onChange={onChange}
-          value={state["creator"]}
-        />
-        <SubjectSuggester
-          data={data}
-          q={q}
-          onChange={onChange}
-          value={state["subject"]}
-        />
-      </div>
-
-      {/*<div className={styles.flexnav}>
-          <div className={styles.buttoninline}>
-            <button
-              type="button"
-              onClick={() => {
-                doSearch();
-              }}
-              data-cy={cyKey({
-                name: "searchbutton",
-                prefix: "header",
-              })}
-              className={styles.button}
-            >
-              <span>{Translate({ context: "header", label: "search" })}</span>
-            </button>
-          </div>
-          <div className={styles.marginauto}>
-            <MoreOptionsLink
-              countQ={0}
-              onSearchClick={() => {
-                setCollapseOpen(!collapseOpen);
-                //onClear();
-                //setShowExpandedSearch(!showExpandedSearch);
-              }}
-              type="showless"
-            />
-          </div>
-        </div>*/}
-      {/*
-      <div className={styles.flex}>
-        <div className={`${styles.expand} `}>
-          <MoreOptionsLink
-            onSearchClick={() => {
-              setCollapseOpen(!collapseOpen);
-              //setShowExpandedSearch(!showExpandedSearch);
-            }}
-            type="showmore"
-          />
-        </div>
-      </div>*/}
     </div>
   );
 }
@@ -192,42 +122,22 @@ function MoreOptionsLink({ onSearchClick, type }) {
   );
 }
 
-/*function TitleSuggester({ value, onChange, data }) {
-  return (
-    <Suggester id="advanced-search-title" data={data}>
-      initialValue={value}
-      <Input
-        id="search-title"
-        dataCy="search-input-title"
-        value={value}
-        placeholder={"hej"}
-        onChange={(e) => {
-          const val = e?.target?.value;
-          onChange(val);
-          // onChange prop
-          // props?.onChange?.(e);
-        }}
-      />
-    </Suggester>
-  );
-}*/
-
-function TitleSuggester({ q, onChange, data, value = "" }) {
-  console.log(data, "DATA");
-
+function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
       <Suggester
         id="advanced-search-title"
         data={data}
-        /*onSelect={(e) => {
+        onSelect={(e) => {
+          doSearch();
           onChange(e, "title");
         }}
         onClear={() => {
           onChange("", "title");
+          doSearch();
         }}
-        initialValue={value}*/
+        initialValue={value}
       >
         <Input
           id="search-title"
@@ -236,23 +146,17 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
           onChange={(e) => {
             const val = e?.target?.value;
             onChange(val, "title");
-            // onChange prop
+            if (e.key === "Enter") {
+              document.activeElement.blur();
+            }
           }}
-          //onChange={(e) => {
-          //  const val = e;
-          // onChange(val, "title");
-          //if (e.key === "Enter") {
-          //  document.activeElement.blur();
-          //}
-          //}}
         />
       </Suggester>
-      FISK
     </div>
   );
 }
 
-function CreatorSuggester({ q, onChange, data, value = "" }) {
+function CreatorSuggester({ q, onChange, data, doSearch, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> CREATOR:</div>
@@ -261,9 +165,11 @@ function CreatorSuggester({ q, onChange, data, value = "" }) {
         data={data}
         onSelect={(e) => {
           onChange(e, "creator");
+          doSearch();
         }}
         onClear={() => {
           onChange("", "creator");
+          doSearch();
         }}
         className={styles.suggestionswrap}
         initialValue={value}
@@ -275,9 +181,10 @@ function CreatorSuggester({ q, onChange, data, value = "" }) {
           onChange={(e) => {
             const val = e?.target?.value;
             onChange(val, "creator");
-            if (e.key === "Enter") {
+
+            /*if (e.key === "Enter") {
               document.activeElement.blur();
-            }
+            }*/
           }}
         />
       </Suggester>
@@ -356,15 +263,12 @@ export default function Wrap({ router = null, headerQuery }) {
   let initial = { ...base, ..._q };
 
   const [state, setState] = useState({ ...initial });
-  console.log(state, "STATE");
 
   useEffect(() => {
     setState({ ...initial });
-    console.log(initial, "IONITIINTIKA");
   }, [_q]);
 
   const [type, setType] = useState("title");
-  console.log(type, "TYPE");
 
   // extract selected workType, if any
   const workType = filters.workType?.[0] || null;
@@ -401,14 +305,12 @@ export default function Wrap({ router = null, headerQuery }) {
 
   const doSearch = () => {
     router &&
-      Object.keys(stateValues).length > 0 &&
+      //Object.keys(stateValues).length > 0 &&
       router["push"]({
         pathname: "/find",
         query: paramValues,
       });
   };
-
-  console.log(filtered, "EXPAND DATA");
 
   return (
     <ExpandedSearch

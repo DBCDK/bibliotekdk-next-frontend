@@ -34,10 +34,6 @@ function Input({
   ...props
 }) {
   const [val, setVal] = useState(value || "");
-  /*useEffect(() => {
-    onChange && onChange(val);
-  }, [val]);*/
-
   // Update value if undefined/null at first render
   useEffect(() => {
     setVal(value);
