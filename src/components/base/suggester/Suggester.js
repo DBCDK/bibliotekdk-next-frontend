@@ -108,8 +108,6 @@ function renderSuggestion(suggestion, query, skeleton) {
   // Add to suggestion object
   const highlight = highlightMatch(suggestion.value, query);
 
-  console.log(suggestion, "SUGGESTIONSINGLE");
-
   return (
     <div className={styles.suggestion}>
       <Text type="text1" skeleton={skeleton} lines={1}>
