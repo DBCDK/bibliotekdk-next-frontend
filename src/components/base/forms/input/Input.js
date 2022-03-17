@@ -33,9 +33,6 @@ function Input({
   "aria-label": ariaLabel,
 }) {
   const [val, setVal] = useState(value || "");
-
-  console.log(val, "INPUTVAL");
-
   useEffect(() => {
     onChange && onChange(val);
   }, [val]);

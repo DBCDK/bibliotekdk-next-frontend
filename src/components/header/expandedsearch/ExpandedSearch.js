@@ -192,6 +192,26 @@ function MoreOptionsLink({ onSearchClick, type }) {
   );
 }
 
+/*function TitleSuggester({ value, onChange, data }) {
+  return (
+    <Suggester id="advanced-search-title" data={data}>
+      initialValue={value}
+      <Input
+        id="search-title"
+        dataCy="search-input-title"
+        value={value}
+        placeholder={"hej"}
+        onChange={(e) => {
+          const val = e?.target?.value;
+          onChange(val);
+          // onChange prop
+          // props?.onChange?.(e);
+        }}
+      />
+    </Suggester>
+  );
+}*/
+
 function TitleSuggester({ q, onChange, data, value = "" }) {
   return (
     <div className={styles.suggesterright}>
@@ -212,12 +232,20 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
           dataCy="search-input-title"
           placeholder={"title"}
           onChange={(e) => {
-            const val = e;
+            alert("fisk");
+            const val = e?.target?.value;
             onChange(val, "title");
-            /*if (e.key === "Enter") {
-              document.activeElement.blur();
-            }*/
+            // onChange prop
+            //props?.onChange?.(e);
           }}
+          //onChange={(e) => {
+          //  const val = e;
+          // onChange(val, "title");
+          //if (e.key === "Enter") {
+          //  document.activeElement.blur();
+          //}
+          //}}
+          value={value}
         />
       </Suggester>
       FISK
