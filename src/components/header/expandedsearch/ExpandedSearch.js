@@ -232,11 +232,11 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
           dataCy="search-input-title"
           placeholder={"title"}
           onChange={(e) => {
-            alert("fisk");
             const val = e?.target?.value;
+            alert(val);
             onChange(val, "title");
             // onChange prop
-            //props?.onChange?.(e);
+            props?.onChange?.(e);
           }}
           //onChange={(e) => {
           //  const val = e;

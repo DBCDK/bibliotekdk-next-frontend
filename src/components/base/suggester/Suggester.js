@@ -193,11 +193,11 @@ function Suggester({
       // Supported in all browsers
       console.log(e, "E");
       console.log(children, "CHILDRED");
-      //if (e.type === "change") {
-      onChange && onChange(e);
-      children?.props?.onChange?.(e);
-      //setState({ q: e.target.value, _q: null });
-      //}
+      if (e.type === "change") {
+        onChange && onChange(e);
+        children?.props?.onChange?.(e);
+        //setState({ q: e.target.value, _q: null });
+      }
     },
   };
 
