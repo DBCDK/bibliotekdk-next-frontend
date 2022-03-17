@@ -31,6 +31,7 @@ function Input({
   required,
   "aria-labelledby": ariaLabelledby,
   "aria-label": ariaLabel,
+  ...props
 }) {
   const [val, setVal] = useState(value || "");
   /*useEffect(() => {
@@ -47,6 +48,7 @@ function Input({
 
   return (
     <input
+      {...props}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
