@@ -245,7 +245,6 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
           //  document.activeElement.blur();
           //}
           //}}
-          value={value}
         />
       </Suggester>
       FISK
