@@ -58,6 +58,7 @@ function Input({
       tabIndex={disabled ? "-1" : tabIndex}
       onBlur={(e) => onBlur && onBlur(e.target.value)}
       onChange={(e) => {
+        onChange && onChange(e);
         setVal(e.target.value);
       }}
       required={required}

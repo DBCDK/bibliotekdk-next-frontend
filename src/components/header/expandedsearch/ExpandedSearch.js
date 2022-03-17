@@ -233,10 +233,9 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
           placeholder={"title"}
           onChange={(e) => {
             const val = e?.target?.value;
-            alert(val);
             onChange(val, "title");
             // onChange prop
-            props?.onChange?.(e);
+            props.onChange?.(e);
           }}
           //onChange={(e) => {
           //  const val = e;
