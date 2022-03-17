@@ -170,12 +170,17 @@ function Suggester({
   // react-autosuggest will mutate these objects,
   // and data from swr must not be mutated (may lead to endless loop)
   data = useMemo(() => data.map((d) => ({ ...d })), [data]);
+
   /**
    * Internal query state is needed for keys navigation in suggester.
    * When using key up/down, the value changes in the inputfield, but we dont
    * want to trigger the query callback.
    */
   const [state, setState] = useState({ q, _q: null });
+
+  console.log(data, "SUGGESTERDAT");
+  console.log(state._q, "Q");
+  console.log(state.q, "Q");
 
   // Create theme container with className prop
   useEffect(() => {

@@ -213,19 +213,21 @@ function MoreOptionsLink({ onSearchClick, type }) {
 }*/
 
 function TitleSuggester({ q, onChange, data, value = "" }) {
+  console.log(data, "DATA");
+
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
       <Suggester
         id="advanced-search-title"
         data={data}
-        onSelect={(e) => {
+        /*onSelect={(e) => {
           onChange(e, "title");
         }}
         onClear={() => {
           onChange("", "title");
         }}
-        initialValue={value}
+        initialValue={value}*/
       >
         <Input
           id="search-title"
@@ -235,7 +237,6 @@ function TitleSuggester({ q, onChange, data, value = "" }) {
             const val = e?.target?.value;
             onChange(val, "title");
             // onChange prop
-            props.onChange?.(e);
           }}
           //onChange={(e) => {
           //  const val = e;
@@ -356,12 +357,15 @@ export default function Wrap({ router = null, headerQuery }) {
   let initial = { ...base, ..._q };
 
   const [state, setState] = useState({ ...initial });
+  console.log(state, "STATE");
+
   useEffect(() => {
     setState({ ...initial });
     console.log(initial, "IONITIINTIKA");
   }, [_q]);
 
   const [type, setType] = useState("title");
+  console.log(type, "TYPE");
 
   // extract selected workType, if any
   const workType = filters.workType?.[0] || null;
