@@ -33,9 +33,9 @@ function Input({
   "aria-label": ariaLabel,
 }) {
   const [val, setVal] = useState(value || "");
-  useEffect(() => {
+  /*useEffect(() => {
     onChange && onChange(val);
-  }, [val]);
+  }, [val]);*/
 
   // Update value if undefined/null at first render
   useEffect(() => {
