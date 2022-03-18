@@ -21,11 +21,35 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
+const isEmpty = (objectToCheck) => !Object.values(objectToCheck).some((v) => v);
+
+function ExpandedSearch({
+  q,
+  onChange,
+  data,
+  doSearch,
+  onReset,
+  state,
+  onClear,
+}) {
   const [collapseOpen, setCollapseOpen] = useState(false);
+
+  console.log(state, "EXPANDSTAGE");
+
+  useEffect(() => {
+    if (!isEmpty(state) && !collapseOpen) {
+      console.log("FISK");
+      setCollapseOpen(true);
+    }
+  }, [q]);
+
   const expandClick = () => {
+    if (collapseOpen) {
+      onReset();
+    }
     setCollapseOpen(!collapseOpen);
   };
+
   return (
     <div className={styles.flexnav}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
@@ -35,20 +59,24 @@ function ExpandedSearch({ q, onChange, data, doSearch, state, onClear }) {
               data={data}
               q={q}
               onChange={onChange}
-              value={state["title"]}
               doSearch={doSearch}
+              onClear={onClear}
+              value={state["title"]}
             />
             <CreatorSuggester
               data={data}
               q={q}
               onChange={onChange}
-              value={state["creator"]}
               doSearch={doSearch}
+              onClear={onClear}
+              value={state["creator"]}
             />
             <SubjectSuggester
               data={data}
               q={q}
               onChange={onChange}
+              doSearch={doSearch}
+              onClear={onClear}
               value={state["subject"]}
             />
           </div>
@@ -122,8 +150,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
   );
 }
 
-function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
-  console.log(value, "TITLEVALUE");
+function TitleSuggester({ q, onChange, data, doSearch, value = "", onClear }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
@@ -134,10 +161,7 @@ function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
           doSearch();
           onChange(e, "title");
         }}
-        onClear={() => {
-          onChange("", "title");
-          doSearch();
-        }}
+        onClear={() => onClear && onClear("title")}
         initialValue={value}
       >
         <Input
@@ -145,6 +169,7 @@ function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
           dataCy="search-input-title"
           placeholder={"title"}
           onChange={(e) => {
+            console.log("ONCHANGE INPUT");
             const val = e?.target?.value;
             onChange(val, "title");
             if (e.key === "Enter") {
@@ -158,7 +183,14 @@ function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
   );
 }
 
-function CreatorSuggester({ q, onChange, data, doSearch, value = "" }) {
+function CreatorSuggester({
+  q,
+  onChange,
+  data,
+  doSearch,
+  onClear,
+  value = "",
+}) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> CREATOR:</div>
@@ -169,10 +201,7 @@ function CreatorSuggester({ q, onChange, data, doSearch, value = "" }) {
           onChange(e, "creator");
           doSearch();
         }}
-        onClear={() => {
-          onChange("", "creator");
-          doSearch();
-        }}
+        onClear={onClear}
         className={styles.suggestionswrap}
         initialValue={value}
       >
@@ -183,10 +212,9 @@ function CreatorSuggester({ q, onChange, data, doSearch, value = "" }) {
           onChange={(e) => {
             const val = e?.target?.value;
             onChange(val, "creator");
-
-            /*if (e.key === "Enter") {
+            if (e.key === "Enter") {
               document.activeElement.blur();
-            }*/
+            }
           }}
         />
       </Suggester>
@@ -194,7 +222,7 @@ function CreatorSuggester({ q, onChange, data, doSearch, value = "" }) {
   );
 }
 
-function SubjectSuggester({ q, onChange, data, value = "" }) {
+function SubjectSuggester({ q, onChange, data, onClear, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> SUBJECT:</div>
@@ -204,9 +232,7 @@ function SubjectSuggester({ q, onChange, data, value = "" }) {
         onSelect={(e) => {
           onChange(e, "subject");
         }}
-        onClear={(e) => {
-          onChange("", "subject");
-        }}
+        onClear={onClear}
         onChange={(e) => {
           const val = e?.target?.value;
           onChange(val, "subject");
@@ -232,6 +258,7 @@ function SubjectSuggester({ q, onChange, data, value = "" }) {
 
 function cleanParams(params, headerQuery) {
   const ret = {};
+  console.log(params, "CLEANPARAMS");
   Object.entries(params).forEach(([key, value]) => {
     if (key === "all" && value !== headerQuery) {
       headerQuery ? (ret[`q.${key}`] = headerQuery) : "";
@@ -255,7 +282,7 @@ function cleanInitial(initial, headerQuery) {
 }
 
 export default function Wrap({ router = null, headerQuery }) {
-  const { q: _q, base } = useQ();
+  const { q: _q, base, setQuery } = useQ();
   const { filters } = useFilters();
 
   if (!headerQuery && _q.all) {
@@ -263,8 +290,6 @@ export default function Wrap({ router = null, headerQuery }) {
   }
 
   let initial = { ...base, ..._q };
-
-  console.log(initial, "INITIAL");
 
   const [state, setState] = useState({ ...initial });
 
@@ -297,7 +322,7 @@ export default function Wrap({ router = null, headerQuery }) {
     setState({ ...initial, [type]: val });
   };
 
-  const onClear = () => {
+  const onReset = () => {
     const clearState = { ...state, creator: "", subject: "", title: "" };
     const stateValues = cleanParams(clearState, headerQuery);
     //const paramValues = { ...stateValues, ...filters };
@@ -307,9 +332,19 @@ export default function Wrap({ router = null, headerQuery }) {
       });
   };
 
+  const onClear = (type) => {
+    const newState = { ...state, title: "" };
+    setState({ ...newState });
+    const stateValues = cleanParams(state, headerQuery);
+    router &&
+      router["push"]({
+        query: stateValues,
+      });
+  };
+
   const doSearch = () => {
     router &&
-      //Object.keys(stateValues).length > 0 &&
+      Object.keys(stateValues).length > 0 &&
       router["push"]({
         pathname: "/find",
         query: paramValues,
@@ -321,10 +356,10 @@ export default function Wrap({ router = null, headerQuery }) {
       data={filtered}
       q={suggest_q}
       onChange={onChange}
-      //onChange={() => alert("fisk")}
       doSearch={doSearch}
       state={state}
       onClear={onClear}
+      onReset={onReset}
     />
   );
 }

@@ -103,8 +103,6 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
  * @param {string} params.workId the work id
  */
 export function facets({ q, filters = {}, facets = types }) {
-  console.log(q, "FACETQ");
-
   return {
     // delay: 1000, // for debugging
     query: `query ($q: SearchQuery!, $filters: SearchFilters, $facets: [FacetField!]!) {
