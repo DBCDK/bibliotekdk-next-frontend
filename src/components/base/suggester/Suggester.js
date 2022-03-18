@@ -186,7 +186,8 @@ function Suggester({
   const inputProps = {
     value:
       //initialValue === "" && !state._q && !state.q ? "" : state._q || state.q,
-      initialValue === "" ? "" : state._q || state.q,
+      // allow empty values - @TODO - this might need a flag to allow empty values
+      initialValue === "" ? "" : initialValue || state._q || state.q,
     // onChange func. is required by autosuggest
     onChange: (e) => {
       // Only run onChange update on e.type change

@@ -123,6 +123,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
 }
 
 function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
+  console.log(value, "TITLEVALUE");
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
@@ -150,6 +151,7 @@ function TitleSuggester({ q, onChange, data, doSearch, value = "" }) {
               document.activeElement.blur();
             }
           }}
+          value={value}
         />
       </Suggester>
     </div>
@@ -261,6 +263,8 @@ export default function Wrap({ router = null, headerQuery }) {
   }
 
   let initial = { ...base, ..._q };
+
+  console.log(initial, "INITIAL");
 
   const [state, setState] = useState({ ...initial });
 
