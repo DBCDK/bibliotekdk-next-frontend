@@ -14,6 +14,6 @@ test("getCanonicalWorkUrl", () => {
   };
   const actual = getCanonicalWorkUrl(work);
   const expected =
-    "http://localhost:3000/en-bogtitel_en-forfatter/some-work-id";
+    "http://localhost:3000/materiale/en-bogtitel_en-forfatter/some-work-id";
   expect(actual).toEqual(expected);
 });
