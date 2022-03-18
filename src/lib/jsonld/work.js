@@ -31,6 +31,140 @@ function getSchemaOrgBookFormat(materialType) {
   return null;
 }
 
+function getBook({
+  id,
+  title,
+  description,
+  creators = [],
+  manifestations = [],
+  url,
+}) {
+  return {
+    "@id": id,
+    "@type": "Book",
+    abstract: description,
+    author: creators.map((creator) => ({
+      "@type": "Person",
+      name: creator.name,
+    })),
+    name: title,
+    url,
+    workExample: manifestations.map((entry) => {
+      const manifestation = {
+        "@id": entry.pid,
+        "@type": "Book",
+        author: entry.creators.map((creator) => ({
+          "@type": "Person",
+          name: creator.name,
+        })),
+        datePublished: entry.datePublished,
+        identifier: entry.pid,
+        url,
+        inLanguage: entry.inLanguage,
+      };
+      if (entry.title && title !== entry.title) {
+        // only add name to manifestation if it differs from work
+        manifestation.name = entry.title;
+      }
+      if (entry.isbn) {
+        manifestation.isbn = entry.isbn;
+      }
+      if (entry.cover) {
+        manifestation.image = entry.cover.detail;
+      }
+      if (entry.edition) {
+        manifestation.bookEdition = entry.edition;
+      }
+      if (entry.publisher) {
+        manifestation.publisher = {
+          "@type": "Organization",
+          name: entry.publisher,
+        };
+      }
+      const bookFormat = getSchemaOrgBookFormat(entry.materialType);
+      if (bookFormat) {
+        manifestation.bookFormat = bookFormat;
+      }
+      return manifestation;
+    }),
+  };
+}
+
+function getArticle({
+  id,
+  title,
+  description,
+  creators = [],
+  manifestations = [],
+  url,
+}) {
+  return {
+    "@id": id,
+    "@type": "Article",
+    abstract: description,
+    author: creators.map((creator) => ({
+      "@type": "Person",
+      name: creator.name,
+    })),
+    headLine: title,
+    url,
+    datePublished: manifestations?.[0]?.datePublishedArticle,
+    publisher: manifestations?.[0].hostPublication?.title && {
+      "@type": "Organization",
+      name: manifestations?.[0].hostPublication?.title,
+    },
+  };
+}
+
+function getCreativeWork({
+  id,
+  title,
+  description,
+  cover,
+  url,
+  manifestations,
+}) {
+  return {
+    "@id": id,
+    "@type": "CreativeWork",
+    abstract: description,
+    creator: manifestations?.[0]?.creators?.map((creator) => ({
+      "@type": "Person",
+      name: creator.name,
+    })),
+    name: title,
+    url,
+    image: cover?.detail,
+  };
+}
+
+function getMovie({ id, title, description, url, cover, manifestations = [] }) {
+  const director = manifestations?.[0]?.creators
+    ?.filter((creator) => creator?.type?.includes("drt"))
+    .map((director) => ({
+      "@type": "Person",
+      name: director.name,
+    }));
+
+  const actor = manifestations?.[0]?.creators
+    ?.filter((creator) => creator?.type?.includes("act"))
+    .map((director) => ({
+      "@type": "Person",
+      name: director.name,
+    }));
+
+  return {
+    "@id": id,
+    "@type": "Movie",
+    abstract: description,
+    director,
+    actor,
+    name: title,
+    url,
+    image: cover?.detail,
+  };
+}
+
 /**
  * Creates JSON-LD representation ofthe work
  * - https://developers.google.com/search/docs/data-types/book
@@ -47,68 +181,30 @@ function getSchemaOrgBookFormat(materialType) {
  *
  * @returns {object} JSON-LD representation of work
  */
-export function getJSONLD({
-  id,
-  title,
-  description,
-  creators = [],
-  path,
-  manifestations = [],
-}) {
-  const url = getCanonicalWorkUrl({ title, creators, id });
+export function getJSONLD(work) {
+  const url = getCanonicalWorkUrl(work);
+
+  let mainEntity;
+  console.log({ work });
+
+  switch (work.workTypes[0]) {
+    case "article":
+      mainEntity = getArticle({ ...work, url });
+      break;
+    case "literature":
+      mainEntity = getBook({ ...work, url });
+      break;
+    case "movie":
+      mainEntity = getMovie({ ...work, url });
+      break;
+    default:
+      mainEntity = getCreativeWork({ ...work, url });
+  }
+
   const res = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    breadcrumb: path.join(" > "),
-    mainEntity: {
-      "@id": id,
-      "@type": "Book",
-      abstract: description,
-      author: creators.map((creator) => ({
-        "@type": "Person",
-        name: creator.name,
-      })),
-      name: title,
-      url,
-      workExample: manifestations.map((entry) => {
-        const manifestation = {
-          "@id": entry.pid,
-          "@type": "Book",
-          author: entry.creators.map((creator) => ({
-            "@type": "Person",
-            name: creator.name,
-          })),
-          datePublished: entry.datePublished,
-          identifier: entry.pid,
-          url,
-          inLanguage: entry.inLanguage,
-        };
-        if (entry.title && title !== entry.title) {
-          // only add name to manifestation if it differs from work
-          manifestation.name = entry.title;
-        }
-        if (entry.isbn) {
-          manifestation.isbn = entry.isbn;
-        }
-        if (entry.cover) {
-          manifestation.image = entry.cover.detail;
-        }
-        if (entry.edition) {
-          manifestation.bookEdition = entry.edition;
-        }
-        if (entry.publisher) {
-          manifestation.publisher = {
-            "@type": "Organization",
-            name: entry.publisher,
-          };
-        }
-        const bookFormat = getSchemaOrgBookFormat(entry.materialType);
-        if (bookFormat) {
-          manifestation.bookFormat = bookFormat;
-        }
-        return manifestation;
-      }),
-    },
+    mainEntity,
   };
   return res;
 }

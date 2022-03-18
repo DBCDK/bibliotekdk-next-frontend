@@ -10,6 +10,7 @@ const APP_URL =
 
 /**
  * Encode string
+ * Get rid of diacritics and stuff
  *
  * @param {string}
  *
@@ -17,13 +18,16 @@ const APP_URL =
  */
 export function encodeString(str = "") {
   return str
-    .replace(/\s+/g, "-")
     .toLowerCase()
     .replace(/æ/g, "ae")
     .replace(/ø/g, "oe")
     .replace(/å/g, "aa")
-    .replace(/\?/g, "")
-    .toLowerCase();
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\.+/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/[^\w]/g, "-")
+    .replace(/-+/g, "-");
 }
 
 /**
@@ -38,7 +42,9 @@ export function encodeString(str = "") {
 export function encodeTitleCreator(title = "", creator = "") {
   // @TODO there may be more than one creator - should it be handled? if yes
   // then it should be handled here - make creator an array
-  return encodeString(title) + "_" + encodeString(creator);
+  return creator
+    ? encodeString(title) + "_" + encodeString(creator)
+    : encodeString(title);
 }
 
 /**
@@ -48,9 +54,9 @@ export function encodeTitleCreator(title = "", creator = "") {
  * @returns {string} The canonical work URL
  */
 export function getCanonicalWorkUrl({ title, creators, id }) {
-  return `${APP_URL}/${encodeTitleCreator(
+  return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
-    creators && creators[0] && creators[0].name
+    creators?.[0]?.name
   )}/${id}`;
 }
 

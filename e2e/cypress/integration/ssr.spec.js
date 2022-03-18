@@ -12,6 +12,14 @@ function getPageHead(path) {
     })
     .its("body")
     .then((html) => {
+      let jsonld;
+      try {
+        jsonld = JSON.parse(
+          html.match(
+            /<script type="application\/ld\+json">(.*?)<\/script>/
+          )?.[1]
+        );
+      } catch (e) {}
       return {
         title: html.match(/<title>(.*?)<\/title>/)[1],
         description: html.match(
@@ -30,6 +38,7 @@ function getPageHead(path) {
         alternate: html.match(
           /<link rel=\"alternate\" hreflang=\".*?" href=\".*?"\/>/g
         ),
+        jsonld,
       };
     });
 }
@@ -79,7 +88,7 @@ describe("Server Side Rendering", () => {
           "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:url"]).to.equal(
-          "http://localhost:3000/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"
+          "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
         );
         expect(res["og:title"]).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
@@ -98,6 +107,78 @@ describe("Server Side Rendering", () => {
         expect(res.alternate).to.deep.equal([
           '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"/>',
           '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"/>',
+        ]);
+      });
+    });
+
+    it(`has json-ld for book`, () => {
+      getPageHead(
+        "/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+      ).then((res) => {
+        expect(res.jsonld.mainEntity.url).to.equal(
+          "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
+        );
+        expect(res.jsonld.mainEntity["@type"]).to.equal("Book");
+      });
+    });
+
+    it(`has json-ld for article`, () => {
+      getPageHead(
+        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561"
+      ).then((res) => {
+        expect(res.jsonld.mainEntity.url).to.equal(
+          "http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of:870971-avis:33301561"
+        );
+
+        expect(res.jsonld.mainEntity["@type"]).to.equal("Article");
+        expect(res.jsonld.mainEntity.headLine).to.equal(
+          "Psykopaten på den hvide hest"
+        );
+        expect(res.jsonld.mainEntity.abstract).to.exist;
+        expect(res.jsonld.mainEntity.datePublished).to.equal("2008-10-04");
+        expect(res.jsonld.mainEntity.publisher).to.deep.equal({
+          "@type": "Organization",
+          name: "Politiken",
+        });
+      });
+    });
+
+    it(`has json-ld for movie`, () => {
+      getPageHead(
+        "/materiale/junglebogen_justin-marks/work-of%3A870970-basis%3A52331080"
+      ).then((res) => {
+        expect(res.jsonld.mainEntity.url).to.equal(
+          "http://localhost:3000/materiale/junglebogen_justin-marks/work-of:870970-basis:52331080"
+        );
+
+        expect(res.jsonld.mainEntity["@type"]).to.equal("Movie");
+        expect(res.jsonld.mainEntity.name).to.equal("Junglebogen");
+        expect(res.jsonld.mainEntity.image).to.exist;
+        expect(res.jsonld.mainEntity.director).to.deep.equal([
+          {
+            "@type": "Person",
+            name: "Jon Favreau",
+          },
+        ]);
+        expect(res.jsonld.mainEntity.actor).to.deep.equal([
+          { "@type": "Person", name: "Neel Sethi" },
+        ]);
+      });
+    });
+
+    it(`has json-ld for creative work`, () => {
+      getPageHead(
+        "/materiale/midt-i-en-droem/work-of%3A870970-basis%3A53189148"
+      ).then((res) => {
+        expect(res.jsonld.mainEntity.url).to.equal(
+          "http://localhost:3000/materiale/midt-i-en-droem/work-of:870970-basis:53189148"
+        );
+
+        expect(res.jsonld.mainEntity["@type"]).to.equal("CreativeWork");
+        expect(res.jsonld.mainEntity.name).to.equal("Midt i en drøm");
+        expect(res.jsonld.mainEntity.image).to.exist;
+        expect(res.jsonld.mainEntity.creator).to.deep.equal([
+          { "@type": "Person", name: "Vagn Nørgaard" },
         ]);
       });
     });

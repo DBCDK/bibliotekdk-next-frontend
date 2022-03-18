@@ -27,7 +27,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  */
 export default function Header({ workId }) {
   const details = useData(workFragments.detailsAllManifestations({ workId }));
-  const { canonical, alternate } = useCanonicalUrl();
+  const { alternate } = useCanonicalUrl();
 
   if (!details.data || details.isLoading || details.error) {
     return null;
@@ -37,11 +37,13 @@ export default function Header({ workId }) {
   const pageDescription = data.work.seo.description;
   const pageTitle = data.work.seo.title;
 
+  const canonicalWorkUrl = getCanonicalWorkUrl(data.work);
+
   return (
     <Head>
       <title>{pageTitle}</title>
       <meta name="description" content={pageDescription}></meta>
-      <meta property="og:url" content={canonical.url} />
+      <meta property="og:url" content={canonicalWorkUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
