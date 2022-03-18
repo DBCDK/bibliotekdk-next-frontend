@@ -2,11 +2,12 @@
 .linkshowmore{
 }
 .linkshowless{
-    margin:auto;
+    margin:auto 0 auto 0;
 }
 .hide{
     display:none;
 }
+
 .flexnav {
     display: flex;
     width: 100%;
@@ -35,15 +36,17 @@
 
 .button {
     position: relative;
-    padding: var(--pt2) var(--pt4);
-    background-color: transparent;
-    color: var(--blue);
-    border: 2px solid var(--blue);
+
+    background-color: var(--blue);
+    color: var(--white);
+    /*border: 2px solid var(--blue);*/
     font-family: var(--body-font);
     font-size: 20px;
     line-height: 22px;
     cursor: pointer;
     overflow: hidden;
+    margin-left: var(--pt05);
+    padding: var(--pt2) var(--pt10) var(--pt2) var(--pt10);
 }
 
 .suggestionswrap {
