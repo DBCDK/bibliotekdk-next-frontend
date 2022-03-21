@@ -6,7 +6,7 @@
   position: relative;
   z-index: 2;
 
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);*/
 }
 
 /* Header */
@@ -197,7 +197,7 @@
 @media (min-width: 992px) {
   .header {
     padding-top: var(--pt4);
-    padding-bottom: var(--pt4);
+/*padding-bottom: var(--pt4);*/
   }
 
   .logo {

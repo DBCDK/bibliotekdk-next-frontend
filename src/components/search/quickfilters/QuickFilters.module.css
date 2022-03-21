@@ -17,11 +17,20 @@
   margin-right: var(--pt1);
 }
 
+.nopadding{
+  position: relative;
+  padding: 0;
+}
+.fullwidth{
+  max-width: 100%;
+}
+
 .quickfilters {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: var(--pt2) 0;
+  background-color: var(--concrete);
+  border-bottom: 1px solid var(--shadow-effect  );
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  padding: var(--pt1) 0 var(--pt1) 0;
 }
 
 @media (min-width: 767px) {

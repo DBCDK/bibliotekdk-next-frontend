@@ -9,7 +9,7 @@
 }
 
 .flexnav {
-    display: flex;
+    display: none;
     width: 100%;
     padding-right: var(--pt4);
 }
@@ -78,3 +78,11 @@
 
 .wrapper {
 }
+
+@media (min-width: 992px) {
+    .flexnav {
+        display: flex;
+    }
+}
+
+

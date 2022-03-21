@@ -32,7 +32,6 @@ import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
-import { MoreOptionsLink } from "@/components/search/quickfilters/QuickFilters";
 
 /**
  * The Component function
@@ -331,7 +330,7 @@ export function Header({
                 </div>
               </div>
             </Col>
-            <Col xs={{ span: 7, offset: 3 }}>
+            <Col lg={{ span: 7, offset: 3 }} >
               <ExpandedSearch router={router} headerQuery={query} setHeader={setQuery} />
             </Col>
           </Row>

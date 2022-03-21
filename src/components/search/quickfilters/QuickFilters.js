@@ -37,7 +37,7 @@ export function MoreOptionsLink({ countQ, onSearchClick, type }) {
           context: "search",
           label:
             countQ === "0" ? "advancedSearchLink" : "advancedSearchLinkCount",
-          vars: countQ === "0" ? null : [countQ],
+          vars: countQ === "0" ? null : [countQ]
         })}
       </Text>
     </Link>
@@ -53,7 +53,7 @@ export function QuickFilters({
   onFiltersClick,
   onViewSelect,
   viewSelected,
-  onSearchClick,
+  onSearchClick
 }) {
   const { getCount: getFiltersCount } = useFilters();
   const { getCount: getQCount } = useQ();
@@ -62,57 +62,61 @@ export function QuickFilters({
   const countQ = getQCount(["all"]).toString();
 
   return (
-    <Container fluid className={styles.section}>
-      <Row>
-        <Col xs={12} lg={{ offset: 3 }}>
+
+      <Container className={styles.fullwidth}>
+        <Row>
           <div className={styles.quickfilters}>
-            {/* <ViewSelector
+          <Col  lg={{ span:24, offset: 4 }}>
+            <div>
+              {/* <ViewSelector
           className={styles.viewselector}
           onViewSelect={onViewSelect}
           viewSelected={viewSelected}
         /> */}
 
-            <Text type="text2">
+              {/*} <Text type="text2">
               {Translate({ context: "search", label: "filtersResultText" })}
               ZEBRA
             </Text>
-
-            <div className={styles.links}>
-              <Link
-                tabIndex="-1"
-                className={styles.link}
-                onClick={() => onFiltersClick()}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.keyCode === 13) {
-                    onFiltersClick();
-                  }
-                }}
-                border={false}
-              >
-                <Icon src="settings.svg" size={2} />
+*/}
+              <div className={styles.links}>
                 <Link
-                  dataCy="view-all-filters"
-                  onClick={(e) => e.preventDefault()}
-                  border={{ bottom: { keepVisible: true } }}
+                  tabIndex="-1"
+                  className={styles.link}
+                  onClick={() => onFiltersClick()}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.keyCode === 13) {
+                      onFiltersClick();
+                    }
+                  }}
+                  border={false}
                 >
-                  <Text type="text3">
-                    {Translate({
-                      context: "search",
-                      label:
-                        countFilters === "0"
-                          ? "showAllFilters"
-                          : "showAllFiltersCount",
-                      vars: countFilters === "0" ? null : [countFilters],
-                    })}
-                    FISKHEST
-                  </Text>
+                  <Icon src="settings.svg" size={2} />
+                  <Link
+                    dataCy="view-all-filters"
+                    onClick={(e) => e.preventDefault()}
+                    border={{ bottom: { keepVisible: true } }}
+                  >
+                    <Text type="text3">
+                      {Translate({
+                        context: "search",
+                        label:
+                          countFilters === "0"
+                            ? "showAllFilters"
+                            : "showAllFiltersCount",
+                        vars: countFilters === "0" ? null : [countFilters]
+                      })}
+
+                    </Text>
+                  </Link>
                 </Link>
-              </Link>
+              </div>
             </div>
+          </Col>
           </div>
-        </Col>
-      </Row>
-    </Container>
+        </Row>
+      </Container>
+
   );
 }
 
@@ -122,5 +126,5 @@ export default function Wrap(props) {
 
 QuickFilters.propTypes = {
   viewSelected: PropTypes.string,
-  onViewSelect: PropTypes.func,
+  onViewSelect: PropTypes.func
 };
