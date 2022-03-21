@@ -21,24 +21,33 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-const isEmpty = (objectToCheck) => !Object.values(objectToCheck).some((v) => v);
+
+const isEmpty = (objectToCheck) => {
+  let empty = true;
+  for (const [key, value] of Object.entries(objectToCheck)) {
+    if (key === "all") {
+      continue;
+    }
+    if (value) {
+      empty = false;
+      break;
+    }
+  }
+  return empty;
+};
 
 function ExpandedSearch({
   q,
   onChange,
   data,
+  onClear,
   doSearch,
   onReset,
-  state,
-  onClear,
+  clearHeader,
 }) {
   const [collapseOpen, setCollapseOpen] = useState(false);
-
-  console.log(state, "EXPANDSTAGE");
-
   useEffect(() => {
-    if (!isEmpty(state) && !collapseOpen) {
-      console.log("FISK");
+    if (!isEmpty(q) && !collapseOpen) {
       setCollapseOpen(true);
     }
   }, [q]);
@@ -46,6 +55,7 @@ function ExpandedSearch({
   const expandClick = () => {
     if (collapseOpen) {
       onReset();
+      clearHeader();
     }
     setCollapseOpen(!collapseOpen);
   };
@@ -56,28 +66,25 @@ function ExpandedSearch({
         <div className={styles.wrapper}>
           <div className={styles.flex} id="example-collapse-text">
             <TitleSuggester
-              data={data}
               q={q}
+              data={data}
               onChange={onChange}
-              doSearch={doSearch}
               onClear={onClear}
-              value={state["title"]}
+              value={q["title"]}
             />
             <CreatorSuggester
-              data={data}
               q={q}
+              data={data}
               onChange={onChange}
-              doSearch={doSearch}
               onClear={onClear}
-              value={state["creator"]}
+              value={q["creator"]}
             />
             <SubjectSuggester
-              data={data}
               q={q}
+              data={data}
               onChange={onChange}
-              doSearch={doSearch}
               onClear={onClear}
-              value={state["subject"]}
+              value={q["subject"]}
             />
           </div>
 
@@ -90,7 +97,7 @@ function ExpandedSearch({
                 }}
                 data-cy={cyKey({
                   name: "searchbutton",
-                  prefix: "header",
+                  prefix: "header"
                 })}
                 className={styles.button}
               >
@@ -142,7 +149,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
             label:
               type === "showmore"
                 ? "advancedSearchLink"
-                : "advancedSearchLinkCount",
+                : "advancedSearchLinkCount"
           })}
         </Text>
       </Link>
@@ -150,7 +157,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
   );
 }
 
-function TitleSuggester({ q, onChange, data, doSearch, value = "", onClear }) {
+function TitleSuggester({ onChange, data, q, value = "", onClear }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> TITLE:</div>
@@ -158,39 +165,27 @@ function TitleSuggester({ q, onChange, data, doSearch, value = "", onClear }) {
         id="advanced-search-title"
         data={data}
         onSelect={(e) => {
-          doSearch();
-          onChange(e, "title");
+          onChange && onChange(e, "title");
         }}
         onClear={() => onClear && onClear("title")}
         initialValue={value}
       >
         <Input
+          className={styles.expandedinput}
           id="search-title"
           dataCy="search-input-title"
           placeholder={"title"}
           onChange={(e) => {
-            console.log("ONCHANGE INPUT");
-            const val = e?.target?.value;
-            onChange(val, "title");
-            if (e.key === "Enter") {
-              document.activeElement.blur();
-            }
+            onChange && onChange(e?.target?.value, "title");
           }}
-          value={value}
+          value={q["title"]}
         />
       </Suggester>
     </div>
   );
 }
 
-function CreatorSuggester({
-  q,
-  onChange,
-  data,
-  doSearch,
-  onClear,
-  value = "",
-}) {
+function CreatorSuggester({ onChange, data, q, onClear, value = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> CREATOR:</div>
@@ -198,23 +193,18 @@ function CreatorSuggester({
         id="advanced-search-creator"
         data={data}
         onSelect={(e) => {
-          onChange(e, "creator");
-          doSearch();
+          onChange && onChange(e, "creator");
         }}
-        onClear={onClear}
-        className={styles.suggestionswrap}
+        onClear={() => onClear && onClear("creator")}
         initialValue={value}
       >
         <Input
+          className={styles.expandedinput}
           id="search-creator"
           dataCy="search-input-creator"
           placeholder={"creators"}
           onChange={(e) => {
-            const val = e?.target?.value;
-            onChange(val, "creator");
-            if (e.key === "Enter") {
-              document.activeElement.blur();
-            }
+            onChange && onChange(e?.target?.value, "creator");
           }}
         />
       </Suggester>
@@ -222,33 +212,30 @@ function CreatorSuggester({
   );
 }
 
-function SubjectSuggester({ q, onChange, data, onClear, value = "" }) {
+function SubjectSuggester({ onChange, data, onClear, q }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}> SUBJECT:</div>
       <Suggester
+        className={styles.expandedsuggestercontainer}
         id="advanced-search-subject"
         data={data}
         onSelect={(e) => {
           onChange(e, "subject");
         }}
-        onClear={onClear}
+        onClear={() => onClear && onClear("subject")}
         onChange={(e) => {
-          const val = e?.target?.value;
-          onChange(val, "subject");
+          onChange(e?.target?.value, "subject");
         }}
-        initialValue={value}
+        initialValue={q["subject"]}
       >
         <Input
+          className={styles.expandedinput}
           id="search-subject"
           dataCy="search-input-subject"
           placeholder={"subject"}
           onChange={(e) => {
-            const val = e?.target?.value;
-            onChange(val, "subject");
-            if (e.key === "Enter") {
-              document.activeElement.blur();
-            }
+            onChange && onChange(e.target.value, "subject");
           }}
         />
       </Suggester>
@@ -258,108 +245,77 @@ function SubjectSuggester({ q, onChange, data, onClear, value = "" }) {
 
 function cleanParams(params, headerQuery) {
   const ret = {};
-  console.log(params, "CLEANPARAMS");
+  if (!params["all"] && headerQuery) {
+    params["all"] = headerQuery;
+  }
   Object.entries(params).forEach(([key, value]) => {
-    if (key === "all" && value !== headerQuery) {
-      headerQuery ? (ret[`q.${key}`] = headerQuery) : "";
-    } else {
-      value ? (ret[`q.${key}`] = value) : "";
-    }
-  });
-  return ret;
-}
-
-function cleanInitial(initial, headerQuery) {
-  const ret = {};
-  Object.entries(initial).forEach(([key, value]) => {
     if (key === "all" && value !== headerQuery) {
       headerQuery ? (ret[key] = headerQuery) : "";
     } else {
       value ? (ret[key] = value) : "";
     }
   });
+
   return ret;
 }
 
-export default function Wrap({ router = null, headerQuery }) {
-  const { q: _q, base, setQuery } = useQ();
+export default function Wrap({ router = null, headerQuery, setHeader }) {
+  // connect useQ hook
+  const { q, setQ, clearQ, setQuery } = useQ();
+  const [type, setType] = useState("all");
+
+  // connected filters hook
   const { filters } = useFilters();
 
-  if (!headerQuery && _q.all) {
-    headerQuery = _q.all;
-  }
-
-  let initial = { ...base, ..._q };
-
-  const [state, setState] = useState({ ...initial });
-
-  useEffect(() => {
-    setState({ ...initial });
-  }, [_q]);
-
-  const [type, setType] = useState("title");
-
   // extract selected workType, if any
-  const workType = filters.workType?.[0] || null;
+  const workType = filters.workType?.[0];
 
-  const suggest_q = state[type];
+  // preserve query from eg frontpage
+  if (!headerQuery && q.all) {
+    headerQuery = q.all;
+  }
 
   // use the useData hook to fetch data
-  const { data, isLoading, error } = useData(all({ q: suggest_q, workType }));
+  const query =  q[type]? q[type]:"";
+  const { data, isLoading, error } = useData(all({ q: query, workType }));
 
   const filtered = data?.suggest?.result?.map((obj) => ({
-    value: obj.value || obj.title || obj.name,
+    value: obj.value || obj.title || obj.name
   }));
 
-  const stateValues = cleanParams(state, headerQuery);
-  const paramValues = { ...stateValues, ...filters };
+  const onReset = () => clearQ({ exclude: ["all"] });
 
-  if (error) {
-    return null;
-  }
-  const onChange = (val, type) => {
-    setType(type);
-    setState({ ...initial, [type]: val });
+  // we need to check the 'all' query params - it might not be set
+  // eg. if a subject is selected from frontpage
+  const expandedSearchParams = cleanParams(q, headerQuery);
+  setQ({ ...expandedSearchParams });
+
+  const doSearch = () => {
+    setQuery({pathname:"/find"});
   };
 
-  const onReset = () => {
-    const clearState = { ...state, creator: "", subject: "", title: "" };
-    const stateValues = cleanParams(clearState, headerQuery);
-    //const paramValues = { ...stateValues, ...filters };
-    router &&
-      router["push"]({
-        query: stateValues,
-      });
+  const clearHeader = () => {
+    setHeader("");
+  }
+
+  const onChange = (val, type) => {
+    setType(type);
+    setQ({ ...q, [type]: val });
   };
 
   const onClear = (type) => {
-    const newState = { ...state, title: "" };
-    setState({ ...newState });
-    const stateValues = cleanParams(state, headerQuery);
-    router &&
-      router["push"]({
-        query: stateValues,
-      });
-  };
-
-  const doSearch = () => {
-    router &&
-      Object.keys(stateValues).length > 0 &&
-      router["push"]({
-        pathname: "/find",
-        query: paramValues,
-      });
+    setQ({ ...q, [type]: "" });
   };
 
   return (
     <ExpandedSearch
+      q={q}
       data={filtered}
-      q={suggest_q}
       onChange={onChange}
-      doSearch={doSearch}
-      state={state}
       onClear={onClear}
       onReset={onReset}
+      doSearch={doSearch}
+      clearHeader={clearHeader}
     />
   );
 }

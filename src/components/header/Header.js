@@ -332,7 +332,7 @@ export function Header({
               </div>
             </Col>
             <Col xs={{ span: 7, offset: 3 }}>
-              <ExpandedSearch router={router} headerQuery={query} />
+              <ExpandedSearch router={router} headerQuery={query} setHeader={setQuery} />
             </Col>
           </Row>
         </Container>

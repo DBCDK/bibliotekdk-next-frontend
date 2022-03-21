@@ -360,6 +360,7 @@ export function Suggester({
       }
     },
     onChange: (event, { newValue }, method) => {
+      console.log(newValue, "INPUT Q");
       // For updating onChange when deleting last char in input
       newValue === "" && onChange && onChange("");
       // internal query update

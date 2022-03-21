@@ -21,6 +21,8 @@
     flex-wrap: wrap;
 }
 
+
+
 .iconinline {
     margin-right: var(--pt1);
 }
@@ -32,11 +34,19 @@
 .suggesterright {
     display: flex;
     width: 100%;
+    height: 50%;
+}
+
+.expandedinput{
+    height: var(--pt5);
+}
+
+.expandedsuggestercontainer{
+    max-width: 600px;
 }
 
 .button {
     position: relative;
-
     background-color: var(--blue);
     color: var(--white);
     /*border: 2px solid var(--blue);*/

@@ -172,7 +172,7 @@ function useQ() {
    * @param {object} include
    * @param {array} exclude
    */
-  const setQuery = ({ include = _q, exclude = [] }) => {
+  const setQuery = ({ include = _q, exclude = [], pathname }) => {
     // include all q types (empty types)
     const base = buildQ();
 
@@ -205,7 +205,7 @@ function useQ() {
     // update router
     router &&
       router.push({
-        pathname: router.pathname,
+        pathname: pathname || router.pathname,
         query: merged,
       });
   };
