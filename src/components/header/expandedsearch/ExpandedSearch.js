@@ -73,7 +73,6 @@ function ExpandedSearch({
   onClear,
   doSearch,
   onReset,
-  clearHeader,
   workType,
   collapseOpen,
   setCollapseOpen,
@@ -88,7 +87,6 @@ function ExpandedSearch({
   const expandClick = () => {
     if (collapseOpen) {
       onReset();
-      clearHeader();
     }
     setCollapseOpen(!collapseOpen);
   };
@@ -319,7 +317,6 @@ function cleanParams(params, headerQuery) {
 export default function Wrap({
   router = null,
   headerQuery,
-  setHeader,
   collapseOpen,
   setCollapseOpen,
 }) {
@@ -354,12 +351,7 @@ export default function Wrap({
   setQ({ ...expandedSearchParams });
 
   const doSearch = () => {
-    console.log(headerQuery, "DOSEARCH HEADERQUERY");
     setQuery({ pathname: "/find" });
-  };
-
-  const clearHeader = () => {
-    setHeader("");
   };
 
   const onChange = (val, type) => {
@@ -379,7 +371,6 @@ export default function Wrap({
       onClear={onClear}
       onReset={onReset}
       doSearch={doSearch}
-      clearHeader={clearHeader}
       workType={workType}
       collapseOpen={collapseOpen}
       setCollapseOpen={setCollapseOpen}

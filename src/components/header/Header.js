@@ -251,11 +251,9 @@ export function Header({
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    /*if (query === "") {
+                    if (query === "") {
                       return;
-                    }*/
-
-                    setQuery(query);
+                    }
 
                     doSearch({ query: query });
 
@@ -343,7 +341,6 @@ export function Header({
                 setCollapseOpen={setCollapseOpen}
                 router={router}
                 headerQuery={query}
-                setHeader={setQuery}
               />
             </Col>
           </Row>
