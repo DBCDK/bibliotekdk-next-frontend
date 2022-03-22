@@ -126,6 +126,8 @@ export function Header({
     : "";
 
   const doSearch = ({ query, suggestion }) => {
+    console.log(query, "SEARCH QUERY");
+
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
@@ -160,6 +162,7 @@ export function Header({
       //  remove dead params
       Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
       router &&
+        query &&
         router[routerFunc]({
           pathname: "/find",
           query: params,
@@ -176,6 +179,8 @@ export function Header({
     context: "general",
     label: "frontpage",
   });
+
+  const [collapseOpen, setCollapseOpen] = useState(false);
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -246,9 +251,9 @@ export function Header({
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (query === "") {
+                    /*if (query === "") {
                       return;
-                    }
+                    }*/
 
                     setQuery(query);
 
@@ -289,17 +294,19 @@ export function Header({
                       onSelect={doSearch}
                     />
                   </div>
-                  <button
-                    className={styles.button}
-                    type="submit"
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
+                  {!collapseOpen && (
+                    <button
+                      className={styles.button}
+                      type="submit"
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
+                      })}
+                    >
+                      <span>{Translate({ ...context, label: "search" })}</span>
+                      <div className={styles.fill} />
+                    </button>
+                  )}
                 </form>
 
                 <div
@@ -330,8 +337,14 @@ export function Header({
                 </div>
               </div>
             </Col>
-            <Col lg={{ span: 7, offset: 3 }} >
-              <ExpandedSearch router={router} headerQuery={query} setHeader={setQuery} />
+            <Col lg={{ span: 7, offset: 3 }}>
+              <ExpandedSearch
+                collapseOpen={collapseOpen}
+                setCollapseOpen={setCollapseOpen}
+                router={router}
+                headerQuery={query}
+                setHeader={setQuery}
+              />
             </Col>
           </Row>
         </Container>

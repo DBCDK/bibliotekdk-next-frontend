@@ -24,28 +24,28 @@ function sleep(milliseconds) {
 
 const translations = (workType) => {
   return {
-// Get workType specific labels if set, else fallback to a general text
+    // Get workType specific labels if set, else fallback to a general text
     labelTitle: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-title` : `label-title`
-    }),
-    labelCreator: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-creator` : `label-creator`
-    }),
-    labelSubject : Translate({
-      context: "search",
-      label: workType ? `label-${workType}-subject` : `label-subject`,
-    }),
-    placeholderTitle : Translate({
       context: "search",
       label: workType ? `label-${workType}-title` : `label-title`,
     }),
-    placeholderCreator : Translate({
+    labelCreator: Translate({
       context: "search",
       label: workType ? `label-${workType}-creator` : `label-creator`,
     }),
-    placeholderSubject : Translate({
+    labelSubject: Translate({
+      context: "search",
+      label: workType ? `label-${workType}-subject` : `label-subject`,
+    }),
+    placeholderTitle: Translate({
+      context: "search",
+      label: workType ? `label-${workType}-title` : `label-title`,
+    }),
+    placeholderCreator: Translate({
+      context: "search",
+      label: workType ? `label-${workType}-creator` : `label-creator`,
+    }),
+    placeholderSubject: Translate({
       context: "search",
       label: workType ? `label-${workType}-subject` : `label-subject`,
     }),
@@ -74,9 +74,11 @@ function ExpandedSearch({
   doSearch,
   onReset,
   clearHeader,
-  workType
+  workType,
+  collapseOpen,
+  setCollapseOpen,
 }) {
-  const [collapseOpen, setCollapseOpen] = useState(false);
+  //const [collapseOpen, setCollapseOpen] = useState(false);
   useEffect(() => {
     if (!isEmpty(q) && !collapseOpen) {
       setCollapseOpen(true);
@@ -131,7 +133,7 @@ function ExpandedSearch({
                 }}
                 data-cy={cyKey({
                   name: "searchbutton",
-                  prefix: "header"
+                  prefix: "header",
                 })}
                 className={styles.button}
               >
@@ -183,7 +185,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
             label:
               type === "showmore"
                 ? "advancedSearchLink"
-                : "advancedSearchLinkCount"
+                : "advancedSearchLinkCount",
           })}
         </Text>
       </Link>
@@ -198,14 +200,12 @@ function TitleSuggester({
   value = "",
   onClear,
   title = "",
-  placeHolder="",
+  placeHolder = "",
 }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}>
-        <Label for="advanced-search-title">
-          {title}
-        </Label>
+        <Label for="advanced-search-title">{title}</Label>
       </div>
       <Suggester
         id="advanced-search-title"
@@ -231,13 +231,18 @@ function TitleSuggester({
   );
 }
 
-function CreatorSuggester({ onChange, data, q, onClear, value = "", title=""}) {
+function CreatorSuggester({
+  onChange,
+  data,
+  q,
+  onClear,
+  value = "",
+  title = "",
+}) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}>
-        <Label for="advanced-search-title">
-          {title}
-        </Label>
+        <Label for="advanced-search-title">{title}</Label>
       </div>
       <Suggester
         id="advanced-search-creator"
@@ -262,13 +267,11 @@ function CreatorSuggester({ onChange, data, q, onClear, value = "", title=""}) {
   );
 }
 
-function SubjectSuggester({ onChange, data, onClear, q, title="" }) {
+function SubjectSuggester({ onChange, data, onClear, q, title = "" }) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}>
-        <Label for="advanced-search-title">
-          {title}
-        </Label>
+        <Label for="advanced-search-title">{title}</Label>
       </div>
       <Suggester
         className={styles.expandedsuggestercontainer}
@@ -313,7 +316,13 @@ function cleanParams(params, headerQuery) {
   return ret;
 }
 
-export default function Wrap({ router = null, headerQuery, setHeader }) {
+export default function Wrap({
+  router = null,
+  headerQuery,
+  setHeader,
+  collapseOpen,
+  setCollapseOpen,
+}) {
   // connect useQ hook
   const { q, setQ, clearQ, setQuery } = useQ();
   const [type, setType] = useState("all");
@@ -334,7 +343,7 @@ export default function Wrap({ router = null, headerQuery, setHeader }) {
   const { data, isLoading, error } = useData(all({ q: query, workType }));
 
   const filtered = data?.suggest?.result?.map((obj) => ({
-    value: obj.value || obj.title || obj.name
+    value: obj.value || obj.title || obj.name,
   }));
 
   const onReset = () => clearQ({ exclude: ["all"] });
@@ -345,6 +354,7 @@ export default function Wrap({ router = null, headerQuery, setHeader }) {
   setQ({ ...expandedSearchParams });
 
   const doSearch = () => {
+    console.log(headerQuery, "DOSEARCH HEADERQUERY");
     setQuery({ pathname: "/find" });
   };
 
@@ -371,6 +381,8 @@ export default function Wrap({ router = null, headerQuery, setHeader }) {
       doSearch={doSearch}
       clearHeader={clearHeader}
       workType={workType}
+      collapseOpen={collapseOpen}
+      setCollapseOpen={setCollapseOpen}
     />
   );
 }

@@ -31,6 +31,7 @@ import History from "./templates/history";
 import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
+import Input from "@/components/help/search/input";
 
 // Context
 const context = { context: "suggester" };
