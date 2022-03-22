@@ -94,55 +94,66 @@ function ExpandedSearch({
   return (
     <div className={styles.flexnav}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
-        <div className={styles.wrapper}>
-          <div className={styles.flex} id="example-collapse-text">
-            <TitleSuggester
-              q={q}
-              title={translations(workType).labelTitle}
-              data={data}
-              onChange={onChange}
-              onClear={onClear}
-              value={q["title"]}
-            />
-            <CreatorSuggester
-              q={q}
-              title={translations(workType).labelCreator}
-              data={data}
-              onChange={onChange}
-              onClear={onClear}
-              value={q["creator"]}
-            />
-            <SubjectSuggester
-              q={q}
-              title={translations(workType).labelSubject}
-              data={data}
-              onChange={onChange}
-              onClear={onClear}
-              value={q["subject"]}
-            />
-          </div>
-
-          <div className={styles.flexnav}>
-            <div className={styles.buttoninline}>
-              <button
-                type="button"
-                onClick={() => {
-                  doSearch();
-                }}
-                data-cy={cyKey({
-                  name: "searchbutton",
-                  prefix: "header",
-                })}
-                className={styles.button}
-              >
-                <span>{Translate({ context: "header", label: "search" })}</span>
-              </button>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            doSearch();
+          }}
+        >
+          <div className={styles.wrapper}>
+            <div className={styles.flex} id="example-collapse-text">
+              <TitleSuggester
+                q={q}
+                title={translations(workType).labelTitle}
+                data={data}
+                onChange={onChange}
+                onClear={onClear}
+                value={q["title"]}
+              />
+              <CreatorSuggester
+                q={q}
+                title={translations(workType).labelCreator}
+                data={data}
+                onChange={onChange}
+                onClear={onClear}
+                value={q["creator"]}
+              />
+              <SubjectSuggester
+                q={q}
+                title={translations(workType).labelSubject}
+                data={data}
+                onChange={onChange}
+                onClear={onClear}
+                value={q["subject"]}
+              />
             </div>
-            <span className={!collapseOpen ? styles.hide : styles.linkshowless}>
-              <MoreOptionsLink onSearchClick={expandClick} />
-            </span>
+
+            <div className={styles.flexnav}>
+              <div className={styles.buttoninline}>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    doSearch();
+                  }}
+                  data-cy={cyKey({
+                    name: "searchbutton",
+                    prefix: "header",
+                  })}
+                  className={styles.button}
+                >
+                  <span>
+                    {Translate({ context: "header", label: "search" })}
+                  </span>
+                </button>
+              </div>
+              <span
+                className={!collapseOpen ? styles.hide : styles.linkshowless}
+              >
+                <MoreOptionsLink onSearchClick={expandClick} />
+              </span>
+            </div>
           </div>
-        </div>
+        </form>
       </Collapse>
       <div
         className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}
