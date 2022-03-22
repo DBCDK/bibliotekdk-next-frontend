@@ -132,9 +132,6 @@ function ExpandedSearch({
               <div className={styles.buttoninline}>
                 <button
                   type="submit"
-                  onClick={() => {
-                    doSearch();
-                  }}
                   data-cy={cyKey({
                     name: "searchbutton",
                     prefix: "header",

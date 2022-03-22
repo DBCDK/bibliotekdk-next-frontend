@@ -126,7 +126,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
   const input = React.cloneElement(inputComponent, inputProps);
 
   // Clear/Cross should be visible
-  const showClear = true;
+  const showClear = inputProps.value !== "";
 
   // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
