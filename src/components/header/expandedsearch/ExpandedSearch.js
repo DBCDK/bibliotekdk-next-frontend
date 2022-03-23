@@ -13,6 +13,7 @@ import Icon from "@/components/base/icon/Icon";
 import Text from "@/components/base/text/Text";
 import Collapse from "react-bootstrap/Collapse";
 import Label from "@/components/base/forms/label/Label";
+import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 
 function sleep(milliseconds) {
   const date = Date.now();
@@ -22,7 +23,7 @@ function sleep(milliseconds) {
   } while (currentDate - date < milliseconds);
 }
 
-const translations = (workType) => {
+/*const translations = (workType) => {
   return {
     // Get workType specific labels if set, else fallback to a general text
     labelTitle: Translate({
@@ -50,9 +51,9 @@ const translations = (workType) => {
       label: workType ? `label-${workType}-subject` : `label-subject`,
     }),
   };
-};
+};*/
 
-const isEmpty = (objectToCheck) => {
+export const isEmpty = (objectToCheck) => {
   let empty = true;
   for (const [key, value] of Object.entries(objectToCheck)) {
     if (key === "all") {
@@ -66,7 +67,7 @@ const isEmpty = (objectToCheck) => {
   return empty;
 };
 
-function ExpandedSearch({
+export function ExpandedSearch({
   q,
   onChange,
   data,
@@ -102,33 +103,54 @@ function ExpandedSearch({
         >
           <div className={styles.wrapper}>
             <div className={styles.flex} id="example-collapse-text">
-              <TitleSuggester
-                q={q}
-                title={translations(workType).labelTitle}
-                data={data}
-                onChange={onChange}
-                onClear={onClear}
-                value={q["title"]}
-              />
-              <CreatorSuggester
-                q={q}
-                title={translations(workType).labelCreator}
-                data={data}
-                onChange={onChange}
-                onClear={onClear}
-                value={q["creator"]}
-              />
-              <SubjectSuggester
-                q={q}
-                title={translations(workType).labelSubject}
-                data={data}
-                onChange={onChange}
-                onClear={onClear}
-                value={q["subject"]}
-              />
+              <div className={styles.suggesterright}>
+                <div className={styles.labelinline}>
+                  <Label for="advanced-search-title">
+                    {translations(workType).labelTitle}
+                  </Label>
+                </div>
+                <TitleSuggester
+                  title={translations(workType).labelTitle}
+                  q={q}
+                  data={data}
+                  onChange={onChange}
+                  onClear={onClear}
+                  value={q["title"]}
+                />
+              </div>
+              <div className={styles.suggesterright}>
+                <div className={styles.labelinline}>
+                  <Label for="advanced-search-title">
+                    {translations(workType).labelCreator}
+                  </Label>
+                </div>
+                <CreatorSuggester
+                  title={translations(workType).labelCreator}
+                  q={q}
+                  data={data}
+                  onChange={onChange}
+                  onClear={onClear}
+                  value={q["creator"]}
+                />
+              </div>
+              <div className={styles.suggesterright}>
+                <div className={styles.labelinline}>
+                  <Label for="advanced-search-title">
+                    {translations(workType).labelSubject}
+                  </Label>
+                </div>
+                <SubjectSuggester
+                  title={translations(workType).labelSubject}
+                  q={q}
+                  data={data}
+                  onChange={onChange}
+                  onClear={onClear}
+                  value={q["subject"]}
+                />
+              </div>
             </div>
 
-            <div className={styles.flexnav}>
+            <div className={styles.buttonflexnav}>
               <div className={styles.buttoninline}>
                 <button
                   type="submit"
@@ -161,7 +183,7 @@ function ExpandedSearch({
   );
 }
 
-function MoreOptionsLink({ onSearchClick, type }) {
+export function MoreOptionsLink({ onSearchClick, type }) {
   return (
     <span
       className={
@@ -199,7 +221,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
   );
 }
 
-function TitleSuggester({
+export function TitleSuggester({
   onChange,
   data,
   q,
@@ -209,10 +231,7 @@ function TitleSuggester({
   placeHolder = "",
 }) {
   return (
-    <div className={styles.suggesterright}>
-      <div className={styles.labelinline}>
-        <Label for="advanced-search-title">{title}</Label>
-      </div>
+    <div className={styles.suggestionswrap}>
       <Suggester
         id="advanced-search-title"
         data={data}
@@ -237,19 +256,16 @@ function TitleSuggester({
   );
 }
 
-function CreatorSuggester({
+export function CreatorSuggester({
   onChange,
   data,
   q,
   onClear,
   value = "",
-  title = "",
+  title,
 }) {
   return (
-    <div className={styles.suggesterright}>
-      <div className={styles.labelinline}>
-        <Label for="advanced-search-title">{title}</Label>
-      </div>
+    <div className={styles.suggestionswrap}>
       <Suggester
         id="advanced-search-creator"
         data={data}
@@ -273,12 +289,9 @@ function CreatorSuggester({
   );
 }
 
-function SubjectSuggester({ onChange, data, onClear, q, title = "" }) {
+export function SubjectSuggester({ onChange, data, onClear, q, title }) {
   return (
-    <div className={styles.suggesterright}>
-      <div className={styles.labelinline}>
-        <Label for="advanced-search-title">{title}</Label>
-      </div>
+    <div className={styles.suggestionswrap}>
       <Suggester
         className={styles.expandedsuggestercontainer}
         id="advanced-search-subject"
@@ -322,10 +335,10 @@ function cleanParams(params, headerQuery) {
   return ret;
 }
 
-export default function Wrap({
+export function initExpanded({
   router = null,
-  headerQuery,
-  collapseOpen,
+  headerQuery = "",
+  collapseOpen = false,
   setCollapseOpen,
 }) {
   // connect useQ hook
@@ -371,17 +384,41 @@ export default function Wrap({
     setQ({ ...q, [type]: "" });
   };
 
+  return {
+    q,
+    filtered,
+    onChange,
+    onReset,
+    doSearch,
+    workType,
+    collapseOpen,
+    setCollapseOpen,
+  };
+}
+
+export default function Wrap({
+  router = null,
+  headerQuery = "",
+  collapseOpen = false,
+  setCollapseOpen,
+}) {
+  const init = initExpanded({
+    router,
+    headerQuery,
+    collapseOpen,
+    setCollapseOpen,
+  });
   return (
     <ExpandedSearch
-      q={q}
-      data={filtered}
-      onChange={onChange}
-      onClear={onClear}
-      onReset={onReset}
-      doSearch={doSearch}
-      workType={workType}
-      collapseOpen={collapseOpen}
-      setCollapseOpen={setCollapseOpen}
+      q={init.q}
+      data={init.filtered}
+      onChange={init.onChange}
+      onClear={init.onClear}
+      onReset={init.onReset}
+      doSearch={init.doSearch}
+      workType={init.workType}
+      collapseOpen={init.collapseOpen}
+      setCollapseOpen={init.setCollapseOpen}
     />
   );
 }
