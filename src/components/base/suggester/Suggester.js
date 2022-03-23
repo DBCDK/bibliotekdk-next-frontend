@@ -164,6 +164,7 @@ function Suggester({
   onClear = null,
   onSelect = null,
   onChange = null,
+  onBlur = null,
   initialValue = "",
 }) {
   // Make copy of all suggestion objects
@@ -177,6 +178,12 @@ function Suggester({
    * want to trigger the query callback.
    */
   const [state, setState] = useState({ q, _q: null });
+
+  // reset on initial change
+  useEffect(() => {
+    setState({ q: initialValue, _q: null });
+  }, [initialValue]);
+
   // Create theme container with className prop
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
@@ -184,10 +191,24 @@ function Suggester({
 
   // Default input props
   const inputProps = {
-    value:
-      //initialValue === "" && !state._q && !state.q ? "" : state._q || state.q,
-      // allow empty values - @TODO - this might need a flag to allow empty values
-      initialValue === "" ? "" : initialValue || state._q || state.q,
+    value: state._q || state.q,
+    // allow empty values - @TODO - this might need a flag to allow empty values
+    // initialValue === "" ? "" : initialValue || state._q || state.q,
+    onBlur: (e, { highlightedSuggestion }) => {
+      // Update value in header on e.g. tab key
+      if (highlightedSuggestion) {
+        // select suggestion on tab
+        // onSelect && onSelect(highlightedSuggestion.value);
+        // update value on tab
+        onBlur && onBlur(e);
+        children?.props?.onBlur?.(e);
+
+        onChange && onChange(e);
+        children?.props?.onChange?.(e);
+        setState({ q: highlightedSuggestion.value, _q: null });
+      }
+    },
+
     // onChange func. is required by autosuggest
     onChange: (e) => {
       // Only run onChange update on e.type change

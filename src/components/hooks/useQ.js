@@ -55,15 +55,19 @@ export const getQuery = (query = {}) => {
   Object.entries(query).forEach(([key, val]) => {
     // remove empty key values
     if (val && val !== "") {
-      // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
-      // Will not convert if a q.all already exist in query
-      if (key === "q" && !query["q.all"]) {
-        key = "q.all";
-      }
-      // strip q keys to match types
-      key = key.replace("q.", "");
-      if (types.includes(key) && val) {
-        params[key] = val;
+      // check if key actually is a q. param
+      // filters also have a "creator" and "subject" param
+      if (key.includes("q.")) {
+        // The old q param will be converted to the new q.all (old hyperlinks to site e.g.)
+        // Will not convert if a q.all already exist in query
+        if (key === "q" && !query["q.all"]) {
+          key = "q.all";
+        }
+        // strip q keys to match types
+        key = key.replace("q.", "");
+        if (types.includes(key) && val) {
+          params[key] = val;
+        }
       }
     }
   });
@@ -172,11 +176,12 @@ function useQ() {
    * @param {object} include
    * @param {array} exclude
    */
+
   const setQuery = ({ include = _q, exclude = [], pathname }) => {
     // include all q types (empty types)
     const base = buildQ();
 
-    include = { ...base, ..._q };
+    include = { ...base, ...include };
 
     const params = {};
     // include

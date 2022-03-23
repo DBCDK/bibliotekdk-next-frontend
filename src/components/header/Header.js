@@ -6,6 +6,7 @@ import { signIn, signOut } from "@dbcdk/login-nextjs/client";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import { cyKey } from "@/utils/trim";
 
@@ -53,8 +54,9 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  // Seach Query in suggester callback
-  const [query, setQuery] = useState("");
+  const { q, setQ, clearQ, setQuery } = useQ();
+
+  const query = q.all;
 
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
@@ -132,47 +134,24 @@ export function Header({
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";
 
-    if (suggestion?.__typename === "Work") {
-      router &&
-        router[routerFunc]({
-          pathname: "/materiale/[title_author]/[workId]",
-          query: {
-            title_author: encodeTitleCreator(
-              suggestion.title,
-              suggestion.creators?.[0]?.name
-            ),
-            workId: suggestion.id,
-          },
-        });
-    } else {
-      let queryKey;
-      if (suggestion?.__typename === "Creator") {
-        queryKey = "q.creator";
-      } else if (suggestion?.__typename === "Subject") {
-        queryKey = "q.subject";
-      } else {
-        queryKey = "q.all";
-      }
+    const params = {
+      workType: selectedMaterial !== "all" ? selectedMaterial : null,
+      ["q.all"]: query,
+    };
 
-      const params = {
-        workType: selectedMaterial !== "all" ? selectedMaterial : null,
-        [queryKey]: query,
-      };
+    //  remove dead params
+    Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
+    router &&
+      query &&
+      router[routerFunc]({
+        pathname: "/find",
+        query: params,
+      });
 
-      //  remove dead params
-      Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
-      router &&
-        query &&
-        router[routerFunc]({
-          pathname: "/find",
-          query: params,
-        });
-
-      // Delay history update in list
-      setTimeout(() => {
-        setHistory(query);
-      }, 300);
-    }
+    // Delay history update in list
+    setTimeout(() => {
+      setHistory(query);
+    }, 300);
   };
 
   const frontpageTranslated = Translate({
@@ -280,7 +259,7 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onChange={setQuery}
+                      onChange={(val) => setQ({ all: val })}
                       onClose={() => {
                         if (router) {
                           // remove suggester prop from query obj
@@ -339,8 +318,6 @@ export function Header({
               <ExpandedSearch
                 collapseOpen={collapseOpen}
                 setCollapseOpen={setCollapseOpen}
-                router={router}
-                headerQuery={query}
               />
             </Col>
           </Row>
