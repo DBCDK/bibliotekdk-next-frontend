@@ -15,14 +15,6 @@ import Collapse from "react-bootstrap/Collapse";
 import Label from "@/components/base/forms/label/Label";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-
 /*const translations = (workType) => {
   return {
     // Get workType specific labels if set, else fallback to a general text

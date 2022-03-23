@@ -53,9 +53,6 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  // Seach Query in suggester callback
-  // const [query, setQuery] = useState("");
-
   const { q, setQ, clearQ, setQuery } = useQ();
 
   const query = q.all;
