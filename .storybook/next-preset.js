@@ -59,6 +59,12 @@ module.exports = {
       ],
     });
 
+    newConfig.module.rules.push({
+      test: /\.mjs$/,
+      include: /node_modules/,
+      type: "javascript/auto",
+    });
+
     // Then we tell webpack what to do with CSS modules
     newConfig.module.rules.push({
       test: /\.scss$/,
