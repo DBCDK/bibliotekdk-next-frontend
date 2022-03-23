@@ -86,6 +86,8 @@ describe("Search", () => {
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
 
+      cy.get("[data-cy=header-searchbutton]").click();
+
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({
@@ -96,8 +98,6 @@ describe("Search", () => {
           workType: "movie",
         });
       });
-
-      cy.get("[data-cy=header-searchbutton]").click();
     });
   });
 });
