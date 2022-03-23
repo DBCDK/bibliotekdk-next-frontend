@@ -38,6 +38,13 @@ NavHeader.story = {
         Subject: {
           value: ({ getNext }) => getNext(["heste", "oste", "halløj"]),
         },
+        Cover: {
+          thumbnail: ({ path }) =>
+            `https://picsum.photos/seed/${path.replace(
+              /[\[|\]|\.]/g,
+              ""
+            )}/200/300`,
+        },
       },
     },
     nextRouter: {

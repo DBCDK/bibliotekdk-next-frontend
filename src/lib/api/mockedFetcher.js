@@ -4,7 +4,7 @@ import { graphql, getIntrospectionQuery, buildClientSchema } from "graphql";
 import { APIMockContext } from "./api";
 import { useMemo } from "react";
 
-const LOGGER_PREFIX = "GMOCK:";
+const LOGGER_PREFIX = "GMOCKER:";
 const SCALAR_TYPES = ["Int", "Float", "String", "Boolean", "ID"];
 const SCALAR_EXAMPLE_VALUES = {
   Int: 10,
@@ -72,6 +72,8 @@ export function createMockedFetcher({
 
   let fieldSpy = {};
 
+  let counters = {};
+
   /**
    * Will introspect and create executable GraphQL schema
    */
@@ -121,7 +123,6 @@ export function createMockedFetcher({
         resolvers,
       });
 
-      let counters = {};
       function getNext(arr) {
         const key = JSON.stringify(arr);
         if (typeof counters[key] === "undefined") {
@@ -233,6 +234,7 @@ export function createMockedFetcher({
     const schema = await fetchSchema();
 
     beforeFetch();
+    counters = {};
     fieldSpy = {};
     const res = await graphql(schema, query, null, null, variables);
     if (debug) {
