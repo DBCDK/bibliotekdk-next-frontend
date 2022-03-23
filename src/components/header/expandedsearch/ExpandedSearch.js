@@ -108,7 +108,6 @@ export function ExpandedSearch({
                 </div>
                 <TitleSuggester
                   title={translations(workType).labelTitle}
-                  q={q}
                   data={data}
                   onSelect={onSelect}
                   onChange={onChange}
@@ -124,7 +123,6 @@ export function ExpandedSearch({
                 </div>
                 <CreatorSuggester
                   title={translations(workType).labelCreator}
-                  q={q}
                   data={data}
                   onSelect={onSelect}
                   onChange={onChange}
@@ -140,7 +138,6 @@ export function ExpandedSearch({
                 </div>
                 <SubjectSuggester
                   title={translations(workType).labelSubject}
-                  q={q}
                   data={data}
                   onSelect={onSelect}
                   onChange={onChange}
@@ -225,11 +222,9 @@ export function TitleSuggester({
   onChange,
   data,
   onSelect,
-  q,
   value = "",
   onClear,
   title = "",
-  placeHolder = "",
 }) {
   return (
     <div className={styles.suggestionswrap}>
@@ -250,7 +245,7 @@ export function TitleSuggester({
           onChange={(e) => {
             onChange && onChange(e?.target?.value, "title");
           }}
-          value={q["title"]}
+          value={value}
         />
       </Suggester>
     </div>
@@ -261,7 +256,6 @@ export function CreatorSuggester({
   onChange,
   data,
   onSelect,
-  q,
   onClear,
   value = "",
   title,
@@ -285,6 +279,7 @@ export function CreatorSuggester({
           onChange={(e) => {
             onChange && onChange(e?.target?.value, "creator");
           }}
+          value={value}
         />
       </Suggester>
     </div>
@@ -296,7 +291,7 @@ export function SubjectSuggester({
   onSelect,
   data,
   onClear,
-  q,
+  value = "",
   title,
 }) {
   return (
@@ -312,7 +307,7 @@ export function SubjectSuggester({
         onChange={(e) => {
           onChange(e?.target?.value, "subject");
         }}
-        initialValue={q["subject"]}
+        initialValue={value}
       >
         <Input
           className={styles.expandedinput}
@@ -322,6 +317,7 @@ export function SubjectSuggester({
           onChange={(e) => {
             onChange && onChange(e.target.value, "subject");
           }}
+          value={value}
         />
       </Suggester>
     </div>
@@ -375,21 +371,15 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
     onChange,
     onReset,
     doSearch,
+    onClear,
     workType,
     collapseOpen,
     setCollapseOpen,
   };
 }
 
-export default function Wrap({
-  router = null,
-  headerQuery = "",
-  collapseOpen = false,
-  setCollapseOpen,
-}) {
+export default function Wrap({ collapseOpen = false, setCollapseOpen }) {
   const init = initExpanded({
-    router,
-    headerQuery,
     collapseOpen,
     setCollapseOpen,
   });

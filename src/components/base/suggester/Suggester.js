@@ -178,6 +178,12 @@ function Suggester({
    * want to trigger the query callback.
    */
   const [state, setState] = useState({ q, _q: null });
+
+  // reset on initial change
+  useEffect(() => {
+    setState({ q: initialValue, _q: null });
+  }, [initialValue]);
+
   // Create theme container with className prop
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
@@ -185,8 +191,7 @@ function Suggester({
 
   // Default input props
   const inputProps = {
-    value:
-      initialValue === "" && !state._q && !state.q ? "" : state._q || state.q,
+    value: state._q || state.q,
     // allow empty values - @TODO - this might need a flag to allow empty values
     // initialValue === "" ? "" : initialValue || state._q || state.q,
     onBlur: (e, { highlightedSuggestion }) => {
