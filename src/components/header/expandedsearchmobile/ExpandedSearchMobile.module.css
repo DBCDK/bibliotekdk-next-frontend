@@ -89,6 +89,7 @@
 @media (max-width: 992px) {
     .flexnav {
         display: flex;
+        padding: 0;
     }
     .flex {
         /*flex-grow: 2;*/
@@ -105,6 +106,9 @@
     }
     .suggestionswrap{
         width:100%;
+    }
+    .marginauto{
+        margin: var(--pt1) 0 var(--pt1)  auto;
     }
 
 }
