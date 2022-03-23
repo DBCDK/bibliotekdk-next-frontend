@@ -80,5 +80,24 @@ describe("Search", () => {
         });
       });
     });
+
+    it(`Editing default search input, should not wipe other input`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+      cy.get("[data-cy=suggester-input]").clear().type("something else");
+
+      // Check URL query parameters are as expected
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({
+          "q.all": "something else",
+          "q.title": "some title",
+          "q.creator": "some creator",
+          "q.subject": "some subject",
+          workType: "movie",
+        });
+      });
+
+      cy.get("[data-cy=header-searchbutton]").click();
+    });
   });
 });
