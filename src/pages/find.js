@@ -29,6 +29,7 @@ import useDataCollect from "@/lib/useDataCollect";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
 
 /**
  * @file

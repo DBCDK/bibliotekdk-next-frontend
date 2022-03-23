@@ -33,6 +33,7 @@ import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
+import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
 
 /**
  * The Component function
@@ -131,8 +132,6 @@ export function Header({
     : "";
 
   const doSearch = ({ query, suggestion }) => {
-    console.log(query, "SEARCH QUERY");
-
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     let routerFunc = suggesterVisibleMobile ? "replace" : "push";

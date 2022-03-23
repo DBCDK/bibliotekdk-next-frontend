@@ -23,7 +23,7 @@
 .flex {
     /*flex-grow: 2;*/
     display: flex;
-    max-width: 75%;
+    max-width: 100%;
     flex-wrap: wrap;
 }
 
@@ -62,7 +62,7 @@
     cursor: pointer;
     overflow: hidden;
     margin-left: var(--pt05);
-    padding: var(--pt2) var(--pt10) var(--pt2) var(--pt10);
+    padding: var(--pt2) var(--pt6) var(--pt2) var(--pt6);
 }
 
 .suggestionswrap {
@@ -70,7 +70,7 @@
 }
 
 .buttoninline {
-    padding: var(--pt2) var(--pt5) var(--pt2) var(--pt15);
+    padding: var(--pt2) var(--pt2) var(--pt2) 0;
 }
 
 .labelinline {
@@ -86,10 +86,31 @@
 }
 
 
-@media (min-width: 992px) {
+@media (max-width: 992px) {
     .flexnav {
         display: flex;
+        padding: 0;
     }
+    .flex {
+        /*flex-grow: 2;*/
+        display: flex;
+        max-width: 100%;
+        margin-top: var(--pt2);
+    }
+    .labelinline {
+        padding: 0;
+    }
+    .suggesterright{
+        display: block;
+        width: 100%;
+    }
+    .suggestionswrap{
+        width:100%;
+    }
+    .marginauto{
+        margin: var(--pt1) 0 var(--pt1)  auto;
+    }
+
 }
 
 
