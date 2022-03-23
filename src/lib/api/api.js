@@ -18,6 +18,8 @@ const config =
 // generated on the server
 export const APIStateContext = createContext();
 
+export const APIMockContext = createContext();
+
 /**
  * Converts a query object to stringified key
  *
@@ -125,17 +127,23 @@ export function useData(query) {
 
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
-  const initialData = useContext(APIStateContext) || {};
+  const { initialData = {} } = useContext(APIStateContext) || {};
+
+  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
 
   // isSlow is set to true, when query is slow
   const [isSlow, setIsSlow] = useState(false);
 
   // Fetch data
-  const { data, error, mutate } = useSWR(accessToken && key, fetcher, {
-    initialData: initialData[key],
-    loadingTimeout: query?.slowThreshold || 5000,
-    onLoadingSlow: () => setIsSlow(true),
-  });
+  const { data, error, mutate } = useSWR(
+    accessToken && key,
+    mockedFetcher || fetcher,
+    {
+      initialData: initialData[key],
+      loadingTimeout: query?.slowThreshold || 5000,
+      onLoadingSlow: () => setIsSlow(true),
+    }
+  );
 
   return {
     data: data?.data,

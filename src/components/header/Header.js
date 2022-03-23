@@ -34,6 +34,7 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
+import { useRouter } from "next/router";
 
 /**
  * The Component function
@@ -353,6 +354,7 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
+  const router = useRouter();
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
@@ -361,7 +363,15 @@ export default function Wrap(props) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} user={user} modal={modal} filters={filters} />;
+  return (
+    <Header
+      {...props}
+      user={user}
+      modal={modal}
+      filters={filters}
+      router={router}
+    />
+  );
 }
 
 // PropTypes for component
