@@ -135,6 +135,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
     <div className={styles.input_wrap}>
       {input}
       <span
+        data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => onClear()}
       >

@@ -64,5 +64,21 @@ describe("Search", () => {
       cy.get("[data-cy=router-pathname]").should("have.text", "/find");
       cy.get("[data-cy=router-action]").should("have.text", "push");
     });
+
+    it(`Click input clear button should be reflected in URL immediately`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+      cy.get("[data-cy=search-input-subject-clear]").click();
+
+      // Check URL query parameters are as expected
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({
+          "q.all": "some all",
+          "q.title": "some title",
+          "q.creator": "some creator",
+          workType: "movie",
+        });
+      });
+    });
   });
 });
