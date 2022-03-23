@@ -119,7 +119,9 @@ export default function Wrap({
   onPageChange,
 }) {
   const { filters } = useFilters();
-  const { q, hasQuery } = useQ();
+  const { getQuery, hasQuery } = useQ();
+
+  const q = getQuery();
 
   // use the useData hook to fetch data
   const fastResponse = useData(hasQuery && hitcount({ q, filters }));

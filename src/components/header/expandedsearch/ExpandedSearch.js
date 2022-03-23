@@ -72,7 +72,7 @@ function ExpandedSearch({
   data,
   onClear,
   doSearch,
-  onReset,
+  onSelect,
   workType,
   collapseOpen,
   setCollapseOpen,
@@ -85,9 +85,6 @@ function ExpandedSearch({
   }, [q]);
 
   const expandClick = () => {
-    if (collapseOpen) {
-      onReset();
-    }
     setCollapseOpen(!collapseOpen);
   };
 
@@ -114,6 +111,7 @@ function ExpandedSearch({
                 q={q}
                 title={translations(workType).labelCreator}
                 data={data}
+                onSelect={onSelect}
                 onChange={onChange}
                 onClear={onClear}
                 value={q["creator"]}
@@ -202,6 +200,7 @@ function MoreOptionsLink({ onSearchClick, type }) {
 function TitleSuggester({
   onChange,
   data,
+  onSelect,
   q,
   value = "",
   onClear,
@@ -216,8 +215,8 @@ function TitleSuggester({
       <Suggester
         id="advanced-search-title"
         data={data}
-        onSelect={(e) => {
-          onChange && onChange(e, "title");
+        onSelect={(val) => {
+          onSelect && onSelect(val, "title");
         }}
         onClear={() => onClear && onClear("title")}
         initialValue={value}
@@ -240,6 +239,7 @@ function TitleSuggester({
 function CreatorSuggester({
   onChange,
   data,
+  onSelect,
   q,
   onClear,
   value = "",
@@ -253,8 +253,8 @@ function CreatorSuggester({
       <Suggester
         id="advanced-search-creator"
         data={data}
-        onSelect={(e) => {
-          onChange && onChange(e, "creator");
+        onSelect={(val) => {
+          onSelect && onSelect(val, "creator");
         }}
         onClear={() => onClear && onClear("creator")}
         initialValue={value}
@@ -273,7 +273,14 @@ function CreatorSuggester({
   );
 }
 
-function SubjectSuggester({ onChange, data, onClear, q, title = "" }) {
+function SubjectSuggester({
+  onChange,
+  data,
+  onClear,
+  onSelect,
+  q,
+  title = "",
+}) {
   return (
     <div className={styles.suggesterright}>
       <div className={styles.labelinline}>
@@ -283,8 +290,8 @@ function SubjectSuggester({ onChange, data, onClear, q, title = "" }) {
         className={styles.expandedsuggestercontainer}
         id="advanced-search-subject"
         data={data}
-        onSelect={(e) => {
-          onChange(e, "subject");
+        onSelect={(val) => {
+          onSelect(val, "subject");
         }}
         onClear={() => onClear && onClear("subject")}
         onChange={(e) => {
@@ -306,28 +313,7 @@ function SubjectSuggester({ onChange, data, onClear, q, title = "" }) {
   );
 }
 
-function cleanParams(params, headerQuery) {
-  const ret = {};
-  if (!params["all"] && headerQuery) {
-    params["all"] = headerQuery;
-  }
-  Object.entries(params).forEach(([key, value]) => {
-    if (key === "all" && value !== headerQuery) {
-      headerQuery ? (ret[key] = headerQuery) : "";
-    } else {
-      value ? (ret[key] = value) : "";
-    }
-  });
-
-  return ret;
-}
-
-export default function Wrap({
-  router = null,
-  headerQuery,
-  collapseOpen,
-  setCollapseOpen,
-}) {
+export default function Wrap({ collapseOpen, setCollapseOpen }) {
   // connect useQ hook
   const { q, setQ, clearQ, setQuery } = useQ();
   const [type, setType] = useState("all");
@@ -337,11 +323,6 @@ export default function Wrap({
 
   // extract selected workType, if any
   const workType = filters.workType?.[0];
-
-  // preserve query from eg frontpage
-  if (!headerQuery && q.all) {
-    headerQuery = q.all;
-  }
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
@@ -353,13 +334,9 @@ export default function Wrap({
 
   const onReset = () => clearQ({ exclude: ["all"] });
 
-  // we need to check the 'all' query params - it might not be set
-  // eg. if a subject is selected from frontpage
-  const expandedSearchParams = cleanParams(q, headerQuery);
-  setQ({ ...expandedSearchParams });
-
   const doSearch = () => {
     setQuery({ pathname: "/find" });
+    document.activeElement.blur();
   };
 
   const onChange = (val, type) => {
@@ -367,17 +344,22 @@ export default function Wrap({
     setQ({ ...q, [type]: val });
   };
 
+  const onSelect = (val, type) => {
+    setQuery({ include: { ...q, [type]: val } });
+    document.activeElement.blur();
+  };
+
   const onClear = (type) => {
-    setQ({ ...q, [type]: "" });
+    setQuery({ include: { ...q, [type]: "" } });
   };
 
   return (
     <ExpandedSearch
       q={q}
       data={filtered}
+      onSelect={onSelect}
       onChange={onChange}
       onClear={onClear}
-      onReset={onReset}
       doSearch={doSearch}
       workType={workType}
       collapseOpen={collapseOpen}

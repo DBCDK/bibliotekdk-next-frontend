@@ -54,7 +54,7 @@ function Input({
       readOnly={readOnly}
       data-cy={dataCy}
       tabIndex={disabled ? "-1" : tabIndex}
-      onBlur={(e) => onBlur && onBlur(e.target.value)}
+      onBlur={(e) => onBlur && onBlur(e)}
       onChange={(e) => {
         onChange && onChange(e);
         setVal(e.target.value);
