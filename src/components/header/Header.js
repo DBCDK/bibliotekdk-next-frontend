@@ -54,7 +54,7 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  const { q, setQ, clearQ, setQuery } = useQ();
+  const { q, setQ } = useQ();
 
   const query = q.all;
 
@@ -145,7 +145,7 @@ export function Header({
       query &&
       router[routerFunc]({
         pathname: "/find",
-        query: params,
+        query: { ...router.query, ...params },
       });
 
     // Delay history update in list
@@ -230,11 +230,11 @@ export function Header({
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (query === "") {
-                      return;
-                    }
+                    // if (query === "") {
+                    //   return;
+                    // }
 
-                    doSearch({ query: query });
+                    doSearch({ query });
 
                     // view query in storybook
                     story && alert(`/find?q.all=${query}`);
@@ -243,7 +243,7 @@ export function Header({
                     story && story.setSuggesterVisibleMobile(false);
 
                     // clear query if mobile
-                    suggesterVisibleMobile && setQuery("");
+                    // suggesterVisibleMobile && setQuery("");
                     // remove keyboard/unfocus
                     blurInput();
                   }}
@@ -259,7 +259,10 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onChange={(val) => setQ({ all: val })}
+                      onChange={(val) => {
+                        console.log("hest", { ...q, all: val });
+                        setQ({ ...q, all: val });
+                      }}
                       onClose={() => {
                         if (router) {
                           // remove suggester prop from query obj
