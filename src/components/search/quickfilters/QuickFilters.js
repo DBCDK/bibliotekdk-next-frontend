@@ -59,7 +59,7 @@ export function QuickFilters({
   const { getCount: getQCount } = useQ();
 
   const countFilters = getFiltersCount(["workType"]).toString();
-  const countQ = getQCount(["all"]).toString();
+  const countQ = getQCount({ exclude: ["all"] }).toString();
 
   return (
     <div className={styles.section}>
