@@ -494,7 +494,7 @@ export default function Wrap(props) {
       }}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect({ query: suggestionValue, suggestion: suggestion });
+        props.onSelect(suggestionValue);
         dataCollect.collectSuggestClick({
           query,
           suggestion,

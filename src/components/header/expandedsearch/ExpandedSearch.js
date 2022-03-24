@@ -389,9 +389,8 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   const doSearch = () => {
     setQuery({
       pathname: "/find",
-      query: workType || {},
+      query: { workType },
     });
-
     document.activeElement.blur();
   };
 

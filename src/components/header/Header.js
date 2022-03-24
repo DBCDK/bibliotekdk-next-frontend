@@ -132,7 +132,7 @@ export function Header({
     ? styles.suggester__visible
     : "";
 
-  const doSearch = ({ query }) => {
+  const doSearch = (value) => {
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
     const method = suggesterVisibleMobile ? "replace" : "push";
@@ -142,14 +142,15 @@ export function Header({
     };
 
     setQuery({
+      include: { ...q, all: value },
       pathname: "/find",
-      query: { ...type },
+      query: type,
       method,
     });
 
     // Delay history update in list
     setTimeout(() => {
-      setHistory(query);
+      setHistory(value);
     }, 300);
   };
 
@@ -227,11 +228,7 @@ export function Header({
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    // if (query === "") {
-                    //   return;
-                    // }
-
-                    doSearch({ query });
+                    doSearch(query);
 
                     // view query in storybook
                     story && alert(`/find?q.all=${query}`);
@@ -239,8 +236,6 @@ export function Header({
                     // Remove suggester in storybook
                     story && story.setSuggesterVisibleMobile(false);
 
-                    // clear query if mobile
-                    // suggesterVisibleMobile && setQuery("");
                     // remove keyboard/unfocus
                     blurInput();
                   }}
@@ -256,6 +251,7 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
+                      onSelect={(val) => doSearch(val)}
                       onChange={(val) => setQ({ ...q, all: val })}
                       onClose={() => {
                         if (router) {
@@ -265,7 +261,6 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
-                      onSelect={doSearch}
                     />
                   </div>
 
@@ -356,6 +351,10 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
+
+  if (props.skeleton) {
+    return <HeaderSkeleton {...props} />;
+  }
 
   return (
     <Header

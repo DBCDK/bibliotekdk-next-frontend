@@ -88,7 +88,7 @@ describe("Search", () => {
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
 
-      cy.get("[data-cy=header-searchbutton]").click();
+      cy.get("[data-cy=header-searchbutton]").last().click();
 
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {

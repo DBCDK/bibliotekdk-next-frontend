@@ -205,7 +205,7 @@ function useQ() {
 
     // remove empty params
     Object.entries(merged).forEach(([key, val]) => {
-      if (val === "") {
+      if (!val || val === "") {
         delete merged[key];
       }
     });
