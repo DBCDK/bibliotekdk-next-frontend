@@ -210,12 +210,18 @@ function Suggester({
 
     // onChange func. is required by autosuggest
     onChange: (e) => {
+      // update input value for highlighted suggestion on keydown
+      const value = e.target?.value;
+
+      // if (e.type === "keydown") {
+      //   setState({ ...state, _q: newValue });
+      // }
       // Only run onChange update on e.type change
       // Supported in all browsers
       if (e.type === "change") {
         onChange && onChange(e);
         children?.props?.onChange?.(e);
-        setState({ q: e.target.value, _q: null });
+        setState({ q: value, _q: null });
       }
     },
   };

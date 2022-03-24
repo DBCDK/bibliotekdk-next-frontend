@@ -177,7 +177,13 @@ function useQ() {
    * @param {array} exclude
    */
 
-  const setQuery = ({ include = _q, exclude = [], pathname }) => {
+  const setQuery = ({
+    include = _q,
+    exclude = [],
+    pathname,
+    query = { ...router.query },
+    method = "push",
+  }) => {
     // include all q types (empty types)
     const base = buildQ();
 
@@ -192,7 +198,7 @@ function useQ() {
     });
 
     // query params
-    const query = { ...router.query };
+    // const query = { ...router.query };
 
     // merge current query params and new filters
     const merged = { ...query, ...params };
@@ -209,7 +215,7 @@ function useQ() {
 
     // update router
     router &&
-      router.push({
+      router[method]({
         pathname: pathname || router.pathname,
         query: merged,
       });

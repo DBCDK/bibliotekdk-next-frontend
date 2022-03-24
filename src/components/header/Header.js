@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { signIn, signOut } from "@dbcdk/login-nextjs/client";
 
@@ -26,7 +26,7 @@ import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
-import { encodeTitleCreator } from "@/lib/utils";
+
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 import { DesktopMaterialSelect } from "@/components/search/select";
@@ -53,7 +53,8 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  const { q, setQ } = useQ();
+  const { q, setQ, setQuery, getCount } = useQ();
+  const countQ = getCount({ exclude: ["all"] });
 
   const query = q.all;
 
@@ -62,6 +63,9 @@ export function Header({
 
   // worktype filter param
   const { workType } = filters.getQuery();
+
+  // exapnded search state
+  const [collapseOpen, setCollapseOpen] = useState(!!countQ);
 
   // specific material worktype selected
   const selectedMaterial = workType[0] || "all";
@@ -128,24 +132,20 @@ export function Header({
     ? styles.suggester__visible
     : "";
 
-  const doSearch = ({ query, suggestion }) => {
+  const doSearch = ({ query }) => {
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
-    let routerFunc = suggesterVisibleMobile ? "replace" : "push";
+    const method = suggesterVisibleMobile ? "replace" : "push";
 
-    const params = {
+    const type = {
       workType: selectedMaterial !== "all" ? selectedMaterial : null,
-      ["q.all"]: query,
     };
 
-    //  remove dead params
-    Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
-    router &&
-      query &&
-      router[routerFunc]({
-        pathname: "/find",
-        query: { ...router.query, ...params },
-      });
+    setQuery({
+      pathname: "/find",
+      query: { ...type },
+      method,
+    });
 
     // Delay history update in list
     setTimeout(() => {
@@ -157,8 +157,6 @@ export function Header({
     context: "general",
     label: "frontpage",
   });
-
-  const [collapseOpen, setCollapseOpen] = useState(false);
 
   return (
     <header className={`${styles.wrap} ${className}`}>
@@ -258,10 +256,7 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onChange={(val) => {
-                        console.log("hest", { ...q, all: val });
-                        setQ({ ...q, all: val });
-                      }}
+                      onChange={(val) => setQ({ ...q, all: val })}
                       onClose={() => {
                         if (router) {
                           // remove suggester prop from query obj
@@ -273,19 +268,20 @@ export function Header({
                       onSelect={doSearch}
                     />
                   </div>
-                  {!collapseOpen && (
-                    <button
-                      className={styles.button}
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
-                    >
-                      <span>{Translate({ ...context, label: "search" })}</span>
-                      <div className={styles.fill} />
-                    </button>
-                  )}
+
+                  <button
+                    className={`${styles.button} ${
+                      collapseOpen ? styles.hidden : ""
+                    }`}
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
+                  >
+                    <span>{Translate({ ...context, label: "search" })}</span>
+                    <div className={styles.fill} />
+                  </button>
                 </form>
 
                 <div
@@ -360,10 +356,6 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
-
-  if (props.skeleton) {
-    return <HeaderSkeleton {...props} />;
-  }
 
   return (
     <Header

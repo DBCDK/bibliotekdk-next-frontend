@@ -1,10 +1,12 @@
 import { useState } from "react";
 
+const KEY = "bibdk-search-history";
+
 export const useHistory = () => {
   const [storedValue, setStoredValue, clearStoredValue] = useState(() => {
     try {
       if (typeof window !== "undefined") {
-        const item = localStorage.getItem("history");
+        const item = localStorage.getItem(KEY);
         return item ? JSON.parse(item) : [];
       }
     } catch (err) {
@@ -17,9 +19,7 @@ export const useHistory = () => {
     try {
       if (typeof window !== "undefined") {
         // Fetch clean
-        let freshStoredValue = JSON.parse(
-          localStorage.getItem("history") || "[]"
-        );
+        let freshStoredValue = JSON.parse(localStorage.getItem(KEY) || "[]");
         // New history obj
         const obj = {
           __typename: "History",
@@ -35,7 +35,7 @@ export const useHistory = () => {
         valueToStore = valueToStore.slice(0, 8);
         // Store again
         setStoredValue(valueToStore);
-        localStorage.setItem("history", JSON.stringify(valueToStore));
+        localStorage.setItem(KEY, JSON.stringify(valueToStore));
       }
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ export const useHistory = () => {
     try {
       if (typeof window !== "undefined") {
         setStoredValue([]);
-        localStorage.setItem("history", JSON.stringify([]));
+        localStorage.setItem(KEY, JSON.stringify([]));
       }
     } catch (err) {
       console.error(err);

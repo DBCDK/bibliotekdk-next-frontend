@@ -63,14 +63,15 @@ export function ExpandedSearch({
   collapseOpen,
   setCollapseOpen,
 }) {
-  const { getCount } = useQ();
+  const { getCount, getQuery } = useQ();
   const countQ = getCount({ exclude: ["all"] }).toString();
 
+  const queryParams = getQuery();
   useEffect(() => {
-    if (!isEmpty(q) && !collapseOpen) {
+    if (!isEmpty(queryParams) && !collapseOpen) {
       setCollapseOpen(true);
     }
-  }, [q]);
+  }, [JSON.stringify(queryParams)]);
 
   const expandClick = () => {
     setCollapseOpen(!collapseOpen);
@@ -386,7 +387,11 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   const onReset = () => clearQ({ exclude: ["all"] });
 
   const doSearch = () => {
-    setQuery({ pathname: "/find" });
+    setQuery({
+      pathname: "/find",
+      query: workType || {},
+    });
+
     document.activeElement.blur();
   };
 

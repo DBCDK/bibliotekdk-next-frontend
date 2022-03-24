@@ -93,7 +93,6 @@
 .suggester__wrap {
   flex-grow: 2;
   max-width: 672px;
-  /* max-width: 468px; */
 }
 
 .suggester {
@@ -123,6 +122,11 @@
   margin-left: var(--pt4);
   cursor: pointer;
   overflow: hidden;
+}
+
+.button.hidden {
+  visibility: hidden;
+  /* display: none; */
 }
 
 .button span {
@@ -156,7 +160,7 @@
   color: white;
 }
 
-.showexpandedlink{
+.showexpandedlink {
   padding-right: var(--pt4);
   float: right;
 }
@@ -197,7 +201,7 @@
 @media (min-width: 992px) {
   .header {
     padding-top: var(--pt4);
-/*padding-bottom: var(--pt4);*/
+    /*padding-bottom: var(--pt4);*/
   }
 
   .logo {
