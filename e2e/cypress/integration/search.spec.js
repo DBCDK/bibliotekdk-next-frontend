@@ -1,5 +1,3 @@
-const { csrfToken } = require("next-auth/client");
-
 describe("Search", () => {
   context(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
