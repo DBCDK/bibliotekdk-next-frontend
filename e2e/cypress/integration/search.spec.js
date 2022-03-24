@@ -1,5 +1,7 @@
+const { csrfToken } = require("next-auth/client");
+
 describe("Search", () => {
-  context(`header`, () => {
+  context(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
@@ -97,6 +99,52 @@ describe("Search", () => {
           "q.subject": "some subject",
           workType: "movie",
         });
+      });
+    });
+
+    it(`All default input suggestions will search with q.all`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header");
+
+      cy.get("[data-cy=suggester-input]").clear().type("hest");
+
+      cy.get("[data-cy=suggester-container")
+        .find("li")
+        .should("have.length", 3);
+
+      // Check creator, subject, and work
+      [
+        "suggest.result[0].name",
+        "suggest.result[1].value",
+        "suggest.result[2].title",
+      ].forEach((suggestion) => {
+        cy.get("[data-cy=suggester-input]").clear().type("hest");
+        cy.contains(suggestion).click();
+        cy.get("[data-cy=router-query]").then((el) => {
+          expect(JSON.parse(el.text())).to.deep.equal({
+            "q.all": suggestion,
+          });
+        });
+      });
+    });
+
+    it(`Tab away from input will not sync with URL immediately`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header");
+
+      cy.get("[data-cy=suggester-input]").clear().type("hest");
+      cy.tab();
+
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({});
+      });
+    });
+
+    it(`Pressing enter will sync with URL immediately`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header");
+
+      cy.get("[data-cy=suggester-input]").clear().type("hest{enter}");
+
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
       });
     });
   });

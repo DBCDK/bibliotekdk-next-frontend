@@ -13,17 +13,9 @@ const graphql = {
   resolvers: {
     SuggestResponse: {
       result: ({ variables }) =>
-        variables?.q === "hest" ? [...new Array(10).fill({})] : [],
-    },
-    SuggestRow: {
-      __resolveType: ({ getNext }) => getNext(["Subject", "Creator", "Work"]),
-    },
-    Subject: {
-      value: ({ getNext }) => getNext(["heste", "oste", "halløj"]),
-    },
-    Cover: {
-      thumbnail: ({ path }) =>
-        `https://picsum.photos/seed/${path.replace(/[\[|\]|\.]/g, "")}/200/300`,
+        variables?.q === "hest" || "suggest.".startsWith(variables?.q)
+          ? [...new Array(3).fill({})]
+          : [],
     },
   },
 };
@@ -36,7 +28,7 @@ export function NavHeader() {
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
-      <StoryDescription>Try to input "hest"</StoryDescription>
+      <StoryDescription>Try to input "hest" or "suggest"</StoryDescription>
       <HeaderWrapped />
     </div>
   );
