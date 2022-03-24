@@ -47,26 +47,27 @@ export function Result({
       <Section
         contentDivider={null}
         titleDivider={<Divider className={styles.titledivider} />}
-        topSpace={true}
         title={
-          <div className={styles.titlewrapper}>
-            <Title type="title4">
-              {Translate({ context: "search", label: "title" })}
-            </Title>
-            <div>
-              <Title
-                type="title2"
-                tag="h3"
-                className={styles.resultlength}
-                skeleton={isLoading}
-              >
-                {hits}
+          <div className={styles.right}>
+            <div className={styles.titlewrapper}>
+              <Title type="title4">
+                {Translate({ context: "search", label: "title" })}
               </Title>
-              <ViewSelector
-                className={styles.viewselector}
-                onViewSelect={onViewSelect}
-                viewSelected={viewSelected}
-              />
+              <div>
+                <Title
+                  type="title2"
+                  tag="h3"
+                  className={styles.resultlength}
+                  skeleton={isLoading}
+                >
+                  {hits}
+                </Title>
+                {/*<ViewSelector
+                  className={styles.viewselector}
+                  onViewSelect={onViewSelect}
+                  viewSelected={viewSelected}
+                />*/}
+              </div>
             </div>
           </div>
         }
