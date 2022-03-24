@@ -33,7 +33,6 @@ import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
-import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
 import { useRouter } from "next/router";
 
 /**

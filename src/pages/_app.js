@@ -27,7 +27,7 @@ import { APIStateContext } from "@/lib/api/api";
 import { AnonymousSessionContext } from "@/components/hooks/useUser";
 import {
   setLocale,
-  setTranslations
+  setTranslations,
 } from "@/components/base/translate/Translate";
 
 import Banner from "@/components/banner/Banner";
@@ -75,7 +75,7 @@ export default function MyApp({ Component, pageProps, router }) {
       session={pageProps.session}
       options={{
         clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
-        keepAlive: 5 * 60 // Send keepAlive message every 5 minutes
+        keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
       }}
     >
       <AnonymousSessionContext.Provider value={pageProps.anonSession}>
@@ -86,7 +86,7 @@ export default function MyApp({ Component, pageProps, router }) {
               query: router.query,
               push: (obj) => router.push(obj),
               replace: (obj) => router.replace(obj),
-              go: (index) => window.history.go(index)
+              go: (index) => window.history.go(index),
             }}
           >
             <Modal.Container>
@@ -101,7 +101,6 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="filter" component={Pages.Filter} />
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
-              <Modal.Page id="search" component={Pages.Search} />
             </Modal.Container>
 
             <Matomo allowCookies={allowCookies} />
@@ -141,7 +140,7 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     pageProps: {
       ...appProps?.pageProps,
-      translations: await fetchTranslations()
-    }
+      translations: await fetchTranslations(),
+    },
   };
 };

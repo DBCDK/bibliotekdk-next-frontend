@@ -11,39 +11,6 @@ import Translate from "@/components/base/translate";
 
 import styles from "./QuickFilters.module.css";
 
-export function MoreOptionsLink({ countQ, onSearchClick, type }) {
-  /*const onSearchClick = () => {
-    alert("SEARCH");
-  };*/
-
-  return (
-    <Link
-      tabIndex="-1"
-      className={styles.link}
-      onClick={() => onSearchClick()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          onSearchClick();
-        }
-      }}
-      border={{ bottom: { keepVisible: true } }}
-    >
-      <span>
-        <Icon src="search_blue.svg" size={2} />
-      </span>
-
-      <Text type="text3" tag="span">
-        {Translate({
-          context: "search",
-          label:
-            countQ === "0" ? "advancedSearchLink" : "advancedSearchLinkCount",
-          vars: countQ === "0" ? null : [countQ],
-        })}
-      </Text>
-    </Link>
-  );
-}
-
 /**
  * The quick filters section
  *
@@ -76,7 +43,6 @@ export function QuickFilters({
 
                 {/*} <Text type="text2">
               {Translate({ context: "search", label: "filtersResultText" })}
-              ZEBRA
             </Text>
 */}
                 <div className={styles.links}>
