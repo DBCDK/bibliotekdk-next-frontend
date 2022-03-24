@@ -1,5 +1,5 @@
 .section {
-  padding: var(--pt3) 0 var(--pt2) 0;
+  padding: var(--pt3) 0 0 0;
   margin: 0;
 }
 

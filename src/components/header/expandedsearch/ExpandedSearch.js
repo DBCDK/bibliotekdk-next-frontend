@@ -176,9 +176,7 @@ export function ExpandedSearch({
         >
           {Translate({
             context: "search",
-            vars: [countQ],
-            label:
-              countQ !== "0" ? "advancedSearchLinkCount" : "advancedSearchLink",
+            label: "advancedSearchLink",
           })}
         </MoreOptionsLink>
       </div>
@@ -378,7 +376,9 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
-  const { data, isLoading, error } = useData(all({ q: query, workType }));
+  const { data, isLoading, error } = useData(
+    all({ q: query, workType, suggesttype: type })
+  );
 
   const filtered = data?.suggest?.result?.map((obj) => ({
     value: obj.value || obj.title || obj.name,

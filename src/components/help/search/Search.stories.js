@@ -11,6 +11,18 @@ export function EmptyInput() {
 export function NoResults() {
   return <Page result={[]} isLoading={false} query={"hest"} />;
 }
+NoResults.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        EntityQueryResult: {
+          entities: (args) => [...new Array(10).fill({})],
+        },
+        Entity: { __resolveType: () => "NodeFaq" },
+      },
+    },
+  },
+};
 
 export function ShowResults() {
   return (

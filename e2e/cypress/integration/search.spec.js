@@ -148,4 +148,17 @@ describe("Search", () => {
       });
     });
   });
+
+  context(`Result`, () => {
+    it(`Maps from URL params to a search result`, () => {
+      cy.visit("/iframe.html?id=search-result--connected");
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({
+          "q.all": "hest",
+        });
+      });
+
+      cy.get("[data-cy=result-row]").should("have.length", 10);
+    });
+  });
 });

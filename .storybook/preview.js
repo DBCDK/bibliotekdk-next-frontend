@@ -96,6 +96,20 @@ function RouterProvider({ children, value }) {
     ],
   });
 
+  function parse(...args) {
+    let pathname = args[0]?.pathname;
+    let query = args[0]?.query || {};
+    if (typeof args[0] === "string") {
+      const split = args[0].split("?");
+      pathname = split[0];
+      split[1]?.split("&")?.forEach((entry) => {
+        const param = entry?.split("=");
+        query[param?.[0]] = param?.[1];
+      });
+    }
+    return { pathname, query };
+  }
+
   return (
     <RouterContext.Provider
       value={{
@@ -103,15 +117,18 @@ function RouterProvider({ children, value }) {
         action: history[current].action,
         query: history[current].query || {},
         pathname: history[current].pathname || "/",
-        replace: ({ pathname, query }) =>
+        replace: (...args) => {
+          const { pathname, query } = parse(...args);
           setQuery({
             current,
             history: [
               ...history.slice(0, current),
               { pathname, query, action: "replace" },
             ],
-          }),
-        push: ({ pathname, query }) => {
+          });
+        },
+        push: (...args) => {
+          const { pathname, query } = parse(...args);
           setQuery({
             current: current + 1,
             history: [

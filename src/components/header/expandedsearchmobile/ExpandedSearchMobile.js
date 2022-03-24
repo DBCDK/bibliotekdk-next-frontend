@@ -133,7 +133,12 @@ function ExpandedSearchMobile({
               <span
                 className={!collapseOpen ? styles.hide : styles.linkshowless}
               >
-                <MoreOptionsLink onSearchClick={expandClick} />
+                <MoreOptionsLink onSearchClick={expandClick}>
+                  {Translate({
+                    context: "search",
+                    label: "advancedSearchLinkLess",
+                  })}
+                </MoreOptionsLink>
               </span>
             </div>
           </div>
@@ -142,7 +147,12 @@ function ExpandedSearchMobile({
       <div
         className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}
       >
-        <MoreOptionsLink onSearchClick={expandClick} type="showmore" />
+        <MoreOptionsLink onSearchClick={expandClick} type="showmore">
+          {Translate({
+            context: "search",
+            label: "advancedSearchLink",
+          })}
+        </MoreOptionsLink>
       </div>
     </div>
   );
