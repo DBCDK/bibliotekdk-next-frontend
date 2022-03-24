@@ -152,7 +152,14 @@ export function detailsAllManifestations({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
         work(id: $workId) {
+          id
+          title
           fullTitle
+          description
+          creators {
+            type
+            name
+          }
           cover {
             detail
           }
@@ -178,6 +185,7 @@ export function detailsAllManifestations({ workId }) {
               detail
             }
             datePublished
+            datePublishedArticle: datePublished(format: "YYYY-MM-DD")
             dk5 {
               value
             }
