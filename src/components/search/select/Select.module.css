@@ -69,9 +69,7 @@
   margin: 0 -15px;
   white-space: nowrap;
   padding: var(--pt2) var(--pt2) 0 var(--pt2);
-  background-color: var(--white);
-  border-top:1px solid var(--gray);
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+  
 }
 
 .materials button {
