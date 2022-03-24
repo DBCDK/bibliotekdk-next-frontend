@@ -136,7 +136,7 @@ function ExpandedSearchMobile({
                 <MoreOptionsLink onSearchClick={expandClick}>
                   {Translate({
                     context: "search",
-                    label: "advancedSearchLink",
+                    label: "advancedSearchLinkLess",
                   })}
                 </MoreOptionsLink>
               </span>
@@ -150,7 +150,7 @@ function ExpandedSearchMobile({
         <MoreOptionsLink onSearchClick={expandClick} type="showmore">
           {Translate({
             context: "search",
-            label: "advancedSearchLinkLess",
+            label: "advancedSearchLink",
           })}
         </MoreOptionsLink>
       </div>
