@@ -120,6 +120,13 @@ export function SingleSection() {
     </div>
   );
 }
+SingleSection.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+    },
+  },
+};
 
 export function SingleSectionAlternativeUrl() {
   return (
@@ -138,6 +145,13 @@ export function SingleSectionAlternativeUrl() {
     </div>
   );
 }
+SingleSectionAlternativeUrl.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+    },
+  },
+};
 
 export function DoubleSection() {
   return (
@@ -166,6 +180,13 @@ export function TripleSection() {
     </div>
   );
 }
+TripleSection.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+    },
+  },
+};
 
 export function Loading() {
   return (
