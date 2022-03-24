@@ -78,19 +78,20 @@ function Email(props) {
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
-          onBlur(value, {
+          onBlur(e, {
             status: valid,
             message: getLabel(value, valid),
           });
         }
       }}
-      onChange={(value) => {
+      onChange={(e) => {
         if (onChange) {
+          const value = e?.target?.value;
           const allowEmpty = value === "" && !required;
           const valid = validateEmail(value) || allowEmpty;
           setValid(valid);
 
-          onChange(value, {
+          onChange(e, {
             status: valid,
             message: getLabel(value, valid),
           });

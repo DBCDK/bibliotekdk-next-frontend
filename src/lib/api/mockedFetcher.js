@@ -133,6 +133,8 @@ export function createMockedFetcher({
         return arr[counters[key] % arr.length];
       }
 
+      const interfaceImplementations = getInterfaceImplementations(schema);
+
       wrapResolvers(
         schemaWithMocks,
         (orgResolver, { parentTypeName, fieldName }) => {
@@ -151,6 +153,8 @@ export function createMockedFetcher({
             const possibleUnionTypes = args[3]?._types?.map(
               (type) => type?.name
             );
+            const implementations =
+              possibleUnionTypes || interfaceImplementations[parentTypeName];
 
             // Create mock helper object
             if (!fieldSpy[parentTypeName]) {
@@ -159,8 +163,8 @@ export function createMockedFetcher({
             if (fieldName === "__resolveType") {
               fieldSpy[parentTypeName][
                 fieldName
-              ] = `(args) => args.getNext([${possibleUnionTypes
-                .map((el) => `"${el}"`)
+              ] = `(args) => args.getNext([${implementations
+                ?.map((el) => `"${el}"`)
                 .join(", ")}])`;
             } else if (!isScalar && isList) {
               fieldSpy[parentTypeName][fieldName] =
@@ -193,7 +197,7 @@ export function createMockedFetcher({
             // If this field is for resolving union types
             // we return the next possible type
             if (fieldName === "__resolveType") {
-              return getNext(possibleUnionTypes);
+              return getNext(implementations || []);
             }
 
             // When no resolver is given for the field, we return field path as default
@@ -308,6 +312,20 @@ function wrapResolvers(schema, wrapper) {
       });
     }
   });
+}
+
+function getInterfaceImplementations(schema) {
+  const res = {};
+  const types = schema.getTypeMap();
+  Object.values(types).forEach((type) => {
+    type?.getInterfaces?.().forEach?.((iface) => {
+      if (!res[iface.name]) {
+        res[iface.name] = [];
+      }
+      res[iface.name].push(type.name);
+    });
+  });
+  return res;
 }
 
 function mockScalarTypes(schema) {
