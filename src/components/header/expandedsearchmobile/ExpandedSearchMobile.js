@@ -1,3 +1,7 @@
+/**
+ * @file Component for specific search on title, creator and subject. Mobile version
+ */
+
 import {
   CreatorSuggester,
   initExpanded,
@@ -14,6 +18,20 @@ import Translate from "@/components/base/translate";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 import Label from "@/components/base/forms/label/Label";
 
+/**
+ * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible
+ * @param q
+ * @param onChange
+ * @param data
+ * @param onClear
+ * @param doSearch
+ * @param onReset
+ * @param workType
+ * @param collapseOpen
+ * @param setCollapseOpen
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function ExpandedSearchMobile({
   q,
   onChange,
@@ -130,6 +148,11 @@ function ExpandedSearchMobile({
   );
 }
 
+/**
+ * Wrapper
+ * @param props
+ * @returns {JSX.Element}
+ */
 export default function wrap(props) {
   const init = initExpanded(props);
 

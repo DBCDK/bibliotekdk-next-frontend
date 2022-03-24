@@ -142,19 +142,19 @@ export function StoryRouter() {
     <div className={styles.router}>
       <div>
         <Text type="text3">Pathname:</Text>
-        <Text type="text4" data-cy="router-pathname">
+        <Text type="text4" dataCy="router-pathname">
           {router?.pathname}
         </Text>
       </div>
       <div>
         <Text type="text3">Query:</Text>
-        <Text type="text4" tag="span" data-cy="router-query">
+        <Text type="text4" tag="span" dataCy="router-query">
           {JSON.stringify(router?.query)}
         </Text>
       </div>
       <div>
         <Text type="text3">Action:</Text>
-        <Text type="text4" data-cy="router-pathname">
+        <Text type="text4" dataCy="router-action">
           {router?.action}
         </Text>
       </div>

@@ -1,3 +1,7 @@
+/**
+ * @file Component for specific search on title, creator and subject. Desktop version
+ */
+
 import Suggester from "@/components/base/suggester/Suggester";
 import Input from "@/components/base/forms/input/Input";
 import useQ from "@/components/hooks/useQ";
@@ -15,36 +19,11 @@ import Collapse from "react-bootstrap/Collapse";
 import Label from "@/components/base/forms/label/Label";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 
-/*const translations = (workType) => {
-  return {
-    // Get workType specific labels if set, else fallback to a general text
-    labelTitle: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-title` : `label-title`,
-    }),
-    labelCreator: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-creator` : `label-creator`,
-    }),
-    labelSubject: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-subject` : `label-subject`,
-    }),
-    placeholderTitle: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-title` : `label-title`,
-    }),
-    placeholderCreator: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-creator` : `label-creator`,
-    }),
-    placeholderSubject: Translate({
-      context: "search",
-      label: workType ? `label-${workType}-subject` : `label-subject`,
-    }),
-  };
-};*/
-
+/**
+ * Check if given object has any values.
+ * @param objectToCheck
+ * @returns {boolean}
+ */
 export const isEmpty = (objectToCheck) => {
   let empty = true;
   for (const [key, value] of Object.entries(objectToCheck)) {
@@ -59,6 +38,20 @@ export const isEmpty = (objectToCheck) => {
   return empty;
 };
 
+/**
+ * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible
+ * @param q
+ * @param onChange
+ * @param data
+ * @param onClear
+ * @param doSearch
+ * @param onSelect
+ * @param workType
+ * @param collapseOpen
+ * @param setCollapseOpen
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function ExpandedSearch({
   q,
   onChange,
@@ -220,6 +213,19 @@ export function MoreOptionsLink({ onSearchClick, className = "", children }) {
   );
 }
 
+/**
+ * Subcomponent - show input field with suggestions. Exported for reuse in
+ * mobile version @see /expandedmobile/ExpandedSearchMobile.js
+ *
+ * @param onChange
+ * @param data
+ * @param onSelect
+ * @param value
+ * @param onClear
+ * @param title
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function TitleSuggester({
   onChange,
   data,
@@ -254,6 +260,18 @@ export function TitleSuggester({
   );
 }
 
+/**
+ * Subcomponent - show input field with suggestions. Exported for reuse in
+ * mobile version @see /expandedmobile/ExpandedSearchMobile.js
+ * @param onChange
+ * @param data
+ * @param onSelect
+ * @param onClear
+ * @param value
+ * @param title
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function CreatorSuggester({
   onChange,
   data,
@@ -288,6 +306,18 @@ export function CreatorSuggester({
   );
 }
 
+/**
+ * Subcomponent - show input field with suggestions. Exported for reuse in
+ * mobile version @see /expandedmobile/ExpandedSearchMobile.js
+ * @param onChange
+ * @param onSelect
+ * @param data
+ * @param onClear
+ * @param value
+ * @param title
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SubjectSuggester({
   onChange,
   onSelect,
@@ -326,6 +356,14 @@ export function SubjectSuggester({
   );
 }
 
+/**
+ * Initialize component. Seperate function for reuse in mobile version. @see /expandedmobile/ExpandedSearchMobile.js
+ * Returns parameters to be used.
+ *
+ * @param collapseOpen
+ * @param setCollapseOpen
+ * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
+ */
 export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   // connect useQ hook
   const { q, setQ, clearQ, setQuery } = useQ();
@@ -380,6 +418,14 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   };
 }
 
+/**
+ * Wrapper
+ *
+ * @param collapseOpen
+ * @param setCollapseOpen
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function Wrap({ collapseOpen = false, setCollapseOpen }) {
   const init = initExpanded({
     collapseOpen,

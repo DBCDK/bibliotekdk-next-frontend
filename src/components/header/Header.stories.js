@@ -8,6 +8,18 @@ export default {
   title: "layout/Header",
 };
 
+const graphql = {
+  debug: true,
+  resolvers: {
+    SuggestResponse: {
+      result: ({ variables }) =>
+        variables?.q === "hest" || "suggest.".startsWith(variables?.q)
+          ? [...new Array(3).fill({})]
+          : [],
+    },
+  },
+};
+
 /**
  * Returns Header
  *
@@ -16,42 +28,45 @@ export function NavHeader() {
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
-      <StoryDescription>Try to input "hest"</StoryDescription>
+      <StoryDescription>Try to input "hest" or "suggest"</StoryDescription>
       <HeaderWrapped />
     </div>
   );
 }
-
 NavHeader.story = {
   parameters: {
-    graphql: {
-      debug: true,
-      resolvers: {
-        SuggestResponse: {
-          result: ({ variables }) =>
-            variables?.q === "hest" ? [...new Array(10).fill({})] : [],
-        },
-        SuggestRow: {
-          __resolveType: ({ getNext }) =>
-            getNext(["Subject", "Creator", "Work"]),
-        },
-        Subject: {
-          value: ({ getNext }) => getNext(["heste", "oste", "halløj"]),
-        },
-        Cover: {
-          thumbnail: ({ path }) =>
-            `https://picsum.photos/seed/${path.replace(
-              /[\[|\]|\.]/g,
-              ""
-            )}/200/300`,
-        },
-      },
+    graphql,
+    nextRouter: {
+      showInfo: true,
+      pathname: "/find",
+      query: {},
     },
+  },
+};
+
+export function NavHeaderPrefilled() {
+  return (
+    <div style={{ height: "800px" }}>
+      <StoryTitle>Header</StoryTitle>
+      <StoryDescription>
+        URL query parameters are reflected as default values in input fields
+      </StoryDescription>
+      <HeaderWrapped />
+    </div>
+  );
+}
+NavHeaderPrefilled.story = {
+  parameters: {
+    graphql,
     nextRouter: {
       showInfo: true,
       pathname: "/find",
       query: {
-        "q.title": "hest",
+        "q.all": "some all",
+        "q.title": "some title",
+        "q.creator": "some creator",
+        "q.subject": "some subject",
+        workType: "movie",
       },
     },
   },

@@ -135,6 +135,7 @@ function renderInputComponent({ inputComponent = {}, inputProps, onClear }) {
     <div className={styles.input_wrap}>
       {input}
       <span
+        data-cy={`${inputProps.dataCy}-clear`}
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => onClear()}
       >
@@ -192,8 +193,6 @@ function Suggester({
   // Default input props
   const inputProps = {
     value: state._q || state.q,
-    // allow empty values - @TODO - this might need a flag to allow empty values
-    // initialValue === "" ? "" : initialValue || state._q || state.q,
     onBlur: (e, { highlightedSuggestion }) => {
       // Update value in header on e.g. tab key
       if (highlightedSuggestion) {
