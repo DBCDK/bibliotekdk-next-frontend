@@ -56,7 +56,6 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
-
   return (
     <form
       noValidate
