@@ -127,7 +127,7 @@ export function useData(query) {
 
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
-  const { initialData = {} } = useContext(APIStateContext) || {};
+  const initialData = useContext(APIStateContext) || {};
 
   const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
 
