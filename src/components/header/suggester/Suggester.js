@@ -31,6 +31,7 @@ import History from "./templates/history";
 import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
+import Input from "@/components/help/search/input";
 
 // Context
 const context = { context: "suggester" };
@@ -225,6 +226,7 @@ function renderInputComponent(
   onClear
 ) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
+
   const props = {
     ...inputProps,
     id: "suggester-input",
@@ -492,7 +494,7 @@ export default function Wrap(props) {
       }}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
-        props.onSelect({ query: suggestionValue, suggestion: suggestion });
+        props.onSelect(suggestionValue);
         dataCollect.collectSuggestClick({
           query,
           suggestion,

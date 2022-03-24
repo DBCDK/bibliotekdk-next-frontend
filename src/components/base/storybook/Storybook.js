@@ -3,6 +3,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 
 import styles from "./Storybook.module.css";
+import { useRouter } from "next/router";
 
 /**
  * Function to copy text to clipboard
@@ -121,6 +122,42 @@ export function StoryLabel({ children, copy }) {
       <Text type="text4">{children}</Text>
 
       {copy && <CopyButton el={el} txt="Copy label element" />}
+    </div>
+  );
+}
+
+/**
+ * (FOR INTERNAL/STORYBOOK USE ONLY!)
+ * Function to return storybook label
+ *
+ * @param {obj} children
+ * @param {bool} copy // adds a copy button
+ *
+ * @returns {component}
+ */
+export function StoryRouter() {
+  const router = useRouter();
+
+  return (
+    <div className={styles.router}>
+      <div>
+        <Text type="text3">Pathname:</Text>
+        <Text type="text4" dataCy="router-pathname">
+          {router?.pathname}
+        </Text>
+      </div>
+      <div>
+        <Text type="text3">Query:</Text>
+        <Text type="text4" tag="span" dataCy="router-query">
+          {JSON.stringify(router?.query)}
+        </Text>
+      </div>
+      <div>
+        <Text type="text3">Action:</Text>
+        <Text type="text4" dataCy="router-action">
+          {router?.action}
+        </Text>
+      </div>
     </div>
   );
 }

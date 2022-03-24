@@ -57,7 +57,9 @@ export default function Wrap({ page, onWorkClick }) {
   const offset = limit * (page - 1); // offset
 
   const { filters } = useFilters();
-  const { q, hasQuery } = useQ();
+  const { getQuery, hasQuery } = useQ();
+
+  const q = getQuery();
 
   // use the useData hook to fetch data
   const fastResponse = useData(hasQuery && fast({ q, offset, limit, filters }));

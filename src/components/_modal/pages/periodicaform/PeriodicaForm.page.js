@@ -112,14 +112,14 @@ export function PeriodicaForm({ modal, context, active }) {
             const periodicaForm = {};
             // Process in order
             fields.forEach(({ key }) => {
-              const val = state?.[key]?.trim();
+              const val = state?.[key]?.trim?.();
               if (val) {
                 periodicaForm[key] = val;
               }
             });
             if (expanded) {
               articleFields.forEach(({ key }) => {
-                const val = state?.[key]?.trim();
+                const val = state?.[key]?.trim?.();
                 if (val) {
                   periodicaForm[key] = val;
                 }
@@ -139,10 +139,10 @@ export function PeriodicaForm({ modal, context, active }) {
               required={required}
               value={state[key]}
               hasTry={hasTry}
-              onChange={(value) =>
+              onChange={(e) =>
                 setState({
                   ...state,
-                  [key]: value,
+                  [key]: e?.target?.value,
                 })
               }
             />
@@ -167,10 +167,10 @@ export function PeriodicaForm({ modal, context, active }) {
                     required={required}
                     value={state[key]}
                     hasTry={hasTry}
-                    onChange={(value) =>
+                    onChange={(e) =>
                       setState({
                         ...state,
-                        [key]: value,
+                        [key]: e?.target?.value,
                       })
                     }
                   />

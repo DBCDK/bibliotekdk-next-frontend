@@ -56,7 +56,6 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
-
   return (
     <form
       noValidate
@@ -111,10 +110,10 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
               {userParameterType === "userMail" ? (
                 <Email
                   value={state.userMail || ""}
-                  onChange={(value, { message }) => {
+                  onChange={(e, { message }) => {
                     setState({
                       ...state,
-                      [userParameterType]: value,
+                      [userParameterType]: e?.target?.value,
                     });
                     setEmailMessage(message);
                   }}
@@ -137,10 +136,10 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
                     "text"
                   }
                   dataCy={`input-${userParameterType}`}
-                  onChange={(value) =>
+                  onChange={(e) =>
                     setState({
                       ...state,
-                      [userParameterType]: value,
+                      [userParameterType]: e?.target?.value,
                     })
                   }
                   placeholder={

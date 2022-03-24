@@ -1,5 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { ResultPage } from ".";
+import Result from "../Result";
 
 export default {
   title: "search/Result",
@@ -182,3 +183,36 @@ export function Loading() {
     </div>
   );
 }
+
+export function Connected() {
+  return (
+    <div>
+      <StoryTitle>Connected result page</StoryTitle>
+      <StoryDescription>Uses mocked GraphQL provider</StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <Result page={1} />
+      </div>
+    </div>
+  );
+}
+Connected.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        SearchResponse: {
+          works: ({ variables }) =>
+            variables?.q?.all === "hest" ? [...new Array(10).fill({})] : [],
+          hitcount: () => 20,
+        },
+        Cover: {
+          detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/find",
+      query: { "q.all": "hest" },
+    },
+  },
+};

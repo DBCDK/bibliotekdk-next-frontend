@@ -31,13 +31,9 @@ function Input({
   required,
   "aria-labelledby": ariaLabelledby,
   "aria-label": ariaLabel,
+  ...props
 }) {
   const [val, setVal] = useState(value || "");
-
-  useEffect(() => {
-    onChange && onChange(val);
-  }, [val]);
-
   // Update value if undefined/null at first render
   useEffect(() => {
     setVal(value);
@@ -48,6 +44,7 @@ function Input({
 
   return (
     <input
+      {...props}
       id={id}
       className={`${styles.input} ${readOnlyClass} ${invalidClass} ${className}`}
       type={type}
@@ -57,8 +54,11 @@ function Input({
       readOnly={readOnly}
       data-cy={dataCy}
       tabIndex={disabled ? "-1" : tabIndex}
-      onBlur={(e) => onBlur && onBlur(e.target.value)}
-      onChange={(e) => setVal(e.target.value)}
+      onBlur={(e) => onBlur && onBlur(e)}
+      onChange={(e) => {
+        onChange && onChange(e);
+        setVal(e.target.value);
+      }}
       required={required}
       aria-labelledby={ariaLabelledby}
       aria-label={ariaLabel}

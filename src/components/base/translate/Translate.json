@@ -835,6 +835,10 @@
         "da": "Flere søgemuligheder",
         "en": "LABEL: mangler oversættelse"
       },
+      "advancedSearchLinkLess": {
+        "da": "Færre søgemuligheder",
+        "en": "LABEL: mangler oversættelse"
+      },
       "advancedSearchLinkCount": {
         "da": "Flere søgemuligheder (%s)",
         "en": "LABEL: mangler oversættelse"

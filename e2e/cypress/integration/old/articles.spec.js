@@ -30,42 +30,53 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    const stub = cy.stub();
-    cy.on("window:alert", stub);
-    cy.tabs(3)
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          "/artikel/[title]/[articleId]?title=digitale-bibliotekstilbud&articleId=1"
-        );
+    cy.tabs(3).click();
+
+    // Check URL path is as expected
+    cy.get("[data-cy=router-pathname]").should(
+      "have.text",
+      "/artikel/[title]/[articleId]"
+    );
+
+    // Check URL query parameters are as expected
+    cy.get("[data-cy=router-query]").then((el) => {
+      expect(JSON.parse(el.text())).to.deep.equal({
+        title: "digitale-bibliotekstilbud",
+        articleId: "1",
       });
+    });
   });
 
   it(`Single-section: Can navigate to article`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--single-section&viewMode=story"
     );
-    const stub = cy.stub();
-    cy.on("window:alert", stub);
-    cy.tab()
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          "/artikel/[title]/[articleId]?title=bibliotek.dk&articleId=4"
-        );
+
+    cy.tab().click();
+
+    // Check URL path is as expected
+    cy.get("[data-cy=router-pathname]").should(
+      "have.text",
+      "/artikel/[title]/[articleId]"
+    );
+
+    // Check URL query parameters are as expected
+    cy.get("[data-cy=router-query]").then((el) => {
+      expect(JSON.parse(el.text())).to.deep.equal({
+        title: "bibliotek.dk",
+        articleId: "4",
       });
+    });
   });
 
   it(`Single-section: Can navigate to alternative url`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--single-section-alternative-url"
     );
-    const stub = cy.stub();
-    cy.on("window:alert", stub);
-    cy.tab()
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith("/artikler");
-      });
+
+    cy.tab().click();
+
+    // Check URL path is as expected
+    cy.get("[data-cy=router-pathname]").should("have.text", "/artikler");
   });
 });

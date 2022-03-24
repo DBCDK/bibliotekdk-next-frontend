@@ -1,11 +1,12 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { signIn, signOut } from "@dbcdk/login-nextjs/client";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
+import useQ from "@/components/hooks/useQ";
 
 import { cyKey } from "@/utils/trim";
 
@@ -21,16 +22,18 @@ import LoginIcon from "./icons/login";
 // import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
+import ExpandedSearch from "./expandedsearch/ExpandedSearch";
 import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
-import { encodeTitleCreator } from "@/lib/utils";
+
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 import { DesktopMaterialSelect } from "@/components/search/select";
 import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
+import { useRouter } from "next/router";
 
 /**
  * The Component function
@@ -50,14 +53,19 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  // Seach Query in suggester callback
-  const [query, setQuery] = useState("");
+  const { q, setQ, setQuery, getCount } = useQ();
+  const countQ = getCount({ exclude: ["all"] });
+
+  const query = q.all;
 
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
 
   // worktype filter param
   const { workType } = filters.getQuery();
+
+  // exapnded search state
+  const [collapseOpen, setCollapseOpen] = useState(!!countQ);
 
   // specific material worktype selected
   const selectedMaterial = workType[0] || "all";
@@ -124,52 +132,26 @@ export function Header({
     ? styles.suggester__visible
     : "";
 
-  const doSearch = ({ query, suggestion }) => {
+  const doSearch = (value) => {
     // If we are on mobile we replace
     // since we don't want suggest modal to open if user goes back
-    let routerFunc = suggesterVisibleMobile ? "replace" : "push";
+    const method = suggesterVisibleMobile ? "replace" : "push";
 
-    if (suggestion?.__typename === "Work") {
-      router &&
-        router[routerFunc]({
-          pathname: "/materiale/[title_author]/[workId]",
-          query: {
-            title_author: encodeTitleCreator(
-              suggestion.title,
-              suggestion.creators?.[0]?.name
-            ),
-            workId: suggestion.id,
-          },
-        });
-    } else {
-      let queryKey;
-      if (suggestion?.__typename === "Creator") {
-        queryKey = "q.creator";
-      } else if (suggestion?.__typename === "Subject") {
-        queryKey = "q.subject";
-      } else {
-        queryKey = "q.all";
-      }
+    const type = {
+      workType: selectedMaterial !== "all" ? selectedMaterial : null,
+    };
 
-      const params = {
-        workType: selectedMaterial !== "all" ? selectedMaterial : null,
-        [queryKey]: query,
-      };
+    setQuery({
+      include: { ...q, all: value },
+      pathname: "/find",
+      query: type,
+      method,
+    });
 
-      //  remove dead params
-      Object.entries(params).forEach(([k, v]) => (!v ? delete params[k] : ""));
-
-      router &&
-        router[routerFunc]({
-          pathname: "/find",
-          query: params,
-        });
-
-      // Delay history update in list
-      setTimeout(() => {
-        setHistory(query);
-      }, 300);
-    }
+    // Delay history update in list
+    setTimeout(() => {
+      setHistory(value);
+    }, 300);
   };
 
   const frontpageTranslated = Translate({
@@ -246,11 +228,7 @@ export function Header({
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (query === "") {
-                      return;
-                    }
-
-                    doSearch({ query: query });
+                    doSearch(query);
 
                     // view query in storybook
                     story && alert(`/find?q.all=${query}`);
@@ -258,8 +236,6 @@ export function Header({
                     // Remove suggester in storybook
                     story && story.setSuggesterVisibleMobile(false);
 
-                    // clear query if mobile
-                    suggesterVisibleMobile && setQuery("");
                     // remove keyboard/unfocus
                     blurInput();
                   }}
@@ -275,7 +251,8 @@ export function Header({
                       history={history}
                       clearHistory={clearHistory}
                       isMobile={suggesterVisibleMobile}
-                      onChange={setQuery}
+                      onSelect={(val) => doSearch(val)}
+                      onChange={(val) => setQ({ ...q, all: val })}
                       onClose={() => {
                         if (router) {
                           // remove suggester prop from query obj
@@ -284,11 +261,13 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
-                      onSelect={doSearch}
                     />
                   </div>
+
                   <button
-                    className={styles.button}
+                    className={`${styles.button} ${
+                      collapseOpen ? styles.hidden : ""
+                    }`}
                     type="submit"
                     data-cy={cyKey({
                       name: "searchbutton",
@@ -328,6 +307,12 @@ export function Header({
                 </div>
               </div>
             </Col>
+            <Col lg={{ span: 7, offset: 3 }}>
+              <ExpandedSearch
+                collapseOpen={collapseOpen}
+                setCollapseOpen={setCollapseOpen}
+              />
+            </Col>
           </Row>
         </Container>
       </div>
@@ -362,6 +347,7 @@ function HeaderSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
+  const router = useRouter();
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
@@ -370,7 +356,15 @@ export default function Wrap(props) {
     return <HeaderSkeleton {...props} />;
   }
 
-  return <Header {...props} user={user} modal={modal} filters={filters} />;
+  return (
+    <Header
+      {...props}
+      user={user}
+      modal={modal}
+      filters={filters}
+      router={router}
+    />
+  );
 }
 
 // PropTypes for component

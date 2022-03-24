@@ -72,6 +72,13 @@ export function WorkNarrowAndWideCover() {
     </div>
   );
 }
+WorkNarrowAndWideCover.story = {
+  parameters: {
+    nextRouter: {
+      showInfo: true,
+    },
+  },
+};
 
 export function SeriesCard() {
   const part = {

@@ -38,6 +38,8 @@
 .dropdownmenu {
   border: 1px solid var(--blue);
   background-color: var(--white);
+  z-index:1;
+
 }
 
 .dropdowntoggle:focus {
@@ -67,6 +69,7 @@
   margin: 0 -15px;
   white-space: nowrap;
   padding: var(--pt2) var(--pt2) 0 var(--pt2);
+  
 }
 
 .materials button {

@@ -6,7 +6,7 @@
   position: relative;
   z-index: 2;
 
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+  /*box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);*/
 }
 
 /* Header */
@@ -93,7 +93,6 @@
 .suggester__wrap {
   flex-grow: 2;
   max-width: 672px;
-  /* max-width: 468px; */
 }
 
 .suggester {
@@ -125,6 +124,11 @@
   overflow: hidden;
 }
 
+.button.hidden {
+  visibility: hidden;
+  /* display: none; */
+}
+
 .button span {
   color: var(--blue);
   position: relative;
@@ -154,6 +158,11 @@
 .button:hover > span,
 .button:focus-visible > span {
   color: white;
+}
+
+.showexpandedlink {
+  padding-right: var(--pt4);
+  float: right;
 }
 
 @media (max-width: 991px) {
@@ -192,7 +201,7 @@
 @media (min-width: 992px) {
   .header {
     padding-top: var(--pt4);
-    padding-bottom: var(--pt4);
+    /*padding-bottom: var(--pt4);*/
   }
 
   .logo {

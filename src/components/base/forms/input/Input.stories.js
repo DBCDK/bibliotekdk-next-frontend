@@ -64,7 +64,9 @@ export function OnBlur() {
       <StoryDescription>
         Input onBlur function trigger (console.logs value)
       </StoryDescription>
-      <Input onBlur={(value) => console.log(("input", { value }))} />
+      <Input
+        onBlur={(e) => console.log(("input", { value: e.target.value }))}
+      />
     </div>
   );
 }

@@ -1,33 +1,12 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-function mockgraphql() {
-  cy.fixture("helpFaq.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
-      if (req.body.query.includes("NodeFaq")) {
-        req.reply(fixture);
-      }
-    });
-  });
-
-  cy.fixture("publishedHelpTxts.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
-      if (req.body.query.includes("NodeHelpText")) {
-        req.reply(fixture);
-      }
-    });
-  });
-}
-
 describe("help", () => {
   it(`Search: should show empty response message`, () => {
-    mockgraphql();
-
     cy.visit("/iframe.html?path=/story/help-search--no-results");
     cy.contains("Din søgning giver ingen resultater");
     cy.get("[data-cy=faq]").should("be.visible");
   });
   it(`Search: should show two results`, () => {
-    mockgraphql();
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=result-row]").its("length").should("eq", 2);
 
@@ -39,12 +18,10 @@ describe("help", () => {
     cy.focused().should("have.attr", "href", "/hjaelp/om-login/2");
   });
   it(`Search: menu is visible on desktop`, () => {
-    mockgraphql();
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.visible");
   });
   it(`Search: menu is hidden on mobile`, () => {
-    mockgraphql();
     cy.viewport(991, 800);
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
