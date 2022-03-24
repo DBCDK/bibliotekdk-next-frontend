@@ -30,7 +30,7 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
       className={`${styles.creator} ${className} ${skeletonClass}`}
       data-cy={cyKey({ name: "creator-element", prefix: "suggester" })}
     >
-      <div className={styles.wrap}>
+      {/* <div className={styles.wrap}>
         {!skeleton && data.imageUrl ? (
           <img src={data.imageUrl} alt="" />
         ) : (
@@ -41,7 +41,7 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
             alt=""
           />
         )}
-      </div>
+      </div> */}
       <div className={styles.text}>
         <Text
           type="text1"
@@ -51,14 +51,14 @@ export function Creator({ className = "", data = {}, skeleton = false }) {
         >
           {data.highlight}
         </Text>
-        <Text
+        {/* <Text
           type="text3"
           className={styles.type}
           skeleton={skeleton}
           lines={0}
         >
           {Translate({ ...context, label: "creator" })}
-        </Text>
+        </Text> */}
       </div>
     </div>
   );

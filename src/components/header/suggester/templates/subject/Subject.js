@@ -31,14 +31,14 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
       className={`${styles.subject} ${className} ${skeletonClass}`}
       data-cy={cyKey({ name: "subject-element", prefix: "suggester" })}
     >
-      <div className={styles.wrap}>
+      {/* <div className={styles.wrap}>
         <Icon
           src="search.svg"
           bgColor="var(--iron)"
           skeleton={skeleton}
           alt=""
         />
-      </div>
+      </div> */}
 
       <div className={styles.text}>
         <Text
@@ -49,14 +49,14 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
         >
           {data.highlight}
         </Text>
-        <Text
+        {/* <Text
           type="text3"
           className={styles.type}
           skeleton={skeleton}
           lines={0}
         >
           {Translate({ ...context, label: "subject" })}
-        </Text>
+        </Text> */}
       </div>
     </div>
   );

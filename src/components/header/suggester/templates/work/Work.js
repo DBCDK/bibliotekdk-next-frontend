@@ -31,13 +31,13 @@ export function Work({ className = "", data = {}, skeleton = false }) {
       className={`${styles.work} ${className} ${skeletonClass}`}
       data-cy={cyKey({ name: "work-element", prefix: "suggester" })}
     >
-      <div className={styles.wrap}>
+      {/* <div className={styles.wrap}>
         {skeleton || hasCover ? (
           <Cover src={data.cover.thumbnail} size="fill" skeleton={skeleton} />
         ) : (
           <span />
         )}
-      </div>
+      </div> */}
       <div className={styles.text}>
         <Text
           type="text1"
