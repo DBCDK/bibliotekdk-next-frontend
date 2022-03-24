@@ -63,7 +63,9 @@ export function ExpandedSearch({
   collapseOpen,
   setCollapseOpen,
 }) {
-  //const [collapseOpen, setCollapseOpen] = useState(false);
+  const { getCount } = useQ();
+  const countQ = getCount({ exclude: ["all"] }).toString();
+
   useEffect(() => {
     if (!isEmpty(q) && !collapseOpen) {
       setCollapseOpen(true);
@@ -150,7 +152,15 @@ export function ExpandedSearch({
               <span
                 className={!collapseOpen ? styles.hide : styles.linkshowless}
               >
-                <MoreOptionsLink onSearchClick={expandClick} />
+                <MoreOptionsLink
+                  onSearchClick={expandClick}
+                  className={styles.linkshowless}
+                >
+                  {Translate({
+                    context: "search",
+                    label: "advancedSearchLinkLess",
+                  })}
+                </MoreOptionsLink>
               </span>
             </div>
           </div>
@@ -159,26 +169,25 @@ export function ExpandedSearch({
       <div
         className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}
       >
-        <MoreOptionsLink onSearchClick={expandClick} type="showmore" />
+        <MoreOptionsLink
+          onSearchClick={expandClick}
+          className={styles.linkshowmore}
+        >
+          {Translate({
+            context: "search",
+            vars: [countQ],
+            label:
+              countQ !== "0" ? "advancedSearchLinkCount" : "advancedSearchLink",
+          })}
+        </MoreOptionsLink>
       </div>
     </div>
   );
 }
 
-/**
- * Link to show/hide input fields.
- * @param onSearchClick
- * @param type
- * @returns {JSX.Element}
- * @constructor
- */
-export function MoreOptionsLink({ onSearchClick, type }) {
+export function MoreOptionsLink({ onSearchClick, className = "", children }) {
   return (
-    <span
-      className={
-        type === "showmore" ? styles.linkshowmore : styles.linkshowless
-      }
-    >
+    <span className={className}>
       <Link
         tabIndex="-1"
         onClick={() => onSearchClick()}
@@ -197,13 +206,7 @@ export function MoreOptionsLink({ onSearchClick, type }) {
               className={styles.iconinline}
             />
           </span>
-          {Translate({
-            context: "search",
-            label:
-              type === "showmore"
-                ? "advancedSearchLink"
-                : "advancedSearchLinkCount",
-          })}
+          {children}
         </Text>
       </Link>
     </span>

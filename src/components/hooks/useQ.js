@@ -222,7 +222,7 @@ function useQ() {
    *
    * @returns {int}
    */
-  function getCount(exclude = []) {
+  function getCount({ exclude = [] }) {
     const q = _getQuery();
 
     let count = 0;
