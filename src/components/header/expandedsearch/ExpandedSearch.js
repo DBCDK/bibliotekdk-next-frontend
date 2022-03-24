@@ -175,9 +175,7 @@ export function ExpandedSearch({
         >
           {Translate({
             context: "search",
-            vars: [countQ],
-            label:
-              countQ !== "0" ? "advancedSearchLinkCount" : "advancedSearchLink",
+            label: "advancedSearchLink",
           })}
         </MoreOptionsLink>
       </div>
