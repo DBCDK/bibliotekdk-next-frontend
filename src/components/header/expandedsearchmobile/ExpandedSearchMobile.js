@@ -2,14 +2,8 @@
  * @file Component for specific search on title, creator and subject. Mobile version
  */
 
-import {
-  CreatorSuggester,
-  initExpanded,
-  SubjectSuggester,
-  TitleSuggester,
-  MoreOptionsLink,
-  isEmpty,
-} from "../expandedsearch/ExpandedSearch";
+import SuggesterTemplate from "../expandedsearch/SuggesterTemplate";
+import { MoreOptionsLink, isEmpty } from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
 import styles from "@/components/header/expandedsearchmobile/ExpandedSearchMobile.module.css";
 import Collapse from "react-bootstrap/Collapse";
@@ -43,7 +37,9 @@ function ExpandedSearchMobile({
   collapseOpen,
   setCollapseOpen,
 }) {
-  //const [collapseOpen, setCollapseOpen] = useState(false);
+  return <div>fisk</div>;
+
+  /*const [collapseOpen, setCollapseOpen] = useState(false);
   useEffect(() => {
     if (!isEmpty(q) && !collapseOpen) {
       setCollapseOpen(true);
@@ -74,7 +70,7 @@ function ExpandedSearchMobile({
                     {translations(workType).labelTitle}
                   </Label>
                 </div>
-                <TitleSuggester
+                <SuggesterTemplate
                   q={q}
                   title={translations(workType).labelTitle}
                   data={data}
@@ -155,7 +151,7 @@ function ExpandedSearchMobile({
         </MoreOptionsLink>
       </div>
     </div>
-  );
+  );*/
 }
 
 /**
@@ -164,7 +160,9 @@ function ExpandedSearchMobile({
  * @returns {JSX.Element}
  */
 export default function wrap(props) {
-  const init = initExpanded(props);
+  return <div>hest</div>;
+
+  /*const init = initExpanded(props);
 
   return (
     <ExpandedSearchMobile
@@ -178,5 +176,5 @@ export default function wrap(props) {
       collapseOpen={init.collapseOpen}
       setCollapseOpen={init.setCollapseOpen}
     />
-  );
+  );*/
 }

@@ -18,6 +18,7 @@ import Text from "@/components/base/text/Text";
 import Collapse from "react-bootstrap/Collapse";
 import Label from "@/components/base/forms/label/Label";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
+import SuggesterTemplate from "@/components/header/expandedsearch/SuggesterTemplate";
 
 /**
  * Check if given object has any values.
@@ -53,12 +54,7 @@ export const isEmpty = (objectToCheck) => {
  * @constructor
  */
 export function ExpandedSearch({
-  q,
-  onChange,
-  data,
-  onClear,
   doSearch,
-  onSelect,
   workType,
   collapseOpen,
   setCollapseOpen,
@@ -94,13 +90,9 @@ export function ExpandedSearch({
                     {translations(workType).labelTitle}
                   </Label>
                 </div>
-                <TitleSuggester
+                <SuggesterTemplate
+                  type="title"
                   title={translations(workType).labelTitle}
-                  data={data}
-                  onSelect={onSelect}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["title"]}
                 />
               </div>
               <div className={styles.suggesterright}>
@@ -109,13 +101,9 @@ export function ExpandedSearch({
                     {translations(workType).labelCreator}
                   </Label>
                 </div>
-                <CreatorSuggester
+                <SuggesterTemplate
+                  type="creator"
                   title={translations(workType).labelCreator}
-                  data={data}
-                  onSelect={onSelect}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["creator"]}
                 />
               </div>
               <div className={styles.suggesterright}>
@@ -124,13 +112,9 @@ export function ExpandedSearch({
                     {translations(workType).labelSubject}
                   </Label>
                 </div>
-                <SubjectSuggester
+                <SuggesterTemplate
+                  type="subject"
                   title={translations(workType).labelSubject}
-                  data={data}
-                  onSelect={onSelect}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["subject"]}
                 />
               </div>
             </div>
@@ -206,149 +190,6 @@ export function MoreOptionsLink({ onSearchClick, className = "", children }) {
 }
 
 /**
- * Subcomponent - show input field with suggestions. Exported for reuse in
- * mobile version @see /expandedmobile/ExpandedSearchMobile.js
- *
- * @param onChange
- * @param data
- * @param onSelect
- * @param value
- * @param onClear
- * @param title
- * @returns {JSX.Element}
- * @constructor
- */
-export function TitleSuggester({
-  onChange,
-  data,
-  onSelect,
-  value = "",
-  onClear,
-  title = "",
-}) {
-  return (
-    <div className={styles.suggestionswrap}>
-      <Suggester
-        id="advanced-search-title"
-        data={data}
-        onSelect={(val) => {
-          onSelect && onSelect(val, "title");
-        }}
-        onClear={() => onClear && onClear("title")}
-        initialValue={value}
-      >
-        <Input
-          className={styles.expandedinput}
-          id="search-title"
-          dataCy="search-input-title"
-          placeholder={title}
-          onChange={(e) => {
-            onChange && onChange(e?.target?.value, "title");
-          }}
-          value={value}
-        />
-      </Suggester>
-    </div>
-  );
-}
-
-/**
- * Subcomponent - show input field with suggestions. Exported for reuse in
- * mobile version @see /expandedmobile/ExpandedSearchMobile.js
- * @param onChange
- * @param data
- * @param onSelect
- * @param onClear
- * @param value
- * @param title
- * @returns {JSX.Element}
- * @constructor
- */
-export function CreatorSuggester({
-  onChange,
-  data,
-  onSelect,
-  onClear,
-  value = "",
-  title,
-}) {
-  return (
-    <div className={styles.suggestionswrap}>
-      <Suggester
-        id="advanced-search-creator"
-        data={data}
-        onSelect={(val) => {
-          onSelect && onSelect(val, "creator");
-        }}
-        onClear={() => onClear && onClear("creator")}
-        initialValue={value}
-      >
-        <Input
-          className={styles.expandedinput}
-          id="search-creator"
-          dataCy="search-input-creator"
-          placeholder={title}
-          onChange={(e) => {
-            onChange && onChange(e?.target?.value, "creator");
-          }}
-          value={value}
-        />
-      </Suggester>
-    </div>
-  );
-}
-
-/**
- * Subcomponent - show input field with suggestions. Exported for reuse in
- * mobile version @see /expandedmobile/ExpandedSearchMobile.js
- * @param onChange
- * @param onSelect
- * @param data
- * @param onClear
- * @param value
- * @param title
- * @returns {JSX.Element}
- * @constructor
- */
-export function SubjectSuggester({
-  onChange,
-  onSelect,
-  data,
-  onClear,
-  value = "",
-  title,
-}) {
-  return (
-    <div className={styles.suggestionswrap}>
-      <Suggester
-        className={styles.expandedsuggestercontainer}
-        id="advanced-search-subject"
-        data={data}
-        onSelect={(val) => {
-          onSelect(val, "subject");
-        }}
-        onClear={() => onClear && onClear("subject")}
-        onChange={(e) => {
-          onChange(e?.target?.value, "subject");
-        }}
-        initialValue={value}
-      >
-        <Input
-          className={styles.expandedinput}
-          id="search-subject"
-          dataCy="search-input-subject"
-          placeholder={title}
-          onChange={(e) => {
-            onChange && onChange(e.target.value, "subject");
-          }}
-          value={value}
-        />
-      </Suggester>
-    </div>
-  );
-}
-
-/**
  * Initialize component. Seperate function for reuse in mobile version. @see /expandedmobile/ExpandedSearchMobile.js
  * Returns parameters to be used.
  *
@@ -357,28 +198,6 @@ export function SubjectSuggester({
  * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
  */
 export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
-  // connect useQ hook
-  const { q, setQ, clearQ, setQuery } = useQ();
-  const [type, setType] = useState("all");
-
-  // connected filters hook
-  const { filters } = useFilters();
-
-  // extract selected workType, if any
-  const workType = filters.workType?.[0];
-
-  // use the useData hook to fetch data
-  const query = q[type] ? q[type] : "";
-  const { data, isLoading, error } = useData(
-    all({ q: query, workType, suggesttype: type })
-  );
-
-  const filtered = data?.suggest?.result?.map((obj) => ({
-    value: obj.value || obj.title || obj.name,
-  }));
-
-  const onReset = () => clearQ({ exclude: ["all"] });
-
   const doSearch = () => {
     setQuery({
       pathname: "/find",
@@ -387,29 +206,8 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
     document.activeElement.blur();
   };
 
-  const onChange = (val, type) => {
-    setType(type);
-    setQ({ ...q, [type]: val });
-  };
-
-  const onSelect = (val, type) => {
-    setQuery({ include: { ...q, [type]: val } });
-    document.activeElement.blur();
-  };
-
-  const onClear = (type) => {
-    setQuery({ include: { ...q, [type]: "" } });
-  };
-
   return {
-    q,
-    filtered,
-    onSelect,
-    onChange,
-    onReset,
     doSearch,
-    onClear,
-    workType,
     collapseOpen,
     setCollapseOpen,
   };
@@ -430,14 +228,7 @@ export default function Wrap({ collapseOpen = false, setCollapseOpen }) {
   });
   return (
     <ExpandedSearch
-      q={init.q}
-      data={init.filtered}
-      onSelect={init.onSelect}
-      onChange={init.onChange}
-      onClear={init.onClear}
-      onReset={init.onReset}
       doSearch={init.doSearch}
-      workType={init.workType}
       collapseOpen={init.collapseOpen}
       setCollapseOpen={init.setCollapseOpen}
     />
