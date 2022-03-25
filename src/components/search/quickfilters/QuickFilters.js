@@ -10,6 +10,8 @@ import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 
 import styles from "./QuickFilters.module.css";
+import Logo from "@/components/base/logo/Logo";
+import React from "react";
 
 /**
  * The quick filters section
@@ -30,10 +32,10 @@ export function QuickFilters({
 
   return (
     <div className={styles.section}>
-      <Container className={styles.fullwidth}>
+      <Container className={styles.fullwidth} fluid>
         <Row>
           <div className={styles.quickfilters}>
-            <Col lg={{ offset: 3 }}>
+            <Col xs={{ span: 9, offset: 3 }}>
               <div>
                 {/* <ViewSelector
           className={styles.viewselector}

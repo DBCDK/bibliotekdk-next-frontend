@@ -1,11 +1,10 @@
 .section {
   display: none;
+  background-color: var(--concrete);
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
 .links {
-  /*display: flex;
-  align-items: center;*/
-
   display: inline-flex;
   -moz-box-align: center;
   align-items: center;
@@ -26,14 +25,12 @@
   padding: 0;
 }
 .fullwidth{
-  max-width: 100%;
+
 }
 
 .quickfilters {
   width: 100%;
-  background-color: var(--concrete);
   border-bottom: 1px solid var(--shadow-effect  );
-  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
