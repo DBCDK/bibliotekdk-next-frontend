@@ -13,7 +13,7 @@ describe("help", () => {
     // FAQ should be hidden when there are results
     cy.get("[data-cy=faq]").should("not.exist");
 
-    cy.get('[href="/hjaelp/saadan-soeger-du-i-bibliotek.dk/1"]').focus();
+    cy.get('[href="/hjaelp/saadan-soeger-du-i-bibliotek-dk/1"]').focus();
     cy.tabs(1);
     cy.focused().should("have.attr", "href", "/hjaelp/om-login/2");
   });

@@ -42,7 +42,7 @@ describe("Cards", () => {
     // Check URL query parameters are as expected
     cy.get("[data-cy=router-query]").then((el) => {
       expect(JSON.parse(el.text())).to.deep.equal({
-        title_author: "blodroede-spor_andrew-taylor-%28f.-1951%29",
+        title_author: "blodroede-spor_andrew-taylor-f-1951-",
         workId: "work-id-2",
       });
     });

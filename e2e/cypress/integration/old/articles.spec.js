@@ -63,7 +63,7 @@ describe("Article", () => {
     // Check URL query parameters are as expected
     cy.get("[data-cy=router-query]").then((el) => {
       expect(JSON.parse(el.text())).to.deep.equal({
-        title: "bibliotek.dk",
+        title: "bibliotek-dk",
         articleId: "4",
       });
     });

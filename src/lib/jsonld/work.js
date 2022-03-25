@@ -185,9 +185,8 @@ export function getJSONLD(work) {
   const url = getCanonicalWorkUrl(work);
 
   let mainEntity;
-  console.log({ work });
 
-  switch (work.workTypes[0]) {
+  switch (work?.workTypes?.[0]) {
     case "article":
       mainEntity = getArticle({ ...work, url });
       break;
