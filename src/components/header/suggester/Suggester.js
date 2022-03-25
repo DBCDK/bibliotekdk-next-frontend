@@ -235,10 +235,11 @@ function renderInputComponent(
   };
 
   // Clear/Cross should be visible
-  const showClear = !!(isMobile && inputProps.value !== "");
+  const showClear = !!(inputProps.value !== "");
 
   // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
+
   return (
     <div className={styles.input_wrap}>
       <span

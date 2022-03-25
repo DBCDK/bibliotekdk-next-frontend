@@ -198,6 +198,10 @@ export function MoreOptionsLink({ onSearchClick, className = "", children }) {
  * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
  */
 export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
+  const { setQuery } = useQ();
+  // connected filters hook
+  const { filters } = useFilters();
+  const workType = filters.workType?.[0];
   const doSearch = () => {
     setQuery({
       pathname: "/find",
@@ -205,7 +209,6 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
     });
     document.activeElement.blur();
   };
-
   return {
     doSearch,
     collapseOpen,

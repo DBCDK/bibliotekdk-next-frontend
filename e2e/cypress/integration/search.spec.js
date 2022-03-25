@@ -65,7 +65,7 @@ describe("Search", () => {
       cy.get("[data-cy=router-action]").should("have.text", "push");
     });
 
-    it(`Click input clear button should be reflected in URL immediately`, () => {
+    it(`Click input clear button should NOT be reflected in URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
       cy.get("[data-cy=search-input-subject-clear]").click();
@@ -76,6 +76,7 @@ describe("Search", () => {
           "q.all": "some all",
           "q.title": "some title",
           "q.creator": "some creator",
+          "q.subject": "some subject",
           workType: "movie",
         });
       });
