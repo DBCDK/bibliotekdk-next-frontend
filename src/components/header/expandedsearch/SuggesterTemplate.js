@@ -96,7 +96,7 @@ export default function wrap({ title = "", type = "" }) {
   };
 
   const onClear = (type) => {
-    setQuery({ include: { ...q, [type]: "" } });
+    setQ({ ...q, [type]: "" });
   };
 
   return (
