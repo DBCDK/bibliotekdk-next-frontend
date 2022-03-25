@@ -198,13 +198,6 @@ export function MoreOptionsLink({ onSearchClick, className = "", children }) {
         border={{ bottom: { keepVisible: true } }}
       >
         <Text type="text3" tag="span">
-          <span>
-            <Icon
-              src="search_blue.svg"
-              size={2}
-              className={styles.iconinline}
-            />
-          </span>
           {children}
         </Text>
       </Link>

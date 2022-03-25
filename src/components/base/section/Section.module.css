@@ -53,3 +53,7 @@
     padding-top: 0;
   }
 }
+
+@media (max-width: 992px){
+  .topSpace{padding-top: 0}
+}
