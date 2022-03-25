@@ -209,13 +209,13 @@ function Suggester({
     },
 
     // onChange func. is required by autosuggest
-    onChange: (e) => {
+    onChange: (e, { newValue }) => {
       // update input value for highlighted suggestion on keydown
       const value = e.target?.value;
 
-      // if (e.type === "keydown") {
-      //   setState({ ...state, _q: newValue });
-      // }
+      if (e.type === "keydown") {
+        setState({ ...state, _q: newValue });
+      }
       // Only run onChange update on e.type change
       // Supported in all browsers
       if (e.type === "change") {
@@ -258,7 +258,7 @@ function Suggester({
       renderInputComponent={(props) => {
         const merged = merge({}, props, children?.props, {
           value: inputProps.value,
-          onChange: inputProps.onChange,
+          onChange: (e) => inputProps.onChange(e, { newValue: props?.value }),
         });
         return renderInputComponent({
           inputComponent: children,
@@ -270,11 +270,11 @@ function Suggester({
           },
         });
       }}
-      onSuggestionHighlighted={({ suggestion }) => {
-        if (suggestion?.value !== state._q) {
-          setState({ ...state, _q: suggestion?.value });
-        }
-      }}
+      // onSuggestionHighlighted={({ suggestion }) => {
+      //   if (suggestion?.value !== state._q) {
+      //     setState({ ...state, _q: suggestion?.value });
+      //   }
+      // }}
       focusInputOnSuggestionClick={false}
       highlightFirstSuggestion={false}
       inputProps={inputProps}

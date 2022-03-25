@@ -36,6 +36,7 @@
   top: var(--pt05);
   transform: scale(0);
   transition: transform 0.3s;
+  cursor: pointer;
 }
 
 .clear.visible {

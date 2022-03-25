@@ -398,7 +398,8 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   };
 
   const onClear = (type) => {
-    setQuery({ include: { ...q, [type]: "" } });
+    // setQuery({ include: { ...q, [type]: "" } });
+    setQ({ ...q, [type]: "" });
   };
 
   return {
