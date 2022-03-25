@@ -3,7 +3,11 @@
  */
 
 import SuggesterTemplate from "../expandedsearch/SuggesterTemplate";
-import { MoreOptionsLink, isEmpty } from "../expandedsearch/ExpandedSearch";
+import {
+  MoreOptionsLink,
+  isEmpty,
+  initExpanded,
+} from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
 import styles from "@/components/header/expandedsearchmobile/ExpandedSearchMobile.module.css";
 import Collapse from "react-bootstrap/Collapse";
@@ -11,6 +15,7 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 import Label from "@/components/base/forms/label/Label";
+import useQ from "@/components/hooks/useQ";
 
 /**
  * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible
@@ -27,29 +32,23 @@ import Label from "@/components/base/forms/label/Label";
  * @constructor
  */
 function ExpandedSearchMobile({
-  q,
-  onChange,
-  data,
-  onClear,
   doSearch,
-  onReset,
   workType,
   collapseOpen,
   setCollapseOpen,
 }) {
-  return <div>fisk</div>;
+  const { getCount, getQuery } = useQ();
+  const countQ = getCount({ exclude: ["all"] }).toString();
 
-  /*const [collapseOpen, setCollapseOpen] = useState(false);
+  const queryParams = getQuery();
+
   useEffect(() => {
-    if (!isEmpty(q) && !collapseOpen) {
+    if (!isEmpty(queryParams) && !collapseOpen) {
       setCollapseOpen(true);
     }
-  }, [q]);
+  }, [JSON.stringify(queryParams)]);
 
   const expandClick = () => {
-    if (collapseOpen) {
-      onReset();
-    }
     setCollapseOpen(!collapseOpen);
   };
 
@@ -71,12 +70,8 @@ function ExpandedSearchMobile({
                   </Label>
                 </div>
                 <SuggesterTemplate
-                  q={q}
+                  type="title"
                   title={translations(workType).labelTitle}
-                  data={data}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["title"]}
                 />
               </div>
               <div className={styles.suggesterright}>
@@ -85,13 +80,9 @@ function ExpandedSearchMobile({
                     {translations(workType).labelCreator}
                   </Label>
                 </div>
-                <CreatorSuggester
-                  q={q}
+                <SuggesterTemplate
+                  type="creator"
                   title={translations(workType).labelCreator}
-                  data={data}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["creator"]}
                 />
               </div>
               <div className={styles.suggesterright}>
@@ -100,13 +91,9 @@ function ExpandedSearchMobile({
                     {translations(workType).labelSubject}
                   </Label>
                 </div>
-                <SubjectSuggester
-                  q={q}
+                <SuggesterTemplate
+                  type="subject"
                   title={translations(workType).labelSubject}
-                  data={data}
-                  onChange={onChange}
-                  onClear={onClear}
-                  value={q["subject"]}
                 />
               </div>
             </div>
@@ -151,7 +138,7 @@ function ExpandedSearchMobile({
         </MoreOptionsLink>
       </div>
     </div>
-  );*/
+  );
 }
 
 /**
@@ -160,21 +147,13 @@ function ExpandedSearchMobile({
  * @returns {JSX.Element}
  */
 export default function wrap(props) {
-  return <div>hest</div>;
-
-  /*const init = initExpanded(props);
+  const init = initExpanded(props);
 
   return (
     <ExpandedSearchMobile
-      q={init.q}
-      data={init.filtered}
-      onChange={init.onChange}
-      onClear={init.onClear}
-      onReset={init.onReset}
       doSearch={init.doSearch}
-      workType={init.workType}
-      collapseOpen={init.collapseOpen}
-      setCollapseOpen={init.setCollapseOpen}
+      collapseOpen={props.collapseOpen}
+      setCollapseOpen={props.setCollapseOpen}
     />
-  );*/
+  );
 }
