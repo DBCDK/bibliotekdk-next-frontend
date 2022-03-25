@@ -215,10 +215,14 @@ function useQ() {
 
     // update router
     router &&
-      router[method]({
-        pathname: pathname || router.pathname,
-        query: merged,
-      });
+      router[method](
+        {
+          pathname: pathname || router.pathname,
+          query: merged,
+        },
+        undefined,
+        { scroll: router.pathname === "/find" ? false : true }
+      );
   };
 
   /**

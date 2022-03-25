@@ -245,10 +245,14 @@ function useFilters() {
 
     // update router
     router &&
-      router.push({
-        pathname: router.pathname,
-        query: merged,
-      });
+      router.push(
+        {
+          pathname: router.pathname,
+          query: merged,
+        },
+        undefined,
+        { scroll: router.pathname === "/find" ? false : true }
+      );
   };
 
   /**
