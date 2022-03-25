@@ -3,11 +3,7 @@
  */
 
 import SuggesterTemplate from "../expandedsearch/SuggesterTemplate";
-import {
-  MoreOptionsLink,
-  isEmpty,
-  initExpanded,
-} from "../expandedsearch/ExpandedSearch";
+import { isEmpty, initExpanded } from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
 import styles from "@/components/header/expandedsearchmobile/ExpandedSearchMobile.module.css";
 import Collapse from "react-bootstrap/Collapse";
@@ -16,6 +12,8 @@ import Translate from "@/components/base/translate";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 import Label from "@/components/base/forms/label/Label";
 import useQ from "@/components/hooks/useQ";
+
+import { MoreOptionsLink } from "../utils";
 
 /**
  * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible

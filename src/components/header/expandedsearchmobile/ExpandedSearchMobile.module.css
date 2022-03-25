@@ -1,116 +1,108 @@
-
-.linkshowmore{
+.linkshowmore {
 }
-.linkshowless{
-    margin:auto 0 auto 0;
+.linkshowless {
+  margin: auto 0 auto 0;
 }
-.hide{
-    display:none;
+.hide {
+  display: none;
 }
 
 .flexnav {
-    display: none;
-    width: 100%;
-    padding-right: var(--pt4);
+  display: none;
+  width: 100%;
+  padding-right: var(--pt4);
 }
 
-.buttonflexnav{
-    display: flex;
-    width: 100%;
-    padding-right: var(--pt4);
+.buttonflexnav {
+  display: flex;
+  width: 100%;
+  padding-right: var(--pt4);
 }
 
 .flex {
-    /*flex-grow: 2;*/
-    display: flex;
-    max-width: 100%;
-    flex-wrap: wrap;
+  /*flex-grow: 2;*/
+  display: flex;
+  max-width: 100%;
+  flex-wrap: wrap;
 }
 
-
-
 .iconinline {
-    margin-right: var(--pt1);
+  margin-right: var(--pt1);
 }
 
 .marginauto {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .suggesterright {
-    display: flex;
-    width: 100%;
-    height: 50%;
+  display: flex;
+  width: 100%;
+  height: 50%;
 }
 
-.expandedinput{
-    height: var(--pt5);
+.expandedinput {
+  height: var(--pt5);
 }
 
-.expandedsuggestercontainer{
-    max-width: 600px;
+.expandedsuggestercontainer {
 }
 
 .button {
-    position: relative;
-    background-color: var(--blue);
-    color: var(--white);
-    /*border: 2px solid var(--blue);*/
-    font-family: var(--body-font);
-    font-size: 20px;
-    line-height: 22px;
-    cursor: pointer;
-    overflow: hidden;
-    margin-left: var(--pt05);
-    padding: var(--pt2) var(--pt6) var(--pt2) var(--pt6);
+  position: relative;
+  background-color: var(--blue);
+  color: var(--white);
+  /*border: 2px solid var(--blue);*/
+  font-family: var(--body-font);
+  font-size: 20px;
+  line-height: 22px;
+  cursor: pointer;
+  overflow: hidden;
+  margin-left: var(--pt05);
+  padding: var(--pt2) var(--pt6) var(--pt2) var(--pt6);
 }
 
 .suggestionswrap {
-    width: 100%;
+  width: 100%;
 }
 
 .buttoninline {
-    padding: var(--pt2) var(--pt2) var(--pt2) 0;
+  padding: var(--pt2) var(--pt2) var(--pt2) 0;
 }
 
 .labelinline {
-    padding: var(--pt2);
-    border-right: none;
-    background-color: var(--cyan);
-    min-width: 125px;
-    height: 100%;
-    text-align: left;
+  padding: var(--pt2);
+  border-right: none;
+  background-color: var(--cyan);
+  min-width: 125px;
+  height: 100%;
+  text-align: left;
 }
 
 .wrapper {
 }
 
-
 @media (max-width: 992px) {
-    .flexnav {
-        display: flex;
-        padding: 0;
-    }
-    .flex {
-        /*flex-grow: 2;*/
-        display: flex;
-        max-width: 100%;
-        margin-top: var(--pt2);
-    }
-    .labelinline {
-        padding: 0;
-    }
-    .suggesterright{
-        display: block;
-        width: 100%;
-    }
-    .suggestionswrap{
-        width:100%;
-    }
-    .marginauto{
-        margin: var(--pt1) 0 var(--pt1)  auto;
-    }
-
+  .flexnav {
+    display: flex;
+    padding: 0;
+  }
+  .flex {
+    /*flex-grow: 2;*/
+    display: flex;
+    max-width: 100%;
+    margin-top: var(--pt2);
+  }
+  .labelinline {
+    padding: 0;
+  }
+  .suggesterright {
+    display: block;
+    width: 100%;
+  }
+  .suggestionswrap {
+    width: 100%;
+  }
+  .marginauto {
+    margin: var(--pt1) 0 var(--pt1) auto;
+  }
 }
-
-

@@ -12,9 +12,8 @@ import { all } from "@/lib/api/suggest.fragments";
 import styles from "./ExpandedSearch.module.css";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
-import Link from "@/components/base/link";
-import Icon from "@/components/base/icon/Icon";
-import Text from "@/components/base/text/Text";
+
+import { MoreOptionsLink } from "../utils";
 import Collapse from "react-bootstrap/Collapse";
 import Label from "@/components/base/forms/label/Label";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
@@ -56,6 +55,7 @@ export const isEmpty = (objectToCheck) => {
 export function ExpandedSearch({
   doSearch,
   workType,
+  className,
   collapseOpen,
   setCollapseOpen,
 }) {
@@ -69,12 +69,8 @@ export function ExpandedSearch({
     }
   }, [JSON.stringify(queryParams)]);
 
-  const expandClick = () => {
-    setCollapseOpen(!collapseOpen);
-  };
-
   return (
-    <div className={styles.flexnav}>
+    <div className={`${styles.flexnav} ${className}`}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
         <form
           onSubmit={(e) => {
@@ -132,13 +128,14 @@ export function ExpandedSearch({
                   <span>
                     {Translate({ context: "header", label: "search" })}
                   </span>
+                  <div className={styles.fill} />
                 </button>
               </div>
               <span
                 className={!collapseOpen ? styles.hide : styles.linkshowless}
               >
                 <MoreOptionsLink
-                  onSearchClick={expandClick}
+                  onSearchClick={() => setCollapseOpen(!collapseOpen)}
                   className={styles.linkshowless}
                 >
                   {Translate({
@@ -151,41 +148,7 @@ export function ExpandedSearch({
           </div>
         </form>
       </Collapse>
-      <div
-        className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}
-      >
-        <MoreOptionsLink
-          onSearchClick={expandClick}
-          className={styles.linkshowmore}
-        >
-          {Translate({
-            context: "search",
-            label: "advancedSearchLink",
-          })}
-        </MoreOptionsLink>
-      </div>
     </div>
-  );
-}
-
-export function MoreOptionsLink({ onSearchClick, className = "", children }) {
-  return (
-    <span className={className}>
-      <Link
-        tabIndex="-1"
-        onClick={() => onSearchClick()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            onSearchClick();
-          }
-        }}
-        border={{ bottom: { keepVisible: true } }}
-      >
-        <Text type="text3" tag="span">
-          {children}
-        </Text>
-      </Link>
-    </span>
   );
 }
 
@@ -224,7 +187,11 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export default function Wrap({ collapseOpen = false, setCollapseOpen }) {
+export default function Wrap({
+  collapseOpen = false,
+  setCollapseOpen,
+  className = "",
+}) {
   const init = initExpanded({
     collapseOpen,
     setCollapseOpen,
@@ -232,6 +199,8 @@ export default function Wrap({ collapseOpen = false, setCollapseOpen }) {
   return (
     <ExpandedSearch
       doSearch={init.doSearch}
+      workType={init.workType}
+      className={className}
       collapseOpen={init.collapseOpen}
       setCollapseOpen={init.setCollapseOpen}
     />

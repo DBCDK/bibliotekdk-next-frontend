@@ -13,9 +13,9 @@ import { cyKey } from "@/utils/trim";
 import styles from "./Select.module.css";
 import React from "react";
 
-export function Desktop({ options = [], onSelect, selected }) {
+export function Desktop({ options = [], onSelect, selected, className }) {
   return (
-    <Dropdown className={styles.dropdownwrap}>
+    <Dropdown className={`${styles.dropdownwrap} ${className}`}>
       <Dropdown.Toggle
         data-cy={cyKey({ name: "material-selector", prefix: "header" })}
         variant="success"
@@ -76,12 +76,13 @@ export function Mobile({
   selected,
   count,
   onFilterClick,
+  className,
 }) {
   // Number of selected filters (in query)
   count = count.toString();
 
   return (
-    <div className={styles.materials}>
+    <div className={`${styles.materials} ${className}`}>
       <Link
         className={styles.link}
         onClick={() => onFilterClick()}

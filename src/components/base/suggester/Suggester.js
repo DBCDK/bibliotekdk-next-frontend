@@ -238,7 +238,6 @@ function Suggester({
       id={id}
       theme={theme}
       suggestions={data}
-      focusInputOnSuggestionClick={false}
       shouldRenderSuggestions={(value, reason) => {
         // type to see suggestions
         return value.trim().length > 0;
