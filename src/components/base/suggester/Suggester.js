@@ -16,6 +16,17 @@ import ClearSvg from "@/public/icons/close.svg";
 
 import styles from "./Suggester.module.css";
 
+class AutoSuggestFixed extends AutoSuggest {
+  constructor(...args) {
+    super(...args);
+    this.onSuggestionTouchMove = () => {
+      this.justSelectedSuggestion = false;
+      this.pressedSuggestion = null;
+      this.input?.focus?.();
+    };
+  }
+}
+
 // Context
 const context = { context: "suggester" };
 
@@ -227,7 +238,7 @@ function Suggester({
   };
 
   return (
-    <AutoSuggest
+    <AutoSuggestFixed
       id={id}
       theme={theme}
       suggestions={data}
