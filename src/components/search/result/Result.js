@@ -47,6 +47,7 @@ export function Result({
       <Section
         contentDivider={null}
         titleDivider={<Divider className={styles.titledivider} />}
+        topSpace={true}
         title={
           <div className={styles.right}>
             <div className={styles.titlewrapper}>
