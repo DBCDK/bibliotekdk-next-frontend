@@ -59,7 +59,6 @@
 .bottom .actions {
   display: flex;
   align-items: center;
-  height: 64px;
 }
 
 /* Logo */
@@ -98,12 +97,9 @@
 }
 
 .suggester__wrap {
+  padding-bottom: var(--pt2);
   flex-grow: 2;
   max-width: 672px;
-}
-
-.suggester__wrap.collapsed {
-  padding-bottom: var(--pt3);
 }
 
 .suggester {
@@ -238,6 +234,10 @@
 
   .header .bottom {
     height: auto;
+  }
+
+  .bottom .actions {
+    height: 64px;
   }
 
   .bottom .actions .action:first-child {

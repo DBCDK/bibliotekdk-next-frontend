@@ -51,79 +51,81 @@ function ExpandedSearchMobile({
   };
 
   return (
-    <div className={styles.flexnav}>
+    <div>
       <Collapse in={collapseOpen} className={styles.wrapper}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            doSearch();
-          }}
-        >
-          <div className={styles.wrapper}>
-            <div className={styles.flex} id="example-collapse-text">
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelTitle}
-                  </Label>
+        <div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              doSearch();
+            }}
+          >
+            <div className={styles.wrapper}>
+              <div className={styles.flex} id="example-collapse-text">
+                <div className={styles.suggesterright}>
+                  <div className={styles.labelinline}>
+                    <Label for="advanced-search-title">
+                      {translations(workType).labelTitle}
+                    </Label>
+                  </div>
+                  <SuggesterTemplate
+                    type="title"
+                    title={translations(workType).labelTitle}
+                  />
                 </div>
-                <SuggesterTemplate
-                  type="title"
-                  title={translations(workType).labelTitle}
-                />
-              </div>
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelCreator}
-                  </Label>
+                <div className={styles.suggesterright}>
+                  <div className={styles.labelinline}>
+                    <Label for="advanced-search-title">
+                      {translations(workType).labelCreator}
+                    </Label>
+                  </div>
+                  <SuggesterTemplate
+                    type="creator"
+                    title={translations(workType).labelCreator}
+                  />
                 </div>
-                <SuggesterTemplate
-                  type="creator"
-                  title={translations(workType).labelCreator}
-                />
-              </div>
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelSubject}
-                  </Label>
+                <div className={styles.suggesterright}>
+                  <div className={styles.labelinline}>
+                    <Label for="advanced-search-title">
+                      {translations(workType).labelSubject}
+                    </Label>
+                  </div>
+                  <SuggesterTemplate
+                    type="subject"
+                    title={translations(workType).labelSubject}
+                  />
                 </div>
-                <SuggesterTemplate
-                  type="subject"
-                  title={translations(workType).labelSubject}
-                />
               </div>
-            </div>
 
-            <div className={styles.buttonflexnav}>
-              <div className={styles.buttoninline}>
-                <button
-                  type="submit"
-                  data-cy={cyKey({
-                    name: "searchbutton",
-                    prefix: "header",
-                  })}
-                  className={styles.button}
+              <div className={styles.buttonflexnav}>
+                <div className={styles.buttoninline}>
+                  <button
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
+                    className={styles.button}
+                  >
+                    <span>
+                      {Translate({ context: "header", label: "search" })}
+                    </span>
+                  </button>
+                </div>
+                <span
+                  className={!collapseOpen ? styles.hide : styles.linkshowless}
                 >
-                  <span>
-                    {Translate({ context: "header", label: "search" })}
-                  </span>
-                </button>
+                  <MoreOptionsLink onSearchClick={expandClick}>
+                    {Translate({
+                      context: "search",
+                      label: "advancedSearchLinkLess",
+                    })}
+                  </MoreOptionsLink>
+                </span>
               </div>
-              <span
-                className={!collapseOpen ? styles.hide : styles.linkshowless}
-              >
-                <MoreOptionsLink onSearchClick={expandClick}>
-                  {Translate({
-                    context: "search",
-                    label: "advancedSearchLinkLess",
-                  })}
-                </MoreOptionsLink>
-              </span>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </Collapse>
       <div
         className={`${styles.marginauto} ${collapseOpen ? styles.hide : ""}`}

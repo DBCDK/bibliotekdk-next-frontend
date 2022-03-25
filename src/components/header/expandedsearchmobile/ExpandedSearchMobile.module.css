@@ -79,6 +79,8 @@
 }
 
 .wrapper {
+  display: block;
+  min-width: 100%;
 }
 
 @media (max-width: 992px) {
@@ -103,6 +105,11 @@
     width: 100%;
   }
   .marginauto {
-    margin: var(--pt1) 0 var(--pt1) auto;
+    margin: var(--pt2) 0 var(--pt2) auto;
+    display: flex;
+    justify-content: flex-end;
+  }
+  .marginauto.hide {
+    display: none;
   }
 }

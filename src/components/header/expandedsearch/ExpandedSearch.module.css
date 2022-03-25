@@ -92,7 +92,7 @@
 }
 
 .buttoninline {
-  padding: var(--pt2) var(--pt5) var(--pt2) var(--pt15);
+  padding: var(--pt2) var(--pt5) 0 var(--pt15);
 }
 
 .labelinline {
@@ -110,6 +110,6 @@
 @media (min-width: 992px) {
   .flexnav {
     display: flex;
-    padding-top: var(--pt1);
+    padding-top: var(--pt2);
   }
 }
