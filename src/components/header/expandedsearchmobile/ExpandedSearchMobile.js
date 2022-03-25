@@ -7,7 +7,6 @@ import {
   initExpanded,
   SubjectSuggester,
   TitleSuggester,
-  MoreOptionsLink,
   isEmpty,
 } from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
@@ -17,6 +16,8 @@ import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 import Label from "@/components/base/forms/label/Label";
+
+import { MoreOptionsLink } from "../utils";
 
 /**
  * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible

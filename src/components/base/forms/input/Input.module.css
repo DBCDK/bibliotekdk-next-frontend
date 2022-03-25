@@ -1,7 +1,6 @@
 .input {
   height: var(--pt7);
   width: 100%;
-  max-width: 500px;
   border: 1px solid var(--gray);
   padding: 0 var(--pt2);
 

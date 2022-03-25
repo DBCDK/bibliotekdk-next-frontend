@@ -9,6 +9,8 @@
 
   color: var(--mine-shaft);
   text-decoration: none;
+
+  white-space: nowrap;
 }
 
 .wrap {

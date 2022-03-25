@@ -59,6 +59,7 @@
 .bottom .actions {
   display: flex;
   align-items: center;
+  height: 64px;
 }
 
 /* Logo */
@@ -81,13 +82,18 @@
   width: var(--pt13) !important;
 }
 
+.select {
+  height: 64px;
+}
+
 /* Searchbar */
 
 .search {
   flex-grow: 2;
   display: flex;
+  position: relative;
 
-  padding-right: var(--pt3);
+  margin-right: var(--pt3);
 }
 
 .suggester__wrap {
@@ -95,8 +101,26 @@
   max-width: 672px;
 }
 
+.suggester__wrap.collapsed {
+  padding-bottom: var(--pt3);
+}
+
 .suggester {
   max-width: 100%;
+}
+
+.expandedSearch {
+  transform: translateX(-125px);
+}
+
+.linkshowmore {
+  position: absolute;
+  right: calc(125px + var(--pt4));
+  bottom: 0;
+}
+
+.linkshowmore.hidden {
+  visibility: hidden;
 }
 
 /* Dropdown */
@@ -111,7 +135,9 @@
 
 .button {
   position: relative;
-  height: 100%;
+  width: 125px;
+  min-width: 125px;
+  height: 64px;
   padding: var(--pt2) var(--pt4);
   background-color: transparent;
   color: var(--blue);

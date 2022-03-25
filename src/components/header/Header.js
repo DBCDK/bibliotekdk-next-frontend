@@ -27,6 +27,8 @@ import useUser from "../hooks/useUser";
 
 import Logo from "@/components/base/logo/Logo";
 
+import { MoreOptionsLink } from "./utils";
+
 import { SkipToMainAnchor } from "@/components/base/skiptomain/SkipToMain";
 
 import { DesktopMaterialSelect } from "@/components/search/select";
@@ -242,9 +244,12 @@ export function Header({
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <DesktopMaterialSelect />
+                  <DesktopMaterialSelect className={styles.select} />
+
                   <div
-                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
+                    className={`${styles.suggester__wrap} ${
+                      !collapseOpen ? styles.collapsed : ""
+                    } ${suggesterVisibleMobileClass}`}
                   >
                     <Suggester
                       className={`${styles.suggester}`}
@@ -261,6 +266,24 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
+                    />
+
+                    <MoreOptionsLink
+                      onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                      className={`${styles.linkshowmore} ${
+                        collapseOpen ? styles.hidden : ""
+                      }`}
+                    >
+                      {Translate({
+                        context: "search",
+                        label: "advancedSearchLink",
+                      })}
+                    </MoreOptionsLink>
+
+                    <ExpandedSearch
+                      className={styles.expandedSearch}
+                      collapseOpen={collapseOpen}
+                      setCollapseOpen={setCollapseOpen}
                     />
                   </div>
 
@@ -306,12 +329,6 @@ export function Header({
                   })}
                 </div>
               </div>
-            </Col>
-            <Col lg={{ span: 7, offset: 3 }}>
-              <ExpandedSearch
-                collapseOpen={collapseOpen}
-                setCollapseOpen={setCollapseOpen}
-              />
             </Col>
           </Row>
         </Container>
