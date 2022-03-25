@@ -5,6 +5,7 @@
 }
 
 .container__open {
+
 }
 
 .input_wrap {
@@ -70,7 +71,7 @@
   height: auto;
   max-height: 50vh;
   padding: 0;
-  z-index: 1;
+  z-index: 2;
   box-shadow: var(--shadow-effect);
 }
 
