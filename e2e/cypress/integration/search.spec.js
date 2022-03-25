@@ -49,7 +49,7 @@ describe("Search", () => {
       cy.get("[data-cy=search-input-title]").type("some title");
       cy.get("[data-cy=search-input-creator]").type("some creator");
       cy.get("[data-cy=search-input-subject]").type("some subject");
-      cy.get("[data-cy=header-searchbutton]").last().click();
+      cy.get("[data-cy=header-searchbutton]").first().click();
 
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {
@@ -87,7 +87,7 @@ describe("Search", () => {
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
 
-      cy.get("[data-cy=header-searchbutton]").last().click();
+      cy.get("[data-cy=header-searchbutton]").first().click();
 
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {

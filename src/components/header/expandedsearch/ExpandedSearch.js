@@ -53,7 +53,6 @@ export const isEmpty = (objectToCheck) => {
  * @constructor
  */
 export function ExpandedSearch({
-  doSearch,
   workType,
   className,
   collapseOpen,
@@ -72,81 +71,70 @@ export function ExpandedSearch({
   return (
     <div className={`${styles.flexnav} ${className}`}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            doSearch();
-          }}
-        >
-          <div className={styles.wrapper}>
-            <div className={styles.flex} id="example-collapse-text">
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelTitle}
-                  </Label>
-                </div>
-                <SuggesterTemplate
-                  type="title"
-                  title={translations(workType).labelTitle}
-                />
+        <div className={styles.wrapper}>
+          <div className={styles.flex} id="example-collapse-text">
+            <div className={styles.suggesterright}>
+              <div className={styles.labelinline}>
+                <Label for="advanced-search-title">
+                  {translations(workType).labelTitle}
+                </Label>
               </div>
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelCreator}
-                  </Label>
-                </div>
-                <SuggesterTemplate
-                  type="creator"
-                  title={translations(workType).labelCreator}
-                />
-              </div>
-              <div className={styles.suggesterright}>
-                <div className={styles.labelinline}>
-                  <Label for="advanced-search-title">
-                    {translations(workType).labelSubject}
-                  </Label>
-                </div>
-                <SuggesterTemplate
-                  type="subject"
-                  title={translations(workType).labelSubject}
-                />
-              </div>
+              <SuggesterTemplate
+                type="title"
+                title={translations(workType).labelTitle}
+              />
             </div>
-
-            <div className={styles.buttonflexnav}>
-              <div className={styles.buttoninline}>
-                <button
-                  type="submit"
-                  data-cy={cyKey({
-                    name: "searchbutton",
-                    prefix: "header",
-                  })}
-                  className={styles.button}
-                >
-                  <span>
-                    {Translate({ context: "header", label: "search" })}
-                  </span>
-                  <div className={styles.fill} />
-                </button>
+            <div className={styles.suggesterright}>
+              <div className={styles.labelinline}>
+                <Label for="advanced-search-title">
+                  {translations(workType).labelCreator}
+                </Label>
               </div>
-              <span
-                className={!collapseOpen ? styles.hide : styles.linkshowless}
-              >
-                <MoreOptionsLink
-                  onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                  className={styles.linkshowless}
-                >
-                  {Translate({
-                    context: "search",
-                    label: "advancedSearchLinkLess",
-                  })}
-                </MoreOptionsLink>
-              </span>
+              <SuggesterTemplate
+                type="creator"
+                title={translations(workType).labelCreator}
+              />
+            </div>
+            <div className={styles.suggesterright}>
+              <div className={styles.labelinline}>
+                <Label for="advanced-search-title">
+                  {translations(workType).labelSubject}
+                </Label>
+              </div>
+              <SuggesterTemplate
+                type="subject"
+                title={translations(workType).labelSubject}
+              />
             </div>
           </div>
-        </form>
+
+          <div className={styles.buttonflexnav}>
+            <div className={styles.buttoninline}>
+              <button
+                type="submit"
+                data-cy={cyKey({
+                  name: "searchbutton",
+                  prefix: "header",
+                })}
+                className={styles.button}
+              >
+                <span>{Translate({ context: "header", label: "search" })}</span>
+                <div className={styles.fill} />
+              </button>
+            </div>
+            <span className={!collapseOpen ? styles.hide : styles.linkshowless}>
+              <MoreOptionsLink
+                onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                className={styles.linkshowless}
+              >
+                {Translate({
+                  context: "search",
+                  label: "advancedSearchLinkLess",
+                })}
+              </MoreOptionsLink>
+            </span>
+          </div>
+        </div>
       </Collapse>
     </div>
   );
