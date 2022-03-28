@@ -6,6 +6,7 @@ import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 import { useData } from "@/lib/api/api";
 import { all } from "@/lib/api/suggest.fragments";
+import Translate from "@/components/base/translate";
 
 /**
  * Subcomponent - show input field with suggestions. Exported for reuse in
@@ -28,6 +29,7 @@ export function SuggesterWithInput({
   value = "",
   onClear,
   title = "",
+  placeholder = "",
 }) {
   return (
     <div className={styles.suggestionswrap}>
@@ -44,7 +46,7 @@ export function SuggesterWithInput({
           className={styles.expandedinput}
           id={`search-${type}`}
           dataCy={`search-input-${type}`}
-          placeholder={title}
+          placeholder={placeholder}
           onChange={(e) => {
             onChange && onChange(e?.target?.value, type);
           }}
@@ -76,16 +78,6 @@ export default function wrap({ title = "", type = "" }) {
 
   const value = q[type];
 
-  /*const onReset = () => clearQ({ exclude: ["all"] });
-
-  const doSearch = () => {
-    setQuery({
-      pathname: "/find",
-      query: { workType },
-    });
-    document.activeElement.blur();
-  };*/
-
   const onChange = (val, type) => {
     setQ({ ...q, [type]: val });
   };
@@ -99,6 +91,11 @@ export default function wrap({ title = "", type = "" }) {
     setQ({ ...q, [type]: "" });
   };
 
+  const placeholder = Translate({
+    context: "search",
+    label: `placeholder-${type}`,
+  });
+
   return (
     <SuggesterWithInput
       type={type}
@@ -108,6 +105,7 @@ export default function wrap({ title = "", type = "" }) {
       onChange={onChange}
       onClear={onClear}
       value={value}
+      placeholder={placeholder}
     />
   );
 }

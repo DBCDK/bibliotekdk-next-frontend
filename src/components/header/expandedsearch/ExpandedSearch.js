@@ -1,14 +1,9 @@
 /**
  * @file Component for specific search on title, creator and subject. Desktop version
  */
-
-import Suggester from "@/components/base/suggester/Suggester";
-import Input from "@/components/base/forms/input/Input";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 import React, { useEffect, useState } from "react";
-import { useData } from "@/lib/api/api";
-import { all } from "@/lib/api/suggest.fragments";
 import styles from "./ExpandedSearch.module.css";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
