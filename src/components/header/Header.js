@@ -276,7 +276,11 @@ export function Header({
                     >
                       {Translate({
                         context: "search",
-                        label: "advancedSearchLink",
+                        label:
+                          countQ === 0
+                            ? "advancedSearchLink"
+                            : "advancedSearchLinkCount",
+                        vars: [countQ],
                       })}
                     </MoreOptionsLink>
 
