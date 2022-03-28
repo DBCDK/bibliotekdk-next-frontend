@@ -83,7 +83,7 @@ export default function wrap({ title = "", type = "" }) {
   };
 
   const onSelect = (val, type) => {
-    setQuery({ include: { ...q, [type]: val } });
+    setQuery({ pathname: "/find", include: { ...q, [type]: val } });
     document.activeElement.blur();
   };
 
