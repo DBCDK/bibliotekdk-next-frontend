@@ -41,7 +41,7 @@ export default function Searchbar({ q }) {
           <Col xs={12} md={{ span: 8, offset: 2 }}>
             <Row>
               <Col xs={12}>
-                <FakeSearchInput q={q} />
+                <FakeSearchInput q={q} showButton={!expandedOpen} />
                 <ExpandedSearchMobile
                   collapseOpen={expandedOpen}
                   setCollapseOpen={setExpandedOpen}

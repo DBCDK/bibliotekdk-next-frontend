@@ -137,6 +137,11 @@ function RouterProvider({ children, value }) {
             ],
           });
         },
+        back: () =>
+          setQuery({
+            current: Math.max(current - 1, 0),
+            history,
+          }),
         go: (index) =>
           setQuery({
             current: current + index,

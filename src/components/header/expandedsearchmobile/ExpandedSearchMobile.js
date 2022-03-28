@@ -51,7 +51,7 @@ function ExpandedSearchMobile({
   };
 
   return (
-    <div>
+    <div data-cy="expanded-search-mobile">
       <Collapse in={collapseOpen} className={styles.wrapper}>
         <div>
           <form

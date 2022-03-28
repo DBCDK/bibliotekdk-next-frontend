@@ -12,6 +12,7 @@
   border: 1px solid white;
 }
 .fakeinput {
+  position: relative;
   background: white;
   height: 56px;
   border: 1px solid var(--gray);
@@ -42,6 +43,31 @@
 }
 .placeholder {
   display: none;
+}
+
+.clear {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  transform: scale(0);
+  transition: transform 0.3s;
+  cursor: pointer;
+
+  /* override dynamic style */
+  min-width: 56px;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clear.visible{
+  transform: scale(1);
+  transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
+}
+
+.clear path {
+  fill: var(--blue);
 }
 
 @media (min-width: 464px) {
