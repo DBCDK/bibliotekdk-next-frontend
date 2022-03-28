@@ -1,4 +1,4 @@
-import Router, { useRouter } from "next/router";
+import Router from "next/router";
 
 import PropTypes from "prop-types";
 import AutoSuggest from "react-autosuggest";
@@ -7,6 +7,7 @@ import AutosuggestHighlightParse from "autosuggest-highlight/parse";
 
 import { useState, useEffect, useMemo } from "react";
 
+import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 
 import { useData } from "@/lib/api/api";
@@ -31,7 +32,6 @@ import History from "./templates/history";
 import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
-import Input from "@/components/help/search/input";
 
 // Context
 const context = { context: "suggester" };
@@ -246,7 +246,7 @@ function renderInputComponent(
         className={styles.arrow}
         data-cy={cyKey({ name: "arrow-close", prefix: "suggester" })}
         onClick={() => {
-          onClear();
+          // onClear();
           onClose();
         }}
       >
@@ -324,15 +324,6 @@ export function Suggester({
   // Flag that history is used in suggester
   const isHistory = !!(isMobile && query === "");
 
-  // clear queries
-  useEffect(() => {
-    if (isMobile) {
-      // clear internal query + onChange callback
-      setIntQuery("");
-      onChange && onChange("");
-    }
-  }, [isMobile]);
-
   // Create theme container with className prop
   useEffect(() => {
     theme.container = `${styles.container} ${className} react-autosuggest__container`;
@@ -367,6 +358,11 @@ export function Suggester({
       // internal query update
       setIntQuery(newValue);
     },
+    onFocus: (e) =>
+      e.currentTarget.setSelectionRange(
+        e.currentTarget.value.length,
+        e.currentTarget.value.length
+      ),
   };
 
   return (
@@ -376,13 +372,6 @@ export function Suggester({
       alwaysRenderSuggestions={!!isMobile}
       // shouldRenderSuggestions={shouldRenderSuggestions}
       suggestions={isHistory ? history : suggestions}
-      onSuggestionsClearRequested={() => {
-        // clear internal and external query if mobile
-        if (isMobile) {
-          onChange && onChange("");
-          setIntQuery("");
-        }
-      }}
       onSuggestionsFetchRequested={({ value, reason }) => {
         if (reason === "input-changed") {
           onChange && onChange(value);
@@ -399,7 +388,7 @@ export function Suggester({
 
         // Clear Query
         const shouldClear = isMobile || suggestion?.__typename === "Work";
-        onChange && onChange(shouldClear ? "" : suggestionValue);
+        onChange && onChange(suggestionValue);
         shouldClear && setIntQuery("");
       }}
       renderSuggestionsContainer={(props) =>
@@ -446,13 +435,12 @@ export default function Wrap(props) {
   let { className } = props;
   const { onChange } = props;
 
-  const router = useRouter();
   const dataCollect = useDataCollect();
   const { filters } = useFilters();
+  const { q } = useQ();
 
-  const initialQuery = router.query["q.all"] || "";
+  const query = q.all;
 
-  const [query, setQuery] = useState(initialQuery);
   const [selected, setSelected] = useState();
 
   const worktype = filters.workType?.[0] || null;
@@ -460,16 +448,6 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(
     query && query !== selected && suggestFragments.all({ q: query, worktype })
   );
-
-  // Its a mess with internal states all over the place
-  // At some point look into it
-  // the URL param "q" should be the single source of truth
-  useEffect(() => {
-    const all = router.query["q.all"];
-    if (all && all !== query) {
-      setQuery(all);
-    }
-  }, [router.query["q.all"]]);
 
   useEffect(() => {
     // Collect data
@@ -489,10 +467,7 @@ export default function Wrap(props) {
   return (
     <Suggester
       {...props}
-      onChange={(q) => {
-        onChange && onChange(q);
-        setQuery(q);
-      }}
+      onChange={(q) => onChange && onChange(q)}
       onSelect={(suggestionValue, suggestion, suggestionIndex) => {
         setSelected(suggestionValue);
         props.onSelect(suggestionValue);

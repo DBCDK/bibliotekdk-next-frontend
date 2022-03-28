@@ -153,7 +153,7 @@ describe("Search", () => {
       });
     });
     context(`Mobile`, () => {
-      it.skip(`Maintains input value when opening mobile suggester`, () => {
+      it(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");
         cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
