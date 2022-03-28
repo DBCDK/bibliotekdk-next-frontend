@@ -150,6 +150,8 @@ export function Header({
       method,
     });
 
+    document.activeElement.blur();
+
     // Delay history update in list
     setTimeout(() => {
       setHistory(value);
