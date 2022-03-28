@@ -1,6 +1,7 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { useState } from "react";
 import HeaderWrapped, { Header } from "./Header";
+import Searchbar from "@/components/search/searchbar";
 
 import useFilters from "@/components/hooks/useFilters";
 
@@ -30,6 +31,7 @@ export function NavHeader() {
       <StoryTitle>Header</StoryTitle>
       <StoryDescription>Try to input "hest" or "suggest"</StoryDescription>
       <HeaderWrapped />
+      <Searchbar />
     </div>
   );
 }
@@ -52,6 +54,7 @@ export function NavHeaderPrefilled() {
         URL query parameters are reflected as default values in input fields
       </StoryDescription>
       <HeaderWrapped />
+      <Searchbar />
     </div>
   );
 }

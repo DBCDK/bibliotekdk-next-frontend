@@ -18,14 +18,20 @@ describe("Search", () => {
       cy.get("[data-cy=router-pathname]").should("have.text", "/find");
 
       // And check that they are correctly displayed
-      cy.get("[data-cy=header-material-selector]").contains("Film");
-      cy.get("[data-cy=suggester-input]").should("have.value", "some all");
-      cy.get("[data-cy=search-input-title]").should("have.value", "some title");
-      cy.get("[data-cy=search-input-creator]").should(
+      cy.get("header [data-cy=header-material-selector]").contains("Film");
+      cy.get("header [data-cy=suggester-input]").should(
+        "have.value",
+        "some all"
+      );
+      cy.get("header [data-cy=search-input-title]").should(
+        "have.value",
+        "some title"
+      );
+      cy.get("header [data-cy=search-input-creator]").should(
         "have.value",
         "some creator"
       );
-      cy.get("[data-cy=search-input-subject]").should(
+      cy.get("header [data-cy=search-input-subject]").should(
         "have.value",
         "some subject"
       );
@@ -43,13 +49,13 @@ describe("Search", () => {
       cy.contains("Flere søgemuligheder").click();
 
       // And fill in some stuff
-      cy.get("[data-cy=header-material-selector]").click();
-      cy.get("[data-cy=item-movie] > [data-cy=text-film]").click();
-      cy.get("[data-cy=suggester-input]").type("some all");
-      cy.get("[data-cy=search-input-title]").type("some title");
-      cy.get("[data-cy=search-input-creator]").type("some creator");
-      cy.get("[data-cy=search-input-subject]").type("some subject");
-      cy.get("[data-cy=header-searchbutton]").first().click();
+      cy.get("header [data-cy=header-material-selector]").click();
+      cy.get("header [data-cy=item-movie] > [data-cy=text-film]").click();
+      cy.get("header [data-cy=suggester-input]").type("some all");
+      cy.get("header [data-cy=search-input-title]").type("some title");
+      cy.get("header [data-cy=search-input-creator]").type("some creator");
+      cy.get("header [data-cy=search-input-subject]").type("some subject");
+      cy.get("header [data-cy=header-searchbutton]").first().click();
 
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {
@@ -68,7 +74,7 @@ describe("Search", () => {
     it(`Click input clear button should NOT be reflected in URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
-      cy.get("[data-cy=search-input-subject-clear]").click();
+      cy.get("header [data-cy=search-input-subject-clear]").click();
 
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {
@@ -104,9 +110,9 @@ describe("Search", () => {
     it(`All default input suggestions will search with q.all`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("[data-cy=suggester-input]").clear().type("hest");
+      cy.get("header [data-cy=suggester-input]").clear().type("hest");
 
-      cy.get("[data-cy=suggester-container")
+      cy.get("header [data-cy=suggester-container")
         .find("li")
         .should("have.length", 3);
 
@@ -129,7 +135,7 @@ describe("Search", () => {
     it(`Tab away from input will not sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("[data-cy=suggester-input]").clear().type("hest");
+      cy.get("header [data-cy=suggester-input]").clear().type("hest");
       cy.tab();
 
       cy.get("[data-cy=router-query]").then((el) => {
@@ -140,10 +146,65 @@ describe("Search", () => {
     it(`Pressing enter will sync with URL immediately`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
-      cy.get("[data-cy=suggester-input]").clear().type("hest{enter}");
+      cy.get("header [data-cy=suggester-input]").clear().type("hest{enter}");
 
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
+      });
+    });
+    context(`Mobile`, () => {
+      it.skip(`Maintains input value when opening mobile suggester`, () => {
+        cy.viewport("iphone-6");
+        cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+        cy.get("[data-cy=fake-search-input]").click();
+        cy.get("[data-cy=suggester-input]").should("have.value", "some all");
+      });
+
+      it(`Hide mobile search button when expanded`, () => {
+        cy.viewport("iphone-6");
+        cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+        cy.get("[data-cy=fake-search-input-button]").should("not.exist");
+        cy.get(
+          "[data-cy=expanded-search-mobile] [data-cy=text-færre-søgemuligheder]"
+        )
+          .scrollIntoView()
+          .click();
+        cy.get("[data-cy=fake-search-input-button]").should("exist");
+      });
+
+      it(`Click input clear on mobile should NOT be reflected in URL immediately`, () => {
+        cy.viewport("iphone-6");
+        cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+        cy.get("[data-cy=fake-search-input]").should("contain", "some all");
+        cy.get("[data-cy=fake-search-input-clear]").should("be.visible");
+        cy.get("[data-cy=fake-search-input-clear]").click();
+        cy.get("[data-cy=fake-search-input-clear]").should("not.be.visible");
+        cy.get("[data-cy=fake-search-input]").should("not.contain", "some all");
+
+        // Check URL query parameters are as expected
+        cy.get("[data-cy=router-query]").then((el) => {
+          expect(JSON.parse(el.text())).to.deep.equal({
+            "q.all": "some all",
+            "q.title": "some title",
+            "q.creator": "some creator",
+            "q.subject": "some subject",
+            workType: "movie",
+          });
+        });
+
+        cy.get(
+          "[data-cy=expanded-search-mobile] [data-cy=header-searchbutton]"
+        ).click();
+
+        cy.get("[data-cy=router-query]").then((el) => {
+          expect(JSON.parse(el.text())).to.deep.equal({
+            "q.title": "some title",
+            "q.creator": "some creator",
+            "q.subject": "some subject",
+            workType: "movie",
+          });
+        });
       });
     });
   });

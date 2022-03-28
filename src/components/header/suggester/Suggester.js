@@ -58,10 +58,10 @@ const theme = {
  * Function to open mobile suggester
  *
  */
-export function openMobileSuggester() {
-  Router.push({
-    pathname: Router.pathname,
-    query: { ...Router.query, suggester: true },
+export function openMobileSuggester(router = Router) {
+  router.push({
+    pathname: router.pathname,
+    query: { ...router.query, suggester: true },
   });
   // ios devices require focus to be called
   // while executing the click event
