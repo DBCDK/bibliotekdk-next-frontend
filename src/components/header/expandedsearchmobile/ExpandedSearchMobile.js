@@ -154,6 +154,7 @@ export default function wrap(props) {
       doSearch={init.doSearch}
       collapseOpen={props.collapseOpen}
       setCollapseOpen={props.setCollapseOpen}
+      workType={init.workType}
     />
   );
 }

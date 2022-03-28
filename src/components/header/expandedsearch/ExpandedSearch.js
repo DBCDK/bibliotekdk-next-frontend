@@ -152,6 +152,7 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   const { setQuery } = useQ();
   // connected filters hook
   const { filters } = useFilters();
+
   const workType = filters.workType?.[0];
   const doSearch = () => {
     setQuery({
@@ -164,6 +165,7 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
     doSearch,
     collapseOpen,
     setCollapseOpen,
+    workType,
   };
 }
 
