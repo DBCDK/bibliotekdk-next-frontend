@@ -21,20 +21,19 @@
   .titlewrapper {
     display: flex;
     position: relative;
-    top: var(--pt4);
     flex-direction: row-reverse;
+    align-items: baseline;
   }
 
   .titlewrapper h1 {
-    font-size: 17px;
-    line-height: 26px;
+    font-size: 14px;
     font-family: var(--body-font);
     display: inline-block;
   }
   .resultlength {
     display: inline-block;
     margin-right: var(--pt1);
-    font-size: 14px;
+    font-size: 17px;
     width: unset;
   }
 }
@@ -42,16 +41,6 @@
 @media (max-width: 768px) {
   .titledivider {
     display: block;
-  }
-
-  .resultlength {
-    display: inline-block;
-  }
-
-  .titlewrapper {
-    display: flex;
-    position: relative;
-    top: var(--pt3);
   }
 
   .titlewrapper .viewselector {
