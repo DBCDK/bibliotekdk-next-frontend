@@ -93,7 +93,7 @@ export default function wrap({ title = "", type = "" }) {
 
   const placeholder = Translate({
     context: "search",
-    label: `placeholder-${type}`,
+    label: workType ? `placeholder-${workType}-${type}` : `placeholder-${type}`,
   });
 
   return (
