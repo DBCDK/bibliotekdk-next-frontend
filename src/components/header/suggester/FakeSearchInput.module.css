@@ -17,6 +17,7 @@
   height: 56px;
   border: 1px solid var(--gray);
   flex-grow: 2;
+  overflow: hidden;
 }
 .fakeinput p {
   color: var(--gray);
@@ -48,20 +49,21 @@
 .clear {
   position: absolute;
   right: 0;
-  top: 0px;
+  top: 0;
   transform: scale(0);
   transition: transform 0.3s;
   cursor: pointer;
+  background-color: white;
 
   /* override dynamic style */
   min-width: 56px;
-  height: 56px;
+  height: 54px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.clear.visible{
+.clear.visible {
   transform: scale(1);
   transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
 }

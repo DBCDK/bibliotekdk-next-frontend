@@ -39,6 +39,7 @@ export function fast({ q, limit = 100, offset = 0, filters = {} }) {
                  works(limit: $limit, offset: $offset) {
                    id
                    title
+                   fullTitle
                    creators {
                      name
                    }
@@ -81,6 +82,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
                    }
                    path
                    title
+                   fullTitle
                  }
                  hitcount
                }
