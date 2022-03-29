@@ -12,6 +12,7 @@ import { cyKey } from "@/utils/trim";
 
 import styles from "./Select.module.css";
 import React from "react";
+import useQ from "@/components/hooks/useQ";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -137,9 +138,10 @@ export function Mobile({
  * @constructor
  */
 function Wrap({ children }) {
-  const { setQuery, getQuery, workTypes, getCount } = useFilters();
-
+  const { getQuery, workTypes, getCount } = useFilters();
   const { workType } = getQuery();
+
+  const { setQuery } = useQ();
 
   const selected = workType[0] || "all";
 
@@ -147,7 +149,9 @@ function Wrap({ children }) {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
       const param = elem === "all" ? {} : { workType: [elem] };
-      setQuery({ include: param });
+      setQuery({
+        query: param,
+      });
     },
     selected,
     count: getCount(["workType"]),
