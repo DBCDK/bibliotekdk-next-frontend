@@ -635,8 +635,9 @@ export function Order({
             </Text>
           ) : availableAsDigitalCopy ? (
             <Link
+              target="_blank"
               disabled={false}
-              href={"/hjaelp/digital-artikelservice/67"}
+              href={"/hjaelp/digital-artikelservice/84"}
               border={{ top: false, bottom: { keepVisible: true } }}
             >
               <Text type="text3">
