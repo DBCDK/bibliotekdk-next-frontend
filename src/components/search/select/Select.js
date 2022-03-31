@@ -148,7 +148,7 @@ function Wrap({ children }) {
   return React.cloneElement(children, {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
-      const param = elem === "all" ? {} : { workType: [elem] };
+      const param = elem === "all" ? {} : { workType: elem };
       setQuery({
         query: param,
       });
