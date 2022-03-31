@@ -150,7 +150,7 @@ function Wrap({ children }) {
     onSelect: (elem) => {
       const param = elem === "all" ? {} : { workType: elem };
       setQuery({
-        query: param,
+        include: param,
       });
     },
     selected,
