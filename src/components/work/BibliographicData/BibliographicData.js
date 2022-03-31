@@ -27,6 +27,10 @@ export function BibliographicData({ work, workId }) {
     () => sortManifestations(work.manifestations),
     [work]
   );
+
+  // temporary fix for large manifestation lists
+  const sliced = sortedMaterialTypes.slice(0, 100);
+
   return (
     <Section
       title={Translate({
@@ -37,7 +41,7 @@ export function BibliographicData({ work, workId }) {
       topSpace={true}
     >
       <Accordion>
-        {sortedMaterialTypes.map((manifestation, index) => {
+        {sliced.map((manifestation, index) => {
           const volume = manifestation.volume
             ? " (" + manifestation.volume + ")"
             : "";

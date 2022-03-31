@@ -1,3 +1,4 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
@@ -20,9 +21,12 @@ import styles from "./Row.module.css";
  * @param {object} props.data
  */
 export default function ResultRow({ data, onClick }) {
-  const { title } = data;
+  const [expand, setExpand] = useState(false);
+  const { fullTitle, title } = data;
+
   const work = data;
   const creatorName = work.creators?.[0]?.name;
+
   return (
     <Link
       a={true}
@@ -44,25 +48,24 @@ export default function ResultRow({ data, onClick }) {
       <Row className={styles.row}>
         {/* BETA-1 - removed this column
         <Col className={styles.leftcol} xs={3}>
-
-
           <Breadcrumbs
             skeleton={!work.path}
             crumbs={work.path ? null : 4}
             path={work.path || []}
             link={false}
           />
-
         </Col>
         */}
         <Col>
           <Title
             type="title5"
             tag="h2"
-            lines={1}
+            lines={3}
+            clamp={true}
+            title={fullTitle}
             skeleton={!work.title && !title}
           >
-            {work.title || title}
+            {fullTitle || title}
           </Title>
           <Text
             type="text3"

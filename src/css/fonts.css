@@ -23,9 +23,9 @@
 
 @font-face {
   font-family: "ibm_plex_sanssemibold";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-semibold-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-SemiBold.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-semibold-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Sans/woff/IBMPlexSans-SemiBold.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -33,9 +33,9 @@
 
 @font-face {
   font-family: "ibm_plex_sansmedium";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-medium-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-Medium.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-medium-webfont.woff")
+    url("../../public/fonts//IBM-Plex-Sans/woff/IBMPlexSans-Medium.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -43,9 +43,9 @@
 
 @font-face {
   font-family: "ibm_plex_sansregular";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-regular-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-Regular.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-regular-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Sans/woff/IBMPlexSans-Regular.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -53,9 +53,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_sanslight";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-light-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-Light.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-light-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Sans/woff/IBMPlexSans-Light.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -63,9 +63,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_sansextralight";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-extralight-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-ExtraLight.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-extralight-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Sans/woff/IBMPlexSans-ExtraLight.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -73,9 +73,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_sansthin";
-  src: url("../../public/fonts/ibm-sans/ibmplexsans-thin-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Sans/woff2/IBMPlexSans-Thin.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-sans/ibmplexsans-thin-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Sans/woff/IBMPlexSans-Thin.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -88,9 +88,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_serifbold";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-bold-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-Bold.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-bold-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-Bold.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -98,9 +98,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_serifsemibold";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-semibold-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-SemiBold.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-semibold-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-SemiBold.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -108,9 +108,9 @@
 
 @font-face {
   font-family: "ibm_plex_serifmedium";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-medium-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-Medium.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-medium-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-Medium.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -118,9 +118,9 @@
 
 @font-face {
   font-family: "ibm_plex_serifregular";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-regular-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-Regular.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-regular-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-Regular.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -128,9 +128,9 @@
 
 @font-face {
   font-family: "ibm_plex_seriflight";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-light-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-Light.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-light-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-Light.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -138,9 +138,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_serifextralight";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-extralight-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-ExtraLight.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-extralight-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-ExtraLight.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;
@@ -148,9 +148,9 @@
 
 /* @font-face {
   font-family: "ibm_plex_serifthin";
-  src: url("../../public/fonts/ibm-serif/ibmplexserif-thin-webfont.woff2")
+  src: url("../../public/fonts/IBM-Plex-Serif/woff2/IBMPlexSerif-Thin.woff2")
       format("woff2"),
-    url("../../public/fonts/ibm-serif/ibmplexserif-thin-webfont.woff")
+    url("../../public/fonts/IBM-Plex-Serif/woff/IBMPlexSerif-Thin.woff")
       format("woff");
   font-weight: normal;
   font-style: normal;

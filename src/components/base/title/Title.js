@@ -21,6 +21,7 @@ export const Title = ({
   type = "title1",
   clamp,
   lines,
+  ...props
 }) => {
   const Tag = tag;
 
@@ -46,6 +47,7 @@ export const Title = ({
 
   return (
     <Tag
+      {...props}
       ref={el}
       className={`${styles.title} ${styles[type]} ${className} ${
         clamp && styles.clamp
