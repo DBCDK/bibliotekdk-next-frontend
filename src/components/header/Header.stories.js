@@ -35,6 +35,7 @@ export function NavHeader() {
     </div>
   );
 }
+
 NavHeader.story = {
   parameters: {
     graphql,
@@ -58,6 +59,7 @@ export function NavHeaderPrefilled() {
     </div>
   );
 }
+
 NavHeaderPrefilled.story = {
   parameters: {
     graphql,
@@ -70,6 +72,33 @@ NavHeaderPrefilled.story = {
         "q.creator": "some creator",
         "q.subject": "some subject",
         workType: "movie",
+      },
+    },
+  },
+};
+
+export function NavHeaderMaterialPage() {
+  return (
+    <div style={{ height: "800px" }}>
+      <StoryTitle>Header</StoryTitle>
+      <StoryDescription>
+        URL query parameters are reflected as default values in input fields
+      </StoryDescription>
+      <HeaderWrapped />
+      <Searchbar />
+    </div>
+  );
+}
+
+NavHeaderMaterialPage.story = {
+  parameters: {
+    graphql,
+    nextRouter: {
+      showInfo: true,
+      pathname: "/materiale/[title_author]/[workId]",
+      query: {
+        title_author: "den-vaade-fisk_volker-kutscher",
+        workId: "work-of:870970-basis:27644317",
       },
     },
   },

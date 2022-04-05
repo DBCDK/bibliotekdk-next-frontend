@@ -13,6 +13,7 @@ import { cyKey } from "@/utils/trim";
 import styles from "./Select.module.css";
 import React from "react";
 import useQ from "@/components/hooks/useQ";
+import { useRouter } from "next/router";
 
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
@@ -145,11 +146,19 @@ function Wrap({ children }) {
 
   const selected = workType[0] || "all";
 
+  const router = useRouter();
+
+  console.log(router.pathname, "ROUTE");
+
+  const path =
+    router.pathname === "/materiale/[title_author]/[workId]" ? "/find" : null;
+
   return React.cloneElement(children, {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
       const param = elem === "all" ? {} : { workType: elem };
       setQuery({
+        pathname: path,
         query: param,
       });
     },

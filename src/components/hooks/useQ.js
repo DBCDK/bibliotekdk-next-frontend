@@ -184,6 +184,8 @@ function useQ() {
     query = { ...router.query },
     method = "push",
   }) => {
+    console.log(pathname, "PATHNAME");
+
     // include all q types (empty types)
     const base = buildQ();
 
