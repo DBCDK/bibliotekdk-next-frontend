@@ -224,7 +224,10 @@ export function detailsAllManifestations({ workId }) {
             pid
             physicalDescription
             publisher
-            shelf
+            shelf{
+              prefix
+              shelfmark
+            }
             title
             volume
           }

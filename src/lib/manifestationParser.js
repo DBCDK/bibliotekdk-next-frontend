@@ -127,6 +127,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "shelf",
     }),
+    valueParser: (value) => Object.values(value).join(", "),
   },
   {
     dataField: "notes",
