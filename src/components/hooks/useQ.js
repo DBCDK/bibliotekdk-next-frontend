@@ -104,6 +104,7 @@ function useQ() {
    */
   useEffect(() => {
     const q = _getQuery();
+
     const initQuery = JSON.stringify(q);
     if (initialized !== initQuery) {
       // set initialized to initQuery, this prevents multiple mount call (multiple instances of hook)
@@ -184,8 +185,6 @@ function useQ() {
     query = { ...router.query },
     method = "push",
   }) => {
-    console.log(pathname, "PATHNAME");
-
     // include all q types (empty types)
     const base = buildQ();
 

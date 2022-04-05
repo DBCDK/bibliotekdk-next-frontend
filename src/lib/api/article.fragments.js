@@ -58,7 +58,7 @@ export function promotedArticles({ language }) {
   return {
     // delay: 1000, // for debugging
     query: `query ( $language: LanguageId! $langcode: [String] ) {
-      nodeQuery (limit:20 filter: {conditions: [
+      nodeQuery (limit:40 filter: {conditions: [
         {field: "type", value: ["article"]}, 
         {field: "promote", value: "1"},
         {field: "status", value: "1"},
