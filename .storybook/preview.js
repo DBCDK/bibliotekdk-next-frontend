@@ -76,7 +76,7 @@ export const decorators = [
       <GraphQLMocker
         url={
           context?.parameters?.graphql?.url ||
-          "https://alfa-api.stg.bibliotek.dk/graphql"
+          "https://alfa-api.stg.bibliotek.dk/190101/default/graphql"
         }
         resolvers={context?.parameters?.graphql?.resolvers}
         beforeFetch={context?.parameters?.graphql?.urlbeforeFetch}
