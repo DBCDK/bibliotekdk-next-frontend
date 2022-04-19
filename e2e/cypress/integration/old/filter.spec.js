@@ -130,7 +130,7 @@ describe("Filter", () => {
   });
 
   it(`Can parse facet containing ","`, () => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req?.body?.query?.includes?.("facets")) {
         req.reply({
           data: {

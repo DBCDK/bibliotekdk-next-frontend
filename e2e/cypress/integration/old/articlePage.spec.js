@@ -122,9 +122,10 @@ describe("ArticlePage", () => {
       });
     });
 
-    it.skip("Shows login prompt when not logged in", () => {
+    // @TODO skipped next three tests - ENABLE
+    it("Shows login prompt when not logged in", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", "/graphql", (req) => {
+        cy.intercept("POST", "/190101/default/graphql", (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -145,9 +146,9 @@ describe("ArticlePage", () => {
       cy.get("[data-cy=button-log-ind]").should("be.visible");
     });
 
-    it.skip("Shows login prompt when logged in user is not granted access", () => {
+    it("Shows login prompt when logged in user is not granted access", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", "/graphql", (req) => {
+        cy.intercept("POST", "/190101/default/graphql", (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -156,14 +157,14 @@ describe("ArticlePage", () => {
         });
       });
       cy.fixture("branchUserParameters.json").then((fixture) => {
-        cy.intercept("POST", "/graphql", (req) => {
+        cy.intercept("POST", "/190101/default/graphql", (req) => {
           if (req?.body?.variables?.branchId) {
             req.reply(fixture);
           }
         });
       });
       cy.fixture("sessionUserParameters.json").then((fixture) => {
-        cy.intercept("POST", "/graphql", (req) => {
+        cy.intercept("POST", "/190101/default/graphql", (req) => {
           if (req.body.query.includes("session {")) {
             req.reply(fixture);
           }
@@ -183,8 +184,8 @@ describe("ArticlePage", () => {
       );
     });
 
-    it.skip("Shows 404 when article does not exist", () => {
-      cy.intercept("POST", "/graphql", (req) => {
+    it("Shows 404 when article does not exist", () => {
+      cy.intercept("POST", "/190101/default/graphql", (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
           req.reply({
             errors: [

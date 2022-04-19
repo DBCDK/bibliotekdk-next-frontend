@@ -32,7 +32,7 @@ describe("Search", () => {
 
   it(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.startsWith("mutation")) {
         if (req.body.variables?.input?.search) {
           req.alias = "apiMutationOnSearch";

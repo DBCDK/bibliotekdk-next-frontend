@@ -14,7 +14,7 @@ describe("Recommender data collect", () => {
 
     // Intercept requests to graphql
     cy.fixture("recommendations.json").then((recommendationsFixture) => {
-      cy.intercept("POST", "/graphql", (req) => {
+      cy.intercept("POST", "/190101/default/graphql", (req) => {
         if (req.body.query.startsWith("mutation")) {
           req.alias = "apiMutation";
         } else if (req.body.query.includes("recommendations")) {

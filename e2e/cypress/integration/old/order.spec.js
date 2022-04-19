@@ -24,7 +24,7 @@ function mockLogin(customMock = {}) {
     },
   });
   cy.fixture("user.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(merge({}, fixture, customMock));
       }
@@ -34,7 +34,7 @@ function mockLogin(customMock = {}) {
 
 function mockFullWork() {
   cy.fixture("fullwork.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -44,7 +44,7 @@ function mockFullWork() {
 
 function mockArticleWork() {
   cy.fixture("fullarticlework.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -54,7 +54,7 @@ function mockArticleWork() {
 
 function mockArticleWorkNoPhysical() {
   cy.fixture("fullarticleworknophysical.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -64,7 +64,7 @@ function mockArticleWorkNoPhysical() {
 
 function mockPeriodicaWork() {
   cy.fixture("fullperiodicawork.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -74,7 +74,7 @@ function mockPeriodicaWork() {
 
 function mockAvailability() {
   cy.fixture("fullmanifestation.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("manifestation(")) {
         req.reply(fixture);
       }
@@ -84,7 +84,7 @@ function mockAvailability() {
 
 function mockBranchUserParameters() {
   cy.fixture("branchUserParameters.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("BranchUserParameters(")) {
         req.reply(fixture);
       }
@@ -94,7 +94,7 @@ function mockBranchUserParameters() {
 
 function mockBranchesSearch() {
   cy.fixture("branches.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("branches(q:")) {
         console.log(fixture);
         req.reply(fixture);
@@ -105,7 +105,7 @@ function mockBranchesSearch() {
 
 function mockSubmitOrder() {
   cy.fixture("submitorder.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("submitOrder(")) {
         req.reply(fixture);
         req.alias = "submitOrder";
@@ -116,7 +116,7 @@ function mockSubmitOrder() {
 
 function mockSubmitPeriodicaArticleOrder() {
   cy.fixture("submitPeriodicaArticleOrder.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("submitPeriodicaArticleOrder(")) {
         req.reply(fixture);
         req.alias = "submitPeriodicaArticleOrder";
@@ -128,7 +128,7 @@ function mockSubmitPeriodicaArticleOrder() {
 function mockSessionUserParameters() {
   cy.fixture("sessionUserParametersNull.json").then((fixtureNull) => {
     cy.fixture("sessionUserParameters.json").then((fixture) => {
-      cy.intercept("POST", "/graphql", (req) => {
+      cy.intercept("POST", "/190101/default/graphql", (req) => {
         if (req.body.query.includes("session {")) {
           cy.returnUserParameters ? req.reply(fixture) : req.reply(fixtureNull);
         }
@@ -139,7 +139,7 @@ function mockSessionUserParameters() {
 
 function mockSubmitSessionUserParameters() {
   cy.fixture("submitSessionUserParameters.json").then((fixture) => {
-    cy.intercept("POST", "/graphql", (req) => {
+    cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.includes("submitSession")) {
         req.reply(fixture);
       }
