@@ -2,7 +2,7 @@ version: "3"
 services:
   web:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: "${IMAGE:-docker-ux.dbc.dk/bibliotekdk-next-frontend:latest}"
+    image: "${IMAGE:-docker-frontend.artifacts.dbccloud.dk/bibliotekdk-next-frontend:latest}"
     environment:
       - DISABLE_DRUPAL_TRANSLATE=1
       - ENABLE_STORYBOOK=1
@@ -15,7 +15,7 @@ services:
     command: npm run start
   e2e:
     ipc: host ## Prevent Docker Crash in Cypress (https://github.com/cypress-io/cypress/issues/350)
-    image: docker.dbc.dk/cypress:latest
+    image: docker-dbc.artifacts.dbccloud.dk/cypress:latest
     volumes:
       - "./e2e:/app/e2e"
     depends_on:
