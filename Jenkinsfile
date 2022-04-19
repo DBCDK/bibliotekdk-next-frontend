@@ -30,6 +30,7 @@ pipeline {
         stage('Integration test') {
             steps { 
                 script {
+                    // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
                         sh "docker pull docker.dbc.dk/cypress:latest" 
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
@@ -45,7 +46,7 @@ pipeline {
             steps { 
                 script {
                 if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                    docker.withRegistry('https://docker-ux.dbc.dk', 'docker') {
+                    docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
                         app.push()
                         app.push("latest")
                     }
@@ -53,26 +54,19 @@ pipeline {
             } }
         }
         stage("Update staging version number") {
-			agent {
-				docker {
-					label 'devel9-head'
-					image "docker-io.dbc.dk/python3-build-image"
-					alwaysPull true
-				}
-			}
+            agent {
+                docker {
+                    label 'devel10-head'
+                    image "docker-dbc.artifacts.dbccloud.dk/build-env:latest"
+                    alwaysPull true
+                }
+            }
 			when {
 				branch "master"
 			}
 			steps {
 				dir("deploy") {
-					git(url: "gitlab@gitlab.dbc.dk:frontend/bibliotekdk-next-frontend-deploy.git", credentialsId: "gitlab-isworker", branch: "staging")
-					sh """#!/usr/bin/env bash
-						set -xe
-						rm -rf auto-committer-env
-						python3 -m venv auto-committer-env
-						source auto-committer-env/bin/activate
-						pip install -U pip
-						pip install git+https://github.com/DBCDK/kube-deployment-auto-committer#egg=deployversioner
+                    sh """#!/usr/bin/env bash
 						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
 					"""
 				}
