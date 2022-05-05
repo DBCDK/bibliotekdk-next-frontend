@@ -48,7 +48,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
             ...queryFunc({ ...context.query, ...customQueryVariables }),
             accessToken: session?.accessToken || anonSession?.accessToken,
           });
-          const queryRes = await fetcher(queryKey);
+          const queryRes = await fetcher(queryKey, userAgent);
           return { queryKey, queryRes };
         })
       )

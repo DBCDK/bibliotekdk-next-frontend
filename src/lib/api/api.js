@@ -38,7 +38,7 @@ export function generateKey(query) {
  *
  * @param {string} queryStr
  */
-export async function fetcher(queryStr) {
+export async function fetcher(queryStr, userAgent) {
   const { query, variables, delay, accessToken } =
     typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
@@ -47,6 +47,9 @@ export async function fetcher(queryStr) {
   };
   if (accessToken) {
     headers.Authorization = `Bearer ${accessToken}`;
+  }
+  if (userAgent) {
+    headers["user-agent"] = userAgent;
   }
   const start = Date.now();
   const res = await fetch(config.api.url, {
