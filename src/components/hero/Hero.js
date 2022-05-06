@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <Container className={styles.containerback} fluid>
       <Image
-        src="/img/bibdk-hero-scaled.jpeg"
+        src="/img/new_hero.jpg"
         layout="fill"
         priority={true}
         objectFit="cover"
