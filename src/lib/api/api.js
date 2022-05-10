@@ -38,7 +38,7 @@ export function generateKey(query) {
  *
  * @param {string} queryStr
  */
-export async function fetcher(queryStr, userAgent) {
+export async function fetcher(queryStr, userAgent, xForwardedFor) {
   const { query, variables, delay, accessToken } =
     typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
@@ -50,6 +50,9 @@ export async function fetcher(queryStr, userAgent) {
   }
   if (userAgent) {
     headers["user-agent"] = userAgent;
+  }
+  if (xForwardedFor) {
+    headers["x-forwarded-for"] = xForwardedFor;
   }
   const start = Date.now();
   const res = await fetch(config.api.url, {

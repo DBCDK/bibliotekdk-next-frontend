@@ -27,6 +27,9 @@ export async function fetchAll(queries, context, customQueryVariables) {
   // Detect if requester is a bot
   const userAgent = context.req.headers["user-agent"];
   const isBot = require("isbot")(userAgent) || !!context.query.isBot;
+  const ip =
+    context.req.headers["x-forwarded-for"] ||
+    context.req.connection.remoteAddress;
 
   // user session
   let anonSession;
@@ -48,7 +51,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
             ...queryFunc({ ...context.query, ...customQueryVariables }),
             accessToken: session?.accessToken || anonSession?.accessToken,
           });
-          const queryRes = await fetcher(queryKey, userAgent);
+          const queryRes = await fetcher(queryKey, userAgent, ip);
           return { queryKey, queryRes };
         })
       )
