@@ -9,8 +9,9 @@
     "nextjsBaseUrl": "http://localhost:3000"
   },
   "retries": {
-    "runMode": 4,
+    "runMode": 3,
     "openMode": 0
   },
-  "video": false
+  "video": false,
+  "numTestsKeptInMemory": 20
 }
