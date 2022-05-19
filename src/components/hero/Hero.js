@@ -17,7 +17,7 @@ export default function Hero() {
   return (
     <Container className={styles.containerback} fluid>
       <Image
-        src="/img/dokk1_5_resized.jpg"
+        src="/img/forside-beta.png"
         layout="fill"
         priority={true}
         objectFit="cover"
