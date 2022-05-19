@@ -40,7 +40,7 @@ export default function Hero() {
             {Translate({
               context: "general",
               label: "heroTxt",
-              renderAsHtml: true,
+              renderAsHtml: false,
             })}
           </Title>
 
