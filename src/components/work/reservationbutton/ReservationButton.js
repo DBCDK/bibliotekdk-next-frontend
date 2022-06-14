@@ -305,12 +305,18 @@ function getBaseUrl(url) {
 /**
  * Check if work can be ordered - run through given manifestations - if one
  * is reservable -> return true, if not return false
+ *
  * @param manifestations
  * @return {boolean}
  */
 export function checkRequestButtonIsTrue({ manifestations }) {
+  // pjo 14/6 - bug 1020 - sort out some materialtypes - would be better to do
+  // somewhere else
+  const notReservable = ["Biograffilm", "Udstilling", "Teateropførelse"];
   return !!manifestations?.find(
-    (manifestation) => manifestation?.admin?.requestButton
+    (manifestation) =>
+      manifestation?.admin?.requestButton &&
+      !notReservable.includes(manifestation?.materialType)
   );
 }
 
