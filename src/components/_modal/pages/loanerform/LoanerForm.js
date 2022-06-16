@@ -33,6 +33,8 @@ export const LOGIN_MODE = {
   SUBSCRIPTION: "subscription",
   DIGITAL_COPY: "digitalCopy",
   PLAIN_LOGIN: "plainLogin",
+  INFOMEDIA: "infomedia",
+  // @TODO .. another mode? INFOMEDIA ?
 };
 
 export function UserParamsForm({ branch, initial, onSubmit, mode }) {
@@ -208,7 +210,6 @@ export function LoanerForm({
   digitalCopyAccess,
 }) {
   let { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
-
   if (mode === LOGIN_MODE.SUBSCRIPTION) {
     mode = digitalCopyAccess
       ? LOGIN_MODE.DIGITAL_COPY

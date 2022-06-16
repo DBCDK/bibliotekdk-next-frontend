@@ -1920,6 +1920,14 @@
       "plainLogin-description": {
         "da": "Du skal bruge dine låneroplysninger fra %s",
         "en": "LABEL: mangler oversættelse %s"
+      },
+      "infomedia-description": {
+        "da": "Log ind på %s for at læse artklen",
+        "en": "Login to %s for at læse artiklen"
+      },
+      "infomedia-title": {
+        "da": "Læs artiklen fra infomedia",
+        "en": "Read article from infomedia"
       }
     },
     "form": {
