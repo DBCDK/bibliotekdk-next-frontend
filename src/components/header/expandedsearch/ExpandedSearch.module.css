@@ -101,7 +101,7 @@
   background-color: var(--cyan);
   min-width: 125px;
   height: 100%;
-  text-align: left;
+  text-align: right;
 }
 
 .wrapper {

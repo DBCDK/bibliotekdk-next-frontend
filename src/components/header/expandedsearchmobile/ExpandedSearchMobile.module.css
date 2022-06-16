@@ -57,7 +57,6 @@
   line-height: 22px;
   cursor: pointer;
   overflow: hidden;
-  margin-left: var(--pt05);
   padding: var(--pt2) var(--pt6) var(--pt2) var(--pt6);
 }
 
