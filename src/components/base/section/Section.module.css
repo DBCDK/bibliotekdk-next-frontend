@@ -29,8 +29,7 @@
   display: none;
 }
 
-.noTitleDivider,
-.noContentDivider {
+.noTitleDivider {
   padding-top: var(--pt2);
 }
 
