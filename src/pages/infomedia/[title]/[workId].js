@@ -63,9 +63,7 @@ export function InfomediaArticle(infomediaData) {
                 context: "articles",
                 label: "accessWarning",
               })}
-              signIn={() =>
-                modal.push("login", { mode: LOGIN_MODE.SUBSCRIPTION })
-              }
+              signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
             />
           )}
           {user.isLoggedIn && workPublic && !hasArticle && (
