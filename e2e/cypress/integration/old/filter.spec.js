@@ -247,7 +247,7 @@ describe("Filter", () => {
   });
 
   // pjo 17/06 skip this test - simplesearch 1.2 gives a mix of materialtypes
-  it.skip(`Restore filters when browser's back button is used`, () => {
+  it(`Restore filters when browser's back button is used`, () => {
     cy.visit(
       `${nextjsBaseUrl}/find?q.all=katte&workType=article&materialType=avisartikel`
     );
