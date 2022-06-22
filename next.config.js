@@ -40,7 +40,8 @@ module.exports = {
     domains: [
       "forfatterweb.dk",
       "bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
-      "bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk",
+      "bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk",
+      "bibdk-backend-www-master.frontend-staging.svc.cloud.dbc.dk",
     ],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640, 1400],
   },
