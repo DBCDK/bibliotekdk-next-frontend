@@ -26,7 +26,7 @@ Port on which storybook runs. Default is 4000.
 - **USE_FIXED_SESSION_ID**
 Set to false in production. When set to true, the session id is set to "test", when collecting data. This allow AI to remove entries with session_id=test. Default is true.
 - **NEXT_PUBLIC_API_URL**
-URL to the GraphQL API. Default is http://bibliotekdk-next-api-1.frontend-staging.svc.cloud.dbc.dk/graphql.
+URL to the GraphQL API. Default is http://bibliotekdk-next-api-1.febib-staging.svc.cloud.dbc.dk/graphql.
 - **API_TIMEOUT_MS**
 Time in ms for how long the Next.js server should wait for data when doing server side rendering. Default is 150.
 - **NEXTAUTH_URL**

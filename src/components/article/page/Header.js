@@ -64,7 +64,7 @@ export default function Header({ articleId }) {
       />
       <link
         rel="preconnect"
-        href="http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk"
+        href="http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk"
       ></link>
     </Head>
   );
