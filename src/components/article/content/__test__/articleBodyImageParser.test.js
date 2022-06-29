@@ -5,3 +5,14 @@ test("parseArticleBodyImages", () => {
   const actual = parseArticleBody(data.article.body.value);
   expect(actual).toMatchSnapshot();
 });
+
+test("replaceString", () => {
+  const replaceme =
+    "fisk http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/ hest og køer";
+  const expected =
+    "fisk http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/ hest og køer";
+  const actual = parseArticleBody(replaceme);
+
+  console.log(actual);
+  expect(actual).toEqual(expected);
+});

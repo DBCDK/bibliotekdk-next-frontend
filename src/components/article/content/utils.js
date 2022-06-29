@@ -14,8 +14,12 @@ export default function parseArticleBody(str) {
   // quick fix bug - BIBDK2021-1059 .. moved to new namespace (febib) ..
   // but images from drupal has an absolute url .. to the old namespace
   // @TODO better fix
-  let newstr = str.replaceAll(
-    "http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/",
+  const regex =
+    /http:\/\/bibdk-backend-www-master\.frontend-prod\.svc\.cloud\.dbc\.dk\//g;
+  let newstr;
+
+  newstr = str.replace(
+    regex,
     "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/"
   );
 
