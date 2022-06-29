@@ -27,8 +27,6 @@ export default function parseArticleBody(str) {
         const caption = img.match(cap_regex);
         const src = img.match(src_regex);
 
-        console.log(src);
-
         const alt = img.match(alt_regex);
 
         // Set image src
