@@ -11,13 +11,24 @@ export default function parseArticleBody(str) {
   const src_regex = /src=\"(.*?)\"/;
   const alt_regex = /alt=\"(.*?)\"/;
 
-  const img = str.match(img_regex);
+  // quick fix bug - BIBDK2021-1059 .. moved to new namespace (febib) ..
+  // but images from drupal has an absolute url .. to the old namespace
+  // @TODO better fix
+  let newstr = str.replaceAll(
+    "http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/",
+    "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/"
+  );
+
+  const img = newstr.match(img_regex);
 
   img &&
     img.map((img) => {
       if (img) {
         const caption = img.match(cap_regex);
         const src = img.match(src_regex);
+
+        console.log(src);
+
         const alt = img.match(alt_regex);
 
         // Set image src
@@ -41,9 +52,9 @@ export default function parseArticleBody(str) {
         const newEl = `<figure> ${modified_img} ${
           captionEl && captionEl
         }</figure>`;
-        str = str.replace(img, newEl);
+        newstr = newstr.replace(img, newEl);
       }
     });
 
-  return str;
+  return newstr;
 }
