@@ -58,10 +58,11 @@ function Find() {
 
   const context = { context: "metadata" };
 
+  const titleToUse = q.all || q.title || q.creator || q.subject;
   const pageTitle = Translate({
     ...context,
     label: "find-title",
-    vars: [q?.all],
+    vars: [titleToUse],
   });
 
   const pageDescription = Translate({
