@@ -75,7 +75,7 @@ module.exports = {
     // Will only be available on the server side
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    jwtSecret: process.env.JWT_SECRET,
+    jwtSecret: process.env.NEXTAUTH_SECRET,
     disableDrupalTranslate: process.env.DISABLE_DRUPAL_TRANSLATE || false,
   },
   publicRuntimeConfig: {

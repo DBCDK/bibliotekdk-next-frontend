@@ -12,7 +12,7 @@
 import React from "react";
 
 import Cookies from "js-cookie";
-import { Provider } from "next-auth/client";
+import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
 
 import Head from "next/head";
@@ -71,7 +71,7 @@ export default function MyApp({ Component, pageProps, router }) {
   useScrollRestoration(router);
 
   return (
-    <Provider
+    <SessionProvider
       session={pageProps.session}
       options={{
         clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
@@ -123,7 +123,7 @@ export default function MyApp({ Component, pageProps, router }) {
           </Modal.Provider>
         </APIStateContext.Provider>
       </AnonymousSessionContext.Provider>
-    </Provider>
+    </SessionProvider>
   );
 }
 

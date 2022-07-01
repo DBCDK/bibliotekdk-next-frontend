@@ -1,4 +1,4 @@
-import { useSession } from "next-auth/client";
+import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { createContext, useContext, useMemo, useEffect, useState } from "react";
 import merge from "lodash/merge";
@@ -31,7 +31,7 @@ function useUserMock() {
   const useUserMockKey = "useUserMock";
 
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
-    initialData: loanerInfoMock
+    initialData: loanerInfoMock,
   });
 
   const authUser = { name: "Some Name", mail: "some@mail.dk" };
@@ -49,7 +49,7 @@ function useUserMock() {
 
       // Broadcast update
       mutate(useUserMockKey);
-    }
+    },
   };
 }
 
@@ -63,7 +63,7 @@ function useUserImpl() {
   // Fetch loaner info from session
   const { data, mutate } = useData(sessionFragments.session());
 
-  const [session] = useSession();
+  const { data: session } = useSession();
 
   const sessionMutate = useMutate();
 
@@ -72,7 +72,7 @@ function useUserImpl() {
   const {
     data: userData,
     isLoading: userIsLoading,
-    error: userDataError
+    error: userDataError,
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
@@ -100,7 +100,7 @@ function useUserImpl() {
 
     const obj = {
       ...data?.session,
-      userParameters: { ...loggedInUser, ...sessionCopy?.userParameters }
+      userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
 
     return obj;
@@ -130,7 +130,7 @@ function useUserImpl() {
       await sessionMutate.post(sessionFragments.deleteSession());
       // Broadcast update
       await mutate();
-    }
+    },
   };
 }
 
@@ -143,7 +143,6 @@ async function fetchSession() {
   );
   sess = await anonSessionRes.json();
   return sess;
-
 }
 
 const APP_URL =
@@ -153,7 +152,7 @@ const APP_URL =
  * Hook for getting authenticated user
  */
 function useAccessTokenImpl() {
-  const [session] = useSession();
+  const { data: session } = useSession();
   const anonSessionContext = useContext(AnonymousSessionContext);
 
   // anonSessionContext becomes undefined when nextjs changes page without calling server
@@ -163,6 +162,9 @@ function useAccessTokenImpl() {
   }
   // @USEFFECT HERE - sometimes we lose our anonymous token - try to fix it here
   useEffect(() => {
+    if (session?.accessToken) {
+      return;
+    }
     let done = false;
     // only get the session if we lost the accesstoken
     if (!anonSession?.accessToken) {
@@ -176,11 +178,11 @@ function useAccessTokenImpl() {
       };
 
       // get anonymous session
-      fetchAnonymous().catch(()=>console.log("ERROR: No session"));
+      fetchAnonymous().catch(() => console.log("ERROR: No session"));
       // only do it once
-      return () => done = true;
+      return () => (done = true);
     }
-  }, [anonSession?.accessToken]);
+  }, [anonSession?.accessToken, session?.accessToken]);
 
   return session?.accessToken || anonSession?.accessToken;
 }

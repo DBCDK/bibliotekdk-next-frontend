@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import merge from "lodash/merge";
 
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";

@@ -2,7 +2,7 @@ import { refWorks } from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
 
 import { getAnonSession } from "@/lib/api/apiServerOnly";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 
 /**
  * Parse response

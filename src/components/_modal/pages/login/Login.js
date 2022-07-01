@@ -15,7 +15,7 @@ import styles from "./Login.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
-import { signIn } from "next-auth/client";
+import { signIn } from "next-auth/react";
 import getConfig from "next/config";
 
 import Top from "@/components/_modal/pages/base/top";
