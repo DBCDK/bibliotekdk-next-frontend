@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 
-import { signIn, signOut } from "@dbcdk/login-nextjs/client";
+import { signOut } from "@dbcdk/login-nextjs/client";
 
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";

@@ -2,7 +2,7 @@ import nookies from "nookies";
 import getConfig from "next/config";
 import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
-import { getSession } from "next-auth/client";
+import { getSession } from "next-auth/react";
 import { generateKey, fetcher } from "@/lib/api/api";
 import fetch from "isomorphic-unfetch";
 
