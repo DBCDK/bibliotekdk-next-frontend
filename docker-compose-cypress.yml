@@ -9,7 +9,7 @@ services:
       - STORYBOOK_PORT=4000
       - PORT=3000
       - NEXT_BACKEND_API_URL=http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk
-      - JWT_SECRET=some-jwt-secret
+      - NEXTAUTH_SECRET=some-jwt-secret
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
     command: npm run start
