@@ -1,6 +1,6 @@
 import { refWorks } from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
-import { getServerSession } from "@/dbcdk/login-nextjs/server";
+import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Parse response
