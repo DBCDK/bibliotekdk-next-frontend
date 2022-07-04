@@ -1,8 +1,6 @@
 import { refWorks } from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
-
-import { getAnonSession } from "@/lib/api/apiServerOnly";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "@/../../login-nextjs/server";
 
 /**
  * Parse response
@@ -32,11 +30,8 @@ async function getRefWorks(pid, accessToken) {
  * @return {Promise<*>}
  */
 export async function getAccessToken(context) {
-  const session = await getSession(context);
-  const anonSession = await getAnonSession(context);
-  const accessToken = session?.accessToken || anonSession?.accessToken;
-
-  return accessToken;
+  const session = await getServerSession(context.req, context.res);
+  return session?.accessToken;
 }
 
 /**

@@ -1,13 +1,7 @@
 import nookies from "nookies";
-import getConfig from "next/config";
-import fetchTranslations from "@/lib/api/backend";
 import { COOKIES_ALLOWED } from "@/components/cookiebox";
-import { getSession } from "next-auth/react";
 import { generateKey, fetcher } from "@/lib/api/api";
-import fetch from "isomorphic-unfetch";
-
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Initializes session and fetches stuff from API
@@ -32,11 +26,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
     context.req.connection.remoteAddress;
 
   // user session
-  let anonSession;
-  let session = await getSession(context);
-  if (!session?.accessToken) {
-    anonSession = await getAnonSession(context);
-  }
+  let session = await getServerSession(context.req, context.res);
 
   // Fetch all queries in parallel
   const initialData = {};
@@ -49,7 +39,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
         queries.map(async (queryFunc) => {
           const queryKey = generateKey({
             ...queryFunc({ ...context.query, ...customQueryVariables }),
-            accessToken: session?.accessToken || anonSession?.accessToken,
+            accessToken: session?.accessToken,
           });
           const queryRes = await fetcher(queryKey, userAgent, ip);
           return { queryKey, queryRes };
@@ -64,29 +54,5 @@ export async function fetchAll(queries, context, customQueryVariables) {
     initialData,
     allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
     session,
-    anonSession,
   };
-}
-
-export async function getAnonSession(context) {
-  // anonymous session
-  let anonSession;
-  const ANONYMOUS_SESSION = "anon.session";
-  const jwt = nookies.get(context, { path: "/" })[ANONYMOUS_SESSION];
-  const anonSessionRes = await fetch(
-    `${APP_URL}/api/auth/anonsession?jwt=${jwt}`,
-    {
-      headers: context.req.headers,
-    }
-  );
-  const res = await anonSessionRes.json();
-  anonSession = res.session;
-  if (jwt !== res.jwt) {
-    nookies.set(context, ANONYMOUS_SESSION, res.jwt, {
-      path: "/",
-      httpOnly: true,
-    });
-  }
-
-  return anonSession;
 }

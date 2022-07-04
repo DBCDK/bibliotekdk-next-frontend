@@ -1,6 +1,5 @@
-import { destroyCookie } from "nookies";
-import NextAuth from "next-auth";
 import { adgangsplatformen, callbacks } from "@dbcdk/login-nextjs";
+import { NextAuth } from "@dbcdk/login-nextjs";
 import { log } from "dbc-node-logger";
 import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
@@ -10,7 +9,7 @@ if (!clientId || !clientSecret) {
   log.error("ClientId or/and clientSecret was not set. Login is not possible");
 }
 
-const options = {
+export const options = {
   cookies: {
     sessionToken: {
       name: `next-auth.session-token`,
@@ -26,9 +25,6 @@ const options = {
     adgangsplatformen({
       clientId,
       clientSecret,
-      profile(user) {
-        return user;
-      },
     }),
   ],
   debug: false,
@@ -36,9 +32,4 @@ const options = {
     ...callbacks,
   },
 };
-export default (req, res) => {
-  if (req.url.includes("signout")) {
-    destroyCookie({ req, res }, "anon.session", { path: "/" });
-  }
-  return NextAuth(req, res, options);
-};
+export default NextAuth(options);

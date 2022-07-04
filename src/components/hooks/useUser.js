@@ -53,9 +53,6 @@ function useUserMock() {
   };
 }
 
-// hold anonymous session
-let anonSession;
-
 /**
  * Hook for getting and storing loaner info
  */
@@ -136,15 +133,6 @@ function useUserImpl() {
 
 let sess;
 
-async function fetchSession() {
-  // get the data from anonsession @see /api/auth/anonsession.js
-  const anonSessionRes = await fetch(
-    `${APP_URL}/api/auth/anonsession?jwt=${sess?.jwt}`
-  );
-  sess = await anonSessionRes.json();
-  return sess;
-}
-
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
@@ -153,38 +141,8 @@ const APP_URL =
  */
 function useAccessTokenImpl() {
   const { data: session } = useSession();
-  const anonSessionContext = useContext(AnonymousSessionContext);
 
-  // anonSessionContext becomes undefined when nextjs changes page without calling server
-  // we store the latest anon session we got from the server
-  if (anonSessionContext) {
-    anonSession = anonSessionContext;
-  }
-  // @USEFFECT HERE - sometimes we lose our anonymous token - try to fix it here
-  useEffect(() => {
-    if (session?.accessToken) {
-      return;
-    }
-    let done = false;
-    // only get the session if we lost the accesstoken
-    if (!anonSession?.accessToken) {
-      const fetchAnonymous = async () => {
-        // get anonymous session
-        const sess = await fetchSession();
-        if (!done) {
-          // set our
-          anonSession = sess.session;
-        }
-      };
-
-      // get anonymous session
-      fetchAnonymous().catch(() => console.log("ERROR: No session"));
-      // only do it once
-      return () => (done = true);
-    }
-  }, [anonSession?.accessToken, session?.accessToken]);
-
-  return session?.accessToken || anonSession?.accessToken;
+  return session?.accessToken;
 }
 
 const useUser = process.env.STORYBOOK_ACTIVE ? useUserMock : useUserImpl;

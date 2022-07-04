@@ -1,22 +1,11 @@
 import { fetcher } from "@/lib/api/api";
-import fetch from "isomorphic-unfetch";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as searchFragments from "@/lib/api/search.fragments";
-
-import getConfig from "next/config";
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
+import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 const upSince = new Date();
 
 let session;
-async function fetchSession() {
-  const anonSessionRes = await fetch(
-    `${APP_URL}/api/auth/anonsession?jwt=${session?.jwt}`
-  );
-  session = await anonSessionRes.json();
-  return session.session;
-}
 
 /**
  * The howru handler
@@ -24,7 +13,9 @@ async function fetchSession() {
  * We make requests for all our GraphQL fragments
  */
 export default async function handler(req, res) {
-  const session = await fetchSession();
+  if (!session) {
+    session = await getServerSession(req, res);
+  }
 
   // If any of the services fail, this is set to false
   let ok = true;
