@@ -131,8 +131,6 @@ function useUserImpl() {
   };
 }
 
-let sess;
-
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
