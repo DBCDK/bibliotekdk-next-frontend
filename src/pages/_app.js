@@ -72,57 +72,57 @@ export default function MyApp({ Component, pageProps, router }) {
 
   return (
     <SessionProvider
-      session={pageProps.session}
+      session={
+        router.query.disablePagePropsSession ? undefined : pageProps.session
+      }
       options={{
         clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
         keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
       }}
     >
-      <AnonymousSessionContext.Provider value={pageProps.anonSession}>
-        <APIStateContext.Provider value={pageProps.initialData}>
-          <Modal.Provider
-            router={{
-              pathname: router.pathname,
-              query: router.query,
-              push: (obj) => router.push(obj),
-              replace: (obj) => router.replace(obj),
-              go: (index) => window.history.go(index),
-            }}
-          >
-            <Modal.Container>
-              <Modal.Page id="menu" component={Pages.Menu} />
-              <Modal.Page id="options" component={Pages.Options} />
-              <Modal.Page id="order" component={Pages.Order} />
-              <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
-              <Modal.Page id="pickup" component={Pages.Pickup} />
-              <Modal.Page id="loanerform" component={Pages.Loanerform} />
-              <Modal.Page id="receipt" component={Pages.Receipt} />
-              <Modal.Page id="login" component={Pages.Login} />
-              <Modal.Page id="filter" component={Pages.Filter} />
-              <Modal.Page id="localizations" component={Pages.Localizations} />
-              <Modal.Page id="references" component={Pages.References} />
-            </Modal.Container>
+      <APIStateContext.Provider value={pageProps.initialData}>
+        <Modal.Provider
+          router={{
+            pathname: router.pathname,
+            query: router.query,
+            push: (obj) => router.push(obj),
+            replace: (obj) => router.replace(obj),
+            go: (index) => window.history.go(index),
+          }}
+        >
+          <Modal.Container>
+            <Modal.Page id="menu" component={Pages.Menu} />
+            <Modal.Page id="options" component={Pages.Options} />
+            <Modal.Page id="order" component={Pages.Order} />
+            <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+            <Modal.Page id="pickup" component={Pages.Pickup} />
+            <Modal.Page id="loanerform" component={Pages.Loanerform} />
+            <Modal.Page id="receipt" component={Pages.Receipt} />
+            <Modal.Page id="login" component={Pages.Login} />
+            <Modal.Page id="filter" component={Pages.Filter} />
+            <Modal.Page id="localizations" component={Pages.Localizations} />
+            <Modal.Page id="references" component={Pages.References} />
+          </Modal.Container>
 
-            <Matomo allowCookies={allowCookies} />
-            <BodyScrollLock router={router} />
-            <div id="layout">
-              <Head>
-                <meta name="mobile-web-app-capable" content="yes"></meta>
-                <meta name="theme-color" content="#3333ff"></meta>
-              </Head>
-              <SkipToMainLink />
-              <Banner />
-              <Notifications />
-              <HelpHeader />
+          <Matomo allowCookies={allowCookies} />
+          <BodyScrollLock router={router} />
+          <div id="layout">
+            <Head>
+              <meta name="mobile-web-app-capable" content="yes"></meta>
+              <meta name="theme-color" content="#3333ff"></meta>
+            </Head>
+            <SkipToMainLink />
+            <Banner />
+            <Notifications />
+            <HelpHeader />
 
-              <Component {...pageProps} />
-              <Feedback />
-              <CookieBox />
-              <Footer />
-            </div>
-          </Modal.Provider>
-        </APIStateContext.Provider>
-      </AnonymousSessionContext.Provider>
+            <Component {...pageProps} />
+            <Feedback />
+            <CookieBox />
+            <Footer />
+          </div>
+        </Modal.Provider>
+      </APIStateContext.Provider>
     </SessionProvider>
   );
 }

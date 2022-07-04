@@ -177,7 +177,7 @@ describe("Order", () => {
 
   it("submits order - happy path", () => {
     cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -235,7 +235,7 @@ describe("Order", () => {
     mockSessionUserParameters();
 
     cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -293,7 +293,7 @@ describe("Order", () => {
 
   it("should not tab to order modal after it is closed", () => {
     cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763`
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
     );
 
     cy.get("[data-cy=button-nej-tak]").click();
@@ -307,7 +307,7 @@ describe("Order", () => {
 
   it("should show modal when a deep link is followed", () => {
     cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?order=870970-basis%3A51701763&modal=order`
+      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true&order=870970-basis%3A51701763&modal=order`
     );
     cy.url().should("include", "modal=order");
   });
@@ -340,7 +340,7 @@ describe("Order periodica article", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
     );
 
     cy.wait(3000);
@@ -385,7 +385,7 @@ describe("Order periodica article", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -430,7 +430,7 @@ describe("Order periodica article", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853`
+      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -467,7 +467,7 @@ describe("Order periodica volume", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -518,7 +518,7 @@ describe("Order periodica volume", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
     );
 
     openOrderModal();
@@ -577,7 +577,7 @@ describe("Order periodica volume", () => {
       },
     });
     cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179`
+      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
     );
 
     openOrderModal();
