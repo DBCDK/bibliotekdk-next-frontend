@@ -10,6 +10,8 @@ services:
       - PORT=3000
       - NEXT_BACKEND_API_URL=http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk
       - NEXTAUTH_SECRET=some-jwt-secret
+      - NEXTAUTH_URL_INTERNAL=http://localhost:3000
+      - NEXTAUTH_URL=http://web:3000
       - CLIENT_ID=${CLIENT_ID}
       - CLIENT_SECRET=${CLIENT_SECRET}
     command: npm run start
