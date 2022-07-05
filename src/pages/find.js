@@ -68,7 +68,7 @@ function Find() {
   const pageDescription = Translate({
     ...context,
     label: "find-description",
-    vars: [`${hits}`, q?.all],
+    vars: [`${hits}`, titleToUse],
   });
 
   /**
