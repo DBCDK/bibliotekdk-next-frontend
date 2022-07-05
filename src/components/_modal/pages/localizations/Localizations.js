@@ -47,7 +47,7 @@ export function Localizations({
         })}
         className={styles.input}
         onChange={debounce((value) => onChange(value), 100)}
-        id="fiskehest"
+        id="localizations_search"
       />
 
       {!isLoading && (
@@ -82,7 +82,7 @@ export default function wrap({ context, modal }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    document.getElementById("fiskehest").focus();
+    document.getElementById("localizations_search").focus();
   }, [modal.isVisible]);
 
   const { data, isLoading } = useData(
