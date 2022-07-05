@@ -1,7 +1,7 @@
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./Localizations.module.css";
 import { useData } from "@/lib/api/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
@@ -47,6 +47,7 @@ export function Localizations({
         })}
         className={styles.input}
         onChange={debounce((value) => onChange(value), 100)}
+        id="fiskehest"
       />
 
       {!isLoading && (
@@ -75,10 +76,14 @@ export function Localizations({
   );
 }
 
-export default function wrap({ context }) {
+export default function wrap({ context, modal }) {
   const { workId, agency, pids } = { ...context };
 
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    document.getElementById("fiskehest").focus();
+  }, [modal.isVisible]);
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
