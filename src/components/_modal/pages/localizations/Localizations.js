@@ -82,7 +82,9 @@ export default function wrap({ context, modal }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    document.getElementById("localizations_search").focus();
+    setTimeout(() => {
+      document.getElementById("localizations_search").focus();
+    }, 200);
   });
 
   const { data, isLoading } = useData(
