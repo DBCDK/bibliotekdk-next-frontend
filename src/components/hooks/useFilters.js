@@ -119,11 +119,13 @@ export function getQuery(query) {
   const filters = {};
   Object.entries(query).forEach(([key, val]) => {
     if (types.includes(key) && val) {
+      let realVal =
+        typeof val === "string" ? val.split(URL_FACET_DELIMITER) : val;
       filters[key] =
-        val &&
-        val
-          .split(URL_FACET_DELIMITER)
-          .map((v) => v.replace(DELIMITER_ENCODING_REGEX, URL_FACET_DELIMITER));
+        realVal &&
+        realVal.map((v) =>
+          v.replace(DELIMITER_ENCODING_REGEX, URL_FACET_DELIMITER)
+        );
     }
   });
 
