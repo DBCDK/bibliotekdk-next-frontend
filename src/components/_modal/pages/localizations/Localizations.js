@@ -83,7 +83,7 @@ export default function wrap({ context, modal }) {
 
   useEffect(() => {
     document.getElementById("localizations_search").focus();
-  }, [modal.isVisible]);
+  });
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })

@@ -105,7 +105,7 @@ function Container({ children, className = {}, mock = {} }) {
   // current status of the modal dialog
   const [dialogStatus, setDialogStatus] = useState(
     // The initial state
-    modal.isVisible() ? "open" : "closed"
+    modal.isVisible ? "open" : "closed"
   );
 
   // modal ref
@@ -115,7 +115,7 @@ function Container({ children, className = {}, mock = {} }) {
   const didLoad = useRef(false);
 
   // modal has content and should be visible
-  const isVisible = modal.isVisible();
+  const isVisible = modal.isVisible;
 
   // active/visible modal class
   const visibleClass = isVisible ? "modal_visible" : "";
@@ -432,11 +432,9 @@ export function useModal() {
   }
 
   // modal is visible
-  function _isVisible() {
-    return _stack.length > 0 && _index() > -1;
-  }
+  const _isVisible = _stack.length > 0 && _index() > -1;
 
-  if (_isVisible()) {
+  if (_isVisible) {
     _hasBeenVisible = true;
   }
 
