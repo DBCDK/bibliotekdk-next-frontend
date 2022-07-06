@@ -71,6 +71,7 @@ export function openMobileSuggester(router = Router) {
     focusInput();
   }, 100);
 }
+
 /**
  * Function to focus suggester input field
  *
@@ -296,6 +297,7 @@ export function Suggester({
   history = [],
   clearHistory = null,
   selectedMaterial = null,
+  onKeyDown = null,
 }) {
   const placeholder = getPlaceholder(isMobile, selectedMaterial);
 
@@ -358,6 +360,7 @@ export function Suggester({
       // internal query update
       setIntQuery(newValue);
     },
+    onKeyDown: onKeyDown,
     onFocus: (e) =>
       e.currentTarget.setSelectionRange(
         e.currentTarget.value.length,
@@ -463,7 +466,6 @@ export default function Wrap(props) {
   if (props.skeleton || isLoading) {
     className = `${className} ${styles.skeleton}`;
   }
-
   return (
     <Suggester
       {...props}

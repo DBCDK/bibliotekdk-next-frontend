@@ -158,6 +158,13 @@ export function Header({
     }, 300);
   };
 
+  // function to force search onKeyDown
+  const keyPressed = (e) => {
+    if (e.key === "Enter") {
+      doSearch(e.target.value);
+    }
+  };
+
   const frontpageTranslated = Translate({
     context: "general",
     label: "frontpage",
@@ -268,6 +275,7 @@ export function Header({
                         // Remove suggester in storybook
                         story && story.setSuggesterVisibleMobile(false);
                       }}
+                      onKeyDown={keyPressed}
                     />
 
                     <MoreOptionsLink
