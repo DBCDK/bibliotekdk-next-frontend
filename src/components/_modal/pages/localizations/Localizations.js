@@ -82,10 +82,12 @@ export default function wrap({ context, modal }) {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    setTimeout(() => {
-      document.getElementById("localizations_search").focus();
-    }, 200);
-  });
+    if (modal.isVisible) {
+      setTimeout(() => {
+        document.getElementById("localizations_search").focus();
+      }, 300);
+    }
+  }, [modal.isVisible]);
 
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
