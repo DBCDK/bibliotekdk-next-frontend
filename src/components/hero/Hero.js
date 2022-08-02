@@ -64,9 +64,11 @@ export function Hero({ image }) {
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />
-        <Text type="text2" className={styles.herodescription}>
-          {`${image.description}`}
-        </Text>
+        {image.description && (
+          <Text type="text2" className={styles.herodescription}>
+            {`${image.description}`}
+          </Text>
+        )}
       </Row>
     </Container>
   );
