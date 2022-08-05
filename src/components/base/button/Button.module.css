@@ -15,8 +15,7 @@
 */
 
 /* Primary */
-
-.button.primary {
+.primary {
   background-color: var(--blue);
   color: var(--white);
   display: block;
@@ -24,30 +23,30 @@
   line-height: 24px;
 }
 
-.button.primary:hover {
+.primary:hover {
   background-color: var(--mine-shaft);
   color: var(--white);
 }
 
-.button.primary.disabled {
+.primary.disabled {
   background-color: var(--concrete);
   border: 2px solid var(--iron);
 }
 
 /* Secondary */
 
-.button.secondary {
+.secondary {
   color: var(--blue);
   border: 2px solid var(--blue);
   line-height: 23px;
 }
 
-.button.secondary:hover {
+.secondary:hover {
   border: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
-.button.secondary.disabled {
+.secondary.disabled {
   border: 2px solid var(--concrete);
 }
 
@@ -57,33 +56,33 @@
 */
 
 /* primary */
-.button.primary.large {
+.primary.large {
   font-size: 20px;
   padding: var(--pt2) 0;
 }
 
-.button.primary.medium {
+.primary.medium {
   font-size: 17px;
   padding: var(--pt1) 0;
 }
 
-.button.primary.small {
+.primary.small {
   font-size: 13px;
   padding: var(--pt05) 0;
 }
 
 /* secondary */
-.button.secondary.large {
+.secondary.large {
   font-size: 20px;
   padding: var(--pt2) var(--pt10);
 }
 
-.button.secondary.medium {
+.secondary.medium {
   font-size: 17px;
   padding: var(--pt1) var(--pt6);
 }
 
-.button.secondary.small {
+.secondary.small {
   font-size: 13px;
   padding: var(--pt05) var(--pt4);
 }
@@ -93,13 +92,13 @@
 *
 */
 
-.button.primary:focus {
+.primary:focus {
   background-color: var(--mine-shaft);
   color: var(--white);
   outline: none;
 }
 
-.button.secondary:focus {
+.secondary:focus {
   outline: 1px solid var(--mine-shaft);
   border: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
@@ -115,8 +114,8 @@
   cursor: default;
 }
 
-.button.disabled,
-.button.disabled:hover {
+.disabled,
+.disabled:hover {
   color: var(--mine-shaft);
 }
 

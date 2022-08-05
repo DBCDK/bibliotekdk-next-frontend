@@ -1,0 +1,72 @@
+.feedbacktxt {
+    display: inline;
+}
+
+.feedbackcontainer {
+    padding: var(--pt3);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.iconcontainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.feedbackicon {
+    margin-right: var(--pt3);
+    cursor: pointer;
+}
+
+.iconcontainer svg path {
+    stroke: blue;
+    stroke-width: 3px;
+}
+
+.feedbackthankyou {
+    border-top: 1px;
+    padding: var(--pt3) 0 var(--pt3) var(--pt1);
+    animation: fadeIn 1s;
+}
+
+.feedbackfadein {
+    animation: fadeIn 1s;
+}
+
+.feedbackbutton:hover {
+    background-color: var(--blue);
+}
+
+.feedbackbutton {
+    width: 125px;
+    min-width: 125px;
+    background-color: transparent;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    overflow: hidden;
+}
+
+.feedbackbutton .fill {
+    position: absolute;
+    width: 125px;
+    height: 100%;
+    background-color: red;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.75);
+    transition-duration: 0.2s;
+    z-index: 1;
+    opacity: 0;
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
