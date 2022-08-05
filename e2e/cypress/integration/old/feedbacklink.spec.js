@@ -1,9 +1,9 @@
 /**
  * @file
- * Test feedback
+ * Test feedbacklink
  */
 describe("feedbacklink", () => {
-  it(`View in BIG viewport`, () => {
+  it(`check link to kunderservice`, () => {
     cy.visit("/iframe.html?id=base-feedbacklink--feedback");
     // verify that banner is shown
     cy.get("[data-cy=feedbacklink-to-kundeservice]").should("be.visible");
