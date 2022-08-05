@@ -11,6 +11,7 @@ export default function FeedbackLink() {
           href="https://kundeservice.dbc.dk/bibdk"
           target="_blank"
           border={{ top: false, bottom: { keepVisible: true } }}
+          dataCy="feedbacklink-to-kundeservice"
         >
           <Text tag="span" type="text3" className={styles.textrotate}>
             {Translate({
