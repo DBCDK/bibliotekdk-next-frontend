@@ -32,6 +32,10 @@
       "feed_back_link_text": {
         "da": "Svar på 2 spørgsmål",
         "en": "Answer 2 questions"
+      },
+      "feed_back_kunderservice_link_text" : {
+        "da" : "Feedback",
+        "en": "Feedback"
       }
     },
     "login": {
@@ -80,8 +84,8 @@
         "en": "Skip to content"
       },
       "heroTxt": {
-        "da": "Afhent lokalt<br /> eller tilgå digitalt",
-        "en": "Pick up locally<br /> or access digitally"
+        "da": "Afhent lokal eller tilgå digitalt",
+        "en": "Pick up locally or access digitally"
       },
       "readMore": {
         "da": "Læs mere",

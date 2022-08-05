@@ -40,7 +40,7 @@ import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
-import Feedback from "@/components/feedback";
+import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 import { enableDataCollect } from "@/lib/useDataCollect";
 
@@ -117,7 +117,7 @@ export default function MyApp({ Component, pageProps, router }) {
             <HelpHeader />
 
             <Component {...pageProps} />
-            <Feedback />
+            <FeedBackLink />
             <CookieBox />
             <Footer />
           </div>
