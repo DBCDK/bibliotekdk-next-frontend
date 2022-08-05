@@ -14,6 +14,7 @@ export function SearchFeedBackWrapper({ show }) {
   const [showThumbs, setShowThumbs] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [showThankyou, setShowThankyou] = useState(false);
+  const [showImprove, setShowImprove] = useState(false);
 
   const onThumbsUpClick = () => {
     setShowThumbs(false);
@@ -28,6 +29,12 @@ export function SearchFeedBackWrapper({ show }) {
     setShowForm(true);
   };
 
+  const onSubmitClick = () => {
+    setShowThumbs(false);
+    setShowForm(false);
+    setShowImprove(true);
+  };
+
   return (
     <div>
       {/* initial state - show thumbs up and down */}
@@ -40,7 +47,8 @@ export function SearchFeedBackWrapper({ show }) {
       {/* thumbsup has been clicked - nice - thankyou */}
       {showThankyou && <SearchFeedBackThankyou />}
       {/* thumbsdown has been clicked - show suggest form*/}
-      {showForm && <SearchFeedBackForm />}
+      {showForm && <SearchFeedBackForm onSubmitClick={onSubmitClick} />}
+      {showImprove && <SearchFeedBackImprove />}
     </div>
   );
 }
@@ -71,6 +79,16 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   );
 }
 
+export function SearchFeedBackImprove() {
+  return (
+    <div className={styles.feedbackthankyou}>
+      <Text type="text3" className={styles.feedbacktxt} lines={1} tag="span">
+        {Translate({ context: "feedback", label: "search_feed_back_improve" })}
+      </Text>
+    </div>
+  );
+}
+
 export function SearchFeedBackThankyou() {
   return (
     <div className={styles.feedbackthankyou}>
@@ -81,7 +99,7 @@ export function SearchFeedBackThankyou() {
   );
 }
 
-export function SearchFeedBackForm() {
+export function SearchFeedBackForm({ onSubmitClick }) {
   return (
     <div class={styles.feedbackthankyou}>
       <Text type="text3" lines={1}>
@@ -91,7 +109,12 @@ export function SearchFeedBackForm() {
         })}
       </Text>
       <textarea rows="4" cols="50" />
-      <Button type="primary" size="small" className={styles.feedbackbutton}>
+      <Button
+        type="primary"
+        size="small"
+        className={styles.feedbackbutton}
+        onClick={onSubmitClick}
+      >
         <span>
           {Translate({
             context: "feedback",

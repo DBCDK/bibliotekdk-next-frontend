@@ -41,6 +41,10 @@
         "da" : "Tak for din feedback. \\n Vi er glade for at kunne levere et godt søgeresultat",
         "en": "Thank you for the feedback. \\n We are happy to deliver a qualified search result"
       },
+      "search_feed_back_improve": {
+        "da": "Tak for din feedback. \\n Vi arbejder fortsat på at gøre søgningen bedre",
+        "en": "Thank you for the feedback. \\n We work hard to improve searches"
+      },
       "search_feed_back_form_title": {
         "da": "Hvad kan vi gøre for at blive bedre?",
         "en": "How can we improve?"
