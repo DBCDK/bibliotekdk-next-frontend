@@ -1,4 +1,4 @@
-import { StoryTitle, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Icon from "./Icon";
 

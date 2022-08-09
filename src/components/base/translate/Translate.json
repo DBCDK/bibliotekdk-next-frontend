@@ -33,6 +33,26 @@
         "da": "Svar på 2 spørgsmål",
         "en": "Answer 2 questions"
       },
+      "search_feed_back_text": {
+        "da": "Hvordan er søgeresultatet ?",
+        "en": "How is the search result ?"
+      },
+      "search_feed_back_thankyou": {
+        "da" : "Tak for din feedback. \\n Vi er glade for at kunne levere et godt søgeresultat",
+        "en": "Thank you for the feedback. \\n We are happy to deliver a qualified search result"
+      },
+      "search_feed_back_improve": {
+        "da": "Tak for din feedback. \\n Vi arbejder fortsat på at gøre søgningen bedre",
+        "en": "Thank you for the feedback. \\n We work hard to improve searches"
+      },
+      "search_feed_back_form_title": {
+        "da": "Hvad kan vi gøre for at blive bedre?",
+        "en": "How can we improve?"
+      },
+      "search_feed_back_form_submit":{
+        "da": "Afslut",
+        "en": "Submit"
+      },
       "feed_back_kunderservice_link_text" : {
         "da" : "Feedback",
         "en": "Feedback"

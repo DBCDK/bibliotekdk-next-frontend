@@ -158,3 +158,32 @@ export function collectSearchWorkClick({
     },
   };
 }
+
+/**
+ * When user post search feedback
+ *
+ * @param thumbs
+ *  thumbsup or thumbsdown
+ * @param query
+ *  current searchquery
+ * @param reason
+ *  only form thumbsdown - what can we improve
+ * @returns {{variables: {input: {search_feedback: {reason, query, thumbs}}}, query: string}}
+ */
+export function collectSearchFeedback({ thumbs, query, reason }) {
+  return {
+    query: `mutation ($input: DataCollectInput!) {
+      data_collect(input: $input)
+    }
+    `,
+    variables: {
+      input: {
+        search_feedback: {
+          thumbs,
+          query,
+          reason,
+        },
+      },
+    },
+  };
+}
