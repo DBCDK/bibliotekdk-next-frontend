@@ -18,7 +18,7 @@ export function FeedBack() {
   };
 
   const onDataCollect = (input) => {
-    alert(input);
+    alert(JSON.stringify(input));
   };
   return (
     <div>
@@ -27,9 +27,9 @@ export function FeedBack() {
         thumbs up OR thumbs down with description
       </StoryDescription>
       <SearchFeedBackWrapper
-        show={true}
         datacollect={onDataCollect}
-        query={null}
+        router={null}
+        ForceshowMe={true}
       />
     </div>
   );

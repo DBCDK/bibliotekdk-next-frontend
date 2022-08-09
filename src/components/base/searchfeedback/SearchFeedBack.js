@@ -2,28 +2,50 @@ import styles from "./SearchFeedBack.module.css";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Icon from "@/components/base/icon/Icon";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/components/base/button/Button";
 import useDataCollect from "@/lib/useDataCollect";
 
-export function SearchFeedBackWrapper({ show, datacollect, query }) {
-  if (!show) {
-    return null;
-  }
-
-  const [showThumbs, setShowThumbs] = useState(true);
+export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
+  const [showThumbs, setShowThumbs] = useState(
+    (ForceshowMe && ForceshowMe) || false
+  );
   const [showForm, setShowForm] = useState(false);
   const [showThankyou, setShowThankyou] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
 
+  // useEffect depends on query parameters .. but not paging or modal ..
+  const excludeFromQuery = ["page", "modal"];
+  const filtered = router
+    ? Object.entries(router.query).filter((entry, index) => {
+        if (!excludeFromQuery.includes(entry[0])) {
+          return entry;
+        }
+      })
+    : {};
+  const effectParams = (router && Object.fromEntries(filtered)) || {};
+
+  useEffect(() => {
+    if (!ForceshowMe) {
+      if (
+        (router && !router.query.page) ||
+        (router && router.query.page === "1")
+      ) {
+        setShowThumbs(true);
+      } else {
+        setShowThumbs(false);
+      }
+    }
+  }, [JSON.stringify(effectParams)]);
+
   const onThumbsUpClick = () => {
     setShowThumbs(false);
     setShowThankyou(true);
-    // @TODO set timeout to hide feedback
-    /*setTimeout(() => {
+    setTimeout(() => {
       setShowThankyou(false);
-    }, 3000);*/
+    }, 3000);
+    datacollect({ thumbs: "up", reason: "" });
   };
   const onThumbsDownClick = () => {
     setShowThumbs(false);
@@ -34,8 +56,11 @@ export function SearchFeedBackWrapper({ show, datacollect, query }) {
     setShowThumbs(false);
     setShowForm(false);
     setShowImprove(true);
+    setTimeout(() => {
+      setShowImprove(false);
+    }, 3000);
     const input = document.getElementById("search-feedback-input").value;
-    datacollect(input);
+    datacollect({ thumbs: "down", reason: input });
   };
 
   return (
@@ -159,22 +184,16 @@ export function SearchFeedBackForm({ onSubmitClick }) {
 export default function wrap() {
   const router = useRouter();
 
-  // @TODO only show on first page - and if query changes
-  const show = router.query.page ? router.query.page === "1" : true;
-  // @TODO - init (reset) on new search
-
   const dataCollect = useDataCollect();
   // @TODO - use the datacollect
   const onDataCollect = (input) => {
     console.log(input);
-    alert(input);
+    /*dataCollect.collectSearchFeedback({
+      searchfeedback_thumbs: input.thumbs,
+      searchfeedback_query: router.query,
+      searchfeedback_reason: input.reason,
+    });*/
   };
 
-  return (
-    <SearchFeedBackWrapper
-      show={true}
-      datacollect={onDataCollect}
-      query={router.query}
-    />
-  );
+  return <SearchFeedBackWrapper datacollect={onDataCollect} router={router} />;
 }

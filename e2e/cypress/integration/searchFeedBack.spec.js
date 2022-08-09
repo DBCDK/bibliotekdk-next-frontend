@@ -10,7 +10,12 @@ describe("searchfeedback", () => {
     cy.get("[data-cy=search_feed_back_thankyou]").should("not.exist");
     cy.get("[data-cy=search-feedback-thumbsup]").click();
 
+    cy.on("window:alert", (str) => {
+      expect(str).to.contain("up");
+    });
     cy.get("[data-cy=search_feed_back_thankyou]").should("be.visible");
+    cy.wait(3000);
+    cy.get("[data-cy=search_feed_back_thankyou]").should("not.exist");
   });
 
   it(`thumbsdown click`, () => {
@@ -28,7 +33,7 @@ describe("searchfeedback", () => {
 
     cy.get("[data-cy=search-feedback-form] Button").click();
     cy.on("window:alert", (str) => {
-      expect(str).to.equal("fisk");
+      expect(str).to.contain("fisk");
     });
   });
 });
