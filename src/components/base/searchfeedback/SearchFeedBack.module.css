@@ -10,6 +10,10 @@
     width: 40%;
 }
 
+.feedbacktextarea{
+    margin: var(--pt3) 0 var(--pt3) 0
+}
+
 .iconcontainer {
     display: flex;
     justify-content: space-between;
@@ -22,8 +26,6 @@
     top: 7px;
     left: 7px;
 }
-
-/*.feedbackicon:hover{filter: invert(1);}*/
 
 .spanwrap {
     cursor: pointer;
@@ -47,14 +49,6 @@
     animation: fadeIn 1s;
 }
 
-.feedbackfadein {
-    animation: fadeIn 1s;
-}
-
-.feedbackbutton:hover {
-    background-color: var(--blue);
-}
-
 .feedbackbutton {
     width: 125px;
     min-width: 125px;
@@ -63,20 +57,6 @@
     border: 2px solid var(--blue);
     overflow: hidden;
 }
-
-.feedbackbutton .fill {
-    position: absolute;
-    width: 125px;
-    height: 100%;
-    background-color: red;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0.75);
-    transition-duration: 0.2s;
-    z-index: 1;
-    opacity: 0;
-}
-
 
 @keyframes fadeIn {
     0% {

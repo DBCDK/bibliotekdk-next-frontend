@@ -6,7 +6,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/components/base/button/Button";
 import useDataCollect from "@/lib/useDataCollect";
+import useQ from "@/components/hooks/useQ";
 
+/**
+ * Wrapper for feedback thumbs
+ * @param datacollect
+ * @param router
+ * @param ForceshowMe
+ *  Needed for testing
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   const [showThumbs, setShowThumbs] = useState(
     (ForceshowMe && ForceshowMe) || false
@@ -33,6 +43,8 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
         (router && router.query.page === "1")
       ) {
         setShowThumbs(true);
+        // if thumbs are set - all other elements should be gone .. especially the form
+        setShowForm(false);
       } else {
         setShowThumbs(false);
       }
@@ -82,6 +94,13 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   );
 }
 
+/**
+ * Thumbs up and down component - shown initially until one or the other is clicked
+ * @param onThumbsUp
+ * @param onThumbsDown
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   return (
     <div className={styles.feedbackcontainer}>
@@ -113,6 +132,11 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   );
 }
 
+/**
+ * Feedback thankyou  - shown on submit from thumbsdown
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SearchFeedBackImprove() {
   return (
     <div className={styles.feedbackthankyou}>
@@ -132,6 +156,11 @@ export function SearchFeedBackImprove() {
   );
 }
 
+/**
+ * Thankyou component - shown on thumbUp
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SearchFeedBackThankyou() {
   return (
     <div className={styles.feedbackthankyou}>
@@ -148,6 +177,12 @@ export function SearchFeedBackThankyou() {
   );
 }
 
+/**
+ * Feedback form - shown on thumbsdown
+ * @param onSubmitClick
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export function SearchFeedBackForm({ onSubmitClick }) {
   return (
     <div class={styles.feedbackthankyou} data-cy="search-feedback-form">
@@ -162,6 +197,7 @@ export function SearchFeedBackForm({ onSubmitClick }) {
         cols="50"
         id="search-feedback-input"
         data-cy="search-feedback-input"
+        className={styles.feedbacktextarea}
       />
       <Button
         type="primary"
@@ -183,16 +219,14 @@ export function SearchFeedBackForm({ onSubmitClick }) {
 
 export default function wrap() {
   const router = useRouter();
-
   const dataCollect = useDataCollect();
   // @TODO - use the datacollect
   const onDataCollect = (input) => {
-    console.log(input);
-    /*dataCollect.collectSearchFeedback({
+    dataCollect.collectSearchFeedback({
       searchfeedback_thumbs: input.thumbs,
       searchfeedback_query: router.query,
       searchfeedback_reason: input.reason,
-    });*/
+    });
   };
 
   return <SearchFeedBackWrapper datacollect={onDataCollect} router={router} />;
