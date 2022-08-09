@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import SearchFeedBack from "./SearchFeedBack";
+import { SearchFeedBackWrapper } from "./SearchFeedBack";
 
 export default {
   title: "base/SearchFeedBack",
@@ -16,13 +16,21 @@ export function FeedBack() {
   const onThumbsDownClick = () => {
     alert("thumbsdown");
   };
+
+  const onDataCollect = (input) => {
+    alert(input);
+  };
   return (
     <div>
       <StoryTitle>SearchFeedBack</StoryTitle>
       <StoryDescription>
         thumbs up OR thumbs down with description
       </StoryDescription>
-      <SearchFeedBack />
+      <SearchFeedBackWrapper
+        show={true}
+        datacollect={onDataCollect}
+        query={null}
+      />
     </div>
   );
 }

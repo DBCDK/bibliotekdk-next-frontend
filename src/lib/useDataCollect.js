@@ -4,10 +4,12 @@ import {
   collectSuggestClick,
   collectSearch,
   collectSearchWorkClick,
+  collectSearchFeedback,
 } from "@/lib/api/datacollect.mutations";
 import { useFetcher } from "@/lib/api/api";
 
 let enabled = false;
+
 export function enableDataCollect(enable) {
   enabled = enable;
 }
@@ -24,5 +26,7 @@ export default function useDataCollect() {
     collectSuggestClick: (obj) => enabled && fetcher(collectSuggestClick(obj)),
     collectRecommenderClick: (obj) =>
       enabled && fetcher(collectRecommenderClick(obj)),
+    collectSearchFeedback: (obj) =>
+      enabled && fetcher(collectSearchFeedback(obj)),
   };
 }

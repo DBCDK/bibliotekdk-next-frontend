@@ -6,23 +6,39 @@
     padding: var(--pt3);
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     width: 40%;
 }
 
 .iconcontainer {
     display: flex;
     justify-content: space-between;
+    width: 30%;
 }
 
 .feedbackicon {
     margin-right: var(--pt3);
-    cursor: pointer;
+    position: relative;
+    top: 7px;
+    left: 7px;
 }
 
-.iconcontainer svg path {
-    stroke: blue;
-    stroke-width: 3px;
+/*.feedbackicon:hover{filter: invert(1);}*/
+
+.spanwrap {
+    cursor: pointer;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.spanwrap:hover {
+    animation: fadeIn 1s;
+    background-color: blue;
+}
+
+.spanwrap:hover img {
+    filter: invert(1);
 }
 
 .feedbackthankyou {
