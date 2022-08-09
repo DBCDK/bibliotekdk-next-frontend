@@ -52,6 +52,10 @@
       "search_feed_back_form_submit":{
         "da": "Afslut",
         "en": "Submit"
+      },
+      "feed_back_kunderservice_link_text" : {
+        "da" : "Feedback",
+        "en": "Feedback"
       }
     },
     "login": {
@@ -100,8 +104,8 @@
         "en": "Skip to content"
       },
       "heroTxt": {
-        "da": "Afhent lokalt<br /> eller tilgå digitalt",
-        "en": "Pick up locally<br /> or access digitally"
+        "da": "Afhent lokal eller tilgå digitalt",
+        "en": "Pick up locally or access digitally"
       },
       "readMore": {
         "da": "Læs mere",
