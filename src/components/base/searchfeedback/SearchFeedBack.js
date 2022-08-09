@@ -57,7 +57,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
     setTimeout(() => {
       setShowThankyou(false);
     }, 3000);
-    datacollect({ thumbs: "up", reason: "" });
+    datacollect({ thumbs: "up", reason: "hestefisk" });
   };
   const onThumbsDownClick = () => {
     setShowThumbs(false);
@@ -223,9 +223,9 @@ export default function wrap() {
   // @TODO - use the datacollect
   const onDataCollect = (input) => {
     dataCollect.collectSearchFeedback({
-      searchfeedback_thumbs: input.thumbs,
-      searchfeedback_query: router.query,
-      searchfeedback_reason: input.reason,
+      thumbs: input.thumbs,
+      query: JSON.stringify(router.query),
+      reason: input.reason,
     });
   };
 

@@ -170,11 +170,7 @@ export function collectSearchWorkClick({
  *  only form thumbsdown - what can we improve
  * @returns {{variables: {input: {search_feedback: {reason, query, thumbs}}}, query: string}}
  */
-export function collectSearchFeedback({
-  searchfeedback_thumbs,
-  searchfeedback_query,
-  searchfeedback_reason,
-}) {
+export function collectSearchFeedback({ thumbs, query, reason }) {
   return {
     query: `mutation ($input: DataCollectInput!) {
       data_collect(input: $input)
