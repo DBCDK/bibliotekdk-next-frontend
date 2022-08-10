@@ -25,6 +25,15 @@
 .fakesearchinput {
   margin-top: var(--pt3);
 }
+
+.herodescription{
+  color: white;
+  padding: var(--pt2);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
 .readmorebutton {
   margin-top: var(--pt5);
   max-width: 208px;
