@@ -76,9 +76,7 @@ export function Hero({ image }) {
 
 function parseHero(data) {
   const heros =
-    data &&
-    data.nodeQuery &&
-    data.nodeQuery.entities &&
+    data?.nodeQuery?.entities &&
     data.nodeQuery.entities.filter(
       (hero) => hero && hero.__typename === "NodeHeroFrontpage"
     );
