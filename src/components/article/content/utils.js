@@ -5,11 +5,15 @@
  *
  * @returns {string}
  */
+import config from "@/config";
+
 export default function parseArticleBody(str) {
   const img_regex = /<\s*img[^>]*\/>/g;
   const cap_regex = /data-caption=\"(.*?)\"/;
   const src_regex = /src=\"(.*?)\"/;
   const alt_regex = /alt=\"(.*?)\"/;
+
+  const backendurl = config.api.url + "/";
 
   // quick fix bug - BIBDK2021-1059 .. moved to new namespace (febib) ..
   // but images from drupal has an absolute url .. to the old namespace
@@ -18,10 +22,7 @@ export default function parseArticleBody(str) {
     /http:\/\/bibdk-backend-www-master\.frontend-prod\.svc\.cloud\.dbc\.dk\//g;
   let newstr;
 
-  newstr = str.replace(
-    regex,
-    "http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/"
-  );
+  newstr = str.replace(regex, backendurl);
 
   const img = newstr.match(img_regex);
 

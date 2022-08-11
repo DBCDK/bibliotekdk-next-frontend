@@ -19,6 +19,7 @@ export function Hero({ image }) {
   if (!image) {
     return null;
   }
+
   return (
     <Container className={styles.containerback} fluid>
       <Image
@@ -30,9 +31,11 @@ export function Hero({ image }) {
       />
       <div className={styles.gradient} />
       <Row>
-        <Col lg={{ span: 3 }} xs={{ span: 0 }} className={styles.heroicon}>
-          <Icon src={"ornament1white.svg"} size={{ w: 5, h: "auto" }} alt="" />
-        </Col>
+        <Col
+          lg={{ span: 3 }}
+          xs={{ span: 0 }}
+          className={styles.heroicon}
+        ></Col>
 
         <Col
           lg={{ span: 9, offset: 0 }}
@@ -41,29 +44,38 @@ export function Hero({ image }) {
           xs={{ span: 12, offset: 0 }}
           className={styles.heromargin}
         >
-          <Title type="title1" className={styles.herotitle}>
+          <Title type="title2" className={styles.heromobiletxt}>
             {Translate({
               context: "general",
               label: "heroTxt",
-              renderAsHtml: false,
             })}
           </Title>
 
-          <Link a={false} href={"/artikel/bibliotek.dk/6"} target="_self">
-            <Button
-              className={styles.readmorebutton}
-              type="primary"
-              size="large"
-            >
-              {Translate({
-                context: "general",
-                label: "readMore",
-              })}
-            </Button>
-          </Link>
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />
+        <div className={styles.bluebox}>
+          <span>
+            <Icon
+              src={"ornament1white.svg"}
+              size={{ w: 10, h: "auto" }}
+              alt=""
+              className={styles.heroicon}
+            />
+          </span>
+          <Title type="title2" className={styles.herotitle}>
+            {Translate({
+              context: "general",
+              label: "heroTxt",
+            })}
+          </Title>
+          <Text type="text2" className={styles.herobluetxt}>
+            {Translate({
+              context: "general",
+              label: "readMore",
+            })}
+          </Text>
+        </div>
         {image.description && (
           <Text type="text2" className={styles.herodescription}>
             {`${image.description}`}
