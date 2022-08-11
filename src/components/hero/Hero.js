@@ -20,7 +20,6 @@ export function Hero({ image }) {
     return null;
   }
 
-  console.log(image.image.url);
   return (
     <Container className={styles.containerback} fluid>
       <Image
