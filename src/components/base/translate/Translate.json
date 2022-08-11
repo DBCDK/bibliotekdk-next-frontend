@@ -104,12 +104,12 @@
         "en": "Skip to content"
       },
       "heroTxt": {
-        "da": "Afhent lokal eller tilgå digitalt",
-        "en": "Pick up locally or access digitally"
+        "da": "Søg, find, lån",
+        "en": "Search, find, borrow"
       },
       "readMore": {
-        "da": "Læs mere",
-        "en": "Read more"
+        "da": "Bibliotek.dk viser materialer fra alle danske biblioteker, som du nemt kan låne og aflevere på dit bibliotek.",
+        "en": "Materials from all danish libraries, easy to pickup and deliver at your local library"
       },
       "searchButton": {
         "da": "Søg",
