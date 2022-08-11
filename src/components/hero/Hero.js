@@ -45,7 +45,7 @@ export function Hero({ image }) {
           xs={{ span: 12, offset: 0 }}
           className={styles.heromargin}
         >
-          <Title type="title3" className={styles.heromobiletxt}>
+          <Title type="title2" className={styles.heromobiletxt}>
             {Translate({
               context: "general",
               label: "heroTxt",
