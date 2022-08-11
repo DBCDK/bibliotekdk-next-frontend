@@ -34,6 +34,16 @@
   bottom: 0;
 }
 
+.bluebox{
+  width:559px;
+  height: 214px;
+  background-color: var(--blue);
+  color:var(--white);
+  position: absolute;
+  left: var(--pt4);
+  bottom: var(--pt4);
+}
+
 .readmorebutton {
   margin-top: var(--pt5);
   max-width: 208px;

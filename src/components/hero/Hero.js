@@ -19,6 +19,8 @@ export function Hero({ image }) {
   if (!image) {
     return null;
   }
+
+  console.log(image.image.url);
   return (
     <Container className={styles.containerback} fluid>
       <Image
@@ -64,6 +66,7 @@ export function Hero({ image }) {
           <FakeSearchInput className={styles.fakesearchinput} />
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />
+        <div className={styles.bluebox}>FISK</div>
         {image.description && (
           <Text type="text2" className={styles.herodescription}>
             {`${image.description}`}
