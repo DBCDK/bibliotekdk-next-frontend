@@ -16,16 +16,17 @@
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(rgb(0, 0, 0, 0.3), transparent);
+    background-image: linear-gradient(rgb(0, 0, 0, 0.4), transparent);
 }
 
 .heroicon {
     display: none;
     display: block;
+    margin-top: var(--pt3);
 }
 
 .fakesearchinput {
-    margin-top: var(--pt3);
+    margin-top: var(--pt2);
 }
 
 .iconandtxt{
@@ -81,7 +82,7 @@
     }
 
     .fakesearchinput {
-        margin-top: var(--pt4);
+        margin-top: var(--pt2);
     }
 }
 
@@ -89,6 +90,10 @@
 @media (min-width: 992px) {
     .bluebox {
         display: block;
+    }
+
+    .gradient{
+        display: none;
     }
 
     .heromobiletxt {

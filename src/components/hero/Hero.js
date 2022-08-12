@@ -29,6 +29,7 @@ export function Hero({ image }) {
         objectFit="cover"
         alt=""
       />
+      <div className={styles.gradient} />
       <Row>
         <Col
           lg={{ span: 3 }}
