@@ -16,6 +16,7 @@
   display: flex;
   width: 100%;
   padding-right: var(--pt4);
+  transform: translateX(var(--pt15));
 }
 
 .flex {
@@ -92,7 +93,7 @@
 }
 
 .buttoninline {
-  padding: var(--pt2) var(--pt5) 0 var(--pt15);
+  padding: var(--pt2) var(--pt5) 0 0;
 }
 
 .labelinline {
