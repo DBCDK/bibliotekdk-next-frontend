@@ -29,7 +29,6 @@ export function Hero({ image }) {
         objectFit="cover"
         alt=""
       />
-      <div className={styles.gradient} />
       <Row>
         <Col
           lg={{ span: 3 }}
@@ -55,20 +54,21 @@ export function Hero({ image }) {
         </Col>
         <Col md={{ span: 2 }} xs={{ span: 1 }} />
         <div className={styles.bluebox}>
-          <span>
+          <div className={styles.iconandtxt}>
             <Icon
               src={"ornament1white.svg"}
-              size={{ w: 10, h: "auto" }}
+              size={{ w: 8, h: "auto" }}
               alt=""
               className={styles.heroicon}
             />
-          </span>
-          <Title type="title2" className={styles.herotitle}>
-            {Translate({
-              context: "general",
-              label: "heroTxt",
-            })}
-          </Title>
+
+            <Title type="title2" className={styles.herotitle}>
+              {Translate({
+                context: "general",
+                label: "heroTxt",
+              })}
+            </Title>
+          </div>
           <Text type="text2" className={styles.herobluetxt}>
             {Translate({
               context: "general",
