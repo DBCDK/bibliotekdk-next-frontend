@@ -22,7 +22,6 @@
 .heroicon {
     display: none;
     display: block;
-    margin-top: var(--pt3);
 }
 
 .fakesearchinput {
@@ -68,6 +67,10 @@
 
 .heromobiletxt {
     color: white;
+}
+
+.herotopmargin{
+    margin-top: var(--pt3);
 }
 
 .herobluetxt {

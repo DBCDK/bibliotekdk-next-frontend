@@ -30,7 +30,7 @@ export function Hero({ image }) {
         alt=""
       />
       <div className={styles.gradient} />
-      <Row>
+      <Row className={styles.herotopmargin}>
         <Col
           lg={{ span: 3 }}
           xs={{ span: 0 }}
