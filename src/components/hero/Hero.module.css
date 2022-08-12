@@ -61,7 +61,6 @@
 
 .herotitle {
     color: var(--white);
-    font-weight: bolder;
     display: inline;
     padding: 0 0 0 var(--pt3);
 }
@@ -71,7 +70,6 @@
 }
 
 .herobluetxt {
-    font-weight: bold;
     padding: var(--pt2) var(--pt10) 0 var(--pt11);
 }
 
