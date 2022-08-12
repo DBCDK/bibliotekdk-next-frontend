@@ -148,8 +148,8 @@
 }
 
 .button.hidden {
-  visibility: hidden;
-  /* display: none; */
+  /*visibility: hidden;*/
+   display: none;
 }
 
 .button span {
