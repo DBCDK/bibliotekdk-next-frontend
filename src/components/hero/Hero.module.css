@@ -1,109 +1,128 @@
 .containerback {
-  position: relative;
-  height: 260px;
-  padding-top: var(--pt4);
-  background: black;
-  margin-bottom: var(--pt5);
+    position: relative;
+    height: 260px;
+    padding-top: var(--pt4);
+    background: black;
+    margin-bottom: var(--pt5);
 }
 
 .herobackground {
-  position: relative;
+    position: relative;
 }
+
 .gradient {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-image: linear-gradient(rgb(0, 0, 0, 0.3), transparent);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(rgb(0, 0, 0, 0.4), transparent);
 }
+
 .heroicon {
-  margin-top: var(--pt5);
-  display: none;
-  display: block;
+    display: none;
+    display: block;
 }
 
 .fakesearchinput {
-  margin-top: var(--pt3);
+    margin-top: var(--pt2);
 }
 
-.herodescription{
-  color: white;
-  padding: var(--pt2);
-  position: absolute;
-  right: 0;
-  bottom: 0;
+.iconandtxt{
+    display: flex;
+    align-items: center;
 }
 
-.bluebox{
-  width:559px;
-  height: 214px;
-  background-color: var(--blue);
-  color:var(--white);
-  position: absolute;
-  left: var(--pt4);
-  bottom: var(--pt4);
-  padding: var(--pt3) 0 0 0;
-  display: none;
+.herodescription {
+    color: white;
+    padding: var(--pt2);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    filter: drop-shadow(0 0 var(--pt05) var(--mine-shaft));
+}
+
+.bluebox {
+    width: 559px;
+    background-color: var(--blue);
+    color: var(--white);
+    position: absolute;
+    left: var(--pt4);
+    bottom: var(--pt4);
+    padding: var(--pt3) 0 var(--pt4) 0;
+    display: none;
 }
 
 .readmorebutton {
-  margin-top: var(--pt5);
-  max-width: 208px;
-  display: none !important;
+    margin-top: var(--pt5);
+    max-width: 208px;
+    display: none !important;
 }
 
 .herotitle {
-  color: var(--white);
-  font-weight: bolder;
-  display: inline;
-  padding: 0 0 0 var(--pt3);
+    color: var(--white);
+    display: inline;
+    padding: 0 0 0 var(--pt3);
 }
 
-.heromobiletxt{
-  color: white;
+.heromobiletxt {
+    color: white;
 }
 
-.herobluetxt{
-  font-weight: bold;
-  padding: var(--pt2) var(--pt10) 0 var(--pt13);
+.herotopmargin{
+    margin-top: var(--pt3);
 }
+
+.herobluetxt {
+    padding: var(--pt2) var(--pt10) 0 var(--pt11);
+}
+
 /* Small devices */
 @media (min-width: 576px) {
-  .containerback {
-    height: 360px;
-    padding-top: var(--pt6);
-  }
-  .fakesearchinput {
-    margin-top: var(--pt4);
-  }
+    .containerback {
+        height: 360px;
+        padding-top: var(--pt6);
+    }
+
+    .fakesearchinput {
+        margin-top: var(--pt2);
+    }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  .bluebox{
-    display: block;
-  }
-  .heromobiletxt{
-    display: none;
-  }
-  .heroicon {
-    display: initial;
-    padding: 0 0 0 var(--pt3);
-    display: inline-block;
-  }
-  .containerback {
-    height: 560px;
-    padding-top: var(--pt12);
-  }
-  .fakesearchinput {
-    display: none !important;
-  }
-  .readmorebutton {
-    margin-top: var(--pt5);
-    max-width: 208px;
-    display: initial !important;
-  }
+    .bluebox {
+        display: block;
+    }
+
+    .gradient{
+        display: none;
+    }
+
+    .heromobiletxt {
+        display: none;
+    }
+
+    .heroicon {
+        display: initial;
+        display: inline-block;
+        padding: 0 0 0 var(--pt3);
+    }
+
+    .containerback {
+        height: 560px;
+        padding-top: var(--pt12);
+    }
+
+    .fakesearchinput {
+        display: none !important;
+    }
+
+    .readmorebutton {
+        margin-top: var(--pt5);
+        max-width: 208px;
+        display: initial !important;
+    }
 }
 
 
