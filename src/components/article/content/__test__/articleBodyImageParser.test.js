@@ -10,7 +10,7 @@ test("parseArticleBodyImages", () => {
 test("replaceString", () => {
   const replaceme =
     "fisk http://bibdk-backend-www-master.frontend-prod.svc.cloud.dbc.dk/ hest og køer";
-  const expected = "fisk " + config.api.url + "/ hest og køer";
+  const expected = "fisk " + config.backend.url + "/ hest og køer";
   const actual = parseArticleBody(replaceme);
 
   console.log(actual);
