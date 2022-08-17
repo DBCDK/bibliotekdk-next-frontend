@@ -13,7 +13,7 @@ export default function parseArticleBody(str) {
   const src_regex = /src=\"(.*?)\"/;
   const alt_regex = /alt=\"(.*?)\"/;
 
-  const backendurl = config.api.url + "/";
+  const backendurl = config.backend.url + "/";
 
   // quick fix bug - BIBDK2021-1059 .. moved to new namespace (febib) ..
   // but images from drupal has an absolute url .. to the old namespace
