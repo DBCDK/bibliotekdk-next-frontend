@@ -53,6 +53,10 @@
         "da": "Afslut",
         "en": "Submit"
       },
+      "search_feed_back_form_send":{
+        "da": "Send",
+        "en": "Send"
+      },
       "feed_back_kunderservice_link_text" : {
         "da" : "Feedback",
         "en": "Feedback"
