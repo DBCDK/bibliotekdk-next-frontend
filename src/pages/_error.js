@@ -12,7 +12,6 @@ import { log } from "dbc-node-logger";
  * @constructor
  */
 function Error({ statusCode }) {
-  console.log(statusCode);
   log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
   return (
     <p>
