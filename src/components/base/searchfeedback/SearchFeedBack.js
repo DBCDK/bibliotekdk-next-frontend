@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/components/base/button/Button";
 import useDataCollect from "@/lib/useDataCollect";
-import useQ from "@/components/hooks/useQ";
 import Collapse from "react-bootstrap/Collapse";
 
 /**
@@ -19,9 +18,8 @@ import Collapse from "react-bootstrap/Collapse";
  * @constructor
  */
 export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
-  const [showThumbs, setShowThumbs] = useState(
-    (ForceshowMe && ForceshowMe) || false
-  );
+  const [showContainer, setShowContainer] = useState(ForceshowMe || false);
+  const [showThumbs, setShowThumbs] = useState(ForceshowMe || false);
   const [showForm, setShowForm] = useState(false);
   const [showThankyou, setShowThankyou] = useState(false);
   const [showImprove, setShowImprove] = useState(false);
@@ -44,29 +42,30 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
         (router && router.query.page === "1")
       ) {
         setShowThumbs(true);
+        setShowContainer(true);
         // if thumbs are set - all other elements should be gone .. especially the form
         setShowForm(false);
       } else {
+        setShowContainer(false);
         setShowThumbs(false);
       }
     } else {
+      setShowContainer(true);
       setShowThumbs(true);
     }
   }, [JSON.stringify(effectParams)]);
 
   const onThumbsUpClick = () => {
+    setShowThankyou(true);
     setShowThumbs(false);
     setTimeout(() => {
-      setShowThankyou(true);
-    }, 50);
-    setTimeout(() => {
-      setShowThankyou(false);
+      setShowContainer(false);
     }, 5000);
     datacollect({ thumbs: "up", reason: "" });
   };
   const onThumbsDownClick = () => {
-    setShowThumbs(false);
     setShowForm(true);
+    setShowThumbs(false);
   };
 
   const onSubmitClick = () => {
@@ -74,29 +73,37 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
     setShowForm(false);
     setShowImprove(true);
     setTimeout(() => {
-      setShowImprove(false);
+      setShowContainer(false);
     }, 4000);
     const input = document.getElementById("search-feedback-input").value;
     datacollect({ thumbs: "down", reason: input });
   };
 
   return (
-    <div>
-      {/* initial state - show thumbs up and down */}
-
-      <SearchFeedBack
-        showThumbs={showThumbs}
-        onThumbsUp={onThumbsUpClick}
-        onThumbsDown={onThumbsDownClick}
-      />
-
-      {/* thumbsup has been clicked - nice - thankyou */}
-      <SearchFeedBackThankyou showThankyou={showThankyou} />
-      {/* thumbsdown has been clicked - show suggest form*/}
-      <SearchFeedBackForm onSubmitClick={onSubmitClick} showForm={showForm} />
-      {/* Feedback from has been posted */}
-      <SearchFeedBackImprove showImprove={showImprove} />
-    </div>
+    <Collapse
+      in={showContainer}
+      appear={true}
+      onExited={() => {
+        setShowImprove(false);
+        setShowThankyou(false);
+      }}
+    >
+      <div>
+        {/* initial state - show thumbs up and down */}
+        {showThumbs && (
+          <SearchFeedBack
+            onThumbsUp={onThumbsUpClick}
+            onThumbsDown={onThumbsDownClick}
+          />
+        )}
+        {/* thumbsup has been clicked - nice - thankyou */}
+        {showThankyou && <SearchFeedBackThankyou />}
+        {/* thumbsdown has been clicked - show suggest form*/}
+        {showForm && <SearchFeedBackForm onSubmitClick={onSubmitClick} />}
+        {/* Feedback from has been posted */}
+        {showImprove && <SearchFeedBackImprove />}
+      </div>
+    </Collapse>
   );
 }
 
@@ -107,36 +114,34 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function SearchFeedBack({ onThumbsUp, onThumbsDown, showThumbs }) {
+export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   return (
-    <Collapse in={showThumbs} appear={true}>
-      <div className={styles.thumbscontaioner}>
-        <Text type="text2" className={styles.feedbacktxt} lines={1} tag="span">
-          {Translate({ context: "feedback", label: "search_feed_back_text" })}
-        </Text>
+    <div className={styles.thumbscontaioner}>
+      <Text type="text2" className={styles.feedbacktxt} lines={1} tag="span">
+        {Translate({ context: "feedback", label: "search_feed_back_text" })}
+      </Text>
 
-        <span className={styles.iconcontainer}>
-          <span className={styles.spanwrap} onClick={onThumbsUp}>
-            <Icon
-              size={{ w: "auto", h: 3 }}
-              src="thumbsup.svg"
-              alt="nice"
-              className={styles.feedbackicon}
-              data-cy="search-feedback-thumbsup"
-            />
-          </span>
-          <span className={styles.spanwrap} onClick={onThumbsDown}>
-            <Icon
-              size={{ w: "auto", h: 3 }}
-              src="thumbsdown.svg"
-              alt="nice"
-              className={styles.feedbackicon}
-              data-cy="search-feedback-thumbsdown"
-            />
-          </span>
+      <span className={styles.iconcontainer}>
+        <span className={styles.spanwrap} onClick={onThumbsUp}>
+          <Icon
+            size={{ w: "auto", h: 3 }}
+            src="thumbsup.svg"
+            alt="nice"
+            className={styles.feedbackicon}
+            data-cy="search-feedback-thumbsup"
+          />
         </span>
-      </div>
-    </Collapse>
+        <span className={styles.spanwrap} onClick={onThumbsDown}>
+          <Icon
+            size={{ w: "auto", h: 3 }}
+            src="thumbsdown.svg"
+            alt="nice"
+            className={styles.feedbackicon}
+            data-cy="search-feedback-thumbsdown"
+          />
+        </span>
+      </span>
+    </div>
   );
 }
 
@@ -145,26 +150,24 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown, showThumbs }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function SearchFeedBackImprove({ showImprove }) {
+export function SearchFeedBackImprove() {
   return (
-    <Collapse in={showImprove}>
-      <div className={styles.feedbackcontainer}>
-        <div className={styles.feedbackthankyou}>
-          <Text
-            type="text2"
-            className={styles.feedbacktxt}
-            lines={1}
-            tag="span"
-            dataCy="search_feed_back_improve"
-          >
-            {Translate({
-              context: "feedback",
-              label: "search_feed_back_improve",
-            })}
-          </Text>
-        </div>
+    <div className={styles.feedbackcontainer}>
+      <div className={styles.feedbackthankyou}>
+        <Text
+          type="text2"
+          className={styles.feedbacktxt}
+          lines={1}
+          tag="span"
+          dataCy="search_feed_back_improve"
+        >
+          {Translate({
+            context: "feedback",
+            label: "search_feed_back_improve",
+          })}
+        </Text>
       </div>
-    </Collapse>
+    </div>
   );
 }
 
@@ -173,24 +176,22 @@ export function SearchFeedBackImprove({ showImprove }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function SearchFeedBackThankyou({ showThankyou }) {
+export function SearchFeedBackThankyou() {
   return (
-    <Collapse in={showThankyou}>
-      <div className={styles.feedbackcontainer}>
-        <Text
-          type="text2"
-          className={styles.feedbacktxt}
-          lines={1}
-          tag="span"
-          dataCy="search_feed_back_thankyou"
-        >
-          {Translate({
-            context: "feedback",
-            label: "search_feed_back_thankyou",
-          })}
-        </Text>
-      </div>
-    </Collapse>
+    <div className={styles.feedbackcontainer}>
+      <Text
+        type="text2"
+        className={styles.feedbacktxt}
+        lines={1}
+        tag="span"
+        dataCy="search_feed_back_thankyou"
+      >
+        {Translate({
+          context: "feedback",
+          label: "search_feed_back_thankyou",
+        })}
+      </Text>
+    </div>
   );
 }
 
@@ -200,39 +201,37 @@ export function SearchFeedBackThankyou({ showThankyou }) {
  * @returns {JSX.Element}
  * @constructor
  */
-export function SearchFeedBackForm({ onSubmitClick, showForm }) {
+export function SearchFeedBackForm({ onSubmitClick }) {
   const [hasTxt, setHasTxt] = useState(false);
   return (
-    <Collapse in={showForm}>
-      <div className={styles.feedbackcontainer}>
-        <div data-cy="search-feedback-form">
-          <Text type="text2" lines={1}>
-            {Translate({
-              context: "feedback",
-              label: "search_feed_back_form_title",
-            })}
-          </Text>
-          <textarea
-            rows="4"
-            cols="50"
-            id="search-feedback-input"
-            data-cy="search-feedback-input"
-            className={styles.feedbacktextarea}
-            placeholder="Skriv dit forslag her (valgfrit)"
-            onFocus={() => setHasTxt(true)}
-          />
+    <div className={styles.feedbackcontainer}>
+      <div data-cy="search-feedback-form">
+        <Text type="text2" lines={1}>
+          {Translate({
+            context: "feedback",
+            label: "search_feed_back_form_title",
+          })}
+        </Text>
+        <textarea
+          rows="4"
+          cols="50"
+          id="search-feedback-input"
+          data-cy="search-feedback-input"
+          className={styles.feedbacktextarea}
+          placeholder="Skriv dit forslag her (valgfrit)"
+          onFocus={() => setHasTxt(true)}
+        />
 
-          <Button
-            type="primary"
-            size="small"
-            className={styles.feedbackbutton}
-            onClick={onSubmitClick}
-          >
-            <ButtonTxt hasTxt={hasTxt} />
-          </Button>
-        </div>
+        <Button
+          type="primary"
+          size="small"
+          className={styles.feedbackbutton}
+          onClick={onSubmitClick}
+        >
+          <ButtonTxt hasTxt={hasTxt} />
+        </Button>
       </div>
-    </Collapse>
+    </div>
   );
 }
 
