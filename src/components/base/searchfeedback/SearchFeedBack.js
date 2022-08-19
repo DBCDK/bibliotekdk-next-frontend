@@ -6,9 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@/components/base/button/Button";
 import useDataCollect from "@/lib/useDataCollect";
-import useQ from "@/components/hooks/useQ";
 import Collapse from "react-bootstrap/Collapse";
-import Fade from "react-bootstrap/Fade";
 
 /**
  * Wrapper for feedback thumbs
