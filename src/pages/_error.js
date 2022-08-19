@@ -5,13 +5,19 @@
  */
 
 import { log } from "dbc-node-logger";
+
 /**
  * Handle 500 errorcode
  * @param statusCode
  * @returns {JSX.Element}
  * @constructor
  */
+
+export let errorCount = 0;
+
 function Error({ statusCode }) {
+  errorCount++;
+  console.log(errorCount, "_error: ERRORCOUNT");
   log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
   return (
     <p>

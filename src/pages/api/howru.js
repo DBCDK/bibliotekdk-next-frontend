@@ -7,59 +7,67 @@ const upSince = new Date();
 
 let session;
 
+import { errorCount } from "@/pages/_error";
+
 /**
  * The howru handler
  *
  * We make requests for all our GraphQL fragments
  */
 export default async function handler(req, res) {
-  if (!session) {
-    session = await getServerSession(req, res);
-  }
-
   // If any of the services fail, this is set to false
   let ok = true;
+  try {
+    if (!session) {
+      session = await getServerSession(req, res);
+    }
+    // Create service object for each fragment
+    const services = [
+      ...Object.entries(workFragments).map(([name, func]) => ({
+        service: `api-work-${name}`,
+        handler: () =>
+          fetcher({
+            ...func({ workId: "work-of:870970-basis:23154382" }),
+            accessToken: session?.accessToken,
+          }),
+      })),
+      ...Object.entries(searchFragments).map(([name, func]) => ({
+        service: `api-search-${name}`,
+        handler: () =>
+          fetcher({
+            ...func({ q: { all: "hest" }, limit: 10 }),
+            accessToken: session?.accessToken,
+          }),
+      })),
+    ];
 
-  // Create service object for each fragment
-  const services = [
-    ...Object.entries(workFragments).map(([name, func]) => ({
-      service: `api-work-${name}`,
-      handler: () =>
-        fetcher({
-          ...func({ workId: "work-of:870970-basis:23154382" }),
-          accessToken: session?.accessToken,
-        }),
-    })),
-    ...Object.entries(searchFragments).map(([name, func]) => ({
-      service: `api-search-${name}`,
-      handler: () =>
-        fetcher({
-          ...func({ q: { all: "hest" }, limit: 10 }),
-          accessToken: session?.accessToken,
-        }),
-    })),
-  ];
+    // Perform requests
+    const results = await Promise.all(
+      services.map(async (service) => {
+        const res = { service: service.service };
+        try {
+          const { error, errors } = await service.handler();
 
-  // Perform requests
-  const results = await Promise.all(
-    services.map(async (service) => {
-      const res = { service: service.service };
-      try {
-        const { error, errors } = await service.handler();
-
-        if (error || errors) {
+          if (error || errors) {
+            ok = false;
+            res.ok = false;
+          } else {
+            res.ok = true;
+          }
+        } catch (e) {
           ok = false;
           res.ok = false;
-        } else {
-          res.ok = true;
         }
-      } catch (e) {
-        ok = false;
-        res.ok = false;
-      }
-      return res;
-    })
-  );
+        return res;
+      })
+    );
+  } catch (e) {
+    console.log(e, "ERROR CATCH");
+    // do nothing
+  }
 
+  // reset errorCount after a run
+  //errorCount = 0;
+  console.log(errorCount, "HOWRU: ERRORCOUNT");
   res.status(ok ? 200 : 500).json({ ok, upSince, services: results });
 }
