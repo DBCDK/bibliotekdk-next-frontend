@@ -178,7 +178,7 @@ export function SearchFeedBackImprove() {
  */
 export function SearchFeedBackThankyou() {
   return (
-    <div className={styles.feedbackcontainer}>
+    <div className={`${styles.feedbackcontainer} ${styles.feedbackthankyou}`}>
       <Text
         type="text2"
         className={styles.feedbacktxt}
@@ -204,7 +204,7 @@ export function SearchFeedBackThankyou() {
 export function SearchFeedBackForm({ onSubmitClick }) {
   const [hasTxt, setHasTxt] = useState(false);
   return (
-    <div className={styles.feedbackcontainer}>
+    <div className={`${styles.feedbackcontainer} ${styles.feedbackthankyou}`}>
       <div data-cy="search-feedback-form">
         <Text type="text2" lines={1}>
           {Translate({

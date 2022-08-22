@@ -57,8 +57,7 @@
 
 .feedbackthankyou {
   border-top: 1px;
-
-  /*animation: fadeIn 1s;*/
+  animation: fadeIn 1s;
 }
 
 .feedbackbutton {
