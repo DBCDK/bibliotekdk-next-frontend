@@ -34,9 +34,7 @@
     padding: var(--pt5) 0;
   }
 
-  .content > div:first-child {
-    transform: translate(0, -30%);
-  }
+
 }
 
 /* Custom AnimationLine */

@@ -123,7 +123,12 @@ export function ArticleSection({
     return null;
   }
   return (
-    <Section title={title} bgColor={backgroundColor} topSpace={topSpace}>
+    <Section
+      title={title}
+      bgColor={backgroundColor}
+      topSpace={topSpace}
+      contentDivider={null}
+    >
       <Template articles={articles} skeleton={skeleton} />
     </Section>
   );
