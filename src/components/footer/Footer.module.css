@@ -1,7 +1,7 @@
 .background {
-  margin-top: var(--pt10);
+  margin-top: var(--pt8);
   color: white;
-  padding-top: var(--pt10);
+  padding-top: var(--pt8);
 }
 
 .containerback {
