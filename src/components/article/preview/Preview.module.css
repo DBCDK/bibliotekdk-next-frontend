@@ -2,7 +2,6 @@
   color: var(--mine-shaft);
   text-decoration: none;
   display: block;
-  margin-bottom: var(--pt5);
 }
 .preview:focus,
 .preview:hover {

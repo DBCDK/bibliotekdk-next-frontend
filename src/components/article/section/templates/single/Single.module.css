@@ -29,14 +29,6 @@
   padding-bottom: var(--pt05);
 }
 
-@media (min-width: 768px) {
-  .wrap {
-    padding: var(--pt5) 0;
-  }
-
-
-}
-
 /* Custom AnimationLine */
 
 .title,
