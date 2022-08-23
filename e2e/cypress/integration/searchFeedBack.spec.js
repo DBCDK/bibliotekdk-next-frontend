@@ -7,7 +7,7 @@ describe("searchfeedback", () => {
     cy.visit("/iframe.html?id=base-searchfeedback--feed-back");
     // verify that banner is shown
     cy.get("[data-cy=search-feedback-thumbsup]").should("be.visible");
-    cy.get("[data-cy=search_feed_back_thankyou]").should("not.be.visible");
+    cy.get("[data-cy=search_feed_back_thankyou]").should("not.to.exist");
     cy.get("[data-cy=search-feedback-thumbsup]").click();
 
     cy.on("window:alert", (str) => {
@@ -23,7 +23,7 @@ describe("searchfeedback", () => {
     // verify that banner is shown
     cy.get("[data-cy=search-feedback-thumbsdown]").should("be.visible");
 
-    cy.get("[data-cy=search-feedback-form]").should("not.be.visible");
+    cy.get("[data-cy=search-feedback-form]").should("not.to.exist");
 
     cy.get("[data-cy=search-feedback-thumbsdown]").click();
 

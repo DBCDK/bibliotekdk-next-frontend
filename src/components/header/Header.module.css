@@ -222,7 +222,7 @@
 
 @media (min-width: 992px) {
   .header {
-    padding-top: var(--pt4);
+    padding-top: var(--pt1);
     /*padding-bottom: var(--pt4);*/
   }
 
@@ -252,7 +252,7 @@
   }
 
   .header .bottom {
-    padding: var(--pt4) 0 0 0;
+    padding: var(--pt2) 0 0 0;
   }
 
   .bottom .actions .action {

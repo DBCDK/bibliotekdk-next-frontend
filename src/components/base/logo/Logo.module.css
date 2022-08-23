@@ -6,6 +6,7 @@
 .wrapper{
     display: flex ;
     justify-content: space-between;
+    padding: var(--pt1) 0 0 0;
 
 }
 

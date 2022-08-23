@@ -1,100 +1,97 @@
 .feedbacktxt {
-    display: inline;
+  display: inline;
 }
 
 .feedbackcontainer {
-    padding: var(--pt3) 0 var(--pt3) var(--pt2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: var(--pt3) 0 var(--pt3) var(--pt2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.thumbscontaioner{
-    padding: var(--pt3) var(--pt2) var(--pt3) var(--pt2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 50%;
+.thumbscontaioner {
+  padding: var(--pt3) var(--pt2) var(--pt3) var(--pt2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 50%;
 }
 
-.feedbacktextarea{
-    margin: 6px 0 8px 0;
-    padding: var(--pt2);
-    font-family: var(--body-font);
-    display: block;
-    letter-spacing: 0.2px;
-    width: 100%;
+.feedbacktextarea {
+  margin: 6px 0 8px 0;
+  padding: var(--pt2);
+  font-family: var(--body-font);
+  display: block;
+  letter-spacing: 0.2px;
+  width: 100%;
 }
 
 .iconcontainer {
-    display: flex;
-    justify-content: space-between;
-    width: 30%;
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
 }
 
 .feedbackicon {
-    margin-right: var(--pt3);
-    position: relative;
-    top: 12px;
-    left: 12px;
+  margin-right: var(--pt3);
+  position: relative;
+  top: 12px;
+  left: 12px;
 }
 
 .spanwrap {
-    cursor: pointer;
-    border-radius: 50%;
-    width: var(--pt6);
-    height: var(--pt6);
+  cursor: pointer;
+  border-radius: 50%;
+  width: var(--pt6);
+  height: var(--pt6);
 }
 
 .spanwrap:hover {
-    animation: fadeIn 1s;
-    background-color: blue;
+  animation: fadeIn 1s;
+  background-color: blue;
 }
 
 .spanwrap:hover img {
-    filter: invert(1);
+  filter: invert(1);
 }
 
 .feedbackthankyou {
-    border-top: 1px;
-    padding: var(--pt3) 0 var(--pt3) var(--pt1);
-    /*animation: fadeIn 1s;*/
+  border-top: 1px;
+  animation: fadeIn 1s;
 }
 
 .feedbackbutton {
-    width: 125px;
-    min-width: 125px;
-    background-color: transparent;
-    color: var(--blue);
-    border: 2px solid var(--blue);
-    overflow: hidden;
+  width: 125px;
+  min-width: 125px;
+  background-color: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  overflow: hidden;
 }
 
 @media (max-width: 1100px) {
-    .thumbscontaioner{
-        max-width: 70%;
-    }
+  .thumbscontaioner {
+    max-width: 70%;
+  }
 }
 
 @media (max-width: 992px) {
-    .thumbscontaioner{
-        max-width: 70%;
-    }
+  .thumbscontaioner {
+    max-width: 70%;
+  }
 }
 
 @media (max-width: 576px) {
-    .thumbscontaioner{
-        max-width: 100%;
-    }
+  .thumbscontaioner {
+    max-width: 100%;
+  }
 }
 
-
-
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

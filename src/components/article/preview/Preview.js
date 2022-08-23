@@ -48,7 +48,7 @@ export default function ArticlePreview({ article, skeleton, rubrik = true }) {
         <Title
           className={styles.title}
           tag="h3"
-          type="title3"
+          type="title4"
           lines={1}
           skeleton={skeleton}
         >
