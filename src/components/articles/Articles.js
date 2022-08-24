@@ -12,6 +12,8 @@ import ArticlePreview from "@/components/article/preview";
 import { allArticles, promotedArticles } from "@/lib/api/article.fragments";
 import { getLangcode } from "@/components/base/translate/Translate";
 
+import styles from "./Articles.module.css";
+
 /**
  * The Article page React component
  *
@@ -27,7 +29,9 @@ export function Articles({ articles, skeleton }) {
     <Row>
       {articles.map((article, index) => (
         <Col xs={12} md={4} key={`${article.title}_${index}`}>
-          <ArticlePreview article={article} skeleton={skeleton} />
+          <div className={styles.bottomspacing}>
+            <ArticlePreview article={article} skeleton={skeleton} />
+          </div>
         </Col>
       ))}
     </Row>
