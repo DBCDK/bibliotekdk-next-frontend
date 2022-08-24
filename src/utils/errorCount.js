@@ -1,29 +1,71 @@
-import fs from "fs";
-let errorCount = 0;
+import { promises as Fs } from "fs";
 const path = "/tmp/errorcount";
 
-export function getErrorCount() {
-  fs.readFile(path, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("it has been read", data);
-    return data;
-  });
+/**
+ * Get error count
+ * @returns {Promise<*>}
+ */
+export async function getErrorCount() {
+  if (await exists()) {
+    return await read();
+  } else {
+    return "0";
+  }
 }
 
-export function incErrorCount() {
-  fs.writeFile(path, (errorCount++).toString(), { flag: "w+" }, function (err) {
-    if (err) {
-      throw err;
-    }
-    console.log(errorCount);
-    console.log("It's saved!");
-  });
+/**
+ * helper function to check if the file is there ?
+ * @returns {Promise<boolean>}
+ */
+async function exists() {
+  try {
+    await Fs.access(path);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-export function resetErrorCount() {
-  errorCount = 0;
-  incErrorCount();
+/**
+ * helper function to read the file
+ * @returns {Promise<string>}
+ */
+async function read() {
+  try {
+    return await Fs.readFile(path, { encoding: "utf8" });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * helper function to write the file
+ * @param count
+ * @returns {Promise<void>}
+ */
+async function write(count) {
+  try {
+    // write the file - overwrite existing - create if not exists (w+)
+    await Fs.writeFile(path, count, { flag: "w+" });
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+/**
+ * Increase error count
+ * @returns {Promise<void>}
+ */
+export async function incErrorCount() {
+  const count = await getErrorCount();
+  let errorCount = parseInt(count);
+
+  await write((++errorCount).toString());
+}
+
+/**
+ * Reset error count
+ */
+export async function resetErrorCount() {
+  await write("0");
 }

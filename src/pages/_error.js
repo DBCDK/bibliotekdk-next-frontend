@@ -14,8 +14,11 @@ import { log } from "dbc-node-logger";
  */
 
 function Error({ statusCode, incErrors }) {
+  // log for kibana
   log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
+  // increase error count for howru function
   incErrors();
+  // @TODO - a proper 500 page
   return (
     <p>
       {statusCode

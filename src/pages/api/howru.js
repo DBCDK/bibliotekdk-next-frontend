@@ -8,6 +8,7 @@ import { getErrorCount, resetErrorCount } from "@/utils/errorCount";
 const upSince = new Date();
 
 let session;
+const maxError500 = 10;
 
 /**
  * The howru handler
@@ -66,17 +67,31 @@ export default async function handler(req, res) {
     })
   );
 
-  const count = getErrorCount();
-
-  console.log(count, "HOWRU COUNT");
-
-  /*const error500 = { service: "bibliotekdkService", ok: count > 10 };
-  // howru has finished - reset errorcounter
-  resetErrorCount();
-  console.log(services);
+  // get an object for 500 errors
+  const error500 = await errorCode500();
+  // check object status
+  if (!error500.ok) {
+    // set overall status
+    ok = false;
+  }
+  // push error500 object to results
   results.push(error500);
 
-  console.log(results);*/
-
   res.status(ok ? 200 : 500).json({ ok, upSince, services: results });
+}
+
+async function errorCode500() {
+  const count = await getErrorCount();
+  // check if more errors than allowed is found
+  const error500ok = parseInt(count) < maxError500;
+  // add an object that counts number of 500 errors
+  const error500 = {
+    service: "500Count",
+    count500: count,
+    ok: error500ok,
+  };
+  //howru has finished handling errorcount - reset errorcounter
+  resetErrorCount();
+
+  return error500;
 }
