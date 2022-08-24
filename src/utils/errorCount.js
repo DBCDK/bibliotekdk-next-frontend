@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import { promises as Fs } from "fs";
 import { log } from "dbc-node-logger";
 const path = "/tmp/errorcount";

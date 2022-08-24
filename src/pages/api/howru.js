@@ -4,11 +4,14 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 import { getErrorCount, resetErrorCount } from "@/utils/errorCount";
+import getConfig from "next/config";
+import { log } from "dbc-node-logger";
+const { serverRuntimeConfig } = getConfig();
+const { maxError500Count } = serverRuntimeConfig;
 
 const upSince = new Date();
 
 let session;
-const maxError500 = 10;
 
 /**
  * The howru handler
@@ -24,7 +27,10 @@ export default async function handler(req, res) {
       session = await getServerSession(req, res);
     }
   } catch (e) {
-    console.log(e);
+    log.error(`howru throws exception:`, {
+      error: String(e),
+      stacktrace: e.stack,
+    });
   }
   // Create service object for each fragment
   const services = [
@@ -83,7 +89,7 @@ export default async function handler(req, res) {
 async function errorCode500() {
   const count = await getErrorCount();
   // check if more errors than allowed is found
-  const error500ok = parseInt(count) < maxError500;
+  const error500ok = parseInt(count) < maxError500Count;
   // add an object that counts number of 500 errors
   const error500 = {
     service: "500Count",

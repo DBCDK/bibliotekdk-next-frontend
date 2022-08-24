@@ -29,7 +29,7 @@ Error.getInitialProps = ({ res, err }) => {
   if (typeof window === "undefined") {
     incErrors = require("../utils/errorCount").incErrorCount;
     // log for kibana
-    log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
+    log.error(`INTERNAL ERROR`, { severity: "ERROR" });
     // increase error count for howru function
     incErrors();
   }
