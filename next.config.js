@@ -77,6 +77,7 @@ module.exports = {
     clientSecret: process.env.CLIENT_SECRET,
     jwtSecret: process.env.NEXTAUTH_SECRET,
     disableDrupalTranslate: process.env.DISABLE_DRUPAL_TRANSLATE || false,
+    maxError500Count: process.env.MAX_ERROR_COUNT || 1,
   },
   publicRuntimeConfig: {
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
