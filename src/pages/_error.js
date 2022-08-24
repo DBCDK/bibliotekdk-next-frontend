@@ -1,5 +1,5 @@
 /**
- * 500.js - 500 errors can happen both client-side and server-side
+ * _error.js - 500 errors can happen both client-side and server-side
  * we have en _error page to handle that.
  * @see https://nextjs.org/docs/advanced-features/custom-error-page#500-page
  */
@@ -13,11 +13,7 @@ import { log } from "dbc-node-logger";
  * @constructor
  */
 
-function Error({ statusCode, incErrors }) {
-  // log for kibana
-  log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
-  // increase error count for howru function
-  incErrors();
+function Error({ statusCode }) {
   // @TODO - a proper 500 page
   return (
     <p>
@@ -32,9 +28,14 @@ Error.getInitialProps = ({ res, err }) => {
   let incErrors = null;
   if (typeof window === "undefined") {
     incErrors = require("../utils/errorCount").incErrorCount;
+    // log for kibana
+    log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
+    // increase error count for howru function
+    incErrors();
   }
+
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-  return { statusCode, incErrors };
+  return { statusCode };
 };
 
 export default Error;
