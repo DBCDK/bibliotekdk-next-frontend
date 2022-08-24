@@ -13,12 +13,9 @@ import { log } from "dbc-node-logger";
  * @constructor
  */
 
-export let errorCount = 0;
-
-function Error({ statusCode }) {
-  errorCount++;
-  console.log(errorCount, "_error: ERRORCOUNT");
+function Error({ statusCode, incErrors }) {
   log.error(`INTERNAL ERROR:${statusCode}`, { severity: "ERROR" });
+  incErrors();
   return (
     <p>
       {statusCode
@@ -29,8 +26,12 @@ function Error({ statusCode }) {
 }
 
 Error.getInitialProps = ({ res, err }) => {
+  let incErrors = null;
+  if (typeof window === "undefined") {
+    incErrors = require("../utils/errorCount").incErrorCount;
+  }
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-  return { statusCode };
+  return { statusCode, incErrors };
 };
 
 export default Error;
