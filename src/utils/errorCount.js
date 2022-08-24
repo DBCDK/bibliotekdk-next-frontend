@@ -1,4 +1,5 @@
 import { promises as Fs } from "fs";
+import { log } from "dbc-node-logger";
 const path = "/tmp/errorcount";
 
 /**
@@ -34,7 +35,10 @@ async function read() {
   try {
     return await Fs.readFile(path, { encoding: "utf8" });
   } catch (e) {
-    console.log(e);
+    log.error(`Read errorcount failed:`, {
+      error: String(e),
+      stacktrace: e.stack,
+    });
   }
 }
 
@@ -48,7 +52,10 @@ async function write(count) {
     // write the file - overwrite existing - create if not exists (w+)
     await Fs.writeFile(path, count, { flag: "w+" });
   } catch (e) {
-    console.log(e);
+    log.error(`Write errorcount failed:`, {
+      error: String(e),
+      stacktrace: e.stack,
+    });
   }
 }
 
