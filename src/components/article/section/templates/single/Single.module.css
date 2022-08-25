@@ -23,7 +23,6 @@
   position: relative;
   /* Maintain 16:9 aspect ratio by setting padding-bottom */
   padding-bottom: 56%;
-  margin-bottom: var(--pt2);
 }
 .imageskeleton {
   padding-bottom: var(--pt05);
