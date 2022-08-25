@@ -37,7 +37,7 @@
 
 .header .top {
   display: none;
-  padding: var(--pt1) 0 var(--pt2) 0;
+  padding: var(--pt1) 0 var(--pt1) 0;
 }
 
 .bottom .actions .action,
