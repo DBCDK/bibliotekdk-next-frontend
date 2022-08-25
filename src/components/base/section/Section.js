@@ -73,6 +73,7 @@ export default function Section({
               >
                 {titleDivider}
                 {title}
+                <div className={styles.bottomspacing}></div>
               </Col>
             )}
             <Col
