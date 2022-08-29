@@ -5,25 +5,26 @@
  */
 
 import { log } from "dbc-node-logger";
+import { Custom } from "@/pages/404";
 
 /**
- * Handle 500 errorcode
+ * Handle 500 errorcode - return page not found
  * @param statusCode
  * @returns {JSX.Element}
  * @constructor
  */
 
 function Error({ statusCode }) {
-  // @TODO - a proper 500 page
-  return (
-    <p>
-      {statusCode
-        ? `An error ${statusCode} occurred on server`
-        : "An error occurred on client"}
-    </p>
-  );
+  return <Custom />;
 }
 
+/**
+ * Get serverside props - if an error is serverside - log it and increase
+ * errorcount for howru function
+ * @param res
+ * @param err
+ * @returns {{statusCode: (*|number)}}
+ */
 Error.getInitialProps = ({ res, err }) => {
   let incErrors = null;
   if (typeof window === "undefined") {
