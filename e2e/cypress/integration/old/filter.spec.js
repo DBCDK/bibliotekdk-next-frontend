@@ -17,7 +17,7 @@ function modalBack() {
   cy.contains(/vis\s*\d*\s*resultater/i);
   cy.wait(500);
 }
-describe("Filter", () => {
+describe.skip("Filter", () => {
   beforeEach(function () {});
 
   it(`9/10 categories is visible (workType is excluded)`, () => {
