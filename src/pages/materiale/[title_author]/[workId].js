@@ -97,7 +97,7 @@ const serverQueries = Object.values(workFragments);
 WorkPage.getInitialProps = async (ctx) => {
   const init = await fetchAll(serverQueries, ctx);
   const queries = Object.values(init.initialData);
-  if (queries[0].data && !queries[0].data.work) {
+  if (queries[0]?.data && !queries[0]?.data?.work) {
     ctx.res.statusCode = 404;
     return {
       notFound: true,
