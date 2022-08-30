@@ -90,8 +90,18 @@ const serverQueries = Object.values(workFragments);
  * We use getInitialProps to let Next.js
  * fetch the data server side
  *
+ * We do check if a work is found - if not we redirect to 'not found' page
+ *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-WorkPage.getInitialProps = (ctx) => {
-  return fetchAll(serverQueries, ctx);
+WorkPage.getInitialProps = async (ctx) => {
+  const init = await fetchAll(serverQueries, ctx);
+  const queries = Object.values(init.initialData);
+  if (queries[0].data && !queries[0].data.work) {
+    ctx.res.statusCode = 404;
+    return {
+      notFound: true,
+    };
+  }
+  return init;
 };
