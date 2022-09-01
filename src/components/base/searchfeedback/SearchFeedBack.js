@@ -122,7 +122,11 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
       </Text>
 
       <span className={styles.iconcontainer}>
-        <span className={styles.spanwrap} onClick={onThumbsUp}>
+        <span
+          className={styles.spanwrap}
+          onClick={onThumbsUp}
+          onTouchStart={onThumbsUp}
+        >
           <Icon
             size={{ w: "auto", h: 3 }}
             src="thumbsup.svg"
@@ -131,7 +135,11 @@ export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
             data-cy="search-feedback-thumbsup"
           />
         </span>
-        <span className={styles.spanwrap} onClick={onThumbsDown}>
+        <span
+          className={styles.spanwrap}
+          onClick={onThumbsDown}
+          onTouchStart={onThumbsUp}
+        >
           <Icon
             size={{ w: "auto", h: 3 }}
             src="thumbsdown.svg"
