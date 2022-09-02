@@ -41,7 +41,9 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                branch "master"
+                anyOf {
+                    branch 'master'; branch 'alfa-0'
+                }
             }
             steps { 
                 script {
@@ -62,7 +64,7 @@ pipeline {
                 }
             }
 			when {
-				branch "master"
+			    branch 'master'
 			}
 			steps {
 				dir("deploy") {
