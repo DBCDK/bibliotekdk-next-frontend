@@ -41,7 +41,9 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                env.BRANCH_NAME ==~ /(master|alfa-0)/
+                anyOf {
+                    branch 'master'; branch 'alfa-0'
+                }
             }
             steps { 
                 script {
