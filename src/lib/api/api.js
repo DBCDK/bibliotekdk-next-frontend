@@ -36,19 +36,28 @@ export function generateKey(query) {
 /**
  * Our custom fetcher
  *
- * @param {string} queryStr
- * @param {string} apiUrl
+ * @param {string || object} queryStr
  * @param {string || null} userAgent
  * @param {string || null} xForwardedFor
  */
 export async function fetcher(
   queryStr,
-  apiUrl = config.api.url,
   userAgent = null,
   xForwardedFor = null
 ) {
-  const { query, variables, delay, accessToken } =
-    typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
+  const {
+    apiUrl: apiUrlFromQuery,
+    query,
+    variables,
+    delay,
+    accessToken,
+  } = typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
+
+  // Calculate apiUrl
+  const apiUrl =
+    apiUrlFromQuery && config[apiUrlFromQuery]?.url
+      ? config[apiUrlFromQuery]?.url
+      : config.api.url;
 
   const headers = {
     "Content-Type": "application/json",
@@ -137,11 +146,6 @@ export function useData(query) {
   // The key for this query
   const key = query && generateKey({ ...query, accessToken } || "");
 
-  // Calculate apiUrl
-  const apiUrl = config[query?.apiUrl]?.url
-    ? config[query.apiUrl]?.url
-    : config.api.url;
-
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
   const initialData = useContext(APIStateContext) || {};
@@ -154,7 +158,7 @@ export function useData(query) {
   // Fetch data
   const { data, error, mutate } = useSWR(
     accessToken && key,
-    (key) => (mockedFetcher ? mockedFetcher(key) : fetcher(key, apiUrl)),
+    (key) => (mockedFetcher ? mockedFetcher(key) : fetcher(key)),
     {
       initialData: initialData[key],
       loadingTimeout: query?.slowThreshold || 5000,
