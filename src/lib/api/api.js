@@ -37,8 +37,16 @@ export function generateKey(query) {
  * Our custom fetcher
  *
  * @param {string} queryStr
+ * @param {string} apiUrl
+ * @param {string || null} userAgent
+ * @param {string || null} xForwardedFor
  */
-export async function fetcher(queryStr, userAgent, xForwardedFor) {
+export async function fetcher(
+  queryStr,
+  apiUrl = config.api.url,
+  userAgent = null,
+  xForwardedFor = null
+) {
   const { query, variables, delay, accessToken } =
     typeof queryStr === "string" ? JSON.parse(queryStr) : queryStr;
 
@@ -55,7 +63,7 @@ export async function fetcher(queryStr, userAgent, xForwardedFor) {
     headers["x-forwarded-for"] = xForwardedFor;
   }
   const start = Date.now();
-  const res = await fetch(config.api.url, {
+  const res = await fetch(apiUrl, {
     method: "POST",
     headers,
     body: JSON.stringify({
@@ -79,8 +87,6 @@ export async function fetcher(queryStr, userAgent, xForwardedFor) {
 
 /**
  * A custom React hook for sending mutate requests to the GraphQL API
- *
- * @param {Object} obj - A query object.
  */
 export function useMutate() {
   // The session may contain access token
@@ -122,7 +128,7 @@ export function useMutate() {
  * A custom React hook for fetching data from the GraphQL API
  * https://reactjs.org/docs/hooks-custom.html
  *
- * @param {Object} obj - A query object.
+ * @param {Object} query - A query object.
  */
 export function useData(query) {
   // The session may contain access token
@@ -130,6 +136,11 @@ export function useData(query) {
 
   // The key for this query
   const key = query && generateKey({ ...query, accessToken } || "");
+
+  // Calculate apiUrl
+  const apiUrl = config[query?.apiUrl]?.url
+    ? config[query.apiUrl]?.url
+    : config.api.url;
 
   // Initial data may be set, when a bot is requesting the site
   // Used for server side rendering
@@ -143,7 +154,7 @@ export function useData(query) {
   // Fetch data
   const { data, error, mutate } = useSWR(
     accessToken && key,
-    mockedFetcher || fetcher,
+    (key) => (mockedFetcher ? mockedFetcher(key) : fetcher(key, apiUrl)),
     {
       initialData: initialData[key],
       loadingTimeout: query?.slowThreshold || 5000,
@@ -162,8 +173,6 @@ export function useData(query) {
 
 /**
  * A custom React hook for using the fetcher
- *
- * @param {Object} obj - A query object.
  */
 export function useFetcher() {
   // The session may contain access token
@@ -172,9 +181,12 @@ export function useFetcher() {
   async function doFetch(query) {
     // The key for this query
     const key = query && generateKey({ ...query, accessToken } || "");
-    const res = await fetcher(key);
-    return res;
+    return await fetcher(key);
   }
 
   return doFetch;
 }
+
+export const ApiEnums = Object.freeze({
+  FBI_API: "fbi_api",
+});

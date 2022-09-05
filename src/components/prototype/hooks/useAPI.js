@@ -8,6 +8,12 @@ export default (query) => {
     query,
     response: null,
   });
+
+  // Calculate apiUrl
+  const apiUrl = config[query?.apiUrl]?.url
+    ? config[query.apiUrl]?.url
+    : config.api.url;
+
   useEffect(() => {
     (async () => {
       setState({
@@ -15,7 +21,7 @@ export default (query) => {
         query,
         response: null,
       });
-      const res = await fetch(config.api.url, {
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
