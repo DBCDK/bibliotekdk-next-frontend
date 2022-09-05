@@ -4,6 +4,7 @@
  */
 
 import { getLangcode } from "./fragments.utils";
+import { ApiEnums } from "@/lib/api/api";
 
 /**
  *
@@ -14,6 +15,7 @@ import { getLangcode } from "./fragments.utils";
  */
 export function article({ articleId, language }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($articleId: String! $language: LanguageId! ) {
         article: nodeById(id: $articleId language:$language ) {
@@ -56,6 +58,7 @@ export function article({ articleId, language }) {
 export function promotedArticles({ language }) {
   const langcode = getLangcode(language);
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ( $language: LanguageId! $langcode: [String] ) {
       nodeQuery (limit:40 filter: {conditions: [
@@ -103,6 +106,7 @@ export function promotedArticles({ language }) {
 export function allArticles({ language }) {
   const langcode = getLangcode(language);
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query( $language: LanguageId! $langcode: [String] ) {
       nodeQuery (limit:100 filter: {conditions: [
