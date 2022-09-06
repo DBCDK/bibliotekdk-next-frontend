@@ -3,8 +3,11 @@
  *
  * @returns {{query: string}}
  */
+import { ApiEnums } from "@/lib/api/api";
+
 export function frontpageHero() {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `
     { 
       nodeQuery(limit: 40, filter: {conditions: [
