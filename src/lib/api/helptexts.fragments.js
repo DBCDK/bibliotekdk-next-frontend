@@ -1,11 +1,13 @@
 import { getLangcode } from "./fragments.utils";
 import { lang } from "@/components/base/translate";
+import { ApiEnums } from "@/lib/api/api";
 /**
  * Helptexts - published
  */
 export function publishedHelptexts({ language }) {
   const langcode = getLangcode(language);
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `query ($language: LanguageId! $langcode: [String]){
       nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["help_text"]},
@@ -41,6 +43,7 @@ export function publishedHelptexts({ language }) {
 
 export function helpText({ helpTextId, language }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($helpTextId: String! $language: LanguageId!) {
         helptext: nodeById(id: $helpTextId language:$language){
@@ -73,6 +76,7 @@ export function helpText({ helpTextId, language }) {
 
 export function helpTextSearch({ q }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     delay: 100, // add small delay to avoid flicker when query is fast
     query: `query ($q: String!, $language: LanguageCode) {
               help(q: $q, language: $language) {
