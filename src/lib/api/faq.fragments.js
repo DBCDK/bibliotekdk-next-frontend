@@ -1,7 +1,9 @@
 import { getLangcode } from "./fragments.utils";
+import { ApiEnums } from "@/lib/api/api";
 export function promotedFaqs(language) {
   const langcode = getLangcode(language);
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `query($language: LanguageId! $langcode: [String]) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
@@ -47,6 +49,7 @@ export function promotedFaqs(language) {
 export function publishedFaqs(language) {
   const langcode = getLangcode(language);
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `query($language: LanguageId! $langcode: [String]) {
       faq: nodeQuery (limit:20 filter: {conditions: [
         {field: "type", value: ["faq"]},
@@ -83,6 +86,7 @@ export function publishedFaqs(language) {
 
 export function FaqById({ faqId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($faqId: String!) {
         faq: nodeById(id: $faqId){
