@@ -95,7 +95,7 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
         <Text type="text3" skeleton={skeleton} lines={2}>
           {[
             Translate({ ...context, label: "onlineAccessAt" }),
-            onlineAccess[0].origin,
+            onlineAccess[0].origin || getBaseUrl(onlineAccess[0].url),
           ].join(" ")}
         </Text>
       </Col>
