@@ -1,6 +1,9 @@
 // @TODO export below in a function
+import { ApiEnums } from "@/lib/api/api";
+
 export function notificationsQuery({ language }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `query($language: LanguageId!) {
   nodeQuery(filter: {conditions: {field: "type", value: "notification", operator: EQUAL}}) {
     count
