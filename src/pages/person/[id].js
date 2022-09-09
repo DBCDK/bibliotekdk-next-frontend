@@ -24,6 +24,9 @@ import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
 
 import WorkSlider from "@/components/base/slider/WorkSlider";
+import Title from "@/components/base/title";
+import { Col, Row } from "react-bootstrap";
+import Text from "@/components/base/text";
 
 function forfweb(id) {
   return {
@@ -240,19 +243,45 @@ export default function Page() {
   return (
     <React.Fragment>
       <Header router={router} />
-      <div>
-        <strong>Navn:</strong> {id}
+      <div style={{ background: "#f2f2f2", padding: "48px 0" }}>
+        {topWorks?.length && (
+          <Section title=" " titleDivider={null} contentDivider={null}>
+            <Row>
+              <Col xs={7}>
+                <Title type="title3">{id}</Title>
+                <Text type="text2" style={{ marginTop: 8 }}>
+                  Har en score på {Math.round(creatorRating?.rating * 10)}/10 på
+                  baggrund af {creatorRating?.count} anmeldelser
+                </Text>
+                {subjectToWorks && (
+                  <Text type="text3" style={{ marginTop: 20 }}>
+                    Kredser om emnerne{" "}
+                    {subjectToWorks.slice(0, 10).map((subject, idx) => {
+                      return (
+                        <span key={subject.subject}>
+                          <strong>{subject.subject}</strong> (
+                          {subject.works.length})
+                          {idx < Math.min(subjectToWorks.length, 10) - 1
+                            ? ", "
+                            : ""}
+                        </span>
+                      );
+                    })}
+                  </Text>
+                )}
+              </Col>
+              <Col xs={2}>
+                {forfwebArticle?.cover?.detail && (
+                  <img
+                    style={{ width: "100%" }}
+                    src={forfwebArticle?.cover?.detail}
+                  />
+                )}
+              </Col>
+            </Row>
+          </Section>
+        )}
       </div>
-
-      <div>
-        <strong>Forfatter rating:</strong>{" "}
-        {Math.round(creatorRating?.rating * 10)}/10 - antal anmeldte værker{" "}
-        {creatorRating?.count}
-      </div>
-
-      {forfwebArticle?.cover?.detail && (
-        <img src={forfwebArticle?.cover?.detail} />
-      )}
 
       <div style={{ marginTop: 12 }}>
         <strong>Roller:</strong>{" "}
