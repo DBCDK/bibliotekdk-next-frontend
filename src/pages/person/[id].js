@@ -283,6 +283,21 @@ export default function Page() {
                     })}
                   </Text>
                 )}
+                {rolesSummary && (
+                  <Text type="text3" style={{ marginTop: 20 }}>
+                    Optræder som{" "}
+                    {Object.entries(rolesSummary).map(([role, works], idx) => {
+                      return (
+                        <span key={role}>
+                          <strong>{role}</strong> ({works.length})
+                          {idx < Object.entries(rolesSummary).length - 1
+                            ? ", "
+                            : ""}
+                        </span>
+                      );
+                    })}
+                  </Text>
+                )}
               </Col>
               <Col xs={2}>
                 {(wikiImage || forfwebArticle?.cover?.detail) && (
@@ -294,8 +309,10 @@ export default function Page() {
 
                 {forfwebArticle?.cover?.detail ? (
                   <span>Fra forfatterweb</span>
-                ) : (
+                ) : wikiImage ? (
                   <span>Fra wikimedia.org</span>
+                ) : (
+                  ""
                 )}
               </Col>
             </Row>
@@ -303,30 +320,65 @@ export default function Page() {
         )}
       </div>
 
-      <div style={{ marginTop: 12 }}>
-        <strong>Roller:</strong>{" "}
-        {rolesSummary &&
-          Object.entries(rolesSummary).map(([role, works]) => {
-            return (
-              <div key={role}>
-                {role} - {works.length}
-              </div>
-            );
-          })}
-      </div>
       <div>
-        <div style={{ marginTop: 12 }}>
-          <strong>Top:</strong>
-        </div>
-        {topWorks &&
-          topWorks.map((work) => {
-            return (
-              <div key={work.id}>
-                {work.title} - {Math.round(work.avgRating * 10)}/10 - Antal
-                anmeldelser med rating: {work.reviewsWithRating.length}
-              </div>
-            );
-          })}
+        {topWorks && (
+          <Section
+            title="Anmeldernes favoritter"
+            titleDivider={null}
+            contentDivider={null}
+            topSpace={true}
+          >
+            {topWorks.map((work) => {
+              return (
+                <div key={work.id} style={{ marginBottom: 8 }}>
+                  <div>
+                    <div style={{ display: "flex" }}>
+                      <div
+                        style={{
+                          height: 50,
+                          width: 30,
+                          marginRight: 16,
+                          background: "grey",
+                        }}
+                      >
+                        {work?.cover?.detail && (
+                          <img
+                            src={work.cover.detail}
+                            style={{
+                              height: 50,
+                              width: 30,
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <Text tag="span" type="text1">
+                          {work.title}
+                        </Text>
+                        <Text tag="span" type="text3">
+                          <span
+                            style={{
+                              paddingRight: 8,
+                              fontWeight: 400,
+                              fontSize: 12,
+                            }}
+                          >
+                            {Math.round(work.avgRating * 10)}/10
+                          </span>
+                          Baseret på {work.reviewsWithRating.length}{" "}
+                          {work.reviewsWithRating.length === 1
+                            ? "anmeldelse"
+                            : "anmeldelser"}
+                        </Text>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </Section>
+        )}
       </div>
       <div>
         {topWorks?.length && (
@@ -341,49 +393,49 @@ export default function Page() {
       </div>
 
       <div>
-        <div style={{ marginTop: 12 }}>
-          <strong>Seneste bøger:</strong>
-        </div>
-        {newestWorks &&
-          newestWorks
-            .filter((work) => work.workTypes?.includes("literature"))
-            .slice(0, 10)
-            .map((work) => {
+        {newestWorks && (
+          <Section title="Bibliografi" topSpace={true}>
+            {newestWorks.map((work) => {
+              const role = work.creators.find((creator) => creator.name === id);
               return (
-                <div key={work.id}>
-                  {work.title} - {work.workYear} - {work.workTypes.join(", ")}
+                <div key={work.id} style={{ marginBottom: 8 }}>
+                  <div>
+                    <div style={{ display: "flex" }}>
+                      <div
+                        style={{
+                          height: 50,
+                          width: 30,
+                          marginRight: 16,
+                          background: "grey",
+                        }}
+                      >
+                        {work?.cover?.detail && (
+                          <img
+                            src={work.cover.detail}
+                            style={{
+                              height: 50,
+                              width: 30,
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div>
+                        <Text tag="span" type="text1">
+                          {work.title}
+                        </Text>
+                        <Text tag="span" type="text3">
+                          {work.workYear} {work.workTypes}{" "}
+                          <strong>{work.roles?.join(", ")}</strong>
+                        </Text>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               );
             })}
-        z{" "}
-      </div>
-
-      <div>
-        <div style={{ marginTop: 12 }}>
-          <strong>Seneste:</strong>
-        </div>
-        {newestWorks &&
-          newestWorks.slice(0, 20).map((work) => {
-            return (
-              <div key={work.id}>
-                {work.title} - {work.workYear} - {work.workTypes.join(", ")}
-              </div>
-            );
-          })}
-      </div>
-
-      <div>
-        <div style={{ marginTop: 12 }}>
-          <strong>Ofte brugte emner:</strong>
-        </div>
-        {subjectToWorks &&
-          subjectToWorks.slice(0, 10).map((subject) => {
-            return (
-              <div key={subject.subject}>
-                {subject.subject} - {subject.works.length}
-              </div>
-            );
-          })}
+          </Section>
+        )}
       </div>
     </React.Fragment>
   );
