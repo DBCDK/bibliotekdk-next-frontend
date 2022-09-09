@@ -70,6 +70,7 @@
     "react-intersection-observer": "^8.32.0",
     "sass": "^1.54.5",
     "smoothscroll-polyfill": "^0.4.4",
+    "superagent": "^8.0.0",
     "swiper": "^6.6.1",
     "swr": "^0.5.5",
     "unfetch": "^4.1.0",

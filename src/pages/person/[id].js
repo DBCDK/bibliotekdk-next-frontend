@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 
 import Header from "@/components/header/Header";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
@@ -105,6 +105,20 @@ const include = ["DBCS", "DBCF", "DBCM", null];
 export default function Page() {
   const router = useRouter();
   const { id } = router.query;
+
+  const [wikiImage, setWikiImage] = useState(null);
+  useEffect(() => {
+    fetch(`http://localhost:3000/api/find?name=${id}`)
+      .then((results) => results.json())
+      .then((data) => {
+        const { wikiData } = data;
+        wikiData &&
+          wikiData?.bindings &&
+          wikiData?.bindings[0] &&
+          wikiData?.bindings[0]?.IMAGE?.value &&
+          setWikiImage(wikiData?.bindings[0]?.IMAGE?.value);
+      });
+  }, [id]);
 
   const { data } = useData(id && basic(id));
   const { data: forfwebData } = useData(id && forfweb(id));
@@ -271,11 +285,17 @@ export default function Page() {
                 )}
               </Col>
               <Col xs={2}>
-                {forfwebArticle?.cover?.detail && (
+                {(wikiImage || forfwebArticle?.cover?.detail) && (
                   <img
                     style={{ width: "100%" }}
-                    src={forfwebArticle?.cover?.detail}
+                    src={forfwebArticle?.cover?.detail || wikiImage}
                   />
+                )}
+
+                {forfwebArticle?.cover?.detail ? (
+                  <span>Fra forfatterweb</span>
+                ) : (
+                  <span>Fra wikimedia.org</span>
                 )}
               </Col>
             </Row>
