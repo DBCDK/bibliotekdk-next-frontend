@@ -75,7 +75,7 @@ export function Overview({
     }
   }
 
-  const searchOnUrl = "/find?q.creator=";
+  const searchOnUrl = "/person/";
 
   const workType = workTypes?.[0] || "fallback";
   const workTypeTranslated = hasTranslation({
