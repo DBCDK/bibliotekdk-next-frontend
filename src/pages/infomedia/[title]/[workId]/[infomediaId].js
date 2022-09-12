@@ -34,7 +34,7 @@ export function InfomediaArticle(infomediaData) {
   const router = useRouter();
   const workPublic = publicData?.data?.work;
   const manifestationPublic = publicData?.data?.work?.manifestations?.[0];
-  const hasArticle = privateData?.data?.infomediaContent?.length > 0;
+  const hasArticle = privateData?.data?.infomedia?.article;
 
   const articles = parseArticles(manifestationPublic, workPublic, privateData);
 
@@ -103,62 +103,55 @@ export function InfomediaArticle(infomediaData) {
  *  array of parsed articles
  */
 function parseArticles(manifestationPublic, workPublic, privateData) {
-  const article = privateData?.data?.infomediaContent;
+  const article = privateData?.data?.infomedia?.article;
 
   const returnArticles = [];
   let articleindex = 0;
-  do {
-    const parsed = {
-      article: {
-        creators: manifestationPublic?.creators,
-        title: manifestationPublic?.title,
-        entityCreated: manifestationPublic?.datePublished,
-        category: workPublic?.subjects
-          .filter(
-            (subject) => subject.type === "DBCO" || subject.type === "genre"
-          )
-          .map((subject) => subject.value),
 
-        deliveredBy: "Infomedia",
+  const parsed = {
+    article: {
+      creators: manifestationPublic?.creators,
+      title: manifestationPublic?.title,
+      entityCreated: manifestationPublic?.datePublished,
+      category: workPublic?.subjects
+        .filter(
+          (subject) => subject.type === "DBCO" || subject.type === "genre"
+        )
+        .map((subject) => subject.value),
+
+      deliveredBy: "Infomedia",
+    },
+  };
+
+  // If has access to article
+  if (article) {
+    let currentArticle = article;
+    parsed.article = {
+      ...parsed.article,
+      subHeadLine:
+        currentArticle?.subHeadLine !== currentArticle?.headLine &&
+        currentArticle?.subHeadLine,
+      fieldRubrik: currentArticle?.hedLine,
+      body: {
+        value: currentArticle?.text,
+      },
+      paper: currentArticle?.paper,
+      disclaimer: {
+        logo: "/infomedia_logo.svg",
+        text: currentArticle?.logo,
       },
     };
-
-    // If has access to article
-    if (article) {
-      let currentArticle = article[articleindex];
-      parsed.article = {
-        ...parsed.article,
-        subHeadLine:
-          currentArticle?.subHeadLine !== currentArticle?.headLine &&
-          currentArticle?.subHeadLine,
-        fieldRubrik: currentArticle?.hedLine,
-        body: {
-          value: currentArticle?.text,
-        },
-        paper: currentArticle?.paper,
-        disclaimer: {
-          logo: "/infomedia_logo.svg",
-          text: currentArticle?.logo,
-        },
-      };
-    }
-    articleindex++;
-    returnArticles.push(parsed);
-  } while (article && article?.length > articleindex);
+  }
+  articleindex++;
+  returnArticles.push(parsed);
 
   return returnArticles;
-}
-
-function parseForPid(workId) {
-  const parts = workId.split(":");
-  return `${parts[1]}:${parts[2]}`;
 }
 
 export default function wrap() {
   const modal = useModal();
   const router = useRouter();
-  const { workId, review: reviewPid } = router.query;
-  const pid = reviewPid ? reviewPid : parseForPid(workId);
+  const { workId, infomediaId, review: reviewPid } = router.query;
 
   const user = useUser();
   const pickupBranch = user?.loanerInfo?.pickupBranch;
@@ -178,8 +171,9 @@ export default function wrap() {
   const reviewAuther = review?.author;
 
   const infomediaPrivate = useData(
-    user.isAuthenticated && workId && infomediaArticle({ pid })
+    user.isAuthenticated && infomediaId && infomediaArticle({ id: infomediaId })
   );
+
   const branchRes = useData(
     pickupBranch && branchUserParameters({ branchId: pickupBranch })
   );
