@@ -206,7 +206,8 @@ export function OrderButton({
     const goToLogin =
       selectedMaterial.onlineAccess[0]?.accessType ===
         "urlInternetRestricted" &&
-      selectedMaterial.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1 &&
+      (selectedMaterial.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1 ||
+        selectedMaterial.onlineAccess[0]?.url.indexOf("ebscohost") !== -1) &&
       !user.isAuthenticated;
 
     return (
