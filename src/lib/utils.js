@@ -12,7 +12,7 @@ const APP_URL =
  * Encode string
  * Get rid of diacritics and stuff
  *
- * @param {string}
+ * @param {string} str
  *
  * @returns {string} encoded string
  */
@@ -72,7 +72,8 @@ export function getArticlePath({ title, nid }) {
 
 /**
  * Create canonical URL for given article
- * @param {object} article
+ * @param {object} props
+ * @param {object} props.article
  *
  * @returns {string} The canonical article URL
  */
@@ -94,4 +95,16 @@ export function getIsPeriodicaLike(work) {
     ) ||
     !!work?.manifestations?.find((m) => m.materialType === "Årbog")
   );
+}
+
+/**
+ * Generalised infomediaUrl-builder
+ *
+ * @param {string} title
+ * @param {string} workId
+ * @param {string} infomadiaId
+ * @return {string}
+ */
+export function infomediaUrl(title, workId, infomadiaId) {
+  return `/infomedia/${title}/${workId}/${infomadiaId}`;
 }
