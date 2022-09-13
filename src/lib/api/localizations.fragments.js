@@ -1,5 +1,8 @@
+import { ApiEnums } from "@/lib/api/api";
+
 export function localizationsQuery({ pids }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `query($pids: [String!]!) {
         localizations(pids:$pids){
         count
