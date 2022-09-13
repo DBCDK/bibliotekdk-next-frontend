@@ -23,6 +23,7 @@ export function infomediaIdFromPid({ pid }) {
             }
           }
         }
+        monitor(name: "bibdknext_work_infomedia")
       }
     `,
     variables: { pid },
