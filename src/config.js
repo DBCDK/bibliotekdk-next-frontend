@@ -14,7 +14,7 @@ const config = {
   fbi_api: {
     url:
       process.env.NEXT_PUBLIC_FBI_API_URL ||
-      "https://fbi-api-staging.k8s.dbc.dk/default/graphql",
+      "https://fbi-api.dbc.dk/default/graphql",
     timeout: process.env.API_TIMEOUT_MS || 150,
   },
   backend: {
