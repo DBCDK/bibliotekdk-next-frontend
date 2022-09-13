@@ -187,7 +187,19 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
   );
 }
 
+/**
+ * Change originUrl to something readable (eg ebscohost.search.com -> Ebsco)
+ *
+ * 0931 - PJO - we keep this method for now - but return the origin .. wait
+ * for design to make up their mind
+ *
+ * @param originUrl
+ * @param mode
+ * @returns {string|*}
+ */
+
 function originUrlToUrlName(originUrl, mode) {
+  return originUrl;
   // these are for dda (demand drive acquisition)
   // translate urls to something readable
   if (originUrl && mode === LOGIN_MODE.DDA) {
