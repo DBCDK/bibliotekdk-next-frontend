@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import { getIsPeriodicaLike } from "@/lib/utils";
 import { preferredOnline } from "@/lib/Navigation";
 import { useModal } from "@/components/_modal";
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 // Translate Context
 const context = { context: "overview" };
@@ -230,7 +231,10 @@ export function OrderButton({
           skeleton={buttonSkeleton}
           onClick={() => {
             goToLogin
-              ? modal?.push("login")
+              ? modal?.push("login", {
+                  mode: LOGIN_MODE.DDA,
+                  originUrl: selectedMaterial.onlineAccess[0]?.origin,
+                })
               : onOnlineAccess(selectedMaterial.onlineAccess[0].url, urlTarget);
           }}
           type={type}
