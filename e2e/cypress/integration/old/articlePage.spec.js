@@ -135,7 +135,7 @@ describe("ArticlePage", () => {
       });
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846`
+        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
       cy.contains("Titel på Infomedia-artikel");
@@ -175,7 +175,7 @@ describe("ArticlePage", () => {
       cy.login();
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846`
+        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
       cy.contains("Testbiblioteker giver ikke adgang til at læse artiklen");
@@ -203,7 +203,7 @@ describe("ArticlePage", () => {
       });
 
       cy.visit(
-        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846`
+        `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
       cy.contains("404");

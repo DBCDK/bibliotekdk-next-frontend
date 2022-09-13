@@ -26,7 +26,7 @@ describe("Overview", () => {
     cy.focused().should(
       "have.attr",
       "href",
-      "/infomedia/fiske_hest/work-of:870971-tsart:39160846"
+      "/infomedia/fiske_hest/work-of:870971-tsart:39160846/e842b5ee"
     );
   });
 });

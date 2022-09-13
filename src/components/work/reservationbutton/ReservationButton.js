@@ -3,7 +3,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
-import { getIsPeriodicaLike } from "@/lib/utils";
+import { getIsPeriodicaLike, infomediaUrl } from "@/lib/utils";
 import { preferredOnline } from "@/lib/Navigation";
 
 // Translate Context
@@ -12,18 +12,21 @@ const context = { context: "overview" };
 /**
  * infomedia url is specific for this gui - set an url on the online access object
  * @param onlineAccess
+ * @param title
  * @return {*}
  */
 function addToInfomedia(onlineAccess, title) {
-  const addi = onlineAccess?.map((access) => {
+  return onlineAccess?.map((access) => {
     if (access.infomediaId) {
-      access.url = `/infomedia/${title}/work-of:${access.pid}`;
+      access.url = infomediaUrl(
+        title,
+        `work-of:${access.pid}`,
+        access.infomediaId
+      );
       access.accessType = "infomedia";
     }
     return access;
   });
-
-  return addi;
 }
 
 /**
@@ -71,6 +74,8 @@ function selectMaterial(manifestations) {
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
  * @param selectedMaterial
  * @param skeleton
+ * @param work
+ *
  * @return {JSX.Element|null}
  * @constructor
  */
