@@ -98,7 +98,7 @@ export function LoginPickup({
   context,
 }) {
   const allBranches = data?.result;
-  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
 
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -114,6 +114,7 @@ export function LoginPickup({
       doPolicyCheck: false,
       callbackUrl: callbackurl,
       mode,
+      originUrl,
       clear: true,
     });
   };

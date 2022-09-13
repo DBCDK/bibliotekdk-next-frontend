@@ -34,10 +34,11 @@ export const LOGIN_MODE = {
   DIGITAL_COPY: "digitalCopy",
   PLAIN_LOGIN: "plainLogin",
   INFOMEDIA: "infomedia",
+  DDA: "demand_driven_acquisition",
   // @TODO .. another mode? INFOMEDIA ?
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, mode }) {
+export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -76,7 +77,7 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
         {Translate({
           context: "login",
           label: `${mode}-description`,
-          vars: [branch?.agencyName || branch?.name],
+          vars: originUrl || [branch?.agencyName || branch?.name],
         })}
       </Text>
       <Title type="title4" tag="h4">
@@ -186,6 +187,20 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
   );
 }
 
+function originUrlToUrlName(originUrl, mode) {
+  // these are for dda (demand drive acquisition)
+  // translate urls to something readable
+  if (originUrl && mode === LOGIN_MODE.DDA) {
+    if (originUrl.indexOf("ebookcentral") !== -1) {
+      return "Ebook central";
+    }
+    if (originUrl.indexOf("ebscohost") !== -1) {
+      return "Ebsco";
+    }
+    return originUrl;
+  }
+}
+
 /**
  * Will show either a signin button if the provided branch supports
  * borrowerCheck (supports login.bib.dk), and otherwise a loaner formular.
@@ -209,7 +224,7 @@ export function LoanerForm({
   context,
   digitalCopyAccess,
 }) {
-  let { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  let { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
   if (mode === LOGIN_MODE.SUBSCRIPTION) {
     mode = digitalCopyAccess
       ? LOGIN_MODE.DIGITAL_COPY
@@ -250,7 +265,7 @@ export function LoanerForm({
         {Translate({
           context: "login",
           label: `${mode}-title`,
-          vars: [branch.name],
+          vars: [originUrlToUrlName(originUrl, mode)] || [branch.name],
         })}
       </Title>
 
@@ -319,6 +334,7 @@ export function LoanerForm({
           initial={initial}
           onSubmit={onSubmit}
           mode={mode}
+          originUrl={originUrl}
         />
       )}
     </div>

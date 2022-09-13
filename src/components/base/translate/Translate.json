@@ -1956,6 +1956,14 @@
       "infomedia-title": {
         "da": "Læs artiklen fra infomedia",
         "en": "Read article from infomedia"
+      },
+      "demand_driven_acquisition-title": {
+        "da": "Læs bogen på %s",
+        "en": "Read the book at &s"
+      },
+      "demand_driven_acquisition-description": {
+        "da": "Log ind på %s for at læse bogen",
+        "en": "Login at &s to read the book"
       }
     },
     "form": {
