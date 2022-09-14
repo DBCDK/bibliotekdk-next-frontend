@@ -1891,6 +1891,10 @@
         "da": "Biblioteket modtager ikke bestillinger på dette materiale gennem bibliotek.dk",
         "en": "LABEL: mangler oversættelse"
       },
+      "library-no-dda": {
+        "da": "%s giver ikke adgang til at læse bogen",
+        "en": "%S grants no access to the book"
+      },
       "info-email-message": {
         "da": "Du kan %s",
         "en": "You can"

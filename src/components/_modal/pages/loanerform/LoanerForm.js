@@ -267,8 +267,13 @@ export function LoanerForm({
   }
 
   // Order possible for branch
-  const orderPossible =
+  let orderPossible =
     doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
+
+  // QUICKFIX - .. to avoid api check ..  all public libraries has access to dda - no other
+  if (mode === LOGIN_MODE.DDA) {
+    orderPossible = branch?.agencyId?.startsWith("7") || false;
+  }
 
   return (
     <div className={styles.loanerform}>
@@ -283,12 +288,22 @@ export function LoanerForm({
 
       {!orderPossible && (
         <>
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-not-possible",
-            })}
-          </Text>
+          {mode === LOGIN_MODE.DDA ? (
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "library-no-dda",
+                vars: [branch?.agencyName],
+              })}
+            </Text>
+          ) : (
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-not-possible",
+              })}
+            </Text>
+          )}
           <Button
             onClick={onClose}
             className={styles.loginbutton}
@@ -475,6 +490,7 @@ export default function Wrap(props) {
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
+        onClose={() => props.modal.clear()}
       />
     </>
   );
