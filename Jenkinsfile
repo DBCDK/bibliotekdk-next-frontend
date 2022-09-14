@@ -63,13 +63,13 @@ pipeline {
                     alwaysPull true
                 }
             }
-			when {
-			    branch 'master'
+		        when {
+			    branch 'alfa-0'
 			}
 			steps {
 				dir("deploy") {
                     sh """#!/usr/bin/env bash
-						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
+						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
 					"""
 				}
 			}
