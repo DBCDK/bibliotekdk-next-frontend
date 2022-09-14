@@ -14,7 +14,9 @@ import Translate from "@/components/base/translate";
 
 import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
-import React from "react";
+import { frontpageHero } from "@/lib/api/hero.fragments";
+import { useData } from "@/lib/api/api";
+import { parseHero } from "@/components/hero/Hero";
 
 const Index = () => {
   const context = { context: "metadata" };
@@ -25,6 +27,9 @@ const Index = () => {
   });
 
   const router = useRouter();
+
+  const { isLoading, data } = useData(frontpageHero());
+  const ogImage = parseHero(data);
 
   const { canonical, alternate, root } = useCanonicalUrl();
 
@@ -37,7 +42,7 @@ const Index = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={`${root}/img/forside-beta.png`} />
+        <meta property="og:image" content={`${ogImage?.image?.url}`} />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
         <link rel="alternate icon" href="favicon.ico" />
@@ -74,7 +79,7 @@ const Index = () => {
  * These queries are run on the server.
  * I.e. the data fetched will be used for server side rendering
  */
-const serverQueries = [promotedArticles];
+const serverQueries = [promotedArticles, frontpageHero];
 
 /**
  * We use getInitialProps to let Next.js

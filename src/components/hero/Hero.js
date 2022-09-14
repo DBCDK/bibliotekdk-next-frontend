@@ -87,7 +87,7 @@ export function Hero({ image }) {
   );
 }
 
-function parseHero(data) {
+export function parseHero(data) {
   const heros =
     data?.nodeQuery?.entities &&
     data.nodeQuery.entities.filter(
