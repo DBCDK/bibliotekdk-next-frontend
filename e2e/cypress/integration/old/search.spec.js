@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Search", () => {
   it(`Should show search results`, () => {
@@ -32,7 +33,7 @@ describe("Search", () => {
 
   it(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         if (req.body.variables?.input?.search) {
           req.alias = "apiMutationOnSearch";
