@@ -52,7 +52,7 @@ Cypress.Commands.add("login", () => {
     },
   });
   cy.fixture("user.json").then((fixture) => {
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", "/190101/bibdk21/graphql", (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(fixture);
       }
