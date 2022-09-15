@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 describe("help", () => {
   it(`Search: should show empty response message`, () => {
@@ -28,7 +29,7 @@ describe("help", () => {
   });
   it(`Search: filter by language`, () => {
     // Intercept help search requests
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.includes("help(")) {
         req.alias = "apiHelpRequest";
       }

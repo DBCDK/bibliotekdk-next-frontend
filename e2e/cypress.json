@@ -6,7 +6,8 @@
     "toConsole": true
   },
   "env": {
-    "nextjsBaseUrl": "http://localhost:3000"
+    "nextjsBaseUrl": "http://localhost:3000",
+    "graphqlPath": "/190101/bibdk21/graphql"
   },
   "retries": {
     "runMode": 3,

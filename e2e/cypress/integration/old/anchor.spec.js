@@ -15,8 +15,8 @@ describe("Anchor menu", () => {
     cy.visit("/iframe.html?id=base-anchor--default");
 
     cy.get("[data-cy=anchor-menu-item]").eq(3).click();
+    cy.get(".active").should("have.length", 1);
     cy.get("[data-cy=anchor-menu-item]").eq(3).contains("Section4");
-    cy.get("[data-cy=anchor-menu-item]").eq(3).should("have.class", "active");
     cy.get("[data-cy=anchor-section]").eq(3).should("be.visible");
     cy.get("[data-cy=anchor-section]").eq(3).contains("Section 4");
   });
@@ -25,8 +25,9 @@ describe("Anchor menu", () => {
     cy.visit("/iframe.html?id=base-anchor--default");
 
     cy.get("[data-cy=anchor-menu-item]").eq(1).click();
+    cy.wait(5);
     cy.get("[data-cy=anchor-menu-item]").eq(1).contains("Section2");
-    cy.get("[data-cy=anchor-menu-item]").eq(1).should("have.class", "active");
+    cy.get(".active").should("have.length", 1);
     cy.get("[data-cy=anchor-section]").eq(1).should("be.visible");
     cy.get("[data-cy=anchor-section]").eq(1).contains("Section 2");
   });

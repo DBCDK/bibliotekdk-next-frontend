@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 function viewAllFilters() {
   cy.wait(1000);
@@ -130,7 +131,7 @@ describe.skip("Filter", () => {
   });
 
   it(`Can parse facet containing ","`, () => {
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req?.body?.query?.includes?.("facets")) {
         req.reply({
           data: {
