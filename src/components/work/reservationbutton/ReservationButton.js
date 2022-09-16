@@ -3,7 +3,7 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
-import { getIsPeriodicaLike } from "@/lib/utils";
+import { encodeTitleCreator, getIsPeriodicaLike } from "@/lib/utils";
 import { preferredOnline } from "@/lib/Navigation";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
@@ -19,7 +19,8 @@ const context = { context: "overview" };
 function addToInfomedia(onlineAccess, title) {
   const addi = onlineAccess?.map((access) => {
     if (access.infomediaId) {
-      access.url = `/infomedia/${title}/work-of:${access.pid}`;
+      access.url =
+        "/infomedia/" + encodeTitleCreator(title) + "/work-of:" + access.pid;
       access.accessType = "infomedia";
     }
     return access;
