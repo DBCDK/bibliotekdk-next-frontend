@@ -30,7 +30,6 @@ const Index = () => {
 
   const { isLoading, data } = useData(frontpageHero());
   const ogImage = parseHero(data);
-
   const { canonical, alternate, root } = useCanonicalUrl();
 
   return (
@@ -42,10 +41,9 @@ const Index = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta
-          property="og:image"
-          content={`/_next/image?url=${ogImage?.image?.url}&w=1400&q=90`}
-        />
+        {ogImage && ogImage.image && ogImage.image.ogurl && (
+          <meta property="og:image" content={`${ogImage?.image?.ogurl}`} />
+        )}
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
         <link rel="alternate icon" href="favicon.ico" />
