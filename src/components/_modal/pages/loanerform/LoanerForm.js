@@ -59,6 +59,7 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
   return (
     <form
       noValidate
@@ -275,6 +276,7 @@ export function LoanerForm({
     orderPossible = branch?.agencyId?.startsWith("7") || false;
   }
 
+  const origin = originUrlToUrlName(originUrl, mode);
   return (
     <div className={styles.loanerform}>
       <Top />
@@ -282,7 +284,7 @@ export function LoanerForm({
         {Translate({
           context: "login",
           label: `${mode}-title`,
-          vars: [originUrlToUrlName(originUrl, mode)] || [branch.name],
+          vars: origin ? [origin] : [branch.name],
         })}
       </Title>
 
@@ -390,7 +392,8 @@ LoanerForm.propTypes = {
  */
 export default function Wrap(props) {
   const { active } = props;
-  const { branchId, pid, doPolicyCheck, mode, clear } = props.context;
+  const { branchId, pid, doPolicyCheck, mode, clear, originUrl } =
+    props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -490,7 +493,12 @@ export default function Wrap(props) {
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
-        onClose={() => props.modal.clear()}
+        onClose={() =>
+          props.modal.push("login", {
+            mode: LOGIN_MODE.DDA,
+            originUrl,
+          })
+        }
       />
     </>
   );
