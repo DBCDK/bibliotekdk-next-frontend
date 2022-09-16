@@ -262,7 +262,7 @@ function useQ() {
     setQuery,
     getCount,
     // constants
-    q: _q,
+    q: _q || {},
     hasQuery: _hasQuery,
     types,
     base: buildQ(),

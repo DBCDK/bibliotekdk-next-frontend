@@ -63,6 +63,11 @@ export async function fetcher(queryStr, userAgent, xForwardedFor) {
       variables,
     }),
   });
+
+  if (res.status !== 200) {
+    throw { status: res.status, message: res.statusText };
+  }
+
   const duration = Date.now() - start;
 
   if (delay && typeof window !== "undefined") {

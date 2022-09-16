@@ -282,7 +282,7 @@ function useFilters() {
   }
 
   return {
-    filters: _filters,
+    filters: _filters || {},
     setFilters,
     getQuery: _getQuery,
     setQuery,
