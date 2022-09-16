@@ -44,7 +44,7 @@ const Index = () => {
         <meta property="og:description" content={pageDescription} />
         <meta
           property="og:image"
-          content={`/_next/image?url=${ogImage?.image?.url}`}
+          content={`/_next/image?url=${ogImage?.image?.url}&w=1400&q=90`}
         />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
