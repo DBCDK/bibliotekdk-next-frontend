@@ -126,9 +126,9 @@ describe("Search", () => {
 
       // Check creator, subject, and work
       [
-        "suggest.result[0].name",
-        "suggest.result[1].value",
-        "suggest.result[2].title",
+        "suggest.result[0].term",
+        "suggest.result[1].term",
+        "suggest.result[2].term",
       ].forEach((suggestion) => {
         cy.get("[data-cy=suggester-input]").clear().type("hest");
         cy.contains(suggestion).click();
