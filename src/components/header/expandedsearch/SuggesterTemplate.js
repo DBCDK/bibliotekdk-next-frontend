@@ -1,7 +1,7 @@
 import styles from "@/components/header/expandedsearch/ExpandedSearch.module.css";
 import Suggester from "@/components/base/suggester/Suggester";
 import Input from "@/components/base/forms/input/Input";
-import React, { useState } from "react";
+import React from "react";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 import { useData } from "@/lib/api/api";
@@ -12,12 +12,14 @@ import Translate from "@/components/base/translate";
  * Subcomponent - show input field with suggestions. Exported for reuse in
  * mobile version @see /expandedmobile/ExpandedSearchMobile.js
  *
+ * @param type
  * @param onChange
  * @param data
- * @param onSelect
- * @param value
- * @param onClear
- * @param title
+ * @param {function} onSelect
+ * @param {string} value
+ * @param {function} onClear
+ * @param {string} title
+ * @param {string} placeholder
  * @returns {JSX.Element}
  * @constructor
  */
@@ -58,7 +60,7 @@ export function SuggesterWithInput({
 }
 
 export default function wrap({ title = "", type = "" }) {
-  const { q, setQ, clearQ, setQuery } = useQ();
+  const { q, setQ, setQuery } = useQ();
 
   // connected filters hook
   const { filters } = useFilters();
