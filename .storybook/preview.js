@@ -6,12 +6,12 @@ import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
 import "../src/scss/custom-bootstrap.scss";
 import "../src/css/styles.css";
-import { AnonymousSessionContext } from "../src/components/hooks/useUser";
+import { AnonymousSessionContext } from "@/components/hooks/useUser";
 import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";
-import { APIStateContext } from "../src/lib/api/api";
-import { useEffect, useState } from "react";
+import { APIStateContext } from "@/lib/api/api";
+import { useState } from "react";
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
 
@@ -76,6 +76,7 @@ export const decorators = [
       <GraphQLMocker
         url={
           context?.parameters?.graphql?.url ||
+          "https://fbi-api.dbc.dk/default/graphql" ||
           "https://alfa-api.stg.bibliotek.dk/190101/default/graphql"
         }
         resolvers={context?.parameters?.graphql?.resolvers}
