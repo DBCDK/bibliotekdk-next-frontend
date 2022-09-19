@@ -246,7 +246,7 @@ function useQ() {
     const q = _getQuery();
 
     let count = 0;
-    Object.entries(q).map(([key, _val]) => {
+    Object.entries(q).map(([key, _]) => {
       // exluded keys
       if (!exclude.includes(key)) {
         // if there is an actual value

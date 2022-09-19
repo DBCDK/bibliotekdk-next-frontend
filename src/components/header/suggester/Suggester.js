@@ -170,8 +170,6 @@ function renderSuggestion(suggestion, query, skeleton) {
   // Add to suggestion object
   suggestion.highlight = highlightMatch(value, query);
 
-  console.log("Value in renderSuggestion: ", suggestion);
-
   switch (suggestion.type.toLowerCase()) {
     case SuggestTypeEnum.CREATOR:
       return <Creator data={suggestion} skeleton={skeleton} />;
@@ -352,7 +350,7 @@ export function Suggester({
         onChange && onChange(value);
       }
     },
-    onChange: (event, { newValue }, _method) => {
+    onChange: (event, { newValue }) => {
       // For updating onChange when deleting last char in input
       newValue === "" && onChange && onChange("");
       // internal query update

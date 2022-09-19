@@ -105,7 +105,7 @@ export function Header({
         ? // sign user out - either guest- or hejmdal-user
           signOut
         : user.isGuestUser
-        ? async (_info) => {
+        ? async () => {
             await user.guestLogout();
           }
         : // open login modal
