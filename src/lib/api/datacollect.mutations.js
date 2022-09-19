@@ -4,6 +4,7 @@
  */
 import getConfig from "next/config";
 import { v4 as uuidv4 } from "uuid";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 const config = getConfig();
 
@@ -17,8 +18,6 @@ const session_id = config?.publicRuntimeConfig?.useFixedSessionId
  * When user clicks recommendation
  *
  * @param {object} params
- * @param {string} params.query
- * @param {array} params.suggestions
  */
 export function collectRecommenderClick({
   recommender_based_on,
@@ -64,10 +63,14 @@ export function collectSuggestPresented({ query, suggestions }) {
       input: {
         suggest_presented: {
           suggest_query: query,
-          suggest_query_request_types: ["subject", "creator", "work"],
+          suggest_query_request_types: [
+            SuggestTypeEnum.SUBJECT,
+            SuggestTypeEnum.CREATOR,
+            SuggestTypeEnum.TITLE,
+          ],
           suggest_query_results: suggestions.map((suggestion) => ({
-            type: suggestion.__typename.toLowerCase(),
-            value: suggestion.value || suggestion.name || suggestion.id,
+            type: suggestion.type,
+            value: suggestion.term,
           })),
           session_id,
         },
@@ -81,7 +84,7 @@ export function collectSuggestPresented({ query, suggestions }) {
  *
  * @param {object} params
  * @param {string} params.query
- * @param {array} params.suggestions
+ * @param {array} params.suggestion
  * @param {number} suggest_query_hit.suggestions
  */
 export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
@@ -95,10 +98,14 @@ export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
         suggest_click: {
           suggest_query: query,
           suggest_query_hit,
-          suggest_query_request_types: ["subject", "creator", "work"],
+          suggest_query_request_types: [
+            SuggestTypeEnum.SUBJECT,
+            SuggestTypeEnum.CREATOR,
+            SuggestTypeEnum.TITLE,
+          ],
           suggest_query_result: {
-            type: suggestion.__typename.toLowerCase(),
-            value: suggestion.value || suggestion.name || suggestion.id,
+            type: suggestion.type.toLowerCase(),
+            value: suggestion.term,
           },
           session_id,
         },
@@ -111,7 +118,7 @@ export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
  * When user searches
  *
  * @param {object} params
- * @param {string} params.workId the work id
+ * @param params.search_request
  */
 export function collectSearch({ search_request }) {
   return {
@@ -134,7 +141,9 @@ export function collectSearch({ search_request }) {
  * When user searches and then clicks on work
  *
  * @param {object} params
- * @param {string} params.workId the work id
+ * @param params.search_request
+ * @param params.search_query_hit
+ * @param params.search_query_work
  */
 export function collectSearchWorkClick({
   search_request,
@@ -162,12 +171,9 @@ export function collectSearchWorkClick({
 /**
  * When user post search feedback
  *
- * @param thumbs
- *  thumbsup or thumbsdown
- * @param query
- *  current searchquery
- * @param reason
- *  only form thumbsdown - what can we improve
+ * @param thumbs thumbsup or thumbsdown
+ * @param query current searchquery
+ * @param reason only form thumbsdown - what can we improve
  * @returns {{variables: {input: {search_feedback: {reason, query, thumbs}}}, query: string}}
  */
 export function collectSearchFeedback({ thumbs, query, reason }) {
