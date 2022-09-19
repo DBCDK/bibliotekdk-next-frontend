@@ -3,15 +3,17 @@
  */
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./ExpandedSearch.module.css";
 import { cyKey } from "@/utils/trim";
 import Translate from "@/components/base/translate";
 
 import { MoreOptionsLink } from "../utils";
 import Collapse from "react-bootstrap/Collapse";
-import Label from "@/components/base/forms/label/Label";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
+import { SuggestTypeEnum } from "@/lib/enums";
+
+import Label from "@/components/base/forms/label/Label";
 import SuggesterTemplate from "@/components/header/expandedsearch/SuggesterTemplate";
 
 /**
@@ -22,7 +24,7 @@ import SuggesterTemplate from "@/components/header/expandedsearch/SuggesterTempl
 export const isEmpty = (objectToCheck) => {
   let empty = true;
   for (const [key, value] of Object.entries(objectToCheck)) {
-    if (key === "all") {
+    if (key === SuggestTypeEnum.ALL) {
       continue;
     }
     if (value) {
@@ -36,11 +38,6 @@ export const isEmpty = (objectToCheck) => {
 /**
  * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible
  * @param q
- * @param onChange
- * @param data
- * @param onClear
- * @param doSearch
- * @param onSelect
  * @param workType
  * @param collapseOpen
  * @param setCollapseOpen
@@ -53,8 +50,7 @@ export function ExpandedSearch({
   collapseOpen,
   setCollapseOpen,
 }) {
-  const { getCount, getQuery } = useQ();
-  const countQ = getCount({ exclude: ["all"] }).toString();
+  const { getQuery } = useQ();
 
   const queryParams = getQuery();
   useEffect(() => {
@@ -63,44 +59,34 @@ export function ExpandedSearch({
     }
   }, [JSON.stringify(queryParams)]);
 
+  const singleSearchInputParams = [
+    {
+      labelTranslation: translations(workType).labelTitle,
+      suggestType: SuggestTypeEnum.TITLE,
+    },
+    {
+      labelTranslation: translations(workType).labelCreator,
+      suggestType: SuggestTypeEnum.CREATOR,
+    },
+    {
+      labelTranslation: translations(workType).labelSubject,
+      suggestType: SuggestTypeEnum.SUBJECT,
+    },
+  ];
+
   return (
     <div className={`${styles.flexnav} ${className}`}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
         <div className={styles.wrapper}>
           <div className={styles.flex} id="example-collapse-text">
-            <div className={styles.suggesterright}>
-              <div className={styles.labelinline}>
-                <Label for="advanced-search-title">
-                  {translations(workType).labelTitle}
-                </Label>
-              </div>
-              <SuggesterTemplate
-                type="title"
-                title={translations(workType).labelTitle}
-              />
-            </div>
-            <div className={styles.suggesterright}>
-              <div className={styles.labelinline}>
-                <Label for="advanced-search-title">
-                  {translations(workType).labelCreator}
-                </Label>
-              </div>
-              <SuggesterTemplate
-                type="creator"
-                title={translations(workType).labelCreator}
-              />
-            </div>
-            <div className={styles.suggesterright}>
-              <div className={styles.labelinline}>
-                <Label for="advanced-search-title">
-                  {translations(workType).labelSubject}
-                </Label>
-              </div>
-              <SuggesterTemplate
-                type="subject"
-                title={translations(workType).labelSubject}
-              />
-            </div>
+            {singleSearchInputParams.map(
+              ({ labelTranslation, suggestType }) => (
+                <SingleSearchInput
+                  labelTranslation={labelTranslation}
+                  suggestType={suggestType}
+                />
+              )
+            )}
           </div>
 
           <div className={styles.buttonflexnav}>
@@ -135,12 +121,23 @@ export function ExpandedSearch({
   );
 }
 
+function SingleSearchInput({ labelTranslation, suggestType }) {
+  return (
+    <div className={styles.suggesterright}>
+      <div className={styles.labelinline}>
+        <Label for="advanced-search-title">{labelTranslation}</Label>
+      </div>
+      <SuggesterTemplate type={suggestType} title={labelTranslation} />
+    </div>
+  );
+}
+
 /**
  * Initialize component. Seperate function for reuse in mobile version. @see /expandedmobile/ExpandedSearchMobile.js
  * Returns parameters to be used.
  *
- * @param collapseOpen
- * @param setCollapseOpen
+ * @param {boolean} collapseOpen
+ * @param {function} setCollapseOpen
  * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
  */
 export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
@@ -167,8 +164,9 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
 /**
  * Wrapper
  *
- * @param collapseOpen
- * @param setCollapseOpen
+ * @param {boolean} collapseOpen
+ * @param {function} setCollapseOpen
+ * @param {string} className
  * @returns {JSX.Element}
  * @constructor
  */
