@@ -14,7 +14,7 @@ export default {
           url={
             context?.parameters?.graphql?.url ||
             "https://alfa-api.stg.bibliotek.dk/190101/default/graphql" ||
-            "https://fbi-api.dbc.dk/default/graphql"
+            "https://fbi-api.dbc.dk/bibdk21/graphql"
           }
           resolvers={context?.parameters?.graphql?.resolvers}
           beforeFetch={context?.parameters?.graphql?.urlbeforeFetch}

@@ -97,7 +97,7 @@ module.exports = {
     fbi_api: {
       url:
         process.env.NEXT_PUBLIC_FBI_API_URL ||
-        "https://fbi-api.dbc.dk/default/graphql",
+        "https://fbi-api.dbc.dk/bibdk21/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
     app: {

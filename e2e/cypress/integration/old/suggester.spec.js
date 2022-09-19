@@ -128,7 +128,7 @@ describe("Suggester data collect", () => {
         req.alias = "apiMutation";
       }
     });
-    cy.intercept("POST", "/default/graphql", (req) => {
+    cy.intercept("POST", "/bibdk21/graphql", (req) => {
       if (req.body.query.includes("suggest")) {
         // mock the suggest response
         req.reply({
