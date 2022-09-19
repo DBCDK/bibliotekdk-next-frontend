@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";
 
@@ -36,6 +36,7 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 /**
  * The Component function
@@ -43,7 +44,7 @@ import { useRouter } from "next/router";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Header({
   className = "",
@@ -58,19 +59,19 @@ export function Header({
   const { q, setQ, setQuery, getCount } = useQ();
   const countQ = getCount({ exclude: ["all"] });
 
-  const query = q.all;
+  const query = q[SuggestTypeEnum.ALL];
 
   // Search history in suggester
   const [history, setHistory, clearHistory] = useHistory();
 
-  // worktype filter param
+  // workType filter param
   const { workType } = filters.getQuery();
 
-  // exapnded search state
+  // expanded search state
   const [collapseOpen, setCollapseOpen] = useState(!!countQ);
 
-  // specific material worktype selected
-  const selectedMaterial = workType[0] || "all";
+  // specific material workType selected
+  const selectedMaterial = workType[0] || SuggestTypeEnum.ALL;
 
   // for beta1 - disable links above
   const linksdisabled = false;
@@ -104,7 +105,7 @@ export function Header({
         ? // sign user out - either guest- or hejmdal-user
           signOut
         : user.isGuestUser
-        ? async (info) => {
+        ? async (_info) => {
             await user.guestLogout();
           }
         : // open login modal
@@ -136,11 +137,12 @@ export function Header({
 
   const doSearch = (value) => {
     // If we are on mobile we replace
-    // since we don't want suggest modal to open if user goes back
+    // since we don't want to suggest modal to open if user goes back
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {
-      workType: selectedMaterial !== "all" ? selectedMaterial : null,
+      workType:
+        selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
 
     setQuery({
@@ -357,7 +359,7 @@ export function Header({
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function HeaderSkeleton(props) {
   return (
@@ -375,7 +377,7 @@ function HeaderSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const router = useRouter();
