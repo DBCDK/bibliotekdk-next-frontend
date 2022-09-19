@@ -2,10 +2,9 @@
  * cyKey
  * function to generate cypress keys (data-cy)
  *
- * @param {obj} props
- * @param {string} props.name
- * @param {string} props.prefix
- * @param {string} props.seperator
+ * @param {string} name
+ * @param {string} prefix
+ * @param {string} seperator
  * @param {bool} lowerCase
  *
  * @returns {string}
