@@ -18,7 +18,7 @@ import smoothscroll from "smoothscroll-polyfill";
 
 import { SWRConfig } from "swr";
 
-import { terminateSession } from "@dbcdk/login-nextjs/client";
+import { destroy } from "@dbcdk/login-nextjs/client";
 
 import Head from "next/head";
 
@@ -81,7 +81,8 @@ export default function MyApp({ Component, pageProps, router }) {
     onError: async (err, key, config) => {
       switch (err.status) {
         case 403:
-          terminateSession();
+          // calls destroy to remove all session cookies
+          destroy();
           break;
       }
     },
