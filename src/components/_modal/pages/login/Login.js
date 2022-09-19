@@ -176,7 +176,7 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency } = props;
+  const { agency, originUrl = null } = props;
 
   const [query, setQuery] = useState("");
 
@@ -209,6 +209,7 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       includeArrows={includeArrows}
       onLogin={signIn}
+      origin={originUrl}
     />
   );
 }
