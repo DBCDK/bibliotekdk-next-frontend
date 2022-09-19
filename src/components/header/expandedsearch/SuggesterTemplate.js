@@ -5,8 +5,10 @@ import React from "react";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 import { useData } from "@/lib/api/api";
-import { all } from "@/lib/api/suggest.fragments";
+import * as suggestFragments from "@/lib/api/suggest.fragments";
 import Translate from "@/components/base/translate";
+import { SuggestTypeEnum } from "@/lib/enums";
+import { typedSuggest } from "@/lib/api/suggest.fragments";
 
 /**
  * Subcomponent - show input field with suggestions. Exported for reuse in
@@ -70,13 +72,21 @@ export default function wrap({ title = "", type = "" }) {
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
-  const { data, isLoading, error } = useData(
-    all({ q: query, workType, suggesttype: type })
+  const fragmentType = type === SuggestTypeEnum.ALL ? "all" : "typedSuggest";
+
+  const { data } = useData(
+    suggestFragments[fragmentType]({
+      q: query,
+      workType,
+      suggestType: type,
+    })
   );
 
-  const filtered = data?.suggest?.result?.map((obj) => ({
-    value: obj.value || obj.title || obj.name,
-  }));
+  const filtered = data?.suggest?.result
+    ?.filter((obj) => obj.type.toLowerCase() === type)
+    ?.map((obj) => ({
+      value: obj.term,
+    }));
 
   const value = q[type];
 
@@ -93,9 +103,13 @@ export default function wrap({ title = "", type = "" }) {
     setQ({ ...q, [type]: "" });
   };
 
+  const label = workType
+    ? `placeholder-${workType}-${type}`
+    : `placeholder-${type}`;
+
   const placeholder = Translate({
     context: "search",
-    label: workType ? `placeholder-${workType}-${type}` : `placeholder-${type}`,
+    label: label,
   });
 
   return (
