@@ -59,18 +59,18 @@ export function HeaderSuggester() {
           clearHistory={() => alert("History cleared")}
           history={[
             {
-              __typename: "History",
-              value: "Anders Matthesen",
+              type: "History",
+              term: "Anders Matthesen",
             },
             {
-              __typename: "History",
-              value: "Ternet Ninja",
+              type: "History",
+              term: "Ternet Ninja",
             },
           ]}
           suggestions={[
             {
-              __typename: "Work",
-              title: "Ternet Ninja",
+              type: "Title",
+              term: "Ternet Ninja",
               highlight: "Ternet Ninja",
               cover: {
                 thumbnail:
@@ -78,13 +78,13 @@ export function HeaderSuggester() {
               },
             },
             {
-              __typename: "Subject",
-              value: "ninjaer",
+              type: "Subject",
+              term: "ninjaer",
               highlight: "ninjaer",
             },
             {
-              __typename: "Creator",
-              name: "Anders Matthesen",
+              type: "Creator",
+              term: "Anders Matthesen",
               highlight: "Anders Matthesen",
               imageUrl:
                 "https://forfatterweb.dk/sites/default/files/styles/top_image/public/2019-09/Matthesen%20Anders1_1200_besk%C3%A5ret_forfatterweb.jpg?itok=ANfChbLr",
