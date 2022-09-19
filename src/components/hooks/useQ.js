@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -27,7 +28,12 @@ let initialized = false;
 const fetcher = () => locale;
 
 // current supported filter types
-export const types = ["all", "creator", "subject", "title"];
+export const types = [
+  SuggestTypeEnum.ALL,
+  SuggestTypeEnum.CREATOR,
+  SuggestTypeEnum.SUBJECT,
+  SuggestTypeEnum.TITLE,
+];
 
 /**
  * function to build the default (empty) q object
@@ -176,6 +182,9 @@ function useQ() {
    *
    * @param {object} include
    * @param {array} exclude
+   * @param pathname
+   * @param query
+   * @param method
    */
 
   const setQuery = ({
@@ -222,7 +231,7 @@ function useQ() {
           query: merged,
         },
         undefined,
-        { scroll: router.pathname === "/find" ? false : true }
+        { scroll: router.pathname !== "/find" }
       );
   };
 
@@ -237,7 +246,7 @@ function useQ() {
     const q = _getQuery();
 
     let count = 0;
-    Object.entries(q).map(([key, val]) => {
+    Object.entries(q).map(([key, _]) => {
       // exluded keys
       if (!exclude.includes(key)) {
         // if there is an actual value
@@ -252,7 +261,13 @@ function useQ() {
    * Boolean to check if q contains a value
    */
   const obj = _getQuery();
-  const _hasQuery = !!(obj.all || obj.creator || obj.title || obj.subject);
+
+  const _hasQuery = Boolean(
+    obj[SuggestTypeEnum.ALL] ||
+      obj[SuggestTypeEnum.CREATOR] ||
+      obj[SuggestTypeEnum.TITLE] ||
+      obj[SuggestTypeEnum.SUBJECT]
+  );
 
   return {
     // functions

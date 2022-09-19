@@ -3,33 +3,29 @@
  *
  */
 
+import { ApiEnums } from "@/lib/api/api";
+
 /**
  * Detailed search response
  *
  * @param {object} params
  * @param {string} params.q the query string
  */
-export function fast({ q, worktype }) {
+export function fast({ q, workType }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($q: String! $worktype:WorkType) {
-        suggest(q: $q worktype:$worktype) {
-          result {
-            __typename
-            ... on Creator {
-              name
-            }
-            ... on Subject {
-              value
-            }
-            ... on Work {
-              title
-            }
-          }
+    query: `
+    query ($q: String!, $workType: WorkType) {
+      suggest(q: $q, workType: $workType) {
+        result {
+          type
+          term
         }
-        monitor(name: "bibdknext_suggest_all")
-      }`,
-    variables: { q, worktype },
+      }
+      monitor(name: "bibdknext_suggest_all")
+    }`,
+    variables: { q, workType },
     slowThreshold: 3000,
   };
 }
@@ -40,35 +36,97 @@ export function fast({ q, worktype }) {
  * @param {object} params
  * @param {string} params.q the query string
  */
-export function all({ q, worktype, suggesttype = "all" }) {
+export function all({ q, workType, suggestType = "", limit = 100000 }) {
+  suggestType = suggestType.toUpperCase();
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($q: String! $worktype:WorkType $suggesttype: String) {
-        suggest(q: $q worktype:$worktype suggesttype:$suggesttype) {
-          result {
+    query: `
+    query ($q: String!, $workType: WorkType, $limit: Int) {
+      suggest(q: $q, workType: $workType, limit: $limit) {
+        result {
+          type
+          term
+          work {
             __typename
-            ... on Creator {
-              name
-              imageUrl
+            workId
+            creators {
+              display
+              nameSort
             }
-            ... on Subject {
-              value
-            }
-            ... on Work {
-              id
-              title
-              cover {
-                thumbnail
+            subjects {
+              all {
+                ... on SubjectText {
+                  type
+                }
               }
-              creators {
-                name
+            }
+            manifestations {
+              latest {
+                cover {
+                  thumbnail
+                }
               }
             }
           }
         }
-        monitor(name: "bibdknext_suggest_all")
-      }`,
-    variables: { q, worktype, suggesttype },
+      }
+      monitor(name: "bibdknext_suggest_all")
+    }`,
+    variables: { q, workType, suggestType, limit },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Detailed search response
+ *
+ * @param {object} params
+ * @param {string} params.q the query string
+ */
+export function typedSuggest({
+  q,
+  workType,
+  suggestType = "",
+  limit = 100000,
+}) {
+  suggestType = suggestType.toUpperCase();
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query ($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {
+      suggest(q: $q, workType: $workType, suggestType: $suggestType, limit: $limit) {
+        result {
+          type
+          term
+          work {
+            __typename
+            workId
+            creators {
+              display
+              nameSort
+            }
+            subjects {
+              all {
+                ... on SubjectText {
+                  type
+                }
+              }
+            }
+            manifestations {
+              latest {
+                cover {
+                  thumbnail
+                }
+              }
+            }
+          }
+        }
+      }
+      monitor(name: "bibdknext_suggest_all")
+    }`,
+    variables: { q, workType, suggestType, limit },
     slowThreshold: 3000,
   };
 }

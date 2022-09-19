@@ -1,9 +1,30 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { ResultPage } from ".";
 import Result from "../Result";
+import { decorators } from "../../../../../.storybook/preview";
+import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 
 export default {
   title: "search/Result",
+  decorators: [
+    ...decorators.slice(0, -1),
+    (Story, context) => {
+      return (
+        <GraphQLMocker
+          url={
+            context?.parameters?.graphql?.url ||
+            "https://alfa-api.stg.bibliotek.dk/190101/default/graphql" ||
+            "https://fbi-api.dbc.dk/bibdk21/graphql"
+          }
+          resolvers={context?.parameters?.graphql?.resolvers}
+          beforeFetch={context?.parameters?.graphql?.urlbeforeFetch}
+          debug={context?.parameters?.graphql?.debug}
+        >
+          <Story />
+        </GraphQLMocker>
+      );
+    },
+  ],
 };
 
 export function Default() {

@@ -126,7 +126,10 @@ describe("Suggester data collect", () => {
     cy.intercept("POST", "/190101/default/graphql", (req) => {
       if (req.body.query.startsWith("mutation")) {
         req.alias = "apiMutation";
-      } else if (req.body.query.includes("suggest")) {
+      }
+    });
+    cy.intercept("POST", "/bibdk21/graphql", (req) => {
+      if (req.body.query.includes("suggest")) {
         // mock the suggest response
         req.reply({
           data: {
@@ -134,8 +137,8 @@ describe("Suggester data collect", () => {
               result: [
                 {
                   id: "some-work-id",
-                  __typename: "Work",
-                  title: "Hest i flugt",
+                  type: "title",
+                  term: "Hest i flugt",
                   cover: {
                     thumbnail:
                       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51971485&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=244ae7aa540f41939461",
@@ -158,8 +161,8 @@ describe("Suggester data collect", () => {
 
       expect(data).to.deep.equal({
         suggest_query: "h",
-        suggest_query_request_types: ["subject", "creator", "work"],
-        suggest_query_results: [{ type: "work", value: "some-work-id" }],
+        suggest_query_request_types: ["subject", "creator", "title"],
+        suggest_query_results: [{ type: "title", value: "Hest i flugt" }],
         session_id: "test",
       });
 
@@ -175,8 +178,11 @@ describe("Suggester data collect", () => {
       expect(data).to.deep.equal({
         suggest_query: "h",
         suggest_query_hit: 1,
-        suggest_query_request_types: ["subject", "creator", "work"],
-        suggest_query_result: { type: "work", value: "some-work-id" },
+        suggest_query_request_types: ["subject", "creator", "title"],
+        suggest_query_result: {
+          type: "title",
+          value: "Hest i flugt",
+        },
         session_id: "test",
       });
 

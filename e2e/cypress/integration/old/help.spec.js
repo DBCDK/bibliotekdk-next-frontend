@@ -28,7 +28,7 @@ describe("help", () => {
   });
   it(`Search: filter by language`, () => {
     // Intercept help search requests
-    cy.intercept("POST", "/default/graphql", (req) => {
+    cy.intercept("POST", "/bibdk21/graphql", (req) => {
       if (req.body.query.includes("help(")) {
         req.alias = "apiHelpRequest";
       }

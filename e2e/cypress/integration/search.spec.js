@@ -1,5 +1,5 @@
 describe("Search", () => {
-  context(`Form`, () => {
+  describe(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
@@ -126,9 +126,9 @@ describe("Search", () => {
 
       // Check creator, subject, and work
       [
-        "suggest.result[0].name",
-        "suggest.result[1].value",
-        "suggest.result[2].title",
+        "suggest.result[0].term",
+        "suggest.result[1].term",
+        "suggest.result[2].term",
       ].forEach((suggestion) => {
         cy.get("[data-cy=suggester-input]").clear().type("hest");
         cy.contains(suggestion).click();
@@ -160,7 +160,7 @@ describe("Search", () => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
       });
     });
-    context(`Mobile`, () => {
+    describe(`Mobile`, () => {
       it(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");
         cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
@@ -217,7 +217,7 @@ describe("Search", () => {
     });
   });
 
-  context(`Result`, () => {
+  describe(`Result`, () => {
     it(`Maps from URL params to a search result`, () => {
       cy.visit("/iframe.html?id=search-result--connected");
       cy.get("[data-cy=router-query]").then((el) => {

@@ -32,6 +32,7 @@ import History from "./templates/history";
 import styles from "./Suggester.module.css";
 
 import useDataCollect from "@/lib/useDataCollect";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 // Context
 const context = { context: "suggester" };
@@ -164,19 +165,19 @@ function renderSuggestionsContainer(
  *
  */
 function renderSuggestion(suggestion, query, skeleton) {
-  const value = suggestion.name || suggestion.value || suggestion.title;
+  const value = suggestion.term;
 
   // Add to suggestion object
   suggestion.highlight = highlightMatch(value, query);
 
-  switch (suggestion.__typename) {
-    case "Creator":
+  switch (suggestion.type.toLowerCase()) {
+    case SuggestTypeEnum.CREATOR:
       return <Creator data={suggestion} skeleton={skeleton} />;
-    case "Work":
+    case SuggestTypeEnum.TITLE:
       return <Work data={suggestion} skeleton={skeleton} />;
-    case "Subject":
+    case SuggestTypeEnum.SUBJECT:
       return <Subject data={suggestion} skeleton={skeleton} />;
-    case "History":
+    case SuggestTypeEnum.COMPOSITE:
       return <History data={suggestion} skeleton={skeleton} />;
     default:
       return null;
@@ -196,9 +197,9 @@ function getPlaceholder(isMobile, selectedMaterial) {
     label: isMobile ? "placeholderMobile" : "placeholder",
   });
   if (selectedMaterial) {
-    const isAll = selectedMaterial === "all";
+    const isAll = selectedMaterial === SuggestTypeEnum.ALL;
 
-    // Update placeholder if specific worktype is selected
+    // Update placeholder if specific workType is selected
     if (!isAll) {
       placeholder = Translate({
         context: "suggester",
@@ -236,7 +237,7 @@ function renderInputComponent(
   };
 
   // Clear/Cross should be visible
-  const showClear = !!(inputProps.value !== "");
+  const showClear = Boolean(inputProps.value !== "");
 
   // Class for clear/cross button
   const clearVisibleClass = showClear ? styles.visible : "";
@@ -272,18 +273,13 @@ function renderInputComponent(
   );
 }
 
-function shouldRenderSuggestions(value, reason) {
-  return true;
-  // return value.trim().length > 2;
-}
-
 /**
  * The Component function
  *
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Suggester({
   className = "",
@@ -308,6 +304,7 @@ export function Suggester({
     () => suggestions.map((suggestion) => ({ ...suggestion })),
     [suggestions]
   );
+
   /**
    * Internal query state is needed for arrow navigation in suggester.
    * When using arrow up/down, the value changes in the inputfield, but we dont
@@ -349,12 +346,11 @@ export function Suggester({
     onBlur: (event, { highlightedSuggestion }) => {
       // Update value in header on e.g. tab key
       if (highlightedSuggestion) {
-        const s = highlightedSuggestion;
-        const value = s.name || s.title || s.value;
+        const value = highlightedSuggestion.term;
         onChange && onChange(value);
       }
     },
-    onChange: (event, { newValue }, method) => {
+    onChange: (event, { newValue }) => {
       // For updating onChange when deleting last char in input
       newValue === "" && onChange && onChange("");
       // internal query update
@@ -390,7 +386,8 @@ export function Suggester({
           onSelect(suggestionValue, suggestion, entry.suggestionIndex);
 
         // Clear Query
-        const shouldClear = isMobile || suggestion?.__typename === "Work";
+        const shouldClear =
+          isMobile || suggestion?.type === SuggestTypeEnum.TITLE;
         onChange && onChange(suggestionValue);
         shouldClear && setIntQuery("");
       }}
@@ -402,9 +399,7 @@ export function Suggester({
           clearHistory
         )
       }
-      getSuggestionValue={(suggestion) =>
-        suggestion.name || suggestion.title || suggestion.value
-      }
+      getSuggestionValue={(suggestion) => suggestion.term}
       renderSuggestion={(suggestion, { query }) =>
         renderSuggestion(suggestion, query, skeleton)
       }
@@ -432,7 +427,7 @@ export function Suggester({
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   let { className } = props;
@@ -442,14 +437,16 @@ export default function Wrap(props) {
   const { filters } = useFilters();
   const { q } = useQ();
 
-  const query = q.all;
+  const query = q[SuggestTypeEnum.ALL];
 
   const [selected, setSelected] = useState();
 
-  const worktype = filters.workType?.[0] || null;
+  const workType = filters.workType?.[0] || null;
 
-  const { data, isLoading, error } = useData(
-    query && query !== selected && suggestFragments.all({ q: query, worktype })
+  const { data, isLoading } = useData(
+    query &&
+      query !== selected &&
+      suggestFragments.all({ q: query, workType: workType })
   );
 
   useEffect(() => {
@@ -483,7 +480,7 @@ export default function Wrap(props) {
       skeleton={isLoading}
       query={query}
       suggestions={(data && data.suggest && data.suggest.result) || []}
-      selectedMaterial={worktype}
+      selectedMaterial={workType}
     />
   );
 }
