@@ -12,17 +12,14 @@ import Translate from "@/components/base/translate";
 import { expandtranslations as translations } from "@/components/header/expandedsearch/expandedTranslations";
 import Label from "@/components/base/forms/label/Label";
 import useQ from "@/components/hooks/useQ";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 import { MoreOptionsLink } from "../utils";
 
 /**
  * Main component - shows three input fields with suggestions (title, creator, subject). Collapsible
  * @param q
- * @param onChange
- * @param data
- * @param onClear
  * @param doSearch
- * @param onReset
  * @param workType
  * @param collapseOpen
  * @param setCollapseOpen
@@ -35,8 +32,7 @@ function ExpandedSearchMobile({
   collapseOpen,
   setCollapseOpen,
 }) {
-  const { getCount, getQuery } = useQ();
-  const countQ = getCount({ exclude: ["all"] }).toString();
+  const { getQuery } = useQ();
 
   const queryParams = getQuery();
 
@@ -69,7 +65,7 @@ function ExpandedSearchMobile({
                     </Label>
                   </div>
                   <SuggesterTemplate
-                    type="title"
+                    type={SuggestTypeEnum.TITLE}
                     title={translations(workType).labelTitle}
                   />
                 </div>
@@ -80,7 +76,7 @@ function ExpandedSearchMobile({
                     </Label>
                   </div>
                   <SuggesterTemplate
-                    type="creator"
+                    type={SuggestTypeEnum.CREATOR}
                     title={translations(workType).labelCreator}
                   />
                 </div>
@@ -91,7 +87,7 @@ function ExpandedSearchMobile({
                     </Label>
                   </div>
                   <SuggesterTemplate
-                    type="subject"
+                    type={SuggestTypeEnum.SUBJECT}
                     title={translations(workType).labelSubject}
                   />
                 </div>
