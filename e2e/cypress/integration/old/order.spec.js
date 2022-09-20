@@ -148,6 +148,12 @@ function mockSubmitSessionUserParameters() {
   });
 }
 
+function mockFallback() {
+  cy.intercept("/190101/bibdk21/graphql", (req) => {
+    req.reply({ message: "fallback response" });
+  });
+}
+
 function openOrderModal() {
   cy.wait(1000);
   // Wait for content to be loaded
@@ -160,6 +166,7 @@ function openOrderModal() {
 
 describe("Order", () => {
   beforeEach(function () {
+    mockFallback();
     mockFullWork();
     mockAvailability();
     mockSubmitOrder();
