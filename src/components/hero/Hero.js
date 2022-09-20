@@ -16,19 +16,18 @@ import Text from "@/components/base/text/Text";
 //@TODO switch backclass for mobile
 // @TODO image scale on resize
 export function Hero({ image }) {
-  if (!image) {
-    return null;
-  }
-
   return (
     <Container className={styles.containerback} fluid>
-      <Image
-        src={`${image.image.url}`}
-        layout="fill"
-        priority={true}
-        objectFit="cover"
-        alt=""
-      />
+      {image?.image?.url && (
+        <Image
+          src={`${image?.image?.url}`}
+          layout="fill"
+          priority={true}
+          objectFit="cover"
+          alt=""
+          height="560"
+        />
+      )}
       <div className={styles.gradient} />
       <Row className={styles.herotopmargin}>
         <Col
@@ -77,9 +76,9 @@ export function Hero({ image }) {
             })}
           </Text>
         </div>
-        {image.description && (
+        {image?.description && (
           <Text type="text2" className={styles.herodescription}>
-            {`${image.description}`}
+            {`${image?.description}`}
           </Text>
         )}
       </Row>
