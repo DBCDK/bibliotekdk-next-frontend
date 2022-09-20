@@ -25,7 +25,6 @@ export function Hero({ image }) {
           priority={true}
           objectFit="cover"
           alt=""
-          height="560"
         />
       )}
       <div className={styles.gradient} />
