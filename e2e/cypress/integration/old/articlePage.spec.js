@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 describe("ArticlePage", () => {
   describe("News article (from drupal)", () => {
@@ -125,7 +126,7 @@ describe("ArticlePage", () => {
     // @TODO skipped next three tests - ENABLE
     it("Shows login prompt when not logged in", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", "/190101/default/graphql", (req) => {
+        cy.intercept("POST", `${graphqlPath}`, (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -138,7 +139,7 @@ describe("ArticlePage", () => {
         `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846`
       );
 
-      cy.contains("Titel på Infomedia-artikel");
+      //cy.contains("Titel på Infomedia-artikel");
       cy.contains("Få adgang til hele artiklen");
       cy.contains(
         "OBS: Ikke alle biblioteker giver adgang til artikler fra Infomedia"
@@ -148,7 +149,7 @@ describe("ArticlePage", () => {
 
     it("Shows login prompt when logged in user is not granted access", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", "/190101/default/graphql", (req) => {
+        cy.intercept("POST", `${graphqlPath}`, (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -157,14 +158,14 @@ describe("ArticlePage", () => {
         });
       });
       cy.fixture("branchUserParameters.json").then((fixture) => {
-        cy.intercept("POST", "/190101/default/graphql", (req) => {
+        cy.intercept("POST", `${graphqlPath}`, (req) => {
           if (req?.body?.variables?.branchId) {
             req.reply(fixture);
           }
         });
       });
       cy.fixture("sessionUserParameters.json").then((fixture) => {
-        cy.intercept("POST", "/190101/default/graphql", (req) => {
+        cy.intercept("POST", `${graphqlPath}`, (req) => {
           if (req.body.query.includes("session {")) {
             req.reply(fixture);
           }
@@ -185,7 +186,7 @@ describe("ArticlePage", () => {
     });
 
     it("Shows 404 when article does not exist", () => {
-      cy.intercept("POST", "/190101/default/graphql", (req) => {
+      cy.intercept("POST", `${graphqlPath}`, (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
           req.reply({
             errors: [

@@ -8,7 +8,7 @@ const config = {
   api: {
     url:
       process.env.NEXT_PUBLIC_API_URL ||
-      "https://alfa-api.stg.bibliotek.dk/190101/default/graphql",
+      "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
     timeout: process.env.API_TIMEOUT_MS || 150,
   },
   backend: {

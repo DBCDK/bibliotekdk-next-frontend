@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 it(`redirect to 404`, () => {
   // this is a normal request for a non existing work - we expect nothing serious to happen (200)

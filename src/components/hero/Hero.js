@@ -87,7 +87,7 @@ export function Hero({ image }) {
   );
 }
 
-function parseHero(data) {
+export function parseHero(data) {
   const heros =
     data?.nodeQuery?.entities &&
     data.nodeQuery.entities.filter(
@@ -103,6 +103,7 @@ function parseHero(data) {
         url: heros[0].fieldImage.url,
         width: heros[0].fieldImage.width,
         height: heros[0].fieldImage.height,
+        ogurl: "/_next/image?url=" + heros[0].fieldImage.url + "&w=3840&q=75",
       },
     }
   );

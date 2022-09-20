@@ -5,6 +5,7 @@ const before = require("lodash/before");
  * Test functionality of recommender
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Recommender data collect", () => {
   beforeEach(() => {
@@ -14,7 +15,7 @@ describe("Recommender data collect", () => {
 
     // Intercept requests to graphql
     cy.fixture("recommendations.json").then((recommendationsFixture) => {
-      cy.intercept("POST", "/190101/default/graphql", (req) => {
+      cy.intercept("POST", `${graphqlPath}`, (req) => {
         if (req.body.query.startsWith("mutation")) {
           req.alias = "apiMutation";
         } else if (req.body.query.includes("recommendations")) {

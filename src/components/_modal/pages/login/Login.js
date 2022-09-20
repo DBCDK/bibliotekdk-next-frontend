@@ -98,7 +98,7 @@ export function LoginPickup({
   context,
 }) {
   const allBranches = data?.result;
-  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
 
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -114,6 +114,7 @@ export function LoginPickup({
       doPolicyCheck: false,
       callbackUrl: callbackurl,
       mode,
+      originUrl,
       clear: true,
     });
   };
@@ -175,7 +176,7 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency } = props;
+  const { agency, originUrl = null } = props;
 
   const [query, setQuery] = useState("");
 
@@ -208,6 +209,7 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       includeArrows={includeArrows}
       onLogin={signIn}
+      origin={originUrl}
     />
   );
 }

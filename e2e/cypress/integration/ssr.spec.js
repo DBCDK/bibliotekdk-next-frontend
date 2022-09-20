@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 function getPageHead(path) {
   return cy

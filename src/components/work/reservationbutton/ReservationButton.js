@@ -3,9 +3,10 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
-import { getIsPeriodicaLike } from "@/lib/utils";
+import { encodeTitleCreator, getIsPeriodicaLike } from "@/lib/utils";
 import { preferredOnline } from "@/lib/Navigation";
 import { useModal } from "@/components/_modal";
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 // Translate Context
 const context = { context: "overview" };
@@ -18,7 +19,8 @@ const context = { context: "overview" };
 function addToInfomedia(onlineAccess, title) {
   const addi = onlineAccess?.map((access) => {
     if (access.infomediaId) {
-      access.url = `/infomedia/${title}/work-of:${access.pid}`;
+      access.url =
+        "/infomedia/" + encodeTitleCreator(title) + "/work-of:" + access.pid;
       access.accessType = "infomedia";
     }
     return access;
@@ -206,7 +208,8 @@ export function OrderButton({
     const goToLogin =
       selectedMaterial.onlineAccess[0]?.accessType ===
         "urlInternetRestricted" &&
-      selectedMaterial.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1 &&
+      (selectedMaterial.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1 ||
+        selectedMaterial.onlineAccess[0]?.url.indexOf("ebscohost") !== -1) &&
       !user.isAuthenticated;
 
     return (
@@ -229,7 +232,10 @@ export function OrderButton({
           skeleton={buttonSkeleton}
           onClick={() => {
             goToLogin
-              ? modal?.push("login")
+              ? modal?.push("login", {
+                  mode: LOGIN_MODE.DDA,
+                  originUrl: selectedMaterial.onlineAccess[0]?.origin,
+                })
               : onOnlineAccess(selectedMaterial.onlineAccess[0].url, urlTarget);
           }}
           type={type}
