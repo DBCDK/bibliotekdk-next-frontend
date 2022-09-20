@@ -150,7 +150,7 @@ export function useData(query) {
     accessToken && key,
     mockedFetcher || fetcher,
     {
-      initialData: initialData[key],
+      fallbackData: initialData[key],
       loadingTimeout: query?.slowThreshold || 5000,
       onLoadingSlow: () => setIsSlow(true),
     }
