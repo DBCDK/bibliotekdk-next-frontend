@@ -215,18 +215,14 @@ export function OrderButton({
     return (
       <>
         {/* Check if internet access requires a login */}
-        {selectedMaterial.onlineAccess[0]?.accessType ===
-          "urlInternetRestricted" && (
-          <Text type="text3" className={styles.textAboveButton}>
-            {Translate({ ...context, label: "url_login_required" })}
-          </Text>
-        )}
-        {/* Check if user is authenticated to view infomedia article */}
-        {selectedMaterial.onlineAccess[0].infomediaId && !user.isAuthenticated && (
-          <Text type="text3" className={styles.textAboveButton}>
-            {Translate({ ...context, label: "label_infomediaAccess" })}
-          </Text>
-        )}
+        {(selectedMaterial.onlineAccess[0]?.accessType ===
+          "urlInternetRestricted" ||
+          selectedMaterial.onlineAccess[0]?.infomediaId) &&
+          !user.isAuthenticated && (
+            <Text type="text3" className={styles.textAboveButton}>
+              {Translate({ ...context, label: "url_login_required" })}
+            </Text>
+          )}
         <Button
           className={styles.externalLink}
           skeleton={buttonSkeleton}

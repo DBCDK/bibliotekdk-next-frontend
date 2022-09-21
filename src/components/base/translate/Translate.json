@@ -626,8 +626,8 @@
         "en": "Located at %s libraries"
       },
       "url_login_required": {
-        "da": "Login kræves for at læse artiklen",
-        "en": "Login required to read article"
+        "da": "Kræver login",
+        "en": "Login required"
       },
       "label_infomediaAccess": {
         "da": "Læs artikel fra infomedia (kræver login)",
