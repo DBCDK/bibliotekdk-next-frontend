@@ -62,12 +62,6 @@
         "en": "Feedback"
       }
     },
-    "login": {
-      "login-search-title": {
-        "da": "Vælg bibliotek",
-        "en": "Select library"
-      }
-    },
     "errorpages": {
       "404_not_found_title": {
         "da": "Siden blev ikke fundet",
@@ -626,8 +620,8 @@
         "en": "Located at %s libraries"
       },
       "url_login_required": {
-        "da": "Login kræves for at læse artiklen",
-        "en": "Login required to read article"
+        "da": "Kræver login",
+        "en": "Login required"
       },
       "label_infomediaAccess": {
         "da": "Læs artikel fra infomedia (kræver login)",
@@ -1891,6 +1885,10 @@
         "da": "Biblioteket modtager ikke bestillinger på dette materiale gennem bibliotek.dk",
         "en": "LABEL: mangler oversættelse"
       },
+      "library-no-dda": {
+        "da": "%s giver ikke adgang til at læse bogen",
+        "en": "%S grants no access to the book"
+      },
       "info-email-message": {
         "da": "Du kan %s",
         "en": "You can"
@@ -1917,6 +1915,10 @@
       }
     },
     "login": {
+      "login-search-title": {
+        "da": "Vælg bibliotek",
+        "en": "Select library"
+      },
       "orderPhysical-title": {
         "da": "Bestil til %s",
         "en": "LABEL: mangler oversættelse %s"
@@ -1956,6 +1958,14 @@
       "infomedia-title": {
         "da": "Læs artiklen fra infomedia",
         "en": "Read article from infomedia"
+      },
+      "demand_driven_acquisition-title": {
+        "da": "Læs bogen på %s",
+        "en": "Read the book at &s"
+      },
+      "demand_driven_acquisition-description": {
+        "da": "Log ind på %s for at læse bogen",
+        "en": "Login at &s to read the book"
       }
     },
     "form": {

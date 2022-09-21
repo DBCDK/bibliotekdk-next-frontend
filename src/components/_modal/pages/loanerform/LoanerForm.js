@@ -34,10 +34,11 @@ export const LOGIN_MODE = {
   DIGITAL_COPY: "digitalCopy",
   PLAIN_LOGIN: "plainLogin",
   INFOMEDIA: "infomedia",
+  DDA: "demand_driven_acquisition",
   // @TODO .. another mode? INFOMEDIA ?
 };
 
-export function UserParamsForm({ branch, initial, onSubmit, mode }) {
+export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
   function validateState() {
     for (let i = 0; i < requiredParameters.length; i++) {
       const { userParameterType } = requiredParameters[i];
@@ -58,6 +59,7 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
   const requiredParameters = branch?.userParameters?.filter(
     ({ parameterRequired }) => parameterRequired
   );
+
   return (
     <form
       noValidate
@@ -76,7 +78,7 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
         {Translate({
           context: "login",
           label: `${mode}-description`,
-          vars: [branch?.agencyName || branch?.name],
+          vars: originUrl || [branch?.agencyName || branch?.name],
         })}
       </Text>
       <Title type="title4" tag="h4">
@@ -187,6 +189,35 @@ export function UserParamsForm({ branch, initial, onSubmit, mode }) {
 }
 
 /**
+ * Change originUrl to something readable (eg ebscohost.search.com -> Ebsco)
+ *
+ * 0931 - PJO - we keep this method for now - but return the origin .. wait
+ * for design to make up their mind
+ *
+ * @param originUrl
+ * @param mode
+ * @returns {string|*}
+ */
+
+function originUrlToUrlName(originUrl, mode) {
+  return originUrl;
+  // these are for dda (demand drive acquisition)
+  // translate urls to something readable
+
+  // TODO: Figure out why this code is here
+  //  Ebook central Ebsco
+  // if (originUrl && mode === LOGIN_MODE.DDA) {
+  //   if (originUrl.indexOf("ebookcentral") !== -1) {
+  //     return "Ebook central";
+  //   }
+  //   if (originUrl.indexOf("ebscohost") !== -1) {
+  //     return "Ebsco";
+  //   }
+  //   return originUrl;
+  // }
+}
+
+/**
  * Will show either a signin button if the provided branch supports
  * borrowerCheck (supports login.bib.dk), and otherwise a loaner formular.
  *
@@ -209,7 +240,7 @@ export function LoanerForm({
   context,
   digitalCopyAccess,
 }) {
-  let { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  let { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
   if (mode === LOGIN_MODE.SUBSCRIPTION) {
     mode = digitalCopyAccess
       ? LOGIN_MODE.DIGITAL_COPY
@@ -240,9 +271,15 @@ export function LoanerForm({
   }
 
   // Order possible for branch
-  const orderPossible =
+  let orderPossible =
     doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
 
+  // QUICKFIX - .. to avoid api check ..  all public libraries has access to dda - no other
+  if (mode === LOGIN_MODE.DDA) {
+    orderPossible = branch?.agencyId?.startsWith("7") || false;
+  }
+
+  const origin = originUrlToUrlName(originUrl, mode);
   return (
     <div className={styles.loanerform}>
       <Top />
@@ -250,18 +287,28 @@ export function LoanerForm({
         {Translate({
           context: "login",
           label: `${mode}-title`,
-          vars: [branch.name],
+          vars: origin ? [origin] : [branch.name],
         })}
       </Title>
 
       {!orderPossible && (
         <>
-          <Text type="text2">
-            {Translate({
-              context: "order",
-              label: "order-not-possible",
-            })}
-          </Text>
+          {mode === LOGIN_MODE.DDA ? (
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "library-no-dda",
+                vars: [branch?.agencyName],
+              })}
+            </Text>
+          ) : (
+            <Text type="text2">
+              {Translate({
+                context: "order",
+                label: "order-not-possible",
+              })}
+            </Text>
+          )}
           <Button
             onClick={onClose}
             className={styles.loginbutton}
@@ -319,6 +366,7 @@ export function LoanerForm({
           initial={initial}
           onSubmit={onSubmit}
           mode={mode}
+          originUrl={originUrl}
         />
       )}
     </div>
@@ -347,7 +395,7 @@ LoanerForm.propTypes = {
  */
 export default function Wrap(props) {
   const { active } = props;
-  const { branchId, pid, doPolicyCheck, mode, clear } = props.context;
+  const { branchId, pid, doPolicyCheck, clear, originUrl } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -355,7 +403,7 @@ export default function Wrap(props) {
   );
 
   // PolicyCheck in own request (sometimes slow)
-  const { data: policyData, isLoading: policyIsLoading } = useData(
+  const { data: policyData } = useData(
     pid && branchId && branchOrderPolicy({ branchId, pid })
   );
   const mergedData = merge({}, data, policyData);
@@ -447,6 +495,12 @@ export default function Wrap(props) {
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
+        onClose={() =>
+          props.modal.push("login", {
+            mode: LOGIN_MODE.DDA,
+            originUrl,
+          })
+        }
       />
     </>
   );

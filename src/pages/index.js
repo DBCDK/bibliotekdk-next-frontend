@@ -11,10 +11,12 @@ import { promotedArticles } from "@/lib/api/article.fragments";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
-
+import React from "react";
 import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
-import React from "react";
+import { frontpageHero } from "@/lib/api/hero.fragments";
+import { useData } from "@/lib/api/api";
+import { parseHero } from "@/components/hero/Hero";
 
 const Index = () => {
   const context = { context: "metadata" };
@@ -26,7 +28,9 @@ const Index = () => {
 
   const router = useRouter();
 
-  const { canonical, alternate, root } = useCanonicalUrl();
+  const { data } = useData(frontpageHero());
+  const ogImage = parseHero(data);
+  const { canonical, alternate } = useCanonicalUrl();
 
   return (
     <React.Fragment>
@@ -37,10 +41,17 @@ const Index = () => {
         <meta property="og:type" content="website" />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:image" content={`${root}/img/forside-beta.png`} />
+        {ogImage && ogImage.image && ogImage.image.ogurl && (
+          <meta property="og:image" content={`${ogImage?.image?.ogurl}`} />
+        )}
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-        <link rel="icon" href="favicon.svg" sizes="any" type="image/svg+xml" />
-        <link rel="alternate icon" href="favicon.ico" />
+        <link
+          rel="icon"
+          href="public/favicon.svg"
+          sizes="any"
+          type="image/svg+xml"
+        />
+        <link rel="alternate icon" href="public/favicon.ico" />
         {alternate.map(({ locale, url }) => (
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}
@@ -74,7 +85,7 @@ const Index = () => {
  * These queries are run on the server.
  * I.e. the data fetched will be used for server side rendering
  */
-const serverQueries = [promotedArticles];
+const serverQueries = [promotedArticles, frontpageHero];
 
 /**
  * We use getInitialProps to let Next.js
@@ -82,8 +93,8 @@ const serverQueries = [promotedArticles];
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-Index.getInitialProps = (ctx) => {
-  return fetchAll(serverQueries, ctx);
+Index.getInitialProps = async (ctx) => {
+  return await fetchAll(serverQueries, ctx);
 };
 
 export default Index;

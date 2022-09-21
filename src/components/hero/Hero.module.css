@@ -2,7 +2,7 @@
     position: relative;
     height: 260px;
     padding-top: var(--pt4);
-    background: black;
+    background: var(--concrete);
     margin-bottom: var(--pt8);
 }
 
@@ -20,7 +20,6 @@
 }
 
 .heroicon {
-    display: none;
     display: block;
 }
 
@@ -104,7 +103,6 @@
     }
 
     .heroicon {
-        display: initial;
         display: inline-block;
         padding: 0 0 0 var(--pt3);
     }

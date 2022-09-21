@@ -79,13 +79,15 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
 /**
  * Make pickup branches selectable with Radio buttons
  *
- * @param {object} props
- * @param {object} props.agency
- * @param {className} props.string
- * @param {function} props.onClose
- * @param {function} props.onSelect
- * @param {object} props.selected The selected branch object
- * @param {function} props._ref
+ * @param {object}
+ * @param data
+ * @param className
+ * @param isVisible
+ * @param onChange
+ * @param isLoading
+ * @param includeArrows
+ * @param modal
+ * @param context
  */
 export function LoginPickup({
   data,
@@ -98,7 +100,7 @@ export function LoginPickup({
   context,
 }) {
   const allBranches = data?.result;
-  const { mode = LOGIN_MODE.PLAIN_LOGIN } = context || {};
+  const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
 
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -114,6 +116,7 @@ export function LoginPickup({
       doPolicyCheck: false,
       callbackUrl: callbackurl,
       mode,
+      originUrl,
       clear: true,
     });
   };
@@ -175,11 +178,11 @@ LoginPickup.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { agency } = props;
+  const { agency, originUrl = null } = props;
 
   const [query, setQuery] = useState("");
 
-  const { data, isLoading, error } = useData(
+  const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
   );
   const dummyData = {
@@ -208,6 +211,7 @@ export default function Wrap(props) {
       onChange={(q) => setQuery(q)}
       includeArrows={includeArrows}
       onLogin={signIn}
+      origin={originUrl}
     />
   );
 }

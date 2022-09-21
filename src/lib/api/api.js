@@ -80,6 +80,11 @@ export async function fetcher(
       variables,
     }),
   });
+
+  if (res.status !== 200) {
+    throw { status: res.status, message: res.statusText };
+  }
+
   const duration = Date.now() - start;
 
   if (delay && typeof window !== "undefined") {
@@ -160,7 +165,7 @@ export function useData(query) {
     accessToken && key,
     (key) => (mockedFetcher ? mockedFetcher(key) : fetcher(key)),
     {
-      initialData: initialData[key],
+      fallbackData: initialData[key],
       loadingTimeout: query?.slowThreshold || 5000,
       onLoadingSlow: () => setIsSlow(true),
     }

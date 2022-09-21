@@ -32,4 +32,5 @@ export const options = {
     ...callbacks,
   },
 };
+
 export default NextAuth(options);
