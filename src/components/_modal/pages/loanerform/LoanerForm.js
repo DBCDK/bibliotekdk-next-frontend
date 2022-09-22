@@ -493,12 +493,7 @@ export default function Wrap(props) {
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
-        onClose={() =>
-          props.modal.push("login", {
-            mode: LOGIN_MODE.DDA,
-            originUrl,
-          })
-        }
+        onClose={() => props.modal.prev()}
       />
     </>
   );
