@@ -238,7 +238,7 @@ function Suggester({
       id={id}
       theme={theme}
       suggestions={data}
-      shouldRenderSuggestions={(value, reason) => {
+      shouldRenderSuggestions={(value) => {
         // type to see suggestions
         return value.trim().length > 0;
       }}
@@ -294,10 +294,10 @@ function Suggester({
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  let { className } = props;
+  let { className, data } = props;
   const { skeleton, onSelect, children } = props;
 
   if (skeleton) {
@@ -306,6 +306,7 @@ export default function Wrap(props) {
   return (
     <Suggester
       {...props}
+      data={data}
       q={children?.props?.value || ""}
       className={className}
       onSelect={(val, obj, i) => {
@@ -318,7 +319,7 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   id: PropTypes.string.isRequired,
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onSelect: PropTypes.func,
   onClear: PropTypes.func,

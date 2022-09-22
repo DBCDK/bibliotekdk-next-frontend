@@ -26,8 +26,6 @@ const Index = () => {
     label: "frontpage-description",
   });
 
-  const router = useRouter();
-
   const { data } = useData(frontpageHero());
   const ogImage = parseHero(data);
   const { canonical, alternate } = useCanonicalUrl();
@@ -45,19 +43,14 @@ const Index = () => {
           <meta property="og:image" content={`${ogImage?.image?.ogurl}`} />
         )}
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
-        <link
-          rel="icon"
-          href="public/favicon.svg"
-          sizes="any"
-          type="image/svg+xml"
-        />
-        <link rel="alternate icon" href="public/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.ico" />
         {alternate.map(({ locale, url }) => (
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}
       </Head>
       <div>
-        <Header router={router} />
+        <Header />
         <Hero />
         <ArticleSection
           title={Translate({ context: "index", label: "section1" })}
