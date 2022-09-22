@@ -376,6 +376,9 @@ export function Suggester({
           onChange && onChange(value);
         }
       }}
+      onSuggestionsClearRequested={() => {
+        // func is required
+      }}
       onSuggestionSelected={(_, entry) => {
         const { suggestionValue, suggestion } = entry;
 

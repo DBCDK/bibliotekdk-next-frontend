@@ -85,13 +85,11 @@ module.exports = {
     useFixedSessionId:
       typeof process.env.USE_FIXED_SESSION_ID === "undefined" ||
       process.env.USE_FIXED_SESSION_ID !== "false" ||
-      !process.env.USE_FIXED_SESSION_ID
-        ? true
-        : false,
+      !process.env.USE_FIXED_SESSION_ID,
     api: {
       url:
         process.env.NEXT_PUBLIC_API_URL ||
-        "https://alfa-api.stg.bibliotek.dk/190101/default/graphql",
+        "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,
     },
     fbi_api: {

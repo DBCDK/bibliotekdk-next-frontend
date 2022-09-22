@@ -8,6 +8,7 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
  * Required for SSR
  * @param {*} queries
  * @param {*} context
+ * @param customQueryVariables
  * @returns
  */
 export async function fetchAll(queries, context, customQueryVariables) {
@@ -41,13 +42,19 @@ export async function fetchAll(queries, context, customQueryVariables) {
             ...queryFunc({ ...context.query, ...customQueryVariables }),
             accessToken: session?.accessToken,
           });
-          const queryRes = await fetcher(queryKey, userAgent, ip);
-          return { queryKey, queryRes };
+          try {
+            const queryRes = await fetcher(queryKey, userAgent, ip);
+            return { queryKey, queryRes };
+          } catch (e) {
+            return null;
+          }
         })
       )
-    ).forEach(({ queryKey, queryRes }) => {
-      initialData[queryKey] = queryRes;
-    });
+    )
+      .filter((r) => r)
+      .forEach(({ queryKey, queryRes }) => {
+        initialData[queryKey] = queryRes;
+      });
   }
 
   return {

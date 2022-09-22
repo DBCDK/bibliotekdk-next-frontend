@@ -73,20 +73,22 @@ export function ExpandedSearch({
       suggestType: SuggestTypeEnum.SUBJECT,
     },
   ];
+  const singleSearchInputList = singleSearchInputParams.map(
+    ({ labelTranslation, suggestType }) => (
+      <SingleSearchInput
+        key={suggestType}
+        labelTranslation={labelTranslation}
+        suggestType={suggestType}
+      />
+    )
+  );
 
   return (
     <div className={`${styles.flexnav} ${className}`}>
       <Collapse in={collapseOpen} className={styles.wrapper}>
         <div className={styles.wrapper}>
           <div className={styles.flex} id="example-collapse-text">
-            {singleSearchInputParams.map(
-              ({ labelTranslation, suggestType }) => (
-                <SingleSearchInput
-                  labelTranslation={labelTranslation}
-                  suggestType={suggestType}
-                />
-              )
-            )}
+            {singleSearchInputList}
           </div>
 
           <div className={styles.buttonflexnav}>
@@ -123,7 +125,7 @@ export function ExpandedSearch({
 
 function SingleSearchInput({ labelTranslation, suggestType }) {
   return (
-    <div className={styles.suggesterright}>
+    <div className={styles.suggesterright} key={suggestType}>
       <div className={styles.labelinline}>
         <Label for="advanced-search-title">{labelTranslation}</Label>
       </div>

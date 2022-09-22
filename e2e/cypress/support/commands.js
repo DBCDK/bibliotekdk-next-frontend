@@ -24,6 +24,8 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+const graphqlPath = Cypress.env("graphqlPath");
+
 /**
  * Tabs function
  * @param {int} n // n is number of tabs -> default to 1
@@ -52,7 +54,7 @@ Cypress.Commands.add("login", () => {
     },
   });
   cy.fixture("user.json").then((fixture) => {
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(fixture);
       }

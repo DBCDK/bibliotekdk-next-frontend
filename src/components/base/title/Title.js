@@ -9,6 +9,12 @@ import { getStyle } from "@/utils/css";
 /**
  * The Component function
  *
+ * @param children
+ * @param className
+ * @param tag
+ * @param type
+ * @param clamp
+ * @param lines
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -44,6 +50,8 @@ export const Title = ({
       });
     }
   }, [lineHeight, lines]);
+
+  delete props.skeleton;
 
   return (
     <Tag
@@ -86,7 +94,7 @@ export const TitleSkeleton = (props) => {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {

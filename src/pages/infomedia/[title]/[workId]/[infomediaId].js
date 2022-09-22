@@ -81,9 +81,7 @@ export function InfomediaArticle(infomediaData) {
                 context: "order",
                 label: "change-pickup-digital-copy-link",
               })}
-              signIn={() =>
-                modal.push("login", { mode: LOGIN_MODE.SUBSCRIPTION })
-              }
+              signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
             />
           )}
         </>

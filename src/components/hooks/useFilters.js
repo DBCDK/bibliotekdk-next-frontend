@@ -253,7 +253,7 @@ function useFilters() {
           query: merged,
         },
         undefined,
-        { scroll: router.pathname === "/find" ? false : true }
+        { scroll: router.pathname !== "/find" }
       );
   };
 
@@ -282,7 +282,7 @@ function useFilters() {
   }
 
   return {
-    filters: _filters,
+    filters: _filters || {},
     setFilters,
     getQuery: _getQuery,
     setQuery,

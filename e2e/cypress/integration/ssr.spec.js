@@ -1,4 +1,5 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 function getPageHead(path) {
   return cy
@@ -36,7 +37,7 @@ function getPageHead(path) {
           /<meta property="og:image" content="(.*?)"/
         )?.[1],
         alternate: html.match(
-          /<link rel=\"alternate\" hreflang=\".*?" href=\".*?"\/>/g
+          /<link rel="alternate" hreflang=".*?" href=".*?"\/>/g
         ),
         jsonld,
       };

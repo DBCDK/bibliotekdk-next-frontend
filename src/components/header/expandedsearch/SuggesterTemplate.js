@@ -1,7 +1,7 @@
 import styles from "@/components/header/expandedsearch/ExpandedSearch.module.css";
 import Suggester from "@/components/base/suggester/Suggester";
 import Input from "@/components/base/forms/input/Input";
-import React from "react";
+import React, { useMemo } from "react";
 import useQ from "@/components/hooks/useQ";
 import useFilters from "@/components/hooks/useFilters";
 import { useData } from "@/lib/api/api";
@@ -82,11 +82,15 @@ export default function wrap({ title = "", type = "" }) {
     })
   );
 
-  const filtered = data?.suggest?.result
-    ?.filter((obj) => obj.type.toLowerCase() === type)
-    ?.map((obj) => ({
-      value: obj.term,
-    }));
+  const filtered = useMemo(
+    () =>
+      data?.suggest?.result
+        ?.filter((obj) => obj.type.toLowerCase() === type)
+        ?.map((obj) => ({
+          value: obj.term,
+        })),
+    [data?.suggest?.result]
+  );
 
   const value = q[type];
 

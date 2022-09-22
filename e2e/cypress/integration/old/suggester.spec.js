@@ -3,6 +3,7 @@
  * Test functionality of Header
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
+const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Suggester", () => {
   before(function () {
@@ -123,7 +124,7 @@ describe("Suggester data collect", () => {
     cy.get("[data-cy=button-ok]").click();
 
     // Intercept requests to graphql
-    cy.intercept("POST", "/190101/default/graphql", (req) => {
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         req.alias = "apiMutation";
       }

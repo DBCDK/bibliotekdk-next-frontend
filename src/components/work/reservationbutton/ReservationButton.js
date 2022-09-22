@@ -3,8 +3,14 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
 import Col from "react-bootstrap/Col";
-import { getIsPeriodicaLike, infomediaUrl } from "@/lib/utils";
+import {
+  infomediaUrl,
+  encodeTitleCreator,
+  getIsPeriodicaLike,
+} from "@/lib/utils";
 import { preferredOnline } from "@/lib/Navigation";
+import { useModal } from "@/components/_modal";
+import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 // Translate Context
 const context = { context: "overview" };
@@ -19,7 +25,7 @@ function addToInfomedia(onlineAccess, title) {
   return onlineAccess?.map((access) => {
     if (access.infomediaId) {
       access.url = infomediaUrl(
-        title,
+        encodeTitleCreator(title),
         `work-of:${access.pid}`,
         access.infomediaId
       );
@@ -80,8 +86,6 @@ function selectMaterial(manifestations) {
  * @constructor
  */
 export function ButtonTxt({ selectedMaterial, skeleton, work }) {
-  // @TODO use function to find correct material
-
   if (!selectedMaterial?.manifestations) {
     return null;
   }
@@ -101,7 +105,7 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
         <Text type="text3" skeleton={skeleton} lines={2}>
           {[
             Translate({ ...context, label: "onlineAccessAt" }),
-            getBaseUrl(onlineAccess[0].url),
+            onlineAccess[0].origin || getBaseUrl(onlineAccess[0].url),
           ].join(" ")}
         </Text>
       </Col>
@@ -170,6 +174,8 @@ export function OrderButton({
     return null;
   }
 
+  const modal = useModal();
+
   const manifestations = selectedMaterial.manifestations;
   if (!singleManifestion) {
     selectedMaterial = selectMaterial(manifestations);
@@ -206,27 +212,36 @@ export function OrderButton({
       ? "_self"
       : "_blank";
 
+    // check if we should open login modal on click
+    const goToLogin =
+      selectedMaterial.onlineAccess[0]?.accessType ===
+        "urlInternetRestricted" &&
+      (selectedMaterial.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1 ||
+        selectedMaterial.onlineAccess[0]?.url.indexOf("ebscohost") !== -1) &&
+      !user.isAuthenticated;
+
     return (
       <>
         {/* Check if internet access requires a login */}
-        {selectedMaterial.onlineAccess[0]?.accessType ===
-          "urlInternetRestricted" && (
-          <Text type="text3" className={styles.textAboveButton}>
-            {Translate({ ...context, label: "url_login_required" })}
-          </Text>
-        )}
-        {/* Check if user is authenticated to view infomedia article */}
-        {selectedMaterial.onlineAccess[0].infomediaId && !user.isAuthenticated && (
-          <Text type="text3" className={styles.textAboveButton}>
-            {Translate({ ...context, label: "label_infomediaAccess" })}
-          </Text>
-        )}
+        {(selectedMaterial.onlineAccess[0]?.accessType ===
+          "urlInternetRestricted" ||
+          selectedMaterial.onlineAccess[0]?.infomediaId) &&
+          !user.isAuthenticated && (
+            <Text type="text3" className={styles.textAboveButton}>
+              {Translate({ ...context, label: "url_login_required" })}
+            </Text>
+          )}
         <Button
           className={styles.externalLink}
           skeleton={buttonSkeleton}
-          onClick={() =>
-            onOnlineAccess(selectedMaterial.onlineAccess[0].url, urlTarget)
-          }
+          onClick={() => {
+            goToLogin
+              ? modal?.push("login", {
+                  mode: LOGIN_MODE.DDA,
+                  originUrl: selectedMaterial.onlineAccess[0]?.origin,
+                })
+              : onOnlineAccess(selectedMaterial.onlineAccess[0].url, urlTarget);
+          }}
           type={type}
         >
           {[
