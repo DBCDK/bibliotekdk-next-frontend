@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import merge from "lodash/merge";
 
@@ -19,7 +19,7 @@ import useQ from "@/components/hooks/useQ";
 import response from "./dummy.data";
 
 import { useData } from "@/lib/api/api";
-import { facets, hitcount } from "@/lib/api/search.fragments";
+import * as searchFragments from "@/lib/api/search.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
@@ -50,7 +50,7 @@ function SelectedFilter({
       return 0;
     }*/
     if (sortOrder === "numerical") {
-      return a.count < b.count ? 1 : -1;
+      return a.score < b.score ? 1 : -1;
     } else {
       return a.term.toLowerCase() > b.term.toLowerCase() ? 1 : -1;
     }
@@ -161,7 +161,7 @@ function SelectedFilter({
         {orderedValues?.map((term, idx) => {
           const title = term.term;
           const key = term.key;
-          const count = term.count || "-";
+          const score = term.score || "-";
 
           const isCheked = terms.includes(title);
 
@@ -205,10 +205,10 @@ function SelectedFilter({
                   lines={1}
                   skeleton={isLoading}
                   type="text3"
-                  dataCy={`text-${count}`}
-                  className={styles.count}
+                  dataCy={`text-${score}`}
+                  className={styles.score}
                 >
-                  {count}
+                  {score}
                 </Text>
               </div>
             </List.Select>
@@ -216,28 +216,6 @@ function SelectedFilter({
         })}
       </List.Group>
     </>
-  );
-}
-
-/**
- *
- * function to build selected filters
- *
- * @param {array} facet
- * @param {array} selected
- *
- * @returns {component}
- */
-function Selected({ facet, selected }) {
-  const match = useMemo(
-    () => selected.map((s) => facet.values.find((f) => f.key === s)),
-    [facet, selected]
-  );
-
-  return (
-    <Text type="text3" className={styles.selected}>
-      {selected.join(", ")}
-    </Text>
   );
 }
 
@@ -433,7 +411,9 @@ export default function Wrap(props) {
   const facetFilters = (workType && includedTypes[workType]) || undefined;
 
   // hitcount according to selected filters
-  const { data: hitcountData } = useData(hasQuery && hitcount({ q, filters }));
+  const { data: hitcountData } = useData(
+    hasQuery && searchFragments.hitcount({ q, filters })
+  );
 
   // On a specific filter category page we make sure to remove filters from within that category.
   // This will make sure facet hitcounts won't change, when you select/unselect filters.
@@ -445,7 +425,7 @@ export default function Wrap(props) {
   // facets according to query filters
   const { data, isLoading } = useData(
     hasQuery &&
-      facets({
+      searchFragments.facets({
         q,
         filters: filtersForCategory,
         facets: facetFilters,

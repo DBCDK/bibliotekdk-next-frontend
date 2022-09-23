@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import QuickFilters from "@/components/search/quickfilters";
 import Result from "@/components/search/result/Result";
 import Searchbar from "@/components/search/searchbar";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
+import * as searchFragments from "@/lib/api/search.fragments";
 
 import useFilters, {
   getQuery as getQueryFilters,
@@ -15,20 +14,15 @@ import useQ, {
   getQuery as getQueryQ,
 } from "@/components/hooks/useQ";
 
-import { useModal } from "@/components/_modal";
-
 import Head from "next/head";
 import { useRouter } from "next/router";
-import {
-  collectSearch,
-  collectSearchWorkClick,
-} from "@/lib/api/datacollect.mutations";
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
 import useDataCollect from "@/lib/useDataCollect";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 /**
  * @file
@@ -36,15 +30,13 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  *
  */
 function Find() {
-  const modal = useModal();
-
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
   const dataCollect = useDataCollect();
   const router = useRouter();
 
-  const { page = 1, view } = router.query;
+  const { page = 1 } = router.query;
 
   // Add worktype and all q types to useCanonicalUrl func
   const { canonical, alternate, root } = useCanonicalUrl({
@@ -52,13 +44,17 @@ function Find() {
   });
 
   // use the useData hook to fetch data
-  const hitcountResponse = useData(hitcount({ q, filters }));
+  const hitcountResponse = useData(searchFragments.hitcount({ q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
   const context = { context: "metadata" };
 
-  const titleToUse = q.all || q.title || q.creator || q.subject;
+  const titleToUse =
+    q[SuggestTypeEnum.ALL] ||
+    q[SuggestTypeEnum.TITLE] ||
+    q[SuggestTypeEnum.CREATOR] ||
+    q[SuggestTypeEnum.SUBJECT];
   const pageTitle = Translate({
     ...context,
     label: "find-title",
@@ -75,6 +71,7 @@ function Find() {
    * Updates URL query params
    *
    * @param {object} params
+   * @param {object} settings
    */
   function updateQueryParams(params, settings = {}) {
     const query = { ...router.query, ...params };
@@ -120,18 +117,9 @@ function Find() {
 
       <Searchbar q={q} />
 
-      <QuickFilters
-        viewSelected={view}
-        onViewSelect={(view) => updateQueryParams({ view })}
-        onFiltersClick={() => modal.push("filter", { q })}
-        onSearchClick={() => modal.push("search", { q })}
-      />
-
       {q && (
         <Result
           page={parseInt(page, 10)}
-          viewSelected={view}
-          onViewSelect={(view) => updateQueryParams({ view })}
           onPageChange={(page, scroll) =>
             updateQueryParams({ page }, { scroll })
           }
@@ -155,7 +143,10 @@ Find.getInitialProps = (ctx) => {
   const queryQ = getQueryQ(ctx.query);
   // Appends a custom query filters object containing all materialfilters
   // The filters object can now be read by the search.fragments
-  return fetchAll([hitcount], ctx, { filters: queryFilters, q: queryQ });
+  return fetchAll([searchFragments.hitcount], ctx, {
+    filters: queryFilters,
+    q: queryQ,
+  });
 };
 
 export default Find;

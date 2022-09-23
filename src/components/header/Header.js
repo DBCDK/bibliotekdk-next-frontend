@@ -65,13 +65,13 @@ export function Header({
   const [history, setHistory, clearHistory] = useHistory();
 
   // workType filter param
-  const { workType } = filters.getQuery();
+  const { workTypes } = filters.getQuery();
 
   // expanded search state
   const [collapseOpen, setCollapseOpen] = useState(!!countQ);
 
   // specific material workType selected
-  const selectedMaterial = workType[0] || SuggestTypeEnum.ALL;
+  const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
   // for beta1 - disable links above
   const linksdisabled = false;

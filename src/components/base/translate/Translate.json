@@ -1103,31 +1103,31 @@
         "da": "Sorter efter antal",
         "en": "Sort by numbers"
       },
-      "label-workType": {
+      "label-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-language": {
+      "label-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-materialType": {
+      "label-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-fictiveCharacter": {
+      "label-fictionalCharacter": {
         "da": "Fiktive karakterer",
         "en": "Fictitious characters"
       },
-      "label-genre": {
+      "label-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-audience": {
+      "label-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-accessType": {
+      "label-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1135,39 +1135,39 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-subject": {
+      "label-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-creator": {
+      "label-creators": {
         "da": "Forfatter",
         "en": "Author"
       },
-      "label-literature-workType": {
+      "label-literature-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-literature-language": {
+      "label-literature-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-literature-materialType": {
+      "label-literature-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-literature-fictiveCharacter": {
+      "label-literature-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-literature-genre": {
+      "label-literature-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-literature-audience": {
+      "label-literature-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-literature-accessType": {
+      "label-literature-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1175,39 +1175,39 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-literature-subject": {
+      "label-literature-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-literature-creator": {
+      "label-literature-creators": {
         "da": "Forfatter",
         "en": "Author"
       },
-      "label-article-workType": {
+      "label-article-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-article-language": {
+      "label-article-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-article-materialType": {
+      "label-article-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-article-fictiveCharacter": {
+      "label-article-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-article-genre": {
+      "label-article-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-article-audience": {
+      "label-article-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-article-accessType": {
+      "label-article-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1215,39 +1215,39 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-article-subject": {
+      "label-article-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-article-creator": {
+      "label-article-creators": {
         "da": "Forfatter",
         "en": "Author"
       },
-      "label-movie-workType": {
+      "label-movie-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-movie-language": {
+      "label-movie-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-movie-materialType": {
+      "label-movie-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-movie-fictiveCharacter": {
+      "label-movie-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-movie-genre": {
+      "label-movie-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-movie-audience": {
+      "label-movie-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-movie-accessType": {
+      "label-movie-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1255,39 +1255,39 @@
         "da": "Spillefilm/dokumentar",
         "en": "Feature film/documentary"
       },
-      "label-movie-subject": {
+      "label-movie-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-movie-creator": {
+      "label-movie-creators": {
         "da": "Instruktør/medvirkende",
         "en": "Director/contributor"
       },
-      "label-game-workType": {
+      "label-game-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-game-language": {
+      "label-game-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-game-materialType": {
+      "label-game-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-game-fictiveCharacter": {
+      "label-game-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-game-genre": {
+      "label-game-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-game-audience": {
+      "label-game-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-game-accessType": {
+      "label-game-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1295,39 +1295,39 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-game-subject": {
+      "label-game-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-game-creator": {
+      "label-game-creators": {
         "da": "Forfatter",
         "en": "Author"
       },
-      "label-music-workType": {
+      "label-music-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-music-language": {
+      "label-music-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-music-materialType": {
+      "label-music-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-music-fictiveCharacter": {
+      "label-music-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-music-genre": {
+      "label-music-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-music-audience": {
+      "label-music-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-music-accessType": {
+      "label-music-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1335,39 +1335,39 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-music-subject": {
+      "label-music-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-music-creator": {
+      "label-music-creators": {
         "da": "Kunstner/medvirkende",
         "en": "Artist/performer"
       },
-      "label-sheetmusic-workType": {
+      "label-sheetmusic-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"
       },
-      "label-sheetmusic-language": {
+      "label-sheetmusic-mainLanguages": {
         "da": "Sprog",
         "en": "Language"
       },
-      "label-sheetmusic-materialType": {
+      "label-sheetmusic-materialTypes": {
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-sheetmusic-fictiveCharacter": {
+      "label-sheetmusic-fictionalCharacter": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
-      "label-sheetmusic-genre": {
+      "label-sheetmusic-genreAndForm": {
         "da": "Genre",
         "en": "Genre"
       },
-      "label-sheetmusic-audience": {
+      "label-sheetmusic-childrenOrAdults": {
         "da": "For børn/voksne",
         "en": "For children/adults"
       },
-      "label-sheetmusic-accessType": {
+      "label-sheetmusic-accessTypes": {
         "da": "Fysisk/digital",
         "en": "Physical/digital"
       },
@@ -1375,11 +1375,11 @@
         "da": "Skøn-/faglitteratur",
         "en": "Fiction/Non-fiction"
       },
-      "label-sheetmusic-subject": {
+      "label-sheetmusic-subjects": {
         "da": "Emne",
         "en": "Subject"
       },
-      "label-sheetmusic-creator": {
+      "label-sheetmusic-creators": {
         "da": "Komponist",
         "en": "Composer"
       },
