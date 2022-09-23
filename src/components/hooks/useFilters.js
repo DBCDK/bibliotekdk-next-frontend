@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 import useSWR from "swr";
+import { FilterTypeEnum } from "@/lib/enums";
 
 const URL_FACET_DELIMITER = ",";
 const DELIMITER_ENCODING = "__";
@@ -31,60 +32,6 @@ let initialized = false;
 
 // Custom fetcher
 const fetcher = () => locale;
-
-// current supported filter types
-export const types = [
-  "materialType",
-  "accessType",
-  "subject",
-  "creator",
-  "fictionNonfiction",
-  "language",
-  "genre",
-  "audience",
-  "fictiveCharacter",
-  "workType",
-];
-
-// Visible Worktypes for work type selections
-export const workTypes = [
-  "literature",
-  "article",
-  "movie",
-  "game",
-  "music",
-  "sheetmusic",
-];
-
-// Included categories/facets by selected workType
-// This list works as a sorted whitelist
-export const includedTypes = {
-  literature: [
-    "materialType",
-    "accessType",
-    "subject",
-    "creator",
-    "fictionNonfiction",
-    "language",
-    "genre",
-    "audience",
-    "fictiveCharacter",
-  ],
-  article: ["materialType", "accessType", "subject", "creator", "language"],
-  movie: [
-    "materialType",
-    "accessType",
-    "subject",
-    "creator",
-    "language",
-    "genre",
-    "audience",
-    "fictiveCharacter",
-  ],
-  game: ["materialType", "accessType", "genre", "audience", "fictiveCharacter"],
-  music: ["materialType", "accessType", "creator", "genre", "audience"],
-  sheetmusic: ["materialType", "accessType", "subject", "creator", "genre"],
-};
 
 /**
  *
@@ -147,7 +94,7 @@ export function getQuery(query) {
  *
  */
 
-function useFilters() {
+export default function useFilters() {
   // router
   const router = useRouter();
 
@@ -292,4 +239,68 @@ function useFilters() {
   };
 }
 
-export default useFilters;
+const types = Object.values(FilterTypeEnum);
+
+// Visible Worktypes for work type selections
+export const workTypes = [
+  "article",
+  "game",
+  "literature",
+  "movie",
+  "music",
+  "sheetmusic",
+];
+
+// Included categories/facets by selected workType
+// This list works as a sorted whitelist
+export const includedTypes = {
+  literature: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.AUDIENCE,
+    FilterTypeEnum.CREATOR,
+    FilterTypeEnum.FICTION_NONFICTION,
+    // FilterTypeEnum.FICTIVE_CHARACTER,
+    FilterTypeEnum.GENRE,
+    FilterTypeEnum.LANGUAGE,
+    FilterTypeEnum.MATERIAL_TYPE,
+    FilterTypeEnum.SUBJECT,
+  ],
+  article: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.CREATOR,
+    FilterTypeEnum.LANGUAGE,
+    FilterTypeEnum.MATERIAL_TYPE,
+    FilterTypeEnum.SUBJECT,
+  ],
+  movie: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.AUDIENCE,
+    FilterTypeEnum.CREATOR,
+    // FilterTypeEnum.FICTIVE_CHARACTER,
+    FilterTypeEnum.GENRE,
+    FilterTypeEnum.LANGUAGE,
+    FilterTypeEnum.MATERIAL_TYPE,
+    FilterTypeEnum.SUBJECT,
+  ],
+  game: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.AUDIENCE,
+    // FilterTypeEnum.FICTIVE_CHARACTER,
+    FilterTypeEnum.GENRE,
+    FilterTypeEnum.MATERIAL_TYPE,
+  ],
+  music: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.AUDIENCE,
+    FilterTypeEnum.CREATOR,
+    FilterTypeEnum.GENRE,
+    FilterTypeEnum.MATERIAL_TYPE,
+  ],
+  sheetmusic: [
+    FilterTypeEnum.ACCESS_TYPE,
+    FilterTypeEnum.CREATOR,
+    FilterTypeEnum.GENRE,
+    FilterTypeEnum.MATERIAL_TYPE,
+    FilterTypeEnum.SUBJECT,
+  ],
+};
