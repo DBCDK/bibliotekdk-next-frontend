@@ -67,10 +67,10 @@ export default function ResultRow({ data, onClick }) {
             tag="h2"
             lines={3}
             clamp={true}
-            title={work?.titles?.full[0]}
-            skeleton={!work?.titles?.main[0]}
+            title={work?.titles?.full}
+            skeleton={!work?.titles?.main}
           >
-            {work?.titles?.full?.[0] || work?.titles?.main?.[0]}
+            {work?.titles?.full || work?.titles?.main}
           </Title>
           <Text
             type="text3"
