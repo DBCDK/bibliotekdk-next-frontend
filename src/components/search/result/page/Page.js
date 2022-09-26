@@ -20,24 +20,22 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
     rows = [{}, {}, {}, {}, {}, {}];
   }
 
+  const resultRows = rows?.map((row, index) => (
+    <div key={row.workId + ":" + index}>
+      <ResultRow
+        data={row}
+        key={`${row?.titles?.main}_${index}`}
+        onClick={onWorkClick && (() => onWorkClick(index, row))}
+      />
+      {index === 0 && <SearchFeedBack />}
+    </div>
+  ));
+
   if (!rows) {
     return null;
   }
 
-  return (
-    <>
-      {rows.map((row, index) => (
-        <>
-          <ResultRow
-            data={row}
-            key={`${row?.titles?.main}_${index}`}
-            onClick={onWorkClick && (() => onWorkClick(index, row))}
-          />
-          {index === 0 && <SearchFeedBack />}
-        </>
-      ))}
-    </>
-  );
+  return <>{resultRows}</>;
 }
 
 ResultPage.propTypes = {

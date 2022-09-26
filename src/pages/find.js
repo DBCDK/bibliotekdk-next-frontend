@@ -23,6 +23,8 @@ import useDataCollect from "@/lib/useDataCollect";
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
+import { QuickFilters } from "@/components/search/quickfilters/QuickFilters";
+import { useModal } from "@/components/_modal";
 
 /**
  * @file
@@ -30,6 +32,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
  *
  */
 function Find() {
+  const modal = useModal();
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
@@ -40,7 +43,7 @@ function Find() {
 
   // Add worktype and all q types to useCanonicalUrl func
   const { canonical, alternate, root } = useCanonicalUrl({
-    preserveParams: ["workType", ...typesQ.map((t) => `q.${t}`)],
+    preserveParams: ["workTypes", ...typesQ.map((t) => `q.${t}`)],
   });
 
   // use the useData hook to fetch data
@@ -117,6 +120,8 @@ function Find() {
 
       <Searchbar q={q} />
 
+      <QuickFilters onFiltersClick={() => modal.push("filter", { q })} />
+
       {q && (
         <Result
           page={parseInt(page, 10)}
@@ -127,7 +132,7 @@ function Find() {
             dataCollect.collectSearchWorkClick({
               search_request: { q, filters },
               search_query_hit: index + 1,
-              search_query_work: work.id,
+              search_query_work: work.workId,
             });
           }}
         />

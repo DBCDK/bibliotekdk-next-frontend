@@ -141,7 +141,7 @@ export function Header({
     const method = suggesterVisibleMobile ? "replace" : "push";
 
     const type = {
-      workType:
+      workTypes:
         selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
 
@@ -198,11 +198,11 @@ export function Header({
                         prefix: "header-link",
                       })}
                       onClick={() => {
-                        filters.setQuery({ include: { workType: [m] } });
+                        filters.setQuery({ include: { workTypes: [m] } });
                       }}
                       onKeyDown={(e) => {
                         if (e.key === "Enter" || e.keyCode === 13) {
-                          filters.setQuery({ include: { workType: [m] } });
+                          filters.setQuery({ include: { workTypes: [m] } });
                         }
                       }}
                     >

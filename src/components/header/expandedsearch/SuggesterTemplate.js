@@ -68,7 +68,7 @@ export default function wrap({ title = "", type = "" }) {
   const { filters } = useFilters();
 
   // extract selected workType, if any
-  const workType = filters.workType?.[0];
+  const workType = filters.workTypes?.[0];
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
