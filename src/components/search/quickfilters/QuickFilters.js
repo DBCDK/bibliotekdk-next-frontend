@@ -19,7 +19,7 @@ import { FilterTypeEnum } from "@/lib/enums";
 export function QuickFilters({ onFiltersClick }) {
   const { getCount: getFiltersCount } = useFilters();
 
-  const countFilters = getFiltersCount([FilterTypeEnum.WORK_TYPE]).toString();
+  const countFilters = getFiltersCount([FilterTypeEnum.WORK_TYPES]).toString();
 
   return (
     <div className={styles.section}>

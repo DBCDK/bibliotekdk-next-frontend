@@ -7,14 +7,14 @@ export const SuggestTypeEnum = Object.freeze({
 });
 
 export const FilterTypeEnum = Object.freeze({
-  ACCESS_TYPE: "accessTypes",
-  AUDIENCE: "childrenOrAdults",
-  CREATOR: "creators",
+  ACCESS_TYPES: "accessTypes",
+  CHILDREN_OR_ADULTS: "childrenOrAdults",
+  CREATORS: "creators",
   FICTION_NONFICTION: "fictionNonfiction",
-  // FICTIVE_CHARACTER: "fictionalCharacter",
-  GENRE: "genreAndForm",
-  LANGUAGE: "mainLanguages",
-  MATERIAL_TYPE: "materialTypes",
-  SUBJECT: "subjects",
-  WORK_TYPE: "workTypes",
+  // FICTIONAL_CHARACTERS: "fictionalCharacters",
+  GENRE_AND_FORM: "genreAndForm",
+  MAIN_LANGUAGES: "mainLanguages",
+  MATERIAL_TYPES: "materialTypes",
+  SUBJECTS: "subjects",
+  WORK_TYPES: "workTypes",
 });

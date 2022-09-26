@@ -240,7 +240,7 @@ export function Filter(props) {
   const { facet } = context;
 
   // Global excluded categories
-  const excluded = [FilterTypeEnum.WORK_TYPE];
+  const excluded = [FilterTypeEnum.WORK_TYPES];
 
   // extract workType if any selected
   const workType = selected.workTypes?.[0];

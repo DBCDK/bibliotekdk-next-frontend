@@ -22,7 +22,7 @@ import styles from "./Row.module.css";
 export default function ResultRow({ data, onClick }) {
   const work = data;
 
-  const creatorName = work.creators?.[0]?.display;
+  const creatorName = work?.creators?.[0]?.display;
 
   const coverDetail = useMemo(() => {
     if (data?.manifestations?.all) {
