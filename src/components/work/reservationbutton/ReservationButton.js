@@ -192,8 +192,20 @@ export function OrderButton({
   4. material is not available -> disable
    */
 
+  // hold if user is logged in to access dda - check if user has a municipality
+  const noMunicipality = user?.isAuthenticated
+    ? ((selectedMaterial?.onlineAccess?.length > 0 &&
+        selectedMaterial?.onlineAccess[0]?.url.indexOf("ebookcentral") !==
+          -1) ||
+        (selectedMaterial?.onlineAccess?.length > 0 &&
+          selectedMaterial?.onlineAccess[0]?.url.indexOf("ebscohost") !==
+            -1)) &&
+      !user?.authUser?.municipalityAgencyId
+    : false;
+
   // online access ? - special handling of digital copy (onlineAccess[0].issn)
   if (
+    !noMunicipality &&
     selectedMaterial?.onlineAccess?.length > 0 &&
     !selectedMaterial.onlineAccess[0].issn
   ) {

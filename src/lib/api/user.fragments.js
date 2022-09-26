@@ -18,6 +18,7 @@ export function basic() {
         mail
         address
         postalCode
+        municipalityAgencyId
       }
       monitor(name: "bibdknext_user")
      }`,
