@@ -23,6 +23,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 import styles from "./Filter.module.css";
+import { FilterTypeEnum } from "@/lib/enums";
 
 function SelectedFilter({
   isLoading,
@@ -239,10 +240,10 @@ export function Filter(props) {
   const { facet } = context;
 
   // Global excluded categories
-  const excluded = ["workType"];
+  const excluded = [FilterTypeEnum.WORK_TYPE];
 
   // extract workType if any selected
-  const workType = selected.workType?.[0];
+  const workType = selected.workTypes?.[0];
 
   // currently
   const selectedFacet = facet && facets.find((obj) => obj.name === facet?.name);
@@ -404,7 +405,7 @@ export default function Wrap(props) {
   const q = getQuery();
 
   // extract selected workType, if any
-  const workType = filters.workType?.[0];
+  const workType = filters.workTypes?.[0];
 
   // Exclude irrelevant worktype categories
   // undefined will result in a include-all fallback at the fragment api call function.
@@ -440,7 +441,7 @@ export default function Wrap(props) {
   }
 
   // Dont clear the workType filter onClear
-  const excludeOnClear = { workType: filters.workType };
+  const excludeOnClear = { workTypes: filters.workTypes };
 
   return (
     <Filter
