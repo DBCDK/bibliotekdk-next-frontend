@@ -96,7 +96,6 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           }
           materialTypes {
             specific
-            general
           }
           fictionNonfiction {
             display
