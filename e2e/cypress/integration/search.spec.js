@@ -10,7 +10,7 @@ describe("Search", () => {
           "q.title": "some title",
           "q.creator": "some creator",
           "q.subject": "some subject",
-          workType: "movie",
+          workTypes: "movie",
         });
       });
 
@@ -72,7 +72,7 @@ describe("Search", () => {
           "q.title": "some title",
           "q.creator": "some creator",
           "q.subject": "some subject",
-          workType: "movie",
+          workTypes: "movie",
         });
       });
       cy.get("[data-cy=router-pathname]").should("have.text", "/find");
@@ -91,7 +91,7 @@ describe("Search", () => {
           "q.title": "some title",
           "q.creator": "some creator",
           "q.subject": "some subject",
-          workType: "movie",
+          workTypes: "movie",
         });
       });
     });
@@ -110,7 +110,7 @@ describe("Search", () => {
           "q.title": "some title",
           "q.creator": "some creator",
           "q.subject": "some subject",
-          workType: "movie",
+          workTypes: "movie",
         });
       });
     });
@@ -197,7 +197,7 @@ describe("Search", () => {
             "q.title": "some title",
             "q.creator": "some creator",
             "q.subject": "some subject",
-            workType: "movie",
+            workTypes: "movie",
           });
         });
 
@@ -210,7 +210,7 @@ describe("Search", () => {
             "q.title": "some title",
             "q.creator": "some creator",
             "q.subject": "some subject",
-            workType: "movie",
+            workTypes: "movie",
           });
         });
       });

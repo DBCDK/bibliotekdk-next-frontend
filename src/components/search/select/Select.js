@@ -67,8 +67,12 @@ export function Desktop({ options = [], onSelect, selected, className }) {
 /**
  * Mobile version - @see SearchBar.js
  * @param options
- * @param onOptionClicked
- * @param selectedMaterial
+ * @param onSelect
+ * @param selected
+ * @param count
+ * @param onFilterClick
+ * @param className
+ *
  * @return {JSX.Element}
  * @constructor
  */
@@ -132,19 +136,17 @@ export function Mobile({
 /**
  * Show a 'select' list of available material filters.
  *
- * @param options
- * @param onOptionClicked
- * @param selectedMaterial
+ * @param children
  * @return {JSX.Element}
  * @constructor
  */
 function Wrap({ children }) {
   const { getQuery, workTypes, getCount } = useFilters();
-  const { workType } = getQuery();
+  const { workTypes: workTypes2 } = getQuery();
 
   const { setQuery } = useQ();
 
-  const selected = workType[0] || "all";
+  const selected = workTypes2[0] || "all";
 
   const router = useRouter();
 
@@ -155,11 +157,11 @@ function Wrap({ children }) {
   return React.cloneElement(children, {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
-      const param = elem === "all" ? {} : { workType: [elem] };
+      const param = elem === "all" ? {} : { workTypes: [elem] };
       setQuery({ pathname: pathname, query: param });
     },
     selected,
-    count: getCount(["workType"]),
+    count: getCount(["workTypes"]),
   });
 }
 

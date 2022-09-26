@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 import { useState } from "react";
 import HeaderWrapped, { Header } from "./Header";
 import Searchbar from "@/components/search/searchbar";
@@ -71,7 +71,7 @@ NavHeaderPrefilled.story = {
         "q.title": "some title",
         "q.creator": "some creator",
         "q.subject": "some subject",
-        workType: "movie",
+        workTypes: "movie",
       },
     },
   },
@@ -128,7 +128,7 @@ export function NavHeaderUserLoggedIn() {
         filters={{
           ...filters,
           getQuery: () => ({
-            workType: "all",
+            workTypes: "all",
           }),
         }}
       />

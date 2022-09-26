@@ -123,7 +123,7 @@ describe.skip("Filter", () => {
   });
 
   it(`Only show 5 specific filters on workType 'game'`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q.all=lego&workType=game`);
+    cy.visit(`${nextjsBaseUrl}/find?q.all=lego&workTypes=game`);
 
     viewAllFilters();
 

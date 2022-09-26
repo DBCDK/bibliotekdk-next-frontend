@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import ResultRow from "../row";
 
 import { useData } from "@/lib/api/api";
-import { fast, all } from "@/lib/api/search.fragments";
+import * as searchFragments from "@/lib/api/search.fragments";
 
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
@@ -20,24 +20,22 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
     rows = [{}, {}, {}, {}, {}, {}];
   }
 
+  const resultRows = rows?.map((row, index) => (
+    <div key={row.workId + ":" + index}>
+      <ResultRow
+        data={row}
+        key={`${row?.titles?.main}_${index}`}
+        onClick={onWorkClick && (() => onWorkClick(index, row))}
+      />
+      {index === 0 && <SearchFeedBack />}
+    </div>
+  ));
+
   if (!rows) {
     return null;
   }
 
-  return (
-    <>
-      {rows.map((row, index) => (
-        <>
-          <ResultRow
-            data={row}
-            key={`${row.title}_${index}`}
-            onClick={onWorkClick && (() => onWorkClick(index, row))}
-          />
-          {index === 0 && <SearchFeedBack />}
-        </>
-      ))}
-    </>
-  );
+  return <>{resultRows}</>;
 }
 
 ResultPage.propTypes = {
@@ -53,7 +51,7 @@ ResultPage.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap({ page, onWorkClick }) {
   // settings
@@ -66,8 +64,12 @@ export default function Wrap({ page, onWorkClick }) {
   const q = getQuery();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(hasQuery && fast({ q, offset, limit, filters }));
-  const allResponse = useData(hasQuery && all({ q, limit, offset, filters }));
+  const fastResponse = useData(
+    hasQuery && searchFragments.fast({ q, offset, limit, filters })
+  );
+  const allResponse = useData(
+    hasQuery && searchFragments.all({ q, limit, offset, filters })
+  );
 
   if (fastResponse.error || allResponse.error) {
     return null;

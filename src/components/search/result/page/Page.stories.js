@@ -13,7 +13,6 @@ export default {
         <GraphQLMocker
           url={
             context?.parameters?.graphql?.url ||
-            "https://alfa-api.stg.bibliotek.dk/190101/default/graphql" ||
             "https://fbi-api.dbc.dk/bibdk21/graphql"
           }
           resolvers={context?.parameters?.graphql?.resolvers}
@@ -30,124 +29,148 @@ export default {
 export function Default() {
   const rows = [
     {
-      id: "some-id-1",
-      cover: {
-        detail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+      workId: "some-id-1",
+      manifestations: {
+        all: [
+          {
+            cover: {
+              detail:
+                "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+            },
+          },
+        ],
       },
       creators: [
         {
-          name: "Joanne K. Rowling",
+          display: "Joanne K. Rowling",
         },
       ],
       materialTypes: [
         {
-          materialType: "Bog",
+          specific: "Bog",
         },
         {
-          materialType: "Diskette",
+          specific: "Diskette",
         },
         {
-          materialType: "E-bog",
+          specific: "E-bog",
         },
         {
-          materialType: "Lydbog (bånd)",
+          specific: "Lydbog (bånd)",
         },
         {
-          materialType: "Lydbog (cd)",
+          specific: "Lydbog (cd)",
         },
         {
-          materialType: "Lydbog (cd-mp3)",
+          specific: "Lydbog (cd-mp3)",
         },
         {
-          materialType: "Lydbog (net)",
+          specific: "Lydbog (net)",
         },
         {
-          materialType: "Punktskrift",
+          specific: "Punktskrift",
         },
       ],
-      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-      title: "Harry Potter og De Vises Sten",
+      titles: {
+        main: "Harry Potter og De Vises Sten",
+        full: "Harry Potter og De Vises Sten",
+      },
     },
     {
-      id: "some-id-2",
-      cover: {
-        detail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22677780&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=01f2186198e525d002a2",
+      workId: "some-id-2",
+      manifestations: {
+        all: [
+          {
+            cover: {
+              detail:
+                "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22677780&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=01f2186198e525d002a2",
+            },
+          },
+        ],
       },
       creators: [
         {
-          name: "Joanne K. Rowling",
+          display: "Joanne K. Rowling",
         },
       ],
       materialTypes: [
         {
-          materialType: "Bog",
+          specific: "Bog",
         },
         {
-          materialType: "Diskette",
+          specific: "Diskette",
         },
         {
-          materialType: "E-bog",
+          specific: "E-bog",
         },
         {
-          materialType: "Lydbog (bånd)",
+          specific: "Lydbog (bånd)",
         },
         {
-          materialType: "Lydbog (cd)",
+          specific: "Lydbog (cd)",
         },
         {
-          materialType: "Lydbog (cd-mp3)",
+          specific: "Lydbog (cd-mp3)",
         },
         {
-          materialType: "Lydbog (net)",
+          specific: "Lydbog (net)",
         },
         {
-          materialType: "Punktskrift",
+          specific: "Punktskrift",
         },
       ],
-      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-      title: "Harry Potter og Hemmelighedernes Kammer",
+      titles: {
+        main: "Harry Potter og Hemmelighedernes Kammer",
+        full: "Harry Potter og Hemmelighedernes Kammer",
+      },
     },
     {
-      id: "some-id-3",
-      cover: {
-        detail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24880605&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=87f28c0762bb189c72bb",
+      workId: "some-id-3",
+      manifestations: {
+        all: [
+          {
+            cover: {
+              detail:
+                "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24880605&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=87f28c0762bb189c72bb",
+            },
+          },
+        ],
       },
       creators: [
         {
-          name: "Joanne K. Rowling",
+          display: "Joanne K. Rowling",
         },
       ],
       materialTypes: [
         {
-          materialType: "Bog",
+          specific: "Bog",
         },
         {
-          materialType: "Diskette",
+          specific: "Diskette",
         },
         {
-          materialType: "E-bog",
+          specific: "E-bog",
         },
         {
-          materialType: "Lydbog (bånd)",
+          specific: "Lydbog (bånd)",
         },
         {
-          materialType: "Lydbog (cd)",
+          specific: "Lydbog (cd)",
         },
         {
-          materialType: "Lydbog (cd-mp3)",
+          specific: "Lydbog (cd-mp3)",
         },
         {
-          materialType: "Lydbog (net)",
+          specific: "Lydbog (net)",
         },
         {
-          materialType: "Punktskrift",
+          specific: "Punktskrift",
         },
       ],
-      path: ["Bøger", "Fiktion", "skønlitteratur", "roman"],
-      title: "Harry Potter og Fønixordenen",
+      titles: {
+        main: "Harry Potter og Fønixordenen",
+        full: "Harry Potter og Fønixordenen",
+      },
     },
   ];
   return (
@@ -166,19 +189,19 @@ export function Partial() {
     {
       title: "Harry Potter og de vises sten",
       creator: {
-        name: "Joanne K. Rowling",
+        display: "Joanne K. Rowling",
       },
     },
     {
       title: "Harry Potter og Hemmelighedernes Kammer",
       creator: {
-        name: "Joanne K. Rowling",
+        display: "Joanne K. Rowling",
       },
     },
     {
       title: "Harry Potter og Fønixordenen",
       creator: {
-        name: "Joanne K. Rowling",
+        display: "Joanne K. Rowling",
       },
     },
   ];

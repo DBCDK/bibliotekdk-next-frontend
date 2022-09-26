@@ -5,12 +5,11 @@ import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
+import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
 import Divider from "@/components/base/divider";
-import ViewSelector from "../viewselector";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
@@ -29,9 +28,7 @@ export function Result({
   page,
   isLoading,
   hitcount = 0,
-  onViewSelect,
   onWorkClick,
-  viewSelected,
   onPageChange,
 }) {
   const breakpoint = useBreakpoint();
@@ -63,11 +60,6 @@ export function Result({
                 >
                   {hits}
                 </Title>
-                {/*<ViewSelector
-                  className={styles.viewselector}
-                  onViewSelect={onViewSelect}
-                  viewSelected={viewSelected}
-                />*/}
               </div>
             </div>
           </div>
@@ -111,22 +103,18 @@ Result.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export default function Wrap({
-  page,
-  onViewSelect,
-  onWorkClick,
-  viewSelected,
-  onPageChange,
-}) {
+export default function Wrap({ page, onWorkClick, onPageChange }) {
   const { filters } = useFilters();
   const { getQuery, hasQuery } = useQ();
 
   const q = getQuery();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(hasQuery && hitcount({ q, filters }));
+  const fastResponse = useData(
+    hasQuery && searchFragments.hitcount({ q, filters })
+  );
 
   if (fastResponse.error) {
     return null;
@@ -143,9 +131,7 @@ export default function Wrap({
       q={q}
       page={page}
       hitcount={data.search?.hitcount}
-      onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
-      viewSelected={viewSelected}
       onPageChange={onPageChange}
     />
   );
