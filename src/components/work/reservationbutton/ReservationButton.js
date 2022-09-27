@@ -195,10 +195,8 @@ export function OrderButton({
   // hold if user is logged in to access dda - check if user has a municipality
   const requireMunicipality =
     (user.isAuthenticated &&
-      selectedMaterial?.onlineAccess?.length > 0 &&
-      selectedMaterial?.onlineAccess[0]?.url.indexOf("ebookcentral") !== -1) ||
-    (selectedMaterial?.onlineAccess?.length > 0 &&
-      selectedMaterial?.onlineAccess[0]?.url.indexOf("ebscohost") !== -1);
+      selectedMaterial?.onlineAccess?.[0]?.url?.includes("ebookcentral")) ||
+    selectedMaterial?.onlineAccess?.[0]?.url.includes("ebscohost");
 
   // online access ? - special handling of digital copy (onlineAccess[0].issn and dda (demand driven acquisition)
   if (
