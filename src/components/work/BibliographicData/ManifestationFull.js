@@ -17,7 +17,7 @@ import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { useData } from "@/lib/api/api";
-import { localizationsQuery } from "@/lib/api/localizations.fragments";
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 /**
  * Column one of full view. Some links and a button.
@@ -197,7 +197,7 @@ export default function wrap({ manifestation, work, workId }) {
   const pids = [manifestation.pid];
 
   const { data: localizations, isLoading: localizationsLoading } = useData(
-    localizationsQuery({ pids })
+    localizationsFragments.localizationsQuery({ pids })
   );
 
   const user = useUser();
