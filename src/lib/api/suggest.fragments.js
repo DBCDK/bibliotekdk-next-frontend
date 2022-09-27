@@ -11,8 +11,8 @@ import { ApiEnums } from "@/lib/api/api";
  * @param {object} params
  * @param {string} params.q the query string
  */
-export function fast({ q, workType: workTypeLowerCase }) {
-  const workType = workTypeLowerCase?.toUpperCase();
+export function fast({ q, workType }) {
+  workType = workType?.toUpperCase();
 
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -38,14 +38,9 @@ export function fast({ q, workType: workTypeLowerCase }) {
  * @param {object} params
  * @param {string} params.q the query string
  */
-export function all({
-  q,
-  workType: workTypeLowerCase,
-  suggestType: suggestTypeLowerCase = "",
-  limit = 100000,
-}) {
-  const workType = workTypeLowerCase?.toUpperCase();
-  const suggestType = suggestTypeLowerCase?.toUpperCase();
+export function all({ q, workType, suggestType = "", limit = 100000 }) {
+  workType = workType?.toUpperCase();
+  suggestType = suggestType?.toUpperCase();
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -94,12 +89,12 @@ export function all({
  */
 export function typedSuggest({
   q,
-  workType: workTypeLowerCase,
-  suggestType: suggestTypeLowerCase = "",
+  workType,
+  suggestType = "",
   limit = 100000,
 }) {
-  const workType = workTypeLowerCase?.toUpperCase();
-  const suggestType = suggestTypeLowerCase?.toUpperCase();
+  workType = workType?.toUpperCase();
+  suggestType = suggestType?.toUpperCase();
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
