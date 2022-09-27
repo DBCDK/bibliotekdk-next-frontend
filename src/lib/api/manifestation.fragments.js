@@ -2,34 +2,14 @@
  * @file Contains GraphQL queries all taking a pid (manifestion) as variable
  *
  */
-
-/**
- * availability
- */
-export function availability({ pid }) {
-  return {
-    // delay: 250,
-    query: `query ($pid: String!) {
-      manifestation(pid: $pid) {
-        materialType
-        availability{
-           orderPossible
-           orderPossibleReason
-           willLend
-           expectedDelivery
-           }
-      }
-      monitor(name: "bibdknext_manifestations_availability")
-    }`,
-    variables: { pid },
-    slowThreshold: 3000,
-  };
-}
+import { ApiEnums } from "@/lib/api/api";
 
 export function refWorks(pid) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 250,
-    query: `query ($pid: String!) {
+    query: `
+    query ($pid: String!) {
       refWorks(pid:$pid)
       monitor(name: "bibdknext_manifestation_refworks")
     }`,
@@ -40,6 +20,7 @@ export function refWorks(pid) {
 
 export function ris(pid) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 250,
     query: `query ($pid: String!) {
       ris(pid:$pid)

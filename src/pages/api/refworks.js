@@ -1,4 +1,4 @@
-import { refWorks } from "@/lib/api/manifestation.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
@@ -18,7 +18,7 @@ function parseRefWorks(ref) {
  * @return {Promise<*>}
  */
 async function getRefWorks(pid, accessToken) {
-  const querystr = refWorks(pid);
+  const querystr = manifestationFragments.refWorks(pid);
   const paramsForApi = { ...querystr, accessToken };
   const ref = await fetcher(paramsForApi);
   return parseRefWorks(ref);
