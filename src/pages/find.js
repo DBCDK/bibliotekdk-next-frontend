@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from "react";
-
-import QuickFilters from "@/components/search/quickfilters";
-import Result from "@/components/search/result/Result";
-import Searchbar from "@/components/search/searchbar";
-import Translate from "@/components/base/translate";
-import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
 import useFilters, {
   getQuery as getQueryFilters,
@@ -14,18 +9,17 @@ import useQ, {
   types as typesQ,
   getQuery as getQueryQ,
 } from "@/components/hooks/useQ";
-
-import { useModal } from "@/components/_modal";
-
-import Head from "next/head";
-import { useRouter } from "next/router";
-import {
-  collectSearch,
-  collectSearchWorkClick,
-} from "@/lib/api/datacollect.mutations";
 import { fetchAll } from "@/lib/api/apiServerOnly";
+import { useData } from "@/lib/api/api";
+import { hitcount } from "@/lib/api/search.fragments";
 
 import useDataCollect from "@/lib/useDataCollect";
+
+import Result from "@/components/search/result/Result";
+import Searchbar from "@/components/search/searchbar";
+import Translate from "@/components/base/translate";
+
+import Related from "@/components/search/related";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
@@ -36,8 +30,6 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  *
  */
 function Find() {
-  const modal = useModal();
-
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
@@ -116,16 +108,13 @@ function Find() {
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}
       </Head>
+
       <Header router={router} />
 
-      <Searchbar q={q} />
-
-      <QuickFilters
-        viewSelected={view}
-        onViewSelect={(view) => updateQueryParams({ view })}
-        onFiltersClick={() => modal.push("filter", { q })}
-        onSearchClick={() => modal.push("search", { q })}
-      />
+      <div className="search-settings">
+        <Searchbar q={q} />
+        <Related q={q} />
+      </div>
 
       {q && (
         <Result

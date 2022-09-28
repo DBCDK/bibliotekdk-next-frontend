@@ -33,6 +33,16 @@
   align-items: center;
 }
 
+.search-settings {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 992px) {
+  .search-settings {
+    box-shadow: unset;
+  }
+}
+
 @media screen and (min-width: 1400px) {
   .container,
   .container-fluid {

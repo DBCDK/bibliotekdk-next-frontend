@@ -3,14 +3,18 @@ import PropTypes from "prop-types";
 import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
+import Button from "@/components/base/button";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
+
+import Icon from "@/components/base/icon";
 import { useData } from "@/lib/api/api";
 import { hitcount } from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
+import { useModal } from "@/components/_modal";
 
 import Divider from "@/components/base/divider";
-import ViewSelector from "../viewselector";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
@@ -26,10 +30,11 @@ import styles from "./Result.module.css";
  */
 export function Result({
   q,
+  modal,
   page,
   isLoading,
   hitcount = 0,
-  onViewSelect,
+  filtersCount,
   onWorkClick,
   viewSelected,
   onPageChange,
@@ -39,37 +44,50 @@ export function Result({
 
   const numPages = Math.ceil(hitcount / 10);
 
-  // Set number of hits for the user, ads a '+' if "more" than 100 results found.
-  const hits = hitcount === 100 ? `Over ${hitcount}` : hitcount;
+  const filtersLabel = Translate({
+    context: "search",
+    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
+    vars: filtersCount === "0" ? null : [filtersCount],
+  });
 
   return (
     <>
       <Section
         contentDivider={null}
-        titleDivider={<Divider className={styles.titledivider} />}
+        titleDivider={null}
         topSpace={true}
+        bottomSpace={!(isMobile || breakpoint === "md")}
         title={
-          <div className={styles.right}>
-            <div className={styles.titlewrapper}>
-              <Title type="title4">
-                {Translate({ context: "search", label: "title" })}
-              </Title>
+          <div className={styles.wrap}>
+            <Button
+              className={styles.filtersButton}
+              type="secondary"
+              size="medium"
+              dataCy="view-all-filters"
+              onClick={() => modal.push("filter", { q })}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.keyCode === 13) {
+                  modal.push("filter", { q });
+                }
+              }}
+            >
+              <Icon src="settings.svg" size={2} />
+              {filtersLabel}
+            </Button>
+            {(isMobile || breakpoint === "md") && (
               <div>
-                <Title
-                  type="title2"
-                  tag="h3"
-                  className={styles.resultlength}
+                <Text type="text3" skeleton={isLoading} lines={1}>
+                  {Translate({ context: "search", label: "title" })}
+                </Text>
+                <Text
+                  type="text2"
+                  className={styles.hitcount}
                   skeleton={isLoading}
                 >
-                  {hits}
-                </Title>
-                {/*<ViewSelector
-                  className={styles.viewselector}
-                  onViewSelect={onViewSelect}
-                  viewSelected={viewSelected}
-                />*/}
+                  {hitcount}
+                </Text>
               </div>
-            </div>
+            )}
           </div>
         }
       >
@@ -125,6 +143,11 @@ export default function Wrap({
 
   const q = getQuery();
 
+  const modal = useModal();
+
+  const { getCount } = useFilters();
+  const filtersCount = getCount(["workType"]).toString();
+
   // use the useData hook to fetch data
   const fastResponse = useData(hasQuery && hitcount({ q, filters }));
 
@@ -141,7 +164,9 @@ export default function Wrap({
   return (
     <Result
       q={q}
+      modal={modal}
       page={page}
+      filtersCount={filtersCount}
       hitcount={data.search?.hitcount}
       onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}

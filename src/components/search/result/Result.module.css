@@ -13,6 +13,34 @@
   display: block;
 }
 
+.wrap {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: var(--pt2);
+}
+
+.wrap > div {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.hitcount {
+  color: var(--blue);
+  margin-right: var(--pt05);
+}
+
+.filtersButton {
+  display: flex;
+  align-items: center;
+  padding: var(--pt1) var(--pt3) !important;
+}
+
+.filtersButton i {
+  margin-right: var(--pt1);
+  margin-bottom: 2px;
+}
+
 .right {
   margin-left: auto;
 }

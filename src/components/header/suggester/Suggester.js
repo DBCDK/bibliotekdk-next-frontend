@@ -170,7 +170,7 @@ function renderSuggestion(suggestion, query, skeleton) {
   // Add to suggestion object
   suggestion.highlight = highlightMatch(value, query);
 
-  switch (suggestion.type.toLowerCase()) {
+  switch (suggestion.type?.toLowerCase()) {
     case SuggestTypeEnum.CREATOR:
       return <Creator data={suggestion} skeleton={skeleton} />;
     case SuggestTypeEnum.TITLE:

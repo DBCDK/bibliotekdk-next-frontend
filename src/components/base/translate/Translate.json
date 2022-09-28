@@ -828,11 +828,11 @@
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFilters": {
-        "da": "Vis alle filtre",
+        "da": "Filtrer",
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFiltersCount": {
-        "da": "Vis alle filtre (%s)",
+        "da": "Filtrer (%s)",
         "en": "LABEL: mangler oversættelse"
       },
       "filters": {

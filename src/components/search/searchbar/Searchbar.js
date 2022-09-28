@@ -6,6 +6,8 @@ import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 
 import Section from "@/components/base/section";
 
+import Related from "@/components/search/related";
+
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";
 import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
@@ -38,7 +40,7 @@ export default function Searchbar({ q }) {
         className={styles.section}
       >
         <Row>
-          <Col xs={12} md={{ span: 8, offset: 2 }}>
+          <Col xs={12} md={{ span: 12, offset: 0 }}>
             <Row>
               <Col xs={12}>
                 <FakeSearchInput q={q} showButton={!expandedOpen} />
