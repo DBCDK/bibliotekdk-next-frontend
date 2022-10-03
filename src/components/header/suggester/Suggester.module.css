@@ -140,9 +140,6 @@
     border: 1px solid var(--gray);
   }
 
-  .history{
-    display: none;
-  }
 
   .input__focused {
     border: 1px solid var(--blue);
