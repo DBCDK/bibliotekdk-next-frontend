@@ -384,13 +384,13 @@ export default function Wrap(props) {
   const modal = useModal();
   const filters = useFilters();
 
-  const wSizeChange = () => {
+  let wSize = useWindowSize();
+  useEffect(() => {
     if (wSize.width > 992) {
       delete router.query.suggester;
       router.push(router);
     }
-  };
-  const wSize = useWindowSize({ onChange: wSizeChange });
+  }, [wSize]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
