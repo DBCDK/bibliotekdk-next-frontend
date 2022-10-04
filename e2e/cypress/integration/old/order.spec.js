@@ -234,7 +234,7 @@ describe("Order", () => {
     cy.contains("Bestillingen blev gennemført");
   });
 
-  it("Should not lock emailfield for agencies with no borrowerCheck", () => {
+  it.only("Should not lock emailfield for agencies with no borrowerCheck", () => {
     cy.returnUserParameters = false;
     // Custom mock
     mockBranchesSearch();
@@ -268,6 +268,16 @@ describe("Order", () => {
     cy.get("[data-cy=input-userMail]").should("have.value", "cicero@mail.dk");
 
     // user is allowed to enter an alternative mail
+    cy.get("[data-cy=input-userMail]").clear();
+
+    // email should be validated
+    cy.get("[data-cy=input-userMail]").type("fiskehest");
+    cy.get("[data-cy=button-log-ind]").click();
+
+    cy.get("[data-cy=text-angiv-venligst-en-korrekt-email-adresse]").contains(
+      "Angiv venligst en korrekt email-adresse"
+    );
+
     cy.get("[data-cy=input-userMail]").clear();
     cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
 
