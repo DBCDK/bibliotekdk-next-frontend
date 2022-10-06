@@ -1,0 +1,7 @@
+.skip {
+  content-visibility: hidden;
+}
+
+.skip:focus-visible {
+  content-visibility: unset;
+}

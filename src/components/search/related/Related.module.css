@@ -2,6 +2,16 @@
   padding-top: var(--pt2);
 }
 
+.skip {
+  position: absolute;
+  transform: translateX(-100%);
+}
+
+/* override section title default bootstrap styles */
+.section section > div:last-child {
+  padding: 0;
+}
+
 .hitcount {
   color: var(--blue);
 }
@@ -9,7 +19,7 @@
 .related {
   display: flex;
   overflow-x: scroll;
-  padding-bottom: var(--pt1);
+  padding: 0 var(--pt2) var(--pt1) var(--pt2);
 }
 
 .words {
@@ -23,6 +33,9 @@
 
 .label {
   min-width: fit-content;
+}
+
+@media (max-width: 992px) {
 }
 
 @media (min-width: 992px) {

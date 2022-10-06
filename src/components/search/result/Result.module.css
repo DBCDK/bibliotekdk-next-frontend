@@ -74,4 +74,8 @@
   .titlewrapper .viewselector {
     display: none;
   }
+
+  .wrap {
+    padding-bottom: 0;
+  }
 }

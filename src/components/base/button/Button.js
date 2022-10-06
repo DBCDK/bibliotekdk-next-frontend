@@ -20,6 +20,7 @@ function handleOnButtonClick() {
  */
 function Button({
   children = "im a button",
+  id = null,
   className = "",
   type = "primary",
   size = "large",
@@ -33,6 +34,7 @@ function Button({
 
   return (
     <button
+      id={id}
       data-cy={key}
       className={`${className} ${styles.button} ${styles[size]} ${styles[type]}  ${disabledStyle}`}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}

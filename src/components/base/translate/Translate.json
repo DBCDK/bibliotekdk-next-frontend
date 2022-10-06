@@ -320,6 +320,10 @@
       "clearAll": {
         "da": "Ryd alt",
         "en": "LABEL: mangler oversættelse"
+      },
+      "skip":{
+        "da": "Spring over",
+        "en": "Skip"
       }
     },
     "articles": {
@@ -1045,6 +1049,14 @@
       },
       "placeholder-sheetmusic-subject": {
         "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
+      },
+      "relatedSubjects":{
+        "da": "Lignende søgninger:",
+        "en": "Label: mangler oversættelse"
+      },
+      "skipRelatedSubjects":{
+        "da": "Spring lignende søgninger over",
         "en": "Label: mangler oversættelse"
       }
     },

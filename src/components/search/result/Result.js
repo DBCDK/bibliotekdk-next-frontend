@@ -60,6 +60,7 @@ export function Result({
         title={
           <div className={styles.wrap}>
             <Button
+              id="view-all-filters"
               className={styles.filtersButton}
               type="secondary"
               size="medium"
