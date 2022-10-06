@@ -816,11 +816,11 @@ export default function Wrap(props) {
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
-  if (isLoading) {
+  if (isLoading || covers.isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error) {
+  if (error || !mergedWork?.work) {
     return <div>Error :( !!!!!</div>;
   }
 
