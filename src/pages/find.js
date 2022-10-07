@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import Head from "next/head";
+import { useRouter } from "next/router";
 
-import Result from "@/components/search/result/Result";
-import Searchbar from "@/components/search/searchbar";
-import Translate from "@/components/base/translate";
-import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 
 import useFilters, {
@@ -13,18 +11,20 @@ import useQ, {
   types as typesQ,
   getQuery as getQueryQ,
 } from "@/components/hooks/useQ";
-
-import Head from "next/head";
-import { useRouter } from "next/router";
 import { fetchAll } from "@/lib/api/apiServerOnly";
+import { useData } from "@/lib/api/api";
 
 import useDataCollect from "@/lib/useDataCollect";
+
+import Result from "@/components/search/result/Result";
+import Searchbar from "@/components/search/searchbar";
+import Translate from "@/components/base/translate";
+
+import Related from "@/components/search/related";
 
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { QuickFilters } from "@/components/search/quickfilters/QuickFilters";
-import { useModal } from "@/components/_modal";
 
 /**
  * @file
@@ -32,7 +32,6 @@ import { useModal } from "@/components/_modal";
  *
  */
 function Find() {
-  const modal = useModal();
   // To get correct hitcount we use the serverside supported getQuery instead of the local filters
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
@@ -116,11 +115,13 @@ function Find() {
           <link key={url} rel="alternate" hreflang={locale} href={url} />
         ))}
       </Head>
+
       <Header router={router} />
 
-      <Searchbar q={q} />
-
-      <QuickFilters onFiltersClick={() => modal.push("filter", { q })} />
+      <div className="search-settings">
+        <Searchbar q={q} />
+        <Related q={q} />
+      </div>
 
       {q && (
         <Result

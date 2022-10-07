@@ -31,6 +31,7 @@ export default function Section({
   dataCy = "section",
   bgColor = null,
   topSpace = false,
+  bottomSpace = true,
   contentDivider = <Divider />,
   titleDivider = <Divider />,
   // to hide entire section
@@ -73,7 +74,7 @@ export default function Section({
               >
                 {titleDivider}
                 {title}
-                <div className={styles.bottomspacing}></div>
+                {bottomSpace && <div className={styles.bottomspacing} />}
               </Col>
             )}
             <Col

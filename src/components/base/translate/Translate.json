@@ -320,6 +320,10 @@
       "clearAll": {
         "da": "Ryd alt",
         "en": "LABEL: mangler oversættelse"
+      },
+      "skip":{
+        "da": "Spring over",
+        "en": "Skip"
       }
     },
     "articles": {
@@ -828,11 +832,11 @@
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFilters": {
-        "da": "Vis alle filtre",
+        "da": "Filtrer",
         "en": "LABEL: mangler oversættelse"
       },
       "showAllFiltersCount": {
-        "da": "Vis alle filtre (%s)",
+        "da": "Filtrer (%s)",
         "en": "LABEL: mangler oversættelse"
       },
       "filters": {
@@ -1045,6 +1049,14 @@
       },
       "placeholder-sheetmusic-subject": {
         "da": "Et eller flere emner",
+        "en": "Label: mangler oversættelse"
+      },
+      "relatedSubjects":{
+        "da": "Lignende søgninger:",
+        "en": "Label: mangler oversættelse"
+      },
+      "skipRelatedSubjects":{
+        "da": "Spring lignende søgninger over",
         "en": "Label: mangler oversættelse"
       }
     },

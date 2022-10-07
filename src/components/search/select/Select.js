@@ -89,34 +89,6 @@ export function Mobile({
 
   return (
     <div className={`${styles.materials} ${className}`}>
-      <Link
-        className={styles.link}
-        onClick={() => onFilterClick()}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            onFiltersClick();
-          }
-        }}
-        border={false}
-      >
-        <Icon
-          src="settings.svg"
-          alt={Translate({ context: "search", label: "filtersImageAlt" })}
-          size={2}
-        />
-        <Link
-          onClick={(e) => e.preventDefault()}
-          border={{ bottom: { keepVisible: true } }}
-        >
-          <Text type="text3">
-            {Translate({
-              context: "search",
-              label: count === "0" ? "filters" : "filtersCount",
-              vars: count === "0" ? null : [count],
-            })}
-          </Text>
-        </Link>
-      </Link>
       {options.map((elem) => {
         const isSelected = selected === elem;
 

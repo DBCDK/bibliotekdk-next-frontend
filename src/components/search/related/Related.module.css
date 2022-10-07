@@ -1,0 +1,57 @@
+.section {
+  padding-top: var(--pt2);
+}
+
+.skip {
+  position: absolute;
+  transform: translateX(-100%);
+  display: none;
+}
+
+/* override section title default bootstrap styles */
+.section section > div:last-child {
+  padding: 0;
+}
+
+.hitcount {
+  color: var(--blue);
+}
+
+.related {
+  display: flex;
+  overflow-x: scroll;
+  padding: 0 var(--pt2) var(--pt1) var(--pt2);
+}
+
+.words {
+  display: flex;
+  padding-bottom: var(--pt1);
+}
+
+.word {
+  margin-left: var(--pt3);
+}
+
+.label {
+  min-width: fit-content;
+}
+
+@media (min-width: 992px) {
+  .related {
+    overflow: unset;
+    padding-bottom: unset;
+  }
+
+  .skip {
+    display: block;
+  }
+
+  .words {
+    display: unset;
+    padding: 0;
+  }
+
+  .section {
+    padding-top: var(--pt3);
+  }
+}
