@@ -3,7 +3,7 @@ const data = {
     search: {
       facets: [
         {
-          name: "workType",
+          name: "workTypes",
           values: [
             {
               term: "literature",

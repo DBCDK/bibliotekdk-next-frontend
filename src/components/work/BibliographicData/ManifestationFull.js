@@ -7,7 +7,6 @@ import React, { useMemo } from "react";
 import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
 import Link from "@/components/base/link";
-import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
@@ -18,25 +17,18 @@ import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { useData } from "@/lib/api/api";
-import { localizationsQuery } from "@/lib/api/localizations.fragments";
-
-/**
- * bibliotek.dk object url
- *
- * @param {string} pid
- *
- * @returns {string}
- */
-function bibdkObjectUrl(pid) {
-  return {
-    pathname: "https://bibliotek.dk/linkme.php",
-    query: `rec.id=${pid}`,
-  };
-}
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
 /**
  * Column one of full view. Some links and a button.
  * @param manifestation
+ * @param worktypes
+ * @param localizations
+ * @param localizationsLoading
+ * @param openOrderModal
+ * @param opener
+ * @param user
+ * @param work
  * @returns {JSX.Element}
  * @constructor
  */
@@ -120,6 +112,12 @@ function ColumnOne({
 /**
  * Get the data to parse; parse it into 3 columns
  * @param manifestation
+ * @param work
+ * @param localizations
+ * @param localizationsLoading
+ * @param opener
+ * @param openOrderModal
+ * @param user
  * @returns {JSX.Element}
  * @constructor
  */
@@ -132,7 +130,7 @@ export function ManifestationFull({
   openOrderModal,
   user,
 }) {
-  const worktype = work.workTypes;
+  const workType = work.workTypes;
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
@@ -143,7 +141,7 @@ export function ManifestationFull({
     <Row>
       <ColumnOne
         manifestation={manifestation}
-        worktypes={worktype}
+        worktypes={workType}
         localizations={localizations}
         localizationsLoading={localizationsLoading}
         openOrderModal={openOrderModal}
@@ -199,7 +197,7 @@ export default function wrap({ manifestation, work, workId }) {
   const pids = [manifestation.pid];
 
   const { data: localizations, isLoading: localizationsLoading } = useData(
-    localizationsQuery({ pids })
+    localizationsFragments.localizationsQuery({ pids })
   );
 
   const user = useUser();

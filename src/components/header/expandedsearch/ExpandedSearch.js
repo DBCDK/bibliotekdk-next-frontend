@@ -147,11 +147,11 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
   // connected filters hook
   const { filters } = useFilters();
 
-  const workType = filters.workType?.[0];
+  const workTypes = filters.workTypes?.[0];
   const doSearch = () => {
     setQuery({
       pathname: "/find",
-      query: { workType },
+      query: { workTypes },
     });
     document.activeElement.blur();
   };
@@ -159,7 +159,7 @@ export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
     doSearch,
     collapseOpen,
     setCollapseOpen,
-    workType,
+    workTypes,
   };
 }
 

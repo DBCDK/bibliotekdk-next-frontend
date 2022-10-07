@@ -170,7 +170,7 @@ function renderSuggestion(suggestion, query, skeleton) {
   // Add to suggestion object
   suggestion.highlight = highlightMatch(value, query);
 
-  switch (suggestion.type?.toLowerCase()) {
+  switch (suggestion?.type?.toLowerCase()) {
     case SuggestTypeEnum.CREATOR:
       return <Creator data={suggestion} skeleton={skeleton} />;
     case SuggestTypeEnum.TITLE:
@@ -444,7 +444,7 @@ export default function Wrap(props) {
 
   const [selected, setSelected] = useState();
 
-  const workType = filters.workType?.[0] || null;
+  const workType = filters.workTypes?.[0] || null;
 
   const { data, isLoading } = useData(
     query &&

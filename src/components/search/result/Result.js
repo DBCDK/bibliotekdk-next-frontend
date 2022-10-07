@@ -4,17 +4,14 @@ import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Button from "@/components/base/button";
-import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
 import Icon from "@/components/base/icon";
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
+import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 import { useModal } from "@/components/_modal";
-
-import Divider from "@/components/base/divider";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
@@ -36,7 +33,6 @@ export function Result({
   hitcount = 0,
   filtersCount,
   onWorkClick,
-  viewSelected,
   onPageChange,
 }) {
   const breakpoint = useBreakpoint();
@@ -130,15 +126,9 @@ Result.propTypes = {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export default function Wrap({
-  page,
-  onViewSelect,
-  onWorkClick,
-  viewSelected,
-  onPageChange,
-}) {
+export default function Wrap({ page, onWorkClick, onPageChange }) {
   const { filters } = useFilters();
   const { getQuery, hasQuery } = useQ();
 
@@ -150,7 +140,9 @@ export default function Wrap({
   const filtersCount = getCount(["workType"]).toString();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(hasQuery && hitcount({ q, filters }));
+  const fastResponse = useData(
+    hasQuery && searchFragments.hitcount({ q, filters })
+  );
 
   if (fastResponse.error) {
     return null;
@@ -169,9 +161,7 @@ export default function Wrap({
       page={page}
       filtersCount={filtersCount}
       hitcount={data.search?.hitcount}
-      onViewSelect={onViewSelect}
       onWorkClick={onWorkClick}
-      viewSelected={viewSelected}
       onPageChange={onPageChange}
     />
   );

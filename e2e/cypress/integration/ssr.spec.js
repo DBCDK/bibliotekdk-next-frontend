@@ -312,10 +312,10 @@ describe("Server Side Rendering", () => {
     });
 
     it(`has correct alternate links`, () => {
-      getPageHead("/find?q.all=ost&workType=movie").then((res) => {
+      getPageHead("/find?q.all=ost&workTypes=movie").then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find?workType=movie&amp;q.all=ost"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find?workType=movie&amp;q.all=ost"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/find?workTypes=movie&amp;q.all=ost"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/find?workTypes=movie&amp;q.all=ost"/>',
         ]);
       });
     });
@@ -337,7 +337,7 @@ describe("Server Side Rendering", () => {
         // Applying a filter should result in lower hitcount
 
         // worktype kan ligenu ikke fanges af serverside renderingen af hitcount da fetchAll forventer af router.query indeholder en param som hedder filters
-        getPageHead("/find?q.all=ost&workType=movie").then((filteredRes) => {
+        getPageHead("/find?q.all=ost&workTypes=movie").then((filteredRes) => {
           const filteredHitcount = parseInt(
             filteredRes.description.match(/i alt (\d+) resultater/)[1],
             10

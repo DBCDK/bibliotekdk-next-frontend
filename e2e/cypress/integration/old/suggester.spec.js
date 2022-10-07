@@ -124,13 +124,10 @@ describe("Suggester data collect", () => {
     cy.get("[data-cy=button-ok]").click();
 
     // Intercept requests to graphql
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `/bibdk21/graphql`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         req.alias = "apiMutation";
-      }
-    });
-    cy.intercept("POST", "/bibdk21/graphql", (req) => {
-      if (req.body.query.includes("suggest")) {
+      } else if (req.body.query.includes("suggest")) {
         // mock the suggest response
         req.reply({
           data: {

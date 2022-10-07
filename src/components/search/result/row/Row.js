@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
@@ -7,7 +7,6 @@ import Translate from "@/components/base/translate";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
-import Breadcrumbs from "@/components/base/breadcrumbs";
 import Cover from "@/components/base/cover";
 import { encodeTitleCreator } from "@/lib/utils";
 import Link from "@/components/base/link";
@@ -21,11 +20,17 @@ import styles from "./Row.module.css";
  * @param {object} props.data
  */
 export default function ResultRow({ data, onClick }) {
-  const [expand, setExpand] = useState(false);
-  const { fullTitle, title } = data;
-
   const work = data;
-  const creatorName = work.creators?.[0]?.name;
+
+  const creatorName = work?.creators?.[0]?.display;
+
+  const coverDetail = useMemo(() => {
+    if (data?.manifestations?.all) {
+      return data.manifestations.all
+        .map((all) => all.cover.detail)
+        .find((detail) => detail);
+    }
+  }, [data.manifestations]);
 
   return (
     <Link
@@ -36,13 +41,13 @@ export default function ResultRow({ data, onClick }) {
         pathname: "/materiale/[title_author]/[workId]",
         query: {
           title_author: encodeTitleCreator(
-            title,
-            work.creators && work.creators[0] && work.creators[0].name
+            work?.titles?.main?.[0],
+            work?.creators?.[0]?.display
           ),
-          workId: work.id,
+          workId: work?.workId,
         },
       }}
-      dataCy={`result-row${work.id ? "" : "-skeleton"}`}
+      dataCy={`result-row${work?.workId ? "" : "-skeleton"}`}
       onClick={onClick}
     >
       <Row className={styles.row}>
@@ -62,15 +67,15 @@ export default function ResultRow({ data, onClick }) {
             tag="h2"
             lines={3}
             clamp={true}
-            title={fullTitle}
-            skeleton={!work.title && !title}
+            title={work?.titles?.full}
+            skeleton={!work?.titles?.main}
           >
-            {fullTitle || title}
+            {work?.titles?.full || work?.titles?.main}
           </Title>
           <Text
             type="text3"
             className={styles.creator}
-            skeleton={!work.creators}
+            skeleton={!work?.creators}
             lines={1}
           >
             {creatorName || " "}
@@ -80,13 +85,12 @@ export default function ResultRow({ data, onClick }) {
               type="text3"
               lines={2}
               clamp={true}
-              skeleton={!work.materialTypes}
+              skeleton={!work?.materialTypes}
             >
               {Translate({ context: "search", label: "loanOptions" })}
             </Text>
-            {work.materialTypes &&
-              work.materialTypes.length > 0 &&
-              work.materialTypes.map((material) => {
+            {work?.materialTypes?.length > 0 &&
+              work?.materialTypes?.map((material) => {
                 return (
                   <Link
                     border={{ top: false, bottom: { keepVisible: true } }}
@@ -95,20 +99,21 @@ export default function ResultRow({ data, onClick }) {
                       pathname: "/materiale/[title_author]/[workId]",
                       query: {
                         title_author: encodeTitleCreator(
-                          title,
-                          work.creators &&
-                            work.creators[0] &&
-                            work.creators[0].name
+                          work?.titles?.main?.[0],
+                          work?.creators?.[0]?.display
                         ),
-                        type: material.materialType,
-                        workId: work.id,
+                        type: material?.specific,
+                        workId: work?.workId,
                       },
                     }}
-                    key={material.materialType}
+                    key={material?.specific}
                     tabIndex="-1"
                     tag="span"
                   >
-                    <Text type="text4">{material.materialType}</Text>
+                    <Text type="text4">
+                      {material?.specific?.[0]?.toUpperCase() +
+                        material?.specific?.slice(1)}
+                    </Text>
                   </Link>
                 );
               })}
@@ -118,8 +123,8 @@ export default function ResultRow({ data, onClick }) {
         <Col xs={4}>
           <Cover
             className={styles.cover}
-            src={work.cover && work.cover.detail}
-            skeleton={!work.cover}
+            src={coverDetail}
+            skeleton={!work?.manifestations?.all}
             size="fill-width"
           />
         </Col>

@@ -1,10 +1,10 @@
-import { ris } from "@/lib/api/manifestation.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { fetcher } from "@/lib/api/api";
 import { getAccessToken } from "./refworks";
 
 /**
  * Parse response
- * @param ref
+ * @param response
  * @return {*}
  */
 function parseRis(response) {
@@ -18,7 +18,7 @@ function parseRis(response) {
  * @return {Promise<*>}
  */
 export async function getRis(pid, accessToken) {
-  const querystr = ris(pid);
+  const querystr = manifestationFragments.ris(pid);
   const paramsForApi = { ...querystr, accessToken };
   const response = await fetcher(paramsForApi);
   return parseRis(response);
