@@ -288,7 +288,6 @@ export function Order({
   // Update email from user account
   useEffect(() => {
     const userMail = user.userParameters?.userMail;
-
     if (userMail) {
       const message = null;
 
@@ -357,7 +356,7 @@ export function Order({
    * @param {*} valid
    */
   function onMailChange(value, valid) {
-    valid &&
+    valid.status &&
       updateLoanerInfo &&
       updateLoanerInfo({ userParameters: { userMail: value } });
     // update mail in state
