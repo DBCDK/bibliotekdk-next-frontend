@@ -66,14 +66,14 @@ function LinkArrow({ onClick, disabled, children, className = "" }) {
 
 export function Edition({
   isLoading,
-  work,
+  work = {},
   singleManifestation = false,
   isArticle = false,
   isPeriodicaLike = false,
   availableAsDigitalCopy = false,
   isArticleRequest = false,
   context,
-  material,
+  material = {},
   showOrderTxt = true,
   modal = {},
 }) {
