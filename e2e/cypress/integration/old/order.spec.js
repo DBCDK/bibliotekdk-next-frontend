@@ -234,7 +234,7 @@ describe("Order", () => {
     cy.contains("Bestillingen blev gennemført");
   });
 
-  it.only("Should not lock emailfield for agencies with no borrowerCheck", () => {
+  it("Should not lock emailfield for agencies with no borrowerCheck", () => {
     cy.returnUserParameters = false;
     // Custom mock
     mockBranchesSearch();
