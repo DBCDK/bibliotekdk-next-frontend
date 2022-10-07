@@ -47,7 +47,7 @@ export function Words({ data, isLoading }) {
   );
 }
 
-export function Realted({ data, hitcount, isLoading }) {
+export function Related({ data, hitcount, isLoading }) {
   const breakpoint = useBreakpoint();
   const isMobile =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
@@ -97,7 +97,7 @@ export default function Wrap() {
   const hitcountResponse = useData(hitcount({ q, filters }));
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
-  // prioritized q type to get realted subjects for
+  // prioritized q type to get related subjects for
   const query = q.subject || q.all || q.title || q.creator;
 
   const { data, isLoading } = useData(
@@ -118,7 +118,7 @@ export default function Wrap() {
   ];
 
   return (
-    <Realted
+    <Related
       data={data?.relatedSubjects || (isLoading && dummy) || []}
       hitcount={hits}
       isLoading={hitcountResponse?.isLoading || isLoading}
