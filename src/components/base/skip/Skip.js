@@ -6,6 +6,12 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Skip.module.css";
 
+/**
+ *
+ * Used for skipping specific content, by setting focus to
+ * a other element with some given id. Component is only visible
+ * on tab.
+ */
 export default function Skip({ id, className = "", label }) {
   if (typeof window === "undefined") {
     return null;

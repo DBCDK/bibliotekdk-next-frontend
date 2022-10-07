@@ -8,8 +8,6 @@ import { ApiEnums } from "@/lib/api/api";
  * @param {string} params.limit
  */
 export function subjects({ q, limit = 10 }) {
-  console.log("q", q);
-
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging

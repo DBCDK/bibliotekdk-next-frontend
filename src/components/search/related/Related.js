@@ -17,6 +17,10 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import styles from "./Related.module.css";
 
+/**
+ *
+ * Returns a item/word for the items/words component
+ */
 function Word({ word, isLoading }) {
   return (
     <Link
@@ -32,6 +36,10 @@ function Word({ word, isLoading }) {
   );
 }
 
+/**
+ *
+ * Returns a list of related subject words/items
+ */
 export function Words({ data, isLoading }) {
   return (
     <div className={styles.related}>
@@ -47,6 +55,10 @@ export function Words({ data, isLoading }) {
   );
 }
 
+/**
+ *
+ * Related subjects used in a section component
+ */
 export function Related({ data, hitcount, isLoading }) {
   const breakpoint = useBreakpoint();
   const isMobile =
@@ -90,6 +102,10 @@ export function Related({ data, hitcount, isLoading }) {
   );
 }
 
+/**
+ *
+ * Wrap for fetching data for the subject Related component
+ */
 export default function Wrap() {
   const filters = useFilters().getQuery();
   const q = useQ().getQuery();
@@ -104,6 +120,7 @@ export default function Wrap() {
     query && subjects({ q: [query], filters })
   );
 
+  // dummy data will be returned on isLoading - skeleton view
   const dummy = [
     "heste",
     "børnebøger",
