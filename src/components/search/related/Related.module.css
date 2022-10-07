@@ -5,6 +5,7 @@
 .skip {
   position: absolute;
   transform: translateX(-100%);
+  display: none;
 }
 
 /* override section title default bootstrap styles */
@@ -35,13 +36,14 @@
   min-width: fit-content;
 }
 
-@media (max-width: 992px) {
-}
-
 @media (min-width: 992px) {
   .related {
     overflow: unset;
     padding-bottom: unset;
+  }
+
+  .skip {
+    display: block;
   }
 
   .words {
