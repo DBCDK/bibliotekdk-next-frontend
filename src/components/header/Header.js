@@ -36,6 +36,7 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
+import useWindowSize from "@/components/hooks/useWindowSize";
 
 /**
  * The Component function
@@ -382,6 +383,19 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
+
+  // if window changes size from small to larger (>992) we need to remove
+  // the suggester url parameter (suggester=true) for the mobile
+  // suggester to go away
+  let wSize = useWindowSize();
+  const changeMe = wSize.width > 992;
+  useEffect(() => {
+    if (changeMe) {
+      let query = { ...router.query };
+      delete query.suggester;
+      router.replace({ pathname: router.pathname, query });
+    }
+  }, [changeMe]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
