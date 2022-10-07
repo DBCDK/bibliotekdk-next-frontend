@@ -324,7 +324,12 @@ function getBaseUrl(url) {
 export function checkRequestButtonIsTrue({ manifestations }) {
   // pjo 14/6 - bug 1020 - sort out some materialtypes - would be better to do
   // somewhere else
-  const notReservable = ["Biograffilm", "Udstilling", "Teateropførelse"];
+  const notReservable = [
+    "Biograffilm",
+    "Udstilling",
+    "Teateropførelse",
+    "Lyd (podcast)",
+  ];
   return !!manifestations?.find(
     (manifestation) =>
       manifestation?.admin?.requestButton &&
