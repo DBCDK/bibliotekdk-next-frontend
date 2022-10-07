@@ -5,6 +5,7 @@ import Description from "../description";
 import Details from "../details";
 import Overview from "../overview";
 import Keywords from "../keywords";
+import Related from "../related";
 import Reviews from "../reviews";
 import BibliographicData from "../BibliographicData";
 import Series from "../series";
@@ -62,11 +63,13 @@ export default function WorkPage({
           type={type}
           anchor-label={Translate({ context: "content", label: "title" })}
         />
-        <Keywords
-          workId={workId}
+        <div
           type={type}
           anchor-label={Translate({ context: "keywords", label: "title" })}
-        />
+        >
+          <Keywords workId={workId} />
+          <Related workId={workId} />
+        </div>
         <Series
           workId={workId}
           anchor-label={Translate({ context: "workmenu", label: "series" })}

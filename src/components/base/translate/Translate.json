@@ -736,8 +736,14 @@
     },
     "keywords": {
       "title": {
-        "da": "Emneord",
-        "en": "Keywords"
+        "da": "Tags",
+        "en": "Tags"
+      }
+    },
+    "relatedKeywords": {
+      "title": {
+        "da": "Relaterede tags",
+        "en": "Related tags"
       }
     },
     "bookmark": {

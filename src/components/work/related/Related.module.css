@@ -1,0 +1,21 @@
+.section section {
+  padding-top: 0 !important;
+}
+
+.skip {
+  position: absolute;
+  transform: translateX(-100%);
+  display: none;
+}
+
+.words {
+  padding-bottom: var(--pt1);
+}
+
+.word:last-child {
+  margin-right: 0;
+}
+
+.word {
+  margin: 0 var(--pt3) var(--pt2) 0;
+}
