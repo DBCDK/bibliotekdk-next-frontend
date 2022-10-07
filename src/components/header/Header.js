@@ -390,9 +390,11 @@ export default function Wrap(props) {
   let wSize = useWindowSize();
   const changeMe = wSize.width > 992;
   useEffect(() => {
-    let query = { ...router.query };
-    delete query.suggester;
-    router.replace({ pathname: router.pathname, query });
+    if (changeMe) {
+      let query = { ...router.query };
+      delete query.suggester;
+      router.replace({ pathname: router.pathname, query });
+    }
   }, [changeMe]);
 
   if (props.skeleton) {
