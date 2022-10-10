@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { SuggestTypeEnum } from "@/lib/enums";
 
 const KEY = "bibdk-search-history";
 
 export const useHistory = () => {
-  const [storedValue, setStoredValue, clearStoredValue] = useState(() => {
+  const [storedValue, setStoredValue, _clearStoredValue] = useState(() => {
     try {
       if (typeof window !== "undefined") {
         const item = localStorage.getItem(KEY);
@@ -22,8 +23,11 @@ export const useHistory = () => {
         let freshStoredValue = JSON.parse(localStorage.getItem(KEY) || "[]");
         // New history obj
         const obj = {
+          // TODO: På sigt skal "__typename" og "value" fjernes til fordel for kun "type" og "term"
           __typename: "History",
+          type: SuggestTypeEnum.HISTORY,
           value,
+          term: value,
         };
         // Remove duplicates if any
         let valueToStore = freshStoredValue.filter(
