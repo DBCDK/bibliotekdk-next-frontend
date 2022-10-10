@@ -4,7 +4,7 @@ import { SuggestTypeEnum } from "@/lib/enums";
 const KEY = "bibdk-search-history";
 
 export const useHistory = () => {
-  const [storedValue, setStoredValue, _clearStoredValue] = useState(() => {
+  const [storedValue, setStoredValue] = useState(() => {
     try {
       if (typeof window !== "undefined") {
         const item = localStorage.getItem(KEY);
