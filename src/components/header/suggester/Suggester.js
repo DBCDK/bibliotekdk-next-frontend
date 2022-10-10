@@ -449,7 +449,7 @@ export default function Wrap(props) {
   const { data, isLoading } = useData(
     query &&
       query !== selected &&
-      suggestFragments.all({ q: query, workType: workType })
+      suggestFragments.all({ q: query, workType: workType, limit: 10 })
   );
 
   useEffect(() => {

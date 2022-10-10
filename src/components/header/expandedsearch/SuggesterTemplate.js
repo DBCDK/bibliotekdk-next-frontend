@@ -79,6 +79,7 @@ export default function wrap({ title = "", type = "" }) {
       q: query,
       workType,
       suggestType: type,
+      limit: 10,
     })
   );
 
