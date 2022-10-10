@@ -22,7 +22,7 @@ export function References({ context }) {
 
   const links = onlinelinks(pids[0]);
   const linkslist = Object.keys(links).map((onlinekey) => (
-    <li className={styles.list}>
+    <li className={styles.list} key={onlinekey}>
       <Link
         dataCy={onlinekey}
         border={{ bottom: { keepVisible: true } }}
