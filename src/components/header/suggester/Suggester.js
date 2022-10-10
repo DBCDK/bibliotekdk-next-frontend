@@ -177,8 +177,11 @@ function renderSuggestion(suggestion, query, skeleton) {
       return <Work data={suggestion} skeleton={skeleton} />;
     case SuggestTypeEnum.SUBJECT:
       return <Subject data={suggestion} skeleton={skeleton} />;
-    case SuggestTypeEnum.COMPOSITE:
+    case SuggestTypeEnum.HISTORY:
       return <History data={suggestion} skeleton={skeleton} />;
+    // TODO: OBS: Hvordan skal dette egentlig renderes? Som <Work /> ligesom her?
+    case SuggestTypeEnum.COMPOSITE:
+      return <Work data={suggestion} skeleteon={skeleton} />;
     default:
       return null;
   }
