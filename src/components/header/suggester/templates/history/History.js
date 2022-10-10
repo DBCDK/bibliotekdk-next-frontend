@@ -67,7 +67,7 @@ export function History({ className = "", data = {}, skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function HistorySkeleton(props) {
   return <History {...props} className={styles.skeleton} skeleton={true} />;
@@ -79,7 +79,7 @@ export function HistorySkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

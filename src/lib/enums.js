@@ -3,6 +3,7 @@ export const SuggestTypeEnum = Object.freeze({
   SUBJECT: "subject",
   CREATOR: "creator",
   COMPOSITE: "composit",
+  HISTORY: "history",
   ALL: "all",
 });
 
