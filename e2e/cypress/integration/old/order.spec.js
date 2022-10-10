@@ -220,7 +220,6 @@ describe("Order", () => {
     cy.get("[data-cy=button-godkend]").click();
 
     cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
       expect(order.request.body.variables.input).to.deep.equal({
         pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
         pickUpBranch: "790900",
