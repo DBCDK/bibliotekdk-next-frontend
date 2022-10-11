@@ -371,11 +371,15 @@ describe("Order", () => {
       cy.visit(
         `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true&order=870970-basis%3A51701763&modal=order`
       );
-      cy.url().should("include", "modal=order");
+
+      cy.on("url:change", (url) => {
+        expect(url).to.contain("modal=order");
+      });
     });
 
     it("should handle failed checkorder and pickupAllowed=false", () => {
       cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
+      cy.wait(1000);
       cy.contains(
         "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
       );
