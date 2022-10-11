@@ -370,6 +370,36 @@ export function LoanerForm({
   );
 }
 
+/**
+ * Get a callback url for sign in.
+ *
+ * Remove modals except for the third one.
+ *     scenarios:
+ *     a. user logins from a page eg. infomedia
+ *     b. user logins from a modal eg. order
+ *       if user logins in from a modal the top stack will be the original modal.
+ *       two last elements in stack are "login" and "loanerform" - login ALWAYS
+ *       happens via - login->loanerform -- so if user comes from another modal
+ *       it will be on top - redirect to that
+ *
+ * @param modal
+ * @returns {string}
+ */
+function getCallbackUrl(modal) {
+  const stack = modal.stack;
+  let callback = window.location.href;
+
+  // remove modal from callback - if any
+  const regex = /[&|?]modal=[0-9]*/;
+  callback = callback.replace(regex, "");
+  if (stack.length > 2) {
+    // pick top element in stack
+    callback =
+      callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
+  }
+  return callback;
+}
+
 LoanerForm.propTypes = {
   branch: PropTypes.object,
   onSubmit: PropTypes.func,
@@ -444,23 +474,16 @@ export default function Wrap(props) {
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {
+      const callback = getCallbackUrl(props.modal);
       (async () => {
-        signIn("adgangsplatformen", {}, { agency: branch?.agencyId });
+        signIn(
+          "adgangsplatformen",
+          { callbackUrl: callback },
+          { agency: branch?.agencyId }
+        );
       })();
     }
   }, [loggedOut]);
-
-  // Handle if user just logged in via adgangsplatform
-  useEffect(() => {
-    if (
-      !userIsLoading &&
-      active &&
-      loggedInAgencyId &&
-      loggedInAgencyId === branch?.agencyId
-    ) {
-      onSubmit();
-    }
-  }, [loggedInAgencyId, branch?.agencyId, userIsLoading, active]);
 
   if (!branchId) {
     return null;
