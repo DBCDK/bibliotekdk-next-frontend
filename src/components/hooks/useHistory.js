@@ -8,7 +8,7 @@ export const useHistory = () => {
     try {
       if (typeof window !== "undefined") {
         const item = localStorage.getItem(KEY);
-        return item ? JSON.parse(item) : [];
+        return item ? extractStoredValue(JSON.parse(item)) : [];
       }
     } catch (err) {
       console.error(err);
@@ -16,22 +16,41 @@ export const useHistory = () => {
     }
   });
 
+  function extractStoredValue(oldItemArray) {
+    let newItemArray = [];
+
+    for (let i = 0; i < oldItemArray.length; i++) {
+      newItemArray.push({});
+      if (oldItemArray?.[i]?.type && oldItemArray?.[i]?.term) {
+        newItemArray[i] = oldItemArray[i];
+        continue;
+      }
+      if (oldItemArray?.[i]?.__typename) {
+        newItemArray[i].type = SuggestTypeEnum.HISTORY;
+      }
+      if (oldItemArray?.[i]?.value) {
+        newItemArray[i].term = oldItemArray[i].value;
+      }
+    }
+
+    return newItemArray;
+  }
+
   const setValue = (value) => {
     try {
       if (typeof window !== "undefined") {
         // Fetch clean
-        let freshStoredValue = JSON.parse(localStorage.getItem(KEY) || "[]");
+        let freshStoredValue =
+          extractStoredValue(JSON.parse(localStorage.getItem(KEY))) || "[]";
+
         // New history obj
         const obj = {
-          // TODO: På sigt skal "__typename" og "value" fjernes til fordel for kun "type" og "term"
-          __typename: "History",
           type: SuggestTypeEnum.HISTORY,
-          value,
           term: value,
         };
         // Remove duplicates if any
         let valueToStore = freshStoredValue.filter(
-          (h) => h.value.toLowerCase() !== value.toLowerCase()
+          (h) => h.term.toLowerCase() !== value.toLowerCase()
         );
         // Add to beginning of history array
         valueToStore.unshift(obj);
