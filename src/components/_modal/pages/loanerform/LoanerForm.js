@@ -388,13 +388,10 @@ export function LoanerForm({
 function getCallbackUrl(modal) {
   const stack = modal.stack;
   let callback = window.location.href;
-
   // remove modal from callback - if any
   const regex = /[&|?]modal=[0-9]*/;
   callback = callback.replace(regex, "");
   if (stack.length > 2) {
-    // remove last two elements in stach
-    stack.splice(1);
     // pick top element in stack
     callback =
       callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
