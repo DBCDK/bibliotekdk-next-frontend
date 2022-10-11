@@ -16,7 +16,7 @@ import styles from "./Description.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
   if (!data) {
@@ -46,7 +46,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function DescriptionSkeleton(props) {
   return (
@@ -65,7 +65,7 @@ export function DescriptionSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;
@@ -80,7 +80,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Description {...props} data={data.work.description} />;
+  return <Description {...props} data={data?.work?.description} />;
 }
 
 // PropTypes for component

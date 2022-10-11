@@ -4,7 +4,7 @@ export function localizationsQuery({ pids }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query ($pids: [String!]!) {
+    query LocalizationsFragments($pids: [String!]!) {
       localizations(pids: $pids) {
         count
         agencies {

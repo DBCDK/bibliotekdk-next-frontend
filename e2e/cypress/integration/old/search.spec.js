@@ -1,5 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Search", () => {
   it(`Should show search results`, () => {
@@ -33,7 +34,7 @@ describe("Search", () => {
 
   it(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
-    cy.intercept("POST", "/bibdk21/graphql", (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         if (req.body.variables?.input?.search) {
           req.alias = "apiMutationOnSearch";

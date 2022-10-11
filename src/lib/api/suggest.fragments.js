@@ -18,7 +18,7 @@ export function fast({ q, workType }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($q: String!, $workType: WorkType) {
+    query SuggestFragmentsFast($q: String!, $workType: WorkType) {
       suggest(q: $q, workType: $workType) {
         result {
           type
@@ -45,7 +45,7 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($q: String!, $workType: WorkType, $limit: Int) {
+    query SuggestFragmentsAll($q: String!, $workType: WorkType, $limit: Int) {
       suggest(q: $q, workType: $workType, limit: $limit) {
         result {
           type
@@ -99,7 +99,7 @@ export function typedSuggest({
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query ($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {
+    query SuggestFragmentsTyped($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {
       suggest(q: $q, workType: $workType, suggestType: $suggestType, limit: $limit) {
         result {
           type
