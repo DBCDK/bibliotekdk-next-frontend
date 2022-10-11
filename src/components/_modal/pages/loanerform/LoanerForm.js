@@ -393,6 +393,8 @@ function getCallbackUrl(modal) {
   const regex = /[&|?]modal=[0-9]*/;
   callback = callback.replace(regex, "");
   if (stack.length > 2) {
+    // remove last two elements in stach
+    stack.splice(1);
     // pick top element in stack
     callback =
       callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
@@ -499,7 +501,11 @@ export default function Wrap(props) {
         // Remove this, when its possible to log in via an agency without logging out first
         <iframe
           style={{ display: "none" }}
-          onLoad={() => setLoggedOut(true)}
+          onLoad={() =>
+            setTimeout(() => {
+              setLoggedOut(true);
+            }, 100)
+          }
           src={`https://login.bib.dk/logout?access_token=${accessToken}`}
         />
       )}
