@@ -1,5 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("help", () => {
   it(`Search: should show empty response message`, () => {
@@ -29,7 +30,7 @@ describe("help", () => {
   });
   it(`Search: filter by language`, () => {
     // Intercept help search requests
-    cy.intercept("POST", "/bibdk21/graphql", (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("help(")) {
         req.alias = "apiHelpRequest";
       }
