@@ -7,6 +7,7 @@ import merge from "lodash/merge";
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 function mockLogin(customMock = {}) {
   cy.intercept("/api/auth/session", {
@@ -28,6 +29,37 @@ function mockLogin(customMock = {}) {
     cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(merge({}, fixture, customMock));
+      }
+    });
+  });
+}
+
+function mockSuggest() {
+  cy.fixture("suggest_hest_hest_tiger_tiger.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("SuggestFragments")) {
+        req.reply(fixture);
+      }
+    });
+  });
+}
+
+function mockLocalizations() {
+  cy.fixture("localizations_hest_hest_tiger_tiger.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("LocalizationsFragments")) {
+        req.reply(fixture);
+        req.alias = "localizationsFragments";
+      }
+    });
+  });
+}
+
+function mockNotifications() {
+  cy.fixture("notifications_da.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("NotificationsFragments")) {
+        req.reply(fixture);
       }
     });
   });
@@ -88,6 +120,7 @@ function mockBranchUserParameters() {
     cy.intercept("POST", `${graphqlPath}`, (req) => {
       if (req.body.query.includes("BranchUserParameters(")) {
         req.reply(fixture);
+        req.alias = "branchesFragments";
       }
     });
   });
@@ -155,6 +188,15 @@ function mockFallback() {
 }
 
 function openOrderModal() {
+  cy.fixture("libraryFragmentsSearch.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("LibraryFragmentsSearch(")) {
+        req.reply(fixture);
+        req.alias = "libraryFragmentsSearch";
+      }
+    });
+  });
+
   cy.wait(1000);
   // Wait for content to be loaded
   cy.get("[data-cy=button-order-overview-enabled]");
@@ -165,463 +207,494 @@ function openOrderModal() {
 }
 
 describe("Order", () => {
-  beforeEach(function () {
-    mockFallback();
-    mockFullWork();
-    mockAvailability();
-    mockSubmitOrder();
+  describe("Order-base", () => {
+    beforeEach(function () {
+      mockFallback();
 
-    // manipulating the user mock for this specific test
-    const customMock = {
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
+      mockSuggest();
+      mockLocalizations();
+      mockNotifications();
+
+      mockFullWork();
+      mockAvailability();
+      mockSubmitOrder();
+
+      // manipulating the user mock for this specific test
+      const customMock = {
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+          },
         },
-      },
-    };
+      };
 
-    mockLogin(customMock);
+      mockLogin(customMock);
+    });
+
+    it("submits order - happy path", () => {
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+      mockSubmitSessionUserParameters();
+      mockSessionUserParameters();
+
+      // Work info in modal is visible
+      cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
+
+      // Pickup branch is visible
+      cy.get('[data-cy="text-b.-adresse"]').should("be.visible");
+      cy.get("[data-cy=text-dbctestbibliotek]").should("be.visible");
+
+      // name of user is visible
+      cy.get("[data-cy=text-freja-damgaard]")
+        .scrollIntoView()
+        .should("be.visible");
+
+      // Change pickup branch
+      cy.get("[data-cy=text-skift-afhentning]").click();
+      cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
+      cy.get('[data-cy="text-b.-adresse"]')
+        .scrollIntoView()
+        .should("be.visible");
+
+      // cicero mail should default be inserted and locked here
+      cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
+      cy.get("#order-user-email").should("be.disabled");
+
+      // updating loanerinfo in background
+      cy.get("[data-cy=text-freja-damgaard]").click();
+
+      // submit order
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
+          pickUpBranch: "790900",
+          userParameters: {
+            userMail: "cicero@mail.dk",
+            userName: "Freja Damgaard",
+          },
+        });
+      });
+
+      cy.contains("Bestillingen blev gennemført");
+    });
+
+    // TODO: Find ud af om dette stadigvæk burde virke
+    it.skip("Should not lock emailfield for agencies with no borrowerCheck", () => {
+      cy.returnUserParameters = false;
+      // Custom mock
+      mockBranchesSearch();
+      mockBranchUserParameters();
+      mockSubmitSessionUserParameters();
+      mockSessionUserParameters();
+
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+
+      // Work info in modal is visible
+      cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
+
+      // cicero mail should default be inserted here
+      cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
+      cy.get("#order-user-email").should("be.disabled");
+      // Change pickup branch
+      cy.get("[data-cy=text-skift-afhentning]").click();
+
+      cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
+      cy.wait(["@localizationsFragments", "@branchesFragments"]);
+
+      cy.tab().type("{enter}");
+
+      cy.wait(1000);
+
+      cy.get("[data-cy=input-customId]").type("Some class");
+      cy.get("[data-cy=input-userName]").should("have.value", "Freja Damgaard");
+
+      // cicero mail should default be inserted here
+      cy.get("[data-cy=input-userMail]").should("have.value", "cicero@mail.dk");
+
+      // user is allowed to enter an alternative mail
+      cy.get("[data-cy=input-userMail]").clear();
+      cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
+
+      // Intercept fetching user params, and return actual parameters
+      cy.wait(100).then(() => {
+        cy.returnUserParameters = true;
+      });
+
+      cy.get("[data-cy=button-log-ind]").click();
+
+      // cicero mail should now be replaced with the alternative mail
+      cy.get("#order-user-email").should("have.value", "freja@mail.dk");
+      cy.get("#order-user-email").should("not.be.disabled");
+
+      // submit order
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
+          pickUpBranch: "790904",
+          userParameters: {
+            userMail: "freja@mail.dk",
+            userName: "Freja Damgaard",
+            customId: "Some class",
+          },
+        });
+      });
+    });
+
+    it("should not tab to order modal after it is closed", () => {
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
+      );
+
+      cy.get("[data-cy=button-nej-tak]").click();
+      openOrderModal();
+      cy.wait(1000);
+      cy.get("[data-cy=close-modal]").click();
+      cy.wait(1000);
+      cy.get("body").tab();
+      cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
+    });
+
+    it("should show modal when a deep link is followed", () => {
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true&order=870970-basis%3A51701763&modal=order`
+      );
+      cy.url().should("include", "modal=order");
+    });
+
+    it("should handle failed checkorder and pickupAllowed=false", () => {
+      cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
+      cy.contains(
+        "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
+      );
+
+      cy.get("[data-cy=button-godkend]").should("be.disabled");
+      cy.get("[data-cy=text-skift-afhentning]").click();
+    });
   });
 
-  it("submits order - happy path", () => {
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
-    );
+  describe("Order periodica article", () => {
+    beforeEach(function () {
+      mockAvailability();
+      mockSubmitOrder();
+      mockSubmitPeriodicaArticleOrder();
 
-    openOrderModal();
-    mockSubmitSessionUserParameters();
-    mockSessionUserParameters();
+      mockSuggest();
+      mockLocalizations();
+      mockNotifications();
 
-    // Work info in modal is visible
-    cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
+      mockSubmitSessionUserParameters();
+      mockSessionUserParameters();
+    });
 
-    // Pickup branch is visible
-    cy.get('[data-cy="text-b.-adresse"]').should("be.visible");
-    cy.get("[data-cy=text-dbctestbibliotek]").should("be.visible");
+    it("should order indexed periodica article as digital copy", () => {
+      mockArticleWork();
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+          },
+        },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
+      );
 
-    // name of user is visible
-    cy.get("[data-cy=text-freja-damgaard]")
-      .scrollIntoView()
-      .should("be.visible");
+      cy.wait(3000);
 
-    // Change pickup branch
-    cy.get("[data-cy=text-skift-afhentning]").click();
-    cy.get("[data-cy=text-DBC-bibilioteksekspressen]").click();
-    cy.get('[data-cy="text-b.-adresse"]').scrollIntoView().should("be.visible");
+      openOrderModal();
 
-    // cicero mail should default be inserted and locked here
-    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
-    cy.get("#order-user-email").should("be.disabled");
+      cy.get(".modal_container [data-cy=text-digital-kopi]").should(
+        "be.visible"
+      );
+      cy.contains("Dit bibliotek");
+      cy.get(".modal_container [data-cy=text-digital-kopi]")
+        .scrollIntoView()
+        .should("be.visible");
 
-    // updating loanerinfo in background
-    cy.get("[data-cy=text-freja-damgaard]").click();
+      cy.get("[data-cy=button-godkend]").click();
 
-    // submit order
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
-        pickUpBranch: "790900",
-        userParameters: {
+      cy.wait("@submitPeriodicaArticleOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pid: "870971-tsart:33261853",
+          pickUpBranch: "790900",
+          userName: "Freja Damgaard",
           userMail: "cicero@mail.dk",
-          userName: "Freja Damgaard",
-        },
+        });
       });
+
+      cy.contains(
+        "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen"
+      );
     });
 
-    cy.contains("Bestillingen blev gennemført");
-  });
-
-  it("Should not lock emailfield for agencies with no borrowerCheck", () => {
-    cy.returnUserParameters = false;
-    // Custom mock
-    mockBranchesSearch();
-    mockBranchUserParameters();
-    mockSubmitSessionUserParameters();
-    mockSessionUserParameters();
-
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
-    );
-
-    openOrderModal();
-
-    // Work info in modal is visible
-    cy.get('[data-cy="text-hest,-hest,-tiger,-tiger"]').should("be.visible");
-
-    // cicero mail should default be inserted here
-    cy.get("#order-user-email").should("have.value", "cicero@mail.dk");
-    cy.get("#order-user-email").should("be.disabled");
-    // Change pickup branch
-    cy.get("[data-cy=text-skift-afhentning]").click();
-
-    cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
-    cy.wait(1000);
-    cy.tab().type("{enter}");
-
-    cy.get("[data-cy=input-customId]").type("Some class");
-    cy.get("[data-cy=input-userName]").should("have.value", "Freja Damgaard");
-
-    // cicero mail should default be inserted here
-    cy.get("[data-cy=input-userMail]").should("have.value", "cicero@mail.dk");
-
-    // user is allowed to enter an alternative mail
-    cy.get("[data-cy=input-userMail]").clear();
-    cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
-
-    // Intercept fetching user params, and return actual parameters
-    cy.wait(100).then(() => {
-      cy.returnUserParameters = true;
-    });
-
-    cy.get("[data-cy=button-log-ind]").click();
-
-    // cicero mail should now be replaced with the alternative mail
-    cy.get("#order-user-email").should("have.value", "freja@mail.dk");
-    cy.get("#order-user-email").should("not.be.disabled");
-
-    // submit order
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
-        pickUpBranch: "790904",
-        userParameters: {
-          userMail: "freja@mail.dk",
-          userName: "Freja Damgaard",
-          customId: "Some class",
-        },
-      });
-    });
-  });
-
-  it("should not tab to order modal after it is closed", () => {
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
-    );
-
-    cy.get("[data-cy=button-nej-tak]").click();
-    openOrderModal();
-    cy.wait(1000);
-    cy.get("[data-cy=close-modal]").click();
-    cy.wait(1000);
-    cy.get("body").tab();
-    cy.get("[data-cy=modal-dimmer]").should("not.be.visible");
-  });
-
-  it("should show modal when a deep link is followed", () => {
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true&order=870970-basis%3A51701763&modal=order`
-    );
-    cy.url().should("include", "modal=order");
-  });
-
-  it("should handle failed checkorder and pickupAllowed=false", () => {
-    cy.visit("/iframe.html?id=modal-order--order-policy-fail&viewMode=story");
-    cy.contains(
-      "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
-    );
-
-    cy.get("[data-cy=button-godkend]").should("be.disabled");
-    cy.get("[data-cy=text-skift-afhentning]").click();
-  });
-});
-
-describe("Order periodica article", () => {
-  beforeEach(function () {
-    mockAvailability();
-    mockSubmitOrder();
-    mockSubmitPeriodicaArticleOrder();
-  });
-
-  it("should order indexed periodica article as digital copy", () => {
-    mockArticleWork();
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-        },
-      },
-    });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
-    );
-
-    cy.wait(3000);
-
-    openOrderModal();
-
-    cy.get(".modal_container [data-cy=text-digital-kopi]").should("be.visible");
-    cy.contains("Dit bibliotek");
-    cy.get(".modal_container [data-cy=text-digital-kopi]")
-      .scrollIntoView()
-      .should("be.visible");
-
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitPeriodicaArticleOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pid: "870971-tsart:33261853",
-        pickUpBranch: "790900",
-        userName: "Freja Damgaard",
-        userMail: "cicero@mail.dk",
-      });
-    });
-
-    cy.contains("Du vil modtage en email fra Det Kgl. Bibliotek med artiklen");
-  });
-
-  it("should order indexed periodica article as physical copy", () => {
-    mockArticleWork();
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-          agency: {
-            result: [
-              {
-                digitalCopyAccess: false,
-              },
-            ],
+    it("should order indexed periodica article as physical copy", () => {
+      mockArticleWork();
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+            agency: {
+              result: [
+                {
+                  digitalCopyAccess: false,
+                },
+              ],
+            },
           },
         },
-      },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+
+      // Check that text match a physical order
+      cy.contains("Afhentningssted");
+      cy.contains(
+        "Du får besked fra dit bibliotek når materialet er klar til afhentning"
+      );
+
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pids: ["870971-tsart:33261853"],
+          pickUpBranch: "790900",
+          userParameters: {
+            userMail: "cicero@mail.dk",
+            userName: "Freja Damgaard",
+          },
+        });
+      });
+
+      cy.contains("Bestillingen blev gennemført");
     });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
-    );
 
-    openOrderModal();
+    it("should not order indexed periodica article as physical copy when not available as physical copy", () => {
+      mockArticleWorkNoPhysical();
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+            agency: {
+              result: [
+                {
+                  digitalCopyAccess: false,
+                },
+              ],
+            },
+          },
+        },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
+      );
 
-    // Check that text match a physical order
-    cy.contains("Afhentningssted");
-    cy.contains(
-      "Du får besked fra dit bibliotek når materialet er klar til afhentning"
-    );
+      openOrderModal();
 
-    cy.get("[data-cy=button-godkend]").click();
+      cy.contains(
+        "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
+      );
 
-    cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pids: ["870971-tsart:33261853"],
-        pickUpBranch: "790900",
-        userParameters: {
+      cy.get("[data-cy=button-godkend]").should("be.disabled");
+    });
+  });
+
+  describe("Order periodica volume", () => {
+    beforeEach(function () {
+      mockPeriodicaWork();
+      mockAvailability();
+      mockSubmitOrder();
+      mockSubmitPeriodicaArticleOrder();
+
+      mockSuggest();
+      mockLocalizations();
+      mockNotifications();
+
+      mockSubmitSessionUserParameters();
+      mockSessionUserParameters();
+    });
+
+    it("should order full physical periodica volume", () => {
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+            agency: {
+              result: [
+                {
+                  digitalCopyAccess: true,
+                },
+              ],
+            },
+          },
+        },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+
+      // Try to order without filling out form
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.contains("For at bestille skal du vælge udgave eller artikel");
+
+      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+      cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+      cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+      cy.get('[data-cy="button-gem"]').click();
+
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pids: ["870970-basis:06150179"],
+          pickUpBranch: "790900",
+          userParameters: {
+            userMail: "cicero@mail.dk",
+            userName: "Freja Damgaard",
+          },
+          publicationDateOfComponent: "1992",
+          volume: "8",
+        });
+      });
+    });
+
+    it("should order physical non-indexed article from periodica volume", () => {
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+            agency: {
+              result: [
+                {
+                  digitalCopyAccess: false,
+                },
+              ],
+            },
+          },
+        },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+
+      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+      cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+      cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+      cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
+
+      cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
+
+      cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
+        "some title"
+      );
+
+      cy.get('[placeholder="150-154"]').type("100-104");
+
+      cy.get('[data-cy="button-gem"]').click();
+
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pids: ["870970-basis:06150179"],
+          pickUpBranch: "790900",
+          userParameters: {
+            userMail: "cicero@mail.dk",
+            userName: "Freja Damgaard",
+          },
+          publicationDateOfComponent: "1992",
+          volume: "8",
+          authorOfComponent: "Test Testesen",
+          titleOfComponent: "some title",
+          pagination: "100-104",
+        });
+      });
+    });
+
+    it("should order non-indexed article from periodica volume as digital copy", () => {
+      mockLogin({
+        data: {
+          user: {
+            mail: "cicero@mail.dk",
+            agency: {
+              result: [
+                {
+                  digitalCopyAccess: true,
+                },
+              ],
+            },
+          },
+        },
+      });
+      cy.visit(
+        `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
+      );
+
+      openOrderModal();
+
+      cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
+
+      cy.get('[placeholder="Skriv årstal"]').type("1992");
+
+      cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
+
+      cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
+
+      cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
+
+      cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
+        "some title"
+      );
+
+      cy.get('[placeholder="150-154"]').type("100-104");
+
+      cy.get('[data-cy="button-gem"]').click();
+
+      cy.get("[data-cy=button-godkend]").click();
+
+      cy.wait("@submitPeriodicaArticleOrder").then((order) => {
+        console.log(order.request.body.variables.input, "INPUT");
+        expect(order.request.body.variables.input).to.deep.equal({
+          pid: "870970-basis:06150179",
+          pickUpBranch: "790900",
+          userName: "Freja Damgaard",
           userMail: "cicero@mail.dk",
-          userName: "Freja Damgaard",
-        },
-      });
-    });
-
-    cy.contains("Bestillingen blev gennemført");
-  });
-
-  it("should not order indexed periodica article as physical copy when not available as physical copy", () => {
-    mockArticleWorkNoPhysical();
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-          agency: {
-            result: [
-              {
-                digitalCopyAccess: false,
-              },
-            ],
-          },
-        },
-      },
-    });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
-    );
-
-    openOrderModal();
-
-    cy.contains(
-      "Materialet kan ikke bestilles til det her afhentningssted. Vælg et andet."
-    );
-
-    cy.get("[data-cy=button-godkend]").should("be.disabled");
-  });
-});
-
-describe("Order periodica volume", () => {
-  beforeEach(function () {
-    mockPeriodicaWork();
-    mockAvailability();
-    mockSubmitOrder();
-    mockSubmitPeriodicaArticleOrder();
-  });
-
-  it("should order full physical periodica volume", () => {
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-          agency: {
-            result: [
-              {
-                digitalCopyAccess: true,
-              },
-            ],
-          },
-        },
-      },
-    });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
-    );
-
-    openOrderModal();
-
-    // Try to order without filling out form
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.contains("For at bestille skal du vælge udgave eller artikel");
-
-    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
-
-    cy.get('[placeholder="Skriv årstal"]').type("1992");
-
-    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
-
-    cy.get('[data-cy="button-gem"]').click();
-
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pids: ["870970-basis:06150179"],
-        pickUpBranch: "790900",
-        userParameters: {
-          userMail: "cicero@mail.dk",
-          userName: "Freja Damgaard",
-        },
-        publicationDateOfComponent: "1992",
-        volume: "8",
-      });
-    });
-  });
-
-  it("should order physical non-indexed article from periodica volume", () => {
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-          agency: {
-            result: [
-              {
-                digitalCopyAccess: false,
-              },
-            ],
-          },
-        },
-      },
-    });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
-    );
-
-    openOrderModal();
-
-    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
-
-    cy.get('[placeholder="Skriv årstal"]').type("1992");
-
-    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
-
-    cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
-
-    cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
-
-    cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
-      "some title"
-    );
-
-    cy.get('[placeholder="150-154"]').type("100-104");
-
-    cy.get('[data-cy="button-gem"]').click();
-
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pids: ["870970-basis:06150179"],
-        pickUpBranch: "790900",
-        userParameters: {
-          userMail: "cicero@mail.dk",
-          userName: "Freja Damgaard",
-        },
-        publicationDateOfComponent: "1992",
-        volume: "8",
-        authorOfComponent: "Test Testesen",
-        titleOfComponent: "some title",
-        pagination: "100-104",
-      });
-    });
-  });
-
-  it("should order non-indexed article from periodica volume as digital copy", () => {
-    mockLogin({
-      data: {
-        user: {
-          mail: "cicero@mail.dk",
-          agency: {
-            result: [
-              {
-                digitalCopyAccess: true,
-              },
-            ],
-          },
-        },
-      },
-    });
-    cy.visit(
-      `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
-    );
-
-    openOrderModal();
-
-    cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
-
-    cy.get('[placeholder="Skriv årstal"]').type("1992");
-
-    cy.get('[placeholder="Hæfte, nummer eller bind"]').type("8");
-
-    cy.get('[data-cy="text-kun-interesseret-i-en-bestemt-artikel?"]').click();
-
-    cy.get('[placeholder="Skriv artiklens forfatter"]').type("Test Testesen");
-
-    cy.get('[placeholder="Forår og efterår i botanikerens have"]').type(
-      "some title"
-    );
-
-    cy.get('[placeholder="150-154"]').type("100-104");
-
-    cy.get('[data-cy="button-gem"]').click();
-
-    cy.get("[data-cy=button-godkend]").click();
-
-    cy.wait("@submitPeriodicaArticleOrder").then((order) => {
-      console.log(order.request.body.variables.input, "INPUT");
-      expect(order.request.body.variables.input).to.deep.equal({
-        pid: "870970-basis:06150179",
-        pickUpBranch: "790900",
-        userName: "Freja Damgaard",
-        userMail: "cicero@mail.dk",
-        publicationDateOfComponent: "1992",
-        volume: "8",
-        authorOfComponent: "Test Testesen",
-        titleOfComponent: "some title",
-        pagination: "100-104",
+          publicationDateOfComponent: "1992",
+          volume: "8",
+          authorOfComponent: "Test Testesen",
+          titleOfComponent: "some title",
+          pagination: "100-104",
+        });
       });
     });
   });
