@@ -16,10 +16,7 @@ import Top from "../base/top";
 
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
-import {
-  branchUserParameters,
-  branchOrderPolicy,
-} from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser, { useAccessToken } from "@/components/hooks/useUser";
 import { branchesForUser } from "@/lib/api/user.fragments";
 import TjoolTjip from "@/components/base/tjooltjip";
@@ -233,7 +230,6 @@ export function LoanerForm({
   submitting,
   skeleton,
   initial,
-  isVisible,
   onClose,
   doPolicyCheck,
   // modal props
@@ -399,12 +395,12 @@ export default function Wrap(props) {
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
-    branchId && branchUserParameters({ branchId })
+    branchId && branchesFragments.branchUserParameters({ branchId })
   );
 
   // PolicyCheck in own request (sometimes slow)
   const { data: policyData } = useData(
-    pid && branchId && branchOrderPolicy({ branchId, pid })
+    pid && branchId && branchesFragments.branchOrderPolicy({ branchId, pid })
   );
   const mergedData = merge({}, data, policyData);
 
