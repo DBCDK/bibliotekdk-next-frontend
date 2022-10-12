@@ -34,6 +34,17 @@ function mockLogin(customMock = {}) {
   });
 }
 
+function mockLibrary() {
+  cy.fixture("libraryFragmentsSearch.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("LibraryFragmentsSearch(")) {
+        req.reply(fixture);
+        req.alias = "libraryFragmentsSearch";
+      }
+    });
+  });
+}
+
 function mockSuggest() {
   cy.fixture("suggest_hest_hest_tiger_tiger.json").then((fixture) => {
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
@@ -117,7 +128,7 @@ function mockAvailability() {
 
 function mockBranchUserParameters() {
   cy.fixture("branchUserParameters.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("BranchUserParameters(")) {
         req.reply(fixture);
         req.alias = "branchesFragments";
@@ -125,13 +136,24 @@ function mockBranchUserParameters() {
     });
   });
 }
+function mockBranchesOrderPolicy() {
+  cy.fixture("branchesOrderPolicy.json").then((fixture) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
+      if (req.body.query.includes("BranchesOrderPolicy(")) {
+        req.reply(fixture);
+        req.alias = "branchesOrderPolicy";
+      }
+    });
+  });
+}
 
 function mockBranchesSearch() {
   cy.fixture("branches.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("branches(q:")) {
         console.log(fixture);
         req.reply(fixture);
+        cy.alias = "branchesSearch";
       }
     });
   });
@@ -165,6 +187,7 @@ function mockSessionUserParameters() {
       cy.intercept("POST", `${graphqlPath}`, (req) => {
         if (req.body.query.includes("session {")) {
           cy.returnUserParameters ? req.reply(fixture) : req.reply(fixtureNull);
+          cy.alias = "sessionUser";
         }
       });
     });
@@ -188,15 +211,6 @@ function mockFallback() {
 }
 
 function openOrderModal() {
-  cy.fixture("libraryFragmentsSearch.json").then((fixture) => {
-    cy.intercept("POST", `${fbiApiPath}`, (req) => {
-      if (req.body.query.includes("LibraryFragmentsSearch(")) {
-        req.reply(fixture);
-        req.alias = "libraryFragmentsSearch";
-      }
-    });
-  });
-
   cy.wait(1000);
   // Wait for content to be loaded
   cy.get("[data-cy=button-order-overview-enabled]");
@@ -236,6 +250,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
       mockSubmitSessionUserParameters();
       mockSessionUserParameters();
@@ -285,11 +300,12 @@ describe("Order", () => {
     });
 
     // TODO: Find ud af om dette stadigvæk burde virke
-    it.skip("Should not lock emailfield for agencies with no borrowerCheck", () => {
+    it.only("Should not lock emailfield for agencies with no borrowerCheck", () => {
       cy.returnUserParameters = false;
       // Custom mock
       mockBranchesSearch();
       mockBranchUserParameters();
+      mockBranchesOrderPolicy();
       mockSubmitSessionUserParameters();
       mockSessionUserParameters();
 
@@ -309,7 +325,8 @@ describe("Order", () => {
       cy.get("[data-cy=text-skift-afhentning]").click();
 
       cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
-      cy.wait(["@localizationsFragments", "@branchesFragments"]);
+
+      cy.wait(1000);
 
       cy.tab().type("{enter}");
 
@@ -359,6 +376,8 @@ describe("Order", () => {
       );
 
       cy.get("[data-cy=button-nej-tak]").click();
+
+      mockLibrary();
       openOrderModal();
       cy.wait(1000);
       cy.get("[data-cy=close-modal]").click();
@@ -418,6 +437,7 @@ describe("Order", () => {
 
       cy.wait(3000);
 
+      mockLibrary();
       openOrderModal();
 
       cy.get(".modal_container [data-cy=text-digital-kopi]").should(
@@ -465,6 +485,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
 
       // Check that text match a physical order
@@ -510,6 +531,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/bo-bedre-paa-din-krops-betingelser_charlotte-hallbaeck-andersen/work-of%3A870971-tsart%3A33261853?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
 
       cy.contains(
@@ -554,6 +576,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
 
       // Try to order without filling out form
@@ -605,6 +628,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
 
       cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
@@ -664,6 +688,7 @@ describe("Order", () => {
         `${nextjsBaseUrl}/materiale/siden-saxo_/work-of%3A870970-basis%3A06150179?disablePagePropsSession=true`
       );
 
+      mockLibrary();
       openOrderModal();
 
       cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();

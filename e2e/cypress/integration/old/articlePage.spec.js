@@ -1,5 +1,6 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("ArticlePage", () => {
   describe("News article (from drupal)", () => {
@@ -158,7 +159,7 @@ describe("ArticlePage", () => {
         });
       });
       cy.fixture("branchUserParameters.json").then((fixture) => {
-        cy.intercept("POST", `${graphqlPath}`, (req) => {
+        cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (req?.body?.variables?.branchId) {
             req.reply(fixture);
           }
