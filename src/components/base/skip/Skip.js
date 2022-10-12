@@ -12,7 +12,7 @@ import styles from "./Skip.module.css";
  * a other element with some given id. Component is only visible
  * on tab.
  */
-export default function Skip({ id, className = "", label }) {
+export default function Skip({ id, className = "", label, dataCy = "skip" }) {
   if (typeof window === "undefined") {
     return null;
   }
@@ -23,6 +23,7 @@ export default function Skip({ id, className = "", label }) {
     <Link
       className={`${styles.skip} ${className}`}
       onClick={() => element?.focus()}
+      dataCy={dataCy}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
           e.preventDefault();

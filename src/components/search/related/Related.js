@@ -4,16 +4,16 @@ import { subjects } from "@/lib/api/relatedSubjects.fragments";
 
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+import { cyKey } from "@/utils/trim";
 
 import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
-
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
-
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import styles from "./Related.module.css";
 
@@ -24,7 +24,8 @@ import styles from "./Related.module.css";
 function Word({ word, isLoading }) {
   return (
     <Link
-      href={`/find?q.all=${word}`}
+      href={`/find?q.subject=${word}`}
+      dataCy={cyKey({ name: word, prefix: "related-subject" })}
       className={styles.word}
       disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
@@ -46,7 +47,7 @@ export function Words({ data, isLoading }) {
       <Text className={styles.label}>
         {Translate({ context: "search", label: "relatedSubjects" })}
       </Text>
-      <div className={styles.words}>
+      <div className={styles.words} data-cy="words-container">
         {data.map((w) => (
           <Word word={w} isLoading={isLoading} />
         ))}
@@ -117,7 +118,7 @@ export default function Wrap() {
   const query = q.subject || q.all || q.title || q.creator;
 
   const { data, isLoading } = useData(
-    query && subjects({ q: [query], filters })
+    query && subjects({ q: [query], limit: 7 })
   );
 
   // dummy data will be returned on isLoading - skeleton view

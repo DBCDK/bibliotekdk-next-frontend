@@ -229,4 +229,51 @@ describe("Search", () => {
       cy.get("[data-cy=result-row]").should("have.length", 10);
     });
   });
+
+  describe("Related search subjects", () => {
+    it(`Can tab through related keywords`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--default");
+      cy.get("body").tab();
+      cy.focused().should("have.attr", "data-cy", "related-subject-heste");
+      cy.tabs(10);
+      cy.focused().should("have.attr", "data-cy", "related-subject-heste");
+    });
+
+    it(`Can visit keywords`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--default");
+
+      const tag = "ridning";
+      const url = `/find?q.subject=${tag}`;
+
+      // Get selected tag
+      const item = cy.get(`[data-cy=related-subject-${tag}]`);
+
+      // Check link attributes
+      item.should("have.attr", "target", "_self");
+      item.should("have.attr", "href", url);
+    });
+
+    it(`Can render and interact with connected related subjects`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--connected");
+      cy.get("[data-cy=words-container]").children().should("have.length", 2);
+      cy.get("[data-cy=words-container]")
+        .children()
+        .each((el, idx) => {
+          cy.get(el).click();
+          cy.get("[data-cy=router-pathname]").should("have.text", "/find");
+          cy.get("[data-cy=router-query]").should(
+            "have.text",
+            `{"q.subject":"relatedSubjects[${idx}]"}`
+          );
+        });
+    });
+
+    it(`Will show search result hitcount in the connected related subjects section`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--connected");
+      cy.wait(500);
+      cy.get("[data-cy=text-resultater]")
+        .siblings("h3")
+        .should("have.text", "998");
+    });
+  });
 });

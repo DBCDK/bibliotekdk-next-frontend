@@ -1,12 +1,10 @@
 import { useData } from "@/lib/api/api";
-import { basic } from "@/lib/api/work.fragments";
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
 
-import uniqBy from "lodash/uniqBy";
+import { cyKey } from "@/utils/trim";
 
 import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
-
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
@@ -20,7 +18,8 @@ import styles from "./Related.module.css";
 function Word({ word, isLoading }) {
   return (
     <Link
-      href={`/find?q.all=${word}`}
+      href={`/find?q.subject=${word}`}
+      dataCy={cyKey({ name: word, prefix: "related-subject" })}
       className={styles.word}
       disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
@@ -38,7 +37,7 @@ function Word({ word, isLoading }) {
  */
 export function Words({ data, isLoading }) {
   return (
-    <div className={styles.words}>
+    <div className={styles.words} data-cy="words-container">
       {data.map((w) => (
         <Word word={w} isLoading={isLoading} />
       ))}
@@ -81,30 +80,30 @@ export function Related({ data, isLoading }) {
  * Wrap for fetching data for the subject Related component
  */
 export default function Wrap({ workId }) {
-  // Call materialTypes mockdata API
-  const { data: workData, isLoading: workIsLoading } = useData(
-    basic({ workId })
-  );
+  // Move this section to some work fragment on fbi-api migration
+  const query = {
+    apiUrl: "fbi_api",
+    query: `query ($workId: String!) {
+          work(id: $workId) {
+            subjects {
+              dbcVerified {
+                display
+              }
+            }
+          }
+        }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+  // // // // // // // // // // // // // // // // // // // // // //
 
-  let keywords = workData?.work?.subjects;
+  // fetch work subjects
+  const { data: workData, isLoading: workIsLoading } = useData(query);
 
-  /**
-   * This section can be removed when work is migrated to fbi-api
-   */
-  // Include wanted subject types
-  const include = ["DBCS", "DBCF", "DBCM", null];
-  let filteredData = keywords?.filter((s) => include.includes(s.type));
-
-  // Remove duplicates and flatten
-  filteredData = uniqBy(filteredData, (s) =>
-    s.value.toLowerCase().replace(/\./g, "")
-  );
-  // flatten data value as array
-  keywords = filteredData.map((s) => s.value);
-  /**
-   *
-   */
-
+  console.log("workData", workData);
+  // flatten subjects to array of strings
+  const keywords = workData?.work?.subjects?.dbcVerified?.map((s) => s.display);
+  // get related subjects
   const { data, isLoading } = useData(
     keywords?.length && subjects({ q: keywords })
   );
