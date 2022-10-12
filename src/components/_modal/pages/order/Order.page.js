@@ -37,6 +37,7 @@ import { branchUserParameters } from "@/lib/api/branches.fragments";
 import { getIsPeriodicaLike } from "@/lib/utils";
 import TjoolTjip from "@/components/base/tjooltjip";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import debounce from "lodash/debounce";
 
 function LinkArrow({ onClick, disabled, children, className = "" }) {
   return (
@@ -290,7 +291,6 @@ export function Order({
     const userMail = user.userParameters?.userMail;
     if (userMail) {
       const message = null;
-      updateLoanerInfo({ userParameters: { userMail: userMail } });
       setMail({
         value: userMail,
         valid: { status: true, message },
@@ -593,7 +593,10 @@ export function Order({
               onMount={(e, valid) =>
                 setMail({ value: e?.target?.value, valid })
               }
-              onBlur={(e, valid) => onMailChange(e?.target?.value, valid)}
+              onChange={debounce(
+                (e, valid) => onMailChange(e?.target?.value, valid),
+                200
+              )}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
