@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import ResultRow from "../row";
+import { Fragment } from "react";
 
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
@@ -21,14 +22,14 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
   }
 
   const resultRows = rows?.map((row, index) => (
-    <div key={row.workId + ":" + index}>
+    <Fragment key={row.workId + ":" + index}>
       <ResultRow
         data={row}
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
       {index === 0 && <SearchFeedBack />}
-    </div>
+    </Fragment>
   ));
 
   if (!rows) {

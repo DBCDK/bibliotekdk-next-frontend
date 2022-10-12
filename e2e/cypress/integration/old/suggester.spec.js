@@ -4,6 +4,7 @@
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Suggester", () => {
   before(function () {
@@ -124,7 +125,7 @@ describe("Suggester data collect", () => {
     cy.get("[data-cy=button-ok]").click();
 
     // Intercept requests to graphql
-    cy.intercept("POST", `/bibdk21/graphql`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {
         req.alias = "apiMutation";
       } else if (req.body.query.includes("suggest")) {

@@ -6,8 +6,6 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { encodeTitleCreator } from "@/lib/utils";
 
-import translate from "@/components/base/translate";
-
 /**
  * The skeleton card React component
  */
@@ -112,7 +110,6 @@ Card.propTypes = {
   id: PropTypes.string,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
-  id: PropTypes.string,
   series: PropTypes.shape({
     part: PropTypes.number,
   }),
