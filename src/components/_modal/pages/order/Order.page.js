@@ -104,7 +104,7 @@ export function Edition({
               dataCy="additional_edition_info"
             >
               {material.datePublished},&nbsp;
-              {material.publisher && material.publisher.map((pub, _) => pub)}
+              {material.publisher && material.publisher.map((pub) => pub)}
               &nbsp;
               {material.edition && "," + material.edition}
             </Text>
