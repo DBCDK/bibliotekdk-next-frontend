@@ -290,7 +290,7 @@ export function Order({
     const userMail = user.userParameters?.userMail;
     if (userMail) {
       const message = null;
-
+      updateLoanerInfo({ userParameters: { userMail: userMail } });
       setMail({
         value: userMail,
         valid: { status: true, message },
