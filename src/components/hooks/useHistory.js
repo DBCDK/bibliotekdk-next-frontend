@@ -3,6 +3,33 @@ import { SuggestTypeEnum } from "@/lib/enums";
 
 const KEY = "bibdk-search-history";
 
+/**
+ * @function extractStoredValue
+ * Ensures the localStorage uses the proper fields in `bibdk-search-history`.
+ * That is `type` instead of `__typename` and `term` instead of `value`
+ * @param {Array<Object>} prevItemArray -- The previous array of items
+ * @returns {Array<Object>} -- The new and updated array of items
+ */
+function extractStoredValue(prevItemArray) {
+  let newItemArray = [];
+
+  for (let i = 0; i < prevItemArray.length; i++) {
+    newItemArray.push({});
+    if (prevItemArray?.[i]?.type && prevItemArray?.[i]?.term) {
+      newItemArray[i] = prevItemArray[i];
+      continue;
+    }
+    if (prevItemArray?.[i]?.__typename) {
+      newItemArray[i].type = SuggestTypeEnum.HISTORY;
+    }
+    if (prevItemArray?.[i]?.value) {
+      newItemArray[i].term = prevItemArray[i].value;
+    }
+  }
+
+  return newItemArray;
+}
+
 export const useHistory = () => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
@@ -15,26 +42,6 @@ export const useHistory = () => {
       return [];
     }
   });
-
-  function extractStoredValue(oldItemArray) {
-    let newItemArray = [];
-
-    for (let i = 0; i < oldItemArray.length; i++) {
-      newItemArray.push({});
-      if (oldItemArray?.[i]?.type && oldItemArray?.[i]?.term) {
-        newItemArray[i] = oldItemArray[i];
-        continue;
-      }
-      if (oldItemArray?.[i]?.__typename) {
-        newItemArray[i].type = SuggestTypeEnum.HISTORY;
-      }
-      if (oldItemArray?.[i]?.value) {
-        newItemArray[i].term = oldItemArray[i].value;
-      }
-    }
-
-    return newItemArray;
-  }
 
   const setValue = (value) => {
     try {
