@@ -16,7 +16,6 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
-import { Fragment } from "react";
 
 /**
  *
@@ -50,9 +49,7 @@ export function Words({ data, isLoading }) {
       </Text>
       <div className={styles.words} data-cy="words-container">
         {data.map((w) => (
-          <Fragment key={w}>
-            <Word word={w} isLoading={isLoading} />
-          </Fragment>
+          <Word key={w} word={w} isLoading={isLoading} />
         ))}
       </div>
     </div>

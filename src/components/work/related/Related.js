@@ -39,7 +39,7 @@ export function Words({ data, isLoading }) {
   return (
     <div className={styles.words} data-cy="words-container">
       {data.map((w) => (
-        <Word word={w} isLoading={isLoading} />
+        <Word key={w} word={w} isLoading={isLoading} />
       ))}
     </div>
   );
@@ -100,7 +100,6 @@ export default function Wrap({ workId }) {
   // fetch work subjects
   const { data: workData, isLoading: workIsLoading } = useData(query);
 
-  console.log("workData", workData);
   // flatten subjects to array of strings
   const keywords = workData?.work?.subjects?.dbcVerified?.map((s) => s.display);
   // get related subjects
