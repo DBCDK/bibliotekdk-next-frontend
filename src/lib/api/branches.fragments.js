@@ -103,8 +103,10 @@ export function branchHoldings({ branchId, pids }) {
  */
 export function branchOrderPolicy({ branchId, pid }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query BranchUserParameters($branchId: String!, $language: LanguageCode!, $pid: String!) {
+    query: `
+    query BranchesOrderPolicy($branchId: String!, $language: LanguageCode!, $pid: String!) {
       branches(branchId: $branchId, language: $language) {
         result {
           orderPolicy(pid: $pid) {
