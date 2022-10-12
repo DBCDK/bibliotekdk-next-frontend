@@ -1,4 +1,5 @@
 import { lang } from "@/components/base/translate";
+import { ApiEnums } from "@/lib/api/api";
 
 /**
  * @file Contains GraphQL queries for fetching branches
@@ -11,8 +12,10 @@ import { lang } from "@/components/base/translate";
  */
 export function branchUserParameters({ branchId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
+    query: `
+    query BranchUserParameters($branchId: String!, $language: LanguageCode!) {
       branches(branchId: $branchId, language: $language) {
         result {
           borrowerCheck
@@ -47,47 +50,49 @@ export function branchUserParameters({ branchId }) {
  */
 export function branchHoldings({ branchId, pids }) {
   return {
-    query: `query BranchHoldings($branchId: String!, $pids: [String]){
-              branches(branchId:$branchId){
-              agencyUrl
-              result{
-                agencyName
-                name
-                agencyId
-                branchId
-                branchWebsiteUrl
-                branchCatalogueUrl
-                lookupUrl
-                holdingStatus(pids:$pids){
-                  count
-                  lamp{color message}
-                agencyHoldings{
-                    localisationPid
-                    localIdentifier
-                    agencyId                    
-                  }
-                  holdingItems
-                    {
-                      branch
-                      branchId
-                      willLend 
-                      expectedDelivery 
-                      localHoldingsId 
-                      circulationRule
-                      issueId
-                      department
-                      issueText
-                      location
-                      note
-                      readyForLoan
-                      status
-                      subLocation
-                    }
-                }
-              }
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query BranchHoldings($branchId: String!, $pids: [String]){
+      branches(branchId:$branchId){
+      agencyUrl
+      result{
+        agencyName
+        name
+        agencyId
+        branchId
+        branchWebsiteUrl
+        branchCatalogueUrl
+        lookupUrl
+        holdingStatus(pids:$pids){
+          count
+          lamp{color message}
+        agencyHoldings{
+          localisationPid
+          localIdentifier
+          agencyId                    
+          }
+          holdingItems
+            {
+              branch
+              branchId
+              willLend 
+              expectedDelivery 
+              localHoldingsId 
+              circulationRule
+              issueId
+              department
+              issueText
+              location
+              note
+              readyForLoan
+              status
+              subLocation
+            }
         }
-      monitor(name: "bibdknext_branch_holdings")
-     }`,
+      }
+     }
+     monitor(name: "bibdknext_branch_holdings")
+    }`,
     variables: { branchId, pids },
     slowThreshold: 3000,
   };
