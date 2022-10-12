@@ -256,16 +256,15 @@ describe("Search", () => {
     it(`Can render and interact with connected related subjects`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
       cy.get("[data-cy=words-container]").children().should("have.length", 2);
-      cy.get("[data-cy=words-container]")
-        .children()
-        .each((el, idx) => {
-          cy.get(el).click();
-          cy.get("[data-cy=router-pathname]").should("have.text", "/find");
-          cy.get("[data-cy=router-query]").should(
-            "have.text",
-            `{"q.subject":"relatedSubjects[${idx}]"}`
-          );
-        });
+
+      cy.get("[data-cy=words-container]").each((el, idx) => {
+        cy.get(el).click();
+        cy.get("[data-cy=router-pathname]").should("have.text", "/find");
+        cy.get("[data-cy=router-query]").should(
+          "have.text",
+          `{"q.subject":"relatedSubjects[${idx}]"}`
+        );
+      });
     });
 
     it(`Will show search result hitcount in the connected related subjects section`, () => {
