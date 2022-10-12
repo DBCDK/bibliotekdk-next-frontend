@@ -300,7 +300,7 @@ describe("Order", () => {
     });
 
     // TODO: Find ud af om dette stadigvæk burde virke
-    it.only("Should not lock emailfield for agencies with no borrowerCheck", () => {
+    it("Should not lock emailfield for agencies with no borrowerCheck", () => {
       cy.returnUserParameters = false;
       // Custom mock
       mockBranchesSearch();
