@@ -36,23 +36,4 @@ describe("searchfeedback", () => {
       expect(str).to.contain("fisk");
     });
   });
-
-  it.only(`show on page 1 and initial page only`, () => {
-    cy.visit("/iframe.html?id=base-searchfeedback--feed-back?page=1");
-    // verify that banner is shown
-    cy.get("[data-cy=search-feedback-thumbsdown]").should("be.visible");
-
-    cy.get("[data-cy=search-feedback-form]").should("not.to.exist");
-
-    cy.get("[data-cy=search-feedback-thumbsdown]").click();
-
-    cy.get("[data-cy=search-feedback-form]").should("be.visible");
-
-    cy.get("[data-cy=search-feedback-input]").type("fisk");
-
-    cy.get("[data-cy=search-feedback-form] Button").click();
-    cy.on("window:alert", (str) => {
-      expect(str).to.contain("fisk");
-    });
-  });
 });
