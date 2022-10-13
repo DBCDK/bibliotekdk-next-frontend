@@ -26,14 +26,13 @@ import Email from "@/components/base/forms/email";
 import Cover from "@/components/base/cover";
 import Arrow from "@/components/base/animation/arrow";
 
-import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import animations from "@/components/base/animation/animations.module.css";
 
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
-import { branchUserParameters } from "@/lib/api/branches.fragments";
 import { getIsPeriodicaLike } from "@/lib/utils";
 import TjoolTjip from "@/components/base/tjooltjip";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
@@ -77,19 +76,9 @@ export function Edition({
   showOrderTxt = true,
   modal = {},
 }) {
-  const {
-    cover: workCover,
-    title: workTitle = "...",
-    creators: workCreators = [{ name: "..." }],
-    manifestations = [],
-  } = work;
+  const { cover: workCover, creators: workCreators = [{ name: "..." }] } = work;
 
-  const {
-    title = workTitle,
-    creators = workCreators,
-    cover = workCover,
-    materialType,
-  } = material;
+  const { creators = workCreators, cover = workCover, materialType } = material;
 
   return (
     <div className={styles.edition}>
@@ -115,8 +104,7 @@ export function Edition({
               dataCy="additional_edition_info"
             >
               {material.datePublished},&nbsp;
-              {material.publisher &&
-                material.publisher.map((pub, index) => pub)}
+              {material.publisher && material.publisher.map((pub) => pub)}
               &nbsp;
               {material.edition && "," + material.edition}
             </Text>
@@ -365,12 +353,7 @@ export function Order({
   }
 
   // Work props
-  const {
-    cover: workCover,
-    title: workTitle = "...",
-    creators: workCreators = [{ name: "..." }],
-    manifestations = [],
-  } = work;
+  const { manifestations = [] } = work;
   // Material by pid
   const material = filter(
     manifestations,
@@ -391,13 +374,6 @@ export function Order({
   }
 
   const isLoadingBranches = isLoading || (user.name && !user?.agency);
-  // Material props
-  const {
-    title = workTitle,
-    creators = workCreators,
-    cover = workCover,
-    materialType,
-  } = material;
 
   // user props
   const { agency } = user;
@@ -415,8 +391,6 @@ export function Order({
     label: "info-email-message",
     vars: [agency?.result?.[0]?.agencyName || libraryFallback],
   };
-
-  const urlToEmailArticle = "/hjaelp/saadan-aendrer-du-din-mailadresse/68";
 
   // Used to assess whether the email field should be locked or not
   const hasBorchk = pickupBranch?.borrowerCheck;
@@ -773,11 +747,9 @@ export default function Wrap(props) {
    */
 
   // Fetch branches and order policies for (loggedIn) user
-  const {
-    data: orderPolicy,
-    isLoading: policyIsLoading,
-    error: orderPolicyError,
-  } = useData(pid && authUser.name && userFragments.orderPolicy({ pid }));
+  const { data: orderPolicy, isLoading: policyIsLoading } = useData(
+    pid && authUser.name && userFragments.orderPolicy({ pid })
+  );
 
   // scope
   const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
@@ -786,7 +758,9 @@ export default function Wrap(props) {
   // OBS! Pickup can differs from users own branches.
   const { data: userParams, isLoading: userParamsIsLoading } = useData(
     loanerInfo?.pickupBranch &&
-      branchUserParameters({ branchId: loanerInfo.pickupBranch })
+      branchesFragments.branchUserParameters({
+        branchId: loanerInfo.pickupBranch,
+      })
   );
 
   // scope
@@ -801,7 +775,10 @@ export default function Wrap(props) {
   const { data: selectedBranchPolicyData, isLoading: branchPolicyIsLoading } =
     useData(
       shouldFetchOrderPolicy &&
-        branchOrderPolicy({ branchId: selectedBranch?.branchId, pid })
+        branchesFragments.branchOrderPolicy({
+          branchId: selectedBranch?.branchId,
+          pid,
+        })
     );
 
   // scope

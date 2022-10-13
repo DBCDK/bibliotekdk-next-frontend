@@ -16,11 +16,13 @@ import animations from "@/components/base/animation/animations.module.css";
 /**
  * A custom Radio Button displayed as a row
  *
+ * @param disabled
  * @param {object} props
  * @param {array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
+ * @param className
  * @param {boolean} props.selected
  * @param {function} props._ref
  */
@@ -82,11 +84,16 @@ Radio.propTypes = {
 /**
  * A custom Select Button displayed as a row
  *
+ * @param disabled
+ * @param onDisabled
+ * @param labelledBy
  * @param {object} props
  * @param {array} props.children
  * @param {className} props.string
  * @param {string} props.label the aria label for the radio button
  * @param {function} props.onSelect
+ * @param className
+ * @param {JSX} includeArrows
  * @param {boolean} props.selected
  * @param {function} props._ref
  */

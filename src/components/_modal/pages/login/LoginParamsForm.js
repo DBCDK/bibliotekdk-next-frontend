@@ -1,6 +1,6 @@
 import { UserParamsForm } from "@/components/modal/templates/order/layers/loanerform/LoanerForm";
 import { useData } from "@/lib/api/api";
-import { branchUserParameters } from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import styles from "@/components/modal/templates/order/layers/loanerform/LoanerForm.module.css";
 import useUser from "@/components/hooks/useUser";
 import getConfig from "next/config";
@@ -18,7 +18,7 @@ export default function wrap({ branchId }) {
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
-    branchId && branchUserParameters({ branchId })
+    branchId && branchesFragments.branchUserParameters({ branchId })
   );
 
   const { loanerInfo, updateLoanerInfo } = useUser();

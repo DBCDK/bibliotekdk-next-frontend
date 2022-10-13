@@ -32,7 +32,6 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
-  // OBS.... fix incomming
   it(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {

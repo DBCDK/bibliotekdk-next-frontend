@@ -3,30 +3,18 @@ import { useEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import find from "lodash/find";
 
-import getConfig from "next/config";
-
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
-
 import List from "@/components/base/forms/list";
 import Search from "@/components/base/forms/search";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
-
 import Top from "../base/top";
-
 import styles from "./Pickup.module.css";
 import animations from "@/components/base/animation/animations.module.css";
-
 import useUser from "@/components/hooks/useUser";
-
 import { useData } from "@/lib/api/api";
-
 import * as libraryFragments from "@/lib/api/library.fragments";
-
-import { branchOrderPolicy } from "@/lib/api/branches.fragments";
-
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 /**
@@ -38,7 +26,7 @@ function PolicyLoader({ branch, onLoad, pid, requireDigitalAccess }) {
   let { data } = useData(
     pid &&
       branch?.branchId &&
-      branchOrderPolicy({ branchId: branch.branchId, pid })
+      branchesFragments.branchOrderPolicy({ branchId: branch.branchId, pid })
   );
 
   const orderPolicy =
@@ -136,11 +124,15 @@ function Row({
 /**
  * Make pickup branches selectable with Radio buttons
  *
- * @param {object} props
- * @param {className} props.string
- * @param {function} props.onClose
- * @param {object} props.selected The selected branch object
- * @param {function} props._ref
+ * @param {object} data
+ * @param selected
+ * @param {boolean} isVisible
+ * @param {function} onChange
+ * @param {boolean} isLoading
+ * @param {JSX} includeArrows
+ * @param updateLoanerInfo
+ * @param context
+ * @param modal
  */
 export function Pickup({
   data,
@@ -190,7 +182,7 @@ export function Pickup({
 
   // Incrementally creates a list of allowed branches as policies load one by one,
   // keeping the order of the original result
-  let allPoliciesLoaded = isLoading ? false : true;
+  let allPoliciesLoaded = !isLoading;
 
   const orderPossibleBranches =
     data?.result?.filter((branch) => {
@@ -343,7 +335,7 @@ export default function Wrap(props) {
 
   const { updateLoanerInfo } = useUser();
 
-  const { data, isLoading, error } = useData(
+  const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
   );
 
