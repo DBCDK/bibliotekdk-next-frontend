@@ -21,6 +21,7 @@
   display: flex;
   overflow-x: scroll;
   padding: 0 var(--pt2) var(--pt1) var(--pt2);
+  align-items: baseline;
 }
 
 .words {
@@ -49,6 +50,10 @@
   .words {
     display: unset;
     padding: 0;
+  }
+
+  .word {
+    margin-bottom: var(--pt1);
   }
 
   .section {

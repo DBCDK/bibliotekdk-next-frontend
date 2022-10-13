@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { Words } from "./Related";
+import WrappedRelated, { Words } from "./Related";
 
 export default {
   title: "search/RelatedSubjects",
@@ -31,3 +31,32 @@ export function Default() {
     </div>
   );
 }
+
+export function Connected() {
+  return (
+    <div>
+      <StoryTitle>Connected result page</StoryTitle>
+      <StoryDescription>Uses mocked GraphQL provider</StoryDescription>
+      <div style={{ maxWidth: "1200px", margin: "auto" }}>
+        <WrappedRelated workId="work-of:870970-basis:51701763" />
+      </div>
+    </div>
+  );
+}
+
+Connected.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        SearchResponse: {
+          hitcount: (args) => "998",
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/find",
+      query: { "q.all": "hest" },
+    },
+  },
+};

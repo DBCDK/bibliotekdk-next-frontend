@@ -1,16 +1,10 @@
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
-
-import useFilters from "@/components/hooks/useFilters";
-import useQ from "@/components/hooks/useQ";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import { cyKey } from "@/utils/trim";
 
 import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
-import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
@@ -43,15 +37,10 @@ function Word({ word, isLoading }) {
  */
 export function Words({ data, isLoading }) {
   return (
-    <div className={styles.related}>
-      <Text className={styles.label}>
-        {Translate({ context: "search", label: "relatedSubjects" })}
-      </Text>
-      <div className={styles.words} data-cy="words-container">
-        {data.map((w) => (
-          <Word key={w} word={w} isLoading={isLoading} />
-        ))}
-      </div>
+    <div className={styles.words} data-cy="words-container">
+      {data.map((w) => (
+        <Word key={w} word={w} isLoading={isLoading} />
+      ))}
     </div>
   );
 }
@@ -60,33 +49,16 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, hitcount, isLoading }) {
-  const breakpoint = useBreakpoint();
-  const isMobile =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
-
+export function Related({ data, isLoading }) {
   return (
     <Section
-      contentDivider={null}
-      titleDivider={null}
-      className={styles.section}
       title={
-        !isMobile && (
-          <div>
-            <Text type="text3" skeleton={isLoading} lines={1}>
-              {Translate({ context: "search", label: "title" })}
-            </Text>
-            <Title
-              type="title5"
-              tag="h3"
-              className={styles.hitcount}
-              skeleton={isLoading}
-            >
-              {hitcount}
-            </Title>
-          </div>
-        )
+        <Text type="text1">
+          {Translate({ context: "relatedKeywords", label: "title" })}
+        </Text>
       }
+      className={styles.section}
+      bgColor="var(--jagged-ice)"
     >
       <div>
         <Skip
@@ -107,19 +79,38 @@ export function Related({ data, hitcount, isLoading }) {
  *
  * Wrap for fetching data for the subject Related component
  */
-export default function Wrap() {
-  const filters = useFilters().getQuery();
-  const q = useQ().getQuery();
+export default function Wrap({ workId }) {
+  // Move this section to some work fragment on fbi-api migration
+  const query = {
+    apiUrl: "fbi_api",
+    query: `query ($workId: String!) {
+          work(id: $workId) {
+            subjects {
+              dbcVerified {
+                display
+              }
+            }
+          }
+        }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+  // // // // // // // // // // // // // // // // // // // // // //
 
-  const hitcountResponse = useData(hitcount({ q, filters }));
-  const hits = hitcountResponse?.data?.search?.hitcount || 0;
+  // fetch work subjects
+  const { data: workData, isLoading: workIsLoading } = useData(query);
 
-  // prioritized q type to get related subjects for
-  const query = q.subject || q.all || q.title || q.creator;
-
+  // flatten subjects to array of strings
+  const keywords = workData?.work?.subjects?.dbcVerified?.map((s) => s.display);
+  // get related subjects
   const { data, isLoading } = useData(
-    query && subjects({ q: [query], limit: 7 })
+    keywords?.length && subjects({ q: keywords })
   );
+
+  // Remove section if work contains no keywords
+  if (data?.relatedSubjects?.length === 0 && !isLoading) {
+    return null;
+  }
 
   // dummy data will be returned on isLoading - skeleton view
   const dummy = [
@@ -138,8 +129,7 @@ export default function Wrap() {
   return (
     <Related
       data={data?.relatedSubjects || (isLoading && dummy) || []}
-      hitcount={hits}
-      isLoading={hitcountResponse?.isLoading || isLoading}
+      isLoading={workIsLoading || isLoading}
     />
   );
 }
