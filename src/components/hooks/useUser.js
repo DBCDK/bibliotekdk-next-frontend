@@ -1,21 +1,16 @@
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-import { createContext, useContext, useMemo, useEffect, useState } from "react";
+import { createContext, useMemo } from "react";
 import merge from "lodash/merge";
-
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
-import fetch from "isomorphic-unfetch";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
 
-import getConfig from "next/config";
-
 // in memory object for storing loaner info for current user
 let loanerInfoMock = {};
-const loanerInfoKey = "loanerinfo";
 
 /**
  * Mock used in storybook
@@ -95,12 +90,10 @@ function useUserImpl() {
       });
     }
 
-    const obj = {
+    return {
       ...data?.session,
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
-
-    return obj;
   }, [data?.session, loggedInUser]);
 
   const isGuestUser =
@@ -130,9 +123,6 @@ function useUserImpl() {
     },
   };
 }
-
-const APP_URL =
-  getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
 
 /**
  * Hook for getting authenticated user
