@@ -12,7 +12,7 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
 import { useData } from "@/lib/api/api";
-import { branchOrderPolicy } from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 
 import styles from "./Receipt.module.css";
 
@@ -152,7 +152,10 @@ export default function Wrap(props) {
 
   const { data: policyData, isLoading: policyIsLoading } = useData(
     shouldFetchOrderPolicy &&
-      branchOrderPolicy({ branchId: pickupBranch?.branchId, pid })
+      branchesFragments.branchOrderPolicy({
+        branchId: pickupBranch?.branchId,
+        pid,
+      })
   );
 
   // If found, merge orderPolicy into pickupBranch

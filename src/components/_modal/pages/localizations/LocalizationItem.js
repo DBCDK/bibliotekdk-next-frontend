@@ -1,5 +1,5 @@
 import { useData } from "@/lib/api/api";
-import * as branchFragments from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import Text from "@/components/base/text/Text";
 import styles from "./Localizations.module.css";
 import Divider from "@/components/base/divider";
@@ -55,11 +55,12 @@ function parseBranchLookupUrl(branch, holdings, localIds) {
  * Localization overview for given branch with given holdings
  * @param branch
  * @param holdings
- * @param isLoading
+ * @param {boolean} isLoading
+ * @param {number} index
  * @return {JSX.Element}
  * @constructor
  */
-export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
+export function LocalizationItem({ branch, holdings, isLoading, index }) {
   // here we need a branch + holdingsdata for the branch
   // data has holdings for ONE agency only - filtered holdingsitem
   const branchHoldings = holdings?.branches?.result?.[0];
@@ -81,7 +82,7 @@ export function LocalizationItem({ pids, branch, holdings, isLoading, index }) {
       ? firstholding.expectedDelivery
       : "";
 
-  const messages = (label, branch) => {
+  const messages = (label, _) => {
     const translated = {
       no_loc_no_holding: Translate({
         context: "holdings",
@@ -297,7 +298,7 @@ export default function wrap({ props }) {
 
   const { data, isLoading } = !testing
     ? useData(
-        branchFragments.branchHoldings({
+        branchesFragments.branchHoldings({
           branchId: branchId,
           pids: pids,
         })

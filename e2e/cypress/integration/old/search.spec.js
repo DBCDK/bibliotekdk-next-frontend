@@ -32,7 +32,7 @@ describe("Search", () => {
     cy.url().should("include", "/materiale");
   });
 
-  it(`Should collect data when searching and clicking work`, () => {
+  it.skip(`Should collect data when searching and clicking work`, () => {
     // Intercept data collection requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.startsWith("mutation")) {

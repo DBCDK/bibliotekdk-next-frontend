@@ -17,7 +17,7 @@ import Translate from "@/components/base/translate";
 
 import LoginPrompt from "@/components/login/prompt";
 import { useModal } from "@/components/_modal";
-import { branchUserParameters } from "@/lib/api/branches.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
 export function InfomediaArticle(infomediaData) {
@@ -173,7 +173,8 @@ export default function wrap() {
   );
 
   const branchRes = useData(
-    pickupBranch && branchUserParameters({ branchId: pickupBranch })
+    pickupBranch &&
+      branchesFragments.branchUserParameters({ branchId: pickupBranch })
   );
 
   const infomediaData = {
