@@ -184,7 +184,7 @@ function mockSubmitPeriodicaArticleOrder() {
 function mockSessionUserParameters() {
   cy.fixture("sessionUserParametersNull.json").then((fixtureNull) => {
     cy.fixture("sessionUserParameters.json").then((fixture) => {
-      cy.intercept("POST", `${graphqlPath}`, (req) => {
+      cy.intercept("POST", `${fbiApiPath}`, (req) => {
         if (req.body.query.includes("session {")) {
           cy.returnUserParameters ? req.reply(fixture) : req.reply(fixtureNull);
           cy.alias = "sessionUser";
@@ -196,7 +196,7 @@ function mockSessionUserParameters() {
 
 function mockSubmitSessionUserParameters() {
   cy.fixture("submitSessionUserParameters.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("submitSession")) {
         req.reply(fixture);
       }

@@ -166,7 +166,7 @@ describe("ArticlePage", () => {
         });
       });
       cy.fixture("sessionUserParameters.json").then((fixture) => {
-        cy.intercept("POST", `${graphqlPath}`, (req) => {
+        cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (req.body.query.includes("session {")) {
             req.reply(fixture);
           }
