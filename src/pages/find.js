@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -86,16 +85,6 @@ function Find() {
       { shallow: true, ...settings }
     );
   }
-
-  // Sideeffects to be run when search query changes
-  useEffect(() => {
-    // Check that q is set and not the empty string
-    if (q && Object.values(q)?.length > 0) {
-      dataCollect.collectSearch({
-        search_request: { q, filters },
-      });
-    }
-  }, [JSON.stringify({ q, filters })]);
 
   return (
     <>

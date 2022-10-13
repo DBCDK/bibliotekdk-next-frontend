@@ -123,7 +123,11 @@ export function collectSuggestClick({ query, suggestion, suggest_query_hit }) {
  * @param {object} params
  * @param params.search_request
  */
-export function collectSearch({ search_request }) {
+export function collectSearch({
+  search_request,
+  search_response_works,
+  search_offset,
+}) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `mutation ($input: DataCollectInput!) {
@@ -134,6 +138,8 @@ export function collectSearch({ search_request }) {
       input: {
         search: {
           search_request,
+          search_response_works,
+          search_offset,
           session_id,
         },
       },

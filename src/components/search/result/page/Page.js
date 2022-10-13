@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import ResultRow from "../row";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
@@ -8,6 +8,7 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 import SearchFeedBack from "@/components/base/searchfeedback";
+import useDataCollect from "@/lib/useDataCollect";
 
 /**
  * Row representation of a search result entry
@@ -61,6 +62,7 @@ export default function Wrap({ page, onWorkClick }) {
 
   const { filters } = useFilters();
   const { getQuery, hasQuery } = useQ();
+  const dataCollect = useDataCollect();
 
   const q = getQuery();
 
@@ -71,6 +73,22 @@ export default function Wrap({ page, onWorkClick }) {
   const allResponse = useData(
     hasQuery && searchFragments.all({ q, limit, offset, filters })
   );
+
+  // This useEffect is responsible for collecting data about the search response.
+  // The effect is run, when search response is fetched and shown to the user.
+  useEffect(() => {
+    if (fastResponse?.data) {
+      dataCollect.collectSearch({
+        search_request: {
+          q,
+          filters,
+        },
+        search_response_works:
+          fastResponse?.data?.search?.works?.map((w) => w.workId) || [],
+        search_offset: offset,
+      });
+    }
+  }, [fastResponse?.data]);
 
   if (fastResponse.error || allResponse.error) {
     return null;
