@@ -38,6 +38,4 @@ export const options = {
   },
 };
 
-console.log(callbacks, "CALLBACK");
-
 export default NextAuth(options);
