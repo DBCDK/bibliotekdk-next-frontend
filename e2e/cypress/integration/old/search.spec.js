@@ -2,7 +2,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Search", () => {
-  it.only(`Should show search results`, () => {
+  it(`Should show search results`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="result-row"]').should("have.length", 10);
 
