@@ -25,7 +25,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   const [showImprove, setShowImprove] = useState(false);
 
   // useEffect depends on query parameters .. but not paging or modal ..
-  const excludeFromQuery = ["page", "modal"];
+  const excludeFromQuery = ["modal"];
   const filtered = router
     ? Object.entries(router.query).filter((entry, index) => {
         if (!excludeFromQuery.includes(entry[0])) {
@@ -33,14 +33,13 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
         }
       })
     : {};
-  const effectParams = (router && Object.fromEntries(filtered)) || {};
+  const effectParams =
+    (router?.query?.page && Object.fromEntries(filtered)) || {};
 
   useEffect(() => {
     if (!ForceshowMe) {
-      if (
-        (router && !router.query.page) ||
-        (router && router.query.page === "1")
-      ) {
+      // show search feedback if on page 1 or initial search (page is undefined)
+      if (router && (router?.query?.page === "1" || !router?.query?.page)) {
         setShowThumbs(true);
         setShowContainer(true);
         // if thumbs are set - all other elements should be gone .. especially the form
@@ -116,7 +115,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
  */
 export function SearchFeedBack({ onThumbsUp, onThumbsDown }) {
   return (
-    <div className={styles.thumbscontaioner}>
+    <div className={styles.thumbscontaioner} data-cy="cy-feedback-container">
       <Text type="text2" className={styles.feedbacktxt} lines={1} tag="span">
         {Translate({ context: "feedback", label: "search_feed_back_text" })}
       </Text>

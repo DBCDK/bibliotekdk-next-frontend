@@ -6,6 +6,9 @@ describe("Search", () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="result-row"]').should("have.length", 10);
 
+    // feedback should be visible
+    cy.get('[data-cy="cy-feedback-container"]').should("be.visible");
+
     // click grid view, should be reflected in url
     /** PJO removed gridview and listview - they do not work yet .. if ever
     cy.get('[data-cy="grid-button"]').first().click();
@@ -19,6 +22,8 @@ describe("Search", () => {
     // click page 2, should be reflected in url
     cy.get('[data-cy="page-2-button"]').click({ force: true });
     cy.url().should("include", "page=2");
+    // feedback should NOT be visible
+    cy.get('[data-cy="cy-feedback-container"]').should("not.exist");
 
     // click page 3, should be reflected in url
     cy.get('[data-cy="page-3-button"]').click({ force: true });
