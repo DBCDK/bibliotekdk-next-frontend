@@ -18,7 +18,7 @@ import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser, { useAccessToken } from "@/components/hooks/useUser";
-import { branchesForUser } from "@/lib/api/user.fragments";
+import * as userFragments from "@/lib/api/user.fragments";
 import TjoolTjip from "@/components/base/tjooltjip";
 
 const ERRORS = {
@@ -411,7 +411,7 @@ export default function Wrap(props) {
 
   // User branches fetch
   const { data: userData, isLoading: userIsLoading } = useData(
-    isAuthenticated && branchesForUser()
+    isAuthenticated && userFragments.branchesForUser()
   );
 
   const loggedInAgencyId = userData?.user?.agency?.result?.[0]?.agencyId;
