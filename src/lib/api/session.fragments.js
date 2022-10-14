@@ -1,10 +1,14 @@
 /**
  * submits session data
  */
+import { ApiEnums } from "@/lib/api/api";
+
 export function submitSession(input) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `mutation($input: SessionInput!) {
+    query: `
+    mutation($input: SessionInput!) {
       submitSession(input: $input)
     }
     `,
@@ -18,7 +22,9 @@ export function submitSession(input) {
  */
 export function deleteSession() {
   return {
-    query: `mutation {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    mutation {
       deleteSession
     }`,
     slowThreshold: 3000,
@@ -30,8 +36,10 @@ export function deleteSession() {
  */
 export function session() {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query session {
+    query: `
+    query session {
       session {
         userParameters {
           cpr
