@@ -6,10 +6,7 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as userFragments from "@/lib/api/user.fragments";
-import {
-  submitOrder,
-  submitPeriodicaArticleOrder,
-} from "@/lib/api/order.mutations";
+import * as orderMutations from "@/lib/api/order.mutations";
 
 import useUser from "@/components/hooks/useUser";
 
@@ -826,7 +823,7 @@ export default function Wrap(props) {
       updateLoanerInfo={updateLoanerInfo}
       onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) => {
         articleOrderMutation.post(
-          submitPeriodicaArticleOrder({
+          orderMutations.submitPeriodicaArticleOrder({
             pid,
             pickUpBranch,
             userName: loanerInfo?.userParameters?.userName,
@@ -837,7 +834,7 @@ export default function Wrap(props) {
       }}
       onSubmit={(pids, pickupBranch, periodicaForm = {}) => {
         orderMutation.post(
-          submitOrder({
+          orderMutations.submitOrder({
             pids,
             branchId: pickupBranch.branchId,
             userParameters: loanerInfo.userParameters,

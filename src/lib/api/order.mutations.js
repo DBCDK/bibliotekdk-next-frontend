@@ -4,6 +4,8 @@
  * @param {object} params
  * @param {string} params.workId the work id
  */
+import { ApiEnums } from "@/lib/api/api";
+
 export function submitOrder({
   pids,
   branchId,
@@ -15,13 +17,15 @@ export function submitOrder({
   pagination,
 }) {
   return {
-    query: `mutation ($input: SubmitOrderInput!){
-        submitOrder(input: $input){
-          status
-          orderId
-        }
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    mutation ($input: SubmitOrderInput!){
+      submitOrder(input: $input){
+        status
+        orderId
       }
-      `,
+    }
+    `,
     variables: {
       input: {
         pids,
@@ -49,11 +53,13 @@ export function submitPeriodicaArticleOrder({
   pagination,
 }) {
   return {
-    query: `mutation($input: PeriodicaArticleOrder!) {
-        submitPeriodicaArticleOrder(input: $input) {
-          status
-        }
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    mutation($input: PeriodicaArticleOrder!) {
+      submitPeriodicaArticleOrder(input: $input) {
+        status
       }
+    }
       `,
     variables: {
       input: {
