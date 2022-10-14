@@ -13,12 +13,6 @@ function mockLogin(customMock = {}) {
     body: {
       user: {
         uniqueId: "3ad8276b-43ed-430e-891d-3238996da656",
-        agencies: [
-          { agencyId: "190110", userId: "lkh@dbc.dk", userIdType: "LOCAL" },
-          { agencyId: "191977", userId: "10003", userIdType: "LOCAL" },
-          { agencyId: "191977", userId: "0102033696", userIdType: "CPR" },
-          { agencyId: "790900", userId: "C04122017435", userIdType: "LOCAL" },
-        ],
       },
       expires: "2021-06-26T07:00:09.408Z",
       accessToken: "dummy-token",
