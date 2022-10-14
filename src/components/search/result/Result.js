@@ -10,7 +10,6 @@ import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
 import Divider from "@/components/base/divider";
-import ViewSelector from "../viewselector";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
@@ -45,9 +44,11 @@ export function Result({
   return (
     <>
       <Section
-        contentDivider={null}
-        titleDivider={<Divider className={styles.titledivider} />}
-        topSpace={true}
+        divider={{
+          title: <Divider className={styles.titledivider} />,
+          content: false,
+        }}
+        space={{ top: "var(--pt8)" }}
         title={
           <div className={styles.right}>
             <div className={styles.titlewrapper}>
@@ -63,11 +64,6 @@ export function Result({
                 >
                   {hits}
                 </Title>
-                {/*<ViewSelector
-                  className={styles.viewselector}
-                  onViewSelect={onViewSelect}
-                  viewSelected={viewSelected}
-                />*/}
               </div>
             </div>
           </div>

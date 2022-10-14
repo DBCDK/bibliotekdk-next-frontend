@@ -26,7 +26,10 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   const context = { context: "content" };
 
   return (
-    <Section title={Translate({ ...context, label: "title" })} topSpace={true}>
+    <Section
+      title={Translate({ ...context, label: "title" })}
+      space={{ top: "var(--pt8)" }}
+    >
       <Row className={`${styles.content} ${className}`}>
         {data.content.map((n, i) => {
           return (

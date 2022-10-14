@@ -20,7 +20,7 @@ import styles from "./Triple.module.css";
  */
 export default function Triple({ articles, skeleton }) {
   return (
-    <Row>
+    <Row className={styles.container}>
       {articles.map((article, index) => (
         <Col xs={12} md={4} key={`${article.title}_${index}`}>
           <ArticlePreview article={article} skeleton={skeleton} />

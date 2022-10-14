@@ -21,12 +21,10 @@ export function Series({ isLoading, works = [] }) {
   // Translate Context
   const context = { context: "series" };
 
-  // BETA-1 hide series section ( hide={true} ) - it is not implemented
   return (
     <Section
       title={Translate({ ...context, label: "label" })}
-      topSpace={true}
-      hide={false}
+      space={{ top: "var(--pt8)" }}
     >
       <Row className={`${styles.series}`}>
         <Col xs={12} md>

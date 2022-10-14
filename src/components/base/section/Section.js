@@ -29,21 +29,41 @@ export default function Section({
   children = "Some content",
   className = "",
   dataCy = "section",
-  bgColor = null,
-  topSpace = false,
-  contentDivider = <Divider />,
-  titleDivider = <Divider />,
-  // to hide entire section
-  hide = false,
+  backgroundColor = null,
+  divider = {},
+  space = {},
 }) {
-  const backgroundColor = bgColor;
-  const backgroundClass = bgColor ? styles.background : "";
+  // background color class
+  const backgroundClass = backgroundColor ? styles.background : "";
 
-  const topSpaceClass = topSpace ? styles.topSpace : "";
+  // space settings can be boolean or custom
+  const _space = space ? { bottom: "var(--pt8)", top: false } : {};
+  space = typeof space === "object" ? { ..._space, ...space } : _space;
 
-  const noContentDividerClass = !contentDivider ? styles.noContentDivider : "";
-  const noTitleDividerClass = !titleDivider ? styles.noTitleDivider : "";
+  // divider settings can be boolean or custom
+  const _divider = divider ? { title: <Divider />, content: <Divider /> } : {};
+  divider =
+    typeof divider === "object" ? { ..._divider, ...divider } : _divider;
 
+  const contentDividerClass = divider?.content ? styles.divider : "";
+  const titleDividerClass = divider?.title ? styles.divider : "";
+
+  // inline styles (custom settings)
+  let style = {
+    paddingTop: space?.top,
+    paddingBottom: space?.bottom,
+  };
+
+  if (backgroundColor) {
+    style = {
+      ...style,
+      backgroundColor,
+      paddingTop: space?.top || "var(--pt8)",
+      marginBottom: space.bottom || "var(--pt8)",
+    };
+  }
+
+  // Title as component support
   if (title) {
     title =
       typeof title === "string" ? (
@@ -56,57 +76,50 @@ export default function Section({
   }
 
   return (
-    <div className={`${topSpaceClass} ${hide ? styles.hide : ""}`}>
-      <div
-        className={`${backgroundClass} ${className} `}
-        style={{ backgroundColor }}
-        data-cy={dataCy}
-      >
-        <Container fluid>
-          <Row as="section" className={`${styles.section}`}>
-            {title && (
-              <Col
-                xs={12}
-                lg={2}
-                data-cy={cyKey({ name: "title", prefix: "section" })}
-                className={noTitleDividerClass}
-              >
-                {titleDivider}
-                {title}
-                <div className={styles.bottomspacing}></div>
-              </Col>
-            )}
+    <div
+      className={`${backgroundClass} ${className}`}
+      style={style}
+      data-cy={dataCy}
+    >
+      <Container className={styles.container} fluid>
+        <Row as="section" className={styles.section}>
+          {title && (
             <Col
               xs={12}
-              lg={{ offset: title ? 1 : 0 }}
-              data-cy={cyKey({ name: "content", prefix: "section" })}
-              className={noContentDividerClass}
+              lg={2}
+              data-cy={cyKey({ name: "title", prefix: "section" })}
+              className={`${styles.title} ${titleDividerClass}`}
             >
-              {contentDivider}
-              {children}
+              {divider?.title}
+              {title}
             </Col>
-          </Row>
-        </Container>
-      </div>
+          )}
+          <Col
+            xs={12}
+            lg={{ offset: title ? 1 : 0 }}
+            data-cy={cyKey({ name: "content", prefix: "section" })}
+            className={`${styles.content} ${contentDividerClass}`}
+          >
+            {divider?.content}
+            {children}
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
 
 // PropTypes for component
 Section.propTypes = {
-  bgColor: PropTypes.string,
-  title: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object,
-    PropTypes.array,
-    PropTypes.bool,
-  ]),
-  dataCy: PropTypes.string,
+  title: PropTypes.any,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
   ]),
+  dataCy: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  space: PropTypes.object,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  hide: PropTypes.bool,
 };
