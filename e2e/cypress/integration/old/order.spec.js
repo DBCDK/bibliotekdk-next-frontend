@@ -161,7 +161,7 @@ function mockBranchesSearch() {
 
 function mockSubmitOrder() {
   cy.fixture("submitorder.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("submitOrder(")) {
         req.reply(fixture);
         req.alias = "submitOrder";
@@ -172,7 +172,7 @@ function mockSubmitOrder() {
 
 function mockSubmitPeriodicaArticleOrder() {
   cy.fixture("submitPeriodicaArticleOrder.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("submitPeriodicaArticleOrder(")) {
         req.reply(fixture);
         req.alias = "submitPeriodicaArticleOrder";
