@@ -1,4 +1,5 @@
 import { lang } from "@/components/base/translate";
+import { ApiEnums } from "@/lib/api/api";
 
 /**
  * @file Contains GraphQL queries all taking a workId as variable
@@ -11,8 +12,10 @@ import { lang } from "@/components/base/translate";
  */
 export function basic() {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query {
+    query: `
+    query {
       user {
         name
         mail
@@ -32,8 +35,10 @@ export function basic() {
  */
 export function branchesForUser() {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($language: LanguageCode! ) {
+    query: `
+    query ($language: LanguageCode! ) {
       user {
         agency (language: $language){
           result {
@@ -51,6 +56,7 @@ export function branchesForUser() {
 
 export function orderPolicy({ pid }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `query ($language: LanguageCode!, $pid: String! ) {
       user {

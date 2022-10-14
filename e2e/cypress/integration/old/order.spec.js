@@ -26,7 +26,7 @@ function mockLogin(customMock = {}) {
     },
   });
   cy.fixture("user.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(merge({}, fixture, customMock));
       }

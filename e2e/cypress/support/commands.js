@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
 /**
  * Tabs function
@@ -54,7 +55,7 @@ Cypress.Commands.add("login", () => {
     },
   });
   cy.fixture("user.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("user {")) {
         req.reply(fixture);
       }

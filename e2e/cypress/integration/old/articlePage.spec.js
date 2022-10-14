@@ -2,7 +2,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("ArticlePage", () => {
+describe.only("ArticlePage", () => {
   describe("News article (from drupal)", () => {
     before(() => {
       cy.visit("/iframe.html?id=articles-page--article-page&viewMode=story");
