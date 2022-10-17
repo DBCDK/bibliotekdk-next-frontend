@@ -12,7 +12,7 @@ export function SkipToMainLink() {
   return (
     <Link
       className={styles.skiptomainlink}
-      onClick={(e) => {
+      onClick={() => {
         location.href = "#nav-main";
       }}
       onKeyDown={(e) => {

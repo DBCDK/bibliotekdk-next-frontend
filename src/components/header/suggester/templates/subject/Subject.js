@@ -1,12 +1,6 @@
 import PropTypes from "prop-types";
-
 import { cyKey } from "@/utils/trim";
-
 import Text from "@/components/base/text";
-import Icon from "@/components/base/icon";
-
-import Translate from "@/components/base/translate";
-
 import styles from "./Subject.module.css";
 
 /**
@@ -19,11 +13,9 @@ import styles from "./Subject.module.css";
  *
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Subject({ className = "", data = {}, skeleton = false }) {
-  const context = { context: "suggester" };
-
   const skeletonClass = skeleton ? styles.skeleton : "";
 
   return (
@@ -68,7 +60,7 @@ export function Subject({ className = "", data = {}, skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function SubjectSkeleton(props) {
   return <Subject {...props} className={styles.skeleton} skeleton={true} />;
@@ -80,7 +72,7 @@ export function SubjectSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

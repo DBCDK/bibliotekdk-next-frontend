@@ -104,7 +104,6 @@ function parseArticles(manifestationPublic, workPublic, privateData) {
   const article = privateData?.data?.infomedia?.article;
 
   const returnArticles = [];
-  let articleindex = 0;
 
   const parsed = {
     article: {
@@ -140,7 +139,6 @@ function parseArticles(manifestationPublic, workPublic, privateData) {
       },
     };
   }
-  articleindex++;
   returnArticles.push(parsed);
 
   return returnArticles;

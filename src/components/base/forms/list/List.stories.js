@@ -42,7 +42,6 @@ export function RadioGroup() {
   );
 }
 export function SelectGroup() {
-  const [_selected, setSelected] = useState({});
   return (
     <div>
       <StoryTitle>Select Button Group</StoryTitle>
@@ -54,12 +53,7 @@ export function SelectGroup() {
         {rows.map((row) => (
           <List.Select
             key={row.title}
-            onSelect={() =>
-              setSelected(() => {
-                alert(`${row.title} selected`);
-                return `${row.title} selected`;
-              })
-            }
+            onSelect={() => alert(`${row.title} selected`)}
             label={row.title}
           >
             <b>{row.title}</b>

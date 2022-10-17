@@ -93,7 +93,7 @@ Checkbox.propTypes = {
  * Return loading version of component
  *
  */
-export function SkeletonCheckbox(props) {
+export function SkeletonCheckbox() {
   return (
     <div className={`${styles.input} ${styles.skeleton}`}>
       <Skeleton />

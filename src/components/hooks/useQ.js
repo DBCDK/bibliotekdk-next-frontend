@@ -1,15 +1,14 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import useSWR from "swr";
+import { SuggestTypeEnum } from "@/lib/enums";
+
 /**
  * Hook for q search param sync across components 🤯
  *
  * OBS! useQ hook is SWR connected and will trigger an update
  * on connected components.
  */
-
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-
-import useSWR from "swr";
-import { SuggestTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -246,9 +245,9 @@ function useQ() {
     const q = _getQuery();
 
     let count = 0;
-    Object.entries(q).map(([key, _]) => {
+    Object.entries(q).map((entry) => {
       // exluded keys
-      if (!exclude.includes(key)) {
+      if (!exclude.includes(entry[0])) {
         // if there is an actual value
         count++;
       }

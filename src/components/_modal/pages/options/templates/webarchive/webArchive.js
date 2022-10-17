@@ -5,13 +5,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./webArchive.module.css";
 
-export default function WebArchive({
-  url,
-  origin,
-  note,
-  className,
-  materialType,
-}) {
+export default function WebArchive({ url, note, className }) {
   const context = { context: "options" };
 
   return (

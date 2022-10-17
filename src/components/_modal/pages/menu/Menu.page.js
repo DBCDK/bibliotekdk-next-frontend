@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import Language from "@/components/base/language";
 
-import { materials, actions } from "@/lib/Navigation";
+import { actions } from "@/lib/Navigation";
 import { cyKey } from "@/utils/trim";
 
 import Top from "../base/top";
@@ -25,7 +24,7 @@ import styles from "./Menu.module.css";
  * @returns {component}
  */
 
-function Menu({ modal, context }) {
+function Menu({ modal }) {
   return (
     <div className={`${styles.menu}`} data-cy="menu-modal">
       <Top

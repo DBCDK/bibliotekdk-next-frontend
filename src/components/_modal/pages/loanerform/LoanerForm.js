@@ -192,11 +192,10 @@ export function UserParamsForm({ branch, initial, onSubmit, mode, originUrl }) {
  * for design to make up their mind
  *
  * @param originUrl
- * @param mode
  * @returns {string|*}
  */
 
-function originUrlToUrlName(originUrl, mode) {
+function originUrlToUrlName(originUrl) {
   return originUrl;
   // these are for dda (demand drive acquisition)
   // translate urls to something readable

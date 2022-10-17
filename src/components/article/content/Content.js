@@ -27,7 +27,7 @@ function ArticleHeader({ article, skeleton }) {
     (article?.fieldTags?.length > 0 &&
       article?.fieldTags
         ?.slice(0, 2)
-        .map((fieldTag, index) => fieldTag.entity.entityLabel)) || ["Nyhed"]
+        .map((fieldTag) => fieldTag.entity.entityLabel)) || ["Nyhed"]
   ).join(", ");
 
   const readTime = useMemo(() => {

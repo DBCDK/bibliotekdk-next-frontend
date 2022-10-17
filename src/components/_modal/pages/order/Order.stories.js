@@ -20,6 +20,7 @@ export default exportedObject;
  *
  */
 export function ToggleOrder() {
+  // eslint-disable-next-line no-unused-vars
   const [_query, setQuery] = useState({ modal: null });
 
   return (

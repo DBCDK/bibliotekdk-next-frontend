@@ -1,15 +1,10 @@
 import Dropdown from "react-bootstrap/Dropdown";
-
 import useFilters from "@/components/hooks/useFilters";
-
-import Link from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 import Tag from "@/components/base/forms/tag";
 import Translate from "@/components/base/translate";
-
 import { cyKey } from "@/utils/trim";
-
 import styles from "./Select.module.css";
 import React from "react";
 import useQ from "@/components/hooks/useQ";
@@ -70,23 +65,12 @@ export function Desktop({ options = [], onSelect, selected, className }) {
  * @param onSelect
  * @param selected
  * @param count
- * @param onFilterClick
  * @param className
  *
  * @return {JSX.Element}
  * @constructor
  */
-export function Mobile({
-  options = [],
-  onSelect,
-  selected,
-  count,
-  onFilterClick,
-  className,
-}) {
-  // Number of selected filters (in query)
-  count = count.toString();
-
+export function Mobile({ options = [], onSelect, selected, className }) {
   return (
     <div className={`${styles.materials} ${className}`}>
       {options.map((elem) => {

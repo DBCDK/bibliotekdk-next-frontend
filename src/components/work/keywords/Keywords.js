@@ -30,8 +30,7 @@ function url(keyword) {
 /**
  * getFontSize
  *
- * @param {obj} data
- * Get fontsize according to amount of keywords
+ * @param {Array} keywords Get fontsize according to amount of keywords
  *
  * @returns {obj} // styles.class
  */
@@ -156,7 +155,7 @@ export function KeywordsSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { workId, type, skeleton } = props;
+  const { workId } = props;
 
   // Call materialTypes mockdata API
   const { data, isLoading, error } = useData(workFragments.basic({ workId }));

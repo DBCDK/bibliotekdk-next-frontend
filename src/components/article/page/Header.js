@@ -16,7 +16,7 @@ import * as articleFragments from "@/lib/api/article.fragments";
 import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import Translate, { getLangcode } from "@/components/base/translate";
+import { getLangcode } from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -24,25 +24,17 @@ import Translate, { getLangcode } from "@/components/base/translate";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Header({ articleId }) {
   const language = getLangcode();
   const data = useData(articleFragments.article({ articleId, language }));
-
-  const context = { context: "metadata" };
 
   if (!data.data || !data.data.article || data.isLoading || data.error) {
     return null;
   }
 
   const article = data.data.article;
-
-  const pageTitle = Translate({
-    ...context,
-    label: "article-title",
-    vars: [article.title],
-  });
 
   return (
     <Head>

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 
@@ -22,7 +21,7 @@ import styles from "./MaterialReview.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function MaterialReview({
   className = "",
@@ -160,7 +159,7 @@ function LectorReview({ data, skeleton }) {
  * @return {JSX.Element|string}
  * @constructor
  */
-function LectorLink({ paragraph, skeleton }) {
+function LectorLink({ paragraph }) {
   if (!paragraph.work) {
     return ". ";
   }
@@ -180,13 +179,10 @@ function LectorLink({ paragraph, skeleton }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param
-    {obj}
-    props
+ * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns
-    {component}
+ * @returns {JSX.Element}
  */
 export function MaterialReviewSkeleton(props) {
   const data = {
@@ -211,16 +207,13 @@ export function MaterialReviewSkeleton(props) {
 /**
  *  Default export function of the Component
  *
- * @param
-    {obj}
-    props
+ * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns
-    {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  const { data, error, isSkeleton } = props;
+  const { error, isSkeleton } = props;
 
   if (isSkeleton) {
     return <MaterialReviewSkeleton />;

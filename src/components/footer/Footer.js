@@ -1,20 +1,18 @@
-/** @file
- * Footer
- * holds a section with logo and three columns with description and links
- * well section .. rather a copy paste from the Section component
- */
-
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Language from "@/components/base/language";
 import Link from "@/components/base/link";
 import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
-
 import styles from "./Footer.module.css";
 import Logo from "@/components/base/logo/Logo";
+
+/** @file
+ * Footer
+ * holds a section with logo and three columns with description and links
+ * well section .. rather a copy paste from the Section component
+ */
 
 /**
  * The logo @see icons/logowhite.svg
@@ -168,7 +166,7 @@ const ThirdColumn = () => {
  * Generate links for materialtypes
  * Object holding info to generate links to materialtypes
  * NOTICE Keys are translated
- * @returns {}
+ * @returns {JSX.Element}
  * @constructor
  */
 const BranchLinks = () => {
@@ -185,7 +183,7 @@ const BranchLinks = () => {
   // BETA-1 all these links are disabled .. should they be removed?
   const footerlinksdisabled = true;
 
-  return Object.keys(branch_links).map((key, index) => (
+  return Object.keys(branch_links).map((key) => (
     <div key={key}>
       <Link
         href={branch_links[key]}
@@ -209,8 +207,6 @@ const BranchLinks = () => {
 
 /**
  * Defines the footer section - one row with four columns
- * @param className
- * @param bgColor
  * @returns {JSX.Element}
  * @constructor
  */

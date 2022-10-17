@@ -82,7 +82,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
       ? firstholding.expectedDelivery
       : "";
 
-  const messages = (label, _) => {
+  const messages = (label) => {
     const translated = {
       no_loc_no_holding: Translate({
         context: "holdings",
@@ -132,7 +132,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
                 tag="span"
                 className={blinkingcolors.includes(color) ? styles.inline : ""}
               >
-                {messages(label, branch)}
+                {messages(label)}
               </Text>
             </span>
             {showLink && (

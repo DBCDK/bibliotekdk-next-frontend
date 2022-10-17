@@ -14,72 +14,8 @@ import Swiper from "react-id-swiper";
 import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
-import Icon from "@/components/base/icon";
-import Translate from "@/components/base/translate";
-
-/**
- * The left arrow React component
- *
- * @param {Object} props
- * @param {function} props.onClick OnClick handler
- * @param {boolean} props.disabled true if button is disabled
- * @param {boolean} props.leftAdjust true if there is for the button to the left
- *
- */
-function ArrowLeft({ onClick, disabled, leftAdjust }) {
-  return (
-    <span
-      className={`${styles.button} ${styles.left} ${
-        leftAdjust && styles["left-adjust"]
-      } ${disabled && styles.disabled}`}
-      data-cy="arrow-left"
-      onClick={onClick}
-    >
-      <Icon
-        src={"arrowleft.svg"}
-        size={{ w: 5, h: 5 }}
-        bgColor={"transparent"}
-        alt={Translate({ context: "recommendations", label: "arrow-left" })}
-      />
-    </span>
-  );
-}
-ArrowLeft.propTypes = {
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-  leftAdjust: PropTypes.bool,
-};
-
-/**
- * The right arrow React component
- *
- * @param {Object} props
- * @param {function} props.onClick OnClick handler
- * @param {boolean} props.disabled true if button is disabled
- *
- */
-function ArrowRight({ onClick, disabled }) {
-  return (
-    <span
-      className={`${styles.button} ${styles.right} ${
-        disabled && styles.disabled
-      }`}
-      data-cy="arrow-right"
-      onClick={onClick}
-    >
-      <Icon
-        src={"arrowright.svg"}
-        size={{ w: 5, h: 5 }}
-        bgColor={"transparent"}
-        alt={Translate({ context: "recommendations", label: "arrow-right" })}
-      />
-    </span>
-  );
-}
-ArrowRight.propTypes = {
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-};
+import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
+import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 /**
  * The work slider skeleton React component

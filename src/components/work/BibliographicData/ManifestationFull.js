@@ -22,7 +22,6 @@ import * as localizationsFragments from "@/lib/api/localizations.fragments";
 /**
  * Column one of full view. Some links and a button.
  * @param manifestation
- * @param worktypes
  * @param localizations
  * @param localizationsLoading
  * @param openOrderModal
@@ -34,7 +33,6 @@ import * as localizationsFragments from "@/lib/api/localizations.fragments";
  */
 function ColumnOne({
   manifestation,
-  worktypes,
   localizations,
   localizationsLoading,
   openOrderModal,
@@ -129,7 +127,6 @@ export function ManifestationFull({
   openOrderModal,
   user,
 }) {
-  const workType = work.workTypes;
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
@@ -140,7 +137,6 @@ export function ManifestationFull({
     <Row>
       <ColumnOne
         manifestation={manifestation}
-        worktypes={workType}
         localizations={localizations}
         localizationsLoading={localizationsLoading}
         openOrderModal={openOrderModal}

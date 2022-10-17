@@ -22,7 +22,6 @@ import Page from "@/components/article/page";
 import ArticleHeader from "@/components/article/page/Header";
 import Header from "@/components/header/Header";
 import React from "react";
-import Footer from "@/components/footer";
 
 /**
  * Renders the WorkPage component

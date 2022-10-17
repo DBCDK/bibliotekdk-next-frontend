@@ -8,7 +8,6 @@ import * as workFragments from "@/lib/api/work.fragments";
 
 import { cyKey } from "@/utils/trim";
 
-import Icon from "@/components/base/icon";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 
@@ -18,6 +17,9 @@ import MaterialReview from "./types/material";
 
 import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
+
+import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
+import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 /**
  * Selecting the correct review template
@@ -41,78 +43,12 @@ function getTemplate(type) {
 }
 
 /**
- * The left arrow React component
- *
- * @param {Object} props
- * @param {function} props.onClick OnClick handler
- * @param {boolean} props.disabled true if button is disabled
- * @param {boolean} props.leftAdjust true if there is for the button to the left
- *
- */
-function ArrowLeft({ onClick, disabled, leftAdjust }) {
-  return (
-    <span
-      className={`${styles.button} ${styles.left} ${
-        leftAdjust && styles["left-adjust"]
-      } ${disabled && styles.disabled}`}
-      data-cy="arrow-left"
-      onClick={onClick}
-    >
-      <Icon
-        src={"arrowleft.svg"}
-        size={{ w: 5, h: 5 }}
-        bgColor={"transparent"}
-        alt={Translate({ context: "recommendations", label: "arrow-left" })}
-      />
-    </span>
-  );
-}
-
-ArrowLeft.propTypes = {
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-  leftAdjust: PropTypes.bool,
-};
-
-/**
- * The right arrow React component
- *
- * @param {Object} props
- * @param {function} props.onClick OnClick handler
- * @param {boolean} props.disabled true if button is disabled
- *
- */
-function ArrowRight({ onClick, disabled }) {
-  return (
-    <span
-      className={`${styles.button} ${styles.right} ${
-        disabled && styles.disabled
-      }`}
-      data-cy="arrow-right"
-      onClick={onClick}
-    >
-      <Icon
-        src={"arrowright.svg"}
-        size={{ w: 5, h: 5 }}
-        bgColor={"transparent"}
-        alt={Translate({ context: "recommendations", label: "arrow-right" })}
-      />
-    </span>
-  );
-}
-
-ArrowRight.propTypes = {
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-};
-
-/**
  * The Component function
  *
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
@@ -175,10 +111,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     }
   }
 
-  const hasMaterialReview = !!(
-    data[0] && data[0].reviewType === "MATERIALREVIEWS"
-  );
-
   return (
     <Section
       className={`${styles.reviews} ${className}`}
@@ -232,7 +164,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function ReviewsSkeleton(props) {
   const data = [
@@ -278,7 +210,7 @@ export function ReviewsSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;

@@ -1,12 +1,7 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Dropdown as BootstrapDropdown } from "react-bootstrap";
-
 import { cyKey } from "@/utils/trim";
-
-import Skeleton from "@/components/base/skeleton";
-import Icon from "@/components/base/icon";
-
 import styles from "./Dropdown.module.css";
 
 /**
@@ -17,12 +12,7 @@ import styles from "./Dropdown.module.css";
  *
  * @returns {component}
  */
-function Dropdown({
-  children = "im a tag",
-  className = "",
-  disabled = false,
-  skeleton = false,
-}) {
+function Dropdown({ children = "im a tag", className = "", disabled = false }) {
   const key = cyKey({ name: children, prefix: "tag" });
   const disabledStyle = disabled ? styles.disabled : "";
   const [selected, setSelected] = useState("Søg i alt");
@@ -80,13 +70,12 @@ function Dropdown({
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function DropdownSkeleton(props) {
   return (
     <Dropdown
       {...props}
-      skeleton={true}
       className={`${props.className} ${styles.skeleton}`}
       onClick={null}
       disabled={true}
@@ -101,7 +90,7 @@ function DropdownSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

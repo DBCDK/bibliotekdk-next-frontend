@@ -1,13 +1,7 @@
 import { Row, Col } from "react-bootstrap";
-
 import { useModal } from "@/components/_modal";
-
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
-
 import Section from "@/components/base/section";
-
-import Related from "@/components/search/related";
-
 import styles from "./Searchbar.module.css";
 import { MobileMaterialSelect } from "@/components/search/select";
 import ExpandedSearchMobile from "@/components/header/expandedsearchmobile/ExpandedSearchMobile";
@@ -20,10 +14,9 @@ import { useRouter } from "next/router";
  * It acts like a button to open the mobile suggester modal
  *
  *
- * @param {obj} props
- * @param {string} props.className
+ * @param {string} q
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Searchbar({ q }) {
   // modal

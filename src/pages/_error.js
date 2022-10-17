@@ -9,12 +9,11 @@ import { Custom } from "@/pages/404";
 
 /**
  * Handle 500 errorcode - return page not found
- * @param statusCode
  * @returns {JSX.Element}
  * @constructor
  */
 
-function Error({ statusCode }) {
+function Error() {
   return <Custom />;
 }
 
