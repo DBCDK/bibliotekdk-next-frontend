@@ -12,7 +12,7 @@
     "start:storybook": "[ \"$ENABLE_STORYBOOK\" = \"1\" ] && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
     "dev": "run-p dev:storybook dev:next",
     "start": "run-p start:storybook start:next",
-    "lint": "eslint src/",
+    "lint": "next lint",
     "cy:run": "npx cypress@9 run --project ./e2e",
     "cy:open": "npx cypress@9 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js'",
@@ -23,11 +23,11 @@
   "devDependencies": {
     "@graphql-tools/mock": "^8.6.1",
     "@graphql-tools/schema": "^8.3.3",
-    "@storybook/addon-a11y": "^6.1.21",
-    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-a11y": "^6.5.12",
+    "@storybook/addon-actions": "^6.5.12",
     "@storybook/addon-knobs": "^6.1.21",
-    "@storybook/addon-storysource": "^6.1.21",
-    "@storybook/react": "^6.4.9",
+    "@storybook/addon-storysource": "^6.5.12",
+    "@storybook/react": "^6.5.12",
     "@svgr/webpack": "^5.5.0",
     "babel-jest": "^27.4.6",
     "css-loader": "^3.4.1",
@@ -43,7 +43,7 @@
     "jest": "^26.6.0",
     "prettier": "^2.3.2",
     "sass-loader": "^10",
-    "storybook-addon-next-router": "^3.1.1",
+    "storybook-addon-next-router": "^4.0.1",
     "style-loader": "^1.1.2"
   },
   "dependencies": {
