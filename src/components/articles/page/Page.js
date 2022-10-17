@@ -54,7 +54,7 @@ export default function Page() {
         <Section
           className={styles.articles}
           title={Translate({ context: "articles", label: "section-title" })}
-          contentDivider={false}
+          divider={{ content: false }}
         >
           <Articles />
         </Section>

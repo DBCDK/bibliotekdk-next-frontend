@@ -34,7 +34,7 @@ export default function Searchbar({ q }) {
     <div className={styles.wrap}>
       <Section
         title={false}
-        bgColor={"var(--concrete)"}
+        backgroundColor={"var(--concrete)"}
         className={styles.section}
       >
         <Row>

@@ -37,8 +37,7 @@ export function BibliographicData({ work, workId }) {
         context: "bibliographic-data",
         label: "storytitle",
       })}
-      contentDivider={null}
-      topSpace={true}
+      divider={{ content: false }}
     >
       <Accordion>
         {sliced.map((manifestation, index) => {

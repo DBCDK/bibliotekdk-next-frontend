@@ -36,6 +36,7 @@ export function Promoted({ className, data }) {
       className={`${styles.promoted} ${className}`}
       title={Translate({ context: "help", label: "faq-title" })}
       dataCy="faq"
+      space={{ bottom: false }}
     >
       <Row>
         <Col lg="8">
