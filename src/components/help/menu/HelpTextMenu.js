@@ -174,7 +174,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = useData(
-    publishedHelptexts({ langcode: getLangcode() })
+    publishedHelptexts({ language: getLangcode() })
   );
 
   if (isLoading) {

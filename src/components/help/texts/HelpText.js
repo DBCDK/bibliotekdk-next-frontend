@@ -41,7 +41,7 @@ export function HelpText({ helptext }) {
  * @constructor
  */
 export default function Wrap({ helpTextId }) {
-  const args = { ...helpTextId, ...{ langcode: getLangcode() } };
+  const args = { ...helpTextId, ...{ language: getLangcode() } };
   const { isLoading, data, error } = useData(helpText(args));
 
   if (isLoading) {
