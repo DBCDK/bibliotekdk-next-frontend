@@ -1,9 +1,8 @@
 import { Localizations } from "./Localizations";
 import { LocalizationItem } from "./LocalizationItem";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
-import useUser from "@/components/hooks/useUser";
 import Modal, { useModal } from "@/components/_modal";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default {
   title: "modal/Localizations",
@@ -168,26 +167,16 @@ const dummySearch = {
 export function LocalizationLink() {
   const type = "Bog";
 
-  const props = {
-    title: "fisk",
-    workId: "work-of:870970-basis:01362984",
-    //materialType: selectedMaterial.materialType,
-    materialType: type,
-  };
-
   const selectedLocalizations = dummylocalizations?.work?.materialTypes?.filter(
     (mat) => mat.materialType === type
   )[0];
 
-  const context = { ...props, ...selectedLocalizations };
   const alertopener = () => {};
-  const user = useUser();
 
   return (
     <LocalizationsLink
       opener={alertopener}
       localizations={selectedLocalizations.localizations}
-      user={user}
     />
   );
 }
@@ -215,13 +204,6 @@ export function LocalizationItemGreen() {
     message: "loc_holding",
   };
 
-  const props = {
-    holdings: holdings,
-    index: 0,
-    testing: true,
-    branchId: dummybranch.branchId,
-    branch: { dummybranch },
-  };
   return (
     <LocalizationItem
       pids={[]}
@@ -317,7 +299,6 @@ export function LocalizationsList() {
 
   const context = { ...props, ...selectedLocalizations };
   const alertopener = () => {};
-  const user = useUser();
   const modal = useModal();
   // simulate order submit and callback
   useEffect(() => {
