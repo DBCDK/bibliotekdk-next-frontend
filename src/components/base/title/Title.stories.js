@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { StoryTitle } from "@/storybook";
 
 import Title from "./Title";
@@ -26,12 +27,12 @@ export function Titles() {
       <StoryTitle>Titles</StoryTitle>
 
       {titles.map((type, i) => (
-        <React.Fragment key={type}>
+        <Fragment key={type}>
           <StoryTitle>{`${type} [${size[i]}]`}</StoryTitle>
           <Title tag="h1" key={type} type={type}>
             Hello World
           </Title>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
@@ -47,13 +48,13 @@ export function Loading() {
       <StoryTitle>Loading Titles</StoryTitle>
 
       {titles.map((type) => (
-        <React.Fragment key={type}>
+        <Fragment key={type}>
           <StoryTitle>{`Loading Title [${type}]`}</StoryTitle>
 
           <Title tag="h1" type={type} skeleton={true}>
             Hello World
           </Title>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

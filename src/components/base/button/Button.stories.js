@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Button from "./Button";
 import Skeleton from "@/components/base/skeleton";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 export default {
   title: "base/Buttons",
@@ -26,12 +26,12 @@ export function Primary() {
       </StoryDescription>
       <div style={{ maxWidth: 400 }}>
         {sizes.map((size) => (
-          <React.Fragment key={`${type}-${size}`}>
+          <Fragment key={`${type}-${size}`}>
             <Button type={type} size={size}>
               {size}
             </Button>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
 
@@ -39,12 +39,12 @@ export function Primary() {
 
       <div style={{ maxWidth: 400 }}>
         {sizes.map((size) => (
-          <React.Fragment key={`${type}-${size}`}>
+          <Fragment key={`${type}-${size}`}>
             <Button type={type} size={size} disabled={true}>
               {size}
             </Button>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </div>
@@ -65,23 +65,23 @@ export function Secondary() {
         Secondary buttons adapts to content [inline]
       </StoryDescription>
       {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
+        <Fragment key={`${type}-${size}`}>
           <Button type={type} size={size}>
             {size}
           </Button>
           <StorySpace space="2" />
-        </React.Fragment>
+        </Fragment>
       ))}
 
       <StoryTitle>[Disabled] Secondary buttons </StoryTitle>
 
       {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
+        <Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} disabled={true}>
             {size}
           </Button>
           <StorySpace space="2" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
@@ -108,12 +108,12 @@ export function Loading() {
       </StoryDescription>
 
       {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
+        <Fragment key={`${type}-${size}`}>
           <Button type={type} size={size} skeleton={true}>
             {size}
           </Button>
           <StorySpace space="2" />
-        </React.Fragment>
+        </Fragment>
       ))}
 
       <StoryTitle>[isSlow] Loading Secondary buttons</StoryTitle>
@@ -123,14 +123,14 @@ export function Loading() {
       </StoryDescription>
 
       {sizes.map((size) => (
-        <React.Fragment key={`${type}-${size}`}>
+        <Fragment key={`${type}-${size}`}>
           <Button className="relative" disabled={true} type={type} size={size}>
             <Skeleton isSlow={isSlow} />
             {size}
           </Button>
 
           <StorySpace space="2" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

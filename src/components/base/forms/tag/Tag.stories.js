@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { StoryTitle, StorySpace } from "@/storybook";
 
 import Tag from "./Tag";
@@ -32,12 +32,12 @@ export function TagButton() {
         const isSelected = selectedType === type;
 
         return (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <Tag selected={isSelected} onClick={() => setSelectedType(type)}>
               {type}
             </Tag>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>
@@ -54,14 +54,14 @@ export function Loading() {
       </Tag>
 
       <StoryTitle>Multiple tags [Radio style]</StoryTitle>
-      {types.map((type, i) => {
+      {types.map((type) => {
         return (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <Tag selected={false} skeleton={true}>
               {type}
             </Tag>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>

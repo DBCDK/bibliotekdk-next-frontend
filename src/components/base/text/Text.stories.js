@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { StoryTitle, StorySpace } from "@/storybook";
 
 import Text from "./Text";
@@ -21,7 +22,7 @@ export function Body() {
 
       <div style={{ maxWidth: 600 }}>
         {texts.map((type, i) => (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <StoryTitle>
               {type} [{size[i]}]
             </StoryTitle>
@@ -34,7 +35,7 @@ export function Body() {
             </Text>
 
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </div>

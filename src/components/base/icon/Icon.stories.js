@@ -1,4 +1,5 @@
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { Fragment } from "react";
+import { StoryTitle, StorySpace } from "@/storybook";
 
 import Icon from "./Icon";
 
@@ -21,10 +22,10 @@ export function BasicIcon() {
       <StoryTitle>Icons sized according to width [auto height]</StoryTitle>
       {sizes.map((size) => {
         return (
-          <React.Fragment key={size}>
+          <Fragment key={size}>
             <Icon src={src} size={{ w: size, h: "auto" }} />
             <StorySpace space="5" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>
@@ -44,10 +45,10 @@ export function RoundIcon() {
       <StoryTitle>Icons sized according to width and height</StoryTitle>
       {sizes.map((size) => {
         return (
-          <React.Fragment key={size}>
+          <Fragment key={size}>
             <Icon src={src} size={{ w: size, h: size }} bgColor={bgColor} />
             <StorySpace space="5" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>
@@ -69,21 +70,21 @@ export function Loading() {
       <StoryTitle>Loading basic icons</StoryTitle>
       {sizes.map((size) => {
         return (
-          <React.Fragment key={size}>
+          <Fragment key={size}>
             <Icon
               src={src1}
               size={{ w: size, h: "auto" }}
               skeleton={skeleton}
             />
             <StorySpace space="5" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
 
       <StoryTitle>Loading round icons</StoryTitle>
       {sizes.map((size) => {
         return (
-          <React.Fragment key={size}>
+          <Fragment key={size}>
             <Icon
               src={src2}
               size={{ w: size, h: size }}
@@ -91,7 +92,7 @@ export function Loading() {
               skeleton={skeleton}
             />
             <StorySpace space="5" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>

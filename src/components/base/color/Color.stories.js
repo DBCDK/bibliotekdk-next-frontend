@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Color from "./Color";
@@ -25,10 +26,10 @@ export const Primary = () => {
       </StoryDescription>
 
       {colors.map((color) => (
-        <React.Fragment key={color.name}>
+        <Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
           <StorySpace space="5" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
@@ -60,10 +61,10 @@ export const Secondary = () => {
         color name
       </StoryDescription>
       {colors.map((color) => (
-        <React.Fragment key={color.name}>
+        <Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
           <StorySpace space="5" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
@@ -88,10 +89,10 @@ export const Greys = () => {
         color name
       </StoryDescription>
       {colors.map((color) => (
-        <React.Fragment key={color.name}>
+        <Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
           <StorySpace space="5" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
@@ -121,10 +122,10 @@ export const Alerts = () => {
         color name
       </StoryDescription>
       {colors.map((color) => (
-        <React.Fragment key={color.name}>
+        <Fragment key={color.name}>
           <Color hex={color.hex} name={color.name} />
           <StorySpace space="5" />
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );
