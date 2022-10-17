@@ -73,7 +73,6 @@ export default function Pagination({
                 key={index}
                 size={{ w: 4, h: 4 }}
                 bgColor={"var(--blue)"}
-                skeleton={false}
                 className={
                   !isLoading && page === currentPage ? styles.selected : ""
                 }
