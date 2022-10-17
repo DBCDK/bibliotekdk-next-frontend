@@ -13,7 +13,7 @@ export default {
         <GraphQLMocker
           url={
             context?.parameters?.graphql?.url ||
-            "https://fbi-api.dbc.dk/bibdk21/graphql"
+            "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql"
           }
           resolvers={context?.parameters?.graphql?.resolvers}
           beforeFetch={context?.parameters?.graphql?.urlbeforeFetch}
