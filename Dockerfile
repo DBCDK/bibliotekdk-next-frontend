@@ -6,12 +6,14 @@ WORKDIR /home/node/app
 # copy project file
 COPY . .
 
+RUN npm version
+
 # install dependencies
 RUN npm set progress=false && npm config set depth 0 && \
     npm install
 
 # Run lint and tests
-# RUN npm run lint && \
+RUN npm run lint
 RUN npm run test
 
 # build for production
