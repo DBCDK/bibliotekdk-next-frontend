@@ -1,10 +1,10 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "plugin:css-modules/recommended",
-    "plugin:cypress/recommended"
+    "plugin:cypress/recommended",
+    "plugin:css-modules/recommended"
   ],
-  "plugins": ["cypress", "mocha", "prettier"],
+  "plugins": ["cypress", "css-modules", "mocha", "prettier"],
   "rules": {
     "prettier/prettier": "error",
     "mocha/no-exclusive-tests": "error",
@@ -14,16 +14,17 @@
     // TODO: Turn these on at some point
     /* next/core-web-vitals */
     "@next/next/no-img-element": "off",
-    "import/no-anonymous-default-export": "off",
-    "react/jsx-key": "off",
-    "react/jsx-no-duplicate-props": "off",
-    "react/jsx-no-undef": "off",
+//    "import/no-anonymous-default-export": "off",
+//    "react/jsx-key": "off",
+//    "react/jsx-no-duplicate-props": "off",
+//    "react/jsx-no-undef": "off",
     "react/no-children-prop": "off",
-    "react/no-unescaped-entities": "off",
+//    "react/no-unescaped-entities": "off",
     "react-hooks/exhaustive-deps": "off",
-    "react-hooks/rules-of-hooks": "off",
+//    "react-hooks/rules-of-hooks": "off",
 
     /* plugin:css-modules/recommended */
+    /** Keep this rule because of error **/
     "css-modules/no-unused-class": "off",
     "css-modules/no-undef-class": "off"
   }
