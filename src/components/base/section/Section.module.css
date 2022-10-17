@@ -3,7 +3,6 @@
 }
 
 /* has divider class */
-
 hr.divider {
   width: 50%;
   height: 1px;
@@ -12,16 +11,24 @@ hr.divider {
   background-color: var(--iron);
 }
 
-.background hr.divider {
+.content hr.divider {
   display: none;
 }
 
+.background hr.divider {
+  display: none !important;
+}
+
 @media (min-width: 992px) {
+  .title {
+    padding-bottom: 0;
+  }
+
   .title hr.divider {
     width: 100%;
   }
 
-  .title {
-    padding-bottom: 0;
+  .content hr.divider {
+    display: block;
   }
 }

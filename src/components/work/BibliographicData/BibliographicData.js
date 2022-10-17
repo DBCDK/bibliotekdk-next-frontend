@@ -38,7 +38,6 @@ export function BibliographicData({ work, workId }) {
         label: "storytitle",
       })}
       divider={{ content: false }}
-      space={{ top: "var(--pt8)" }}
     >
       <Accordion>
         {sliced.map((manifestation, index) => {
