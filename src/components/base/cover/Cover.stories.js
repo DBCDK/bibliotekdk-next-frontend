@@ -21,16 +21,13 @@ const urls = [
  *
  */
 export function SimpleCover() {
-  const doppler =
-    "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25775481&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f36e2a71599c57976cb4";
-
   return (
     <div>
       <StoryTitle>Cover</StoryTitle>
 
       {sizes.map((size) => {
         return (
-          <div style={{ display: "flex" }}>
+          <div key={size} style={{ display: "flex" }}>
             {urls.map((url) => (
               <Cover key={size + url} src={url} size={size} />
             ))}
@@ -56,7 +53,7 @@ export function BookmarkInCover() {
       </StoryDescription>
       {sizes.map((size) => {
         return (
-          <div style={{ display: "flex" }}>
+          <div key={size} style={{ display: "flex" }}>
             {urls.map((url) => (
               <Cover
                 key={size + url}
@@ -87,7 +84,7 @@ export function Loading() {
       <StoryTitle>Loading Cover</StoryTitle>
       {sizes.map((size) => {
         return (
-          <div style={{ display: "flex" }}>
+          <div key={size} style={{ display: "flex" }}>
             {urls.map((url) => (
               <Cover
                 key={size + url}
