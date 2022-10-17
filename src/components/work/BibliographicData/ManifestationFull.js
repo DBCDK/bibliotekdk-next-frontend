@@ -76,7 +76,6 @@ function ColumnOne({
               localizations={localizations?.localizations}
               isLoading={localizationsLoading}
               materialType={manifestation.materialType}
-              user={user}
             />
           </span>
         </div>
@@ -173,7 +172,7 @@ export function ManifestationFull({
   );
 }
 
-export default function wrap({ manifestation, work, workId }) {
+export default function Wrap({ manifestation, work, workId }) {
   const modal = useModal();
   const openLocalizationsModal = () => {
     modal.push("localizations", {

@@ -1,11 +1,8 @@
 import { useRouter } from "next/router";
 import { useModal } from "@/components/_modal";
-
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
-
-import styles from "./Alternatives.module.css";
 import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/ReservationButton";
 
 export function AlternativeOptions({ modal = null, context = {} }) {
@@ -39,7 +36,7 @@ export function AlternativeOptions({ modal = null, context = {} }) {
   );
 }
 
-export default function wrap({ selectedMaterial }) {
+export default function Wrap({ selectedMaterial }) {
   const manifestations = selectedMaterial?.manifestations;
   const requestButton = checkRequestButtonIsTrue({ manifestations });
   const modal = useModal();

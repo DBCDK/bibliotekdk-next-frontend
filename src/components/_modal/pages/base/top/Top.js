@@ -95,19 +95,26 @@ export function Back({ className, onBack }) {
 
 /**
  *
- * @param {*} props
- * @param {obj} props.className
- * @param {string} props.label
- * @param {func} props.close
- * @returns {component}
+ * @param modalBeforeCheck
+ * @param {object} className
+ * @param title
+ * @param {boolean} back
+ * @param {boolean} sticky
+ * @returns {JSX.Element}
  */
 export default function Top({
-  modal = useModal(),
+  modal: modalBeforeCheck,
   className = {},
   title,
   back = true,
   sticky = false,
 }) {
+  let modal = useModal();
+
+  if (modalBeforeCheck) {
+    modal = modalBeforeCheck;
+  }
+
   const showBack = back && modal.index?.() > 0;
 
   const stickyClass = sticky ? styles.sticky : "";

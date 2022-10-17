@@ -61,7 +61,7 @@ export function SuggesterWithInput({
   );
 }
 
-export default function wrap({ title = "", type = "" }) {
+export default function Wrap({ title = "", type = "" }) {
   const { q, setQ, setQuery } = useQ();
 
   // connected filters hook

@@ -80,7 +80,7 @@ let _stack = [];
 
 /**
  *
- * @param children
+ * @param {object|Array} children
  * @param {obj} className
  * @param mock
  * @param {string} className.dimmer
@@ -90,12 +90,10 @@ let _stack = [];
  */
 function Container({ children, className = {}, mock = {} }) {
   if (!children) {
-    return null;
-  }
-
-  // If container only has 1 child, children is object
-  // We want children to always be handled as an array
-  if (!Array.isArray(children)) {
+    children = [];
+  } else if (!Array.isArray(children)) {
+    // If container only has 1 child, children is object
+    // We want children to always be handled as an array
     children = [children];
   }
 
@@ -279,6 +277,10 @@ function Container({ children, className = {}, mock = {} }) {
 
   // Debug -> remove me in future
   console.log("Debug: ", { stack: modal.stack });
+
+  if (children.length <= 0) {
+    return null;
+  }
 
   return (
     <div
@@ -523,7 +525,7 @@ export function useModal() {
    *
    * @returns {int}
    */
-  function _index(id) {
+  function _index(id = null) {
     if (id) {
       return _stack.findIndex((obj) => obj.id === id);
     }

@@ -39,6 +39,7 @@ function MenuLink({ label, href = "#!", active = false }) {
  * @param menus
  * @param groups
  * @param helpTextId
+ * @param className
  * @return {*}
  * @constructor
  */
@@ -48,10 +49,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
   return groups.map((group, index) => {
     const expanded = index === expandedGroup;
 
-    // find the active link if this is a direct entry
-    let activelink = false;
-
-    activelink = menus[group.name].find(
+    const activelink = menus[group.name].find(
       ({ id }) => parseInt(helpTextId, "10") === id
     );
 
@@ -108,12 +106,13 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
  * Entry function for helptext menu, parse helptext in menu groups - return the menu
  * @param helpTexts
  * @param helpTextId
+ * @param props
  * @return {JSX.Element}
  * @constructor
  */
 export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const menus = helpTextParseMenu(helpTexts);
-  const groups = Object.keys(menus).map((groupname, index) => {
+  const groups = Object.keys(menus).map((groupname) => {
     return { name: groupname };
   });
 
@@ -167,23 +166,16 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
 }
 
 /**
- * Get all helptexts from api
- * @return {{isLoading, data}}
- */
-function getPublishedHelpTexts() {
-  const langcode = { language: getLangcode() };
-  const { isLoading, data } = useData(publishedHelptexts(langcode));
-  return { isLoading, data };
-}
-
-/**
  * Default export function for component
  * @param helpTextId
+ * @param props
  * @return {JSX.Element|null}
  * @constructor
  */
 export default function Wrap({ helpTextId, ...props }) {
-  const { isLoading, data } = getPublishedHelpTexts();
+  const { isLoading, data } = useData(
+    publishedHelptexts({ langcode: getLangcode() })
+  );
 
   if (isLoading) {
     return <Skeleton className={styles.helpskeleton} lines={8} />;

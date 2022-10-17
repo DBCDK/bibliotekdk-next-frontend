@@ -13,7 +13,7 @@ import { signIn } from "@dbcdk/login-nextjs/client";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function BodyParser({ body, className, skeleton, lines = 10 }) {
   const parsedBody = useMemo(() => {
@@ -22,10 +22,6 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
     }
     return "";
   }, [body]);
-
-  if (skeleton) {
-    return <Text type="text2" skeleton={true} lines={lines}></Text>;
-  }
 
   // handle login links (https://login.bib.dk/login) - replace
   // with click event to use login platform
@@ -62,6 +58,10 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
       }
     });
   }, [body]);
+
+  if (skeleton || !parsedBody) {
+    return <Text type="text2" skeleton={true} lines={lines}></Text>;
+  }
 
   return (
     <div

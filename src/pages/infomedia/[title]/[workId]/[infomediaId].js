@@ -146,7 +146,7 @@ function parseArticles(manifestationPublic, workPublic, privateData) {
   return returnArticles;
 }
 
-export default function wrap() {
+export default function Wrap() {
   const modal = useModal();
   const router = useRouter();
   const { workId, infomediaId, review: reviewPid } = router.query;
@@ -196,6 +196,6 @@ export default function wrap() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-wrap.getInitialProps = (ctx) => {
+Wrap.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };

@@ -67,6 +67,6 @@ export function References({ context }) {
   );
 }
 
-export default function wrap({ context }) {
+export default function Wrap({ context }) {
   return <References context={context} />;
 }

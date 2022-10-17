@@ -13,7 +13,7 @@ export function LoginParamsForm({ branch, initial, onSubmit }) {
   );
 }
 
-export default function wrap({ branchId }) {
+export default function Wrap({ branchId }) {
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
   // Branch userparams fetch (Fast)

@@ -123,15 +123,14 @@ const storedProgressMax = {};
 /**
  * The work slider React component
  *
+ * @param skeleton
+ * @param onWorkClick
  * @param {Object} props
  * @param {Array.<Object>} props.works
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
-  if (skeleton) {
-    return <WorkSliderSkeleton />;
-  }
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -235,6 +234,10 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     if (swiperRef.current && swiperRef.current.swiper) {
       swiperRef.current.swiper.slidePrev();
     }
+  }
+
+  if (skeleton) {
+    return <WorkSliderSkeleton />;
   }
 
   // And finally we return the React component

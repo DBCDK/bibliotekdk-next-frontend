@@ -159,7 +159,7 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
   );
 }
 
-export default function wrap({ props }) {
+export default function Wrap({ props }) {
   const { branch, pids, index, testing, branchId } = { ...props };
 
   const dummyData = {
@@ -296,25 +296,21 @@ export default function wrap({ props }) {
   // @TODO .. what do we need here
   // .. we need detailed holdings to show expected delivery
 
-  const { data, isLoading } = !testing
-    ? useData(
-        branchesFragments.branchHoldings({
-          branchId: branchId,
-          pids: pids,
-        })
-      )
-    : {
-        data: dummyHoldings[branchId],
-        isLoading: false,
-      };
+  let { data, isLoading } = useData(
+    !testing &&
+      branchesFragments.branchHoldings({
+        branchId: branchId,
+        pids: pids,
+      })
+  );
 
   const holdingsData = isLoading ? dummyData : data;
   return (
     <LocalizationItem
       pids={pids}
       branch={branch}
-      holdings={holdingsData}
-      isLoading={isLoading}
+      holdings={!testing ? holdingsData : dummyHoldings[branchId]}
+      isLoading={!testing ? isLoading : false}
       index={index}
     />
   );
