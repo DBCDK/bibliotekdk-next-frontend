@@ -23,6 +23,7 @@ const URL_PAGE_UID_KEY = "modal";
  * Push page uid
  *
  * @param {string} uid
+ * @param router
  */
 function pushPageUID(uid, router) {
   router.push({
@@ -38,6 +39,7 @@ function pushPageUID(uid, router) {
  * Replace page uid
  *
  * @param {string} uid
+ * @param router
  */
 function replacePageUID(uid, router) {
   router.replace({
@@ -78,7 +80,9 @@ let _stack = [];
 
 /**
  *
+ * @param children
  * @param {obj} className
+ * @param mock
  * @param {string} className.dimmer
  * @param {string} className.modal
  * @param {string} className.content
@@ -139,7 +143,7 @@ function Container({ children, className = {}, mock = {} }) {
       const uid = currentPageUid;
 
       // Traverse the loadedstack
-      stack.forEach((entry, index) => {
+      stack.forEach((entry) => {
         // One page may be active
         entry.active = entry.uid === uid;
 
@@ -424,7 +428,7 @@ function Page(props) {
 
 let _hasBeenVisible = false;
 export function useModal() {
-  const { setStack: _setStack, save, router } = useContext(ModalContext);
+  const { setStack: _setStack, router } = useContext(ModalContext);
 
   function setStack(stack) {
     _stack = stack;
@@ -692,13 +696,12 @@ export function useModal() {
 /**
  * blah blah
  *
- * @param {obj} name
- * @param {string} name.key
+ * @param children
+ * @param router
  *
  * @returns
  *
  */
-
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
 
@@ -709,4 +712,6 @@ export function Provider({ children, router }) {
   );
 }
 
-export default { Provider, Container, Page };
+const ModalObject = { Provider, Container, Page };
+
+export default ModalObject;
