@@ -82,9 +82,9 @@ export function PreExpanded() {
     <div>
       <StoryTitle>Pre-expanded</StoryTitle>
       <StoryDescription>
-        A section can be mounted open as default by using the "defaultActiveKey"
+        {`A section can be mounted open as default by using the \"defaultActiveKey\"
         prop and set the key for the section you want to pre-open (e.g.
-        defaultActiveKey="1")
+        defaultActiveKey=\"1\")`}
       </StoryDescription>
       <div style={{ maxWidth: "1000px" }}>
         <Accordion data={data} defaultActiveKey="1" />

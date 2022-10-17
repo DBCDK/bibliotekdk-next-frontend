@@ -1,8 +1,5 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { toColor } from "./utils.js";
-
 import Modal, { useModal } from ".";
-import { useState } from "react";
 
 export default {
   title: "Modal2.0",
@@ -127,7 +124,7 @@ export function Default() {
               e.preventDefault();
             }}
           >
-            i'm not tabbable
+            {"i'm not tabbable"}
           </a>
         </div>
         <div>

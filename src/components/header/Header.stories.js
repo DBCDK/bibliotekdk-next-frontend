@@ -29,7 +29,7 @@ export function NavHeader() {
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
-      <StoryDescription>Try to input "hest" or "suggest"</StoryDescription>
+      <StoryDescription>{`Try to input "hest" or "suggest"`}</StoryDescription>
       <HeaderWrapped />
       <Searchbar />
     </div>

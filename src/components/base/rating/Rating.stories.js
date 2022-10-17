@@ -20,7 +20,7 @@ export function SomeRating() {
     <div>
       <StoryTitle>Rating</StoryTitle>
       <StoryDescription>
-        Converts a string/rating (e.g. "5/6") to a rating component.
+        {`Converts a string/rating (e.g. \"5/6\") to a rating component.`}
       </StoryDescription>
 
       <Rating rating="2/6" />

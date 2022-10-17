@@ -40,7 +40,7 @@ export function RadioGroup() {
   );
 }
 export function SelectGroup() {
-  const [selected, setSelected] = useState({});
+  const [_selected, setSelected] = useState({});
   return (
     <div>
       <StoryTitle>Select Button Group</StoryTitle>
@@ -52,7 +52,12 @@ export function SelectGroup() {
         {rows.map((row) => (
           <List.Select
             key={row.title}
-            onSelect={() => setSelected(alert(`${row.title} selected`))}
+            onSelect={() =>
+              setSelected(() => {
+                alert(`${row.title} selected`);
+                return `${row.title} selected`;
+              })
+            }
             label={row.title}
           >
             <b>{row.title}</b>
@@ -94,7 +99,7 @@ export function DisabledRadioGroup() {
     <div>
       <StoryTitle>Radio Button Group</StoryTitle>
       <StoryDescription>
-        One can't tab into group, or check/uncheck radio buttons
+        {`One can\'t tab into group, or check/uncheck radio buttons`}
       </StoryDescription>
       <List.Group enabled={false}>
         {rows.map((row) => (

@@ -20,13 +20,13 @@ export function TagButton() {
 
   return (
     <div>
-      <StoryTitle>Single Tag ("Checkbox" style)</StoryTitle>
+      <StoryTitle>{`Single Tag (\"Checkbox\" style)`}</StoryTitle>
 
       <Tag selected={isSelected} onClick={() => setIsSelected(!isSelected)}>
         Book
       </Tag>
 
-      <StoryTitle>Multiple tags ("Radio" style)</StoryTitle>
+      <StoryTitle>{`Multiple tags ("Radio" style)`}</StoryTitle>
 
       {types.map((type) => {
         const isSelected = selectedType === type;

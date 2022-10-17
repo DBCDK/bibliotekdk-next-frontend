@@ -21,7 +21,7 @@ export function CSS() {
     <div>
       <StoryTitle>Animations</StoryTitle>
       <StoryDescription>
-        On hover container -> animate container.
+        {`On hover container -> animate container.`}
       </StoryDescription>
       <div
         style={outerStyle}
@@ -30,25 +30,25 @@ export function CSS() {
         <p>hej</p>
       </div>
       <StoryDescription>
-        On hover container -> animate inner element.
+        {`On hover container -> animate inner element.`}`
       </StoryDescription>
       <div style={outerStyle} className={`${animations["on-hover"]}`}>
         <p className={animations["h-border-bottom"]}>hej</p>
       </div>
       <StoryDescription>
-        On hover container -> translate-right inner element.
+        {`On hover container -> translate-right inner element.`}`
       </StoryDescription>
       <div style={outerStyle} className={`${animations["on-hover"]}`}>
         <p className={animations["h-translate-right"]}>hej</p>
       </div>
       <StoryDescription>
-        On hover container -> color blue inner element.
+        {`On hover container -> color blue inner element.`}
       </StoryDescription>
       <div style={outerStyle} className={`${animations["on-hover"]}`}>
         <p className={animations["h-color-blue"]}>hej</p>
       </div>
       <StoryDescription>
-        On hover container -> outline container.
+        {`On hover container -> outline container.`}
       </StoryDescription>
       <div
         style={outerStyle}
@@ -59,8 +59,9 @@ export function CSS() {
       <StoryDescription>
         Combinations:
         <br />
-        On hover container -> color and underline inner element. <br />
-        On focus container -> outline container, and translate inner element.
+        {`On hover container -> color and underline inner element.`}
+        <br />
+        {`On focus container -> outline container, and translate inner element.`}
       </StoryDescription>
       <div
         style={{
