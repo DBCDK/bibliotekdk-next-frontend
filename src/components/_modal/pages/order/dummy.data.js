@@ -109,4 +109,6 @@ const order = {
   isStory: true,
 };
 
-export default { work, user, order };
+const exportDummyData = { work, user, order };
+
+export default exportDummyData;

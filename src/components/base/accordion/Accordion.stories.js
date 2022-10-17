@@ -5,9 +5,11 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Cover from "@/components/base/cover";
 
-export default {
+const exportedObject = {
   title: "Base/Accordion",
 };
+
+export default exportedObject;
 
 /**
  * Accordion - "collapsible table"

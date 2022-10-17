@@ -1,15 +1,16 @@
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { StoryDescription, StoryTitle } from "@/storybook";
 
 import { Notifications } from "./Notifications";
-import { Rating } from "@/components/base/rating/Rating";
 
-export default {
+const exportedObject = {
   title: "base/Notifications",
 };
 
+export default exportedObject;
+
 // a single notification in an array
 function notification() {
-  const notification = {
+  return {
     nodeQuery: {
       count: 1,
       entities: [
@@ -24,8 +25,6 @@ function notification() {
       ],
     },
   };
-
-  return notification;
 }
 
 /**

@@ -5,9 +5,11 @@ import Searchbar from "@/components/search/searchbar";
 
 import useFilters from "@/components/hooks/useFilters";
 
-export default {
+const exportedObject = {
   title: "layout/Header",
 };
+
+export default exportedObject;
 
 const graphql = {
   debug: true,

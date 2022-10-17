@@ -16,9 +16,13 @@ import styles from "./Prompt.module.css";
 /**
  * Show a login prompt with a title and description
  *
- * @param {obj} props
+ *
  * See propTypes for specific props and types
  *
+ * @param {string} title
+ * @param {string} description
+ * @param {string} buttonText
+ * @param {func} signIn
  * @returns {component}
  */
 export default function LoginPrompt({

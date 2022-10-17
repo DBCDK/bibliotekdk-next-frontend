@@ -3,9 +3,11 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 import Color from "./Color";
 
-export default {
+const exportedObject = {
   title: "base/Colors",
 };
+
+export default exportedObject;
 
 /**
  * Returns all Primary colors

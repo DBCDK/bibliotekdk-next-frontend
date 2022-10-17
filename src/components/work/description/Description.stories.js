@@ -3,9 +3,11 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 import { Description, DescriptionSkeleton } from "./Description";
 
-export default {
+const exportedObject = {
   title: "work/Description",
 };
+
+export default exportedObject;
 
 /**
  * Returns Description section

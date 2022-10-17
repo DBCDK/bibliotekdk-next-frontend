@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import animations from "@/components/base/animation/animations.module.css";
 
-export default {
+const exportedObject = {
   title: "base/Animation",
 };
+
+export default exportedObject;
 
 const outerStyle = {
   width: 100,

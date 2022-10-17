@@ -3,11 +3,13 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import useUser from "@/components/hooks/useUser";
 import fullwork from "../dummydata/fullwork.json";
 import available from "../dummydata/available.json";
+import { OrderButton } from "@/components/work/reservationbutton/ReservationButton";
 
-export default {
+const exportedObject = {
   title: "work/ReservationButton",
 };
-import { OrderButton } from "@/components/work/reservationbutton/ReservationButton";
+
+export default exportedObject;
 
 /**
  *

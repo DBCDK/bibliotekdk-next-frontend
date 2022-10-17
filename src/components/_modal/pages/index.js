@@ -10,7 +10,7 @@ import Filter from "./filter";
 import Localizations from "./localizations";
 import References from "./references";
 
-export default {
+const _modal = {
   Menu,
   Options,
   Order,
@@ -23,3 +23,5 @@ export default {
   Localizations,
   References,
 };
+
+export default _modal;

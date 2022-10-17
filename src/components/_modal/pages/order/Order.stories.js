@@ -9,9 +9,11 @@ import dummyData from "./dummy.data";
 import Modal, { useModal } from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 
-export default {
+const exportedObject = {
   title: "modal/Order",
 };
+
+export default exportedObject;
 
 /**
  * Returns Modal

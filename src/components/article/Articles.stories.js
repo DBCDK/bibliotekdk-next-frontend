@@ -1,9 +1,11 @@
 import { StoryTitle, StoryLabel, StoryDescription } from "@/storybook";
 import { ArticleSection } from "@/components/article/section";
 
-export default {
+const exportedObject = {
   title: "articles/sections",
 };
+
+export default exportedObject;
 
 const articles = [
   {
@@ -202,7 +204,6 @@ export function Loading() {
         skeleton={true}
         template="double"
       />
-
       <StoryLabel>Loading triple section</StoryLabel>
       <ArticleSection
         title="Bibliotek.dk tilbyder"

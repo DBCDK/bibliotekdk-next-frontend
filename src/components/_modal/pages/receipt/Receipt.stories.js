@@ -1,13 +1,12 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-
 import { useState, useEffect } from "react";
-
 import Receipt from "./";
 import Modal, { useModal } from "@/components/_modal";
 
-export default {
+const exportedObject = {
   title: "Modal/Receipt",
 };
+
+export default exportedObject;
 
 export function Default() {
   const { index, update, setStack } = useModal();

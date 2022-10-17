@@ -1,8 +1,10 @@
 import { CookieBox } from "./CookieBox";
 
-export default {
+const exportedObject = {
   title: "cookies/CookieBox",
 };
+
+export default exportedObject;
 
 export function CookieBox_full() {
   return <CookieBox />;

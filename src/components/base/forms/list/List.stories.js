@@ -4,9 +4,11 @@ import List from "@/components/base/forms/list";
 import animations from "@/components/base/animation/animations.module.css";
 import { useState } from "react";
 
-export default {
+const exportedObject = {
   title: "base/Forms/List",
 };
+
+export default exportedObject;
 
 const rows = [
   { title: "First", description: "der" },

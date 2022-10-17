@@ -1,8 +1,10 @@
 import Hero from "./Hero";
 
-export default {
+const exportedObject = {
   title: "layout/Hero",
 };
+
+export default exportedObject;
 
 export function HeroStory() {
   return <Hero />;

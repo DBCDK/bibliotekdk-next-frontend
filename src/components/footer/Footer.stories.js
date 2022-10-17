@@ -1,8 +1,10 @@
 import Footer from "./Footer";
 
-export default {
+const exportedObject = {
   title: "layout/Footer",
 };
+
+export default exportedObject;
 
 export function FooterStory() {
   return <Footer />;

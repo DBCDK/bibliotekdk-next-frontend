@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Anchor from "./";
 
-export default {
+const exportedObject = {
   title: "Base/Anchor",
 };
+
+export default exportedObject;
 
 /**
  * Anchor - anchor one-page menu

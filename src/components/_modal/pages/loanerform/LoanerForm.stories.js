@@ -1,9 +1,11 @@
 import { LoanerForm } from "./LoanerForm";
 import { LOGIN_MODE } from "./LoanerForm";
 
-export default {
+const exportedObject = {
   title: "modal/Order/LoanerForm",
 };
+
+export default exportedObject;
 
 /**
  * Returns Loaner Form

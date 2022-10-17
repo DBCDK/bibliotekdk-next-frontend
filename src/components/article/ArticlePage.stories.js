@@ -4,9 +4,11 @@ import {
   ContentSkeleton,
 } from "@/components/article/content/Content.js";
 
-export default {
+const exportedObject = {
   title: "articles/page",
 };
+
+export default exportedObject;
 
 export function ArticlePage() {
   const data = {

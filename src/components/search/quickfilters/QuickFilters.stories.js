@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import { useState } from "react";
 import QuickFilters from "../quickfilters";
 
-export default {
+const exportedObject = {
   title: "search/QuickFilters",
 };
+
+export default exportedObject;
 
 export function Default() {
   const [viewSelected, setSelectedView] = useState();

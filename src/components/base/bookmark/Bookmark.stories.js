@@ -4,9 +4,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import Bookmark from "./Bookmark";
 import Cover from "@/components/base/cover";
 
-export default {
+const exportedObject = {
   title: "base/Bookmark",
 };
+
+export default exportedObject;
 
 /**
  * Returns Bookmark button
@@ -35,8 +37,6 @@ export function Button() {
  *
  */
 export function Loading() {
-  const [isBookmarked, setIsBookmarked] = useState(false);
-
   return (
     <div>
       <StoryTitle>Loading Bookmark Button</StoryTitle>

@@ -238,8 +238,6 @@ function Group({
   );
 }
 
-export default {
-  Group,
-  Radio,
-  Select,
-};
+const ExportedList = { Group, Radio, Select };
+
+export default ExportedList;

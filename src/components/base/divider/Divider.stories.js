@@ -2,9 +2,11 @@ import Divider from "./Divider";
 import { StoryTitle } from "@/storybook";
 import React from "react";
 
-export default {
+const exportedObject = {
   title: "base/Divider (<hr>)",
 };
+
+export default exportedObject;
 
 /**
  * Returns bibliographic data component

@@ -4,9 +4,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import Cover from "./Cover";
 import Bookmark from "@/components/base/bookmark";
 
-export default {
+const exportedObject = {
   title: "base/Cover",
 };
+
+export default exportedObject;
 
 const sizes = ["thumbnail", "medium", "large"];
 const urls = [

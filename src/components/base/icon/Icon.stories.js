@@ -3,9 +3,11 @@ import { StoryTitle, StorySpace } from "@/storybook";
 
 import Icon from "./Icon";
 
-export default {
+const exportedObject = {
   title: "base/Icon",
 };
+
+export default exportedObject;
 
 // Current button types
 const sizes = [2, 3, 4, 5, 6];

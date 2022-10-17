@@ -4,7 +4,7 @@ import Result from "../Result";
 import { decorators } from "../../../../../.storybook/preview";
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 
-export default {
+const exportedObject = {
   title: "search/Result",
   decorators: [
     ...decorators.slice(0, -1),
@@ -25,6 +25,8 @@ export default {
     },
   ],
 };
+
+export default exportedObject;
 
 export function Default() {
   const rows = [

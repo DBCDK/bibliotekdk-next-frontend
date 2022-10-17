@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import { useState } from "react";
 import Pagination from "../pagination/Pagination";
 
-export default {
+const exportedObject = {
   title: "search/Pagination",
 };
+
+export default exportedObject;
 
 export function Default() {
   const [currentPage, setCurrentPage] = useState(1);

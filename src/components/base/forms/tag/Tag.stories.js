@@ -3,9 +3,11 @@ import { StoryTitle, StorySpace } from "@/storybook";
 
 import Tag from "./Tag";
 
-export default {
+const exportedObject = {
   title: "base/Forms/Tag",
 };
+
+export default exportedObject;
 
 //  Some material types to show in a Tag
 const types = ["Book", "Ebook", "Audiobook"];

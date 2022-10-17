@@ -1,9 +1,12 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Card from "./Card";
-export default {
+
+const exportedObject = {
   title: "base/Cards",
 };
+
+export default exportedObject;
 
 export function WorkNarrowAndWideCover() {
   const narrow = {

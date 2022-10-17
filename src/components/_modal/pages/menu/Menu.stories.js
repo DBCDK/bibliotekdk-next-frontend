@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import Menu from ".";
 import Modal, { useModal } from "@/components/_modal";
 
-export default {
+const exportedObject = {
   title: "Modal/Menu",
 };
+
+export default exportedObject;
 
 export function Default() {
   const { setStack } = useModal();

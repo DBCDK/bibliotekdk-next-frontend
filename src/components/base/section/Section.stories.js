@@ -1,9 +1,11 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import Section from "./Section";
 
-export default {
+const exportedObject = {
   title: "base/Section",
 };
+
+export default exportedObject;
 
 /**
  * Returns all primary buttons (Default button style)

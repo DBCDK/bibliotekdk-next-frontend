@@ -3,10 +3,12 @@ import { useState } from "react";
 
 import WorkPage from "./Page";
 
-export default {
+const exportedObject = {
   title: "work/Page",
   decorators: [withKnobs],
 };
+
+export default exportedObject;
 
 export function WorkPageRealData() {
   const workId = text("workId", "work-of:870970-basis:28384645");

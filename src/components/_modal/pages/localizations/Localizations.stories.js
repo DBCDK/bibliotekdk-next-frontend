@@ -4,9 +4,12 @@ import { LocalizationsLink } from "@/components/work/overview/localizationslink/
 import Modal, { useModal } from "@/components/_modal";
 import { useEffect } from "react";
 
-export default {
+const exportedObject = {
   title: "modal/Localizations",
 };
+
+export default exportedObject;
+
 const greatGatsby = {
   data: {
     branches: {

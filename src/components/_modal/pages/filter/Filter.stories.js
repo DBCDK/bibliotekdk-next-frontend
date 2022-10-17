@@ -7,9 +7,11 @@ import useFilters from "@/components/hooks/useFilters";
 
 import response from "./dummy.data";
 
-export default {
+const exportedObject = {
   title: "Modal/Filter",
 };
+
+export default exportedObject;
 
 export function Default() {
   const { setStack } = useModal();

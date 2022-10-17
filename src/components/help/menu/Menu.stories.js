@@ -3,9 +3,11 @@ import { HelpTextMenu } from "@/components/help/menu/HelpTextMenu";
 
 import allHelp from "./allHelp.json";
 
-export default {
+const exportedObject = {
   title: "help/menu",
 };
+
+export default exportedObject;
 
 /**
  * HelpMenu - collapsed if no id is given

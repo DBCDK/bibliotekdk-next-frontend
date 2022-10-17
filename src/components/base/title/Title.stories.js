@@ -3,9 +3,11 @@ import { StoryTitle } from "@/storybook";
 
 import Title from "./Title";
 
-export default {
+const exportedObject = {
   title: "base/Titles",
 };
+
+export default exportedObject;
 
 // Current title types
 const titles = ["title1", "title2", "title3", "title4", "title5"];

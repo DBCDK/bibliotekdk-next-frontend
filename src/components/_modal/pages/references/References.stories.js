@@ -1,12 +1,14 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import { References } from "@/components/_modal/pages/references/References";
 import { Edition } from "@/components/_modal/pages/order/Order.page";
 import dummywork from "./dummydata.json";
 
-export default {
+const exportedObject = {
   title: "modal/References",
 };
+
+export default exportedObject;
 
 export function referenceLinks() {
   const context = {

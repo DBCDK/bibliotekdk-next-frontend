@@ -4,12 +4,13 @@ import {
   StoryLabel,
   StorySpace,
 } from "@/storybook";
-
 import { Rating, RatingSkeleton } from "./Rating";
 
-export default {
+const exportedObject = {
   title: "base/Rating",
 };
+
+export default exportedObject;
 
 /**
  * Returns Bookmark button

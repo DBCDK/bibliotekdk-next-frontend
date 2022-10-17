@@ -17,9 +17,11 @@ import Work from "./templates/work";
 import Subject from "./templates/subject";
 import History from "./templates/history";
 
-export default {
+const exportedObject = {
   title: "search/Suggester",
 };
+
+export default exportedObject;
 
 /**
  * Returns Suggester

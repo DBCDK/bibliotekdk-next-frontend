@@ -4,9 +4,11 @@ import Button from "./Button";
 import Skeleton from "@/components/base/skeleton";
 import { Fragment, useEffect, useState } from "react";
 
-export default {
+const exportedObject = {
   title: "base/Buttons",
 };
+
+export default exportedObject;
 
 // Current button types
 const sizes = ["large", "medium", "small"];

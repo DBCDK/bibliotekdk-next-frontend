@@ -1,9 +1,11 @@
 import { toColor } from "./utils.js";
 import Modal, { useModal } from ".";
 
-export default {
+const exportedObject = {
   title: "Modal2.0",
 };
+
+export default exportedObject;
 
 const Link = ({ id, context = {} }) => {
   const { push } = useModal();

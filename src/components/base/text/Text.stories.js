@@ -3,9 +3,11 @@ import { StoryTitle, StorySpace } from "@/storybook";
 
 import Text from "./Text";
 
-export default {
+const exportedObject = {
   title: "base/Texts",
 };
+
+export default exportedObject;
 
 // Current text types
 const texts = ["text1", "text2", "text3", "text4"];

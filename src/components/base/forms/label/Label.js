@@ -9,6 +9,10 @@ import styles from "./Label.module.css";
 /**
  * The Component function
  *
+ * @param children
+ * @param className
+ * @param htmlFor
+ * @param dataCy
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -61,7 +65,7 @@ function LabelSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {
@@ -73,7 +77,7 @@ export default function Wrap(props) {
 
 // PropTypes for the component
 Wrap.propTypes = {
-  for: PropTypes.string.isRequired,
+  for: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.object,
