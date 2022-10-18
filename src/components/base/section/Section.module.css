@@ -12,6 +12,7 @@ hr.divider {
 }
 
 .content hr.divider {
+  width: 100%;
   display: none;
 }
 
