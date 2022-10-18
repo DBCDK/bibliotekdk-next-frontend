@@ -8,6 +8,8 @@ import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 import SearchFeedBack from "@/components/base/searchfeedback";
 
+import styles from "./Page.module.css";
+
 /**
  * Row representation of a search result entry
  *
@@ -31,6 +33,7 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
           <ResultRow
             data={row}
             key={`${row.title}_${index}`}
+            className={styles.row}
             onClick={onWorkClick && (() => onWorkClick(index, row))}
           />
           {index === 0 && <SearchFeedBack />}

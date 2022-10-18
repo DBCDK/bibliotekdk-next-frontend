@@ -37,11 +37,22 @@ export default function Section({
   const backgroundClass = backgroundColor ? styles.background : "";
 
   // space settings can be boolean or custom
-  const _space = space ? { bottom: "var(--pt8)", top: false } : {};
+  // support true/false on object attribute level
+  const _topSpace = space?.top === true ? "var(--pt8)" : space?.top || false;
+  const _bottomSpace =
+    space?.bottom === true ? "var(--pt8)" : space?.bottom || "var(--pt8)";
+
+  const _space = !!space ? { bottom: _bottomSpace, top: _topSpace } : {};
   space = typeof space === "object" ? { ..._space, ...space } : _space;
 
+  // support true/false on object attribute level
+  const _titleEl = divider?.title === true ? <Divider /> : divider?.title;
+  const _contentEl = divider?.content === true ? <Divider /> : divider?.content;
+
   // divider settings can be boolean or custom
-  const _divider = divider ? { title: <Divider />, content: <Divider /> } : {};
+  const _divider = !!divider
+    ? { title: _titleEl || <Divider />, content: _contentEl || <Divider /> }
+    : {};
   divider =
     typeof divider === "object" ? { ..._divider, ...divider } : _divider;
 
@@ -88,7 +99,7 @@ export default function Section({
               xs={12}
               lg={2}
               data-cy={cyKey({ name: "title", prefix: "section" })}
-              className={`${styles.title} ${titleDividerClass}`}
+              className={`section-title ${styles.title} ${titleDividerClass}`}
             >
               {divider?.title}
               {title}
@@ -98,7 +109,7 @@ export default function Section({
             xs={12}
             lg={{ offset: title ? 1 : 0 }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
-            className={`${styles.content} ${contentDividerClass}`}
+            className={`section-content ${styles.content} ${contentDividerClass}`}
           >
             {divider?.content}
             {children}
