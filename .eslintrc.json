@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:cypress/recommended",
-    "plugin:css-modules/recommended"
-  ],
-  "plugins": ["cypress", "css-modules", "mocha", "prettier"],
+  "plugins": ["cypress", "mocha", "prettier"],
+  "extends": ["next", "next/core-web-vitals", "plugin:cypress/recommended"],
   "rules": {
     "prettier/prettier": "error",
     "mocha/no-exclusive-tests": "error",
@@ -14,7 +10,6 @@
     // TODO: Turn these on at some point
     /* next/core-web-vitals */
     "@next/next/no-img-element": "off",
-    "react/no-children-prop": "off",
     "react-hooks/exhaustive-deps": "off",
 
     /* plugin:css-modules/recommended */
