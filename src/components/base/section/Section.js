@@ -16,6 +16,17 @@ function Divider() {
   return <hr className={styles.divider} />;
 }
 
+// function to replace true with a 'default' value and false with a 'null'
+function handleBooleans(obj, def) {
+  const c = {};
+  if (typeof obj === "object") {
+    Object.entries(obj).forEach(
+      ([k, v]) => (c[k] = v === true ? def : v === false ? null : v)
+    );
+  }
+  return c;
+}
+
 /**
  * The Component function
  *
@@ -33,29 +44,21 @@ export default function Section({
   divider = {},
   space = {},
 }) {
-  // background color class
   const backgroundClass = backgroundColor ? styles.background : "";
 
-  // space settings can be boolean or custom
+  // default space setting
+  const defSpace = { bottom: "var(--pt8)" };
   // support true/false on object attribute level
-  const _topSpace = space?.top === true ? "var(--pt8)" : space?.top || false;
-  const _bottomSpace =
-    space?.bottom === true ? "var(--pt8)" : space?.bottom || "var(--pt8)";
+  const _space = handleBooleans(space, "var(--pt8)");
+  space = space === false ? {} : { ...defSpace, ..._space };
 
-  const _space = !!space ? { bottom: _bottomSpace, top: _topSpace } : {};
-  space = typeof space === "object" ? { ..._space, ...space } : _space;
-
+  // default divider setting
+  const defDivider = { title: <Divider />, content: <Divider /> };
   // support true/false on object attribute level
-  const _titleEl = divider?.title === true ? <Divider /> : divider?.title;
-  const _contentEl = divider?.content === true ? <Divider /> : divider?.content;
+  const _divider = handleBooleans(divider, <Divider />);
+  divider = divider === false ? {} : { ...defDivider, ..._divider };
 
-  // divider settings can be boolean or custom
-  const _divider = !!divider
-    ? { title: _titleEl || <Divider />, content: _contentEl || <Divider /> }
-    : {};
-  divider =
-    typeof divider === "object" ? { ..._divider, ...divider } : _divider;
-
+  // divider class'
   const contentDividerClass = divider?.content ? styles.divider : "";
   const titleDividerClass = divider?.title ? styles.divider : "";
 

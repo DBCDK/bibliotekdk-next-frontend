@@ -26,9 +26,7 @@ export function Result({
   page,
   isLoading,
   hitcount = 0,
-  onViewSelect,
   onWorkClick,
-  viewSelected,
   onPageChange,
 }) {
   const breakpoint = useBreakpoint();
@@ -43,7 +41,7 @@ export function Result({
     <>
       <Section
         divider={{
-          title: isMobile,
+          title: !isMobile,
           content: false,
         }}
         space={{ top: isDesktop ? "var(--pt8)" : false }}
