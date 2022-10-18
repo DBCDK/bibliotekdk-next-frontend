@@ -145,7 +145,6 @@ export function Overview({
                   return (
                     <span key={`${c.name}-${i}`}>
                       <Link
-                        children={c.name}
                         disabled={skeleton}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
