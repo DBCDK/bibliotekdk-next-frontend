@@ -27,7 +27,7 @@ import { getLangcode } from "@/components/base/translate/Translate";
  * @param {obj} props.skeleton
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Sections({ className, data, skeleton }) {
   // Parse helptexts
@@ -102,7 +102,7 @@ Sections.propTypes = {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function SectionsSkeleton(props) {
   const data = [
@@ -144,12 +144,12 @@ export function SectionsSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   // real data goes here ...
   const langcode = { language: getLangcode() };
-  const { isLoading, data } = useData(publishedHelptexts(langcode));
+  const { data } = useData(publishedHelptexts(langcode));
 
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {
     // @TODO skeleton

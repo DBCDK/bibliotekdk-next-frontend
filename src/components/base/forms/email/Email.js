@@ -2,7 +2,6 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 
 import Input from "@/components/base/forms/input";
-import Translate from "@/components/base/translate";
 
 import { validateEmail } from "@/utils/validateEmail";
 

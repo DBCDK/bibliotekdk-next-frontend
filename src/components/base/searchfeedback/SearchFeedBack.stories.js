@@ -1,22 +1,17 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { SearchFeedBackWrapper } from "./SearchFeedBack";
 
-export default {
+const exportedObject = {
   title: "base/SearchFeedBack",
 };
+
+export default exportedObject;
+
 /**
  * Returns SearchFeedBack
  *
  */
 export function FeedBack() {
-  const onThumbsUpClick = () => {
-    alert("thumbsup");
-  };
-
-  const onThumbsDownClick = () => {
-    alert("thumbsdown");
-  };
-
   const onDataCollect = (input) => {
     alert(JSON.stringify(input));
   };

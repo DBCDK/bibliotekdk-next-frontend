@@ -23,6 +23,7 @@ const URL_PAGE_UID_KEY = "modal";
  * Push page uid
  *
  * @param {string} uid
+ * @param router
  */
 function pushPageUID(uid, router) {
   router.push({
@@ -38,6 +39,7 @@ function pushPageUID(uid, router) {
  * Replace page uid
  *
  * @param {string} uid
+ * @param router
  */
 function replacePageUID(uid, router) {
   router.replace({
@@ -78,7 +80,9 @@ let _stack = [];
 
 /**
  *
+ * @param {object|Array} children
  * @param {obj} className
+ * @param mock
  * @param {string} className.dimmer
  * @param {string} className.modal
  * @param {string} className.content
@@ -86,12 +90,10 @@ let _stack = [];
  */
 function Container({ children, className = {}, mock = {} }) {
   if (!children) {
-    return null;
-  }
-
-  // If container only has 1 child, children is object
-  // We want children to always be handled as an array
-  if (!Array.isArray(children)) {
+    children = [];
+  } else if (!Array.isArray(children)) {
+    // If container only has 1 child, children is object
+    // We want children to always be handled as an array
     children = [children];
   }
 
@@ -139,7 +141,7 @@ function Container({ children, className = {}, mock = {} }) {
       const uid = currentPageUid;
 
       // Traverse the loadedstack
-      stack.forEach((entry, index) => {
+      stack.forEach((entry) => {
         // One page may be active
         entry.active = entry.uid === uid;
 
@@ -275,6 +277,10 @@ function Container({ children, className = {}, mock = {} }) {
 
   // Debug -> remove me in future
   console.log("Debug: ", { stack: modal.stack });
+
+  if (children.length <= 0) {
+    return null;
+  }
 
   return (
     <div
@@ -424,7 +430,7 @@ function Page(props) {
 
 let _hasBeenVisible = false;
 export function useModal() {
-  const { setStack: _setStack, save, router } = useContext(ModalContext);
+  const { setStack: _setStack, router } = useContext(ModalContext);
 
   function setStack(stack) {
     _stack = stack;
@@ -519,7 +525,7 @@ export function useModal() {
    *
    * @returns {int}
    */
-  function _index(id) {
+  function _index(id = null) {
     if (id) {
       return _stack.findIndex((obj) => obj.id === id);
     }
@@ -692,13 +698,12 @@ export function useModal() {
 /**
  * blah blah
  *
- * @param {obj} name
- * @param {string} name.key
+ * @param children
+ * @param router
  *
  * @returns
  *
  */
-
 export function Provider({ children, router }) {
   const [stack, setStack] = useState([]);
 
@@ -709,4 +714,6 @@ export function Provider({ children, router }) {
   );
 }
 
-export default { Provider, Container, Page };
+const ModalObject = { Provider, Container, Page };
+
+export default ModalObject;

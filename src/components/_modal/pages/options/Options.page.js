@@ -15,7 +15,7 @@ import Top from "../base/top";
 /**
  * Template selection function
  *
- * @param {string} template name of template
+ * @param {object} props props for template
  *
  * @returns {component}
  */
@@ -56,10 +56,8 @@ function sortorder(onlineaccess) {
 
 /**
  * Enrich online access object with additinal info
- * @param onlineAccess
- *  Array of onlineaccess objects
- * @parm orderPossible
- *  Is it possible to order a physical copy?
+ * @param onlineAccess Array of onlineaccess objects
+ * @param orderPossible Is it possible to order a physical copy?
  * @return {*}
  */
 function addToOnlinAccess(onlineAccess = [], orderPossible) {
@@ -103,7 +101,7 @@ export function Options({ data, isLoading, modal, context }) {
     return <Skeleton lines={3} className={styles.skeleton} />;
   }
 
-  const { orderPossible, onlineAccess } = { ...context };
+  const { onlineAccess } = { ...context };
 
   // no type selected - get the first one
   const type = context.type || data?.work?.materialTypes?.[0].materialType;
@@ -140,9 +138,7 @@ export function Options({ data, isLoading, modal, context }) {
 export default function Wrap(props) {
   const { workId } = props.context;
   // Fetch work data
-  const { data, isLoading, isSlow, error } = useData(
-    workFragments.details({ workId })
-  );
+  const { data, isLoading, error } = useData(workFragments.details({ workId }));
 
   if (error) {
     return <div>Error :( !!!!!</div>;

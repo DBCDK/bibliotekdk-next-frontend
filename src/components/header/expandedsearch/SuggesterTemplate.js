@@ -8,7 +8,6 @@ import { useData } from "@/lib/api/api";
 import * as suggestFragments from "@/lib/api/suggest.fragments";
 import Translate from "@/components/base/translate";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { typedSuggest } from "@/lib/api/suggest.fragments";
 
 /**
  * Subcomponent - show input field with suggestions. Exported for reuse in
@@ -23,7 +22,6 @@ import { typedSuggest } from "@/lib/api/suggest.fragments";
  * @param {string} title
  * @param {string} placeholder
  * @returns {JSX.Element}
- * @constructor
  */
 export function SuggesterWithInput({
   type,
@@ -32,6 +30,7 @@ export function SuggesterWithInput({
   onSelect,
   value = "",
   onClear,
+  // eslint-disable-next-line no-unused-vars
   title = "",
   placeholder = "",
 }) {
@@ -61,7 +60,7 @@ export function SuggesterWithInput({
   );
 }
 
-export default function wrap({ title = "", type = "" }) {
+export default function Wrap({ title = "", type = "" }) {
   const { q, setQ, setQuery } = useQ();
 
   // connected filters hook

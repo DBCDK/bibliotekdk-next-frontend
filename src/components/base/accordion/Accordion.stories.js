@@ -5,9 +5,11 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Cover from "@/components/base/cover";
 
-export default {
+const exportedObject = {
   title: "Base/Accordion",
 };
+
+export default exportedObject;
 
 /**
  * Accordion - "collapsible table"
@@ -82,9 +84,9 @@ export function PreExpanded() {
     <div>
       <StoryTitle>Pre-expanded</StoryTitle>
       <StoryDescription>
-        A section can be mounted open as default by using the "defaultActiveKey"
+        {`A section can be mounted open as default by using the \"defaultActiveKey\"
         prop and set the key for the section you want to pre-open (e.g.
-        defaultActiveKey="1")
+        defaultActiveKey=\"1\")`}
       </StoryDescription>
       <div style={{ maxWidth: "1000px" }}>
         <Accordion data={data} defaultActiveKey="1" />

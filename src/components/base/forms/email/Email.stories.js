@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Email from "./";
 
-export default {
+const exportedObject = {
   title: "base/Forms/Email",
 };
+
+export default exportedObject;
 
 /**
  * Default email field
@@ -33,9 +34,11 @@ export function ValidationOnChange() {
       </StoryDescription>
       <Email
         value="invalid@mail."
-        onChange={(value, valid) =>
-          console.log(("email input", { value, valid }))
-        }
+        onChange={(value, valid) => {
+          return console.log(
+            `email input: ${value.target.value} is valid: ${valid.status}`
+          );
+        }}
       />
     </div>
   );
@@ -53,9 +56,11 @@ export function ValidationOnBlur() {
         Validating input onBlur (console.logs response)
       </StoryDescription>
       <Email
-        onBlur={(value, valid) =>
-          console.log(("email input", { value, valid }))
-        }
+        onBlur={(value, valid) => {
+          return console.log(
+            `email input: ${value.target.value} is valid: ${valid.status}`
+          );
+        }}
       />
     </div>
   );

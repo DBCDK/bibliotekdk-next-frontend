@@ -8,9 +8,11 @@
 import React from "react";
 import { useData } from "@/lib/api/api";
 
-export default {
+const exportedObject = {
   title: "hooks/useData",
 };
+
+export default exportedObject;
 
 /**
  * A function that creates queries for our stories

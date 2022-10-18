@@ -10,7 +10,7 @@ function parseForPid(workId) {
   return `${parts[1]}:${parts[2]}`;
 }
 
-export default function wrap() {
+export default function Wrap() {
   const router = useRouter();
   const { workId, review: reviewPid } = router?.query;
   const pid = reviewPid ? reviewPid : parseForPid(workId);
@@ -34,6 +34,6 @@ export default function wrap() {
  *
  * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
  */
-wrap.getInitialProps = (ctx) => {
+Wrap.getInitialProps = (ctx) => {
   return fetchAll([], ctx);
 };

@@ -3,9 +3,11 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 import { Content, ContentSkeleton } from "./Content";
 
-export default {
+const exportedObject = {
   title: "work/Content",
 };
+
+export default exportedObject;
 
 /**
  * Returns Content section

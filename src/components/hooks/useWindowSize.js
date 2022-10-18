@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-export default ({ onChange } = {}) => {
+
+function useWindowSize({ onChange } = {}) {
   const isClient = typeof window === "object";
   function getSize() {
     return {
@@ -22,4 +23,6 @@ export default ({ onChange } = {}) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []); // Empty array ensures that effect is only run on mount and unmount
   return windowSize;
-};
+}
+
+export default useWindowSize;

@@ -5,9 +5,11 @@ import Searchbar from "@/components/search/searchbar";
 
 import useFilters from "@/components/hooks/useFilters";
 
-export default {
+const exportedObject = {
   title: "layout/Header",
 };
+
+export default exportedObject;
 
 const graphql = {
   debug: true,
@@ -29,7 +31,7 @@ export function NavHeader() {
   return (
     <div style={{ height: "800px" }}>
       <StoryTitle>Header</StoryTitle>
-      <StoryDescription>Try to input "hest" or "suggest"</StoryDescription>
+      <StoryDescription>{`Try to input "hest" or "suggest"`}</StoryDescription>
       <HeaderWrapped />
       <Searchbar />
     </div>

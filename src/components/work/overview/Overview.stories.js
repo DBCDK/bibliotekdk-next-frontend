@@ -1,11 +1,13 @@
 import { useState } from "react";
 import dummy_workDataApi from "../dummy.workDataApi";
 import { OverviewSkeleton, Overview } from "./Overview";
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
-export default {
+const exportedObject = {
   title: "work/Overview",
 };
+
+export default exportedObject;
 
 /**
  * Overview

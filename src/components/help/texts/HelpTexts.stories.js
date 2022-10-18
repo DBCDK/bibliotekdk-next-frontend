@@ -3,9 +3,11 @@ import { HelpText } from "@/components/help/texts/HelpText";
 
 import aHelptText from "./aHelpText.json";
 
-export default {
+const exportedObject = {
   title: "help/Helptext",
 };
+
+export default exportedObject;
 
 /**
  * a single helptext

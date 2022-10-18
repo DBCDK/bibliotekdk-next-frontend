@@ -1,9 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import { Sections, SectionsSkeleton } from "./Sections";
 
-export default {
+const exportedObject = {
   title: "help/sections",
 };
+
+export default exportedObject;
 
 /**
  * Help Sections

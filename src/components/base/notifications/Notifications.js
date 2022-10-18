@@ -1,6 +1,4 @@
 import PropTypes from "prop-types";
-
-import Text from "@/components/base/text/Text";
 import React, { useState } from "react";
 import { useData } from "@/lib/api/api";
 import { notificationsQuery } from "@/lib/api/notification.fragment";
@@ -18,7 +16,6 @@ import animations from "@/components/base/animation/animations.module.css";
 /**
  * list of notifications
  * @param notificationArray
- * @param hideNotification
  * @return {unknown[]}
  * @constructor
  */
@@ -78,19 +75,16 @@ function notificationsFilter(data) {
     data.nodeQuery.entities &&
     data.nodeQuery.entities.filter((notification) => notification);
 
-  const notifications = notificationfetch ? notificationfetch : [];
-
-  return notifications;
+  return notificationfetch ? notificationfetch : [];
 }
 
 /**
  * wrapper to export
- * @param props
  * @return {JSX.Element}
  */
-export default function wrapper(props) {
+export default function Wrap() {
   const langcode = { language: getLangcode() };
-  const { isLoading, data, error } = useData(notificationsQuery(langcode));
+  const { data } = useData(notificationsQuery(langcode));
 
   return <Notifications notificationObject={data} />;
 }

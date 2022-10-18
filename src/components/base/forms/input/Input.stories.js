@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Input from "./";
 
-export default {
+const exportedObject = {
   title: "base/Forms/Input",
 };
+
+export default exportedObject;
 
 /**
  * Default input field
@@ -48,7 +49,9 @@ export function OnChange() {
       <StoryDescription>
         Input onChange function trigger (console.logs value)
       </StoryDescription>
-      <Input onChange={(value) => console.log(("input", { value }))} />
+      <Input
+        onChange={(value) => console.log(`input: ${value.target.value}`)}
+      />
     </div>
   );
 }
@@ -64,9 +67,7 @@ export function OnBlur() {
       <StoryDescription>
         Input onBlur function trigger (console.logs value)
       </StoryDescription>
-      <Input
-        onBlur={(e) => console.log(("input", { value: e.target.value }))}
-      />
+      <Input onBlur={(e) => console.log(`input: ${e.target.value}`)} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ import { useData } from "@/lib/api/api";
 import { Col, Row } from "react-bootstrap";
 import ArticlePreview from "@/components/article/preview";
 
-import { allArticles, promotedArticles } from "@/lib/api/article.fragments";
+import { allArticles } from "@/lib/api/article.fragments";
 import { getLangcode } from "@/components/base/translate/Translate";
 
 import styles from "./Articles.module.css";

@@ -153,12 +153,11 @@ export function ButtonTxt({ selectedMaterial, skeleton, work }) {
  *
  * @param user
  *  The user
- * @param singlemanifestion
  * @return {JSX.Element}
  * @constructor
  */
 export function OrderButton({
-  selectedMaterial,
+  selectedMaterial: selectedMaterialBeforeAltering,
   onOnlineAccess,
   openOrderModal,
   user,
@@ -168,11 +167,7 @@ export function OrderButton({
   type = "primary",
   size = "large",
 }) {
-  // The loan button is skeleton until we know if selected
-  // material is physical or online
-  if (!selectedMaterial) {
-    return null;
-  }
+  let selectedMaterial = selectedMaterialBeforeAltering;
 
   const modal = useModal();
 
@@ -199,6 +194,12 @@ export function OrderButton({
   3. material is available for logged in library -> prepare order button with parameters
   4. material is not available -> disable
    */
+
+  // The loan button is skeleton until we know if selected
+  // material is physical or online
+  if (!selectedMaterialBeforeAltering) {
+    return null;
+  }
 
   // online access ? - special handling of digital copy (onlineAccess[0].issn)
   if (

@@ -1,11 +1,8 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-
 import { promotedArticles } from "@/lib/api/article.fragments";
 import { useData } from "@/lib/api/api";
 import Section from "@/components/base/section";
-
-// templates
 import Single from "./templates/single";
 import Double from "./templates/double";
 import Triple from "./templates/triple";
@@ -50,26 +47,22 @@ function getContext(template) {
  */
 function parseArticles(articles, matchTag, numberOfArticles) {
   // We are filtering and sorting, hence we make us of useMemo
-  articles = useMemo(() => {
-    if (!articles) {
-      // Create skeleton articles
-      return Array(numberOfArticles).fill({});
-    } else {
-      return articles
-        .filter(
-          (article) =>
-            article &&
-            article.fieldArticleSection &&
-            article.fieldArticleSection === matchTag
-        )
-        .sort(function (a, b) {
-          return a.fieldArticlePosition - b.fieldArticlePosition;
-        })
-        .slice(0, numberOfArticles);
-    }
-  }, [articles]);
-
-  return articles;
+  if (!articles) {
+    // Create skeleton articles
+    return Array(numberOfArticles).fill({});
+  } else {
+    return articles
+      .filter(
+        (article) =>
+          article &&
+          article.fieldArticleSection &&
+          article.fieldArticleSection === matchTag
+      )
+      .sort(function (a, b) {
+        return a.fieldArticlePosition - b.fieldArticlePosition;
+      })
+      .slice(0, numberOfArticles);
+  }
 }
 
 /**
@@ -78,17 +71,15 @@ function parseArticles(articles, matchTag, numberOfArticles) {
  * @returns {array}
  */
 
-function getArticleData() {
-  const langcode = { language: getLangcode() };
-  const { isLoading, data } = useData(promotedArticles(langcode));
-  const articles =
+function getArticleData(data) {
+  return (
     data &&
     data.nodeQuery &&
     data.nodeQuery.entities &&
     data.nodeQuery.entities.filter(
       (article) => article && article.__typename === "NodeArticle"
-    );
-  return { articles, isLoading, data };
+    )
+  );
 }
 
 /**
@@ -116,7 +107,10 @@ export function ArticleSection({
   const Template = context.template;
   const backgroundColor = color || context.background || null;
 
-  articles = parseArticles(articles, matchTag, numberOfArticles);
+  articles = useMemo(
+    () => parseArticles(articles, matchTag, numberOfArticles),
+    [articles, matchTag, numberOfArticles]
+  );
 
   if (articles.length < 1) {
     // there are no articles prevent mount
@@ -144,7 +138,11 @@ ArticleSection.propTypes = {
 };
 
 export default function Wrap(props) {
-  const { articles, isLoading, data } = getArticleData();
+  const { data, isLoading } = useData(
+    promotedArticles({ language: getLangcode() })
+  );
+
+  const articles = getArticleData(data);
   return <ArticleSection {...props} articles={articles} skeleton={isLoading} />;
 }
 

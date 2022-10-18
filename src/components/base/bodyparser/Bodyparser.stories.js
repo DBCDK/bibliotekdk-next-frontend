@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import BodyParser from "./BodyParser";
 
-export default {
+const exportedObject = {
   title: "base/BodyParser",
 };
+
+export default exportedObject;
 
 /**
  * Returns Bookmark button

@@ -10,19 +10,6 @@ import Skeleton from "@/components/base/skeleton";
 import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
- * get a helptext by id from api
- * @param helpTextId
- * @return {{isLoading, data}}
- */
-function getAhelpText(helpTextId) {
-  const langcode = { language: getLangcode() };
-  const args = { ...helpTextId, ...langcode };
-
-  const { isLoading, data, error } = useData(helpText(args));
-  return { isLoading, data, error };
-}
-
-/**
  * Entry function for a helptext
  * @param helptext
  * @return {JSX.Element|null}
@@ -54,7 +41,8 @@ export function HelpText({ helptext }) {
  * @constructor
  */
 export default function Wrap({ helpTextId }) {
-  const { isLoading, data, error } = getAhelpText({ helpTextId });
+  const args = { ...helpTextId, ...{ language: getLangcode() } };
+  const { isLoading, data, error } = useData(helpText(args));
 
   if (isLoading) {
     return <Skeleton lines={2} />;

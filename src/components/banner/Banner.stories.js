@@ -1,9 +1,11 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 import Banner from "./Banner";
 
-export default {
+const exportedObject = {
   title: "layout/Banner",
 };
+
+export default exportedObject;
 
 /**
  * Returns Banner

@@ -1,18 +1,17 @@
-import { useState } from "react";
-
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import dummy_data from "./dummy_data.json";
-import Modal, { useModal } from "@/components/_modal/Modal";
+import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { Options } from "./Options.page";
 
-export default {
+const exportedObject = {
   title: "modal/Options",
 };
 
+export default exportedObject;
+
 export function AllOptions() {
-  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
@@ -38,7 +37,6 @@ export function AllOptions() {
 }
 
 export function NoPhysicalOption() {
-  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>
@@ -61,7 +59,6 @@ export function NoPhysicalOption() {
 }
 
 export function NoDigitalCopyOption() {
-  const modal = useModal();
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Url, pdf, infomedia and digital copy</StoryTitle>

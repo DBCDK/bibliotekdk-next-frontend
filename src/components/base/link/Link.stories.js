@@ -1,11 +1,12 @@
 import { StoryTitle, StoryDescription } from "../storybook";
 
 import Link from "./Link";
-import Text from "@/components/base/text";
 
-export default {
+const exportedObject = {
   title: "base/Link",
 };
+
+export default exportedObject;
 
 /**
  * Return what-ever as a Link

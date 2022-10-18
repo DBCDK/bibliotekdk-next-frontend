@@ -3,9 +3,11 @@ import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
 import { Keywords, KeywordsSkeleton } from "./Keywords";
 
-export default {
+const exportedObject = {
   title: "work/Keywords",
 };
+
+export default exportedObject;
 
 /**
  * Returns Description section

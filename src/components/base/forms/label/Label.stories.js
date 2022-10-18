@@ -1,11 +1,13 @@
 import Label from "./";
 import Input from "../input/";
 
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { StoryTitle } from "@/storybook";
 
-export default {
+const exportedObject = {
   title: "Base/Forms/Label",
 };
+
+export default exportedObject;
 
 export function Default() {
   return (

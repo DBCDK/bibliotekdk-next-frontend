@@ -27,21 +27,16 @@ function CreateLines({ n, children }) {
  * @param {object} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Skeleton({
   children,
   className = "",
   isSlow = false,
   lines = 1,
-  display = "inline-block",
 }) {
   // Adds the slow loading class (error/red loading color)
   const slowClass = isSlow ? styles.slow : "";
-
-  // display -> block: makes component fill 100% of width
-  // display -> inline-block: make component adapt to content width
-  display = styles[display];
 
   return (
     <div className={`${styles.skeleton} ${className} ${slowClass}`}>
@@ -58,5 +53,4 @@ Skeleton.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   isSlow: PropTypes.bool,
   lines: PropTypes.number,
-  display: PropTypes.string,
 };

@@ -76,8 +76,8 @@ export function Localizations({
   );
 }
 
-export default function wrap({ context, modal }) {
-  const { workId, agency, pids } = { ...context };
+export default function Wrap({ context, modal }) {
+  const { agency, pids } = { ...context };
 
   const [query, setQuery] = useState("");
 

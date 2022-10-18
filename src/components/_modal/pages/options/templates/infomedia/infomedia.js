@@ -34,6 +34,6 @@ export function Infomedia({ props }) {
   );
 }
 
-export default function wrap({ props }) {
+export default function Wrap({ props }) {
   return <Infomedia props={props} />;
 }

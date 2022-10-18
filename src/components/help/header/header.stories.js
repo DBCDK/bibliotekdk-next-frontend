@@ -3,9 +3,11 @@ import { useState } from "react";
 
 import { Header } from "./Header";
 
-export default {
+const exportedObject = {
   title: "Help/Header",
 };
+
+export default exportedObject;
 
 /**
  * Returns Header

@@ -1,21 +1,17 @@
+import PropTypes from "prop-types";
+import { Col, Row } from "react-bootstrap";
+import ArticlePreview from "@/components/article/preview";
+
 /**
  * @file
  * Three articles in a row template
  */
 
-import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
-
-import ArticlePreview from "@/components/article/preview";
-
-import styles from "./Triple.module.css";
-
 /**
  * A section displaying three articles
  *
- * @param {obj} props
- * @param {obj} props.article
- * @param {boolean} props.skeleton
+ * @param {obj} articles
+ * @param {boolean} skeleton
  *
  */
 export default function Triple({ articles, skeleton }) {

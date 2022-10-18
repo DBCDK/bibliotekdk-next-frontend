@@ -5,7 +5,6 @@ import Skeleton from "@/components/base/skeleton";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
-import useUser from "@/components/hooks/useUser";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
 import { preferredOnline } from "@/lib/Navigation";
@@ -14,7 +13,6 @@ export function LocalizationsLink({
   materialType,
   localizations,
   opener,
-  user,
   isLoading,
 }) {
   if (isLoading) {
@@ -72,14 +70,12 @@ export function LocalizationsLink({
   );
 }
 
-export default function wrap({ selectedMaterial, workId }) {
+export default function Wrap({ selectedMaterial, workId }) {
   // use the useData hook to fetch data
-  const { data, isLoading, isSlow, error } = useData(
-    workFragments.localizations({ workId })
-  );
+  const { data, isLoading } = useData(workFragments.localizations({ workId }));
 
   // @TODO if user is logged in - do a holdingsitems request on user agency
-  const user = useUser();
+  // const user = useUser();
 
   // get pids from selected material to look up detailed holdings
   const pids = selectedMaterial?.manifestations?.map((mani) => mani.pid);
@@ -102,7 +98,6 @@ export default function wrap({ selectedMaterial, workId }) {
       materialType={selectedMaterial.materialType}
       localizations={selectedLocalizations?.localizations || "0"}
       opener={openLocalizationsModal}
-      user={user}
       isLoading={isLoading}
     />
   );

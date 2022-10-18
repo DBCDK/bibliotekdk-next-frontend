@@ -1,10 +1,11 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import { useState } from "react";
+import { StoryTitle, StoryDescription } from "@/storybook";
 import Logo from "./Logo";
 
-export default {
+const exportedObject = {
   title: "base/logo",
 };
+
+export default exportedObject;
 
 /**
  * Returns Header

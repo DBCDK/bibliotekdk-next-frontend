@@ -33,8 +33,6 @@
     margin: var(--pt2) 0 var(--pt2) 0;
 }
 
-
-
 .itemwrap{
     margin: var(--pt2);
 }
@@ -82,7 +80,7 @@
 @-webkit-keyframes blinking {
     0% {
         background-color: #27AE60;
-        margin-left: 0px;
+        margin-left: 0;
     }
     25% {
         background-color: #F2C94C;
@@ -98,7 +96,7 @@
     }
     100% {
         background-color: #27AE60;
-        margin-left: 0px;
+        margin-left: 0;
     }
 }
 

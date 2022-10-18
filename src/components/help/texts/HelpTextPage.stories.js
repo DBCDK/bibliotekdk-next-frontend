@@ -1,9 +1,11 @@
 import HelpPage from "./page/Page";
 import { StoryTitle } from "@/storybook";
 
-export default {
+const exportedObject = {
   title: "help/page",
 };
+
+export default exportedObject;
 
 export function HelpTextPage() {
   return (
@@ -18,7 +20,7 @@ HelpTextPage.story = {
     graphql: {
       resolvers: {
         Node: {
-          __resolveType: (args) => "NodeHelpText",
+          __resolveType: () => "NodeHelpText",
         },
       },
     },

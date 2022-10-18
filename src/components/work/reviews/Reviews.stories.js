@@ -17,9 +17,11 @@ import {
   ExternalReviewSkeleton,
 } from "./types/external/ExternalReview.js";
 
-export default {
+const exportedObject = {
   title: "work/Reviews",
 };
+
+export default exportedObject;
 
 /**
  * Returns all primary buttons (Default button style)

@@ -2,9 +2,11 @@ import { useState } from "react";
 
 import { Desktop as Select } from "@/components/search/select/Select";
 
-export default {
+const exportedObject = {
   title: "base/Select",
 };
+
+export default exportedObject;
 
 export function AList() {
   const [state, setState] = useState("all");

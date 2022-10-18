@@ -4,9 +4,11 @@ import List from "@/components/base/forms/list";
 import animations from "@/components/base/animation/animations.module.css";
 import { useState } from "react";
 
-export default {
+const exportedObject = {
   title: "base/Forms/List",
 };
+
+export default exportedObject;
 
 const rows = [
   { title: "First", description: "der" },
@@ -40,7 +42,6 @@ export function RadioGroup() {
   );
 }
 export function SelectGroup() {
-  const [selected, setSelected] = useState({});
   return (
     <div>
       <StoryTitle>Select Button Group</StoryTitle>
@@ -52,7 +53,7 @@ export function SelectGroup() {
         {rows.map((row) => (
           <List.Select
             key={row.title}
-            onSelect={() => setSelected(alert(`${row.title} selected`))}
+            onSelect={() => alert(`${row.title} selected`)}
             label={row.title}
           >
             <b>{row.title}</b>
@@ -94,7 +95,7 @@ export function DisabledRadioGroup() {
     <div>
       <StoryTitle>Radio Button Group</StoryTitle>
       <StoryDescription>
-        One can't tab into group, or check/uncheck radio buttons
+        {`One can\'t tab into group, or check/uncheck radio buttons`}
       </StoryDescription>
       <List.Group enabled={false}>
         {rows.map((row) => (

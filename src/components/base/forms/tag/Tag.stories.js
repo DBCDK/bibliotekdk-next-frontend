@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { StoryTitle, StorySpace } from "@/storybook";
 
 import Tag from "./Tag";
 
-export default {
+const exportedObject = {
   title: "base/Forms/Tag",
 };
+
+export default exportedObject;
 
 //  Some material types to show in a Tag
 const types = ["Book", "Ebook", "Audiobook"];
@@ -20,24 +22,24 @@ export function TagButton() {
 
   return (
     <div>
-      <StoryTitle>Single Tag ("Checkbox" style)</StoryTitle>
+      <StoryTitle>{`Single Tag (\"Checkbox\" style)`}</StoryTitle>
 
       <Tag selected={isSelected} onClick={() => setIsSelected(!isSelected)}>
         Book
       </Tag>
 
-      <StoryTitle>Multiple tags ("Radio" style)</StoryTitle>
+      <StoryTitle>{`Multiple tags ("Radio" style)`}</StoryTitle>
 
       {types.map((type) => {
         const isSelected = selectedType === type;
 
         return (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <Tag selected={isSelected} onClick={() => setSelectedType(type)}>
               {type}
             </Tag>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>
@@ -54,14 +56,14 @@ export function Loading() {
       </Tag>
 
       <StoryTitle>Multiple tags [Radio style]</StoryTitle>
-      {types.map((type, i) => {
+      {types.map((type) => {
         return (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <Tag selected={false} skeleton={true}>
               {type}
             </Tag>
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </div>

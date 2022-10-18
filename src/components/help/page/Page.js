@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 import Faq from "@/components/help/faq/promoted";
 import Sections from "../sections";
@@ -8,8 +8,6 @@ import Contact from "../contact";
 import Translate from "@/components/base/translate";
 
 import styles from "./Page.module.css";
-import Link from "@/components/base/link";
-import Text from "@/components/base/text";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import React from "react";
 

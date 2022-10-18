@@ -1,10 +1,13 @@
+import { Fragment } from "react";
 import { StoryTitle, StorySpace } from "@/storybook";
 
 import Text from "./Text";
 
-export default {
+const exportedObject = {
   title: "base/Texts",
 };
+
+export default exportedObject;
 
 // Current text types
 const texts = ["text1", "text2", "text3", "text4"];
@@ -21,7 +24,7 @@ export function Body() {
 
       <div style={{ maxWidth: 600 }}>
         {texts.map((type, i) => (
-          <React.Fragment key={type}>
+          <Fragment key={type}>
             <StoryTitle>
               {type} [{size[i]}]
             </StoryTitle>
@@ -34,7 +37,7 @@ export function Body() {
             </Text>
 
             <StorySpace space="2" />
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
     </div>

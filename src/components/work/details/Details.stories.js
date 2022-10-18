@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import dummy_materialTypesApi from "../dummy.materialTypesApi";
 import { Details, DetailsSkeleton } from "./Details";
 
-export default {
+const exportedObject = {
   title: "work/Details",
 };
+
+export default exportedObject;
 
 /**
  * Returns details section

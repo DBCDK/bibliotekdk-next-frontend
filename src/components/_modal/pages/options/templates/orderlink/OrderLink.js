@@ -1,10 +1,7 @@
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
-
 import Translate from "@/components/base/translate";
-
 import styles from "./OrderLink.module.css";
-import { useRouter } from "next/router";
 
 /**
  * Get pid from workid.
@@ -19,6 +16,9 @@ function parseForPid(workId) {
 /**
  * Push needed parameters for an order to router.
  * @param props
+ * @param onOrder
+ * @param combined
+ * @param digitalOnly
  * @return {JSX.Element}
  * @constructor
  */
@@ -28,7 +28,7 @@ export function OrderLink({
   combined,
   digitalOnly,
 }) {
-  const { workId, className, modal, materialType: type } = { ...props };
+  const { workId, className } = { ...props };
 
   const pid = parseForPid(workId);
 
@@ -69,9 +69,11 @@ export function OrderLink({
 /**
  * default export function
  * @param props
+ * @param combined
+ * @param digitalOnly
  * @return {JSX.Element}
  */
-export default function wrap({ props, combined, digitalOnly }) {
+export default function Wrap({ props, combined, digitalOnly }) {
   const { modal, workId, materialType: type } = { ...props };
   return (
     <OrderLink

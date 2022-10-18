@@ -1,9 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import WrappedRelated, { Words } from "./Related";
 
-export default {
+const exportedObject = {
   title: "search/RelatedSubjects",
 };
+
+export default exportedObject;
 
 export function Default() {
   const data = [
@@ -49,7 +51,7 @@ Connected.story = {
     graphql: {
       resolvers: {
         SearchResponse: {
-          hitcount: (args) => "998",
+          hitcount: () => "998",
         },
       },
     },

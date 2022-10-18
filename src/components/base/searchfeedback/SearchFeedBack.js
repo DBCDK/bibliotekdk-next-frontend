@@ -27,7 +27,7 @@ export function SearchFeedBackWrapper({ datacollect, router, ForceshowMe }) {
   // useEffect depends on query parameters .. but not paging or modal ..
   const excludeFromQuery = ["page", "modal"];
   const filtered = router
-    ? Object.entries(router.query).filter((entry, index) => {
+    ? Object.entries(router.query).filter((entry) => {
         if (!excludeFromQuery.includes(entry[0])) {
           return entry;
         }
@@ -261,7 +261,7 @@ export function ButtonTxt({ hasTxt }) {
   );
 }
 
-export default function wrap() {
+export default function Wrap() {
   const router = useRouter();
   const dataCollect = useDataCollect();
   // @TODO - use the datacollect

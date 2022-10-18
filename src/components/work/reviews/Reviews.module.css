@@ -16,39 +16,6 @@
   max-width: 100%;
 }
 
-.button {
-  cursor: pointer;
-  user-select: none;
-  background-color: var(--blue);
-  color: var(--white);
-  transition-duration: 0.35s;
-
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  position: absolute;
-  z-index: 100;
-  top: 40%;
-
-  display: none;
-}
-
-.button:hover {
-  background-color: var(--mine-shaft);
-}
-.button.disabled {
-  background-color: var(--iron);
-  cursor: initial;
-}
-.left {
-  left: var(--pt4);
-}
-.left-adjust {
-  left: calc(var(--pt4) * -1 - var(--pt5));
-}
-.right {
-  right: var(--pt4);
-}
-
 /* Skeleton */
 
 .skeleton .button {
@@ -74,10 +41,5 @@
 @media (min-width: 992px) {
   .SlideWrapper {
     max-width: unset;
-  }
-
-  /* Make buttons visible */
-  .button {
-    display: inherit;
   }
 }

@@ -1,9 +1,11 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import WrappedRelated, { Related } from "./Related";
 
-export default {
+const exportedObject = {
   title: "work/RelatedSubjects",
 };
+
+export default exportedObject;
 
 const dummy = [
   "heste",

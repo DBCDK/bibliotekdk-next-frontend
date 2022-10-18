@@ -95,7 +95,6 @@ export default function Feedback({
         </div>
       </div>
       <div
-        data-cy="feedback-toggler"
         className={styles.blue}
         onClick={() => {
           handleCookie("click");

@@ -1,0 +1,20 @@
+{
+  "plugins": ["cypress", "mocha", "prettier"],
+  "extends": ["next", "next/core-web-vitals", "plugin:cypress/recommended"],
+  "rules": {
+    "prettier/prettier": "error",
+    "mocha/no-exclusive-tests": "error",
+    "cypress/no-unnecessary-waiting": 0,
+    "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+
+    // TODO: Turn these on at some point
+    /* next/core-web-vitals */
+    "@next/next/no-img-element": "off",
+    "react-hooks/exhaustive-deps": "off",
+
+    /* plugin:css-modules/recommended */
+    /** Keep this rule because of error **/
+    "css-modules/no-unused-class": "off",
+    "css-modules/no-undef-class": "off"
+  }
+}

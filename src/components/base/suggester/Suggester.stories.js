@@ -1,13 +1,15 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 
 import Suggester from "./";
 import Input from "../forms/input/";
 
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { StoryTitle } from "@/storybook";
 
-export default {
+const exportedObject = {
   title: "Base/Suggester",
 };
+
+export default exportedObject;
 
 const dummy = [
   { value: "hest" },

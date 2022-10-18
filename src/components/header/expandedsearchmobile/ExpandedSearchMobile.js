@@ -3,7 +3,7 @@
  */
 
 import SuggesterTemplate from "../expandedsearch/SuggesterTemplate";
-import { isEmpty, initExpanded } from "../expandedsearch/ExpandedSearch";
+import { isEmpty, useInitExpanded } from "../expandedsearch/ExpandedSearch";
 import React, { useEffect } from "react";
 import styles from "@/components/header/expandedsearchmobile/ExpandedSearchMobile.module.css";
 import Collapse from "react-bootstrap/Collapse";
@@ -142,8 +142,8 @@ function ExpandedSearchMobile({
  * @param props
  * @returns {JSX.Element}
  */
-export default function wrap(props) {
-  const init = initExpanded(props);
+export default function Wrap(props) {
+  const init = useInitExpanded(props);
 
   return (
     <ExpandedSearchMobile

@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Anchor from "./";
 
-export default {
+const exportedObject = {
   title: "Base/Anchor",
 };
+
+export default exportedObject;
 
 /**
  * Anchor - anchor one-page menu
@@ -69,8 +71,8 @@ export function MissingAnchorLabel() {
     <div>
       <StoryTitle>Anchor Menu - 2 Removed sections</StoryTitle>
       <StoryDescription>
-        Section 2 has no "anchor-label" and is therefor not rendered. Section 3
-        has no height, and is therefor also removed.
+        {`Section 2 has no \"anchor-label\" and is therefor not rendered. Section 3
+        has no height, and is therefor also removed.`}
       </StoryDescription>
       <Anchor.Wrap>
         <Anchor.Menu />

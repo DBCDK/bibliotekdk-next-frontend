@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 import { cyKey } from "@/utils/trim";
 
@@ -37,8 +37,7 @@ export function InfomediaReview({
   // make an url for infomedia page
   const reviewPid = data?.reference?.[0]?.pid;
   const urlTxt = encodeString("Anmeldelse_" + title);
-  const infomediaUrl = `/infomedia/${urlTxt}/${workId}?review=${reviewPid}`;
-  data.url = infomediaUrl;
+  data.url = `/infomedia/${urlTxt}/${workId}?review=${reviewPid}`;
 
   return (
     <Col

@@ -5,9 +5,11 @@ import {
   StoryLabel,
 } from "./Storybook";
 
-export default {
+const exportedObject = {
   title: "storybook/Storybook",
 };
+
+export default exportedObject;
 
 /**
  * Returns storybook title component

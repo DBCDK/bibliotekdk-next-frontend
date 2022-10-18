@@ -71,9 +71,11 @@ const localizations = {
   monitor: "OK",
 };
 
-export default {
+const exportedObject = {
   title: "work/Bibliographic data",
 };
+
+export default exportedObject;
 
 /**
  * Returns bibliographic data component

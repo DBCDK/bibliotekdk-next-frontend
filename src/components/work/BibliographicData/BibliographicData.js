@@ -3,7 +3,7 @@
  * This component uses the section component defined in base/section
  */
 import PropTypes from "prop-types";
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
@@ -20,7 +20,7 @@ import * as workFragments from "@/lib/api/work.fragments";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function BibliographicData({ work, workId }) {
   const sortedMaterialTypes = useMemo(
@@ -71,7 +71,7 @@ export function BibliographicData({ work, workId }) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap({ workId }) {
   const { data, isLoading, error } = useData(

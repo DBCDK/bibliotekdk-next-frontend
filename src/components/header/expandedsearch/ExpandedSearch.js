@@ -142,7 +142,7 @@ function SingleSearchInput({ labelTranslation, suggestType }) {
  * @param {function} setCollapseOpen
  * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
  */
-export function initExpanded({ collapseOpen = false, setCollapseOpen }) {
+export function useInitExpanded({ collapseOpen = false, setCollapseOpen }) {
   const { setQuery } = useQ();
   // connected filters hook
   const { filters } = useFilters();
@@ -177,7 +177,7 @@ export default function Wrap({
   setCollapseOpen,
   className = "",
 }) {
-  const init = initExpanded({
+  const init = useInitExpanded({
     collapseOpen,
     setCollapseOpen,
   });

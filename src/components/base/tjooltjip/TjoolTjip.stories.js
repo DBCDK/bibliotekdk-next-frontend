@@ -1,10 +1,12 @@
-import { StoryTitle, StorySpace } from "@/storybook";
+import { StoryTitle } from "@/storybook";
 
 import Popover from "./Tjooltjip";
 
-export default {
+const exportedObject = {
   title: "base/Tooltips",
 };
+
+export default exportedObject;
 
 export function SimpleTooltip() {
   return (

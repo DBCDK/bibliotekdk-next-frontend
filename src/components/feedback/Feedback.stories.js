@@ -1,9 +1,11 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 import Feedb from "./Feedback";
 
-export default {
+const exportedObject = {
   title: "base/feedback",
 };
+
+export default exportedObject;
 
 /**
  * Returns Banner

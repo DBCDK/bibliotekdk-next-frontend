@@ -8,10 +8,11 @@ const searchOnUrl = "/find?q.creator=";
 function manifestationLink({ name }) {
   return (
     <Link
-      children={name}
       href={`${searchOnUrl}${name}`}
       border={{ top: false, bottom: { keepVisible: true } }}
-    />
+    >
+      {name}
+    </Link>
   );
 }
 

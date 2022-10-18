@@ -8,6 +8,21 @@ import styles from "./Input.module.css";
 /**
  * The Component function
  *
+ * @param className
+ * @param {string} tabIndex
+ * @param {string} type
+ * @param id
+ * @param invalid
+ * @param {string} value
+ * @param {string|null} placeholder
+ * @param {boolean} disabled
+ * @param onChange
+ * @param onBlur
+ * @param {string} dataCy
+ * @param {boolean} readOnly
+ * @param required
+ * @param ariaLabelledby
+ * @param ariaLabel
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -90,7 +105,7 @@ Input.propTypes = {
  * Return loading version of component
  *
  */
-function SkeletonInput(props) {
+function SkeletonInput() {
   return (
     <div className={`${styles.input} ${styles.skeleton}`}>
       <Skeleton />

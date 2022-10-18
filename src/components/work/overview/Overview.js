@@ -10,7 +10,6 @@ import Icon from "@/components/base/icon";
 import Cover from "@/components/base/cover";
 import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
-import Breadcrumbs from "@/components/base/breadcrumbs";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
@@ -27,22 +26,18 @@ import styles from "./Overview.module.css";
 
 import { ButtonTxt } from "@/components/work/reservationbutton/ReservationButton";
 
-// Translate Context
-const context = { context: "overview" };
-
 /**
  * The Component function
  *
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Overview({
   title = "...",
   fullTitle = "...",
   creators = [{ name: "Mrs. Jane Do" }],
-  path = [],
   materialTypes = [],
   type,
   onTypeChange = () => {},
@@ -90,9 +85,6 @@ export function Overview({
         context: "workTypeDistinctForm",
         label: "fallback",
       });
-
-  // BETA-1 .. disable breadcrumb links
-  const breadcrumbsdisabled = true;
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -153,7 +145,6 @@ export function Overview({
                   return (
                     <span key={`${c.name}-${i}`}>
                       <Link
-                        children={c.name}
                         disabled={skeleton}
                         href={`${searchOnUrl}${c.name}`}
                         border={{ top: false, bottom: { keepVisible: true } }}
@@ -283,11 +274,10 @@ export function OverviewError() {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  const { workId, type, onTypeChange, onOnlineAccess, login, openOrderModal } =
-    props;
+  const { workId, type, onTypeChange, onOnlineAccess, login } = props;
 
   const user = useUser();
 

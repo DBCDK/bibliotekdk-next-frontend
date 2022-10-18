@@ -46,12 +46,9 @@ export default function Action({
       aria-label={title}
     >
       {badge && <Badge className={styles.badge}>{badge}</Badge>}
-      <Icon
-        size={{ w: "auto", h: 3 }}
-        src={icon}
-        children={children}
-        alt={title}
-      />
+      <Icon size={{ w: "auto", h: 3 }} src={icon} alt={title}>
+        {children}
+      </Icon>
       <div className={styles.wrap}>
         <Text type="text3">{title}</Text>
         {animation && <AnimationLine />}

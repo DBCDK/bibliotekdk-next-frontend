@@ -12,7 +12,6 @@ import { fetchAll } from "@/lib/api/apiServerOnly";
 import Header from "@/components/header/Header";
 import Translate from "@/components/base/translate";
 import React from "react";
-import { useRouter } from "next/router";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import { useData } from "@/lib/api/api";

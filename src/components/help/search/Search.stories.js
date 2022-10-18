@@ -1,8 +1,10 @@
 import { Page } from "@/components/help/search/page";
 
-export default {
+const exportedObject = {
   title: "help/search",
 };
+
+export default exportedObject;
 
 export function EmptyInput() {
   return <Page result={[]} isLoading={false} query={""} />;
@@ -16,7 +18,7 @@ NoResults.story = {
     graphql: {
       resolvers: {
         EntityQueryResult: {
-          entities: (args) => [...new Array(10).fill({})],
+          entities: () => [...new Array(10).fill({})],
         },
         Entity: { __resolveType: () => "NodeFaq" },
       },

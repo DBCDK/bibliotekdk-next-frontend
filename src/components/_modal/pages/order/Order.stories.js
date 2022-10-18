@@ -1,27 +1,27 @@
 import { useState } from "react";
 
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Button from "@/components/base/button";
-//import { Modal } from "@/components/modal";
 import { Order, OrderSkeleton } from "./Order.page.js";
 import data from "./dummy.data";
 import dummyData from "./dummy.data";
 import Modal, { useModal } from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 
-export default {
+const exportedObject = {
   title: "modal/Order",
 };
+
+export default exportedObject;
 
 /**
  * Returns Modal
  *
  */
 export function ToggleOrder() {
-  const [query, setQuery] = useState({ modal: null });
-
-  const { work, user, order } = data;
+  // eslint-disable-next-line no-unused-vars
+  const [_query, setQuery] = useState({ modal: null });
 
   return (
     <div style={{ height: "100vh" }}>
@@ -67,7 +67,7 @@ export function ToggleOrder() {
 export function Default() {
   const [query, setQuery] = useState({ modal: "order" });
 
-  const { work, user, order } = data;
+  const { user, order } = data;
   const pickupBranch = user.agency.result[0];
 
   const modifiedUser = { ...user, mail: "some@mail.dk" };
@@ -125,7 +125,7 @@ export function Loading() {
 export function NoEmail() {
   const [query, setQuery] = useState({ modal: "order" });
 
-  const { work, user, order } = data;
+  const { user, order } = data;
 
   const pickupBranch = user.agency.result[0];
   return (
@@ -162,30 +162,10 @@ export function NoEmail() {
 export function ManyPickupPoints() {
   const [query, setQuery] = useState({ modal: "order" });
 
-  const { work, user, order } = data;
+  const { user, order } = data;
 
   // City main library
   const main = user.agency.result[0];
-
-  // Auto generated long pickup list
-  const list = Array.from(Array(25).keys()).map((l, i) => ({
-    branchId: `${i + 1}`,
-    name: `Filial ${i + 1}`,
-    postalAddress: `Filialvej ${i + 1}`,
-    postalCode: "1234",
-    city: "Filialby",
-    orderPolicy: {
-      orderPossible: true,
-      orderPossibleReason: "OWNED_ACCEPTED",
-      lookUpUrl: "https://some-lookup-url",
-    },
-    pickupAllowed: i < 20,
-  }));
-
-  const modifiedUser = {
-    ...user,
-    agency: { result: [main, ...list] },
-  };
 
   return (
     <div style={{ height: "100vh" }}>
@@ -218,17 +198,19 @@ export function ManyPickupPoints() {
 }
 
 export function Ordering() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { work, user, order } = data;
-
-  const modifiedOrder = { ...order, isLoading: true };
+  // const [query, setQuery] = useState({ modal: "order" });
+  //
+  // const { work, user, order } = data;
+  //
+  // const modifiedOrder = { ...order, isLoading: true };
 
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Ordering</StoryTitle>
       <StoryDescription>
-        Order in progress status (When user has clicked the "approve" button)
+        {
+          'Order in progress status (When user has clicked the "approve" button)'
+        }
       </StoryDescription>
 
       {/*
@@ -256,14 +238,14 @@ export function Ordering() {
 }
 
 export function Ordered() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { work, user, order } = data;
-
-  const modifiedOrder = {
-    ...order,
-    data: { submitOrder: { status: "ok", orsId: "some-ors-id" } },
-  };
+  // const [query, setQuery] = useState({ modal: "order" });
+  //
+  // const { work, user, order } = data;
+  //
+  // const modifiedOrder = {
+  //   ...order,
+  //   data: { submitOrder: { status: "ok", orsId: "some-ors-id" } },
+  // };
 
   return (
     <div style={{ height: "100vh" }}>

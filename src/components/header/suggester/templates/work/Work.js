@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import { cyKey } from "@/utils/trim";
 
 import Text from "@/components/base/text";
-import Cover from "@/components/base/cover";
-
-import Translate from "@/components/base/translate";
 
 import styles from "./Work.module.css";
 
@@ -18,14 +15,11 @@ import styles from "./Work.module.css";
  * @param {object} data
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Work({ className = "", data = {}, skeleton = false }) {
-  const context = { context: "suggester" };
-
   const skeletonClass = skeleton ? styles.skeleton : "";
 
-  const hasCover = !!(data.cover && data.cover.thumbnail);
   return (
     <div
       className={`${styles.work} ${className} ${skeletonClass}`}
@@ -68,7 +62,7 @@ export function Work({ className = "", data = {}, skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function WorkSkeleton(props) {
   return <Work {...props} className={styles.skeleton} skeleton={true} />;
@@ -80,7 +74,7 @@ export function WorkSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   if (props.skeleton) {

@@ -36,7 +36,7 @@ export default function BasketIcon(props) {
 
           <div className={styles._bag} />
 
-          <Badge className={`${styles.badge} ${sizeClass}`} children={items} />
+          <Badge className={`${styles.badge} ${sizeClass}`}>{items}</Badge>
         </div>
       </div>
     </Action>

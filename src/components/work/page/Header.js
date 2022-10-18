@@ -9,7 +9,6 @@
  */
 import PropTypes from "prop-types";
 import Head from "next/head";
-import merge from "lodash/merge";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
@@ -23,7 +22,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Header({ workId }) {
   const details = useData(workFragments.detailsAllManifestations({ workId }));

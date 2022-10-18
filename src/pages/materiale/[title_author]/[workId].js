@@ -28,7 +28,7 @@ import React from "react";
  */
 export default function WorkPage() {
   const router = useRouter();
-  const { workId, title_author, type } = router.query;
+  const { workId, type } = router.query;
 
   /**
    * Updates the query params in the url

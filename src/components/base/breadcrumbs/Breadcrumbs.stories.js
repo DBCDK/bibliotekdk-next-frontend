@@ -2,9 +2,11 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Breadcrumbs from "./Breadcrumbs";
 
-export default {
+const exportedObject = {
   title: "base/Breadcrumbs",
 };
+
+export default exportedObject;
 
 /**
  * Returns all primary buttons (Default button style)

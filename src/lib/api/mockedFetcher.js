@@ -52,10 +52,10 @@ export function GraphQLMocker({
  * The above will return "Jens Jensen" for creator types.
  * For more examples, see https://www.graphql-tools.com/docs/mocking#customizing-mocks
  *
- * @param {object} params
- * @param {string} params.url
- * @param {object} params.mocks
- * @param {function} params.beforeFetch
+ * @param {string} url
+ * @param {object} resolvers
+ * @param {function} beforeFetch
+ * @param debug
  * @returns
  */
 export function createMockedFetcher({
@@ -147,9 +147,7 @@ export function createMockedFetcher({
               isString,
               scalarTypeName,
             } = expandReturnType(args[3]?.returnType);
-            const { path, pathNoKeys } = getFieldPath(
-              args[3]?.path || args[2]?.path
-            );
+            const { path } = getFieldPath(args[3]?.path || args[2]?.path);
             const possibleUnionTypes = args[3]?._types?.map(
               (type) => type?.name
             );
@@ -399,6 +397,6 @@ function getFieldPath(current) {
   });
   return {
     path: pathStr,
-    pathNoKeys: pathStr.replace(/\[\d+\]/g, "[]"),
+    pathNoKeys: pathStr.replace(/\[\d+]/g, "[]"),
   };
 }

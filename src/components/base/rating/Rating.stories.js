@@ -4,12 +4,13 @@ import {
   StoryLabel,
   StorySpace,
 } from "@/storybook";
-
 import { Rating, RatingSkeleton } from "./Rating";
 
-export default {
+const exportedObject = {
   title: "base/Rating",
 };
+
+export default exportedObject;
 
 /**
  * Returns Bookmark button
@@ -20,7 +21,7 @@ export function SomeRating() {
     <div>
       <StoryTitle>Rating</StoryTitle>
       <StoryDescription>
-        Converts a string/rating (e.g. "5/6") to a rating component.
+        {`Converts a string/rating (e.g. \"5/6\") to a rating component.`}
       </StoryDescription>
 
       <Rating rating="2/6" />

@@ -12,12 +12,12 @@ export function sortReviews(data) {
   const groups = groupBy(data, "__typename");
 
   // sort the infomedia group by rating/no rating
-  groups.ReviewInfomedia?.sort(function (a, b) {
+  groups.ReviewInfomedia?.sort(function (a) {
     return a.rating ? 1 : -1;
   });
 
   // sort external reviews with a url
-  groups.ReviewExternalMedia?.sort(function (a, b) {
+  groups.ReviewExternalMedia?.sort(function (a) {
     return a.url ? -1 : 1;
   });
 
@@ -29,7 +29,7 @@ export function sortReviews(data) {
   ];
 
   // sort reviews with no url last
-  reviews?.sort(function (a, b) {
+  reviews?.sort(function (a) {
     return a.url || a.reference ? -1 : 1;
   });
 

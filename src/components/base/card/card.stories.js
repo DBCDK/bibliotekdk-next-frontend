@@ -1,9 +1,12 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Card from "./Card";
-export default {
+
+const exportedObject = {
   title: "base/Cards",
 };
+
+export default exportedObject;
 
 export function WorkNarrowAndWideCover() {
   const narrow = {
@@ -61,8 +64,8 @@ export function WorkNarrowAndWideCover() {
     <div>
       <StoryTitle>Work: Narrow and wide covers</StoryTitle>
       <StoryDescription>
-        The work card has fixed dimensions. Lines are clamped, and cover is
-        "contained" in a fixed sized box
+        {`The work card has fixed dimensions. Lines are clamped, and cover is
+        \"contained\" in a fixed sized box`}
       </StoryDescription>
       <div style={{ display: "flex" }}>
         <Card {...narrow} />

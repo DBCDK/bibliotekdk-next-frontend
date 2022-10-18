@@ -241,7 +241,7 @@ function Wrap({ children }) {
   // Object to collect all section refs by id
   const menu = useRef();
   const refs = useRef({});
-  const [sections, setSections] = useState(refs);
+  const [sections] = useState(refs);
   const titles = {};
 
   const onChange = useMemo(
@@ -299,4 +299,6 @@ Wrap.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
-export default { Wrap, Menu };
+const ExportedAnchor = { Wrap, Menu };
+
+export default ExportedAnchor;

@@ -105,7 +105,7 @@ export function parseHero(data) {
   );
 }
 
-export default function wrap() {
+export default function Wrap() {
   const { data } = useData(frontpageHero());
   const heroImage = parseHero(data);
   return <Hero image={heroImage} />;
