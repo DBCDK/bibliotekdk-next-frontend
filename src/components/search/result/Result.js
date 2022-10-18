@@ -9,8 +9,6 @@ import { hitcount } from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
-import Divider from "@/components/base/divider";
-
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
@@ -35,7 +33,7 @@ export function Result({
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl" || false;
   const numPages = Math.ceil(hitcount / 10);
 
   // Set number of hits for the user, ads a '+' if "more" than 100 results found.
@@ -45,10 +43,11 @@ export function Result({
     <>
       <Section
         divider={{
-          title: <Divider className={styles.titledivider} />,
+          title: isMobile,
           content: false,
         }}
-        space={{ top: "var(--pt8)" }}
+        space={{ top: isDesktop ? "var(--pt8)" : false }}
+        className={styles.section}
         title={
           <div className={styles.right}>
             <div className={styles.titlewrapper}>
