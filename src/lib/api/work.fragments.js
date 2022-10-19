@@ -439,7 +439,7 @@ export function infomediaArticlePublicInfo({ workId }) {
 }
 
 /**
- * Basic work info that is fast to fetch
+ * Subject work info that is fast to fetch
  *
  * @param {object} params
  * @param {string} params.workId the work id
@@ -456,6 +456,28 @@ export function subjects({ workId }) {
             display
           }
         }
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function description({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query subjects($workId: String!) {
+      work(id: $workId) {
+        abstract
       }
       monitor(name: "bibdknext_work_basic")
     }`,

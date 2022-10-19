@@ -119,8 +119,7 @@ export default function getMaterialTypes({ workId, type }) {
               type: "ill",
             },
           ],
-          description:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat.",
+          description: examples.ABSTRACT,
           content: [
             "Introduction, Barbara Larson;",
             "Darwin, Burke, and the biological sublime, Barbara Larson;",
@@ -328,6 +327,22 @@ export function getSubjectsDbcVerified({ workId }) {
   return { [workId]: [...response?.work.subjects?.dbcVerified] };
 }
 
+export function getDescription({ workId }) {
+  //  Mock data
+  const response = {
+    work: {
+      abstract: examples.ABSTRACT,
+    },
+  };
+
+  // WorkId or type was not found
+  if (!response?.work?.abstract) {
+    return { [workId]: {} };
+  }
+
+  return { [workId]: [...response?.work?.abstract] };
+}
+
 const examples = Object.freeze({
   SUBJECTS: [
     { display: "far-søn-forholdet" },
@@ -348,4 +363,6 @@ const examples = Object.freeze({
     { display: "1990-1999" },
     { display: "2000-2009" },
   ],
+  ABSTRACT:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo.",
 });
