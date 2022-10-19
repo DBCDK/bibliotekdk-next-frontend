@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
 import { useData } from "@/lib/api/api";
-import { recommendations } from "@/lib/api/work.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
@@ -48,7 +48,9 @@ function parse(data) {
  * @param {string} props.workId The work id
  */
 export default function Recommendations({ workId }) {
-  const { data, isLoading } = useData(recommendations({ workId }));
+  const { data, isLoading } = useData(
+    workFragments.recommendations({ workId })
+  );
   const dataCollect = useDataCollect();
 
   const parsed = parse(data);
