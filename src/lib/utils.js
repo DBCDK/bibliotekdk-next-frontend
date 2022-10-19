@@ -108,3 +108,11 @@ export function getIsPeriodicaLike(work) {
 export function infomediaUrl(title, workId, infomadiaId) {
   return `/infomedia/${title}/${workId}/${infomadiaId}`;
 }
+
+export function uniqueEntries(oldArray) {
+  return [
+    ...new Set(
+      oldArray?.map((s) => s.display.toLowerCase().replace(/\./g, ""))
+    ),
+  ];
+}
