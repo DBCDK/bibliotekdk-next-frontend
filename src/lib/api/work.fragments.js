@@ -3,6 +3,8 @@
  *
  */
 
+import { ApiEnums } from "@/lib/api/api";
+
 /**
  * Basic work info that is fast to fetch
  *
@@ -431,6 +433,32 @@ export function infomediaArticlePublicInfo({ workId }) {
       monitor(name: "bibdknext_work_infomedia_public")
     }
   `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Basic work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function subjects({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query subjects($workId: String!) {
+      work(id: $workId) {
+        subjects {
+          dbcVerified {
+            display
+          }
+        }
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
     variables: { workId },
     slowThreshold: 3000,
   };
