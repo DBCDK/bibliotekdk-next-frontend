@@ -1,26 +1,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
 
-function viewAllFilters() {
-  cy.wait(1000);
-  cy.get("[data-cy=view-all-filters]").click({ force: true });
-  // wait for transition to end
-  cy.wait(1000);
-  cy.get(".modal_open").should("be.visible");
-  // Wait for facets to load
-  cy.contains(/vis\s*\d*\s*resultater/i);
-  cy.wait(500);
-}
-
-function modalBack() {
-  cy.get("[data-cy=modal-back]").click();
-  // Wait for facets to load
-  cy.contains(/vis\s*\d*\s*resultater/i);
-  cy.wait(500);
-}
 describe("Filter", () => {
-  beforeEach(function () {});
-
   it(`workTypes facet is excluded from facets list`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.get("button").contains("open filters").click();
