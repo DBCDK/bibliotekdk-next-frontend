@@ -7,7 +7,6 @@ import Modal, { useModal } from "@/components/_modal";
 import useFilters from "@/components/hooks/useFilters";
 
 import response from "./dummy.data";
-import { useRouter } from "next/router";
 
 const exportedObject = {
   title: "Modal/Filter",
@@ -43,7 +42,7 @@ Connected.story = {
             args?.variables?.filters?.subjects?.includes("krimi") ? 8 : 20,
 
           // Return two facets
-          facets: (args) => [...new Array(3).fill({})],
+          facets: () => [...new Array(3).fill({})],
         },
         FacetResult: {
           // Return the names of the two facets
