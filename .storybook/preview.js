@@ -15,6 +15,7 @@ import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import Router from "next/router";
 
 export const decorators = [
   (Story) => {
@@ -56,7 +57,11 @@ export const decorators = [
     );
   },
   (Story, context) => {
-    const { showInfo, pathname, query } = context?.parameters?.nextRouter || {};
+    const {
+      showInfo,
+      pathname = "",
+      query = {},
+    } = context?.parameters?.nextRouter || {};
     return (
       <RouterProvider value={{ pathname, query }}>
         {showInfo && <StoryRouter />}
@@ -88,46 +93,48 @@ function RouterProvider({ children, value = {} }) {
     return { pathname, query };
   }
 
+  const r = {
+    ...value,
+    action: history[current].action,
+    query: history[current].query || {},
+    pathname: history[current].pathname || "/",
+    asPath: history[current].pathname || "/",
+    replace: (...args) => {
+      const { pathname, query } = parse(...args);
+      setQuery({
+        current,
+        history: [
+          ...history.slice(0, current),
+          { pathname, query, action: "replace" },
+        ],
+      });
+    },
+    push: (...args) => {
+      const { pathname, query } = parse(...args);
+      setQuery({
+        current: current + 1,
+        history: [
+          ...history.slice(0, current + 1),
+          { pathname, query, action: "push" },
+        ],
+      });
+    },
+    back: () =>
+      setQuery({
+        current: Math.max(current - 1, 0),
+        history,
+      }),
+    go: (index) =>
+      setQuery({
+        current: current + index,
+        history,
+      }),
+    prefetch: async () => {},
+  };
+  Router.router = r;
+
   return (
-    <RouterContext.Provider
-      value={{
-        ...value,
-        action: history[current].action,
-        query: history[current].query || {},
-        pathname: history[current].pathname || "/",
-        replace: (...args) => {
-          const { pathname, query } = parse(...args);
-          setQuery({
-            current,
-            history: [
-              ...history.slice(0, current),
-              { pathname, query, action: "replace" },
-            ],
-          });
-        },
-        push: (...args) => {
-          const { pathname, query } = parse(...args);
-          setQuery({
-            current: current + 1,
-            history: [
-              ...history.slice(0, current + 1),
-              { pathname, query, action: "push" },
-            ],
-          });
-        },
-        back: () =>
-          setQuery({
-            current: Math.max(current - 1, 0),
-            history,
-          }),
-        go: (index) =>
-          setQuery({
-            current: current + index,
-            history,
-          }),
-        prefetch: async () => {},
-      }}
-    >
+    <RouterContext.Provider value={r}>
       {value.showInfo && <StoryRouter />}
       {children}
     </RouterContext.Provider>
