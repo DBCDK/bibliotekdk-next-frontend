@@ -4,7 +4,8 @@ FROM  $NODE_BASEIMAGE AS build
 # set working directory
 WORKDIR /home/node/app
 # copy project file
-COPY . .
+COPY --chown=node:node . .
+USER node
 
 RUN npm version
 
