@@ -38,17 +38,23 @@ function SkeletonCard() {
 export default function Card({
   cardRef,
   className = "",
-  cover,
+  manifestations,
+  workId,
   creators,
+  titles,
   onFocus,
   onClick,
-  id,
   skeleton,
+  // remove on fbi-api migration
+  id,
+  cover,
   title,
 }) {
   if (skeleton) {
     return <SkeletonCard />;
   }
+
+  console.log({ titles, creators });
 
   return (
     <Link
@@ -60,7 +66,7 @@ export default function Card({
             title,
             creators[0] && creators[0].name
           ),
-          workId: id,
+          workId: workId || id,
         },
       }}
     >
@@ -73,7 +79,10 @@ export default function Card({
         onClick={onClick}
       >
         <div className={styles.CoverWrapper}>
-          <Cover src={cover.detail} size="fill" />
+          <Cover
+            src={manifestations?.latest?.cover?.detail || cover?.detail}
+            size="fill"
+          />
         </div>
         <div>
           <Text
@@ -82,7 +91,7 @@ export default function Card({
             lines={2}
             clamp={true}
           >
-            {title}
+            {titles?.main[0] || title}
           </Text>
 
           {creators.length > 0 && (
@@ -92,7 +101,7 @@ export default function Card({
               lines={2}
               clamp={true}
             >
-              {creators[0] && creators[0].name}
+              {creators[0]?.display || creators[0]?.name}
             </Text>
           )}
         </div>
@@ -107,12 +116,17 @@ Card.propTypes = {
   className: PropTypes.string,
   cover: PropTypes.object,
   creators: PropTypes.array,
-  id: PropTypes.string,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
   series: PropTypes.shape({
     part: PropTypes.number,
   }),
   skeleton: PropTypes.bool,
+  manifestations: PropTypes.object,
+  workId: PropTypes.string,
+  titles: PropTypes.object,
+  // remove on fbi-api migration
+  id: PropTypes.string,
   title: PropTypes.string,
+  cover: PropTypes.object,
 };

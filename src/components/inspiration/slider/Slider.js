@@ -11,15 +11,14 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Slider.module.css";
 
-export function Slider({ works, isLoading }) {
+export function Slider({ title, works, isLoading }) {
   const dataCollect = useDataCollect();
 
   return (
     <Section
-      // title={Translate({ ...context, label: "remindsOf" })}
-
-      topSpace={true}
-      dataCy="section-recommend"
+      title={title}
+      bgColor="var(--parchment)"
+      dataCy="section-inspiration"
     >
       <Row className={`${styles.slider}`}>
         <Col xs={12} md>
@@ -43,11 +42,13 @@ export function Slider({ works, isLoading }) {
   );
 }
 
-export default function Wrap({ category, subCategory }) {
+export default function Wrap({ title, category, subCategory }) {
   const { data, isLoading } = useData(inspiration?.[category]?.());
 
   const cat = data?.inspiration?.categories?.[category];
   const sub = cat?.find((obj) => obj.title === subCategory);
 
-  return <Slider works={sub?.works || []} isLoading={isLoading} />;
+  return (
+    <Slider title={title} works={sub?.works || []} isLoading={isLoading} />
+  );
 }

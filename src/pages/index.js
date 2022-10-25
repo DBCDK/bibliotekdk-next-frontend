@@ -70,7 +70,14 @@ const Index = () => {
           template="double"
         />
         <ArticleSection title={false} matchTag="section 4" template="single" />
-        <InspirationSlider category="fiction" subCategory="nyeste" />
+        <InspirationSlider
+          title={Translate({
+            context: "index",
+            label: "inspirationSliderTitle",
+          })}
+          category="fiction"
+          subCategory="nyeste"
+        />
       </div>
     </React.Fragment>
   );
