@@ -1,3 +1,7 @@
+.section {
+  padding-top: var(--pt4);
+}
+
 .titledivider {
   display: none;
 }
@@ -63,6 +67,12 @@
     margin-right: var(--pt1);
     font-size: 17px;
     width: unset;
+  }
+}
+
+@media (max-width: 991px) {
+  .section {
+    padding-top: 0;
   }
 }
 

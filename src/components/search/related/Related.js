@@ -42,6 +42,11 @@ function Word({ word, isLoading }) {
  * Returns a list of related subject words/items
  */
 export function Words({ data, isLoading }) {
+  // remove words component if no hits found
+  if (data.length === 0 && !isLoading) {
+    return null;
+  }
+
   return (
     <div className={styles.related}>
       <Text className={styles.label}>
@@ -64,6 +69,11 @@ export function Related({ data, hitcount, isLoading }) {
   const breakpoint = useBreakpoint();
   const isMobile =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
+
+  // remove entire section if no hits on mobile
+  if (data.length === 0 && !isLoading && isMobile) {
+    return null;
+  }
 
   return (
     <Section
