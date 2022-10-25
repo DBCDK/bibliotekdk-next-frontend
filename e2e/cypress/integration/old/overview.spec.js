@@ -64,7 +64,7 @@ describe("Overview", () => {
     cy.get(`[data-cy=${tag2}]`).children("i").should("not.be.visible");
   });
 
-  it(`Can access external ebook`, () => {
+  it.skip(`Can access external ebook`, () => {
     cy.get(`[data-cy=tag-e-bog]`).click();
     cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
     cy.get("[data-cy=button-gå-til-bogen]").click();
@@ -74,7 +74,7 @@ describe("Overview", () => {
     });
   });
 
-  it(`Can access external audio book`, () => {
+  it.skip(`Can access external audio book`, () => {
     cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
     cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
     cy.get("[data-cy=button-gå-til-bogen]").click();
