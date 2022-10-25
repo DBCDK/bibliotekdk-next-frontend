@@ -82,57 +82,57 @@ export function details({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
           work(id: $workId) {
-          seo {
-            title
-            description
-          }
-          subjects {
-            type
-            value
-          }          
-          materialTypes {
-            materialType
-            manifestations {
-              admin{
-                requestButton
-              }
-              content
-              creators {
-                type
-                functionSingular
-                name
-              }
-              datePublished
-              edition
-              isbn
-              materialType
-              language
-              onlineAccess {
-                ... on UrlReference {
-                  url
-                  origin
-                  note
-                  accessType
-                }
-                ... on InfomediaReference {
-                  infomediaId
-                  pid
-                }
-                ... on WebArchive {
-                  type
-                  url
-                  pid
-                }
-                ... on DigitalCopy{
-                  issn
-                }
-              }
-              physicalDescription
-              publisher              
+            seo {
+              title
+              description
             }
+            subjects {
+              type
+              value
+            }          
+            materialTypes {
+              materialType
+              manifestations {
+                admin{
+                  requestButton
+                }
+                content
+                creators {
+                  type
+                  functionSingular
+                  name
+                }
+                datePublished
+                edition
+                isbn
+                materialType
+                language
+                onlineAccess {
+                  ... on UrlReference {
+                    url
+                    origin
+                    note
+                    accessType
+                  }
+                  ... on InfomediaReference {
+                    infomediaId
+                    pid
+                  }
+                  ... on WebArchive {
+                    type
+                    url
+                    pid
+                  }
+                  ... on DigitalCopy{
+                    issn
+                  }
+                }
+                physicalDescription
+                publisher              
+              }
+            }
+            workTypes
           }
-          workTypes
-        }
         monitor(name: "bibdknext_work_details")
       }`,
     variables: { workId },
@@ -345,9 +345,10 @@ export function reviews({ workId }) {
 export function localizations({ workId }) {
   return {
     // delay: 4000, // for debugging
-    query: ` query ($workId: String!){
-        work(id:$workId){
-          materialTypes{
+    query: `
+    query WorkFragmentLocalizations($workId: String!){
+      work(id:$workId){
+        materialTypes{
           materialType
           localizations {
             count
@@ -475,9 +476,138 @@ export function description({ workId }) {
     apiUrl: ApiEnums.FBI_API,
     // delay: 250,
     query: `
-    query subjects($workId: String!) {
+    query description($workId: String!) {
       work(id: $workId) {
         abstract
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function buttonTxt({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query buttonTxt ($workId: String!) {
+      work(id: $workId) {
+        titles {
+          main
+        }
+        materialTypes {
+          specific
+        }
+        manifestations {
+          all {
+            pid
+            access {
+              __typename  
+              ... on AccessUrl {
+                url
+                origin
+              }
+              ... on Ereol {
+                url
+              }
+              ... on InterLibraryLoan {
+                loanIsPossible
+              }
+              ... on InfomediaService {
+                id
+              }
+              ... on DigitalArticleService {
+                issn
+              }
+            }
+            materialTypes {
+              specific
+            }
+          }
+        }
+        workTypes
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function buttonTxt2({ workId }) {
+  return {
+    // delay: 250,
+    query: `
+    query buttonTxt($workId: String!) {
+      work(id: $workId) {
+        title
+        materialTypes {
+          manifestations {
+            pid
+            onlineAccess {
+              ... on UrlReference {
+                url
+                origin
+              }
+              ... on InfomediaReference {
+                infomediaId
+                pid
+              }
+              ... on WebArchive {
+                url
+              }
+              ... on DigitalCopy {
+                issn
+              }
+            }
+            materialType
+            admin {
+              requestButton
+            }
+          }
+          materialType
+        }
+        manifestations {
+          pid
+          onlineAccess {
+            ... on UrlReference {
+              url
+              origin
+            }
+            ... on InfomediaReference {
+              infomediaId
+              pid
+            }
+            ... on WebArchive {
+              url
+            }
+            ... on DigitalCopy {
+              issn
+            }
+          }
+          materialType
+          admin {
+            requestButton
+          }
+        }
+        materialTypes {
+          materialType
+        }
+        workTypes
       }
       monitor(name: "bibdknext_work_basic")
     }`,
