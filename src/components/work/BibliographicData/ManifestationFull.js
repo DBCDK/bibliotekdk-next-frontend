@@ -15,7 +15,7 @@ import { cyKey } from "@/utils/trim";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
-import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import { OrderButton_TempUsingAlfaApi } from "@/components/work/reservationbutton/ReservationButton";
 import { useData } from "@/lib/api/api";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
@@ -54,7 +54,7 @@ function ColumnOne({
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
       <div>
-        <ReservationButton
+        <OrderButton_TempUsingAlfaApi
           user={user}
           openOrderModal={openOrderModal}
           selectedMaterial={{

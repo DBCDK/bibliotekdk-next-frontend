@@ -19,7 +19,7 @@ import styles from "./Description.module.css";
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  if (!data) {
+  if (!data || data?.length === 0) {
     return null;
   }
   // Translate Context

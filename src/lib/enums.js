@@ -19,3 +19,16 @@ export const FilterTypeEnum = Object.freeze({
   SUBJECTS: "subjects",
   WORK_TYPES: "workTypes",
 });
+
+/** TODO: Maybe use a map like this instead of
+ *   flattening the materialTypes as in
+ *   "selectMaterialBasedOnType"
+ * */
+export const MaterialTypeEnum = Object.freeze({
+  BOG: "bog",
+  EBOG: "e-bog",
+  "LYDBOG (NET)": "lydbog (net)",
+  "LYDBOG (CD-MP3)": "lydbog (cd-mp3)",
+  "LYDBOG (CD)": "Lydbog (cd)",
+  "LYDBOG (BÅND)": "lydbog (bånd)",
+});
