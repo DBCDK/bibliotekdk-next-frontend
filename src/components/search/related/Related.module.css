@@ -25,6 +25,10 @@
   align-items: baseline;
 }
 
+.related.skeleton {
+  align-items: flex-start;
+}
+
 .words {
   display: flex;
   padding-bottom: var(--pt1);

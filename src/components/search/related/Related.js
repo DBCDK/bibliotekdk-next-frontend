@@ -42,14 +42,11 @@ function Word({ word, isLoading }) {
  * Returns a list of related subject words/items
  */
 export function Words({ data, isLoading }) {
-  // remove words component if no hits found
-  if (data.length === 0 && !isLoading) {
-    return null;
-  }
+  const skeletonClass = isLoading ? styles.skeleton : "";
 
   return (
-    <div className={styles.related}>
-      <Text className={styles.label}>
+    <div className={`${skeletonClass} ${styles.related}`}>
+      <Text className={styles.label} skeleton={isLoading} lines="1">
         {Translate({ context: "search", label: "relatedSubjects" })}
       </Text>
       <div className={styles.words} data-cy="words-container">
@@ -98,17 +95,19 @@ export function Related({ data, hitcount, isLoading }) {
         )
       }
     >
-      <div>
-        <Skip
-          id="view-all-filters"
-          className={styles.skip}
-          label={Translate({
-            context: "search",
-            label: "skipRelatedSubjects",
-          })}
-        />
-        <Words data={data} isLoading={isLoading} />
-      </div>
+      {(data.length > 0 || isLoading) && (
+        <div>
+          <Skip
+            id="view-all-filters"
+            className={styles.skip}
+            label={Translate({
+              context: "search",
+              label: "skipRelatedSubjects",
+            })}
+          />
+          <Words data={data} isLoading={isLoading} />
+        </div>
+      )}
     </Section>
   );
 }
