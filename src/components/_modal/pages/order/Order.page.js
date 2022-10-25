@@ -30,7 +30,7 @@ import animations from "@/components/base/animation/animations.module.css";
 import data from "./dummy.data";
 
 import styles from "./Order.module.css";
-import { getIsPeriodicaLike } from "@/lib/utils";
+import { getIsPeriodicaLike_TempUsingAlfaApi } from "@/lib/utils";
 import TjoolTjip from "@/components/base/tjooltjip";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 
@@ -239,7 +239,7 @@ export function Order({
   const [hasTry, setHasTry] = useState(false);
 
   const isArticle = work?.workTypes?.includes("article");
-  const isPeriodicaLike = getIsPeriodicaLike(work);
+  const isPeriodicaLike = getIsPeriodicaLike_TempUsingAlfaApi(work);
 
   const isArticleRequest =
     !!context?.periodicaForm?.titleOfComponent ||
