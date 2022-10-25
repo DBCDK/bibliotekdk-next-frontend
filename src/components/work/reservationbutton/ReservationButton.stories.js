@@ -1,9 +1,11 @@
 import dummy_workDataApi from "../dummy.workDataApi";
-import { StoryTitle, StoryDescription } from "@/storybook";
+import { StoryDescription, StoryTitle } from "@/storybook";
 import useUser from "@/components/hooks/useUser";
 import fullwork from "../dummydata/fullwork.json";
 import available from "../dummydata/available.json";
-import { OrderButton } from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButton, {
+  OrderButton,
+} from "@/components/work/reservationbutton/ReservationButton";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -11,20 +13,74 @@ const exportedObject = {
 
 export default exportedObject;
 
+function ReservationButtonComponentBuilder({
+  type = "Bog",
+  workId = "some-id-book",
+  storyNameOverride = null,
+}) {
+  const descriptionName = storyNameOverride ? storyNameOverride : type;
+  return (
+    <div>
+      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
+      <StoryDescription>
+        The OrderButton based on the type: {descriptionName}
+      </StoryDescription>
+      <OrderButton
+        workId={workId}
+        chosenMaterialType={type}
+        skeleton={false}
+        buttonType={"primary"}
+        size={"large"}
+        openOrderModal={() => {}}
+      />
+    </div>
+  );
+}
+
+function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
+  return {
+    parameters: {
+      graphql: {
+        debug: true,
+        resolvers: resolvers,
+        url:
+          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql" ||
+          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      },
+      nextRouter: {
+        showInfo: true,
+        pathname: `/materiale/${storyname}ReservationButton/work-of:870970-basis:${storyname}`,
+        query: query,
+      },
+    },
+  };
+}
+
+export function ReservationButtonOnlineAccessTesta() {
+  return <ReservationButtonComponentBuilder workId={"some-id"} type={"Bog"} />;
+}
+ReservationButtonOnlineAccessTesta.story = {
+  ...ReservationButtonStoryBuilder("Book", {}),
+};
+
 /**
  *
  * @return {JSX.Element}
  * @constructor
  */
 export function ReservationButtonOnlineAccess() {
-  const data = dummy_workDataApi({ workId: "some-id" });
+  const workId = "some-id";
+  const data = dummy_workDataApi({ workId: workId });
   return (
     <div>
       <StoryTitle>material online - user not logged in</StoryTitle>
       <StoryDescription>
         user is not logged in - material accesible online
       </StoryDescription>
-      <OrderButton
+      <ReservationButton
+        workId={workId}
+        type={"EBog"}
+        buttonType={"primary"}
         selectedMaterial={data.work.materialTypes[2]}
         user={useUser}
         onlineAccess={() => {
@@ -48,7 +104,7 @@ export function ReservationButtonInactive() {
     <div>
       <StoryTitle>material can not be ordered (requestbutton:false)</StoryTitle>
       <StoryDescription>material can not be ordered</StoryDescription>
-      <OrderButton
+      <ReservationButton
         selectedMaterial={data.work.materialTypes[0]}
         user={useUser}
         onlineAccess={() => {}}
@@ -71,7 +127,7 @@ export function ReservationButtonActive() {
     <div>
       <StoryTitle>user logged in - material reservable</StoryTitle>
       <StoryDescription>user is logged in - order is possible</StoryDescription>
-      <OrderButton
+      <ReservationButton
         selectedMaterial={data.work.materialTypes[0]}
         user={{ isAuthenticated: true }}
         onlineAccess={() => {}}
@@ -98,7 +154,7 @@ export function ReservationButtonNotLoggedIn() {
       <StoryDescription>
         user is not logged in - order is possible
       </StoryDescription>
-      <OrderButton
+      <ReservationButton
         selectedMaterial={data.work.materialTypes[0]}
         user={useUser}
         onlineAccess={() => {}}
@@ -117,7 +173,7 @@ export function ReservationButtonSkeleton() {
     <div>
       <StoryTitle>Skeleton</StoryTitle>
       <StoryDescription>reservation button not ready</StoryDescription>
-      <OrderButton
+      <ReservationButton
         selectedMaterial={{}}
         user={{ isAuthenticated: false }}
         onlineAccess={() => {}}
