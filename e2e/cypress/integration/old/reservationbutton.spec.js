@@ -6,7 +6,7 @@ describe("Reservation button", () => {
   describe("OrderButton", () => {
     it(`user logged in material available`, () => {
       cy.visit(
-        "/iframe.html?id=work-reservationbutton--reservation-button-active"
+        "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
       );
 
       cy.get("[data-cy=button-order-overview-enabled]").click();
@@ -17,14 +17,22 @@ describe("Reservation button", () => {
 
     it(`user logged in material unavailable`, () => {
       cy.visit(
-        "/iframe.html?id=work-reservationbutton--reservation-button-inactive"
+        "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
       );
       cy.get("[data-cy=button-order-overview]").should("be.disabled");
     });
 
-    it(`user not logged in material available`, () => {
+    it("user not logged in then above text is shown", () => {
       cy.visit(
-        "/iframe.html?id=work-reservationbutton--reservation-button-not-logged-in"
+        "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
+      );
+      cy.get("[data-cy=button-order-overview]").contains("Gå til");
+      cy.get("[data-cy=text-above-order-button").contains("Kræver");
+    });
+
+    it.skip(`user not logged in material available`, () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
       );
       cy.get("[data-cy=button-order-overview-enabled]")
         .contains("Bestil")
