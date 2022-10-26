@@ -14,7 +14,7 @@ import LocalizationsLink from "./localizationslink";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Link from "@/components/base/link";
-import { OrderButton } from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import { OrderButtonTextBelow } from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
@@ -102,6 +102,14 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
+  const validMaterialTypes = work?.materialTypes.map(
+    (materialType) => materialType.materialType
+  );
+
+  if (type === null || !validMaterialTypes?.includes(type)) {
+    onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
+  }
+
   // Either use type from props, or from local state
   const selectedMaterial = selectMaterialBasedOnType(work?.materialTypes, type);
 
@@ -156,7 +164,7 @@ export function Overview({
                 )}
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <OrderButton
+                <ReservationButton
                   workId={workId}
                   chosenMaterialType={type}
                   onOnlineAccess={onOnlineAccess}
@@ -248,19 +256,10 @@ export default function Wrap(props) {
   const modal = useModal();
 
   // use the useData hook to fetch data
-  const basic = useData(workFragments.basic({ workId }));
+  const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
   const details = useData(workFragments.details({ workId }));
   const covers = useData(workFragments.covers({ workId }));
-
-  if (basic.isLoading) {
-    return <OverviewSkeleton isSlow={basic.isSlow} />;
-  }
-
-  if (basic.error || details.error) {
-    return <OverviewError />;
-  }
-
-  const merged = merge({}, covers.data, basic.data, details.data);
+  const merged = merge({}, covers.data, buttonTxt.data, details.data);
 
   function handleOpenOrderModal(pid, modal, workId, type) {
     modal.push("order", {
@@ -269,6 +268,14 @@ export default function Wrap(props) {
       workId,
       type,
     });
+  }
+
+  if (buttonTxt.isLoading) {
+    return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
+  }
+
+  if (buttonTxt.error || details.error) {
+    return <OverviewError />;
   }
 
   return (
