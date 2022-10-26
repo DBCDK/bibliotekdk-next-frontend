@@ -6,44 +6,6 @@
 import { ApiEnums } from "@/lib/api/api";
 
 /**
- * Basic work info that is fast to fetch
- *
- * @param {object} params
- * @param {string} params.workId the work id
- */
-export function basic({ workId }) {
-  return {
-    // delay: 250,
-    query: `query ($workId: String!) {
-        work(id: $workId) {
-          creators {
-            type
-            name
-          }
-          description
-          materialTypes {
-            materialType
-            manifestations {
-              pid
-              materialType
-            }
-          }
-          path
-          fullTitle
-          title
-          subjects{
-            type
-            value
-          }
-        }
-        monitor(name: "bibdknext_work_basic")
-      }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
  * Covers for the different material types
  *
  * @param {Object} variables
@@ -82,6 +44,11 @@ export function details({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
           work(id: $workId) {
+            title
+            fullTitle
+            creators {
+              name
+            }
             seo {
               title
               description
@@ -508,12 +475,16 @@ export function buttonTxt({ workId }) {
         }
         manifestations {
           all {
-            pid
+            pid   
+            accessTypes {
+              code
+            }
             access {
               __typename  
               ... on AccessUrl {
                 url
                 origin
+                loginRequired
               }
               ... on Ereol {
                 url
@@ -548,13 +519,12 @@ export function buttonTxt({ workId }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function buttonTxt2({ workId }) {
+export function buttonTxt_TempForAlfaApi({ workId }) {
   return {
     // delay: 250,
     query: `
     query buttonTxt($workId: String!) {
       work(id: $workId) {
-        title
         materialTypes {
           manifestations {
             pid
