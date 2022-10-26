@@ -30,7 +30,7 @@ export default function WorkPage({
   onOnlineAccess,
   login,
   openOrderModal,
-  type = "Bog",
+  type,
 }) {
   const router = useRouter();
   return (
