@@ -11,21 +11,25 @@ import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import {
   addToInfomedia_TempUsingAlfaApi,
   checkDigitalCopy,
+  checkDigitalCopy_TempUsingAlfaApi,
   checkRequestButtonIsTrue,
   context,
+  selectMaterial,
   selectMaterial_TempUsingAlfaApi,
+  selectMaterialBasedOnType,
 } from "@/components/work/reservationbutton/utils";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { useMemo } from "react";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
   return hasTranslation({
     context: "workTypeDistinctForm",
-    label: workType,
+    label: workType.toLowerCase(),
   })
     ? Translate({
         context: "workTypeDistinctForm",
-        label: workType,
+        label: workType.toLowerCase(),
       })
     : Translate({
         context: "workTypeDistinctForm",
@@ -33,24 +37,25 @@ function workTypeTranslator(workTypes) {
       });
 }
 
-function selectMaterialBasedOnType(materialTypes, type) {
-  // Creates MaterialTypes as an index
-  const materialTypesMap = {};
-  materialTypes?.forEach((m) => {
-    materialTypesMap[m.materialType] = m;
-  });
+function handleGoToLogin(
+  data,
+  selectedManifestations,
+  user,
+  modal,
+  onOnlineAccess
+) {
+  const { access, pid, accessTypeCode, title } = extractSimpleFields(
+    data,
+    selectedManifestations
+  );
 
-  return materialTypesMap[type] || materialTypes?.[0] || false;
-}
-
-function handleGoToLogin(access, user, modal, onOnlineAccess, title) {
-  function addToInfomedia(onlineAccess, title) {
-    onlineAccess?.map((access) => {
-      if (access?.infomediaId) {
+  function addToInfomedia(access, pid, title) {
+    access?.map((access) => {
+      if (access?.__typename === "InfomediaSerivce" && access?.id !== null) {
         access.url = infomediaUrl(
           encodeTitleCreator(title),
-          `work-of:${access.pid}`,
-          access.infomediaId
+          `work-of:${pid}`,
+          access.id
         );
         access.accessType = "infomedia";
       }
@@ -58,17 +63,18 @@ function handleGoToLogin(access, user, modal, onOnlineAccess, title) {
     });
   }
   // add url to infomedia - if any
-  addToInfomedia(access, title);
+  addToInfomedia(access, pid, title);
 
   // if this is an infomedia article it should open in same window
-  const urlTarget = access[0]?.infomediaId ? "_self" : "_blank";
+  const urlTarget = access[0]?.id ? "_self" : "_blank";
 
   // check if we should open login modal on click
   const goToLogin =
-    access[0]?.accessType === "urlInternetRestricted" &&
+    !user.isAuthenticated &&
+    accessTypeCode === "ONLINE" &&
+    access[0]?.loginRequired &&
     (access[0]?.url.indexOf("ebookcentral") !== -1 ||
-      access[0]?.url.indexOf("ebscohost") !== -1) &&
-    !user.isAuthenticated;
+      access[0]?.url.indexOf("ebscohost") !== -1);
 
   return goToLogin
     ? modal?.push("login", {
@@ -78,26 +84,55 @@ function handleGoToLogin(access, user, modal, onOnlineAccess, title) {
     : onOnlineAccess(access[0]?.url, urlTarget);
 }
 
+function extractSimpleFields(work, selectedManifestations) {
+  const workTypeTranslated = workTypeTranslator(work?.workTypes);
+  const title = work?.titles?.main;
+  const pid = selectedManifestations?.pid;
+  const accessTypeCode = selectedManifestations?.accessTypes?.code;
+
+  const access = selectedManifestations?.access;
+  const buttonSkeleton =
+    selectedManifestations !== null && typeof access === "undefined";
+
+  // if we prefer online material button text should be different
+  let onlineDisable = preferredOnline.includes(work?.materialTypes?.specific);
+
+  const loanIsPossibleOnAny = access && access?.length > 0;
+
+  return {
+    workTypeTranslated,
+    title,
+    pid,
+    accessTypeCode,
+    access,
+    buttonSkeleton,
+    onlineDisable,
+    loanIsPossibleOnAny,
+  };
+}
+
 /**
  * Seperat function for orderbutton
  * Check what kind of material (eg. online, not avialable etc)
  * and present appropriate button
  *
  * @param {string} workId given workId for querying
- * @param {string} type current type looked at
+ * @param {string} chosenMaterialType current type looked at
  * @param {function} onOnlineAccess
  *  callback onclick handler for online access
  * @param {function} openOrderModal
  *  onclick handler for reservation
  * @param {boolean} singleManifestion
- * @param {string} type of button for base button component
+ * @param {string} buttonType of button for base button component
  * @param {string} size of button for base button component
  *
  * @return {JSX.Element}
  * @constructor
  */
 export function OrderButton({
-  workId,
+  user,
+  modal,
+  work,
   chosenMaterialType,
   onOnlineAccess,
   openOrderModal,
@@ -105,85 +140,102 @@ export function OrderButton({
   buttonType = "primary",
   size = "large",
 }) {
-  const user = useUser();
-  const modal = useModal();
-
-  const { data } = useData(workId && workFragments.buttonTxt2({ workId }));
-
-  const selectedMaterials = selectMaterialBasedOnType(
-    data?.work?.materialTypes,
+  const selectedMaterial = selectMaterialBasedOnType(
+    work?.manifestations?.all,
     chosenMaterialType
   );
-
-  const workTypeTranslated = workTypeTranslator(data?.work?.workTypes);
-  const title = data?.work?.title;
-
-  let selectedManifestations = selectedMaterials;
-
-  const manifestations = selectedMaterials.manifestations;
+  let selectedManifestation = selectedMaterial;
   if (!singleManifestion) {
-    selectedManifestations = selectMaterial_TempUsingAlfaApi(manifestations);
+    selectedManifestation = selectMaterial(selectedMaterial);
   }
 
-  const buttonSkeleton =
-    typeof selectedManifestations?.onlineAccess === "undefined";
-
-  const access = selectedManifestations?.onlineAccess;
-
-  /* order button acts on following scenarios:
-  1. material is accessible online (no user login) -> go to online url
-    a. online url
-    b. webarchive
-    c. infomedia access (needs login)
-    d. digital copy (needs login)
-  2. material can not be ordered - maybe it is too new or something else -> disable (with a reason?)
-  3. material is available for logged in library -> prepare order button with parameters
-  4. material is not available -> disable
-   */
+  const {
+    workTypeTranslated,
+    pid,
+    accessTypeCode,
+    access,
+    buttonSkeleton,
+    onlineDisable,
+    loanIsPossibleOnAny,
+  } = useMemo(
+    () => extractSimpleFields(work, selectedManifestation),
+    [work, selectedManifestation]
+  );
 
   // QUICK DECISION: if this is single manifestation AND the manifestation can NOT be ordered
   // we show no Reservation button - @TODO should we show online accesss etc. ???
-  if (singleManifestion && !checkRequestButtonIsTrue({ manifestations })) {
+  if (
+    singleManifestion &&
+    (!loanIsPossibleOnAny ||
+      !checkRequestButtonIsTrue({ manifestations: selectedMaterial }))
+  ) {
     return <></>;
   }
 
-  // The loan button is skeleton until we know if selected
-  // material is physical or online
-  if (!selectedMaterials) {
-    return <></>;
-  }
-
-  // if we prefer online material button text should be different
-  let onlinedisable = preferredOnline.includes(
-    manifestations?.[0]?.materialType
-  );
-
-  // All is well - material can be ordered - order button
-  const pid = manifestations?.[0]?.pid;
-
-  const translationMap = [
-    Boolean(access?.length > 0 && !access?.[0]?.issn),
+  /** order button acts on following scenarios: */
+  const caseScenarioMap = [
+    /** (0) selectedManifestations does not exist for some reason */
     Boolean(
-      !checkRequestButtonIsTrue({ manifestations }) &&
-        !checkDigitalCopy({ manifestations })
+      selectedManifestation === null ||
+        typeof selectedManifestation === "undefined" ||
+        access === null
     ),
+    /** (1) material is accessible online (no user login) -> go to online url
+     * --- a. online url
+     * --- b. webarchive
+     * --- c. infomedia access (needs login)
+     * --- d. digital copy (needs login)
+     * ? online access ? - special handling of digital copy (access[0].issn) */
+    Boolean(
+      access?.length > 0 &&
+        !access?.[0]?.issn &&
+        access?.[0]?.__typename !== "InterLibraryLoan"
+    ),
+    /** (2) material can not be ordered
+     * --- maybe it is too new or something else -> disable (with a reason?)
+     * ? No online access ? - check if work can be ordered */
+    Boolean(
+      loanIsPossibleOnAny === false &&
+        !checkRequestButtonIsTrue({ manifestations: selectedMaterial }) &&
+        !checkDigitalCopy({ manifestations: selectedMaterial })
+    ),
+    /** (3) material is available for logged in library
+     * ---  --> prepare order button with parameters
+     * ? All is well ? - material can be ordered - order button */
     Boolean(singleManifestion),
+    /** (4) material is not available -> disable */
     true,
   ];
 
   const buttonPropsMap = [
-    {
-      onClick: () =>
-        handleGoToLogin(access, user, modal, onOnlineAccess, title),
-    },
+    /* (0) */
     {
       dataCy: "button-order-overview",
       disabled: true,
     },
+    /* (1) */
+    {
+      dataCy: "button-order-overview",
+      onClick: () =>
+        handleGoToLogin(
+          work,
+          selectedManifestation,
+          user,
+          modal,
+          onOnlineAccess
+        ),
+    },
+    /* (2) */
+    {
+      dataCy: "button-order-overview",
+      disabled: true,
+    },
+    /* (3) */
     {
       onClick: () => pid && openOrderModal(pid),
       dataCy: `button-order-overview-enabled${pid}`,
     },
+    /* (4) */
     {
       onClick: () => pid && openOrderModal(pid),
       dataCy: `button-order-overview-enabled`,
@@ -191,6 +243,13 @@ export function OrderButton({
   ];
 
   const buttonTxtMap = [
+    /* (0) */
+    () =>
+      Translate({
+        context: "overview",
+        label: onlineDisable ? "Order-online-disabled" : "Order-disabled",
+      }),
+    /* (1) */
     () =>
       [
         Translate({
@@ -199,22 +258,24 @@ export function OrderButton({
         }),
         workTypeTranslated,
       ].join(" "),
+    /* (2) */
     () =>
       Translate({
         context: "overview",
-        label: onlinedisable ? "Order-online-disabled" : "Order-disabled",
+        label: onlineDisable ? "Order-online-disabled" : "Order-disabled",
       }),
+    /* (3) */
     () =>
       Translate({
         context: "order",
         label: "specific-edition",
       }),
+    /* (4) */
     () => Translate({ context: "general", label: "bestil" }),
   ];
 
   // Set the index, buttonProps, and buttonTxt
-  const index = translationMap.findIndex((caseCheck) => caseCheck);
-
+  const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
   const buttonProps = {
     className: styles.externalLink,
     skeleton: buttonSkeleton,
@@ -222,15 +283,18 @@ export function OrderButton({
     size: size,
     ...buttonPropsMap[index],
   };
-
   const buttonTxt = buttonTxtMap[index];
 
   return (
     <>
-      {(access[0]?.accessType === "urlInternetRestricted" ||
-        access[0]?.infomediaId) &&
+      {((accessTypeCode === "ONLINE" && access?.[0]?.loginRequired) ||
+        access?.[0]?.__typename === "InfomediaService") &&
         !user.isAuthenticated && (
-          <Text type="text3" className={styles.textAboveButton}>
+          <Text
+            type="text3"
+            className={styles.textAboveButton}
+            dataCy={"text-above-order-button"}
+          >
             {Translate({ ...context, label: "url_login_required" })}
           </Text>
         )}
@@ -363,7 +427,7 @@ export function OrderButton_TempUsingAlfaApi({
   /* No online access - check if work can be ordered  */
   if (
     !checkRequestButtonIsTrue({ manifestations }) &&
-    !checkDigitalCopy({ manifestations })
+    !checkDigitalCopy_TempUsingAlfaApi({ manifestations })
   ) {
     // if we prefer online material button text should be different
     let onlinedisable =
@@ -431,4 +495,33 @@ function DisabledReservationButton({ buttonSkeleton, type, onlinedisable }) {
   );
 }
 
-export default OrderButton;
+function ReservationButton({
+  workId,
+  chosenMaterialType,
+  onOnlineAccess,
+  openOrderModal,
+  singleManifestion = false,
+  buttonType = "primary",
+  size = "large",
+}) {
+  const user = useUser();
+  const modal = useModal();
+
+  const { data } = useData(workId && workFragments.buttonTxt({ workId }));
+
+  return (
+    <OrderButton
+      user={user}
+      modal={modal}
+      work={data?.work}
+      chosenMaterialType={chosenMaterialType}
+      onOnlineAccess={onOnlineAccess}
+      openOrderModal={openOrderModal}
+      singleManifestion={singleManifestion}
+      buttonType={buttonType}
+      size={size}
+    />
+  );
+}
+
+export default ReservationButton;
