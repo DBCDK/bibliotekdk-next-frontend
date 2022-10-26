@@ -1,4 +1,4 @@
-export default function dummy_workDataApi({ workId }) {
+export default function dummy_workDataApi_TempUsingAlfaApi({ workId }) {
   const response = {
     [workId]: {
       work: {
@@ -79,6 +79,32 @@ export default function dummy_workDataApi({ workId }) {
           },
         ],
         workTypes: ["literature"],
+      },
+    },
+  };
+
+  // WorkId or type was not found
+  if (!workId) {
+    return {};
+  }
+
+  return response[workId];
+}
+
+export function dummy_workDataApi({ workId }) {
+  const response = {
+    [workId]: {
+      work: {
+        manifestations: {
+          all: [
+            {
+              accessTypes: { code: "ONLINE" },
+              access: [{ loginRequired: true, __typename: "InfomediaService" }],
+              materialTypes: [{ specific: "avisartikel" }],
+            },
+          ],
+        },
+        workTypes: ["LITERATURE"],
       },
     },
   };
