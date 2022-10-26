@@ -49,6 +49,18 @@ export function checkRequestButtonIsTrue({ manifestations }) {
  */
 export function checkDigitalCopy({ manifestations }) {
   return !!manifestations?.find((manifestation) =>
+    manifestation?.access?.find((access) => access?.issn)
+  );
+}
+
+/**
+ * Check if order of digital copy is an option - if one af the manifestions in work
+ * has an issn (International Standard Serial Number) return true, if not return false
+ * @param manifestations
+ * @return {boolean}
+ */
+export function checkDigitalCopy_TempUsingAlfaApi({ manifestations }) {
+  return !!manifestations?.find((manifestation) =>
     manifestation?.onlineAccess?.find((access) => access?.issn)
   );
 }
@@ -107,7 +119,7 @@ export function selectMaterial(manifestations) {
       // inner loop -> onlineaccess
       manifest.access.every((access) => {
         // special case: "dfi.dk" is not a 'real' onlineaccess
-        if (access.url && access.url.indexOf("dfi.dk") === -1) {
+        if (access?.url?.indexOf("dfi.dk") === -1) {
           url = access.url;
           // we found an online access -> break inner loop
           return false;
@@ -126,9 +138,23 @@ export function selectMaterial(manifestations) {
     // continue outer loop
     return true;
   });
+  function accessWithLoanIsPossible(access) {
+    return access?.filter(
+      (accessSingle) =>
+        (accessSingle.__typename === "InterLibraryLoan" &&
+          accessSingle.loanIsPossible === true) ||
+        accessSingle.__typename !== "InterLibraryLoan"
+    );
+  }
+
+  const manifestationsOnlyLoanIsPossible = manifestations?.filter(
+    (manifestation) =>
+      accessWithLoanIsPossible(manifestation?.access)?.length > 0
+  );
+
   // if a manifestion with an url has been found it will be returned - if not
   // return the first manifestation in array
-  return selectedManifestation || manifestations?.[0];
+  return selectedManifestation || manifestationsOnlyLoanIsPossible?.[0] || null;
 }
 
 /**
