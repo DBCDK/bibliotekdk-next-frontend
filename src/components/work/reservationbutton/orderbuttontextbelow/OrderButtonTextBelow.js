@@ -12,35 +12,6 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 /**
- * translateButtonTxt iterates through the transtextAboveButtonlationsForButtonText,
- *  which consists of the translations used for rendering in JSX
- *  returns null if the translationMap is only false
- * @param {Array<Boolean>} translationMap
- * @param {Array<Object>} access
- * @returns {string|*|null}
- */
-function translateButtonTxt(translationMap, access) {
-  const translationForButtonText = [
-    () => {
-      return [
-        Translate({ ...context, label: "onlineAccessAt" }),
-        access?.[0]?.origin || getBaseUrl(access?.[0]?.url),
-      ].join(" ");
-    },
-    () =>
-      Translate({
-        context: "options",
-        label: "periodica-link-description",
-      }),
-    () => Translate({ ...context, label: "addToCart-line1" }),
-  ];
-
-  const index = translationMap.findIndex((caseCheck) => caseCheck);
-
-  return index !== -1 ? translationForButtonText[index]() : null;
-}
-
-/**
  * Set texts BELOW reservation button - also sets the text IN the button
  * For infomedia text is set ABOVE the button ( @see ReservationButton )
  * @param skeleton
@@ -71,23 +42,42 @@ export function OrderButtonTextBelow({ workId, type, skeleton }) {
 
   const access = selectedManifestations?.access;
 
-  const translationMap = [
+  const caseScenarioMap = [
     Boolean(access?.[0]?.url),
-    isPeriodicaLike,
-    access?.[0]?.loanIsPossible ||
-      checkRequestButtonIsTrue({ manifestations: selectedMaterial }),
+    Boolean(isPeriodicaLike),
+    Boolean(
+      access?.[0]?.loanIsPossible ||
+        checkRequestButtonIsTrue({ manifestations: selectedMaterial })
+    ),
   ];
+
+  const translationForButtonText = [
+    () => {
+      return [
+        Translate({ ...context, label: "onlineAccessAt" }),
+        access?.[0]?.origin || getBaseUrl(access?.[0]?.url),
+      ].join(" ");
+    },
+    () =>
+      Translate({
+        context: "options",
+        label: "periodica-link-description",
+      }),
+    () => Translate({ ...context, label: "addToCart-line1" }),
+  ];
+
+  const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
 
   return (
     access?.[0]?.id !== null &&
-    translateButtonTxt(translationMap, access) !== null && (
+    translationForButtonText[index] !== null && (
       <Text
         dataCy={"reservation-button-txt"}
         type="text3"
         skeleton={skeleton}
         lines={2}
       >
-        {translateButtonTxt(translationMap, access)}
+        {translationForButtonText[index]()}
       </Text>
     )
   );

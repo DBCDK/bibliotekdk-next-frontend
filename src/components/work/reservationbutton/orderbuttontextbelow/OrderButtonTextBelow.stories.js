@@ -9,7 +9,7 @@ export default exportedObject;
 
 function ButtonTxtComponentBuilder({
   type = "Bog",
-  workId = "some-id-book",
+  workId = "some-id-builder",
   storyNameOverride = null,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
@@ -60,9 +60,8 @@ BookButtonTxt.story = {
 };
 
 export function EBookButtonTxt() {
-  return <ButtonTxtComponentBuilder type={"ebog"} workId={"some-id-book"} />;
+  return <ButtonTxtComponentBuilder type={"ebog"} workId={"some-id-e-book"} />;
 }
-
 EBookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("EBook", {
     MaterialType: {
@@ -81,11 +80,10 @@ export function EAudioBookPhysicalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Lydbog (cd-mp3)"}
-      workId={"some-id-book"}
+      workId={"some-id-physical-book"}
     />
   );
 }
-
 EAudioBookPhysicalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (cd-mp3)", {
     MaterialType: {
@@ -102,10 +100,12 @@ EAudioBookPhysicalButtonTxt.story = {
 
 export function EAudioBookDigitalButtonTxt() {
   return (
-    <ButtonTxtComponentBuilder type={"Lydbog (net)"} workId={"some-id-book"} />
+    <ButtonTxtComponentBuilder
+      type={"Lydbog (net)"}
+      workId={"some-id-e-audio-book"}
+    />
   );
 }
-
 EAudioBookDigitalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (net)", {
     MaterialType: {
@@ -113,6 +113,7 @@ EAudioBookDigitalButtonTxt.story = {
     },
     AccessUrl: {
       origin: () => "notambo.dekå",
+      loginRequired: () => false,
     },
     Access: {
       __resolveType: () => "AccessUrl",
@@ -124,12 +125,11 @@ export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"bog"}
-      workId={"some-id-book"}
+      workId={"some-id-periodica"}
       storyNameOverride={"Periodica"}
     />
   );
 }
-
 PeriodicaButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Periodica", {
     AccessUrl: {
