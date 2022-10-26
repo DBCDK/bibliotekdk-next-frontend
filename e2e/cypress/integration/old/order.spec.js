@@ -220,7 +220,7 @@ function openOrderModal() {
   cy.get("[data-cy=button-order-overview-enabled]").click();
 }
 
-describe("Order", () => {
+describe.skip("Order", () => {
   describe("Order-base", () => {
     beforeEach(function () {
       mockFallback();
