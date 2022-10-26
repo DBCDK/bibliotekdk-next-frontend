@@ -1,11 +1,8 @@
-import dummy_workDataApi from "../dummy.workDataApi";
 import { StoryDescription, StoryTitle } from "@/storybook";
-import useUser from "@/components/hooks/useUser";
-import fullwork from "../dummydata/fullwork.json";
-import available from "../dummydata/available.json";
 import ReservationButton, {
   OrderButton,
 } from "@/components/work/reservationbutton/ReservationButton";
+import { dummy_workDataApi } from "@/components/work/dummy.workDataApi";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -15,7 +12,7 @@ export default exportedObject;
 
 function ReservationButtonComponentBuilder({
   type = "Bog",
-  workId = "some-id-book",
+  workId = "some-id-builder",
   storyNameOverride = null,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
@@ -25,13 +22,14 @@ function ReservationButtonComponentBuilder({
       <StoryDescription>
         The OrderButton based on the type: {descriptionName}
       </StoryDescription>
-      <OrderButton
+      <ReservationButton
         workId={workId}
         chosenMaterialType={type}
-        skeleton={false}
+        onOnlineAccess={() => {}}
+        openOrderModal={() => {}}
+        singleManifestation={false}
         buttonType={"primary"}
         size={"large"}
-        openOrderModal={() => {}}
       />
     </div>
   );
@@ -44,8 +42,8 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
         debug: true,
         resolvers: resolvers,
         url:
-          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql" ||
-          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
+          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
       },
       nextRouter: {
         showInfo: true,
@@ -56,130 +54,147 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
   };
 }
 
-export function ReservationButtonOnlineAccessTesta() {
-  return <ReservationButtonComponentBuilder workId={"some-id"} type={"Bog"} />;
+export function ReservationButtonPhysicalBook() {
+  return (
+    <ReservationButtonComponentBuilder workId={"some-id-book"} type={"Bog"} />
+  );
 }
-ReservationButtonOnlineAccessTesta.story = {
-  ...ReservationButtonStoryBuilder("Book", {}),
+ReservationButtonPhysicalBook.story = {
+  ...ReservationButtonStoryBuilder("Book", {
+    MaterialType: {
+      specific: () => "Bog",
+    },
+    InterLibraryLoan: {
+      loanIsPossible: () => true,
+    },
+    Access: {
+      __resolveType: () => "InterLibraryLoan",
+    },
+  }),
 };
 
-/**
- *
- * @return {JSX.Element}
- * @constructor
- */
-export function ReservationButtonOnlineAccess() {
-  const workId = "some-id";
-  const data = dummy_workDataApi({ workId: workId });
+export function ReservationButtonEBook() {
+  return (
+    <ReservationButtonComponentBuilder
+      workId={"some-id-e-book"}
+      type={"EBog"}
+    />
+  );
+}
+ReservationButtonEBook.story = {
+  ...ReservationButtonStoryBuilder("EBook", {
+    MaterialType: {
+      specific: () => "EBog",
+    },
+    Ereol: {
+      url: () => "ereol.combo",
+    },
+    Access: {
+      __resolveType: () => "Ereol",
+    },
+    AccessType: {
+      display: () => "some-display",
+    },
+    Work: {
+      workTypes: () => ["LITERATURE"],
+    },
+  }),
+};
+
+export function ReservationButtonEAudioBook() {
+  return (
+    <ReservationButtonComponentBuilder
+      workId={"some-id-e-audio-book"}
+      type={"EBog"}
+    />
+  );
+}
+ReservationButtonEAudioBook.story = {
+  ...ReservationButtonStoryBuilder("EBook", {
+    MaterialType: {
+      specific: () => "EBog",
+    },
+    Ereol: {
+      url: () => "ereol.combo",
+    },
+    Access: {
+      __resolveType: () => "Ereol",
+    },
+    AccessType: {
+      display: () => "some-display",
+    },
+    Work: {
+      workTypes: () => ["LITERATURE"],
+    },
+  }),
+};
+
+export function ReservationButtonGame() {
+  return (
+    <ReservationButtonComponentBuilder
+      workId={"some-id-game"}
+      type={"Playstation 4"}
+    />
+  );
+}
+ReservationButtonGame.story = {
+  ...ReservationButtonStoryBuilder("Playstation 4", {
+    MaterialType: {
+      specific: () => "Playstation 4",
+    },
+    InterLibraryLoan: {
+      loanIsPossible: () => true,
+    },
+    Access: {
+      __resolveType: () => "InterLibraryLoan",
+    },
+    Work: {
+      workTypes: () => ["GAME"],
+    },
+  }),
+};
+
+export function ReservationButtonDisabled() {
+  return (
+    <ReservationButtonComponentBuilder
+      workId={"some-id-button-disabled"}
+      type={"Ebog"}
+    />
+  );
+}
+ReservationButtonDisabled.story = {
+  ...ReservationButtonStoryBuilder("Button disabled", {
+    MaterialType: {
+      specific: () => "Ebog",
+    },
+    Access: {
+      __resolveType: () => "InfomediaService",
+    },
+    Work: {
+      workTypes: () => ["LITERATURE"],
+    },
+    Manifestations: {
+      all: () => [],
+    },
+  }),
+};
+
+export function OrderButtonNotLoggedIn() {
+  const workId = "some-id-button-not-logged-in";
+  const descriptionName = "Not logged in";
+  const user = { isAuthenticated: false };
+  const data = dummy_workDataApi({ workId });
+
   return (
     <div>
-      <StoryTitle>material online - user not logged in</StoryTitle>
+      <StoryTitle>OrderButton - {descriptionName}</StoryTitle>
       <StoryDescription>
-        user is not logged in - material accesible online
+        The OrderButton based on the type: {descriptionName}
       </StoryDescription>
-      <ReservationButton
-        workId={workId}
-        type={"EBog"}
-        buttonType={"primary"}
-        selectedMaterial={data.work.materialTypes[2]}
-        user={useUser}
-        onlineAccess={() => {
-          alert("online access");
-        }}
-        login={() => {}}
-        openOrderModal={() => {}}
-      />
-    </div>
-  );
-}
-
-/**
- *
- * @return {JSX.Element}
- * @constructor
- */
-export function ReservationButtonInactive() {
-  const data = dummy_workDataApi({ workId: "some-id" });
-  return (
-    <div>
-      <StoryTitle>material can not be ordered (requestbutton:false)</StoryTitle>
-      <StoryDescription>material can not be ordered</StoryDescription>
-      <ReservationButton
-        selectedMaterial={data.work.materialTypes[0]}
-        user={useUser}
-        onlineAccess={() => {}}
-        login={() => {}}
-        openOrderModal={() => {}}
-      />
-    </div>
-  );
-}
-
-/**
- *
- * @return {JSX.Element}
- * @constructor
- */
-export function ReservationButtonActive() {
-  const availability = available;
-  const data = fullwork.data;
-  return (
-    <div>
-      <StoryTitle>user logged in - material reservable</StoryTitle>
-      <StoryDescription>user is logged in - order is possible</StoryDescription>
-      <ReservationButton
-        selectedMaterial={data.work.materialTypes[0]}
-        user={{ isAuthenticated: true }}
-        onlineAccess={() => {}}
-        login={() => {}}
-        openOrderModal={() => {
-          alert("order");
-        }}
-        availability={availability}
-      />
-    </div>
-  );
-}
-
-/**
- *
- * @return {JSX.Element}
- * @constructor
- */
-export function ReservationButtonNotLoggedIn() {
-  const data = fullwork.data;
-  return (
-    <div>
-      <StoryTitle>user not logged in - material reservable</StoryTitle>
-      <StoryDescription>
-        user is not logged in - order is possible
-      </StoryDescription>
-      <ReservationButton
-        selectedMaterial={data.work.materialTypes[0]}
-        user={useUser}
-        onlineAccess={() => {}}
-        login={() => {
-          alert("login");
-        }}
-        openOrderModal={() => {}}
-        availability={{ available: true, availabiblityLoading: false }}
-      />
-    </div>
-  );
-}
-
-export function ReservationButtonSkeleton() {
-  return (
-    <div>
-      <StoryTitle>Skeleton</StoryTitle>
-      <StoryDescription>reservation button not ready</StoryDescription>
-      <ReservationButton
-        selectedMaterial={{}}
-        user={{ isAuthenticated: false }}
-        onlineAccess={() => {}}
-        login={() => {}}
-        openOrderModal={() => {}}
-        availability={{ available: false, availabiblityLoading: false }}
+      <OrderButton
+        user={user}
+        chosenMaterialType={"avisartikel"}
+        work={data?.work}
       />
     </div>
   );
