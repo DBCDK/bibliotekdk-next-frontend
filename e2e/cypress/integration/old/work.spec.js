@@ -4,7 +4,6 @@
  */
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Work", () => {
   it(`renders all data on server`, () => {
@@ -12,7 +11,7 @@ describe("Work", () => {
     // the actual html returned from the server
     // set isBot=true to make sure data is loaded on server
     cy.request(
-      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423?isBot=true`
+      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423?type=Bog&isBot=true`
     )
       .its("body")
       .then((html) => {
