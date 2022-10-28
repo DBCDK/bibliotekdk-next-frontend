@@ -1,4 +1,3 @@
-import { useModal } from "@/components/_modal";
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import merge from "lodash/merge";
@@ -8,7 +7,6 @@ import Icon from "@/components/base/icon";
 import Cover from "@/components/base/cover";
 import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
-import Translate from "@/components/base/translate";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
 import { useData } from "@/lib/api/api";
@@ -17,9 +15,10 @@ import Link from "@/components/base/link";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
-import { OrderButtonTextBelow } from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
+import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
+import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
 
-function selectMaterialBasedOnType(materialTypes, type) {
+function selectMaterialBasedOnType_TempUsingAlfaApi(materialTypes, type) {
   // Creates MaterialTypes as an index
   const materialTypesMap = {};
   materialTypes?.forEach((m) => {
@@ -95,10 +94,9 @@ function MaterialTypeArray(
 export function Overview({
   work,
   workId,
+  selectedPids,
   type,
   onTypeChange = () => {},
-  onOnlineAccess = () => {},
-  openOrderModal = () => {},
   className = "",
   skeleton = false,
 }) {
@@ -111,7 +109,10 @@ export function Overview({
   }
 
   // Either use type from props, or from local state
-  const selectedMaterial = selectMaterialBasedOnType(work?.materialTypes, type);
+  const selectedMaterial = selectMaterialBasedOnType_TempUsingAlfaApi(
+    work?.materialTypes,
+    type
+  );
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -166,18 +167,15 @@ export function Overview({
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <ReservationButton
                   workId={workId}
-                  chosenMaterialType={type}
-                  onOnlineAccess={onOnlineAccess}
-                  openOrderModal={openOrderModal}
+                  selectedPids={selectedPids}
                 />
               </Col>
-              <Col xs={12} className={styles.info}>
-                <OrderButtonTextBelow
-                  workId={workId}
-                  type={type}
-                  skeleton={skeleton}
-                />
-              </Col>
+              <OrderButtonTextBelow
+                workId={workId}
+                selectedPids={selectedPids}
+                type={type}
+                skeleton={skeleton}
+              />
               <Col xs={12} className={styles.info}>
                 <AlternativeOptions selectedMaterial={selectedMaterial} />
               </Col>
@@ -251,9 +249,8 @@ export function OverviewError() {
  * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  const { workId, type, onTypeChange, onOnlineAccess, login } = props;
+  const { workId, type, onTypeChange, login } = props;
   const user = useUser();
-  const modal = useModal();
 
   // use the useData hook to fetch data
   const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
@@ -261,14 +258,7 @@ export default function Wrap(props) {
   const covers = useData(workFragments.covers({ workId }));
   const merged = merge({}, covers.data, buttonTxt.data, details.data);
 
-  function handleOpenOrderModal(pid, modal, workId, type) {
-    modal.push("order", {
-      title: Translate({ context: "modal", label: "title-order" }),
-      pid,
-      workId,
-      type,
-    });
-  }
+  const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
 
   if (buttonTxt.isLoading) {
     return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
@@ -281,13 +271,12 @@ export default function Wrap(props) {
   return (
     <Overview
       work={merged.work}
+      workId={workId}
+      selectedPids={selectedPids}
       type={type}
       onTypeChange={onTypeChange}
-      onOnlineAccess={onOnlineAccess}
       login={login}
-      openOrderModal={(pid) => handleOpenOrderModal(pid, modal, workId, type)}
       user={user}
-      workId={workId}
     />
   );
 }
@@ -298,7 +287,6 @@ Wrap.propTypes = {
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
   onOnlineAccess: PropTypes.func,
-  openOrderModal: PropTypes.func,
   user: PropTypes.object,
   login: PropTypes.func,
 };
