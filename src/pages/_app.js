@@ -51,7 +51,6 @@ import { enableDataCollect } from "@/lib/useDataCollect";
 
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
-import useSetPickupBranch from "@/components/utils/SetPickupBranch";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
 
 // kick off the polyfill!
