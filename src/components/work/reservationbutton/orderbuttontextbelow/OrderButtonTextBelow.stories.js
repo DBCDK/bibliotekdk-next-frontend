@@ -1,5 +1,5 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
-import { OrderButtonTextBelow } from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
+import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 
 const exportedObject = {
   title: "work/ReservationButton/OrderButtonTextBelow",
@@ -10,6 +10,7 @@ export default exportedObject;
 function ButtonTxtComponentBuilder({
   type = "Bog",
   workId = "some-id-builder",
+  selectedPids = ["some-other-id-builder"],
   storyNameOverride = null,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
@@ -19,7 +20,11 @@ function ButtonTxtComponentBuilder({
       <StoryDescription>
         The button text based on the type: {descriptionName}
       </StoryDescription>
-      <OrderButtonTextBelow workId={workId} type={type} skeleton={false} />
+      <OrderButtonTextBelow
+        workId={workId}
+        selectedPids={selectedPids}
+        skeleton={false}
+      />
     </div>
   );
 }
@@ -42,7 +47,13 @@ function ButtonTxtStoryBuilder(storyname, resolvers = {}, query = {}) {
 }
 
 export function BookButtonTxt() {
-  return <ButtonTxtComponentBuilder type={"Bog"} workId={"some-id-book"} />;
+  return (
+    <ButtonTxtComponentBuilder
+      type="Bog"
+      workId={"some-id-book"}
+      selectedPids={["some-other-id-book"]}
+    />
+  );
 }
 
 BookButtonTxt.story = {
@@ -50,22 +61,37 @@ BookButtonTxt.story = {
     MaterialType: {
       specific: () => "Bog",
     },
+    Manifestation: {
+      pid: () => "some-other-id-book",
+    },
     InterLibraryLoan: {
       loanIsPossible: () => true,
     },
     Access: {
       __resolveType: () => "InterLibraryLoan",
     },
+    Work: {
+      workTypes: () => ["LITERATURE"],
+    },
   }),
 };
 
 export function EBookButtonTxt() {
-  return <ButtonTxtComponentBuilder type={"ebog"} workId={"some-id-e-book"} />;
+  return (
+    <ButtonTxtComponentBuilder
+      type={"ebog"}
+      workId={"some-id-e-book"}
+      selectedPids={["some-other-id-e-book"]}
+    />
+  );
 }
 EBookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("EBook", {
     MaterialType: {
       specific: () => "e-bog",
+    },
+    Manifestation: {
+      pid: () => "some-other-id-e-book",
     },
     Ereol: {
       url: () => "ereol.combo",
@@ -80,7 +106,8 @@ export function EAudioBookPhysicalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Lydbog (cd-mp3)"}
-      workId={"some-id-physical-book"}
+      workId={"some-id-physical-audio-book"}
+      selectedPids={["some-other-id-physical-audio-book"]}
     />
   );
 }
@@ -88,6 +115,9 @@ EAudioBookPhysicalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (cd-mp3)", {
     MaterialType: {
       specific: () => "lydbog (cd-mp3)",
+    },
+    Manifestation: {
+      pid: () => "some-other-id-physical-audio-book",
     },
     InterLibraryLoan: {
       loanIsPossible: () => true,
@@ -103,6 +133,7 @@ export function EAudioBookDigitalButtonTxt() {
     <ButtonTxtComponentBuilder
       type={"Lydbog (net)"}
       workId={"some-id-e-audio-book"}
+      selectedPids={["some-other-id-e-audio-book"]}
     />
   );
 }
@@ -110,6 +141,9 @@ EAudioBookDigitalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (net)", {
     MaterialType: {
       specific: () => "lydbog (net)",
+    },
+    Manifestation: {
+      pid: () => "some-other-id-e-audio-book",
     },
     AccessUrl: {
       origin: () => "notambo.dekå",
@@ -126,6 +160,7 @@ export function PeriodicaButtonTxt() {
     <ButtonTxtComponentBuilder
       type={"bog"}
       workId={"some-id-periodica"}
+      selectedPids={["some-other-id-periodica"]}
       storyNameOverride={"Periodica"}
     />
   );
@@ -139,6 +174,7 @@ PeriodicaButtonTxt.story = {
       workTypes: () => ["PERIODICA"],
     },
     Manifestation: {
+      pid: () => "some-other-id-periodica",
       access: () => [],
     },
   }),
