@@ -48,10 +48,6 @@ export default function WorkPage() {
     );
   }
 
-  function handleOnOnlineAccess(url, target = "_blank") {
-    window.open(url, target);
-  }
-
   function handleOrder(pid) {
     router.push({
       pathname: router.pathname,
@@ -65,7 +61,6 @@ export default function WorkPage() {
       <Page
         workId={workId}
         onTypeChange={handleOnTypeChange}
-        onOnlineAccess={handleOnOnlineAccess}
         login={signIn}
         openOrderModal={handleOrder}
         type={type}
