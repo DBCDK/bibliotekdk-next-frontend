@@ -2,6 +2,7 @@
  * @file Contains GraphQL queries all taking a workId as variable
  *
  */
+import { ApiEnums } from "@/lib/api/api";
 
 /**
  * Basic work info that is fast to fetch
@@ -367,6 +368,25 @@ export function localizations({ workId }) {
   };
 }
 
+// Use this fragments in queries that provide data
+// to the WorkSlider
+const workSliderFragment = `fragment workSliderFragment on Work {
+  workId
+  titles {
+    main
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      cover {
+        detail
+      }
+    }
+  }
+}`;
+
 /**
  * Series for a work
  *
@@ -377,25 +397,16 @@ export function localizations({ workId }) {
  */
 export function series({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query ($workId: String!) {
+    query: `query Series($workId: String!) {
       work(id: $workId) {
-        series {
-          title
-          works {
-            id
-            title
-            creators {
-              name
-            }
-            cover {
-              detail
-            }
-          }
+        seriesMembers {
+          ...workSliderFragment
         }
       }
-      monitor(name: "bibdknext_work_series")
     }
+    ${workSliderFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,

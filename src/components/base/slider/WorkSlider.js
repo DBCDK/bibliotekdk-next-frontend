@@ -16,6 +16,7 @@ import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
 import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
+import work from "@/components/header/suggester/templates/work";
 
 /**
  * The work slider skeleton React component
@@ -175,6 +176,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   if (skeleton) {
     return <WorkSliderSkeleton />;
   }
+  console.log(works);
 
   // And finally we return the React component
   return (
@@ -183,8 +185,15 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
         {works.map((work, idx) => (
           <Card
             cardRef={idx === 0 && cardRef}
-            key={work.id}
-            {...work}
+            cover={
+              work?.manifestations?.all.find(
+                (manifestation) => manifestation?.cover?.detail
+              )?.cover
+            }
+            creators={work?.creators}
+            workId={work?.workId}
+            title={work?.titles?.main?.[0]}
+            key={work.workId}
             className={styles.SlideWrapper}
             onFocus={() => {
               // Make sure focused card become visible
@@ -195,7 +204,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
               if (onWorkClick) {
                 // Find all the works that have been shown for this slider
                 const shownWorks = works
-                  .map((work) => work.id)
+                  .map((work) => work.workId)
                   .slice(
                     0,
                     Math.max(

@@ -51,13 +51,11 @@ export default function Container({ workId }) {
   const { data, isLoading } = useData(series({ workId }));
 
   // if work is not part of series, we wont show series section
-  if (!isLoading && data && data.work && !data.work.series) {
+  if (!isLoading && !data?.work?.seriesMembers) {
     return null;
   }
 
-  const works = data && data.work && data.work.series && data.work.series.works;
-
-  return <Series isLoading={isLoading} works={works} />;
+  return <Series isLoading={isLoading} works={data?.work?.seriesMembers} />;
 }
 Container.propTypes = {
   workId: PropTypes.string,
