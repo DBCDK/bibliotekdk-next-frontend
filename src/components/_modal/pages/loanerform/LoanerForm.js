@@ -385,7 +385,7 @@ export function LoanerForm({
  * @param modal
  * @returns {string}
  */
-function getCallbackUrl(modal) {
+function getCallbackUrl(modal, pickupBranch) {
   const stack = modal.stack;
   let callback = window.location.href;
   // remove modal from callback - if any
@@ -396,7 +396,12 @@ function getCallbackUrl(modal) {
     callback =
       callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
   }
-  return callback;
+  return pickupBranch
+    ? callback +
+        (callback.includes("?") ? "&" : "?") +
+        "setPickupAgency=" +
+        pickupBranch
+    : callback;
 }
 
 LoanerForm.propTypes = {
@@ -473,7 +478,7 @@ export default function Wrap(props) {
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {
-      const callback = getCallbackUrl(props.modal);
+      const callback = getCallbackUrl(props.modal, branch?.branchId);
       (async () => {
         signIn(
           "adgangsplatformen",
@@ -489,7 +494,6 @@ export default function Wrap(props) {
   }
 
   const digitalCopyAccess = branch?.digitalCopyAccess;
-
   return (
     <>
       {beginLogout && (
