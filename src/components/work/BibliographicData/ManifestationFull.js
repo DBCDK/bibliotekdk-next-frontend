@@ -15,7 +15,7 @@ import { cyKey } from "@/utils/trim";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
-import { OrderButton_TempUsingAlfaApi } from "@/components/work/reservationbutton/ReservationButton";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { useData } from "@/lib/api/api";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 
@@ -26,7 +26,6 @@ import * as localizationsFragments from "@/lib/api/localizations.fragments";
  * @param localizationsLoading
  * @param openOrderModal
  * @param opener
- * @param user
  * @param work
  * @returns {JSX.Element}
  * @constructor
@@ -35,10 +34,9 @@ function ColumnOne({
   manifestation,
   localizations,
   localizationsLoading,
-  openOrderModal,
   opener,
-  user,
   work,
+  workId,
 }) {
   const modal = useModal();
 
@@ -54,15 +52,11 @@ function ColumnOne({
         <Cover src={manifestation.cover.detail} size="thumbnail" />
       )}
       <div>
-        <OrderButton_TempUsingAlfaApi
-          user={user}
-          openOrderModal={openOrderModal}
-          selectedMaterial={{
-            manifestations: [manifestation],
-            onlineAccess: [],
-          }}
-          singleManifestion={true}
-          type="secondary"
+        <ReservationButton
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+          buttonType="secondary"
           size="small"
         />
       </div>
@@ -115,12 +109,16 @@ function ColumnOne({
  * @param opener
  * @param openOrderModal
  * @param user
+ * @param workId
+ * @param pid
  * @returns {JSX.Element}
  * @constructor
  */
 export function ManifestationFull({
   manifestation,
   work,
+  workId,
+  pid,
   localizations,
   localizationsLoading,
   opener,
@@ -136,13 +134,15 @@ export function ManifestationFull({
   return (
     <Row>
       <ColumnOne
+        work={work}
+        workId={workId}
+        pid={pid}
         manifestation={manifestation}
         localizations={localizations}
         localizationsLoading={localizationsLoading}
         openOrderModal={openOrderModal}
         opener={opener}
         user={user}
-        work={work}
       />
       <Col xs={12} md>
         <div className={styles.container}>
@@ -179,20 +179,20 @@ export default function Wrap({ manifestation, work, workId }) {
     });
   };
 
-  const openOrderModal = (pid) => {
+  const openOrderModal = () => {
     modal.push("order", {
       title: Translate({ context: "modal", label: "title-order" }),
-      pid,
+      pid: manifestation.pid,
       workId,
       type: manifestation.materialType,
       orderType: "singleManifestation",
     });
   };
 
-  const pids = [manifestation.pid];
+  const pid = [manifestation.pid];
 
   const { data: localizations, isLoading: localizationsLoading } = useData(
-    localizationsFragments.localizationsQuery({ pids })
+    localizationsFragments.localizationsQuery({ pids: pid })
   );
 
   const user = useUser();
@@ -202,6 +202,7 @@ export default function Wrap({ manifestation, work, workId }) {
       manifestation={manifestation}
       work={work}
       workId={workId}
+      pid={pid}
       localizations={localizations}
       localizationsLoading={localizationsLoading}
       opener={openLocalizationsModal}
