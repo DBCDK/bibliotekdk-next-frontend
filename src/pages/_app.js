@@ -123,8 +123,6 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
-            {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
-            <SetPickupBranch />
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
@@ -144,6 +142,8 @@ export default function MyApp({ Component, pageProps, router }) {
             </div>
           </Modal.Provider>
         </APIStateContext.Provider>
+        {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
+        <SetPickupBranch router={router} />
       </SessionProvider>
     </SWRConfig>
   );
