@@ -12,10 +12,10 @@ export function WorkNarrowAndWideCover() {
   const narrow = {
     creators: [
       {
-        name: "Ruth Rendell",
+        display: "Ruth Rendell",
       },
       {
-        name: "Asta Smith-Hansen",
+        display: "Asta Smith-Hansen",
       },
     ],
     cover: {
@@ -31,7 +31,7 @@ export function WorkNarrowAndWideCover() {
   const wide = {
     creators: [
       {
-        name: "Andrew Taylor (f. 1951)",
+        display: "Andrew Taylor (f. 1951)",
       },
     ],
     cover: {
@@ -47,7 +47,7 @@ export function WorkNarrowAndWideCover() {
   const longTitle = {
     creators: [
       {
-        name: "Some Creator",
+        display: "Some Creator",
       },
     ],
     cover: {
@@ -87,7 +87,7 @@ export function SeriesCard() {
   const part = {
     creators: [
       {
-        name: "Andrew Taylor (f. 1951)",
+        display: "Andrew Taylor (f. 1951)",
       },
     ],
     cover: {

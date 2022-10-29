@@ -16,7 +16,6 @@ import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
 import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
-import work from "@/components/header/suggester/templates/work";
 
 /**
  * The work slider skeleton React component
@@ -98,13 +97,13 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   // Generate hash to uniquely identify this list of works
   const hash = useMemo(
-    () => hashCode(works.map((work) => work.id).join("")),
+    () => hashCode(works.map((work) => work.workId).join("")),
     [works]
   );
 
   // Update the swiper instance when slidesPerGroup changes
   useEffect(() => {
-    if (swiperRef.current) {
+    if (swiperRef.current?.swiper) {
       swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
       swiperRef.current.swiper.update();
     }
@@ -123,7 +122,11 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   // Restore progress for slider
   useEffect(() => {
-    if (storedProgress[hash]) {
+    if (
+      works?.length > 0 &&
+      storedProgress[hash] &&
+      swiperRef.current?.swiper
+    ) {
       swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
     }
   }, [works]);
@@ -176,7 +179,6 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   if (skeleton) {
     return <WorkSliderSkeleton />;
   }
-  console.log(works);
 
   // And finally we return the React component
   return (

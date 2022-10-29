@@ -51,7 +51,7 @@ export default function Container({ workId }) {
   const { data, isLoading } = useData(series({ workId }));
 
   // if work is not part of series, we wont show series section
-  if (!isLoading && !data?.work?.seriesMembers) {
+  if (!isLoading && !data?.work?.seriesMembers?.length) {
     return null;
   }
 

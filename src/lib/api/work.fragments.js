@@ -242,9 +242,6 @@ export function detailsAllManifestations({ workId }) {
 /**
  * Recommendations for a work
  *
- * This is still the old laesekompas recommender
- * Will be changed at some point
- *
  * @param {Object} variables
  * @param {string} variables.workId
  *
@@ -252,27 +249,21 @@ export function detailsAllManifestations({ workId }) {
  */
 export function recommendations({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query ($workId: String!) {
-    manifestation(pid: $workId) {
-      recommendations {
+    query: `query Recommendations($workId: String!) {
+    recommend(id: $workId) {
+      result {
         reader
-        manifestation {
-          cover {
-            detail
-          }
-          pid
-          title
-          creators {
-            name
-          }
+        work {
+          ...workSliderFragment  
         }
       }
     }
-    monitor(name: "bibdknext_work_recommendations")
   }
+  ${workSliderFragment}
   `,
-    variables: { workId: workId.replace("work-of:", "") },
+    variables: { workId },
     slowThreshold: 3000,
   };
 }
