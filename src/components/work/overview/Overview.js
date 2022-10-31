@@ -180,8 +180,8 @@ export function Overview({
               </Col>
               <Col xs={12} className={styles.info}>
                 <LocalizationsLink
-                  selectedMaterial={selectedMaterial}
                   workId={workId}
+                  selectedPids={selectedPids}
                 />
               </Col>
             </Row>
