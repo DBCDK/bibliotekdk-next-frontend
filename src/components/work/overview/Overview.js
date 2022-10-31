@@ -173,7 +173,6 @@ export function Overview({
               <OrderButtonTextBelow
                 workId={workId}
                 selectedPids={selectedPids}
-                type={type}
                 skeleton={skeleton}
               />
               <Col xs={12} className={styles.info}>
