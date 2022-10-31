@@ -32,7 +32,7 @@ WrappedRecommendationsSlider.story = {
               : [],
         },
         Manifestations: {
-          all: (args) => [...new Array(1).fill({})],
+          all: () => [...new Array(1).fill({})],
         },
         Cover: {
           detail: (args) =>
