@@ -83,7 +83,7 @@ export function Keywords({
             <span
               data-cy={key}
               className={`${styles.keyword} ${sizeClass}`}
-              key={`${key}`}
+              key={`${key}-${JSON.stringify(val)}`}
             >
               <Link
                 a
@@ -163,7 +163,13 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Keywords {...props} data={uniqueEntries(subjectsDbcVerified)} />;
+  return (
+    <Keywords
+      className={props.className}
+      skeleton={false}
+      data={uniqueEntries(subjectsDbcVerified)}
+    />
+  );
 }
 
 // PropTypes for component
