@@ -48,7 +48,7 @@ const works = [
     },
 
     description:
-      "Kriminalroman. En mand bliver fundet hængt i nærheden af den gamle markedsby Lydmouth. Kriminalassistent Thornhill sættes på sagen, og samtworkIdig opdager en kvindelig journalist, at der er foregået mystiske ting på den skole, hvor den døde underviste",
+      "Kriminalroman. En mand bliver fundet hængt i nærheden af den gamle markedsby Lydmouth. Kriminalassistent Thornhill sættes på sagen, og samtidig opdager en kvindelig journalist, at der er foregået mystiske ting på den skole, hvor den døde underviste",
 
     workId: "some-work-id-2",
     titles: { main: ["Galgetræet"] },
@@ -94,7 +94,7 @@ const works = [
     },
 
     description:
-      "Kriminalroman. Kriminalkommissær McKenna skal løse mysteriet om en kvinde der er blevet fundet hængende bagbundet i en skov. Kvinden har hængt der i flere år, så workIdentiteten er svær at finde frem til, og i lillebyen trives løgne og halve sandheder",
+      "Kriminalroman. Kriminalkommissær McKenna skal løse mysteriet om en kvinde der er blevet fundet hængende bagbundet i en skov. Kvinden har hængt der i flere år, så identiteten er svær at finde frem til, og i lillebyen trives løgne og halve sandheder",
 
     workId: "some-work-id-4",
     titles: { main: ["Simeons brud - meget lang titel"] },
@@ -116,7 +116,7 @@ const works = [
       ],
     },
     description:
-      "Krimi. MworkIdt i sine lykkelige bryllupsplaner bliver Adam Dalgliesh kaldt til den eksklusive privatklinik for plastikkirurgi i Dorset, hvor skandalejournalisten Rhoda Gradwyn er blevet opereret - og nu er fundet myrdet",
+      "Krimi. Midt i sine lykkelige bryllupsplaner bliver Adam Dalgliesh kaldt til den eksklusive privatklinik for plastikkirurgi i Dorset, hvor skandalejournalisten Rhoda Gradwyn er blevet opereret - og nu er fundet myrdet",
 
     workId: "some-work-id-5",
     titles: { main: ["Ar for livet"] },
@@ -141,7 +141,7 @@ const works = [
       ],
     },
     description:
-      "Krimi med kommissær Wexford og hans makker Burden på sporet af historien bag fundet af to lig, der var gravet ned 11 og 8 år tworkIdligere. Beboerne i den lille by Kingsmarkham har mange hemmeligheder, og nogle af dem er dystre",
+      "Krimi med kommissær Wexford og hans makker Burden på sporet af historien bag fundet af to lig, der var gravet ned 11 og 8 år tidligere. Beboerne i den lille by Kingsmarkham har mange hemmeligheder, og nogle af dem er dystre",
 
     workId: "some-work-id-6",
     titles: { main: ["Ikke i kød og blod"] },
@@ -232,7 +232,7 @@ const works = [
     },
 
     description:
-      "Krimi, hvor chefkriminalinspektør Alan Banks får en sag, der drejer sig om hans egen ungdomsven, der forsvandt 40 år tworkIdligere og hvis skelet pludselig dukker op",
+      "Krimi, hvor chefkriminalinspektør Alan Banks får en sag, der drejer sig om hans egen ungdomsven, der forsvandt 40 år tidligere og hvis skelet pludselig dukker op",
 
     workId: "some-work-id-10",
     titles: { main: ["Alt for tæt på"] },
