@@ -101,14 +101,6 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     [works]
   );
 
-  // Update the swiper instance when slidesPerGroup changes
-  useEffect(() => {
-    if (swiperRef.current?.swiper) {
-      swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
-      swiperRef.current.swiper.update();
-    }
-  }, [slidesPerGroup]);
-
   // Store progress for slider
   useEffect(() => {
     if (typeof progress === "number") {
@@ -120,16 +112,18 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     }
   }, [progress]);
 
+  // Update slidesPerGroup
   // Restore progress for slider
   useEffect(() => {
-    if (
-      works?.length > 0 &&
-      storedProgress[hash] &&
-      swiperRef.current?.swiper
-    ) {
+    if (!swiperRef.current?.swiper) {
+      return;
+    }
+    swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
+    swiperRef.current.swiper.update();
+    if (slidesPerGroup > 1 && storedProgress[hash]) {
       swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
     }
-  }, [works]);
+  }, [works, slidesPerGroup]);
 
   // If there is enough room to the left of the slider,
   // we move the left arrow a bit to the left
