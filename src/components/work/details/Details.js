@@ -9,6 +9,7 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Details.module.css";
+import { overViewDetails } from "@/lib/api/work.fragments";
 
 /**
  * The Component function
@@ -22,34 +23,26 @@ export function Details({
   className = "",
   data = {},
   skeleton = false,
-  allsubjects = null,
+  genreAndForm = null,
 }) {
   // Translate Context
   const context = { context: "details" };
-  const contributors =
-    data.creators &&
-    data.creators.filter((creator) => creator.type && creator.type !== "aut");
 
-  // filter out duplicate languages
-  const languages =
-    data.language &&
-    data.language.filter((lang, index, self) => {
+  // bidrag - contributors + creators
+  const contributors_tmp =
+    data?.contributors?.map((contrib) => contrib.display) || [];
+  const creators = data?.creators?.map((creator) => creator.display);
+  const contributors = [...creators, ...contributors_tmp];
+
+  // languages - main + subtitles + spoken;  filter out duplicates
+  const main = data?.languages?.main?.map((mlang) => mlang.display) || [];
+  const spoken = data?.languages?.spoken?.map((spok) => spok.display) || [];
+  const subtitles = data?.languages?.subtitles.map((sub) => sub.display) || [];
+  const languages = [...main, ...spoken, ...subtitles].filter(
+    (lang, index, self) => {
       return self.indexOf(lang) === index;
-    });
-
-  // subjects also - to show genre and form
-  // Include wanted subject types
-  const include = ["DBCO", "genre", null];
-  // filter out other subjects
-  const subjects =
-    allsubjects && allsubjects.filter((s) => include.includes(s.type));
-  // filter out duplicates
-  const uniquesubjects =
-    subjects &&
-    subjects.filter(
-      (subject, index, self) =>
-        index === self.findIndex((unique) => unique.value === subject.value)
-    );
+    }
+  );
 
   return (
     <Section
@@ -58,7 +51,7 @@ export function Details({
       className={`${className}`}
     >
       <Row className={`${styles.details}`}>
-        {data.language && (
+        {data.languages && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -73,7 +66,7 @@ export function Details({
             </Text>
           </Col>
         )}
-        {data.physicalDescription && (
+        {data.physicalDescriptions && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -83,12 +76,22 @@ export function Details({
             >
               {Translate({ ...context, label: "physicalDescription" })}
             </Text>
-            <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.physicalDescription}
-            </Text>
+            {data.physicalDescriptions.map((description, i) => {
+              return (
+                <Text
+                  type="text4"
+                  skeleton={skeleton}
+                  lines={0}
+                  key={`${description.summary}-${i}`}
+                >
+                  {description.summary}
+                </Text>
+              );
+            })}
           </Col>
         )}
-        {data.datePublished && (
+
+        {data.edition?.publicationYear?.display && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -99,7 +102,7 @@ export function Details({
               {Translate({ ...context, label: "released" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.datePublished}
+              {data.edition.publicationYear.display}
             </Text>
           </Col>
         )}
@@ -113,7 +116,7 @@ export function Details({
             >
               {Translate({ ...context, label: "contribution" })}
             </Text>
-            {contributors.map((c, i) => {
+            {contributors.map((display, i) => {
               // Array length
               const l = contributors.length;
               // Trailing comma
@@ -121,20 +124,18 @@ export function Details({
               return (
                 <Text
                   type="text4"
-                  key={`${c}-${i}`}
+                  key={`${display}-${i}`}
                   skeleton={skeleton}
                   lines={0}
                 >
-                  {c.name +
-                    (c.functionSingular && ` (${c.functionSingular})`) +
-                    t}
+                  {display + t}
                 </Text>
               );
             })}
           </Col>
         )}
 
-        {uniquesubjects && uniquesubjects.length > 0 && (
+        {genreAndForm && genreAndForm.length > 0 && (
           <Col
             xs={{ span: 6, offset: 0 }}
             md={{ span: 3, offset: 0 }}
@@ -155,10 +156,10 @@ export function Details({
               lines={0}
               dataCy="text-genre-form"
             >
-              {uniquesubjects.map((subject, index) => {
+              {genreAndForm.map((subject, index) => {
                 // Trailing comma
-                const t = index + 1 === uniquesubjects.length ? "" : ", ";
-                return subject.value + t;
+                const t = index + 1 === genreAndForm.length ? "" : ", ";
+                return subject + t;
               })}
             </Text>
           </Col>
@@ -172,7 +173,7 @@ export function Details({
  * Function to return skeleton (Loading) version of the Component
  *
  * @param {obj} props
- *  See propTypes for specific props and types
+ * See propTypes for specific props and types
  *
  * @returns {component}
  */
@@ -195,7 +196,7 @@ export function DetailsSkeleton(props) {
 }
 
 /**
- *  Default export function of the Component
+ * Default export function of the Component
  *
  * @param {obj} props
  * See propTypes for specific props and types
@@ -205,7 +206,9 @@ export function DetailsSkeleton(props) {
 export default function Wrap(props) {
   const { workId, type } = props;
 
-  const { data, isLoading, error } = useData(workFragments.details({ workId }));
+  const { data, isLoading, error } = useData(
+    workFragments.overViewDetails({ workId })
+  );
 
   if (error) {
     return null;
@@ -215,16 +218,21 @@ export default function Wrap(props) {
     return <DetailsSkeleton {...props} />;
   }
 
-  // find the selected matieralType, use first element as fallback
-  const materialType =
-    data.work.materialTypes.find((element) => element.materialType === type) ||
-    data.work.materialTypes[0];
+  // find the selected materialType (manifestation), use first manifestation as fallback
+  const manifestationByMaterialType =
+    data?.work?.manifestations?.all.find((element) =>
+      element.materialTypes.find((matType) => {
+        return matType.specific.toLowerCase() === type.toLowerCase();
+      })
+    ) || data?.work?.manifestations?.all[0];
+
+  const genreAndForm = data?.work?.genreAndForm || [];
 
   return (
     <Details
       {...props}
-      data={materialType?.manifestations?.[0]}
-      allsubjects={data?.work?.subjects}
+      data={manifestationByMaterialType}
+      genreAndForm={genreAndForm}
     />
   );
 }
