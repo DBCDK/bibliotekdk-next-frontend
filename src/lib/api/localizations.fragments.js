@@ -11,8 +11,8 @@ export function localizationsQuery({ pids }) {
           agencyId
           holdingItems {
             localizationPid
-            codes
             localIdentifier
+            codes
           }
         }
       }

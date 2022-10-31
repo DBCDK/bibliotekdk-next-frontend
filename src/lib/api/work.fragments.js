@@ -308,37 +308,6 @@ export function reviews({ workId }) {
 }
 
 /**
- * localizations for a work
- */
-export function localizations({ workId }) {
-  return {
-    // delay: 4000, // for debugging
-    query: `
-    query WorkFragmentLocalizations($workId: String!){
-      work(id:$workId){
-        materialTypes{
-          materialType
-          localizations {
-            count
-            agencies{
-              agencyId
-              holdingItems{
-                localizationPid
-                localIdentifier
-                codes
-              }
-            }
-          }
-        }
-      }
-      monitor(name: "bibdknext_work_localizations")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
  * Series for a work
  *
  * @param {Object} variables
@@ -467,6 +436,9 @@ export function pidsAndMaterialTypes({ workId }) {
     query: `
     query fetchPids($workId: String!) {
       work(id: $workId) {
+        materialTypes {
+          specific
+        }
         manifestations {
           all {
             pid
