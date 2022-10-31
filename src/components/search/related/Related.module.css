@@ -1,5 +1,6 @@
 .section {
   padding-top: var(--pt2);
+  background-color: var(--concrete);
 }
 
 .skip {
@@ -22,6 +23,10 @@
   overflow-x: scroll;
   padding: 0 var(--pt2) var(--pt1) var(--pt2);
   align-items: baseline;
+}
+
+.related.skeleton {
+  align-items: flex-start;
 }
 
 .words {
@@ -58,5 +63,6 @@
 
   .section {
     padding-top: var(--pt3);
+    background-color: transparent;
   }
 }

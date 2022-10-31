@@ -1,7 +1,10 @@
 .skip {
-  content-visibility: hidden;
+  /* visibility: hidden; is not supported in moz - work around: */
+  opacity: 0;
+  pointer-events: none;
 }
 
 .skip:focus-visible {
-  content-visibility: unset;
+  opacity: unset;
+  pointer-events: unset;
 }

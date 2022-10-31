@@ -24,7 +24,7 @@ function Word({ word, isLoading }) {
       disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
     >
-      <Text skeleton={isLoading} lines={1}>
+      <Text type="text2" skeleton={isLoading} lines={1}>
         {word}
       </Text>
     </Link>
@@ -108,7 +108,7 @@ export default function Wrap({ workId }) {
   );
 
   // Remove section if work contains no keywords
-  if (data?.relatedSubjects?.length === 0 && !isLoading) {
+  if ((!data || data?.relatedSubjects?.length === 0) && !isLoading) {
     return null;
   }
 
