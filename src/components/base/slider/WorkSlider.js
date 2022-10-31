@@ -138,9 +138,9 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     slidesPerGroup,
     on: {
       init: (swiper) => {
-        // We update isBeginning and isEnd on init
+        // We update progress on init
         setPosition({
-          progress: Math.min(swiper.progress, 0),
+          progress: storedProgressMax[hash] || Math.min(swiper.progress, 0),
         });
       },
       activeIndexChange: (swiper) => {
