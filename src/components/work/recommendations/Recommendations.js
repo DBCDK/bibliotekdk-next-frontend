@@ -61,7 +61,7 @@ export default function Recommendations({ workId }) {
               dataCollect.collectRecommenderClick({
                 recommender_based_on: workId,
                 recommender_click_hit: index + 1,
-                recommender_click_work: work.id,
+                recommender_click_work: work.workId,
                 recommender_click_reader: work.reader,
                 recommender_shown_recommendations: shownWorks,
               });
