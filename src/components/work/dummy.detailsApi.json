@@ -1,0 +1,256 @@
+{
+  "materialTypes": [
+    {
+      "specific": "blu-ray 4K"
+    }
+  ],
+  "titles": {
+    "main": [
+      "Tenet"
+    ]
+  },
+  "genreAndForm": [
+    "actionfilm",
+    "thriller",
+    "science fiction"
+  ],
+  "languages": {
+    "subtitles": [
+      {
+        "display": "engelsk"
+      },
+      {
+        "display": "fransk"
+      },
+      {
+        "display": "tysk"
+      },
+      {
+        "display": "italiensk"
+      },
+      {
+        "display": "spansk"
+      },
+      {
+        "display": "nederlandsk"
+      },
+      {
+        "display": "kinesisk"
+      },
+      {
+        "display": "koreansk"
+      },
+      {
+        "display": "tjekkisk"
+      },
+      {
+        "display": "dansk"
+      },
+      {
+        "display": "finsk"
+      },
+      {
+        "display": "ungarsk"
+      },
+      {
+        "display": "norsk"
+      },
+      {
+        "display": "polsk"
+      },
+      {
+        "display": "portugisisk"
+      },
+      {
+        "display": "svensk"
+      },
+      {
+        "display": "thai"
+      }
+    ],
+    "spoken": [
+      {
+        "display": "fransk"
+      },
+      {
+        "display": "tysk"
+      },
+      {
+        "display": "italiensk"
+      },
+      {
+        "display": "spansk"
+      },
+      {
+        "display": "tjekkisk"
+      },
+      {
+        "display": "hindi"
+      },
+      {
+        "display": "polsk"
+      },
+      {
+        "display": "thai"
+      },
+      {
+        "display": "tamil"
+      }
+    ],
+    "main": [
+      {
+        "display": "engelsk"
+      }
+    ]
+  },
+  "physicalDescriptions": [
+    {
+      "summary": "1 blu-ray disc (4K), blu-ray 4K, 1 blu-ray disc, blu-ray, 1 bonus-disc ; 2 t., 30 min."
+    }
+  ],
+  "edition": {
+    "publicationYear": {
+      "display": "2020"
+    }
+  },
+  "contributors": [
+    {
+      "display": "John David Washington",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Robert Pattinson",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Elizabeth Debicki",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Dimple Kapadia",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Michael Caine",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Kenneth Branagh",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Martin Donovan",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Fiona Dourif",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Yuri Kolokolnikov",
+      "roles": [
+        {
+          "functionCode": "act",
+          "function": {
+            "plural": "skuespillere",
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    }
+  ],
+  "creators": [
+    {
+      "display": "Christopher Nolan (instruktør)",
+      "roles": [
+        {
+          "functionCode": "aus",
+          "function": {
+            "singular": "manuskript"
+          }
+        },
+        {
+          "functionCode": "drt",
+          "function": {
+            "singular": "instruktør"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Hoyte van Hoytema",
+      "roles": [
+        {
+          "functionCode": "cng",
+          "function": {
+            "singular": "filmfotograf"
+          }
+        }
+      ]
+    }
+  ]
+}

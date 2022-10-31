@@ -20,6 +20,6 @@ describe("Details", () => {
     cy.get("[data-cy=genre-form-container]")
       .find("p")
       .eq(1)
-      .should("have.text", "fiske og hest, hund og kat");
+      .should("have.text", "actionfilm, thriller, science fiction");
   });
 });
