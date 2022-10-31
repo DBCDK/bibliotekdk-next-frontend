@@ -46,8 +46,6 @@ export function OrderButtonTextBelow({ work, skeleton }) {
     ),
   ];
 
-  console.log("caseScenarioMap: ", caseScenarioMap);
-
   const translationForButtonText = [
     () => {
       return [
@@ -87,8 +85,6 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
   const workFragment = workId && workFragments.buttonTxt({ workId });
 
   const work = useWorkFromSelectedPids(workFragment, selectedPids);
-
-  console.log("selectedPids: ", selectedPids);
 
   return <OrderButtonTextBelow work={work} skeleton={skeleton} />;
 }
