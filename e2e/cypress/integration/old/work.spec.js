@@ -11,7 +11,7 @@ describe("Work", () => {
     // the actual html returned from the server
     // set isBot=true to make sure data is loaded on server
     cy.request(
-      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423?type=Bog&isBot=true`
+      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:22669885?type=Bog&isBot=true`
     )
       .its("body")
       .then((html) => {
@@ -23,7 +23,7 @@ describe("Work", () => {
     // we make a request instead of visit to see
     // the actual html returned from the server
     cy.request(
-      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar/work-of:870970-basis:53033423`
+      `${nextjsBaseUrl}/materiale/1950-high-noon_gunnar-staalesen/work-of%3A870970-basis%3A22669885?type=Bog`
     )
       .its("body")
       .then((html) => {

@@ -1,5 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 
 function getPageHead(path) {
   return cy
@@ -47,7 +46,7 @@ function getPageHead(path) {
  * Check that the site is server side rendered properly
  */
 describe("Server Side Rendering", () => {
-  context(`frontpage`, () => {
+  describe(`frontpage`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/").then((res) => {
         expect(res.title).to.equal(
@@ -77,10 +76,10 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`material`, () => {
+  describe(`material`, () => {
     it(`has correct metadata`, () => {
       getPageHead(
-        "/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
@@ -103,18 +102,18 @@ describe("Server Side Rendering", () => {
 
     it(`has correct alternate links`, () => {
       getPageHead(
-        "/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
       ).then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763"/>',
         ]);
       });
     });
 
     it(`has json-ld for book`, () => {
       getPageHead(
-        "/materiale/hest%2C-hest%2C-tiger%2C-tiger_mette-e.-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
@@ -125,7 +124,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for article`, () => {
       getPageHead(
-        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561"
+        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=Avisartikel"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of:870971-avis:33301561"
@@ -146,7 +145,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for movie`, () => {
       getPageHead(
-        "/materiale/junglebogen_justin-marks/work-of%3A870970-basis%3A52331080"
+        "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080?type=Blu-ray"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/junglebogen_justin-marks/work-of:870970-basis:52331080"
@@ -169,7 +168,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for creative work`, () => {
       getPageHead(
-        "/materiale/midt-i-en-droem/work-of%3A870970-basis%3A53189148"
+        "/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=Node"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/midt-i-en-droem/work-of:870970-basis:53189148"
@@ -185,7 +184,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`artikler`, () => {
+  describe(`artikler`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/artikler").then((res) => {
         expect(res.title).to.equal("Alle artikler | Bibliotek.dk");
@@ -211,7 +210,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`hjaelp`, () => {
+  describe(`hjaelp`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -237,7 +236,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`hjaelp/faq`, () => {
+  describe(`hjaelp/faq`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/faq").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -263,7 +262,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`/hjaelp/find`, () => {
+  describe(`/hjaelp/find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/hjaelp/find?q=ost").then((res) => {
         expect(res.title).to.equal("Hjælp og vejledning | Bibliotek.dk");
@@ -291,7 +290,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
-  context(`find`, () => {
+  describe(`find`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/find?q.all=ost").then((res) => {
         expect(res.title).to.equal(
