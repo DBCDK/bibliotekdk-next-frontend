@@ -2,18 +2,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useData } from "@/lib/api/api";
-import useDataCollect from "@/lib/useDataCollect";
 import * as inspiration from "@/lib/api/inspiration.fragments";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
-import Translate from "@/components/base/translate";
 
 import styles from "./Slider.module.css";
 
 export function Slider({ title, works, isLoading }) {
-  const dataCollect = useDataCollect();
-
   return (
     <Section
       title={title}
@@ -25,15 +21,6 @@ export function Slider({ title, works, isLoading }) {
           <WorkSlider
             skeleton={isLoading}
             works={works}
-            onWorkClick={(work, shownWorks, index) => {
-              dataCollect.collectRecommenderClick({
-                recommender_based_on: workId,
-                recommender_click_hit: index + 1,
-                recommender_click_work: work.id,
-                recommender_click_reader: work.reader,
-                recommender_shown_recommendations: shownWorks,
-              });
-            }}
             data-cy="recommender"
           />
         </Col>
@@ -42,13 +29,16 @@ export function Slider({ title, works, isLoading }) {
   );
 }
 
-export default function Wrap({ title, category, subCategory }) {
-  const { data, isLoading } = useData(inspiration?.[category]?.());
+export default function Wrap({ title, category, filter }) {
+  const { data, isLoading } = useData(
+    inspiration?.[category]?.({
+      filters: [filter],
+    })
+  );
 
-  const cat = data?.inspiration?.categories?.[category];
-  const sub = cat?.find((obj) => obj.title === subCategory);
+  const cat = data?.inspiration?.categories?.[category]?.[0];
 
   return (
-    <Slider title={title} works={sub?.works || []} isLoading={isLoading} />
+    <Slider title={title} works={cat?.works || []} isLoading={isLoading} />
   );
 }

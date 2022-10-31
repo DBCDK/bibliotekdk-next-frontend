@@ -63,7 +63,7 @@ export default function Card({
         pathname: "/materiale/[title_author]/[workId]",
         query: {
           title_author: encodeTitleCreator(
-            title,
+            titles?.main[0] || title,
             creators[0] && creators[0].name
           ),
           workId: workId || id,

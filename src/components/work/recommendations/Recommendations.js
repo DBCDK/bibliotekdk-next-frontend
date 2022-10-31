@@ -72,6 +72,7 @@ export default function Recommendations({ workId }) {
             skeleton={isLoading}
             works={parsed}
             onWorkClick={(work, shownWorks, index) => {
+              console.log("work", work);
               dataCollect.collectRecommenderClick({
                 recommender_based_on: workId,
                 recommender_click_hit: index + 1,

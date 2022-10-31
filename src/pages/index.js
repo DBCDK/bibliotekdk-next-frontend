@@ -76,7 +76,7 @@ const Index = () => {
             label: "inspirationSliderTitle",
           })}
           category="fiction"
-          subCategory="nyeste"
+          filter="nyeste"
         />
       </div>
     </React.Fragment>
