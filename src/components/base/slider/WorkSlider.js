@@ -88,26 +88,21 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     : null;
 
   // Variables used for enabling/disabling prev/next buttons
-  const [{ isBeginning, isEnd, progress }, setPosition] = useState({});
+  const [{ progress }, setPosition] = useState({});
 
   // The number of cards to slide in one swipe (or clicking next/prev)
   // Calculated based on width of swiper and width of a card
   const slidesPerGroup =
     swiperRect && cardRect ? Math.floor(swiperRect.width / cardRect.width) : 1;
 
+  const isBeginning = progress === 0;
+  const isEnd = progress === 1 || works?.length <= slidesPerGroup;
+
   // Generate hash to uniquely identify this list of works
   const hash = useMemo(
-    () => hashCode(works.map((work) => work.id).join("")),
+    () => hashCode(works.map((work) => work.workId).join("")),
     [works]
   );
-
-  // Update the swiper instance when slidesPerGroup changes
-  useEffect(() => {
-    if (swiperRef.current) {
-      swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
-      swiperRef.current.swiper.update();
-    }
-  }, [slidesPerGroup]);
 
   // Store progress for slider
   useEffect(() => {
@@ -120,12 +115,18 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     }
   }, [progress]);
 
+  // Update slidesPerGroup
   // Restore progress for slider
   useEffect(() => {
-    if (storedProgress[hash]) {
+    if (!swiperRef.current?.swiper) {
+      return;
+    }
+    swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
+    swiperRef.current.swiper.update();
+    if (slidesPerGroup > 1 && storedProgress[hash]) {
       swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
     }
-  }, [works]);
+  }, [works, slidesPerGroup]);
 
   // If there is enough room to the left of the slider,
   // we move the left arrow a bit to the left
@@ -139,15 +140,11 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
       init: (swiper) => {
         // We update isBeginning and isEnd on init
         setPosition({
-          isBeginning: swiper.isBeginning,
-          isEnd: swiper.isEnd,
-          progress: swiper.progress,
+          progress: Math.min(swiper.progress, 0),
         });
       },
       activeIndexChange: (swiper) => {
         setPosition({
-          isBeginning: swiper.isBeginning,
-          isEnd: swiper.isEnd,
           progress: swiper.progress,
         });
       },
@@ -183,8 +180,15 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
         {works.map((work, idx) => (
           <Card
             cardRef={idx === 0 && cardRef}
-            key={work.id}
-            {...work}
+            cover={
+              work?.manifestations?.all.find(
+                (manifestation) => manifestation?.cover?.detail
+              )?.cover
+            }
+            creators={work?.creators}
+            workId={work?.workId}
+            title={work?.titles?.main?.[0]}
+            key={work.workId}
             className={styles.SlideWrapper}
             onFocus={() => {
               // Make sure focused card become visible
@@ -195,7 +199,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
               if (onWorkClick) {
                 // Find all the works that have been shown for this slider
                 const shownWorks = works
-                  .map((work) => work.id)
+                  .map((work) => work.workId)
                   .slice(
                     0,
                     Math.max(
