@@ -88,12 +88,15 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     : null;
 
   // Variables used for enabling/disabling prev/next buttons
-  const [{ isBeginning, isEnd, progress }, setPosition] = useState({});
+  const [{ progress }, setPosition] = useState({});
 
   // The number of cards to slide in one swipe (or clicking next/prev)
   // Calculated based on width of swiper and width of a card
   const slidesPerGroup =
     swiperRect && cardRect ? Math.floor(swiperRect.width / cardRect.width) : 1;
+
+  const isBeginning = progress === 0;
+  const isEnd = progress === 1 || works?.length <= slidesPerGroup;
 
   // Generate hash to uniquely identify this list of works
   const hash = useMemo(
@@ -137,15 +140,11 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
       init: (swiper) => {
         // We update isBeginning and isEnd on init
         setPosition({
-          isBeginning: swiper.isBeginning,
-          isEnd: swiper.isEnd,
-          progress: swiper.progress,
+          progress: Math.min(swiper.progress, 0),
         });
       },
       activeIndexChange: (swiper) => {
         setPosition({
-          isBeginning: swiper.isBeginning,
-          isEnd: swiper.isEnd,
           progress: swiper.progress,
         });
       },
