@@ -1,5 +1,6 @@
 // Translate Context
-import Translate from "@/components/base/translate";
+import { flattenWord } from "@/lib/utils";
+
 /**
  * Example:
  *
@@ -60,10 +61,6 @@ export function checkDigitalCopy({ manifestations }) {
  * @returns {Array<Object>}
  */
 export function selectMaterialBasedOnType(manifestations, type) {
-  function flattenWord(word) {
-    return word?.toLowerCase().replace(/[^0-9a-z]/gi, "");
-  }
-
   return manifestations?.filter((manifestation) => {
     return manifestation.materialTypes.find(
       (materialType) => flattenWord(materialType.specific) === flattenWord(type)
@@ -123,23 +120,4 @@ export function selectMaterial(manifestations) {
   // if a manifestion with an url has been found it will be returned - if not
   // return the first manifestation in array
   return selectedManifestation || manifestationsOnlyLoanIsPossible?.[0] || null;
-}
-
-export function openOrderModal(
-  modal,
-  workId,
-  singleManifestation,
-  manifestation
-) {
-  modal.push("order", {
-    title: Translate({ context: "modal", label: "title-order" }),
-    pid: manifestation.pid,
-    workId,
-    type: manifestation.materialTypes.specific,
-    ...(singleManifestation && { orderType: "singleManifestation" }),
-  });
-}
-
-export function onOnlineAccess(url, target = "_blank") {
-  window.open(url, target);
 }
