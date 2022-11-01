@@ -1,5 +1,6 @@
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton";
 import Translate from "@/components/base/translate";
@@ -7,12 +8,14 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
-import { preferredOnline } from "@/lib/Navigation";
+import { checkPreferredOnline } from "@/lib/Navigation";
+import { openLocalizationsModal } from "@/components/work/utils";
+import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 
 export function LocalizationsLink({
   materialType,
   localizations,
-  opener,
+  openLocalizationsModal,
   isLoading,
 }) {
   if (isLoading) {
@@ -20,7 +23,7 @@ export function LocalizationsLink({
   }
 
   // @see lib/Navigation.js :: preferredOnline
-  if (preferredOnline.includes(materialType)) {
+  if (checkPreferredOnline(materialType)) {
     return null;
   }
 
@@ -53,7 +56,7 @@ export function LocalizationsLink({
         &nbsp;-&nbsp;
       </Text>
       <Link
-        onClick={() => opener()}
+        onClick={() => openLocalizationsModal()}
         border={{ top: false, bottom: { keepVisible: true } }}
         dataCy={localizationLinkKey}
         ariaLabel="open localizations"
@@ -70,34 +73,31 @@ export function LocalizationsLink({
   );
 }
 
-export default function Wrap({ selectedMaterial, workId }) {
-  // use the useData hook to fetch data
-  const { data, isLoading } = useData(workFragments.localizations({ workId }));
-
+export default function Wrap({ selectedPids, workId }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   // const user = useUser();
-
-  // get pids from selected material to look up detailed holdings
-  const pids = selectedMaterial?.manifestations?.map((mani) => mani.pid);
-
   const modal = useModal();
-  const openLocalizationsModal = () => {
-    modal.push("localizations", {
-      title: Translate({ context: "modal", label: "title-order" }),
-      workId,
-      materialType: selectedMaterial.materialType,
-      pids: pids,
-    });
-  };
-  const selectedLocalizations = data?.work?.materialTypes?.filter(
-    (mat) => mat.materialType === selectedMaterial.materialType
-  )[0];
+
+  const workFragment = workId && workFragments.pidsAndMaterialTypes({ workId });
+  const workFromSelectedPids = useWorkFromSelectedPids(
+    workFragment,
+    selectedPids
+  );
+
+  const { data, isLoading } = useData(
+    selectedPids &&
+      localizationsFragments.localizationsQuery({ pids: selectedPids })
+  );
+
+  const materialType = workFromSelectedPids?.materialTypes?.[0]?.specific;
 
   return (
     <LocalizationsLink
-      materialType={selectedMaterial.materialType}
-      localizations={selectedLocalizations?.localizations || "0"}
-      opener={openLocalizationsModal}
+      materialType={materialType}
+      localizations={data?.localizations || "0"}
+      openLocalizationsModal={() =>
+        openLocalizationsModal(modal, selectedPids, workId, materialType)
+      }
       isLoading={isLoading}
     />
   );

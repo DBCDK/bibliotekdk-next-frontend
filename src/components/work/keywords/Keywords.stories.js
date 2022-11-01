@@ -1,7 +1,8 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import { getSubjectsDbcVerified } from "../dummy.materialTypesApi";
 
 import { Keywords, KeywordsSkeleton } from "./Keywords";
+import { uniqueSubjectEntries } from "@/lib/utils";
 
 const exportedObject = {
   title: "work/Keywords",
@@ -10,13 +11,13 @@ const exportedObject = {
 export default exportedObject;
 
 /**
- * Returns Description section
+ * Returns Keyword section
  *
  */
-export function DescriptionSection() {
+export function KeywordsSection() {
   const workId = "some-id";
-  const type = "Bog";
-  const data = dummy_materialTypesApi({ workId, type });
+  const data = getSubjectsDbcVerified({ workId });
+  const uniqueSubjects = uniqueSubjectEntries(data[workId]);
 
   return (
     <div>
@@ -25,8 +26,7 @@ export function DescriptionSection() {
         Work keywords component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-
-      <Keywords data={data[workId].subjects} type={type} />
+      <Keywords data={uniqueSubjects} />
     </div>
   );
 }

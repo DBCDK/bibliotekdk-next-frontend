@@ -4,8 +4,8 @@ import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import { infomediaArticlePublicInfo, reviews } from "@/lib/api/work.fragments";
-import { infomediaArticle } from "@/lib/api/infomedia.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
+import * as infomediaFragments from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
 
 import {
@@ -153,11 +153,13 @@ export default function Wrap() {
   const pickupBranch = user?.loanerInfo?.pickupBranch;
 
   const infomediaPublic = useData(
-    workId && infomediaArticlePublicInfo({ workId })
+    workId && workFragments.infomediaArticlePublicInfo({ workId })
   );
 
   // This article may be a review, so we fetch the rating
-  const allReviews = useData(reviewPid && workId && reviews({ workId }));
+  const allReviews = useData(
+    reviewPid && workId && workFragments.reviews({ workId })
+  );
   const review = allReviews?.data?.work?.reviews?.find(
     (review) =>
       !!review?.reference?.find((reference) => reference.pid === reviewPid)
@@ -167,7 +169,9 @@ export default function Wrap() {
   const reviewAuther = review?.author;
 
   const infomediaPrivate = useData(
-    user.isAuthenticated && infomediaId && infomediaArticle({ id: infomediaId })
+    user.isAuthenticated &&
+      infomediaId &&
+      infomediaFragments.infomediaArticle({ id: infomediaId })
   );
 
   const branchRes = useData(

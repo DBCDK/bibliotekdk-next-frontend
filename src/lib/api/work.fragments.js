@@ -3,43 +3,7 @@
  *
  */
 
-/**
- * Basic work info that is fast to fetch
- *
- * @param {object} params
- * @param {string} params.workId the work id
- */
-export function basic({ workId }) {
-  return {
-    // delay: 250,
-    query: `query ($workId: String!) {
-        work(id: $workId) {
-          creators {
-            type
-            name
-          }
-          description
-          materialTypes {
-            materialType
-            manifestations {
-              pid
-              materialType
-            }
-          }
-          path
-          fullTitle
-          title
-          subjects{
-            type
-            value
-          }
-        }
-        monitor(name: "bibdknext_work_basic")
-      }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
+import { ApiEnums } from "@/lib/api/api";
 
 /**
  * Covers for the different material types
@@ -80,57 +44,62 @@ export function details({ workId }) {
     // delay: 1000, // for debugging
     query: `query ($workId: String!) {
           work(id: $workId) {
-          seo {
             title
-            description
-          }
-          subjects {
-            type
-            value
-          }          
-          materialTypes {
-            materialType
-            manifestations {
-              admin{
-                requestButton
-              }
-              content
-              creators {
-                type
-                functionSingular
-                name
-              }
-              datePublished
-              edition
-              isbn
-              materialType
-              language
-              onlineAccess {
-                ... on UrlReference {
-                  url
-                  origin
-                  note
-                  accessType
-                }
-                ... on InfomediaReference {
-                  infomediaId
-                  pid
-                }
-                ... on WebArchive {
-                  type
-                  url
-                  pid
-                }
-                ... on DigitalCopy{
-                  issn
-                }
-              }
-              physicalDescription
-              publisher              
+            fullTitle
+            creators {
+              name
             }
+            seo {
+              title
+              description
+            }
+            subjects {
+              type
+              value
+            }          
+            materialTypes {
+              materialType
+              manifestations {
+                admin{
+                  requestButton
+                }
+                content
+                creators {
+                  type
+                  functionSingular
+                  name
+                }
+                datePublished
+                edition
+                isbn
+                materialType
+                language
+                onlineAccess {
+                  ... on UrlReference {
+                    url
+                    origin
+                    note
+                    accessType
+                  }
+                  ... on InfomediaReference {
+                    infomediaId
+                    pid
+                  }
+                  ... on WebArchive {
+                    type
+                    url
+                    pid
+                  }
+                  ... on DigitalCopy{
+                    issn
+                  }
+                }
+                physicalDescription
+                publisher              
+              }
+            }
+            workTypes
           }
-          workTypes
-        }
         monitor(name: "bibdknext_work_details")
       }`,
     variables: { workId },
@@ -169,6 +138,7 @@ export function detailsAllManifestations({ workId }) {
           }
           workTypes
           manifestations {
+            pid
             admin{
               requestButton
             }
@@ -241,9 +211,6 @@ export function detailsAllManifestations({ workId }) {
 /**
  * Recommendations for a work
  *
- * This is still the old laesekompas recommender
- * Will be changed at some point
- *
  * @param {Object} variables
  * @param {string} variables.workId
  *
@@ -251,27 +218,21 @@ export function detailsAllManifestations({ workId }) {
  */
 export function recommendations({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query ($workId: String!) {
-    manifestation(pid: $workId) {
-      recommendations {
+    query: `query Recommendations($workId: String!) {
+    recommend(id: $workId) {
+      result {
         reader
-        manifestation {
-          cover {
-            detail
-          }
-          pid
-          title
-          creators {
-            name
-          }
+        work {
+          ...workSliderFragment  
         }
       }
     }
-    monitor(name: "bibdknext_work_recommendations")
   }
+  ${workSliderFragment}
   `,
-    variables: { workId: workId.replace("work-of:", "") },
+    variables: { workId },
     slowThreshold: 3000,
   };
 }
@@ -337,35 +298,24 @@ export function reviews({ workId }) {
   };
 }
 
-/**
- * localizations for a work
- */
-export function localizations({ workId }) {
-  return {
-    // delay: 4000, // for debugging
-    query: ` query ($workId: String!){
-        work(id:$workId){
-          materialTypes{
-          materialType
-          localizations {
-            count
-            agencies{
-              agencyId
-              holdingItems{
-                localizationPid
-                localIdentifier
-                codes
-              }
-            }
-          }
-        }
+// Use this fragments in queries that provide data
+// to the WorkSlider
+const workSliderFragment = `fragment workSliderFragment on Work {
+  workId
+  titles {
+    main
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      cover {
+        detail
       }
-      monitor(name: "bibdknext_work_localizations")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
+    }
+  }
+}`;
 
 /**
  * Series for a work
@@ -377,25 +327,16 @@ export function localizations({ workId }) {
  */
 export function series({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 4000, // for debugging
-    query: `query ($workId: String!) {
+    query: `query Series($workId: String!) {
       work(id: $workId) {
-        series {
-          title
-          works {
-            id
-            title
-            creators {
-              name
-            }
-            cover {
-              detail
-            }
-          }
+        seriesMembers {
+          ...workSliderFragment
         }
       }
-      monitor(name: "bibdknext_work_series")
     }
+    ${workSliderFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -431,6 +372,281 @@ export function infomediaArticlePublicInfo({ workId }) {
       monitor(name: "bibdknext_work_infomedia_public")
     }
   `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Subject work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function subjects({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query subjects($workId: String!) {
+      work(id: $workId) {
+        subjects {
+          dbcVerified {
+            display
+          }
+        }
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function description({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query description($workId: String!) {
+      work(id: $workId) {
+        abstract
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function pidsAndMaterialTypes({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query fetchPids($workId: String!) {
+      work(id: $workId) {
+        manifestations {
+          all {
+            pid
+            materialTypes {
+              specific
+            }
+          }
+        }
+      }
+      monitor(name: "bibdknext_work_pidsAndMaterialTypes")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function buttonTxt({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 250,
+    query: `
+    query buttonTxt ($workId: String!) {
+      work(id: $workId) {
+        titles {
+          main
+        }
+        materialTypes {
+          specific
+        }
+        manifestations {
+          all {
+            pid   
+            accessTypes {
+              code
+            }
+            access {
+              __typename  
+              ... on AccessUrl {
+                url
+                origin
+                loginRequired
+              }
+              ... on Ereol {
+                url
+              }
+              ... on InterLibraryLoan {
+                loanIsPossible
+              }
+              ... on InfomediaService {
+                id
+              }
+              ... on DigitalArticleService {
+                issn
+              }
+            }
+            materialTypes {
+              specific
+            }
+          }
+        }
+        workTypes
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Description work info that is fast to fetch
+ *
+ * @param {object} params
+ * @param {string} params.workId the work id
+ */
+export function buttonTxt_TempForAlfaApi({ workId }) {
+  return {
+    // delay: 250,
+    query: `
+    query buttonTxt($workId: String!) {
+      work(id: $workId) {
+        materialTypes {
+          manifestations {
+            pid
+            onlineAccess {
+              ... on UrlReference {
+                url
+                origin
+              }
+              ... on InfomediaReference {
+                infomediaId
+                pid
+              }
+              ... on WebArchive {
+                url
+              }
+              ... on DigitalCopy {
+                issn
+              }
+            }
+            materialType
+            admin {
+              requestButton
+            }
+          }
+          materialType
+        }
+        manifestations {
+          pid
+          onlineAccess {
+            ... on UrlReference {
+              url
+              origin
+            }
+            ... on InfomediaReference {
+              infomediaId
+              pid
+            }
+            ... on WebArchive {
+              url
+            }
+            ... on DigitalCopy {
+              issn
+            }
+          }
+          materialType
+          admin {
+            requestButton
+          }
+        }
+        materialTypes {
+          materialType
+        }
+        workTypes
+      }
+      monitor(name: "bibdknext_work_basic")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function overViewDetails({ workId }) {
+  // for fbi-api - see components/work/details/Detail.js
+  return {
+    // delay: 4000, // for debugging
+    apiUrl: ApiEnums.FBI_API,
+    query: `query overViewDetails($workId: String!) {
+        work(id: $workId) {
+          workId
+          workTypes
+          genreAndForm     
+          manifestations {
+            all {
+              materialTypes {
+                specific
+              }
+              titles {
+                main
+              }
+              genreAndForm
+              languages {
+                subtitles {
+                  display
+                }
+                spoken {
+                  display
+                }
+                main {
+                  display
+                }
+              }
+              physicalDescriptions {
+                summary
+              }
+              edition {
+                publicationYear {
+                  display
+                }
+              }
+              contributors {
+                display
+                roles {
+                  functionCode
+                  function {
+                    plural
+                    singular
+                  }
+                }
+              }
+              creators {
+                display
+                roles {
+                  functionCode
+                  function {
+                    singular
+                  }
+                }
+              }
+            }
+          }
+        }
+        monitor(name: "bibdknext_work_overview_details")
+      }`,
     variables: { workId },
     slowThreshold: 3000,
   };

@@ -1,6 +1,6 @@
 import { BibliographicData } from "./BibliographicData";
 import dummyWorkManifestationsApi from "../dummyWorkManifestationsApi.json";
-import { ManifestationFull } from "@/components/work/BibliographicData/ManifestationFull";
+import ManifestationFull from "@/components/work/BibliographicData/ManifestationFull";
 
 const localizations = {
   localizations: {
@@ -183,7 +183,7 @@ export function FullManifestation() {
       workId={work.workId}
       localizations={localizations}
       localizationsLoading={false}
-      opener={alertopener}
+      openLocalizationsModal={alertopener}
       openOrderModal={alertopener}
       user={{}}
     />

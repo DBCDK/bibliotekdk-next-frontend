@@ -12,34 +12,20 @@ import Translate from "@/components/base/translate";
 import { parseManifestation } from "@/lib/manifestationParser";
 import styles from "./BibliographicData.module.css";
 import { cyKey } from "@/utils/trim";
-import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
+import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
-import useUser from "@/components/hooks/useUser";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
-import { useData } from "@/lib/api/api";
-import * as localizationsFragments from "@/lib/api/localizations.fragments";
+import { openReferencesModal } from "@/components/work/utils";
 
 /**
  * Column one of full view. Some links and a button.
  * @param manifestation
  * @param localizations
- * @param localizationsLoading
- * @param openOrderModal
- * @param opener
- * @param user
  * @param work
  * @returns {JSX.Element}
  * @constructor
  */
-function ColumnOne({
-  manifestation,
-  localizations,
-  localizationsLoading,
-  openOrderModal,
-  opener,
-  user,
-  work,
-}) {
+function ColumnOne({ work, workId, manifestation }) {
   const modal = useModal();
 
   return (
@@ -55,14 +41,10 @@ function ColumnOne({
       )}
       <div>
         <ReservationButton
-          user={user}
-          openOrderModal={openOrderModal}
-          selectedMaterial={{
-            manifestations: [manifestation],
-            onlineAccess: [],
-          }}
-          singleManifestion={true}
-          type="secondary"
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+          buttonType="secondary"
           size="small"
         />
       </div>
@@ -70,10 +52,8 @@ function ColumnOne({
         <div>
           <span>
             <LocalizationsLink
-              opener={opener}
-              localizations={localizations?.localizations}
-              isLoading={localizationsLoading}
-              materialType={manifestation.materialType}
+              workId={workId}
+              selectedPids={[manifestation?.pid]}
             />
           </span>
         </div>
@@ -82,15 +62,12 @@ function ColumnOne({
             dataCy="link-references"
             border={{ bottom: { keepVisible: true } }}
             onClick={() =>
-              modal.push("references", {
-                title: Translate({
-                  context: "references",
-                  label: "label_references_title",
-                }),
-                pids: [manifestation.pid],
-                work: work,
-                manifestation: manifestation,
-              })
+              openReferencesModal(
+                modal,
+                [manifestation?.pid],
+                work,
+                manifestation
+              )
             }
           >
             <Text type="text3" className={styles.linkstyle}>
@@ -111,22 +88,11 @@ function ColumnOne({
  * @param manifestation
  * @param work
  * @param localizations
- * @param localizationsLoading
- * @param opener
- * @param openOrderModal
- * @param user
+ * @param workId
  * @returns {JSX.Element}
  * @constructor
  */
-export function ManifestationFull({
-  manifestation,
-  work,
-  localizations,
-  localizationsLoading,
-  opener,
-  openOrderModal,
-  user,
-}) {
+export default function ManifestationFull({ manifestation, work, workId }) {
   // Parse manifestation, we use the useMemo hook such that the manifestation
   // is not parsed on every rerender of the component
   const parsed = useMemo(() => {
@@ -135,15 +101,7 @@ export function ManifestationFull({
 
   return (
     <Row>
-      <ColumnOne
-        manifestation={manifestation}
-        localizations={localizations}
-        localizationsLoading={localizationsLoading}
-        openOrderModal={openOrderModal}
-        opener={opener}
-        user={user}
-        work={work}
-      />
+      <ColumnOne work={work} workId={workId} manifestation={manifestation} />
       <Col xs={12} md>
         <div className={styles.container}>
           {parsed.map(({ label, value }) => {
@@ -165,48 +123,5 @@ export function ManifestationFull({
         </div>
       </Col>
     </Row>
-  );
-}
-
-export default function Wrap({ manifestation, work, workId }) {
-  const modal = useModal();
-  const openLocalizationsModal = () => {
-    modal.push("localizations", {
-      title: Translate({ context: "modal", label: "title-order" }),
-      workId,
-      materialType: manifestation.materialType,
-      pids: [manifestation.pid],
-    });
-  };
-
-  const openOrderModal = (pid) => {
-    modal.push("order", {
-      title: Translate({ context: "modal", label: "title-order" }),
-      pid,
-      workId,
-      type: manifestation.materialType,
-      orderType: "singleManifestation",
-    });
-  };
-
-  const pids = [manifestation.pid];
-
-  const { data: localizations, isLoading: localizationsLoading } = useData(
-    localizationsFragments.localizationsQuery({ pids })
-  );
-
-  const user = useUser();
-
-  return (
-    <ManifestationFull
-      manifestation={manifestation}
-      work={work}
-      workId={workId}
-      localizations={localizations}
-      localizationsLoading={localizationsLoading}
-      opener={openLocalizationsModal}
-      openOrderModal={openOrderModal}
-      user={user}
-    />
   );
 }

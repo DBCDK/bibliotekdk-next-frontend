@@ -42,7 +42,7 @@ export default function Card({
   creators,
   onFocus,
   onClick,
-  id,
+  workId,
   skeleton,
   title,
 }) {
@@ -56,11 +56,8 @@ export default function Card({
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
-          title_author: encodeTitleCreator(
-            title,
-            creators[0] && creators[0].name
-          ),
-          workId: id,
+          title_author: encodeTitleCreator(title, creators[0]?.display),
+          workId,
         },
       }}
     >
@@ -73,7 +70,7 @@ export default function Card({
         onClick={onClick}
       >
         <div className={styles.CoverWrapper}>
-          <Cover src={cover.detail} size="fill" />
+          <Cover src={cover?.detail} size="fill" />
         </div>
         <div>
           <Text
@@ -92,7 +89,7 @@ export default function Card({
               lines={2}
               clamp={true}
             >
-              {creators[0] && creators[0].name}
+              {creators[0]?.display}
             </Text>
           )}
         </div>

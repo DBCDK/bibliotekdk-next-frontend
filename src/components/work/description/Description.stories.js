@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
+import { getDescription } from "../dummy.materialTypesApi";
 
 import { Description, DescriptionSkeleton } from "./Description";
 
@@ -15,8 +15,7 @@ export default exportedObject;
  */
 export function DescriptionSection() {
   const workId = "some-id";
-  const type = "Bog";
-  const data = dummy_materialTypesApi({ workId, type });
+  const abstract = getDescription({ workId });
   return (
     <div>
       <StoryTitle>Description section</StoryTitle>
@@ -25,7 +24,7 @@ export function DescriptionSection() {
       </StoryDescription>
       <StorySpace direction="v" space="8" />
 
-      <Description data={data[workId].description} type={type} />
+      <Description data={abstract[workId]} />
     </div>
   );
 }

@@ -1,31 +1,32 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import WrappedSeries, { Series } from "./Series";
+import WrappedRecommendations from "./Recommendations";
 
 const exportedObject = {
-  title: "work/Series",
+  title: "work/Recommendations",
 };
 
 export default exportedObject;
 
 const WORK_ID = "work-of:870970-basis:07276346";
 
-export function WrappedSeriesSlider() {
+export function WrappedRecommendationsSlider() {
   return (
     <div>
-      <StoryTitle>Wrapped Series Slider</StoryTitle>
+      <StoryTitle>Wrapped Recommendations Slider</StoryTitle>
       <StoryDescription>Fetches data from ...</StoryDescription>
-      <WrappedSeries workId={WORK_ID} />
+      <WrappedRecommendations workId={WORK_ID} />
     </div>
   );
 }
-WrappedSeriesSlider.story = {
+WrappedRecommendationsSlider.story = {
   parameters: {
     graphql: {
       debug: true,
       resolvers: {
-        Work: {
-          seriesMembers: (args) =>
-            // Return empty array if wrong workId is given
+        RecommendationResponse: {
+          result: (
+            args // Return empty array if wrong workId is given
+          ) =>
             args?.variables?.workId === WORK_ID
               ? [...new Array(2).fill({})]
               : [],
@@ -49,16 +50,3 @@ WrappedSeriesSlider.story = {
     },
   },
 };
-
-export function LoadingSeries() {
-  return (
-    <div>
-      <StoryTitle>Loading</StoryTitle>
-      <StoryDescription>
-        The loading/skeleton version of the review slider, uses the Infomedia
-        template as skeleton elements.
-      </StoryDescription>
-      <Series isLoading={true} />
-    </div>
-  );
-}

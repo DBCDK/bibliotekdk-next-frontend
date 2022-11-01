@@ -178,8 +178,10 @@ export function LocalizationLink() {
 
   return (
     <LocalizationsLink
-      opener={alertopener}
+      materialType={type}
       localizations={selectedLocalizations.localizations}
+      openLocalizationsModal={alertopener}
+      isLoading={false}
     />
   );
 }

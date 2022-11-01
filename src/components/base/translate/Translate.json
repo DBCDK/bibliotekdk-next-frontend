@@ -38,7 +38,7 @@
         "en": "How is the search result ?"
       },
       "search_feed_back_thankyou": {
-        "da" : "Tak for din feedback. \\n Vi er glade for at kunne levere et godt søgeresultat",
+        "da": "Tak for din feedback. \\n Vi er glade for at kunne levere et godt søgeresultat",
         "en": "Thank you for the feedback. \\n We are happy to deliver a qualified search result"
       },
       "search_feed_back_improve": {
@@ -49,16 +49,16 @@
         "da": "Hvad kan vi gøre for at blive bedre?",
         "en": "How can we improve?"
       },
-      "search_feed_back_form_submit":{
+      "search_feed_back_form_submit": {
         "da": "Afslut",
         "en": "Submit"
       },
-      "search_feed_back_form_send":{
+      "search_feed_back_form_send": {
         "da": "Send",
         "en": "Send"
       },
-      "feed_back_kunderservice_link_text" : {
-        "da" : "Feedback",
+      "feed_back_kunderservice_link_text": {
+        "da": "Feedback",
         "en": "Feedback"
       }
     },
@@ -321,7 +321,7 @@
         "da": "Ryd alt",
         "en": "LABEL: mangler oversættelse"
       },
-      "skip":{
+      "skip": {
         "da": "Spring over",
         "en": "Skip"
       }
@@ -660,7 +660,7 @@
         "en": "Not available"
       },
       "Order-disabled": {
-        "da": "Bestil (deaktiveret))",
+        "da": "Bestil (deaktiveret)",
         "en": "Order (disabled)"
       },
       "all-options-link": {
@@ -1057,11 +1057,11 @@
         "da": "Et eller flere emner",
         "en": "Label: mangler oversættelse"
       },
-      "relatedSubjects":{
+      "relatedSubjects": {
         "da": "Lignende søgninger:",
         "en": "Label: mangler oversættelse"
       },
-      "skipRelatedSubjects":{
+      "skipRelatedSubjects": {
         "da": "Spring lignende søgninger over",
         "en": "Label: mangler oversættelse"
       }
