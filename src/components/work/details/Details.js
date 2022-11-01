@@ -7,9 +7,8 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import * as workFragments from "@/lib/api/work.fragments";
-
 import styles from "./Details.module.css";
-import { overViewDetails } from "@/lib/api/work.fragments";
+import { useMemo } from "react";
 
 /**
  * The Component function
@@ -28,21 +27,24 @@ export function Details({
   // Translate Context
   const context = { context: "details" };
 
-  // bidrag - contributors + creators
-  const contributors_tmp =
-    data?.contributors?.map((contrib) => contrib.display) || [];
-  const creators = data?.creators?.map((creator) => creator.display);
-  const contributors = [...creators, ...contributors_tmp];
+  // bidrag - contributors + creators - useMemo for performance
+  const contributors = useMemo(() => {
+    const contributors_tmp =
+      data?.contributors?.map((contrib) => contrib.display) || [];
+    const creators = data?.creators?.map((creator) => creator.display);
+    return [...creators, ...contributors_tmp];
+  }, [data]);
 
-  // languages - main + subtitles + spoken;  filter out duplicates
-  const main = data?.languages?.main?.map((mlang) => mlang.display) || [];
-  const spoken = data?.languages?.spoken?.map((spok) => spok.display) || [];
-  const subtitles = data?.languages?.subtitles.map((sub) => sub.display) || [];
-  const languages = [...main, ...spoken, ...subtitles].filter(
-    (lang, index, self) => {
-      return self.indexOf(lang) === index;
-    }
-  );
+  // languages - main + subtitles + spoken - useMemo for performance;
+  const languages = useMemo(() => {
+    const main = data?.languages?.main?.map((mlang) => mlang.display) || [];
+    const spoken = data?.languages?.spoken?.map((spok) => spok.display) || [];
+    const subtitles =
+      data?.languages?.subtitles.map((sub) => sub.display) || [];
+    const mixed = [...main, ...spoken, ...subtitles];
+    // filter out duplicates
+    return [...new Set(mixed)];
+  }, [data]);
 
   return (
     <Section
