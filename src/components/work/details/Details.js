@@ -224,7 +224,7 @@ export default function Wrap(props) {
   const manifestationByMaterialType =
     data?.work?.manifestations?.all.find((element) =>
       element.materialTypes.find((matType) => {
-        return matType.specific.toLowerCase() === type.toLowerCase();
+        return matType.specific.toLowerCase() === type?.toLowerCase();
       })
     ) || data?.work?.manifestations?.all[0];
 
