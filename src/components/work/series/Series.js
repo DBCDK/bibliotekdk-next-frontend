@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 
 import { useData } from "@/lib/api/api";
-import { series } from "@/lib/api/work.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
@@ -48,7 +48,7 @@ Series.propTypes = {
  * @param {string} props.workId The work id
  */
 export default function Container({ workId }) {
-  const { data, isLoading } = useData(series({ workId }));
+  const { data, isLoading } = useData(workFragments.series({ workId }));
 
   // if work is not part of series, we wont show series section
   if (!isLoading && !data?.work?.seriesMembers?.length) {

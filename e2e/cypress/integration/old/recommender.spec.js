@@ -6,7 +6,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("Recommender data collect", () => {
+describe.skip("Recommender data collect", () => {
   beforeEach(() => {
     // Allow cookies
     cy.visit(`${nextjsBaseUrl}`);

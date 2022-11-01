@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import uniqBy from "lodash/uniqBy";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -12,6 +11,7 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
+import { uniqueEntries } from "@/lib/utils";
 
 /**
  * bibliotek.dk url
@@ -56,31 +56,18 @@ function getFontSize(keywords) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export function Keywords({ className = "", data = [], skeleton = false }) {
-  // Dont return empty komponent if nothing to show
-  if (data.length === 0) {
-    return null;
-  }
+export function Keywords({
+  className = "",
+  data: uniqueSubjects = [],
+  skeleton = false,
+}) {
+  // Get fontsize - based on subjects in data
+  const sizeClass = getFontSize(uniqueSubjects);
 
   // Translate Context
   const context = { context: "keywords" };
-
-  // Include wanted subject types
-  const include = ["DBCS", "DBCF", "DBCM", null];
-  const filteredData = data.filter((s) => include.includes(s.type));
-
-  // Remove entire keyword section when there are no keywords
-  if (!filteredData.length) {
-    return null;
-  }
-
-  // Remove duplicates
-  data = uniqBy(filteredData, (s) => s.value.toLowerCase().replace(/\./g, ""));
-
-  // Get fontsize - based on subjects in data
-  const sizeClass = getFontSize(data);
 
   return (
     <Section
@@ -89,19 +76,18 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
       bgColor="var(--jagged-ice)"
     >
       <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
-        {data.map((k) => {
-          const val = k.value.replace(/\./g, "");
+        {uniqueSubjects.map((val) => {
           const key = cyKey({ name: val, prefix: "keyword" });
 
           return (
             <span
               data-cy={key}
               className={`${styles.keyword} ${sizeClass}`}
-              key={`${k.type}-${key}`}
+              key={`${key}-${JSON.stringify(val)}`}
             >
               <Link
                 a
-                href={url(k.value)}
+                href={url(val)}
                 border={{ bottom: { keepVisible: true } }}
               >
                 <Title type="title4" skeleton={skeleton}>
@@ -122,7 +108,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function KeywordsSkeleton(props) {
   const data = [
@@ -152,13 +138,15 @@ export function KeywordsSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId } = props;
 
   // Call materialTypes mockdata API
-  const { data, isLoading, error } = useData(workFragments.basic({ workId }));
+  const { data, isLoading, error } = useData(
+    workId && workFragments.subjects({ workId })
+  );
 
   if (isLoading) {
     return <KeywordsSkeleton />;
@@ -169,9 +157,19 @@ export default function Wrap(props) {
   }
 
   // get subjects from response
-  const subjects = data.work.subjects;
+  const subjectsDbcVerified = data?.work?.subjects?.dbcVerified;
 
-  return <Keywords {...props} data={subjects} />;
+  if (!subjectsDbcVerified || subjectsDbcVerified.length === 0) {
+    return null;
+  }
+
+  return (
+    <Keywords
+      className={props.className}
+      skeleton={false}
+      data={uniqueEntries(subjectsDbcVerified)}
+    />
+  );
 }
 
 // PropTypes for component

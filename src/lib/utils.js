@@ -87,13 +87,30 @@ export function getCanonicalArticleUrl(props) {
  * @param {object} work
  * @returns {boolean}
  */
-export function getIsPeriodicaLike(work) {
+export function getIsPeriodicaLike_TempUsingAlfaApi(work) {
+  // TODO: Remove this when the migration is complete!
   return (
     work?.workTypes?.includes("periodica") ||
     !!work?.materialTypes?.find(({ manifestations }) =>
       manifestations?.find((m) => m.materialType === "Årbog")
     ) ||
     !!work?.manifestations?.find((m) => m.materialType === "Årbog")
+  );
+}
+
+/**
+ * Handle this work as a periodica
+ *
+ * @param {object} workTypes
+ * @param {object} materialTypes
+ * @returns {boolean}
+ */
+export function getIsPeriodicaLike(workTypes, materialTypes) {
+  return (
+    !!workTypes?.find((workType) => workType.toLowerCase() === "periodica") ||
+    !!materialTypes?.find(
+      (materialType) => materialType?.specific?.toLowerCase() === "årbog"
+    )
   );
 }
 
@@ -107,4 +124,12 @@ export function getIsPeriodicaLike(work) {
  */
 export function infomediaUrl(title, workId, infomadiaId) {
   return `/infomedia/${title}/${workId}/${infomadiaId}`;
+}
+
+export function uniqueEntries(oldArray) {
+  return [
+    ...new Set(
+      oldArray?.map((s) => s.display.toLowerCase().replace(/\./g, ""))
+    ),
+  ];
 }
