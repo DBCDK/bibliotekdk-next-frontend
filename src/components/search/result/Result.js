@@ -51,7 +51,7 @@ export function Result({
       <Section
         contentDivider={null}
         titleDivider={null}
-        topSpace={true}
+        className={styles.section}
         bottomSpace={!(isMobile || breakpoint === "md")}
         title={
           <div className={styles.wrap}>

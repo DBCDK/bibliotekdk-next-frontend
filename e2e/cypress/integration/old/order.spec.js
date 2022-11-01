@@ -220,6 +220,7 @@ function openOrderModal() {
   cy.get("[data-cy=button-order-overview-enabled]").click();
 }
 
+// TODO activate tests, during migration of order modal to fbi-api!
 describe.skip("Order", () => {
   describe("Order-base", () => {
     beforeEach(function () {
