@@ -24,15 +24,18 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  *
  * @returns {JSX.Element}
  */
-export default function Header({ workId }) {
-  const details = useData(workFragments.detailsAllManifestations({ workId }));
+export function Header({ details }) {
   const { alternate } = useCanonicalUrl();
 
   if (!details.data || details.isLoading || details.error) {
     return null;
   }
   const data = details.data;
+  /*
+  this on is tricky - JSONLD uses many fields - see work.js/getJSONLD(work)
+   */
   const jsonld = getJSONLD(data.work);
+  /* there is no SEO in fbi-api */
   const pageDescription = data.work.seo.description;
   const pageTitle = data.work.seo.title;
 
@@ -64,6 +67,21 @@ export default function Header({ workId }) {
   );
 }
 
-Header.propTypes = {
+/*
+NOTES
+pageDescription
+canonicalWorkUrl
+pageTitle
+pageDescription
+cover
+ */
+
+export default function Wrap({ workId }) {
+  const details = useData(workFragments.detailsAllManifestations({ workId }));
+  console.log(details, "DETAILS");
+  return <Header details={details} />;
+}
+
+Wrap.propTypes = {
   workId: PropTypes.string,
 };

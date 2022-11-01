@@ -166,6 +166,33 @@ function getMovie({ id, title, description, url, cover, manifestations = [] }) {
 }
 
 /**
+ * @TODO seo: - like this:
+ * from bib-api
+ * 
+ const materialTypes = resolvers.Work.materialTypes(
+ parent,
+ args,
+ context,
+ info
+ );
+
+ // Return title and description
+ return {
+        title: `${parent.title}${
+          parent.creators && parent.creators[0]
+            ? ` af ${parent.creators[0].value}`
+            : ""
+        }`,
+        description: getPageDescription({
+          title: parent.title,
+          creators: parent.creators,
+          materialTypes,
+        }),
+      };
+ *
+ */
+
+/**
  * Creates JSON-LD representation ofthe work
  * - https://developers.google.com/search/docs/data-types/book
  * - https://solsort.dk/dkabm-til-schema.org
