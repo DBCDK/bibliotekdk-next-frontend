@@ -11,7 +11,7 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
-import { uniqueEntries } from "@/lib/utils";
+import { uniqueSubjectEntries } from "@/lib/utils";
 
 /**
  * bibliotek.dk url
@@ -167,7 +167,7 @@ export default function Wrap(props) {
     <Keywords
       className={props.className}
       skeleton={false}
-      data={uniqueEntries(subjectsDbcVerified)}
+      data={uniqueSubjectEntries(subjectsDbcVerified)}
     />
   );
 }

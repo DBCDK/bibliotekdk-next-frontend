@@ -4,20 +4,19 @@ import Button from "@/components/base/button/Button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
-import { preferredOnline } from "@/lib/Navigation";
+import { checkPreferredOnline } from "@/lib/Navigation";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import {
   checkDigitalCopy,
   checkRequestButtonIsTrue,
   context,
-  onOnlineAccess,
-  openOrderModal,
   selectMaterial,
 } from "@/components/work/reservationbutton/utils";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import { useMemo } from "react";
 import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
+import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -93,7 +92,9 @@ function extractSimpleFields(work, selectedManifestations) {
     selectedManifestations !== null && typeof access === "undefined";
 
   // if we prefer online material button text should be different
-  let onlineDisable = preferredOnline.includes(work?.materialTypes?.specific);
+  const onlineDisable = checkPreferredOnline(
+    selectedManifestations?.materialTypes?.[0]?.specific
+  );
 
   const loanIsPossibleOnAny = access && access?.length > 0;
 

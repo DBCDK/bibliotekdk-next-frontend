@@ -1,5 +1,5 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import WrappedDetails, { Details, DetailsSkeleton } from "./Details";
+import WrappedDetails, { DetailsSkeleton } from "./Details";
 
 const exportedObject = {
   title: "work/Details",
@@ -13,9 +13,6 @@ export default exportedObject;
  */
 
 export function WrappedDetailsSection() {
-  const workId = "some-id";
-  const type = "Bog";
-
   return (
     <div>
       <StoryTitle>Detials section</StoryTitle>

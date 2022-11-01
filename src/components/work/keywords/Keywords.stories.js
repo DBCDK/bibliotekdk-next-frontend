@@ -2,7 +2,7 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import { getSubjectsDbcVerified } from "../dummy.materialTypesApi";
 
 import { Keywords, KeywordsSkeleton } from "./Keywords";
-import { uniqueEntries } from "@/lib/utils";
+import { uniqueSubjectEntries } from "@/lib/utils";
 
 const exportedObject = {
   title: "work/Keywords",
@@ -17,7 +17,7 @@ export default exportedObject;
 export function KeywordsSection() {
   const workId = "some-id";
   const data = getSubjectsDbcVerified({ workId });
-  const uniqueSubjects = uniqueEntries(data[workId]);
+  const uniqueSubjects = uniqueSubjectEntries(data[workId]);
 
   return (
     <div>

@@ -1,3 +1,5 @@
+import { flattenWord } from "@/lib/utils";
+
 // this is for the material links in header
 export const materials = [
   { label: "books", href: "/#!" },
@@ -38,3 +40,11 @@ export const preferredOnline = [
   "Tidsskriftsartikel",
   "Film (net)",
 ];
+
+export function checkPreferredOnline(materialType) {
+  return (
+    preferredOnline.findIndex(
+      (type) => flattenWord(type) === flattenWord(materialType)
+    ) !== -1
+  );
+}

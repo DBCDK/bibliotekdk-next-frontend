@@ -126,10 +126,20 @@ export function infomediaUrl(title, workId, infomadiaId) {
   return `/infomedia/${title}/${workId}/${infomadiaId}`;
 }
 
-export function uniqueEntries(oldArray) {
+export function flattenWord(word) {
+  return word?.toLowerCase().replace(/[^0-9a-z]/gi, "");
+}
+
+export function uniqueSubjectEntries(oldArray) {
   return [
     ...new Set(
-      oldArray?.map((s) => s.display.toLowerCase().replace(/\./g, ""))
+      oldArray?.map((s) => s?.display?.toLowerCase().replace(/\./g, ""))
     ),
+  ];
+}
+
+export function uniqueEntries(oldArray) {
+  return [
+    ...new Set(oldArray?.map((s) => s?.toLowerCase().replace(/\./g, ""))),
   ];
 }

@@ -14,8 +14,7 @@ describe("Details", () => {
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
     cy.get("[data-cy=text-bidrag]").should("have.text", "Bidrag");
 
-    const genre = cy.get("[data-cy=genre-form-container]");
-    genre.find("p").should("have.length", 2);
+    cy.get("[data-cy=genre-form-container]").find("p").should("have.length", 2);
 
     cy.get("[data-cy=genre-form-container]")
       .find("p")
