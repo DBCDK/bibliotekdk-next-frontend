@@ -4,7 +4,7 @@
 
 describe("Details", () => {
   before(function () {
-    cy.visit("/iframe.html?id=work-details--details-section");
+    cy.visit("/iframe.html?id=work-details--wrapped-details-section");
   });
 
   // some simple tests - at least they are there

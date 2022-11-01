@@ -4,8 +4,6 @@
  */
 import { ApiEnums } from "@/lib/api/api";
 
-import { ApiEnums } from "@/lib/api/api";
-
 /**
  * Basic work info that is fast to fetch
  *
@@ -445,7 +443,7 @@ export function overViewDetails({ workId }) {
   return {
     // delay: 4000, // for debugging
     apiUrl: ApiEnums.FBI_API,
-    query: `query ($workId: String!) {
+    query: `query overViewDetails($workId: String!) {
         work(id: $workId) {
           workId
           workTypes
