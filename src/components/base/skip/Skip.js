@@ -13,21 +13,15 @@ import styles from "./Skip.module.css";
  * on tab.
  */
 export default function Skip({ id, className = "", label, dataCy = "skip" }) {
-  if (typeof window === "undefined") {
-    return null;
-  }
-
-  const element = document.getElementById(id);
-
   return (
     <Link
       className={`${styles.skip} ${className}`}
-      onClick={() => element?.focus()}
+      onClick={() => document.getElementById(id)?.focus()}
       dataCy={dataCy}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
           e.preventDefault();
-          element?.focus();
+          document.getElementById(id)?.focus();
         }
       }}
       aria-label={label}

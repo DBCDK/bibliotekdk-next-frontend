@@ -42,9 +42,11 @@ function Word({ word, isLoading }) {
  * Returns a list of related subject words/items
  */
 export function Words({ data, isLoading }) {
+  const skeletonClass = isLoading ? styles.skeleton : "";
+
   return (
-    <div className={styles.related}>
-      <Text className={styles.label}>
+    <div className={`${skeletonClass} ${styles.related}`}>
+      <Text className={styles.label} skeleton={isLoading} lines="1">
         {Translate({ context: "search", label: "relatedSubjects" })}
       </Text>
       <div className={styles.words} data-cy="words-container">
@@ -64,6 +66,11 @@ export function Related({ data, hitcount, isLoading }) {
   const breakpoint = useBreakpoint();
   const isMobile =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
+
+  // remove entire section if no hits on mobile
+  if (data.length === 0 && !isLoading && isMobile) {
+    return null;
+  }
 
   return (
     <Section
@@ -88,17 +95,19 @@ export function Related({ data, hitcount, isLoading }) {
         )
       }
     >
-      <div>
-        <Skip
-          id="view-all-filters"
-          className={styles.skip}
-          label={Translate({
-            context: "search",
-            label: "skipRelatedSubjects",
-          })}
-        />
-        <Words data={data} isLoading={isLoading} />
-      </div>
+      {(data.length > 0 || isLoading) && (
+        <div>
+          <Skip
+            id="view-all-filters"
+            className={styles.skip}
+            label={Translate({
+              context: "search",
+              label: "skipRelatedSubjects",
+            })}
+          />
+          <Words data={data} isLoading={isLoading} />
+        </div>
+      )}
     </Section>
   );
 }

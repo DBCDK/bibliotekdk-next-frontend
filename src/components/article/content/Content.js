@@ -144,10 +144,6 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     return null;
   }
 
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   const context = { context: "articles" };
 
   const article = data.article;
