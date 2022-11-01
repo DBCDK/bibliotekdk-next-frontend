@@ -4,7 +4,7 @@
 
 describe("Details", () => {
   before(function () {
-    cy.visit("/iframe.html?id=work-details--details-section");
+    cy.visit("/iframe.html?id=work-details--wrapped-details-section");
   });
 
   // some simple tests - at least they are there
@@ -20,6 +20,6 @@ describe("Details", () => {
     cy.get("[data-cy=genre-form-container]")
       .find("p")
       .eq(1)
-      .should("have.text", "fiske og hest, hund og kat");
+      .should("have.text", "actionfilm, thriller, science fiction");
   });
 });
