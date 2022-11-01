@@ -33,12 +33,24 @@ export function Header({ details }) {
   const data = details.data;
   /*
   this on is tricky - JSONLD uses many fields - see work.js/getJSONLD(work)
+  articles:
+  id,
+  title,
+  description,
+  creators = [],
+  manifestations = [],
+  url
+
+
    */
   const jsonld = getJSONLD(data.work);
   /* there is no SEO in fbi-api */
   const pageDescription = data.work.seo.description;
   const pageTitle = data.work.seo.title;
 
+  /**
+   * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
+   */
   const canonicalWorkUrl = getCanonicalWorkUrl(data.work);
 
   return (
