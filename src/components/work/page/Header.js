@@ -90,7 +90,6 @@ cover
 
 export default function Wrap({ workId }) {
   const details = useData(workFragments.detailsAllManifestations({ workId }));
-  console.log(details, "DETAILS");
   return <Header details={details} />;
 }
 

@@ -651,3 +651,73 @@ export function overViewDetails({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+export function workJsonLd({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    apiUrl: ApiEnums.FBI_API,
+    query: `query workJsonLd($workId: String!) {
+            work(id: $workId) {
+              workId
+              workTypes
+              titles {
+                main
+              }
+              abstract
+              creators {
+                display
+              }
+              manifestations {
+                all {
+                  pid
+                  identifiers {
+                    type
+                    value
+                  }
+                  materialTypes {
+                    specific
+                  }
+                  titles {
+                    main
+                  }
+                  languages {
+                    main {
+                      display
+                    }
+                  }
+                  physicalDescriptions {
+                    summary
+                  }
+                  edition {
+                    publicationYear {
+                      display
+                    }
+                  }
+                  contributors {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        plural
+                        singular
+                      }
+                    }
+                  }
+                  creators {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        singular
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            monitor(name: "bibdknext_work_json_ld")
+          }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
