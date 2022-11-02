@@ -475,6 +475,10 @@
         "da": "Af",
         "en": "By"
       },
+      "co-creators": {
+        "da": "Skabere",
+        "en": "Creators"
+      },
       "contributors": {
         "da": "Bidrag",
         "en": "Contribution"
@@ -498,6 +502,10 @@
       "originalTitle": {
         "da": "Originaltitel",
         "en": "Original Title"
+      },
+      "originalYear": {
+        "da": "Originaludgivelsesår",
+        "en": "Original Year"
       },
       "shelf": {
         "da": "Opstilling i folkebiblioteker",
