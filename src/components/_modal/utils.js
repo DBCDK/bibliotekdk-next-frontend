@@ -1,3 +1,5 @@
+import * as orderMutations from "@/lib/api/order.mutations";
+
 // elements we want
 const elements = [
   "a",
@@ -141,8 +143,7 @@ export function toColor(
 function getScrollYPos() {
   // Get scrollY (all browsers)
   var doc = document.documentElement;
-  var top = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-  return top;
+  return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 }
 
 /**
@@ -176,4 +177,39 @@ export function scrollLock(shouldLockScroll) {
     layout.style.marginTop = `auto`;
     window.scrollTo(0, scrollY);
   }
+}
+
+export function handleSubmitPeriodicaArticleOrder(
+  pid,
+  pickUpBranch,
+  periodicaForm,
+  loanerInfo,
+  articleOrderMutation
+) {
+  articleOrderMutation.post(
+    orderMutations.submitPeriodicaArticleOrder({
+      pid,
+      pickUpBranch,
+      userName: loanerInfo?.userParameters?.userName,
+      userMail: loanerInfo?.userParameters?.userMail,
+      ...periodicaForm,
+    })
+  );
+}
+
+export function handleSubmitOrder(
+  pid,
+  pickupBranch,
+  periodicaForm,
+  loanerInfo,
+  orderMutation
+) {
+  orderMutation.post(
+    orderMutations.submitOrder({
+      pids,
+      branchId: pickupBranch.branchId,
+      userParameters: loanerInfo.userParameters,
+      ...periodicaForm,
+    })
+  );
 }

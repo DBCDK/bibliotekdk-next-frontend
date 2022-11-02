@@ -24,13 +24,14 @@ export function openOrderModal(
   });
 }
 
-export function openReferencesModal(modal, pids, work, manifestation) {
+export function openReferencesModal(modal, pids, workId, work, manifestation) {
   modal.push("references", {
     title: Translate({
       context: "references",
       label: "label_references_title",
     }),
     pids: pids,
+    workId: workId,
     work: work,
     manifestation: manifestation,
   });
