@@ -651,3 +651,25 @@ export function overViewDetails({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+export function editionWork({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query editionWork($workId: String!) {
+      work(id: $workId) {
+        titles {
+          full
+        }
+        
+        materialTypes {
+          specific
+        }
+        workTypes
+      }
+      monitor(name: "bibdknext_edition_work")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
