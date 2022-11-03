@@ -1,13 +1,11 @@
-import groupBy from "lodash/groupBy";
-
+/**
+ * Sort reviews by
+ * 1. ReviewMatVurd
+ * 2. review with an url - direct access
+ * 3. reviews with stars (judgment)
+ * 4. others
+ */
 export function sortReviews(data = []) {
-  /* sort order
-  1. ReviewMatVurd
-  2. review with an url - direct access
-  3. reviews with stars (judgment)
-  4. others
-*/
-
   // Copy reviews, do not mutate original array
   const reviews = [...data];
 
