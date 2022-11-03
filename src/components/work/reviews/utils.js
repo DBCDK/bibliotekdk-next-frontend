@@ -16,6 +16,7 @@ export function sortReviews(data = []) {
     return (
       Number(!!b.librariansReview) - Number(!!a.librariansReview) ||
       Number(!!b.urls?.length > 0) - Number(!!a.urls?.length > 0) ||
+      Number(!!b.infomediaId) - Number(!!a.infomediaId) ||
       Number(!!b.rating) - Number(!!a.rating)
     );
   });
