@@ -128,6 +128,7 @@ export function Material() {
     pid: "some-pid-4",
     author: "Some Librarian",
     date: "1999-05-20",
+    rating: null,
     urls: [],
     infomediaId: null,
     periodica: null,
