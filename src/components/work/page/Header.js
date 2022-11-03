@@ -15,6 +15,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import { getJSONLD } from "@/lib/jsonld/work";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { getSeo } from "@/components/work/utils";
 
 /**
  * The work page React component
@@ -44,14 +45,27 @@ export function Header({ details }) {
 
    */
   const jsonld = getJSONLD(data.work);
+
+  console.log(jsonld, "JSONLD");
+
   /* there is no SEO in fbi-api */
-  const pageDescription = data.work.seo.description;
-  const pageTitle = data.work.seo.title;
+  const seo = getSeo(data.work);
+  const pageDescription = seo.description;
+  const pageTitle = seo.title;
 
   /**
    * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
    */
-  const canonicalWorkUrl = getCanonicalWorkUrl(data.work);
+  /* title, creators, id*/
+
+  const urlWork = {
+    title: data.work?.titles?.main[0],
+    creators: data.work?.creators?.map((creator) => ({
+      name: creator.display,
+    })),
+    id: data.work?.workId,
+  };
+  const canonicalWorkUrl = getCanonicalWorkUrl({ ...urlWork });
 
   return (
     <Head>
@@ -89,8 +103,12 @@ cover
  */
 
 export default function Wrap({ workId }) {
-  const details = useData(workFragments.detailsAllManifestations({ workId }));
-  return <Header details={details} />;
+  //const details = useData(workFragments.detailsAllManifestations({ workId }));
+
+  //console.log(details, "DETAILS");
+  const fisk = useData(workFragments.workJsonLd({ workId }));
+  console.log(fisk, "FISK");
+  return <Header details={fisk} />;
 }
 
 Wrap.propTypes = {

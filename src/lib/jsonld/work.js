@@ -209,22 +209,54 @@ function getMovie({ id, title, description, url, cover, manifestations = [] }) {
  * @returns {object} JSON-LD representation of work
  */
 export function getJSONLD(work) {
-  const url = getCanonicalWorkUrl(work);
+  console.log(work, "LEDWORK");
+
+  /* title, creators, id*/
+  const urlWork = {
+    title: work?.titles?.main[0],
+    creators: work?.creators?.map((creator) => ({
+      name: creator.display,
+    })),
+    id: work?.workId,
+  };
+
+  console.log(urlWork, "URLWORK");
+  const url = getCanonicalWorkUrl(urlWork);
+
+  console.log(url, "URL");
+  /*
+  const id = work?.workId;
+  const title = work?.titles?.main[0];
+  const description = work?.abstract[0];
+  const creators = work?.creators;
+  const manifestations = work?.manifestations?.all;
+  const url = "fisk";
+   */
+  const ldWork = {
+    id: work?.workId,
+    title: work?.titles?.main[0],
+    description: work?.abstract[0],
+    creators: work?.creators?.map((creator) => ({
+      name: creator.display,
+    })),
+    manifestations: work?.manifestations?.all,
+    url: url,
+  };
 
   let mainEntity;
 
-  switch (work?.workTypes?.[0]) {
+  switch (work?.workTypes?.[0].toLowerCase()) {
     case "article":
-      mainEntity = getArticle({ ...work, url });
+      mainEntity = getArticle({ ...ldWork });
       break;
     case "literature":
-      mainEntity = getBook({ ...work, url });
+      mainEntity = getBook({ ...ldWork });
       break;
     case "movie":
-      mainEntity = getMovie({ ...work, url });
+      mainEntity = getMovie({ ...ldWork });
       break;
     default:
-      mainEntity = getCreativeWork({ ...work, url });
+      mainEntity = getCreativeWork({ ...ldWork });
   }
 
   const res = {

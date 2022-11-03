@@ -660,6 +660,7 @@ export function workJsonLd({ workId }) {
             work(id: $workId) {
               workId
               workTypes
+              abstract
               titles {
                 main
               }
@@ -670,6 +671,9 @@ export function workJsonLd({ workId }) {
               manifestations {
                 all {
                   pid
+                  cover {
+                    detail
+                  }                  
                   identifiers {
                     type
                     value
