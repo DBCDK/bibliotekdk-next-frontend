@@ -652,6 +652,11 @@ export function overViewDetails({ workId }) {
   };
 }
 
+/**
+ * Get parameters needed to generate JsonLD - @see components/work/header/Header.js
+ * @param workId
+ * @returns {{variables: {workId}, apiUrl: string, slowThreshold: number, query: string}}
+ */
 export function workJsonLd({ workId }) {
   return {
     // delay: 4000, // for debugging

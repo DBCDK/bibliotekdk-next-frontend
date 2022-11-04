@@ -96,6 +96,9 @@ function getBook({
 /**
  * Get summary from manifestion - for articles there (sometimes) is info
  * to be parsed as publisher and publication date
+ *
+ * @TODO this is unstable - is there a better way to get publicationDate ??
+ *
  * @param manifestation
  * @returns {{datePublished: *, organization: *}}
  */
@@ -150,8 +153,6 @@ function getCreativeWork({
   /* tricky .. for nodes look in contributors for creator ?? ..
    * well .. look in creators first - if no creators look in contributors
    * */
-  console.log(manifestations, "CREATIVE WORK MANIFESTATIONS");
-
   let creator = manifestations?.[0]?.creators?.map((creator) => ({
     "@type": "Person",
     name: creator.display,
@@ -217,33 +218,6 @@ function getMovie({
     image: coverUrl,
   };
 }
-
-/**
- * @TODO seo: - like this:
- * from bib-api
- *
- const materialTypes = resolvers.Work.materialTypes(
- parent,
- args,
- context,
- info
- );
-
- // Return title and description
- return {
-        title: `${parent.title}${
-          parent.creators && parent.creators[0]
-            ? ` af ${parent.creators[0].value}`
-            : ""
-        }`,
-        description: getPageDescription({
-          title: parent.title,
-          creators: parent.creators,
-          materialTypes,
-        }),
-      };
- *
- */
 
 /**
  * we no longer get cover image on work level. Run through manifestations and

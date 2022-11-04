@@ -84,6 +84,11 @@ export function getPageDescription({ title, creators, materialTypes }) {
   }${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
 }
 
+/**
+ * Get materialtypes from given manifestations.
+ * @param manifestations
+ * @returns {*}
+ */
 function getMaterialTypes(manifestations) {
   return uniqueEntries(
     manifestations?.flatMap((manifestation) => {
@@ -94,6 +99,11 @@ function getMaterialTypes(manifestations) {
   );
 }
 
+/**
+ * Get title and description for search engines.
+ * @param work
+ * @returns {{description: string, title: string}}
+ */
 export function getSeo(work) {
   const materialTypes = getMaterialTypes(work?.manifestations?.all);
   //return materialTypes;
