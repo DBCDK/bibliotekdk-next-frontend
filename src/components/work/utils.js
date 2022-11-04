@@ -49,7 +49,7 @@ export function onOnlineAccess(url, target = "_blank") {
  */
 export function getPageDescription({ title, creators, materialTypes }) {
   const creator = creators && creators[0] && creators[0]?.display;
-  const allowedTypes = ["lydbog", "e-bog", "bog"];
+  const allowedTypes = ["lydbog", "ebog", "bog"];
   const types = uniq(
     materialTypes
       .map((entry) => {

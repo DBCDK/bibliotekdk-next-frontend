@@ -38,14 +38,17 @@ export default function WorkPage() {
    */
 
   function handleOnTypeChange(query) {
-    router.replace(
-      { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      },
-      { shallow: true, scroll: false }
-    );
+    // @TODO run router replace in useEffect hook
+    if (typeof window !== "undefined") {
+      router.replace(
+        { pathname: router.pathname, query },
+        {
+          pathname: router.asPath.replace(/\?.*/, ""),
+          query,
+        },
+        { shallow: true, scroll: false }
+      );
+    }
   }
 
   function handleOrder(pid) {

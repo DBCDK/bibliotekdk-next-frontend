@@ -707,6 +707,10 @@ export function workJsonLd({ workId }) {
                       }
                     }
                   }
+                  hostPublication{
+                    title      
+                    summary
+                  }
                   creators {
                     display
                     roles {

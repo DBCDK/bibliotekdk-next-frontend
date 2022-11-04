@@ -18,7 +18,7 @@ function getSchemaOrgBookFormat(materialType) {
 
   materialType = materialType.toLowerCase();
 
-  if (materialType.includes("e-bog")) {
+  if (materialType.includes("ebog")) {
     return "http://schema.org/EBook";
   } else if (materialType.includes("lydbog")) {
     return "http://schema.org/AudiobookFormat";
@@ -38,6 +38,7 @@ function getBook({
   creators = [],
   manifestations = [],
   url,
+  coverUrl,
 }) {
   return {
     "@id": id,
@@ -55,7 +56,7 @@ function getBook({
         "@type": "Book",
         author: entry.creators.map((creator) => ({
           "@type": "Person",
-          name: creator.name,
+          name: creator.display,
         })),
         datePublished: entry.datePublished,
         identifier: entry.pid,
@@ -73,7 +74,7 @@ function getBook({
         manifestation.image = entry.cover.detail;
       }
       if (entry.edition) {
-        manifestation.bookEdition = entry.edition;
+        manifestation.bookEdition = entry.edition.publicationYear.display;
       }
       if (entry.publisher) {
         manifestation.publisher = {
@@ -81,12 +82,33 @@ function getBook({
           name: entry.publisher,
         };
       }
-      const bookFormat = getSchemaOrgBookFormat(entry.materialType);
+      const bookFormat = getSchemaOrgBookFormat(
+        entry.materialTypes[0].specific
+      );
       if (bookFormat) {
         manifestation.bookFormat = bookFormat;
       }
       return manifestation;
     }),
+  };
+}
+
+/**
+ * Get summary from manifestion - for articles there (sometimes) is info
+ * to be parsed as publisher and publication date
+ * @param manifestation
+ * @returns {{datePublished: *, organization: *}}
+ */
+function getArticleDate(manifestation) {
+  const summary = manifestation?.hostPublication?.summary || null;
+  const organization = manifestation?.hostPublication?.title || null;
+
+  // split on ',' - last part is a date
+  const parts = summary?.split(",");
+  const date = parts?.[1]?.trim() || null;
+  return {
+    organization: organization,
+    datePublished: date,
   };
 }
 
@@ -98,6 +120,7 @@ function getArticle({
   manifestations = [],
   url,
 }) {
+  const articlesummary = getArticleDate(manifestations?.[0]);
   return {
     "@id": id,
     "@type": "Article",
@@ -108,10 +131,10 @@ function getArticle({
     })),
     headLine: title,
     url,
-    datePublished: manifestations?.[0]?.datePublishedArticle,
-    publisher: manifestations?.[0].hostPublication?.title && {
+    datePublished: articlesummary.datePublished || null,
+    publisher: articlesummary.datePublished && {
       "@type": "Organization",
-      name: manifestations?.[0].hostPublication?.title,
+      name: articlesummary.organization || null,
     },
   };
 }
@@ -120,34 +143,64 @@ function getCreativeWork({
   id,
   title,
   description,
-  cover,
   url,
   manifestations,
+  coverUrl,
 }) {
+  /* tricky .. for nodes look in contributors for creator ?? ..
+   * well .. look in creators first - if no creators look in contributors
+   * */
+  console.log(manifestations, "CREATIVE WORK MANIFESTATIONS");
+
+  let creator = manifestations?.[0]?.creators?.map((creator) => ({
+    "@type": "Person",
+    name: creator.display,
+  }));
+  if (creator.length === 0) {
+    creator = manifestations?.[0]?.contributors?.map((contrib) => ({
+      "@type": "Person",
+      name: contrib.display,
+    }));
+  }
+
   return {
     "@id": id,
     "@type": "CreativeWork",
     abstract: description,
-    creator: manifestations?.[0]?.creators?.map((creator) => ({
-      "@type": "Person",
-      name: creator.name,
-    })),
+    creator: creator,
     name: title,
     url,
-    image: cover?.detail,
+    image: coverUrl,
   };
 }
 
-function getMovie({ id, title, description, url, cover, manifestations = [] }) {
+function getMovie({
+  id,
+  title,
+  description,
+  url,
+  coverUrl,
+  manifestations = [],
+}) {
   const director = manifestations?.[0]?.creators
-    ?.filter((creator) => creator?.type?.includes("drt"))
+    .map((creator) => ({
+      name: creator.display,
+      functionCode: creator.roles[0]?.functionCode,
+      functionName: creator.roles[0]?.function?.singular || null,
+    }))
+    .filter((dir) => dir.functionCode === "drt")
     .map((director) => ({
       "@type": "Person",
       name: director.name,
     }));
 
-  const actor = manifestations?.[0]?.creators
-    ?.filter((creator) => creator?.type?.includes("act"))
+  const actor = manifestations?.[0]?.contributors
+    .map((contrib) => ({
+      name: contrib.display,
+      functionCode: contrib.roles[0]?.functionCode,
+      functionName: contrib.roles[0]?.function?.singular || null,
+    }))
+    .filter((dir) => dir.functionCode === "act")
     .map((director) => ({
       "@type": "Person",
       name: director.name,
@@ -161,14 +214,14 @@ function getMovie({ id, title, description, url, cover, manifestations = [] }) {
     actor,
     name: title,
     url,
-    image: cover?.detail,
+    image: coverUrl,
   };
 }
 
 /**
  * @TODO seo: - like this:
  * from bib-api
- * 
+ *
  const materialTypes = resolvers.Work.materialTypes(
  parent,
  args,
@@ -193,6 +246,18 @@ function getMovie({ id, title, description, url, cover, manifestations = [] }) {
  */
 
 /**
+ * we no longer get cover image on work level. Run through manifestations and
+ * pick the first found - if any
+ * @param work
+ */
+export function getCoverImage(work) {
+  return (
+    work.manifestations.all.find((entry) => entry?.cover?.detail)?.cover
+      .detail || null
+  );
+}
+
+/**
  * Creates JSON-LD representation ofthe work
  * - https://developers.google.com/search/docs/data-types/book
  * - https://solsort.dk/dkabm-til-schema.org
@@ -209,8 +274,7 @@ function getMovie({ id, title, description, url, cover, manifestations = [] }) {
  * @returns {object} JSON-LD representation of work
  */
 export function getJSONLD(work) {
-  console.log(work, "LEDWORK");
-
+  // set parameters for getCanonicalUrl method
   /* title, creators, id*/
   const urlWork = {
     title: work?.titles?.main[0],
@@ -219,19 +283,10 @@ export function getJSONLD(work) {
     })),
     id: work?.workId,
   };
-
-  console.log(urlWork, "URLWORK");
   const url = getCanonicalWorkUrl(urlWork);
-
-  console.log(url, "URL");
-  /*
-  const id = work?.workId;
-  const title = work?.titles?.main[0];
-  const description = work?.abstract[0];
-  const creators = work?.creators;
-  const manifestations = work?.manifestations?.all;
-  const url = "fisk";
-   */
+  const coverUrl = getCoverImage(work);
+  // set parameters for led data
+  /* id, title, description, creators, manifestations, url */
   const ldWork = {
     id: work?.workId,
     title: work?.titles?.main[0],
@@ -241,8 +296,8 @@ export function getJSONLD(work) {
     })),
     manifestations: work?.manifestations?.all,
     url: url,
+    coverUrl: coverUrl,
   };
-
   let mainEntity;
 
   switch (work?.workTypes?.[0].toLowerCase()) {

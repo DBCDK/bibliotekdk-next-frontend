@@ -54,8 +54,6 @@ export function encodeTitleCreator(title = "", creator = "") {
  * @returns {string} The canonical work URL
  */
 export function getCanonicalWorkUrl({ title, creators, id }) {
-  console.log(creators, "URLCREATORS");
-
   return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
     creators?.[0]?.name
