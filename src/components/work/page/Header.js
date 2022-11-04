@@ -98,9 +98,8 @@ cover
  */
 
 export default function Wrap({ workId }) {
-  //const details = useData(workFragments.detailsAllManifestations({ workId }));
-  const fisk = useData(workFragments.workJsonLd({ workId }));
-  return <Header details={fisk} />;
+  const details = useData(workFragments.workJsonLd({ workId }));
+  return <Header details={details} />;
 }
 
 Wrap.propTypes = {
