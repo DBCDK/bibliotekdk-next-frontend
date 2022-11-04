@@ -38,7 +38,6 @@ function getBook({
   creators = [],
   manifestations = [],
   url,
-  coverUrl,
 }) {
   return {
     "@id": id,
