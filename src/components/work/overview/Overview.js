@@ -18,14 +18,25 @@ import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
 
-function selectMaterialBasedOnType_TempUsingAlfaApi(materialTypes, type) {
-  // Creates MaterialTypes as an index
-  const materialTypesMap = {};
-  materialTypes?.forEach((m) => {
-    materialTypesMap[m.materialType] = m;
-  });
+function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
+  // filter on type
+  const filteredManifestations = fbiManifestations?.filter((manifestation) =>
+    manifestation.materialTypes.filter(
+      (matType) => matType.specific === type.toLowerCase()
+    )
+  );
+  const manifestationWithCover = filteredManifestations.find(
+    (manifestation) => manifestation.cover.detail
+  );
+  const coverImage = manifestationWithCover
+    ? { detail: manifestationWithCover.cover.detail }
+    : null;
 
-  return materialTypesMap[type] || materialTypes?.[0] || false;
+  return {
+    cover: coverImage,
+    manifestations: filteredManifestations,
+    materialType: type,
+  };
 }
 
 function CreatorsArray(creators, skeleton) {
@@ -92,6 +103,7 @@ function MaterialTypeArray(
  * @returns {JSX.Element}
  */
 export function Overview({
+  fbiWork,
   work,
   workId,
   selectedPids,
@@ -108,11 +120,17 @@ export function Overview({
     onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
   }
 
+  const fbiManifestations = fbiWork?.data?.work?.manifestations.all;
   // Either use type from props, or from local state
+  /*
+  NOT cover, manifestations, materialType
+   */
   const selectedMaterial = selectMaterialBasedOnType_TempUsingAlfaApi(
-    work?.materialTypes,
+    fbiManifestations,
     type
   );
+
+  console.log(selectedMaterial, "SELECTED");
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -259,6 +277,8 @@ export default function Wrap(props) {
 
   const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
 
+  const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
+
   if (buttonTxt.isLoading) {
     return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
   }
@@ -269,6 +289,7 @@ export default function Wrap(props) {
 
   return (
     <Overview
+      fbiWork={fbiWork}
       work={merged.work}
       workId={workId}
       selectedPids={selectedPids}

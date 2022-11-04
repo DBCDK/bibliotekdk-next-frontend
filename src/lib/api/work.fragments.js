@@ -651,3 +651,93 @@ export function overViewDetails({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+export function fbiOverviewDetail({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    apiUrl: ApiEnums.FBI_API,
+    query: `query overViewDetails($workId: String!) {
+        work(id: $workId) {
+          workId
+          workTypes
+          genreAndForm     
+          manifestations {
+            all {
+              access {
+                __typename
+                ... on InterLibraryLoan {
+                  loanIsPossible
+                }
+                ... on AccessUrl {
+                  url
+                  loginRequired
+                }
+                ... on Ereol {
+                  origin
+                  url
+                  canAlwaysBeLoaned
+                }
+                ... on InfomediaService {
+                  id
+                }
+                ... on DigitalArticleService {
+                  issn
+                }
+              }
+              cover {
+                detail
+              }              
+              materialTypes {
+                specific
+              }
+              titles {
+                main
+              }
+              genreAndForm
+              languages {
+                subtitles {
+                  display
+                }
+                spoken {
+                  display
+                }
+                main {
+                  display
+                }
+              }
+              physicalDescriptions {
+                summary
+              }
+              edition {
+                publicationYear {
+                  display
+                }
+              }
+              contributors {
+                display
+                roles {
+                  functionCode
+                  function {
+                    plural
+                    singular
+                  }
+                }
+              }
+              creators {
+                display
+                roles {
+                  functionCode
+                  function {
+                    singular
+                  }
+                }
+              }
+            }
+          }
+        }
+        monitor(name: "bibdknext_work_overview_details")
+      }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
