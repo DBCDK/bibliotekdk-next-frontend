@@ -29,17 +29,14 @@ import { ArrowRight } from "@/components/base/arrow/ArrowRight";
  *
  */
 
-function getTemplate(type) {
-  switch (type) {
-    case "ReviewMatVurd":
-      return MaterialReview;
-    case "ReviewExternalMedia":
-      return ExternalReview;
-    case "ReviewInfomedia":
-      return InfomediaReview;
-    default:
-      return InfomediaReview;
+function getTemplate(review) {
+  if (review.librariansReview) {
+    return MaterialReview;
   }
+  if (review.infomediaId) {
+    return InfomediaReview;
+  }
+  return ExternalReview;
 }
 
 /**
@@ -53,11 +50,9 @@ function getTemplate(type) {
 export function Reviews({ className = "", data = [], skeleton = false }) {
   // Translate Context
   const context = { context: "reviews" };
-
-  const workId = data.id;
-  const title = data.title;
-  const reviews = useMemo(() => sortReviews(data.reviews), [data.reviews]);
-
+  const workId = data?.workId;
+  const title = data?.titles?.main?.[0];
+  const reviews = useMemo(() => sortReviews(data.workReviews), [data]);
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -125,7 +120,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     >
       <Swiper {...params} ref={swiperRef}>
         {reviews.map((review, idx) => {
-          const Review = getTemplate(review.__typename);
+          const Review = getTemplate(review);
 
           const skeletonReview = skeleton
             ? `${styles.skeleton} ${styles.custom}`
@@ -169,35 +164,14 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
 export function ReviewsSkeleton(props) {
   const data = [
     {
-      author: "Svend Svendsen",
-      media: "Jyllandsposten",
-      rating: "4/5",
-      __typename: "ReviewInfomedia",
-      date: "2013-06-25",
-      url: "http://",
-    },
-    {
-      author: "Svend Svendsen",
-      media: "Jyllandsposten",
-      rating: "4/5",
-      __typename: "ReviewInfomedia",
-      date: "2013-06-25",
-      url: "http://",
-    },
-    {
-      author: "Svend Svendsen",
-      media: "Jyllandsposten",
-      rating: "4/5",
-      __typename: "ReviewInfomedia",
-      date: "2013-06-25",
-      url: "http://",
+      librariansReview: [],
     },
   ];
 
   return (
     <Reviews
       {...props}
-      data={data}
+      data={{ workReviews: data }}
       className={`${props.className} ${styles.skeleton}`}
       skeleton={true}
     />
@@ -225,7 +199,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  if (!data.work.reviews.length) {
+  if (!data.work.workReviews.length) {
     return null;
   }
 
