@@ -209,7 +209,7 @@ export default function Wrap(props) {
   const { workId, type } = props;
 
   const { data, isLoading, error } = useData(
-    workFragments.overViewDetails({ workId })
+    workFragments.fbiOverviewDetail({ workId })
   );
 
   if (error) {

@@ -17,6 +17,7 @@ import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
+import { useEffect } from "react";
 
 function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
   // filter on type
@@ -40,7 +41,6 @@ function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
 }
 
 function CreatorsArray(creators, skeleton) {
-  console.log(creators, "CREATORS");
   const searchOnUrl = "/find?q.creator=";
   return creators?.map((creator, index) => {
     return (
@@ -75,14 +75,13 @@ function MaterialTypeArray(
   // Handle selectedMaterial
   function handleSelectedMaterial(material, type) {
     // Update query param callback
-    if (type !== material.materialType) {
-      onTypeChange({ type: material.materialType });
+    if (type !== material.specific) {
+      onTypeChange({ type: material.specific });
     }
   }
 
   return materialTypes?.map((material) => {
     //  Sets isSelected flag if button should be selected
-    console.log(material, "MATERIAL");
     return (
       <Tag
         key={material.specific}
@@ -118,11 +117,13 @@ export function Overview({
     (materialType) => materialType.specific
   );
 
-  console.log(validMaterialTypes, "VALID TYPES");
-
-  if (type === null || !validMaterialTypes?.includes(type)) {
-    onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
-  }
+  useEffect(() => {
+    if (type === null || !validMaterialTypes?.includes(type)) {
+      onTypeChange({
+        type: fbiWork?.data?.work?.materialTypes?.[0]?.specific,
+      });
+    }
+  }, [type]);
 
   const fbiManifestations = fbiWork?.data?.work?.manifestations.all;
   // Either use type from props, or from local state
@@ -133,9 +134,6 @@ export function Overview({
     fbiManifestations,
     type
   );
-
-  console.log(selectedMaterial, "SELECTED");
-  console.log(work, "OLD WORK");
 
   /**
    * NOTE

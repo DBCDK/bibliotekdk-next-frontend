@@ -37,6 +37,8 @@ export function AlternativeOptions({ modal = null, context = {} }) {
 }
 
 export default function Wrap({ selectedMaterial }) {
+  console.log(selectedMaterial, "SELECTED");
+
   const manifestations = selectedMaterial?.manifestations;
   const requestButton = checkRequestButtonIsTrue({ manifestations });
   const modal = useModal();
