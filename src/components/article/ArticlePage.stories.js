@@ -72,12 +72,6 @@ WrappedInfomediaArticlePage.story = {
           infomedia: (args) =>
             args.variables.id === "some-article-id" ? {} : null,
         },
-        WorkReview: {
-          infomediaId: () => "some-article-id",
-          librariansReview: () => null,
-          date: () => "2022-11-05",
-          rating: () => "3/5",
-        },
         InfomediaArticle: {
           logo: () => "<p>Infomedia disclaimer</p>",
         },
