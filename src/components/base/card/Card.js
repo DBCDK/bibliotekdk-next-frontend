@@ -38,15 +38,11 @@ function SkeletonCard() {
 export default function Card({
   cardRef,
   className = "",
-  manifestations,
   workId,
   creators,
-  titles,
   onFocus,
   onClick,
   skeleton,
-  // remove on fbi-api migration
-  id,
   cover,
   title,
 }) {
@@ -54,19 +50,14 @@ export default function Card({
     return <SkeletonCard />;
   }
 
-  console.log({ titles, creators });
-
   return (
     <Link
       a={false}
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
-          title_author: encodeTitleCreator(
-            titles?.main[0] || title,
-            creators[0] && creators[0].name
-          ),
-          workId: workId || id,
+          title_author: encodeTitleCreator(title, creators[0]?.display),
+          workId,
         },
       }}
     >
@@ -79,10 +70,7 @@ export default function Card({
         onClick={onClick}
       >
         <div className={styles.CoverWrapper}>
-          <Cover
-            src={manifestations?.latest?.cover?.detail || cover?.detail}
-            size="fill"
-          />
+          <Cover src={cover?.detail} size="fill" />
         </div>
         <div>
           <Text
@@ -91,7 +79,7 @@ export default function Card({
             lines={2}
             clamp={true}
           >
-            {titles?.main[0] || title}
+            {title}
           </Text>
 
           {creators.length > 0 && (
@@ -101,7 +89,7 @@ export default function Card({
               lines={2}
               clamp={true}
             >
-              {creators[0]?.display || creators[0]?.name}
+              {creators[0]?.display}
             </Text>
           )}
         </div>
@@ -122,11 +110,6 @@ Card.propTypes = {
     part: PropTypes.number,
   }),
   skeleton: PropTypes.bool,
-  manifestations: PropTypes.object,
   workId: PropTypes.string,
-  titles: PropTypes.object,
-  // remove on fbi-api migration
-  id: PropTypes.string,
   title: PropTypes.string,
-  cover: PropTypes.object,
 };

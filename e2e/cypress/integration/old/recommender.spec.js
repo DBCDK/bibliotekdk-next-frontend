@@ -4,20 +4,26 @@
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const graphqlPath = Cypress.env("graphqlPath");
+const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("Recommender data collect", () => {
+describe.skip("Recommender data collect", () => {
   beforeEach(() => {
     // Allow cookies
     cy.visit(`${nextjsBaseUrl}`);
     cy.get("[data-cy=button-ok]").click();
 
+    cy.intercept("POST", `${graphqlPath}`, (req) => {
+      if (req.body.query.startsWith("mutation")) {
+        req.alias = "apiMutation";
+      }
+    });
+
     // Intercept requests to graphql
     cy.fixture("recommendations.json").then((recommendationsFixture) => {
-      cy.intercept("POST", `${graphqlPath}`, (req) => {
-        if (req.body.query.startsWith("mutation")) {
-          req.alias = "apiMutation";
-        } else if (req.body.query.includes("recommendations")) {
+      cy.intercept("POST", `${fbiApiPath}`, (req) => {
+        if (req.body.query.includes("recommend")) {
           // mock the recommender response
+          req.alias = "apiRecommend";
           req.reply(recommendationsFixture);
         }
       });
@@ -29,10 +35,11 @@ describe("Recommender data collect", () => {
   });
   it(`Should collect data for recommender`, () => {
     // When a recommendation is clicked data should be logged
-    cy.wait(500);
+    cy.wait("@apiRecommend");
     cy.get(
       "[data-cy=section-recommend] [data-cy=text-sidste-sporvogn-til-elysian-fields]"
     ).click();
+
     cy.wait("@apiMutation").then((interception) => {
       const data = interception.request.body.variables.input.recommender_click;
 
@@ -56,6 +63,7 @@ describe("Recommender data collect", () => {
   });
 
   it(`Should collect all shown recommendations`, () => {
+    cy.wait("@apiRecommend");
     // Scroll to let user see all recommendations
     // and pick the last one
     cy.get("[data-cy=recommender] [data-cy=arrow-right]").click();

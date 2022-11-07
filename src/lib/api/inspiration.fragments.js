@@ -24,7 +24,7 @@ export function fiction({ limit = 10, filters } = {}) {
                   display
                 }
                 manifestations {
-                  latest {
+                  all {
                     cover {
                       detail
                     }

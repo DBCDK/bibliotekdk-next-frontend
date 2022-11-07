@@ -1,5 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 
 describe("Filter", () => {
   it(`workTypes facet is excluded from facets list`, () => {

@@ -27,10 +27,9 @@ import Anchor from "@/components/base/anchor";
 export default function WorkPage({
   workId,
   onTypeChange,
-  onOnlineAccess,
   login,
   openOrderModal,
-  type = "Bog",
+  type,
 }) {
   const router = useRouter();
   return (
@@ -40,7 +39,6 @@ export default function WorkPage({
         <Overview
           workId={workId}
           onTypeChange={onTypeChange}
-          onOnlineAccess={onOnlineAccess}
           login={login}
           openOrderModal={openOrderModal}
           type={type}
@@ -98,6 +96,4 @@ WorkPage.propTypes = {
   workId: PropTypes.string,
   type: PropTypes.string,
   onTypeChange: PropTypes.func,
-  onOnlineAccess: PropTypes.func,
-  openOrderModal: PropTypes.func,
 };

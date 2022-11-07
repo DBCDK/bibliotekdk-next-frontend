@@ -1,7 +1,7 @@
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
 import { useData } from "@/lib/api/api";
-import { infomediaIdFromPid } from "@/lib/api/infomedia.fragments";
+import * as infomediaFragments from "@/lib/api/infomedia.fragments";
 import { Custom } from "@/pages/404";
 import useUser from "@/components/hooks/useUser";
 
@@ -17,7 +17,9 @@ export default function Wrap() {
   const user = useUser();
 
   const infomediaIds = useData(
-    user.isAuthenticated && pid && infomediaIdFromPid({ pid: pid })
+    user.isAuthenticated &&
+      pid &&
+      infomediaFragments.infomediaIdFromPid({ pid: pid })
   )
     ?.data?.manifestation?.access?.map((obj) => obj.id)
     .filter((id) => id);

@@ -19,7 +19,7 @@ import styles from "./Description.module.css";
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  if (!data) {
+  if (!data || data?.length === 0) {
     return null;
   }
   // Translate Context
@@ -30,7 +30,12 @@ export function Description({ className = "", data = "", skeleton = false }) {
       <Row className={`${styles.description} ${className}`}>
         {data && (
           <Col xs={12} md>
-            <Text type="text2" skeleton={skeleton} lines={4}>
+            <Text
+              dataCy={"description"}
+              type="text2"
+              skeleton={skeleton}
+              lines={4}
+            >
               {data}
             </Text>
           </Col>
@@ -70,7 +75,9 @@ export function DescriptionSkeleton(props) {
 export default function Wrap(props) {
   const { workId } = props;
 
-  const { data, isLoading, error } = useData(workFragments.basic({ workId }));
+  const { data, isLoading, error } = useData(
+    workFragments.description({ workId })
+  );
 
   if (isLoading) {
     return <DescriptionSkeleton />;
@@ -80,7 +87,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Description {...props} data={data?.work?.description} />;
+  return <Description {...props} data={data?.work?.abstract} />;
 }
 
 // PropTypes for component

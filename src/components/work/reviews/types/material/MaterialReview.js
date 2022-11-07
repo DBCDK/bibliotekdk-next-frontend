@@ -129,24 +129,23 @@ function LectorReview({ data, skeleton }) {
       skeleton={skeleton}
       clamp={true}
     >
-      {data.all &&
-        data.all
-          .map((paragraph) => paragraph)
-          .filter(
-            (paragraph) =>
-              !paragraph.text.startsWith("Materialevurdering") &&
-              !paragraph.text.startsWith("Indscannet version")
-          )
-          .map((paragraph, i) => {
-            return (
-              <span key={`paragraph-${i}`} className={styles.reviewTxt}>
-                <Title type="title3" skeleton={skeleton} lines={1}>
-                  {paragraph.text}
-                </Title>
-                <LectorLink paragraph={paragraph} skeleton={skeleton} />
-              </span>
-            );
-          })}
+      {data?.librariansReview
+        ?.map((paragraph) => paragraph)
+        .filter(
+          (paragraph) =>
+            !paragraph.text.startsWith("Materialevurdering") &&
+            !paragraph.text.startsWith("Indscannet version")
+        )
+        .map((paragraph, i) => {
+          return (
+            <span key={`paragraph-${i}`} className={styles.reviewTxt}>
+              <Title type="title3" skeleton={skeleton} lines={1}>
+                {paragraph.text}
+              </Title>
+              <LectorLink paragraph={paragraph} skeleton={skeleton} />
+            </span>
+          );
+        })}
     </Title>
   );
 }
@@ -166,14 +165,12 @@ function LectorLink({ paragraph }) {
 
   // @TODO there may be more than one creator - for now simply grab the first
   // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
-  const creator = paragraph.work.creators[0]?.name
-    ? paragraph.work.creators[0].name
-    : "";
-  const title = paragraph.work.title ? paragraph.work.title : "";
+  const creator = paragraph.work.creators[0]?.display || "";
+  const title = paragraph?.work?.titles?.main?.[0] || "";
   const title_crator = encodeTitleCreator(title, creator);
 
-  const path = `/materiale/${title_crator}/${paragraph.work.id}`;
-  return <Link href={path}>{paragraph.work.title}</Link>;
+  const path = `/materiale/${title_crator}/${paragraph.work.workId}`;
+  return <Link href={path}>{paragraph.work?.titles?.main}</Link>;
 }
 
 /**

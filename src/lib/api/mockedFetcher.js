@@ -139,6 +139,14 @@ export function createMockedFetcher({
         schemaWithMocks,
         (orgResolver, { parentTypeName, fieldName }) => {
           return async (...args) => {
+            const parent = args[0];
+
+            // If value is provided by parent, we use that
+            // i.e. we do not call custom mocked resolver
+            if (parent?.[fieldName] || parent?.[fieldName] === null) {
+              return parent?.[fieldName];
+            }
+
             const variables = args[3]?.variableValues;
             const {
               isCustomScalar,

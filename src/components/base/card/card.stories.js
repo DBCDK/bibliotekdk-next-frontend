@@ -12,10 +12,10 @@ export function WorkNarrowAndWideCover() {
   const narrow = {
     creators: [
       {
-        name: "Ruth Rendell",
+        display: "Ruth Rendell",
       },
       {
-        name: "Asta Smith-Hansen",
+        display: "Asta Smith-Hansen",
       },
     ],
     cover: {
@@ -24,14 +24,14 @@ export function WorkNarrowAndWideCover() {
     },
     description:
       "Krimi med kommissær Wexford og hans makker Burden på sporet af historien bag fundet af to lig, der var gravet ned 11 og 8 år tidligere. Beboerne i den lille by Kingsmarkham har mange hemmeligheder, og nogle af dem er dystre",
-    id: "work-id-1",
+    workId: "work-id-1",
     title: "Ikke i kød og blod",
   };
 
   const wide = {
     creators: [
       {
-        name: "Andrew Taylor (f. 1951)",
+        display: "Andrew Taylor (f. 1951)",
       },
     ],
     cover: {
@@ -40,14 +40,14 @@ export function WorkNarrowAndWideCover() {
     },
     description:
       "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
-    id: "work-id-2",
+    workId: "work-id-2",
     title: "Blodrøde spor",
   };
 
   const longTitle = {
     creators: [
       {
-        name: "Some Creator",
+        display: "Some Creator",
       },
     ],
     cover: {
@@ -56,7 +56,7 @@ export function WorkNarrowAndWideCover() {
     },
     description:
       "Kriminalroman. Da den aldrende enkemand Rufus bliver fundet død, lyder kendelsen på selvmord, men det er kriminalassistent Thornhill ikke tilfreds med. Han graver i sagen, som involverer mange personer, herunder hans egen kone Edith, da dødsfaldet viser sig at have tråde tilbage til mystiske dødsfald i 1938",
-    id: "work-id-3",
+    workId: "work-id-3",
     title: "I am a very long title, so long and very long. Its really long",
   };
 
@@ -87,7 +87,7 @@ export function SeriesCard() {
   const part = {
     creators: [
       {
-        name: "Andrew Taylor (f. 1951)",
+        display: "Andrew Taylor (f. 1951)",
       },
     ],
     cover: {
