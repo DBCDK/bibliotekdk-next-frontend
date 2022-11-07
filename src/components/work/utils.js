@@ -32,7 +32,6 @@ export function openReferencesModal(modal, pids, workId, work, manifestation) {
     }),
     pids: pids,
     workId: workId,
-    work: work,
     manifestation: manifestation,
   });
 }
