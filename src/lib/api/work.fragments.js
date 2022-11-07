@@ -250,49 +250,57 @@ export function recommendations({ workId }) {
  */
 export function reviews({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-        work(id: $workId) {
-          id
-          title
-          reviews {
-            __typename
-            ... on ReviewInfomedia {
-              author
-              date
-              media
-              rating
-              reference{
-                infomediaId
-                pid
+    query: `query Reviews($workId: String!) {
+      work(id: $workId) {
+        workId
+        titles {
+          main
+        }
+        subjects {
+          dbcVerified {
+            display
+            type
+          }
+        }
+        workReviews {
+          pid
+          author
+          date
+          origin
+          rating
+          infomediaId
+          urls {
+            origin
+            url
+            note
+          }
+          periodica {
+            volume
+            pages
+            hostPublication {
+              workId
+              titles {
+                main
               }
             }
-            ... on ReviewExternalMedia {
-              author
-              date
-              media
-              rating
-              url
-              alternateUrl
-            }
-            ... on ReviewMatVurd {
-              author
-              date
-              all {
-                text
-                work {
-                  title
-                  id
-                  creators {
-                    name
-                  }
-                }
+          }
+          librariansReview {
+            text
+            work {
+              workId
+              creators {
+                display
+              }
+              titles {
+                main
               }
             }
           }
         }
-        monitor(name: "bibdknext_work_reviews")
-      }`,
+      }
+    }`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -353,23 +361,37 @@ export function series({ workId }) {
  */
 export function infomediaArticlePublicInfo({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
+
     // delay: 4000, // for debugging
-    query: `query ($workId: String!, $locale: String) {
+    query: `query InfomediaPublic($workId: String!) {
       work(id: $workId) {
         workTypes
-        manifestations {
-          title
-          creators {
-            name
-          }
-          datePublished(locale: $locale, format: "LL")
+        titles {
+          main
+        }
+        creators {
+          display
         }
         subjects {
-          type
-          value
+          dbcVerified {
+            display
+            type
+          }
         }
+        manifestations {
+          latest {
+            physicalDescriptions {
+              summary
+            }
+            hostPublication {
+              issue
+              title
+            }
+          }
+        }
+        
       }
-      monitor(name: "bibdknext_work_infomedia_public")
     }
   `,
     variables: { workId },
@@ -647,6 +669,89 @@ export function overViewDetails({ workId }) {
         }
         monitor(name: "bibdknext_work_overview_details")
       }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Get parameters needed to generate JsonLD - @see components/work/header/Header.js
+ * @param workId
+ * @returns {{variables: {workId}, apiUrl: string, slowThreshold: number, query: string}}
+ */
+export function workJsonLd({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    apiUrl: ApiEnums.FBI_API,
+    query: `query workJsonLd($workId: String!) {
+            work(id: $workId) {
+              workId
+              workTypes
+              abstract
+              titles {
+                main
+              }
+              abstract
+              creators {
+                display
+              }
+              manifestations {
+                all {
+                  pid
+                  cover {
+                    detail
+                  }                  
+                  identifiers {
+                    type
+                    value
+                  }
+                  materialTypes {
+                    specific
+                  }
+                  titles {
+                    main
+                  }
+                  languages {
+                    main {
+                      display
+                    }
+                  }
+                  physicalDescriptions {
+                    summary
+                  }
+                  edition {
+                    publicationYear {
+                      display
+                    }
+                  }
+                  contributors {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        plural
+                        singular
+                      }
+                    }
+                  }
+                  hostPublication{
+                    title      
+                    summary
+                  }
+                  creators {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        singular
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            monitor(name: "bibdknext_work_json_ld")
+          }`,
     variables: { workId },
     slowThreshold: 3000,
   };

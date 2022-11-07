@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
-import { Reviews, ReviewsSkeleton } from "./Reviews.js";
+import WrappedReviews, { ReviewsSkeleton } from "./Reviews.js";
 
 import {
   MaterialReview,
@@ -23,77 +23,92 @@ const exportedObject = {
 
 export default exportedObject;
 
-/**
- * Returns all primary buttons (Default button style)
- *
- */
-
-export function ReviewsSlider() {
-  const data = {
-    reviews: [
-      {
-        __typename: "ReviewInfomedia",
-        author: "Svend Svendsen",
-        date: "2013-06-25",
-        media: "Jyllandsposten",
-        rating: "4/5",
-        url: "http://",
-      },
-      {
-        __typename: "ReviewExternalMedia",
-        author: "Didrik Pedersen",
-        date: "2013-06-25",
-        media: "Litteratursiden.dk online",
-        rating: "1/5",
-        url: "http://",
-      },
-      {
-        __typename: "ReviewMatVurd",
-        author: "Svend Svendsen",
-        date: "2013-06-25",
-        all: [
-          {
-            text: "Romanen er Ninni SchuImans anden fritstående krimi om journalisten Magdalene og betjentene Petra og Christer. I den svenske sommervarme er en pyroman løs. En kvinde omkommer i flammerne og nu må politiet, sammen med journalisten Magdalene, forsøge at finde frem til gerningsmanden, inden der bliver begået flere mord. Bag det spinkle plot, som er meget utroværdigt selv inden for genrens rammer, er romanen en skildring af fortabte drømme, kærlighed og livet omkring de 40. Problemet er dog, at de to dele, krimien og hverdagsrealismen, aldrig bliver koblet ordenligt sammen, og så hæmmer det realismen voldsomt, at plottet ikke er troværdigt. Politifolkene fremstår eksempelvis unødvendigt inkompetente. Forfatteren formår dog at komme med fine miljøskildringer og et par enkelte fine karakterer, som hæver sig over det todimensionale og skabelonagtige",
-          },
-          {
-            text: 'Til den store læserskare af "nordiske krimier tilsat hverdagsrealisme". Der findes mange bedre krimier, der ligner Drengen der holdt op med at græde til forveksling',
-          },
-          {
-            text: "Det er oplagt at sammenligne med Liza Marklund og Mari Jungstedt, der også benytter sig af makkerparret journalist/politimand",
-          },
-          {
-            text: "Ordinær krimi, med fine miljøskildringer, hvor plottet dog virker forceret og utroværdigt, og det drukner de ellers fine tilløb til hverdagsrealisme. Der findes mange bedre skandinaviske krimier på markedet, som formår at koble det realistiske sammen med et veludført plot",
-          },
-        ],
-        url: "http://",
-      },
-      {
-        __typename: "ReviewInfomedia",
-        date: "2013-06-25",
-        author: "Didrik Pedersen",
-        media: "Berlingske Tidende",
-        rating: "5/5",
-        url: "http://",
-      },
-      {
-        __typename: "ReviewInfomedia",
-        date: "2013-06-25",
-        author: "Svend Svendsen",
-        media: "Jyllandsposten",
-        rating: "4/5",
-        url: "http://",
-      },
-    ],
-  };
-
+export function WrappedReviewsSlider() {
   return (
     <div>
-      <StoryTitle>Anmeldesler</StoryTitle>
-      <StoryDescription>...</StoryDescription>
-      <Reviews data={data} />
+      <StoryTitle>Anmeldelser</StoryTitle>
+      <StoryDescription>Wrapped component</StoryDescription>
+      <WrappedReviews workId={"some-work-id"} />
     </div>
   );
 }
+WrappedReviewsSlider.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Work: {
+          titles: () => ({
+            main: ["Great book"],
+          }),
+          workReviews: () => [
+            // Review that is not available anywhere
+            {
+              pid: "some-pid-1",
+              author: "Jens Jensen",
+              date: "1988-07-20",
+              librariansReview: null,
+              rating: null,
+              origin: "Some Periodica",
+              periodica: { volume: "1998. 8. årgang" },
+              infomediaId: null,
+              urls: [],
+            },
+            // Review that is available on external site
+            {
+              pid: "some-pid-2",
+              author: "Jens Jensen",
+              date: "1988-07-20",
+              librariansReview: null,
+              rating: null,
+              origin: "Litteratursiden",
+              periodica: { volume: null },
+              infomediaId: null,
+              urls: [{ url: "http://some-external-site/some-path" }],
+            },
+            // Review that is available via infomedia
+            {
+              pid: "some-pid-3",
+              author: "Hans Hansen",
+              date: "2021-06-20",
+              rating: "4/6",
+              librariansReview: null,
+              origin: "Politiken",
+              infomediaId: "some-infomedia-id",
+              urls: [],
+            },
+            // Librarians Review
+            {
+              pid: "some-pid-4",
+              author: "Some Librarian",
+              date: "1999-05-20",
+              rating: null,
+              urls: [],
+              infomediaId: null,
+              periodica: null,
+              librariansReview: [
+                {
+                  text: "Great book that is almost as good as ",
+                  work: {
+                    workId: "some-other-work-id",
+                    creators: [{ display: "Some Creator" }],
+                    titles: {
+                      main: ["Some other great book"],
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  },
+};
 
 export function LoadingSlider() {
   return (
@@ -110,11 +125,25 @@ export function LoadingSlider() {
 
 export function Material() {
   const data = {
-    author: "Svend Svendsen",
-    media: "Jyllandsposten",
-    rating: "4/5",
-    reviewType: "MATERIALREVIEW",
-    url: "http://",
+    pid: "some-pid-4",
+    author: "Some Librarian",
+    date: "1999-05-20",
+    rating: null,
+    urls: [],
+    infomediaId: null,
+    periodica: null,
+    librariansReview: [
+      {
+        text: "Great book that is almost as good as ",
+        work: {
+          workId: "some-other-work-id",
+          creators: [{ display: "Some Creator" }],
+          titles: {
+            main: ["Some other great book"],
+          },
+        },
+      },
+    ],
   };
   return (
     <div>
@@ -141,11 +170,14 @@ export function Material() {
 
 export function Infomedia() {
   const data = {
-    author: "Svend Svendsen",
-    media: "Jyllandsposten",
-    rating: "4/5",
-    reviewType: "INFOMEDIA",
-    url: "http://",
+    pid: "some-pid-3",
+    author: "Hans Hansen",
+    date: "2021-06-20",
+    rating: "4/6",
+    librariansReview: null,
+    origin: "Politiken",
+    infomediaId: "some-infomedia-id",
+    urls: [],
   };
   return (
     <div>
@@ -170,9 +202,14 @@ export function Infomedia() {
 
 export function ExternalMedia() {
   const data = {
-    author: "Svend Svendsen",
-    reviewType: "INFOMEDIA",
-    url: "http://",
+    pid: "some-pid-2",
+    author: "Jens Jensen",
+    date: "1988-07-20",
+    librariansReview: null,
+    origin: "Litteratursiden",
+    periodica: { volume: null },
+    infomediaId: null,
+    urls: [{ url: "http://some-external-site/some-path" }],
   };
   return (
     <div>

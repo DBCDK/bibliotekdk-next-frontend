@@ -12,9 +12,10 @@ import Head from "next/head";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
-import { getJSONLD } from "@/lib/jsonld/work";
+import { getCoverImage, getJSONLD } from "@/lib/jsonld/work";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
+import { getSeo } from "@/components/work/utils";
 
 /**
  * The work page React component
@@ -24,19 +25,44 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
  *
  * @returns {JSX.Element}
  */
-export default function Header({ workId }) {
-  const details = useData(workFragments.detailsAllManifestations({ workId }));
+export function Header({ details }) {
   const { alternate } = useCanonicalUrl();
 
   if (!details.data || details.isLoading || details.error) {
     return null;
   }
   const data = details.data;
+  /*
+  this on is tricky - JSONLD uses many fields - see work.js/getJSONLD(work)
+  articles:
+  id,
+  title,
+  description,
+  creators = [],
+  manifestations = [],
+  url
+   */
   const jsonld = getJSONLD(data.work);
-  const pageDescription = data.work.seo.description;
-  const pageTitle = data.work.seo.title;
+  /* there is no SEO in fbi-api */
+  const seo = getSeo(data.work);
+  const pageDescription = seo.description;
+  const pageTitle = seo.title;
 
-  const canonicalWorkUrl = getCanonicalWorkUrl(data.work);
+  /** get coverUrl **/
+  const coverUrl = getCoverImage(data.work);
+
+  /**
+   * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
+   */
+  /* title, creators, id*/
+  const urlWork = {
+    title: data.work?.titles?.main[0],
+    creators: data.work?.creators?.map((creator) => ({
+      name: creator.display,
+    })),
+    id: data.work?.workId,
+  };
+  const canonicalWorkUrl = getCanonicalWorkUrl({ ...urlWork });
 
   return (
     <Head>
@@ -46,9 +72,7 @@ export default function Header({ workId }) {
       <meta property="og:type" content="website" />
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
-      {data.work.cover && (
-        <meta property="og:image" content={data.work.cover.detail} />
-      )}
+      {coverUrl && <meta property="og:image" content={coverUrl} />}
 
       <script
         type="application/ld+json"
@@ -64,6 +88,20 @@ export default function Header({ workId }) {
   );
 }
 
-Header.propTypes = {
+/*
+NOTES
+pageDescription
+canonicalWorkUrl
+pageTitle
+pageDescription
+cover
+ */
+
+export default function Wrap({ workId }) {
+  const details = useData(workFragments.workJsonLd({ workId }));
+  return <Header details={details} />;
+}
+
+Wrap.propTypes = {
   workId: PropTypes.string,
 };

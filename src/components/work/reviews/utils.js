@@ -1,37 +1,23 @@
-import groupBy from "lodash/groupBy";
+/**
+ * Sort reviews by
+ * 1. ReviewMatVurd
+ * 2. review with an url - direct access
+ * 3. reviews with stars (judgment)
+ * 4. others
+ */
+export function sortReviews(data = []) {
+  // Copy reviews, do not mutate original array
+  const reviews = [...data];
 
-export function sortReviews(data) {
-  /* sort order
-  1. ReviewMatVurd
-  2. review with an url - direct access
-  3. reviews with stars (judgment)
-  4. others
-*/
-
-  // Group data by reviewType
-  const groups = groupBy(data, "__typename");
-
-  // sort the infomedia group by rating/no rating
-  groups.ReviewInfomedia?.sort(function (a) {
-    return a.rating ? 1 : -1;
+  reviews.sort(function (a, b) {
+    // Convert every value to either 1 or 0, to perform the comparison
+    return (
+      Number(!!b.librariansReview) - Number(!!a.librariansReview) ||
+      Number(!!b.urls?.length > 0) - Number(!!a.urls?.length > 0) ||
+      Number(!!b.infomediaId) - Number(!!a.infomediaId) ||
+      Number(!!b.rating) - Number(!!a.rating)
+    );
   });
 
-  // sort external reviews with a url
-  groups.ReviewExternalMedia?.sort(function (a) {
-    return a.url ? -1 : 1;
-  });
-
-  // spread the groups - matvurd first, litteratursiden (direct link) second
-  // newspapers (infomedia) last
-  const reviews = [
-    ...(groups.ReviewInfomedia || []),
-    ...(groups.ReviewExternalMedia || []),
-  ];
-
-  // sort reviews with no url last
-  reviews?.sort(function (a) {
-    return a.url || a.reference ? -1 : 1;
-  });
-
-  return [...(groups.ReviewMatVurd || []), ...reviews];
+  return reviews;
 }

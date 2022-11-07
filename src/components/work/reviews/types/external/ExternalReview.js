@@ -31,19 +31,22 @@ export function ExternalReview({
   // Translate Context
   const context = { context: "reviews" };
 
+  const volume =
+    data.periodica?.volume || (data.date && dateToShortDate(data.date, "d. "));
+
   return (
     <Col
       xs={12}
       sm={6}
       md={4}
       className={`${styles.litteratursiden} ${className}`}
-      data-cy={cyKey({ prefix: "review", name: "litteratursiden" })}
+      data-cy={cyKey({ prefix: "review", name: "external" })}
     >
       <Row>
-        {data.media && (
+        {data.origin && (
           <Col xs={12} className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
-              {data.media}
+              {data.origin}
             </Title>
           </Col>
         )}
@@ -61,11 +64,7 @@ export function ExternalReview({
               <Col xs={10} className={styles.author}>
                 {!skeleton && <Text type="text2">{data.author}</Text>}
                 <div className={styles.date}>
-                  {!skeleton && data.date && (
-                    <Text type="text3">
-                      {dateToShortDate(data.date, "d. ")}
-                    </Text>
-                  )}
+                  {!skeleton && volume && <Text type="text3">{volume}</Text>}
                 </div>
               </Col>
             )}
@@ -78,54 +77,36 @@ export function ExternalReview({
           </Col>
         </div>
 
-        {data.url && (
-          <Col xs={12} className={styles.url}>
-            <Icon
-              src="chevron.svg"
-              size={{ w: 2, h: "auto" }}
-              skeleton={skeleton}
-              alt=""
-            />
-            <Link
-              href={data.url}
-              target="_blank"
-              onFocus={onFocus}
-              disabled={!data.url}
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text2" skeleton={skeleton}>
-                {Translate({
-                  ...context,
-                  label: "reviewLinkText",
-                })}
-              </Text>
-            </Link>
-          </Col>
-        )}
-        {data.alternateUrl && (
-          <Col xs={12} className={`${styles.url} ${styles.alternateUrl}`}>
-            <Icon
-              src="chevron.svg"
-              size={{ w: 2, h: "auto" }}
-              skeleton={skeleton}
-              alt=""
-            />
-            <Link
-              href={data.alternateUrl}
-              target="_blank"
-              onFocus={onFocus}
-              disabled={!data.alternateUrl}
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text2" skeleton={skeleton}>
-                {Translate({
-                  ...context,
-                  label: "alternateReviewLinkText",
-                })}
-              </Text>
-            </Link>
-          </Col>
-        )}
+        {data.urls?.map((accessUrl) => {
+          const shouldUseAlternateText =
+            accessUrl.url?.includes("https://moreinfo");
+          return (
+            <Col xs={12} className={styles.url} key={accessUrl.url}>
+              <Icon
+                src="chevron.svg"
+                size={{ w: 2, h: "auto" }}
+                skeleton={skeleton}
+                alt=""
+              />
+              <Link
+                href={accessUrl.url}
+                target="_blank"
+                onFocus={onFocus}
+                disabled={!accessUrl.url}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
+                <Text type="text2" skeleton={skeleton}>
+                  {Translate({
+                    ...context,
+                    label: shouldUseAlternateText
+                      ? "alternateReviewLinkText"
+                      : "reviewLinkText",
+                  })}
+                </Text>
+              </Link>
+            </Col>
+          );
+        })}
       </Row>
     </Col>
   );
@@ -142,10 +123,9 @@ export function ExternalReview({
 export function ExternalReviewSkeleton(props) {
   const data = {
     author: "Svend Svendsen",
-    reviewType: "INFOMEDIA",
     date: "2013-06-25",
-    media: "Litteratursiden.dk online",
-    url: "http://",
+    origin: "Litteratursiden.dk online",
+    urls: [{ url: "http://" }],
   };
 
   return (

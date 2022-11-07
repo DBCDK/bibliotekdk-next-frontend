@@ -17,6 +17,7 @@ import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
+import { useEffect } from "react";
 
 function selectMaterialBasedOnType_TempUsingAlfaApi(materialTypes, type) {
   // Creates MaterialTypes as an index
@@ -103,10 +104,11 @@ export function Overview({
   const validMaterialTypes = work?.materialTypes.map(
     (materialType) => materialType.materialType
   );
-
-  if (type === null || !validMaterialTypes?.includes(type)) {
-    onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
-  }
+  useEffect(() => {
+    if (type === null || !validMaterialTypes?.includes(type)) {
+      onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
+    }
+  }, [type]);
 
   // Either use type from props, or from local state
   const selectedMaterial = selectMaterialBasedOnType_TempUsingAlfaApi(
