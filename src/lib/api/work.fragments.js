@@ -250,49 +250,57 @@ export function recommendations({ workId }) {
  */
 export function reviews({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-        work(id: $workId) {
-          id
-          title
-          reviews {
-            __typename
-            ... on ReviewInfomedia {
-              author
-              date
-              media
-              rating
-              reference{
-                infomediaId
-                pid
+    query: `query Reviews($workId: String!) {
+      work(id: $workId) {
+        workId
+        titles {
+          main
+        }
+        subjects {
+          dbcVerified {
+            display
+            type
+          }
+        }
+        workReviews {
+          pid
+          author
+          date
+          origin
+          rating
+          infomediaId
+          urls {
+            origin
+            url
+            note
+          }
+          periodica {
+            volume
+            pages
+            hostPublication {
+              workId
+              titles {
+                main
               }
             }
-            ... on ReviewExternalMedia {
-              author
-              date
-              media
-              rating
-              url
-              alternateUrl
-            }
-            ... on ReviewMatVurd {
-              author
-              date
-              all {
-                text
-                work {
-                  title
-                  id
-                  creators {
-                    name
-                  }
-                }
+          }
+          librariansReview {
+            text
+            work {
+              workId
+              creators {
+                display
+              }
+              titles {
+                main
               }
             }
           }
         }
-        monitor(name: "bibdknext_work_reviews")
-      }`,
+      }
+    }`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -353,23 +361,37 @@ export function series({ workId }) {
  */
 export function infomediaArticlePublicInfo({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
+
     // delay: 4000, // for debugging
-    query: `query ($workId: String!, $locale: String) {
+    query: `query InfomediaPublic($workId: String!) {
       work(id: $workId) {
         workTypes
-        manifestations {
-          title
-          creators {
-            name
-          }
-          datePublished(locale: $locale, format: "LL")
+        titles {
+          main
+        }
+        creators {
+          display
         }
         subjects {
-          type
-          value
+          dbcVerified {
+            display
+            type
+          }
         }
+        manifestations {
+          latest {
+            physicalDescriptions {
+              summary
+            }
+            hostPublication {
+              issue
+              title
+            }
+          }
+        }
+        
       }
-      monitor(name: "bibdknext_work_infomedia_public")
     }
   `,
     variables: { workId },

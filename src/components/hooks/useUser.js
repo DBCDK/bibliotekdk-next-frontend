@@ -37,6 +37,7 @@ function useUserMock() {
     isLoading: false,
     error: null,
     isAuthenticated: true,
+    isLoggedIn: true,
     loanerInfo: { ...data, ...loggedInUser },
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
