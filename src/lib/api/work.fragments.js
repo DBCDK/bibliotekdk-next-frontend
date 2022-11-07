@@ -31,6 +31,32 @@ export function covers({ workId }) {
   };
 }
 
+export function tableOfContents({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query TableOfContents($workId: String!) {
+      work(id: $workId) {
+        manifestations {
+          all {
+            materialTypes {
+              specific
+            }
+            tableOfContents {
+              heading
+              listOfContent {
+                content
+              }
+            }
+          }
+        }
+      }
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Details for work manifestations
  *

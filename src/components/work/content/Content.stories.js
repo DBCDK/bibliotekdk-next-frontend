@@ -1,7 +1,6 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import dummy_materialTypesApi from "../dummy.materialTypesApi";
 
-import { Content, ContentSkeleton } from "./Content";
+import WrappedContent, { ContentSkeleton } from "./Content";
 
 const exportedObject = {
   title: "work/Content",
@@ -16,7 +15,6 @@ export default exportedObject;
 export function ContentSection() {
   const workId = "some-id";
   const type = "Bog";
-  const data = dummy_materialTypesApi({ workId, type });
   return (
     <div>
       <StoryTitle>Content section</StoryTitle>
@@ -24,10 +22,44 @@ export function ContentSection() {
         Work content component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Content data={data[workId]} />
+      <WrappedContent workId={workId} type={type} />
     </div>
   );
 }
+ContentSection.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Manifestation: {
+          materialTypes: () => [{ specific: "bog" }],
+          tableOfContents: ({ variables }) =>
+            variables.workId === "some-id"
+              ? {
+                  heading: "Kapitler",
+                  listOfContent: [
+                    { content: "Kapitel 1" },
+                    {
+                      content: "Kapitel 2",
+                    },
+                    {
+                      content: "Kapitel 3",
+                    },
+                    {
+                      content: "Kapitel 4",
+                    },
+                  ],
+                }
+              : null,
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  },
+};
 
 /**
  * Returns Loading content section
