@@ -91,7 +91,7 @@ function Row({
     >
       <>
         <Text
-          lines="1"
+          lines={1}
           skeleton={isLoading}
           type="text2"
           dataCy={`text-${branch.name}`}
