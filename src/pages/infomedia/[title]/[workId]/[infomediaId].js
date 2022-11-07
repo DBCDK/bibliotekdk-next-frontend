@@ -102,7 +102,8 @@ export default function Wrap() {
     <InfomediaArticle
       article={article}
       notFound={
-        infomediaArticleData && !infomediaArticleData?.infomedia?.article
+        (infomediaPublicData && !infomediaPublicData.work) ||
+        (infomediaArticleData && !infomediaArticleData?.infomedia?.article)
       }
       isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
       articleId={infomediaId}
