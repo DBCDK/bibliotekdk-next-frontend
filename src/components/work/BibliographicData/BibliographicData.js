@@ -4,28 +4,28 @@
  */
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
-
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
 import ManifestationFull from "./ManifestationFull";
-import { sortManifestations } from "./utils";
+import { prettyAndOrderedMaterialTypesEnum, sortManifestations } from "./utils";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
-
 import * as workFragments from "@/lib/api/work.fragments";
+import { flattenWord } from "@/lib/utils";
 
 /**
  * Export function of the Component
  *
- * @param {obj} props
+ * @param {obj} manifestation
+ * @param {string} workId
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
  */
-export function BibliographicData({ work, workId }) {
+export function BibliographicData({ manifestations, workId }) {
   const sortedMaterialTypes = useMemo(
-    () => sortManifestations(work.manifestations),
-    [work]
+    () => sortManifestations(manifestations),
+    [manifestations]
   );
 
   // temporary fix for large manifestation lists
@@ -45,18 +45,31 @@ export function BibliographicData({ work, workId }) {
           const volume = manifestation.volume
             ? " (" + manifestation.volume + ")"
             : "";
+
+          const prettyMaterialType = ((manifestation) => {
+            const materialType = manifestation.materialTypes[0].specific;
+            const flatMaterialType = flattenWord(materialType);
+            const type =
+              prettyAndOrderedMaterialTypesEnum[flatMaterialType] ||
+              materialType;
+
+            return type?.[0]?.toUpperCase() + type?.slice(1);
+          })(manifestation);
+
           return (
             <Item
-              title={`${manifestation.materialType + volume}`}
-              subTitle={manifestation.datePublished}
-              key={`${manifestation.title}_${index}`}
+              title={`${prettyMaterialType + volume}`}
+              subTitle={manifestation.edition.publicationYear.display}
+              key={`${manifestation.titles.main[0]}_${index}`}
               eventKey={index.toString()}
             >
-              <ManifestationFull
-                manifestation={manifestation}
-                work={work}
-                workId={workId}
-              />
+              {(hasBeenSeen) => (
+                <ManifestationFull
+                  pid={manifestation.pid}
+                  workId={workId}
+                  hasBeenSeen={hasBeenSeen}
+                />
+              )}
             </Item>
           );
         })}
@@ -68,14 +81,14 @@ export function BibliographicData({ work, workId }) {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
+ * @param {string} workId
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
  */
 export default function Wrap({ workId }) {
   const { data, isLoading, error } = useData(
-    workFragments.detailsAllManifestations({ workId })
+    workId && workFragments.listOfAllManifestations({ workId: workId })
   );
 
   if (error || !data) {
@@ -85,7 +98,12 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  return <BibliographicData work={data.work} workId={workId} />;
+  return (
+    <BibliographicData
+      manifestations={data?.work?.manifestations?.all}
+      workId={workId}
+    />
+  );
 }
 
 // PropTypes for component
