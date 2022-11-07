@@ -16,6 +16,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import { useData } from "@/lib/api/api";
 import { parseHero } from "@/components/hero/Hero";
+import { InspirationSlider } from "@/components/inspiration";
 
 const Index = () => {
   const context = { context: "metadata" };
@@ -51,6 +52,7 @@ const Index = () => {
       <div>
         <Header />
         <Hero />
+
         <ArticleSection
           title={Translate({ context: "index", label: "section1" })}
           matchTag="section 1"
@@ -68,6 +70,14 @@ const Index = () => {
           template="double"
         />
         <ArticleSection title={false} matchTag="section 4" template="single" />
+        <InspirationSlider
+          title={Translate({
+            context: "index",
+            label: "inspirationSliderTitle",
+          })}
+          category="fiction"
+          filter="nyeste"
+        />
       </div>
     </React.Fragment>
   );

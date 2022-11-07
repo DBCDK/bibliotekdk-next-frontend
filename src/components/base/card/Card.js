@@ -38,12 +38,12 @@ function SkeletonCard() {
 export default function Card({
   cardRef,
   className = "",
-  cover,
+  workId,
   creators,
   onFocus,
   onClick,
-  workId,
   skeleton,
+  cover,
   title,
 }) {
   if (skeleton) {
@@ -104,12 +104,12 @@ Card.propTypes = {
   className: PropTypes.string,
   cover: PropTypes.object,
   creators: PropTypes.array,
-  id: PropTypes.string,
   onFocus: PropTypes.func,
   onClick: PropTypes.func,
   series: PropTypes.shape({
     part: PropTypes.number,
   }),
   skeleton: PropTypes.bool,
+  workId: PropTypes.string,
   title: PropTypes.string,
 };
