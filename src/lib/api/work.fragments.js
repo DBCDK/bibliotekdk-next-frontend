@@ -660,7 +660,16 @@ export function fbiOverviewDetail({ workId }) {
         work(id: $workId) {
           workId
           workTypes
-          genreAndForm     
+          genreAndForm 
+          creators {
+            display
+          }
+          materialTypes {
+            specific
+          }
+          titles {
+            full
+          }                                  
           manifestations {
             all {
               access {

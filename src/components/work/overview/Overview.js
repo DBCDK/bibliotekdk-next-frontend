@@ -21,16 +21,16 @@ import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelect
 function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
   // filter on type
   const filteredManifestations = fbiManifestations?.filter((manifestation) =>
-    manifestation.materialTypes.filter(
-      (matType) => matType.specific === type.toLowerCase()
+    manifestation?.materialTypes?.filter(
+      (matType) => matType.specific === type?.toLowerCase()
     )
   );
-  const manifestationWithCover = filteredManifestations.find(
+  const manifestationWithCover = filteredManifestations?.find(
     (manifestation) => manifestation.cover.detail
   );
   const coverImage = manifestationWithCover
     ? { detail: manifestationWithCover.cover.detail }
-    : null;
+    : { detail: null };
 
   return {
     cover: coverImage,
@@ -40,13 +40,14 @@ function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
 }
 
 function CreatorsArray(creators, skeleton) {
+  console.log(creators, "CREATORS");
   const searchOnUrl = "/find?q.creator=";
   return creators?.map((creator, index) => {
     return (
-      <span key={`${creator.name}-${index}`}>
+      <span key={`${creator.display}-${index}`}>
         <Link
           disabled={skeleton}
-          href={`${searchOnUrl}${creator.name}`}
+          href={`${searchOnUrl}${creator.display}`}
           border={{ top: false, bottom: { keepVisible: true } }}
         >
           <Text
@@ -55,7 +56,7 @@ function CreatorsArray(creators, skeleton) {
             skeleton={skeleton}
             lines={1}
           >
-            {creator.name}
+            {creator.display}
           </Text>
         </Link>
         {creators?.length > index + 1 ? ", " : ""}
@@ -81,14 +82,15 @@ function MaterialTypeArray(
 
   return materialTypes?.map((material) => {
     //  Sets isSelected flag if button should be selected
+    console.log(material, "MATERIAL");
     return (
       <Tag
-        key={material.materialType}
-        selected={material.materialType === selectedMaterial.materialType}
+        key={material.specific}
+        selected={material.specific === selectedMaterial.specific}
         onClick={() => handleSelectedMaterial(material, type)}
         skeleton={skeleton}
       >
-        {material.materialType}
+        {material.specific}
       </Tag>
     );
   });
@@ -112,9 +114,11 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
-  const validMaterialTypes = work?.materialTypes.map(
-    (materialType) => materialType.materialType
+  const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
+    (materialType) => materialType.specific
   );
+
+  console.log(validMaterialTypes, "VALID TYPES");
 
   if (type === null || !validMaterialTypes?.includes(type)) {
     onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
@@ -131,7 +135,13 @@ export function Overview({
   );
 
   console.log(selectedMaterial, "SELECTED");
+  console.log(work, "OLD WORK");
 
+  /**
+   * NOTE
+   * - materialtypes array
+   * - Creators array
+   */
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -161,7 +171,7 @@ export function Overview({
             <Row>
               <Col xs={12}>
                 <Title type="title3" skeleton={skeleton}>
-                  {work?.fullTitle}
+                  {fbiWork?.data?.work?.titles?.full[0]}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
@@ -172,10 +182,10 @@ export function Overview({
                   alt=""
                 />
               </Col>
-              <Col xs={12}>{CreatorsArray(work?.creators)}</Col>
+              <Col xs={12}>{CreatorsArray(fbiWork?.data?.work?.creators)}</Col>
               <Col xs={12} className={styles.materials}>
                 {MaterialTypeArray(
-                  work?.materialTypes,
+                  fbiWork?.data?.work?.materialTypes,
                   selectedMaterial,
                   skeleton,
                   onTypeChange,
@@ -271,9 +281,9 @@ export default function Wrap(props) {
 
   // use the useData hook to fetch data
   const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
-  const details = useData(workFragments.details({ workId }));
+  //const details = useData(workFragments.details({ workId }));
   const covers = useData(workFragments.covers({ workId }));
-  const merged = merge({}, covers.data, buttonTxt.data, details.data);
+  //const merged = merge({}, covers.data, buttonTxt.data, details.data);
 
   const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
 
@@ -283,14 +293,14 @@ export default function Wrap(props) {
     return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
   }
 
-  if (buttonTxt.error || details.error) {
+  if (buttonTxt.error || fbiWork.error) {
     return <OverviewError />;
   }
 
   return (
     <Overview
       fbiWork={fbiWork}
-      work={merged.work}
+      //work={merged.work}
       workId={workId}
       selectedPids={selectedPids}
       type={type}
