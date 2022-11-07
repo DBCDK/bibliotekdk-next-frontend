@@ -18,6 +18,7 @@ import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
 import { useEffect } from "react";
+import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
 
 function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
   // filter on type
@@ -105,14 +106,21 @@ function MaterialTypeArray(
  */
 export function Overview({
   fbiWork,
-  work,
   workId,
-  selectedPids,
   type,
   onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
+  const materialPids = selectMaterialBasedOnType(
+    fbiWork?.data?.work?.manifestations?.all,
+    type
+  );
+
+  const selectedPids = materialPids?.map((mat) => mat?.pid);
+
+  console.log(selectedPids);
+
   const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
     (materialType) => materialType.specific
   );
@@ -153,13 +161,13 @@ export function Overview({
           >
             <Row>
               <Cover
-                src={selectedMaterial?.cover?.detail || work?.materialTypes}
+                src={selectedMaterial?.cover?.detail || fbiWork?.materialTypes}
                 skeleton={skeleton || !selectedMaterial.cover}
                 size="large"
               >
                 <Bookmark
                   skeleton={skeleton || !selectedMaterial.cover}
-                  title={work?.title}
+                  title={fbiWork?.titles?.full[0]}
                 />
               </Cover>
             </Row>
@@ -277,21 +285,22 @@ export default function Wrap(props) {
   const { workId, type, onTypeChange, login } = props;
   const user = useUser();
 
+  const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
   // use the useData hook to fetch data
-  const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
+  //const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
   //const details = useData(workFragments.details({ workId }));
-  const covers = useData(workFragments.covers({ workId }));
+  //const covers = useData(workFragments.covers({ workId }));
   //const merged = merge({}, covers.data, buttonTxt.data, details.data);
 
-  const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
+  //const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
 
-  const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
+  console.log(fbiWork, "FBIWORK");
 
-  if (buttonTxt.isLoading) {
-    return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
+  if (fbiWork.isLoading) {
+    return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
   }
 
-  if (buttonTxt.error || fbiWork.error) {
+  if (fbiWork.error || fbiWork.error) {
     return <OverviewError />;
   }
 
@@ -300,7 +309,6 @@ export default function Wrap(props) {
       fbiWork={fbiWork}
       //work={merged.work}
       workId={workId}
-      selectedPids={selectedPids}
       type={type}
       onTypeChange={onTypeChange}
       login={login}

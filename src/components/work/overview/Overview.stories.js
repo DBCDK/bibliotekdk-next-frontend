@@ -8,15 +8,18 @@ const exportedObject = {
   title: "work/Overview",
 };
 
+const dummyFbiWork = require("../dummy.overViewWorkapi.json");
+
 export default exportedObject;
 
 /**
  * Overview
  *
  */
-export function WorkOverview() {
+/*export function WorkOverview() {
+  asdlkfjalæskjf;
   const workId = "some-id";
-  const data = dummy_workDataApi_TempUsingAlfaApi({ workId: workId });
+  //const data = dummy_workDataApi_TempUsingAlfaApi({ workId: workId });
   const [type, setType] = useState();
   return (
     <div>
@@ -25,7 +28,28 @@ export function WorkOverview() {
         user is not logged in - order button logs user in
       </StoryDescription>
       <Overview
-        work={data.work}
+        work={dummyFbiWork}
+        type={type}
+        onTypeChange={(el) => setType(el.type)}
+        onOnlineAccess={(el) => alert(el)}
+        workId={workId}
+      />
+    </div>
+  );
+}*/
+
+export function fisk() {
+  const workId = "some-id";
+  //const data = dummy_workDataApi_TempUsingAlfaApi({ workId: workId });
+  const [type, setType] = useState();
+  return (
+    <div>
+      <StoryTitle>Overview - not logged in</StoryTitle>
+      <StoryDescription>
+        user is not logged in - order button logs user in
+      </StoryDescription>
+      <Overview
+        fbiWork={dummyFbiWork}
         type={type}
         onTypeChange={(el) => setType(el.type)}
         onOnlineAccess={(el) => alert(el)}

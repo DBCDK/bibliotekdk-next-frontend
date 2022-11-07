@@ -605,6 +605,7 @@ export function fbiOverviewDetail({ workId }) {
           }                                  
           manifestations {
             all {
+              pid
               access {
                 __typename
                 ... on InterLibraryLoan {
