@@ -30,8 +30,8 @@ Connected.story = {
             args.variables?.filters?.[0] === "nyeste" ? [{}] : [],
         },
         Category: {
-          title: (args) => "nyeste",
-          works: (args) => [
+          title: () => "nyeste",
+          works: () => [
             {
               workId: "id-1",
               titles: { main: ["title-1"] },
