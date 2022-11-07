@@ -258,6 +258,12 @@ export function reviews({ workId }) {
         titles {
           main
         }
+        subjects {
+          dbcVerified {
+            display
+            type
+          }
+        }
         workReviews {
           pid
           author
@@ -355,23 +361,37 @@ export function series({ workId }) {
  */
 export function infomediaArticlePublicInfo({ workId }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
+
     // delay: 4000, // for debugging
-    query: `query ($workId: String!, $locale: String) {
+    query: `query InfomediaPublic($workId: String!) {
       work(id: $workId) {
         workTypes
-        manifestations {
-          title
-          creators {
-            name
-          }
-          datePublished(locale: $locale, format: "LL")
+        titles {
+          main
+        }
+        creators {
+          display
         }
         subjects {
-          type
-          value
+          dbcVerified {
+            display
+            type
+          }
         }
+        manifestations {
+          latest {
+            physicalDescriptions {
+              summary
+            }
+            hostPublication {
+              issue
+              title
+            }
+          }
+        }
+        
       }
-      monitor(name: "bibdknext_work_infomedia_public")
     }
   `,
     variables: { workId },

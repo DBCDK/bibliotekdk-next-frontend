@@ -4,11 +4,96 @@ import {
   ContentSkeleton,
 } from "@/components/article/content/Content.js";
 
+import InfomediaReviewPage from "@/pages/anmeldelse/[title]/[workId]/[articleId]";
+import InfomediaArticlePage from "@/pages/infomedia/[title]/[workId]/[infomediaId]";
+
 const exportedObject = {
   title: "articles/page",
 };
 
 export default exportedObject;
+
+export function WrappedInfomediaReviewPage() {
+  return (
+    <div>
+      <StoryTitle>Article Page</StoryTitle>
+      <InfomediaReviewPage />
+    </div>
+  );
+}
+WrappedInfomediaReviewPage.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          work: (args) =>
+            args.variables.workId === "some-work-id" ? {} : null,
+          infomedia: (args) =>
+            args.variables.id === "some-article-id" ? {} : null,
+        },
+        WorkReview: {
+          infomediaId: () => "some-article-id",
+          librariansReview: () => null,
+          date: () => "2022-11-05",
+          rating: () => "3/5",
+        },
+        InfomediaArticle: {
+          logo: () => "<p>Infomedia disclaimer</p>",
+        },
+        Subject: {
+          __resolveType: () => "SubjectText",
+        },
+        SubjectText: { type: () => "TOPIC" },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: { workId: "some-work-id", articleId: "some-article-id" },
+    },
+  },
+};
+
+export function WrappedInfomediaArticlePage() {
+  return (
+    <div>
+      <StoryTitle>Article Page</StoryTitle>
+      <InfomediaArticlePage />
+    </div>
+  );
+}
+WrappedInfomediaArticlePage.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          work: (args) =>
+            args.variables.workId === "some-work-id" ? {} : null,
+          infomedia: (args) =>
+            args.variables.id === "some-article-id" ? {} : null,
+        },
+        WorkReview: {
+          infomediaId: () => "some-article-id",
+          librariansReview: () => null,
+          date: () => "2022-11-05",
+          rating: () => "3/5",
+        },
+        InfomediaArticle: {
+          logo: () => "<p>Infomedia disclaimer</p>",
+        },
+        Subject: {
+          __resolveType: () => "SubjectText",
+        },
+        SubjectText: { type: () => "TOPIC" },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: { workId: "some-work-id", infomediaId: "some-article-id" },
+    },
+  },
+};
 
 export function ArticlePage() {
   const data = {

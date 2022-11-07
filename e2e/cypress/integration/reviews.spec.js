@@ -1,91 +1,116 @@
 describe("Overview", () => {
-  before(function () {
-    cy.visit(
-      "/iframe.html?id=work-reviews--wrapped-reviews-slider&viewMode=story"
-    );
+  describe("Page", () => {
+    before(function () {
+      cy.visit(
+        "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
+      );
+    });
+    it(`Displays the contents of a review from infomedia`, () => {
+      cy.contains("infomedia.article.headLine");
+      cy.contains(
+        "infomedia.article.paper (work.workReviews[0].periodica.pages)"
+      );
+      cy.contains("Læsetid: 1 min.");
+      cy.contains(
+        "work.subjects.dbcVerified[0].display, work.subjects.dbcVerified[1].display"
+      );
+      cy.contains("5 nov. 2022");
+      cy.contains("work.workReviews[0].author");
+      cy.contains("infomedia.article.subHeadLine");
+      cy.contains("infomedia.article.hedLine");
+      cy.contains("infomedia.article.text");
+      cy.contains("Infomedia disclaimer");
+    });
   });
+  describe("Review Slider", () => {
+    before(function () {
+      cy.visit(
+        "/iframe.html?id=work-reviews--wrapped-reviews-slider&viewMode=story"
+      );
+    });
 
-  it(`First review should be visible - last not visible`, () => {
-    cy.contains("Anmeldelser (4)");
+    it(`First review should be visible - last not visible`, () => {
+      cy.contains("Anmeldelser (4)");
 
-    cy.get(".swiper-slide").should("have.length", 4);
-    cy.get(" .swiper-slide").last().should("not.be.visible");
-    cy.get(" .swiper-slide").first().should("be.visible");
-  });
+      cy.get(".swiper-slide").should("have.length", 4);
+      cy.get(" .swiper-slide").last().should("not.be.visible");
+      cy.get(" .swiper-slide").first().should("be.visible");
+    });
 
-  it(`should link to mentioned work for librarians review`, () => {
-    cy.contains("Some other great book").should(
-      "have.attr",
-      "href",
-      "/materiale/some-other-great-book_some-creator/some-other-work-id"
-    );
-  });
-
-  it(`infomedia review should link to infomedia page`, () => {
-    cy.get("[data-cy=review-infomedia]")
-      .contains("Læs anmeldelse")
-      .should(
+    it(`should link to mentioned work for librarians review`, () => {
+      cy.contains("Some other great book").should(
         "have.attr",
         "href",
-        "/infomedia/anmeldelse_great-book/work.workId?review=some-pid-3"
+        "/materiale/some-other-great-book_some-creator/some-other-work-id"
       );
-  });
+    });
 
-  it(`external review should link to external site`, () => {
-    cy.get("[data-cy=review-external]")
-      .contains("Læs anmeldelse")
-      .should("have.attr", "href", "http://some-external-site/some-path");
-  });
+    it(`infomedia review should link to infomedia page`, () => {
+      cy.get("[data-cy=review-infomedia]")
+        .contains("Læs anmeldelse")
+        .should(
+          "have.attr",
+          "href",
+          "/anmeldelse/great-book/work.workId/some-infomedia-id"
+        );
+    });
 
-  it(`reviews are ordered correctly`, () => {
-    // Librarians reviews should come first
-    cy.get(".swiper-slide").eq(0).contains("Lektørudtalelse");
+    it(`external review should link to external site`, () => {
+      cy.get("[data-cy=review-external]")
+        .contains("Læs anmeldelse")
+        .should("have.attr", "href", "http://some-external-site/some-path");
+    });
 
-    // Then litteratursiden, because it has external url (accessible without login)
-    cy.get(".swiper-slide").eq(1).contains("Litteratursiden");
+    it(`reviews are ordered correctly`, () => {
+      // Librarians reviews should come first
+      cy.get(".swiper-slide").eq(0).contains("Lektørudtalelse");
 
-    // Then Politiken, because it has a rating
-    cy.get(".swiper-slide").eq(2).contains("Politiken");
+      // Then litteratursiden, because it has external url (accessible without login)
+      cy.get(".swiper-slide").eq(1).contains("Litteratursiden");
 
-    // Finally Some Periodica, because it is not available anywhere
-    cy.get(".swiper-slide").eq(3).contains("Some Periodica");
-  });
+      // Then Politiken, because it has a rating
+      cy.get(".swiper-slide").eq(2).contains("Politiken");
 
-  //BETA-1 skip this test - material reviews are gone
-  it.skip(`Can tab through path`, () => {
-    cy.get("body").tabs(3);
-    cy.focused()
-      .parent()
-      .parent()
-      .should("have.attr", "data-cy", "review-infomedia");
-    cy.tabs(1);
-    cy.focused().should("have.attr", "data-cy", "link");
-  });
+      // Finally Some Periodica, because it is not available anywhere
+      cy.get(".swiper-slide").eq(3).contains("Some Periodica");
+    });
 
-  // Slider is now infinite -> buttons will never get disabled
-  it.skip(`Can navigate with arrows`, () => {
-    // reset slider
-    cy.visit("/iframe.html?id=work-reviews--reviews-slider");
+    //BETA-1 skip this test - material reviews are gone
+    it.skip(`Can tab through path`, () => {
+      cy.get("body").tabs(3);
+      cy.focused()
+        .parent()
+        .parent()
+        .should("have.attr", "data-cy", "review-infomedia");
+      cy.tabs(1);
+      cy.focused().should("have.attr", "data-cy", "link");
+    });
 
-    // Check navigation-button status
-    cy.get("[data-cy=arrow-left]")
-      .should("have.css", "background-color")
-      .and("eq", "rgb(214, 214, 215)");
+    // Slider is now infinite -> buttons will never get disabled
+    it.skip(`Can navigate with arrows`, () => {
+      // reset slider
+      cy.visit("/iframe.html?id=work-reviews--reviews-slider");
 
-    cy.get("[data-cy=arrow-right]")
-      .should("have.css", "background-color")
-      .and("eq", "rgb(51, 51, 255)");
+      // Check navigation-button status
+      cy.get("[data-cy=arrow-left]")
+        .should("have.css", "background-color")
+        .and("eq", "rgb(214, 214, 215)");
 
-    // Navigate to end of slider
-    cy.get("[data-cy=arrow-right]").click().click().click();
+      cy.get("[data-cy=arrow-right]")
+        .should("have.css", "background-color")
+        .and("eq", "rgb(51, 51, 255)");
 
-    // Check that navigation-button status have changed
-    cy.get("[data-cy=arrow-right]")
-      .should("have.css", "background-color")
-      .and("eq", "rgb(214, 214, 215)");
+      // Navigate to end of slider
+      cy.get("[data-cy=arrow-right]").click().click().click();
 
-    cy.get("[data-cy=arrow-left]")
-      .should("have.css", "background-color")
-      .and("eq", "rgb(51, 51, 255)");
+      // Check that navigation-button status have changed
+      cy.get("[data-cy=arrow-right]")
+        .should("have.css", "background-color")
+        .and("eq", "rgb(214, 214, 215)");
+
+      cy.get("[data-cy=arrow-left]")
+        .should("have.css", "background-color")
+        .and("eq", "rgb(51, 51, 255)");
+    });
   });
 });

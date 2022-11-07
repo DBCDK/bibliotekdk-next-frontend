@@ -16,6 +16,9 @@ export function timestampToShortDate(timestamp) {
   const shortMonths = months({ label: "shortenedMonths" });
 
   const a = new Date(timestamp);
+  if (isNaN(a)) {
+    return timestamp;
+  }
 
   const year = a.getFullYear();
   const month = (shortMonths && shortMonths[a.getMonth()]) || a.getMonth() + 1;

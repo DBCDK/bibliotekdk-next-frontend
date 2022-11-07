@@ -36,9 +36,10 @@ export function InfomediaReview({
 
   // make an url for infomedia page
   const reviewPid = data?.pid;
-  const urlTxt = encodeString("Anmeldelse_" + title);
+  const urlTxt = encodeString(title);
   const url =
-    data?.infomediaId && `/infomedia/${urlTxt}/${workId}?review=${reviewPid}`;
+    data?.infomediaId && `/anmeldelse/${urlTxt}/${workId}/${data?.infomediaId}`;
+
   return (
     <Col
       xs={12}

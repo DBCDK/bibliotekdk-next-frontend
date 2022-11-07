@@ -196,6 +196,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 {article.paper && (
                   <Text type="text3" skeleton={skeleton}>
                     {article.paper}
+                    {article.pages && <span> ({article.pages})</span>}
                   </Text>
                 )}
                 {article.deliveredBy && (
@@ -233,9 +234,9 @@ export function Content({ className = "", data = {}, skeleton = false }) {
                 </Text>
               ))
             )}
-            {data.rating && (
+            {article.rating && (
               <div className={styles.rating}>
-                <Rating rating={data.rating} skeleton={false} />
+                <Rating rating={article.rating} skeleton={false} />
               </div>
             )}
           </Col>
@@ -263,27 +264,29 @@ export function Content({ className = "", data = {}, skeleton = false }) {
         </Row>
       )}
 
-      <Row>
-        <Col
-          data-cy="article-body"
-          xs={12}
-          md={{ span: 10, offset: 1 }}
-          lg={{ span: 6, offset: 3 }}
-        >
-          <BodyParser
-            body={article?.body?.value}
-            className={styles.body}
-            skeleton={skeleton}
-            lines={10}
-          />
-          {article?.disclaimer && (
-            <div className={styles.disclaimer}>
-              <img src={article?.disclaimer?.logo} alt="logo" />
-              <Text type="text3">{article?.disclaimer?.text}</Text>
-            </div>
-          )}
-        </Col>
-      </Row>
+      {(skeleton || article?.body?.value) && (
+        <Row>
+          <Col
+            data-cy="article-body"
+            xs={12}
+            md={{ span: 10, offset: 1 }}
+            lg={{ span: 6, offset: 3 }}
+          >
+            <BodyParser
+              body={article?.body?.value}
+              className={styles.body}
+              skeleton={skeleton}
+              lines={10}
+            />
+            {article?.disclaimer && (
+              <div className={styles.disclaimer}>
+                <img src={article?.disclaimer?.logo} alt="logo" />
+                <Text type="text3">{article?.disclaimer?.text}</Text>
+              </div>
+            )}
+          </Col>
+        </Row>
+      )}
     </Container>
   );
 }

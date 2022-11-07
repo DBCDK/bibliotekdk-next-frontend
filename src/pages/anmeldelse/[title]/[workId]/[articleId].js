@@ -4,20 +4,21 @@ import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
-import * as workFragments from "@/lib/api/work.fragments";
-import * as infomediaFragments from "@/lib/api/infomedia.fragments";
+import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
+
+import * as workFragments from "@/lib/api/work.fragments";
 
 import {
   Content,
   ContentSkeleton,
 } from "@/components/article/content/Content.js";
 
-import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
+import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 
-export function InfomediaArticle(props) {
-  const { articleId, article, notFound, isLoading } = props;
+export function ReviewPage(props) {
+  const { article, notFound, isLoading, articleId } = props;
 
   const router = useRouter();
 
@@ -42,19 +43,12 @@ export function InfomediaArticle(props) {
 /**
  * Parse work/article data to a format the Content component likes
  */
-function parseInfomediaArticle(work, infomediaArticle) {
-  const manifestation = work?.manifestations?.latest;
+function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
   return {
-    creators: [
-      {
-        name: work?.creators?.[0]?.display,
-      },
-    ],
+    creators: [{ name: publicReviewData?.author }],
     title: infomediaArticle?.headLine || work?.titles?.main?.[0],
     entityCreated:
-      infomediaArticle?.dateLine ||
-      (manifestation?.hostPublication?.issue &&
-        timestampToShortDate(manifestation?.hostPublication?.issue)),
+      publicReviewData?.date && timestampToShortDate(publicReviewData?.date),
     subHeadLine:
       infomediaArticle?.subHeadLine !== infomediaArticle?.headLine &&
       infomediaArticle?.subHeadLine,
@@ -62,7 +56,7 @@ function parseInfomediaArticle(work, infomediaArticle) {
     body: {
       value: infomediaArticle?.text,
     },
-    paper: infomediaArticle?.paper || manifestation?.hostPublication?.title,
+    paper: infomediaArticle?.paper || publicReviewData?.origin,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
       .map((subject) => subject.display),
@@ -71,41 +65,37 @@ function parseInfomediaArticle(work, infomediaArticle) {
       logo: "/infomedia_logo.svg",
       text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: manifestation?.physicalDescriptions
-      ?.map((d) => d.summary)
-      ?.join(", "),
+    pages: publicReviewData?.periodica?.pages,
+    rating: publicReviewData?.rating,
   };
 }
 
 export default function Wrap() {
   const router = useRouter();
-  const { workId, infomediaId } = router.query;
-
+  const { workId, articleId } = router.query;
   const user = useUser();
-
-  const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
-    useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
-
-  const { data: infomediaArticleData, isLoadingInfomedia } = useData(
-    user.isAuthenticated &&
-      infomediaId &&
-      infomediaFragments.infomediaArticle({ id: infomediaId })
+  const { data, isLoading: isLoadingWork } = useData(
+    workFragments.reviews({ workId })
   );
-  console.log({ infomediaId, infomediaArticleData });
+  const publicReviewData = data?.work?.workReviews?.find(
+    (review) => review.infomediaId === articleId || review.pid === articleId
+  );
+  const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
+    user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
+  );
 
   const article = parseInfomediaArticle(
-    infomediaPublicData?.work,
+    publicReviewData,
+    data?.work,
     infomediaArticleData?.infomedia?.article
   );
 
   return (
-    <InfomediaArticle
+    <ReviewPage
       article={article}
-      notFound={
-        infomediaArticleData && !infomediaArticleData?.infomedia?.article
-      }
-      isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
-      articleId={infomediaId}
+      notFound={data && !publicReviewData}
+      isLoading={isLoadingWork || isLoadingInfomedia}
+      articleId={articleId}
     />
   );
 }
