@@ -85,7 +85,7 @@ describe("Server Side Rendering", () => {
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res.description).to.equal(
-          "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
@@ -94,7 +94,7 @@ describe("Server Side Rendering", () => {
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res["og:description"]).to.equal(
-          "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:image"]).to.exist;
       });
@@ -145,14 +145,14 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for movie`, () => {
       getPageHead(
-        "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080?type=Blu-ray"
+        "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
-          "http://localhost:3000/materiale/junglebogen_justin-marks/work-of:870970-basis:52331080"
+          "http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of:870970-basis:52331080"
         );
 
         expect(res.jsonld.mainEntity["@type"]).to.equal("Movie");
-        expect(res.jsonld.mainEntity.name).to.equal("Junglebogen");
+        expect(res.jsonld.mainEntity.name).to.equal("The jungle book");
         expect(res.jsonld.mainEntity.image).to.exist;
         expect(res.jsonld.mainEntity.director).to.deep.equal([
           {

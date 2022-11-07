@@ -683,3 +683,86 @@ export function fbiOverviewDetail({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * Get parameters needed to generate JsonLD - @see components/work/header/Header.js
+ * @param workId
+ * @returns {{variables: {workId}, apiUrl: string, slowThreshold: number, query: string}}
+ */
+export function workJsonLd({ workId }) {
+  return {
+    // delay: 4000, // for debugging
+    apiUrl: ApiEnums.FBI_API,
+    query: `query workJsonLd($workId: String!) {
+            work(id: $workId) {
+              workId
+              workTypes
+              abstract
+              titles {
+                main
+              }
+              abstract
+              creators {
+                display
+              }
+              manifestations {
+                all {
+                  pid
+                  cover {
+                    detail
+                  }                  
+                  identifiers {
+                    type
+                    value
+                  }
+                  materialTypes {
+                    specific
+                  }
+                  titles {
+                    main
+                  }
+                  languages {
+                    main {
+                      display
+                    }
+                  }
+                  physicalDescriptions {
+                    summary
+                  }
+                  edition {
+                    publicationYear {
+                      display
+                    }
+                  }
+                  contributors {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        plural
+                        singular
+                      }
+                    }
+                  }
+                  hostPublication{
+                    title      
+                    summary
+                  }
+                  creators {
+                    display
+                    roles {
+                      functionCode
+                      function {
+                        singular
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            monitor(name: "bibdknext_work_json_ld")
+          }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
