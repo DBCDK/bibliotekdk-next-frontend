@@ -127,7 +127,6 @@ export function ExternalReviewSkeleton(props) {
     origin: "Litteratursiden.dk online",
     urls: [{ url: "http://" }],
   };
-  console.log("huh?");
 
   return (
     <ExternalReview

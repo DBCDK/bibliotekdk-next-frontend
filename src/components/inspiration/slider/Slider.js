@@ -21,7 +21,7 @@ export function Slider({ title, works, isLoading }) {
           <WorkSlider
             skeleton={isLoading}
             works={works}
-            data-cy="recommender"
+            data-cy="inspiration-slider"
           />
         </Col>
       </Row>
@@ -37,6 +37,10 @@ export default function Wrap({ title, category, filter }) {
   );
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
+
+  if (!cat && !isLoading) {
+    return null;
+  }
 
   return (
     <Slider title={title} works={cat?.works || []} isLoading={isLoading} />
