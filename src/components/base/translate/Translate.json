@@ -423,6 +423,10 @@
         "da": "Sidetal",
         "en": "Pagenumber"
       },
+      "physicalDescriptionArticlesAlternative": {
+        "da": "Omfang",
+        "en": "Extent"
+      },
       "usedLanguage": {
         "da": "Anvendt sprog",
         "en": "Used language"
