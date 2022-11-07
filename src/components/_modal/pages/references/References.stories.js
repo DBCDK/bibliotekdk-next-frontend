@@ -1,8 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 
 import { References } from "@/components/_modal/pages/references/References";
-import { Edition } from "@/components/_modal/pages/order/Order.page";
-import dummywork from "./dummydata.json";
 
 const exportedObject = {
   title: "modal/References",
@@ -12,9 +10,9 @@ export default exportedObject;
 
 export function referenceLinks() {
   const context = {
-    pids: ["820030-katalog:246833"],
-    work: {},
-    manifestation: {},
+    pids: ["some-pid-1"],
+    workId: "some-work-id",
+    periodicaForm: false,
   };
   return (
     <div>
@@ -22,47 +20,5 @@ export function referenceLinks() {
       <StoryDescription>endnote refworks download</StoryDescription>
       <References context={context} />
     </div>
-  );
-}
-
-export function editionSingleManifestation() {
-  const work = dummywork.work;
-  const manifestation = dummywork.work.manifestations[0];
-  return (
-    <Edition
-      material={manifestation}
-      work={work}
-      isLoading={false}
-      showOrderTxt={false}
-      singleManifestation={true}
-    />
-  );
-}
-
-export function editionAnyManifestation() {
-  const work = dummywork.work;
-  const manifestation = dummywork.work.manifestations[0];
-  return (
-    <Edition
-      material={manifestation}
-      work={work}
-      isLoading={false}
-      showOrderTxt={false}
-      singleManifestation={false}
-    />
-  );
-}
-
-export function editionAnyManifestationWithOrderTxt() {
-  const work = dummywork.work;
-  const manifestation = dummywork.work.manifestations[0];
-  return (
-    <Edition
-      material={manifestation}
-      work={work}
-      isLoading={false}
-      showOrderTxt={true}
-      singleManifestation={false}
-    />
   );
 }

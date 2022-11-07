@@ -4,7 +4,7 @@ import Text from "@/components/base/text/Text";
 import Top from "@/components/_modal/pages/base/top";
 import styles from "./References.module.css";
 import getConfig from "next/config";
-import { Edition } from "@/components/_modal/pages/order/Order.page";
+import Edition from "@/components/_modal/pages/edition/Edition";
 
 const onlinelinks = (pid) => {
   const APP_URL =
@@ -18,9 +18,8 @@ const onlinelinks = (pid) => {
 };
 
 export function References({ context }) {
-  const { pids, work, manifestation } = context;
+  const links = onlinelinks(context?.pids[0]);
 
-  const links = onlinelinks(pids[0]);
   const linkslist = Object.keys(links).map((onlinekey) => (
     <li className={styles.list} key={onlinekey}>
       <Link
@@ -41,6 +40,7 @@ export function References({ context }) {
       </Text>
     </li>
   ));
+
   return (
     <div>
       <div className={styles.options}>
@@ -53,12 +53,9 @@ export function References({ context }) {
       </div>
       <div className={styles.item}>
         <Edition
-          material={manifestation}
-          work={work}
-          isLoading={false}
           context={context}
-          showOrderTxt={false}
           singleManifestation={true}
+          showOrderTxt={false}
         />
       </div>
 
