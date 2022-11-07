@@ -661,13 +661,43 @@ export function editionWork({ workId }) {
         titles {
           full
         }
-        
         materialTypes {
           specific
         }
         workTypes
       }
       monitor(name: "bibdknext_edition_work")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function listOfAllManifestations({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query listOfAllManifestations($workId: String!) {
+      work(id: $workId) {
+        manifestations {
+          all {
+            pid
+            volume
+            titles {
+              main
+            }
+            materialTypes {
+              specific
+            }
+            edition {
+              publicationYear {
+                display
+              }
+            }
+          }
+        }
+      }
+      monitor(name: "bibdknext_list_of_all_manifestations")
     }`,
     variables: { workId },
     slowThreshold: 3000,
