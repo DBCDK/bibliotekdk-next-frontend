@@ -20,7 +20,6 @@ function getContext(template) {
       return {
         template: Single,
         numberOfArticles: 1,
-        // background: "var(--pippin)",
       };
     case "double":
       return {
