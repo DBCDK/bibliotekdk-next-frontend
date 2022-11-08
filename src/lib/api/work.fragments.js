@@ -660,6 +660,7 @@ export function fbiOverviewDetail({ workId }) {
                   loanIsPossible
                 }
                 ... on AccessUrl {
+                  origin
                   url
                   loginRequired
                 }

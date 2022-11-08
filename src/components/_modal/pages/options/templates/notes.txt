@@ -1,0 +1,4 @@
+infomedia: infomediaId, title_author, className, workId
+online: url, origin, note, className, materialType
+orderlink: workId, className
+webarchive: url, note

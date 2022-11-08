@@ -136,6 +136,8 @@ export function Options({ data, isLoading, modal, context }) {
 }
 
 export default function Wrap(props) {
+  console.log(props, "OPTIONS PROPS");
+
   const { workId } = props.context;
   // Fetch work data
   const { data, isLoading, error } = useData(workFragments.details({ workId }));

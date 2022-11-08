@@ -1,0 +1,2765 @@
+{
+  "workId": "work-of:800010-katalog:99122063770705763",
+  "workTypes": [
+  "LITERATURE"
+],
+  "genreAndForm": [
+  "roman",
+  "science fiction",
+  "fremtidsfortællinger",
+  "ordbog"
+],
+  "creators": [
+  {
+    "display": "H. G. Wells"
+  }
+],
+  "materialTypes": [
+  {
+    "specific": "punktskrift"
+  },
+  {
+    "specific": "lydbog (net)"
+  },
+  {
+    "specific": "ebog"
+  },
+  {
+    "specific": "bog"
+  },
+  {
+    "specific": "lydbog (bånd)"
+  },
+  {
+    "specific": "lydbog (cd-mp3)"
+  }
+],
+  "titles": {
+  "full": [
+    "Klodernes kamp"
+  ]
+},
+  "manifestations": {
+  "all": [
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "223 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1941"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "187 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1986"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Jannick Storm",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": []
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "science fiction",
+        "fremtidsfortællinger"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "187 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2005"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "209 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1967"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "220 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1963"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "208 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1967"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://www.kb.dk/e-mat/dod/11580809384B-color.pdf",
+          "loginRequired": false
+        },
+        {
+          "__typename": "AccessUrl",
+          "url": "https://www.kb.dk/e-mat/dod/11580809384B-bw.pdf",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [
+        "ordbog"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "2016"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog stor skrift"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "iii, 326 sider (stor skrift)"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2018"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://ereolen.dk/ting/object/870970-basis:47006465",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "200 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2019"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "219 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1963"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "208 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1967"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "234 s."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1951"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [
+        "science fiction",
+        "fremtidsfortællinger"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "223 S."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1941"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "188 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1974"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "209 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1967"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "illustreret ; 279 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2020"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Henrique Alvim Corrêa",
+          "roles": [
+            {
+              "functionCode": "ill",
+              "function": {
+                "plural": "illustratorer",
+                "singular": "illustrator"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Niels Dalgaard)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "243 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2021"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Niels Dalgaard",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            },
+            {
+              "functionCode": "aft",
+              "function": {
+                "plural": "efterord",
+                "singular": "efterord"
+              }
+            }
+          ]
+        },
+        {
+          "display": "Science Fiction Cirklen",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "207 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2022"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "1941"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H.G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "188 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1974"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Nyt Dansk Litteraturselskab)"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "209 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1967"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "223 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1963"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "lydbog (bånd)"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Paul Becker)"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "5 kassetter, mono ; 435 min., i 1 boks"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1983"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Paul Becker",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "187 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1986"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "lydbog (bånd)"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Peter Damm-Ottesen)"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "5 kassetter, mono ; 380 min., i 1 mappe"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "©1990"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Peter Damm-Ottesen",
+          "roles": [
+            {
+              "functionCode": "dkind",
+              "function": {
+                "plural": "indlæsere",
+                "singular": "indlæser"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25805488&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=ecfa3a07c88bf6d245c8"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "187 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2005"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "fremtidsfortællinger"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "223 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1941"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46958454&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=cae23659fcd2c164e97c"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "200 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2019"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=48639941&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=c5b9bdb7b9a02b386180"
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp (Ill. Henrique Alvim Corrêa)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "2020"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Henrique Alvim Corrêa",
+          "roles": [
+            {
+              "functionCode": "ill",
+              "function": {
+                "plural": "illustratorer",
+                "singular": "illustrator"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=48691412&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=55b1679c006ead7b8c85"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes Kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "illustreret ; 279 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2020"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Henrique Alvim Corrêa",
+          "roles": [
+            {
+              "functionCode": "ill",
+              "function": {
+                "plural": "illustratorer",
+                "singular": "illustrator"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "234 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "1951"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52822378&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0a31b297b07ba31cd8bc"
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "2017"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Kim N. Jensen",
+          "roles": [
+            {
+              "functionCode": "edt",
+              "function": {
+                "plural": "redaktører",
+                "singular": "redaktør"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52849985&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=cde09960bd2d196a801d"
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "2017"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://ereolen.dk/ting/object/870970-basis:54627890",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54627890&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=18164efa1b806ca0e569"
+      },
+      "materialTypes": [
+        {
+          "specific": "lydbog (net)"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "6 t., 10 min."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2018"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Johan Olsen (f. 1969)",
+          "roles": [
+            {
+              "functionCode": "dkind",
+              "function": {
+                "plural": "indlæsere",
+                "singular": "indlæser"
+              }
+            }
+          ]
+        },
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "lydbog (cd-mp3)"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (mp3)"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "1 cd i 1 mappe, mp3 ; 6 t., 10 min."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2018"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Johan Olsen (f. 1969)",
+          "roles": [
+            {
+              "functionCode": "dkind",
+              "function": {
+                "plural": "indlæsere",
+                "singular": "indlæser"
+              }
+            }
+          ]
+        },
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54926391&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=847441b94c1b387ba182"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog stor skrift"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved J. Storm, Magnumbøger)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "iii, 326 sider (stor skrift)"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2018"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=61713778&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=415d46f1884419da5ff6"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Niels Dalgaard)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "243 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2021"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Niels Dalgaard",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            },
+            {
+              "functionCode": "aft",
+              "function": {
+                "plural": "efterord",
+                "singular": "efterord"
+              }
+            }
+          ]
+        },
+        {
+          "display": "Science Fiction Cirklen",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=62232811&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=633f77560b24fec5e156"
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "207 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2022"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Jannick Storm",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            }
+          ]
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=62908556&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=14ab5ca6b41f48502bce"
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Niels Dalgaard)"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "romaner"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [],
+      "edition": {
+        "publicationYear": {
+          "display": "2022"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Niels Dalgaard",
+          "roles": [
+            {
+              "functionCode": "trl",
+              "function": {
+                "plural": "oversættere",
+                "singular": "oversætter"
+              }
+            },
+            {
+              "functionCode": "aft",
+              "function": {
+                "plural": "efterord",
+                "singular": "efterord"
+              }
+            }
+          ]
+        },
+        {
+          "display": "Science Fiction Cirklen",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://nota.dk/bibliotek/bogid/24365",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "lydbog (net)"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "06 t., 41 min."
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2004"
+        }
+      },
+      "contributors": [
+        {
+          "display": "Paul Becker",
+          "roles": []
+        }
+      ],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://nota.dk/bibliotek/bogid/106054",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "punktskrift"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "5 bind"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2006"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "AccessUrl",
+          "url": "https://nota.dk/bibliotek/bogid/706118",
+          "loginRequired": false
+        },
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": false
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "ebog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp"
+        ]
+      },
+      "genreAndForm": [
+        "roman",
+        "science fiction",
+        "fremtidsfortællinger"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "Antal tegn: 343346"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2006"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "access": [
+        {
+          "__typename": "InterLibraryLoan",
+          "loanIsPossible": true
+        }
+      ],
+      "cover": {
+        "detail": null
+      },
+      "materialTypes": [
+        {
+          "specific": "bog"
+        }
+      ],
+      "titles": {
+        "main": [
+          "Klodernes kamp (Ved Jannick Storm)"
+        ]
+      },
+      "genreAndForm": [
+        "science fiction"
+      ],
+      "languages": {
+        "subtitles": [],
+        "spoken": [],
+        "main": [
+          {
+            "display": "dansk"
+          }
+        ]
+      },
+      "physicalDescriptions": [
+        {
+          "summary": "187 sider"
+        }
+      ],
+      "edition": {
+        "publicationYear": {
+          "display": "2005"
+        }
+      },
+      "contributors": [],
+      "creators": [
+        {
+          "display": "H. G. Wells",
+          "roles": [
+            {
+              "functionCode": "aut",
+              "function": {
+                "singular": "forfatter"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+}
