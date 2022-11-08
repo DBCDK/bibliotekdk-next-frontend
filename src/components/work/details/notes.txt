@@ -1,8 +1,0 @@
-language
-creators
-genre (no subjects)
-physicalDescription
-publicationYear
-contributors/creators ?
-
-
