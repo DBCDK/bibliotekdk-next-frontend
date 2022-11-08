@@ -1,6 +1,6 @@
 import { getIsPeriodicaLike } from "@/lib/utils";
 
-export function inferCheckers(
+export function inferAccessTypes(
   work,
   context,
   manifestations,
