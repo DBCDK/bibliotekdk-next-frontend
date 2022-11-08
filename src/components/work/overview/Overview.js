@@ -79,12 +79,25 @@ function MaterialTypeArray(
     }
   }
 
+  // sort materialtypes
+
+  materialTypes?.sort(function (a, b) {
+    if (a.specific > b.specific) {
+      return 11;
+    }
+    if (b.specific > a.specific) {
+      return -1;
+    }
+    return 0;
+  });
+
   return materialTypes?.map((material) => {
     //  Sets isSelected flag if button should be selected
+
     return (
       <Tag
         key={material.specific}
-        selected={material.specific === selectedMaterial.specific}
+        selected={material.specific === selectedMaterial.materialType}
         onClick={() => handleSelectedMaterial(material, type)}
         skeleton={skeleton}
       >
@@ -110,15 +123,11 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
-  console.log(fbiWork, "FBIWORK");
-
   const materialPids = selectMaterialBasedOnType(
     fbiWork?.data?.work?.manifestations?.all,
     type
   );
   const selectedPids = materialPids?.map((mat) => mat?.pid);
-
-  console.log(selectedPids, "SELECTED PIDS");
 
   const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
     (materialType) => materialType.specific
@@ -141,8 +150,6 @@ export function Overview({
     fbiManifestations,
     type
   );
-
-  console.log(selectedMaterial, "SELECTED");
 
   /**
    * NOTE
@@ -168,7 +175,7 @@ export function Overview({
               >
                 <Bookmark
                   skeleton={skeleton || !selectedMaterial.cover}
-                  title={fbiWork?.titles?.full[0]}
+                  title={fbiWork?.data?.work?.titles?.full[0]}
                 />
               </Cover>
             </Row>
@@ -306,7 +313,6 @@ export default function Wrap(props) {
   return (
     <Overview
       fbiWork={fbiWork}
-      //work={merged.work}
       workId={workId}
       type={type}
       onTypeChange={onTypeChange}
