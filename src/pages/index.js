@@ -58,11 +58,7 @@ const Index = () => {
           matchTag="section 1"
           template="triple"
         />
-        <ArticleSection
-          title={Translate({ context: "index", label: "section2" })}
-          matchTag="section 2"
-          template="triple"
-        />
+
         <ArticleSection
           title={Translate({ context: "index", label: "section3" })}
           matchTag="section 3"
@@ -76,6 +72,11 @@ const Index = () => {
           })}
           category="fiction"
           filter="nyeste"
+        />
+        <ArticleSection
+          title={Translate({ context: "index", label: "section2" })}
+          matchTag="section 2"
+          template="triple"
         />
       </div>
     </React.Fragment>
