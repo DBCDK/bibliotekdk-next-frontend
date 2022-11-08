@@ -18,25 +18,35 @@ import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
 import { useEffect } from "react";
+import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
 
-function selectMaterialBasedOnType_TempUsingAlfaApi(materialTypes, type) {
-  // Creates MaterialTypes as an index
-  const materialTypesMap = {};
-  materialTypes?.forEach((m) => {
-    materialTypesMap[m.materialType] = m;
-  });
+function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
+  const filteredManifestations = fbiManifestations?.filter(
+    (manifestation) => manifestation?.materialTypes?.[0]?.specific === type
+  );
 
-  return materialTypesMap[type] || materialTypes?.[0] || false;
+  const manifestationWithCover = filteredManifestations?.find(
+    (manifestation) => manifestation.cover.detail
+  );
+  const coverImage = manifestationWithCover
+    ? { detail: manifestationWithCover.cover.detail }
+    : { detail: null };
+
+  return {
+    cover: coverImage,
+    manifestations: filteredManifestations,
+    materialType: type,
+  };
 }
 
 function CreatorsArray(creators, skeleton) {
   const searchOnUrl = "/find?q.creator=";
   return creators?.map((creator, index) => {
     return (
-      <span key={`${creator.name}-${index}`}>
+      <span key={`${creator.display}-${index}`}>
         <Link
           disabled={skeleton}
-          href={`${searchOnUrl}${creator.name}`}
+          href={`${searchOnUrl}${creator.display}`}
           border={{ top: false, bottom: { keepVisible: true } }}
         >
           <Text
@@ -45,7 +55,7 @@ function CreatorsArray(creators, skeleton) {
             skeleton={skeleton}
             lines={1}
           >
-            {creator.name}
+            {creator.display}
           </Text>
         </Link>
         {creators?.length > index + 1 ? ", " : ""}
@@ -64,21 +74,34 @@ function MaterialTypeArray(
   // Handle selectedMaterial
   function handleSelectedMaterial(material, type) {
     // Update query param callback
-    if (type !== material.materialType) {
-      onTypeChange({ type: material.materialType });
+    if (type !== material.specific) {
+      onTypeChange({ type: material.specific });
     }
   }
 
+  // sort materialtypes
+
+  materialTypes?.sort(function (a, b) {
+    if (a.specific > b.specific) {
+      return 11;
+    }
+    if (b.specific > a.specific) {
+      return -1;
+    }
+    return 0;
+  });
+
   return materialTypes?.map((material) => {
     //  Sets isSelected flag if button should be selected
+
     return (
       <Tag
-        key={material.materialType}
-        selected={material.materialType === selectedMaterial.materialType}
+        key={material.specific}
+        selected={material.specific === selectedMaterial.materialType}
         onClick={() => handleSelectedMaterial(material, type)}
         skeleton={skeleton}
       >
-        {material.materialType}
+        {material.specific}
       </Tag>
     );
   });
@@ -93,29 +116,46 @@ function MaterialTypeArray(
  * @returns {JSX.Element}
  */
 export function Overview({
-  work,
+  fbiWork,
   workId,
-  selectedPids,
   type,
   onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
-  const validMaterialTypes = work?.materialTypes.map(
-    (materialType) => materialType.materialType
+  const materialPids = selectMaterialBasedOnType(
+    fbiWork?.data?.work?.manifestations?.all,
+    type
   );
+  const selectedPids = materialPids?.map((mat) => mat?.pid);
+
+  const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
+    (materialType) => materialType.specific
+  );
+
   useEffect(() => {
     if (type === null || !validMaterialTypes?.includes(type)) {
-      onTypeChange({ type: work?.materialTypes?.[0]?.materialType });
+      onTypeChange({
+        type: fbiWork?.data?.work?.materialTypes?.[0]?.specific,
+      });
     }
   }, [type]);
 
+  const fbiManifestations = fbiWork?.data?.work?.manifestations.all;
   // Either use type from props, or from local state
+  /*
+  NOT cover, manifestations, materialType
+   */
   const selectedMaterial = selectMaterialBasedOnType_TempUsingAlfaApi(
-    work?.materialTypes,
+    fbiManifestations,
     type
   );
 
+  /**
+   * NOTE
+   * - materialtypes array
+   * - Creators array
+   */
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -129,13 +169,13 @@ export function Overview({
           >
             <Row>
               <Cover
-                src={selectedMaterial?.cover?.detail || work?.materialTypes}
+                src={selectedMaterial?.cover?.detail || fbiWork?.materialTypes}
                 skeleton={skeleton || !selectedMaterial.cover}
                 size="large"
               >
                 <Bookmark
                   skeleton={skeleton || !selectedMaterial.cover}
-                  title={work?.title}
+                  title={fbiWork?.data?.work?.titles?.full?.[0]}
                 />
               </Cover>
             </Row>
@@ -145,7 +185,7 @@ export function Overview({
             <Row>
               <Col xs={12}>
                 <Title type="title3" skeleton={skeleton}>
-                  {work?.fullTitle}
+                  {fbiWork?.data?.work?.titles?.full[0]}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
@@ -156,10 +196,10 @@ export function Overview({
                   alt=""
                 />
               </Col>
-              <Col xs={12}>{CreatorsArray(work?.creators)}</Col>
+              <Col xs={12}>{CreatorsArray(fbiWork?.data?.work?.creators)}</Col>
               <Col xs={12} className={styles.materials}>
                 {MaterialTypeArray(
-                  work?.materialTypes,
+                  fbiWork?.data?.work?.materialTypes,
                   selectedMaterial,
                   skeleton,
                   onTypeChange,
@@ -253,27 +293,20 @@ export default function Wrap(props) {
   const { workId, type, onTypeChange, login } = props;
   const user = useUser();
 
-  // use the useData hook to fetch data
-  const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
-  const details = useData(workFragments.details({ workId }));
-  const covers = useData(workFragments.covers({ workId }));
-  const merged = merge({}, covers.data, buttonTxt.data, details.data);
+  const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
 
-  const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
-
-  if (buttonTxt.isLoading) {
-    return <OverviewSkeleton isSlow={buttonTxt.isSlow} />;
+  if (fbiWork.isLoading) {
+    return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
   }
 
-  if (buttonTxt.error || details.error) {
+  if (fbiWork.error || fbiWork.error) {
     return <OverviewError />;
   }
 
   return (
     <Overview
-      work={merged.work}
+      fbiWork={fbiWork}
       workId={workId}
-      selectedPids={selectedPids}
       type={type}
       onTypeChange={onTypeChange}
       login={login}

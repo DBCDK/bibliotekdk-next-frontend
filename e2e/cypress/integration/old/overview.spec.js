@@ -28,7 +28,7 @@ describe("Overview", () => {
     cy.tabs(2);
     cy.focused().should("have.attr", "data-cy", "tag-bog");
 
-    cy.tabs(6);
+    cy.tabs(5);
     cy.focused().should("have.attr", "data-cy", "tag-punktskrift");
   });
 
@@ -55,7 +55,7 @@ describe("Overview", () => {
   });
 
   it(`Can click on button tag`, () => {
-    const tag = "tag-e-bog";
+    const tag = "tag-ebog";
     const tag2 = "tag-bog";
 
     cy.get(`[data-cy=${tag}]`).children("i").should("not.be.visible");

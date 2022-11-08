@@ -633,8 +633,7 @@ export function buttonTxt_TempForAlfaApi({ workId }) {
   };
 }
 
-export function overViewDetails({ workId }) {
-  // for fbi-api - see components/work/details/Detail.js
+export function fbiOverviewDetail({ workId }) {
   return {
     // delay: 4000, // for debugging
     apiUrl: ApiEnums.FBI_API,
@@ -642,9 +641,43 @@ export function overViewDetails({ workId }) {
         work(id: $workId) {
           workId
           workTypes
-          genreAndForm     
+          genreAndForm 
+          creators {
+            display
+          }
+          materialTypes {
+            specific
+          }
+          titles {
+            full
+          }                                  
           manifestations {
             all {
+              pid
+              access {
+                __typename
+                ... on InterLibraryLoan {
+                  loanIsPossible
+                }
+                ... on AccessUrl {
+                  url
+                  loginRequired
+                }
+                ... on Ereol {
+                  origin
+                  url
+                  canAlwaysBeLoaned
+                }
+                ... on InfomediaService {
+                  id
+                }
+                ... on DigitalArticleService {
+                  issn
+                }
+              }
+              cover {
+                detail
+              }              
               materialTypes {
                 specific
               }

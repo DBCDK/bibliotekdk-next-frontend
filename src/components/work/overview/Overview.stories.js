@@ -1,8 +1,9 @@
 import { useState } from "react";
-import dummy_workDataApi_TempUsingAlfaApi from "../dummy.workDataApi";
+import dummy_workDataApi from "../dummy.workDataApi";
 import { OverviewSkeleton, Overview } from "./Overview";
+import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
-import { StoryTitle, StoryDescription } from "@/storybook";
+const dummyOverviewData = require("../dummy.overViewWorkapi.json");
 
 const exportedObject = {
   title: "work/Overview",
@@ -15,9 +16,12 @@ export default exportedObject;
  *
  */
 export function WorkOverview() {
-  const workId = "some-id";
-  const data = dummy_workDataApi_TempUsingAlfaApi({ workId: workId });
-  const [type, setType] = useState();
+  const data = dummyOverviewData;
+
+  const fbiWork = {
+    data: { work: data, isLoading: false, isSlow: false },
+  };
+  const [type, setType] = useState("bog");
   return (
     <div>
       <StoryTitle>Overview - not logged in</StoryTitle>
@@ -25,11 +29,11 @@ export function WorkOverview() {
         user is not logged in - order button logs user in
       </StoryDescription>
       <Overview
-        work={data.work}
+        fbiWork={fbiWork}
+        workId="work-of:800010-katalog:99122063770705763"
         type={type}
         onTypeChange={(el) => setType(el.type)}
         onOnlineAccess={(el) => alert(el)}
-        workId={workId}
       />
     </div>
   );
