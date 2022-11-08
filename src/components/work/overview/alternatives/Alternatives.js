@@ -5,10 +5,12 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
 
-export function AlternativeOptions({ modal = null, fisk = {} }) {
-  const { selectedMaterial } = { ...fisk };
+export function AlternativeOptions({ modal = null, context = {} }) {
+  const { selectedMaterial, type, workId } = { ...context };
 
   const manifestations = selectedMaterial?.manifestations;
+
+  // @TODO where to get requestbutton
   const requestButton = true;
   const allOnline = [];
   // run through manifestions to get ALL onlineaccess
@@ -40,7 +42,9 @@ export function AlternativeOptions({ modal = null, fisk = {} }) {
         onClick={() =>
           modal.push("options", {
             title: Translate({ context: "modal", label: "title-options" }),
-            ...fisk,
+            type: type,
+            onlineAccess: onlineAccess,
+            workId: workId,
           })
         }
       >
@@ -57,8 +61,6 @@ export function AlternativeOptions({ modal = null, fisk = {} }) {
 }
 
 export default function Wrap({ selectedMaterial }) {
-  console.log(selectedMaterial, "SELECTED MATERIAL");
-
   const modal = useModal();
   const router = useRouter();
 
@@ -67,7 +69,7 @@ export default function Wrap({ selectedMaterial }) {
   return (
     <AlternativeOptions
       modal={modal}
-      fisk={{
+      context={{
         workId,
         title_author,
         type,
