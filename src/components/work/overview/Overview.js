@@ -294,13 +294,6 @@ export default function Wrap(props) {
   const user = useUser();
 
   const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
-  // use the useData hook to fetch data
-  //const buttonTxt = useData(workFragments.buttonTxt_TempForAlfaApi({ workId }));
-  //const details = useData(workFragments.details({ workId }));
-  //const covers = useData(workFragments.covers({ workId }));
-  //const merged = merge({}, covers.data, buttonTxt.data, details.data);
-
-  //const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
 
   if (fbiWork.isLoading) {
     return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
