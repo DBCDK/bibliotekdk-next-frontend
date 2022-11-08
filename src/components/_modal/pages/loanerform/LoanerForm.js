@@ -368,6 +368,41 @@ export function LoanerForm({
   );
 }
 
+/**
+ * Get a callback url for sign in.
+ *
+ * Remove modals except for the third one.
+ *     scenarios:
+ *     a. user logins from a page eg. infomedia
+ *     b. user logins from a modal eg. order
+ *       if user logins in from a modal the top stack will be the original modal.
+ *       two last elements in stack are "login" and "loanerform" - login ALWAYS
+ *       happens via - login->loanerform -- so if user comes from another modal
+ *       it will be on top - redirect to that
+ *
+ * @param modal
+ * @param pickupBranch
+ * @returns {string}
+ */
+function getCallbackUrl(modal, pickupBranch) {
+  const stack = modal.stack;
+  let callback = window.location.href;
+  // remove modal from callback - if any
+  const regex = /[&|?]modal=[0-9]*/;
+  callback = callback.replace(regex, "");
+  if (stack.length > 2) {
+    // pick top element in stack
+    callback =
+      callback + (callback.includes("?") ? "&" : "?") + "modal=" + stack[0].uid;
+  }
+  return pickupBranch
+    ? callback +
+        (callback.includes("?") ? "&" : "?") +
+        "setPickupAgency=" +
+        pickupBranch
+    : callback;
+}
+
 LoanerForm.propTypes = {
   branch: PropTypes.object,
   onSubmit: PropTypes.func,
@@ -389,8 +424,7 @@ LoanerForm.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { active } = props;
-  const { branchId, pid, doPolicyCheck, clear, originUrl } = props.context;
+  const { branchId, pid, doPolicyCheck, clear } = props.context;
 
   // Branch userparams fetch (Fast)
   const { data, isLoading: branchIsLoading } = useData(
@@ -441,30 +475,22 @@ export default function Wrap(props) {
 
   useEffect(() => {
     if (loggedOut && branch?.agencyId) {
+      const callback = getCallbackUrl(props.modal, branch?.branchId);
       (async () => {
-        signIn("adgangsplatformen", {}, { agency: branch?.agencyId });
+        signIn(
+          "adgangsplatformen",
+          { callbackUrl: callback },
+          { agency: branch?.agencyId }
+        );
       })();
     }
   }, [loggedOut]);
-
-  // Handle if user just logged in via adgangsplatform
-  useEffect(() => {
-    if (
-      !userIsLoading &&
-      active &&
-      loggedInAgencyId &&
-      loggedInAgencyId === branch?.agencyId
-    ) {
-      onSubmit();
-    }
-  }, [loggedInAgencyId, branch?.agencyId, userIsLoading, active]);
 
   if (!branchId) {
     return null;
   }
 
   const digitalCopyAccess = branch?.digitalCopyAccess;
-
   return (
     <>
       {beginLogout && (
@@ -473,7 +499,11 @@ export default function Wrap(props) {
         // Remove this, when its possible to log in via an agency without logging out first
         <iframe
           style={{ display: "none" }}
-          onLoad={() => setLoggedOut(true)}
+          onLoad={() =>
+            setTimeout(() => {
+              setLoggedOut(true);
+            }, 100)
+          }
           src={`https://login.bib.dk/logout?access_token=${accessToken}`}
         />
       )}
@@ -490,12 +520,7 @@ export default function Wrap(props) {
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
-        onClose={() =>
-          props.modal.push("login", {
-            mode: LOGIN_MODE.DDA,
-            originUrl,
-          })
-        }
+        onClose={() => props.modal.prev()}
       />
     </>
   );

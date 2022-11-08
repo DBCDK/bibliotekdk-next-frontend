@@ -1,68 +1,35 @@
-.background {
-  padding: 0 0 var(--pt8) 0;
+.title {
+  padding-bottom: var(--pt3);
 }
 
-.topSpace {
-  padding-top: var(--pt8);
-}
-
-.background section:last-child {
-  padding: var(--pt8) 0 0 0;
-}
-
-.divider {
+/* has divider class */
+hr.divider {
   width: 50%;
   height: 1px;
   margin: 0 0 var(--pt2) 0;
   border: none;
-}
-
-.bottomspacing {
-  padding: 0 0 var(--pt1) 0;
-}
-
-.section div:first-child .divider {
   background-color: var(--iron);
 }
 
-.background .divider {
-  background-color: transparent;
-}
-
-.background .section div:first-child .divider {
+.content hr.divider {
+  width: 100%;
   display: none;
 }
 
-.noTitleDivider {
-  padding-top: var(--pt2);
-}
-
-.hide {
-  display: none;
+.background hr.divider {
+  display: none !important;
 }
 
 @media (min-width: 992px) {
-  .divider {
+  .title {
+    padding-bottom: 0;
+  }
+
+  .title hr.divider {
     width: 100%;
-    background-color: var(--iron);
   }
 
-  .bottomspacing {
-    padding: 0;
-  }
-
-  .background .divider {
-    display: none;
-  }
-
-  .noTitleDivider,
-  .noContentDivider {
-    padding-top: 0;
-  }
-}
-
-@media (max-width: 992px) {
-  .topSpace {
-    padding-top: 0;
+  .content hr.divider {
+    display: block;
   }
 }

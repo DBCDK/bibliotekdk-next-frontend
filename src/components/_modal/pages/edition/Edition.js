@@ -28,7 +28,9 @@ export function Edition_TempUsingAlfaApi({
 }) {
   const { cover: workCover, creators: workCreators = [{ name: "..." }] } = work;
 
-  const { creators = workCreators, cover = workCover, materialType } = material;
+  const creators = material?.creators || workCreators;
+  const cover = material?.cover || workCover;
+  const materialType = material?.materialType;
 
   return (
     <div className={styles.edition}>

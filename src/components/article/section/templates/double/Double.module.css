@@ -4,10 +4,8 @@
   padding: 0;
 }
 
-@media (min-width: 768px) {
-  .wrap {
-    flex-direction: row;
-  }
+.wrap > div:not(:last-child) {
+  margin-bottom: var(--pt5);
 }
 
 .article:first-child {
@@ -32,4 +30,14 @@
     var(--jagged-ice) 50%,
     transparent 100%
   );
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    flex-direction: row;
+  }
+
+  .wrap > div:first-child {
+    margin-bottom: 0;
+  }
 }

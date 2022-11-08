@@ -1,9 +1,5 @@
-.section {
-  padding-top: var(--pt4);
-}
-
-.titledivider {
-  display: none;
+.section :global(.section-title) {
+  padding-bottom: 0;
 }
 
 .titlewrapper {
@@ -77,10 +73,6 @@
 }
 
 @media (max-width: 768px) {
-  .titledivider {
-    display: block;
-  }
-
   .titlewrapper .viewselector {
     display: none;
   }

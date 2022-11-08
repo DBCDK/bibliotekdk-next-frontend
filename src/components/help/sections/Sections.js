@@ -38,8 +38,7 @@ export function Sections({ className, data, skeleton }) {
       <Section
         className={`${styles.sections} ${className}`}
         title={<Icon size={{ w: 6, h: "auto" }} src={"ornament1.svg"} />}
-        titleDivider={false}
-        contentDivider={false}
+        divider={false}
       >
         <Row>
           <Col lg="8">
@@ -56,7 +55,8 @@ export function Sections({ className, data, skeleton }) {
         return (
           <Section
             className={`${className} ${styles.section}`}
-            contentDivider={false}
+            divider={{ content: false }}
+            space={{ bottom: false }}
             title={
               <Title type="title4" skeleton={skeleton}>
                 {Translate({ context: "helpmenu", label: `${group_name}` })}

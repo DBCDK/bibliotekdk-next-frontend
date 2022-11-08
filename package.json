@@ -16,8 +16,8 @@
     "cy:run": "npx cypress@9 run --project ./e2e",
     "cy:open": "npx cypress@9 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js'",
-    "test": "jest src/",
-    "test-watch": "jest src/ --watch",
+    "test:run": "jest src/",
+    "test:watch": "jest src/ --watch",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"
   },
   "author": "Frontend @ DBC",
@@ -46,7 +46,7 @@
     "style-loader": "^1.1.2"
   },
   "dependencies": {
-    "@dbcdk/login-nextjs": "^3.2.0",
+    "@dbcdk/login-nextjs": "^3.2.2",
     "@rooks/use-mutation-observer": "^4.11.0",
     "autosuggest-highlight": "^3.1.1",
     "bootstrap": "^4.5.0",

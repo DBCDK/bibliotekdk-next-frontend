@@ -74,8 +74,8 @@ export function Related({ data, hitcount, isLoading }) {
 
   return (
     <Section
-      contentDivider={null}
-      titleDivider={null}
+      divider={false}
+      space={{ bottom: "var(--pt4)" }}
       className={styles.section}
       title={
         !isMobile && (

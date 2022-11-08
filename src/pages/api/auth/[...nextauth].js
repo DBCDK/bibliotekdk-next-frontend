@@ -30,6 +30,11 @@ export const options = {
   debug: false,
   callbacks: {
     ...callbacks,
+    session: async (...args) => {
+      let res = await callbacks.session(...args);
+      delete res?.user?.agencies;
+      return res;
+    },
   },
 };
 

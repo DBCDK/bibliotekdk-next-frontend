@@ -27,7 +27,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   const context = { context: "content" };
 
   return (
-    <Section title={Translate({ ...context, label: "title" })} topSpace={true}>
+    <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.content} ${className}`}>
         {data?.tableOfContents?.listOfContent?.map((n, i) => {
           return (

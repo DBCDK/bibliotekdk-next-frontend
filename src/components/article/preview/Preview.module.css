@@ -34,8 +34,8 @@
 /* Preview focus and hover */
 .preview:focus .arrow > div,
 .preview:hover .arrow > div {
-  border-left: 0px;
-  border-right: 0px;
+  border-left: 0;
+  border-right: 0;
   width: 3px;
 }
 .preview:focus .arrow > div:nth-child(1),
@@ -53,10 +53,4 @@
 .preview:focus .arrow > div:nth-child(4),
 .preview:hover .arrow > div:nth-child(4) {
   transform: translateX(30px) translateY(4px) rotate(90deg) scaleY(1.25);
-}
-
-@media (max-width: 992px) {
-  .preview{
-    margin-bottom: var(--pt5);
-  }
 }

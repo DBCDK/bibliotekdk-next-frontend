@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Col, Row } from "react-bootstrap";
 import ArticlePreview from "@/components/article/preview";
+import styles from "./Triple.module.css";
 
 /**
  * @file
@@ -16,7 +17,7 @@ import ArticlePreview from "@/components/article/preview";
  */
 export default function Triple({ articles, skeleton }) {
   return (
-    <Row>
+    <Row className={styles.container}>
       {articles.map((article, index) => (
         <Col xs={12} md={4} key={`${article.title}_${index}`}>
           <ArticlePreview article={article} skeleton={skeleton} />
