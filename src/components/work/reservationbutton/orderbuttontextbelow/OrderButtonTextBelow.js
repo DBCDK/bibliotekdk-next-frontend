@@ -37,6 +37,7 @@ export function OrderButtonTextBelow({ work, skeleton }) {
 
   const access = selectedManifestations?.access;
 
+  // @TODO infomedia
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodicaLike),

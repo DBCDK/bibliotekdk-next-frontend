@@ -21,12 +21,10 @@ import { useEffect } from "react";
 import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
 
 function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
-  // filter on type
-  const filteredManifestations = fbiManifestations?.filter((manifestation) =>
-    manifestation?.materialTypes?.filter(
-      (matType) => matType.specific === type?.toLowerCase()
-    )
+  const filteredManifestations = fbiManifestations?.filter(
+    (manifestation) => manifestation?.materialTypes?.[0]?.specific === type
   );
+
   const manifestationWithCover = filteredManifestations?.find(
     (manifestation) => manifestation.cover.detail
   );
@@ -112,14 +110,15 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
+  console.log(fbiWork, "FBIWORK");
+
   const materialPids = selectMaterialBasedOnType(
     fbiWork?.data?.work?.manifestations?.all,
     type
   );
-
   const selectedPids = materialPids?.map((mat) => mat?.pid);
 
-  console.log(selectedPids);
+  console.log(selectedPids, "SELECTED PIDS");
 
   const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
     (materialType) => materialType.specific
@@ -142,6 +141,8 @@ export function Overview({
     fbiManifestations,
     type
   );
+
+  console.log(selectedMaterial, "SELECTED");
 
   /**
    * NOTE
@@ -293,8 +294,6 @@ export default function Wrap(props) {
   //const merged = merge({}, covers.data, buttonTxt.data, details.data);
 
   //const selectedPids = useGetPidsFromWorkIdAndType(workId, type);
-
-  console.log(fbiWork, "FBIWORK");
 
   if (fbiWork.isLoading) {
     return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
