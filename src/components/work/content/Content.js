@@ -9,6 +9,7 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
+import { useMemo } from "react";
 
 /**
  * The Component function
@@ -19,7 +20,7 @@ import styles from "./Content.module.css";
  * @returns {component}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
-  if (!data.content || data.content.length === 0) {
+  if (!data?.tableOfContents?.listOfContent?.length) {
     return null;
   }
   // Translate Context
@@ -28,11 +29,11 @@ export function Content({ className = "", data = {}, skeleton = false }) {
   return (
     <Section title={Translate({ ...context, label: "title" })} topSpace={true}>
       <Row className={`${styles.content} ${className}`}>
-        {data.content.map((n, i) => {
+        {data?.tableOfContents?.listOfContent?.map((n, i) => {
           return (
-            <Col key={n + i} xs={12}>
+            <Col key={n.content + i} xs={12}>
               <Text type="text3" skeleton={skeleton} lines={8}>
-                {n}
+                {n.content}
               </Text>
             </Col>
           );
@@ -54,7 +55,7 @@ export function ContentSkeleton(props) {
   return (
     <Content
       {...props}
-      data={{ content: ["..."] }}
+      data={{ tableOfContents: { listOfContent: ["..."] } }}
       className={`${props.className} ${styles.skeleton}`}
       skeleton={true}
     />
@@ -72,7 +73,20 @@ export function ContentSkeleton(props) {
 export default function Wrap(props) {
   const { workId, type } = props;
 
-  const { data, isLoading, error } = useData(workFragments.details({ workId }));
+  const { data, isLoading, error } = useData(
+    workFragments.tableOfContents({ workId })
+  );
+
+  // Find manifestation of the right type that contains tableOfContents
+  const manifestation = useMemo(() => {
+    return data?.work?.manifestations?.all?.find(
+      (manifestation) =>
+        manifestation.tableOfContents &&
+        manifestation.materialTypes.find(
+          (t) => t.specific.toLowerCase() === type.toLowerCase()
+        )
+    );
+  }, [data]);
 
   if (error) {
     return null;
@@ -81,12 +95,7 @@ export default function Wrap(props) {
     return <ContentSkeleton {...props} />;
   }
 
-  // find the selected matieralType, use first element as fallback
-  const materialType =
-    data.work.materialTypes.find((element) => element.materialType === type) ||
-    data.work.materialTypes[0];
-
-  return <Content {...props} data={materialType?.manifestations?.[0]} />;
+  return <Content {...props} data={manifestation} />;
 }
 
 // PropTypes for component

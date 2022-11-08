@@ -1,5 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Search", () => {
@@ -9,12 +8,12 @@ describe("Search", () => {
 
     // click grid view, should be reflected in url
     /** PJO removed gridview and listview - they do not work yet .. if ever
-    cy.get('[data-cy="grid-button"]').first().click();
-    cy.url().should("include", "view=grid");
+     cy.get('[data-cy="grid-button"]').first().click();
+     cy.url().should("include", "view=grid");
 
-    // click list view, should be reflected in url
-    cy.get('[data-cy="list-button"]').first().click();
-    cy.url().should("include", "view=list");
+     // click list view, should be reflected in url
+     cy.get('[data-cy="list-button"]').first().click();
+     cy.url().should("include", "view=list");
      **/
 
     // click page 2, should be reflected in url

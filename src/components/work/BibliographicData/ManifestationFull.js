@@ -16,28 +16,29 @@ import LocalizationsLink from "@/components/work/overview/localizationslink/Loca
 import { useModal } from "@/components/_modal";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import { openReferencesModal } from "@/components/work/utils";
+import { useData } from "@/lib/api/api";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
 /**
  * Column one of full view. Some links and a button.
+ * @param workId
  * @param manifestation
- * @param localizations
- * @param work
  * @returns {JSX.Element}
  * @constructor
  */
-function ColumnOne({ work, workId, manifestation }) {
+function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
 
   return (
     <Col
-      key={"col1" + manifestation.pid}
+      key={"col1" + manifestation?.pid}
       xs={12}
       md={4}
       data-cy="bibliographic-column1"
       className={styles.fullmanifestation}
     >
-      {manifestation.cover && (
-        <Cover src={manifestation.cover.detail} size="thumbnail" />
+      {manifestation?.cover?.thumbnail && (
+        <Cover src={manifestation?.cover?.thumbnail} size="thumbnail" />
       )}
       <div>
         <ReservationButton
@@ -65,7 +66,7 @@ function ColumnOne({ work, workId, manifestation }) {
               openReferencesModal(
                 modal,
                 [manifestation?.pid],
-                work,
+                workId,
                 manifestation
               )
             }
@@ -85,26 +86,27 @@ function ColumnOne({ work, workId, manifestation }) {
 
 /**
  * Get the data to parse; parse it into 3 columns
- * @param manifestation
- * @param work
- * @param localizations
  * @param workId
+ * @param pid
+ * @param hasBeenSeen
  * @returns {JSX.Element}
  * @constructor
  */
-export default function ManifestationFull({ manifestation, work, workId }) {
-  // Parse manifestation, we use the useMemo hook such that the manifestation
-  // is not parsed on every rerender of the component
+export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
+  const { data } = useData(
+    hasBeenSeen && pid && manifestationFragments.manifestation({ pid: pid })
+  );
+
   const parsed = useMemo(() => {
-    return parseManifestation(manifestation);
-  }, [manifestation]);
+    return parseManifestation(data?.manifestation);
+  }, [data?.manifestation]);
 
   return (
     <Row>
-      <ColumnOne work={work} workId={workId} manifestation={manifestation} />
+      <ColumnOne workId={workId} manifestation={data?.manifestation} />
       <Col xs={12} md>
         <div className={styles.container}>
-          {parsed.map(({ label, value }) => {
+          {parsed?.map(({ label, value }) => {
             return (
               <div
                 className={styles.item}

@@ -30,3 +30,133 @@ export function ris(pid) {
     slowThreshold: 3000,
   };
 }
+
+export function manifestation({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query manifestation($pid: String!) {
+      manifestation(pid: $pid) {
+        ...manifestationCoverFragment
+        ...manifestationFragment
+      }
+      monitor(name: "bibdknext_manifestation_manifestation")
+    }
+    ${manifestationFragment}
+    ${manifestationCoverFragment}
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+export function editionManifestations({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query editionManifestations($pid: [String!]!) {
+      manifestations(pid: $pid) {
+        materialTypes {
+          specific
+        }
+        edition {
+          publicationYear {
+            display
+          }
+          edition
+        }
+        publisher
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        ...manifestationCoverFragment
+      }
+      monitor(name: "bibdknext_manifestation_manifestations")
+    }
+    ${manifestationCoverFragment}
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+const manifestationCoverFragment = `fragment manifestationCoverFragment on Manifestation {
+  cover {
+    detail
+    thumbnail
+  }
+}`;
+
+const manifestationFragment = `fragment manifestationFragment on Manifestation {
+  pid
+  titles {
+    main
+    full
+    original
+  }
+  creators {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  publisher
+  edition {
+    publicationYear {
+      display
+    }
+    edition
+  }
+  hostPublication {
+    summary
+  }
+  physicalDescriptions {
+    summary
+    extent
+  }
+  classifications {
+    system
+    display
+  }
+  languages {
+    original {
+      display
+    }
+    main {
+      display
+    }
+    spoken {
+      display
+    }
+    subtitles {
+      display
+    }
+  }
+  workYear
+  identifiers {
+    type
+    value
+  }
+  notes {
+    display
+  }
+  materialTypes {
+    specific
+  }
+  access {
+	  ...on DigitalArticleService {
+      issn
+    }
+  }
+}`;

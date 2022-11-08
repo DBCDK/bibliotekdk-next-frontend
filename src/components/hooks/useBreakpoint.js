@@ -19,25 +19,15 @@ const getDeviceConfig = (width) => {
 };
 
 const useBreakpoint = () => {
-  const [brkPnt, setBrkPnt] = useState(() => {
-    return typeof window !== "undefined"
-      ? getDeviceConfig(window?.innerWidth)
-      : null;
-  });
+  const [brkPnt, setBrkPnt] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const calcInnerWidth = throttle(function () {
-        setBrkPnt(getDeviceConfig(window?.innerWidth));
-      }, 200);
-      window?.addEventListener("resize", calcInnerWidth);
-      return () => window?.removeEventListener("resize", calcInnerWidth);
-    }
+    const calcInnerWidth = throttle(function () {
+      setBrkPnt(getDeviceConfig(window?.innerWidth));
+    }, 200);
+    window?.addEventListener("resize", calcInnerWidth);
+    return () => window?.removeEventListener("resize", calcInnerWidth);
   }, []);
-
-  if (typeof window === "undefined") {
-    return null;
-  }
 
   return brkPnt;
 };

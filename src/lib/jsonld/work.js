@@ -287,10 +287,9 @@ export function getJSONLD(work) {
       mainEntity = getCreativeWork({ ...ldWork });
   }
 
-  const res = {
+  return {
     "@context": "https://schema.org",
     "@type": "WebPage",
     mainEntity,
   };
-  return res;
 }
