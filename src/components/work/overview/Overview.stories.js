@@ -5,9 +5,11 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 
 const dummyOverviewData = require("../dummy.overViewWorkapi.json");
 
-export default {
+const exportedObject = {
   title: "work/Overview",
 };
+
+export default exportedObject;
 
 /**
  * Overview

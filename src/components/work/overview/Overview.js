@@ -175,7 +175,7 @@ export function Overview({
               >
                 <Bookmark
                   skeleton={skeleton || !selectedMaterial.cover}
-                  title={fbiWork?.data?.work?.titles?.full[0]}
+                  title={fbiWork?.data?.work?.titles?.full?.[0]}
                 />
               </Cover>
             </Row>
