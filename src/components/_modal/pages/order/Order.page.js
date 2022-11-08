@@ -1,208 +1,27 @@
-import { useState, useEffect, useMemo } from "react";
-
+import { useEffect, useMemo, useState } from "react";
 import filter from "lodash/filter";
 import merge from "lodash/merge";
-
 import { useData, useMutate } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import * as userFragments from "@/lib/api/user.fragments";
-import * as orderMutations from "@/lib/api/order.mutations";
-
-import useUser from "@/components/hooks/useUser";
-
 import Translate from "@/components/base/translate";
-
 import Top from "../base/top";
-
 import Button from "@/components/base/button";
 import Link from "@/components/base/link";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
-import Tag from "@/components/base/forms/tag";
 import Email from "@/components/base/forms/email";
-import Cover from "@/components/base/cover";
-import Arrow from "@/components/base/animation/arrow";
-
-import * as branchesFragments from "@/lib/api/branches.fragments";
-
-import animations from "@/components/base/animation/animations.module.css";
-
 import data from "./dummy.data";
-
 import styles from "./Order.module.css";
 import { getIsPeriodicaLike_TempUsingAlfaApi } from "@/lib/utils";
 import TjoolTjip from "@/components/base/tjooltjip";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
-
-function LinkArrow({ onClick, disabled, children, className = "" }) {
-  return (
-    <div
-      className={`${styles.link} ${animations["on-hover"]} ${className}`}
-      onClick={onClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          onClick(e);
-        }
-      }}
-    >
-      <Link
-        className={`${animations["on-focus"]}`}
-        disabled={disabled}
-        onClick={(e) => e.preventDefault()}
-        border={{ bottom: { keepVisible: !disabled } }}
-      >
-        {children}
-      </Link>
-      <Arrow
-        className={`${styles.arrow} ${animations["h-bounce-right"]} ${animations["f-bounce-right"]}`}
-      />
-    </div>
-  );
-}
-
-export function Edition({
-  isLoading,
-  work,
-  singleManifestation = false,
-  isArticle = false,
-  isPeriodicaLike = false,
-  availableAsDigitalCopy = false,
-  isArticleRequest = false,
-  context,
-  material,
-  showOrderTxt = true,
-  modal = {},
-}) {
-  const { cover: workCover, creators: workCreators = [{ name: "..." }] } = work;
-
-  const { creators = workCreators, cover = workCover, materialType } = material;
-
-  return (
-    <div className={styles.edition}>
-      <div className={styles.left}>
-        <div className={styles.title}>
-          <Text type="text1" skeleton={isLoading} lines={1}>
-            {work?.fullTitle}
-          </Text>
-        </div>
-        <div className={styles.creators}>
-          <Text type="text3" skeleton={isLoading} lines={1}>
-            {creators.map((c, i) =>
-              creators.length > i + 1 ? c.name + ", " : c.name
-            )}
-          </Text>
-        </div>
-        {singleManifestation && (
-          <div>
-            <Text
-              type="text3"
-              skeleton={isLoading}
-              lines={1}
-              dataCy="additional_edition_info"
-            >
-              {material.datePublished},&nbsp;
-              {material.publisher && material.publisher.map((pub) => pub)}
-              &nbsp;
-              {material.edition && "," + material.edition}
-            </Text>
-          </div>
-        )}
-        <div className={styles.material}>
-          {!isArticle &&
-            !isPeriodicaLike &&
-            !singleManifestation &&
-            showOrderTxt && (
-              <Link onClick={() => {}} disabled>
-                <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                  {Translate({
-                    context: "order",
-                    label: "no-specific-edition",
-                  })}
-                </Text>
-              </Link>
-            )}
-          {singleManifestation && showOrderTxt && (
-            <Link onClick={() => {}} disabled>
-              <Text type="text3" skeleton={isLoading} lines={1} clamp>
-                {Translate({
-                  context: "order",
-                  label: "specific-edition",
-                })}
-              </Text>
-            </Link>
-          )}
-          <div>
-            <Tag tag="span" skeleton={isLoading}>
-              {materialType}
-            </Tag>
-          </div>
-        </div>
-        {availableAsDigitalCopy ? (
-          <div className={styles.articletype}>
-            <Text type="text4">
-              {Translate({
-                context: "order",
-                label: "will-order-digital-copy",
-              })}
-            </Text>
-          </div>
-        ) : isArticleRequest ? (
-          <div className={styles.articletype}>
-            <Text type="text4">
-              {Translate({
-                context: "general",
-                label: "article",
-              })}
-            </Text>
-          </div>
-        ) : context?.periodicaForm ? (
-          <div className={styles.articletype}>
-            <Text type="text4">
-              {Translate({
-                context: "general",
-                label: "volume",
-              })}
-            </Text>
-          </div>
-        ) : null}
-        {context?.periodicaForm && (
-          <div className={styles.periodicasummary}>
-            {Object.entries(context?.periodicaForm).map(([key, value]) => (
-              <Text type="text3" key={key}>
-                {Translate({
-                  context: "order-periodica",
-                  label: `label-${key}`,
-                })}
-                : {value}
-              </Text>
-            ))}
-          </div>
-        )}
-        {isPeriodicaLike && (
-          <LinkArrow
-            onClick={() => {
-              modal.push("periodicaform", {
-                periodicaForm: context?.periodicaForm,
-              });
-            }}
-            disabled={false}
-            className={styles.periodicaformlink}
-          >
-            <Text type="text3">
-              {Translate({
-                context: "order-periodica",
-                label: "title",
-              })}
-            </Text>
-          </LinkArrow>
-        )}
-      </div>
-      <div className={styles.right}>
-        <Cover src={cover?.detail} size="thumbnail" skeleton={isLoading} />
-      </div>
-    </div>
-  );
-}
+import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import { Edition_TempUsingAlfaApi } from "@/components/_modal/pages/edition/Edition";
+import usePickupBranch from "@/components/hooks/usePickupBranch";
+import {
+  handleSubmitOrder,
+  handleSubmitPeriodicaArticleOrder,
+} from "@/components/_modal/utils";
 
 /**
  *  Order component function
@@ -432,7 +251,7 @@ export function Order({
         }}
       />
 
-      <Edition
+      <Edition_TempUsingAlfaApi
         isLoading={isLoading}
         work={work}
         singleManifestation={singleManifestation}
@@ -464,6 +283,7 @@ export function Order({
             </Text>
           )}
           <LinkArrow
+            className={styles.link}
             onClick={() => {
               !isLoadingBranches &&
                 modal.push("pickup", {
@@ -693,20 +513,16 @@ export function OrderSkeleton(props) {
  * @param {Object} props Component props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   // context
-  const { context } = props;
+  const { context, modal } = props;
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
-
   const orderMutation = useMutate();
   const articleOrderMutation = useMutate();
 
-  /**
-   * Order
-   */
   useEffect(() => {
     if (context.pid) {
       // When order modal opens, we reset previous order status
@@ -717,78 +533,21 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  /**
-   * Work data
-   */
   const { data, isLoading, isSlow, error } = useData(
     workFragments.detailsAllManifestations({ workId: context.workId })
   );
-
   const covers = useData(workFragments.covers({ workId: context.workId }));
-
   const mergedWork = merge({}, covers.data, data);
 
-  /**
-   * User
-   */
   const {
     authUser,
     loanerInfo,
     updateLoanerInfo,
-    isAuthenticated,
-    isGuestUser,
-  } = useUser();
-
-  /**
-   * Branches, details, policies, and userParams
-   */
-
-  // Fetch branches and order policies for (loggedIn) user
-  const { data: orderPolicy, isLoading: policyIsLoading } = useData(
-    pid && authUser.name && userFragments.orderPolicy({ pid })
-  );
-
-  // scope
-  const defaultUserPickupBranch = orderPolicy?.user?.agency?.result[0];
-
-  // fetch user parameters for the selected pickup
-  // OBS! Pickup can differs from users own branches.
-  const { data: userParams, isLoading: userParamsIsLoading } = useData(
-    loanerInfo?.pickupBranch &&
-      branchesFragments.branchUserParameters({
-        branchId: loanerInfo.pickupBranch,
-      })
-  );
-
-  // scope
-  const selectedBranch = userParams?.branches?.result?.[0];
-
-  // Fetch order policies for selected pickupBranch (if pickupBranch differes from user agency branches)
-  // check if orderpolicy already exist for selected pickupbranch
-  const shouldFetchOrderPolicy =
-    pid && selectedBranch?.branchId && !selectedBranch?.orderPolicy;
-
-  // Fetch Orderpolicy for selected branch, if not already exist
-  const { data: selectedBranchPolicyData, isLoading: branchPolicyIsLoading } =
-    useData(
-      shouldFetchOrderPolicy &&
-        branchesFragments.branchOrderPolicy({
-          branchId: selectedBranch?.branchId,
-          pid,
-        })
-    );
-
-  // scope
-  const pickupBranchOrderPolicy =
-    selectedBranchPolicyData?.branches?.result?.[0];
-
-  // If found, merge fetched orderPolicy into pickupBranch
-  const mergedSelectedBranch =
-    pickupBranchOrderPolicy &&
-    merge({}, selectedBranch, pickupBranchOrderPolicy);
-
-  // Merge user and branches
-  const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
+    initialPickupBranch,
+    pickupBranchIsLoading,
+    pickupBranchUser,
+    isAuthenticatedForPickupBranch,
+  } = usePickupBranch(context.pid);
 
   if (isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
@@ -802,50 +561,37 @@ export default function Wrap(props) {
     <Order
       work={mergedWork?.work}
       authUser={authUser}
-      isAuthenticated={isAuthenticated || isGuestUser}
-      user={(!userParamsIsLoading && mergedUser) || {}}
-      initial={{
-        pickupBranch:
-          mergedSelectedBranch ||
-          selectedBranch ||
-          defaultUserPickupBranch ||
-          null,
-      }}
-      isLoading={
-        isLoading ||
-        policyIsLoading ||
-        userParamsIsLoading ||
-        branchPolicyIsLoading
-      }
+      isAuthenticated={isAuthenticatedForPickupBranch}
+      user={pickupBranchUser}
+      initial={initialPickupBranch}
+      isLoading={isLoading || pickupBranchIsLoading}
       pid={context.pid}
       order={orderMutation}
       articleOrder={articleOrderMutation}
       updateLoanerInfo={updateLoanerInfo}
-      onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) => {
-        articleOrderMutation.post(
-          orderMutations.submitPeriodicaArticleOrder({
-            pid,
-            pickUpBranch,
-            userName: loanerInfo?.userParameters?.userName,
-            userMail: loanerInfo?.userParameters?.userMail,
-            ...periodicaForm,
-          })
-        );
-      }}
-      onSubmit={(pids, pickupBranch, periodicaForm = {}) => {
-        orderMutation.post(
-          orderMutations.submitOrder({
-            pids,
-            branchId: pickupBranch.branchId,
-            userParameters: loanerInfo.userParameters,
-            ...periodicaForm,
-          })
-        );
-      }}
+      onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) =>
+        handleSubmitPeriodicaArticleOrder(
+          pid,
+          pickUpBranch,
+          periodicaForm,
+          loanerInfo,
+          articleOrderMutation
+        )
+      }
+      onSubmit={(pids, pickupBranch, periodicaForm = {}) =>
+        handleSubmitOrder(
+          pid,
+          pickupBranch,
+          periodicaForm,
+          loanerInfo,
+          orderMutation
+        )
+      }
       singleManifestation={
         context.orderType && context.orderType === "singleManifestation"
       }
-      {...props}
+      context={context}
+      modal={modal}
     />
   );
 }

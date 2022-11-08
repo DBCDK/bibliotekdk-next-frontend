@@ -85,7 +85,8 @@ export default function Wrap({ selectedPids, workId }) {
   );
 
   const { data, isLoading } = useData(
-    selectedPids &&
+    selectedPids?.length > 0 &&
+      typeof selectedPids?.[0] !== "undefined" &&
       localizationsFragments.localizationsQuery({ pids: selectedPids })
   );
 

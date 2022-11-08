@@ -1,75 +1,5 @@
-import { BibliographicData } from "./BibliographicData";
-import dummyWorkManifestationsApi from "../dummyWorkManifestationsApi.json";
+import BibliographicData from "./BibliographicData";
 import ManifestationFull from "@/components/work/BibliographicData/ManifestationFull";
-
-const localizations = {
-  localizations: {
-    count: 6,
-    agencies: [
-      {
-        agencyId: "800022",
-        holdingItems: [
-          {
-            localizationPid: "800010-katalog:99122237439705763",
-            codes: "",
-            localIdentifier: "99122237439705763",
-          },
-        ],
-      },
-      {
-        agencyId: "739000",
-        holdingItems: [
-          {
-            localizationPid: "870970-basis:28940483",
-            codes: "",
-            localIdentifier: "28940483",
-          },
-        ],
-      },
-      {
-        agencyId: "800015",
-        holdingItems: [
-          {
-            localizationPid: "800010-katalog:99122237439705763",
-            codes: "d",
-            localIdentifier: "99122237439705763",
-          },
-        ],
-      },
-      {
-        agencyId: "911010",
-        holdingItems: [
-          {
-            localizationPid: "870970-basis:28940483",
-            codes: "g",
-            localIdentifier: "28940483",
-          },
-        ],
-      },
-      {
-        agencyId: "774600",
-        holdingItems: [
-          {
-            localizationPid: "870970-basis:28940483",
-            codes: "",
-            localIdentifier: "28940483",
-          },
-        ],
-      },
-      {
-        agencyId: "715500",
-        holdingItems: [
-          {
-            localizationPid: "870970-basis:28940483",
-            codes: "",
-            localIdentifier: "28940483",
-          },
-        ],
-      },
-    ],
-  },
-  monitor: "OK",
-};
 
 const exportedObject = {
   title: "work/Bibliographic data",
@@ -77,13 +7,35 @@ const exportedObject = {
 
 export default exportedObject;
 
+function BibDataStoryBuilder(storyname, resolvers = {}, query = {}) {
+  return {
+    parameters: {
+      graphql: {
+        debug: true,
+        resolvers: resolvers,
+        url:
+          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
+          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
+      },
+      nextRouter: {
+        showInfo: true,
+        pathname: `/materiale/${storyname}ReservationButton/work-of:870970-basis:${storyname}`,
+        query: query,
+      },
+    },
+  };
+}
+
 /**
  * Returns bibliographic data component
  */
 export function BibData() {
-  const data = dummyWorkManifestationsApi;
-  return <BibliographicData work={data.work} />;
+  // const data = dummyWorkManifestationsApi;
+  return <BibliographicData workId={"some-workId"} />;
 }
+BibData.story = {
+  ...BibDataStoryBuilder("book", {}),
+};
 
 /**
  * Returns bibliographic data component
@@ -170,22 +122,28 @@ export function Article() {
  * @constructor
  */
 export function FullManifestation() {
-  const data = dummyWorkManifestationsApi;
-  const work = data.work;
-  const manifestation = work.manifestations[0];
-  const alertopener = () => {
-    alert("open");
-  };
   return (
     <ManifestationFull
-      manifestation={manifestation}
-      work={work}
-      workId={work.workId}
-      localizations={localizations}
-      localizationsLoading={false}
-      openLocalizationsModal={alertopener}
-      openOrderModal={alertopener}
-      user={{}}
+      workId={"some-work-id"}
+      pid={"some-pid"}
+      hasBeenSeen={true}
     />
   );
 }
+FullManifestation.story = {
+  ...BibDataStoryBuilder("EBook", {
+    Manifestation: {
+      pid: () => "some-pid",
+      creators: () => [...new Array(10).fill({})],
+      contributors: () => [...new Array(10).fill({})],
+      publisher: () => ["some-publisher - 1", "some-publisher - 2"],
+      physicalDescriptions: () => [...new Array(10).fill({})],
+      classifications: () => [...new Array(10).fill({})],
+      workYear: () => "some-workYear",
+      identifiers: () => [...new Array(10).fill({})],
+      notes: () => [...new Array(10).fill({})],
+      materialTypes: () => [...new Array(10).fill({})],
+      access: () => [...new Array(10).fill({})],
+    },
+  }),
+};

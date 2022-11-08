@@ -1,33 +1,253 @@
 {
-  "pid": [
-    "870970-basis:06442870"
+  "cover": {
+    "detail": null,
+    "thumbnail": null
+  },
+  "pid": "870970-basis:53001211",
+  "titles": {
+    "main": ["Warcraft"],
+    "full": ["Warcraft"],
+    "original": []
+  },
+  "creators": [
+    {
+      "display": "Duncan Jones",
+      "roles": [
+        {
+          "function": {
+            "singular": "instruktør"
+          }
+        },
+        {
+          "function": {
+            "singular": "manuskript"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Charles Leavitt",
+      "roles": [
+        {
+          "function": {
+            "singular": "manuskript"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Simon Duggan",
+      "roles": [
+        {
+          "function": {
+            "singular": "filmfotograf"
+          }
+        }
+      ]
+    }
   ],
-  "lang": [
-    "danglish"
+  "contributors": [
+    {
+      "display": "Travis Fimmel",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Paula Patton",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Ben Foster",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Dominic Cooper",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Toby Kebbell",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Ben Schnetzer",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Rob Kazinsky",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Clancy Brown",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    },
+    {
+      "display": "Daniel Wu",
+      "roles": [
+        {
+          "function": {
+            "singular": "skuespiller"
+          }
+        }
+      ]
+    }
   ],
-  "pages": [
-    "xxvii, 123 sider, illustreret"
+  "publisher": ["Universal Sony Pictures Home Entertainment"],
+  "edition": {
+    "publicationYear": {
+      "display": "2017"
+    },
+    "edition": ""
+  },
+  "hostPublication": null,
+  "physicalDescriptions": [
+    {
+      "summary": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
+      "extent": "ca. 2 t., 3 min."
+    }
   ],
-  "released": [
-    "2020"
+  "classifications": [
+    {
+      "system": "DK5",
+      "display": "77.7 Spillefilm"
+    }
   ],
-  "contribution": [
-    "some contributor",
-    "some other contributor"
-  ],
-  "description": [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices leo facilisis, sagittis ligula nec, dapibus purus. Phasellus blandit nisl vitae dignissim eleifend. In dictum tortor ex, vitae aliquam magna dictum in. Pellentesque condimentum metus eu dolor faucibus rhoncus. Duis eu dolor nisl. Donec ullamcorper augue varius eleifend maximus. Aliquam erat volutpat. Phasellus ut quam et ipsum varius efficitur et a leo."
+  "languages": {
+    "original": [],
+    "main": [
+      {
+        "display": "engelsk"
+      }
+    ],
+    "spoken": [
+      {
+        "display": "fransk"
+      },
+      {
+        "display": "tysk"
+      },
+      {
+        "display": "italiensk"
+      },
+      {
+        "display": "spansk"
+      },
+      {
+        "display": "hindi"
+      }
+    ],
+    "subtitles": [
+      {
+        "display": "engelsk"
+      },
+      {
+        "display": "fransk"
+      },
+      {
+        "display": "tysk"
+      },
+      {
+        "display": "italiensk"
+      },
+      {
+        "display": "spansk"
+      },
+      {
+        "display": "nederlandsk"
+      },
+      {
+        "display": "dansk"
+      },
+      {
+        "display": "finsk"
+      },
+      {
+        "display": "norsk"
+      },
+      {
+        "display": "svensk"
+      },
+      {
+        "display": "portugisisk"
+      },
+      {
+        "display": "hindi"
+      },
+      {
+        "display": "arabisk"
+      },
+      {
+        "display": "islandsk"
+      }
+    ]
+  },
+  "workYear": null,
+  "identifiers": [
+    {
+      "type": "MOVIE",
+      "value": "Nordic 8310290"
+    }
   ],
   "notes": [
-    "Introduction, Barbara Larson;",
-    "Darwin, Burke, and the biological sublime, Barbara Larson;",
-    "Why is the peacock's tail so beautiful?, Laurence Shafe;",
-    "Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;",
-    "Cultural selection and the shape of time, Larry Silver;",
-    "The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;",
-    "On the development of a theory of representation in Darwin and Warburg, Sabine Flach;",
-    "On mimicry in Darwin and surrealism, Jan Soffner;",
-    "Contemporary art and the aesthetics of natural selection, Ellen Levy;",
-    "index"
-  ]
+    {
+      "display": [
+        "Produktion: Universal Pictures (USA), Legendary Pictures (USA), Atlas Entertainment (USA), 2015"
+      ]
+    },
+    {
+      "display": ["Baseret på spillet: Warcraft"]
+    }
+  ],
+  "materialTypes": [
+    {
+      "specific": "blu-ray"
+    }
+  ],
+  "access": [{}]
 }

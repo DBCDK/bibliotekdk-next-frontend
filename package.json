@@ -17,6 +17,7 @@
     "cy:open": "npx cypress@9 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js'",
     "test": "jest src/",
+    "test-watch": "jest src/ --watch",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"
   },
   "author": "Frontend @ DBC",

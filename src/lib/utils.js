@@ -143,3 +143,17 @@ export function uniqueEntries(oldArray) {
     ...new Set(oldArray?.map((s) => s?.toLowerCase().replace(/\./g, ""))),
   ];
 }
+
+export function indexInArray(referenceArray, element, defaultValue = 2) {
+  return referenceArray.indexOf(element) !== -1
+    ? referenceArray.indexOf(element)
+    : defaultValue;
+}
+
+export function comparableYear(a) {
+  return !a ||
+    !["string", "number"].includes(typeof a) ||
+    ["????", ""].includes(a)
+    ? 1
+    : a;
+}

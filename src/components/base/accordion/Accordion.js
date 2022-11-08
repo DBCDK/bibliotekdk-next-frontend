@@ -13,6 +13,7 @@ import animations from "@/components/base/animation/animations.module.css";
 
 import BodyParser from "@/components/base/bodyparser";
 import React from "react";
+import useElementVisible from "@/components/hooks/useElementVisible";
 
 /**
  * The Component function
@@ -25,9 +26,14 @@ import React from "react";
  *
  * @returns {component}
  */
-
 export function Item({ title, subTitle, children, eventKey, onChange }) {
   const currentEventKey = React.useContext(AccordionContext);
+
+  const { elementRef, hasBeenSeen } = useElementVisible({
+    root: null,
+    rootMargin: "150px",
+    threshold: 1.0,
+  });
 
   const isCurrentEventKey = !!(currentEventKey === eventKey);
 
@@ -49,7 +55,7 @@ export function Item({ title, subTitle, children, eventKey, onChange }) {
   }
 
   return (
-    <Card className={styles.element} data-cy="accordion-item">
+    <Card className={styles.element} data-cy="accordion-item" ref={elementRef}>
       <Card.Header
         tabIndex="0"
         className={[
@@ -79,7 +85,11 @@ export function Item({ title, subTitle, children, eventKey, onChange }) {
         className={styles.content}
         eventKey={eventKey}
       >
-        <Card.Body>{children}</Card.Body>
+        <Card.Body>
+          {typeof children === "function"
+            ? children(typeof window !== "undefined" ? hasBeenSeen : true)
+            : children}
+        </Card.Body>
       </BootstrapAccordion.Collapse>
     </Card>
   );
@@ -88,7 +98,11 @@ export function Item({ title, subTitle, children, eventKey, onChange }) {
 Item.propTypes = {
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   subTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.func,
+  ]),
   eventKey: PropTypes.string.isRequired,
 };
 

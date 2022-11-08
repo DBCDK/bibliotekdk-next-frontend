@@ -1,0 +1,94 @@
+.edition {
+  padding: var(--pt2);
+}
+
+.edition {
+  background-color: var(--concrete);
+
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.edition .title {
+  padding: 0 var(--pt2) 0 0;
+}
+
+.creators {
+  padding: var(--pt1) var(--pt2) 0 0;
+}
+
+.articletype {
+  margin-top: var(--pt2);
+}
+
+.material {
+  padding: var(--pt1) 0 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  flex-direction: row-reverse;
+}
+
+.material a {
+  flex-grow: 2;
+  margin: 0 auto 0 0;
+}
+
+.material a p,
+.material div span {
+  margin: var(--pt1) var(--pt2) 0 0;
+}
+
+.material div {
+  margin: 0 auto 0 0;
+}
+
+.left {
+  flex-grow: 2;
+}
+
+.right {
+  flex-shrink: 2;
+}
+
+.right .cover {
+  max-height: 100px;
+}
+
+.periodicasummary{
+  /* margin-top: var(--pt2); */
+}
+
+.periodicaformlink{
+  margin-top: var(--pt2);
+}
+
+
+.link {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.link .fullLink {
+  display: none;
+}
+
+.arrow {
+  margin: 0 0 0 var(--pt1);
+}
+
+
+@media (min-width: 576px) {
+  .edition {
+    padding: var(--pt3) var(--pt6);
+  }
+  .link .fullLink {
+    display: block;
+  }
+
+  .link .shortLink {
+    display: none;
+  }
+}

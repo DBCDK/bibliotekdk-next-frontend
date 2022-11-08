@@ -3,92 +3,71 @@
 exports[`Test_parseManifestation 1`] = `
 Array [
   Object {
-    "dataField": "notes",
-    "label": "Note",
+    "dataField": "titles",
+    "label": "Titel",
     "value": Array [
-      <div>
-        Introduction, Barbara Larson;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        Darwin, Burke, and the biological sublime, Barbara Larson;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        Why is the peacock's tail so beautiful?, Laurence Shafe;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        Cultural selection and the shape of time, Larry Silver;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        On mimicry in Darwin and surrealism, Jan Soffner;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        Contemporary art and the aesthetics of natural selection, Ellen Levy;
-        <div>
-           
-        </div>
-      </div>,
-      <div>
-        index
-      </div>,
+      "Warcraft",
     ],
   },
-]
-`;
-
-exports[`Test_parseManifestation 2`] = `
-Array [
   Object {
     "dataField": "creators",
-    "label": "Af",
-    "value": <Link
-      border={
-        Object {
-          "bottom": Object {
-            "keepVisible": true,
-          },
-          "top": false,
-        }
-      }
-      href="/find?q.creator=some contributor"
-    >
-      some contributor
-    </Link>,
+    "label": "Skabere",
+    "value": Array [
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Duncan Jones"
+        >
+          Duncan Jones
+        </Link>
+         (instruktør, manuskript)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Charles Leavitt"
+        >
+          Charles Leavitt
+        </Link>
+         (manuskript)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Simon Duggan"
+        >
+          Simon Duggan
+        </Link>
+         (filmfotograf)
+        <br />
+      </span>,
+    ],
   },
   Object {
-    "dataField": "creators",
+    "dataField": "contributors",
     "label": "Bidrag",
     "value": Array [
       <span>
@@ -101,10 +80,11 @@ Array [
               "top": false,
             }
           }
-          href="/find?q.creator=some contributor"
+          href="/find?q.creator=Travis Fimmel"
         >
-          some contributor
+          Travis Fimmel
         </Link>
+         (skuespiller)
         <br />
       </span>,
       <span>
@@ -117,10 +97,231 @@ Array [
               "top": false,
             }
           }
-          href="/find?q.creator=some other contributor"
+          href="/find?q.creator=Paula Patton"
         >
-          some other contributor
+          Paula Patton
         </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Ben Foster"
+        >
+          Ben Foster
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Dominic Cooper"
+        >
+          Dominic Cooper
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Toby Kebbell"
+        >
+          Toby Kebbell
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Ben Schnetzer"
+        >
+          Ben Schnetzer
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Rob Kazinsky"
+        >
+          Rob Kazinsky
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Clancy Brown"
+        >
+          Clancy Brown
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=Daniel Wu"
+        >
+          Daniel Wu
+        </Link>
+         (skuespiller)
+        <br />
+      </span>,
+    ],
+  },
+  Object {
+    "dataField": "publisher",
+    "label": "Udgiver",
+    "value": Array [
+      "Universal Sony Pictures Home Entertainment",
+    ],
+  },
+  Object {
+    "dataField": "edition",
+    "label": "Udgivelsesår",
+    "value": "2017",
+  },
+  Object {
+    "dataField": "physicalDescriptions",
+    "label": "Omfang",
+    "value": "1 blu-ray disc, blu-ray ; ca. 2 t., 3 min.",
+  },
+  Object {
+    "dataField": "classifications",
+    "label": "DK5",
+    "value": "77.7 Spillefilm",
+  },
+  Object {
+    "dataField": "notes",
+    "label": "Note",
+    "value": Array [
+      <div>
+        <div>
+          Produktion: Universal Pictures (USA), Legendary Pictures (USA), Atlas Entertainment (USA), 2015
+        </div>
+        <div>
+           
+        </div>
+      </div>,
+      <div>
+        <div>
+          Baseret på spillet: Warcraft
+        </div>
+      </div>,
+    ],
+  },
+  Object {
+    "dataField": "languages",
+    "label": "Anvendt sprog",
+    "value": <React.Fragment>
+      <div>
+        Tale:
+         
+        engelsk
+      </div>
+      <div>
+        Synkronisering:
+         
+        fransk, tysk, italiensk, spansk, hindi
+      </div>
+      <div>
+        Undertekster:
+         
+        engelsk, fransk, tysk, italiensk, spansk, nederlandsk, dansk, finsk, norsk, svensk, portugisisk, hindi, arabisk, islandsk
+      </div>
+    </React.Fragment>,
+  },
+]
+`;
+
+exports[`Test_parseManifestation 2`] = `
+Array [
+  Object {
+    "dataField": "creators",
+    "label": "Skabere",
+    "value": Array [
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=undefined"
+        />
+        <br />
+      </span>,
+      <span>
+        <Link
+          border={
+            Object {
+              "bottom": Object {
+                "keepVisible": true,
+              },
+              "top": false,
+            }
+          }
+          href="/find?q.creator=undefined"
+        />
         <br />
       </span>,
     ],
@@ -130,62 +331,51 @@ Array [
     "label": "Note",
     "value": Array [
       <div>
-        Introduction, Barbara Larson;
         <div>
            
         </div>
       </div>,
       <div>
-        Darwin, Burke, and the biological sublime, Barbara Larson;
         <div>
            
         </div>
       </div>,
       <div>
-        Why is the peacock's tail so beautiful?, Laurence Shafe;
         <div>
            
         </div>
       </div>,
       <div>
-        Art's 'contest with nature': Darwin, Haeckel, and the scientific art history of Alois Riegl, Marsha Morton;
         <div>
            
         </div>
       </div>,
       <div>
-        Cultural selection and the shape of time, Larry Silver;
         <div>
            
         </div>
       </div>,
       <div>
-        The evolution of culture or the cultural history of the evolutionary concept: epistemological problems at the interface between the two cultures, Sigrid Weigel;
         <div>
            
         </div>
       </div>,
       <div>
-        On the development of a theory of representation in Darwin and Warburg, Sabine Flach;
         <div>
            
         </div>
       </div>,
       <div>
-        On mimicry in Darwin and surrealism, Jan Soffner;
         <div>
            
         </div>
       </div>,
       <div>
-        Contemporary art and the aesthetics of natural selection, Ellen Levy;
         <div>
            
         </div>
       </div>,
-      <div>
-        index
-      </div>,
+      <div />,
     ],
   },
 ]

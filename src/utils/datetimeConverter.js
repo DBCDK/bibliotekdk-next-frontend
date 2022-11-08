@@ -29,9 +29,8 @@ export function timestampToShortDate(timestamp) {
 
 /**
  * date
- *
- * @param {string} format: yyyy-mm-dd
- *
+ * @param date
+ * @param prefix
  * @returns {string} format: dd. mmm. yyyy
  */
 export function dateToShortDate(date, prefix = "") {

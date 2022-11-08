@@ -24,9 +24,9 @@ import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 /**
  * Selecting the correct review template
  *
- * @param {string} type
- * @returns {component}
+ * @param review
  *
+ * @returns {component}
  */
 
 function getTemplate(review) {
