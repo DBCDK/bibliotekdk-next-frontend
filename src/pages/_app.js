@@ -51,6 +51,7 @@ import { enableDataCollect } from "@/lib/useDataCollect";
 
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
+import SetPickupBranch from "@/components/utils/SetPickupBranch";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -122,7 +123,6 @@ export default function MyApp({ Component, pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
-
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
@@ -143,6 +143,8 @@ export default function MyApp({ Component, pageProps, router }) {
             </div>
           </Modal.Provider>
         </APIStateContext.Provider>
+        {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
+        <SetPickupBranch router={router} />
       </SessionProvider>
     </SWRConfig>
   );

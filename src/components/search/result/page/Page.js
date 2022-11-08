@@ -1,10 +1,8 @@
 import PropTypes from "prop-types";
 import ResultRow from "../row";
 import { Fragment, useEffect } from "react";
-
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
-
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 import SearchFeedBack from "@/components/base/searchfeedback";

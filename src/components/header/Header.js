@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";
 
@@ -19,7 +19,6 @@ import Link from "@/components/base/link";
 import { useModal } from "@/components/_modal";
 
 import LoginIcon from "./icons/login";
-// import BasketIcon from "./icons/basket";
 import BurgerIcon from "./icons/burger";
 import SearchIcon from "./icons/search";
 import ExpandedSearch from "./expandedsearch/ExpandedSearch";
@@ -37,6 +36,7 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
+import useWindowSize from "@/components/hooks/useWindowSize";
 
 /**
  * The Component function
@@ -384,6 +384,19 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
+
+  // if window changes size from small to larger (>992) we need to remove
+  // the suggester url parameter (suggester=true) for the mobile
+  // suggester to go away
+  let wSize = useWindowSize();
+  const changeMe = wSize.width > 992;
+  useEffect(() => {
+    if (changeMe) {
+      let query = { ...router.query };
+      delete query.suggester;
+      router.replace({ pathname: router.pathname, query });
+    }
+  }, [changeMe]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;

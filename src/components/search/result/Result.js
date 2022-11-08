@@ -37,7 +37,7 @@ export function Result({
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-
+  const isDesktop = breakpoint === "lg" || breakpoint === "xl" || false;
   const numPages = Math.ceil(hitcount / 10);
 
   const filtersLabel = Translate({
@@ -49,10 +49,9 @@ export function Result({
   return (
     <>
       <Section
-        contentDivider={null}
-        titleDivider={null}
+        divider={false}
+        space={{ top: isDesktop ? "var(--pt8)" : "var(--pt2)" }}
         className={styles.section}
-        bottomSpace={!(isMobile || breakpoint === "md")}
         title={
           <div className={styles.wrap}>
             <Button

@@ -19,7 +19,7 @@ import styles from "./Row.module.css";
  * @param {object} props
  * @param {object} props.data
  */
-export default function ResultRow({ data, onClick }) {
+export default function ResultRow({ data, className = "", onClick }) {
   const work = data;
 
   const creatorName = work?.creators?.[0]?.display;
@@ -36,7 +36,7 @@ export default function ResultRow({ data, onClick }) {
     <Link
       a={true}
       border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
-      className={styles.wrapper}
+      className={`${styles.wrapper} ${className}`}
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
@@ -124,7 +124,7 @@ export default function ResultRow({ data, onClick }) {
           <Cover
             className={styles.cover}
             src={coverDetail}
-            skeleton={!work?.manifestations?.all}
+            skeleton={!coverDetail}
             size="fill-width"
           />
         </Col>

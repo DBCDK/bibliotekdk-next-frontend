@@ -22,6 +22,7 @@ import {
   handleSubmitOrder,
   handleSubmitPeriodicaArticleOrder,
 } from "@/components/_modal/utils";
+import debounce from "lodash/debounce";
 
 /**
  *  Order component function
@@ -92,10 +93,8 @@ export function Order({
   // Update email from user account
   useEffect(() => {
     const userMail = user.userParameters?.userMail;
-
     if (userMail) {
       const message = null;
-
       setMail({
         value: userMail,
         valid: { status: true, message },
@@ -161,7 +160,7 @@ export function Order({
    * @param {*} valid
    */
   function onMailChange(value, valid) {
-    valid &&
+    valid.status &&
       updateLoanerInfo &&
       updateLoanerInfo({ userParameters: { userMail: value } });
     // update mail in state
@@ -385,7 +384,10 @@ export function Order({
               onMount={(e, valid) =>
                 setMail({ value: e?.target?.value, valid })
               }
-              onBlur={(e, valid) => onMailChange(e?.target?.value, valid)}
+              onChange={debounce(
+                (e, valid) => onMailChange(e?.target?.value, valid),
+                200
+              )}
               readOnly={isLoading || (authUser?.mail && hasBorchk)}
               skeleton={isLoadingBranches}
             />
@@ -549,11 +551,11 @@ export default function Wrap(props) {
     isAuthenticatedForPickupBranch,
   } = usePickupBranch(context.pid);
 
-  if (isLoading) {
+  if (isLoading || covers.isLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error) {
+  if (error || !mergedWork?.work) {
     return <div>Error :( !!!!!</div>;
   }
 

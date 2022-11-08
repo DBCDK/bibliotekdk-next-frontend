@@ -286,7 +286,6 @@ describe.skip("Order", () => {
       cy.get("[data-cy=button-godkend]").click();
 
       cy.wait("@submitOrder").then((order) => {
-        console.log(order.request.body.variables.input, "INPUT");
         expect(order.request.body.variables.input).to.deep.equal({
           pids: ["870970-basis:51701763", "870970-basis:12345678"], // all pids for selected materialtype (bog)
           pickUpBranch: "790900",
@@ -326,9 +325,7 @@ describe.skip("Order", () => {
       cy.get("[data-cy=text-skift-afhentning]").click();
 
       cy.get("[data-cy=pickup-search-input]").type("BranchWithNoBorchk");
-
       cy.wait(1000);
-
       cy.tab().type("{enter}");
 
       cy.wait(1000);
@@ -340,6 +337,16 @@ describe.skip("Order", () => {
       cy.get("[data-cy=input-userMail]").should("have.value", "cicero@mail.dk");
 
       // user is allowed to enter an alternative mail
+      cy.get("[data-cy=input-userMail]").clear();
+
+      // email should be validated
+      cy.get("[data-cy=input-userMail]").type("fiskehest");
+      cy.get("[data-cy=button-log-ind]").click();
+
+      cy.get("[data-cy=text-angiv-venligst-en-korrekt-email-adresse]").contains(
+        "Angiv venligst en korrekt email-adresse"
+      );
+
       cy.get("[data-cy=input-userMail]").clear();
       cy.get("[data-cy=input-userMail]").type("freja@mail.dk");
 

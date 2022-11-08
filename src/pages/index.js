@@ -57,7 +57,6 @@ const Index = () => {
           title={Translate({ context: "index", label: "section1" })}
           matchTag="section 1"
           template="triple"
-          topSpace={false}
         />
         <ArticleSection
           title={Translate({ context: "index", label: "section2" })}

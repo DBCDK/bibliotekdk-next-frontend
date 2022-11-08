@@ -72,8 +72,8 @@ export function Keywords({
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
-      topSpace={true}
-      bgColor="var(--jagged-ice)"
+      space={{ top: "var(--pt8)" }}
+      backgroundColor="var(--jagged-ice)"
     >
       <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
         {uniqueSubjects.map((val) => {
