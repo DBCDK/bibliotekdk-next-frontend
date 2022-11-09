@@ -29,11 +29,12 @@ export function getOrderPids(pid, work, singleManifestation) {
   // Material by pid
   const material = manifestations?.filter(
     (manifestation) => manifestation.pid === pid
-  );
+  )?.[0];
 
   const materialsSameType = manifestations?.filter((manifestation) => {
     return (
-      manifestation?.materialType === material?.materialType &&
+      manifestation?.materialTypes?.[0]?.specific ===
+        material?.materialTypes?.[0]?.specific &&
       (!material?.accessTypes?.find(
         (accessType) => accessType?.display !== "fysisk"
       ) ||

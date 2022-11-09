@@ -287,9 +287,9 @@ export default function Wrap(props) {
           articleOrderMutation
         )
       }
-      onSubmit={(pid, pickupBranch, periodicaForm = {}) =>
+      onSubmit={(pids, pickupBranch, periodicaForm = {}) =>
         handleSubmitOrder(
-          pid,
+          pids,
           pickupBranch,
           periodicaForm,
           loanerInfo,

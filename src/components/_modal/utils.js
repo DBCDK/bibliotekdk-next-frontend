@@ -198,7 +198,7 @@ export function handleSubmitPeriodicaArticleOrder(
 }
 
 export function handleSubmitOrder(
-  pid,
+  pids,
   pickupBranch,
   periodicaForm,
   loanerInfo,
@@ -206,7 +206,7 @@ export function handleSubmitOrder(
 ) {
   orderMutation.post(
     orderMutations.submitOrder({
-      pid,
+      pids,
       branchId: pickupBranch.branchId,
       userParameters: loanerInfo.userParameters,
       ...periodicaForm,

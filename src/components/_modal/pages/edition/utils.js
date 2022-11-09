@@ -24,8 +24,9 @@ export function inferAccessTypes(
     !!periodicaForm?.pagination;
 
   const isDigitalCopy = !!manifestations?.find((m) => {
-    return m?.accessTypes?.find(
-      (accessType) => accessType?.display === "online"
+    return (
+      !!m?.workTypes?.find((workType) => workType === "article") &&
+      !!m?.access?.find((singleAccess) => singleAccess.issn)
     );
   });
   const availableAsDigitalCopy =

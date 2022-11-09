@@ -605,6 +605,10 @@ export function orderPageManifestations({ workId }) {
         workTypes
         manifestations {
           all {
+            pid
+            materialTypes {
+              specific
+            }
             accessTypes {
               display
             }
