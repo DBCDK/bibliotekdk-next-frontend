@@ -58,7 +58,7 @@ export function Related({ data, isLoading }) {
         </Text>
       }
       className={styles.section}
-      bgColor="var(--jagged-ice)"
+      backgroundColor="var(--jagged-ice)"
     >
       <div>
         <Skip
