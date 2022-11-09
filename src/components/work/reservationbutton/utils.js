@@ -37,8 +37,9 @@ export function checkRequestButtonIsTrue({ manifestations }) {
   const notReservable = ["Biograffilm", "Udstilling", "Teateropførelse"];
   return !!manifestations?.find(
     (manifestation) =>
-      manifestation?.admin?.requestButton &&
-      !notReservable.includes(manifestation?.materialType)
+      manifestation?.access?.loanIsPossible ||
+      (manifestation?.admin?.requestButton &&
+        !notReservable.includes(manifestation?.materialType))
   );
 }
 
@@ -60,7 +61,7 @@ export function checkDigitalCopy({ manifestations }) {
  * @param {String} type
  * @returns {Array<Object>}
  */
-export function selectMaterialBasedOnType(manifestations, type) {
+export function getPidsFromType(manifestations, type) {
   return manifestations?.filter((manifestation) => {
     return manifestation.materialTypes.find(
       (materialType) => flattenWord(materialType.specific) === flattenWord(type)
