@@ -84,23 +84,6 @@ export function getCanonicalArticleUrl(props) {
 /**
  * Handle this work as a periodica
  *
- * @param {object} work
- * @returns {boolean}
- */
-export function getIsPeriodicaLike_TempUsingAlfaApi(work) {
-  // TODO: Remove this when the migration is complete!
-  return (
-    work?.workTypes?.includes("periodica") ||
-    !!work?.materialTypes?.find(({ manifestations }) =>
-      manifestations?.find((m) => m.materialType === "Årbog")
-    ) ||
-    !!work?.manifestations?.find((m) => m.materialType === "Årbog")
-  );
-}
-
-/**
- * Handle this work as a periodica
- *
  * @param {object} workTypes
  * @param {object} materialTypes
  * @returns {boolean}
