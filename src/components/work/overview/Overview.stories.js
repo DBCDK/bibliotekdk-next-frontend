@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { OverviewSkeleton, Overview } from "./Overview";
-import { StoryTitle, StoryDescriptions } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 const dummyOverviewData = require("../dummy.overViewWorkapi.json");
 
