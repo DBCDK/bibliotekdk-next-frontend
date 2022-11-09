@@ -33,6 +33,15 @@ WrappedDetailsSection.story = {
         Work: {
           genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
         },
+
+        Manifestation: {
+          access: () => [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+        },
       },
     },
   },
