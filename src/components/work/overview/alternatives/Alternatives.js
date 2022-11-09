@@ -6,12 +6,34 @@ import Link from "@/components/base/link";
 import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
 
 export function AlternativeOptions({ modal = null, context = {} }) {
-  const { orderPossible, onlineAccess } = { ...context };
+  const { selectedMaterial, type, workId } = { ...context };
+
+  const manifestations = selectedMaterial?.manifestations;
+
+  // @TODO where to get requestbutton
+  const requestButton = true;
+  const allOnline = [];
+  // run through manifestions to get ALL onlineaccess
+  manifestations?.forEach((manifestation) => {
+    manifestation?.access?.forEach((element) => allOnline.push(element));
+  });
+
+  //  filter out duplicates
+  let seen = {};
+  const onlineAccess = allOnline.filter(function (item) {
+    // No duplicate url or issn
+    const key = item.url || item.issn;
+    if (seen[key]) {
+      return false;
+    }
+    seen[key] = true;
+    return true;
+  });
 
   // digitalcopy and physical (orderPossible) are counted as one
   const count =
     onlineAccess?.filter((entry) => !entry.issn).length +
-    (orderPossible || onlineAccess?.find((entry) => entry.issn) ? 1 : 0);
+    (requestButton || manifestations?.find((entry) => entry.issn) ? 1 : 0);
 
   return (
     count > 1 && (
@@ -20,7 +42,9 @@ export function AlternativeOptions({ modal = null, context = {} }) {
         onClick={() =>
           modal.push("options", {
             title: Translate({ context: "modal", label: "title-options" }),
-            ...context,
+            type: type,
+            onlineAccess: onlineAccess,
+            workId: workId,
           })
         }
       >
@@ -37,28 +61,8 @@ export function AlternativeOptions({ modal = null, context = {} }) {
 }
 
 export default function Wrap({ selectedMaterial }) {
-  const manifestations = selectedMaterial?.manifestations;
-  const requestButton = checkRequestButtonIsTrue({ manifestations });
   const modal = useModal();
   const router = useRouter();
-
-  const allOnline = [];
-  // run through manifestions to get ALL onlineaccess
-  manifestations?.forEach((manifestation) => {
-    manifestation?.onlineAccess?.forEach((element) => allOnline.push(element));
-  });
-
-  //  filter out duplicates
-  let seen = {};
-  const onlineAccess = allOnline.filter(function (item) {
-    // No duplicate url or issn
-    const key = item.url || item.issn;
-    if (seen[key]) {
-      return false;
-    }
-    seen[key] = true;
-    return true;
-  });
 
   const { workId, title_author, type } = router.query;
 
@@ -69,8 +73,7 @@ export default function Wrap({ selectedMaterial }) {
         workId,
         title_author,
         type,
-        orderPossible: requestButton,
-        onlineAccess,
+        selectedMaterial,
       }}
     />
   );

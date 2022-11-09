@@ -96,15 +96,11 @@ function specialSort(a, b) {
   return 0;
 }
 
-export function Options({ data, isLoading, modal, context }) {
-  if (isLoading) {
-    return <Skeleton lines={3} className={styles.skeleton} />;
-  }
-
-  const { onlineAccess } = { ...context };
+export function Options({ modal, context }) {
+  const { selectedMaterials, onlineAccess } = { ...context };
 
   // no type selected - get the first one
-  const type = context.type || data?.work?.materialTypes?.[0].materialType;
+  const type = context.type;
 
   const addiOnlineAccess = addToOnlinAccess(
     onlineAccess,
@@ -136,13 +132,5 @@ export function Options({ data, isLoading, modal, context }) {
 }
 
 export default function Wrap(props) {
-  const { workId } = props.context;
-  // Fetch work data
-  const { data, isLoading, error } = useData(workFragments.details({ workId }));
-
-  if (error) {
-    return <div>Error :( !!!!!</div>;
-  }
-
-  return <Options data={data} isLoading={isLoading} {...props} />;
+  return <Options {...props} />;
 }
