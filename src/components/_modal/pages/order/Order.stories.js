@@ -88,7 +88,7 @@ export function Default() {
         work={dummyData.work}
         user={modifiedUser}
         authUser={modifiedUser}
-        order={order}
+        orderMutation={order}
         query={query}
         onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
         onLayerClose={() => setQuery({ modal: "order" })}
@@ -145,7 +145,7 @@ export function NoEmail() {
         work={dummyData.work}
         user={user}
         authUser={user}
-        order={order}
+        orderMutation={order}
         query={query}
         onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
         onLayerClose={() => setQuery({ modal: "order" })}
@@ -181,7 +181,7 @@ export function ManyPickupPoints() {
         }}
         pid="some-pid"
         work={dummyData.work}
-        order={order}
+        orderMutation={order}
         user={user}
         authUser={user}
         query={query}
@@ -355,8 +355,8 @@ export function OrderPolicyFail() {
         user={modifiedUser}
         authUser={modifiedUser}
         pid={"some-pid"}
-        articleOrder={order}
-        order={order}
+        articleOrderMutation={order}
+        orderMutation={order}
         query={query}
         onLayerChange={(query) => setQuery(query)}
         onLayerClose={() => setQuery({ modal: "order" })}
