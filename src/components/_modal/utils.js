@@ -206,7 +206,7 @@ export function handleSubmitOrder(
 ) {
   orderMutation.post(
     orderMutations.submitOrder({
-      pids,
+      pid,
       branchId: pickupBranch.branchId,
       userParameters: loanerInfo.userParameters,
       ...periodicaForm,
