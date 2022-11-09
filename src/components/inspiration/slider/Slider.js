@@ -13,7 +13,7 @@ export function Slider({ title, works, isLoading }) {
   return (
     <Section
       title={title}
-      bgColor="var(--parchment)"
+      backgroundColor="var(--parchment)"
       dataCy="section-inspiration"
     >
       <Row className={`${styles.slider}`}>
@@ -33,6 +33,7 @@ export default function Wrap({ title, category, filter }) {
   const { data, isLoading } = useData(
     inspiration?.[category]?.({
       filters: [filter],
+      limit: 30,
     })
   );
 

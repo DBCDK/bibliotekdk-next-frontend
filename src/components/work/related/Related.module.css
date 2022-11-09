@@ -1,6 +1,9 @@
 .section section {
   padding-top: 0 !important;
 }
+.section {
+  margin-top: calc(var(--pt16) * -1);
+}
 
 .skip {
   position: absolute;
