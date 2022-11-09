@@ -1,6 +1,6 @@
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
+import { getPidsFromType } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import { uniqueEntries } from "@/lib/utils";
 
@@ -41,7 +41,7 @@ export function useGetPidsFromWorkIdAndType(workId, type) {
     workId && workFragments.pidsAndMaterialTypes({ workId })
   );
 
-  return selectMaterialBasedOnType(
+  return getPidsFromType(
     pidsAndMaterialTypes?.data?.work?.manifestations?.all,
     type
   )?.map((manifestation) => manifestation.pid);
