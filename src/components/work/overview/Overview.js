@@ -1,6 +1,5 @@
 import { Container, Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import merge from "lodash/merge";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
@@ -16,7 +15,6 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
-import { useGetPidsFromWorkIdAndType } from "@/components/hooks/useWorkAndSelectedPids";
 import { useEffect } from "react";
 import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
 
