@@ -1,13 +1,8 @@
-import { useState } from "react";
-
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Button from "@/components/base/button";
-import { Order, OrderSkeleton } from "./Order.page.js";
-import data from "./dummy.data";
-import dummyData from "./dummy.data";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 
 const exportedObject = {
   title: "modal/Order",
@@ -15,356 +10,204 @@ const exportedObject = {
 
 export default exportedObject;
 
-/**
- * Returns Modal
- *
+/** ------------------------------------------------------- */
+/** EditionComponentBuilder
+ * @param {string} type
+ * @param {Object<Object<string, Array, boolean>, boolean, boolean>} editionProps
+ * @param {string} storyNameOverride
  */
-export function ToggleOrder() {
-  // eslint-disable-next-line no-unused-vars
-  const [_query, setQuery] = useState({ modal: null });
+function OrderPageComponentBuilder({ type = "Bog", storyNameOverride = null }) {
+  const descriptionName = storyNameOverride ? storyNameOverride : type;
 
   return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order template</StoryTitle>
-      <StoryDescription>Toggle order component</StoryDescription>
-
-      <Button
-        type="secondary"
-        size="small"
-        onClick={() => setQuery({ modal: "order" })}
-      >
-        {"Toggle order"}
-      </Button>
-
-      {/*
-
-      <Modal
-        onClose={() => setQuery({ modal: null })}
-        onLang={null}
-        template={query.modal}
-      >
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function Default() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-  const pickupBranch = user.agency.result[0];
-
-  const modifiedUser = { ...user, mail: "some@mail.dk" };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Default</StoryTitle>
+    <div>
+      <StoryTitle>Edition - {descriptionName}</StoryTitle>
       <StoryDescription>
-        User has an email attached to the account
+        The Edition on the type: {descriptionName}
       </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: pickupBranch,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        user={modifiedUser}
-        authUser={modifiedUser}
-        orderMutation={order}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
+      <ReservationButton
+        workId={"some-work-id"}
+        selectedPids={["some-pid-0", "some-pid-1"]}
       />
+      <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        {/*<Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />*/}
+        {/*<Modal.Page id="pickup" component={Pages.Pickup} />*/}
+        {/*<Modal.Page id="loanerform" component={Pages.Loanerform} />*/}
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        {/*<Modal.Page id="login" component={Pages.Login} />*/}
+      </Modal.Container>
     </div>
   );
 }
 
-/**
- * Order template
- *
- */
-export function Loading() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Loading</StoryTitle>
-      <StoryDescription>
-        Skeleton version of the order template
-      </StoryDescription>
-      <OrderSkeleton />
-    </div>
-  );
-}
-
-/**
- * Order template
- *
- */
-export function NoEmail() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-
-  const pickupBranch = user.agency.result[0];
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Missing account email</StoryTitle>
-      <StoryDescription>
-        When user has no email attached to the account, they can enter one in
-        the email field.
-      </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: pickupBranch,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        user={user}
-        authUser={user}
-        orderMutation={order}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
-      />
-    </div>
-  );
-}
-
-export function ManyPickupPoints() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-
-  // City main library
-  const main = user.agency.result[0];
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order Template</StoryTitle>
-      <StoryDescription>
-        If user has a long list of pickup points
-      </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: main,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        orderMutation={order}
-        user={user}
-        authUser={user}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
-      />
-    </div>
-  );
-}
-
-export function Ordering() {
-  // const [query, setQuery] = useState({ modal: "order" });
-  //
-  // const { work, user, order } = data;
-  //
-  // const modifiedOrder = { ...order, isLoading: true };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Ordering</StoryTitle>
-      <StoryDescription>
-        {
-          'Order in progress status (When user has clicked the "approve" button)'
-        }
-      </StoryDescription>
-
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={modifiedOrder}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function Ordered() {
-  // const [query, setQuery] = useState({ modal: "order" });
-  //
-  // const { work, user, order } = data;
-  //
-  // const modifiedOrder = {
-  //   ...order,
-  //   data: { submitOrder: { status: "ok", orsId: "some-ors-id" } },
-  // };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Ordered</StoryTitle>
-      <StoryDescription>
-        When the order has successfully completed
-      </StoryDescription>
-
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={modifiedOrder}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function OrderPolicyFail() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { work, user, order } = data;
-
-  const modifiedUser = {
-    ...user,
-    agency: {
-      result: [
-        {
-          agencyId: "715900",
-          name: "Bibliografen Bagsværd",
-          city: "Bagsværd",
-          postalAddress: "Bagsværd Hovedgade 116",
-          postalCode: "2880",
-          branchId: "715902",
-          openingHours:
-            "man.-fre.:10-18, lør.:10-14. \r\nSelvbetjening: man.-fre.:18-21, lør.:14-21, søn- og helligdage 12-21. Lukket 24.12.",
-          orderPolicy: {
-            orderPossible: false,
-            orderPossibleReason: "OWNED_OWN_CATALOGUE",
-            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
-          },
-          pickupAllowed: true,
-        },
-        {
-          agencyId: "715900",
-          name: "Gladsaxe Bibliotekerne, Hovedbiblioteket",
-          city: "Søborg",
-          postalAddress: "Søborg Hovedgade 220",
-          postalCode: "2860",
-          branchId: "715900",
-          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-          orderPolicy: {
-            orderPossible: true,
-            orderPossibleReason: "OWNED_ACCEPTED",
-            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
-          },
-          pickupAllowed: true,
-        },
-        {
-          agencyId: "715900",
-          name: "Dummy",
-          city: "Søborg",
-          postalAddress: "Søborg Hovedgade 220",
-          postalCode: "2860",
-          branchId: "715907",
-          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-          orderPolicy: null,
-          pickupAllowed: false,
-        },
-      ],
+function OrderPageStoryBuilder(storyname, resolvers = {}, query = {}) {
+  return {
+    parameters: {
+      graphql: {
+        debug: true,
+        resolvers: resolvers,
+        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      },
+      nextRouter: {
+        showInfo: true,
+        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}?modal=12312412`,
+        query: query,
+      },
     },
   };
+}
 
-  // City main library
-  const main = modifiedUser.agency.result[0];
+function reservationButtonResolver(additionalResolver = {}) {
+  return {
+    // ReservationButton
+    MaterialType: {
+      specific: () => "Bog",
+    },
+    InterLibraryLoan: {
+      loanIsPossible: () => true,
+    },
+    Access: {
+      __resolveType: () => "InterLibraryLoan",
+    },
+    ...additionalResolver,
+  };
+}
 
-  const modal = useModal();
+function orderPageResolver(additionalArgs = {}, additionalResolver = {}) {
+  return {
+    // Order.Page
+    Manifestation: {
+      pid: () => additionalArgs.pid ?? "some-pid-0",
+      publisher: () => additionalArgs.publisher ?? ["Sølvbakke"],
+      creators: () => additionalArgs.creators ?? [{}],
+      accessTypes: () => additionalArgs.accessTypes ?? ["fysisk"],
+    },
+    AccessType: {
+      display: () => "fysisk",
+    },
+    ManifestationTitles: {
+      full: () => additionalArgs.full ?? ["Hugo i Sølvskoven"],
+    },
+    Person: {
+      display: () => "Linoleum Gummigulv",
+    },
+    PublicationYear: {
+      display: () => "3001",
+    },
+    Edition: {
+      edition: () => "109. udgave",
+    },
+    ...additionalResolver,
+  };
+}
+
+function userResolver(additionalResolver = {}) {
+  return {
+    // USER:
+    Branch: {
+      name: () => "Bibliotekerne Sølvskoven",
+      postalAddress: () => "Sølvskovvej 101",
+      postalCode: () => "0090",
+      city: () => "Træstubstrup",
+      pickupAllowed: () => true,
+      userParameters: () => [],
+      branchId: () => "901902",
+    },
+    CheckOrderPolicy: {
+      orderPossible: () => true,
+    },
+    ...additionalResolver,
+  };
+}
+
+function mutationResolver(additionalResolver = {}) {
+  return {
+    // Mutation
+    Mutation: {
+      submitOrder: (args) => {
+        const isValid = ["pids", "userParameters", "pickUpBranch"].every(
+          (inputParam) => Object.keys(args.variables.input).includes(inputParam)
+        );
+
+        return {
+          orderId: isValid ? "fiske-order-id" : "falsk-order-id",
+        };
+      },
+    },
+    SubmitOrder: {
+      status: (args) => console.log("status: ", args),
+      orderId: (args) => console.log("orderId: ", args),
+    },
+    ...additionalResolver,
+  };
+}
+
+function baseResolvers(additionalResolvers = {}) {
+  return {
+    ...reservationButtonResolver(),
+    ...orderPageResolver({ full: ["Hugo i Guldskoven"] }),
+    ...userResolver(),
+    ...mutationResolver(),
+    ...additionalResolvers,
+  };
+}
+
+function resolvers(storyname, additionalResolver = baseResolvers()) {
+  return {
+    ...OrderPageStoryBuilder(`${storyname}`, {
+      ...additionalResolver,
+    }),
+  };
+}
+
+export function BogOrder() {
   return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order Template</StoryTitle>
-      <StoryDescription>Order policy fail</StoryDescription>
-
-      <Modal.Container>
-        <Modal.Page id="pickup" component={Pages.Pickup} />
-      </Modal.Container>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: main,
-        }}
-        work={work}
-        user={modifiedUser}
-        authUser={modifiedUser}
-        pid={"some-pid"}
-        articleOrderMutation={order}
-        orderMutation={order}
-        query={query}
-        onLayerChange={(query) => setQuery(query)}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch) => {
-          alert(`Ordering "${pids}" to branch id "${pickupBranch.branchId}".`);
-        }}
-        modal={modal}
-      />
-    </div>
+    <OrderPageComponentBuilder type={"Bog"} storyNameOverride={"BogOrder"} />
   );
 }
+BogOrder.story = {
+  ...resolvers("BogOrder", {
+    ...reservationButtonResolver(),
+    ...orderPageResolver(),
+    ...userResolver(),
+    ...mutationResolver(),
+  }),
+};
+
+// TODO: Overvej om tidligere stories er interessante
+//  Måske vi hellere vil have nogle forskellige cases,
+//  til når man trykker på OrderConfirmationButton-knappen...?
+// export function ToggleOrder() {}
+// export function Default() {}
+// export function Loading() {}
+// export function NoEmail() {}
+// export function ManyPickupPoints() {}
+// export function Ordering() {}
+// export function Ordered() {}
+// export function OrderPolicyFail() {}
+
+// TODO: Implementer knap-cases:
+// onArticleSubmit,
+// onSubmit,
+// fejlende udgaver,
+// etc.
+
+// TODO: Implementer visning af Order.page.
+//  Dette bør gøres i del-komponenterne, men noter her:
+// TODO: Edition
+//  Done...?
+// TODO: LocalizationsInformation.js cases:
+// availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
+// (isLoadingBranches || pickupBranch)
+// !isLoadingBranches && pickupBranch && !availableAsPhysicalCopy && !availableAsDigitalCopy
+// TODO: OrdererInformation.js cases:
+// (isLoadingBranches || name)
+// (isLoadingBranches || (mail && lockedMessage && pickupBranch?.borrowerCheck))
+// message
+// (isLoadingBranches || (mail && lockedMessage && pickupBranch?.borrowerCheck)
+// TODO: OrderConfirmation.js cases:
+// actionMessage
+// availableAsDigitalCopy
+// !availableAsDigitalCopy && !availableAsPhysicalCopy
+// isWorkLoading || isPickupBranchLoading
