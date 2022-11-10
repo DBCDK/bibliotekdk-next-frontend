@@ -73,7 +73,7 @@ export default function Section({
       ...style,
       backgroundColor,
       paddingTop: space?.top || "var(--pt8)",
-      marginBottom: space.bottom || "var(--pt8)",
+      marginBottom: defSpace.bottom || "var(--pt8)",
     };
   }
 

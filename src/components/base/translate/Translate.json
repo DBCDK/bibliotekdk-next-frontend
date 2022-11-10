@@ -2166,6 +2166,64 @@
         "en": "%s | Bibliotek.dk"
       }
     },
+    "inspiration": {
+      "title-games": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "category-games-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-populære": {
+        "da": "Populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-børnematerialer": {
+        "da": "Børnematerialer",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-playstation-4": {
+        "da": "Playstation 4",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-xbox-one": {
+        "da": "Xbox One",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-playstation-3": {
+        "da": "Playstation 3",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-xbox-360": {
+        "da": "Xbox 360",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-nintendo-switch": {
+        "da": "Nintendo Switch",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-wii": {
+        "da": "Wii",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-nintendo-ds": {
+        "da": "Nintendo DS",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-pc-spil": {
+        "da": "Pc-spil",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-playstation-5": {
+        "da": "Playstation 5",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-": {
+        "da": "",
+        "en": "Label: mangler oversættelse"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",
