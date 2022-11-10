@@ -199,7 +199,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  if (!data.work.workReviews.length) {
+  if (!data?.work?.workReviews?.length) {
     return null;
   }
 

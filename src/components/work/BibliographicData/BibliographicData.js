@@ -46,7 +46,7 @@ export function BibliographicData({ manifestations, workId }) {
             : "";
 
           const prettyMaterialType = ((manifestation) => {
-            const materialType = manifestation.materialTypes[0].specific;
+            const materialType = manifestation?.materialTypes?.[0]?.specific;
             const flatMaterialType = flattenWord(materialType);
             const type =
               prettyAndOrderedMaterialTypesEnum[flatMaterialType] ||
@@ -58,13 +58,13 @@ export function BibliographicData({ manifestations, workId }) {
           return (
             <Item
               title={`${prettyMaterialType + volume}`}
-              subTitle={manifestation.edition.publicationYear.display}
-              key={`${manifestation.titles.main[0]}_${index}`}
+              subTitle={manifestation?.edition?.publicationYear?.display}
+              key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
             >
               {(hasBeenSeen) => (
                 <ManifestationFull
-                  pid={manifestation.pid}
+                  pid={manifestation?.pid}
                   workId={workId}
                   hasBeenSeen={hasBeenSeen}
                 />
