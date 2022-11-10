@@ -1,6 +1,3 @@
-import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
-
 // templates
 import Infomedia from "./templates/infomedia";
 import Online from "./templates/online";
@@ -8,7 +5,6 @@ import WebArchive from "./templates/webarchive";
 import OrderLink from "./templates/orderlink";
 
 import styles from "./Options.module.css";
-import Skeleton from "@/components/base/skeleton";
 import sortBy from "lodash/sortBy";
 import Top from "../base/top";
 
@@ -17,7 +13,7 @@ import Top from "../base/top";
  *
  * @param {object} props props for template
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function getTemplate(props) {
   if (props.accessType === "webArchive") {
@@ -97,7 +93,7 @@ function specialSort(a, b) {
 }
 
 export function Options({ modal, context }) {
-  const { selectedMaterials, onlineAccess } = { ...context };
+  const { onlineAccess } = { ...context };
 
   // no type selected - get the first one
   const type = context.type;

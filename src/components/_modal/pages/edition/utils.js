@@ -2,10 +2,15 @@ import { getIsPeriodicaLike } from "@/lib/utils";
 
 export function inferAccessTypes(
   work,
-  context,
-  manifestations,
-  initialPickupBranch
+  periodicaForm,
+  initialPickupBranch,
+  manifestationsBeforeCheck = {}
 ) {
+  const manifestations =
+    Object.keys(manifestationsBeforeCheck)?.length > 0
+      ? manifestationsBeforeCheck
+      : work?.manifestations?.all;
+
   const isArticle = work?.workTypes?.find(
     (workType) => workType.toLowerCase() === "article"
   );
@@ -14,16 +19,32 @@ export function inferAccessTypes(
     work?.materialTypes
   );
   const isArticleRequest =
-    !!context?.periodicaForm?.titleOfComponent ||
-    !!context?.periodicaForm?.authorOfComponent ||
-    !!context?.periodicaForm?.pagination;
-  const isDigitalCopy = !!manifestations?.find((m) =>
-    m?.access?.find((entry) => entry.issn)
-  );
+    !!periodicaForm?.titleOfComponent ||
+    !!periodicaForm?.authorOfComponent ||
+    !!periodicaForm?.pagination;
+
+  const isDigitalCopy = !!manifestations?.find((m) => {
+    return (
+      !!m?.workTypes?.find((workType) => workType === "article") &&
+      !!m?.access?.find((singleAccess) => singleAccess.issn)
+    );
+  });
   const availableAsDigitalCopy =
-    initialPickupBranch?.pickupBranch?.digitalCopyAccess &&
     isDigitalCopy &&
+    initialPickupBranch?.digitalCopyAccess &&
     (isPeriodicaLike ? isArticleRequest : true);
+
+  const isPhysical = !!manifestations?.find((m) => {
+    return m?.accessTypes?.find(
+      (accessType) => accessType?.display === "fysisk"
+    );
+  });
+  const availableAsPhysicalCopy =
+    isPhysical &&
+    initialPickupBranch?.pickupAllowed &&
+    initialPickupBranch?.orderPolicy?.orderPossible;
+
+  const requireDigitalAccess = isDigitalCopy && !isPhysical;
 
   return {
     isArticle,
@@ -31,5 +52,8 @@ export function inferAccessTypes(
     isArticleRequest,
     isDigitalCopy,
     availableAsDigitalCopy,
+    isPhysical,
+    availableAsPhysicalCopy,
+    requireDigitalAccess,
   };
 }

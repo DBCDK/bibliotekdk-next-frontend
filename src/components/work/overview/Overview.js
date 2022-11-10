@@ -16,9 +16,9 @@ import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useEffect } from "react";
-import { selectMaterialBasedOnType } from "@/components/work/reservationbutton/utils";
+import { getPidsFromType } from "@/components/work/reservationbutton/utils";
 
-function selectMaterialBasedOnType_TempUsingAlfaApi(fbiManifestations, type) {
+function selectMaterialBasedOnType(fbiManifestations, type) {
   const filteredManifestations = fbiManifestations?.filter(
     (manifestation) => manifestation?.materialTypes?.[0]?.specific === type
   );
@@ -121,7 +121,7 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
-  const materialPids = selectMaterialBasedOnType(
+  const materialPids = getPidsFromType(
     fbiWork?.data?.work?.manifestations?.all,
     type
   );
@@ -144,10 +144,7 @@ export function Overview({
   /*
   NOT cover, manifestations, materialType
    */
-  const selectedMaterial = selectMaterialBasedOnType_TempUsingAlfaApi(
-    fbiManifestations,
-    type
-  );
+  const selectedMaterial = selectMaterialBasedOnType(fbiManifestations, type);
 
   /**
    * NOTE

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { OverviewSkeleton, Overview } from "./Overview";
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-const dummyOverviewData = require("../dummy.overViewWorkapi.json");
+import dummyOverviewData from "../dummy.overViewWorkapi.json";
 
 const exportedObject = {
   title: "work/Overview",

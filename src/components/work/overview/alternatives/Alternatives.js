@@ -3,7 +3,6 @@ import { useModal } from "@/components/_modal";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
-import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
 
 export function AlternativeOptions({ modal = null, context = {} }) {
   const { selectedMaterial, type, workId } = { ...context };

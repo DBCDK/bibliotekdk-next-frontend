@@ -67,18 +67,18 @@ export default function usePickupBranch(pid) {
   // Merge user and branches
   const mergedUser = merge({}, loanerInfo, orderPolicy?.user);
 
-  const pickupBranchIsLoading =
+  const isPickupBranchLoading =
     policyIsLoading || userParamsIsLoading || branchPolicyIsLoading;
   const pickupBranchUser = (!userParamsIsLoading && mergedUser) || {};
   const isAuthenticatedForPickupBranch = isAuthenticated || isGuestUser;
 
   return {
-    authUser: authUser,
-    loanerInfo: loanerInfo,
-    updateLoanerInfo: updateLoanerInfo,
-    initialPickupBranch: initialPickupBranch,
-    pickupBranchIsLoading: pickupBranchIsLoading,
-    pickupBranchUser: pickupBranchUser,
-    isAuthenticatedForPickupBranch: isAuthenticatedForPickupBranch,
+    authUser,
+    loanerInfo,
+    updateLoanerInfo,
+    pickupBranch: initialPickupBranch.pickupBranch,
+    isPickupBranchLoading,
+    pickupBranchUser,
+    isAuthenticatedForPickupBranch,
   };
 }
