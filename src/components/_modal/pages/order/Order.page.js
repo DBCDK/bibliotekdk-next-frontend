@@ -61,8 +61,7 @@ function Order({
     }
   }, [user?.userParameters]);
 
-  // An order has successfully been submitted
-  useEffect(() => {
+  function updateModal() {
     if (modal && modal.isVisible) {
       // call update if data or isLoading is changed
       if (articleOrderMutation?.isLoading || articleOrderMutation?.data) {
@@ -71,12 +70,16 @@ function Order({
         modal.update(modal.index(), { order: orderMutation });
       }
     }
+  }
+
+  // An order has successfully been submitted
+  useEffect(() => {
+    updateModal();
   }, [
-    orderMutation.data,
-    orderMutation.isLoading,
+    orderMutation?.data,
+    orderMutation?.isLoading,
     articleOrderMutation?.data,
     articleOrderMutation?.isLoading,
-    modal,
   ]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
