@@ -6,7 +6,6 @@
 import merge from "lodash/merge";
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 function mockLogin(customMock = {}) {
@@ -78,7 +77,7 @@ function mockNotifications() {
 
 function mockFullWork() {
   cy.fixture("fullwork.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -88,7 +87,7 @@ function mockFullWork() {
 
 function mockArticleWork() {
   cy.fixture("fullarticlework.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -98,7 +97,7 @@ function mockArticleWork() {
 
 function mockArticleWorkNoPhysical() {
   cy.fixture("fullarticleworknophysical.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -108,7 +107,7 @@ function mockArticleWorkNoPhysical() {
 
 function mockPeriodicaWork() {
   cy.fixture("fullperiodicawork.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("work(")) {
         req.reply(fixture);
       }
@@ -118,7 +117,7 @@ function mockPeriodicaWork() {
 
 function mockAvailability() {
   cy.fixture("fullmanifestation.json").then((fixture) => {
-    cy.intercept("POST", `${graphqlPath}`, (req) => {
+    cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("manifestation(")) {
         req.reply(fixture);
       }
@@ -205,7 +204,7 @@ function mockSubmitSessionUserParameters() {
 }
 
 function mockFallback() {
-  cy.intercept("/190101/bibdk21/graphql", (req) => {
+  cy.intercept(`${fbiApiPath}`, (req) => {
     req.reply({ message: "fallback response" });
   });
 }
