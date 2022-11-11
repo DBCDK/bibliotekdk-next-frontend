@@ -199,3 +199,35 @@ export function OrderButtonNotLoggedIn() {
     </div>
   );
 }
+
+export function ReservationButtonSlowResponse() {
+  return (
+    <ReservationButtonComponentBuilder
+      workId={"some-slow-id-book"}
+      type={"Slow response"}
+    />
+  );
+}
+ReservationButtonSlowResponse.story = {
+  ...ReservationButtonStoryBuilder("Slow", {
+    Manifestation: {
+      access: async () => {
+        // Simulate slow access response, wait 5000ms
+        await new Promise((r) => {
+          setTimeout(r, 5000);
+        });
+
+        return [{}];
+      },
+    },
+    MaterialType: {
+      specific: () => "Bog",
+    },
+    InterLibraryLoan: {
+      loanIsPossible: () => true,
+    },
+    Access: {
+      __resolveType: () => "InterLibraryLoan",
+    },
+  }),
+};

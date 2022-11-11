@@ -30,6 +30,24 @@ describe("Reservation button", () => {
       cy.get("[data-cy=text-above-order-button").contains("Kræver");
     });
 
+    it("does not display 'deaactivated' text, when it is loading", () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton--reservation-button-slow-response&viewMode=story"
+      );
+
+      // This text is hidden by skeleton animation
+      cy.get("[data-cy=button-order-overview]").should(
+        "include.text",
+        "loading"
+      );
+
+      // It must not show deactivated text while loading
+      cy.get("[data-cy=button-order-overview]").should(
+        "not.include.text",
+        "deaktiveret"
+      );
+    });
+
     it.skip(`user not logged in material available`, () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
