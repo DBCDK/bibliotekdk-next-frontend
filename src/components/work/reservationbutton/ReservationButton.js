@@ -88,7 +88,7 @@ function extractSimpleFields(work, selectedManifestations) {
   const accessTypeCode = selectedManifestations?.accessTypes?.code;
 
   const access = selectedManifestations?.access;
-  const buttonSkeleton = !work;
+  const buttonSkeleton = !work || !selectedManifestations;
 
   // if we prefer online material button text should be different
   const onlineDisable = checkPreferredOnline(
