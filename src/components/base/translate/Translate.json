@@ -2167,6 +2167,66 @@
       }
     },
     "inspiration": {
+      "title-articles": {
+        "da": "Artikler",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-33": {
+        "da": "33",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-37": {
+        "da": "37",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-86": {
+        "da": "86",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-artikel": {
+        "da": "Artikel",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-tidsskriftsartikel": {
+        "da": "Tidsskriftsartikel",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-avisartikel": {
+        "da": "Avisartikel",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-99.4": {
+        "da": "99.4",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-60.1": {
+        "da": "60.1",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-34.31": {
+        "da": "34.31",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-34.38": {
+        "da": "34.38",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-32.26": {
+        "da": "32.26",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-33.19": {
+        "da": "33.19",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-61.44": {
+        "da": "61.44",
+        "en": "Label: mangler oversættelse"
+      },
       "title-games": {
         "da": "Spil",
         "en": "Games"
@@ -2221,6 +2281,214 @@
       },
       "category-games-": {
         "da": "",
+        "en": "Label: mangler oversættelse"
+      },
+      "title-fiction": {
+        "da": "Bøger",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-populære": {
+        "da": "Populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-krimi": {
+        "da": "Krimi",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-humor": {
+        "da": "Humor",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-spænding": {
+        "da": "Spænding",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-biografiske-romaner": {
+        "da": "Biografiske romaner",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-samfundskritik": {
+        "da": "Samfundskritik",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-eksperimenterende-litteratur": {
+        "da": "Eksperimenterende litteratur",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-science-fiction": {
+        "da": "Science fiction",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-historiske-romaner": {
+        "da": "Historiske romaner",
+        "en": "Label: mangler oversættelse"
+      },
+      "title-movies": {
+        "da": "Film",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-populære": {
+        "da": "Populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-børnematerialer": {
+        "da": "Børnematerialer",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-drama": {
+        "da": "Drama",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-kærlighed": {
+        "da": "Kærlighed",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-dokumentarfilm": {
+        "da": "Dokumentarfilm",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-komedier": {
+        "da": "Komedier",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-kunst-og-kunstnere": {
+        "da": "Kunst og kunstnere",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-tegnefilm": {
+        "da": "Tegnefilm",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-tv-serier": {
+        "da": "TV-serier",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-dvd": {
+        "da": "Dvd",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-video": {
+        "da": "Video",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-film-(net)": {
+        "da": "film-(net)",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-film": {
+        "da": "film",
+        "en": "Label: mangler oversættelse"
+      },
+      "title-music": {
+        "da": "Musik",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-populære": {
+        "da": "Populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-børnematerialer": {
+        "da": "Børnematerialer",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-cd-(musik)": {
+        "da": "CD-(musik)",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-grammofonplade": {
+        "da": "Grammofonplade",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-dvd": {
+        "da": "DVD",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-rock": {
+        "da": "Rock",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-jazz": {
+        "da": "Jazz",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-blues": {
+        "da": "Blues",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-singer/songwriter": {
+        "da": "Singer/songwriter",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-electronica": {
+        "da": "Electronica",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-kammermusik": {
+        "da": "Kammermusik",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-hip-hop": {
+        "da": "Hip-hop",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-klassisk-musik-1950-->": {
+        "da": "klassisk-musik-1950-->",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-folk": {
+        "da": "Folk",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-metal": {
+        "da": "Metal",
+        "en": "Label: mangler oversættelse"
+      },
+      "title-sheetmusic": {
+        "da": "Noder",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-nyeste": {
+        "da": "Nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-music-minus-one": {
+        "da": "Music minus one",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-karaoke": {
+        "da": "Karaoke",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-guitarskoler": {
+        "da": "Guitarskoler",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-undervisningsmaterialer": {
+        "da": "Undervisningsmaterialer",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-klaverskoler": {
+        "da": "Klaverskoler",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-sammenspil": {
+        "da": "Sammenspil",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-trommeskoler": {
+        "da": "Trommeskoler",
         "en": "Label: mangler oversættelse"
       }
     },

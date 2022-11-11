@@ -40,6 +40,7 @@ export default function Section({
   children = "Some content",
   className = "",
   dataCy = "section",
+  isLoading = false,
   backgroundColor = null,
   divider = {},
   space = {},
@@ -81,7 +82,7 @@ export default function Section({
   if (title) {
     title =
       typeof title === "string" ? (
-        <Title type="title4" tag="h2">
+        <Title type="title4" tag="h2" skeleton={isLoading}>
           {title}
         </Title>
       ) : (
@@ -132,6 +133,7 @@ Section.propTypes = {
     PropTypes.array,
   ]),
   dataCy: PropTypes.string,
+  isLoading: PropTypes.bool,
   backgroundColor: PropTypes.string,
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   space: PropTypes.object,

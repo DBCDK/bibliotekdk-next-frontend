@@ -11,7 +11,7 @@ import styles from "./Slider.module.css";
 
 export function Slider({ works, isLoading, ...props }) {
   return (
-    <Section dataCy="section-inspiration" {...props}>
+    <Section dataCy="section-inspiration" isLoading={isLoading} {...props}>
       <Row className={`${styles.slider}`}>
         <Col>
           <WorkSlider

@@ -172,27 +172,21 @@ const ThirdColumn = () => {
 const BranchLinks = () => {
   // Object holding info to generate links to materialtypes * NOTICE Keys are translated.
   const branch_links = {
-    books: { pathname: "/", query: {} },
-    articles: { pathname: "/", query: {} },
-    film: { pathname: "/", query: {} },
-    ematerials: { pathname: "/", query: {} },
-    games: { pathname: "/", query: {} },
-    music: { pathname: "/", query: {} },
-    nodes: { pathname: "/", query: {} },
+    books: "/inspiration/bøger",
+    articles: "/inspiration/artikler",
+    film: "/inspiration/film",
+    games: "/inspiration/spil",
+    music: "/inspiration/musik",
+    nodes: "/inspiration/noder",
   };
-  // BETA-1 all these links are disabled .. should they be removed?
-  const footerlinksdisabled = true;
 
   return Object.keys(branch_links).map((key) => (
     <div key={key}>
       <Link
         href={branch_links[key]}
         border={{ bottom: { keepVisible: true } }}
-        className={`${
-          footerlinksdisabled ? styles.disabled : styles.footerlink
-        }`}
+        className={styles.footerlink}
         dataCy="branchlink"
-        disabled={footerlinksdisabled}
       >
         <Text tag="span" type="text3">
           {Translate({
