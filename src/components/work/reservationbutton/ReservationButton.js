@@ -88,8 +88,7 @@ function extractSimpleFields(work, selectedManifestations) {
   const accessTypeCode = selectedManifestations?.accessTypes?.code;
 
   const access = selectedManifestations?.access;
-  const buttonSkeleton =
-    selectedManifestations !== null && typeof access === "undefined";
+  const buttonSkeleton = !work || !selectedManifestations;
 
   // if we prefer online material button text should be different
   const onlineDisable = checkPreferredOnline(
@@ -264,8 +263,7 @@ export function OrderButton({
     size: size,
     ...buttonPropsMap[index],
   };
-  const buttonTxt = buttonTxtMap[index];
-
+  const buttonTxt = buttonSkeleton ? () => "loading" : buttonTxtMap[index];
   return (
     <>
       {((accessTypeCode === "ONLINE" && access?.[0]?.loginRequired) ||
