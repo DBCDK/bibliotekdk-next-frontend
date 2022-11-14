@@ -64,7 +64,7 @@ function CreatorsArray(creators, skeleton) {
 
 function MaterialTypeArray(
   materialTypes,
-  selectedMaterial,
+  selectedMaterialType,
   skeleton,
   onTypeChange,
   type
@@ -77,32 +77,22 @@ function MaterialTypeArray(
     }
   }
 
-  // sort materialtypes
-
-  materialTypes?.sort(function (a, b) {
-    if (a.specific > b.specific) {
-      return 11;
-    }
-    if (b.specific > a.specific) {
-      return -1;
-    }
-    return 0;
-  });
-
-  return materialTypes?.map((material) => {
-    //  Sets isSelected flag if button should be selected
-
-    return (
-      <Tag
-        key={material.specific}
-        selected={material.specific === selectedMaterial.materialType}
-        onClick={() => handleSelectedMaterial(material, type)}
-        skeleton={skeleton}
-      >
-        {material.specific}
-      </Tag>
-    );
-  });
+  return materialTypes
+    ?.sort((a, b) => a.specific.localeCompare(b.specific))
+    ?.map((materialType) => {
+      //  Sets isSelected flag if button should be selected
+      return (
+        <Tag
+          key={materialType.specific}
+          selected={materialType.specific === selectedMaterialType}
+          onClick={() => handleSelectedMaterial(materialType, type)}
+          skeleton={skeleton}
+        >
+          {materialType.specific[0].toUpperCase() +
+            materialType.specific.slice(1)}
+        </Tag>
+      );
+    });
 }
 
 /**
@@ -191,8 +181,8 @@ export function Overview({
               <Col xs={12}>{CreatorsArray(fbiWork?.data?.work?.creators)}</Col>
               <Col xs={12} className={styles.materials}>
                 {MaterialTypeArray(
-                  fbiWork?.data?.work?.materialTypes,
-                  selectedMaterial,
+                  work?.materialTypes,
+                  selectedMaterial?.materialType,
                   skeleton,
                   onTypeChange,
                   type
