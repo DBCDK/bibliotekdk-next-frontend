@@ -1,38 +1,29 @@
-import { useRouter } from "next/router";
 import { useModal } from "@/components/_modal";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { useData } from "@/lib/api/api";
+import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
+import { useRouter } from "next/router";
 
-export function AlternativeOptions({ modal = null, context = {} }) {
-  const { selectedMaterial, type, workId } = { ...context };
+function AlternativeOptions({ modal = null, context = {} }) {
+  const { manifestations, type, workId } = { ...context };
 
-  const manifestations = selectedMaterial?.manifestations;
+  const requestButton = checkRequestButtonIsTrue({ manifestations });
 
-  // @TODO where to get requestbutton
-  const requestButton = true;
-  const allOnline = [];
-  // run through manifestions to get ALL onlineaccess
-  manifestations?.forEach((manifestation) => {
-    manifestation?.access?.forEach((element) => allOnline.push(element));
-  });
+  const accesses = manifestations?.flatMap((manifestation) =>
+    manifestation?.access?.map((singleAccess) => singleAccess)
+  );
 
-  //  filter out duplicates
-  let seen = {};
-  const onlineAccess = allOnline.filter(function (item) {
-    // No duplicate url or issn
-    const key = item.url || item.issn;
-    if (seen[key]) {
-      return false;
-    }
-    seen[key] = true;
-    return true;
+  const onlineAccess = accesses?.filter((singleAccess) => {
+    return ["url", "issn"].includes(
+      Object.keys(singleAccess)?.filter((fields) => fields !== "__typename")[0]
+    );
   });
 
   // digitalcopy and physical (orderPossible) are counted as one
-  const count =
-    onlineAccess?.filter((entry) => !entry.issn).length +
-    (requestButton || manifestations?.find((entry) => entry.issn) ? 1 : 0);
+  const count = (requestButton ? 1 : 0) + onlineAccess?.length;
 
   return (
     count > 1 && (
@@ -44,6 +35,8 @@ export function AlternativeOptions({ modal = null, context = {} }) {
             type: type,
             onlineAccess: onlineAccess,
             workId: workId,
+            orderPossible: requestButton,
+            title_author: context.title_author,
           })
         }
       >
@@ -59,20 +52,29 @@ export function AlternativeOptions({ modal = null, context = {} }) {
   );
 }
 
-export default function Wrap({ selectedMaterial }) {
-  const modal = useModal();
+export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
+  const title_author = router.query.title_author;
 
-  const { workId, title_author, type } = router.query;
+  const modal = useModal();
+
+  const { data } = useData(
+    selectedPids &&
+      manifestationFragments.alternativesManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = data?.manifestations;
+
+  const type = manifestations?.[0]?.materialTypes?.[0]?.specific;
 
   return (
     <AlternativeOptions
       modal={modal}
       context={{
         workId,
-        title_author,
         type,
-        selectedMaterial,
+        manifestations,
+        title_author,
       }}
     />
   );
