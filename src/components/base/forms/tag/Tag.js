@@ -14,7 +14,7 @@ import Translate from "../../translate";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function Tag({
   children = "im a tag",
@@ -59,7 +59,7 @@ function Tag({
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function TagSkeleton(props) {
   return (
@@ -82,7 +82,7 @@ function TagSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {
@@ -94,7 +94,12 @@ export default function Container(props) {
 
 // PropTypes for Button component
 Container.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
