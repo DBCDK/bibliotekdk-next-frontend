@@ -9,8 +9,8 @@ import {
   handleSubmitPeriodicaArticleOrder,
 } from "@/components/_modal/utils";
 import LocalizationInformation from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation";
-import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfirmationbutton/OrderConfirmationButton";
 import OrdererInformation from "@/components/_modal/pages/order/ordererinformation/OrdererInformation";
+import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfirmationbutton/OrderConfirmationButton";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import {
@@ -24,7 +24,7 @@ import {
  * @param {*} param0
  * @returns JSX.Element
  */
-export function Order({
+function Order({
   pid,
   orderPids,
   accessTypeInfo = {},
@@ -61,8 +61,7 @@ export function Order({
     }
   }, [user?.userParameters]);
 
-  // An order has successfully been submitted
-  useEffect(() => {
+  function updateModal() {
     if (modal && modal.isVisible) {
       // call update if data or isLoading is changed
       if (articleOrderMutation?.isLoading || articleOrderMutation?.data) {
@@ -71,12 +70,16 @@ export function Order({
         modal.update(modal.index(), { order: orderMutation });
       }
     }
+  }
+
+  // An order has successfully been submitted
+  useEffect(() => {
+    updateModal();
   }, [
-    orderMutation.data,
-    orderMutation.isLoading,
+    orderMutation?.data,
+    orderMutation?.isLoading,
     articleOrderMutation?.data,
     articleOrderMutation?.isLoading,
-    modal,
   ]);
 
   const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
@@ -132,7 +135,9 @@ export function Order({
         context={context}
         validated={validated}
         failedSubmission={failedSubmission}
-        onMount={(e, valid) => setMail({ value: e?.target?.value, valid })}
+        onSetMailDirectly={(e, valid) =>
+          setMail({ value: e?.target?.value, valid })
+        }
         onMailChange={(e, valid) =>
           onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail)
         }
