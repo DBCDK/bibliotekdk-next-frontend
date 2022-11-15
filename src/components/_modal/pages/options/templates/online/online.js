@@ -6,7 +6,7 @@ import Translate from "@/components/base/translate";
 import styles from "./online.module.css";
 
 export default function Online({ props }) {
-  const { url, note, origin, className, materialType } = { ...props };
+  const { url, origin, note, className, materialType } = { ...props };
 
   return (
     <li className={`${className} ${styles.item}`}>
