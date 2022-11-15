@@ -197,6 +197,7 @@ export function createMockedFetcher({
                 variables,
                 path,
                 getNext,
+                parent,
               });
             }
 
@@ -263,7 +264,6 @@ export function createMockedFetcher({
           .map((line) => line + "\n")
       );
     }
-
     return res;
   }
 

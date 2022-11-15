@@ -3,6 +3,7 @@ import { StoryTitle, StoryDescription } from "@/storybook";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "modal/Order",
@@ -10,170 +11,352 @@ const exportedObject = {
 
 export default exportedObject;
 
-/** ------------------------------------------------------- */
-/** EditionComponentBuilder
- * @param {string} type
- * @param {Object<Object<string, Array, boolean>, boolean, boolean>} editionProps
- * @param {string} storyNameOverride
- */
-function OrderPageComponentBuilder({ type = "Bog", storyNameOverride = null }) {
-  const descriptionName = storyNameOverride ? storyNameOverride : type;
+// A manifestation that may be ordered via ILL
+const MANIFESTATION_1 = {
+  titles: {
+    full: ["Hugo i Sølvskoven"],
+  },
+  pid: "some-pid-1",
+  materialTypes: [
+    {
+      specific: "Bog",
+    },
+  ],
+  accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
+  access: [
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+};
+// Another manifestation that may be ordered via ILL
+const MANIFESTATION_2 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-2",
+};
+// A manifestation that may not be ordered via ILL
+const MANIFESTATION_3 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-3",
+  access: [
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: false,
+    },
+  ],
+};
+// Indexed article, that may be ordered via digital article copy
+const MANIFESTATION_4 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-4",
+  materialTypes: [
+    {
+      specific: "tidsskriftsartikel",
+    },
+  ],
+  access: [
+    {
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["ARTICLE"],
+};
+// A periodica
+const MANIFESTATION_5 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-5",
+  materialTypes: [
+    {
+      specific: "tidsskrift",
+    },
+  ],
+  access: [
+    {
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["PERIODICA"],
+};
+const ALL_MANIFESTATIONS = [
+  MANIFESTATION_1,
+  MANIFESTATION_2,
+  MANIFESTATION_3,
+  MANIFESTATION_4,
+  MANIFESTATION_5,
+];
 
+const ALL_WORKS = [
+  // A work that has physical manifestations, two of them can be loaned via ILL
+  {
+    workId: "some-work-id-1",
+    manifestations: {
+      all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    },
+  },
+  // A work that is an indexed periodica article
+  {
+    workId: "some-work-id-2",
+    manifestations: { all: [MANIFESTATION_4] },
+    workTypes: ["ARTICLE"],
+  },
+  // A work that is a periodica
+  {
+    workId: "some-work-id-3",
+    manifestations: { all: [MANIFESTATION_5] },
+    workTypes: ["PERIODICA"],
+  },
+];
+
+const BRANCH_1 = {
+  name: "Test Bib - only physical via ILL",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+};
+const BRANCH_2 = {
+  name: "Test Bib - no orders here",
+  orderPolicy: {
+    orderPossible: false,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+};
+const BRANCH_3 = {
+  name: "Test Bib - ILL and digital copy service",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+};
+
+// A user with some agencies
+const USER_1 = {
+  agency: {
+    result: [BRANCH_1, BRANCH_2],
+  },
+};
+
+const USER_2 = {
+  agency: {
+    result: [BRANCH_2],
+  },
+};
+
+const USER_3 = {
+  agency: {
+    result: [BRANCH_3],
+  },
+};
+
+const DEFAULT_STORY_PARAMETERS = {
+  parameters: {
+    graphql: {
+      debug: true,
+      resolvers: {
+        Access: {
+          __resolveType: ({ parent }) => {
+            return parent?.__typename;
+          },
+        },
+        Query: {
+          user: () => {
+            return USER_1;
+          },
+          manifestations: (args) => {
+            return args?.variables?.pid?.map((pid) =>
+              ALL_MANIFESTATIONS.find((m) => m.pid === pid)
+            );
+          },
+          work: ({ variables }) => {
+            return ALL_WORKS.find((w) => w.workId === variables?.workId);
+          },
+          branches: () => {
+            return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
+          },
+        },
+        Mutation: {
+          submitOrder: (args) => {
+            // Used for cypress testing
+            console.log("submitOrder", args?.variables?.input);
+            return { orderId: "some-order-id" };
+          },
+          submitPeriodicaArticleOrder: (args) => {
+            // Used for cypress testing
+            console.log("submitPeriodicaArticleOrder", args?.variables?.input);
+            return { status: "OK" };
+          },
+        },
+      },
+      url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: `/i-dont-care`,
+      query: {},
+    },
+  },
+};
+
+function OrderPageComponentBuilder({
+  title,
+  description,
+  workId,
+  selectedPids,
+}) {
   return (
     <div>
-      <StoryTitle>Edition - {descriptionName}</StoryTitle>
+      <StoryTitle>{title}</StoryTitle>
       <StoryDescription>
-        The Edition on the type: {descriptionName}
+        {description}
+        <br />
+        <br />
+        <div>workId: {workId}</div>
+        <div>selectedPids: {selectedPids.join(", ")}</div>
       </StoryDescription>
-      <ReservationButton
-        workId={"some-work-id"}
-        selectedPids={["some-pid-0", "some-pid-1"]}
-      />
+      <ReservationButton workId={workId} selectedPids={selectedPids} />
       <Modal.Container>
         <Modal.Page id="order" component={Pages.Order} />
-        {/*<Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />*/}
-        {/*<Modal.Page id="pickup" component={Pages.Pickup} />*/}
-        {/*<Modal.Page id="loanerform" component={Pages.Loanerform} />*/}
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+        <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
         <Modal.Page id="receipt" component={Pages.Receipt} />
-        {/*<Modal.Page id="login" component={Pages.Login} />*/}
+        <Modal.Page id="login" component={Pages.Login} />
       </Modal.Container>
     </div>
   );
 }
 
-function OrderPageStoryBuilder(storyname, resolvers = {}, query = {}) {
-  return {
-    parameters: {
-      graphql: {
-        debug: true,
-        resolvers: resolvers,
-        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      },
-      nextRouter: {
-        showInfo: true,
-        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}?modal=12312412`,
-        query: query,
-      },
-    },
-  };
-}
-
-function reservationButtonResolver(additionalResolver = {}) {
-  return {
-    // ReservationButton
-    MaterialType: {
-      specific: () => "Bog",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
-    },
-    ...additionalResolver,
-  };
-}
-
-function orderPageResolver(additionalArgs = {}, additionalResolver = {}) {
-  return {
-    // Order.Page
-    Manifestation: {
-      pid: () => additionalArgs.pid ?? "some-pid-0",
-      publisher: () => additionalArgs.publisher ?? ["Sølvbakke"],
-      creators: () => additionalArgs.creators ?? [{}],
-      accessTypes: () => additionalArgs.accessTypes ?? ["fysisk"],
-    },
-    AccessType: {
-      display: () => "fysisk",
-    },
-    ManifestationTitles: {
-      full: () => additionalArgs.full ?? ["Hugo i Sølvskoven"],
-    },
-    Person: {
-      display: () => "Linoleum Gummigulv",
-    },
-    PublicationYear: {
-      display: () => "3001",
-    },
-    Edition: {
-      edition: () => "109. udgave",
-    },
-    ...additionalResolver,
-  };
-}
-
-function userResolver(additionalResolver = {}) {
-  return {
-    // USER:
-    Branch: {
-      name: () => "Bibliotekerne Sølvskoven",
-      postalAddress: () => "Sølvskovvej 101",
-      postalCode: () => "0090",
-      city: () => "Træstubstrup",
-      pickupAllowed: () => true,
-      userParameters: () => [],
-      branchId: () => "901902",
-    },
-    CheckOrderPolicy: {
-      orderPossible: () => true,
-    },
-    ...additionalResolver,
-  };
-}
-
-function mutationResolver(additionalResolver = {}) {
-  return {
-    // Mutation
-    Mutation: {
-      submitOrder: (args) => {
-        const isValid = ["pids", "userParameters", "pickUpBranch"].every(
-          (inputParam) => Object.keys(args.variables.input).includes(inputParam)
-        );
-
-        return {
-          orderId: isValid ? "fiske-order-id" : "falsk-order-id",
-        };
-      },
-    },
-    SubmitOrder: {
-      status: (args) => console.log("status: ", args),
-      orderId: (args) => console.log("orderId: ", args),
-    },
-    ...additionalResolver,
-  };
-}
-
-function baseResolvers(additionalResolvers = {}) {
-  return {
-    ...reservationButtonResolver(),
-    ...orderPageResolver({ full: ["Hugo i Guldskoven"] }),
-    ...userResolver(),
-    ...mutationResolver(),
-    ...additionalResolvers,
-  };
-}
-
-function resolvers(storyname, additionalResolver = baseResolvers()) {
-  return {
-    ...OrderPageStoryBuilder(`${storyname}`, {
-      ...additionalResolver,
-    }),
-  };
-}
-
-export function BogOrder() {
+// -------------------- Stories come here -----------------------
+export function OrderViaILL() {
   return (
-    <OrderPageComponentBuilder type={"Bog"} storyNameOverride={"BogOrder"} />
+    <OrderPageComponentBuilder
+      title="Order via ILL"
+      description="some-pid-3 should not be ordered, since loanIsPossible is false"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
   );
 }
-BogOrder.story = {
-  ...resolvers("BogOrder", {
-    ...reservationButtonResolver(),
-    ...orderPageResolver(),
-    ...userResolver(),
-    ...mutationResolver(),
-  }),
-};
+OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
+
+export function PickupNotAllowed() {
+  return (
+    <OrderPageComponentBuilder
+      title="Pickup not allowed"
+      description="When checkorder fails for material on a branch, error is displayed"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: { graphql: { resolvers: { Query: { user: () => USER_2 } } } },
+});
+
+export function OrderIndexedPeriodicaArticle() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Indexed Periodica Article"
+      description={`An article from a periodica has been indexed (we have a work for that article).
+        And it can be ordered via digital article service.`}
+      workId={"some-work-id-2"}
+      selectedPids={["some-pid-4"]}
+    />
+  );
+}
+OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_3 },
+      },
+    },
+  },
+});
+
+export function OrderIndexedPeriodicaArticleILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Indexed Periodica Article - ILL"
+      description={`An article from a periodica has been indexed (we have a work for that article).
+        And it can be ordered via ILL, not digital article service.`}
+      workId={"some-work-id-2"}
+      selectedPids={["some-pid-4"]}
+    />
+  );
+}
+OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_1 },
+      },
+    },
+  },
+});
+
+export function OrderPeriodicaVolume() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Periodica Volume"
+      description={`Order periodica volume through ILL, 
+        or a specific periodica article through preferrably article service and then ILL.`}
+      workId={"some-work-id-3"}
+      selectedPids={["some-pid-5"]}
+    />
+  );
+}
+OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_3 },
+      },
+    },
+  },
+});
+
+export function OrderPeriodicaVolumeOnlyILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Periodica Volume"
+      description={`Order periodica volume through ILL, 
+        or a specific periodica article through ILL. Selected branch does not subscribe 
+        to digital article service.`}
+      workId={"some-work-id-3"}
+      selectedPids={["some-pid-5"]}
+    />
+  );
+}
+OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_1 },
+      },
+    },
+  },
+});
 
 // TODO: Overvej om tidligere stories er interessante
 //  Måske vi hellere vil have nogle forskellige cases,

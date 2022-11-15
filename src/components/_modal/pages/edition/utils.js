@@ -3,17 +3,15 @@ import { getIsPeriodicaLike } from "@/lib/utils";
 export function inferAccessTypes(
   work,
   periodicaForm,
-  initialPickupBranch,
-  manifestationsBeforeCheck = {}
+  initialPickupBranch
+  // manifestationsBeforeCheck = {}
 ) {
-  const manifestations =
-    Object.keys(manifestationsBeforeCheck)?.length > 0
-      ? manifestationsBeforeCheck
-      : work?.manifestations?.all;
+  const manifestations = work?.manifestations?.all;
 
-  const isArticle = work?.workTypes?.find(
+  const isArticle = !!work?.workTypes?.find(
     (workType) => workType.toLowerCase() === "article"
   );
+
   const isPeriodicaLike = getIsPeriodicaLike(
     work?.workTypes,
     work?.materialTypes
@@ -24,11 +22,9 @@ export function inferAccessTypes(
     !!periodicaForm?.pagination;
 
   const isDigitalCopy = !!manifestations?.find((m) => {
-    return (
-      !!m?.workTypes?.find((workType) => workType === "article") &&
-      !!m?.access?.find((singleAccess) => singleAccess.issn)
-    );
+    return !!m?.access?.find((a) => a.issn);
   });
+
   const availableAsDigitalCopy =
     isDigitalCopy &&
     initialPickupBranch?.digitalCopyAccess &&
@@ -36,7 +32,7 @@ export function inferAccessTypes(
 
   const isPhysical = !!manifestations?.find((m) => {
     return m?.accessTypes?.find(
-      (accessType) => accessType?.display === "fysisk"
+      (accessType) => accessType?.code === "PHYSICAL"
     );
   });
   const availableAsPhysicalCopy =
