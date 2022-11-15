@@ -48,27 +48,6 @@ export function Connected() {
 
 Connected.story = {
   parameters: {
-    graphql: {
-      resolvers: {
-        // Subject: {
-        //   __resolveType: () => "SubjectText",
-        // },
-        // Work: {
-        //   subjects: (args) => {
-        //     console.log("args1....", args);
-        //     return {
-        //       dbcVerified: [{ display: "hest" }, { display: "ost" }],
-        //     };
-        //   },
-        // },
-        // Query: {
-        //   relatedSubjects: (args) => {
-        //     console.log("args2...", args);
-        //     return dummy;
-        //   },
-        // },
-      },
-    },
     nextRouter: {
       showInfo: true,
       pathname: "/materiale",

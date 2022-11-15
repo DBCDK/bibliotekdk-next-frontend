@@ -2171,6 +2171,10 @@
         "da": "Artikler",
         "en": "Label: mangler oversættelse"
       },
+      "description-articles": {
+        "da": "kort beskrivelse af sidens indhold her ...",
+        "en": "Label: mangler oversættelse"
+      },
       "category-articles-33": {
         "da": "33",
         "en": "Label: mangler oversættelse"
@@ -2231,6 +2235,10 @@
         "da": "Spil",
         "en": "Games"
       },
+      "description-games": {
+        "da": "kort beskrivelse af sidens indhold her ...",
+        "en": "Label: mangler oversættelse"
+      },
       "category-games-nyeste": {
         "da": "Nyeste",
         "en": "Label: mangler oversættelse"
@@ -2279,12 +2287,12 @@
         "da": "Playstation 5",
         "en": "Label: mangler oversættelse"
       },
-      "category-games-": {
-        "da": "",
-        "en": "Label: mangler oversættelse"
-      },
       "title-fiction": {
         "da": "Bøger",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-fiction": {
+        "da": "kort beskrivelse af sidens indhold her ...",
         "en": "Label: mangler oversættelse"
       },
       "category-fiction-nyeste": {
@@ -2329,6 +2337,10 @@
       },
       "title-movies": {
         "da": "Film",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-movies": {
+        "da": "kort beskrivelse af sidens indhold her ...",
         "en": "Label: mangler oversættelse"
       },
       "category-movies-nyeste": {
@@ -2389,6 +2401,10 @@
       },
       "title-music": {
         "da": "Musik",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-music": {
+        "da": "kort beskrivelse af sidens indhold her ...",
         "en": "Label: mangler oversættelse"
       },
       "category-music-nyeste": {
@@ -2457,6 +2473,10 @@
       },
       "title-sheetmusic": {
         "da": "Noder",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-sheetmusic": {
+        "da": "kort beskrivelse af sidens indhold her ...",
         "en": "Label: mangler oversættelse"
       },
       "category-sheetmusic-nyeste": {

@@ -58,7 +58,14 @@ if (typeof window !== "undefined") {
   smoothscroll.polyfill();
 }
 
-export default function MyApp({ Component, pageProps, router }) {
+let pageProps;
+
+export default function MyApp({ Component, pageProps: _pageProps, router }) {
+  // sync pageProps
+  pageProps = { ...pageProps, ..._pageProps };
+
+  console.log("hest", pageProps);
+
   // If this is rendered on server, allowCookies will be in pageProps
   // In the browser, we use Cookies.get
   const allowCookies =
@@ -156,7 +163,7 @@ export default function MyApp({ Component, pageProps, router }) {
  */
 MyApp.getInitialProps = async (ctx) => {
   if (typeof window !== "undefined") {
-    return { pageProps: { initialState: {} } };
+    return { pageProps: {} };
   }
 
   const appProps = await App.getInitialProps(ctx);

@@ -14,7 +14,7 @@ const CATEGORY_ENUMS = [
 ];
 
 /**
- * fiction inspiration
+ * inspiration
  *
  * @param {object} params
  * @param {string} params.limit
@@ -56,6 +56,38 @@ export function inspiration({ limit = 10, filters, category } = {}) {
       }`,
     variables: {
       limit,
+      filters,
+    },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * inspiration categories for a category
+ *
+ * @param {object} params
+ * @param {string} params.limit
+ */
+
+export function categories({ filters = [], category } = {}) {
+  // ensure valid category
+  if (!CATEGORY_ENUMS.includes(category)) {
+    return null;
+  }
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query ($filters: [String!]) {
+        inspiration {
+          categories {
+            ${category}(filters: $filters) {
+              title
+            }
+          }
+        }
+      }`,
+    variables: {
       filters,
     },
     slowThreshold: 3000,

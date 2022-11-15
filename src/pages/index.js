@@ -70,8 +70,9 @@ const Index = () => {
             context: "index",
             label: "inspirationSliderTitle",
           })}
+          backgroundColor="var(--parchment)"
           category="fiction"
-          filter="nyeste"
+          filters={["nyeste"]}
         />
         <ArticleSection
           title={Translate({ context: "index", label: "section2" })}
