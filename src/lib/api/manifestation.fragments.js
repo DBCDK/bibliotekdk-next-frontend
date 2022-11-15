@@ -101,9 +101,11 @@ export function alternativesManifestations({ pid }) {
           }
           ... on AccessUrl {
             url
+            origin
           }
           ... on Ereol {
             url
+            origin
           }
           ... on InterLibraryLoan {
             loanIsPossible

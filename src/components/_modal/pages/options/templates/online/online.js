@@ -4,10 +4,9 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import styles from "./online.module.css";
-import { getBaseUrl } from "@/components/work/reservationbutton/utils";
 
 export default function Online({ props }) {
-  const { url, note, className, materialType } = { ...props };
+  const { url, note, origin, className, materialType } = { ...props };
 
   return (
     <li className={`${className} ${styles.item}`}>
@@ -30,7 +29,7 @@ export default function Online({ props }) {
         {Translate({
           context: "options",
           label: "online-link-description",
-          vars: [getBaseUrl(url)],
+          vars: [origin],
         })}
       </Text>
     </li>
