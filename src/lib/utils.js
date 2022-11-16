@@ -128,8 +128,8 @@ export function uniqueEntries(oldArray) {
 }
 
 export function indexInArray(referenceArray, element, defaultValue = 2) {
-  return referenceArray.indexOf(element) !== -1
-    ? referenceArray.indexOf(element)
+  return referenceArray?.indexOf(element) !== -1
+    ? referenceArray?.indexOf(element)
     : defaultValue;
 }
 
