@@ -76,8 +76,9 @@ export function checkDigitalCopy({ manifestations }) {
  */
 export function getPidsFromType(manifestations, type) {
   return manifestations?.filter((manifestation) => {
-    return manifestation.materialTypes.find(
-      (materialType) => flattenWord(materialType.specific) === flattenWord(type)
+    return manifestation?.materialTypes?.find(
+      (materialType) =>
+        flattenWord(materialType?.specific) === flattenWord(type)
     );
   });
 }

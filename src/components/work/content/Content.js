@@ -81,9 +81,9 @@ export default function Wrap(props) {
   const manifestation = useMemo(() => {
     return data?.work?.manifestations?.all?.find(
       (manifestation) =>
-        manifestation.tableOfContents &&
-        manifestation.materialTypes.find(
-          (t) => t.specific.toLowerCase() === type.toLowerCase()
+        manifestation?.tableOfContents &&
+        manifestation?.materialTypes.find(
+          (t) => t?.specific?.toLowerCase() === type.toLowerCase()
         )
     );
   }, [data]);

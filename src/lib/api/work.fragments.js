@@ -591,6 +591,7 @@ export function orderPageManifestations({ workId }) {
               specific
             }
             accessTypes {
+              code
               display
             }
             access {

@@ -110,6 +110,8 @@ export function useMutate() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
+  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+
   function reset() {
     setisLoading(false);
     setData(false);
@@ -122,7 +124,7 @@ export function useMutate() {
     setData(null);
     setError(null);
     try {
-      const res = await fetcher(key);
+      const res = mockedFetcher ? await mockedFetcher(key) : await fetcher(key);
       setData(res);
     } catch (e) {
       setError(e);
