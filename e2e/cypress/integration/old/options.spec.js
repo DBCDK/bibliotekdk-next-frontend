@@ -2,7 +2,7 @@
  * @file
  * Test functionality modal options for article access
  */
-describe("Overview", () => {
+describe.skip("Overview", () => {
   before(function () {
     cy.visit("/iframe.html?id=modal-options--all-options");
   });
