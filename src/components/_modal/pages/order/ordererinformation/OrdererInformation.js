@@ -19,7 +19,7 @@ export function OrdererInformation({
   isLoading,
   hasBorchk,
   email,
-  onMount,
+  onSetMailDirectly,
   onMailChange,
   message,
   validClass,
@@ -62,8 +62,8 @@ export function OrdererInformation({
               disabled={isLoading || (mail && hasBorchk)}
               value={email || ""}
               id="order-user-email"
-              // onMount updates email error message (missing email error)
-              onMount={onMount}
+              // onSetMailDirectly updates email error message (missing email error)
+              onMount={onSetMailDirectly}
               onChange={debounce(onMailChange, 200)}
               readOnly={isLoading || (mail && hasBorchk)}
               skeleton={isLoadingBranches && !email}
@@ -110,7 +110,7 @@ OrdererInformation.propTypes = {
   isLoading: PropTypes.any,
   hasBorchk: PropTypes.any,
   email: PropTypes.any,
-  onMount: PropTypes.func,
+  onSetMailDirectly: PropTypes.func,
   onMailChange: PropTypes.func,
   message: PropTypes.any,
   validClass: PropTypes.any,
@@ -120,7 +120,7 @@ export default function Wrap({
   context,
   validated,
   failedSubmission,
-  onMount,
+  onSetMailDirectly,
   onMailChange,
 }) {
   const { workId, pid, periodicaForm } = context;
@@ -186,7 +186,7 @@ export default function Wrap({
       isLoading={isLoading}
       hasBorchk={hasBorchk}
       email={email}
-      onMount={onMount}
+      onSetMailDirectly={onSetMailDirectly}
       onMailChange={onMailChange}
       message={message}
       validClass={validClass}

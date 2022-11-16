@@ -15,6 +15,33 @@ describe("Reservation button", () => {
       });
     });
 
+    it(`physical material click opens modal with query params`, () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton--reservation-button-physical-book"
+      );
+
+      cy.get("[data-cy=button-order-overview-enabled]")
+        .should("contain", "Bestil")
+        .click();
+
+      cy.get("[data-cy=router-query]").contains("modal");
+    });
+
+    it(`digital material`, () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton--reservation-button-e-book"
+      );
+      cy.window().then((win) => {
+        cy.stub(win, "open").as("Open");
+      });
+
+      cy.get("[data-cy=button-order-overview]")
+        .should("contain", "Gå til bogen")
+        .click();
+
+      cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo");
+    });
+
     it(`user logged in material unavailable`, () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
@@ -48,16 +75,18 @@ describe("Reservation button", () => {
       );
     });
 
-    it.skip(`user not logged in material available`, () => {
+    it(`user not logged in material available`, () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--order-button-not-logged-in"
       );
-      cy.get("[data-cy=button-order-overview-enabled]")
-        .contains("Bestil")
+      cy.get("[data-cy=button-order-overview]")
+        .focus()
+        .should("contain", "Gå til")
         .should("be.visible")
         .click();
-      cy.on("window:alert", (str) => {
-        expect(str).to.equal("login");
+
+      cy.on("window:alert", (window) => {
+        expect(window).to.contain("DU SKAL LOGGE IND");
       });
     });
 

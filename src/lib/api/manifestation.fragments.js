@@ -81,6 +81,45 @@ export function editionManifestations({ pid }) {
   };
 }
 
+export function alternativesManifestations({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query alternativesManifestations($pid: [String!]!) {
+      manifestations(pid: $pid) {
+        pid
+        materialTypes {
+          specific
+        }
+        accessTypes {
+          display
+        }
+        access {
+          __typename
+          ... on DigitalArticleService {
+            issn
+          }
+          ... on AccessUrl {
+            url
+            origin
+          }
+          ... on Ereol {
+            url
+            origin
+          }
+          ... on InterLibraryLoan {
+            loanIsPossible
+          }
+        }
+      }
+      monitor(name: "bibdknext_manifestation_manifestations")
+    }
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
 const manifestationCoverFragment = `fragment manifestationCoverFragment on Manifestation {
   cover {
     detail

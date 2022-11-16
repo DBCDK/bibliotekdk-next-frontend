@@ -48,7 +48,7 @@ export function recommendations({ workId }) {
       result {
         reader
         work {
-          ...workSliderFragment  
+          ...workSliderFragment
         }
       }
     }
@@ -128,25 +128,6 @@ export function reviews({ workId }) {
     slowThreshold: 3000,
   };
 }
-
-// Use this fragments in queries that provide data
-// to the WorkSlider
-const workSliderFragment = `fragment workSliderFragment on Work {
-  workId
-  titles {
-    main
-  }
-  creators {
-    display
-  }
-  manifestations {
-    all {
-      cover {
-        detail
-      }
-    }
-  }
-}`;
 
 /**
  * Series for a work
@@ -610,6 +591,7 @@ export function orderPageManifestations({ workId }) {
               specific
             }
             accessTypes {
+              code
               display
             }
             access {
@@ -637,3 +619,56 @@ export function orderPageManifestations({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+export function overviewWork({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query overviewWork($workId: String!) {
+      work(id: $workId) {
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        materialTypes {
+          specific
+        }
+        manifestations {
+          all {
+            pid
+            materialTypes {
+              specific
+            }
+            cover {
+              detail
+            }
+          }
+        }
+      }
+      monitor(name: "bibdknext_overview_work")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+// Use this fragments in queries that provide data
+// to the WorkSlider
+const workSliderFragment = `fragment workSliderFragment on Work {
+  workId
+  titles {
+    main
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      cover {
+        detail
+      }
+    }
+  }
+}`;

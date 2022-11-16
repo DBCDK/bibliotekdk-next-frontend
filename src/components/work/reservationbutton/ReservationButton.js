@@ -70,8 +70,8 @@ function handleGoToLogin(
     !user.isAuthenticated &&
     accessTypeCode === "ONLINE" &&
     access[0]?.loginRequired &&
-    (access[0]?.url.indexOf("ebookcentral") !== -1 ||
-      access[0]?.url.indexOf("ebscohost") !== -1);
+    (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
+      access[0]?.url?.indexOf("ebscohost") !== -1);
 
   return goToLogin
     ? modal?.push("login", {
@@ -132,6 +132,8 @@ export function OrderButton({
   work,
   onOnlineAccess,
   openOrderModal,
+  onHandleGoToLogin = (selectedManifestation) =>
+    handleGoToLogin(work, selectedManifestation, user, modal, onOnlineAccess),
   singleManifestation,
   buttonType = "primary",
   size = "large",
@@ -196,14 +198,9 @@ export function OrderButton({
     /* (1) */
     {
       dataCy: "button-order-overview",
-      onClick: () =>
-        handleGoToLogin(
-          work,
-          selectedManifestation,
-          user,
-          modal,
-          onOnlineAccess
-        ),
+      // TODO: Fix handleGoToLogin!
+      // onClick: () => alert("DU SKAL LOGGE IND"),
+      onClick: () => onHandleGoToLogin(selectedManifestation),
     },
     /* (2) */
     {

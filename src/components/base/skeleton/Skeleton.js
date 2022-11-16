@@ -39,7 +39,10 @@ export default function Skeleton({
   const slowClass = isSlow ? styles.slow : "";
 
   return (
-    <div className={`${styles.skeleton} ${className} ${slowClass}`}>
+    <div
+      className={`${styles.skeleton} ${className} ${slowClass}`}
+      data-cy={"skeleton"}
+    >
       <div className={styles.lines}>
         <CreateLines n={lines}>{children}</CreateLines>
       </div>

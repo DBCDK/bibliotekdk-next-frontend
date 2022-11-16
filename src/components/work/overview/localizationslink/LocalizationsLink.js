@@ -12,25 +12,12 @@ import { checkPreferredOnline } from "@/lib/Navigation";
 import { openLocalizationsModal } from "@/components/work/utils";
 import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 
-export function LocalizationsLink({
-  materialType,
-  localizations,
-  openLocalizationsModal,
-  isLoading,
-}) {
-  if (isLoading) {
-    return <Skeleton lines={1} className={styles.skeletonstyle} />;
-  }
-
-  // @see lib/Navigation.js :: preferredOnline
-  if (checkPreferredOnline(materialType)) {
-    return null;
-  }
-
+export function LocalizationsLink({ localizations, openLocalizationsModal }) {
   // @TODO - if user is logged in - show localizations for logged in library
 
   const count = localizations?.count?.toString() || "0";
   const localizationKey = cyKey({ name: "nolocalizations", prefix: "text" });
+
   const localizationLinkKey = cyKey({ name: "localizations", prefix: "link" });
   if (count === "0") {
     return (
@@ -84,7 +71,7 @@ export default function Wrap({ selectedPids, workId }) {
     selectedPids
   );
 
-  const { data, isLoading } = useData(
+  const { data, isLoading, isSlow } = useData(
     selectedPids?.length > 0 &&
       typeof selectedPids?.[0] !== "undefined" &&
       localizationsFragments.localizationsQuery({ pids: selectedPids })
@@ -92,14 +79,23 @@ export default function Wrap({ selectedPids, workId }) {
 
   const materialType = workFromSelectedPids?.materialTypes?.[0]?.specific;
 
+  if (isLoading) {
+    return (
+      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+    );
+  }
+
+  // @see lib/Navigation.js :: preferredOnline
+  if (checkPreferredOnline(materialType)) {
+    return null;
+  }
+
   return (
     <LocalizationsLink
-      materialType={materialType}
       localizations={data?.localizations || "0"}
       openLocalizationsModal={() =>
         openLocalizationsModal(modal, selectedPids, workId, materialType)
       }
-      isLoading={isLoading}
     />
   );
 }

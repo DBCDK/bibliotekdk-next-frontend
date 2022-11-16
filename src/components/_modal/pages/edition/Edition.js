@@ -92,7 +92,7 @@ export const Edition = memo(function Edition({
             <Link onClick={() => {}} disabled>
               <Text
                 type="text3"
-                skeleton={!specificEdition && isLoading}
+                skeleton={(!specificEdition && isLoading) || !specificEdition}
                 lines={1}
                 clamp
               >

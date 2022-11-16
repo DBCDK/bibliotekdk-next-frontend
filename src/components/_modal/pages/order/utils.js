@@ -35,10 +35,10 @@ export function getOrderPids(pid, work, singleManifestation) {
     return (
       manifestation?.materialTypes?.[0]?.specific ===
         material?.materialTypes?.[0]?.specific &&
-      (!material?.accessTypes?.find(
-        (accessType) => accessType?.display !== "fysisk"
-      ) ||
-        material?.access?.find((singleAccess) => singleAccess.loanIsPossible))
+      (manifestation?.access?.find((singleAccess) => singleAccess.issn) ||
+        manifestation?.access?.find(
+          (singleAccess) => singleAccess.loanIsPossible
+        ))
     );
   });
 

@@ -15,6 +15,9 @@ function ReservationButtonComponentBuilder({
   workId = "some-id-builder",
   storyNameOverride = null,
 }) {
+  const date = new Date();
+  const time = date.getTime();
+
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -23,10 +26,8 @@ function ReservationButtonComponentBuilder({
         The OrderButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
-        workId={workId}
+        workId={workId + time}
         chosenMaterialType={type}
-        onOnlineAccess={() => {}}
-        openOrderModal={() => {}}
         singleManifestation={false}
         buttonType={"primary"}
         size={"large"}
@@ -41,9 +42,7 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
       graphql: {
         debug: true,
         resolvers: resolvers,
-        url:
-          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
-          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
+        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       },
       nextRouter: {
         showInfo: true,
@@ -195,6 +194,7 @@ export function OrderButtonNotLoggedIn() {
         user={user}
         chosenMaterialType={"avisartikel"}
         work={data?.work}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
     </div>
   );

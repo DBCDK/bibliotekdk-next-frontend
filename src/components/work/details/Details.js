@@ -31,7 +31,7 @@ export function Details({
   const contributors = useMemo(() => {
     const contributors_tmp =
       data?.contributors?.map((contrib) => contrib.display) || [];
-    const creators = data?.creators?.map((creator) => creator.display);
+    const creators = data?.creators?.map((creator) => creator.display) || [];
     return [...creators, ...contributors_tmp];
   }, [data]);
 
@@ -222,11 +222,11 @@ export default function Wrap(props) {
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =
-    data?.work?.manifestations?.all.find((element) =>
-      element.materialTypes.find((matType) => {
-        return matType.specific.toLowerCase() === type?.toLowerCase();
+    data?.work?.manifestations?.all?.find((element) =>
+      element?.materialTypes?.find((matType) => {
+        return matType?.specific?.toLowerCase() === type?.toLowerCase();
       })
-    ) || data?.work?.manifestations?.all[0];
+    ) || data?.work?.manifestations?.all?.[0];
 
   const genreAndForm = data?.work?.genreAndForm || [];
 

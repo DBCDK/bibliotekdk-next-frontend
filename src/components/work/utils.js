@@ -53,9 +53,9 @@ export function getPageDescription({ title, creators, materialTypes }) {
   const types = uniq(
     materialTypes
       .map((entry) => {
-        for (let i = 0; i < allowedTypes.length; i++) {
-          if (entry.toLowerCase().includes(allowedTypes[i])) {
-            return allowedTypes[i];
+        for (let i = 0; i < allowedTypes?.length; i++) {
+          if (entry?.toLowerCase().includes(allowedTypes?.[i])) {
+            return allowedTypes?.[i];
           }
         }
       })

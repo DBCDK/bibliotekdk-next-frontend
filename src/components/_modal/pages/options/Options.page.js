@@ -59,13 +59,14 @@ function sortorder(onlineaccess) {
 function addToOnlinAccess(onlineAccess = [], orderPossible) {
   let addi = onlineAccess?.map((access) => {
     const copy = { ...access };
-    if (copy.infomediaId) {
+    if (copy.__typename === "InfomediaService") {
       copy.accessType = "infomedia";
     } else if (copy.issn) {
       // We combine physical and digital into single entry
       copy.accessType = orderPossible ? "combined" : "digitalCopy";
-    } else if (copy.type === "webArchive") {
-      copy.accessType = "webArchive";
+      // TODO: Hvad hedder denne nu?
+      // } else if (copy.type === "webArchive") {
+      //   copy.accessType = "webArchive";
     } else if (copy.url) {
       copy.accessType = "online";
     }
