@@ -1,5 +1,6 @@
 // Translate Context
 import { flattenWord } from "@/lib/utils";
+import { AccessEnum } from "@/lib/enums";
 
 /**
  * Example:
@@ -121,9 +122,9 @@ export function selectMaterial(manifestations) {
   function accessWithLoanIsPossible(access) {
     return access?.filter(
       (accessSingle) =>
-        (accessSingle.__typename === "InterLibraryLoan" &&
+        (accessSingle.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
           accessSingle.loanIsPossible === true) ||
-        accessSingle.__typename !== "InterLibraryLoan"
+        accessSingle.__typename !== AccessEnum.INTER_LIBRARY_LOAN
     );
   }
 
