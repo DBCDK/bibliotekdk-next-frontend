@@ -104,37 +104,30 @@ function MaterialTypeArray(
  * @returns {JSX.Element}
  */
 export function Overview({
-  fbiWork,
+  work,
   workId,
   type,
   onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
-  const materialPids = getPidsFromType(
-    fbiWork?.data?.work?.manifestations?.all,
-    type
-  );
+  const manifestations = work?.manifestations.all;
+  const materialPids = getPidsFromType(manifestations, type);
   const selectedPids = materialPids?.map((mat) => mat?.pid);
 
-  const validMaterialTypes = fbiWork?.data?.work?.materialTypes.map(
+  const validMaterialTypes = work?.materialTypes.map(
     (materialType) => materialType.specific
   );
 
   useEffect(() => {
     if (type === null || !validMaterialTypes?.includes(type)) {
       onTypeChange({
-        type: fbiWork?.data?.work?.materialTypes?.[0]?.specific,
+        type: work?.materialTypes?.[0]?.specific,
       });
     }
   }, [type]);
 
-  const fbiManifestations = fbiWork?.data?.work?.manifestations.all;
-  // Either use type from props, or from local state
-  /*
-  NOT cover, manifestations, materialType
-   */
-  const selectedMaterial = selectMaterialBasedOnType(fbiManifestations, type);
+  const selectedMaterial = selectMaterialBasedOnType(manifestations, type);
 
   /**
    * NOTE
@@ -154,11 +147,11 @@ export function Overview({
           >
             <Row>
               <Cover
-                src={selectedMaterial?.cover?.detail || fbiWork?.materialTypes}
+                src={selectedMaterial?.cover?.detail || work?.materialTypes}
                 skeleton={skeleton || !selectedMaterial.cover}
                 size="large"
               >
-                <Bookmark title={fbiWork?.data?.work?.titles?.full?.[0]} />
+                <Bookmark title={work?.titles?.full?.[0]} />
               </Cover>
             </Row>
           </Col>
@@ -166,8 +159,12 @@ export function Overview({
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
             <Row>
               <Col xs={12}>
-                <Title type="title3" skeleton={skeleton}>
-                  {fbiWork?.data?.work?.titles?.full[0]}
+                <Title
+                  type="title3"
+                  skeleton={skeleton}
+                  data-cy={"title-overview"}
+                >
+                  {work?.titles?.full[0]}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
@@ -178,7 +175,7 @@ export function Overview({
                   alt=""
                 />
               </Col>
-              <Col xs={12}>{CreatorsArray(fbiWork?.data?.work?.creators)}</Col>
+              <Col xs={12}>{CreatorsArray(work?.creators)}</Col>
               <Col xs={12} className={styles.materials}>
                 {MaterialTypeArray(
                   work?.materialTypes,
@@ -200,7 +197,10 @@ export function Overview({
                 skeleton={skeleton}
               />
               <Col xs={12} className={styles.info}>
-                <AlternativeOptions selectedMaterial={selectedMaterial} />
+                <AlternativeOptions
+                  workId={workId}
+                  selectedPids={selectedPids}
+                />
               </Col>
               <Col xs={12} className={styles.info}>
                 <LocalizationsLink
@@ -266,16 +266,18 @@ export function OverviewError() {
  * Wrap is a react component responsible for loading
  * data and displaying the right variant of the component
  *
- * @param {Object} props Component props
+ * @param {string} workId Component props
+ * @param {string} type
+ * @param {function} onTypeChange
+ * @param login
  * See propTypes for specific props and types
  *
  * @returns {JSX.Element}
  */
-export default function Wrap(props) {
-  const { workId, type, onTypeChange, login } = props;
+export default function Wrap({ workId, type, onTypeChange, login }) {
   const user = useUser();
 
-  const fbiWork = useData(workFragments.fbiOverviewDetail({ workId }));
+  const fbiWork = useData(workFragments.overviewWork({ workId }));
 
   if (fbiWork.isLoading) {
     return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
@@ -287,7 +289,7 @@ export default function Wrap(props) {
 
   return (
     <Overview
-      fbiWork={fbiWork}
+      work={fbiWork.data.work}
       workId={workId}
       type={type}
       onTypeChange={onTypeChange}
