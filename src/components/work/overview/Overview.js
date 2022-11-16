@@ -301,8 +301,6 @@ export default function Wrap(props) {
 Wrap.propTypes = {
   workId: PropTypes.string,
   type: PropTypes.string,
-  onTypeChange: PropTypes.func,
-  onOnlineAccess: PropTypes.func,
   user: PropTypes.object,
   login: PropTypes.func,
 };
