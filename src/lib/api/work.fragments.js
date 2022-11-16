@@ -313,6 +313,7 @@ export function buttonTxt({ workId }) {
               }
               ... on Ereol {
                 url
+                origin
               }
               ... on InterLibraryLoan {
                 loanIsPossible
