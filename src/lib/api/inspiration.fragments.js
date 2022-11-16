@@ -15,18 +15,20 @@ export function fiction({ limit = 10, filters } = {}) {
           categories {
             fiction(filters: $filters) {
               title
-              works(limit: $limit) {
-                workId
-                titles {
-                  main
-                }
-                creators {
-                  display
-                }
-                manifestations {
-                  all {
-                    cover {
-                      detail
+              result(limit: $limit) {
+                work {
+                  workId
+                  titles {
+                    main
+                  }
+                  creators {
+                    display
+                  }
+                  manifestations {
+                    all {
+                      cover {
+                        detail
+                      }
                     }
                   }
                 }

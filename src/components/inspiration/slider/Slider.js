@@ -39,11 +39,11 @@ export default function Wrap({ title, category, filter }) {
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
 
+  const works = cat?.result?.map((singleResult) => singleResult.work);
+
   if (!cat && !isLoading) {
     return null;
   }
 
-  return (
-    <Slider title={title} works={cat?.works || []} isLoading={isLoading} />
-  );
+  return <Slider title={title} works={works || []} isLoading={isLoading} />;
 }
