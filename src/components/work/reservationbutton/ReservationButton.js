@@ -35,6 +35,7 @@ function workTypeTranslator(workTypes) {
       });
 }
 
+// TODO: Refactor this mess at some point
 function handleGoToLogin(
   work,
   selectedManifestations,
