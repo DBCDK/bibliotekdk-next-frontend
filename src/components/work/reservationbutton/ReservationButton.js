@@ -17,6 +17,7 @@ import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import { useMemo } from "react";
 import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
+import { AccessEnum } from "@/lib/enums";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -35,22 +36,25 @@ function workTypeTranslator(workTypes) {
 }
 
 function handleGoToLogin(
-  data,
+  work,
   selectedManifestations,
   user,
   modal,
   onOnlineAccess
 ) {
   const { access, pid, accessTypeCode, title } = extractSimpleFields(
-    data,
+    work,
     selectedManifestations
   );
 
   function addToInfomedia(access, pid, title) {
     access?.map((access) => {
-      if (access?.__typename === "InfomediaSerivce" && access?.id !== null) {
+      if (
+        access?.__typename === AccessEnum.INFOMEDIA_SERVICE &&
+        access?.id !== null
+      ) {
         access.url = infomediaUrl(
-          encodeTitleCreator(title),
+          encodeTitleCreator(title?.[0]),
           `work-of:${pid}`,
           access.id
         );
@@ -59,11 +63,14 @@ function handleGoToLogin(
       return access;
     });
   }
+
   // add url to infomedia - if any
   addToInfomedia(access, pid, title);
 
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
+
+  // const chec
 
   // check if we should open login modal on click
   const goToLogin =
@@ -171,7 +178,7 @@ export function OrderButton({
     Boolean(
       access?.length > 0 &&
         !access?.[0]?.issn &&
-        access?.[0]?.__typename !== "InterLibraryLoan"
+        access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
     ),
     /** (2) material is available for logged in library
      * ---  --> prepare order button with parameters
