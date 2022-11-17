@@ -298,37 +298,6 @@ export function buttonTxt({ workId }) {
         materialTypes {
           specific
         }
-        manifestations {
-          all {
-            pid   
-            accessTypes {
-              code
-            }
-            access {
-              __typename  
-              ... on AccessUrl {
-                url
-                origin
-                loginRequired
-              }
-              ... on Ereol {
-                url
-              }
-              ... on InterLibraryLoan {
-                loanIsPossible
-              }
-              ... on InfomediaService {
-                id
-              }
-              ... on DigitalArticleService {
-                issn
-              }
-            }
-            materialTypes {
-              specific
-            }
-          }
-        }
         workTypes
       }
       monitor(name: "bibdknext_work_basic")

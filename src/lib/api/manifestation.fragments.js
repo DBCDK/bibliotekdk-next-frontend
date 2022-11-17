@@ -94,31 +94,65 @@ export function alternativesManifestations({ pid }) {
         accessTypes {
           display
         }
-        access {
-          __typename
-          ... on DigitalArticleService {
-            issn
-          }
-          ... on AccessUrl {
-            url
-            origin
-          }
-          ... on Ereol {
-            url
-            origin
-          }
-          ... on InterLibraryLoan {
-            loanIsPossible
-          }
-        }
+        ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestations")
     }
+    ${accessFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
   };
 }
+
+export function reservationButtonManifestations({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query orderButtonTextBelowManifestations($pid: [String!]!) {
+      manifestations(pid: $pid) {
+        pid
+        materialTypes {
+          specific
+        }
+        accessTypes {
+          display
+        }
+        workTypes
+        ...accessFragment
+      }
+      monitor(name: "bibdknext_manifestation_manifestations")
+    }
+    ${accessFragment}
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+const accessFragment = `fragment accessFragment on Manifestation {
+  access {
+    __typename
+    ... on AccessUrl {
+      url
+      origin
+      loginRequired
+    }
+    ... on Ereol {
+      url
+      origin
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on InfomediaService {
+      id
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+}`;
 
 const manifestationCoverFragment = `fragment manifestationCoverFragment on Manifestation {
   cover {

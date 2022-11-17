@@ -192,7 +192,6 @@ export function Overview({
                 />
               </Col>
               <OrderButtonTextBelow
-                workId={workId}
                 selectedPids={selectedPids}
                 skeleton={skeleton}
               />
