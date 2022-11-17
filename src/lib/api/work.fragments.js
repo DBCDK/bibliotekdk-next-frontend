@@ -298,6 +298,11 @@ export function buttonTxt({ workId }) {
         materialTypes {
           specific
         }
+        manifestations {
+          all {
+            pid
+          }
+        }
         workTypes
       }
       monitor(name: "bibdknext_work_basic")
