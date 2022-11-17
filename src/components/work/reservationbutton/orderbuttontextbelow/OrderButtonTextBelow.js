@@ -99,7 +99,6 @@ export default function Wrap({ selectedPids, skeleton }) {
   const manifestations = data?.manifestations;
 
   if ((!data?.manifestations && isLoading) || !data?.manifestations) {
-    console.log("HEY SKELETON");
     return (
       <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );

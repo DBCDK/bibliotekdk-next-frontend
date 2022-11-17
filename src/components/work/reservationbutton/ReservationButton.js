@@ -72,8 +72,6 @@ function handleGoToLogin(
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
 
-  // const chec
-
   // check if we should open login modal on click
   const goToLogin =
     !user.isAuthenticated &&
