@@ -1,78 +1,91 @@
-import { useRouter } from "next/router";
 import { useModal } from "@/components/_modal";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { useData } from "@/lib/api/api";
+import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
+import { useRouter } from "next/router";
+import Skeleton from "@/components/base/skeleton";
+import styles from "./Alternatives.module.css";
 
-export function AlternativeOptions({ modal = null, context = {} }) {
-  const { selectedMaterial, type, workId } = { ...context };
+function AlternativeOptions({ modal = null, context = {} }) {
+  const { manifestations, type, workId } = { ...context };
 
-  const manifestations = selectedMaterial?.manifestations;
+  const requestButton =
+    manifestations && checkRequestButtonIsTrue({ manifestations });
 
-  // @TODO where to get requestbutton
-  const requestButton = true;
-  const allOnline = [];
-  // run through manifestions to get ALL onlineaccess
-  manifestations?.forEach((manifestation) => {
-    manifestation?.access?.forEach((element) => allOnline.push(element));
-  });
+  const accesses = manifestations?.flatMap((manifestation) =>
+    manifestation?.access?.map((singleAccess) => singleAccess)
+  );
 
-  //  filter out duplicates
-  let seen = {};
-  const onlineAccess = allOnline.filter(function (item) {
-    // No duplicate url or issn
-    const key = item.url || item.issn;
-    if (seen[key]) {
-      return false;
-    }
-    seen[key] = true;
-    return true;
+  const onlineAccess = accesses?.filter((singleAccess) => {
+    return ["url", "issn"]?.includes(
+      Object.keys(singleAccess)?.filter((fields) => fields !== "__typename")[0]
+    );
   });
 
   // digitalcopy and physical (orderPossible) are counted as one
-  const count =
-    onlineAccess?.filter((entry) => !entry.issn).length +
-    (requestButton || manifestations?.find((entry) => entry.issn) ? 1 : 0);
+  const count = (requestButton ? 1 : 0) + onlineAccess?.length;
+
+  if (!(count > 1)) {
+    return null;
+  }
 
   return (
-    count > 1 && (
-      <Link
-        border={{ bottom: { keepVisible: true } }}
-        onClick={() =>
-          modal.push("options", {
-            title: Translate({ context: "modal", label: "title-options" }),
-            type: type,
-            onlineAccess: onlineAccess,
-            workId: workId,
-          })
-        }
-      >
-        <Text tag="span">
-          {Translate({
-            context: "overview",
-            label: "all-options-link",
-            vars: [count],
-          })}
-        </Text>
-      </Link>
-    )
+    <Link
+      border={{ bottom: { keepVisible: true } }}
+      onClick={() =>
+        modal.push("options", {
+          title: Translate({ context: "modal", label: "title-options" }),
+          type: type,
+          onlineAccess: onlineAccess,
+          workId: workId,
+          orderPossible: requestButton,
+          title_author: context.title_author,
+        })
+      }
+    >
+      <Text tag="span">
+        {Translate({
+          context: "overview",
+          label: "all-options-link",
+          vars: [count],
+        })}
+      </Text>
+    </Link>
   );
 }
 
-export default function Wrap({ selectedMaterial }) {
-  const modal = useModal();
+export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
+  const title_author = router.query.title_author;
 
-  const { workId, title_author, type } = router.query;
+  const modal = useModal();
+
+  const { data, isLoading, isSlow } = useData(
+    selectedPids &&
+      manifestationFragments.alternativesManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = data?.manifestations;
+
+  const type = manifestations?.[0]?.materialTypes?.[0]?.specific;
+
+  if (isLoading) {
+    return (
+      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+    );
+  }
 
   return (
     <AlternativeOptions
       modal={modal}
       context={{
         workId,
-        title_author,
         type,
-        selectedMaterial,
+        manifestations,
+        title_author,
       }}
     />
   );

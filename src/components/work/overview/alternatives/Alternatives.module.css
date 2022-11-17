@@ -1,0 +1,5 @@
+.skeletonstyle{
+    margin-top: var(--pt2);
+    position: relative;
+    height: var(--pt2);
+}

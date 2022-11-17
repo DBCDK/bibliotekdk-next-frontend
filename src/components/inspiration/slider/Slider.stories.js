@@ -31,21 +31,27 @@ Connected.story = {
         },
         Category: {
           title: () => "nyeste",
-          works: () => [
+          result: () => [
             {
-              workId: "id-1",
-              titles: { main: ["title-1"] },
-              creators: [{ display: "creator-1" }],
+              work: {
+                workId: "id-1",
+                titles: { main: ["title-1"] },
+                creators: [{ display: "creator-1" }],
+              },
             },
             {
-              workId: "id-2",
-              titles: { main: ["title-2"] },
-              creators: [{ display: "creator-2" }],
+              work: {
+                workId: "id-2",
+                titles: { main: ["title-2"] },
+                creators: [{ display: "creator-2" }],
+              },
             },
             {
-              workId: "id-3",
-              titles: { main: ["title-3"] },
-              creators: [{ display: "creator-3" }],
+              work: {
+                workId: "id-3",
+                titles: { main: ["title-3"] },
+                creators: [{ display: "creator-3" }],
+              },
             },
           ],
         },

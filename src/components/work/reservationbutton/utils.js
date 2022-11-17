@@ -1,5 +1,6 @@
 // Translate Context
 import { flattenWord } from "@/lib/utils";
+import { AccessEnum } from "@/lib/enums";
 
 /**
  * Example:
@@ -35,12 +36,25 @@ export function checkRequestButtonIsTrue({ manifestations }) {
   // pjo 14/6 - bug 1020 - sort out some materialtypes - would be better to do
   // somewhere else
   const notReservable = ["Biograffilm", "Udstilling", "Teateropførelse"];
-  return !!manifestations?.find(
-    (manifestation) =>
-      manifestation?.access?.loanIsPossible ||
-      (manifestation?.admin?.requestButton &&
-        !notReservable.includes(manifestation?.materialType))
-  );
+
+  const possibleToLoan =
+    manifestations?.flatMap((manifestation) => {
+      return manifestation?.access.filter((singleAccess) => {
+        return (
+          singleAccess?.loanIsPossible && singleAccess?.loanIsPossible === true
+        );
+      });
+    }).length > 0;
+
+  const requestButtonExists =
+    manifestations?.filter((manifestation) => {
+      return (
+        manifestation?.admin?.requestButton &&
+        !notReservable.includes(manifestation?.materialType)
+      );
+    }).length > 0;
+
+  return possibleToLoan || requestButtonExists;
 }
 
 /**
@@ -108,9 +122,9 @@ export function selectMaterial(manifestations) {
   function accessWithLoanIsPossible(access) {
     return access?.filter(
       (accessSingle) =>
-        (accessSingle.__typename === "InterLibraryLoan" &&
+        (accessSingle.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
           accessSingle.loanIsPossible === true) ||
-        accessSingle.__typename !== "InterLibraryLoan"
+        accessSingle.__typename !== AccessEnum.INTER_LIBRARY_LOAN
     );
   }
 

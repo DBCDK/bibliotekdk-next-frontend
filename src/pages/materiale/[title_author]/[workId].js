@@ -48,13 +48,6 @@ export default function WorkPage() {
     );
   }
 
-  function handleOrder(pid) {
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, order: `${pid}` },
-    });
-  }
-
   return (
     <React.Fragment>
       <Header workId={workId} />
@@ -62,7 +55,6 @@ export default function WorkPage() {
         workId={workId}
         onTypeChange={handleOnTypeChange}
         login={signIn}
-        openOrderModal={handleOrder}
         type={type}
         query={{ type }}
       />

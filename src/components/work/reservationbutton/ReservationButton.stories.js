@@ -3,6 +3,7 @@ import ReservationButton, {
   OrderButton,
 } from "@/components/work/reservationbutton/ReservationButton";
 import { dummy_workDataApi } from "@/components/work/dummy.workDataApi";
+import { AccessEnum } from "@/lib/enums";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -13,8 +14,12 @@ export default exportedObject;
 function ReservationButtonComponentBuilder({
   type = "Bog",
   workId = "some-id-builder",
+  selectedPids = ["some-other-id-builder"],
   storyNameOverride = null,
 }) {
+  const date = new Date();
+  const time = date.getTime();
+
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -23,10 +28,8 @@ function ReservationButtonComponentBuilder({
         The OrderButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
-        workId={workId}
-        chosenMaterialType={type}
-        onOnlineAccess={() => {}}
-        openOrderModal={() => {}}
+        workId={workId + time}
+        selectedPids={selectedPids.map((pid) => pid + time)}
         singleManifestation={false}
         buttonType={"primary"}
         size={"large"}
@@ -41,9 +44,7 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
       graphql: {
         debug: true,
         resolvers: resolvers,
-        url:
-          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
-          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
+        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
       },
       nextRouter: {
         showInfo: true,
@@ -55,76 +56,108 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
 }
 
 export function ReservationButtonPhysicalBook() {
-  return (
-    <ReservationButtonComponentBuilder workId={"some-id-book"} type={"Bog"} />
-  );
+  return <ReservationButtonComponentBuilder type={"Bog"} />;
 }
 ReservationButtonPhysicalBook.story = {
   ...ReservationButtonStoryBuilder("Book", {
-    MaterialType: {
-      specific: () => "Bog",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Bog" }],
+          workTypes: ["LITERATURE"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "Bog" }],
+            accessTypes: [
+              {
+                display: "fysisk",
+              },
+            ],
+            access: [
+              {
+                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+                loanIsPossible: true,
+              },
+            ],
+            workTypes: ["LITERATURE"],
+          },
+        ];
+      },
     },
   }),
 };
 
 export function ReservationButtonEBook() {
-  return (
-    <ReservationButtonComponentBuilder
-      workId={"some-id-e-book"}
-      type={"EBog"}
-    />
-  );
+  return <ReservationButtonComponentBuilder type={"Ebog"} />;
 }
 ReservationButtonEBook.story = {
-  ...ReservationButtonStoryBuilder("EBook", {
-    MaterialType: {
-      specific: () => "EBog",
-    },
-    Ereol: {
-      url: () => "ereol.combo",
-    },
-    Access: {
-      __resolveType: () => "Ereol",
-    },
-    AccessType: {
-      display: () => "some-display",
-    },
-    Work: {
-      workTypes: () => ["LITERATURE"],
+  ...ReservationButtonStoryBuilder("Ebog", {
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Ebog" }],
+          workTypes: ["LITERATURE"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "Ebog" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
+            access: [
+              {
+                __resolveType: AccessEnum.EREOL,
+                url: "ereol.combo",
+              },
+            ],
+            workTypes: ["LITERATURE"],
+          },
+        ];
+      },
     },
   }),
 };
 
 export function ReservationButtonEAudioBook() {
-  return (
-    <ReservationButtonComponentBuilder
-      workId={"some-id-e-audio-book"}
-      type={"EBog"}
-    />
-  );
+  return <ReservationButtonComponentBuilder type={"EAudioBook"} />;
 }
 ReservationButtonEAudioBook.story = {
-  ...ReservationButtonStoryBuilder("EBook", {
-    MaterialType: {
-      specific: () => "EBog",
-    },
-    Ereol: {
-      url: () => "ereol.combo",
-    },
-    Access: {
-      __resolveType: () => "Ereol",
-    },
-    AccessType: {
-      display: () => "some-display",
-    },
-    Work: {
-      workTypes: () => ["LITERATURE"],
+  ...ReservationButtonStoryBuilder("EAudioBook", {
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "lydbog (net)" }],
+          workTypes: ["LITERATURE"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "lydbog (net)" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
+            access: [
+              {
+                __resolveType: AccessEnum.EREOL,
+                url: "ereol.combo",
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -139,17 +172,32 @@ export function ReservationButtonGame() {
 }
 ReservationButtonGame.story = {
   ...ReservationButtonStoryBuilder("Playstation 4", {
-    MaterialType: {
-      specific: () => "Playstation 4",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
-    },
-    Work: {
-      workTypes: () => ["GAME"],
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Playstation 4" }],
+          workTypes: ["GAME"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "Playstation 4" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
+            access: [
+              {
+                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+                loanIsPossible: true,
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -164,6 +212,28 @@ export function ReservationButtonDisabled() {
 }
 ReservationButtonDisabled.story = {
   ...ReservationButtonStoryBuilder("Button disabled", {
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "EBog" }],
+          workTypes: ["LITERATURE"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "EBog" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
+            access: [],
+          },
+        ];
+      },
+    },
     MaterialType: {
       specific: () => "Ebog",
     },
@@ -195,10 +265,43 @@ export function OrderButtonNotLoggedIn() {
         user={user}
         chosenMaterialType={"avisartikel"}
         work={data?.work}
+        manifestations={data?.work?.manifestations?.all}
+        onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
     </div>
   );
 }
+
+export function ReservationButtonPhysicalBookLoanNotPossible() {
+  return <ReservationButtonComponentBuilder type={"Bog"} />;
+}
+ReservationButtonPhysicalBookLoanNotPossible.story = {
+  ...ReservationButtonStoryBuilder("Book", {
+    Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Bog" }],
+          workTypes: ["LITERATURE"],
+        };
+      },
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "Bog" }],
+            accessTypes: [
+              {
+                display: "fysisk",
+              },
+            ],
+            access: [],
+            workTypes: ["LITERATURE"],
+          },
+        ];
+      },
+    },
+  }),
+};
 
 export function ReservationButtonSlowResponse() {
   return (

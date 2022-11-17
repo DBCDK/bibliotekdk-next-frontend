@@ -1,4 +1,5 @@
 import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
 import Translate, { hasTranslation } from "@/components/base/translate";
@@ -15,8 +16,9 @@ import {
 } from "@/components/work/reservationbutton/utils";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import { useMemo } from "react";
-import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
+import { AccessEnum } from "@/lib/enums";
+import { useData } from "@/lib/api/api";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -34,23 +36,27 @@ function workTypeTranslator(workTypes) {
       });
 }
 
+// TODO: Refactor this mess at some point
 function handleGoToLogin(
-  data,
-  selectedManifestations,
+  work,
+  selectedManifestation,
   user,
   modal,
   onOnlineAccess
 ) {
   const { access, pid, accessTypeCode, title } = extractSimpleFields(
-    data,
-    selectedManifestations
+    work,
+    selectedManifestation
   );
 
   function addToInfomedia(access, pid, title) {
     access?.map((access) => {
-      if (access?.__typename === "InfomediaSerivce" && access?.id !== null) {
+      if (
+        access?.__typename === AccessEnum.INFOMEDIA_SERVICE &&
+        access?.id !== null
+      ) {
         access.url = infomediaUrl(
-          encodeTitleCreator(title),
+          encodeTitleCreator(title?.[0]),
           `work-of:${pid}`,
           access.id
         );
@@ -59,6 +65,7 @@ function handleGoToLogin(
       return access;
     });
   }
+
   // add url to infomedia - if any
   addToInfomedia(access, pid, title);
 
@@ -70,8 +77,8 @@ function handleGoToLogin(
     !user.isAuthenticated &&
     accessTypeCode === "ONLINE" &&
     access[0]?.loginRequired &&
-    (access[0]?.url.indexOf("ebookcentral") !== -1 ||
-      access[0]?.url.indexOf("ebscohost") !== -1);
+    (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
+      access[0]?.url?.indexOf("ebscohost") !== -1);
 
   return goToLogin
     ? modal?.push("login", {
@@ -81,18 +88,18 @@ function handleGoToLogin(
     : onOnlineAccess(access[0]?.url, urlTarget);
 }
 
-function extractSimpleFields(work, selectedManifestations) {
+function extractSimpleFields(work, selectedManifestation) {
   const workTypeTranslated = workTypeTranslator(work?.workTypes);
   const title = work?.titles?.main;
-  const pid = selectedManifestations?.pid;
-  const accessTypeCode = selectedManifestations?.accessTypes?.code;
+  const pid = selectedManifestation?.pid;
+  const accessTypeCode = selectedManifestation?.accessTypes?.code;
 
-  const access = selectedManifestations?.access;
-  const buttonSkeleton = !work || !selectedManifestations;
+  const access = selectedManifestation?.access;
+  const buttonSkeleton = !work || !selectedManifestation;
 
   // if we prefer online material button text should be different
   const onlineDisable = checkPreferredOnline(
-    selectedManifestations?.materialTypes?.[0]?.specific
+    selectedManifestation?.materialTypes?.[0]?.specific
   );
 
   const loanIsPossibleOnAny = access && access?.length > 0;
@@ -130,13 +137,16 @@ export function OrderButton({
   user,
   modal,
   work,
+  manifestations,
   onOnlineAccess,
   openOrderModal,
+  onHandleGoToLogin = (selectedManifestation) =>
+    handleGoToLogin(work, selectedManifestation, user, modal, onOnlineAccess),
   singleManifestation,
   buttonType = "primary",
   size = "large",
 }) {
-  const selectedMaterial = work?.manifestations?.all;
+  const selectedMaterial = manifestations;
   const selectedManifestation = selectMaterial(selectedMaterial);
 
   const {
@@ -169,7 +179,7 @@ export function OrderButton({
     Boolean(
       access?.length > 0 &&
         !access?.[0]?.issn &&
-        access?.[0]?.__typename !== "InterLibraryLoan"
+        access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
     ),
     /** (2) material is available for logged in library
      * ---  --> prepare order button with parameters
@@ -196,14 +206,9 @@ export function OrderButton({
     /* (1) */
     {
       dataCy: "button-order-overview",
-      onClick: () =>
-        handleGoToLogin(
-          work,
-          selectedManifestation,
-          user,
-          modal,
-          onOnlineAccess
-        ),
+      // TODO: Fix handleGoToLogin!
+      // onClick: () => alert("DU SKAL LOGGE IND"),
+      onClick: () => onHandleGoToLogin(selectedManifestation),
     },
     /* (2) */
     {
@@ -258,12 +263,12 @@ export function OrderButton({
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
   const buttonProps = {
     className: styles.externalLink,
-    skeleton: buttonSkeleton,
+    skeleton: buttonPropsMap[index].disabled ? null : buttonSkeleton,
     type: buttonType,
     size: size,
     ...buttonPropsMap[index],
   };
-  const buttonTxt = buttonSkeleton ? () => "loading" : buttonTxtMap[index];
+
   return (
     <>
       {((accessTypeCode === "ONLINE" && access?.[0]?.loginRequired) ||
@@ -277,7 +282,7 @@ export function OrderButton({
             {Translate({ ...context, label: "url_login_required" })}
           </Text>
         )}
-      <Button {...buttonProps}>{buttonTxt()}</Button>
+      <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
     </>
   );
 }
@@ -292,14 +297,38 @@ function ReservationButton({
   const user = useUser();
   const modal = useModal();
 
-  const workFragment = workId && workFragments.buttonTxt({ workId });
-  const work = useWorkFromSelectedPids(workFragment, selectedPids);
+  const { data: workData, isLoading: workIsLoading } = useData(
+    workId && workFragments.buttonTxt({ workId })
+  );
+
+  const { data: manifestationsData, isLoading: manifestationsIsLoading } =
+    useData(
+      selectedPids &&
+        manifestationFragments.reservationButtonManifestations({
+          pid: selectedPids,
+        })
+    );
+
+  if (workIsLoading || manifestationsIsLoading) {
+    return (
+      <Button
+        className={styles.externalLink}
+        skeleton={true}
+        type={buttonType}
+        size={size}
+        dataCy={"button-order-overview-loading"}
+      >
+        {"loading"}
+      </Button>
+    );
+  }
 
   return (
     <OrderButton
       user={user}
       modal={modal}
-      work={work}
+      work={workData?.work}
+      manifestations={manifestationsData?.manifestations}
       selectedPids={selectedPids}
       onOnlineAccess={onOnlineAccess}
       openOrderModal={(manifestation) =>

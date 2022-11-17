@@ -3,92 +3,180 @@
  * Test functionality of Text
  */
 describe("Overview", () => {
-  before(function () {
-    cy.visit("/iframe.html?id=work-overview--work-overview");
-  });
+  describe("Overview parent", () => {
+    before(function () {
+      cy.visit("/iframe.html?id=work-overview--overview-wrapped");
+    });
 
-  // Tabs BETA-1 removed breadcrumbs - tab order fucked up skip this test
-  // @ TODO enable
-  it.skip(`Can tab through path`, () => {
-    cy.get("body").tab();
+    it(`Can tab through to different elements`, () => {
+      cy.wait(500);
+      // Material Selection
+      cy.get("[data-cy=tag-bog]")
+        .focus()
+        .should("have.attr", "data-cy", "tag-bog")
+        .should("contain", "Bog")
+        .tabs(1)
+        .should("have.attr", "data-cy", "tag-ebog")
+        .tabs(2)
+        .should("have.attr", "data-cy", "tag-lydbog-(cd-mp3)")
+        .tabs(1)
+        .should("have.attr", "data-cy", "tag-lydbog-(net)");
 
-    cy.focused().parent().should("have.attr", "data-cy", "crumb-bøger");
+      // Creators and bookmark
+      cy.get(`[data-cy=text-lucky-luke]`)
+        .parent()
+        .focus()
+        .should("contain", "Lucky Luke")
+        .tab({ shift: true })
+        .should(
+          "have.attr",
+          "data-cy",
+          "bookmark-asterix-og-obelix-i-det-vilde-vesten"
+        )
+        .get("[data-cy=tag-ebog]")
+        .focus()
+        .should("have.attr", "data-cy", "tag-ebog")
+        .tabs(4)
+        .should("have.attr", "data-cy", "button-order-overview-enabled");
+    });
 
-    cy.tabs(3);
+    // Clicks
+    it(`Can click on bookmark button`, () => {
+      cy.get(`[data-cy=bookmark-asterix-og-obelix-i-det-vilde-vesten]`)
+        .focus()
+        .click();
 
-    cy.focused().parent().should("have.attr", "data-cy", "crumb-roman");
-  });
+      cy.on("window:alert", (str) => {
+        expect(str).to.equal(`Bookmarked!`);
+      });
+    });
 
-  it(`Can tab to bookmark button`, () => {
-    cy.tab();
-    cy.focused().should("have.attr", "data-cy", "bookmark-klodernes-kamp");
-  });
+    it(`Can click on button tag`, () => {
+      const tagEbog = "tag-ebog";
+      const tagBog = "tag-bog";
 
-  it(`Can tab to material selection`, () => {
-    cy.tabs(2);
-    cy.focused().should("have.attr", "data-cy", "tag-bog");
+      cy.get(`[data-cy=${tagEbog}]`).children("i").should("not.be.visible");
+      cy.get(`[data-cy=${tagEbog}]`).focus().contains("Ebog").click();
+      cy.get(`[data-cy=${tagEbog}]`).children("i").should("be.visible");
+      cy.get(`[data-cy=${tagBog}]`).children("i").should("not.be.visible");
+    });
 
-    cy.tabs(5);
-    cy.focused().should("have.attr", "data-cy", "tag-punktskrift");
-  });
+    // Tabs BETA-1 removed breadcrumbs - tab order fucked up skip this test
+    // @ TODO Remove below
+    // TODO: remove because should be tested reservationbutton.spec.js
+    it.skip(`Can click on 'add-to-basket' button`, () => {
+      cy.get(`[data-cy=button-order-overview]`).click();
+      cy.focused().should("have.attr", "data-cy", "button-order-overview");
+      cy.on("window:alert", (str) => {
+        expect(str).to.equal(`Button clicked!`);
+      });
+    });
 
-  it(`Can tab to 'add-to-basket' button`, () => {
-    cy.tab();
-    cy.focused().should("have.attr", "data-cy");
-  });
+    // TODO: remove because should be tested reservationbutton.spec.js
+    it.skip(`Can access external ebook`, () => {
+      cy.get(`[data-cy=tag-ebog]`).contains("Ebog").click();
+      cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen").click();
+      cy.contains("Du bliver sendt til ebookurl.dk");
+      cy.on("window:alert", (str) => {
+        expect(str).to.equal("https://ebookurl.dk");
+      });
+    });
 
-  // Clicks
-  it(`Can click on bookmark button`, () => {
-    cy.get(`[data-cy=bookmark-klodernes-kamp]`).click();
+    // TODO: remove because should be tested reservationbutton.spec.js
+    it.skip(`Can access external audio book`, () => {
+      cy.get(`[data-cy="tag-lydbog-(net)"]`).contains("Lydbog (net)").click();
+      cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
+      cy.get("[data-cy=button-gå-til-bogen]").click();
+      cy.contains("Du bliver sendt til audiobookurl.dk");
+      cy.on("window:alert", (str) => {
+        expect(str).to.equal("https://audiobookurl.dk");
+      });
+    });
 
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal(`Bookmarked!`);
+    // TODO: remove because should be tested reservationbutton.spec.js
+    it.skip(`Shows button skeleton when it has not been determined if material is physical or online`, () => {
+      // Punkskrift material has onlineAccess undefined.
+      // I.e. work details have not been fetched yet.
+      // Othwerwise it is null or an array
+      cy.get(`[data-cy=tag-punktskrift]`).contains("Punktskrift").click();
+      cy.get("[data-cy=button-order-overview]").should("be.disabled");
     });
   });
 
-  it.skip(`Can click on 'add-to-basket' button`, () => {
-    cy.get(`[data-cy=button-order-overview]`).click();
-    cy.focused().should("have.attr", "data-cy", "button-order-overview");
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal(`Button clicked!`);
+  describe("LocalizationsLink", () => {
+    beforeEach(function () {
+      cy.wrap("[data-cy=text-nolocalizations]").as("nolocalizations");
+      cy.wrap("[data-cy=link-localizations]").as("localizations");
+      cy.wrap("[data-cy=skeleton").as("skeleton");
+    });
+
+    it("Preferred online", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-localizationslink--localizations-link-preferred-online"
+      );
+
+      cy.get(`${this.nolocalizations}`).should("not.exist");
+      cy.get(`${this.localizations}`).should("not.exist");
+      cy.get(`${this.skeleton}`).should("not.exist");
+    });
+    it("Not available for loan at any library", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-localizationslink--localizations-link-no-available"
+      );
+
+      cy.get(`${this.nolocalizations}`).should("exist");
+      cy.get(`${this.localizations}`).should("not.exist");
+      cy.get(`${this.skeleton}`).should("not.exist");
+    });
+    it("Available at libraries", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-localizationslink--localizations-link-available-at-libraries"
+      );
+
+      cy.get(`${this.nolocalizations}`).should("not.exist");
+      cy.get(`${this.localizations}`).should("exist");
+      cy.get(`${this.skeleton}`).should("not.exist");
+    });
+    it("Slow loading", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-localizationslink--localizations-link-slow-response"
+      );
+
+      cy.get(`${this.nolocalizations}`).should("not.exist");
+      cy.get(`${this.localizations}`).should("not.exist");
+      cy.get(`${this.skeleton}`).should("exist");
     });
   });
 
-  it(`Can click on button tag`, () => {
-    const tag = "tag-ebog";
-    const tag2 = "tag-bog";
-
-    cy.get(`[data-cy=${tag}]`).children("i").should("not.be.visible");
-    cy.get(`[data-cy=${tag}]`).click();
-    cy.get(`[data-cy=${tag}]`).children("i").should("be.visible");
-    cy.get(`[data-cy=${tag2}]`).children("i").should("not.be.visible");
-  });
-
-  it.skip(`Can access external ebook`, () => {
-    cy.get(`[data-cy=tag-e-bog]`).click();
-    cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
-    cy.get("[data-cy=button-gå-til-bogen]").click();
-    cy.contains("Du bliver sendt til ebookurl.dk");
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal("https://ebookurl.dk");
+  describe("Alternative Options", () => {
+    beforeEach(function () {
+      cy.wrap("[data-cy=link]").as("link");
+      cy.wrap("[data-cy=skeleton").as("skeleton");
     });
-  });
 
-  it.skip(`Can access external audio book`, () => {
-    cy.get(`[data-cy="tag-lydbog-(net)"]`).click();
-    cy.get("[data-cy=button-gå-til-bogen]").contains("Gå til bogen");
-    cy.get("[data-cy=button-gå-til-bogen]").click();
-    cy.contains("Du bliver sendt til audiobookurl.dk");
-    cy.on("window:alert", (str) => {
-      expect(str).to.equal("https://audiobookurl.dk");
+    it("No alternatives", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-alternatives--alternative-options-no-alternatives"
+      );
+
+      cy.get(`${this.link}`).should("not.exist");
+      cy.get(`${this.skeleton}`).should("not.exist");
     });
-  });
+    it("With alternatives", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-alternatives--alternative-options-with-alternatives"
+      );
 
-  it(`Shows button skeleton when it has not been determined if material is physical or online`, () => {
-    // Punkskrift material has onlineAccess undefined.
-    // I.e. work details have not been fetched yet.
-    // Othwerwise it is null or an array
-    cy.get(`[data-cy=tag-punktskrift]`).click();
-    cy.get("[data-cy=button-order-overview]").should("be.disabled");
+      cy.get(`${this.link}`).should("exist");
+      cy.get(`${this.skeleton}`).should("not.exist");
+    });
+    it("Slow loading", function () {
+      cy.visit(
+        "/iframe.html?id=work-overview-alternatives--alternative-options-slow-response"
+      );
+
+      cy.get(`${this.link}`).should("not.exist");
+      cy.get(`${this.skeleton}`).should("exist");
+    });
   });
 });

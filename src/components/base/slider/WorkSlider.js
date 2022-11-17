@@ -177,7 +177,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   return (
     <div className={styles.WorkSlider} data-cy={props["data-cy"]}>
       <Swiper {...params} ref={swiperRef}>
-        {works.map((work, idx) => (
+        {works?.map((work, idx) => (
           <Card
             cardRef={idx === 0 && cardRef}
             cover={

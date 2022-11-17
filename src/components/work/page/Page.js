@@ -22,15 +22,9 @@ import Anchor from "@/components/base/anchor";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export default function WorkPage({
-  workId,
-  onTypeChange,
-  login,
-  openOrderModal,
-  type,
-}) {
+export default function WorkPage({ workId, onTypeChange, login, type }) {
   const router = useRouter();
   return (
     <main>
@@ -40,7 +34,6 @@ export default function WorkPage({
           workId={workId}
           onTypeChange={onTypeChange}
           login={login}
-          openOrderModal={openOrderModal}
           type={type}
           anchor-label={Translate({ context: "workmenu", label: "loan" })}
         />
