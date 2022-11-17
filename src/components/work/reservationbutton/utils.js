@@ -96,9 +96,9 @@ export function selectMaterial(manifestations) {
   let url;
   manifestations?.every((manifest) => {
     // outer loop -> manifestations
-    if (manifest.access?.length > 0) {
+    if (manifest?.access?.length > 0) {
       // inner loop -> onlineaccess
-      manifest.access.every((access) => {
+      manifest?.access.every((access) => {
         // special case: "dfi.dk" is not a 'real' onlineaccess
         if (access?.url?.indexOf("dfi.dk") === -1) {
           url = access.url;
