@@ -1,4 +1,4 @@
-import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import {
   checkRequestButtonIsTrue,
   context,
@@ -8,9 +8,11 @@ import {
 import { getIsPeriodicaLike } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
-import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
 import { Col } from "react-bootstrap";
 import styles from "./OrderButtonTextBelow.module.css";
+import { useData } from "@/lib/api/api";
+import { uniq } from "lodash";
+import Skeleton from "@/components/base/skeleton";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -21,17 +23,21 @@ import styles from "./OrderButtonTextBelow.module.css";
  * @return {JSX.Element|null}
  * @constructor
  */
-export function OrderButtonTextBelow({ work, skeleton }) {
-  const selectedMaterial = work?.manifestations?.all;
+export function OrderButtonTextBelow({ manifestations, skeleton }) {
+  // const selectedMaterial = work?.manifestations?.all;
+  const selectedMaterial = manifestations;
 
-  if (!selectedMaterial) {
-    return null;
-  }
-
-  const isPeriodicaLike = getIsPeriodicaLike(
-    work?.workTypes,
-    work?.materialTypes
+  const workTypes = uniq(
+    selectedMaterial?.flatMap((manifestation) => manifestation?.workTypes)
   );
+
+  const materialTypes = uniq(
+    selectedMaterial?.flatMap((manifestation) =>
+      manifestation?.materialTypes?.map((materialType) => materialType.specific)
+    )
+  );
+
+  const isPeriodicaLike = getIsPeriodicaLike(workTypes, materialTypes);
 
   const selectedManifestations = selectMaterial(selectedMaterial);
 
@@ -82,10 +88,24 @@ export function OrderButtonTextBelow({ work, skeleton }) {
   );
 }
 
-export default function Wrap({ workId, selectedPids, skeleton }) {
-  const workFragment = workId && workFragments.buttonTxt({ workId });
+export default function Wrap({ selectedPids, skeleton }) {
+  const { data, isSlow, isLoading } = useData(
+    selectedPids &&
+      manifestationFragments.reservationButtonManifestations({
+        pid: selectedPids,
+      })
+  );
 
-  const work = useWorkFromSelectedPids(workFragment, selectedPids);
+  const manifestations = data?.manifestations;
 
-  return <OrderButtonTextBelow work={work} skeleton={skeleton} />;
+  if ((!data?.manifestations && isLoading) || !data?.manifestations) {
+    console.log("HEY SKELETON");
+    return (
+      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+    );
+  }
+
+  return (
+    <OrderButtonTextBelow manifestations={manifestations} skeleton={skeleton} />
+  );
 }
