@@ -1,5 +1,6 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
+import { AccessEnum } from "@/lib/enums";
 
 const exportedObject = {
   title: "work/ReservationButton/OrderButtonTextBelow",
@@ -13,6 +14,9 @@ function ButtonTxtComponentBuilder({
   selectedPids = ["some-other-id-builder"],
   storyNameOverride = null,
 }) {
+  const date = new Date();
+  const time = date.getTime();
+
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -21,8 +25,8 @@ function ButtonTxtComponentBuilder({
         The button text based on the type: {descriptionName}
       </StoryDescription>
       <OrderButtonTextBelow
-        workId={workId}
-        selectedPids={selectedPids}
+        workId={workId + time}
+        selectedPids={selectedPids.map((pid) => pid + time)}
         skeleton={false}
       />
     </div>
@@ -58,20 +62,21 @@ export function BookButtonTxt() {
 
 BookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Book", {
-    MaterialType: {
-      specific: () => "Bog",
-    },
-    Manifestation: {
-      pid: () => "some-other-id-book",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
-    },
-    Work: {
-      workTypes: () => ["LITERATURE"],
+    Query: {
+      manifestations: () => {
+        return [
+          {
+            workTypes: ["LITERATURE"],
+            materialTypes: [{ specific: "Bog" }],
+            access: [
+              {
+                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+                loanIsPossible: true,
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -87,17 +92,21 @@ export function EBookButtonTxt() {
 }
 EBookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("EBook", {
-    MaterialType: {
-      specific: () => "e-bog",
-    },
-    Manifestation: {
-      pid: () => "some-other-id-e-book",
-    },
-    Ereol: {
-      url: () => "ereol.combo",
-    },
-    Access: {
-      __resolveType: () => "Ereol",
+    Query: {
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "Ebog" }],
+            access: [
+              {
+                __resolveType: AccessEnum.EREOL,
+                url: "ereol.combo/langurl",
+                origin: "ereol.combo",
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -113,17 +122,20 @@ export function EAudioBookPhysicalButtonTxt() {
 }
 EAudioBookPhysicalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (cd-mp3)", {
-    MaterialType: {
-      specific: () => "lydbog (cd-mp3)",
-    },
-    Manifestation: {
-      pid: () => "some-other-id-physical-audio-book",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
+    Query: {
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "lydbog (cd-mp3)" }],
+            access: [
+              {
+                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+                loanIsPossible: true,
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -139,18 +151,21 @@ export function EAudioBookDigitalButtonTxt() {
 }
 EAudioBookDigitalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (net)", {
-    MaterialType: {
-      specific: () => "lydbog (net)",
-    },
-    Manifestation: {
-      pid: () => "some-other-id-e-audio-book",
-    },
-    AccessUrl: {
-      origin: () => "notambo.dekå",
-      loginRequired: () => false,
-    },
-    Access: {
-      __resolveType: () => "AccessUrl",
+    Query: {
+      manifestations: () => {
+        return [
+          {
+            materialTypes: [{ specific: "lydbog (net)" }],
+            access: [
+              {
+                __resolveType: AccessEnum.ACCESS_URL,
+                origin: "notambo.dekå",
+                loginRequired: false,
+              },
+            ],
+          },
+        ];
+      },
     },
   }),
 };
@@ -167,15 +182,45 @@ export function PeriodicaButtonTxt() {
 }
 PeriodicaButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Periodica", {
-    AccessUrl: {
-      origin: () => "some-origin",
+    Query: {
+      manifestations: () => {
+        return [
+          {
+            workTypes: ["PERIODICA"],
+            access: [],
+          },
+        ];
+      },
     },
-    Work: {
-      workTypes: () => ["PERIODICA"],
-    },
-    Manifestation: {
-      pid: () => "some-other-id-periodica",
-      access: () => [],
+  }),
+};
+
+export function SlowLoadingButtonTxt() {
+  return (
+    <ButtonTxtComponentBuilder
+      type={"bog"}
+      workId={"some-id-slow-loading"}
+      selectedPids={["some-other-id-slow-loading"]}
+      storyNameOverride={"Slow Loading"}
+    />
+  );
+}
+SlowLoadingButtonTxt.story = {
+  ...ButtonTxtStoryBuilder("Slow Loading", {
+    Query: {
+      manifestations: async () => {
+        // Simulate slow access response, wait 5000ms
+        await new Promise((r) => {
+          setTimeout(r, 5000);
+        });
+
+        return [
+          {
+            materialTypes: [{ specific: "Ebog" }],
+            access: [{ __resolveType: "Ereol", url: "ereol.combo" }],
+          },
+        ];
+      },
     },
   }),
 };

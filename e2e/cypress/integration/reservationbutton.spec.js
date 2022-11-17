@@ -36,7 +36,7 @@ describe("Reservation button", () => {
       });
 
       cy.get("[data-cy=button-order-overview]")
-        .should("contain", "Gå til bogen")
+        .should("contain", "Gå til")
         .click();
 
       cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo");
@@ -63,13 +63,10 @@ describe("Reservation button", () => {
       );
 
       // This text is hidden by skeleton animation
-      cy.get("[data-cy=button-order-overview]").should(
-        "include.text",
-        "loading"
-      );
+      cy.get("[data-cy=button-order-overview-loading]").should("exist");
 
       // It must not show deactivated text while loading
-      cy.get("[data-cy=button-order-overview]").should(
+      cy.get("[data-cy=button-order-overview-loading]").should(
         "not.include.text",
         "deaktiveret"
       );
@@ -90,6 +87,13 @@ describe("Reservation button", () => {
       });
     });
 
+    it(`user logged in loan is not possible for material`, () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
+      );
+      cy.get("[data-cy=button-order-overview]").should("be.disabled");
+    });
+
     // @TODO more testing - request_button:false eg.
   });
 
@@ -107,7 +111,7 @@ describe("Reservation button", () => {
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-book-button-txt"
       );
 
-      cy.get("[data-cy=reservation-button-txt]").contains("ereol");
+      cy.get("[data-cy=reservation-button-txt]").should("contain", "ereol");
     });
 
     it("should have eaudiobook physical button text", () => {
@@ -134,6 +138,14 @@ describe("Reservation button", () => {
       cy.get("[data-cy=reservation-button-txt]").contains(
         "Du kan bestille en artikel eller et bestemt eksemplar"
       );
+    });
+
+    it("should have slow loading", () => {
+      cy.visit(
+        "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--slow-loading-button-txt"
+      );
+
+      cy.get("[data-cy=skeleton]").should("exist");
     });
   });
 });

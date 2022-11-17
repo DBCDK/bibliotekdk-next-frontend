@@ -32,3 +32,11 @@ export const MaterialTypeEnum = Object.freeze({
   "LYDBOG (CD)": "Lydbog (cd)",
   "LYDBOG (BÅND)": "lydbog (bånd)",
 });
+
+export const AccessEnum = Object.freeze({
+  INFOMEDIA_SERVICE: "InfomediaService",
+  ACCESS_URL: "AccessUrl",
+  EREOL: "Ereol",
+  INTER_LIBRARY_LOAN: "InterLibraryLoan",
+  DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
+});
