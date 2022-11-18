@@ -39,7 +39,7 @@ describe("Reservation button", () => {
         .should("contain", "Gå til")
         .click();
 
-      cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo");
+      cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo/langurl");
     });
 
     it(`user logged in material unavailable`, () => {
