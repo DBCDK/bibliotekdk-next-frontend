@@ -82,6 +82,17 @@ export function getCanonicalArticleUrl(props) {
 }
 
 /**
+ * Create canonical URL for given materialtype pages
+ * @param {object} props
+ * @param {object} props.category
+ *
+ * @returns {string} The canonical article URL
+ */
+export function getCanonicalInspirationUrl(props) {
+  return `${APP_URL}/${encodeString(props.category)}}`;
+}
+
+/**
  * Handle this work as a periodica
  *
  * @param {object} work

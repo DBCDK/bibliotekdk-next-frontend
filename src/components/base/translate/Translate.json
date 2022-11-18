@@ -2169,10 +2169,10 @@
     "inspiration": {
       "title-articles": {
         "da": "Artikler",
-        "en": "Label: mangler oversættelse"
+        "en": "Articles"
       },
       "description-articles": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-articles-33": {
@@ -2188,28 +2188,28 @@
         "en": "Label: mangler oversættelse"
       },
       "category-articles-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste artikler",
+        "en": "New articles"
       },
       "category-articles-artikel": {
-        "da": "Artikel",
-        "en": "Label: mangler oversættelse"
+        "da": "Artikler",
+        "en": "Articles"
       },
       "category-articles-tidsskriftsartikel": {
-        "da": "Tidsskriftsartikel",
-        "en": "Label: mangler oversættelse"
+        "da": "Tidsskriftsartikler",
+        "en": "Articles from journals"
       },
       "category-articles-avisartikel": {
         "da": "Avisartikel",
-        "en": "Label: mangler oversættelse"
+        "en": "Articles from newspapers"
       },
       "category-articles-99.4": {
-        "da": "99.4",
-        "en": "Label: mangler oversættelse"
+        "da": "Biografier",
+        "en": "Biographies"
       },
       "category-articles-60.1": {
-        "da": "60.1",
-        "en": "Label: mangler oversættelse"
+        "da": "Erhverv og ledelse ",
+        "en": "Business Management"
       },
       "category-articles-34.31": {
         "da": "34.31",
@@ -2220,296 +2220,296 @@
         "en": "Label: mangler oversættelse"
       },
       "category-articles-32.26": {
-        "da": "32.26",
-        "en": "Label: mangler oversættelse"
+        "da": "Dansk politik",
+        "en": "Danish politics"
       },
       "category-articles-33.19": {
-        "da": "33.19",
-        "en": "Label: mangler oversættelse"
+        "da": "Danmarks økonomiske forhold",
+        "en": "Danish economy"
       },
       "category-articles-61.44": {
-        "da": "61.44",
-        "en": "Label: mangler oversættelse"
+        "da": "Arbejdsmarkedet",
+        "en": "The labor market"
       },
       "title-games": {
         "da": "Spil",
         "en": "Games"
       },
       "description-games": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-games-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste spil",
+        "en": "New games"
       },
       "category-games-populære": {
-        "da": "Populære",
-        "en": "Label: mangler oversættelse"
+        "da": "Populære spil",
+        "en": "Most popular games"
       },
       "category-games-børnematerialer": {
-        "da": "Børnematerialer",
-        "en": "Label: mangler oversættelse"
+        "da": "Spil til børn",
+        "en": "Children's games"
       },
       "category-games-playstation-4": {
         "da": "Playstation 4",
-        "en": "Label: mangler oversættelse"
+        "en": "Playstation 4"
       },
       "category-games-xbox-one": {
         "da": "Xbox One",
-        "en": "Label: mangler oversættelse"
+        "en": "Xbox One"
       },
       "category-games-playstation-3": {
         "da": "Playstation 3",
-        "en": "Label: mangler oversættelse"
+        "en": "Playstation 3"
       },
       "category-games-xbox-360": {
         "da": "Xbox 360",
-        "en": "Label: mangler oversættelse"
+        "en": "Xbox 360"
       },
       "category-games-nintendo-switch": {
         "da": "Nintendo Switch",
-        "en": "Label: mangler oversættelse"
+        "en": "Nintendo Switch"
       },
       "category-games-wii": {
         "da": "Wii",
-        "en": "Label: mangler oversættelse"
+        "en": "Wii"
       },
       "category-games-nintendo-ds": {
         "da": "Nintendo DS",
-        "en": "Label: mangler oversættelse"
+        "en": "Nintendo DS"
       },
       "category-games-pc-spil": {
-        "da": "Pc-spil",
-        "en": "Label: mangler oversættelse"
+        "da": "pc-spil",
+        "en": "pc games"
       },
       "category-games-playstation-5": {
         "da": "Playstation 5",
-        "en": "Label: mangler oversættelse"
+        "en": "Playstation 5"
       },
       "title-fiction": {
-        "da": "Bøger",
-        "en": "Label: mangler oversættelse"
+        "da": "Skønlitteratur",
+        "en": "Fiction"
       },
       "description-fiction": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-fiction-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste skønlitteratur",
+        "en": "New fiction"
       },
       "category-fiction-populære": {
-        "da": "Populære",
-        "en": "Label: mangler oversættelse"
+        "da": "Populære romaner",
+        "en": "Popular fiction"
       },
       "category-fiction-krimi": {
         "da": "Krimi",
-        "en": "Label: mangler oversættelse"
+        "en": "Crime fiction"
       },
       "category-fiction-humor": {
         "da": "Humor",
-        "en": "Label: mangler oversættelse"
+        "en": "Humor"
       },
       "category-fiction-spænding": {
-        "da": "Spænding",
-        "en": "Label: mangler oversættelse"
+        "da": "Spændende bøger",
+        "en": "Action"
       },
       "category-fiction-biografiske-romaner": {
         "da": "Biografiske romaner",
-        "en": "Label: mangler oversættelse"
+        "en": "Biographical novels"
       },
       "category-fiction-samfundskritik": {
-        "da": "Samfundskritik",
-        "en": "Label: mangler oversættelse"
+        "da": "Samfundskritiske romaner",
+        "en": "Social criticism"
       },
       "category-fiction-eksperimenterende-litteratur": {
-        "da": "Eksperimenterende litteratur",
-        "en": "Label: mangler oversættelse"
+        "da": "Eksperimenterende romaner",
+        "en": "Experimental novels"
       },
       "category-fiction-science-fiction": {
         "da": "Science fiction",
-        "en": "Label: mangler oversættelse"
+        "en": "Science Fiction"
       },
       "category-fiction-historiske-romaner": {
         "da": "Historiske romaner",
-        "en": "Label: mangler oversættelse"
+        "en": "Historical novels"
       },
       "title-movies": {
         "da": "Film",
-        "en": "Label: mangler oversættelse"
+        "en": "Movies"
       },
       "description-movies": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-movies-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste film",
+        "en": "New movies"
       },
       "category-movies-populære": {
-        "da": "Populære",
-        "en": "Label: mangler oversættelse"
+        "da": "Populære film",
+        "en": "Popular movies"
       },
       "category-movies-børnematerialer": {
-        "da": "Børnematerialer",
-        "en": "Label: mangler oversættelse"
+        "da": "Film for børn",
+        "en": "Children's movies"
       },
       "category-movies-drama": {
         "da": "Drama",
-        "en": "Label: mangler oversættelse"
+        "en": "Drama Movies"
       },
       "category-movies-kærlighed": {
-        "da": "Kærlighed",
-        "en": "Label: mangler oversættelse"
+        "da": "Kærlighedsfilm",
+        "en": "Romantic Movies"
       },
       "category-movies-dokumentarfilm": {
         "da": "Dokumentarfilm",
-        "en": "Label: mangler oversættelse"
+        "en": "Documentary Movies"
       },
       "category-movies-komedier": {
         "da": "Komedier",
-        "en": "Label: mangler oversættelse"
+        "en": "Comedy Movies"
       },
       "category-movies-kunst-og-kunstnere": {
         "da": "Kunst og kunstnere",
-        "en": "Label: mangler oversættelse"
+        "en": "Art and artists"
       },
       "category-movies-tegnefilm": {
         "da": "Tegnefilm",
-        "en": "Label: mangler oversættelse"
+        "en": "Cartoon"
       },
       "category-movies-tv-serier": {
         "da": "TV-serier",
-        "en": "Label: mangler oversættelse"
+        "en": "TV series"
       },
       "category-movies-dvd": {
-        "da": "Dvd",
-        "en": "Label: mangler oversættelse"
+        "da": "dvd",
+        "en": "dvd"
       },
       "category-movies-video": {
-        "da": "Video",
-        "en": "Label: mangler oversættelse"
+        "da": "VHS",
+        "en": "VHS"
       },
       "category-movies-film-(net)": {
-        "da": "film-(net)",
-        "en": "Label: mangler oversættelse"
+        "da": "Online film",
+        "en": "Movies online"
       },
       "category-movies-film": {
-        "da": "film",
-        "en": "Label: mangler oversættelse"
+        "da": "Film",
+        "en": "Movies"
       },
       "title-music": {
         "da": "Musik",
-        "en": "Label: mangler oversættelse"
+        "en": "Music"
       },
       "description-music": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-music-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste musik",
+        "en": "New music"
       },
       "category-music-populære": {
-        "da": "Populære",
-        "en": "Label: mangler oversættelse"
+        "da": "Populær musik",
+        "en": "Popular music"
       },
       "category-music-børnematerialer": {
-        "da": "Børnematerialer",
-        "en": "Label: mangler oversættelse"
+        "da": "Musik for børn",
+        "en": "Children's music"
       },
       "category-music-cd-(musik)": {
-        "da": "CD-(musik)",
-        "en": "Label: mangler oversættelse"
+        "da": "CD'er",
+        "en": "CD's"
       },
       "category-music-grammofonplade": {
-        "da": "Grammofonplade",
-        "en": "Label: mangler oversættelse"
+        "da": "LP'er",
+        "en": "Gramophone records"
       },
       "category-music-dvd": {
-        "da": "DVD",
-        "en": "Label: mangler oversættelse"
+        "da": "DVD (musik)",
+        "en": "DVD (music)"
       },
       "category-music-rock": {
         "da": "Rock",
-        "en": "Label: mangler oversættelse"
+        "en": "Rock"
       },
       "category-music-jazz": {
         "da": "Jazz",
-        "en": "Label: mangler oversættelse"
+        "en": "Jazz"
       },
       "category-music-blues": {
         "da": "Blues",
-        "en": "Label: mangler oversættelse"
+        "en": "Blues"
       },
       "category-music-singer/songwriter": {
         "da": "Singer/songwriter",
-        "en": "Label: mangler oversættelse"
+        "en": "Singer/songwriter"
       },
       "category-music-electronica": {
         "da": "Electronica",
-        "en": "Label: mangler oversættelse"
+        "en": "Electronica"
       },
       "category-music-kammermusik": {
         "da": "Kammermusik",
-        "en": "Label: mangler oversættelse"
+        "en": "Chamber music"
       },
       "category-music-hip-hop": {
-        "da": "Hip-hop",
-        "en": "Label: mangler oversættelse"
+        "da": "Hiphop",
+        "en": "Hip hop"
       },
       "category-music-klassisk-musik-1950-->": {
-        "da": "klassisk-musik-1950-->",
-        "en": "Label: mangler oversættelse"
+        "da": "Klassisk musik 1950-",
+        "en": "Classical music 1950-"
       },
       "category-music-folk": {
-        "da": "Folk",
-        "en": "Label: mangler oversættelse"
+        "da": "Folkemusik",
+        "en": "Folk music"
       },
       "category-music-metal": {
         "da": "Metal",
-        "en": "Label: mangler oversættelse"
+        "en": "Metal"
       },
       "title-sheetmusic": {
         "da": "Noder",
-        "en": "Label: mangler oversættelse"
+        "en": "Sheet music"
       },
       "description-sheetmusic": {
-        "da": "kort beskrivelse af sidens indhold her ...",
+        "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
       "category-sheetmusic-nyeste": {
-        "da": "Nyeste",
-        "en": "Label: mangler oversættelse"
+        "da": "Nyeste noder",
+        "en": "New sheet music"
       },
       "category-sheetmusic-music-minus-one": {
-        "da": "Music minus one",
-        "en": "Label: mangler oversættelse"
+        "da": "Music Minus One",
+        "en": "Music Minus One"
       },
       "category-sheetmusic-karaoke": {
         "da": "Karaoke",
-        "en": "Label: mangler oversættelse"
+        "en": "Karaoke"
       },
       "category-sheetmusic-guitarskoler": {
         "da": "Guitarskoler",
-        "en": "Label: mangler oversættelse"
+        "en": "Guitar schools"
       },
       "category-sheetmusic-undervisningsmaterialer": {
         "da": "Undervisningsmaterialer",
-        "en": "Label: mangler oversættelse"
+        "en": "Teaching materials"
       },
       "category-sheetmusic-klaverskoler": {
         "da": "Klaverskoler",
-        "en": "Label: mangler oversættelse"
+        "en": "Piano schools"
       },
       "category-sheetmusic-sammenspil": {
         "da": "Sammenspil",
-        "en": "Label: mangler oversættelse"
+        "en": "For more than one instrument"
       },
       "category-sheetmusic-trommeskoler": {
         "da": "Trommeskoler",
-        "en": "Label: mangler oversættelse"
+        "en": "Drumming schools"
       }
     },
     "units": {

@@ -12,10 +12,13 @@
  *  - workType: type of work
  *
  */
+import Head from "next/head";
 import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
 import { inspiration, categories } from "@/lib/api/inspiration.fragments";
+
+import { getCanonicalInspirationUrl } from "@/lib/utils";
 
 import { fetchAll } from "@/lib/api/apiServerOnly";
 
@@ -25,7 +28,7 @@ import Header from "@/components/header";
 import Section from "@/components/base/section";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
-// import { Slider } from "@/components/inspiration/slider/Slider";
+
 import Slider from "@/components/inspiration/slider";
 
 // worktype to categories
@@ -66,15 +69,26 @@ export function Page({ category, data, isLoading }) {
 
   const context = "inspiration";
 
+  const title = Translate({ context, label: trim(`title-${category}`) });
+  const url = getCanonicalInspirationUrl({ category });
+  const description = Translate({
+    context,
+    label: trim(`description-${category}`),
+  });
+
   return (
     <>
       <Header />
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta property="og:url" content={url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+      </Head>
       <Section
-        title={
-          <Title type="title3">
-            {Translate({ context, label: trim(`title-${category}`) })}
-          </Title>
-        }
+        title={<Title type="title3">{title}</Title>}
         backgroundColor={CATEGORY_COLOR[category] || "var(--parchment)"}
         space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
       >
@@ -117,8 +131,6 @@ export default function Wrap() {
       category,
     })
   );
-
-  console.log("page wrap hest......", { data, isLoading });
 
   return (
     <Page

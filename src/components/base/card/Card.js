@@ -45,6 +45,7 @@ export default function Card({
   skeleton,
   cover,
   title,
+  type,
 }) {
   if (skeleton) {
     return <SkeletonCard />;
@@ -58,6 +59,7 @@ export default function Card({
         query: {
           title_author: encodeTitleCreator(title, creators[0]?.display),
           workId,
+          type,
         },
       }}
     >

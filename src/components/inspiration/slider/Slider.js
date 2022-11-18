@@ -12,7 +12,7 @@ import WorkSlider from "@/components/base/slider/WorkSlider";
 
 import styles from "./Slider.module.css";
 
-export function Slider({ works, isLoading, lazyLoad = true, ...props }) {
+export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
   const isClient = typeof window !== "undefined";
   const { elementRef, hasBeenSeen } = useElementVisible({
     root: null,
@@ -33,7 +33,7 @@ export function Slider({ works, isLoading, lazyLoad = true, ...props }) {
         <Col>
           <WorkSlider
             skeleton={isLoading || hide}
-            works={works}
+            manifestations={data}
             data-cy="inspiration-slider"
           />
         </Col>
@@ -57,7 +57,7 @@ export default function Wrap({ category, filters = [], ...props }) {
     return null;
   }
 
-  return <Slider works={cat?.works || []} isLoading={isLoading} {...props} />;
+  return <Slider data={cat?.result || []} isLoading={isLoading} {...props} />;
 }
 
 Wrap.propTypes = {
