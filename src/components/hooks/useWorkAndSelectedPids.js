@@ -1,8 +1,10 @@
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { getPidsFromType } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import { uniqueEntries } from "@/lib/utils";
+import { at } from "lodash";
 
 function filteredWork(work, selectedPids) {
   const manifestations = work?.manifestations?.all?.filter((manifestation) =>
@@ -45,4 +47,48 @@ export function useGetPidsFromWorkIdAndType(workId, type) {
     pidsAndMaterialTypes?.data?.work?.manifestations?.all,
     type
   )?.map((manifestation) => manifestation.pid);
+}
+
+export function useGetManifestationsForOrderButton(workId, selectedPids) {
+  const pids = selectedPids?.filter((pid) => pid !== null && pid !== undefined);
+
+  const workResponse = useData(workId && workFragments.buttonTxt({ workId }));
+
+  const allPids = useMemo(() => {
+    return workResponse?.data?.work?.manifestations?.all?.flatMap(
+      (manifestation) => manifestation.pid
+    );
+  }, [workId, workResponse?.data?.work?.manifestations?.all]);
+
+  const manifestationsResponse = useData(
+    allPids &&
+      allPids?.length > 0 &&
+      manifestationFragments.reservationButtonManifestations({ pid: allPids })
+  );
+
+  const selectedManifestationsPids = pids?.map((pid) => {
+    return allPids?.findIndex((pidFromAll) => pidFromAll === pid);
+  });
+
+  const manifestations = useMemo(() => {
+    return (
+      pids &&
+      selectedManifestationsPids &&
+      at(
+        manifestationsResponse?.data?.manifestations,
+        selectedManifestationsPids
+      )
+    );
+  }, [
+    pids,
+    manifestationsResponse?.data?.manifestations,
+    selectedManifestationsPids,
+  ]);
+
+  return {
+    workResponse,
+    manifestations,
+    manifestationsResponse,
+    selectedManifestationsPids,
+  };
 }
