@@ -11,15 +11,15 @@ const exportedObject = {
 
 export default exportedObject;
 
+const date = new Date();
+const time = date.getTime();
+
 function ReservationButtonComponentBuilder({
   type = "Bog",
-  workId = "some-id-builder",
-  selectedPids = ["some-other-id-builder"],
+  workId = "some-id-builder" + time,
+  selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
 }) {
-  const date = new Date();
-  const time = date.getTime();
-
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -28,8 +28,8 @@ function ReservationButtonComponentBuilder({
         The OrderButton based on the type: {descriptionName}
       </StoryDescription>
       <ReservationButton
-        workId={workId + time}
-        selectedPids={selectedPids.map((pid) => pid + time)}
+        workId={workId}
+        selectedPids={selectedPids.map((pid) => pid)}
         singleManifestation={false}
         buttonType={"primary"}
         size={"large"}
@@ -56,7 +56,12 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
 }
 
 export function ReservationButtonPhysicalBook() {
-  return <ReservationButtonComponentBuilder type={"Bog"} />;
+  return (
+    <ReservationButtonComponentBuilder
+      type={"Bog"}
+      selectedPids={["some-pid-bog" + time]}
+    />
+  );
 }
 ReservationButtonPhysicalBook.story = {
   ...ReservationButtonStoryBuilder("Book", {
@@ -66,11 +71,19 @@ ReservationButtonPhysicalBook.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "Bog" }],
           workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-bog" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-bog" + time,
             materialTypes: [{ specific: "Bog" }],
             accessTypes: [
               {
@@ -92,7 +105,12 @@ ReservationButtonPhysicalBook.story = {
 };
 
 export function ReservationButtonEBook() {
-  return <ReservationButtonComponentBuilder type={"Ebog"} />;
+  return (
+    <ReservationButtonComponentBuilder
+      type={"Ebog"}
+      selectedPids={["some-pid-ebog" + time]}
+    />
+  );
 }
 ReservationButtonEBook.story = {
   ...ReservationButtonStoryBuilder("Ebog", {
@@ -102,11 +120,19 @@ ReservationButtonEBook.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "Ebog" }],
           workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-ebog" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-ebog" + time,
             materialTypes: [{ specific: "Ebog" }],
             accessTypes: [
               {
@@ -128,7 +154,12 @@ ReservationButtonEBook.story = {
 };
 
 export function ReservationButtonEAudioBook() {
-  return <ReservationButtonComponentBuilder type={"EAudioBook"} />;
+  return (
+    <ReservationButtonComponentBuilder
+      type={"EAudioBook"}
+      selectedPids={["some-pid-lydbog-(net)" + time]}
+    />
+  );
 }
 ReservationButtonEAudioBook.story = {
   ...ReservationButtonStoryBuilder("EAudioBook", {
@@ -138,11 +169,19 @@ ReservationButtonEAudioBook.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "lydbog (net)" }],
           workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-lydbog-(net)" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-lydbog-(net)" + time,
             materialTypes: [{ specific: "lydbog (net)" }],
             accessTypes: [
               {
@@ -165,7 +204,7 @@ ReservationButtonEAudioBook.story = {
 export function ReservationButtonGame() {
   return (
     <ReservationButtonComponentBuilder
-      workId={"some-id-game"}
+      selectedPids={["some-pid-game" + time]}
       type={"Playstation 4"}
     />
   );
@@ -178,11 +217,19 @@ ReservationButtonGame.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "Playstation 4" }],
           workTypes: ["GAME"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-game" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-game" + time,
             materialTypes: [{ specific: "Playstation 4" }],
             accessTypes: [
               {
@@ -205,8 +252,8 @@ ReservationButtonGame.story = {
 export function ReservationButtonDisabled() {
   return (
     <ReservationButtonComponentBuilder
-      workId={"some-id-button-disabled"}
       type={"Ebog"}
+      selectedPids={["some-pid-disabled" + time]}
     />
   );
 }
@@ -218,11 +265,19 @@ ReservationButtonDisabled.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "EBog" }],
           workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-disabled" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-disabled" + time,
             materialTypes: [{ specific: "EBog" }],
             accessTypes: [
               {
@@ -273,7 +328,12 @@ export function OrderButtonNotLoggedIn() {
 }
 
 export function ReservationButtonPhysicalBookLoanNotPossible() {
-  return <ReservationButtonComponentBuilder type={"Bog"} />;
+  return (
+    <ReservationButtonComponentBuilder
+      type={"Bog"}
+      selectedPids={["some-pid-bog-loan-not-possible" + time]}
+    />
+  );
 }
 ReservationButtonPhysicalBookLoanNotPossible.story = {
   ...ReservationButtonStoryBuilder("Book", {
@@ -283,11 +343,19 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
           titles: [{ main: "Hugo hejs" }],
           materialTypes: [{ specific: "Bog" }],
           workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-bog-loan-not-possible" + time,
+              },
+            ],
+          },
         };
       },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-bog-loan-not-possible" + time,
             materialTypes: [{ specific: "Bog" }],
             accessTypes: [
               {
@@ -306,31 +374,39 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
 export function ReservationButtonSlowResponse() {
   return (
     <ReservationButtonComponentBuilder
-      workId={"some-slow-id-book"}
+      selectedPids={["some-pid-slow-response" + time]}
       type={"Slow response"}
     />
   );
 }
 ReservationButtonSlowResponse.story = {
   ...ReservationButtonStoryBuilder("Slow", {
-    Manifestation: {
-      access: async () => {
+    Query: {
+      work: () => {
+        const date = new Date();
+        const time = date.getTime();
+
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Bog" }],
+          workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-slow-response" + time,
+              },
+            ],
+          },
+        };
+      },
+      manifestations: async () => {
         // Simulate slow access response, wait 5000ms
         await new Promise((r) => {
           setTimeout(r, 5000);
         });
 
-        return [{}];
+        return [{ access: {} }];
       },
-    },
-    MaterialType: {
-      specific: () => "Bog",
-    },
-    InterLibraryLoan: {
-      loanIsPossible: () => true,
-    },
-    Access: {
-      __resolveType: () => "InterLibraryLoan",
     },
   }),
 };

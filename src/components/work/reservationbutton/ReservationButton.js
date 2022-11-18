@@ -19,6 +19,7 @@ import { useMemo } from "react";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
 import { AccessEnum } from "@/lib/enums";
 import { useData } from "@/lib/api/api";
+import { at } from "lodash";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -301,15 +302,34 @@ function ReservationButton({
     workId && workFragments.buttonTxt({ workId })
   );
 
+  const allPids = useMemo(() => {
+    return workData?.work?.manifestations?.all?.flatMap(
+      (manifestation) => manifestation.pid
+    );
+  }, [workId, workData?.work?.manifestations?.all]);
+
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
     useData(
-      selectedPids &&
-        manifestationFragments.reservationButtonManifestations({
-          pid: selectedPids,
-        })
+      allPids &&
+        manifestationFragments.reservationButtonManifestations({ pid: allPids })
     );
 
-  if (workIsLoading || manifestationsIsLoading) {
+  const selectedManifestationsPids = selectedPids?.map((pid) => {
+    return allPids?.findIndex((pidFromAll) => pidFromAll === pid);
+  });
+
+  const manifestations = useMemo(() => {
+    return (
+      selectedPids &&
+      at(manifestationsData?.manifestations, selectedManifestationsPids)
+    );
+  }, [
+    selectedPids,
+    manifestationsData?.manifestations,
+    selectedManifestationsPids,
+  ]);
+
+  if (workIsLoading || manifestationsIsLoading || !selectedManifestationsPids) {
     return (
       <Button
         className={styles.externalLink}
@@ -328,8 +348,7 @@ function ReservationButton({
       user={user}
       modal={modal}
       work={workData?.work}
-      manifestations={manifestationsData?.manifestations}
-      selectedPids={selectedPids}
+      manifestations={manifestations}
       onOnlineAccess={onOnlineAccess}
       openOrderModal={(manifestation) =>
         openOrderModal(modal, workId, singleManifestation, manifestation)
