@@ -142,7 +142,8 @@ ReservationButtonEBook.story = {
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "ereol.combo",
+                url: "ereol.combo/langurl",
+                origin: "ereol.combo",
               },
             ],
             workTypes: ["LITERATURE"],
