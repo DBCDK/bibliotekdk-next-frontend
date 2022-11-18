@@ -90,7 +90,7 @@ export function getCanonicalArticleUrl(props) {
  */
 export function getIsPeriodicaLike(workTypes, materialTypes) {
   return (
-    !!workTypes?.find((workType) => workType.toLowerCase() === "periodica") ||
+    !!workTypes?.find((workType) => workType?.toLowerCase() === "periodica") ||
     !!materialTypes?.find(
       (materialType) => materialType?.specific?.toLowerCase() === "årbog"
     )

@@ -1,4 +1,3 @@
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import {
   checkRequestButtonIsTrue,
   context,
@@ -10,9 +9,9 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { Col } from "react-bootstrap";
 import styles from "./OrderButtonTextBelow.module.css";
-import { useData } from "@/lib/api/api";
 import { uniq } from "lodash";
 import Skeleton from "@/components/base/skeleton";
+import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -88,19 +87,17 @@ export function OrderButtonTextBelow({ manifestations, skeleton }) {
   );
 }
 
-export default function Wrap({ selectedPids, skeleton }) {
-  const { data, isSlow, isLoading } = useData(
-    selectedPids &&
-      manifestationFragments.reservationButtonManifestations({
-        pid: selectedPids,
-      })
-  );
+export default function Wrap({ workId, selectedPids, skeleton }) {
+  const { manifestations, manifestationsResponse } =
+    useGetManifestationsForOrderButton(workId, selectedPids);
 
-  const manifestations = data?.manifestations;
-
-  if ((!data?.manifestations && isLoading) || !data?.manifestations) {
+  if (manifestationsResponse?.isLoading) {
     return (
-      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+      <Skeleton
+        lines={1}
+        className={styles.skeletonstyle}
+        isSlow={manifestationsResponse?.isSlow}
+      />
     );
   }
 

@@ -8,15 +8,15 @@ const exportedObject = {
 
 export default exportedObject;
 
+const date = new Date();
+const time = date.getTime();
+
 function ButtonTxtComponentBuilder({
   type = "Bog",
-  workId = "some-id-builder",
-  selectedPids = ["some-other-id-builder"],
+  workId = "some-id-builder" + time,
+  selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
 }) {
-  const date = new Date();
-  const time = date.getTime();
-
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -25,8 +25,8 @@ function ButtonTxtComponentBuilder({
         The button text based on the type: {descriptionName}
       </StoryDescription>
       <OrderButtonTextBelow
-        workId={workId + time}
-        selectedPids={selectedPids.map((pid) => pid + time)}
+        workId={workId}
+        selectedPids={selectedPids}
         skeleton={false}
       />
     </div>
@@ -63,17 +63,37 @@ export function BookButtonTxt() {
 BookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Book", {
     Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Bog" }],
+          workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-bog" + time,
+              },
+            ],
+          },
+        };
+      },
       manifestations: () => {
         return [
           {
-            workTypes: ["LITERATURE"],
+            pid: "some-pid-bog" + time,
             materialTypes: [{ specific: "Bog" }],
+            accessTypes: [
+              {
+                display: "fysisk",
+              },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
                 loanIsPossible: true,
               },
             ],
+            workTypes: ["LITERATURE"],
           },
         ];
       },
@@ -84,19 +104,39 @@ BookButtonTxt.story = {
 export function EBookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"ebog"}
-      workId={"some-id-e-book"}
-      selectedPids={["some-other-id-e-book"]}
+      type={"Ebog"}
+      workId={"some-workId-ebog" + time}
+      selectedPids={["some-pid-ebog" + time]}
     />
   );
 }
 EBookButtonTxt.story = {
   ...ButtonTxtStoryBuilder("EBook", {
     Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Ebog" }],
+          workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-ebog" + time,
+              },
+            ],
+          },
+        };
+      },
       manifestations: () => {
         return [
           {
+            pid: "some-pid-ebog" + time,
             materialTypes: [{ specific: "Ebog" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
@@ -104,6 +144,7 @@ EBookButtonTxt.story = {
                 origin: "ereol.combo",
               },
             ],
+            workTypes: ["LITERATURE"],
           },
         ];
       },
@@ -123,16 +164,37 @@ export function EAudioBookPhysicalButtonTxt() {
 EAudioBookPhysicalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (cd-mp3)", {
     Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
+          workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-lydbog" + time,
+              },
+            ],
+          },
+        };
+      },
       manifestations: () => {
         return [
           {
-            materialTypes: [{ specific: "lydbog (cd-mp3)" }],
+            pid: "some-pid-lydbog" + time,
+            materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
+            accessTypes: [
+              {
+                display: "fysisk",
+              },
+            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
                 loanIsPossible: true,
               },
             ],
+            workTypes: ["LITERATURE"],
           },
         ];
       },
@@ -144,25 +206,46 @@ export function EAudioBookDigitalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Lydbog (net)"}
-      workId={"some-id-e-audio-book"}
-      selectedPids={["some-other-id-e-audio-book"]}
+      workId={"some-workId-elydbog" + time}
+      selectedPids={["some-pid-elydbog" + time]}
     />
   );
 }
 EAudioBookDigitalButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Lydbog (net)", {
     Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Lydbog (net)" }],
+          workTypes: ["LITERATURE"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-elydbog" + time,
+              },
+            ],
+          },
+        };
+      },
       manifestations: () => {
         return [
           {
-            materialTypes: [{ specific: "lydbog (net)" }],
-            access: [
+            pid: "some-pid-elydbog" + time,
+            materialTypes: [{ specific: "Lydbog (net)" }],
+            accessTypes: [
               {
-                __resolveType: AccessEnum.ACCESS_URL,
-                origin: "notambo.dekå",
-                loginRequired: false,
+                display: "online",
               },
             ],
+            access: [
+              {
+                __resolveType: AccessEnum.EREOL,
+                url: "nota.combo/langurl",
+                origin: "nota.combo",
+              },
+            ],
+            workTypes: ["LITERATURE"],
           },
         ];
       },
@@ -173,9 +256,9 @@ EAudioBookDigitalButtonTxt.story = {
 export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type={"bog"}
-      workId={"some-id-periodica"}
-      selectedPids={["some-other-id-periodica"]}
+      type={"Ebog"}
+      workId={"some-workId-periodica"}
+      selectedPids={["some-pid-periodica" + time]}
       storyNameOverride={"Periodica"}
     />
   );
@@ -183,11 +266,32 @@ export function PeriodicaButtonTxt() {
 PeriodicaButtonTxt.story = {
   ...ButtonTxtStoryBuilder("Periodica", {
     Query: {
+      work: () => {
+        return {
+          titles: [{ main: "Hugo hejs" }],
+          materialTypes: [{ specific: "Ebog" }],
+          workTypes: ["PERIODICA"],
+          manifestations: {
+            all: [
+              {
+                pid: "some-pid-periodica" + time,
+              },
+            ],
+          },
+        };
+      },
       manifestations: () => {
         return [
           {
-            workTypes: ["PERIODICA"],
+            pid: "some-pid-periodica" + time,
+            materialTypes: [{ specific: "Ebog" }],
+            accessTypes: [
+              {
+                display: "online",
+              },
+            ],
             access: [],
+            workTypes: ["PERIODICA"],
           },
         ];
       },
