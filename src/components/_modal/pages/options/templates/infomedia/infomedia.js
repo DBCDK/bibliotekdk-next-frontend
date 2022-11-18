@@ -7,11 +7,11 @@ import styles from "./infomedia.module.css";
 import { infomediaUrl } from "@/lib/utils";
 
 export function Infomedia({ props }) {
-  const { infomediaId, title_author, className, workId } = {
+  const { id, title_author, className, workId } = {
     ...props,
   };
   const context = { context: "options" };
-  const url = infomediaUrl(title_author, workId, infomediaId);
+  const url = infomediaUrl(title_author, workId, id);
   return (
     <li className={`${className} ${styles.item}`}>
       <Link

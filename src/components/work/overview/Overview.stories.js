@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { OverviewSkeleton, Overview } from "./Overview";
-import { StoryTitle, StoryDescription } from "@/storybook";
+import Overview, { OverviewSkeleton } from "./Overview";
 
-const dummyOverviewData = require("../dummy.overViewWorkapi.json");
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 const exportedObject = {
   title: "work/Overview",
@@ -10,33 +9,110 @@ const exportedObject = {
 
 export default exportedObject;
 
-/**
- * Overview
- *
+/** OverviewComponentBuilder
+ * @param {string} type
+ * @param {Object<Object<string, Array, boolean>, boolean, boolean>} editionProps
+ * @param {string} storyNameOverride
  */
-export function WorkOverview() {
-  const data = dummyOverviewData;
+function OverviewComponentBuilder({
+  overviewProps,
+  type = "Bog",
+  storyNameOverride = null,
+}) {
+  const descriptionName = storyNameOverride ? storyNameOverride : type;
 
-  const fbiWork = {
-    data: { work: data, isLoading: false, isSlow: false },
-  };
-  const [type, setType] = useState("bog");
   return (
     <div>
-      <StoryTitle>Overview - not logged in</StoryTitle>
+      <StoryTitle>Overview - {descriptionName}</StoryTitle>
       <StoryDescription>
-        user is not logged in - order button logs user in
+        Overview with description: {descriptionName}
       </StoryDescription>
       <Overview
-        fbiWork={fbiWork}
-        workId="work-of:800010-katalog:99122063770705763"
-        type={type}
-        onTypeChange={(el) => setType(el.type)}
-        onOnlineAccess={(el) => alert(el)}
+        workId={overviewProps.workId ?? "some-workId"}
+        type={overviewProps.type ?? "Bog"}
+        onTypeChange={(el) => overviewProps.onTypeChange(el.type)}
+        login={() => {}}
       />
     </div>
   );
 }
+
+function OverviewStoryBuilder(storyname, resolvers = {}, query = {}) {
+  return {
+    parameters: {
+      graphql: {
+        debug: true,
+        resolvers: resolvers,
+        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+      },
+      nextRouter: {
+        showInfo: true,
+        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}`,
+        query: query,
+      },
+    },
+  };
+}
+
+function resolvers(storyname) {
+  return {
+    ...OverviewStoryBuilder(`${storyname}`, {
+      MaterialType: {
+        specific: () => "Bog",
+      },
+      InterLibraryLoan: {
+        loanIsPossible: () => true,
+      },
+      Access: {
+        __resolveType: () => "InterLibraryLoan",
+      },
+      Work: {
+        workId: () => "some-workId-bog",
+        materialTypes: () => [
+          { specific: "Bog" },
+          { specific: "Ebog" },
+          { specific: "Lydbog (bånd)" },
+          { specific: "Lydbog (cd-mp3)" },
+          { specific: "Lydbog (net)" },
+        ],
+        creators: () => [{ display: "Lucky Luke" }, { display: "Ratata" }],
+      },
+      WorkTitles: {
+        full: () => ["Asterix og Obelix i det vilde vesten"],
+      },
+      Manifestation: {
+        pid: () => "some-pid",
+        access: () => [...new Array(10).fill({})],
+        materialTypes: () => [
+          { specific: "Ebog" },
+          { specific: "Lydbog (cd-mp3)" },
+        ],
+        genreAndForm: () => ["some-genreAndForm - 1", "some-genreAndForm - 2"],
+        physicalDescriptions: () => [...new Array(10).fill({})],
+        contributors: () => [...new Array(10).fill({})],
+        accessTypes: () => [...new Array(10).fill({})],
+      },
+    }),
+  };
+}
+
+export function OverviewWrapped() {
+  const [type, setType] = useState("bog");
+
+  const overviewProps = {
+    workId: `some-workId-${type}`,
+    type: type,
+    onTypeChange: (el) => setType(el),
+  };
+
+  return (
+    <OverviewComponentBuilder overviewProps={overviewProps} type={"Bog"} />
+  );
+}
+
+OverviewWrapped.story = {
+  ...resolvers("Wrapped"),
+};
 
 /**
  * skeleton

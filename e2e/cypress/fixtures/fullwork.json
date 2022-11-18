@@ -8,48 +8,50 @@
           },
           "materialType": "Bog",
           "workTypes": ["literature"],
-          "manifestations": [
-            {
-              "pid": "870970-basis:51701763",
-              "materialType": "Bog",
-              "admin": { "requestButton": true },
-              "content": [],
-              "creators": [
-                {
-                  "type": "aut",
-                  "functionSingular": "forfatter",
-                  "name": "Mette E. Neerlin"
-                }
-              ],
-              "datePublished": "2015",
-              "edition": "1. udgave",
-              "isbn": "9788763840439",
-              "language": ["Dansk"],
-              "onlineAccess": [],
-              "physicalDescription": "127 sider",
-              "publisher": ["Høst"]
-            },
-            {
-              "pid": "870970-basis:12345678",
-              "materialType": "Bog",
-              "admin": { "requestButton": true },
-              "content": [],
-              "creators": [
-                {
-                  "type": "aut",
-                  "functionSingular": "forfatter",
-                  "name": "Mette E. Neerlin"
-                }
-              ],
-              "datePublished": "2015",
-              "edition": "1. udgave",
-              "isbn": "9788763840439",
-              "language": ["Dansk"],
-              "onlineAccess": [],
-              "physicalDescription": "127 sider",
-              "publisher": ["Høst"]
-            }
-          ]
+          "manifestations": {
+            "all": [
+              {
+                "pid": "870970-basis:51701763",
+                "materialType": "Bog",
+                "admin": { "requestButton": true },
+                "content": [],
+                "creators": [
+                  {
+                    "type": "aut",
+                    "functionSingular": "forfatter",
+                    "name": "Mette E. Neerlin"
+                  }
+                ],
+                "datePublished": "2015",
+                "edition": "1. udgave",
+                "isbn": "9788763840439",
+                "language": ["Dansk"],
+                "onlineAccess": [],
+                "physicalDescription": "127 sider",
+                "publisher": ["Høst"]
+              },
+              {
+                "pid": "870970-basis:12345678",
+                "materialType": "Bog",
+                "admin": { "requestButton": true },
+                "content": [],
+                "creators": [
+                  {
+                    "type": "aut",
+                    "functionSingular": "forfatter",
+                    "name": "Mette E. Neerlin"
+                  }
+                ],
+                "datePublished": "2015",
+                "edition": "1. udgave",
+                "isbn": "9788763840439",
+                "language": ["Dansk"],
+                "onlineAccess": [],
+                "physicalDescription": "127 sider",
+                "publisher": ["Høst"]
+              }
+            ]
+          }
         },
         {
           "cover": {
@@ -206,168 +208,174 @@
         "title": "Hest, hest, tiger, tiger af Mette E. Neerlin",
         "description": "Lån Hest, hest, tiger, tiger som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
       },
-      "manifestations": [
-        {
-          "content": [],
-          "creators": [
-            {
-              "type": "aut",
-              "functionSingular": "forfatter",
-              "name": "Mette E. Neerlin"
-            }
-          ],
-          "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
-          },
-          "datePublished": "2015",
-          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
-          "edition": "1. udgave",
-          "isbn": "9788763840439",
-          "materialType": "Bog",
-          "notes": [],
-          "language": ["Dansk"],
-          "originals": ["Originaludgave: 2015"],
-          "originalTitle": "",
-          "pid": "870970-basis:51701763",
-          "admin": { "requestButton": true },
-          "physicalDescription": "127 sider",
-          "publisher": ["Høst"],
-          "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger"
-        },
-        {
-          "content": [],
-          "creators": [
-            {
-              "type": "aut",
-              "functionSingular": "forfatter",
-              "name": "Mette E. Neerlin"
-            }
-          ],
-          "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
-          },
-          "datePublished": "2015",
-          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
-          "edition": "1. udgave",
-          "isbn": "9788763840439",
-          "materialType": "Bog",
-          "notes": [],
-          "language": ["Dansk"],
-          "originals": ["Originaludgave: 2015"],
-          "originalTitle": "",
-          "pid": "870970-basis:12345678",
-          "admin": { "requestButton": true },
-          "physicalDescription": "127 sider",
-          "publisher": ["Høst"],
-          "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger"
-        },
-        {
-          "content": [],
-          "creators": [
-            {
-              "type": "aut",
-              "functionSingular": "forfatter",
-              "name": "Mette E. Neerlin"
-            }
-          ],
-          "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4db0b737fda36ad47c1e"
-          },
-          "datePublished": "2015",
-          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
-          "edition": "",
-          "isbn": "9788763841757",
-          "materialType": "Ebog",
-          "notes": ["Downloades i EPUB-format"],
-          "language": ["Dansk"],
-          "originals": ["Originaludgave: 2015"],
-          "originalTitle": "",
-          "pid": "870970-basis:51796527",
-          "physicalDescription": "",
-          "publisher": ["Høst"],
-          "shelf": null,
-          "title": "Hest, hest, tiger, tiger"
-        },
-        {
-          "content": [],
-          "creators": [
-            {
-              "type": "aut",
-              "functionSingular": "forfatter",
-              "name": "Mette E. Neerlin"
+      "manifestations": {
+        "all": [
+          {
+            "content": [],
+            "creators": [
+              {
+                "type": "aut",
+                "functionSingular": "forfatter",
+                "name": "Mette E. Neerlin"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
             },
-            {
-              "type": "dkind",
-              "functionSingular": "indlæser",
-              "name": "Joakim Lind Tranberg"
-            },
-            {
-              "type": "trl",
-              "functionSingular": "oversætter",
-              "name": "Ninna Brenøe"
-            }
-          ],
-          "cover": {
-            "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=03e7c28e16b63424064c"
+            "datePublished": "2015",
+            "dk5": [{ "value": "86-096" }, { "value": "sk" }],
+            "edition": "1. udgave",
+            "isbn": "9788763840439",
+            "materialType": "Bog",
+            "notes": [],
+            "language": ["Dansk"],
+            "originals": ["Originaludgave: 2015"],
+            "originalTitle": "",
+            "pid": "870970-basis:51701763",
+            "admin": { "requestButton": true },
+            "physicalDescription": "127 sider",
+            "publisher": ["Høst"],
+            "shelf": "skønlitteratur",
+            "title": "Hest, hest, tiger, tiger"
           },
-          "datePublished": "2017",
-          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
-          "edition": "",
-          "isbn": "9788764476163",
-          "materialType": "Lydbog (cd-mp3)",
-          "notes": [],
-          "language": ["Dansk"],
-          "originals": [
-            "Gengivelse af bogen",
-            "Indlæst efter 1. udgave. 2015. ISBN: 9788763840439",
-            "Bogens originaludgave: 2015"
-          ],
-          "originalTitle": "",
-          "pid": "870970-basis:52988055",
-          "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
-          "publisher": ["Biblioteksmedier"],
-          "shelf": "skønlitteratur",
-          "title": "Hest, hest, tiger, tiger"
-        },
-        {
-          "content": [],
-          "creators": [
-            { "type": "", "functionSingular": "", "name": "Mette E. Neerlin" },
-            {
-              "type": "",
-              "functionSingular": "",
-              "name": "Joakim Lind Tranberg"
-            }
-          ],
-          "cover": { "detail": null },
-          "datePublished": "2017",
-          "dk5": [{ "value": "86-096" }, { "value": "sk" }],
-          "edition": "",
-          "isbn": null,
-          "materialType": "Lydbog (net)",
-          "notes": [
-            "Mette E. Neerlin",
-            "Digital lydbog uden tekst",
-            "Indlæst i 2017",
-            "Indlæser: Joakim Lind Tranberg",
-            "Masternr.: 44564"
-          ],
-          "language": ["Dansk"],
-          "originals": [
-            "Indlæst efter udgaven: Kbh. : Høst, 2015",
-            "Kopieret efter udgaven: Ballerup : Biblioteksmedier, 2017",
-            "Originaludgave: 2015"
-          ],
-          "originalTitle": "",
-          "pid": "874310-katalog:DBB0044564",
-          "physicalDescription": "119793179 bytes",
-          "publisher": ["Nota"],
-          "shelf": null,
-          "title": "Hest, hest, tiger, tiger"
-        }
-      ],
+          {
+            "content": [],
+            "creators": [
+              {
+                "type": "aut",
+                "functionSingular": "forfatter",
+                "name": "Mette E. Neerlin"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51701763&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=6533dcd5ed9d6976a6c5"
+            },
+            "datePublished": "2015",
+            "dk5": [{ "value": "86-096" }, { "value": "sk" }],
+            "edition": "1. udgave",
+            "isbn": "9788763840439",
+            "materialType": "Bog",
+            "notes": [],
+            "language": ["Dansk"],
+            "originals": ["Originaludgave: 2015"],
+            "originalTitle": "",
+            "pid": "870970-basis:12345678",
+            "admin": { "requestButton": true },
+            "physicalDescription": "127 sider",
+            "publisher": ["Høst"],
+            "shelf": "skønlitteratur",
+            "title": "Hest, hest, tiger, tiger"
+          },
+          {
+            "content": [],
+            "creators": [
+              {
+                "type": "aut",
+                "functionSingular": "forfatter",
+                "name": "Mette E. Neerlin"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51796527&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4db0b737fda36ad47c1e"
+            },
+            "datePublished": "2015",
+            "dk5": [{ "value": "86-096" }, { "value": "sk" }],
+            "edition": "",
+            "isbn": "9788763841757",
+            "materialType": "Ebog",
+            "notes": ["Downloades i EPUB-format"],
+            "language": ["Dansk"],
+            "originals": ["Originaludgave: 2015"],
+            "originalTitle": "",
+            "pid": "870970-basis:51796527",
+            "physicalDescription": "",
+            "publisher": ["Høst"],
+            "shelf": null,
+            "title": "Hest, hest, tiger, tiger"
+          },
+          {
+            "content": [],
+            "creators": [
+              {
+                "type": "aut",
+                "functionSingular": "forfatter",
+                "name": "Mette E. Neerlin"
+              },
+              {
+                "type": "dkind",
+                "functionSingular": "indlæser",
+                "name": "Joakim Lind Tranberg"
+              },
+              {
+                "type": "trl",
+                "functionSingular": "oversætter",
+                "name": "Ninna Brenøe"
+              }
+            ],
+            "cover": {
+              "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52988055&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=03e7c28e16b63424064c"
+            },
+            "datePublished": "2017",
+            "dk5": [{ "value": "86-096" }, { "value": "sk" }],
+            "edition": "",
+            "isbn": "9788764476163",
+            "materialType": "Lydbog (cd-mp3)",
+            "notes": [],
+            "language": ["Dansk"],
+            "originals": [
+              "Gengivelse af bogen",
+              "Indlæst efter 1. udgave. 2015. ISBN: 9788763840439",
+              "Bogens originaludgave: 2015"
+            ],
+            "originalTitle": "",
+            "pid": "870970-basis:52988055",
+            "physicalDescription": "1 cd i 1 mappe (mp3) (2 t., 47 min.)",
+            "publisher": ["Biblioteksmedier"],
+            "shelf": "skønlitteratur",
+            "title": "Hest, hest, tiger, tiger"
+          },
+          {
+            "content": [],
+            "creators": [
+              {
+                "type": "",
+                "functionSingular": "",
+                "name": "Mette E. Neerlin"
+              },
+              {
+                "type": "",
+                "functionSingular": "",
+                "name": "Joakim Lind Tranberg"
+              }
+            ],
+            "cover": { "detail": null },
+            "datePublished": "2017",
+            "dk5": [{ "value": "86-096" }, { "value": "sk" }],
+            "edition": "",
+            "isbn": null,
+            "materialType": "Lydbog (net)",
+            "notes": [
+              "Mette E. Neerlin",
+              "Digital lydbog uden tekst",
+              "Indlæst i 2017",
+              "Indlæser: Joakim Lind Tranberg",
+              "Masternr.: 44564"
+            ],
+            "language": ["Dansk"],
+            "originals": [
+              "Indlæst efter udgaven: Kbh. : Høst, 2015",
+              "Kopieret efter udgaven: Ballerup : Biblioteksmedier, 2017",
+              "Originaludgave: 2015"
+            ],
+            "originalTitle": "",
+            "pid": "874310-katalog:DBB0044564",
+            "physicalDescription": "119793179 bytes",
+            "publisher": ["Nota"],
+            "shelf": null,
+            "title": "Hest, hest, tiger, tiger"
+          }
+        ]
+      },
       "reviews": [
         {
           "__typename": "ReviewInfomedia",

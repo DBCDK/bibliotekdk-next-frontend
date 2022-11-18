@@ -154,12 +154,12 @@ function getCreativeWork({
    * */
   let creator = manifestations?.[0]?.creators?.map((creator) => ({
     "@type": "Person",
-    name: creator.display,
+    name: creator?.display,
   }));
-  if (creator.length === 0) {
+  if (creator?.length === 0) {
     creator = manifestations?.[0]?.contributors?.map((contrib) => ({
       "@type": "Person",
-      name: contrib.display,
+      name: contrib?.display,
     }));
   }
 
@@ -225,7 +225,7 @@ function getMovie({
  */
 export function getCoverImage(work) {
   return (
-    work.manifestations.all.find((entry) => entry?.cover?.detail)?.cover
+    work?.manifestations?.all?.find((entry) => entry?.cover?.detail)?.cover
       .detail || null
   );
 }
@@ -262,10 +262,10 @@ export function getJSONLD(work) {
   /* id, title, description, creators, manifestations, url */
   const ldWork = {
     id: work?.workId,
-    title: work?.titles?.main[0],
-    description: work?.abstract[0],
+    title: work?.titles?.main?.[0],
+    description: work?.abstract?.[0],
     creators: work?.creators?.map((creator) => ({
-      name: creator.display,
+      name: creator?.display,
     })),
     manifestations: work?.manifestations?.all,
     url: url,
@@ -273,7 +273,7 @@ export function getJSONLD(work) {
   };
   let mainEntity;
 
-  switch (work?.workTypes?.[0].toLowerCase()) {
+  switch (work?.workTypes?.[0]?.toLowerCase()) {
     case "article":
       mainEntity = getArticle({ ...ldWork });
       break;

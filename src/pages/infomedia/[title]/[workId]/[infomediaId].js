@@ -91,7 +91,6 @@ export default function Wrap() {
       infomediaId &&
       infomediaFragments.infomediaArticle({ id: infomediaId })
   );
-  console.log({ infomediaId, infomediaArticleData });
 
   const article = parseInfomediaArticle(
     infomediaPublicData?.work,

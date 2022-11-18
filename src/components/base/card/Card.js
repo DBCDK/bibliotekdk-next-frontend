@@ -57,7 +57,7 @@ export default function Card({
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
-          title_author: encodeTitleCreator(title, creators[0]?.display),
+          title_author: encodeTitleCreator(title, creators?.[0]?.display),
           workId,
           type,
         },
@@ -84,14 +84,14 @@ export default function Card({
             {title}
           </Text>
 
-          {creators.length > 0 && (
+          {creators?.length > 0 && (
             <Text
               className={`${styles.Creator}`}
               type="text2"
               lines={2}
               clamp={true}
             >
-              {creators[0]?.display}
+              {creators?.[0]?.display}
             </Text>
           )}
         </div>

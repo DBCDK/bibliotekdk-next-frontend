@@ -1,98 +1,57 @@
 import { useEffect, useMemo, useState } from "react";
-import filter from "lodash/filter";
-import merge from "lodash/merge";
-import { useData, useMutate } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
-import Translate from "@/components/base/translate";
+import { useMutate } from "@/lib/api/api";
 import Top from "../base/top";
-import Button from "@/components/base/button";
-import Link from "@/components/base/link";
-import Title from "@/components/base/title";
-import Text from "@/components/base/text";
-import Email from "@/components/base/forms/email";
 import data from "./dummy.data";
 import styles from "./Order.module.css";
-import { getIsPeriodicaLike_TempUsingAlfaApi } from "@/lib/utils";
-import TjoolTjip from "@/components/base/tjooltjip";
-import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
-import { Edition_TempUsingAlfaApi } from "@/components/_modal/pages/edition/Edition";
-import usePickupBranch from "@/components/hooks/usePickupBranch";
+import Edition from "@/components/_modal/pages/edition/Edition";
 import {
   handleSubmitOrder,
   handleSubmitPeriodicaArticleOrder,
 } from "@/components/_modal/utils";
-import debounce from "lodash/debounce";
+import LocalizationInformation from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation";
+import OrdererInformation from "@/components/_modal/pages/order/ordererinformation/OrdererInformation";
+import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfirmationbutton/OrderConfirmationButton";
+import * as PropTypes from "prop-types";
+import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
+import {
+  getOrderPids,
+  onMailChange,
+} from "@/components/_modal/pages/order/utils";
 
 /**
  *  Order component function
  *
  * @param {*} param0
- * @returns component
+ * @returns JSX.Element
  */
-export function Order({
+function Order({
   pid,
-  work,
-  user,
-  initial = {},
-  authUser,
-  isAuthenticated,
-  order,
-  articleOrder,
+  orderPids,
+  accessTypeInfo = {},
+  updateLoanerInfo,
+  pickupBranchInfo = {},
+  orderMutation,
+  articleOrderMutation,
   onArticleSubmit,
   onSubmit,
-  updateLoanerInfo,
-  isLoading = false,
   // new modal props
   context,
   modal,
   singleManifestation = false,
 }) {
-  // Selected pickup branch
-  // If none selected, use first branch in the list
-  const [pickupBranch, setPickupBranch] = useState(null);
-
-  // Email state
-  let [mail, setMail] = useState(null);
+  const {
+    pickupBranchUser: user,
+    pickupBranch,
+    isLoadingBranches = false,
+  } = pickupBranchInfo;
 
   // Sets if user has unsuccessfully tried to submit the order
-  const [hasTry, setHasTry] = useState(false);
+  const [failedSubmission, setFailedSubmission] = useState(false);
 
-  const isArticle = work?.workTypes?.includes("article");
-  const isPeriodicaLike = getIsPeriodicaLike_TempUsingAlfaApi(work);
-
-  const isArticleRequest =
-    !!context?.periodicaForm?.titleOfComponent ||
-    !!context?.periodicaForm?.authorOfComponent ||
-    !!context?.periodicaForm?.pagination;
-
-  const isPhysical = !!work?.manifestations?.find(
-    (m) => m?.admin?.requestButton
-  );
-  const isDigitalCopy = !!work?.manifestations?.find((m) =>
-    m?.onlineAccess?.find((entry) => entry.issn)
-  );
-
-  const availableAsPhysicalCopy =
-    pickupBranch?.pickupAllowed &&
-    pickupBranch?.orderPolicy?.orderPossible &&
-    isPhysical;
-
-  const availableAsDigitalCopy =
-    pickupBranch?.digitalCopyAccess &&
-    isDigitalCopy &&
-    (isPeriodicaLike ? isArticleRequest : true);
-
-  const requireDigitalAccess = isDigitalCopy && !isPhysical;
-  useEffect(() => {
-    if (initial.pickupBranch) {
-      setPickupBranch(initial.pickupBranch);
-    }
-  }, [initial.pickupBranch]);
-
+  const [mail, setMail] = useState(null);
   // Update email from user account
   useEffect(() => {
-    const userMail = user.userParameters?.userMail;
+    const userMail = user?.userParameters?.userMail;
     if (userMail) {
       const message = null;
       setMail({
@@ -101,6 +60,31 @@ export function Order({
       });
     }
   }, [user?.userParameters]);
+
+  function updateModal() {
+    if (modal && modal.isVisible) {
+      // call update if data or isLoading is changed
+      if (articleOrderMutation?.isLoading || articleOrderMutation?.data) {
+        modal.update(modal.index(), { articleOrder: articleOrderMutation });
+      } else if (orderMutation.isLoading || orderMutation.data) {
+        modal.update(modal.index(), { order: orderMutation });
+      }
+    }
+  }
+
+  // An order has successfully been submitted
+  useEffect(() => {
+    updateModal();
+  }, [
+    orderMutation?.data,
+    orderMutation?.isLoading,
+    articleOrderMutation?.data,
+    articleOrderMutation?.isLoading,
+  ]);
+
+  const { isPeriodicaLike, availableAsDigitalCopy } = useMemo(() => {
+    return accessTypeInfo;
+  }, [accessTypeInfo]);
 
   const validated = useMemo(() => {
     const hasMail = !!mail?.valid?.status;
@@ -126,369 +110,91 @@ export function Order({
       },
     };
 
-    return { status, hasTry, details };
+    return { status, hasTry: failedSubmission, details };
   }, [
     mail,
     pid,
     pickupBranch,
-    hasTry,
+    failedSubmission,
     context?.periodicaForm?.publicationDateOfComponent,
   ]);
 
-  // An order has successfully been submitted
-  useEffect(() => {
-    if (modal && modal.isVisible) {
-      // call update if data or isLoading is changed
-      if (articleOrder?.isLoading || articleOrder?.data) {
-        const index = modal.index();
-        modal.update(index, { articleOrder });
-      } else if (order.isLoading || order.data) {
-        const index = modal.index();
-        modal.update(index, { order });
-      }
-    }
-  }, [
-    order.data,
-    order.isLoading,
-    articleOrder?.data,
-    articleOrder?.isLoading,
-  ]);
-
-  /**
-   *
-   * @param {*} value
-   * @param {*} valid
-   */
-  function onMailChange(value, valid) {
-    valid.status &&
-      updateLoanerInfo &&
-      updateLoanerInfo({ userParameters: { userMail: value } });
-    // update mail in state
-    setMail({ value, valid });
-  }
-
-  // Work props
-  const { manifestations = [] } = work;
-  // Material by pid
-  const material = filter(
-    manifestations,
-    (manifestation) => manifestation.pid === pid
-  )[0];
-
-  // Same type materiel
-  const materialsSameType = filter(
-    manifestations,
-    (m) => m?.materialType === material?.materialType && m?.admin?.requestButton
-  );
-
-  let orderPids;
-  if (singleManifestation) {
-    orderPids = [pid];
-  } else {
-    orderPids = materialsSameType.map((m) => m.pid);
-  }
-
-  const isLoadingBranches = isLoading || (user.name && !user?.agency);
-
-  // user props
-  const { agency } = user;
-  const { userName, userMail, userId, cpr, barcode, cardno, customId } =
-    user?.userParameters || {};
-
-  const libraryFallback = Translate({
-    context: "general",
-    label: "your-library",
-  });
-
-  // If user profile has an email, email field will be locked and this message shown
-  const lockedMessage = {
-    context: "order",
-    label: "info-email-message",
-    vars: [agency?.result?.[0]?.agencyName || libraryFallback],
-  };
-
-  // Used to assess whether the email field should be locked or not
-  const hasBorchk = pickupBranch?.borrowerCheck;
-
-  // Email according to agency borrowerCheck (authUser.mail is from cicero and can not be changed)
-  let email = hasBorchk ? authUser.mail || userMail : userMail;
-
-  const name = hasBorchk
-    ? authUser.name
-    : userName || customId || userId || cpr || cardno || barcode;
-
-  // info skeleton loading class
-  const loadingClass = isLoadingBranches ? styles.skeleton : "";
-
-  // Get email messages (from validate object)
-  const emailStatus = validated?.details?.hasMail?.status;
-  const errorMessage = validated?.details?.hasMail?.message;
-
-  // Set email input message if any
-  const message = hasTry && errorMessage;
-
-  // Email validation class'
-  const validClass = hasTry && !emailStatus ? styles.invalid : styles.valid;
-  const customInvalidClass = hasTry && !emailStatus ? styles.invalidInput : "";
-
-  // Check for email validation and email error messages
-  const hasEmail = !!validated?.details?.hasMail?.status;
-
-  const actionMessage =
-    hasTry &&
-    (validated?.details?.requireYear?.message ||
-      (!hasEmail && validated?.details?.hasMail?.message));
-
-  const invalidClass = actionMessage ? styles.invalid : "";
-
   return (
-    <div className={`${styles.order} ${loadingClass}`}>
+    <div
+      className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
+    >
       <Top
         title={context?.title}
         className={{
           top: styles.top,
         }}
       />
-
-      <Edition_TempUsingAlfaApi
-        isLoading={isLoading}
-        work={work}
-        singleManifestation={singleManifestation}
-        isArticle={isArticle}
-        isPeriodicaLike={isPeriodicaLike}
-        availableAsDigitalCopy={availableAsDigitalCopy}
-        isArticleRequest={isArticleRequest}
+      <Edition context={context} singleManifestation={singleManifestation} />
+      <LocalizationInformation context={context} />
+      <OrdererInformation
         context={context}
-        material={material}
-        modal={modal}
+        validated={validated}
+        failedSubmission={failedSubmission}
+        onSetMailDirectly={(e, valid) =>
+          setMail({ value: e?.target?.value, valid })
+        }
+        onMailChange={(e, valid) =>
+          onMailChange(e?.target?.value, valid, updateLoanerInfo, setMail)
+        }
       />
-
-      <div className={styles.pickup}>
-        <div className={styles.title}>
-          <Title type="title5">
-            {Translate({
-              context: "order",
-              label:
-                availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
-                  ? "pickup-title-digital-copy"
-                  : "pickup-title",
-            })}
-          </Title>
-        </div>
-        <div className={styles.library}>
-          {(isLoadingBranches || pickupBranch) && (
-            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-              {pickupBranch?.name}
-            </Text>
-          )}
-          <LinkArrow
-            className={styles.link}
-            onClick={() => {
-              !isLoadingBranches &&
-                modal.push("pickup", {
-                  pid,
-                  initial: { agency },
-                  requireDigitalAccess,
-                  mode: isDigitalCopy
-                    ? LOGIN_MODE.SUBSCRIPTION
-                    : LOGIN_MODE.ORDER_PHYSICAL,
-                });
-            }}
-            disabled={isLoadingBranches}
-          >
-            <Text type="text3" className={styles.fullLink}>
-              {Translate({
-                context: "order",
-                label:
-                  availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
-                    ? "change-pickup-digital-copy-link"
-                    : pickupBranch
-                    ? "change-pickup-link"
-                    : "pickup-link",
-              })}
-            </Text>
-            <Text type="text3" className={styles.shortLink}>
-              {Translate({
-                context: "general",
-                label: pickupBranch ? "change" : "select",
-              })}
-            </Text>
-          </LinkArrow>
-        </div>
-
-        {(isLoadingBranches || pickupBranch) && (
-          <div className={styles.address}>
-            <Text type="text3" skeleton={isLoadingBranches} lines={2}>
-              {pickupBranch?.postalAddress}
-            </Text>
-            <Text
-              type="text3"
-              skeleton={isLoadingBranches}
-              lines={0}
-            >{`${pickupBranch?.postalCode} ${pickupBranch?.city}`}</Text>
-          </div>
-        )}
-        {!isLoadingBranches &&
-          pickupBranch &&
-          !availableAsPhysicalCopy &&
-          !availableAsDigitalCopy && (
-            <div className={`${styles["invalid-pickup"]} ${styles.invalid}`}>
-              <Text type="text3">
-                {Translate({
-                  context: "order",
-                  label: "check-policy-fail",
-                })}
-              </Text>
-            </div>
-          )}
-      </div>
-      {(isLoadingBranches || name) && (
-        <div className={styles.user}>
-          <Title type="title5">
-            {Translate({ context: "order", label: "ordered-by" })}
-          </Title>
-          <div className={styles.name}>
-            <Text type="text1" skeleton={isLoadingBranches} lines={1}>
-              {name}
-            </Text>
-          </div>
-          <div className={styles.email}>
-            <label htmlFor="order-user-email">
-              <Text type="text1" className={styles.textinline}>
-                {Translate({ context: "general", label: "email" })}
-              </Text>
-              {(isLoadingBranches ||
-                (authUser?.mail &&
-                  lockedMessage &&
-                  pickupBranch?.borrowerCheck)) && (
-                <TjoolTjip
-                  placement="right"
-                  labelToTranslate="tooltip_change_email"
-                  customClass={styles.tooltip}
-                />
-              )}
-            </label>
-
-            <Email
-              className={styles.input}
-              placeholder={Translate({
-                context: "form",
-                label: "email-placeholder",
-              })}
-              invalidClass={customInvalidClass}
-              required={true}
-              disabled={isLoading || (authUser?.mail && hasBorchk)}
-              value={email || ""}
-              id="order-user-email"
-              // onMount updates email error message (missing email error)
-              onMount={(e, valid) =>
-                setMail({ value: e?.target?.value, valid })
-              }
-              onChange={debounce(
-                (e, valid) => onMailChange(e?.target?.value, valid),
-                200
-              )}
-              readOnly={isLoading || (authUser?.mail && hasBorchk)}
-              skeleton={isLoadingBranches}
-            />
-
-            {message && (
-              <div className={`${styles.emailMessage} ${validClass}`}>
-                <Text type="text3">{Translate(message)}</Text>
-              </div>
-            )}
-            {(isLoadingBranches ||
-              (authUser?.mail &&
-                lockedMessage &&
-                pickupBranch?.borrowerCheck)) && (
-              <div className={`${styles.emailMessage}`}>
-                <Text
-                  type="text3"
-                  skeleton={isLoadingBranches}
-                  lines={1}
-                  tag="span"
-                  className={styles.userStatusLink}
-                >
-                  {Translate(lockedMessage)}
-                  &nbsp;
-                </Text>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-      <div className={styles.action}>
-        <div className={`${styles.message} ${invalidClass}`}>
-          {actionMessage ? (
-            <Text type="text3">
-              {Translate({
-                context: "order",
-                label: `action-${actionMessage.label}`,
-              })}
-            </Text>
-          ) : availableAsDigitalCopy ? (
-            <Link
-              target="_blank"
-              disabled={false}
-              href={"/hjaelp/digital-artikelservice/84"}
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text3">
-                {Translate({
-                  context: "order",
-                  label: "will-order-digital-copy-delivered-by",
-                })}
-              </Text>
-            </Link>
-          ) : (
-            <Text type="text3">
-              {Translate({
-                context: "order",
-                label: "order-message-library",
-              })}
-            </Text>
-          )}
-        </div>
-        <Button
-          disabled={!availableAsDigitalCopy && !availableAsPhysicalCopy}
-          skeleton={isLoading}
-          onClick={() => {
-            if (validated.status) {
-              modal.push("receipt", {
+      <OrderConfirmationButton
+        context={context}
+        validated={validated}
+        failedSubmission={failedSubmission}
+        onClick={() => {
+          if (validated.status) {
+            modal.push("receipt", {
+              pid,
+              order: {
+                data: orderMutation.data,
+                error: orderMutation.error,
+                isLoading: orderMutation.isLoading,
+              },
+              articleOrder: {
+                data: articleOrderMutation?.data,
+                error: articleOrderMutation?.error,
+                isLoading: articleOrderMutation?.isLoading,
+              },
+              pickupBranch,
+            });
+            if (availableAsDigitalCopy) {
+              onArticleSubmit(
                 pid,
-                order: {
-                  data: order.data,
-                  error: order.error,
-                  isLoading: order.isLoading,
-                },
-                articleOrder: {
-                  data: articleOrder?.data,
-                  error: articleOrder?.error,
-                  isLoading: articleOrder?.isLoading,
-                },
-                pickupBranch,
-              });
-              if (availableAsDigitalCopy) {
-                onArticleSubmit(
-                  pid,
-                  pickupBranch.branchId,
-                  context?.periodicaForm
-                );
-              } else {
-                onSubmit &&
-                  onSubmit(orderPids, pickupBranch, context?.periodicaForm);
-              }
+                pickupBranch.branchId,
+                context?.periodicaForm
+              );
             } else {
-              setHasTry(true);
+              onSubmit &&
+                onSubmit(orderPids, pickupBranch, context?.periodicaForm);
             }
-          }}
-        >
-          {Translate({ context: "general", label: "accept" })}
-        </Button>
-      </div>
+          } else {
+            setFailedSubmission(true);
+          }
+        }}
+      />
     </div>
   );
 }
+
+Order.propTypes = {
+  pid: PropTypes.any,
+  orderPids: PropTypes.arrayOf(PropTypes.string),
+  accessTypeInfo: PropTypes.object,
+  updateLoanerInfo: PropTypes.func,
+  pickupBranchInfo: PropTypes.object,
+  context: PropTypes.object,
+  modal: PropTypes.any,
+  singleManifestation: PropTypes.bool,
+  orderMutation: PropTypes.any,
+  articleOrderMutation: PropTypes.any,
+  onArticleSubmit: PropTypes.func,
+  onSubmit: PropTypes.func,
+};
 
 export function OrderSkeleton(props) {
   const { work, user, order } = data;
@@ -498,8 +204,8 @@ export function OrderSkeleton(props) {
       pid="some-pid"
       work={work}
       user={user}
-      order={order}
-      articleOrder={order}
+      orderMutation={order}
+      articleOrderMutation={order}
       context={{ label: "title-order" }}
       modal={{}}
       className={`${props.className} ${styles.skeleton}`}
@@ -520,6 +226,7 @@ export function OrderSkeleton(props) {
 export default function Wrap(props) {
   // context
   const { context, modal } = props;
+  context.pids = context?.pids ? context?.pids : [context?.pid];
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
   const orderMutation = useMutate();
@@ -535,42 +242,47 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  const { data, isLoading, isSlow, error } = useData(
-    workFragments.detailsAllManifestations({ workId: context.workId })
-  );
-  const covers = useData(workFragments.covers({ workId: context.workId }));
-  const mergedWork = merge({}, covers.data, data);
+  const { userInfo, pickupBranchInfo, accessTypeInfo, workResponse } =
+    useOrderPageInformation(
+      context?.workId,
+      context?.pid,
+      context?.periodicaForm
+    );
+
+  const { loanerInfo, updateLoanerInfo } = userInfo;
 
   const {
-    authUser,
-    loanerInfo,
-    updateLoanerInfo,
-    initialPickupBranch,
-    pickupBranchIsLoading,
-    pickupBranchUser,
-    isAuthenticatedForPickupBranch,
-  } = usePickupBranch(context.pid);
+    data: workData,
+    isLoading: isWorkLoading,
+    isSlow,
+    error,
+  } = workResponse;
 
-  if (isLoading || covers.isLoading) {
+  const singleManifestation =
+    context.orderType && context.orderType === "singleManifestation";
+
+  const orderPids = getOrderPids(pid, workData?.work, singleManifestation);
+
+  if (isWorkLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
   }
 
-  if (error || !mergedWork?.work) {
+  if (error || !workData?.work) {
     return <div>Error :( !!!!!</div>;
   }
 
   return (
     <Order
-      work={mergedWork?.work}
-      authUser={authUser}
-      isAuthenticated={isAuthenticatedForPickupBranch}
-      user={pickupBranchUser}
-      initial={initialPickupBranch}
-      isLoading={isLoading || pickupBranchIsLoading}
-      pid={context.pid}
-      order={orderMutation}
-      articleOrder={articleOrderMutation}
+      pid={pid}
+      orderPids={orderPids}
+      accessTypeInfo={accessTypeInfo}
       updateLoanerInfo={updateLoanerInfo}
+      pickupBranchInfo={pickupBranchInfo}
+      context={context}
+      modal={modal}
+      singleManifestation={singleManifestation}
+      orderMutation={orderMutation}
+      articleOrderMutation={articleOrderMutation}
       onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) =>
         handleSubmitPeriodicaArticleOrder(
           pid,
@@ -582,18 +294,13 @@ export default function Wrap(props) {
       }
       onSubmit={(pids, pickupBranch, periodicaForm = {}) =>
         handleSubmitOrder(
-          pid,
+          pids,
           pickupBranch,
           periodicaForm,
           loanerInfo,
           orderMutation
         )
       }
-      singleManifestation={
-        context.orderType && context.orderType === "singleManifestation"
-      }
-      context={context}
-      modal={modal}
     />
   );
 }

@@ -198,7 +198,7 @@ export function handleSubmitPeriodicaArticleOrder(
 }
 
 export function handleSubmitOrder(
-  pid,
+  pids,
   pickupBranch,
   periodicaForm,
   loanerInfo,

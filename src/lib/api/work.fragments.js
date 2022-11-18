@@ -5,32 +5,6 @@
 
 import { ApiEnums } from "@/lib/api/api";
 
-/**
- * Covers for the different material types
- *
- * @param {Object} variables
- * @param {string} variables.workId
- *
- * @return {Object} a query object
- */
-export function covers({ workId }) {
-  return {
-    // delay: 250,
-    query: `query ($workId: String!) {
-      work(id: $workId) {
-        materialTypes {
-          cover {
-            detail
-          }
-        }
-      }
-      monitor(name: "bibdknext_work_covers")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
 export function tableOfContents({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -58,183 +32,6 @@ export function tableOfContents({ workId }) {
 }
 
 /**
- * Details for work manifestations
- *
- * @param {Object} variables
- * @param {string} variables.workId
- *
- * @return {Object} a query object
- */
-export function details({ workId }) {
-  return {
-    // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-          work(id: $workId) {
-            title
-            fullTitle
-            creators {
-              name
-            }
-            seo {
-              title
-              description
-            }
-            subjects {
-              type
-              value
-            }          
-            materialTypes {
-              materialType
-              manifestations {
-                admin{
-                  requestButton
-                }
-                content
-                creators {
-                  type
-                  functionSingular
-                  name
-                }
-                datePublished
-                edition
-                isbn
-                materialType
-                language
-                onlineAccess {
-                  ... on UrlReference {
-                    url
-                    origin
-                    note
-                    accessType
-                  }
-                  ... on InfomediaReference {
-                    infomediaId
-                    pid
-                  }
-                  ... on WebArchive {
-                    type
-                    url
-                    pid
-                  }
-                  ... on DigitalCopy{
-                    issn
-                  }
-                }
-                physicalDescription
-                publisher              
-              }
-            }
-            workTypes
-          }
-        monitor(name: "bibdknext_work_details")
-      }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Details for all manifestations in a work
- *
- * @param {Object} variables
- * @param {string} variables.workId
- *
- * @return {Object} a query object
- */
-export function detailsAllManifestations({ workId }) {
-  return {
-    // delay: 1000, // for debugging
-    query: `query ($workId: String!) {
-        work(id: $workId) {
-          id
-          title
-          fullTitle
-          description
-          creators {
-            type
-            name
-          }
-          cover {
-            detail
-          }
-          path
-          seo {
-            title
-            description
-          }
-          workTypes
-          manifestations {
-            pid
-            admin{
-              requestButton
-            }
-            inLanguage
-            usedLanguage
-            content
-            creators {
-              type
-              functionSingular
-              name
-            }
-            cover {
-              detail
-            }
-            datePublished
-            datePublishedArticle: datePublished(format: "YYYY-MM-DD")
-            dk5 {
-              value
-            }
-            edition
-            hostPublication {
-              title
-              details
-            }
-            physicalDescriptionArticles
-            isbn
-            materialType
-            notes
-            language
-            onlineAccess {
-              ... on UrlReference {
-                url
-                origin
-                note
-                accessType
-              }
-              ... on InfomediaReference {
-                infomediaId
-                pid
-              }
-              ... on WebArchive {
-                type
-                url
-                pid
-              }
-              ... on DigitalCopy{
-                issn
-              }
-            }
-            originals
-            originalTitle
-            pid
-            physicalDescription
-            publisher
-            shelf{
-              prefix
-              shelfmark
-            }
-            title
-            volume
-          }
-        }
-        monitor(name: "bibdknext_work_detailsallmanifestations")
-      }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
  * Recommendations for a work
  *
  * @param {Object} variables
@@ -251,7 +48,7 @@ export function recommendations({ workId }) {
       result {
         reader
         work {
-          ...workSliderFragment  
+          ...workSliderFragment
         }
       }
     }
@@ -331,25 +128,6 @@ export function reviews({ workId }) {
     slowThreshold: 3000,
   };
 }
-
-// Use this fragments in queries that provide data
-// to the WorkSlider
-const workSliderFragment = `fragment workSliderFragment on Work {
-  workId
-  titles {
-    main
-  }
-  creators {
-    display
-  }
-  manifestations {
-    all {
-      cover {
-        detail
-      }
-    }
-  }
-}`;
 
 /**
  * Series for a work
@@ -522,107 +300,8 @@ export function buttonTxt({ workId }) {
         }
         manifestations {
           all {
-            pid   
-            accessTypes {
-              code
-            }
-            access {
-              __typename  
-              ... on AccessUrl {
-                url
-                origin
-                loginRequired
-              }
-              ... on Ereol {
-                url
-              }
-              ... on InterLibraryLoan {
-                loanIsPossible
-              }
-              ... on InfomediaService {
-                id
-              }
-              ... on DigitalArticleService {
-                issn
-              }
-            }
-            materialTypes {
-              specific
-            }
-          }
-        }
-        workTypes
-      }
-      monitor(name: "bibdknext_work_basic")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Description work info that is fast to fetch
- *
- * @param {object} params
- * @param {string} params.workId the work id
- */
-export function buttonTxt_TempForAlfaApi({ workId }) {
-  return {
-    // delay: 250,
-    query: `
-    query buttonTxt($workId: String!) {
-      work(id: $workId) {
-        materialTypes {
-          manifestations {
             pid
-            onlineAccess {
-              ... on UrlReference {
-                url
-                origin
-              }
-              ... on InfomediaReference {
-                infomediaId
-                pid
-              }
-              ... on WebArchive {
-                url
-              }
-              ... on DigitalCopy {
-                issn
-              }
-            }
-            materialType
-            admin {
-              requestButton
-            }
           }
-          materialType
-        }
-        manifestations {
-          pid
-          onlineAccess {
-            ... on UrlReference {
-              url
-              origin
-            }
-            ... on InfomediaReference {
-              infomediaId
-              pid
-            }
-            ... on WebArchive {
-              url
-            }
-            ... on DigitalCopy {
-              issn
-            }
-          }
-          materialType
-          admin {
-            requestButton
-          }
-        }
-        materialTypes {
-          materialType
         }
         workTypes
       }
@@ -660,6 +339,7 @@ export function fbiOverviewDetail({ workId }) {
                   loanIsPossible
                 }
                 ... on AccessUrl {
+                  origin
                   url
                   loginRequired
                 }
@@ -867,3 +547,102 @@ export function listOfAllManifestations({ workId }) {
     slowThreshold: 3000,
   };
 }
+
+export function orderPageManifestations({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query orderPageManifestations($workId: String!) {
+      work(id: $workId) {
+        materialTypes {
+          specific
+        }
+        workTypes
+        manifestations {
+          all {
+            pid
+            materialTypes {
+              specific
+            }
+            accessTypes {
+              code
+              display
+            }
+            access {
+              ... on InterLibraryLoan{
+                loanIsPossible
+              }
+              ... on DigitalArticleService {
+                issn
+              }
+              ... on AccessUrl {
+                url
+              }
+              ... on Ereol {
+                url
+              }
+              ... on InfomediaService {
+                id
+              }
+            }
+          }
+        }
+      }
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function overviewWork({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query overviewWork($workId: String!) {
+      work(id: $workId) {
+        titles {
+          full
+        }
+        creators {
+          display
+        }
+        materialTypes {
+          specific
+        }
+        manifestations {
+          all {
+            pid
+            materialTypes {
+              specific
+            }
+            cover {
+              detail
+            }
+          }
+        }
+      }
+      monitor(name: "bibdknext_overview_work")
+    }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+// Use this fragments in queries that provide data
+// to the WorkSlider
+const workSliderFragment = `fragment workSliderFragment on Work {
+  workId
+  titles {
+    main
+  }
+  creators {
+    display
+  }
+  manifestations {
+    all {
+      cover {
+        detail
+      }
+    }
+  }
+}`;

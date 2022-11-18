@@ -1,13 +1,9 @@
-import { useState } from "react";
-
 import { StoryTitle, StoryDescription } from "@/storybook";
 
-import Button from "@/components/base/button";
-import { Order, OrderSkeleton } from "./Order.page.js";
-import data from "./dummy.data";
-import dummyData from "./dummy.data";
-import Modal, { useModal } from "@/components/_modal";
+import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
+import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "modal/Order",
@@ -15,356 +11,386 @@ const exportedObject = {
 
 export default exportedObject;
 
-/**
- * Returns Modal
- *
- */
-export function ToggleOrder() {
-  // eslint-disable-next-line no-unused-vars
-  const [_query, setQuery] = useState({ modal: null });
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order template</StoryTitle>
-      <StoryDescription>Toggle order component</StoryDescription>
-
-      <Button
-        type="secondary"
-        size="small"
-        onClick={() => setQuery({ modal: "order" })}
-      >
-        {"Toggle order"}
-      </Button>
-
-      {/*
-
-      <Modal
-        onClose={() => setQuery({ modal: null })}
-        onLang={null}
-        template={query.modal}
-      >
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={order}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function Default() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-  const pickupBranch = user.agency.result[0];
-
-  const modifiedUser = { ...user, mail: "some@mail.dk" };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Default</StoryTitle>
-      <StoryDescription>
-        User has an email attached to the account
-      </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: pickupBranch,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        user={modifiedUser}
-        authUser={modifiedUser}
-        order={order}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
-      />
-    </div>
-  );
-}
-
-/**
- * Order template
- *
- */
-export function Loading() {
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Loading</StoryTitle>
-      <StoryDescription>
-        Skeleton version of the order template
-      </StoryDescription>
-      <OrderSkeleton />
-    </div>
-  );
-}
-
-/**
- * Order template
- *
- */
-export function NoEmail() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-
-  const pickupBranch = user.agency.result[0];
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Missing account email</StoryTitle>
-      <StoryDescription>
-        When user has no email attached to the account, they can enter one in
-        the email field.
-      </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: pickupBranch,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        user={user}
-        authUser={user}
-        order={order}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
-      />
-    </div>
-  );
-}
-
-export function ManyPickupPoints() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { user, order } = data;
-
-  // City main library
-  const main = user.agency.result[0];
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order Template</StoryTitle>
-      <StoryDescription>
-        If user has a long list of pickup points
-      </StoryDescription>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: main,
-        }}
-        pid="some-pid"
-        work={dummyData.work}
-        order={order}
-        user={user}
-        authUser={user}
-        query={query}
-        onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch, email) => {
-          alert(
-            `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-          );
-        }}
-      />
-    </div>
-  );
-}
-
-export function Ordering() {
-  // const [query, setQuery] = useState({ modal: "order" });
-  //
-  // const { work, user, order } = data;
-  //
-  // const modifiedOrder = { ...order, isLoading: true };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Ordering</StoryTitle>
-      <StoryDescription>
-        {
-          'Order in progress status (When user has clicked the "approve" button)'
-        }
-      </StoryDescription>
-
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={modifiedOrder}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function Ordered() {
-  // const [query, setQuery] = useState({ modal: "order" });
-  //
-  // const { work, user, order } = data;
-  //
-  // const modifiedOrder = {
-  //   ...order,
-  //   data: { submitOrder: { status: "ok", orsId: "some-ors-id" } },
-  // };
-
-  return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Ordered</StoryTitle>
-      <StoryDescription>
-        When the order has successfully completed
-      </StoryDescription>
-
-      {/*
-
-      <Modal onClose={null} onLang={null} template={"order"}>
-        <Order
-          work={work}
-          user={user}
-          pid={"some-pid"}
-          order={modifiedOrder}
-          query={query}
-          onLayerChange={(layer) => setQuery({ modal: `order-${layer}` })}
-          onLayerClose={() => setQuery({ modal: "order" })}
-          onSubmit={(pids, pickupBranch, email) => {
-            alert(
-              `Ordering "${pids}" to branch id "${pickupBranch.branchId}" for user with email "${email}"`
-            );
-          }}
-        />
-      </Modal>
-
-      */}
-    </div>
-  );
-}
-
-export function OrderPolicyFail() {
-  const [query, setQuery] = useState({ modal: "order" });
-
-  const { work, user, order } = data;
-
-  const modifiedUser = {
-    ...user,
-    agency: {
-      result: [
-        {
-          agencyId: "715900",
-          name: "Bibliografen Bagsværd",
-          city: "Bagsværd",
-          postalAddress: "Bagsværd Hovedgade 116",
-          postalCode: "2880",
-          branchId: "715902",
-          openingHours:
-            "man.-fre.:10-18, lør.:10-14. \r\nSelvbetjening: man.-fre.:18-21, lør.:14-21, søn- og helligdage 12-21. Lukket 24.12.",
-          orderPolicy: {
-            orderPossible: false,
-            orderPossibleReason: "OWNED_OWN_CATALOGUE",
-            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
-          },
-          pickupAllowed: true,
-        },
-        {
-          agencyId: "715900",
-          name: "Gladsaxe Bibliotekerne, Hovedbiblioteket",
-          city: "Søborg",
-          postalAddress: "Søborg Hovedgade 220",
-          postalCode: "2860",
-          branchId: "715900",
-          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-          orderPolicy: {
-            orderPossible: true,
-            orderPossibleReason: "OWNED_ACCEPTED",
-            lookUpUrl: "https://gladbib.dk/search/ting/45531031",
-          },
-          pickupAllowed: true,
-        },
-        {
-          agencyId: "715900",
-          name: "Dummy",
-          city: "Søborg",
-          postalAddress: "Søborg Hovedgade 220",
-          postalCode: "2860",
-          branchId: "715907",
-          openingHours: "man-fre:10-19, lør.:10-14, søn.:(okt.-mar.)13-17",
-          orderPolicy: null,
-          pickupAllowed: false,
-        },
-      ],
+// A manifestation that may be ordered via ILL
+const MANIFESTATION_1 = {
+  titles: {
+    full: ["Hugo i Sølvskoven"],
+  },
+  pid: "some-pid-1",
+  materialTypes: [
+    {
+      specific: "Bog",
     },
-  };
+  ],
+  accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
+  access: [
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+};
+// Another manifestation that may be ordered via ILL
+const MANIFESTATION_2 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-2",
+};
+// A manifestation that may not be ordered via ILL
+const MANIFESTATION_3 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-3",
+  access: [
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: false,
+    },
+  ],
+};
+// Indexed article, that may be ordered via digital article copy
+const MANIFESTATION_4 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-4",
+  materialTypes: [
+    {
+      specific: "tidsskriftsartikel",
+    },
+  ],
+  access: [
+    {
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["ARTICLE"],
+};
+// A periodica
+const MANIFESTATION_5 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-5",
+  materialTypes: [
+    {
+      specific: "tidsskrift",
+    },
+  ],
+  access: [
+    {
+      __typename: "DigitalArticleService",
+      issn: "some-issn",
+    },
+    {
+      __typename: "InterLibraryLoan",
+      loanIsPossible: true,
+    },
+  ],
+  workTypes: ["PERIODICA"],
+};
+const ALL_MANIFESTATIONS = [
+  MANIFESTATION_1,
+  MANIFESTATION_2,
+  MANIFESTATION_3,
+  MANIFESTATION_4,
+  MANIFESTATION_5,
+];
 
-  // City main library
-  const main = modifiedUser.agency.result[0];
+const ALL_WORKS = [
+  // A work that has physical manifestations, two of them can be loaned via ILL
+  {
+    workId: "some-work-id-1",
+    manifestations: {
+      all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+    },
+  },
+  // A work that is an indexed periodica article
+  {
+    workId: "some-work-id-2",
+    manifestations: { all: [MANIFESTATION_4] },
+    workTypes: ["ARTICLE"],
+  },
+  // A work that is a periodica
+  {
+    workId: "some-work-id-3",
+    manifestations: { all: [MANIFESTATION_5] },
+    workTypes: ["PERIODICA"],
+  },
+];
 
-  const modal = useModal();
+const BRANCH_1 = {
+  name: "Test Bib - only physical via ILL",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+};
+const BRANCH_2 = {
+  name: "Test Bib - no orders here",
+  orderPolicy: {
+    orderPossible: false,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+};
+const BRANCH_3 = {
+  name: "Test Bib - ILL and digital copy service",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: true,
+};
+
+// A user with some agencies
+const USER_1 = {
+  agency: {
+    result: [BRANCH_1, BRANCH_2],
+  },
+};
+
+const USER_2 = {
+  agency: {
+    result: [BRANCH_2],
+  },
+};
+
+const USER_3 = {
+  agency: {
+    result: [BRANCH_3],
+  },
+};
+
+const DEFAULT_STORY_PARAMETERS = {
+  parameters: {
+    graphql: {
+      debug: true,
+      resolvers: {
+        Access: {
+          __resolveType: ({ parent }) => {
+            return parent?.__typename;
+          },
+        },
+        Query: {
+          user: () => {
+            return USER_1;
+          },
+          manifestations: (args) => {
+            return args?.variables?.pid?.map((pid) =>
+              ALL_MANIFESTATIONS.find((m) => m.pid === pid)
+            );
+          },
+          work: ({ variables }) => {
+            return ALL_WORKS.find((w) => w.workId === variables?.workId);
+          },
+          branches: () => {
+            return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
+          },
+        },
+        Mutation: {
+          submitOrder: (args) => {
+            // Used for cypress testing
+            console.log("submitOrder", args?.variables?.input);
+            return { orderId: "some-order-id" };
+          },
+          submitPeriodicaArticleOrder: (args) => {
+            // Used for cypress testing
+            console.log("submitPeriodicaArticleOrder", args?.variables?.input);
+            return { status: "OK" };
+          },
+        },
+      },
+      url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: `/i-dont-care`,
+      query: {},
+    },
+  },
+};
+
+function OrderPageComponentBuilder({
+  title,
+  description,
+  workId,
+  selectedPids,
+}) {
   return (
-    <div style={{ height: "100vh" }}>
-      <StoryTitle>Order Template</StoryTitle>
-      <StoryDescription>Order policy fail</StoryDescription>
-
+    <div>
+      <StoryTitle>{title}</StoryTitle>
+      <StoryDescription>
+        {description}
+        <br />
+        <br />
+        <div>workId: {workId}</div>
+        <div>selectedPids: {selectedPids.join(", ")}</div>
+      </StoryDescription>
+      <ReservationButton workId={workId} selectedPids={selectedPids} />
       <Modal.Container>
+        <Modal.Page id="order" component={Pages.Order} />
+        <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
         <Modal.Page id="pickup" component={Pages.Pickup} />
+        <Modal.Page id="loanerform" component={Pages.Loanerform} />
+        <Modal.Page id="receipt" component={Pages.Receipt} />
+        <Modal.Page id="login" component={Pages.Login} />
       </Modal.Container>
-
-      <Order
-        context={{ label: "title-order" }}
-        initial={{
-          pickupBranch: main,
-        }}
-        work={work}
-        user={modifiedUser}
-        authUser={modifiedUser}
-        pid={"some-pid"}
-        articleOrder={order}
-        order={order}
-        query={query}
-        onLayerChange={(query) => setQuery(query)}
-        onLayerClose={() => setQuery({ modal: "order" })}
-        onSubmit={(pids, pickupBranch) => {
-          alert(`Ordering "${pids}" to branch id "${pickupBranch.branchId}".`);
-        }}
-        modal={modal}
-      />
     </div>
   );
 }
+
+// -------------------- Stories come here -----------------------
+export function OrderViaILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order via ILL"
+      description="some-pid-3 should not be ordered, since loanIsPossible is false"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
+
+export function PickupNotAllowed() {
+  return (
+    <OrderPageComponentBuilder
+      title="Pickup not allowed"
+      description="When checkorder fails for material on a branch, error is displayed"
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1", "some-pid-2", "some-pid-3"]}
+    />
+  );
+}
+PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: { graphql: { resolvers: { Query: { user: () => USER_2 } } } },
+});
+
+export function OrderIndexedPeriodicaArticle() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Indexed Periodica Article"
+      description={`An article from a periodica has been indexed (we have a work for that article).
+        And it can be ordered via digital article service.`}
+      workId={"some-work-id-2"}
+      selectedPids={["some-pid-4"]}
+    />
+  );
+}
+OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_3 },
+      },
+    },
+  },
+});
+
+export function OrderIndexedPeriodicaArticleILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Indexed Periodica Article - ILL"
+      description={`An article from a periodica has been indexed (we have a work for that article).
+        And it can be ordered via ILL, not digital article service.`}
+      workId={"some-work-id-2"}
+      selectedPids={["some-pid-4"]}
+    />
+  );
+}
+OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_1 },
+      },
+    },
+  },
+});
+
+export function OrderPeriodicaVolume() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Periodica Volume"
+      description={`Order periodica volume through ILL, 
+        or a specific periodica article through preferrably article service and then ILL.`}
+      workId={"some-work-id-3"}
+      selectedPids={["some-pid-5"]}
+    />
+  );
+}
+OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_3 },
+      },
+    },
+  },
+});
+
+export function OrderPeriodicaVolumeOnlyILL() {
+  return (
+    <OrderPageComponentBuilder
+      title="Order Periodica Volume"
+      description={`Order periodica volume through ILL, 
+        or a specific periodica article through ILL. Selected branch does not subscribe 
+        to digital article service.`}
+      workId={"some-work-id-3"}
+      selectedPids={["some-pid-5"]}
+    />
+  );
+}
+OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: { user: () => USER_1 },
+      },
+    },
+  },
+});
+
+// TODO: Overvej om tidligere stories er interessante
+//  Måske vi hellere vil have nogle forskellige cases,
+//  til når man trykker på OrderConfirmationButton-knappen...?
+// export function ToggleOrder() {}
+// export function Default() {}
+// export function Loading() {}
+// export function NoEmail() {}
+// export function ManyPickupPoints() {}
+// export function Ordering() {}
+// export function Ordered() {}
+// export function OrderPolicyFail() {}
+
+// TODO: Implementer knap-cases:
+// onArticleSubmit,
+// onSubmit,
+// fejlende udgaver,
+// etc.
+
+// TODO: Implementer visning af Order.page.
+//  Dette bør gøres i del-komponenterne, men noter her:
+// TODO: Edition
+//  Done...?
+// TODO: LocalizationsInformation.js cases:
+// availableAsDigitalCopy || (!isAuthenticated && isDigitalCopy)
+// (isLoadingBranches || pickupBranch)
+// !isLoadingBranches && pickupBranch && !availableAsPhysicalCopy && !availableAsDigitalCopy
+// TODO: OrdererInformation.js cases:
+// (isLoadingBranches || name)
+// (isLoadingBranches || (mail && lockedMessage && pickupBranch?.borrowerCheck))
+// message
+// (isLoadingBranches || (mail && lockedMessage && pickupBranch?.borrowerCheck)
+// TODO: OrderConfirmation.js cases:
+// actionMessage
+// availableAsDigitalCopy
+// !availableAsDigitalCopy && !availableAsPhysicalCopy
+// isWorkLoading || isPickupBranchLoading
