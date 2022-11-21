@@ -84,6 +84,7 @@ export function Related({ data, hitcount, isLoading }) {
               {Translate({ context: "search", label: "title" })}
             </Text>
             <Title
+              data-cy={"related-hitcount"}
               type="title5"
               tag="h3"
               className={styles.hitcount}
