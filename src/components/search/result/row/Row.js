@@ -16,21 +16,26 @@ import styles from "./Row.module.css";
 /**
  * Row representation of a search result entry
  *
- * @param {object} props
- * @param {object} props.data
+ * @param {object} work
+ * @param {string} className
+ * @param {function} onClick
+ * @param {boolean} isLoading
  */
-export default function ResultRow({ data, className = "", onClick }) {
-  const work = data;
-
+export default function ResultRow({
+  work,
+  className = "",
+  onClick,
+  isLoading,
+}) {
   const creatorName = work?.creators?.[0]?.display;
 
   const coverDetail = useMemo(() => {
-    if (data?.manifestations?.all) {
-      return data.manifestations.all
-        .map((all) => all.cover.detail)
+    if (work?.manifestations?.all) {
+      return work.manifestations.all
+        .map((all) => all?.cover?.detail)
         .find((detail) => detail);
     }
-  }, [data.manifestations]);
+  }, [work?.manifestations]);
 
   return (
     <Link
@@ -68,14 +73,15 @@ export default function ResultRow({ data, className = "", onClick }) {
             lines={3}
             clamp={true}
             title={work?.titles?.full}
-            skeleton={!work?.titles?.main}
+            data-cy={"ResultRow-title"}
+            skeleton={!work?.titles?.main && !work?.titles?.full && isLoading}
           >
-            {work?.titles?.full || work?.titles?.main}
+            {work?.titles?.full || work?.titles?.main || " "}
           </Title>
           <Text
             type="text3"
             className={styles.creator}
-            skeleton={!work?.creators}
+            skeleton={(!work?.creators && isLoading) || !work?.creators}
             lines={1}
           >
             {creatorName || " "}
@@ -85,9 +91,13 @@ export default function ResultRow({ data, className = "", onClick }) {
               type="text3"
               lines={2}
               clamp={true}
-              skeleton={!work?.materialTypes}
+              skeleton={
+                (!work?.materialTypes && isLoading) || !work?.materialTypes
+              }
+              dataCy={"result-row-laanemuligheder-wrap"}
             >
-              {Translate({ context: "search", label: "loanOptions" })}
+              {work?.materialTypes?.length > 0 &&
+                Translate({ context: "search", label: "loanOptions" })}
             </Text>
             {work?.materialTypes?.length > 0 &&
               work?.materialTypes?.map((material) => {
@@ -124,7 +134,7 @@ export default function ResultRow({ data, className = "", onClick }) {
           <Cover
             className={styles.cover}
             src={coverDetail}
-            skeleton={!coverDetail}
+            skeleton={!coverDetail && !work?.manifestations}
             size="fill-width"
           />
         </Col>
@@ -133,6 +143,8 @@ export default function ResultRow({ data, className = "", onClick }) {
   );
 }
 ResultRow.propTypes = {
-  data: PropTypes.object,
+  work: PropTypes.object,
+  className: PropTypes.string,
   onClick: PropTypes.func,
+  isLoading: PropTypes.bool,
 };

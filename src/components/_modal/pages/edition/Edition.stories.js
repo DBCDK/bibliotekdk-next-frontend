@@ -82,6 +82,7 @@ export function EditionSingleManifestation() {
     context: {
       workId: "some-work-id",
       pids: ["some-pid-1"],
+      orderPids: ["some-pid-1"],
       periodicaForm: false,
     },
     singleManifestation: true,
@@ -104,6 +105,7 @@ export function EditionSingleManifestationNoOrderTxt() {
     context: {
       workId: "some-work-id",
       pids: ["some-pid-1"],
+      orderPids: ["some-pid-1"],
       periodicaForm: false,
     },
     singleManifestation: true,
@@ -127,6 +129,7 @@ export function EditionAnyManifestation() {
     context: {
       workId: "some-work-id",
       pids: ["some-pid-1"],
+      orderPids: ["some-pid-1"],
       periodicaForm: false,
     },
     singleManifestation: false,
@@ -148,6 +151,7 @@ export function EditionAnyManifestationNoOrderTxt() {
     context: {
       workId: "some-work-id",
       pids: ["some-pid-1"],
+      orderPids: ["some-pid-1"],
       periodicaForm: false,
     },
     singleManifestation: false,

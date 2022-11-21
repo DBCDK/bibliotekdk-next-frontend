@@ -11,6 +11,7 @@ export default exportedObject;
 export function referenceLinks() {
   const context = {
     pids: ["some-pid-1"],
+    orderPids: ["some-pid-1"],
     workId: "some-work-id",
     periodicaForm: false,
   };

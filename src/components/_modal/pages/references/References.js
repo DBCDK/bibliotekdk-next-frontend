@@ -65,5 +65,5 @@ export function References({ context }) {
 }
 
 export default function Wrap({ context }) {
-  return <References context={context} />;
+  return <References context={{ ...context, orderPids: context.pids }} />;
 }
