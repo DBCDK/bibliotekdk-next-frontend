@@ -39,7 +39,7 @@ describe("Reservation button", () => {
         .should("contain", "Gå til")
         .click();
 
-      cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo");
+      cy.get("@Open").should("have.been.calledOnceWith", "ereol.combo/langurl");
     });
 
     it(`user logged in material unavailable`, () => {
@@ -103,7 +103,10 @@ describe("Reservation button", () => {
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--book-button-txt"
       );
 
-      cy.get("[data-cy=reservation-button-txt]").contains("Fysiske materialer");
+      cy.get("[data-cy=reservation-button-txt]").should(
+        "contain",
+        "Fysiske materialer"
+      );
     });
 
     it("should have ebook button text", () => {
@@ -119,7 +122,10 @@ describe("Reservation button", () => {
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-physical-button-txt"
       );
 
-      cy.get("[data-cy=reservation-button-txt]").contains("Fysiske materialer");
+      cy.get("[data-cy=reservation-button-txt]").should(
+        "contain",
+        "Fysiske materialer"
+      );
     });
 
     it("should have eaudiobook digital button text", () => {
@@ -127,7 +133,7 @@ describe("Reservation button", () => {
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--e-audio-book-digital-button-txt"
       );
 
-      cy.get("[data-cy=reservation-button-txt]").contains("nota");
+      cy.get("[data-cy=reservation-button-txt]").should("contain", "nota");
     });
 
     it("should have Periodica button text", () => {
@@ -135,7 +141,8 @@ describe("Reservation button", () => {
         "/iframe.html?id=work-reservationbutton-orderbuttontextbelow--periodica-button-txt"
       );
 
-      cy.get("[data-cy=reservation-button-txt]").contains(
+      cy.get("[data-cy=reservation-button-txt]").should(
+        "contain",
         "Du kan bestille en artikel eller et bestemt eksemplar"
       );
     });

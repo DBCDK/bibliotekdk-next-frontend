@@ -1,5 +1,3 @@
-import * as workFragments from "@/lib/api/work.fragments";
-import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import useUser from "@/components/hooks/useUser";
 import Button from "@/components/base/button/Button";
 import Translate, { hasTranslation } from "@/components/base/translate";
@@ -18,8 +16,7 @@ import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import { useMemo } from "react";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
 import { AccessEnum } from "@/lib/enums";
-import { useData } from "@/lib/api/api";
-import { at } from "lodash";
+import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -298,38 +295,18 @@ function ReservationButton({
   const user = useUser();
   const modal = useModal();
 
-  const { data: workData, isLoading: workIsLoading } = useData(
-    workId && workFragments.buttonTxt({ workId })
-  );
-
-  const allPids = useMemo(() => {
-    return workData?.work?.manifestations?.all?.flatMap(
-      (manifestation) => manifestation.pid
-    );
-  }, [workId, workData?.work?.manifestations?.all]);
-
-  const { data: manifestationsData, isLoading: manifestationsIsLoading } =
-    useData(
-      allPids &&
-        manifestationFragments.reservationButtonManifestations({ pid: allPids })
-    );
-
-  const selectedManifestationsPids = selectedPids?.map((pid) => {
-    return allPids?.findIndex((pidFromAll) => pidFromAll === pid);
-  });
-
-  const manifestations = useMemo(() => {
-    return (
-      selectedPids &&
-      at(manifestationsData?.manifestations, selectedManifestationsPids)
-    );
-  }, [
-    selectedPids,
-    manifestationsData?.manifestations,
+  const {
+    workResponse,
+    manifestations,
+    manifestationsResponse,
     selectedManifestationsPids,
-  ]);
+  } = useGetManifestationsForOrderButton(workId, selectedPids);
 
-  if (workIsLoading || manifestationsIsLoading || !selectedManifestationsPids) {
+  if (
+    workResponse?.isLoading ||
+    manifestationsResponse?.isLoading ||
+    !selectedManifestationsPids
+  ) {
     return (
       <Button
         className={styles.externalLink}
@@ -347,7 +324,7 @@ function ReservationButton({
     <OrderButton
       user={user}
       modal={modal}
-      work={workData?.work}
+      work={workResponse.data?.work}
       manifestations={manifestations}
       onOnlineAccess={onOnlineAccess}
       openOrderModal={(manifestation) =>

@@ -153,9 +153,9 @@ export const Edition = memo(function Edition({
       </div>
       <div className={styles.right}>
         <Cover
-          src={material?.cover?.thumbnail}
+          src={material?.cover?.detail}
           size="thumbnail"
-          skeleton={!material?.cover?.thumbnail && isLoading}
+          skeleton={!material?.cover?.detail && isLoading}
         />
       </div>
     </div>
