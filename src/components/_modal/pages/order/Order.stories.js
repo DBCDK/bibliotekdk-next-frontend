@@ -191,10 +191,12 @@ const DEFAULT_STORY_PARAMETERS = {
         Mutation: {
           submitOrder: () => {
             // Used for cypress testing
+            console.log("submitOrder", args?.variables?.input);
             return { orderId: "some-order-id" };
           },
           submitPeriodicaArticleOrder: () => {
             // Used for cypress testing
+            console.log("submitPeriodicaArticleOrder", args?.variables?.input);
             return { status: "OK" };
           },
         },
