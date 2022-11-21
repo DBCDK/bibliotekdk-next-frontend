@@ -230,6 +230,60 @@ describe("Search", () => {
     });
   });
 
+  describe("ResultRow", () => {
+    it("Should have all data", () => {
+      cy.visit("/iframe.html?id=search-result-resultrow--with-all-data");
+
+      cy.get("[data-cy=result-row]").should("exist");
+
+      cy.get("[data-cy=ResultRow-title]")
+        .should("exist")
+        .should("contain", "Harry Potter");
+
+      cy.get("[data-cy=text-joanne-k-rowling]")
+        .should("exist")
+        .should("contain", "Rowling");
+
+      cy.get("[data-cy=result-row-laanemuligheder-wrap]").should("exist");
+      cy.get("[data-cy=link]").should("exist").first().should("contain", "Bog");
+      cy.get("[data-cy=cover-present]").should("exist");
+    });
+
+    it("should not have cover", () => {
+      cy.visit("/iframe.html?id=search-result-resultrow--without-cover");
+
+      cy.get("[data-cy=missing-cover]").should("exist");
+    });
+
+    it("should not have creator", () => {
+      cy.visit("/iframe.html?id=search-result-resultrow--without-creator");
+
+      cy.get("[data-cy=text-joanne-k-rowling]").should("not.exist");
+    });
+
+    it("should not have titles", () => {
+      cy.visit("/iframe.html?id=search-result-resultrow--without-titles");
+
+      cy.get("[data-cy=ResultRow-title]").should("exist").should("contain", "");
+    });
+
+    it("should not have materialTypes", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--without-material-types"
+      );
+      cy.get("[data-cy=result-row-laanemuligheder-wrap]")
+        .should("exist")
+        .should("not.contain", "Lånemuligheder");
+      cy.get("[data-cy=link]").should("not.exist");
+    });
+
+    it("slow loading", () => {
+      cy.visit("/iframe.html?id=search-result-resultrow--slow-loading");
+
+      cy.get("[data-cy=skeleton]").should("exist");
+    });
+  });
+
   describe("Related search subjects", () => {
     it(`Can tab through related keywords`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
@@ -246,11 +300,9 @@ describe("Search", () => {
       const url = `/find?q.subject=${tag}`;
 
       // Get selected tag
-      const item = cy.get(`[data-cy=related-subject-${tag}]`);
-
-      // Check link attributes
-      item.should("have.attr", "target", "_self");
-      item.should("have.attr", "href", url);
+      cy.get(`[data-cy=related-subject-${tag}]`)
+        .should("have.attr", "target", "_self")
+        .should("have.attr", "href", url);
     });
 
     it(`Can render and interact with connected related subjects`, () => {
