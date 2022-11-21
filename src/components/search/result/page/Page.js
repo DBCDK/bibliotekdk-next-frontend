@@ -23,7 +23,8 @@ export function ResultPage({ rows, onWorkClick, isLoading }) {
   const resultRows = rows?.map((row, index) => (
     <Fragment key={row.workId + ":" + index}>
       <ResultRow
-        data={row}
+        isLoading={isLoading}
+        work={row}
         key={`${row?.titles?.main}_${index}`}
         onClick={onWorkClick && (() => onWorkClick(index, row))}
       />
