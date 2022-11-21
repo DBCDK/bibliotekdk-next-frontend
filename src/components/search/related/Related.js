@@ -95,7 +95,7 @@ export function Related({ data, hitcount, isLoading }) {
         )
       }
     >
-      {(data.length > 0 || isLoading) && (
+      {data.length > 0 || isLoading ? (
         <div>
           <Skip
             id="view-all-filters"
@@ -107,6 +107,8 @@ export function Related({ data, hitcount, isLoading }) {
           />
           <Words data={data} isLoading={isLoading} />
         </div>
+      ) : (
+        <></>
       )}
     </Section>
   );
