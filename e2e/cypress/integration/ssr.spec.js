@@ -84,19 +84,19 @@ describe("Server Side Rendering", () => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
-        // expect(res.description).to.equal(
-        //   "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-        // );
-        // expect(res["og:url"]).to.equal(
-        //   "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
-        // );
-        // expect(res["og:title"]).to.equal(
-        //   "Hest, hest, tiger, tiger af Mette E. Neerlin"
-        // );
-        // expect(res["og:description"]).to.equal(
-        //   "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-        // );
-        // expect(res["og:image"]).to.exist;
+        expect(res.description).to.equal(
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+        );
+        expect(res["og:url"]).to.equal(
+          "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
+        );
+        expect(res["og:title"]).to.equal(
+          "Hest, hest, tiger, tiger af Mette E. Neerlin"
+        );
+        expect(res["og:description"]).to.equal(
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+        );
+        expect(res["og:image"]).to.exist;
       });
     });
 
