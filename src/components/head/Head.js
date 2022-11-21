@@ -21,14 +21,26 @@ export default function DefaultHead() {
 
   return (
     <Head>
-      <title>{pageTitle}</title>
-      <meta name="description" content={pageDescription}></meta>
-      <meta property="og:url" content={canonical.url} />
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
+      <title key="title">{pageTitle}</title>
+      <meta
+        key="description"
+        name="description"
+        content={pageDescription}
+      ></meta>
+      <meta key="og:url" property="og:url" content={canonical.url} />
+      <meta key="og:type" property="og:type" content="website" />
+      <meta key="og:title" property="og:title" content={pageTitle} />
+      <meta
+        key="og:description"
+        property="og:description"
+        content={pageDescription}
+      />
       {ogImage && ogImage.image && ogImage.image.ogurl && (
-        <meta property="og:image" content={`${ogImage?.image?.ogurl}`} />
+        <meta
+          key="og:image"
+          property="og:image"
+          content={`${ogImage?.image?.ogurl}`}
+        />
       )}
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
       <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />

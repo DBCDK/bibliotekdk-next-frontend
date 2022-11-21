@@ -21,6 +21,7 @@ describe("Cards", () => {
       expect(JSON.parse(el.text())).to.deep.equal({
         title_author: "ikke-i-koed-og-blod_ruth-rendell",
         workId: "work-id-1",
+        type: "bog",
       });
     });
   });
@@ -44,6 +45,7 @@ describe("Cards", () => {
       expect(JSON.parse(el.text())).to.deep.equal({
         title_author: "blodroede-spor_andrew-taylor-f-1951-",
         workId: "work-id-2",
+        type: "bog",
       });
     });
   });

@@ -136,7 +136,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Banner />
               <Notifications />
               <HelpHeader />
-
               <Component {...pageProps} />
               <FeedBackLink />
               <CookieBox />

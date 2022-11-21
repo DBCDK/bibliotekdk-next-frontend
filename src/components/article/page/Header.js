@@ -38,14 +38,30 @@ export default function Header({ articleId }) {
 
   return (
     <Head>
-      <title>{article.title}</title>
-      <meta name="description" content={article.fieldRubrik}></meta>
-      <meta property="og:url" content={getCanonicalArticleUrl(article)} />
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={article.title} />
-      <meta property="og:description" content={article.fieldRubrik} />
+      <title key="title">{article.title}</title>
+      <meta
+        key="description"
+        name="description"
+        content={article.fieldRubrik}
+      ></meta>
+      <meta
+        key="og:url"
+        property="og:url"
+        content={getCanonicalArticleUrl(article)}
+      />
+      <meta key="og:type" property="og:type" content="website" />
+      <meta key="og:title" property="og:title" content={article.title} />
+      <meta
+        key="og:description"
+        property="og:description"
+        content={article.fieldRubrik}
+      />
       {article.fieldImage && article.fieldImage.url && (
-        <meta property="og:image" content={article.fieldImage.url} />
+        <meta
+          key="og:image"
+          property="og:image"
+          content={article.fieldImage.url}
+        />
       )}
 
       <script

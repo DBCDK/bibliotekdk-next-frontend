@@ -45,7 +45,7 @@ export default function Card({
   skeleton,
   cover,
   title,
-  type,
+  type = null,
 }) {
   if (skeleton) {
     return <SkeletonCard />;

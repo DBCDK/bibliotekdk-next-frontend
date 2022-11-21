@@ -15,7 +15,7 @@ export function Connected() {
       <WrappedSlider
         title="Nyeste skønlitteratur"
         category="fiction"
-        filter="nyeste"
+        filters={["nyeste"]}
       />
     </div>
   );
@@ -33,24 +33,27 @@ Connected.story = {
           title: () => "nyeste",
           result: () => [
             {
-              work: {
-                workId: "id-1",
+              manifestation: {
+                pid: "pid-1",
                 titles: { main: ["title-1"] },
                 creators: [{ display: "creator-1" }],
+                materialTypes: [{ specific: "bog" }],
               },
             },
             {
-              work: {
-                workId: "id-2",
+              manifestation: {
+                pid: "pid-2",
                 titles: { main: ["title-2"] },
                 creators: [{ display: "creator-2" }],
+                materialTypes: [{ specific: "bog" }],
               },
             },
             {
-              work: {
-                workId: "id-3",
+              manifestation: {
+                pid: "pid-3",
                 titles: { main: ["title-3"] },
                 creators: [{ display: "creator-3" }],
+                materialTypes: [{ specific: "bog" }],
               },
             },
           ],

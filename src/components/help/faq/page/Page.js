@@ -36,13 +36,22 @@ export default function Page() {
   return (
     <React.Fragment>
       <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription}></meta>
-        <meta property="og:url" content={canonical.url} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={pageDescription} />
+        <title key="title">{pageTitle}</title>
         <meta
+          key="description"
+          name="description"
+          content={pageDescription}
+        ></meta>
+        <meta key="og:url" property="og:url" content={canonical.url} />
+        <meta key="og:type" property="og:type" content="website" />
+        <meta key="og:title" property="og:title" content={pageTitle} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={pageDescription}
+        />
+        <meta
+          key="og:image"
           property="og:image"
           content={`${root}/img/bibdk-og-cropped.jpg`}
         />

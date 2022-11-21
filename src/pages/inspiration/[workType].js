@@ -80,12 +80,16 @@ export function Page({ category, data, isLoading }) {
     <>
       <Header />
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta property="og:url" content={url} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <title key="title">{title}</title>
+        <meta key="description" name="description" content={description} />
+        <meta key="og:url" property="og:url" content={url} />
+        <meta key="og:type" property="og:type" content="website" />
+        <meta key="og:title" property="og:title" content={title} />
+        <meta
+          key="og:description"
+          property="og:description"
+          content={description}
+        />
       </Head>
       <Section
         title={<Title type="title3">{title}</Title>}

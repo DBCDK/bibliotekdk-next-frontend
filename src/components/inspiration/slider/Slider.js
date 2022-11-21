@@ -53,6 +53,8 @@ export default function Wrap({ category, filters = [], ...props }) {
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
 
+  console.log("cat", cat);
+
   if (!cat && !isLoading) {
     return null;
   }
