@@ -189,10 +189,12 @@ export function useFetcher() {
   // The session may contain access token
   const accessToken = useAccessToken();
 
+  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+
   async function doFetch(query) {
     // The key for this query
     const key = query && generateKey({ ...query, accessToken } || "");
-    return await fetcher(key);
+    return mockedFetcher ? await mockedFetcher(key) : await fetcher(key);
   }
 
   return doFetch;
