@@ -20,7 +20,7 @@ describe("Inspiration", () => {
 
           cy.get("[data-cy=router-query]").should(
             "have.text",
-            `{"title_author":"title-${idx}_creator-${idx}","workId":"work-of%3Apid-${idx}","type":"bog"}`
+            `{"title_author":"title-${idx}_creator-${idx}","workId":"workId-${idx}","type":"bog"}`
           );
         }
       );

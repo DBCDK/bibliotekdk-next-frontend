@@ -13,16 +13,15 @@
  *
  */
 import Head from "next/head";
+import { useRouter } from "next/router";
 import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
 import { inspiration, categories } from "@/lib/api/inspiration.fragments";
-
-import { getCanonicalInspirationUrl } from "@/lib/utils";
+import { frontpageHero } from "@/lib/api/hero.fragments";
 
 import { fetchAll } from "@/lib/api/apiServerOnly";
-
-import { useRouter } from "next/router";
+import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 import Header from "@/components/header";
 import Section from "@/components/base/section";
@@ -35,7 +34,7 @@ import Slider from "@/components/inspiration/slider";
 const WORKTYPE_TO_CATEGORY = {
   artikler: "articles",
   spil: "games",
-  bøger: "fiction",
+  boeger: "fiction",
   film: "movies",
   musik: "music",
   noder: "sheetMusic",
@@ -68,9 +67,9 @@ export function Page({ category, data, isLoading }) {
   }
 
   const context = "inspiration";
+  const { canonical, alternate } = useCanonicalUrl();
 
   const title = Translate({ context, label: trim(`title-${category}`) });
-  const url = getCanonicalInspirationUrl({ category });
   const description = Translate({
     context,
     label: trim(`description-${category}`),
@@ -82,7 +81,7 @@ export function Page({ category, data, isLoading }) {
       <Head>
         <title key="title">{title}</title>
         <meta key="description" name="description" content={description} />
-        <meta key="og:url" property="og:url" content={url} />
+        <meta key="og:url" property="og:url" content={canonical.url} />
         <meta key="og:type" property="og:type" content="website" />
         <meta key="og:title" property="og:title" content={title} />
         <meta
@@ -90,6 +89,9 @@ export function Page({ category, data, isLoading }) {
           property="og:description"
           content={description}
         />
+        {alternate.map(({ locale, url }) => (
+          <link key={locale} rel="alternate" hreflang={locale} href={url} />
+        ))}
       </Head>
       <Section
         title={<Title type="title3">{title}</Title>}
@@ -160,14 +162,13 @@ Wrap.getInitialProps = async (ctx) => {
   const category = WORKTYPE_TO_CATEGORY[ctx?.query?.workType];
 
   // Get subCategories data
-  const catData = await fetchAll([categories], ctx, {
+  const serverQueries = await fetchAll([categories, frontpageHero], ctx, {
     category,
   });
 
   const subCategories =
-    Object.values(catData.initialData)?.[0]?.data?.inspiration?.categories?.[
-      category
-    ] || [];
+    Object.values(serverQueries.initialData)?.[0]?.data?.inspiration
+      ?.categories?.[category] || [];
 
   // Resolve all belt queries
   const beltData = await Promise.all(
@@ -188,5 +189,5 @@ Wrap.getInitialProps = async (ctx) => {
   );
 
   // Merge categories and belt data
-  return merge({}, catData, { initialData });
+  return merge({}, serverQueries, { initialData });
 };

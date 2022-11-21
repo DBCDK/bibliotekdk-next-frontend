@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.4360" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:17:19" tests="0" file="cypress/integration/old/modal.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Modal" timestamp="2022-11-21T14:17:19" tests="6" time="5.4360" failures="0">
+    <testcase name="Modal Can show modal with menu template" time="1.2010" classname="Can show modal with menu template">
+    </testcase>
+    <testcase name="Modal Can close modal on close button click" time="0.9950" classname="Can close modal on close button click">
+    </testcase>
+    <testcase name="Modal Tab is trapped in Menu modal" time="0.7690" classname="Tab is trapped in Menu modal">
+    </testcase>
+    <testcase name="Modal Tab is trapped in Menu modal 2" time="0.8280" classname="Tab is trapped in Menu modal 2">
+    </testcase>
+    <testcase name="Modal Can click and trap Tab in material categories" time="0.8230" classname="Can click and trap Tab in material categories">
+    </testcase>
+    <testcase name="Modal Can click on language" time="0.8200" classname="Can click on language">
+    </testcase>
+  </testsuite>
+</testsuites>

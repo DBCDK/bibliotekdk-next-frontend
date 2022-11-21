@@ -209,7 +209,7 @@ export function Header({
                   </Link>
 
                   <Link
-                    href="/inspiration/bøger"
+                    href="/inspiration/boeger"
                     dataCy="header-link-literature"
                   >
                     <Text type="text3">

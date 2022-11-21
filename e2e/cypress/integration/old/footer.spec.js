@@ -28,6 +28,6 @@ describe("Overview", () => {
   it("check branch links", () => {
     cy.get(
       "[data-cy=footer-section] [data-cy=footer-column] [data-cy=branchlink]"
-    ).should("have.length", 7);
+    ).should("have.length", 6);
   });
 });

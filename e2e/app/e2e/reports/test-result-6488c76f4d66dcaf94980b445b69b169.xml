@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.0220" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:16:18" tests="0" file="cypress/integration/old/banner.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="TopBanner" timestamp="2022-11-21T14:16:18" tests="2" time="1.0220" failures="0">
+    <testcase name="TopBanner View in BIG viewport" time="1.0020" classname="View in BIG viewport">
+    </testcase>
+    <testcase name="TopBanner View in SMALL viewport" time="0.0200" classname="View in SMALL viewport">
+    </testcase>
+  </testsuite>
+</testsuites>

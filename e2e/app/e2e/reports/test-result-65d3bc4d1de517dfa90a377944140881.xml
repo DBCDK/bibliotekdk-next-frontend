@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.1710" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T08:40:18" tests="0" file="cypress/integration/old/accordion.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Accordion" timestamp="2022-11-21T08:40:18" tests="5" time="3.1710" failures="0">
+    <testcase name="Accordion All 5 items in accorion is visible" time="0.8910" classname="All 5 items in accorion is visible">
+    </testcase>
+    <testcase name="Accordion All 5 items should have visible expand icons" time="0.1970" classname="All 5 items should have visible expand icons">
+    </testcase>
+    <testcase name="Accordion Can expand and close sections" time="0.9710" classname="Can expand and close sections">
+    </testcase>
+    <testcase name="Accordion Expand icon changes on click" time="0.5530" classname="Expand icon changes on click">
+    </testcase>
+    <testcase name="Accordion Can tab through sections" time="0.5590" classname="Can tab through sections">
+    </testcase>
+  </testsuite>
+</testsuites>

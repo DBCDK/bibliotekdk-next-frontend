@@ -55,7 +55,7 @@ export default function Page() {
           content={`${root}/img/bibdk-og-cropped.jpg`}
         />
         {alternate.map(({ locale, url }) => (
-          <link key={url} rel="alternate" hreflang={locale} href={url} />
+          <link key={locale} rel="alternate" hreflang={locale} href={url} />
         ))}
       </Head>
       <Header router={router} />

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+import merge from "lodash/merge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -33,7 +33,7 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
         <Col>
           <WorkSlider
             skeleton={isLoading || hide}
-            manifestations={data}
+            works={data}
             data-cy="inspiration-slider"
           />
         </Col>
@@ -53,13 +53,15 @@ export default function Wrap({ category, filters = [], ...props }) {
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
 
-  console.log("cat", cat);
-
   if (!cat && !isLoading) {
     return null;
   }
 
-  return <Slider data={cat?.result || []} isLoading={isLoading} {...props} />;
+  const works = cat?.result.map((obj) =>
+    merge({}, obj.work, { manifestations: { all: [obj.manifestation] } })
+  );
+
+  return <Slider data={works || []} isLoading={isLoading} {...props} />;
 }
 
 Wrap.propTypes = {

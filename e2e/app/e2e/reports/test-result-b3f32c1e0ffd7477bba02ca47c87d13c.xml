@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.6900" tests="1" failures="1">
+  <testsuite name="Root Suite" timestamp="2022-11-21T13:48:13" tests="0" file="cypress/integration/inspiration.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Inspiration" timestamp="2022-11-21T13:48:13" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Slider" timestamp="2022-11-21T13:48:13" tests="1" time="4.6900" failures="1">
+    <testcase name="Inspiration Slider Can fetch data in connected component" time="4.6900" classname="Can fetch data in connected component">
+      <failure message="Timed out retrying after 4000ms: expected &apos;&lt;span._7XiSFncSI1uFeTHbDzHTA._17X9Xst4a1bHk5Aojq1o2i.undefined&gt;&apos; to have text &apos;{&quot;title_author&quot;:&quot;title-1_creator-1&quot;,&quot;workId&quot;:&quot;work-of%3Apid-1&quot;,&quot;type&quot;:&quot;bog&quot;}&apos;, but the text was &apos;{&quot;title_author&quot;:&quot;inspiration-categories-fiction-0-result-0-work-titles-main-0-_inspiration-categories-fiction-0-result-0-work-creators-0-display&quot;,&quot;workId&quot;:&quot;inspiration.categories.fiction%5B0%5D.result%5B0%5D.work.workId&quot;,&quot;type&quot;:&quot;bog&quot;}&apos;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: expected '<span._7XiSFncSI1uFeTHbDzHTA._17X9Xst4a1bHk5Aojq1o2i.undefined>' to have text '{"title_author":"title-1_creator-1","workId":"work-of%3Apid-1","type":"bog"}', but the text was '{"title_author":"inspiration-categories-fiction-0-result-0-work-titles-main-0-_inspiration-categories-fiction-0-result-0-work-creators-0-display","workId":"inspiration.categories.fiction%5B0%5D.result%5B0%5D.work.workId","type":"bog"}'
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/integration/inspiration.spec.js:108:42)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

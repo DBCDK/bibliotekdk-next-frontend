@@ -35,16 +35,18 @@ export function inspiration({ limit = 10, filters, category } = {}) {
             ${category}(filters: $filters) {
               title
               result(limit: $limit) {
-                manifestation {
-                  pid
-                  materialTypes {
-                    specific
-                  }
+                work {
+                  workId
                   titles {
                     main
                   }
                   creators {
                     display
+                  }
+                }
+                manifestation {
+                  materialTypes {
+                    specific
                   }
                   cover {
                     detail

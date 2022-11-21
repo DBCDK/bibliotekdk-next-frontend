@@ -91,7 +91,7 @@ export function Header({ details }) {
         }}
       />
       {alternate.map(({ locale, url }) => (
-        <link key={url} rel="alternate" hreflang={locale} href={url} />
+        <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
     </Head>

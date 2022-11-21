@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.7970" tests="4" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2022-11-21T08:41:19" tests="0" file="cypress/integration/old/footer.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Overview" timestamp="2022-11-21T08:41:19" tests="4" time="0.7970" failures="0">
+    <testcase name="Overview there should be 4 columns" time="0.7660" classname="there should be 4 columns">
+    </testcase>
+    <testcase name="Overview check contact links" time="0.0180" classname="check contact links">
+    </testcase>
+    <testcase name="Overview check branch links" time="0.0130" classname="check branch links">
+    </testcase>
+  </testsuite>
+</testsuites>

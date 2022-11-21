@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.4890" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T08:25:37" tests="0" file="cypress/integration/old/help.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="help" timestamp="2022-11-21T08:25:37" tests="5" time="5.2910" failures="0">
+    <testcase name="help Search: should show empty response message" time="1.1970" classname="Search: should show empty response message">
+    </testcase>
+    <testcase name="help Search: should show two results" time="0.3210" classname="Search: should show two results">
+    </testcase>
+    <testcase name="help Search: menu is visible on desktop" time="0.3620" classname="Search: menu is visible on desktop">
+    </testcase>
+    <testcase name="help Search: menu is hidden on mobile" time="0.4360" classname="Search: menu is hidden on mobile">
+    </testcase>
+    <testcase name="help Search: filter by language" time="2.9750" classname="Search: filter by language">
+    </testcase>
+  </testsuite>
+  <testsuite name="help menu" timestamp="2022-11-21T08:25:44" tests="1" time="0.1980" failures="0">
+    <testcase name="help menu Help menu - tab &amp; click" time="0.1980" classname="Help menu - tab &amp; click">
+    </testcase>
+  </testsuite>
+</testsuites>

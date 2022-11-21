@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="11.2250" tests="8" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:18:24" tests="0" file="cypress/integration/order.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Order" timestamp="2022-11-21T14:18:24" tests="3" time="2.5910" failures="0">
+    <testcase name="Order submits ILL order for pids that may be ordered" time="1.3640" classname="submits ILL order for pids that may be ordered">
+    </testcase>
+    <testcase name="Order should not tab to order modal after it is closed" time="0.6190" classname="should not tab to order modal after it is closed">
+    </testcase>
+    <testcase name="Order should handle failed checkorder and pickupAllowed=false" time="0.6080" classname="should handle failed checkorder and pickupAllowed=false">
+    </testcase>
+  </testsuite>
+  <testsuite name="Order periodica article " timestamp="2022-11-21T14:18:26" tests="2" time="1.1760" failures="0">
+    <testcase name="Order Order periodica article  should order indexed periodica article through digital article service" time="0.5780" classname="should order indexed periodica article through digital article service">
+    </testcase>
+    <testcase name="Order Order periodica article  should order indexed periodica article through ILL (when branch is not subscribed to article service)" time="0.5980" classname="should order indexed periodica article through ILL (when branch is not subscribed to article service)">
+    </testcase>
+  </testsuite>
+  <testsuite name="Order periodica volume" timestamp="2022-11-21T14:18:28" tests="3" time="7.4580" failures="0">
+    <testcase name="Order Order periodica volume should order full periodica volume through ILL, never through digital article service" time="1.6730" classname="should order full periodica volume through ILL, never through digital article service">
+    </testcase>
+    <testcase name="Order Order periodica volume should order specific article from a periodica volume through digital article service" time="2.9720" classname="should order specific article from a periodica volume through digital article service">
+    </testcase>
+    <testcase name="Order Order periodica volume should order specific article from a periodica volume through ILL (when branch is not subscribed to article service)" time="2.8130" classname="should order specific article from a periodica volume through ILL (when branch is not subscribed to article service)">
+    </testcase>
+  </testsuite>
+</testsuites>

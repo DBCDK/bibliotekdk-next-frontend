@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="22.8840" tests="16" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T13:37:21" tests="0" file="cypress/integration/search.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Search" timestamp="2022-11-21T13:37:21" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Form" timestamp="2022-11-21T13:37:21" tests="8" time="14.7390" failures="0">
+    <testcase name="Search Form Maps query parameters from url to input fields" time="1.5080" classname="Maps query parameters from url to input fields">
+    </testcase>
+    <testcase name="Search Form Go to find page when changing material type on work page" time="2.3530" classname="Go to find page when changing material type on work page">
+    </testcase>
+    <testcase name="Search Form Maps query parameters from input fields to url to input fields" time="3.1100" classname="Maps query parameters from input fields to url to input fields">
+    </testcase>
+    <testcase name="Search Form Click input clear button should NOT be reflected in URL immediately" time="0.7130" classname="Click input clear button should NOT be reflected in URL immediately">
+    </testcase>
+    <testcase name="Search Form Editing default search input, should not wipe other input" time="1.6780" classname="Editing default search input, should not wipe other input">
+    </testcase>
+    <testcase name="Search Form All default input suggestions will search with q.all" time="2.1750" classname="All default input suggestions will search with q.all">
+    </testcase>
+    <testcase name="Search Form Tab away from input will not sync with URL immediately" time="0.8090" classname="Tab away from input will not sync with URL immediately">
+    </testcase>
+    <testcase name="Search Form Pressing enter will sync with URL immediately" time="2.3930" classname="Pressing enter will sync with URL immediately">
+    </testcase>
+  </testsuite>
+  <testsuite name="Mobile" timestamp="2022-11-21T13:37:42" tests="3" time="5.2220" failures="0">
+    <testcase name="Search Form Mobile Maintains input value when opening mobile suggester" time="0.5870" classname="Maintains input value when opening mobile suggester">
+    </testcase>
+    <testcase name="Search Form Mobile Hide mobile search button when expanded" time="2.3890" classname="Hide mobile search button when expanded">
+    </testcase>
+    <testcase name="Search Form Mobile Click input clear on mobile should NOT be reflected in URL immediately" time="2.2460" classname="Click input clear on mobile should NOT be reflected in URL immediately">
+    </testcase>
+  </testsuite>
+  <testsuite name="Result" timestamp="2022-11-21T13:38:01" tests="1" time="0.9770" failures="0">
+    <testcase name="Search Result Maps from URL params to a search result" time="0.9770" classname="Maps from URL params to a search result">
+    </testcase>
+  </testsuite>
+  <testsuite name="Related search subjects" timestamp="2022-11-21T13:38:02" tests="4" time="1.9460" failures="0">
+    <testcase name="Search Related search subjects Can tab through related keywords" time="0.3640" classname="Can tab through related keywords">
+    </testcase>
+    <testcase name="Search Related search subjects Can visit keywords" time="0.1850" classname="Can visit keywords">
+    </testcase>
+    <testcase name="Search Related search subjects Can render and interact with connected related subjects" time="0.6760" classname="Can render and interact with connected related subjects">
+    </testcase>
+    <testcase name="Search Related search subjects Will show search result hitcount in the connected related subjects section" time="0.7210" classname="Will show search result hitcount in the connected related subjects section">
+    </testcase>
+  </testsuite>
+</testsuites>

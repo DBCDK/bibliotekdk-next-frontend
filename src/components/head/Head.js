@@ -46,7 +46,7 @@ export default function DefaultHead() {
       <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
       <link rel="alternate icon" href="/favicon.ico" />
       {alternate.map(({ locale, url }) => (
-        <link key={url} rel="alternate" hreflang={locale} href={url} />
+        <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}
 
       <meta name="mobile-web-app-capable" content="yes"></meta>

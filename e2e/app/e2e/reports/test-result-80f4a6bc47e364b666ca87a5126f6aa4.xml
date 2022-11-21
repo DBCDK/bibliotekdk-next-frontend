@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="2.9950" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T08:42:38" tests="0" file="cypress/integration/old/sliders.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Sliders" timestamp="2022-11-21T08:42:38" tests="2" time="2.9950" failures="0">
+    <testcase name="Sliders Buttons may be used to slide" time="1.5300" classname="Buttons may be used to slide">
+    </testcase>
+    <testcase name="Sliders Tabbing may be used to slide" time="1.4650" classname="Tabbing may be used to slide">
+    </testcase>
+  </testsuite>
+</testsuites>

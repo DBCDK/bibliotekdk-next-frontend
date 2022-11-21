@@ -349,28 +349,24 @@ describe("Server Side Rendering", () => {
   });
 
   describe(`inspiration/material pages`, () => {
-    it.only(`has correct metadata`, () => {
-      getPageHead("/inspiration/bøger").then((res) => {
+    it(`has correct metadata`, () => {
+      getPageHead("/inspiration/boeger").then((res) => {
         expect(res.title).to.equal("Skønlitteratur");
-        // expect(res.description).to.equal(
-        //   "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
-        // );
-        // expect(res["og:url"]).to.equal("http://localhost:3000/");
-        // expect(res["og:title"]).to.equal(
-        //   "Bibliotek.dk | Lån fra alle Danmarks biblioteker"
-        // );
-        // expect(res["og:description"]).to.equal(
-        //   "Én samlet indgang til alle landets biblioteker. Bestil her og hent på dit lokale bibliotek. Lån og reserver bøger, artikler, film, musik, spil, osv."
-        // );
-        // expect(res["og:image"]).to.exist;
+        expect(res.description).to.exist;
+        expect(res["og:url"]).to.equal(
+          "http://localhost:3000/inspiration/boeger"
+        );
+        expect(res["og:title"]).to.equal("Skønlitteratur");
+        expect(res["og:description"]).to.exist;
+        expect(res["og:image"]).to.exist;
       });
     });
 
     it(`has correct alternate links`, () => {
-      getPageHead("/").then((res) => {
+      getPageHead("/inspiration/boeger").then((res) => {
         expect(res.alternate).to.deep.equal([
-          '<link rel="alternate" hreflang="da" href="http://localhost:3000/"/>',
-          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/"/>',
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/inspiration/boeger"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/inspiration/boeger"/>',
         ]);
       });
     });

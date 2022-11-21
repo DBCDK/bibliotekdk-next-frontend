@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.1110" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:16:15" tests="0" file="cypress/integration/old/articles.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Article" timestamp="2022-11-21T14:16:15" tests="5" time="3.1110" failures="0">
+    <testcase name="Article Section display article previews" time="1.2140" classname="Section display article previews">
+    </testcase>
+    <testcase name="Article Tab through article previews" time="0.3560" classname="Tab through article previews">
+    </testcase>
+    <testcase name="Article Article preview links to article page" time="0.9780" classname="Article preview links to article page">
+    </testcase>
+    <testcase name="Article Single-section: Can navigate to article" time="0.3090" classname="Single-section: Can navigate to article">
+    </testcase>
+    <testcase name="Article Single-section: Can navigate to alternative url" time="0.2540" classname="Single-section: Can navigate to alternative url">
+    </testcase>
+  </testsuite>
+</testsuites>

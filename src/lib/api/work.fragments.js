@@ -638,11 +638,11 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   creators {
     display
   }
-  materialTypes {
-    specific
-  }
   manifestations {
     all {
+      materialTypes {
+        specific
+      }
       cover {
         detail
       }

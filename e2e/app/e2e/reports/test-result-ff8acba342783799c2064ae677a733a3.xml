@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.2650" tests="10" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T08:24:29" tests="0" file="cypress/integration/old/articlePage.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="ArticlePage" timestamp="2022-11-21T08:24:29" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="News article (from drupal)" timestamp="2022-11-21T08:24:29" tests="5" time="1.0600" failures="0">
+    <testcase name="ArticlePage News article (from drupal) Check if article has parsed body image" time="0.8950" classname="Check if article has parsed body image">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Check if article has parsed body image" time="0.0340" classname="Check if article has parsed body image">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Shows calculated read time" time="0.0150" classname="Shows calculated read time">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Shows correct category for news article (the ones from drupal)" time="0.0120" classname="Shows correct category for news article (the ones from drupal)">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Print article" time="0.1040" classname="Print article">
+    </testcase>
+  </testsuite>
+  <testsuite name="Infomedia article" timestamp="2022-11-21T08:24:30" tests="5" time="5.2050" failures="0">
+    <testcase name="ArticlePage Infomedia article Shows infomedia data" time="0.2930" classname="Shows infomedia data">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Print article" time="0.2610" classname="Print article">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when not logged in" time="1.5540" classname="Shows login prompt when not logged in">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when logged in user is not granted access" time="1.7510" classname="Shows login prompt when logged in user is not granted access">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows 404 when article does not exist" time="1.3460" classname="Shows 404 when article does not exist">
+    </testcase>
+  </testsuite>
+</testsuites>

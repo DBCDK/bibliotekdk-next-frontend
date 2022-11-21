@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="2.7740" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:08:08" tests="0" file="cypress/integration/old/localizations.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Localization link" timestamp="2022-11-21T14:08:08" tests="3" time="2.7740" failures="0">
+    <testcase name="Localization link Localizations list with holdings" time="2.1220" classname="Localizations list with holdings">
+    </testcase>
+    <testcase name="Localization link Localization link present" time="0.2640" classname="Localization link present">
+    </testcase>
+    <testcase name="Localization link Localization link present" time="0.3880" classname="Localization link present">
+    </testcase>
+  </testsuite>
+</testsuites>

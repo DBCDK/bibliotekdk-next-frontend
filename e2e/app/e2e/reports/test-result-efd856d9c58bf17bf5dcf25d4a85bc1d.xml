@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.0000" tests="2" failures="0" skipped="2">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:08:50" tests="0" file="cypress/integration/old/recommender.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Recommender data collect" timestamp="2022-11-21T14:08:50" tests="2" time="0.0000" failures="0">
+  </testsuite>
+</testsuites>

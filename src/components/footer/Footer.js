@@ -172,7 +172,7 @@ const ThirdColumn = () => {
 const BranchLinks = () => {
   // Object holding info to generate links to materialtypes * NOTICE Keys are translated.
   const branch_links = {
-    books: "/inspiration/bøger",
+    books: "/inspiration/boeger",
     articles: "/inspiration/artikler",
     film: "/inspiration/film",
     games: "/inspiration/spil",

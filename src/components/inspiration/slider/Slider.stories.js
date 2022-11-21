@@ -33,26 +33,32 @@ Connected.story = {
           title: () => "nyeste",
           result: () => [
             {
-              manifestation: {
-                pid: "pid-1",
+              work: {
+                workId: "workId-1",
                 titles: { main: ["title-1"] },
                 creators: [{ display: "creator-1" }],
+              },
+              manifestation: {
                 materialTypes: [{ specific: "bog" }],
               },
             },
             {
-              manifestation: {
-                pid: "pid-2",
+              work: {
+                workId: "workId-2",
                 titles: { main: ["title-2"] },
                 creators: [{ display: "creator-2" }],
+              },
+              manifestation: {
                 materialTypes: [{ specific: "bog" }],
               },
             },
             {
-              manifestation: {
-                pid: "pid-3",
+              work: {
+                workId: "workId-3",
                 titles: { main: ["title-3"] },
                 creators: [{ display: "creator-3" }],
+              },
+              manifestation: {
                 materialTypes: [{ specific: "bog" }],
               },
             },

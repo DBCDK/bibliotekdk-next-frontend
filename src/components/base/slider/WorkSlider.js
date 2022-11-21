@@ -18,17 +18,6 @@ import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 /**
- * converts a list of manifestations to a list of "works"
- */
-function manifestationsToWorks(manifestations) {
-  return manifestations.map((m) => ({
-    workId: `work-of:${m.manifestation.pid}`,
-    ...m.manifestation,
-    manifestations: { all: [{ cover: m.manifestation.cover }] },
-  }));
-}
-
-/**
  * The work slider skeleton React component
  */
 function WorkSliderSkeleton() {
@@ -84,9 +73,6 @@ export default function WorkSlider({
   onWorkClick,
   ...props
 }) {
-  // supports both works and manifestations
-  works = works || manifestationsToWorks(manifestations);
-
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -202,6 +188,10 @@ export default function WorkSlider({
             (manifestation) => manifestation?.cover?.detail
           )?.cover;
 
+          const type = work?.manifestations?.all.find(
+            (manifestation) => manifestation?.materialTypes?.[0]?.specific
+          )?.materialTypes?.[0]?.specific;
+
           return (
             <Card
               cardRef={idx === 0 && cardRef}
@@ -209,7 +199,7 @@ export default function WorkSlider({
               creators={work?.creators}
               workId={work?.workId}
               title={work?.titles?.main?.[0]}
-              type={work?.materialTypes?.[0]?.specific}
+              type={type}
               key={work.workId}
               className={styles.SlideWrapper}
               onFocus={() => {

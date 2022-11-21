@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.7280" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-21T14:17:43" tests="0" file="cypress/integration/old/relatedKeywords.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Related Keywords" timestamp="2022-11-21T14:17:43" tests="3" time="1.7280" failures="0">
+    <testcase name="Related Keywords Can tab through related keywords" time="0.9490" classname="Can tab through related keywords">
+    </testcase>
+    <testcase name="Related Keywords Can visit keywords" time="0.1850" classname="Can visit keywords">
+    </testcase>
+    <testcase name="Related Keywords Can render and interact with connected related subjects" time="0.5940" classname="Can render and interact with connected related subjects">
+    </testcase>
+  </testsuite>
+</testsuites>
