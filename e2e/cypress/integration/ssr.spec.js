@@ -77,7 +77,7 @@ describe("Server Side Rendering", () => {
   });
 
   describe(`material`, () => {
-    it.only(`has correct metadata`, () => {
+    it(`has correct metadata`, () => {
       getPageHead(
         "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=E-bog"
       ).then((res) => {
