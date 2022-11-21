@@ -68,9 +68,10 @@ pipeline {
 			}
 			steps {
 				dir("deploy") {
-                    sh """#!/usr/bin/env bash
+                    sh '''
+                        #!/usr/bin/env bash
 						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
-					"""
+					'''
 				}
 			}
 		}
