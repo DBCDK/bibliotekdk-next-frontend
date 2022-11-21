@@ -1,5 +1,14 @@
 import { getIsPeriodicaLike } from "@/lib/utils";
 
+export function editionCover(manifestations) {
+  const manifestationWithCover = manifestations?.find(
+    (manifestation) => manifestation.cover.detail
+  );
+  return manifestationWithCover
+    ? { detail: manifestationWithCover.cover.detail }
+    : { detail: null };
+}
+
 export function inferAccessTypes(
   work,
   periodicaForm,
