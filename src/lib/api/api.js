@@ -14,10 +14,6 @@ const nextJsConfig = getConfig();
 const config =
   (nextJsConfig && nextJsConfig.publicRuntimeConfig) || storybookConfig;
 
-// Store context used for getting the initial state
-// generated on the server
-export const APIStateContext = createContext();
-
 export const APIMockContext = createContext();
 
 /**
@@ -103,14 +99,12 @@ export async function fetcher(
  * A custom React hook for sending mutate requests to the GraphQL API
  */
 export function useMutate() {
-  // The session may contain access token
-  const accessToken = useAccessToken();
-
   const [isLoading, setisLoading] = useState(false);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
-  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+  const fetcherImpl = useFetcherImpl();
+  const keyGenerator = useKeyGenerator();
 
   function reset() {
     setisLoading(false);
@@ -119,12 +113,12 @@ export function useMutate() {
   }
 
   async function post(query) {
-    const key = generateKey({ ...query, accessToken } || "");
+    const key = keyGenerator(query);
     setisLoading(true);
     setData(null);
     setError(null);
     try {
-      const res = mockedFetcher ? await mockedFetcher(key) : await fetcher(key);
+      const res = await fetcherImpl(key);
       setData(res);
     } catch (e) {
       setError(e);
@@ -147,31 +141,18 @@ export function useMutate() {
  * @param {Object} query - A query object.
  */
 export function useData(query) {
-  // The session may contain access token
-  const accessToken = useAccessToken();
-
-  // The key for this query
-  const key = query && generateKey({ ...query, accessToken } || "");
-
-  // Initial data may be set, when a bot is requesting the site
-  // Used for server side rendering
-  const initialData = useContext(APIStateContext) || {};
-
-  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+  const keyGenerator = useKeyGenerator();
+  const fetcherImpl = useFetcherImpl();
+  const key = keyGenerator(query);
 
   // isSlow is set to true, when query is slow
   const [isSlow, setIsSlow] = useState(false);
 
   // Fetch data
-  const { data, error, mutate } = useSWR(
-    accessToken && key,
-    () => (mockedFetcher ? mockedFetcher(key) : fetcher(key)),
-    {
-      fallbackData: initialData[key],
-      loadingTimeout: query?.slowThreshold || 5000,
-      onLoadingSlow: () => setIsSlow(true),
-    }
-  );
+  const { data, error, mutate } = useSWR(key, fetcherImpl, {
+    loadingTimeout: query?.slowThreshold || 5000,
+    onLoadingSlow: () => setIsSlow(true),
+  });
 
   return {
     data: data?.data,
@@ -186,18 +167,33 @@ export function useData(query) {
  * A custom React hook for using the fetcher
  */
 export function useFetcher() {
-  // The session may contain access token
-  const accessToken = useAccessToken();
-
-  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+  const fetcherImpl = useFetcherImpl();
+  const keyGenerator = useKeyGenerator();
 
   async function doFetch(query) {
     // The key for this query
-    const key = query && generateKey({ ...query, accessToken } || "");
-    return mockedFetcher ? await mockedFetcher(key) : await fetcher(key);
+    const key = keyGenerator(query);
+    return await fetcherImpl(key);
   }
 
   return doFetch;
+}
+
+/**
+ * Will return specific implementation of fetcher
+ * either a mocked one, or the real deal
+ */
+function useFetcherImpl() {
+  const { fetcher: mockedFetcher } = useContext(APIMockContext) || {};
+  return mockedFetcher || fetcher;
+}
+
+/**
+ * Generates key based on the GraphQL query/variables
+ */
+function useKeyGenerator() {
+  const accessToken = useAccessToken();
+  return (query) => query && generateKey({ ...query, accessToken } || "");
 }
 
 export const ApiEnums = Object.freeze({
