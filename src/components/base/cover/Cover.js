@@ -60,6 +60,7 @@ function Cover({
       style={dynamicStyles}
       className={`${styles.cover} ${frameStyle} ${loadedClass} ${errorClass} ${missingCoverClass} ${skeletonClass} ${className} ${styles[size]}`}
       onClick={onClick}
+      data-cy={src ? "cover-present" : "missing-cover"}
     >
       {skeletonClass && <Skeleton />}
       {src && !error && (
