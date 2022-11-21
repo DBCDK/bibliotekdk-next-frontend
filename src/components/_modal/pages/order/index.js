@@ -1,1 +1,1 @@
-export { default, Order, OrderSkeleton } from "./Order.page";
+export { default, OrderSkeleton } from "./Order.page";
