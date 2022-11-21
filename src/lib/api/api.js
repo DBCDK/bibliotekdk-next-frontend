@@ -165,7 +165,7 @@ export function useData(query) {
   // Fetch data
   const { data, error, mutate } = useSWR(
     accessToken && key,
-    (key) => (mockedFetcher ? mockedFetcher(key) : fetcher(key)),
+    () => (mockedFetcher ? mockedFetcher(key) : fetcher(key)),
     {
       fallbackData: initialData[key],
       loadingTimeout: query?.slowThreshold || 5000,

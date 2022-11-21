@@ -20,7 +20,7 @@ describe("Series", () => {
       .should(
         "have.attr",
         "href",
-        "/materiale/work-seriesmembers-0-titles-main-0-_work-seriesmembers-0-creators-0-display/work.seriesMembers%5B0%5D.workId"
+        "/materiale/work-seriesmembers-0-titles-main-0-_work-seriesmembers-0-creators-0-display/work.seriesMembers%5B0%5D.workId?type=work.seriesMembers%5B0%5D.manifestations.all%5B0%5D.materialTypes%5B0%5D.specific"
       );
   });
 });

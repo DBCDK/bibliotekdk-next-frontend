@@ -66,7 +66,13 @@ const storedProgressMax = {};
  *
  * @returns {JSX.Element}
  */
-export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
+export default function WorkSlider({
+  skeleton,
+  works,
+  manifestations,
+  onWorkClick,
+  ...props
+}) {
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -177,42 +183,49 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   return (
     <div className={styles.WorkSlider} data-cy={props["data-cy"]}>
       <Swiper {...params} ref={swiperRef}>
-        {works?.map((work, idx) => (
-          <Card
-            cardRef={idx === 0 && cardRef}
-            cover={
-              work?.manifestations?.all.find(
-                (manifestation) => manifestation?.cover?.detail
-              )?.cover
-            }
-            creators={work?.creators}
-            workId={work?.workId}
-            title={work?.titles?.main?.[0]}
-            key={work.workId}
-            className={styles.SlideWrapper}
-            onFocus={() => {
-              // Make sure focused card become visible
-              // when tabbing through.
-              swiperRef.current.swiper.slideTo(idx);
-            }}
-            onClick={() => {
-              if (onWorkClick) {
-                // Find all the works that have been shown for this slider
-                const shownWorks = works
-                  .map((work) => work.workId)
-                  .slice(
-                    0,
-                    Math.max(
-                      Math.ceil(storedProgressMax[hash] * works.length),
-                      slidesPerGroup,
-                      idx
-                    ) + 1
-                  );
-                onWorkClick(work, shownWorks, idx);
-              }
-            }}
-          />
-        ))}
+        {works.map((work, idx) => {
+          const cover = work?.manifestations?.all.find(
+            (manifestation) => manifestation?.cover?.detail
+          )?.cover;
+
+          const type = work?.manifestations?.all.find(
+            (manifestation) => manifestation?.materialTypes?.[0]?.specific
+          )?.materialTypes?.[0]?.specific;
+
+          return (
+            <Card
+              cardRef={idx === 0 && cardRef}
+              cover={cover}
+              creators={work?.creators}
+              workId={work?.workId}
+              title={work?.titles?.main?.[0]}
+              type={type}
+              key={work.workId}
+              className={styles.SlideWrapper}
+              onFocus={() => {
+                // Make sure focused card become visible
+                // when tabbing through.
+                swiperRef.current.swiper.slideTo(idx);
+              }}
+              onClick={() => {
+                if (onWorkClick) {
+                  // Find all the works that have been shown for this slider
+                  const shownWorks = works
+                    .map((work) => work.workId)
+                    .slice(
+                      0,
+                      Math.max(
+                        Math.ceil(storedProgressMax[hash] * works.length),
+                        slidesPerGroup,
+                        idx
+                      ) + 1
+                    );
+                  onWorkClick(work, shownWorks, idx);
+                }
+              }}
+            />
+          );
+        })}
       </Swiper>
       <ArrowLeft
         onClick={prevHandler}

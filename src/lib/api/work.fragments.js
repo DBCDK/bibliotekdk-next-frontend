@@ -640,6 +640,9 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   }
   manifestations {
     all {
+      materialTypes {
+        specific
+      }
       cover {
         detail
       }

@@ -20,8 +20,6 @@ import { SWRConfig } from "swr";
 
 import { destroy } from "@dbcdk/login-nextjs/client";
 
-import Head from "next/head";
-
 import "@/scss/custom-bootstrap.scss";
 import "@/css/styles.css";
 
@@ -49,6 +47,8 @@ import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
 import { enableDataCollect } from "@/lib/useDataCollect";
 
+import Head from "@/components/head";
+
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
@@ -58,7 +58,12 @@ if (typeof window !== "undefined") {
   smoothscroll.polyfill();
 }
 
-export default function MyApp({ Component, pageProps, router }) {
+let pageProps;
+
+export default function MyApp({ Component, pageProps: _pageProps, router }) {
+  // sync pageProps
+  pageProps = { ...pageProps, ..._pageProps };
+
   // If this is rendered on server, allowCookies will be in pageProps
   // In the browser, we use Cookies.get
   const allowCookies =
@@ -126,16 +131,11 @@ export default function MyApp({ Component, pageProps, router }) {
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
-              <Head>
-                <title />
-                <meta name="mobile-web-app-capable" content="yes"></meta>
-                <meta name="theme-color" content="#3333ff"></meta>
-              </Head>
+              <Head />
               <SkipToMainLink />
               <Banner />
               <Notifications />
               <HelpHeader />
-
               <Component {...pageProps} />
               <FeedBackLink />
               <CookieBox />
@@ -156,7 +156,7 @@ export default function MyApp({ Component, pageProps, router }) {
  */
 MyApp.getInitialProps = async (ctx) => {
   if (typeof window !== "undefined") {
-    return { pageProps: { initialState: {} } };
+    return { pageProps: {} };
   }
 
   const appProps = await App.getInitialProps(ctx);

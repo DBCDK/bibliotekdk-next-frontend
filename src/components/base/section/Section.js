@@ -37,12 +37,14 @@ function handleBooleans(obj, def) {
  */
 export default function Section({
   title = "Some section",
-  children = "Some content",
+  children = "",
   className = "",
   dataCy = "section",
+  isLoading = false,
   backgroundColor = null,
   divider = {},
   space = {},
+  elRef = null,
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -73,7 +75,7 @@ export default function Section({
       ...style,
       backgroundColor,
       paddingTop: space?.top || "var(--pt8)",
-      marginBottom: space.bottom || "var(--pt8)",
+      marginBottom: defSpace.bottom || "var(--pt8)",
     };
   }
 
@@ -81,7 +83,7 @@ export default function Section({
   if (title) {
     title =
       typeof title === "string" ? (
-        <Title type="title4" tag="h2">
+        <Title type="title4" tag="h2" skeleton={isLoading}>
           {title}
         </Title>
       ) : (
@@ -94,6 +96,7 @@ export default function Section({
       className={`${backgroundClass} ${className}`}
       style={style}
       data-cy={dataCy}
+      ref={elRef}
     >
       <Container className={styles.container} fluid>
         <Row as="section" className={styles.section}>
@@ -130,8 +133,10 @@ Section.propTypes = {
     PropTypes.string,
     PropTypes.object,
     PropTypes.array,
+    PropTypes.bool,
   ]),
   dataCy: PropTypes.string,
+  isLoading: PropTypes.bool,
   backgroundColor: PropTypes.string,
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   space: PropTypes.object,

@@ -66,13 +66,23 @@ export function Header({ details }) {
 
   return (
     <Head>
-      <title>{pageTitle}</title>
-      <meta name="description" content={pageDescription}></meta>
-      <meta property="og:url" content={canonicalWorkUrl} />
-      <meta property="og:type" content="website" />
-      <meta property="og:title" content={pageTitle} />
-      <meta property="og:description" content={pageDescription} />
-      {coverUrl && <meta property="og:image" content={coverUrl} />}
+      <title key="title">{pageTitle}</title>
+      <meta
+        key="description"
+        name="description"
+        content={pageDescription}
+      ></meta>
+      <meta key="og:url" property="og:url" content={canonicalWorkUrl} />
+      <meta key="og:type" property="og:type" content="website" />
+      <meta key="og:title" property="og:title" content={pageTitle} />
+      <meta
+        key="og:description"
+        property="og:description"
+        content={pageDescription}
+      />
+      {coverUrl && (
+        <meta key="og:image" property="og:image" content={coverUrl} />
+      )}
 
       <script
         type="application/ld+json"
@@ -81,7 +91,7 @@ export function Header({ details }) {
         }}
       />
       {alternate.map(({ locale, url }) => (
-        <link key={url} rel="alternate" hreflang={locale} href={url} />
+        <link key={locale} rel="alternate" hreflang={locale} href={url} />
       ))}
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
     </Head>

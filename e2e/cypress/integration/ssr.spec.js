@@ -79,7 +79,7 @@ describe("Server Side Rendering", () => {
   describe(`material`, () => {
     it(`has correct metadata`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=E-bog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
@@ -344,6 +344,30 @@ describe("Server Side Rendering", () => {
           expect(filteredHitcount).to.be.greaterThan(0);
           expect(hitcount).to.be.greaterThan(filteredHitcount);
         });
+      });
+    });
+  });
+
+  describe(`inspiration/material pages`, () => {
+    it(`has correct metadata`, () => {
+      getPageHead("/inspiration/boeger").then((res) => {
+        expect(res.title).to.equal("Skønlitteratur");
+        expect(res.description).to.exist;
+        expect(res["og:url"]).to.equal(
+          "http://localhost:3000/inspiration/boeger"
+        );
+        expect(res["og:title"]).to.equal("Skønlitteratur");
+        expect(res["og:description"]).to.exist;
+        expect(res["og:image"]).to.exist;
+      });
+    });
+
+    it(`has correct alternate links`, () => {
+      getPageHead("/inspiration/boeger").then((res) => {
+        expect(res.alternate).to.deep.equal([
+          '<link rel="alternate" hreflang="da" href="http://localhost:3000/inspiration/boeger"/>',
+          '<link rel="alternate" hreflang="en" href="http://localhost:3000/en/inspiration/boeger"/>',
+        ]);
       });
     });
   });

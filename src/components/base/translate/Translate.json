@@ -2166,6 +2166,352 @@
         "en": "%s | Bibliotek.dk"
       }
     },
+    "inspiration": {
+      "title-articles": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "description-articles": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-33": {
+        "da": "33",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-37": {
+        "da": "37",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-86": {
+        "da": "86",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-nyeste": {
+        "da": "Nyeste artikler",
+        "en": "New articles"
+      },
+      "category-articles-artikel": {
+        "da": "Artikler",
+        "en": "Articles"
+      },
+      "category-articles-tidsskriftsartikel": {
+        "da": "Tidsskriftsartikler",
+        "en": "Articles from journals"
+      },
+      "category-articles-avisartikel": {
+        "da": "Avisartikel",
+        "en": "Articles from newspapers"
+      },
+      "category-articles-99.4": {
+        "da": "Biografier",
+        "en": "Biographies"
+      },
+      "category-articles-60.1": {
+        "da": "Erhverv og ledelse ",
+        "en": "Business Management"
+      },
+      "category-articles-34.31": {
+        "da": "34.31",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-34.38": {
+        "da": "34.38",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-articles-32.26": {
+        "da": "Dansk politik",
+        "en": "Danish politics"
+      },
+      "category-articles-33.19": {
+        "da": "Danmarks økonomiske forhold",
+        "en": "Danish economy"
+      },
+      "category-articles-61.44": {
+        "da": "Arbejdsmarkedet",
+        "en": "The labor market"
+      },
+      "title-games": {
+        "da": "Spil",
+        "en": "Games"
+      },
+      "description-games": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-games-nyeste": {
+        "da": "Nyeste spil",
+        "en": "New games"
+      },
+      "category-games-populære": {
+        "da": "Populære spil",
+        "en": "Most popular games"
+      },
+      "category-games-børnematerialer": {
+        "da": "Spil til børn",
+        "en": "Children's games"
+      },
+      "category-games-playstation-4": {
+        "da": "Playstation 4",
+        "en": "Playstation 4"
+      },
+      "category-games-xbox-one": {
+        "da": "Xbox One",
+        "en": "Xbox One"
+      },
+      "category-games-playstation-3": {
+        "da": "Playstation 3",
+        "en": "Playstation 3"
+      },
+      "category-games-xbox-360": {
+        "da": "Xbox 360",
+        "en": "Xbox 360"
+      },
+      "category-games-nintendo-switch": {
+        "da": "Nintendo Switch",
+        "en": "Nintendo Switch"
+      },
+      "category-games-wii": {
+        "da": "Wii",
+        "en": "Wii"
+      },
+      "category-games-nintendo-ds": {
+        "da": "Nintendo DS",
+        "en": "Nintendo DS"
+      },
+      "category-games-pc-spil": {
+        "da": "pc-spil",
+        "en": "pc games"
+      },
+      "category-games-playstation-5": {
+        "da": "Playstation 5",
+        "en": "Playstation 5"
+      },
+      "title-fiction": {
+        "da": "Skønlitteratur",
+        "en": "Fiction"
+      },
+      "description-fiction": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-fiction-nyeste": {
+        "da": "Nyeste skønlitteratur",
+        "en": "New fiction"
+      },
+      "category-fiction-populære": {
+        "da": "Populære romaner",
+        "en": "Popular fiction"
+      },
+      "category-fiction-krimi": {
+        "da": "Krimi",
+        "en": "Crime fiction"
+      },
+      "category-fiction-humor": {
+        "da": "Humor",
+        "en": "Humor"
+      },
+      "category-fiction-spænding": {
+        "da": "Spændende bøger",
+        "en": "Action"
+      },
+      "category-fiction-biografiske-romaner": {
+        "da": "Biografiske romaner",
+        "en": "Biographical novels"
+      },
+      "category-fiction-samfundskritik": {
+        "da": "Samfundskritiske romaner",
+        "en": "Social criticism"
+      },
+      "category-fiction-eksperimenterende-litteratur": {
+        "da": "Eksperimenterende romaner",
+        "en": "Experimental novels"
+      },
+      "category-fiction-science-fiction": {
+        "da": "Science fiction",
+        "en": "Science Fiction"
+      },
+      "category-fiction-historiske-romaner": {
+        "da": "Historiske romaner",
+        "en": "Historical novels"
+      },
+      "title-movies": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "description-movies": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-movies-nyeste": {
+        "da": "Nyeste film",
+        "en": "New movies"
+      },
+      "category-movies-populære": {
+        "da": "Populære film",
+        "en": "Popular movies"
+      },
+      "category-movies-børnematerialer": {
+        "da": "Film for børn",
+        "en": "Children's movies"
+      },
+      "category-movies-drama": {
+        "da": "Drama",
+        "en": "Drama Movies"
+      },
+      "category-movies-kærlighed": {
+        "da": "Kærlighedsfilm",
+        "en": "Romantic Movies"
+      },
+      "category-movies-dokumentarfilm": {
+        "da": "Dokumentarfilm",
+        "en": "Documentary Movies"
+      },
+      "category-movies-komedier": {
+        "da": "Komedier",
+        "en": "Comedy Movies"
+      },
+      "category-movies-kunst-og-kunstnere": {
+        "da": "Kunst og kunstnere",
+        "en": "Art and artists"
+      },
+      "category-movies-tegnefilm": {
+        "da": "Tegnefilm",
+        "en": "Cartoon"
+      },
+      "category-movies-tv-serier": {
+        "da": "TV-serier",
+        "en": "TV series"
+      },
+      "category-movies-dvd": {
+        "da": "dvd",
+        "en": "dvd"
+      },
+      "category-movies-video": {
+        "da": "VHS",
+        "en": "VHS"
+      },
+      "category-movies-film-(net)": {
+        "da": "Online film",
+        "en": "Movies online"
+      },
+      "category-movies-film": {
+        "da": "Film",
+        "en": "Movies"
+      },
+      "title-music": {
+        "da": "Musik",
+        "en": "Music"
+      },
+      "description-music": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-music-nyeste": {
+        "da": "Nyeste musik",
+        "en": "New music"
+      },
+      "category-music-populære": {
+        "da": "Populær musik",
+        "en": "Popular music"
+      },
+      "category-music-børnematerialer": {
+        "da": "Musik for børn",
+        "en": "Children's music"
+      },
+      "category-music-cd-(musik)": {
+        "da": "CD'er",
+        "en": "CD's"
+      },
+      "category-music-grammofonplade": {
+        "da": "LP'er",
+        "en": "Gramophone records"
+      },
+      "category-music-dvd": {
+        "da": "DVD (musik)",
+        "en": "DVD (music)"
+      },
+      "category-music-rock": {
+        "da": "Rock",
+        "en": "Rock"
+      },
+      "category-music-jazz": {
+        "da": "Jazz",
+        "en": "Jazz"
+      },
+      "category-music-blues": {
+        "da": "Blues",
+        "en": "Blues"
+      },
+      "category-music-singer/songwriter": {
+        "da": "Singer/songwriter",
+        "en": "Singer/songwriter"
+      },
+      "category-music-electronica": {
+        "da": "Electronica",
+        "en": "Electronica"
+      },
+      "category-music-kammermusik": {
+        "da": "Kammermusik",
+        "en": "Chamber music"
+      },
+      "category-music-hip-hop": {
+        "da": "Hiphop",
+        "en": "Hip hop"
+      },
+      "category-music-klassisk-musik-1950-->": {
+        "da": "Klassisk musik 1950-",
+        "en": "Classical music 1950-"
+      },
+      "category-music-folk": {
+        "da": "Folkemusik",
+        "en": "Folk music"
+      },
+      "category-music-metal": {
+        "da": "Metal",
+        "en": "Metal"
+      },
+      "title-sheetmusic": {
+        "da": "Noder",
+        "en": "Sheet music"
+      },
+      "description-sheetmusic": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-sheetmusic-nyeste": {
+        "da": "Nyeste noder",
+        "en": "New sheet music"
+      },
+      "category-sheetmusic-music-minus-one": {
+        "da": "Music Minus One",
+        "en": "Music Minus One"
+      },
+      "category-sheetmusic-karaoke": {
+        "da": "Karaoke",
+        "en": "Karaoke"
+      },
+      "category-sheetmusic-guitarskoler": {
+        "da": "Guitarskoler",
+        "en": "Guitar schools"
+      },
+      "category-sheetmusic-undervisningsmaterialer": {
+        "da": "Undervisningsmaterialer",
+        "en": "Teaching materials"
+      },
+      "category-sheetmusic-klaverskoler": {
+        "da": "Klaverskoler",
+        "en": "Piano schools"
+      },
+      "category-sheetmusic-sammenspil": {
+        "da": "Sammenspil",
+        "en": "For more than one instrument"
+      },
+      "category-sheetmusic-trommeskoler": {
+        "da": "Trommeskoler",
+        "en": "Drumming schools"
+      }
+    },
     "units": {
       "second": {
         "da": "sekund",
