@@ -19,7 +19,7 @@ services:
     shm_size: 512M
     image: docker-dbc.artifacts.dbccloud.dk/cypress:old-202228
     volumes:
-      - "./e2e:/"
+      - "./e2e:/app/e2e"
     depends_on:
       - web
     environment:

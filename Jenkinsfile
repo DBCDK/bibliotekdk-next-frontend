@@ -85,7 +85,7 @@ pipeline {
                 docker rmi ${IMAGE_NAME}
             """
 
-            junit skipPublishingChecks: true, testResults: 'e2e/reports/*.xml'
+            junit 'e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
         }
         failure {
