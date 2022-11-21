@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="1.2890" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2022-11-21T08:28:43" tests="0" file="cypress/integration/tableOfContents.spec.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="Table of Contents" timestamp="2022-11-21T08:28:43" tests="1" time="1.2890" failures="0">
-    <testcase name="Table of Contents Displays the table of contents for a work" time="1.2890" classname="Displays the table of contents for a work">
-    </testcase>
-  </testsuite>
-</testsuites>
