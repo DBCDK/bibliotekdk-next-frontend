@@ -68,22 +68,23 @@ pipeline {
 			}
 			steps {
 				dir("deploy") {
-                    sh """#!/usr/bin/env bash
+                    sh '''
+                        #!/usr/bin/env bash
 						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
-					"""
+					'''
 				}
 			}
 		}
     }
     post {
         always {
-            sh """
+            sh '''
                 echo Clean up
                 mkdir -p logs
                 docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
                 docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
                 docker rmi ${IMAGE_NAME}
-            """
+            '''
 
             junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
