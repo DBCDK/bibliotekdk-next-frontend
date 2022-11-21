@@ -66,13 +66,7 @@ const storedProgressMax = {};
  *
  * @returns {JSX.Element}
  */
-export default function WorkSlider({
-  skeleton,
-  works,
-  manifestations,
-  onWorkClick,
-  ...props
-}) {
+export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();

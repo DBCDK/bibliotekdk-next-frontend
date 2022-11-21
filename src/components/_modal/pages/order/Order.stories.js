@@ -189,11 +189,11 @@ const DEFAULT_STORY_PARAMETERS = {
           },
         },
         Mutation: {
-          submitOrder: (args) => {
+          submitOrder: () => {
             // Used for cypress testing
             return { orderId: "some-order-id" };
           },
-          submitPeriodicaArticleOrder: (args) => {
+          submitPeriodicaArticleOrder: () => {
             // Used for cypress testing
             return { status: "OK" };
           },
