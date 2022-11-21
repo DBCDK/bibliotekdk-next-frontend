@@ -10,12 +10,16 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import usePickupBranch from "@/components/hooks/usePickupBranch";
-import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
+import {
+  editionCover,
+  inferAccessTypes,
+} from "@/components/_modal/pages/edition/utils";
 import { memo, useMemo } from "react";
 
 export const Edition = memo(function Edition({
   isLoading,
   singleManifestation = false,
+  coverImage = null,
   isArticle = false,
   isPeriodicaLike = false,
   availableAsDigitalCopy = false,
@@ -153,7 +157,7 @@ export const Edition = memo(function Edition({
       </div>
       <div className={styles.right}>
         <Cover
-          src={material?.cover?.detail}
+          src={coverImage?.detail || material?.cover?.detail}
           size="thumbnail"
           skeleton={!material?.cover?.detail && isLoading}
         />
@@ -168,13 +172,13 @@ export default function Wrap({
   showOrderTxt = true,
 }) {
   const modal = useModal();
-  const { workId, pids } = context;
+  const { workId, pids, orderPids } = context;
 
   const { data: manifestationsData, isLoading: manifestationIsLoading } =
     useData(
-      pids?.length > 0 &&
+      orderPids?.length > 0 &&
         manifestationFragments.editionManifestations({
-          pid: pids,
+          pid: orderPids,
         })
     );
   const manifestations = useMemo(() => {
@@ -202,12 +206,15 @@ export default function Wrap({
     manifestations
   );
 
+  const coverImage = editionCover(manifestations);
+
   return (
     <Edition
       isLoading={
         workIsLoading || manifestationIsLoading || !manifestations?.[0]
       }
       singleManifestation={singleManifestation}
+      coverImage={coverImage}
       isArticle={isArticle}
       isPeriodicaLike={isPeriodicaLike}
       availableAsDigitalCopy={availableAsDigitalCopy}

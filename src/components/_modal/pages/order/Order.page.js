@@ -119,6 +119,8 @@ function Order({
     context?.periodicaForm?.publicationDateOfComponent,
   ]);
 
+  const contextWithOrderPids = { ...context, orderPids };
+
   return (
     <div
       className={`${styles.order} ${isLoadingBranches ? styles.skeleton : ""}`}
@@ -129,7 +131,10 @@ function Order({
           top: styles.top,
         }}
       />
-      <Edition context={context} singleManifestation={singleManifestation} />
+      <Edition
+        context={contextWithOrderPids}
+        singleManifestation={singleManifestation}
+      />
       <LocalizationInformation context={context} />
       <OrdererInformation
         context={context}
@@ -227,6 +232,7 @@ export default function Wrap(props) {
   // context
   const { context, modal } = props;
   context.pids = context?.pids ? context?.pids : [context?.pid];
+
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
   const orderMutation = useMutate();
