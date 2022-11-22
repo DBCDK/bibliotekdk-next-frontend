@@ -293,18 +293,6 @@ describe("Search", () => {
       cy.focused().should("have.attr", "data-cy", "related-subject-heste");
     });
 
-    it(`Can visit keywords`, () => {
-      cy.visit("/iframe.html?id=search-relatedsubjects--default");
-
-      const tag = "ridning";
-      const url = `/find?q.subject=${tag}`;
-
-      // Get selected tag
-      cy.get(`[data-cy=related-subject-${tag}]`)
-        .should("have.attr", "target", "_self")
-        .should("have.attr", "href", url);
-    });
-
     it(`Can render and interact with connected related subjects`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
       cy.get("[data-cy=words-container]").children().should("have.length", 2);
@@ -319,12 +307,36 @@ describe("Search", () => {
       });
     });
 
+    it(`Can visit keywords`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--default");
+
+      const tag = "ridning";
+      const url = `/find?q.subject=${tag}`;
+
+      // Get selected tag
+      cy.get(`[data-cy=related-subject-${tag}]`)
+        .should("have.attr", "target", "_self")
+        .should("have.attr", "href", url);
+    });
+
     it(`Will show search result hitcount in the connected related subjects section`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
-      cy.wait(500);
-      cy.get("[data-cy=text-resultater]")
-        .siblings("h3")
+
+      cy.on("url:change", (url) => {
+        expect(url).to.include("connected");
+      });
+
+      cy.get("[data-cy=text-resultater]").should("exist");
+
+      cy.get("[data-cy=related-hitcount]")
+        .should("exist")
         .should("have.text", "998");
+    });
+
+    it(`Will not show anything if empty`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--empty");
+      cy.get("[data-cy=words-container]").should("not.exist");
+      cy.get("[data-cy=related-hitcount]").should("have.text", "0");
     });
   });
 });

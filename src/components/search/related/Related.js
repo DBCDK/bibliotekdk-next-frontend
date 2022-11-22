@@ -84,6 +84,7 @@ export function Related({ data, hitcount, isLoading }) {
               {Translate({ context: "search", label: "title" })}
             </Text>
             <Title
+              data-cy={"related-hitcount"}
               type="title5"
               tag="h3"
               className={styles.hitcount}
@@ -95,19 +96,20 @@ export function Related({ data, hitcount, isLoading }) {
         )
       }
     >
-      {(data.length > 0 || isLoading) && (
-        <div>
-          <Skip
-            id="view-all-filters"
-            className={styles.skip}
-            label={Translate({
-              context: "search",
-              label: "skipRelatedSubjects",
-            })}
-          />
-          <Words data={data} isLoading={isLoading} />
-        </div>
-      )}
+      {data.length > 0 ||
+        (isLoading && (
+          <div>
+            <Skip
+              id="view-all-filters"
+              className={styles.skip}
+              label={Translate({
+                context: "search",
+                label: "skipRelatedSubjects",
+              })}
+            />
+            <Words data={data} isLoading={isLoading} />
+          </div>
+        ))}
     </Section>
   );
 }
