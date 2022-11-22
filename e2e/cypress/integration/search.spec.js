@@ -295,7 +295,10 @@ describe("Search", () => {
 
     it(`Can render and interact with connected related subjects`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
-      cy.get("[data-cy=words-container]").children().should("have.length", 2);
+      cy.get("[data-cy=words-container]")
+        .should("exist")
+        .children()
+        .should("have.length", 2);
 
       cy.get("[data-cy=words-container]").each((el, idx) => {
         cy.get(el).click();
