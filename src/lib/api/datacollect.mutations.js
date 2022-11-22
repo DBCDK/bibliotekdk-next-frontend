@@ -28,6 +28,7 @@ export function collectRecommenderClick({
   recommender_shown_recommendations,
 }) {
   return {
+    apiUrl: ApiEnums.FBI_API,
     query: `mutation ($input: DataCollectInput!) {
       data_collect(input: $input)
     }

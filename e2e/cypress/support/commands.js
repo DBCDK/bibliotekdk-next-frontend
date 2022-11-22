@@ -38,6 +38,26 @@ Cypress.Commands.add("tabs", (n = 1) => {
   }
 });
 
+Cypress.Commands.add("visitWithConsoleSpy", (url) => {
+  cy.visit(url);
+  cy.window()
+    .its("console")
+    .then((console) => {
+      cy.spy(console, "debug").as("log");
+    });
+});
+
+Cypress.Commands.add("getConsoleEntry", (match) => {
+  return cy
+    .get("@log")
+    .invoke("getCalls")
+    .then((calls) => {
+      const filtered = calls.filter((call) => call.args[0] === match);
+
+      return filtered?.length > 0 ? filtered[filtered.length - 1].args : null;
+    });
+});
+
 Cypress.Commands.add("login", () => {
   cy.intercept("/api/auth/session", {
     body: {

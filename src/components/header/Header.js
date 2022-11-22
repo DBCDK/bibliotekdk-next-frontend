@@ -73,9 +73,6 @@ export function Header({
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
 
-  // for beta1 - disable links above
-  const linksdisabled = false;
-
   const actions = [
     {
       label: "digitalOffers",
@@ -167,11 +164,6 @@ export function Header({
     }
   };
 
-  const frontpageTranslated = Translate({
-    context: "general",
-    label: "frontpage",
-  });
-
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
@@ -187,33 +179,76 @@ export function Header({
                   data-cy={cyKey({ name: "materials", prefix: "header" })}
                 >
                   <Link href="/">
-                    <Text type="text3">{frontpageTranslated}</Text>
-                  </Link>
-                  {filters.workTypes.map((m) => (
-                    <Link
-                      key={m}
-                      disabled={linksdisabled}
-                      dataCy={cyKey({
-                        name: m,
-                        prefix: "header-link",
+                    <Text type="text3">
+                      {Translate({
+                        context: "general",
+                        label: "frontpage",
                       })}
-                      onClick={() => {
-                        filters.setQuery({ include: { workTypes: [m] } });
-                      }}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.keyCode === 13) {
-                          filters.setQuery({ include: { workTypes: [m] } });
-                        }
-                      }}
-                    >
-                      <Text type="text3">
-                        {Translate({
-                          context: "facets",
-                          label: `label-${m}`,
-                        })}
-                      </Text>
-                    </Link>
-                  ))}
+                    </Text>
+                  </Link>
+
+                  <Link
+                    href="/inspiration/artikler"
+                    dataCy="header-link-article"
+                  >
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-article`,
+                      })}
+                    </Text>
+                  </Link>
+
+                  <Link href="/inspiration/spil" dataCy="header-link-game">
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-game`,
+                      })}
+                    </Text>
+                  </Link>
+
+                  <Link
+                    href="/inspiration/boeger"
+                    dataCy="header-link-literature"
+                  >
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-literature`,
+                      })}
+                    </Text>
+                  </Link>
+
+                  <Link href="/inspiration/film" dataCy="header-link-movie">
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-movie`,
+                      })}
+                    </Text>
+                  </Link>
+
+                  <Link href="/inspiration/musik" dataCy="header-link-music">
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-music`,
+                      })}
+                    </Text>
+                  </Link>
+
+                  <Link
+                    href="/inspiration/noder"
+                    dataCy="header-link-sheetmusic"
+                  >
+                    <Text type="text3">
+                      {Translate({
+                        context: "facets",
+                        label: `label-sheetmusic`,
+                      })}
+                    </Text>
+                  </Link>
                 </div>
                 <div
                   className={styles.actions}

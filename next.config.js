@@ -65,6 +65,16 @@ module.exports = {
         permanent: true,
       },
       {
+        source: "/inspiration/b%C3%B8ger",
+        destination: "/inspiration/boeger",
+        permanent: true,
+      },
+      {
+        source: "/inspiration/bøger",
+        destination: "/inspiration/boeger",
+        permanent: true,
+      },
+      {
         source: "/was",
         destination: "https://www.was.digst.dk/beta-bibliotek-dk",
         permanent: false,

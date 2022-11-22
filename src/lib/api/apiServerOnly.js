@@ -16,7 +16,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
   // This prevents a roundtrip to the server
   // and will make page changes feel faster
   if (typeof window !== "undefined") {
-    return { initialState: {} };
+    return {};
   }
 
   // Detect if requester is a bot

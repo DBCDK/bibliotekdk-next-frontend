@@ -1,26 +1,6 @@
-function visitWithLogSpy(url) {
-  cy.visit(url);
-  cy.window()
-    .its("console")
-    .then((console) => {
-      cy.spy(console, "log").as("log");
-    });
-}
-
-function getLogEntry(match) {
-  return cy
-    .get("@log")
-    .invoke("getCalls")
-    .then((calls) => {
-      const filtered = calls.filter((call) => call.args[0] === match);
-
-      return filtered?.length > 0 ? filtered[filtered.length - 1].args : null;
-    });
-}
-
 describe("Order", () => {
   it(`submits ILL order for pids that may be ordered`, () => {
-    visitWithLogSpy(
+    cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
     cy.contains("Bestil").click();
@@ -45,7 +25,7 @@ describe("Order", () => {
     cy.contains("Godkend").click();
     cy.contains("some-order-id");
 
-    getLogEntry("submitOrder").then((entry) => {
+    cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
         pids: ["some-pid-1", "some-pid-2"],
         pickUpBranch: "user.agency.result[0].branchId",
@@ -58,7 +38,7 @@ describe("Order", () => {
   });
 
   it(`should not tab to order modal after it is closed`, () => {
-    visitWithLogSpy(
+    cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
     cy.contains("Bestil").click();
@@ -69,7 +49,7 @@ describe("Order", () => {
   });
 
   it("should handle failed checkorder and pickupAllowed=false", () => {
-    visitWithLogSpy(
+    cy.visitWithConsoleSpy(
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );
     cy.contains("Bestil").click();
@@ -85,7 +65,7 @@ describe("Order", () => {
 
   describe("Order periodica article ", () => {
     it("should order indexed periodica article through digital article service", () => {
-      visitWithLogSpy(
+      cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
       );
       cy.contains("Bestil").click();
@@ -97,7 +77,7 @@ describe("Order", () => {
         "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen"
       );
 
-      getLogEntry("submitPeriodicaArticleOrder").then((entry) => {
+      cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pickUpBranch: "user.agency.result[0].branchId",
           pid: "some-pid-4",
@@ -108,7 +88,7 @@ describe("Order", () => {
     });
 
     it("should order indexed periodica article through ILL (when branch is not subscribed to article service)", () => {
-      visitWithLogSpy(
+      cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article-ill&viewMode=story"
       );
       cy.contains("Bestil").click();
@@ -120,7 +100,7 @@ describe("Order", () => {
       cy.contains("Godkend").click();
       cy.contains("some-order-id");
 
-      getLogEntry("submitOrder").then((entry) => {
+      cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-4"],
           pickUpBranch: "user.agency.result[0].branchId",
@@ -135,7 +115,7 @@ describe("Order", () => {
 
   describe("Order periodica volume", () => {
     it("should order full periodica volume through ILL, never through digital article service", () => {
-      visitWithLogSpy(
+      cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
       cy.contains("Bestil").click();
@@ -159,7 +139,7 @@ describe("Order", () => {
 
       cy.contains("some-order-id");
 
-      getLogEntry("submitOrder").then((entry) => {
+      cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
           pickUpBranch: "user.agency.result[0].branchId",
@@ -174,7 +154,7 @@ describe("Order", () => {
     });
 
     it("should order specific article from a periodica volume through digital article service", () => {
-      visitWithLogSpy(
+      cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
       cy.contains("Bestil").click();
@@ -205,7 +185,7 @@ describe("Order", () => {
         "Du vil modtage en email fra Det Kgl. Bibliotek med artiklen"
       );
 
-      getLogEntry("submitPeriodicaArticleOrder").then((entry) => {
+      cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pid: "some-pid-5",
           pickUpBranch: "user.agency.result[0].branchId",
@@ -221,7 +201,7 @@ describe("Order", () => {
     });
 
     it("should order specific article from a periodica volume through ILL (when branch is not subscribed to article service)", () => {
-      visitWithLogSpy(
+      cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume-only-ill&viewMode=story"
       );
 
@@ -254,7 +234,7 @@ describe("Order", () => {
 
       cy.contains("some-order-id");
 
-      getLogEntry("submitOrder").then((entry) => {
+      cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
           pickUpBranch: "user.agency.result[0].branchId",

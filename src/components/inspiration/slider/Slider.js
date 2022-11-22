@@ -1,26 +1,39 @@
+import PropTypes from "prop-types";
+import merge from "lodash/merge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { useData } from "@/lib/api/api";
-import * as inspiration from "@/lib/api/inspiration.fragments";
+import { inspiration } from "@/lib/api/inspiration.fragments";
+import useElementVisible from "@/components/hooks/useElementVisible";
 
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
 
 import styles from "./Slider.module.css";
 
-export function Slider({ title, works, isLoading }) {
+export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
+  const isClient = typeof window !== "undefined";
+  const { elementRef, hasBeenSeen } = useElementVisible({
+    root: null,
+    rootMargin: "300px",
+    threshold: 0,
+  });
+
+  const hide = lazyLoad && isClient && !hasBeenSeen;
+
   return (
     <Section
-      title={title}
-      backgroundColor="var(--parchment)"
       dataCy="section-inspiration"
+      isLoading={isLoading}
+      {...props}
+      elRef={elementRef}
     >
       <Row className={`${styles.slider}`}>
-        <Col xs={12} md>
+        <Col>
           <WorkSlider
-            skeleton={isLoading}
-            works={works}
+            skeleton={isLoading || hide}
+            works={data}
             data-cy="inspiration-slider"
           />
         </Col>
@@ -29,21 +42,29 @@ export function Slider({ title, works, isLoading }) {
   );
 }
 
-export default function Wrap({ title, category, filter }) {
+export default function Wrap({ category, filters = [], ...props }) {
   const { data, isLoading } = useData(
-    inspiration?.[category]?.({
-      filters: [filter],
+    inspiration({
+      filters,
       limit: 30,
+      category,
     })
   );
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
 
-  const works = cat?.result?.map((singleResult) => singleResult.work);
-
   if (!cat && !isLoading) {
     return null;
   }
 
-  return <Slider title={title} works={works || []} isLoading={isLoading} />;
+  const works = cat?.result.map((obj) =>
+    merge({}, obj.work, { manifestations: { all: [obj.manifestation] } })
+  );
+
+  return <Slider data={works || []} isLoading={isLoading} {...props} />;
 }
+
+Wrap.propTypes = {
+  category: PropTypes.string,
+  filters: PropTypes.array,
+};
