@@ -2,6 +2,7 @@
 
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
+import Text from "@/components/base/text";
 
 const searchOnUrl = "/find?q.creator=";
 
@@ -33,17 +34,7 @@ const fields = () => [
       label: "creators",
     }),
     valueParser: (creators) =>
-      (creators.length === 1 && (
-        <span key={`${creators?.[0]?.display}-creator-by`}>
-          {manifestationLink({ name: creators?.[0]?.display })}
-          {creators?.[0]?.roles?.length > 0 &&
-            ` (${creators?.[0]?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )) ||
-      "",
+      creators?.length === 1 && parseCreatorsOrContributors(creators),
   },
   {
     dataField: "creators",
@@ -51,18 +42,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "co-creators",
     }),
-    valueParser: (value) =>
-      value.length > 1 &&
-      value.map((creator, idx) => (
-        <span key={`${creator?.display}${idx}`}>
-          {manifestationLink({ name: creator?.display })}
-          {creator?.roles?.length > 0 &&
-            ` (${creator?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )),
+    valueParser: (creators) =>
+      creators?.length > 1 && parseCreatorsOrContributors(creators),
   },
   {
     dataField: "contributors",
@@ -70,18 +51,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "contributors",
     }),
-    valueParser: (value) =>
-      value.length > 0 &&
-      value.map((creator, idx) => (
-        <span key={`${creator.display}${idx}`}>
-          {manifestationLink({ name: creator?.display })}
-          {creator?.roles?.length > 0 &&
-            ` (${creator?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )),
+    valueParser: (contributors) =>
+      contributors?.length > 0 && parseCreatorsOrContributors(contributors),
   },
   {
     dataField: "publisher",
@@ -200,6 +171,7 @@ const fields = () => [
       )),
   },
   {
+    // TODO: Prefer use of the language comment (JED 0.8)
     dataField: "languages",
     label: Translate({
       context: "bibliographic-data",
@@ -270,4 +242,20 @@ export function parseManifestation(manifestation) {
         return !!value;
       })
   );
+}
+
+export function parseCreatorsOrContributors(
+  creatorsOrContributors,
+  textType = "text3"
+) {
+  return creatorsOrContributors.map((C, idx) => (
+    <Text key={`${C?.display}${idx}`} type={textType}>
+      {manifestationLink({ name: C?.display })}
+      {C?.roles?.length > 0 &&
+        ` (${C?.roles
+          ?.map((role) => role?.["function"]?.singular)
+          .join(", ")})`}
+      <br />
+    </Text>
+  ));
 }
