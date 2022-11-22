@@ -9,7 +9,18 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
-import { parseCreatorsOrContributors } from "@/lib/manifestationParser";
+import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+
+function CreatorContributorTextHelper({ children }) {
+  return (
+    <span
+      data-cy={"creator-contributor-text-helper"}
+      className={styles.creatorContributorTextHelper}
+    >
+      {children}
+    </span>
+  );
+}
 
 /**
  * The Component function
@@ -30,8 +41,8 @@ export function Details({
 
   // bidrag - contributors + creators - useMemo for performance
   const creatorsAndContributors = useMemo(() => {
-    return [...data?.creators, ...data?.contributors];
-  }, [data?.creators, data?.contributors]);
+    return [...(data?.creators || []), ...(data?.contributors || [])];
+  }, [data]);
 
   // languages - main + subtitles + spoken - useMemo for performance;
   const languages = useMemo(() => {
@@ -115,8 +126,12 @@ export function Details({
           >
             {Translate({ ...context, label: "contribution" })}
           </Text>
-          {creatorsAndContributors.length > 0 &&
-            parseCreatorsOrContributors(creatorsAndContributors)}
+          {creatorsAndContributors?.length > 0 && (
+            <ParsedCreatorsOrContributors
+              creatorsOrContributors={creatorsAndContributors}
+              Tag={CreatorContributorTextHelper}
+            />
+          )}
         </Col>
 
         {genreAndForm && genreAndForm.length > 0 && (
@@ -185,7 +200,7 @@ export function DetailsSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;
