@@ -10,7 +10,6 @@ import { AnonymousSessionContext } from "@/components/hooks/useUser";
 import { RouterContext } from "next/dist/shared/lib/router-context"; // next 12
 
 import { Provider as ModalContextProvider } from "../src/components/_modal/Modal.js";
-import { APIStateContext } from "@/lib/api/api";
 import { GraphQLMocker } from "@/lib/api/mockedFetcher";
 import { StoryRouter } from "@/components/base/storybook";
 import { useRouter } from "next/router";
@@ -18,13 +17,6 @@ import { useState } from "react";
 import Router from "next/router";
 
 export const decorators = [
-  (Story) => {
-    return (
-      <APIStateContext.Provider value={{}}>
-        <Story />
-      </APIStateContext.Provider>
-    );
-  },
   (Story) => {
     return (
       <AnonymousSessionContext.Provider value={{ accessToken: "dummy-token" }}>

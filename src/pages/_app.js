@@ -5,7 +5,7 @@
  * See https://nextjs.org/docs/advanced-features/custom-app
  *
  * Specifically, we make sure pages are wrapped with the
- * APIStateContext.Provider, such that the data fetched
+ * SWRConfig, such that the data fetched
  * via getServerSideProps is used when the React app
  * is rendered.
  */
@@ -25,8 +25,6 @@ import "@/css/styles.css";
 
 import "lazysizes";
 import "lazysizes/plugins/attrchange/ls.attrchange";
-
-import { APIStateContext } from "@/lib/api/api";
 
 import {
   setLocale,
@@ -83,6 +81,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   // swr global confuguration options
   const swrConfigValue = {
+    fallback: pageProps.initialData,
     // catches all errors thrown in fetcher
     onError: async (err) => {
       switch (err.status) {
@@ -105,44 +104,42 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
           keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
         }}
       >
-        <APIStateContext.Provider value={pageProps.initialData}>
-          <Modal.Provider
-            router={{
-              pathname: router.pathname,
-              query: router.query,
-              push: (obj) => router.push(obj),
-              replace: (obj) => router.replace(obj),
-              go: (index) => window.history.go(index),
-            }}
-          >
-            <Modal.Container>
-              <Modal.Page id="menu" component={Pages.Menu} />
-              <Modal.Page id="options" component={Pages.Options} />
-              <Modal.Page id="order" component={Pages.Order} />
-              <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
-              <Modal.Page id="pickup" component={Pages.Pickup} />
-              <Modal.Page id="loanerform" component={Pages.Loanerform} />
-              <Modal.Page id="receipt" component={Pages.Receipt} />
-              <Modal.Page id="login" component={Pages.Login} />
-              <Modal.Page id="filter" component={Pages.Filter} />
-              <Modal.Page id="localizations" component={Pages.Localizations} />
-              <Modal.Page id="references" component={Pages.References} />
-            </Modal.Container>
-            <Matomo allowCookies={allowCookies} />
-            <BodyScrollLock router={router} />
-            <div id="layout">
-              <Head />
-              <SkipToMainLink />
-              <Banner />
-              <Notifications />
-              <HelpHeader />
-              <Component {...pageProps} />
-              <FeedBackLink />
-              <CookieBox />
-              <Footer />
-            </div>
-          </Modal.Provider>
-        </APIStateContext.Provider>
+        <Modal.Provider
+          router={{
+            pathname: router.pathname,
+            query: router.query,
+            push: (obj) => router.push(obj),
+            replace: (obj) => router.replace(obj),
+            go: (index) => window.history.go(index),
+          }}
+        >
+          <Modal.Container>
+            <Modal.Page id="menu" component={Pages.Menu} />
+            <Modal.Page id="options" component={Pages.Options} />
+            <Modal.Page id="order" component={Pages.Order} />
+            <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+            <Modal.Page id="pickup" component={Pages.Pickup} />
+            <Modal.Page id="loanerform" component={Pages.Loanerform} />
+            <Modal.Page id="receipt" component={Pages.Receipt} />
+            <Modal.Page id="login" component={Pages.Login} />
+            <Modal.Page id="filter" component={Pages.Filter} />
+            <Modal.Page id="localizations" component={Pages.Localizations} />
+            <Modal.Page id="references" component={Pages.References} />
+          </Modal.Container>
+          <Matomo allowCookies={allowCookies} />
+          <BodyScrollLock router={router} />
+          <div id="layout">
+            <Head />
+            <SkipToMainLink />
+            <Banner />
+            <Notifications />
+            <HelpHeader />
+            <Component {...pageProps} />
+            <FeedBackLink />
+            <CookieBox />
+            <Footer />
+          </div>
+        </Modal.Provider>
         {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
         <SetPickupBranch router={router} />
       </SessionProvider>
