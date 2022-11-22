@@ -96,21 +96,20 @@ export function Related({ data, hitcount, isLoading }) {
         )
       }
     >
-      {data.length > 0 || isLoading ? (
-        <div>
-          <Skip
-            id="view-all-filters"
-            className={styles.skip}
-            label={Translate({
-              context: "search",
-              label: "skipRelatedSubjects",
-            })}
-          />
-          <Words data={data} isLoading={isLoading} />
-        </div>
-      ) : (
-        <></>
-      )}
+      {data.length > 0 ||
+        (isLoading && (
+          <div>
+            <Skip
+              id="view-all-filters"
+              className={styles.skip}
+              label={Translate({
+                context: "search",
+                label: "skipRelatedSubjects",
+              })}
+            />
+            <Words data={data} isLoading={isLoading} />
+          </div>
+        ))}
     </Section>
   );
 }
