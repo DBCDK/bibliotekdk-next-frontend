@@ -1,21 +1,8 @@
 "use strict";
-
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-
-const searchOnUrl = "/find?q.creator=";
-
-function manifestationLink({ name }) {
-  return (
-    <Link
-      href={`${searchOnUrl}${name}`}
-      border={{ top: false, bottom: { keepVisible: true } }}
-    >
-      {name}
-    </Link>
-  );
-}
+import { useEffect, useState } from "react";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -34,7 +21,9 @@ const fields = () => [
       label: "creators",
     }),
     valueParser: (creators) =>
-      creators?.length === 1 && parseCreatorsOrContributors(creators),
+      creators?.length === 1 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+      ),
   },
   {
     dataField: "creators",
@@ -43,7 +32,9 @@ const fields = () => [
       label: "co-creators",
     }),
     valueParser: (creators) =>
-      creators?.length > 1 && parseCreatorsOrContributors(creators),
+      creators?.length > 1 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+      ),
   },
   {
     dataField: "contributors",
@@ -52,7 +43,9 @@ const fields = () => [
       label: "contributors",
     }),
     valueParser: (contributors) =>
-      contributors?.length > 0 && parseCreatorsOrContributors(contributors),
+      contributors?.length > 0 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={contributors} />
+      ),
   },
   {
     dataField: "publisher",
@@ -244,13 +237,22 @@ export function parseManifestation(manifestation) {
   );
 }
 
-export function parseCreatorsOrContributors(
+export function ParsedCreatorsOrContributors({
   creatorsOrContributors,
-  textType = "text3"
-) {
-  return creatorsOrContributors.map((C, idx) => (
-    <Text key={`${C?.display}${idx}`} type={textType}>
-      {manifestationLink({ name: C?.display })}
+  Tag = ManifestationLink,
+}) {
+  // Used to ensure hydration is consistent
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
+
+  return creatorsOrContributors?.map((C, idx) => (
+    <Text key={`${C?.display}${idx}`}>
+      <Tag>{C?.display}</Tag>
       {C?.roles?.length > 0 &&
         ` (${C?.roles
           ?.map((role) => role?.["function"]?.singular)
@@ -258,4 +260,15 @@ export function parseCreatorsOrContributors(
       <br />
     </Text>
   ));
+}
+
+function ManifestationLink({ children }) {
+  return (
+    <Link
+      href={`/find?q.creator=${children}`}
+      border={{ top: false, bottom: { keepVisible: true } }}
+    >
+      {children}
+    </Link>
+  );
 }
