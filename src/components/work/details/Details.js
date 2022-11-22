@@ -9,6 +9,7 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
+import { parseCreatorsOrContributors } from "@/lib/manifestationParser";
 
 /**
  * The Component function
@@ -16,7 +17,7 @@ import { useMemo } from "react";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Details({
   className = "",
@@ -28,12 +29,9 @@ export function Details({
   const context = { context: "details" };
 
   // bidrag - contributors + creators - useMemo for performance
-  const contributors = useMemo(() => {
-    const contributors_tmp =
-      data?.contributors?.map((contrib) => contrib.display) || [];
-    const creators = data?.creators?.map((creator) => creator.display) || [];
-    return [...creators, ...contributors_tmp];
-  }, [data]);
+  const creatorsAndContributors = useMemo(() => {
+    return [...data?.creators, ...data?.contributors];
+  }, [data?.creators, data?.contributors]);
 
   // languages - main + subtitles + spoken - useMemo for performance;
   const languages = useMemo(() => {
@@ -108,34 +106,18 @@ export function Details({
             </Text>
           </Col>
         )}
-        {contributors && contributors.length > 0 && (
-          <Col xs={6} md={{ span: 3 }}>
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={3}
-            >
-              {Translate({ ...context, label: "contribution" })}
-            </Text>
-            {contributors.map((display, i) => {
-              // Array length
-              const l = contributors.length;
-              // Trailing comma
-              const t = i + 1 === l ? "" : ", ";
-              return (
-                <Text
-                  type="text4"
-                  key={`${display}-${i}`}
-                  skeleton={skeleton}
-                  lines={0}
-                >
-                  {display + t}
-                </Text>
-              );
-            })}
-          </Col>
-        )}
+        <Col xs={6} md={{ span: 3 }}>
+          <Text
+            type="text3"
+            className={styles.title}
+            skeleton={skeleton}
+            lines={3}
+          >
+            {Translate({ ...context, label: "contribution" })}
+          </Text>
+          {creatorsAndContributors.length > 0 &&
+            parseCreatorsOrContributors(creatorsAndContributors)}
+        </Col>
 
         {genreAndForm && genreAndForm.length > 0 && (
           <Col
