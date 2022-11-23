@@ -276,7 +276,7 @@ function Container({ children, className = {}, mock = {} }) {
   }, [modal.stack]);
 
   // Debug -> remove me in future
-  console.log("Debug: ", { stack: modal.stack });
+  console.debug("Debug: ", { stack: modal.stack });
 
   if (children.length <= 0) {
     return null;

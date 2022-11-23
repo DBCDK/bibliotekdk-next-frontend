@@ -9,6 +9,10 @@
   margin: 0 0 var(--pt05) 0;
 }
 
+.creatorContributorTextHelper {
+  font-weight: bold;
+}
+
 @media (min-width: 768px) {
   .details {
     min-height: 75px;

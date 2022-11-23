@@ -9,6 +9,18 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
+import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+
+function CreatorContributorTextHelper({ children }) {
+  return (
+    <span
+      data-cy={"creator-contributor-text-helper"}
+      className={styles.creatorContributorTextHelper}
+    >
+      {children}
+    </span>
+  );
+}
 
 /**
  * The Component function
@@ -16,7 +28,7 @@ import { useMemo } from "react";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Details({
   className = "",
@@ -28,11 +40,8 @@ export function Details({
   const context = { context: "details" };
 
   // bidrag - contributors + creators - useMemo for performance
-  const contributors = useMemo(() => {
-    const contributors_tmp =
-      data?.contributors?.map((contrib) => contrib.display) || [];
-    const creators = data?.creators?.map((creator) => creator.display) || [];
-    return [...creators, ...contributors_tmp];
+  const creatorsAndContributors = useMemo(() => {
+    return [...(data?.creators || []), ...(data?.contributors || [])];
   }, [data]);
 
   // languages - main + subtitles + spoken - useMemo for performance;
@@ -108,34 +117,22 @@ export function Details({
             </Text>
           </Col>
         )}
-        {contributors && contributors.length > 0 && (
-          <Col xs={6} md={{ span: 3 }}>
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={3}
-            >
-              {Translate({ ...context, label: "contribution" })}
-            </Text>
-            {contributors.map((display, i) => {
-              // Array length
-              const l = contributors.length;
-              // Trailing comma
-              const t = i + 1 === l ? "" : ", ";
-              return (
-                <Text
-                  type="text4"
-                  key={`${display}-${i}`}
-                  skeleton={skeleton}
-                  lines={0}
-                >
-                  {display + t}
-                </Text>
-              );
-            })}
-          </Col>
-        )}
+        <Col xs={6} md={{ span: 3 }}>
+          <Text
+            type="text3"
+            className={styles.title}
+            skeleton={skeleton}
+            lines={3}
+          >
+            {Translate({ ...context, label: "contribution" })}
+          </Text>
+          {creatorsAndContributors?.length > 0 && (
+            <ParsedCreatorsOrContributors
+              creatorsOrContributors={creatorsAndContributors}
+              Tag={CreatorContributorTextHelper}
+            />
+          )}
+        </Col>
 
         {genreAndForm && genreAndForm.length > 0 && (
           <Col
@@ -203,7 +200,7 @@ export function DetailsSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;

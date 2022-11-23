@@ -72,7 +72,7 @@ export function handleTab(event, container) {
   );
 
   // Debug -> remove me in future
-  console.log("Debug", { sequence });
+  console.debug("Debug", { sequence });
 
   if (sequence.length < 1) {
     return;
