@@ -15,7 +15,7 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { getPidsFromType } from "@/components/work/reservationbutton/utils";
 
 function selectMaterialBasedOnType(fbiManifestations, type) {
@@ -106,26 +106,33 @@ function MaterialTypeArray(
 export function Overview({
   work,
   workId,
-  type,
+  type = "",
   onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
   const manifestations = work?.manifestations.all;
-  const materialPids = getPidsFromType(manifestations, type);
+  const materialPids = useMemo(() => {
+    if (manifestations && type) {
+      return getPidsFromType(manifestations, type);
+    }
+  }, [manifestations, type]);
   const selectedPids = materialPids?.map((mat) => mat?.pid);
 
-  const validMaterialTypes = work?.materialTypes.map(
-    (materialType) => materialType.specific
-  );
+  const validMaterialTypes = work?.materialTypes
+    ?.map((materialType) => materialType?.specific)
+    ?.sort((a, b) => a?.localeCompare(b));
 
   useEffect(() => {
-    if (type === null || !validMaterialTypes?.includes(type)) {
+    if (
+      validMaterialTypes &&
+      (type === "" || !validMaterialTypes?.includes(type))
+    ) {
       onTypeChange({
-        type: work?.materialTypes?.[0]?.specific,
+        type: validMaterialTypes?.[0],
       });
     }
-  }, [type]);
+  }, [type, validMaterialTypes]);
 
   const selectedMaterial = selectMaterialBasedOnType(manifestations, type);
 
