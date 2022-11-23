@@ -2,7 +2,7 @@ import { getIsPeriodicaLike } from "@/lib/utils";
 
 export function editionCover(manifestations) {
   const manifestationWithCover = manifestations?.find(
-    (manifestation) => manifestation.cover.detail
+    (manifestation) => manifestation?.cover.detail
   );
   return manifestationWithCover
     ? { detail: manifestationWithCover.cover.detail }
@@ -12,10 +12,11 @@ export function editionCover(manifestations) {
 export function inferAccessTypes(
   work,
   periodicaForm,
-  initialPickupBranch
-  // manifestationsBeforeCheck = {}
+  initialPickupBranch,
+  manifestationsBeforeCheck = null
 ) {
-  const manifestations = work?.manifestations?.all;
+  const manifestations =
+    manifestationsBeforeCheck || work?.manifestations?.all || [];
 
   const isArticle = !!work?.workTypes?.find(
     (workType) => workType.toLowerCase() === "article"
