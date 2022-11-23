@@ -174,7 +174,13 @@ export default function Wrap({
   showOrderTxt = true,
 }) {
   const modal = useModal();
-  const { workId, pids, orderPids } = context;
+  const { workId, pids, orderPids: orderPidsBeforeFilter } = context;
+
+  const orderPids = useMemo(() => {
+    return orderPidsBeforeFilter?.filter(
+      (pid) => pid !== null && typeof pid !== "undefined"
+    );
+  }, [orderPidsBeforeFilter]);
 
   const { data: manifestationsData, isLoading: manifestationIsLoading } =
     useData(
