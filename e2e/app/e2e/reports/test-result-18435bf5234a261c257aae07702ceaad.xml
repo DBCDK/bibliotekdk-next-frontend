@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.4740" tests="14" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-22T11:30:34" tests="0" file="cypress/integration/reservationbutton.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Reservation button" timestamp="2022-11-22T11:30:34" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="OrderButton" timestamp="2022-11-22T11:30:34" tests="8" time="3.4030" failures="0">
+    <testcase name="Reservation button OrderButton user logged in material available" time="1.1170" classname="user logged in material available">
+    </testcase>
+    <testcase name="Reservation button OrderButton physical material click opens modal with query params" time="0.4760" classname="physical material click opens modal with query params">
+    </testcase>
+    <testcase name="Reservation button OrderButton digital material" time="0.4430" classname="digital material">
+    </testcase>
+    <testcase name="Reservation button OrderButton user logged in material unavailable" time="0.3390" classname="user logged in material unavailable">
+    </testcase>
+    <testcase name="Reservation button OrderButton user not logged in then above text is shown" time="0.1740" classname="user not logged in then above text is shown">
+    </testcase>
+    <testcase name="Reservation button OrderButton does not display &apos;deaactivated&apos; text, when it is loading" time="0.1910" classname="does not display &apos;deaactivated&apos; text, when it is loading">
+    </testcase>
+    <testcase name="Reservation button OrderButton user not logged in material available" time="0.2430" classname="user not logged in material available">
+    </testcase>
+    <testcase name="Reservation button OrderButton user logged in loan is not possible for material" time="0.4200" classname="user logged in loan is not possible for material">
+    </testcase>
+  </testsuite>
+  <testsuite name="ButtonTxt" timestamp="2022-11-22T11:30:38" tests="6" time="2.0710" failures="0">
+    <testcase name="Reservation button ButtonTxt should have book button text" time="0.1940" classname="should have book button text">
+    </testcase>
+    <testcase name="Reservation button ButtonTxt should have ebook button text" time="0.4360" classname="should have ebook button text">
+    </testcase>
+    <testcase name="Reservation button ButtonTxt should have eaudiobook physical button text" time="0.1710" classname="should have eaudiobook physical button text">
+    </testcase>
+    <testcase name="Reservation button ButtonTxt should have eaudiobook digital button text" time="0.5260" classname="should have eaudiobook digital button text">
+    </testcase>
+    <testcase name="Reservation button ButtonTxt should have Periodica button text" time="0.3850" classname="should have Periodica button text">
+    </testcase>
+    <testcase name="Reservation button ButtonTxt should have slow loading" time="0.3590" classname="should have slow loading">
+    </testcase>
+  </testsuite>
+</testsuites>

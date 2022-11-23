@@ -42,14 +42,20 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
   );
 }
 
-export default function Wrap({ category, filters = [], ...props }) {
-  const { data, isLoading } = useData(
+export default function Wrap({ category, filters = [], limit = 30, ...props }) {
+  console.log("zzz", { category, filters });
+
+  const { data, isLoading, error } = useData(
     inspiration({
       filters,
-      limit: 30,
+      limit,
       category,
     })
   );
+
+  if (error) {
+    console.log("error hest", { category, filters, error });
+  }
 
   const cat = data?.inspiration?.categories?.[category]?.[0];
 

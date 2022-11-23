@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="4.5620" tests="7" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-22T11:27:48" tests="0" file="cypress/integration/old/anchor.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Anchor menu" timestamp="2022-11-22T11:27:48" tests="7" time="4.5620" failures="0">
+    <testcase name="Anchor menu Should render 5 sections" time="1.1630" classname="Should render 5 sections">
+    </testcase>
+    <testcase name="Anchor menu Should render 5 menu items" time="0.2840" classname="Should render 5 menu items">
+    </testcase>
+    <testcase name="Anchor menu Should navigato to clicked section (Section 4)" time="0.3790" classname="Should navigato to clicked section (Section 4)">
+    </testcase>
+    <testcase name="Anchor menu Should navigato to clicked section (Section 2)" time="1.8510" classname="Should navigato to clicked section (Section 2)">
+    </testcase>
+    <testcase name="Anchor menu Should chnage active element on scroll" time="0.3950" classname="Should chnage active element on scroll">
+    </testcase>
+    <testcase name="Anchor menu Menu gets sticky on the fly" time="0.2610" classname="Menu gets sticky on the fly">
+    </testcase>
+    <testcase name="Anchor menu Menu gets relative on the fly" time="0.2290" classname="Menu gets relative on the fly">
+    </testcase>
+  </testsuite>
+</testsuites>

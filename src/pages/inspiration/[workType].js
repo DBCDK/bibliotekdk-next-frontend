@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
-import { inspiration, categories } from "@/lib/api/inspiration.fragments";
+import * as inspirationFragments from "@/lib/api/inspiration.fragments";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 
 import { fetchAll } from "@/lib/api/apiServerOnly";
@@ -31,16 +31,28 @@ import Translate from "@/components/base/translate";
 import Slider from "@/components/inspiration/slider";
 
 // worktype to categories
-const WORKTYPE_TO_CATEGORY = {
-  artikler: "articles",
-  spil: "games",
-  boeger: "fiction",
-  film: "movies",
-  musik: "music",
-  noder: "sheetMusic",
+const WORKTYPE_TO_CATEGORIES = {
+  artikler: ["articles"],
+  spil: ["games"],
+  boeger: [
+    "fiction",
+    "nonfiction",
+    "childrenBooksNonfiction",
+    "childrenBooksFiction",
+  ],
+  film: ["movies"],
+  musik: ["music"],
+  noder: ["sheetMusic"],
 };
 
-// worktype to categories
+// custom filters for a specific category
+const CATEGORY_FILTERS = {
+  childrenBooksNonfiction: ["nyeste", "populære"],
+  childrenBooksFiction: ["nyeste", "populære"],
+  nonfiction: ["nyeste", "populære"],
+};
+
+// category color
 const CATEGORY_COLOR = {
   articles: "var(--parchment)",
   games: "var(--pippin)",
@@ -61,18 +73,23 @@ export function trim(str) {
   return str.replace(/\s/g, "-")?.toLowerCase() || str;
 }
 
-export function Page({ category, data, isLoading }) {
+export function Page({ data, isLoading }) {
   if (isLoading) {
-    data = [...new Array(10).fill({ works: [] })];
+    data = { loading: [...new Array(10).fill({ works: [] })] };
   }
 
+  console.log({ data });
+
+  // Select first element as key (used for translation labels)
+  const label = Object.keys(data)[0];
+
+  // SEO
   const context = "inspiration";
   const { canonical, alternate } = useCanonicalUrl();
-
-  const title = Translate({ context, label: trim(`title-${category}`) });
+  const title = Translate({ context, label: trim(`title-${label}`) });
   const description = Translate({
     context,
-    label: trim(`description-${category}`),
+    label: trim(`description-${label}`),
   });
 
   return (
@@ -95,33 +112,37 @@ export function Page({ category, data, isLoading }) {
       </Head>
       <Section
         title={<Title type="title3">{title}</Title>}
-        backgroundColor={CATEGORY_COLOR[category] || "var(--parchment)"}
+        className="inspiration-section-top"
+        backgroundColor={CATEGORY_COLOR[label] || "var(--parchment)"}
         space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
       >
-        {Translate({ context, label: trim(`description-${category}`) })}
+        {Translate({ context, label: trim(`description-${label}`) })}
       </Section>
 
-      {data?.map((sub, idx) => {
-        const backgroundColor =
-          idx % 2 == 0 ? null : CATEGORY_COLOR[category] || "var(--parchment)";
+      {Object.entries(data)?.map(([category, values]) =>
+        values.map((sub, idx) => {
+          const backgroundColor =
+            idx % 2 == 0 ? null : CATEGORY_COLOR[label] || "var(--parchment)";
 
-        return (
-          <Slider
-            key={`inspiration-${idx}`}
-            title={
-              sub.title &&
-              Translate({
-                context,
-                label: trim(`category-${category}-${sub.title}`),
-              })
-            }
-            category={category}
-            filters={[sub.title]}
-            backgroundColor={backgroundColor}
-            divider={{ content: false }}
-          />
-        );
-      })}
+          return (
+            <Slider
+              key={`inspiration-${sub}-${idx}`}
+              title={
+                sub.title &&
+                Translate({
+                  context,
+                  label: trim(`category-${label}-${sub.title}`),
+                })
+              }
+              limit={30}
+              category={category}
+              filters={[sub.title]}
+              backgroundColor={backgroundColor}
+              divider={{ content: false }}
+            />
+          );
+        })
+      )}
     </>
   );
 }
@@ -130,21 +151,19 @@ export default function Wrap() {
   const router = useRouter();
   const { workType } = router.query;
 
-  const category = WORKTYPE_TO_CATEGORY[workType];
+  const categories = WORKTYPE_TO_CATEGORIES[workType];
+  const filters = CATEGORY_FILTERS;
 
   const { data, isLoading } = useData(
-    categories({
-      category,
+    inspirationFragments.categories({
+      filters: categories.map((c) => ({
+        category: c,
+        subCategories: CATEGORY_FILTERS[c] || [],
+      })),
     })
   );
 
-  return (
-    <Page
-      category={category}
-      data={data?.inspiration?.categories?.[category]}
-      isLoading={isLoading}
-    />
-  );
+  return <Page data={data?.inspiration?.categories} isLoading={isLoading} />;
 }
 
 /**
@@ -159,12 +178,14 @@ export default function Wrap() {
  */
 
 Wrap.getInitialProps = async (ctx) => {
-  const category = WORKTYPE_TO_CATEGORY[ctx?.query?.workType];
+  const categories = WORKTYPE_TO_CATEGORIES[ctx?.query?.workType];
 
   // Get subCategories data
-  const serverQueries = await fetchAll([categories, frontpageHero], ctx, {
-    category,
-  });
+  const serverQueries = await fetchAll(
+    [inspirationFragments.categories, frontpageHero],
+    ctx,
+    { categories }
+  );
 
   const subCategories =
     Object.values(serverQueries.initialData)?.[0]?.data?.inspiration
@@ -175,8 +196,8 @@ Wrap.getInitialProps = async (ctx) => {
     subCategories.map(
       async (sub) =>
         await fetchAll([inspiration], ctx, {
-          category,
-          limit: 30,
+          categories,
+          limit: 50,
           filters: [sub.title],
         })
     )

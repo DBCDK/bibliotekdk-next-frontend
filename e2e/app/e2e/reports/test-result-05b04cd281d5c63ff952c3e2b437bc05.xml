@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.0210" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-22T11:29:01" tests="0" file="cypress/integration/old/loanerform.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="LoanerForm" timestamp="2022-11-22T11:29:01" tests="1" time="1.0210" failures="0">
+    <testcase name="LoanerForm Digital copy" time="1.0210" classname="Digital copy">
+    </testcase>
+  </testsuite>
+</testsuites>

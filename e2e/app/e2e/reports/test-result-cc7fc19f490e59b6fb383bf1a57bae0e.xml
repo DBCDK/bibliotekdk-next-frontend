@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.4570" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2022-11-22T11:28:59" tests="0" file="cypress/integration/old/keywords.spec.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Keywords" timestamp="2022-11-22T11:28:59" tests="3" time="1.4570" failures="0">
+    <testcase name="Keywords Keywords gets filtered" time="1.1290" classname="Keywords gets filtered">
+    </testcase>
+    <testcase name="Keywords Can tab through keywords" time="0.3150" classname="Can tab through keywords">
+    </testcase>
+    <testcase name="Keywords Can visit keywords" time="0.0130" classname="Can visit keywords">
+    </testcase>
+  </testsuite>
+</testsuites>

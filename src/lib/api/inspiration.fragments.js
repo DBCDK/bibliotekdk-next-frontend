@@ -69,12 +69,13 @@ export function inspiration({ limit = 10, filters, category } = {}) {
  * inspiration categories for a category
  *
  * @param {object} params
- * @param {string} params.limit
+ * @param {object} params.filters
+ * @param {array} params.categories
  */
 
-export function categories({ filters = [], category } = {}) {
+export function categories({ filters = [], categories = [] } = {}) {
   // ensure valid category
-  if (!CATEGORY_ENUMS.includes(category)) {
+  if (categories.filter((c) => CATEGORY_ENUMS.includes(c)).length === 0) {
     return null;
   }
 
@@ -83,15 +84,13 @@ export function categories({ filters = [], category } = {}) {
     // delay: 1000, // for debugging
     query: `query ($filters: [String!]) {
         inspiration {
-          categories {
-            ${category}(filters: $filters) {
-              title
-            }
+          categories(filter: $filters) {
+
           }
         }
       }`,
     variables: {
-      filters,
+      filters: [],
     },
     slowThreshold: 3000,
   };
