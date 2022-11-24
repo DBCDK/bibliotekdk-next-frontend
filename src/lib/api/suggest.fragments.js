@@ -47,36 +47,11 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
     query: `
     query SuggestFragmentsAll($q: String!, $workType: WorkType, $limit: Int) {
       suggest(q: $q, workType: $workType, limit: $limit) {
-        result {
-          type
-          term
-          work {
-            __typename
-            workId
-            creators {
-              display
-              nameSort
-            }
-            subjects {
-              all {
-                ... on SubjectText {
-                  type
-                }
-              }
-            }
-            manifestations {
-              latest {
-                cover {
-                  thumbnail
-                  origin
-                }
-              }
-            }
-          }
-        }
+          ...suggestResponseFragment
       }
       monitor(name: "bibdknext_suggest_all")
-    }`,
+    }
+    ${suggestResponseFragment}`,
     variables: { q, workType, suggestType, limit },
     slowThreshold: 3000,
   };
@@ -102,37 +77,43 @@ export function typedSuggest({
     query: `
     query SuggestFragmentsTyped($q: String!, $workType: WorkType, $suggestType: SuggestionType, $limit: Int) {
       suggest(q: $q, workType: $workType, suggestType: $suggestType, limit: $limit) {
-        result {
-          type
-          term
-          work {
-            __typename
-            workId
-            creators {
-              display
-              nameSort
-            }
-            subjects {
-              all {
-                ... on SubjectText {
-                  type
-                }
-              }
-            }
-            manifestations {
-              latest {
-                cover {
-                  thumbnail
-                  origin
-                }
-              }
-            }
-          }
-        }
+        ...suggestResponseFragment
       }
-      monitor(name: "bibdknext_suggest_all")
-    }`,
+      monitor(name: "bibdknext_suggest_typedSuggest")
+    }
+    ${suggestResponseFragment}`,
     variables: { q, workType, suggestType, limit },
     slowThreshold: 3000,
   };
 }
+
+const suggestResponseFragment = `fragment suggestResponseFragment on SuggestResponse {
+  result {
+    type
+    term
+    work {
+      __typename
+      workId
+      creators {
+        display
+        nameSort
+      }
+      subjects {
+        dbcVerified {
+          ... on SubjectText {
+            type
+          }
+        }
+      }
+      manifestations {
+        latest {
+          cover {
+            thumbnail
+            detail
+            origin
+          }
+        }
+      }
+    }
+  }
+}`;

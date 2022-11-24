@@ -293,6 +293,23 @@ describe("Search", () => {
       cy.focused().should("have.attr", "data-cy", "related-subject-heste");
     });
 
+    it(`Can render and interact with connected related subjects`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--connected");
+      cy.get("[data-cy=words-container]")
+        .should("exist")
+        .children()
+        .should("have.length", 2);
+
+      cy.get("[data-cy=words-container]").each((el, idx) => {
+        cy.get(el).click();
+        cy.get("[data-cy=router-pathname]").should("have.text", "/find");
+        cy.get("[data-cy=router-query]").should(
+          "have.text",
+          `{"q.subject":"relatedSubjects[${idx}]"}`
+        );
+      });
+    });
+
     it(`Can visit keywords`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
 
@@ -305,26 +322,24 @@ describe("Search", () => {
         .should("have.attr", "href", url);
     });
 
-    it(`Can render and interact with connected related subjects`, () => {
-      cy.visit("/iframe.html?id=search-relatedsubjects--connected");
-      cy.get("[data-cy=words-container]").children().should("have.length", 2);
-
-      cy.get("[data-cy=words-container]").each((el, idx) => {
-        cy.get(el).click();
-        cy.get("[data-cy=router-pathname]").should("have.text", "/find");
-        cy.get("[data-cy=router-query]").should(
-          "have.text",
-          `{"q.subject":"relatedSubjects[${idx}]"}`
-        );
-      });
-    });
-
     it(`Will show search result hitcount in the connected related subjects section`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
-      cy.wait(500);
-      cy.get("[data-cy=text-resultater]")
-        .siblings("h3")
+
+      cy.on("url:change", (url) => {
+        expect(url).to.include("connected");
+      });
+
+      cy.get("[data-cy=text-resultater]").should("exist");
+
+      cy.get("[data-cy=related-hitcount]")
+        .should("exist")
         .should("have.text", "998");
+    });
+
+    it(`Will not show anything if empty`, () => {
+      cy.visit("/iframe.html?id=search-relatedsubjects--empty");
+      cy.get("[data-cy=words-container]").should("not.exist");
+      cy.get("[data-cy=related-hitcount]").should("have.text", "0");
     });
   });
 });

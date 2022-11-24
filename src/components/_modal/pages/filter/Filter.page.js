@@ -226,7 +226,7 @@ function SelectedFilter({
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Filter(props) {
   const { data, selected, onSubmit, onClear, isLoading, modal, context } =
