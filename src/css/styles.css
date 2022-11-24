@@ -37,13 +37,19 @@
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
-.inspiration-section-top .section-content {
-  padding-top: var(--pt05);
+@media (min-width: 768px) {
+  .inspiration-section-description {
+    max-width: 60%;
+  }
 }
 
 @media (min-width: 992px) {
   .search-settings {
     box-shadow: unset;
+  }
+
+  .inspiration-section-description {
+    padding-top: var(--pt05);
   }
 }
 

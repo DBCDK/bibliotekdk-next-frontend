@@ -25,6 +25,7 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 import Header from "@/components/header";
 import Section from "@/components/base/section";
+import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
@@ -73,18 +74,22 @@ export function trim(str) {
   return str.replace(/\s/g, "-")?.toLowerCase() || str;
 }
 
-export function Page({ data, isLoading }) {
+export function Page({ data, categories, isLoading }) {
   if (isLoading) {
-    data = { loading: [...new Array(10).fill({ works: [] })] };
+    data = [
+      {
+        category: "loading",
+        subCategories: [...new Array(10).fill({ works: [] })],
+      },
+    ];
   }
 
-  console.log({ data });
+  const context = "inspiration";
 
-  // Select first element as key (used for translation labels)
-  const label = Object.keys(data)[0];
+  // use first element in the categories array as label key (for transltations)
+  const label = data?.[0]?.category;
 
   // SEO
-  const context = "inspiration";
   const { canonical, alternate } = useCanonicalUrl();
   const title = Translate({ context, label: trim(`title-${label}`) });
   const description = Translate({
@@ -92,11 +97,14 @@ export function Page({ data, isLoading }) {
     label: trim(`description-${label}`),
   });
 
+  // counter used for slide colors
+  let count = 0;
+
   return (
     <>
       <Header />
       <Head>
-        <title key="title">{title}</title>
+        {!isLoading && <title key="title">{title}</title>}
         <meta key="description" name="description" content={description} />
         <meta key="og:url" property="og:url" content={canonical.url} />
         <meta key="og:type" property="og:type" content="website" />
@@ -111,18 +119,30 @@ export function Page({ data, isLoading }) {
         ))}
       </Head>
       <Section
-        title={<Title type="title3">{title}</Title>}
-        className="inspiration-section-top"
+        title={
+          <Title type="title3" skeleton={isLoading}>
+            {title}
+          </Title>
+        }
         backgroundColor={CATEGORY_COLOR[label] || "var(--parchment)"}
         space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
       >
-        {Translate({ context, label: trim(`description-${label}`) })}
+        <Text
+          className="inspiration-section-description"
+          type="text2"
+          skeleton={isLoading}
+          lines={3}
+        >
+          {Translate({ context, label: trim(`description-${label}`) })}
+        </Text>
       </Section>
 
-      {Object.entries(data)?.map(([category, values]) =>
-        values.map((sub, idx) => {
+      {data?.map(({ category, subCategories }, i) =>
+        subCategories.map((sub, idx) => {
           const backgroundColor =
-            idx % 2 == 0 ? null : CATEGORY_COLOR[label] || "var(--parchment)";
+            count % 2 == 0 ? null : CATEGORY_COLOR[label] || "var(--parchment)";
+
+          count++;
 
           return (
             <Slider
@@ -131,12 +151,12 @@ export function Page({ data, isLoading }) {
                 sub.title &&
                 Translate({
                   context,
-                  label: trim(`category-${label}-${sub.title}`),
+                  label: trim(`category-${category}-${sub.title}`),
                 })
               }
               limit={30}
               category={category}
-              filters={[sub.title]}
+              filters={[{ category, subCategories: sub.title }]}
               backgroundColor={backgroundColor}
               divider={{ content: false }}
             />
@@ -152,7 +172,6 @@ export default function Wrap() {
   const { workType } = router.query;
 
   const categories = WORKTYPE_TO_CATEGORIES[workType];
-  const filters = CATEGORY_FILTERS;
 
   const { data, isLoading } = useData(
     inspirationFragments.categories({
@@ -163,7 +182,13 @@ export default function Wrap() {
     })
   );
 
-  return <Page data={data?.inspiration?.categories} isLoading={isLoading} />;
+  return (
+    <Page
+      data={data?.inspiration?.categories}
+      categories={categories}
+      isLoading={isLoading}
+    />
+  );
 }
 
 /**

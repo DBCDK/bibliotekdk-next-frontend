@@ -22,17 +22,18 @@ const CATEGORY_ENUMS = [
 
 export function inspiration({ limit = 10, filters, category } = {}) {
   // ensure valid category
-  if (!CATEGORY_ENUMS.includes(category)) {
-    return null;
-  }
+  // if (!CATEGORY_ENUMS.includes(category)) {
+  //   return null;
+  // }
 
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($limit: Int!, $filters: [String!]) {
+    query: `query ($limit: Int!, $filters: [CategoryFilter!]) {
         inspiration {
-          categories {
-            ${category}(filters: $filters) {
+          categories(filter: $filters) {
+            category
+            subCategories {
               title
               result(limit: $limit) {
                 work {
@@ -75,22 +76,27 @@ export function inspiration({ limit = 10, filters, category } = {}) {
 
 export function categories({ filters = [], categories = [] } = {}) {
   // ensure valid category
-  if (categories.filter((c) => CATEGORY_ENUMS.includes(c)).length === 0) {
-    return null;
-  }
+  // if (categories.filter((c) => CATEGORY_ENUMS.includes(c)).length === 0) {
+  //   return null;
+  // }
+
+  console.log({ filters });
 
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($filters: [String!]) {
+    query: `query ($filters: [CategoryFilter!]) {
         inspiration {
           categories(filter: $filters) {
-
+            category
+            subCategories {
+              title
+            }
           }
         }
       }`,
     variables: {
-      filters: [],
+      filters,
     },
     slowThreshold: 3000,
   };
