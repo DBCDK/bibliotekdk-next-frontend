@@ -140,7 +140,7 @@ function calcReadTime(htmlString) {
  * @returns {component}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
-  if (!data.article) {
+  if (!data?.article) {
     return null;
   }
 
@@ -324,7 +324,7 @@ export function ContentSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const langcode = { language: getLangcode() };
@@ -344,8 +344,8 @@ export default function Wrap(props) {
 
   const parsed = {
     article: {
-      ...data.article,
-      entityCreated: timestampToShortDate(data.article.entityCreated),
+      ...data?.article,
+      entityCreated: timestampToShortDate(data?.article?.entityCreated),
     },
   };
 
