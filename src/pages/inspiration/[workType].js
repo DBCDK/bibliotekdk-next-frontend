@@ -119,22 +119,19 @@ export function Page({ data, categories, isLoading }) {
         ))}
       </Head>
       <Section
-        title={
+        // Hack for removing title but keep section grid
+        title={<span />}
+        backgroundColor={CATEGORY_COLOR[label] || "var(--white)"}
+        space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
+      >
+        <div className="inspiration-section-about">
           <Title type="title3" skeleton={isLoading}>
             {title}
           </Title>
-        }
-        backgroundColor={CATEGORY_COLOR[label] || "var(--parchment)"}
-        space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
-      >
-        <Text
-          className="inspiration-section-description"
-          type="text2"
-          skeleton={isLoading}
-          lines={3}
-        >
-          {Translate({ context, label: trim(`description-${label}`) })}
-        </Text>
+          <Text type="text2" skeleton={isLoading} lines={2}>
+            {Translate({ context, label: trim(`description-${label}`) })}
+          </Text>
+        </div>
       </Section>
 
       {data?.map(({ category, subCategories }, i) =>
@@ -203,30 +200,36 @@ export default function Wrap() {
  */
 
 Wrap.getInitialProps = async (ctx) => {
-  const categories = WORKTYPE_TO_CATEGORIES[ctx?.query?.workType];
+  const fields = WORKTYPE_TO_CATEGORIES[ctx?.query?.workType];
+  const filters = fields.map((c) => ({
+    category: c,
+    subCategories: CATEGORY_FILTERS[c] || [],
+  }));
 
   // Get subCategories data
   const serverQueries = await fetchAll(
     [inspirationFragments.categories, frontpageHero],
     ctx,
-    { categories }
+    { filters }
   );
 
-  const subCategories =
-    Object.values(serverQueries.initialData)?.[0]?.data?.inspiration
-      ?.categories?.[category] || [];
+  const categories = Object.values(serverQueries.initialData)?.[0]?.data
+    ?.inspiration?.categories;
 
   // Resolve all belt queries
-  const beltData = await Promise.all(
-    subCategories.map(
-      async (sub) =>
-        await fetchAll([inspiration], ctx, {
-          categories,
-          limit: 50,
-          filters: [sub.title],
+  const arr = [];
+  categories?.forEach(({ category, subCategories }) =>
+    subCategories.forEach((sub) =>
+      arr.push(
+        fetchAll([inspirationFragments.inspiration], ctx, {
+          limit: 30,
+          filters: [{ category, subCategories: sub.title }],
         })
+      )
     )
   );
+
+  const beltData = await Promise.all(arr);
 
   // Build initialData object
   let initialData = {};

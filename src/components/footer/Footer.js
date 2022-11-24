@@ -174,7 +174,7 @@ const BranchLinks = () => {
   return MATERIAL_PAGES.map(({ path, label }) => (
     <div key={`link-${path}-${label}`}>
       <Link
-        href={`/inspiration/${path}`}
+        href={`/inspiration/${path}?workTypes=${label}`}
         className={styles.footerlink}
         border={{ bottom: { keepVisible: true } }}
         dataCy="branchlink"

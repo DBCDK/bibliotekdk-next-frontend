@@ -203,7 +203,7 @@ export function Header({
                     return (
                       <Link
                         key={`link-${path}-${label}`}
-                        href={`/inspiration/${path}`}
+                        href={`/inspiration/${path}?workTypes=${label}`}
                         border={{ bottom: { keepVisible: active } }}
                         dataCy={`header-link-${label}`}
                       >
