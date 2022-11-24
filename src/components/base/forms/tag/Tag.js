@@ -48,6 +48,7 @@ function Tag({
           ...context,
           label: selected ? "icon-label-selected" : "icon-label-not-selected",
         })}
+        data-cy={`icon-${children}`}
       />
     </Tag>
   );

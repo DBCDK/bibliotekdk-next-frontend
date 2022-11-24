@@ -1,6 +1,6 @@
 describe("Inspiration", () => {
   describe("Slider", () => {
-    it(`Can fetch data in connected component`, () => {
+    it.skip(`Can fetch data in connected component`, () => {
       cy.visit("/iframe.html?id=inspiration-slider--connected");
 
       cy.get("[data-cy=inspiration-slider] [data-cy=work-card]").should(
