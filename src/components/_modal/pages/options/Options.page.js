@@ -56,9 +56,10 @@ function sortorder(onlineaccess) {
  * @param orderPossible Is it possible to order a physical copy?
  * @return {*}
  */
-function addToOnlinAccess(onlineAccess = [], orderPossible) {
+function addToOnlineAccess(onlineAccess = [], orderPossible) {
   let addi = onlineAccess?.map((access) => {
     const copy = { ...access };
+
     if (copy.__typename === "InfomediaService") {
       copy.accessType = "infomedia";
     } else if (copy.issn) {
@@ -70,6 +71,7 @@ function addToOnlinAccess(onlineAccess = [], orderPossible) {
     } else if (copy.url) {
       copy.accessType = "online";
     }
+
     return copy;
   });
   if (
@@ -99,7 +101,7 @@ export function Options({ modal, context }) {
   // no type selected - get the first one
   const type = context.type;
 
-  const addiOnlineAccess = addToOnlinAccess(
+  const addiOnlineAccess = addToOnlineAccess(
     onlineAccess,
     context.orderPossible
   );
