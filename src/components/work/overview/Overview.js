@@ -26,14 +26,6 @@ function selectMaterialBasedOnType(fbiManifestations, type) {
 
   const coverImage = getCoverImage(filteredManifestations);
 
-  /*const manifestationWithCover = filteredManifestations?.find(
-    (manifestation) => manifestation.cover.detail
-  );
-  const coverImage = manifestationWithCover
-    ? { detail: manifestationWithCover.cover.detail }
-    : { detail: null };
-    */
-
   return {
     cover: coverImage,
     manifestations: filteredManifestations,
