@@ -15,6 +15,7 @@ import {
   inferAccessTypes,
 } from "@/components/_modal/pages/edition/utils";
 import { memo, useMemo } from "react";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 export const Edition = memo(function Edition({
   isLoading,
@@ -208,7 +209,7 @@ export default function Wrap({
     manifestations
   );
 
-  const coverImage = editionCover(manifestations);
+  const coverImage = getCoverImage(manifestations);
 
   return (
     <Edition

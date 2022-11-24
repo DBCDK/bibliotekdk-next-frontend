@@ -68,6 +68,7 @@ export function all({ q, workType, suggestType = "", limit = 100000 }) {
               latest {
                 cover {
                   thumbnail
+                  origin
                 }
               }
             }
@@ -122,6 +123,7 @@ export function typedSuggest({
               latest {
                 cover {
                   thumbnail
+                  origin
                 }
               }
             }

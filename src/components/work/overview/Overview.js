@@ -17,18 +17,22 @@ import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { useEffect } from "react";
 import { getPidsFromType } from "@/components/work/reservationbutton/utils";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 function selectMaterialBasedOnType(fbiManifestations, type) {
   const filteredManifestations = fbiManifestations?.filter(
     (manifestation) => manifestation?.materialTypes?.[0]?.specific === type
   );
 
-  const manifestationWithCover = filteredManifestations?.find(
+  const coverImage = getCoverImage(filteredManifestations);
+
+  /*const manifestationWithCover = filteredManifestations?.find(
     (manifestation) => manifestation.cover.detail
   );
   const coverImage = manifestationWithCover
     ? { detail: manifestationWithCover.cover.detail }
     : { detail: null };
+    */
 
   return {
     cover: coverImage,

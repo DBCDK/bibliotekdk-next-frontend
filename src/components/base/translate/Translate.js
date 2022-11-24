@@ -184,7 +184,8 @@ export function setTranslations(translations) {
 function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
   // hmm .. this is for test purposes:  cy- and jest-tests
   // use translation file for tests
-  if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
+  //if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
+  if (true) {
     contexts = translation.contexts;
   }
   // Check if requested text exist, return error message instead, if not
