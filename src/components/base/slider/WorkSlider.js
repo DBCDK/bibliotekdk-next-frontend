@@ -16,6 +16,7 @@ import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
 import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 /**
  * The work slider skeleton React component
@@ -178,10 +179,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
     <div className={styles.WorkSlider} data-cy={props["data-cy"]}>
       <Swiper {...params} ref={swiperRef}>
         {works.map((work, idx) => {
-          const cover = work?.manifestations?.all.find(
-            (manifestation) => manifestation?.cover?.detail
-          )?.cover;
-
+          const cover = getCoverImage(work?.manifestations?.all);
           const type = work?.manifestations?.all.find(
             (manifestation) => manifestation?.materialTypes?.[0]?.specific
           )?.materialTypes?.[0]?.specific;

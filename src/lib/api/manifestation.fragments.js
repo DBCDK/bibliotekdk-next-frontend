@@ -160,6 +160,7 @@ const manifestationCoverFragment = `fragment manifestationCoverFragment on Manif
   cover {
     detail
     thumbnail
+    origin
   }
 }`;
 

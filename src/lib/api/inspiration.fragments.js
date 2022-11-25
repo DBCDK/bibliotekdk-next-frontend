@@ -50,6 +50,7 @@ export function inspiration({ limit = 10, filters, category } = {}) {
                   }
                   cover {
                     detail
+                    origin
                   }
                 }
               }

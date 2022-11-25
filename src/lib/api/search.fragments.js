@@ -88,6 +88,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             all {
               cover {
                 detail
+                origin
               }
             }
           }

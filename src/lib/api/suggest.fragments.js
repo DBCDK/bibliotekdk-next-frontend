@@ -109,6 +109,8 @@ const suggestResponseFragment = `fragment suggestResponseFragment on SuggestResp
         latest {
           cover {
             thumbnail
+            detail
+            origin
           }
         }
       }
