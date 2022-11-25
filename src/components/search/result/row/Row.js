@@ -12,6 +12,7 @@ import { encodeTitleCreator } from "@/lib/utils";
 import Link from "@/components/base/link";
 
 import styles from "./Row.module.css";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 /**
  * Row representation of a search result entry
@@ -31,9 +32,7 @@ export default function ResultRow({
 
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.all) {
-      return work.manifestations.all
-        .map((all) => all?.cover?.detail)
-        .find((detail) => detail);
+      return getCoverImage(work.manifestations.all).detail;
     }
   }, [work?.manifestations]);
 

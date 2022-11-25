@@ -1,5 +1,10 @@
 import { getIsPeriodicaLike } from "@/lib/utils";
 
+/**
+ * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
+ * @param manifestations
+ * @returns {{detail}|{detail: null}}
+ */
 export function editionCover(manifestations) {
   const manifestationWithCover = manifestations?.find(
     (manifestation) => manifestation?.cover.detail
