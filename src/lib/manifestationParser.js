@@ -170,24 +170,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: (languages) => (
-      <>
-        <div key={`anvendtSprog-main`}>
-          Tale:{" "}
-          {languages.main?.map((mainLang) => mainLang?.display).join(", ")}
-        </div>
-        <div key={`anvendtSprog-syncronized`}>
-          Synkronisering:{" "}
-          {languages?.spoken
-            .map((spokenLang) => spokenLang?.display)
-            .join(", ")}
-        </div>
-        <div key={`anvendtSprog-subtitles`}>
-          Undertekster:{" "}
-          {languages?.subtitles?.map((subLang) => subLang?.display).join(", ")}
-        </div>
-      </>
-    ),
+    valueParser: (languages) => <ParsedLanguages languages={languages} /> || "",
   },
   {
     dataField: "edition",
@@ -270,5 +253,40 @@ function ManifestationLink({ children }) {
     >
       {children}
     </Link>
+  );
+}
+
+function ParsedLanguages({ languages }) {
+  const languagesExist =
+    [...languages?.main, ...languages?.spoken, ...languages?.subtitles].length >
+    0;
+
+  return (
+    languagesExist && (
+      <>
+        {languages?.main?.length > 0 && (
+          <div key={`anvendtSprog-main`}>
+            Sprog:{" "}
+            {languages.main?.map((mainLang) => mainLang?.display).join(", ")}
+          </div>
+        )}
+        {languages?.spoken?.length > 0 && (
+          <div key={`anvendtSprog-syncronized`}>
+            Synkronisering:{" "}
+            {languages?.spoken
+              .map((spokenLang) => spokenLang?.display)
+              .join(", ")}
+          </div>
+        )}
+        {languages?.subtitles?.length > 0 && (
+          <div key={`anvendtSprog-subtitles`}>
+            Undertekster:{" "}
+            {languages?.subtitles
+              ?.map((subLang) => subLang?.display)
+              .join(", ")}
+          </div>
+        )}
+      </>
+    )
   );
 }
