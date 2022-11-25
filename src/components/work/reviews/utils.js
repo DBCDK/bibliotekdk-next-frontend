@@ -8,8 +8,8 @@
 export function sortReviews(a, b) {
   return (
     Number(!!b.librariansReview) - Number(!!a.librariansReview) ||
-    Number(!!b.infomediaId) - Number(!!a.infomediaId) ||
     Number(!!b.urls?.length > 0) - Number(!!a.urls?.length > 0) ||
+    Number(!!b.infomediaId) - Number(!!a.infomediaId) ||
     Number(!!b.rating) - Number(!!a.rating) ||
     0
   );
