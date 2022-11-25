@@ -10,10 +10,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import usePickupBranch from "@/components/hooks/usePickupBranch";
-import {
-  editionCover,
-  inferAccessTypes,
-} from "@/components/_modal/pages/edition/utils";
+import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { memo, useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 
