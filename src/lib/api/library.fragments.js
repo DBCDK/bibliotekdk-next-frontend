@@ -16,7 +16,7 @@ export function search({ q, language = "da", agencyId, limit = 10, offset }) {
     delay: 200, // for debugging
     query: `
     query LibraryFragmentsSearch($q: String, $limit: PaginationLimit, $offset: Int, $language: LanguageCode, $agencyId: String) {
-      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true) {
+      branches(q: $q, agencyid: $agencyId, language: $language, limit: $limit, offset: $offset, bibdkExcludeBranches:true, status:AKTIVE) {
         hitcount
         agencyUrl
         result {
