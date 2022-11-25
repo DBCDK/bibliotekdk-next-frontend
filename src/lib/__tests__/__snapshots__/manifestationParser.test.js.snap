@@ -198,23 +198,79 @@ Array [
   Object {
     "dataField": "languages",
     "label": "Anvendt sprog",
-    "value": <React.Fragment>
-      <div>
-        Tale:
-         
-        engelsk
-      </div>
-      <div>
-        Synkronisering:
-         
-        fransk, tysk, italiensk, spansk, hindi
-      </div>
-      <div>
-        Undertekster:
-         
-        engelsk, fransk, tysk, italiensk, spansk, nederlandsk, dansk, finsk, norsk, svensk, portugisisk, hindi, arabisk, islandsk
-      </div>
-    </React.Fragment>,
+    "value": <ParsedLanguages
+      languages={
+        Object {
+          "main": Array [
+            Object {
+              "display": "engelsk",
+            },
+          ],
+          "original": Array [],
+          "spoken": Array [
+            Object {
+              "display": "fransk",
+            },
+            Object {
+              "display": "tysk",
+            },
+            Object {
+              "display": "italiensk",
+            },
+            Object {
+              "display": "spansk",
+            },
+            Object {
+              "display": "hindi",
+            },
+          ],
+          "subtitles": Array [
+            Object {
+              "display": "engelsk",
+            },
+            Object {
+              "display": "fransk",
+            },
+            Object {
+              "display": "tysk",
+            },
+            Object {
+              "display": "italiensk",
+            },
+            Object {
+              "display": "spansk",
+            },
+            Object {
+              "display": "nederlandsk",
+            },
+            Object {
+              "display": "dansk",
+            },
+            Object {
+              "display": "finsk",
+            },
+            Object {
+              "display": "norsk",
+            },
+            Object {
+              "display": "svensk",
+            },
+            Object {
+              "display": "portugisisk",
+            },
+            Object {
+              "display": "hindi",
+            },
+            Object {
+              "display": "arabisk",
+            },
+            Object {
+              "display": "islandsk",
+            },
+          ],
+        }
+      }
+    />,
   },
 ]
 `;
