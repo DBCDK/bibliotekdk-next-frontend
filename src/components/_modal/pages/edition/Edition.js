@@ -21,16 +21,15 @@ export const Edition = memo(function Edition({
   isLoading,
   singleManifestation = false,
   coverImage = null,
-  isArticle = false,
-  isPeriodicaLike = false,
-  availableAsDigitalCopy = false,
-  isArticleRequest = false,
+  inferredAccessTypes = {},
   context,
   material,
   showOrderTxt = true,
   modal = {},
 }) {
   const { periodicaForm } = context;
+  const { isArticle, isPeriodicaLike, isArticleRequest, isDigitalCopy } =
+    inferredAccessTypes;
 
   const materialType = material?.materialTypes?.[0]?.specific;
 
@@ -42,7 +41,7 @@ export const Edition = memo(function Edition({
     ?.flat()
     ?.join(", ");
 
-  const articleTypeLabel = availableAsDigitalCopy
+  const articleTypeLabel = isDigitalCopy
     ? "will-order-digital-copy"
     : isArticleRequest
     ? "article"
@@ -175,7 +174,13 @@ export default function Wrap({
   showOrderTxt = true,
 }) {
   const modal = useModal();
-  const { workId, pids, orderPids } = context;
+  const { workId, pids, orderPids: orderPidsBeforeFilter } = context;
+
+  const orderPids = useMemo(() => {
+    return orderPidsBeforeFilter?.filter(
+      (pid) => pid !== null && typeof pid !== "undefined"
+    );
+  }, [orderPidsBeforeFilter]);
 
   const { data: manifestationsData, isLoading: manifestationIsLoading } =
     useData(
@@ -197,12 +202,7 @@ export default function Wrap({
 
   const { pickupBranch } = usePickupBranch(pids?.[0]);
 
-  const {
-    isArticle,
-    isPeriodicaLike,
-    isArticleRequest,
-    availableAsDigitalCopy,
-  } = inferAccessTypes(
+  const inferredAccessTypes = inferAccessTypes(
     work,
     context?.periodicaForm,
     pickupBranch,
@@ -218,10 +218,7 @@ export default function Wrap({
       }
       singleManifestation={singleManifestation}
       coverImage={coverImage}
-      isArticle={isArticle}
-      isPeriodicaLike={isPeriodicaLike}
-      availableAsDigitalCopy={availableAsDigitalCopy}
-      isArticleRequest={isArticleRequest}
+      inferredAccessTypes={inferredAccessTypes}
       context={context}
       material={manifestations?.[0]}
       showOrderTxt={showOrderTxt}

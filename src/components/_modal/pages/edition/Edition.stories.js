@@ -1,11 +1,15 @@
 import Edition from "@/components/_modal/pages/edition/Edition";
 import { StoryDescription, StoryTitle } from "@/storybook";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "modal/Edition",
 };
 
 export default exportedObject;
+
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /** EditionComponentBuilder
  * @param {string} type
@@ -34,55 +38,12 @@ function EditionComponentBuilder({
   );
 }
 
-function EditionStoryBuilder(storyname, resolvers = {}, query = {}) {
-  return {
-    parameters: {
-      graphql: {
-        debug: true,
-        resolvers: resolvers,
-        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      },
-      nextRouter: {
-        showInfo: true,
-        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}`,
-        query: query,
-      },
-    },
-  };
-}
-
-function resolvers(storyname) {
-  return {
-    ...EditionStoryBuilder(`${storyname}`, {
-      Manifestation: {
-        publisher: () => ["Sølvbakke"],
-        creators: () => [{}],
-      },
-      ManifestationTitles: {
-        full: () => ["Hugo i Sølvskoven"],
-      },
-      Person: {
-        display: () => "Linoleum Gummigulv",
-      },
-      PublicationYear: {
-        display: () => "3001",
-      },
-      Edition: {
-        edition: () => "109. udgave",
-      },
-      MaterialType: {
-        specific: () => "Bog",
-      },
-    }),
-  };
-}
-
 export function EditionSingleManifestation() {
   const editionProps = {
     context: {
       workId: "some-work-id",
-      pids: ["some-pid-1"],
-      orderPids: ["some-pid-1"],
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
       periodicaForm: false,
     },
     singleManifestation: true,
@@ -96,16 +57,20 @@ export function EditionSingleManifestation() {
     />
   );
 }
-EditionSingleManifestation.story = {
-  ...resolvers("SingleManifestation"),
-};
+EditionSingleManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 export function EditionSingleManifestationNoOrderTxt() {
   const editionProps = {
     context: {
       workId: "some-work-id",
-      pids: ["some-pid-1"],
-      orderPids: ["some-pid-1"],
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
       periodicaForm: false,
     },
     singleManifestation: true,
@@ -120,16 +85,24 @@ export function EditionSingleManifestationNoOrderTxt() {
   );
 }
 
-EditionSingleManifestationNoOrderTxt.story = {
-  ...resolvers("SingleManifestationNoOrderTxt"),
-};
+EditionSingleManifestationNoOrderTxt.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
+      },
+    },
+  }
+);
 
 export function EditionAnyManifestation() {
   const editionProps = {
     context: {
       workId: "some-work-id",
-      pids: ["some-pid-1"],
-      orderPids: ["some-pid-1"],
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
       periodicaForm: false,
     },
     singleManifestation: false,
@@ -144,14 +117,21 @@ export function EditionAnyManifestation() {
   );
 }
 
-EditionAnyManifestation.story = { ...resolvers("AnyManifestation") };
+// EditionAnyManifestation.story = { ...resolvers("AnyManifestation") };
+EditionAnyManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 export function EditionAnyManifestationNoOrderTxt() {
   const editionProps = {
     context: {
       workId: "some-work-id",
-      pids: ["some-pid-1"],
-      orderPids: ["some-pid-1"],
+      pids: ["some-pid-6"],
+      orderPids: ["some-pid-6"],
       periodicaForm: false,
     },
     singleManifestation: false,
@@ -166,6 +146,37 @@ export function EditionAnyManifestationNoOrderTxt() {
   );
 }
 
-EditionAnyManifestationNoOrderTxt.story = {
-  ...resolvers("AnyManifestationNoOrderTxt"),
-};
+EditionAnyManifestationNoOrderTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
+export function EditionAnyManifestationDigitalCopy() {
+  const editionProps = {
+    context: {
+      workId: "some-work-id",
+      pids: ["some-pid-4"],
+      orderPids: ["some-pid-4"],
+      periodicaForm: false,
+    },
+    singleManifestation: false,
+    showOrderTxt: true,
+  };
+
+  return (
+    <EditionComponentBuilder
+      editionProps={editionProps}
+      storyNameOverride={"EditionAnyManifestationDigitalCopy"}
+    />
+  );
+}
+
+EditionAnyManifestationDigitalCopy.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});

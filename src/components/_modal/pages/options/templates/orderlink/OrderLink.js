@@ -84,6 +84,7 @@ export default function Wrap({ props, combined, digitalOnly }) {
           pid,
           workId,
           type,
+          orderType: "singleManifestation",
         })
       }
       combined={combined}

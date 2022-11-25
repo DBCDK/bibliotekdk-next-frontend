@@ -71,10 +71,12 @@ export function editionManifestations({ pid }) {
           display
         }
         ...manifestationCoverFragment
+        ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestations")
     }
     ${manifestationCoverFragment}
+    ${accessFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
