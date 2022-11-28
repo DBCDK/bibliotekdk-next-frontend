@@ -5,6 +5,12 @@ describe("Order", () => {
     );
     cy.contains("Bestil").click();
 
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
+    cy.get("[data-cy=button-godkend]")
+      .should("exist")
+      .should("not.be.disabled");
+
     // Show info about the manifestation/work
     cy.contains("Hugo i Sølvskoven");
     cy.contains(
@@ -23,7 +29,7 @@ describe("Order", () => {
 
     // Submit the order
     cy.contains("Godkend").click();
-    cy.contains("some-order-id");
+    cy.contains("some-order-id", { timeout: 500 });
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
@@ -42,6 +48,10 @@ describe("Order", () => {
       "/iframe.html?id=modal-order--order-via-ill&viewMode=story"
     );
     cy.contains("Bestil").click();
+
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
+
     cy.get("[data-cy=modal-dimmer]").should("be.visible");
     cy.contains("Luk").click();
     cy.get("body").tab();
@@ -53,6 +63,9 @@ describe("Order", () => {
       "/iframe.html?id=modal-order--pickup-not-allowed&viewMode=story"
     );
     cy.contains("Bestil").click();
+
+    // Check that user blocking is not present
+    cy.get("[data-cy=blocked-user]").should("not.exist");
 
     cy.contains("Test Bib - no orders here");
 
@@ -69,6 +82,12 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
       );
       cy.contains("Bestil").click();
+
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
 
       cy.contains("Leveres via digital artikelservice");
       cy.contains("Godkend").click();
@@ -92,6 +111,12 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-indexed-periodica-article-ill&viewMode=story"
       );
       cy.contains("Bestil").click();
+
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
 
       cy.contains("Test Bib");
       cy.contains(
@@ -119,6 +144,12 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
       cy.contains("Bestil").click();
+
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
 
       cy.contains("Test Bib - ILL and digital copy service");
 
@@ -158,6 +189,11 @@ describe("Order", () => {
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
       cy.contains("Bestil").click();
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
 
       cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
 
@@ -207,6 +243,12 @@ describe("Order", () => {
 
       cy.contains("Bestil").click();
 
+      // Check that user blocking is not present
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
+
       cy.get('[data-cy="text-vælg-udgave-eller-artikel"]').click();
 
       cy.get('[placeholder="Skriv årstal"]').type("1992");
@@ -230,6 +272,7 @@ describe("Order", () => {
         "Du får besked fra dit bibliotek når materialet er klar til afhentning"
       );
 
+      // Check that BlockedUser does not exist
       cy.get("[data-cy=button-godkend]").click();
 
       cy.contains("some-order-id");
@@ -249,6 +292,33 @@ describe("Order", () => {
           pagination: "100-104",
         });
       });
+    });
+  });
+
+  describe("Not blocked or Blocked user", () => {
+    it("should not block users from loaning if they are not blocked", () => {
+      cy.visit("/iframe.html?id=modal-order--not-blocked-user&viewMode=story");
+
+      cy.contains("Bestil").click();
+
+      cy.get("[data-cy=blocked-user]").should("not.exist");
+
+      cy.get("[data-cy=button-godkend]")
+        .should("exist")
+        .should("not.be.disabled");
+    });
+
+    it("should block users from loaning if they are blocked", () => {
+      cy.visit("/iframe.html?id=modal-order--blocked-user&viewMode=story");
+
+      cy.contains("Bestil").click();
+
+      cy.get("[data-cy=blocked-user]")
+        .should("exist")
+        .find("a")
+        .should("have.attr", "href", "balleripraprup.dekaa");
+
+      cy.get("[data-cy=button-godkend]").should("exist").should("be.disabled");
     });
   });
 });
