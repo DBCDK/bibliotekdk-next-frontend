@@ -75,13 +75,8 @@ export default function Wrap() {
       ?.map((res) => res.userIsBlocked)
       .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
 
-  const userNotLoggedIn = branches?.result?.every((res) => {
-    return res.userIsBlocked === null;
-  });
-
   if (
     !blockedUser ||
-    userNotLoggedIn ||
     !authUser ||
     isGuestUser ||
     !isAuthenticated ||
