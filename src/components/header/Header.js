@@ -198,7 +198,9 @@ export function Header({
                   </Link>
 
                   {MATERIAL_PAGES.map(({ path, label }) => {
-                    const active = router.asPath === `/inspiration/${path}`;
+                    const active = router.asPath.includes(
+                      `/inspiration/${path}`
+                    );
 
                     return (
                       <Link
