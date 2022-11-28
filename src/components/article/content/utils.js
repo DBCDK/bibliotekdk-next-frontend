@@ -1,3 +1,5 @@
+import config from "@/config";
+
 /**
  * Body parse search-and-replace funtion
  *
@@ -5,13 +7,11 @@
  *
  * @returns {string}
  */
-import config from "@/config";
-
 export default function parseArticleBody(str) {
   const img_regex = /<\s*img[^>]*\/>/g;
-  const cap_regex = /data-caption=\"(.*?)\"/;
-  const src_regex = /src=\"(.*?)\"/;
-  const alt_regex = /alt=\"(.*?)\"/;
+  const cap_regex = /data-caption="(.*?)"/;
+  const src_regex = /src="(.*?)"/;
+  const alt_regex = /alt="(.*?)"/;
 
   const backendurl = config.backend.url + "/";
 
