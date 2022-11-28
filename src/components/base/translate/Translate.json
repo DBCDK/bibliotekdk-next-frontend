@@ -2175,6 +2175,47 @@
         "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
+
+      "category-articles-(30,-39]" : {
+        "da": "category-articles-(30,-39]",
+        "en": "category-articles-(30,-39]"
+      },
+      "category-articles-(60,-69]" : {
+        "da": "category-articles-(60,-69]",
+        "en": "category-articles-(60,-69]"
+      },
+      "category-articles-(90,-99]" : {
+        "da": "category-articles-(90,-99]",
+        "en": "category-articles-(90,-99]"
+      },
+      "category-articles-(70,-79]" : {
+        "da": "category-articles-(70,-79]",
+        "en": "category-articles-(70,-79]"
+      },
+      "category-articles-(10,-19]" : {
+        "da": "category-articles-(10,-19]",
+        "en": "category-articles-(10,-19]"
+      },
+      "category-articles-(80,-89]" : {
+        "da": "category-articles-(80,-89]",
+        "en": "category-articles-(80,-89]"
+      },
+      "category-articles-(50,-59]" : {
+        "da": "category-articles-(50,-59]",
+        "en": "category-articles-(50,-59]"
+      },
+      "category-articles-(20,-29]" : {
+        "da": "category-articles-(20,-29]",
+        "en": "category-articles-(20,-29]"
+      },
+      "category-articles-(40,-49]" : {
+        "da": "category-articles-(40,-49]",
+        "en": "category-articles-(40,-49]"
+      },
+      "category-articles-(0,-9]" : {
+        "da": "category-articles-(0,-9]",
+        "en": "category-articles-(0,-9]"
+      },
       "category-articles-33": {
         "da": "33",
         "en": "Label: mangler oversættelse"
@@ -2335,6 +2376,10 @@
         "da": "Historiske romaner",
         "en": "Historical novels"
       },
+      "category-fiction-politiromaner": {
+        "da": "category-fiction-politiromaner",
+        "en": "category-fiction-politiromaner"
+      },
       "title-movies": {
         "da": "Film",
         "en": "Movies"
@@ -2482,6 +2527,10 @@
       "category-sheetmusic-nyeste": {
         "da": "Nyeste noder",
         "en": "New sheet music"
+      },
+      "category-sheetmusic-populære": {
+        "da": "Populære noder",
+        "en": "Popular sheet music"
       },
       "category-sheetmusic-music-minus-one": {
         "da": "Music Minus One",
