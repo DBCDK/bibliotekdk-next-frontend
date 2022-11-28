@@ -13,6 +13,7 @@ import styles from "./Input.module.css";
  * @param {string} type
  * @param id
  * @param invalid
+ * @param invalidClass
  * @param {string} value
  * @param {string|null} placeholder
  * @param {boolean} disabled
@@ -57,6 +58,10 @@ function Input({
   const readOnlyClass = readOnly || disabled ? styles.readOnly : "";
   const invalidClass = !readOnlyClass && invalid ? styles.error : "";
 
+  delete props.skeleton;
+  delete props.invalidClass;
+  delete props.onMount;
+
   return (
     <input
       {...props}
@@ -89,6 +94,7 @@ Input.propTypes = {
   className: PropTypes.string,
   value: PropTypes.string,
   invalid: PropTypes.bool,
+  invalidClass: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
