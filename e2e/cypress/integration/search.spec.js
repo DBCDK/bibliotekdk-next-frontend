@@ -37,14 +37,6 @@ describe("Search", () => {
       );
     });
 
-    it(`Go to find page when changing material type on work page`, () => {
-      cy.visit("/iframe.html?id=layout-header--nav-header-material-page");
-      cy.get("header [data-cy=header-material-selector]").click();
-      cy.get("header [data-cy=item-movie] > [data-cy=text-film]").click();
-
-      cy.get("[data-cy=router-pathname]").should("have.text", "/find");
-    });
-
     it(`Maps query parameters from input fields to url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 

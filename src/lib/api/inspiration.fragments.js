@@ -20,11 +20,12 @@ const CATEGORY_ENUMS = [
  * @param {string} params.limit
  */
 
-export function inspiration({ limit = 10, filters, category } = {}) {
-  // ensure valid category
-  // if (!CATEGORY_ENUMS.includes(category)) {
-  //   return null;
-  // }
+export function inspiration({ filters = [], limit = 10 } = {}) {
+  // Remove unknown categories
+  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  if (filters.length === 0) {
+    return null;
+  }
 
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -74,13 +75,12 @@ export function inspiration({ limit = 10, filters, category } = {}) {
  * @param {array} params.categories
  */
 
-export function categories({ filters = [], categories = [] } = {}) {
-  // ensure valid category
-  // if (categories.filter((c) => CATEGORY_ENUMS.includes(c)).length === 0) {
-  //   return null;
-  // }
-
-  console.log({ filters });
+export function categories({ filters = [] } = {}) {
+  // Remove unknown categories
+  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  if (filters.length === 0) {
+    return null;
+  }
 
   return {
     apiUrl: ApiEnums.FBI_API,
