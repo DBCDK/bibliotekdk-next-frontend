@@ -4,7 +4,7 @@
  */
 describe("Overview", () => {
   describe("Overview parent", () => {
-    before(function () {
+    beforeEach(function () {
       cy.visit("/iframe.html?id=work-overview--overview-wrapped");
     });
 
@@ -59,6 +59,30 @@ describe("Overview", () => {
       cy.get(`[data-cy=${tagEbog}]`).focus().contains("Ebog").click();
       cy.get(`[data-cy=${tagEbog}]`).children("i").should("be.visible");
       cy.get(`[data-cy=${tagBog}]`).children("i").should("not.be.visible");
+    });
+
+    it("Can default its first materialType: ", () => {
+      cy.visit("/iframe.html?id=work-overview--overview-wrapped-no-type");
+
+      cy.get("[data-cy=icon-Bog]")
+        .children()
+        .should("have.attr", "src", "/icons/checkmark.svg")
+        .should("have.attr", "alt", "ikke valgt");
+
+      cy.on("url:change", (url) => {
+        expect(url).to.contain("type=Bog");
+      });
+
+      cy.get("[data-cy=button-order-overview-enabled]").should("exist");
+
+      cy.get(`[data-cy=icon-Bog]`, { timeout: 500 })
+        .children()
+        .should("have.attr", "src", "/icons/checkmark.svg");
+
+      cy.get("[data-cy=icon-Ebog]", { timeout: 500 })
+        .children()
+        .should("have.attr", "src", "/icons/checkmark.svg")
+        .should("have.attr", "alt", "ikke valgt");
     });
 
     // Tabs BETA-1 removed breadcrumbs - tab order fucked up skip this test

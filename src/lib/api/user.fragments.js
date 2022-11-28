@@ -58,7 +58,7 @@ export function orderPolicy({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($language: LanguageCode!, $pid: String! ) {
+    query: `query orderPolicy ($language: LanguageCode!, $pid: String! ) {
       user {
         agency (language: $language){
           agencyUrl

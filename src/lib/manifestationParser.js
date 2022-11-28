@@ -1,20 +1,8 @@
 "use strict";
-
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
-
-const searchOnUrl = "/find?q.creator=";
-
-function manifestationLink({ name }) {
-  return (
-    <Link
-      href={`${searchOnUrl}${name}`}
-      border={{ top: false, bottom: { keepVisible: true } }}
-    >
-      {name}
-    </Link>
-  );
-}
+import Text from "@/components/base/text";
+import { useEffect, useState } from "react";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -33,17 +21,9 @@ const fields = () => [
       label: "creators",
     }),
     valueParser: (creators) =>
-      (creators.length === 1 && (
-        <span key={`${creators?.[0]?.display}-creator-by`}>
-          {manifestationLink({ name: creators?.[0]?.display })}
-          {creators?.[0]?.roles?.length > 0 &&
-            ` (${creators?.[0]?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )) ||
-      "",
+      creators?.length === 1 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+      ),
   },
   {
     dataField: "creators",
@@ -51,18 +31,10 @@ const fields = () => [
       context: "bibliographic-data",
       label: "co-creators",
     }),
-    valueParser: (value) =>
-      value.length > 1 &&
-      value.map((creator, idx) => (
-        <span key={`${creator?.display}${idx}`}>
-          {manifestationLink({ name: creator?.display })}
-          {creator?.roles?.length > 0 &&
-            ` (${creator?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )),
+    valueParser: (creators) =>
+      creators?.length > 1 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+      ),
   },
   {
     dataField: "contributors",
@@ -70,18 +42,10 @@ const fields = () => [
       context: "bibliographic-data",
       label: "contributors",
     }),
-    valueParser: (value) =>
-      value.length > 0 &&
-      value.map((creator, idx) => (
-        <span key={`${creator.display}${idx}`}>
-          {manifestationLink({ name: creator?.display })}
-          {creator?.roles?.length > 0 &&
-            ` (${creator?.roles
-              .map((role) => role?.["function"]?.singular)
-              .join(", ")})`}
-          <br />
-        </span>
-      )),
+    valueParser: (contributors) =>
+      contributors?.length > 0 && (
+        <ParsedCreatorsOrContributors creatorsOrContributors={contributors} />
+      ),
   },
   {
     dataField: "publisher",
@@ -200,29 +164,13 @@ const fields = () => [
       )),
   },
   {
+    // TODO: Prefer use of the language comment (JED 0.8)
     dataField: "languages",
     label: Translate({
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: (languages) => (
-      <>
-        <div key={`anvendtSprog-main`}>
-          Tale:{" "}
-          {languages.main?.map((mainLang) => mainLang?.display).join(", ")}
-        </div>
-        <div key={`anvendtSprog-syncronized`}>
-          Synkronisering:{" "}
-          {languages?.spoken
-            .map((spokenLang) => spokenLang?.display)
-            .join(", ")}
-        </div>
-        <div key={`anvendtSprog-subtitles`}>
-          Undertekster:{" "}
-          {languages?.subtitles?.map((subLang) => subLang?.display).join(", ")}
-        </div>
-      </>
-    ),
+    valueParser: (languages) => <ParsedLanguages languages={languages} /> || "",
   },
   {
     dataField: "edition",
@@ -269,5 +217,76 @@ export function parseManifestation(manifestation) {
         // remove entry if value is falsy
         return !!value;
       })
+  );
+}
+
+export function ParsedCreatorsOrContributors({
+  creatorsOrContributors,
+  Tag = ManifestationLink,
+}) {
+  // Used to ensure hydration is consistent
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
+
+  return creatorsOrContributors?.map((C, idx) => (
+    <Text key={`${C?.display}${idx}`}>
+      <Tag>{C?.display}</Tag>
+      {C?.roles?.length > 0 &&
+        ` (${C?.roles
+          ?.map((role) => role?.["function"]?.singular)
+          .join(", ")})`}
+      <br />
+    </Text>
+  ));
+}
+
+function ManifestationLink({ children }) {
+  return (
+    <Link
+      href={`/find?q.creator=${children}`}
+      border={{ top: false, bottom: { keepVisible: true } }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function ParsedLanguages({ languages }) {
+  const languagesExist =
+    [...languages?.main, ...languages?.spoken, ...languages?.subtitles].length >
+    0;
+
+  return (
+    languagesExist && (
+      <>
+        {languages?.main?.length > 0 && (
+          <div key={`anvendtSprog-main`}>
+            Sprog:{" "}
+            {languages.main?.map((mainLang) => mainLang?.display).join(", ")}
+          </div>
+        )}
+        {languages?.spoken?.length > 0 && (
+          <div key={`anvendtSprog-syncronized`}>
+            Synkronisering:{" "}
+            {languages?.spoken
+              .map((spokenLang) => spokenLang?.display)
+              .join(", ")}
+          </div>
+        )}
+        {languages?.subtitles?.length > 0 && (
+          <div key={`anvendtSprog-subtitles`}>
+            Undertekster:{" "}
+            {languages?.subtitles
+              ?.map((subLang) => subLang?.display)
+              .join(", ")}
+          </div>
+        )}
+      </>
+    )
   );
 }

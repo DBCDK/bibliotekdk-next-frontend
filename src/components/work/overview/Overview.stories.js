@@ -20,7 +20,7 @@ const time = date.getTime();
  */
 function OverviewComponentBuilder({
   overviewProps,
-  type = "Bog",
+  type,
   storyNameOverride = null,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
@@ -33,7 +33,7 @@ function OverviewComponentBuilder({
       </StoryDescription>
       <Overview
         workId={overviewProps.workId ?? "some-workId"}
-        type={overviewProps.type ?? "Bog"}
+        type={overviewProps.type ?? ""}
         onTypeChange={(el) => overviewProps.onTypeChange(el.type)}
         login={() => {}}
       />
@@ -94,7 +94,7 @@ function resolvers(storyname) {
           return [
             {
               pid: "some-pid-bog" + time,
-              materialTypes: [{ specific: "Bog" }],
+              materialTypes: [{ specific: "Bog" }, { specific: "Ebog" }],
               accessTypes: [
                 {
                   display: "fysisk",
@@ -119,7 +119,7 @@ function resolvers(storyname) {
 }
 
 export function OverviewWrapped() {
-  const [type, setType] = useState("bog");
+  const [type, setType] = useState("Bog");
 
   const overviewProps = {
     workId: `some-workId-${type}`,
@@ -133,6 +133,28 @@ export function OverviewWrapped() {
 }
 
 OverviewWrapped.story = {
+  ...resolvers("Wrapped"),
+};
+
+export function OverviewWrappedNoType() {
+  const [type, setType] = useState("");
+
+  const overviewProps = {
+    workId: `some-workId-${type}`,
+    type: type,
+    onTypeChange: (el) => {
+      setTimeout(() => {
+        setType(el);
+      }, 400);
+    },
+  };
+
+  return (
+    <OverviewComponentBuilder overviewProps={overviewProps} type={"No type"} />
+  );
+}
+
+OverviewWrappedNoType.story = {
   ...resolvers("Wrapped"),
 };
 

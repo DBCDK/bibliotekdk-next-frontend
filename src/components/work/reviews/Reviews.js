@@ -52,7 +52,11 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   const context = { context: "reviews" };
   const workId = data?.workId;
   const title = data?.titles?.main?.[0];
-  const reviews = useMemo(() => sortReviews(data.workReviews), [data]);
+  const reviews = useMemo(
+    () => [...data?.workReviews]?.sort(sortReviews),
+    [data]
+  );
+
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();

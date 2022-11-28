@@ -54,25 +54,24 @@ export function branchHoldings({ branchId, pids }) {
     query: `
     query BranchHoldings($branchId: String!, $pids: [String]){
       branches(branchId:$branchId){
-      agencyUrl
-      result{
-        agencyName
-        name
-        agencyId
-        branchId
-        branchWebsiteUrl
-        branchCatalogueUrl
-        lookupUrl
-        holdingStatus(pids:$pids){
-          count
-          lamp{color message}
-        agencyHoldings{
-          localisationPid
-          localIdentifier
-          agencyId                    
-          }
-          holdingItems
-            {
+        agencyUrl
+        result {
+          agencyName
+          name
+          agencyId
+          branchId
+          branchWebsiteUrl
+          branchCatalogueUrl
+          lookupUrl
+          holdingStatus(pids:$pids) {
+            count
+            lamp{color message}
+            agencyHoldings {
+              localisationPid
+              localIdentifier
+              agencyId                    
+            }
+            holdingItems {
               branch
               branchId
               willLend 
@@ -88,10 +87,10 @@ export function branchHoldings({ branchId, pids }) {
               status
               subLocation
             }
+          }
         }
       }
-     }
-     monitor(name: "bibdknext_branch_holdings")
+      monitor(name: "bibdknext_branch_holdings")
     }`,
     variables: { branchId, pids },
     slowThreshold: 3000,

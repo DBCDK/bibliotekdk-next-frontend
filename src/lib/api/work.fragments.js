@@ -357,6 +357,7 @@ export function fbiOverviewDetail({ workId }) {
               }
               cover {
                 detail
+                origin
               }              
               materialTypes {
                 specific
@@ -439,6 +440,7 @@ export function workJsonLd({ workId }) {
                   pid
                   cover {
                     detail
+                    origin
                   }                  
                   identifiers {
                     type
@@ -617,6 +619,7 @@ export function overviewWork({ workId }) {
             }
             cover {
               detail
+              origin
             }
           }
         }
@@ -645,6 +648,7 @@ const workSliderFragment = `fragment workSliderFragment on Work {
       }
       cover {
         detail
+        origin
       }
     }
   }

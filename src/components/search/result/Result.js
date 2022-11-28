@@ -18,6 +18,7 @@ import useBreakpoint from "@/components/hooks/useBreakpoint";
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
+import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  * Search result
@@ -136,7 +137,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
   const modal = useModal();
 
   const { getCount } = useFilters();
-  const filtersCount = getCount(["workType"]).toString();
+  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
 
   // use the useData hook to fetch data
   const fastResponse = useData(

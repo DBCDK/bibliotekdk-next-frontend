@@ -12,218 +12,147 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": Array [
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+    "value": <ParsedCreatorsOrContributors
+      creatorsOrContributors={
+        Array [
+          Object {
+            "display": "Duncan Jones",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "instruktør",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Duncan Jones"
-        >
-          Duncan Jones
-        </Link>
-         (instruktør, manuskript)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+              Object {
+                "function": Object {
+                  "singular": "manuskript",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Charles Leavitt"
-        >
-          Charles Leavitt
-        </Link>
-         (manuskript)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Charles Leavitt",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "manuskript",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Simon Duggan"
-        >
-          Simon Duggan
-        </Link>
-         (filmfotograf)
-        <br />
-      </span>,
-    ],
+            ],
+          },
+          Object {
+            "display": "Simon Duggan",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "filmfotograf",
+                },
+              },
+            ],
+          },
+        ]
+      }
+    />,
   },
   Object {
     "dataField": "contributors",
     "label": "Bidrag",
-    "value": Array [
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+    "value": <ParsedCreatorsOrContributors
+      creatorsOrContributors={
+        Array [
+          Object {
+            "display": "Travis Fimmel",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Travis Fimmel"
-        >
-          Travis Fimmel
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Paula Patton",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Paula Patton"
-        >
-          Paula Patton
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Ben Foster",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Ben Foster"
-        >
-          Ben Foster
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Dominic Cooper",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Dominic Cooper"
-        >
-          Dominic Cooper
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Toby Kebbell",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Toby Kebbell"
-        >
-          Toby Kebbell
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Ben Schnetzer",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Ben Schnetzer"
-        >
-          Ben Schnetzer
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Rob Kazinsky",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Rob Kazinsky"
-        >
-          Rob Kazinsky
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Clancy Brown",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Clancy Brown"
-        >
-          Clancy Brown
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
+            ],
+          },
+          Object {
+            "display": "Daniel Wu",
+            "roles": Array [
+              Object {
+                "function": Object {
+                  "singular": "skuespiller",
+                },
               },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=Daniel Wu"
-        >
-          Daniel Wu
-        </Link>
-         (skuespiller)
-        <br />
-      </span>,
-    ],
+            ],
+          },
+        ]
+      }
+    />,
   },
   Object {
     "dataField": "publisher",
@@ -269,23 +198,79 @@ Array [
   Object {
     "dataField": "languages",
     "label": "Anvendt sprog",
-    "value": <React.Fragment>
-      <div>
-        Tale:
-         
-        engelsk
-      </div>
-      <div>
-        Synkronisering:
-         
-        fransk, tysk, italiensk, spansk, hindi
-      </div>
-      <div>
-        Undertekster:
-         
-        engelsk, fransk, tysk, italiensk, spansk, nederlandsk, dansk, finsk, norsk, svensk, portugisisk, hindi, arabisk, islandsk
-      </div>
-    </React.Fragment>,
+    "value": <ParsedLanguages
+      languages={
+        Object {
+          "main": Array [
+            Object {
+              "display": "engelsk",
+            },
+          ],
+          "original": Array [],
+          "spoken": Array [
+            Object {
+              "display": "fransk",
+            },
+            Object {
+              "display": "tysk",
+            },
+            Object {
+              "display": "italiensk",
+            },
+            Object {
+              "display": "spansk",
+            },
+            Object {
+              "display": "hindi",
+            },
+          ],
+          "subtitles": Array [
+            Object {
+              "display": "engelsk",
+            },
+            Object {
+              "display": "fransk",
+            },
+            Object {
+              "display": "tysk",
+            },
+            Object {
+              "display": "italiensk",
+            },
+            Object {
+              "display": "spansk",
+            },
+            Object {
+              "display": "nederlandsk",
+            },
+            Object {
+              "display": "dansk",
+            },
+            Object {
+              "display": "finsk",
+            },
+            Object {
+              "display": "norsk",
+            },
+            Object {
+              "display": "svensk",
+            },
+            Object {
+              "display": "portugisisk",
+            },
+            Object {
+              "display": "hindi",
+            },
+            Object {
+              "display": "arabisk",
+            },
+            Object {
+              "display": "islandsk",
+            },
+          ],
+        }
+      }
+    />,
   },
 ]
 `;
@@ -295,36 +280,18 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": Array [
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
-              },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=undefined"
-        />
-        <br />
-      </span>,
-      <span>
-        <Link
-          border={
-            Object {
-              "bottom": Object {
-                "keepVisible": true,
-              },
-              "top": false,
-            }
-          }
-          href="/find?q.creator=undefined"
-        />
-        <br />
-      </span>,
-    ],
+    "value": <ParsedCreatorsOrContributors
+      creatorsOrContributors={
+        Array [
+          Object {
+            "name": "some contributor",
+          },
+          Object {
+            "name": "some other contributor",
+          },
+        ]
+      }
+    />,
   },
   Object {
     "dataField": "notes",
