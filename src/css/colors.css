@@ -35,6 +35,10 @@
   --error: #D1414E;
   --error-light: #fab8ba;
 
+  /* Alerts */
+  --error_temp: #BA4D57;
+  --error-light_temp: #FFF3F0;
+
   --warning: #fbd85b;
   --warning-light: #fbeaad;
 
