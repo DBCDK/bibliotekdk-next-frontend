@@ -106,15 +106,15 @@ function Wrap({ children }) {
 
   const router = useRouter();
 
-  // if we are on the material page we need to set pathname on selection
-  const pathname =
-    router.pathname === "/materiale/[title_author]/[workId]" ? "/find" : null;
-
   return React.cloneElement(children, {
     options: ["all", ...workTypes],
     onSelect: (elem) => {
-      const param = elem === "all" ? {} : { workTypes: [elem] };
-      setQuery({ pathname: pathname, query: param });
+      const param =
+        elem === "all" ? { workTypes: [null] } : { workTypes: [elem] };
+      setQuery({
+        pathname: router.pathname,
+        query: { ...router.query, ...param },
+      });
     },
     selected,
     count: getCount(["workTypes"]),

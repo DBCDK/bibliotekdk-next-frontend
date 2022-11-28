@@ -20,19 +20,21 @@ const CATEGORY_ENUMS = [
  * @param {string} params.limit
  */
 
-export function inspiration({ limit = 10, filters, category } = {}) {
-  // ensure valid category
-  if (!CATEGORY_ENUMS.includes(category)) {
+export function inspiration({ filters = [], limit = 10 } = {}) {
+  // Remove unknown categories
+  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  if (filters.length === 0) {
     return null;
   }
 
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($limit: Int!, $filters: [String!]) {
+    query: `query ($limit: Int!, $filters: [CategoryFilter!]) {
         inspiration {
-          categories {
-            ${category}(filters: $filters) {
+          categories(filter: $filters) {
+            category
+            subCategories {
               title
               result(limit: $limit) {
                 work {
@@ -70,22 +72,25 @@ export function inspiration({ limit = 10, filters, category } = {}) {
  * inspiration categories for a category
  *
  * @param {object} params
- * @param {string} params.limit
+ * @param {object} params.filters
+ * @param {array} params.categories
  */
 
-export function categories({ filters = [], category } = {}) {
-  // ensure valid category
-  if (!CATEGORY_ENUMS.includes(category)) {
+export function categories({ filters = [] } = {}) {
+  // Remove unknown categories
+  filters = filters.filter((f) => CATEGORY_ENUMS.includes(f.category));
+  if (filters.length === 0) {
     return null;
   }
 
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($filters: [String!]) {
+    query: `query ($filters: [CategoryFilter!]) {
         inspiration {
-          categories {
-            ${category}(filters: $filters) {
+          categories(filter: $filters) {
+            category
+            subCategories {
               title
             }
           }

@@ -178,7 +178,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   return (
     <div className={styles.WorkSlider} data-cy={props["data-cy"]}>
       <Swiper {...params} ref={swiperRef}>
-        {works.map((work, idx) => {
+        {works?.map((work, idx) => {
           const cover = getCoverImage(work?.manifestations?.all);
           const type = work?.manifestations?.all.find(
             (manifestation) => manifestation?.materialTypes?.[0]?.specific
@@ -192,7 +192,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
               workId={work?.workId}
               title={work?.titles?.main?.[0]}
               type={type}
-              key={work.workId}
+              key={work?.workId}
               className={styles.SlideWrapper}
               onFocus={() => {
                 // Make sure focused card become visible
@@ -203,7 +203,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
                 if (onWorkClick) {
                   // Find all the works that have been shown for this slider
                   const shownWorks = works
-                    .map((work) => work.workId)
+                    ?.map((work) => work?.workId)
                     .slice(
                       0,
                       Math.max(

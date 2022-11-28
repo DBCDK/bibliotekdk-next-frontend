@@ -37,6 +37,16 @@
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
 }
 
+.inspiration-section-about h1 {
+  margin-bottom: var(--pt1);
+}
+
+@media (min-width: 768px) {
+  .inspiration-section-about {
+    max-width: 60%;
+  }
+}
+
 @media (min-width: 992px) {
   .search-settings {
     box-shadow: unset;

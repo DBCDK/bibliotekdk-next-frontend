@@ -2510,6 +2510,154 @@
       "category-sheetmusic-trommeskoler": {
         "da": "Trommeskoler",
         "en": "Drumming schools"
+      },
+
+      "title-nonfiction": {
+        "da": "title-nonfiction",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-nonfiction": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-nyeste": {
+        "da": "category-nonfiction-nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-populære": {
+        "da": "category-nonfiction-populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-51": {
+        "da": "category-nonfiction-51",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-72": {
+        "da": "category-nonfiction-72",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-71.9564-aalborg": {
+        "da": "category-nonfiction-",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-60.1": {
+        "da": "category-nonfiction-60.1",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-89.3": {
+        "da": "category-nonfiction-89.3",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-55.9": {
+        "da": "category-nonfiction-55.9",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-71.9564-esbjerg": {
+        "da": "category-nonfiction-",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-96.9": {
+        "da": "category-nonfiction-96.9",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-04.6": {
+        "da": "category-nonfiction-04.6",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-nonfiction-37.1": {
+        "da": "category-nonfiction-37.1",
+        "en": "Label: mangler oversættelse"
+      },
+
+      "title-childrenbooksnonfiction": {
+        "da": "title-childrenbooksnonfiction",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-childrenbooksnonfiction": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksnonfiction-nyeste": {
+        "da": "category-childrenbooksnonfiction-nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksnonfiction-populære": {
+        "da": "category-childrenbooksnonfiction-populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksnonfiction-5-8": {
+        "da": "category-childrenbooksnonfiction-5-8",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksnonfiction-8-12": {
+        "da": "category-childrenbooksnonfiction-8-12",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksnonfiction-12-16": {
+        "da": "category-childrenbooksnonfiction-12-16",
+        "en": "Label: mangler oversættelse"
+      },
+      
+      "title-childrenbooksfiction": {
+        "da": "title-childrenbooksfiction",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-childrenbooksfiction": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksfiction-nyeste": {
+        "da": "category-childrenbooksfiction-nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksfiction-populære": {
+        "da": "category-childrenbooksfiction-populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksfiction-5-8": {
+        "da": "category-childrenbooksfiction-5-8",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksfiction-8-12": {
+        "da": "category-childrenbooksfiction-8-12",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-childrenbooksfiction-12-16": {
+        "da": "category-childrenbooksfiction-12-16",
+        "en": "Label: mangler oversættelse"
+      },
+
+      "title-ebooks": {
+        "da": "title-ebooks",
+        "en": "Label: mangler oversættelse"
+      },
+      "description-ebooks": {
+        "da": "Beskrivende tekst om sidens indhold ...",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-nyeste": {
+        "da": "category-ebooks-nyeste",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-": {
+        "da": "category-ebooks-populære",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-lyd": {
+        "da": "category-ebooks-lyd",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-ebog": {
+        "da": "category-ebooks-ebog",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-skønlitteratur": {
+        "da": "category-ebooks-skønlitteratur",
+        "en": "Label: mangler oversættelse"
+      },
+      "category-ebooks-faglitteratur": {
+        "da": "category-ebooks-faglitteratur",
+        "en": "Label: mangler oversættelse"
       }
     },
     "units": {

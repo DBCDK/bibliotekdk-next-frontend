@@ -15,7 +15,7 @@ export function Connected() {
       <WrappedSlider
         title="Nyeste skønlitteratur"
         category="fiction"
-        filters={["nyeste"]}
+        filters={[{ category: "fiction", subCategories: ["nyeste"] }]}
       />
     </div>
   );
@@ -26,8 +26,8 @@ Connected.story = {
     graphql: {
       resolvers: {
         Categories: {
-          fiction: (args) =>
-            args.variables?.filters?.[0] === "nyeste" ? [{}] : [],
+          category: () => "fiction",
+          subCategories: () => ["nyeste"],
         },
         Category: {
           title: () => "nyeste",

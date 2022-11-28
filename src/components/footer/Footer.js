@@ -7,6 +7,7 @@ import Link from "@/components/base/link";
 import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 import styles from "./Footer.module.css";
 import Logo from "@/components/base/logo/Logo";
+import { MATERIAL_PAGES } from "@/components/header";
 
 /** @file
  * Footer
@@ -170,28 +171,18 @@ const ThirdColumn = () => {
  * @constructor
  */
 const BranchLinks = () => {
-  // Object holding info to generate links to materialtypes * NOTICE Keys are translated.
-  const branch_links = {
-    books: "/inspiration/boeger",
-    articles: "/inspiration/artikler",
-    film: "/inspiration/film",
-    games: "/inspiration/spil",
-    music: "/inspiration/musik",
-    nodes: "/inspiration/noder",
-  };
-
-  return Object.keys(branch_links).map((key) => (
-    <div key={key}>
+  return MATERIAL_PAGES.map(({ path, label }) => (
+    <div key={`link-${path}-${label}`}>
       <Link
-        href={branch_links[key]}
-        border={{ bottom: { keepVisible: true } }}
+        href={`/inspiration/${path}?workTypes=${label}`}
         className={styles.footerlink}
+        border={{ bottom: { keepVisible: true } }}
         dataCy="branchlink"
       >
-        <Text tag="span" type="text3">
+        <Text type="text3">
           {Translate({
-            context: "general",
-            label: `${key}`,
+            context: "facets",
+            label: `label-${label}`,
           })}
         </Text>
       </Link>
