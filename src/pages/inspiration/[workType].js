@@ -75,7 +75,7 @@ export function trim(str) {
   return str.replace(/\s/g, "-")?.toLowerCase() || str;
 }
 
-export function Page({ data, categories, isLoading }) {
+export function Page({ data, isLoading }) {
   if (isLoading) {
     data = [
       {
@@ -135,7 +135,7 @@ export function Page({ data, categories, isLoading }) {
         </div>
       </Section>
 
-      {data?.map(({ category, subCategories }, i) =>
+      {data?.map(({ category, subCategories }) =>
         subCategories.map((sub, idx) => {
           const backgroundColor =
             count % 2 == 0 ? null : CATEGORY_COLOR[label] || "var(--parchment)";

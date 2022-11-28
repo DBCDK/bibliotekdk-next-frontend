@@ -42,7 +42,7 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
   );
 }
 
-export default function Wrap({ category, filters = [], limit = 30, ...props }) {
+export default function Wrap({ filters = [], limit = 30, ...props }) {
   const { data, isLoading } = useData(
     inspiration({
       filters,
@@ -64,6 +64,6 @@ export default function Wrap({ category, filters = [], limit = 30, ...props }) {
 }
 
 Wrap.propTypes = {
-  category: PropTypes.string,
+  limit: PropTypes.number,
   filters: PropTypes.array,
 };

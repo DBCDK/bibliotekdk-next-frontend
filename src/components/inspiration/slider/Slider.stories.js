@@ -26,8 +26,8 @@ Connected.story = {
     graphql: {
       resolvers: {
         Categories: {
-          category: (args) => "fiction",
-          subCategories: (args) => ["nyeste"],
+          category: () => "fiction",
+          subCategories: () => ["nyeste"],
         },
         Category: {
           title: () => "nyeste",
