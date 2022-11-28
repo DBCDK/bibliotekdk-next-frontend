@@ -1,0 +1,20 @@
+.redBorder {
+  padding: var(--pt2) var(--pt6);
+  color: var(--error_temp);
+  background: var(--error-light_temp);
+  word-break: break-word;
+  white-space: normal;
+  font-size: 17px;
+}
+
+.redBorder p a {
+  color: var(--error_temp);
+}
+
+.redBorder p a:hover,
+.redBorder p a:focus-visible,
+.redBorder p a::before,
+.redBorder p a::after {
+  color: var(--mine-shaft);
+  border-color: var(--mine-shaft);
+}
