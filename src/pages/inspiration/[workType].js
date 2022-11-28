@@ -12,6 +12,7 @@
  *  - workType: type of work
  *
  */
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import merge from "lodash/merge";

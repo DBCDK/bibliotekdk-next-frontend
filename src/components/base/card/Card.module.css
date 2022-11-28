@@ -23,7 +23,6 @@
 }
 .Card:hover,
 .Card:focus {
-  /* background: var(--concrete); */
   background: rgba(0, 0, 0, 0.1);
 }
 .Card:hover .BottomLine,
