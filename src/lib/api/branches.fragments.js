@@ -122,3 +122,26 @@ export function branchOrderPolicy({ branchId, pid }) {
     slowThreshold: 3000,
   };
 }
+
+/**
+ * AgencyUrl and userIsBlocked
+ */
+export function checkBlockedUser({ branchId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `
+    query checkBlockedUser($branchId: String!, $language: LanguageCode!) {
+      branches(branchId: $branchId, language: $language) {
+        agencyUrl
+        result {
+          agencyName
+        	userIsBlocked
+        }
+      }
+      monitor(name: "bibdknext_CheckBlockedUser")
+    }`,
+    variables: { branchId, language: lang },
+    slowThreshold: 3000,
+  };
+}
