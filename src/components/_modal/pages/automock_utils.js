@@ -1,4 +1,7 @@
 // A manifestation that may be ordered via ILL
+import useUser from "@/components/hooks/useUser";
+import { useId, useMemo } from "react";
+
 const MANIFESTATION_1 = {
   titles: {
     full: ["Hugo i Sølvskoven"],
@@ -123,6 +126,7 @@ const BRANCH_1 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  userIsBlocked: false,
 };
 const BRANCH_2 = {
   name: "Test Bib - no orders here",
@@ -131,6 +135,7 @@ const BRANCH_2 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  userIsBlocked: false,
 };
 const BRANCH_3 = {
   name: "Test Bib - ILL and digital copy service",
@@ -139,6 +144,17 @@ const BRANCH_3 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: true,
+  userIsBlocked: false,
+};
+const BRANCH_4 = {
+  name: "Test Bib - User is blocked",
+  orderPolicy: {
+    orderPossible: true,
+  },
+  pickupAllowed: true,
+  digitalCopyAccess: false,
+  agencyName: "BalleRipRapRup",
+  userIsBlocked: true,
 };
 
 // A user with some agencies
@@ -157,6 +173,12 @@ const USER_2 = {
 const USER_3 = {
   agency: {
     result: [BRANCH_3],
+  },
+};
+
+const USER_4 = {
+  agency: {
+    result: [BRANCH_4],
   },
 };
 
@@ -212,6 +234,15 @@ const DEFAULT_STORY_PARAMETERS = {
   },
 };
 
+function useMockLoanerInfo(pickupBranch = "790900") {
+  const { updateLoanerInfo } = useUser();
+  const id = useId();
+
+  useMemo(() => {
+    updateLoanerInfo({ pickupBranch: pickupBranch });
+  }, [id]);
+}
+
 export default function automock_utils() {
   return {
     MANIFESTATION_1,
@@ -224,9 +255,12 @@ export default function automock_utils() {
     BRANCH_1,
     BRANCH_2,
     BRANCH_3,
+    BRANCH_4,
     USER_1,
     USER_2,
     USER_3,
+    USER_4,
     DEFAULT_STORY_PARAMETERS,
+    useMockLoanerInfo,
   };
 }

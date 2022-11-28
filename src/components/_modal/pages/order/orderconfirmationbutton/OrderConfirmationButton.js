@@ -7,13 +7,13 @@ import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils";
 
-export function OrderConfirmationButton({
+function OrderConfirmationButton({
   invalidClass,
   actionMessage,
   availableAsDigitalCopy,
   availableAsPhysicalCopy,
-  isWorkLoading,
-  isPickupBranchLoading,
+  isLoading,
+  blockedUser,
   onClick,
 }) {
   return (
@@ -51,8 +51,12 @@ export function OrderConfirmationButton({
           )}
         </div>
         <Button
-          disabled={!availableAsDigitalCopy && !availableAsPhysicalCopy}
-          skeleton={isWorkLoading || isPickupBranchLoading}
+          disabled={
+            blockedUser ||
+            blockedUser === null ||
+            (!availableAsDigitalCopy && !availableAsPhysicalCopy)
+          }
+          skeleton={isLoading}
           onClick={onClick}
         >
           {Translate({ context: "general", label: "accept" })}
@@ -83,11 +87,21 @@ export default function Wrap({
     failedSubmission
   );
 
-  const { accessTypeInfo, pickupBranchInfo, workResponse } =
-    useOrderPageInformation(workId, pid, periodicaForm);
+  const {
+    accessTypeInfo,
+    pickupBranchInfo,
+    blockedUserResponse,
+    workResponse,
+  } = useOrderPageInformation(workId, pid, periodicaForm);
 
-  const { isWorkLoading } = workResponse;
-  const { isPickupBranchLoading } = pickupBranchInfo;
+  const { isLoading: isWorkLoading } = workResponse;
+  const { isLoading: isBlockedUserLoading } = blockedUserResponse;
+  const { isLoading: isPickupBranchLoading } = pickupBranchInfo;
+
+  const blockedUser =
+    blockedUserResponse?.data?.branches?.result
+      ?.map((res) => res.userIsBlocked)
+      .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
 
   const { availableAsDigitalCopy, availableAsPhysicalCopy } = accessTypeInfo;
 
@@ -97,8 +111,8 @@ export default function Wrap({
       actionMessage={actionMessage}
       availableAsDigitalCopy={availableAsDigitalCopy}
       availableAsPhysicalCopy={availableAsPhysicalCopy}
-      isWorkLoading={isWorkLoading}
-      isPickupBranchLoading={isPickupBranchLoading}
+      isLoading={isWorkLoading || isBlockedUserLoading || isPickupBranchLoading}
+      blockedUser={blockedUser}
       onClick={onClick}
     />
   );

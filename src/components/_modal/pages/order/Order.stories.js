@@ -12,7 +12,17 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { USER_1, USER_2, USER_3, DEFAULT_STORY_PARAMETERS } = automock_utils();
+const {
+  USER_1,
+  USER_2,
+  USER_3,
+  USER_4,
+  BRANCH_1,
+  BRANCH_2,
+  BRANCH_4,
+  DEFAULT_STORY_PARAMETERS,
+  useMockLoanerInfo,
+} = automock_utils();
 
 function OrderPageComponentBuilder({
   title,
@@ -21,14 +31,15 @@ function OrderPageComponentBuilder({
   selectedPids,
 }) {
   return (
-    <div>
+    <>
       <StoryTitle>{title}</StoryTitle>
       <StoryDescription>
         {description}
         <br />
         <br />
-        <div>workId: {workId}</div>
-        <div>selectedPids: {selectedPids.join(", ")}</div>
+        <span>workId: {workId}</span>
+        <br />
+        <span>selectedPids: {selectedPids.join(", ")}</span>
       </StoryDescription>
       <ReservationButton workId={workId} selectedPids={selectedPids} />
       <Modal.Container>
@@ -39,7 +50,7 @@ function OrderPageComponentBuilder({
         <Modal.Page id="receipt" component={Pages.Receipt} />
         <Modal.Page id="login" component={Pages.Login} />
       </Modal.Container>
-    </div>
+    </>
   );
 }
 
@@ -54,6 +65,7 @@ export function OrderViaILL() {
     />
   );
 }
+
 OrderViaILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
@@ -72,6 +84,7 @@ export function PickupNotAllowed() {
     />
   );
 }
+
 PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: { graphql: { resolvers: { Query: { user: () => USER_2 } } } },
 });
@@ -87,6 +100,7 @@ export function OrderIndexedPeriodicaArticle() {
     />
   );
 }
+
 OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
@@ -108,6 +122,7 @@ export function OrderIndexedPeriodicaArticleILL() {
     />
   );
 }
+
 OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
@@ -129,6 +144,7 @@ export function OrderPeriodicaVolume() {
     />
   );
 }
+
 OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
@@ -151,11 +167,73 @@ export function OrderPeriodicaVolumeOnlyILL() {
     />
   );
 }
+
 OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
         Query: { user: () => USER_1 },
+      },
+    },
+  },
+});
+
+export function NotBlockedUser() {
+  useMockLoanerInfo("790900");
+  return (
+    <OrderPageComponentBuilder
+      title="User is blocked from loaning"
+      description={`User is blocked from loaning, 
+        the red user is blocked information box should be present 
+        and OrderConfirmationButton should be disabled.`}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
+    />
+  );
+}
+
+NotBlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          user: () => USER_1,
+          branches: () => {
+            return {
+              result: [BRANCH_1, BRANCH_2],
+              agencyUrl: "balleripraprup.dekaa",
+            };
+          },
+        },
+      },
+    },
+  },
+});
+
+export function BlockedUser() {
+  useMockLoanerInfo("790900");
+  return (
+    <OrderPageComponentBuilder
+      title="User is blocked from loaning"
+      description={`User is blocked from loaning, 
+        the red user is blocked information box should be present 
+        and OrderConfirmationButton should be disabled.`}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
+    />
+  );
+}
+
+BlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          user: () => USER_4,
+          branches: () => {
+            return { result: [BRANCH_4], agencyUrl: "balleripraprup.dekaa" };
+          },
+        },
       },
     },
   },

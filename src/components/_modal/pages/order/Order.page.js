@@ -11,6 +11,7 @@ import {
 import LocalizationInformation from "@/components/_modal/pages/order/localizationinformation/LocalizationInformation";
 import OrdererInformation from "@/components/_modal/pages/order/ordererinformation/OrdererInformation";
 import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfirmationbutton/OrderConfirmationButton";
+import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import {
@@ -136,6 +137,7 @@ function Order({
         singleManifestation={singleManifestation}
       />
       <LocalizationInformation context={context} />
+      {user && <BlockedUserInformation />}
       <OrdererInformation
         context={context}
         validated={validated}

@@ -1946,6 +1946,22 @@
       "approve-loaner-info": {
         "da": "Godkend låneroplysninger",
         "en": "Approve loaner information"
+      },
+      "blocked-user-heading": {
+        "da": "Biblioteket modtager desværre ikke bestillinger fra dig.",
+        "en": "The library does not take orders from you."
+      },
+      "blocked-user-explanation": {
+        "da": "Det kan skyldes, at du mangler at betale et tilgodehavende, at du har lån som ikke er afleveret eller lignende.",
+        "en": "Reasons can include that you are missing a payments for late books, or that you have unreturned loans"
+      },
+      "blocked-user-link": {
+        "da": "Kontakt %s for at få mere information",
+        "en": "Contact %s for more information"
+      },
+      "blocked-user-alternative-solution": {
+        "da": "eller skift evt. til et andet bibliotek.",
+        "en": "or change to another library."
       }
     },
     "login": {
