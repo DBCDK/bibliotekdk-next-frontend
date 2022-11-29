@@ -42,7 +42,6 @@ export function HelpText({ helptext }) {
  */
 export default function Wrap({ helpTextId }) {
   const args = { helpTextId: helpTextId, ...{ language: getLangcode() } };
-
   const { isLoading, data, error } = useData(args && helpText(args));
 
   if (isLoading) {
