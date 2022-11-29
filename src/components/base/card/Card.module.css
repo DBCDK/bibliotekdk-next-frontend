@@ -43,6 +43,8 @@
 }
 .CoverWrapper {
   height: 200px;
+  display: flex;
+  justify-content: center;
 }
 
 /* Small devices (landscape phones, 576px and up) */
