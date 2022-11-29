@@ -41,8 +41,9 @@ export function HelpText({ helptext }) {
  * @constructor
  */
 export default function Wrap({ helpTextId }) {
-  const args = { ...helpTextId, ...{ language: getLangcode() } };
-  const { isLoading, data, error } = useData(helpText(args));
+  const args = { helpTextId: helpTextId, ...{ language: getLangcode() } };
+
+  const { isLoading, data, error } = useData(args && helpText(args));
 
   if (isLoading) {
     return <Skeleton lines={2} />;
