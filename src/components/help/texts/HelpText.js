@@ -36,7 +36,7 @@ export function HelpText({ helptext }) {
 
 /**
  * Default export function for component
- * @param helpTextId
+ * @param {string} helpTextId
  * @return {JSX.Element|null}
  * @constructor
  */
@@ -57,5 +57,5 @@ export default function Wrap({ helpTextId }) {
 }
 
 HelpText.propTypes = {
-  helptext: PropTypes.object,
+  helptext: PropTypes.string,
 };
