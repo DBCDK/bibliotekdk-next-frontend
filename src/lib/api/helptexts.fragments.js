@@ -41,35 +41,34 @@ export function publishedHelptexts({ language }) {
   };
 }
 
-export function helpText({ helpTextId, language }) {
+export function helpText({ helpTextId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($helpTextId: String! $language: LanguageId!) {
-        helptext: nodeById(id: $helpTextId language:$language){
+    query: `query helptext ($helpTextId: String!, $language: LanguageId!) {
+      nodeById(id: $helpTextId, language: $language) {
         ... on NodeHelpText {
-                  nid
-                  title
-                  body{
-                    value
-                    processed
-                  }
-                  entityCreated
-          				entityChanged
-                  fieldHelpTextGroup
-                  fieldImage {
-                    alt
-                    title
-                    url
-                    width
-                    height
-                  }
-                }
-             }
-          
-          monitor(name: "helptext_by_id")
-        }`,
-    variables: { helpTextId, language },
+          nid
+          title
+          body {
+            value
+            processed
+          }
+          entityCreated
+          entityChanged
+          fieldHelpTextGroup
+          fieldImage {
+            alt
+            title
+            url
+            width
+            height
+          }
+        }
+      }
+      monitor(name: "helptext_by_id")
+    }`,
+    variables: { helpTextId, language: lang.toUpperCase() },
     slowThreshold: 3000,
   };
 }
