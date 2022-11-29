@@ -4,7 +4,7 @@ import Accordion from "@/components/base/accordion";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 import { groupSortData } from "../utils";
 import styles from "./Published.module.css";
 import { useData } from "@/lib/api/api";
@@ -59,7 +59,7 @@ Published.propTypes = {
  * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = getLangcode();
+  const langcode = getLanguage();
   // real data goes here ...
   const { isLoading, data, error } = useData(
     faqFragments.publishedFaqs(langcode)

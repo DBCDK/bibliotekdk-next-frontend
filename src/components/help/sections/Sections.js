@@ -16,7 +16,7 @@ import { helpTextParseMenu } from "../utils.js";
 import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 
 /**
  * The Sections page React component
@@ -148,7 +148,7 @@ export function SectionsSkeleton(props) {
  */
 export default function Wrap(props) {
   // real data goes here ...
-  const langcode = { language: getLangcode() };
+  const langcode = { language: getLanguage() };
   const { data } = useData(publishedHelptexts(langcode));
 
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {

@@ -1,6 +1,6 @@
-import { getLangcode } from "./fragments.utils";
-import { lang } from "@/components/base/translate";
+import { lang, getLanguage } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
+import { getLangcode } from "@/components/base/translate/Translate";
 /**
  * Helptexts - published
  */
@@ -42,6 +42,8 @@ export function publishedHelptexts({ language }) {
 }
 
 export function helpText({ helpTextId }) {
+  const language = getLanguage();
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -68,7 +70,7 @@ export function helpText({ helpTextId }) {
       }
       monitor(name: "helptext_by_id")
     }`,
-    variables: { helpTextId, language: lang.toUpperCase() },
+    variables: { helpTextId, language },
     slowThreshold: 3000,
   };
 }

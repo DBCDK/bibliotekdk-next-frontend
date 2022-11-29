@@ -6,7 +6,7 @@ import Section from "@/components/base/section";
 import Single from "./templates/single";
 import Double from "./templates/double";
 import Triple from "./templates/triple";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 
 /**
  * Get context by template name (template settings)
@@ -136,7 +136,7 @@ ArticleSection.propTypes = {
 
 export default function Wrap(props) {
   const { data, isLoading } = useData(
-    promotedArticles({ language: getLangcode() })
+    promotedArticles({ language: getLanguage() })
   );
 
   const articles = getArticleData(data);

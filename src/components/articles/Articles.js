@@ -10,7 +10,7 @@ import { Col, Row } from "react-bootstrap";
 import ArticlePreview from "@/components/article/preview";
 
 import { allArticles } from "@/lib/api/article.fragments";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 
 import styles from "./Articles.module.css";
 
@@ -43,7 +43,7 @@ Articles.propTypes = {
 };
 
 export default function Wrap(props) {
-  const langcode = { language: getLangcode() };
+  const langcode = { language: getLanguage() };
   const { isLoading, data } = useData(allArticles(langcode));
   const articles = get(data, "nodeQuery.entities", []).filter(
     (article) => article && article.__typename === "NodeArticle"

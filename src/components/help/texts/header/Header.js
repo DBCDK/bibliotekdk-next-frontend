@@ -16,7 +16,7 @@ import { helpText } from "@/lib/api/helptexts.fragments.js";
 import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import Translate, { getLangcode } from "@/components/base/translate";
+import Translate, { getLanguage } from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -27,7 +27,7 @@ import Translate, { getLangcode } from "@/components/base/translate";
  * @returns {component}
  */
 export default function Header({ helpTextId }) {
-  const args = { helpTextId: helpTextId, language: getLangcode() };
+  const args = { helpTextId: helpTextId, language: getLanguage() };
 
   const { isLoading, data, error } = useData(args && helpText(args));
 
