@@ -16,7 +16,7 @@ import { helpText } from "@/lib/api/helptexts.fragments.js";
 import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import Translate, { getLanguage } from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -27,9 +27,9 @@ import Translate, { getLanguage } from "@/components/base/translate";
  * @returns {component}
  */
 export default function Header({ helpTextId }) {
-  const args = { helpTextId: helpTextId, language: getLanguage() };
-
-  const { isLoading, data, error } = useData(args && helpText(args));
+  const { isLoading, data, error } = useData(
+    helpTextId && helpText({ helpTextId: helpTextId })
+  );
 
   if (!data || !data.nodeById || isLoading || error) {
     // @TODO some error here .. message for user .. log ??
