@@ -15,7 +15,13 @@ import { signIn } from "@dbcdk/login-nextjs/client";
  *
  * @returns {JSX.Element}
  */
-export default function BodyParser({ body, className, skeleton, lines = 10 }) {
+export default function BodyParser({
+  body,
+  className,
+  skeleton,
+  lines = 10,
+  dataCy = "",
+}) {
   const parsedBody = useMemo(() => {
     if (body) {
       return parseArticleBody(body);
@@ -65,6 +71,7 @@ export default function BodyParser({ body, className, skeleton, lines = 10 }) {
 
   return (
     <div
+      data-cy={dataCy}
       ref={articleBody}
       className={`${styles.body} ${className}`}
       dangerouslySetInnerHTML={{ __html: parsedBody }}

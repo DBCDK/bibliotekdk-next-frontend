@@ -27,19 +27,18 @@ import Translate, { getLangcode } from "@/components/base/translate";
  * @returns {component}
  */
 export default function Header({ helpTextId }) {
-  const langcode = { language: getLangcode() };
-  const args = { helpTextId, ...langcode };
+  const args = { helpTextId: helpTextId, language: getLangcode() };
 
-  const { isLoading, data, error } = useData(helpText(args));
+  const { isLoading, data, error } = useData(args && helpText(args));
 
-  if (!data || !data.helptext || isLoading || error) {
+  if (!data || !data.nodeById || isLoading || error) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
 
   const context = { context: "metadata" };
 
-  const helptext = data.helptext;
+  const helptext = data.nodeById;
 
   const pageTitle = Translate({
     ...context,
