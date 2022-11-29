@@ -138,7 +138,9 @@ export function Page({ data, isLoading }) {
       {data?.map(({ category, subCategories }) =>
         subCategories.map((sub, idx) => {
           const backgroundColor =
-            count % 2 == 0 ? null : CATEGORY_COLOR[label] || "var(--parchment)";
+            count % 2 === 0
+              ? null
+              : CATEGORY_COLOR[label] || "var(--parchment)";
 
           count++;
 

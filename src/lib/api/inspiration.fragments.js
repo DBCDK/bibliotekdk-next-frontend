@@ -73,7 +73,6 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
  *
  * @param {object} params
  * @param {object} params.filters
- * @param {array} params.categories
  */
 
 export function categories({ filters = [] } = {}) {
