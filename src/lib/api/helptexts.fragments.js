@@ -1,6 +1,6 @@
-import { getLangcode } from "./fragments.utils";
-import { lang } from "@/components/base/translate";
+import { lang, getLanguage } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
+import { getLangcode } from "@/components/base/translate/Translate";
 /**
  * Helptexts - published
  */
@@ -41,34 +41,35 @@ export function publishedHelptexts({ language }) {
   };
 }
 
-export function helpText({ helpTextId, language }) {
+export function helpText({ helpTextId }) {
+  const language = getLanguage();
+
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
-    query: `query ($helpTextId: String! $language: LanguageId!) {
-        helptext: nodeById(id: $helpTextId language:$language){
+    query: `query helptext ($helpTextId: String!, $language: LanguageId!) {
+      nodeById(id: $helpTextId, language: $language) {
         ... on NodeHelpText {
-                  nid
-                  title
-                  body{
-                    value
-                    processed
-                  }
-                  entityCreated
-          				entityChanged
-                  fieldHelpTextGroup
-                  fieldImage {
-                    alt
-                    title
-                    url
-                    width
-                    height
-                  }
-                }
-             }
-          
-          monitor(name: "helptext_by_id")
-        }`,
+          nid
+          title
+          body {
+            value
+            processed
+          }
+          entityCreated
+          entityChanged
+          fieldHelpTextGroup
+          fieldImage {
+            alt
+            title
+            url
+            width
+            height
+          }
+        }
+      }
+      monitor(name: "helptext_by_id")
+    }`,
     variables: { helpTextId, language },
     slowThreshold: 3000,
   };

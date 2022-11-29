@@ -37,8 +37,8 @@ function ColumnOne({ workId, manifestation }) {
       data-cy="bibliographic-column1"
       className={styles.fullmanifestation}
     >
-      {manifestation?.cover?.thumbnail && (
-        <Cover src={manifestation?.cover?.thumbnail} size="thumbnail" />
+      {manifestation?.cover?.detail && (
+        <Cover src={manifestation?.cover?.detail} size="thumbnail" />
       )}
       <div>
         <ReservationButton

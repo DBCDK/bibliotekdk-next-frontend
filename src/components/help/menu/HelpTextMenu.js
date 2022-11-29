@@ -12,7 +12,7 @@ import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 
 /**
@@ -174,7 +174,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = useData(
-    publishedHelptexts({ language: getLangcode() })
+    publishedHelptexts({ language: getLanguage() })
   );
 
   if (isLoading) {

@@ -39,8 +39,12 @@ export function setLocale(locale = "da") {
   lang = locale;
 }
 
-export function getLangcode() {
+export function getLanguage() {
   return lang === "en" ? "EN_GB" : "EN";
+}
+
+export function getLangcode(language) {
+  return language === "EN_GB" ? "en-gb" : "en";
 }
 
 /**
@@ -237,8 +241,8 @@ function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
  * Split given text in <spans>. Split by newline (\\n). We need
  * TWO backslashes since drupal escapes by default.
  * @param text
+ * @param renderAsHtml
  * @return {*}
- * @constructor
  */
 function NewlineInText(text, renderAsHtml) {
   if (!renderAsHtml && text.indexOf("\\n") > 0) {

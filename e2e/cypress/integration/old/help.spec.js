@@ -1,5 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("help", () => {
@@ -68,5 +67,18 @@ describe("help menu", () => {
     cy.get("[data-cy=help-menu]").should("be.visible");
     cy.get("[data-cy=help-menu]").contains("Søgning");
     cy.get("[data-cy=help-menu]").contains("Login");
+  });
+});
+
+describe("Help texts", () => {
+  it("Help text load properly", () => {
+    cy.visit("/iframe.html?path=/story/help-helptext--wrapped-story-help-text");
+
+    cy.get("[data-cy=help-text-title]")
+      .should("exist")
+      .should("contain", "Bibliotek.dk");
+    cy.get("[data-cy=help-text-body]")
+      .should("exist")
+      .should("contain", "danske bibliotekers materialer");
   });
 });
