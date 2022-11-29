@@ -38,6 +38,16 @@ import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
 import useWindowSize from "@/components/hooks/useWindowSize";
 
+// material Pages
+export const MATERIAL_PAGES = [
+  { path: "artikler", label: "article" },
+  { path: "spil", label: "game" },
+  { path: "boeger", label: "literature" },
+  { path: "film", label: "movie" },
+  { path: "musik", label: "music" },
+  { path: "noder", label: "sheetmusic" },
+];
+
 /**
  * The Component function
  *
@@ -187,68 +197,27 @@ export function Header({
                     </Text>
                   </Link>
 
-                  <Link
-                    href="/inspiration/artikler"
-                    dataCy="header-link-article"
-                  >
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-article`,
-                      })}
-                    </Text>
-                  </Link>
+                  {MATERIAL_PAGES.map(({ path, label }) => {
+                    const active = router.asPath.includes(
+                      `/inspiration/${path}`
+                    );
 
-                  <Link href="/inspiration/spil" dataCy="header-link-game">
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-game`,
-                      })}
-                    </Text>
-                  </Link>
-
-                  <Link
-                    href="/inspiration/boeger"
-                    dataCy="header-link-literature"
-                  >
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-literature`,
-                      })}
-                    </Text>
-                  </Link>
-
-                  <Link href="/inspiration/film" dataCy="header-link-movie">
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-movie`,
-                      })}
-                    </Text>
-                  </Link>
-
-                  <Link href="/inspiration/musik" dataCy="header-link-music">
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-music`,
-                      })}
-                    </Text>
-                  </Link>
-
-                  <Link
-                    href="/inspiration/noder"
-                    dataCy="header-link-sheetmusic"
-                  >
-                    <Text type="text3">
-                      {Translate({
-                        context: "facets",
-                        label: `label-sheetmusic`,
-                      })}
-                    </Text>
-                  </Link>
+                    return (
+                      <Link
+                        key={`link-${path}-${label}`}
+                        href={`/inspiration/${path}?workTypes=${label}`}
+                        border={{ bottom: { keepVisible: active } }}
+                        dataCy={`header-link-${label}`}
+                      >
+                        <Text type="text3">
+                          {Translate({
+                            context: "facets",
+                            label: `label-${label}`,
+                          })}
+                        </Text>
+                      </Link>
+                    );
+                  })}
                 </div>
                 <div
                   className={styles.actions}

@@ -4,6 +4,10 @@
   padding-top: var(--pt8);
 }
 
+.background a {
+  color: white;
+}
+
 .containerback {
   background-color: var(--blue);
 }

@@ -42,22 +42,21 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
   );
 }
 
-export default function Wrap({ category, filters = [], ...props }) {
+export default function Wrap({ filters = [], limit = 30, ...props }) {
   const { data, isLoading } = useData(
     inspiration({
       filters,
-      limit: 30,
-      category,
+      limit,
     })
   );
 
-  const cat = data?.inspiration?.categories?.[category]?.[0];
+  const cat = data?.inspiration?.categories?.[0];
 
   if (!cat && !isLoading) {
     return null;
   }
 
-  const works = cat?.result.map((obj) =>
+  const works = cat?.subCategories?.[0]?.result?.map((obj) =>
     merge({}, obj.work, { manifestations: { all: [obj.manifestation] } })
   );
 
@@ -65,6 +64,6 @@ export default function Wrap({ category, filters = [], ...props }) {
 }
 
 Wrap.propTypes = {
-  category: PropTypes.string,
+  limit: PropTypes.number,
   filters: PropTypes.array,
 };

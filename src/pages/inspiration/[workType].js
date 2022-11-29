@@ -12,12 +12,13 @@
  *  - workType: type of work
  *
  */
+
 import Head from "next/head";
 import { useRouter } from "next/router";
 import merge from "lodash/merge";
 
 import { useData } from "@/lib/api/api";
-import { inspiration, categories } from "@/lib/api/inspiration.fragments";
+import * as inspirationFragments from "@/lib/api/inspiration.fragments";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 
 import { fetchAll } from "@/lib/api/apiServerOnly";
@@ -25,22 +26,35 @@ import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
 import Header from "@/components/header";
 import Section from "@/components/base/section";
+import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
 import Slider from "@/components/inspiration/slider";
 
 // worktype to categories
-const WORKTYPE_TO_CATEGORY = {
-  artikler: "articles",
-  spil: "games",
-  boeger: "fiction",
-  film: "movies",
-  musik: "music",
-  noder: "sheetMusic",
+const WORKTYPE_TO_CATEGORIES = {
+  artikler: ["articles"],
+  spil: ["games"],
+  boeger: [
+    "fiction",
+    "nonfiction",
+    "childrenBooksNonfiction",
+    "childrenBooksFiction",
+  ],
+  film: ["movies"],
+  musik: ["music"],
+  noder: ["sheetMusic"],
 };
 
-// worktype to categories
+// custom filters for a specific category
+const CATEGORY_FILTERS = {
+  childrenBooksNonfiction: ["nyeste", "populære"],
+  childrenBooksFiction: ["nyeste", "populære"],
+  nonfiction: ["nyeste", "populære"],
+};
+
+// category color
 const CATEGORY_COLOR = {
   articles: "var(--parchment)",
   games: "var(--pippin)",
@@ -61,25 +75,37 @@ export function trim(str) {
   return str.replace(/\s/g, "-")?.toLowerCase() || str;
 }
 
-export function Page({ category, data, isLoading }) {
+export function Page({ data, isLoading }) {
   if (isLoading) {
-    data = [...new Array(10).fill({ works: [] })];
+    data = [
+      {
+        category: "loading",
+        subCategories: [...new Array(10).fill({ works: [] })],
+      },
+    ];
   }
 
   const context = "inspiration";
-  const { canonical, alternate } = useCanonicalUrl();
 
-  const title = Translate({ context, label: trim(`title-${category}`) });
+  // use first element in the categories array as label key (for transltations)
+  const label = data?.[0]?.category;
+
+  // SEO
+  const { canonical, alternate } = useCanonicalUrl();
+  const title = Translate({ context, label: trim(`title-${label}`) });
   const description = Translate({
     context,
-    label: trim(`description-${category}`),
+    label: trim(`description-${label}`),
   });
+
+  // counter used for slide colors
+  let count = 0;
 
   return (
     <>
       <Header />
       <Head>
-        <title key="title">{title}</title>
+        {!isLoading && <title key="title">{title}</title>}
         <meta key="description" name="description" content={description} />
         <meta key="og:url" property="og:url" content={canonical.url} />
         <meta key="og:type" property="og:type" content="website" />
@@ -94,34 +120,49 @@ export function Page({ category, data, isLoading }) {
         ))}
       </Head>
       <Section
-        title={<Title type="title3">{title}</Title>}
-        backgroundColor={CATEGORY_COLOR[category] || "var(--parchment)"}
+        // Hack for removing title but keep section grid
+        title={<span />}
+        backgroundColor={CATEGORY_COLOR[label] || "var(--white)"}
         space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
       >
-        {Translate({ context, label: trim(`description-${category}`) })}
+        <div className="inspiration-section-about">
+          <Title type="title3" skeleton={isLoading}>
+            {title}
+          </Title>
+          <Text type="text2" skeleton={isLoading} lines={2}>
+            {Translate({ context, label: trim(`description-${label}`) })}
+          </Text>
+        </div>
       </Section>
 
-      {data?.map((sub, idx) => {
-        const backgroundColor =
-          idx % 2 == 0 ? null : CATEGORY_COLOR[category] || "var(--parchment)";
+      {data?.map(({ category, subCategories }) =>
+        subCategories.map((sub, idx) => {
+          const backgroundColor =
+            count % 2 === 0
+              ? null
+              : CATEGORY_COLOR[label] || "var(--parchment)";
 
-        return (
-          <Slider
-            key={`inspiration-${idx}`}
-            title={
-              sub.title &&
-              Translate({
-                context,
-                label: trim(`category-${category}-${sub.title}`),
-              })
-            }
-            category={category}
-            filters={[sub.title]}
-            backgroundColor={backgroundColor}
-            divider={{ content: false }}
-          />
-        );
-      })}
+          count++;
+
+          return (
+            <Slider
+              key={`inspiration-${sub}-${idx}`}
+              title={
+                sub.title &&
+                Translate({
+                  context,
+                  label: trim(`category-${category}-${sub.title}`),
+                })
+              }
+              limit={30}
+              category={category}
+              filters={[{ category, subCategories: sub.title }]}
+              backgroundColor={backgroundColor}
+              divider={{ content: false }}
+            />
+          );
+        })
+      )}
     </>
   );
 }
@@ -130,18 +171,21 @@ export default function Wrap() {
   const router = useRouter();
   const { workType } = router.query;
 
-  const category = WORKTYPE_TO_CATEGORY[workType];
+  const categories = WORKTYPE_TO_CATEGORIES[workType];
 
   const { data, isLoading } = useData(
-    categories({
-      category,
+    inspirationFragments.categories({
+      filters: categories.map((c) => ({
+        category: c,
+        subCategories: CATEGORY_FILTERS[c] || [],
+      })),
     })
   );
 
   return (
     <Page
-      category={category}
-      data={data?.inspiration?.categories?.[category]}
+      data={data?.inspiration?.categories}
+      categories={categories}
       isLoading={isLoading}
     />
   );
@@ -159,28 +203,36 @@ export default function Wrap() {
  */
 
 Wrap.getInitialProps = async (ctx) => {
-  const category = WORKTYPE_TO_CATEGORY[ctx?.query?.workType];
+  const fields = WORKTYPE_TO_CATEGORIES[ctx?.query?.workType];
+  const filters = fields.map((c) => ({
+    category: c,
+    subCategories: CATEGORY_FILTERS[c] || [],
+  }));
 
   // Get subCategories data
-  const serverQueries = await fetchAll([categories, frontpageHero], ctx, {
-    category,
-  });
+  const serverQueries = await fetchAll(
+    [inspirationFragments.categories, frontpageHero],
+    ctx,
+    { filters }
+  );
 
-  const subCategories =
-    Object.values(serverQueries.initialData)?.[0]?.data?.inspiration
-      ?.categories?.[category] || [];
+  const categories = Object.values(serverQueries.initialData)?.[0]?.data
+    ?.inspiration?.categories;
 
   // Resolve all belt queries
-  const beltData = await Promise.all(
-    subCategories.map(
-      async (sub) =>
-        await fetchAll([inspiration], ctx, {
-          category,
+  const arr = [];
+  categories?.forEach(({ category, subCategories }) =>
+    subCategories.forEach((sub) =>
+      arr.push(
+        fetchAll([inspirationFragments.inspiration], ctx, {
           limit: 30,
-          filters: [sub.title],
+          filters: [{ category, subCategories: sub.title }],
         })
+      )
     )
   );
+
+  const beltData = await Promise.all(arr);
 
   // Build initialData object
   let initialData = {};
