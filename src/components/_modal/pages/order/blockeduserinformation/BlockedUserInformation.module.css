@@ -11,8 +11,7 @@
   color: var(--error_temp);
 }
 
-.redBorder p a:hover,
-.redBorder p a:focus-visible,
+.redBorder p a:is(:hover, :focus, :focus-visible),
 .redBorder p a::before,
 .redBorder p a::after {
   color: var(--mine-shaft);
