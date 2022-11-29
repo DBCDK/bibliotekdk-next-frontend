@@ -11,7 +11,7 @@ import styles from "./Page.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function HelpTextPage({ helpTextId }) {
   return (
