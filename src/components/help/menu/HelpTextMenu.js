@@ -18,7 +18,7 @@ import Translate from "@/components/base/translate";
 /**
  * Other menu links
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function MenuLink({ label, href = "#!", active = false }) {
   const activeClass = active ? styles.active : "";
@@ -29,7 +29,7 @@ function MenuLink({ label, href = "#!", active = false }) {
       <Link href={href} dataCy="menu-fixed-links">
         <Text type={type}>{Translate({ context: "help", label })}</Text>
       </Link>
-      <Icon src="arrowrightblue.svg" size={[1]} />
+      <Icon src="arrowrightblue.svg" size={1} />
     </div>
   );
 }
