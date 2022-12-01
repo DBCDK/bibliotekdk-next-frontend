@@ -83,7 +83,7 @@ export default function Wrap(props) {
       (manifestation) =>
         manifestation?.tableOfContents &&
         manifestation?.materialTypes.find(
-          (t) => t?.specific?.toLowerCase() === type.toLowerCase()
+          (t) => t?.specific?.toLowerCase() === type?.toLowerCase()
         )
     );
   }, [data]);
