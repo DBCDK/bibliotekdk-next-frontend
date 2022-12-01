@@ -87,6 +87,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
 
 WorkPage.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   onTypeChange: PropTypes.func,
 };

@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
@@ -305,7 +305,7 @@ export default function Wrap({ workId, type, onTypeChange, login }) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   user: PropTypes.object,
   login: PropTypes.func,
 };

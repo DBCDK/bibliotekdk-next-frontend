@@ -17,7 +17,7 @@ import { useMemo } from "react";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
   if (!data?.tableOfContents?.listOfContent?.length) {
@@ -49,7 +49,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function ContentSkeleton(props) {
   return (
@@ -68,7 +68,7 @@ export function ContentSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;
@@ -101,6 +101,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   skeleton: PropTypes.bool,
 };
