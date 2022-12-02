@@ -9,6 +9,10 @@ export function formatMaterialTypesToUrl(materialTypeArray) {
   return materialTypeArray?.join(" / ");
 }
 
+export function formatMaterialTypesToCypress(materialTypeArray) {
+  return materialTypeArray?.join("/").replace(" ", "-");
+}
+
 export function flattenMaterialType(manifestation) {
   return (
     manifestation?.materialTypes?.flatMap(
@@ -51,9 +55,9 @@ export function compareArraysOfStrings(a, b) {
 
 export function getUniqueMaterialTypes(flatMaterialTypes) {
   // We use sort because we actually want to keep the unique arrays sorted
-  return uniqWith(flatMaterialTypes, (a, b) =>
-    isEqual(a.sort(), b.sort())
-  )?.sort(compareArraysOfStrings);
+  return uniqWith(flatMaterialTypes, (a, b) => isEqual(a.sort(), b.sort()))
+    ?.sort(compareArraysOfStrings)
+    ?.filter((arr) => arr.length > 0);
 }
 
 export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {

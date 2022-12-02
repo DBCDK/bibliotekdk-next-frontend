@@ -15,6 +15,7 @@ import styles from "./Row.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { upperFirst } from "lodash";
 import {
+  formatMaterialTypesToCypress,
   formatMaterialTypesToUrl,
   manifestationMaterialTypeUtils,
 } from "@/lib/manifestationFactoryFunctions";
@@ -98,7 +99,7 @@ export default function ResultRow({
                 Translate({ context: "search", label: "loanOptions" })}
             </Text>
             {uniqueMaterialTypes?.length > 0 &&
-              uniqueMaterialTypes?.map((material) => {
+              uniqueMaterialTypes?.map((materialTypeArray) => {
                 return (
                   <Link
                     border={{ top: false, bottom: { keepVisible: true } }}
@@ -110,21 +111,26 @@ export default function ResultRow({
                           work?.titles?.main?.[0],
                           work?.creators?.[0]?.display
                         ),
-                        type: formatMaterialTypesToUrl(material),
+                        type: formatMaterialTypesToUrl(materialTypeArray),
                         workId: work?.workId,
                       },
                     }}
-                    key={material}
+                    key={materialTypeArray}
                     tabIndex="-1"
                     tag="span"
                   >
-                    <Text type={"text4"} tag={"p"}>
-                      {material?.map((mat, index) => {
+                    <Text
+                      type={"text4"}
+                      tag={"p"}
+                      dataCy={
+                        "text-" +
+                        formatMaterialTypesToCypress(materialTypeArray)
+                      }
+                    >
+                      {materialTypeArray?.map((mat, index) => {
                         return (
-                          <span key={mat}>
-                            {upperFirst(mat)}
-                            {index < material.length - 1 && <>&nbsp;/&nbsp;</>}
-                          </span>
+                          upperFirst(mat) +
+                          (index < materialTypeArray.length - 1 ? " / " : "")
                         );
                       })}
                     </Text>

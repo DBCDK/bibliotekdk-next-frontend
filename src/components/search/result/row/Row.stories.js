@@ -15,7 +15,7 @@ export default exportedObject;
  */
 function RowComponentBuilder({
   rowProps,
-  type = "Bog",
+  type = ["bog"],
   storyNameOverride = null,
 }) {
   const descriptionName = storyNameOverride ? storyNameOverride : type;
@@ -155,6 +155,32 @@ const work = {
           detail:
             "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
         },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+          {
+            specific: "diskette",
+          },
+          {
+            specific: "ebog",
+          },
+          {
+            specific: "lydbog (bånd)",
+          },
+          {
+            specific: "lydbog (cd)",
+          },
+          {
+            specific: "lydbog (cd-mp3)",
+          },
+          {
+            specific: "lydbog (net)",
+          },
+          {
+            specific: "punktskrift",
+          },
+        ],
       },
     ],
   },
@@ -165,28 +191,28 @@ const work = {
   ],
   materialTypes: [
     {
-      specific: "Bog",
+      specific: "bog",
     },
     {
-      specific: "Diskette",
+      specific: "diskette",
     },
     {
-      specific: "E-bog",
+      specific: "ebog",
     },
     {
-      specific: "Lydbog (bånd)",
+      specific: "lydbog (bånd)",
     },
     {
-      specific: "Lydbog (cd)",
+      specific: "lydbog (cd)",
     },
     {
-      specific: "Lydbog (cd-mp3)",
+      specific: "lydbog (cd-mp3)",
     },
     {
-      specific: "Lydbog (net)",
+      specific: "lydbog (net)",
     },
     {
-      specific: "Punktskrift",
+      specific: "punktskrift",
     },
   ],
   titles: {
@@ -196,7 +222,7 @@ const work = {
 };
 
 const noMaterialTypesWork = {
-  workId: "some-id-1",
+  workId: "some-id-2",
   manifestations: {
     all: [
       {
@@ -204,6 +230,7 @@ const noMaterialTypesWork = {
           detail:
             "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
         },
+        materialTypes: [],
       },
     ],
   },

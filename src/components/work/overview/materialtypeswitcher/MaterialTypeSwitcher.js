@@ -1,5 +1,6 @@
 import { isEqual, upperFirst } from "lodash";
 import Tag from "@/components/base/forms/tag";
+import { formatMaterialTypesToCypress } from "@/lib/manifestationFactoryFunctions";
 
 export function MaterialTypeSwitcher({
   uniqueMaterialTypes,
@@ -23,13 +24,12 @@ export function MaterialTypeSwitcher({
         selected={isEqual(materialTypeArray, type)}
         onClick={() => handleSelectedMaterial(materialTypeArray, type)}
         skeleton={skeleton}
+        dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}
       >
         {materialTypeArray?.map((mat, index) => {
           return (
-            <span key={mat}>
-              {upperFirst(mat)}
-              {index < materialTypeArray.length - 1 && <>&nbsp;/&nbsp;</>}
-            </span>
+            upperFirst(mat) +
+            (index < materialTypeArray.length - 1 ? " / " : "")
           );
         })}
       </Tag>

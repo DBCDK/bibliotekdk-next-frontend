@@ -24,6 +24,7 @@ function Tag({
   disabled = false,
   skeleton = false,
   tag = "button",
+  dataCy = "",
 }) {
   const context = { context: "form" };
   const Tag = tag;
@@ -34,7 +35,7 @@ function Tag({
 
   return (
     <Tag
-      data-cy={key}
+      data-cy={dataCy || key}
       className={`${styles.tag} ${className} ${selectedStyle} ${disabledStyle}`}
       onClick={onClick}
     >
