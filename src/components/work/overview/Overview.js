@@ -1,16 +1,13 @@
 import { Col, Container, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
-import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import Cover from "@/components/base/cover";
-import Tag from "@/components/base/forms/tag";
 import Bookmark from "@/components/base/bookmark";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import Link from "@/components/base/link";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
