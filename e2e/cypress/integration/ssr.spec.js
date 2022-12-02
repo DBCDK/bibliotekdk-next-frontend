@@ -79,7 +79,7 @@ describe("Server Side Rendering", () => {
   describe(`material`, () => {
     it(`has correct metadata`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=E-bog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=Ebog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
@@ -102,7 +102,7 @@ describe("Server Side Rendering", () => {
 
     it(`has correct alternate links`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
       ).then((res) => {
         expect(res.alternate).to.deep.equal([
           '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763"/>',
@@ -113,7 +113,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for book`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=E-bog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
