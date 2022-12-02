@@ -14,7 +14,7 @@ export default exportedObject;
  */
 export function ContentSection() {
   const workId = "some-id";
-  const type = "Bog";
+  const type = ["bog"];
   return (
     <div>
       <StoryTitle>Content section</StoryTitle>

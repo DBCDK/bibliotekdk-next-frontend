@@ -10,6 +10,8 @@ import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
 import { useMemo } from "react";
+import { isEqual } from "lodash";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 /**
  * The Component function
@@ -82,9 +84,7 @@ export default function Wrap(props) {
     return data?.work?.manifestations?.all?.find(
       (manifestation) =>
         manifestation?.tableOfContents &&
-        manifestation?.materialTypes.find(
-          (t) => t?.specific?.toLowerCase() === type.toLowerCase()
-        )
+        isEqual(flattenMaterialType(manifestation), type)
     );
   }, [data]);
 

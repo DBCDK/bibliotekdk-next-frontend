@@ -10,6 +10,8 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+import { isEqual } from "lodash";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 function CreatorContributorTextHelper({ children }) {
   return (
@@ -222,11 +224,9 @@ export default function Wrap(props) {
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =
-    data?.work?.manifestations?.all?.find((element) =>
-      element?.materialTypes?.find((matType) => {
-        return matType?.specific?.toLowerCase() === type?.toLowerCase();
-      })
-    ) || data?.work?.manifestations?.all?.[0];
+    manifestations?.find((manifestation) => {
+      return isEqual(flattenMaterialType(manifestation), type);
+    }) || manifestations?.[0];
 
   const genreAndForm = data?.work?.genreAndForm || [];
 
