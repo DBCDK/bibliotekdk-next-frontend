@@ -12,80 +12,29 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
-import { useEffect, useMemo } from "react";
-import { getPidsFromType } from "@/components/work/reservationbutton/utils";
-import { getCoverImage } from "@/components/utils/getCoverImage";
+import { useId, useMemo } from "react";
+import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
+import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
+import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
 
-function selectMaterialBasedOnType(fbiManifestations, type) {
-  const filteredManifestations = fbiManifestations?.filter(
-    (manifestation) => manifestation?.materialTypes?.[0]?.specific === type
-  );
-
-  const coverImage = getCoverImage(filteredManifestations);
-
-  return {
-    cover: coverImage,
-    manifestations: filteredManifestations,
-    materialType: type,
-  };
-}
-
-function CreatorsArray(creators, skeleton) {
-  const searchOnUrl = "/find?q.creator=";
-  return creators?.map((creator, index) => {
-    return (
-      <span key={`${creator.display}-${index}`}>
-        <Link
-          disabled={skeleton}
-          href={`${searchOnUrl}${creator.display}`}
-          border={{ top: false, bottom: { keepVisible: true } }}
-        >
-          <Text
-            type="text3"
-            className={styles.creators}
-            skeleton={skeleton}
-            lines={1}
-          >
-            {creator.display}
-          </Text>
-        </Link>
-        {creators?.length > index + 1 ? ", " : ""}
-      </span>
-    );
-  });
-}
-
-function MaterialTypeArray(
-  materialTypes,
-  selectedMaterialType,
-  skeleton,
-  onTypeChange,
-  type
+function useInitMaterialType(
+  uniqueMaterialTypes,
+  inUniqueMaterialTypes,
+  type,
+  onTypeChange
 ) {
-  // Handle selectedMaterial
-  function handleSelectedMaterial(material, type) {
-    // Update query param callback
-    if (type !== material.specific) {
-      onTypeChange({ type: material.specific });
-    }
-  }
+  const id = useId();
 
-  return materialTypes
-    ?.sort((a, b) => a.specific.localeCompare(b.specific))
-    ?.map((materialType) => {
-      //  Sets isSelected flag if button should be selected
-      return (
-        <Tag
-          key={materialType.specific}
-          selected={materialType.specific === selectedMaterialType}
-          onClick={() => handleSelectedMaterial(materialType, type)}
-          skeleton={skeleton}
-        >
-          {materialType.specific[0].toUpperCase() +
-            materialType.specific.slice(1)}
-        </Tag>
-      );
-    });
+  useMemo(() => {
+    if (
+      uniqueMaterialTypes &&
+      (type === "" || type === [] || !inUniqueMaterialTypes(type))
+    ) {
+      onTypeChange({
+        type: uniqueMaterialTypes?.[0],
+      });
+    }
+  }, [id]);
 }
 
 /**
@@ -99,41 +48,36 @@ function MaterialTypeArray(
 export function Overview({
   work,
   workId,
-  type = "",
+  type = [],
   onTypeChange = () => {},
   className = "",
   skeleton = false,
 }) {
   const manifestations = work?.manifestations.all;
-  const materialPids = useMemo(() => {
-    if (manifestations && type) {
-      return getPidsFromType(manifestations, type);
-    }
-  }, [manifestations, type]);
-  const selectedPids = materialPids?.map((mat) => mat?.pid);
 
-  const validMaterialTypes = work?.materialTypes
-    ?.map((materialType) => materialType?.specific)
-    ?.sort((a, b) => a?.localeCompare(b));
+  const {
+    uniqueMaterialTypes,
+    inUniqueMaterialTypes,
+    flatPidsByType,
+    manifestationsEnrichedWithDefaultFrontpage,
+  } = useMemo(() => {
+    return manifestationMaterialTypeUtils(manifestations);
+  }, [manifestations]);
 
-  useEffect(() => {
-    if (
-      validMaterialTypes &&
-      (type === "" || !validMaterialTypes?.includes(type))
-    ) {
-      onTypeChange({
-        type: validMaterialTypes?.[0],
-      });
-    }
-  }, [type, validMaterialTypes]);
+  useInitMaterialType(
+    uniqueMaterialTypes,
+    inUniqueMaterialTypes,
+    type,
+    onTypeChange
+  );
 
-  const selectedMaterial = selectMaterialBasedOnType(manifestations, type);
+  const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  /**
-   * NOTE
-   * - materialtypes array
-   * - Creators array
-   */
+  const selectedMaterial = useMemo(
+    () => manifestationsEnrichedWithDefaultFrontpage(type),
+    [type]
+  );
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -175,15 +119,16 @@ export function Overview({
                   alt=""
                 />
               </Col>
-              <Col xs={12}>{CreatorsArray(work?.creators)}</Col>
+              <Col xs={12}>
+                <CreatorsArray creators={work?.creators} />
+              </Col>
               <Col xs={12} className={styles.materials}>
-                {MaterialTypeArray(
-                  work?.materialTypes,
-                  selectedMaterial?.materialType,
-                  skeleton,
-                  onTypeChange,
-                  type
-                )}
+                <MaterialTypeSwitcher
+                  uniqueMaterialTypes={uniqueMaterialTypes}
+                  skeleton={skeleton}
+                  onTypeChange={onTypeChange}
+                  type={type}
+                />
               </Col>
               <Col xs={12} sm={9} xl={7} className={styles.basket}>
                 <ReservationButton
