@@ -13,7 +13,7 @@ const customJestConfig = {
     "<rootDir>/.next/",
     "<rootDir>/node_modules/",
   ],
-  testMatch: ["**/__test?(s)__/**/*.[jt]s?(x)", "!**/__fixtures__/**"],
+  testMatch: ["**/__test?(s)__/**/*.test.[jt]s?(x)", "!**/__fixtures__/**"],
   // setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",

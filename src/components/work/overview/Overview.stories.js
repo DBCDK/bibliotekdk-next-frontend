@@ -33,7 +33,7 @@ function OverviewComponentBuilder({
       </StoryDescription>
       <Overview
         workId={overviewProps.workId ?? "some-workId"}
-        type={overviewProps.type ?? []}
+        type={overviewProps.type || []}
         onTypeChange={(el) => overviewProps.onTypeChange(el.type)}
         login={() => {}}
       />

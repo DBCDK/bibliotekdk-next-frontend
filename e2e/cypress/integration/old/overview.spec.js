@@ -37,7 +37,7 @@ describe("Overview", () => {
         .focus()
         .should("have.attr", "data-cy", "tag-ebog")
         .tabs(4)
-        .should("have.attr", "data-cy", "tag-lydbog-(net)-/-soloplade")
+        .should("have.attr", "data-cy", "tag-lydbog-(net)/soloplade")
         .tab()
         .should("have.attr", "data-cy", "button-order-overview-enabled");
     });
