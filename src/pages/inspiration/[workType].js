@@ -32,26 +32,131 @@ import Translate from "@/components/base/translate";
 
 import Slider from "@/components/inspiration/slider";
 
-// worktype to categories
-const WORKTYPE_TO_CATEGORIES = {
-  artikler: ["articles"],
-  spil: ["games"],
-  boeger: [
-    "fiction",
-    "nonfiction",
-    "childrenBooksNonfiction",
-    "childrenBooksFiction",
-  ],
-  film: ["movies"],
-  musik: ["music"],
-  noder: ["sheetMusic"],
-};
+/**
+ * Custom map, settings object
+ * - Maps worktype to main category name
+ * - Selects specific subCategories
+ * - Sorts subCategories
+ *
+ * http://cat-inspire-1-0.mi-prod.svc.cloud.dbc.dk/
+ */
 
-// custom filters for a specific category
-const CATEGORY_FILTERS = {
-  childrenBooksNonfiction: ["nyeste", "populære"],
-  childrenBooksFiction: ["nyeste", "populære"],
-  nonfiction: ["nyeste", "populære"],
+const MAP = {
+  artikler: [
+    {
+      category: "articles",
+      subCategories: [
+        "nyeste",
+        "(30, 39]",
+        "(60, 69]",
+        "(90, 99]",
+        "(70, 79]",
+        "(10, 19]",
+        "(80, 89]",
+        "(50, 59]",
+        "(20, 29]",
+        "(40, 49]",
+        "(0, 9]",
+      ],
+    },
+  ],
+  spil: [
+    {
+      category: "games",
+      subCategories: [
+        "nyeste",
+        "populære",
+        "Pc-spil",
+        "Playstation 5",
+        "Playstation 4",
+        "Playstation 3",
+        "Nintendo Switch",
+        "Wii",
+        "Nintendo DS",
+        "Xbox One",
+        "Xbox 360",
+      ],
+    },
+  ],
+  boeger: [
+    { category: "fiction", subCategories: ["nyeste", "populære"] },
+    { category: "nonfiction", subCategories: ["nyeste", "populære"] },
+    { category: "childrenBooksFiction", subCategories: ["nyeste", "populære"] },
+    {
+      category: "childrenBooksNonfiction",
+      subCategories: ["nyeste", "populære"],
+    },
+    {
+      category: "fiction",
+      subCategories: [
+        "krimi",
+        "humor",
+        "spænding",
+        "biografiske romaner",
+        "historiske romaner",
+        "science fiction",
+        "samfundskritik",
+        "eksperimenterende litteratur",
+        "politiromaner",
+      ],
+    },
+  ],
+  film: [
+    {
+      category: "movies",
+      subCategories: [
+        "nyeste",
+        "populære",
+        "børnematerialer",
+        "drama",
+        "kærlighed",
+        "dokumentarfilm",
+        "komedier",
+        "tegnefilm",
+        "tv-serier",
+        "kunst og kunstnere",
+        "Film (net)",
+        "Dvd",
+      ],
+    },
+  ],
+  musik: [
+    {
+      category: "music",
+      subCategories: [
+        "nyeste",
+        "populære",
+        "børnematerialer",
+        "klassisk musik 1950 ->",
+        "rock",
+        "jazz",
+        "blues",
+        "metal",
+        "folk",
+        "kammermusik",
+        "hip hop",
+        "electronica",
+        "singer/songwriter",
+        "Cd (musik)",
+        "Grammofonplade",
+        "Dvd",
+      ],
+    },
+  ],
+  noder: [
+    {
+      category: "sheetMusic",
+      subCategories: [
+        "nyeste",
+        "populære",
+        "klaverskoler",
+        "guitarskoler",
+        "sammenspil",
+        "undervisningsmaterialer",
+        "karaoke",
+      ],
+    },
+  ],
 };
 
 // category color
@@ -171,24 +276,15 @@ export default function Wrap() {
   const router = useRouter();
   const { workType } = router.query;
 
-  const categories = WORKTYPE_TO_CATEGORIES[workType];
+  const filters = MAP[workType];
 
   const { data, isLoading } = useData(
     inspirationFragments.categories({
-      filters: categories.map((c) => ({
-        category: c,
-        subCategories: CATEGORY_FILTERS[c] || [],
-      })),
+      filters,
     })
   );
 
-  return (
-    <Page
-      data={data?.inspiration?.categories}
-      categories={categories}
-      isLoading={isLoading}
-    />
-  );
+  return <Page data={data?.inspiration?.categories} isLoading={isLoading} />;
 }
 
 /**
@@ -203,11 +299,7 @@ export default function Wrap() {
  */
 
 Wrap.getInitialProps = async (ctx) => {
-  const fields = WORKTYPE_TO_CATEGORIES[ctx?.query?.workType];
-  const filters = fields.map((c) => ({
-    category: c,
-    subCategories: CATEGORY_FILTERS[c] || [],
-  }));
+  const filters = MAP[ctx?.query?.workType];
 
   // Get subCategories data
   const serverQueries = await fetchAll(

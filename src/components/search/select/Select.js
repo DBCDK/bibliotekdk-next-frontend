@@ -10,6 +10,8 @@ import React from "react";
 import useQ from "@/components/hooks/useQ";
 import { useRouter } from "next/router";
 
+import { MATERIAL_PAGES } from "@/components/header";
+
 export function Desktop({ options = [], onSelect, selected, className }) {
   return (
     <Dropdown className={`${styles.dropdownwrap} ${className}`}>
