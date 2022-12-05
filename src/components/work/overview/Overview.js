@@ -1,4 +1,6 @@
-import { Col, Container, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";

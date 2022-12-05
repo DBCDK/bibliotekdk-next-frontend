@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";

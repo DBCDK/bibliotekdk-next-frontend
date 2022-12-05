@@ -3,7 +3,9 @@ import { useState, useEffect, useRef, createRef, useMemo } from "react";
 import PropTypes from "prop-types";
 import throttle from "lodash/throttle";
 
-import { Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 

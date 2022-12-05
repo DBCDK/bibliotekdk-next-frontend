@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import HelpText from "../HelpText";
-import { Col, Container, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import HelpTextMenu from "@/components/help/menu";
 
 import styles from "./Page.module.css";
