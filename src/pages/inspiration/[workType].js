@@ -314,11 +314,11 @@ Wrap.getInitialProps = async (ctx) => {
   // Resolve all belt queries
   const arr = [];
   categories?.forEach(({ category, subCategories }) =>
-    subCategories.forEach((sub) =>
+    subCategories.forEach(({ title }) =>
       arr.push(
         fetchAll([inspirationFragments.inspiration], ctx, {
           limit: 30,
-          filters: [{ category, subCategories: sub.title }],
+          filters: [{ category, subCategories: title }],
         })
       )
     )
