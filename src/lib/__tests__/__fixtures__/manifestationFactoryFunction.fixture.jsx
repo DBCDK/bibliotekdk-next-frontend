@@ -71,7 +71,7 @@ export const grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1 = {
   ],
 };
 
-export const denGrimmeAelling = [
+export const manifestationFactoryFunctionFixture = [
   {
     pid: "800010-katalog:99121927869605763",
     materialTypes: [

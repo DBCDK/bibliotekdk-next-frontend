@@ -7,8 +7,8 @@ import {
   oneSpecificMaterialType_Ebog,
   fiveManifestations_bog_ebog_x2__bog_x2__ebog_x1,
   grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1,
-  denGrimmeAelling,
-} from "@/lib/__tests__/__fixtures__/denGrimmeAelling";
+  manifestationFactoryFunctionFixture,
+} from "@/lib/__tests__/__fixtures__/manifestationFactoryFunction.fixture";
 import {
   compareArraysOfStrings,
   flatMapMaterialTypes,
@@ -330,7 +330,9 @@ describe("getFlatPidsByType", () => {
 
 describe("manifestationMaterialTypeUtils", () => {
   it("expect exact keys from factory function (remember to update test)", () => {
-    const actual = manifestationMaterialTypeUtils(denGrimmeAelling);
+    const actual = manifestationMaterialTypeUtils(
+      manifestationFactoryFunctionFixture
+    );
     const expectedKeys = [
       "flatMaterialTypes",
       "uniqueMaterialTypes",
