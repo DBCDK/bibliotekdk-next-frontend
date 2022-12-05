@@ -4,7 +4,6 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useData } from "@/lib/api/api";
-import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
 import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
@@ -16,12 +15,11 @@ import { useMemo } from "react";
 function AlternativeOptions({ modal = null, context = {} }) {
   const { manifestations, type, workId } = { ...context };
 
-  const { allEnrichedAccesses: accesses } = useMemo(() => {
+  const { allEnrichedAccesses: accesses, requestButtonIsTrue } = useMemo(() => {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const requestButton =
-    accesses && checkRequestButtonIsTrue({ allEnrichedAccesses: accesses });
+  const requestButton = accesses && requestButtonIsTrue;
 
   const onlineAccess = accesses?.filter(
     (singleAccess) => singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
