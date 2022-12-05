@@ -1,7 +1,7 @@
 .info {
   padding-top: var(--pt1);
-
 }
+
 .info p:first-letter {
   text-transform: uppercase;
 }

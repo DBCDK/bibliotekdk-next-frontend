@@ -1,17 +1,15 @@
-import {
-  checkRequestButtonIsTrue,
-  context,
-  getBaseUrl,
-  selectMaterial,
-} from "@/components/work/reservationbutton/utils";
+import { context, getBaseUrl } from "@/components/work/reservationbutton/utils";
 import { getIsPeriodicaLike } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
-import { Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
 import styles from "./OrderButtonTextBelow.module.css";
 import { uniq } from "lodash";
 import Skeleton from "@/components/base/skeleton";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
+import { accessUtils } from "@/lib/accessFactory";
+import { AccessEnum } from "@/lib/enums";
+import { useMemo } from "react";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -23,33 +21,31 @@ import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAn
  * @constructor
  */
 export function OrderButtonTextBelow({ manifestations, skeleton }) {
-  // const selectedMaterial = work?.manifestations?.all;
-  const selectedMaterial = manifestations;
+  const { allEnrichedAccesses: access } = useMemo(() => {
+    return accessUtils(manifestations);
+  }, [manifestations]);
 
   const workTypes = uniq(
-    selectedMaterial?.flatMap((manifestation) => manifestation?.workTypes)
+    manifestations?.flatMap((manifestation) => manifestation?.workTypes)
   );
 
   const materialTypes = uniq(
-    selectedMaterial?.flatMap((manifestation) =>
+    manifestations?.flatMap((manifestation) =>
       manifestation?.materialTypes?.map((materialType) => materialType.specific)
     )
   );
 
   const isPeriodicaLike = getIsPeriodicaLike(workTypes, materialTypes);
 
-  const selectedManifestations = selectMaterial(selectedMaterial);
-
-  const access = selectedManifestations?.access;
+  if (access?.[0]?.__typename === AccessEnum.INFOMEDIA_SERVICE) {
+    return null;
+  }
 
   // @TODO infomedia
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodicaLike),
-    Boolean(
-      access?.[0]?.loanIsPossible ||
-        checkRequestButtonIsTrue({ manifestations: selectedMaterial })
-    ),
+    Boolean(access?.[0]?.loanIsPossible),
   ];
 
   const translationForButtonText = [
@@ -70,7 +66,7 @@ export function OrderButtonTextBelow({ manifestations, skeleton }) {
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
 
   return (
-    index !== -1 &&
+    index > -1 &&
     access?.[0]?.id !== null &&
     translationForButtonText?.[index] !== null && (
       <Col xs={12} className={styles.info}>
