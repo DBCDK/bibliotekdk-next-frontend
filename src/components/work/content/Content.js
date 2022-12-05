@@ -10,6 +10,8 @@ import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
 import { useMemo } from "react";
+import { isEqual } from "lodash";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 /**
  * The Component function
@@ -17,7 +19,7 @@ import { useMemo } from "react";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
   if (!data?.tableOfContents?.listOfContent?.length) {
@@ -49,7 +51,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export function ContentSkeleton(props) {
   return (
@@ -68,7 +70,7 @@ export function ContentSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Wrap(props) {
   const { workId, type } = props;
@@ -82,9 +84,7 @@ export default function Wrap(props) {
     return data?.work?.manifestations?.all?.find(
       (manifestation) =>
         manifestation?.tableOfContents &&
-        manifestation?.materialTypes.find(
-          (t) => t?.specific?.toLowerCase() === type?.toLowerCase()
-        )
+        isEqual(flattenMaterialType(manifestation), type)
     );
   }, [data]);
 
@@ -101,6 +101,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   skeleton: PropTypes.bool,
 };

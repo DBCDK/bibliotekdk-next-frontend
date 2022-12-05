@@ -10,6 +10,8 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+import { isEqual } from "lodash";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 function CreatorContributorTextHelper({ children }) {
   return (
@@ -30,9 +32,9 @@ function CreatorContributorTextHelper({ children }) {
  *
  * @returns {JSX.Element}
  */
-export function Details({
+function Details({
   className = "",
-  data = {},
+  manifestation = {},
   skeleton = false,
   genreAndForm = null,
 }) {
@@ -41,19 +43,24 @@ export function Details({
 
   // bidrag - contributors + creators - useMemo for performance
   const creatorsAndContributors = useMemo(() => {
-    return [...(data?.creators || []), ...(data?.contributors || [])];
-  }, [data]);
+    return [
+      ...(manifestation?.creators || []),
+      ...(manifestation?.contributors || []),
+    ];
+  }, [manifestation]);
 
   // languages - main + subtitles + spoken - useMemo for performance;
   const languages = useMemo(() => {
-    const main = data?.languages?.main?.map((mlang) => mlang.display) || [];
-    const spoken = data?.languages?.spoken?.map((spok) => spok.display) || [];
+    const main =
+      manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
+    const spoken =
+      manifestation?.languages?.spoken?.map((spok) => spok.display) || [];
     const subtitles =
-      data?.languages?.subtitles.map((sub) => sub.display) || [];
+      manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
     const mixed = [...main, ...spoken, ...subtitles];
     // filter out duplicates
     return [...new Set(mixed)];
-  }, [data]);
+  }, [manifestation]);
 
   return (
     <Section
@@ -62,7 +69,7 @@ export function Details({
       className={`${className}`}
     >
       <Row className={`${styles.details}`}>
-        {data.languages && (
+        {manifestation.languages && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -77,7 +84,7 @@ export function Details({
             </Text>
           </Col>
         )}
-        {data.physicalDescriptions && (
+        {manifestation.physicalDescriptions && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -87,7 +94,7 @@ export function Details({
             >
               {Translate({ ...context, label: "physicalDescription" })}
             </Text>
-            {data.physicalDescriptions.map((description, i) => {
+            {manifestation.physicalDescriptions.map((description, i) => {
               return (
                 <Text
                   type="text4"
@@ -102,7 +109,7 @@ export function Details({
           </Col>
         )}
 
-        {data.edition?.publicationYear?.display && (
+        {manifestation.edition?.publicationYear?.display && (
           <Col xs={6} md={{ span: 3 }}>
             <Text
               type="text3"
@@ -113,7 +120,7 @@ export function Details({
               {Translate({ ...context, label: "released" })}
             </Text>
             <Text type="text4" skeleton={skeleton} lines={0}>
-              {data.edition.publicationYear.display}
+              {manifestation.edition.publicationYear.display}
             </Text>
           </Col>
         )}
@@ -155,11 +162,7 @@ export function Details({
               lines={0}
               dataCy="text-genre-form"
             >
-              {genreAndForm.map((subject, index) => {
-                // Trailing comma
-                const t = index + 1 === genreAndForm.length ? "" : ", ";
-                return subject + t;
-              })}
+              {genreAndForm.join(", ")}
             </Text>
           </Col>
         )}
@@ -187,7 +190,7 @@ export function DetailsSkeleton(props) {
   return (
     <Details
       {...props}
-      data={mock}
+      manifestation={mock}
       className={`${props.className} ${styles.skeleton}`}
       skeleton={true}
     />
@@ -217,20 +220,20 @@ export default function Wrap(props) {
     return <DetailsSkeleton {...props} />;
   }
 
+  const manifestations = data?.work?.manifestations?.all;
+
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =
-    data?.work?.manifestations?.all?.find((element) =>
-      element?.materialTypes?.find((matType) => {
-        return matType?.specific?.toLowerCase() === type?.toLowerCase();
-      })
-    ) || data?.work?.manifestations?.all?.[0];
+    manifestations?.find((manifestation) => {
+      return isEqual(flattenMaterialType(manifestation), type);
+    }) || manifestations?.[0];
 
   const genreAndForm = data?.work?.genreAndForm || [];
 
   return (
     <Details
       {...props}
-      data={manifestationByMaterialType}
+      manifestation={manifestationByMaterialType}
       genreAndForm={genreAndForm}
     />
   );
@@ -239,6 +242,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   skeleton: PropTypes.bool,
 };

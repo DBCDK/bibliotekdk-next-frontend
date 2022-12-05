@@ -1,7 +1,6 @@
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { getPidsFromType } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import { uniqueEntries } from "@/lib/utils";
 import { at } from "lodash";
@@ -36,17 +35,6 @@ export function useWorkFromSelectedPids(workFragment, selectedPids) {
       ? filteredWork(data?.work, selectedPids)
       : data?.work;
   }, [data?.work, selectedPids]);
-}
-
-export function useGetPidsFromWorkIdAndType(workId, type) {
-  const pidsAndMaterialTypes = useData(
-    workId && workFragments.pidsAndMaterialTypes({ workId })
-  );
-
-  return getPidsFromType(
-    pidsAndMaterialTypes?.data?.work?.manifestations?.all,
-    type
-  )?.map((manifestation) => manifestation.pid);
 }
 
 export function useGetManifestationsForOrderButton(workId, selectedPids) {

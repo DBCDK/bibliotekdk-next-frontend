@@ -93,6 +93,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   skeleton: PropTypes.bool,
 };

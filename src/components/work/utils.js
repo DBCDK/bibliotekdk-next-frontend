@@ -1,6 +1,7 @@
 import Translate from "@/components/base/translate";
 import { uniq } from "lodash";
 import { uniqueEntries } from "@/lib/utils";
+import Router from "next/router";
 
 export function openLocalizationsModal(modal, pids, workId, materialType) {
   modal.push("localizations", {
@@ -39,7 +40,12 @@ export function openReferencesModal(modal, pids, workId, work, manifestation) {
 }
 
 export function onOnlineAccess(url, target = "_blank") {
-  window.open(url, target);
+  try {
+    const parsedUrl = new URL(url);
+    window.open(parsedUrl.href, target);
+  } catch (_) {
+    Router.push(url);
+  }
 }
 
 /**

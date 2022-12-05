@@ -140,8 +140,8 @@ EBookButtonTxt.story = {
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "ereol.combo/langurl",
-                origin: "ereol.combo",
+                url: "https://ereol.combo/langurl",
+                origin: "https://ereol.combo",
               },
             ],
             workTypes: ["LITERATURE"],
@@ -241,8 +241,8 @@ EAudioBookDigitalButtonTxt.story = {
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "nota.combo/langurl",
-                origin: "nota.combo",
+                url: "https://nota.combo/langurl",
+                origin: "https://nota.combo",
               },
             ],
             workTypes: ["LITERATURE"],
@@ -321,7 +321,7 @@ SlowLoadingButtonTxt.story = {
         return [
           {
             materialTypes: [{ specific: "Ebog" }],
-            access: [{ __resolveType: "Ereol", url: "ereol.combo" }],
+            access: [{ __resolveType: "Ereol", url: "https://ereol.combo" }],
           },
         ];
       },

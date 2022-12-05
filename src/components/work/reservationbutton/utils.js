@@ -1,6 +1,7 @@
 // Translate Context
-import { flattenWord } from "@/lib/utils";
 import { AccessEnum } from "@/lib/enums";
+
+export const context = { context: "overview" };
 
 /**
  * Example:
@@ -11,9 +12,6 @@ import { AccessEnum } from "@/lib/enums";
  * @param {string} url
  * @returns {string}
  */
-
-export const context = { context: "overview" };
-
 export function getBaseUrl(url) {
   if (!url) {
     return "";
@@ -67,21 +65,6 @@ export function checkDigitalCopy({ manifestations }) {
   return !!manifestations?.find((manifestation) =>
     manifestation?.access?.find((access) => access?.issn)
   );
-}
-
-/**
- * Select the manifestations that match the chosen type
- * @param {Array<Object>} manifestations
- * @param {String} type
- * @returns {Array<Object>}
- */
-export function getPidsFromType(manifestations, type) {
-  return manifestations?.filter((manifestation) => {
-    return manifestation?.materialTypes?.find(
-      (materialType) =>
-        flattenWord(materialType?.specific) === flattenWord(type)
-    );
-  });
 }
 
 /**

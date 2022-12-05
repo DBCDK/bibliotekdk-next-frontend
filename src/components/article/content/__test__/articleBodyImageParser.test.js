@@ -1,5 +1,5 @@
 import parseArticleBody from "../utils";
-import data from "./mock/article.mock";
+import data from "./__fixtures__/article.mock";
 import config from "@/config";
 
 test("parseArticleBodyImages", () => {
@@ -13,6 +13,5 @@ test("replaceString", () => {
   const expected = "fisk " + config.backend.url + "/ hest og køer";
   const actual = parseArticleBody(replaceme);
 
-  console.log(actual);
   expect(actual).toEqual(expected);
 });
