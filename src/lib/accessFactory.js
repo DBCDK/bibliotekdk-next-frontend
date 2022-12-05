@@ -148,10 +148,52 @@ export function getAllEnrichedAccessSorted(manifestations) {
     ?.value();
 }
 
+/**
+ * Check loanIsPossible on any access
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkRequestButtonIsTrue(allEnrichedAccesses) {
+  return (
+    allEnrichedAccesses?.filter(
+      (singleAccess) =>
+        singleAccess?.loanIsPossible && singleAccess?.loanIsPossible === true
+    ).length > 0
+  );
+}
+
+/**
+ * Check digitalCopy on any
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkDigitalCopy(allEnrichedAccesses) {
+  return !!allEnrichedAccesses?.find((singleAccess) => singleAccess?.issn);
+}
+
+/**
+ * Check physicalCopy on any
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkPhysicalCopy(allEnrichedAccesses) {
+  return !!allEnrichedAccesses?.find(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.loanIsPossible === true
+  );
+}
+
 export function accessUtils(manifestations) {
   const allEnrichedAccesses = getAllEnrichedAccessSorted(manifestations);
+  const requestButtonIsTrue = checkRequestButtonIsTrue(allEnrichedAccesses);
+  const digitalCopy = checkDigitalCopy(allEnrichedAccesses);
+  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses);
 
   return {
     allEnrichedAccesses: allEnrichedAccesses,
+    requestButtonIsTrue: requestButtonIsTrue,
+    digitalCopy: digitalCopy,
+    physicalCopy: physicalCopy,
   };
 }
