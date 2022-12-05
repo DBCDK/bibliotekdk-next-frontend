@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 
 import Faq from "@/components/help/faq/promoted";
 import Sections from "../sections";

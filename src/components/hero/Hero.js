@@ -1,5 +1,7 @@
 import styles from "@/components/hero/Hero.module.css";
-import { Col, Container, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import React from "react";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";

@@ -6,7 +6,8 @@ import { sortArticles } from "./utils";
 
 import { useData } from "@/lib/api/api";
 
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import ArticlePreview from "@/components/article/preview";
 
 import { allArticles } from "@/lib/api/article.fragments";

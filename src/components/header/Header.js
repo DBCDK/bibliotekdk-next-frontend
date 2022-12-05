@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";

@@ -1,4 +1,5 @@
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import { useModal } from "@/components/_modal";
 import FakeSearchInput from "@/components/header/suggester/FakeSearchInput";
 import Section from "@/components/base/section";
