@@ -11,14 +11,6 @@ import {
 } from "@/lib/accessFactory";
 import { AccessEnum } from "@/lib/enums";
 
-describe("testa", () => {
-  it("testan", () => {
-    const actual = "hej";
-    const expected = "hej";
-    expect(actual).toEqual(expected);
-  });
-});
-
 describe("getAllAccess", () => {
   it("empty manifestations (expect empty access)", () => {
     const actual = getAllAccess([]);
@@ -116,7 +108,7 @@ describe("getAllAccess", () => {
     const actual = getAllAccess([
       {
         pid: "1loan",
-        titles: [{ main: "Hejsa" }],
+        titles: { main: ["Hejsa"] },
         access: [{ url: "urla_1_0.dekaa" }],
       },
     ]);
@@ -141,6 +133,7 @@ describe("enrichInfomediaAccess", () => {
       __typename: AccessEnum.INFOMEDIA_SERVICE,
       id: "id_hej",
       url: "/infomedia/hejsaa/work-of:1loan/id_hej",
+      origin: "infomedia",
       accessType: "infomedia",
     };
     expect(actual).toEqual(expected);

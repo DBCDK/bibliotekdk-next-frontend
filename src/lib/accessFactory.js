@@ -3,12 +3,12 @@ import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 
 export function getAccessForSingleManifestation(manifestation) {
-  return manifestation.access.map((singleAccess) => {
+  return manifestation?.access?.map((singleAccess) => {
     return {
       ...singleAccess,
       ...(manifestation?.pid && { pid: manifestation?.pid }),
-      ...(manifestation?.titles?.length > 0 && {
-        titles: manifestation?.titles?.map((title) => title?.main),
+      ...(manifestation?.titles?.main?.length > 0 && {
+        titles: manifestation?.titles?.main,
       }),
     };
   });
@@ -27,6 +27,7 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
           `work-of:${singleInfomediaAccess?.pid}`,
           singleInfomediaAccess.id
         ),
+        origin: "infomedia",
         accessType: "infomedia",
       }
     : singleInfomediaAccess;
@@ -148,9 +149,9 @@ export function getAllEnrichedAccessSorted(manifestations) {
 }
 
 export function accessUtils(manifestations) {
-  const allEnrichedAccess = getAllEnrichedAccessSorted(manifestations);
+  const allEnrichedAccesses = getAllEnrichedAccessSorted(manifestations);
 
   return {
-    allEnrichedAccess: allEnrichedAccess,
+    allEnrichedAccesses: allEnrichedAccesses,
   };
 }
