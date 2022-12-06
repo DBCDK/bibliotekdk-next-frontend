@@ -349,8 +349,6 @@ describe("Server Side Rendering", () => {
   });
 
   describe(`inspiration/material pages`, () => {
-    // TODO: Stuff is failing. I suspect because of default-frontpage,
-    //  but maybe not
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
         expect(res.title).to.equal("Skønlitteratur");
