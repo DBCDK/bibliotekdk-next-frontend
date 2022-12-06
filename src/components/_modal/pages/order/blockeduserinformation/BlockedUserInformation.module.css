@@ -29,8 +29,7 @@ div.redBorder p.paragraph a.blockedLink {
 
 div.redBorder p.paragraph a.blockedLink:is(:hover, :focus, :focus-visible),
 div.redBorder p.paragraph a.blockedLink::before,
-div.redBorder p.paragraph a.blockedLink::after
-{
+div.redBorder p.paragraph a.blockedLink::after {
   animation: __underline 0.8s ease;
   color: var(--mine-shaft);
   border-color: var(--mine-shaft);
