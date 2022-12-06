@@ -241,7 +241,7 @@ export function Page({ data, isLoading }) {
       </Section>
 
       {data?.map(({ category, subCategories }) =>
-        subCategories.map((sub, idx) => {
+        subCategories.map(({ title }, idx) => {
           const backgroundColor =
             count % 2 === 0
               ? null
@@ -251,17 +251,16 @@ export function Page({ data, isLoading }) {
 
           return (
             <Slider
-              key={`inspiration-${sub}-${idx}`}
+              key={`inspiration-${title}-${idx}`}
               title={
-                sub.title &&
+                title &&
                 Translate({
                   context,
-                  label: trim(`category-${category}-${sub.title}`),
+                  label: trim(`category-${category}-${title}`),
                 })
               }
-              limit={30}
               category={category}
-              filters={[{ category, subCategories: sub.title }]}
+              filters={[{ category, subCategories: [title] }]}
               backgroundColor={backgroundColor}
               divider={{ content: false }}
             />
@@ -318,7 +317,7 @@ Wrap.getInitialProps = async (ctx) => {
       arr.push(
         fetchAll([inspirationFragments.inspiration], ctx, {
           limit: 30,
-          filters: [{ category, subCategories: title }],
+          filters: [{ category, subCategories: [title] }],
         })
       )
     )
