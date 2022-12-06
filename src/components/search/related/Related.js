@@ -10,16 +10,15 @@ import { cyKey } from "@/utils/trim";
 
 import Link from "@/components/base/link";
 import Skip from "@/components/base/skip";
-import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
 import { useModal } from "@/components/_modal";
+import { FilterTypeEnum } from "@/lib/enums";
 import Button from "@/components/base/button/Button";
 import Icon from "@/components/base/icon/Icon";
-import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  *
