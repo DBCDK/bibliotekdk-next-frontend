@@ -47,9 +47,7 @@ function getPageHead(path) {
  */
 describe("Server Side Rendering", () => {
   describe(`frontpage`, () => {
-    // TODO: Stuff is failing. I suspect because of default-frontpage,
-    //  but maybe not
-    it.skip(`has correct metadata`, () => {
+    it(`has correct metadata`, () => {
       getPageHead("/").then((res) => {
         expect(res.title).to.equal(
           "Bibliotek.dk | Lån fra alle Danmarks biblioteker"
@@ -353,7 +351,7 @@ describe("Server Side Rendering", () => {
   describe(`inspiration/material pages`, () => {
     // TODO: Stuff is failing. I suspect because of default-frontpage,
     //  but maybe not
-    it.skip(`has correct metadata`, () => {
+    it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
         expect(res.title).to.equal("Skønlitteratur");
         expect(res.description).to.exist;
