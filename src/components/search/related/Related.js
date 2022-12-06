@@ -46,9 +46,6 @@ export function Words({ data, isLoading }) {
 
   return (
     <div className={`${skeletonClass} ${styles.related}`}>
-      <Text className={styles.label} skeleton={isLoading} lines={1}>
-        {Translate({ context: "search", label: "relatedSubjects" })}
-      </Text>
       <div className={styles.words} data-cy="words-container">
         {data.map((w) => (
           <Word key={w} word={w} isLoading={isLoading} />
@@ -77,7 +74,11 @@ export function Related({ data, hitcount, isLoading }) {
       divider={false}
       space={{ bottom: "var(--pt4)" }}
       className={styles.section}
-      title=" "
+      title={
+        <Text className={styles.label} skeleton={isLoading} lines={1}>
+          {Translate({ context: "search", label: "relatedSubjects" })}
+        </Text>
+      }
     >
       {(data.length > 0 || isLoading) && (
         <div>
