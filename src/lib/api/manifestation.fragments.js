@@ -114,6 +114,9 @@ export function reservationButtonManifestations({ pid }) {
     query orderButtonTextBelowManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
         pid
+        titles {
+          main
+        }
         materialTypes {
           specific
         }

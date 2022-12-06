@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import Translate from "@/components/base/translate";
 
@@ -13,6 +14,12 @@ import Link from "@/components/base/link";
 
 import styles from "./Row.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
+import { upperFirst } from "lodash";
+import {
+  formatMaterialTypesToCypress,
+  formatMaterialTypesToUrl,
+  manifestationMaterialTypeUtils,
+} from "@/lib/manifestationFactoryFunctions";
 
 /**
  * Row representation of a search result entry
@@ -36,6 +43,10 @@ export default function ResultRow({
     }
   }, [work?.manifestations]);
 
+  const { uniqueMaterialTypes } = useMemo(() => {
+    return manifestationMaterialTypeUtils(work?.manifestations?.all);
+  }, [work?.manifestations?.all]);
+
   return (
     <Link
       a={true}
@@ -55,16 +66,6 @@ export default function ResultRow({
       onClick={onClick}
     >
       <Row className={styles.row}>
-        {/* BETA-1 - removed this column
-        <Col className={styles.leftcol} xs={3}>
-          <Breadcrumbs
-            skeleton={!work.path}
-            crumbs={work.path ? null : 4}
-            path={work.path || []}
-            link={false}
-          />
-        </Col>
-        */}
         <Col>
           <Title
             type="title5"
@@ -91,19 +92,19 @@ export default function ResultRow({
               lines={2}
               clamp={true}
               skeleton={
-                (!work?.materialTypes && isLoading) || !work?.materialTypes
+                (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
               }
               dataCy={"result-row-laanemuligheder-wrap"}
             >
-              {work?.materialTypes?.length > 0 &&
+              {uniqueMaterialTypes?.length > 0 &&
                 Translate({ context: "search", label: "loanOptions" })}
             </Text>
-            {work?.materialTypes?.length > 0 &&
-              work?.materialTypes?.map((material) => {
+            {uniqueMaterialTypes?.length > 0 &&
+              uniqueMaterialTypes?.map((materialTypeArray) => {
                 return (
                   <Link
                     border={{ top: false, bottom: { keepVisible: true } }}
-                    className={styles.materiallink}
+                    className={`${styles.materiallink}`}
                     href={{
                       pathname: "/materiale/[title_author]/[workId]",
                       query: {
@@ -111,17 +112,28 @@ export default function ResultRow({
                           work?.titles?.main?.[0],
                           work?.creators?.[0]?.display
                         ),
-                        type: material?.specific,
+                        type: formatMaterialTypesToUrl(materialTypeArray),
                         workId: work?.workId,
                       },
                     }}
-                    key={material?.specific}
+                    key={materialTypeArray}
                     tabIndex="-1"
                     tag="span"
                   >
-                    <Text type="text4">
-                      {material?.specific?.[0]?.toUpperCase() +
-                        material?.specific?.slice(1)}
+                    <Text
+                      type={"text4"}
+                      tag={"p"}
+                      dataCy={
+                        "text-" +
+                        formatMaterialTypesToCypress(materialTypeArray)
+                      }
+                    >
+                      {materialTypeArray?.map((mat, index) => {
+                        return (
+                          upperFirst(mat) +
+                          (index < materialTypeArray.length - 1 ? " / " : "")
+                        );
+                      })}
                     </Text>
                   </Link>
                 );

@@ -1,5 +1,5 @@
 import { sortArticles } from "../utils";
-import data from "./mock/articles.mock";
+import data from "./__fixtures__/articles.mock";
 
 test("sortArticles desc", () => {
   expect(data.length).toBe(5);

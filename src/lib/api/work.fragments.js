@@ -571,20 +571,23 @@ export function orderPageManifestations({ workId }) {
               display
             }
             access {
-              ... on InterLibraryLoan{
-                loanIsPossible
+              __typename
+              ... on AccessUrl {
+                url
+                origin
+              }
+              ... on InfomediaService {
+                id
               }
               ... on DigitalArticleService {
                 issn
               }
-              ... on AccessUrl {
-                url
-              }
               ... on Ereol {
                 url
+                origin
               }
-              ... on InfomediaService {
-                id
+              ... on InterLibraryLoan{
+                loanIsPossible
               }
             }
           }

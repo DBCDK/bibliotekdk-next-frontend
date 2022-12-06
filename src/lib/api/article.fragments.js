@@ -3,8 +3,8 @@
  *
  */
 
-import { getLangcode } from "./fragments.utils";
 import { ApiEnums } from "@/lib/api/api";
+import { getLangcode } from "@/components/base/translate/Translate";
 
 /**
  *

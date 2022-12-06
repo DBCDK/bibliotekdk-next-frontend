@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -22,7 +23,10 @@ export function Series({ isLoading, works = [] }) {
   const context = { context: "series" };
 
   return (
-    <Section title={Translate({ ...context, label: "label" })}>
+    <Section
+      title={Translate({ ...context, label: "label" })}
+      divider={{ content: false }}
+    >
       <Row className={`${styles.series}`}>
         <Col xs={12} md>
           <WorkSlider skeleton={isLoading} works={works} />

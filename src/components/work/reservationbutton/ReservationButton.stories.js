@@ -85,11 +85,6 @@ ReservationButtonPhysicalBook.story = {
           {
             pid: "some-pid-bog" + time,
             materialTypes: [{ specific: "Bog" }],
-            accessTypes: [
-              {
-                display: "fysisk",
-              },
-            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -134,16 +129,11 @@ ReservationButtonEBook.story = {
           {
             pid: "some-pid-ebog" + time,
             materialTypes: [{ specific: "Ebog" }],
-            accessTypes: [
-              {
-                display: "online",
-              },
-            ],
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "ereol.combo/langurl",
-                origin: "ereol.combo",
+                url: "https://ereol.combo/langurl",
+                origin: "https://ereol.combo",
               },
             ],
             workTypes: ["LITERATURE"],
@@ -184,15 +174,10 @@ ReservationButtonEAudioBook.story = {
           {
             pid: "some-pid-lydbog-(net)" + time,
             materialTypes: [{ specific: "lydbog (net)" }],
-            accessTypes: [
-              {
-                display: "online",
-              },
-            ],
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "ereol.combo",
+                url: "https://ereol.combo",
               },
             ],
           },
@@ -232,11 +217,6 @@ ReservationButtonGame.story = {
           {
             pid: "some-pid-game" + time,
             materialTypes: [{ specific: "Playstation 4" }],
-            accessTypes: [
-              {
-                display: "online",
-              },
-            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -280,11 +260,6 @@ ReservationButtonDisabled.story = {
           {
             pid: "some-pid-disabled" + time,
             materialTypes: [{ specific: "EBog" }],
-            accessTypes: [
-              {
-                display: "online",
-              },
-            ],
             access: [],
           },
         ];
@@ -331,7 +306,7 @@ export function OrderButtonNotLoggedIn() {
 export function ReservationButtonPhysicalBookLoanNotPossible() {
   return (
     <ReservationButtonComponentBuilder
-      type={"Bog"}
+      type={["bog"]}
       selectedPids={["some-pid-bog-loan-not-possible" + time]}
     />
   );
@@ -342,7 +317,7 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
       work: () => {
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Bog" }],
+          materialTypes: [{ specific: "bog" }],
           workTypes: ["LITERATURE"],
           manifestations: {
             all: [
@@ -357,12 +332,7 @@ ReservationButtonPhysicalBookLoanNotPossible.story = {
         return [
           {
             pid: "some-pid-bog-loan-not-possible" + time,
-            materialTypes: [{ specific: "Bog" }],
-            accessTypes: [
-              {
-                display: "fysisk",
-              },
-            ],
+            materialTypes: [{ specific: "bog" }],
             access: [],
             workTypes: ["LITERATURE"],
           },
@@ -389,7 +359,7 @@ ReservationButtonSlowResponse.story = {
 
         return {
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Bog" }],
+          materialTypes: [{ specific: "bog" }],
           workTypes: ["LITERATURE"],
           manifestations: {
             all: [

@@ -8,6 +8,12 @@
 .cover img {
   object-position: 50% 0%;
 }
+.cover{
+  max-height: 160px;
+  min-height: 160px; 
+  min-width: 104px;
+  max-width: 104px;
+}
 .wrapper hr:last-child {
   background-color: var(--iron);
 }
@@ -58,14 +64,6 @@
 @media (min-width: 768px) {
   .wrapper:first-child {
     margin-top: 0;
-  }
-
-  .cover,
-  .cover img {
-    max-height: 160px;
-    min-height: 160px;
-    min-width: 104px;
-    max-width: 104px;
   }
 }
 

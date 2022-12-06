@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import HelpText from "../HelpText";
-import { Col, Container, Row } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import HelpTextMenu from "@/components/help/menu";
 
 import styles from "./Page.module.css";
@@ -11,7 +13,7 @@ import styles from "./Page.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function HelpTextPage({ helpTextId }) {
   return (

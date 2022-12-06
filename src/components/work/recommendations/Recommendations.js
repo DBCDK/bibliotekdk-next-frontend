@@ -6,7 +6,8 @@
  */
 
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -52,6 +53,7 @@ export default function Recommendations({ workId }) {
     <Section
       title={Translate({ ...context, label: "remindsOf" })}
       dataCy="section-recommend"
+      divider={{ content: false }}
     >
       <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>

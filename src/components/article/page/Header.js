@@ -16,7 +16,7 @@ import * as articleFragments from "@/lib/api/article.fragments";
 import { getJSONLD } from "@/lib/jsonld/article";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import { getLangcode } from "@/components/base/translate";
+import { getLanguage } from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -27,7 +27,7 @@ import { getLangcode } from "@/components/base/translate";
  * @returns {JSX.Element}
  */
 export default function Header({ articleId }) {
-  const language = getLangcode();
+  const language = getLanguage();
   const data = useData(articleFragments.article({ articleId, language }));
 
   if (!data.data || !data.data.article || data.isLoading || data.error) {

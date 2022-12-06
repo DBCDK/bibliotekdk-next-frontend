@@ -6,14 +6,19 @@
 import { ApiEnums } from "@/lib/api/api";
 
 export function frontpageHero() {
+  const filter = {
+    conditions: [
+      { field: "type", value: ["hero_frontpage"] },
+      { field: "status", value: "1" },
+    ],
+  };
+  const sort = [{ field: "changed", direction: "DESC" }];
+
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    { 
-      nodeQuery(limit: 40, filter: {conditions: [
-    {field: "type", value: ["hero_frontpage"]}, 
-    {field: "status", value: "1"}]}, 
-    sort: [{field: "changed", direction: DESC}]) {
+    query ($filter: EntityQueryFilterInput, $sort: [EntityQuerySortInput]) {
+      nodeQuery(limit: 40, filter: $filter, sort: $sort) {
         entities {
           __typename
           ... on NodeHeroFrontpage {
@@ -33,5 +38,7 @@ export function frontpageHero() {
       }
       monitor(name: "hero_frontpage")
     }`,
+    variables: { filter, sort },
+    slowThreshold: 3000,
   };
 }

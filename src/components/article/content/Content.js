@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
 import { useData } from "@/lib/api/api";
 
 import Text from "@/components/base/text";
@@ -16,7 +18,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 import styles from "./Content.module.css";
 import BodyParser from "@/components/base/bodyparser/BodyParser";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 import { Rating } from "@/components/base/rating/Rating";
 
 function ArticleHeader({ article, skeleton }) {
@@ -327,7 +329,7 @@ export function ContentSkeleton(props) {
  * @returns {JSX.Element}
  */
 export default function Wrap(props) {
-  const langcode = { language: getLangcode() };
+  const langcode = { language: getLanguage() };
 
   let articleArgs = { ...props, ...langcode };
   const { data, isLoading, error } = useData(

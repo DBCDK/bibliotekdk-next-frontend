@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
@@ -16,7 +17,7 @@ import { helpTextParseMenu } from "../utils.js";
 import { encodeString } from "@/lib/utils";
 
 import styles from "./Sections.module.css";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 
 /**
  * The Sections page React component
@@ -148,7 +149,7 @@ export function SectionsSkeleton(props) {
  */
 export default function Wrap(props) {
   // real data goes here ...
-  const langcode = { language: getLangcode() };
+  const langcode = { language: getLanguage() };
   const { data } = useData(publishedHelptexts(langcode));
 
   if (!data || !data.nodeQuery || !data.nodeQuery.entities || data.error) {

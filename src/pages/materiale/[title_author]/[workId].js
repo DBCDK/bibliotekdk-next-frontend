@@ -21,7 +21,11 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
-import React from "react";
+import React, { useMemo, useState } from "react";
+import {
+  formatMaterialTypesFromUrl,
+  formatMaterialTypesToUrl,
+} from "@/lib/manifestationFactoryFunctions";
 
 /**
  * Renders the WorkPage component
@@ -29,23 +33,32 @@ import React from "react";
 export default function WorkPage() {
   const router = useRouter();
   const { workId, type } = router.query;
+  const [query, setQuery] = useState({});
+
+  useMemo(() => {
+    if (query.type) {
+      router.replace(
+        { pathname: router.pathname, query },
+        {
+          pathname: router.asPath.replace(/\?.*/, ""),
+          query,
+        },
+        { shallow: true, scroll: false }
+      );
+    }
+  }, [query]);
 
   /**
    * Updates the query params in the url
    * (f.x. query.type which changes the type of material selected: Book, Ebook, ...)
    *
-   * @param {obj} query
+   * @param {obj} queryInput
    */
-
-  function handleOnTypeChange(query) {
-    router.replace(
-      { pathname: router.pathname, query },
-      {
-        pathname: router.asPath.replace(/\?.*/, ""),
-        query,
-      },
-      { shallow: true, scroll: false }
-    );
+  function handleOnTypeChange(queryInput) {
+    setQuery({
+      ...queryInput,
+      type: formatMaterialTypesToUrl(queryInput?.type),
+    });
   }
 
   return (
@@ -55,8 +68,7 @@ export default function WorkPage() {
         workId={workId}
         onTypeChange={handleOnTypeChange}
         login={signIn}
-        type={type}
-        query={{ type }}
+        type={formatMaterialTypesFromUrl(type)}
       />
     </React.Fragment>
   );

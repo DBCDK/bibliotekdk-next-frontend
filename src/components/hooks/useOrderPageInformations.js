@@ -28,7 +28,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     isArticleRequest,
     isDigitalCopy,
     availableAsDigitalCopy,
-    isPhysical,
+    isPhysicalCopy,
     availableAsPhysicalCopy,
     requireDigitalAccess,
   } = useMemo(() => {
@@ -69,7 +69,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
       isArticleRequest,
       isDigitalCopy,
       availableAsDigitalCopy,
-      isPhysical,
+      isPhysicalCopy,
       availableAsPhysicalCopy,
       requireDigitalAccess,
     },

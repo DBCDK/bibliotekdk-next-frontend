@@ -4,26 +4,26 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useData } from "@/lib/api/api";
-import { checkRequestButtonIsTrue } from "@/components/work/reservationbutton/utils";
 import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
+import Col from "react-bootstrap/Col";
+import { accessUtils } from "@/lib/accessFactory";
+import { AccessEnum } from "@/lib/enums";
+import { useMemo } from "react";
 
 function AlternativeOptions({ modal = null, context = {} }) {
   const { manifestations, type, workId } = { ...context };
 
-  const requestButton =
-    manifestations && checkRequestButtonIsTrue({ manifestations });
+  const { allEnrichedAccesses: accesses, requestButtonIsTrue } = useMemo(() => {
+    return accessUtils(manifestations);
+  }, [manifestations]);
 
-  const accesses = manifestations?.flatMap((manifestation) =>
-    manifestation?.access?.map((singleAccess) => singleAccess)
+  const requestButton = accesses && requestButtonIsTrue;
+
+  const onlineAccess = accesses?.filter(
+    (singleAccess) => singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
   );
-
-  const onlineAccess = accesses?.filter((singleAccess) => {
-    return ["url", "issn"]?.includes(
-      Object.keys(singleAccess)?.filter((fields) => fields !== "__typename")[0]
-    );
-  });
 
   // digitalcopy and physical (orderPossible) are counted as one
   const count = (requestButton ? 1 : 0) + onlineAccess?.length;
@@ -33,27 +33,29 @@ function AlternativeOptions({ modal = null, context = {} }) {
   }
 
   return (
-    <Link
-      border={{ bottom: { keepVisible: true } }}
-      onClick={() =>
-        modal.push("options", {
-          title: Translate({ context: "modal", label: "title-options" }),
-          type: type,
-          onlineAccess: onlineAccess,
-          workId: workId,
-          orderPossible: requestButton,
-          title_author: context.title_author,
-        })
-      }
-    >
-      <Text tag="span">
-        {Translate({
-          context: "overview",
-          label: "all-options-link",
-          vars: [count],
-        })}
-      </Text>
-    </Link>
+    <Col xs={12} className={styles.info}>
+      <Link
+        border={{ bottom: { keepVisible: true } }}
+        onClick={() =>
+          modal.push("options", {
+            title: Translate({ context: "modal", label: "title-options" }),
+            type: type,
+            onlineAccess: onlineAccess,
+            workId: workId,
+            orderPossible: requestButton,
+            title_author: context.title_author,
+          })
+        }
+      >
+        <Text tag="span">
+          {Translate({
+            context: "overview",
+            label: "all-options-link",
+            vars: [count],
+          })}
+        </Text>
+      </Link>
+    </Col>
   );
 }
 

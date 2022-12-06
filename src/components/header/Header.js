@@ -1,5 +1,7 @@
 import PropTypes from "prop-types";
-import { Container, Row, Col } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import React, { useState, useEffect } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";
@@ -40,11 +42,11 @@ import useWindowSize from "@/components/hooks/useWindowSize";
 
 // material Pages
 export const MATERIAL_PAGES = [
-  { path: "artikler", label: "article" },
-  { path: "spil", label: "game" },
   { path: "boeger", label: "literature" },
   { path: "film", label: "movie" },
   { path: "musik", label: "music" },
+  { path: "spil", label: "game" },
+  { path: "artikler", label: "article" },
   { path: "noder", label: "sheetmusic" },
 ];
 

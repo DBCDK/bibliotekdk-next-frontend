@@ -12,13 +12,13 @@ import { encodeString } from "@/lib/utils";
 
 import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 
 /**
  * Other menu links
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function MenuLink({ label, href = "#!", active = false }) {
   const activeClass = active ? styles.active : "";
@@ -29,7 +29,7 @@ function MenuLink({ label, href = "#!", active = false }) {
       <Link href={href} dataCy="menu-fixed-links">
         <Text type={type}>{Translate({ context: "help", label })}</Text>
       </Link>
-      <Icon src="arrowrightblue.svg" size={[1]} />
+      <Icon src="arrowrightblue.svg" size={1} />
     </div>
   );
 }
@@ -174,7 +174,7 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
  */
 export default function Wrap({ helpTextId, ...props }) {
   const { isLoading, data } = useData(
-    publishedHelptexts({ language: getLangcode() })
+    publishedHelptexts({ language: getLanguage() })
   );
 
   if (isLoading) {

@@ -1,5 +1,5 @@
-import { getLangcode } from "./fragments.utils";
 import { ApiEnums } from "@/lib/api/api";
+import { getLangcode } from "@/components/base/translate/Translate";
 export function promotedFaqs(language) {
   const langcode = getLangcode(language);
   return {

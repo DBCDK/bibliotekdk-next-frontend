@@ -12,7 +12,7 @@ const date = new Date();
 const time = date.getTime();
 
 function ButtonTxtComponentBuilder({
-  type = "Bog",
+  type = ["bog"],
   workId = "some-id-builder" + time,
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
@@ -53,9 +53,9 @@ function ButtonTxtStoryBuilder(storyname, resolvers = {}, query = {}) {
 export function BookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
-      type="Bog"
-      workId={"some-id-book"}
-      selectedPids={["some-other-id-book"]}
+      type={["bog"]}
+      workId={"some-workId-bog" + time}
+      selectedPids={["some-pid-bog" + time]}
     />
   );
 }
@@ -65,8 +65,9 @@ BookButtonTxt.story = {
     Query: {
       work: () => {
         return {
+          workId: "some-workId-bog" + time,
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Bog" }],
+          materialTypes: [{ specific: "bog" }],
           workTypes: ["LITERATURE"],
           manifestations: {
             all: [
@@ -81,12 +82,7 @@ BookButtonTxt.story = {
         return [
           {
             pid: "some-pid-bog" + time,
-            materialTypes: [{ specific: "Bog" }],
-            accessTypes: [
-              {
-                display: "fysisk",
-              },
-            ],
+            materialTypes: [{ specific: "bog" }],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -140,8 +136,8 @@ EBookButtonTxt.story = {
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "ereol.combo/langurl",
-                origin: "ereol.combo",
+                url: "https://ereol.combo/langurl",
+                origin: "https://ereol.combo",
               },
             ],
             workTypes: ["LITERATURE"],
@@ -156,8 +152,8 @@ export function EAudioBookPhysicalButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Lydbog (cd-mp3)"}
-      workId={"some-id-physical-audio-book"}
-      selectedPids={["some-other-id-physical-audio-book"]}
+      workId={"some-id-physical-audio-book" + time}
+      selectedPids={["some-pid-physical-audio-book" + time]}
     />
   );
 }
@@ -172,7 +168,7 @@ EAudioBookPhysicalButtonTxt.story = {
           manifestations: {
             all: [
               {
-                pid: "some-pid-lydbog" + time,
+                pid: "some-pid-physical-audio-book" + time,
               },
             ],
           },
@@ -181,13 +177,8 @@ EAudioBookPhysicalButtonTxt.story = {
       manifestations: () => {
         return [
           {
-            pid: "some-pid-lydbog" + time,
+            pid: "some-pid-physical-audio-book" + time,
             materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
-            accessTypes: [
-              {
-                display: "fysisk",
-              },
-            ],
             access: [
               {
                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
@@ -241,8 +232,8 @@ EAudioBookDigitalButtonTxt.story = {
             access: [
               {
                 __resolveType: AccessEnum.EREOL,
-                url: "nota.combo/langurl",
-                origin: "nota.combo",
+                url: "https://nota.combo/langurl",
+                origin: "https://nota.combo",
               },
             ],
             workTypes: ["LITERATURE"],
@@ -257,7 +248,7 @@ export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Ebog"}
-      workId={"some-workId-periodica"}
+      workId={"some-workId-periodica" + time}
       selectedPids={["some-pid-periodica" + time]}
       storyNameOverride={"Periodica"}
     />
@@ -285,11 +276,6 @@ PeriodicaButtonTxt.story = {
           {
             pid: "some-pid-periodica" + time,
             materialTypes: [{ specific: "Ebog" }],
-            accessTypes: [
-              {
-                display: "online",
-              },
-            ],
             access: [],
             workTypes: ["PERIODICA"],
           },
@@ -321,7 +307,7 @@ SlowLoadingButtonTxt.story = {
         return [
           {
             materialTypes: [{ specific: "Ebog" }],
-            access: [{ __resolveType: "Ereol", url: "ereol.combo" }],
+            access: [{ __resolveType: "Ereol", url: "https://ereol.combo" }],
           },
         ];
       },

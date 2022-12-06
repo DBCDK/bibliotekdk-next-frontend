@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
@@ -93,6 +94,6 @@ export default function Wrap(props) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
+  type: PropTypes.arrayOf(PropTypes.string),
   skeleton: PropTypes.bool,
 };

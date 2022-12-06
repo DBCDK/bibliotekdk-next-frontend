@@ -1,5 +1,5 @@
 import styles from "./Banner.module.css";
-import { Container } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 

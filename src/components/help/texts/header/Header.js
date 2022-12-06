@@ -16,7 +16,7 @@ import { helpText } from "@/lib/api/helptexts.fragments.js";
 import { getJSONLD } from "@/lib/jsonld/help";
 import { getCanonicalArticleUrl } from "@/lib/utils";
 
-import Translate, { getLangcode } from "@/components/base/translate";
+import Translate from "@/components/base/translate";
 
 /**
  * The article page Header React component
@@ -27,19 +27,18 @@ import Translate, { getLangcode } from "@/components/base/translate";
  * @returns {component}
  */
 export default function Header({ helpTextId }) {
-  const langcode = { language: getLangcode() };
-  const args = { helpTextId, ...langcode };
+  const { isLoading, data, error } = useData(
+    helpTextId && helpText({ helpTextId: helpTextId })
+  );
 
-  const { isLoading, data, error } = useData(helpText(args));
-
-  if (!data || !data.helptext || isLoading || error) {
+  if (!data || !data.nodeById || isLoading || error) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
 
   const context = { context: "metadata" };
 
-  const helptext = data.helptext;
+  const helptext = data.nodeById;
 
   const pageTitle = Translate({
     ...context,

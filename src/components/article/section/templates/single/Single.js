@@ -4,7 +4,8 @@
  */
 
 import PropTypes from "prop-types";
-import { Col, Row } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import get from "lodash/get";
 
 import Image from "@/components/base/image";
@@ -24,8 +25,8 @@ import React from "react";
 /**
  * A section displaying three articles
  *
- * @param {array} props.articles
- * @param {boolean} props.skeleton
+ * @param {array} articles
+ * @param {boolean} skeleton
  *
  */
 export default function Single({ articles, skeleton }) {

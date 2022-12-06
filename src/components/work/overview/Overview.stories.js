@@ -33,7 +33,7 @@ function OverviewComponentBuilder({
       </StoryDescription>
       <Overview
         workId={overviewProps.workId ?? "some-workId"}
-        type={overviewProps.type ?? ""}
+        type={overviewProps.type || []}
         onTypeChange={(el) => overviewProps.onTypeChange(el.type)}
         login={() => {}}
       />
@@ -66,11 +66,11 @@ function resolvers(storyname) {
           return {
             titles: { full: ["Asterix og Obelix i det vilde vesten"] },
             materialTypes: [
-              { specific: "Bog" },
-              { specific: "Ebog" },
-              { specific: "Lydbog (bånd)" },
-              { specific: "Lydbog (cd-mp3)" },
-              { specific: "Lydbog (net)" },
+              { specific: "bog" },
+              { specific: "ebog" },
+              { specific: "lydbog (bånd)" },
+              { specific: "lydbog (cd-mp3)" },
+              { specific: "lydbog (net)" },
             ],
             creators: [{ display: "Lucky Luke" }, { display: "Ratata" }],
             workTypes: ["LITERATURE"],
@@ -78,9 +78,44 @@ function resolvers(storyname) {
               all: [
                 {
                   pid: "some-pid-bog" + time,
+                  materialTypes: [{ specific: "bog" }],
+                  cover: {
+                    detail: "hejsa.cob",
+                  },
+                },
+                {
+                  pid: "some-pid-bog-1" + time,
+                  materialTypes: [{ specific: "ebog" }],
+                  cover: {
+                    detail: "hejsa.cob",
+                  },
+                },
+                {
+                  pid: "some-pid-bog-2" + time,
+                  materialTypes: [{ specific: "lydbog (bånd)" }],
+                  cover: {
+                    detail: "hejsa.cob",
+                  },
+                },
+                {
+                  pid: "some-pid-bog-3" + time,
+                  materialTypes: [{ specific: "lydbog (cd-mp3)" }],
+                  cover: {
+                    detail: "hejsa.cob",
+                  },
+                },
+                {
+                  pid: "some-pid-bog-4" + time,
+                  materialTypes: [{ specific: "lydbog (net)" }],
+                  cover: {
+                    detail: "hejsa.cob",
+                  },
+                },
+                {
+                  pid: "some-pid-bog-5" + time,
                   materialTypes: [
-                    { specific: "Bog" },
-                    { specific: "Lydbog (cd-mp3)" },
+                    { specific: "lydbog (net)" },
+                    { specific: "soloplade" },
                   ],
                   cover: {
                     detail: "hejsa.cob",
@@ -94,7 +129,26 @@ function resolvers(storyname) {
           return [
             {
               pid: "some-pid-bog" + time,
-              materialTypes: [{ specific: "Bog" }, { specific: "Ebog" }],
+              materialTypes: [{ specific: "Ebog" }],
+              accessTypes: [
+                {
+                  display: "fysisk",
+                },
+              ],
+              access: [
+                {
+                  __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
+                  loanIsPossible: true,
+                },
+              ],
+              workTypes: ["LITERATURE"],
+              genreAndForm: ["some-genreAndForm - 1", "some-genreAndForm - 2"],
+              physicalDescriptions: [...new Array(10).fill({})],
+              contributors: [...new Array(10).fill({})],
+            },
+            {
+              pid: "some-pid-ebog" + time,
+              materialTypes: [{ specific: "Ebog" }],
               accessTypes: [
                 {
                   display: "fysisk",
@@ -119,7 +173,7 @@ function resolvers(storyname) {
 }
 
 export function OverviewWrapped() {
-  const [type, setType] = useState("Bog");
+  const [type, setType] = useState(["bog"]);
 
   const overviewProps = {
     workId: `some-workId-${type}`,
@@ -128,7 +182,7 @@ export function OverviewWrapped() {
   };
 
   return (
-    <OverviewComponentBuilder overviewProps={overviewProps} type={"Bog"} />
+    <OverviewComponentBuilder overviewProps={overviewProps} type={["bog"]} />
   );
 }
 
@@ -137,7 +191,7 @@ OverviewWrapped.story = {
 };
 
 export function OverviewWrappedNoType() {
-  const [type, setType] = useState("");
+  const [type, setType] = useState([]);
 
   const overviewProps = {
     workId: `some-workId-${type}`,
@@ -149,9 +203,7 @@ export function OverviewWrappedNoType() {
     },
   };
 
-  return (
-    <OverviewComponentBuilder overviewProps={overviewProps} type={"No type"} />
-  );
+  return <OverviewComponentBuilder overviewProps={overviewProps} type={[]} />;
 }
 
 OverviewWrappedNoType.story = {

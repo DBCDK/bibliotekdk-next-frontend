@@ -9,7 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Icon from "@/components/base/icon/Icon";
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
 import animations from "@/components/base/animation/animations.module.css";
 
@@ -83,7 +83,7 @@ function notificationsFilter(data) {
  * @return {JSX.Element}
  */
 export default function Wrap() {
-  const langcode = { language: getLangcode() };
+  const langcode = { language: getLanguage() };
   const { data } = useData(notificationsQuery(langcode));
 
   return <Notifications notificationObject={data} />;

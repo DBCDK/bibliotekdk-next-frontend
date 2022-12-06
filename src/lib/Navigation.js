@@ -33,12 +33,12 @@ export const externalUrls = {
 };
 
 export const preferredOnline = [
-  "Lydbog (net)",
-  "E-bog",
-  "Punktskrift",
-  "Artikel",
-  "Tidsskriftsartikel",
-  "Film (net)",
+  "lydbog (net)",
+  "ebog",
+  "punktskrift",
+  "artikel",
+  "tidsskriftsartikel",
+  "film (net)",
 ];
 
 export function checkPreferredOnline(materialType) {

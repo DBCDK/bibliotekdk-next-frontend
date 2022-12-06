@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useMemo } from "react";
-import { Row, Col } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import Section from "@/components/base/section";
 import Accordion from "@/components/base/accordion";
@@ -14,7 +15,7 @@ import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
 import Skeleton from "@/components/base/skeleton";
 
-import { getLangcode } from "@/components/base/translate/Translate";
+import { getLanguage } from "@/components/base/translate/Translate";
 
 import styles from "./Promoted.module.css";
 
@@ -68,7 +69,7 @@ Promoted.propTypes = {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const langcode = getLangcode();
+  const langcode = getLanguage();
   // real data goes here ...
   const { isLoading, data, error } = useData(promotedFaqs(langcode));
 
