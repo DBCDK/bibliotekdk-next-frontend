@@ -15,3 +15,12 @@ export function BlockedUser() {
     />
   );
 }
+
+export function BlockedUserKK() {
+  return (
+    <NamedBlockedUserInformation
+      agencyName={"Københavns Biblioteker"}
+      agencyUrl={"http://bibliotek.kk.dk/"}
+    />
+  );
+}
