@@ -77,24 +77,7 @@ export function Related({ data, hitcount, isLoading }) {
       divider={false}
       space={{ bottom: "var(--pt4)" }}
       className={styles.section}
-      title={
-        !isMobile && (
-          <div>
-            <Text type="text3" skeleton={isLoading} lines={1}>
-              {Translate({ context: "search", label: "title" })}
-            </Text>
-            <Title
-              data-cy={"related-hitcount"}
-              type="title5"
-              tag="h3"
-              className={styles.hitcount}
-              skeleton={isLoading}
-            >
-              {hitcount}
-            </Title>
-          </div>
-        )
-      }
+      title=" "
     >
       {(data.length > 0 || isLoading) && (
         <div>

@@ -71,20 +71,6 @@ export function Result({
               <Icon src="settings.svg" size={2} />
               {filtersLabel}
             </Button>
-            {(isMobile || breakpoint === "md") && (
-              <div>
-                <Text type="text3" skeleton={isLoading} lines={1}>
-                  {Translate({ context: "search", label: "title" })}
-                </Text>
-                <Text
-                  type="text2"
-                  className={styles.hitcount}
-                  skeleton={isLoading}
-                >
-                  {hitcount}
-                </Text>
-              </div>
-            )}
           </div>
         }
       >
