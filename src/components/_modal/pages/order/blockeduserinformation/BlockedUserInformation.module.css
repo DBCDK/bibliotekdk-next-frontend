@@ -20,7 +20,7 @@ div.redBorder p.paragraph span {
 div.redBorder p.paragraph a.blockedLink {
   color: var(--error_temp);
   text-decoration: none;
-  background-image: linear-gradient(#222b40, #222b40);
+  background-image: linear-gradient(var(--mine-shaft), var(--mine-shaft));
   background-size: 100% 1px;
   background-position: 100% 100%;
   background-repeat: no-repeat;
