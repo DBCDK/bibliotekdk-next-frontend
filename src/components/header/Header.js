@@ -46,8 +46,8 @@ export const MATERIAL_PAGES = [
   { path: "film", label: "movie" },
   { path: "musik", label: "music" },
   { path: "spil", label: "game" },
-  { path: "artikler", label: "article" },
   { path: "noder", label: "sheetmusic" },
+  { path: "artikler", label: "article" },
 ];
 
 /**

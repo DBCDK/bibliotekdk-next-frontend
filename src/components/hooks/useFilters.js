@@ -247,8 +247,8 @@ export const workTypes = [
   "movie",
   "music",
   "game",
-  "article",
   "sheetmusic",
+  "article",
 ];
 
 // Included categories/facets by selected workType
