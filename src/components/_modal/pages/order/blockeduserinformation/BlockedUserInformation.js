@@ -5,7 +5,6 @@ import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text/Text";
-import BodyParser from "@/components/base/bodyparser";
 import Translate from "@/components/base/translate";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
@@ -30,27 +29,26 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
     label: "blocked-user-alternative-solution",
   });
 
-  const body = `<p>
-      <b>${titleText}</b>
-      <br/>
-      ${explanation}
-      <br />
-      <br />
-      <a
-        data-cy={"blocked-user-link"}
-        href=${agencyUrl}
-        target={"_blank"}
-        rel={"noreferrer"}
-      >
-        ${url}
-      </a>
-      <span />
-      ${alternativeSolution}
-  </p>`;
-
   return (
     <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
-      <BodyParser body={body} />
+      <p className={styles.paragraph}>
+        <span>{titleText}</span>
+        <br />
+        {explanation}
+        <br />
+        <br />
+        <a
+          className={styles.blockedLink}
+          data-cy={"blocked-user-link"}
+          href={agencyUrl}
+          target={"_blank"}
+          rel={"noreferrer"}
+        >
+          {url}
+        </a>
+        &nbsp;
+        {alternativeSolution}
+      </p>
     </Text>
   );
 });

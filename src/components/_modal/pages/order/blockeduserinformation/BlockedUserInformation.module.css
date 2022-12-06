@@ -1,5 +1,6 @@
-.redBorder {
-  padding: var(--pt2) var(--pt6);
+/* Mobile first */
+div.redBorder {
+  padding: var(--pt2) var(--pt2);
   color: var(--error_temp);
   background: var(--error-light_temp);
   word-break: break-word;
@@ -7,13 +8,48 @@
   font-size: 17px;
 }
 
-.redBorder p a {
-  color: var(--error_temp);
+div.redBorder p.paragraph {
+  padding: 0;
 }
 
-.redBorder p a:is(:hover, :focus, :focus-visible),
-.redBorder p a::before,
-.redBorder p a::after {
+div.redBorder p.paragraph span {
+  padding: 0;
+  font-family: var(--body-font-semibold);
+}
+
+div.redBorder p.paragraph a.blockedLink {
+  color: var(--error_temp);
+  text-decoration: none;
+  background-image: linear-gradient(#222b40, #222b40);
+  background-size: 100% 1px;
+  background-position: 100% 100%;
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+}
+
+div.redBorder p.paragraph a.blockedLink:is(:hover, :focus, :focus-visible),
+div.redBorder p.paragraph a.blockedLink::before,
+div.redBorder p.paragraph a.blockedLink::after {
+  animation: __underline 0.8s ease;
   color: var(--mine-shaft);
   border-color: var(--mine-shaft);
 }
+
+@keyframes __underline {
+  0% {
+    background-size: 0 1px;
+    background-position: 50% 100%;
+  }
+  100% {
+    background-size: 100% 1px;
+    background-position: 50% 100%;
+  }
+}
+
+/* Bigger than mobile */
+@media (min-width: 576px) {
+  div.redBorder {
+    padding: var(--pt2) var(--pt6);
+  }
+}
+
