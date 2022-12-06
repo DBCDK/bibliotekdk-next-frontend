@@ -12,9 +12,6 @@ const exportedObject = {
 
 export default exportedObject;
 
-const date = new Date();
-const time = date.getTime();
-
 const {
   USER_1,
   USER_2,
@@ -221,8 +218,8 @@ export function BlockedUser() {
       description={`User is blocked from loaning, 
         the red user is blocked information box should be present 
         and OrderConfirmationButton should be disabled.`}
-      workId={"some-work-id-1" + time}
-      selectedPids={["some-pid-1" + time]}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
     />
   );
 }
