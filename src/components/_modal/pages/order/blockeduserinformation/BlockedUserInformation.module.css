@@ -30,19 +30,18 @@ div.redBorder p.paragraph a.blockedLink {
 div.redBorder p.paragraph a.blockedLink:is(:hover, :focus, :focus-visible),
 div.redBorder p.paragraph a.blockedLink::before,
 div.redBorder p.paragraph a.blockedLink::after {
-  animation: __underline 0.8s ease;
+  animation: __underline 0.6s ease;
   color: var(--mine-shaft);
   border-color: var(--mine-shaft);
+  background-position: 50% 100%;
 }
 
 @keyframes __underline {
   0% {
     background-size: 0 1px;
-    background-position: 50% 100%;
   }
   100% {
     background-size: 100% 1px;
-    background-position: 50% 100%;
   }
 }
 
