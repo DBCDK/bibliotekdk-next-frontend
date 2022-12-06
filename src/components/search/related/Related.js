@@ -52,6 +52,7 @@ export function Words({ data, isLoading }) {
       <Text className={styles.label} skeleton={isLoading} lines={1}>
         {Translate({ context: "search", label: "relatedSubjects" })}
       </Text>
+
       <div className={styles.words} data-cy="words-container">
         {data.map((w) => (
           <Word key={w} word={w} isLoading={isLoading} />
