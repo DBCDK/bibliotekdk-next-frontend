@@ -3,12 +3,12 @@ import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 
 export function getAccessForSingleManifestation(manifestation) {
-  return manifestation.access.map((singleAccess) => {
+  return manifestation?.access?.map((singleAccess) => {
     return {
       ...singleAccess,
       ...(manifestation?.pid && { pid: manifestation?.pid }),
-      ...(manifestation?.titles?.length > 0 && {
-        titles: manifestation?.titles?.map((title) => title?.main),
+      ...(manifestation?.titles?.main?.length > 0 && {
+        titles: manifestation?.titles?.main,
       }),
     };
   });
@@ -27,6 +27,7 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
           `work-of:${singleInfomediaAccess?.pid}`,
           singleInfomediaAccess.id
         ),
+        origin: "infomedia",
         accessType: "infomedia",
       }
     : singleInfomediaAccess;
@@ -147,10 +148,52 @@ export function getAllEnrichedAccessSorted(manifestations) {
     ?.value();
 }
 
+/**
+ * Check loanIsPossible on any access
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkRequestButtonIsTrue(allEnrichedAccesses) {
+  return (
+    allEnrichedAccesses?.filter(
+      (singleAccess) =>
+        singleAccess?.loanIsPossible && singleAccess?.loanIsPossible === true
+    ).length > 0
+  );
+}
+
+/**
+ * Check digitalCopy on any
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkDigitalCopy(allEnrichedAccesses) {
+  return !!allEnrichedAccesses?.find((singleAccess) => singleAccess?.issn);
+}
+
+/**
+ * Check physicalCopy on any
+ * @param allEnrichedAccesses
+ * @return {boolean}
+ */
+export function checkPhysicalCopy(allEnrichedAccesses) {
+  return !!allEnrichedAccesses?.find(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.loanIsPossible === true
+  );
+}
+
 export function accessUtils(manifestations) {
-  const allEnrichedAccess = getAllEnrichedAccessSorted(manifestations);
+  const allEnrichedAccesses = getAllEnrichedAccessSorted(manifestations);
+  const requestButtonIsTrue = checkRequestButtonIsTrue(allEnrichedAccesses);
+  const digitalCopy = checkDigitalCopy(allEnrichedAccesses);
+  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses);
 
   return {
-    allEnrichedAccess: allEnrichedAccess,
+    allEnrichedAccesses: allEnrichedAccesses,
+    requestButtonIsTrue: requestButtonIsTrue,
+    digitalCopy: digitalCopy,
+    physicalCopy: physicalCopy,
   };
 }

@@ -143,12 +143,7 @@ export function Overview({
                 selectedPids={selectedPids}
                 skeleton={skeleton}
               />
-              <Col xs={12} className={styles.info}>
-                <AlternativeOptions
-                  workId={workId}
-                  selectedPids={selectedPids}
-                />
-              </Col>
+              <AlternativeOptions workId={workId} selectedPids={selectedPids} />
               <Col xs={12} className={styles.info}>
                 <LocalizationsLink
                   workId={workId}

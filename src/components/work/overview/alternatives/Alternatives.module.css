@@ -3,3 +3,7 @@
     position: relative;
     height: var(--pt2);
 }
+
+.info {
+  padding-top: var(--pt1);
+}

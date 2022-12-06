@@ -8,11 +8,11 @@ describe("bibliographic data", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
     // get first edition
     cy.get("[data-cy=accordion-item]").first().click();
-    // TODO: Fix when migrated!
-    // cy.get("[data-cy=edition-data-af]");
-    // .should("have.attr", "href")
-    // .should("not.be.empty")
-    // .and("contain", "/find?q.creator=Lucinda%20Riley");
+    cy.get("[data-cy=edition-data-skabere]")
+      .find("a")
+      .should("have.attr", "href")
+      .should("not.be.empty")
+      .and("contain", "/find?q.creator=manifestation.creators[0].display");
     cy.get("[data-cy=link-references] p")
       .first()
       .should("have.text", "Download til referencesystemer");

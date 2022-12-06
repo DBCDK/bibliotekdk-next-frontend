@@ -3,20 +3,30 @@ import Button from "@/components/base/button/Button";
 import Translate, { hasTranslation } from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 import styles from "./ReservationButton.module.css";
-import { checkPreferredOnline } from "@/lib/Navigation";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
-import {
-  checkDigitalCopy,
-  checkRequestButtonIsTrue,
-  context,
-  selectMaterial,
-} from "@/components/work/reservationbutton/utils";
-import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { context } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
 import { AccessEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
+import { accessUtils } from "@/lib/accessFactory";
+
+function TextAboveButton({ access, user }) {
+  return (
+    (access?.[0]?.loginRequired ||
+      access?.[0]?.__typename === "InfomediaService") &&
+    !user.isAuthenticated && (
+      <Text
+        type="text3"
+        className={styles.textAboveButton}
+        dataCy={"text-above-order-button"}
+      >
+        {Translate({ ...context, label: "url_login_required" })}
+      </Text>
+    )
+  );
+}
 
 function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
@@ -34,46 +44,14 @@ function workTypeTranslator(workTypes) {
       });
 }
 
-// TODO: Refactor this mess at some point
-function handleGoToLogin(
-  work,
-  selectedManifestation,
-  user,
-  modal,
-  onOnlineAccess
-) {
-  const { access, pid, accessTypeCode, title } = extractSimpleFields(
-    work,
-    selectedManifestation
-  );
-
-  function addToInfomedia(access, pid, title) {
-    access?.map((access) => {
-      if (
-        access?.__typename === AccessEnum.INFOMEDIA_SERVICE &&
-        access?.id !== null
-      ) {
-        access.url = infomediaUrl(
-          encodeTitleCreator(title?.[0]),
-          `work-of:${pid}`,
-          access.id
-        );
-        access.accessType = "infomedia";
-      }
-      return access;
-    });
-  }
-
-  // add url to infomedia - if any
-  addToInfomedia(access, pid, title);
-
+function handleGoToLogin(access, user, modal, onOnlineAccess) {
   // if this is an infomedia article it should open in same window
   const urlTarget = access[0]?.id ? "_self" : "_blank";
 
   // check if we should open login modal on click
   const goToLogin =
     !user.isAuthenticated &&
-    accessTypeCode === "ONLINE" &&
+    access[0]?.url &&
     access[0]?.loginRequired &&
     (access[0]?.url?.indexOf("ebookcentral") !== -1 ||
       access[0]?.url?.indexOf("ebscohost") !== -1);
@@ -84,34 +62,6 @@ function handleGoToLogin(
         originUrl: access[0]?.origin,
       })
     : onOnlineAccess(access[0]?.url, urlTarget);
-}
-
-function extractSimpleFields(work, selectedManifestation) {
-  const workTypeTranslated = workTypeTranslator(work?.workTypes);
-  const title = work?.titles?.main;
-  const pid = selectedManifestation?.pid;
-  const accessTypeCode = selectedManifestation?.accessTypes?.code;
-
-  const access = selectedManifestation?.access;
-  const buttonSkeleton = !work || !selectedManifestation;
-
-  // if we prefer online material button text should be different
-  const onlineDisable = checkPreferredOnline(
-    selectedManifestation?.materialTypes?.[0]?.specific
-  );
-
-  const loanIsPossibleOnAny = access && access?.length > 0;
-
-  return {
-    workTypeTranslated,
-    title,
-    pid,
-    accessTypeCode,
-    access,
-    buttonSkeleton,
-    onlineDisable,
-    loanIsPossibleOnAny,
-  };
 }
 
 /**
@@ -138,27 +88,31 @@ export function OrderButton({
   manifestations,
   onOnlineAccess,
   openOrderModal,
-  onHandleGoToLogin = (selectedManifestation) =>
-    handleGoToLogin(work, selectedManifestation, user, modal, onOnlineAccess),
+  onHandleGoToLogin = (access) =>
+    handleGoToLogin(access, user, modal, onOnlineAccess),
   singleManifestation,
   buttonType = "primary",
   size = "large",
 }) {
-  const selectedMaterial = manifestations;
-  const selectedManifestation = selectMaterial(selectedMaterial);
-
   const {
-    workTypeTranslated,
-    pid,
-    accessTypeCode,
-    access,
-    buttonSkeleton,
-    onlineDisable,
-    loanIsPossibleOnAny,
-  } = useMemo(
-    () => extractSimpleFields(work, selectedManifestation),
-    [work, selectedManifestation]
-  );
+    allEnrichedAccesses: access,
+    requestButtonIsTrue,
+    digitalCopy,
+  } = useMemo(() => {
+    return accessUtils(manifestations);
+  }, [manifestations]);
+
+  const selectedManifestation = useMemo(() => {
+    return manifestations?.find(
+      (manifestation) => manifestation?.pid === access?.[0]?.pid
+    );
+  }, [manifestations, access]);
+
+  const workTypeTranslated = workTypeTranslator(work?.workTypes);
+  const pid = selectedManifestation?.pid;
+  const buttonSkeleton = !work || !selectedManifestation;
+  const offlineAccess =
+    access?.[0]?.__typename === AccessEnum.INTER_LIBRARY_LOAN;
 
   /** order button acts on following scenarios: */
   const caseScenarioMap = [
@@ -186,12 +140,8 @@ export function OrderButton({
     /** (3) material can not be ordered
      * --- maybe it is too new or something else -> disable (with a reason?)
      * ? No online access ? - check if work can be ordered */
-    Boolean(
-      loanIsPossibleOnAny === false &&
-        !checkRequestButtonIsTrue({ manifestations: selectedMaterial }) &&
-        !checkDigitalCopy({ manifestations: selectedMaterial })
-    ),
-    /** (4) material is not available -> disable */
+    Boolean(!requestButtonIsTrue && !digitalCopy),
+    /** (4) material is available as loan -> Enable */
     true,
   ];
 
@@ -204,9 +154,7 @@ export function OrderButton({
     /* (1) */
     {
       dataCy: "button-order-overview",
-      // TODO: Fix handleGoToLogin!
-      // onClick: () => alert("DU SKAL LOGGE IND"),
-      onClick: () => onHandleGoToLogin(selectedManifestation),
+      onClick: () => onHandleGoToLogin(access),
     },
     /* (2) */
     {
@@ -230,7 +178,7 @@ export function OrderButton({
     () =>
       Translate({
         context: "overview",
-        label: onlineDisable ? "Order-online-disabled" : "Order-disabled",
+        label: !offlineAccess ? "Order-online-disabled" : "Order-disabled",
       }),
     /* (1) */
     () =>
@@ -251,7 +199,7 @@ export function OrderButton({
     () =>
       Translate({
         context: "overview",
-        label: onlineDisable ? "Order-online-disabled" : "Order-disabled",
+        label: !offlineAccess ? "Order-online-disabled" : "Order-disabled",
       }),
     /* (4) */
     () => Translate({ context: "general", label: "bestil" }),
@@ -269,17 +217,7 @@ export function OrderButton({
 
   return (
     <>
-      {((accessTypeCode === "ONLINE" && access?.[0]?.loginRequired) ||
-        access?.[0]?.__typename === "InfomediaService") &&
-        !user.isAuthenticated && (
-          <Text
-            type="text3"
-            className={styles.textAboveButton}
-            dataCy={"text-above-order-button"}
-          >
-            {Translate({ ...context, label: "url_login_required" })}
-          </Text>
-        )}
+      <TextAboveButton access={access} user={user} />
       <Button {...buttonProps}>{buttonTxtMap[index]()}</Button>
     </>
   );

@@ -1,4 +1,5 @@
 import { getIsPeriodicaLike } from "@/lib/utils";
+import { accessUtils } from "@/lib/accessFactory";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
@@ -20,8 +21,10 @@ export function inferAccessTypes(
   initialPickupBranch,
   manifestationsBeforeCheck = null
 ) {
-  const manifestations =
-    manifestationsBeforeCheck || work?.manifestations?.all || [];
+  const manifestations = manifestationsBeforeCheck || work?.manifestations?.all;
+
+  const { digitalCopy: isDigitalCopy, physicalCopy: isPhysicalCopy } =
+    accessUtils(manifestations);
 
   const isArticle = !!work?.workTypes?.find(
     (workType) => workType.toLowerCase() === "article"
@@ -36,26 +39,17 @@ export function inferAccessTypes(
     !!periodicaForm?.authorOfComponent ||
     !!periodicaForm?.pagination;
 
-  const isDigitalCopy = !!manifestations?.find((m) => {
-    return !!m?.access?.find((a) => a.issn);
-  });
-
   const availableAsDigitalCopy =
     isDigitalCopy &&
     initialPickupBranch?.digitalCopyAccess &&
     (isPeriodicaLike ? isArticleRequest : true);
 
-  const isPhysical = !!manifestations?.find((m) => {
-    return m?.accessTypes?.find(
-      (accessType) => accessType?.code === "PHYSICAL"
-    );
-  });
   const availableAsPhysicalCopy =
-    isPhysical &&
+    isPhysicalCopy &&
     initialPickupBranch?.pickupAllowed &&
     initialPickupBranch?.orderPolicy?.orderPossible;
 
-  const requireDigitalAccess = isDigitalCopy && !isPhysical;
+  const requireDigitalAccess = isDigitalCopy && !isPhysicalCopy;
 
   return {
     isArticle,
@@ -63,7 +57,7 @@ export function inferAccessTypes(
     isArticleRequest,
     isDigitalCopy,
     availableAsDigitalCopy,
-    isPhysical,
+    isPhysicalCopy,
     availableAsPhysicalCopy,
     requireDigitalAccess,
   };
