@@ -1137,6 +1137,10 @@
         "da": "Sorter efter antal",
         "en": "Sort by numbers"
       },
+      "label-canAlwaysBeLoaned": {
+        "da": "Ubegrænsede udlån",
+        "en": "unlimited loans"
+      },
       "label-workTypes": {
         "da": "Materialekategori",
         "en": "Material category"

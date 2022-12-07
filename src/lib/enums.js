@@ -18,6 +18,7 @@ export const FilterTypeEnum = Object.freeze({
   MATERIAL_TYPES: "materialTypes",
   SUBJECTS: "subjects",
   WORK_TYPES: "workTypes",
+  ALWAYS_LOAN: "canAlwaysBeLoaned",
 });
 
 /** TODO: Maybe use a map like this instead of
