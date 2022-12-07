@@ -9,7 +9,7 @@ import Translate from "@/components/base/translate";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
-  agencyUrl,
+  branchOrAgencyUrl,
 }) {
   const titleText = Translate({
     context: "order",
@@ -40,7 +40,7 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
         <a
           className={styles.blockedLink}
           data-cy={"blocked-user-link"}
-          href={agencyUrl}
+          href={branchOrAgencyUrl}
           target={"_blank"}
           rel={"noreferrer"}
         >
@@ -86,7 +86,9 @@ export default function Wrap() {
   return (
     <BlockedUserInformation
       agencyName={branches?.result?.[0]?.agencyName}
-      agencyUrl={branches?.agencyUrl}
+      branchOrAgencyUrl={
+        branches?.result?.[0]?.branchWebsiteUrl || branches?.agencyUrl
+      }
     />
   );
 }
