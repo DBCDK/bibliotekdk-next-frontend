@@ -30,8 +30,8 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
   });
 
   return (
-    <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
-      <p className={styles.paragraph}>
+    <div className={styles.varContainer}>
+      <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
         <span>{titleText}</span>
         <br />
         {explanation}
@@ -48,8 +48,8 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
         </a>
         &nbsp;
         {alternativeSolution}
-      </p>
-    </Text>
+      </Text>
+    </div>
   );
 });
 
