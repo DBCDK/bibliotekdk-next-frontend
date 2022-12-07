@@ -19,7 +19,6 @@ div.redBorder {
   font-size: 17px;
 }
 
-/*div.redBorder p.paragraph span {*/
 div.redBorder span {
   padding: 0;
   font-family: var(--body-font-semibold);
