@@ -42,7 +42,7 @@ div.redBorder a.blockedLink::before,
 div.redBorder a.blockedLink::after {
   --underline-line-color: inherit;
 
-  animation: __underline 0.4s ease;
+  animation: __underline 0.5s ease;
   color: var(--underline-line-color);
   border-color: var(--underline-line-color);
   background-position: 50% 100%;
