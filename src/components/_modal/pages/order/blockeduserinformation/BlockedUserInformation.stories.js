@@ -11,7 +11,7 @@ export function BlockedUser() {
   return (
     <NamedBlockedUserInformation
       agencyName={"BalleRipRapRups biblioteker"}
-      agencyUrl={"balleripsrapsrups.dekå"}
+      branchOrAgencyUrl={"balleripsrapsrups.dekå"}
     />
   );
 }
@@ -20,7 +20,15 @@ export function BlockedUserKK() {
   return (
     <NamedBlockedUserInformation
       agencyName={"Københavns Biblioteker"}
-      agencyUrl={"http://bibliotek.kk.dk/"}
+      branchOrAgencyUrl={"http://bibliotek.kk.dk/"}
+    />
+  );
+}
+export function BlockedUserNoUrl() {
+  return (
+    <NamedBlockedUserInformation
+      agencyName={"BalleRipRapRups biblioteker"}
+      branchOrAgencyUrl={""}
     />
   );
 }

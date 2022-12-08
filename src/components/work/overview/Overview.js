@@ -14,7 +14,7 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import useUser from "@/components/hooks/useUser";
 import styles from "./Overview.module.css";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
-import { useId, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
@@ -25,18 +25,17 @@ function useInitMaterialType(
   type,
   onTypeChange
 ) {
-  const id = useId();
-
-  useMemo(() => {
+  useEffect(() => {
     if (
       uniqueMaterialTypes &&
+      uniqueMaterialTypes?.[0] !== type &&
       (type === "" || type === [] || !inUniqueMaterialTypes(type))
     ) {
       onTypeChange({
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [id]);
+  }, []);
 }
 
 /**

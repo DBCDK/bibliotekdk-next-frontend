@@ -37,6 +37,11 @@ div.redBorder a.blockedLink {
   padding-bottom: 1px;
 }
 
+div.redBorder a.blockedLink[data-link-disabled=""] {
+  pointer-events: none;
+  background-size: 0 0;
+}
+
 div.redBorder a.blockedLink:is(:hover, :focus, :focus-visible),
 div.redBorder a.blockedLink::before,
 div.redBorder a.blockedLink::after {

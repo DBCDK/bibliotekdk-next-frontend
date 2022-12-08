@@ -8,7 +8,7 @@ import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import { context } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
 import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
-import { AccessEnum } from "@/lib/enums";
+import { AccessEnum, MaterialTypeEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { accessUtils } from "@/lib/accessFactory";
 
@@ -26,6 +26,24 @@ function TextAboveButton({ access, user }) {
       </Text>
     )
   );
+}
+
+function isOnlineTranslator(materialTypes) {
+  const overrideWithIsOnline =
+    materialTypes
+      ?.flatMap((materialType) => materialType?.specific)
+      ?.filter((specificMaterialType) =>
+        [MaterialTypeEnum.EBOG, MaterialTypeEnum["LYDBOG (NET)"]].includes(
+          specificMaterialType
+        )
+      ).length > 0;
+
+  return overrideWithIsOnline
+    ? Translate({
+        context: "workTypeDistinctForm",
+        label: "isOnline",
+      })
+    : "";
 }
 
 function workTypeTranslator(workTypes) {
@@ -108,6 +126,9 @@ export function OrderButton({
     );
   }, [manifestations, access]);
 
+  const isOnlineTranslated = isOnlineTranslator(
+    selectedManifestation?.materialTypes
+  );
   const workTypeTranslated = workTypeTranslator(work?.workTypes);
   const pid = selectedManifestation?.pid;
   const buttonSkeleton = !work || !selectedManifestation;
@@ -187,7 +208,7 @@ export function OrderButton({
           context: "overview",
           label: "goto",
         }),
-        workTypeTranslated,
+        isOnlineTranslated || workTypeTranslated,
       ].join(" "),
     /* (2) */
     () =>
@@ -243,6 +264,8 @@ function ReservationButton({
   if (
     workResponse?.isLoading ||
     manifestationsResponse?.isLoading ||
+    !workId ||
+    !selectedPids ||
     !selectedManifestationsPids
   ) {
     return (
