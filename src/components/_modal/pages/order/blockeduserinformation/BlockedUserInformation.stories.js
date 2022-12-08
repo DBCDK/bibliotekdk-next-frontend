@@ -24,7 +24,7 @@ export function BlockedUserKK() {
     />
   );
 }
-export function BlockedUserNoBranchOrAgencyUrl() {
+export function BlockedUserNoUrl() {
   return (
     <NamedBlockedUserInformation
       agencyName={"BalleRipRapRups biblioteker"}
