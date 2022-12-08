@@ -41,38 +41,13 @@ export function Result({
   const isDesktop = breakpoint === "lg" || breakpoint === "xl" || false;
   const numPages = Math.ceil(hitcount / 10);
 
-  const filtersLabel = Translate({
-    context: "search",
-    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
-    vars: filtersCount === "0" ? null : [filtersCount],
-  });
-
   return (
     <>
       <Section
         divider={false}
         space={{ top: isDesktop ? "var(--pt8)" : "var(--pt2)" }}
         className={styles.section}
-        title={
-          <div className={styles.wrap}>
-            <Button
-              id="view-all-filters"
-              className={styles.filtersButton}
-              type="secondary"
-              size="medium"
-              dataCy="view-all-filters"
-              onClick={() => modal.push("filter", { q })}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.keyCode === 13) {
-                  modal.push("filter", { q });
-                }
-              }}
-            >
-              <Icon src="settings.svg" size={2} />
-              {filtersLabel}
-            </Button>
-          </div>
-        }
+        title=" "
       >
         {Array(isMobile ? page : 1)
           .fill({})

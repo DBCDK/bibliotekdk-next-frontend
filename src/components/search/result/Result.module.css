@@ -30,11 +30,7 @@
   margin-right: var(--pt05);
 }
 
-.filtersButton {
-  display: flex;
-  align-items: center;
-  padding: var(--pt1) var(--pt3) !important;
-}
+
 
 .filtersButton i {
   margin-right: var(--pt1);
