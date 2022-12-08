@@ -24,3 +24,11 @@ export function BlockedUserKK() {
     />
   );
 }
+export function BlockedUserNoBranchOrAgencyUrl() {
+  return (
+    <NamedBlockedUserInformation
+      agencyName={"BalleRipRapRups biblioteker"}
+      branchOrAgencyUrl={""}
+    />
+  );
+}

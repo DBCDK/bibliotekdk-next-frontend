@@ -38,6 +38,7 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
         <br />
         <br />
         <a
+          data-link-disabled={branchOrAgencyUrl}
           className={styles.blockedLink}
           data-cy={"blocked-user-link"}
           href={branchOrAgencyUrl}
