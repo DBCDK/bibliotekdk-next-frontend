@@ -16,9 +16,10 @@ import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
 import { useModal } from "@/components/_modal";
-import { FilterTypeEnum } from "@/lib/enums";
+
 import Button from "@/components/base/button/Button";
 import Icon from "@/components/base/icon/Icon";
+import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -52,7 +53,6 @@ export function Words({ data, isLoading }) {
       <Text className={styles.label} skeleton={isLoading} lines={1}>
         {Translate({ context: "search", label: "relatedSubjects" })}
       </Text>
-
       <div className={styles.words} data-cy="words-container">
         {data.map((w) => (
           <Word key={w} word={w} isLoading={isLoading} />
