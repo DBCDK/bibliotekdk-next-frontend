@@ -12,10 +12,11 @@ import Head from "next/head";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
-import { getCoverImage, getJSONLD } from "@/lib/jsonld/work";
+import { getJSONLD } from "@/lib/jsonld/work";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { getSeo } from "@/components/work/utils";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 /**
  * The work page React component
@@ -49,7 +50,7 @@ export function Header({ details }) {
   const pageTitle = seo.title;
 
   /** get coverUrl **/
-  const coverUrl = getCoverImage(data.work);
+  const coverUrl = getCoverImage(data?.work?.manifestations?.all).detail;
 
   /**
    * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
