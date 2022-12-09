@@ -2,15 +2,15 @@ import PropTypes from "prop-types";
 
 import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
-import Button from "@/components/base/button";
-import Icon from "@/components/base/icon";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
+
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
+
 import styles from "./Result.module.css";
 
 /**
