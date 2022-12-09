@@ -43,7 +43,7 @@ export function Result({
     <>
       <Section
         divider={false}
-        space={{ top: isDesktop ? "var(--pt8)" : "var(--pt2)" }}
+        space={{ top: isDesktop ? 0 : "var(--pt2)" }}
         className={styles.section}
         title=" "
       >
