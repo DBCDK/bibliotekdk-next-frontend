@@ -28,11 +28,9 @@ import { FilterTypeEnum } from "@/lib/enums";
  */
 export function Result({
   q,
-  modal,
   page,
   isLoading,
   hitcount = 0,
-  filtersCount,
   onWorkClick,
   onPageChange,
 }) {
@@ -90,15 +88,9 @@ Result.propTypes = {
  * @returns {JSX.Element}
  */
 export default function Wrap({ page, onWorkClick, onPageChange }) {
-  const { filters } = useFilters();
   const { getQuery, hasQuery } = useQ();
-
   const q = getQuery();
-
-  const modal = useModal();
-
-  const { getCount } = useFilters();
-  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
+  const { filters } = useFilters();
 
   // use the useData hook to fetch data
   const fastResponse = useData(
@@ -118,9 +110,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
   return (
     <Result
       q={q}
-      modal={modal}
       page={page}
-      filtersCount={filtersCount}
       hitcount={data.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}

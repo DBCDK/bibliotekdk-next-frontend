@@ -202,6 +202,7 @@ function SelectedFilter({
                 >
                   {title}
                 </Text>
+                {/* outcommented for now - let's see ..
                 <Text
                   lines={1}
                   skeleton={isLoading}
@@ -210,7 +211,7 @@ function SelectedFilter({
                   className={styles.score}
                 >
                   {score}
-                </Text>
+                </Text>*/}
               </div>
             </List.Select>
           );
@@ -358,7 +359,7 @@ export function Filter(props) {
             {Translate({
               context: "search",
               label: "showXResults",
-              vars: [hitcount],
+              vars: [null],
             })}
           </Button>
         </>

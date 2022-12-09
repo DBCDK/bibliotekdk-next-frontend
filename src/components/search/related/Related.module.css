@@ -44,7 +44,7 @@
 .related {
   display: flex;
   overflow-x: scroll;
-  padding: 0 var(--pt2) var(--pt1) var(--pt2);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
   align-items: baseline;
 }
 

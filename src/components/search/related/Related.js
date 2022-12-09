@@ -19,6 +19,7 @@ import styles from "./Related.module.css";
 import { useModal } from "@/components/_modal";
 import Button from "@/components/base/button/Button";
 import Icon from "@/components/base/icon/Icon";
+import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -65,7 +66,7 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, hitcount, isLoading, modal, q }) {
+export function Related({ data, filtersCount, isLoading, modal, q }) {
   const breakpoint = useBreakpoint();
   const isMobile =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
@@ -77,8 +78,8 @@ export function Related({ data, hitcount, isLoading, modal, q }) {
 
   const filtersLabel = Translate({
     context: "search",
-    label: "showAllFilters",
-    vars: null,
+    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
+    vars: filtersCount === "0" ? null : [filtersCount],
   });
 
   return (
@@ -129,7 +130,10 @@ export function Related({ data, hitcount, isLoading, modal, q }) {
  * Wrap for fetching data for the subject Related component
  */
 export default function Wrap() {
-  const filters = useFilters().getQuery();
+  const { filters } = useFilters();
+  const { getCount } = useFilters();
+  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
+
   const q = useQ().getQuery();
 
   const modal = useModal();
@@ -164,6 +168,7 @@ export default function Wrap() {
       hitcount={hits}
       isLoading={hitcountResponse?.isLoading || isLoading}
       modal={modal}
+      filtersCount={filtersCount}
       q={q}
     />
   );
