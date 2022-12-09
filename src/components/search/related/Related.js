@@ -16,6 +16,10 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
+import { useModal } from "@/components/_modal";
+import Button from "@/components/base/button/Button";
+import Icon from "@/components/base/icon/Icon";
+import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -62,7 +66,7 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, hitcount, isLoading }) {
+export function Related({ data, filtersCount, isLoading, modal, q }) {
   const breakpoint = useBreakpoint();
   const isMobile =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
@@ -72,28 +76,36 @@ export function Related({ data, hitcount, isLoading }) {
     return null;
   }
 
+  const filtersLabel = Translate({
+    context: "search",
+    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
+    vars: filtersCount === "0" ? null : [filtersCount],
+  });
+
   return (
     <Section
       divider={false}
       space={{ bottom: "var(--pt4)" }}
       className={styles.section}
       title={
-        !isMobile && (
-          <div>
-            <Text type="text3" skeleton={isLoading} lines={1}>
-              {Translate({ context: "search", label: "title" })}
-            </Text>
-            <Title
-              data-cy={"related-hitcount"}
-              type="title5"
-              tag="h3"
-              className={styles.hitcount}
-              skeleton={isLoading}
-            >
-              {hitcount}
-            </Title>
-          </div>
-        )
+        <div className={styles.wrap}>
+          <Button
+            id="view-all-filters"
+            className={styles.filtersButton}
+            type="secondary"
+            size="medium"
+            dataCy="view-all-filters"
+            onClick={() => modal.push("filter", { q })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.keyCode === 13) {
+                modal.push("filter", { q });
+              }
+            }}
+          >
+            <Icon src="settings.svg" size={2} />
+            {filtersLabel}
+          </Button>
+        </div>
       }
     >
       {(data.length > 0 || isLoading) && (
@@ -118,8 +130,13 @@ export function Related({ data, hitcount, isLoading }) {
  * Wrap for fetching data for the subject Related component
  */
 export default function Wrap() {
-  const filters = useFilters().getQuery();
+  const { filters } = useFilters();
+  const { getCount } = useFilters();
+  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
+
   const q = useQ().getQuery();
+
+  const modal = useModal();
 
   const hitcountResponse = useData(hitcount({ q, filters }));
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
@@ -150,6 +167,9 @@ export default function Wrap() {
       data={data?.relatedSubjects || (isLoading && dummy) || []}
       hitcount={hits}
       isLoading={hitcountResponse?.isLoading || isLoading}
+      modal={modal}
+      filtersCount={filtersCount}
+      q={q}
     />
   );
 }
