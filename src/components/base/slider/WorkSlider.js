@@ -107,7 +107,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   const hash = useMemo(
     () =>
       `${router.asPath}-${hashCode(works.map((work) => work.workId).join(""))}`,
-    [works]
+    [works, router.asPath]
   );
 
   // Store progress for slider
