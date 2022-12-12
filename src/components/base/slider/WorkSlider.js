@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import Swiper from "react-id-swiper";
+import { useRouter } from "next/router";
 import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
@@ -54,7 +55,7 @@ function hashCode(str) {
 // A map containing a progres for each slider
 const storedProgress = {};
 
-// A map containing the maximum progress sliders have been in
+// A map containing the maximum progress sliders have been in (used for data collect)
 const storedProgressMax = {};
 
 /**
@@ -71,6 +72,9 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
+
+  // router used for creating uniq (pr. page) swiper hash keys by prefixing the asPath
+  const router = useRouter();
 
   // Ref to the swiper instance
   const swiperRef = useRef(null);
@@ -101,7 +105,8 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   // Generate hash to uniquely identify this list of works
   const hash = useMemo(
-    () => hashCode(works.map((work) => work.workId).join("")),
+    () =>
+      `${router.asPath}-${hashCode(works.map((work) => work.workId).join(""))}`,
     [works]
   );
 
@@ -141,7 +146,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
       init: (swiper) => {
         // We update progress on init
         setPosition({
-          progress: storedProgressMax[hash] || Math.min(swiper.progress, 0),
+          progress: storedProgress[hash] || Math.min(swiper.progress, 0),
         });
       },
       activeIndexChange: (swiper) => {
