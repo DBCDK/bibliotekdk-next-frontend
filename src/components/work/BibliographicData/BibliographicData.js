@@ -7,11 +7,14 @@ import React, { useMemo } from "react";
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
 import ManifestationFull from "./ManifestationFull";
-import { prettyAndOrderedMaterialTypesEnum, sortManifestations } from "./utils";
+import { sortManifestations } from "./utils";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
-import { flattenWord } from "@/lib/utils";
+import {
+  flattenMaterialType,
+  formatMaterialTypesToPresentation,
+} from "@/lib/manifestationFactoryFunctions";
 
 /**
  * Export function of the Component
@@ -28,8 +31,8 @@ export function BibliographicData({ manifestations, workId }) {
     [manifestations]
   );
 
-  // temporary fix for large manifestation lists
-  const sliced = sortedMaterialTypes.slice(0, 100);
+  // TODO: Fix this temporary fix: temporary fix for large manifestation lists
+  const sliced = sortedMaterialTypes.slice(0, 150);
 
   return (
     <Section
@@ -45,19 +48,13 @@ export function BibliographicData({ manifestations, workId }) {
             ? " (" + manifestation.volume + ")"
             : "";
 
-          const prettyMaterialType = ((manifestation) => {
-            const materialType = manifestation?.materialTypes?.[0]?.specific;
-            const flatMaterialType = flattenWord(materialType);
-            const type =
-              prettyAndOrderedMaterialTypesEnum[flatMaterialType] ||
-              materialType;
-
-            return type?.[0]?.toUpperCase() + type?.slice(1);
-          })(manifestation);
+          const formattedMaterialTypes = formatMaterialTypesToPresentation(
+            flattenMaterialType(manifestation)
+          );
 
           return (
             <Item
-              title={`${prettyMaterialType + volume}`}
+              title={[...formattedMaterialTypes, volume].join("")}
               subTitle={manifestation?.edition?.publicationYear?.display}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
