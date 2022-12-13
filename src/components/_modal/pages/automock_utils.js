@@ -153,6 +153,7 @@ const BRANCH_4 = {
   },
   pickupAllowed: true,
   digitalCopyAccess: false,
+  branchWebsiteUrl: "balleripraprup.dekaa",
   agencyName: "BalleRipRapRup",
   userIsBlocked: true,
 };

@@ -2,23 +2,16 @@ import PropTypes from "prop-types";
 
 import Pagination from "@/components/search/pagination/Pagination";
 import Section from "@/components/base/section";
-import Translate from "@/components/base/translate";
-import Button from "@/components/base/button";
-import Text from "@/components/base/text";
-
-import Icon from "@/components/base/icon";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
-import { useModal } from "@/components/_modal";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
 
 import styles from "./Result.module.css";
-import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  * Search result
@@ -28,11 +21,9 @@ import { FilterTypeEnum } from "@/lib/enums";
  */
 export function Result({
   q,
-  modal,
   page,
   isLoading,
   hitcount = 0,
-  filtersCount,
   onWorkClick,
   onPageChange,
 }) {
@@ -41,52 +32,13 @@ export function Result({
   const isDesktop = breakpoint === "lg" || breakpoint === "xl" || false;
   const numPages = Math.ceil(hitcount / 10);
 
-  const filtersLabel = Translate({
-    context: "search",
-    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
-    vars: filtersCount === "0" ? null : [filtersCount],
-  });
-
   return (
     <>
       <Section
         divider={false}
-        space={{ top: isDesktop ? "var(--pt8)" : "var(--pt2)" }}
+        space={{ top: isDesktop ? 0 : "var(--pt2)" }}
         className={styles.section}
-        title={
-          <div className={styles.wrap}>
-            <Button
-              id="view-all-filters"
-              className={styles.filtersButton}
-              type="secondary"
-              size="medium"
-              dataCy="view-all-filters"
-              onClick={() => modal.push("filter", { q })}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.keyCode === 13) {
-                  modal.push("filter", { q });
-                }
-              }}
-            >
-              <Icon src="settings.svg" size={2} />
-              {filtersLabel}
-            </Button>
-            {(isMobile || breakpoint === "md") && (
-              <div>
-                <Text type="text3" skeleton={isLoading} lines={1}>
-                  {Translate({ context: "search", label: "title" })}
-                </Text>
-                <Text
-                  type="text2"
-                  className={styles.hitcount}
-                  skeleton={isLoading}
-                >
-                  {hitcount}
-                </Text>
-              </div>
-            )}
-          </div>
-        }
+        title=" "
       >
         {Array(isMobile ? page : 1)
           .fill({})
@@ -129,15 +81,9 @@ Result.propTypes = {
  * @returns {JSX.Element}
  */
 export default function Wrap({ page, onWorkClick, onPageChange }) {
-  const { filters } = useFilters();
   const { getQuery, hasQuery } = useQ();
-
   const q = getQuery();
-
-  const modal = useModal();
-
-  const { getCount } = useFilters();
-  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
+  const { filters } = useFilters();
 
   // use the useData hook to fetch data
   const fastResponse = useData(
@@ -157,9 +103,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
   return (
     <Result
       q={q}
-      modal={modal}
       page={page}
-      filtersCount={filtersCount}
       hitcount={data.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}

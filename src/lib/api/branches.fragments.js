@@ -137,6 +137,7 @@ export function checkBlockedUser({ branchId }) {
         result {
           agencyName
         	userIsBlocked
+        	branchWebsiteUrl
         }
       }
       monitor(name: "bibdknext_CheckBlockedUser")

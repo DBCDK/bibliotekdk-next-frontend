@@ -162,7 +162,6 @@ function SelectedFilter({
         {orderedValues?.map((term, idx) => {
           const title = term.term;
           const key = term.key;
-          const score = term.score || "-";
 
           const isCheked = terms.includes(title);
 
@@ -202,6 +201,7 @@ function SelectedFilter({
                 >
                   {title}
                 </Text>
+                {/* outcommented for now - let's see ..
                 <Text
                   lines={1}
                   skeleton={isLoading}
@@ -210,7 +210,7 @@ function SelectedFilter({
                   className={styles.score}
                 >
                   {score}
-                </Text>
+                </Text>*/}
               </div>
             </List.Select>
           );
@@ -234,7 +234,6 @@ export function Filter(props) {
 
   // facet data
   const facets = data?.search?.facets || [];
-  const hitcount = data?.search?.hitcount || null;
 
   // Facet will contain a specific selected facet/category, if any selected
   const { facet } = context;
@@ -358,7 +357,7 @@ export function Filter(props) {
             {Translate({
               context: "search",
               label: "showXResults",
-              vars: [hitcount],
+              vars: [null],
             })}
           </Button>
         </>

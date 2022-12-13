@@ -5,12 +5,11 @@ import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text/Text";
-import BodyParser from "@/components/base/bodyparser";
 import Translate from "@/components/base/translate";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
-  agencyUrl,
+  branchOrAgencyUrl,
 }) {
   const titleText = Translate({
     context: "order",
@@ -30,28 +29,28 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
     label: "blocked-user-alternative-solution",
   });
 
-  const body = `<p>
-      <b>${titleText}</b>
-      <br/>
-      ${explanation}
-      <br />
-      <br />
-      <a
-        data-cy={"blocked-user-link"}
-        href=${agencyUrl}
-        target={"_blank"}
-        rel={"noreferrer"}
-      >
-        ${url}
-      </a>
-      <span />
-      ${alternativeSolution}
-  </p>`;
-
   return (
-    <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
-      <BodyParser body={body} />
-    </Text>
+    <div className={styles.varContainer}>
+      <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
+        <span>{titleText}</span>
+        <br />
+        {explanation}
+        <br />
+        <br />
+        <a
+          data-link-disabled={branchOrAgencyUrl}
+          className={styles.blockedLink}
+          data-cy={"blocked-user-link"}
+          href={branchOrAgencyUrl}
+          target={"_blank"}
+          rel={"noreferrer"}
+        >
+          {url}
+        </a>
+        &nbsp;
+        {alternativeSolution}
+      </Text>
+    </div>
   );
 });
 
@@ -88,7 +87,9 @@ export default function Wrap() {
   return (
     <BlockedUserInformation
       agencyName={branches?.result?.[0]?.agencyName}
-      agencyUrl={branches?.agencyUrl}
+      branchOrAgencyUrl={
+        branches?.result?.[0]?.branchWebsiteUrl || branches?.agencyUrl
+      }
     />
   );
 }

@@ -18,6 +18,7 @@ export const FilterTypeEnum = Object.freeze({
   MATERIAL_TYPES: "materialTypes",
   SUBJECTS: "subjects",
   WORK_TYPES: "workTypes",
+  ALWAYS_LOAN: "canAlwaysBeLoaned",
 });
 
 /** TODO: Maybe use a map like this instead of
@@ -26,7 +27,7 @@ export const FilterTypeEnum = Object.freeze({
  * */
 export const MaterialTypeEnum = Object.freeze({
   BOG: "bog",
-  EBOG: "e-bog",
+  EBOG: "ebog",
   "LYDBOG (NET)": "lydbog (net)",
   "LYDBOG (CD-MP3)": "lydbog (cd-mp3)",
   "LYDBOG (CD)": "Lydbog (cd)",

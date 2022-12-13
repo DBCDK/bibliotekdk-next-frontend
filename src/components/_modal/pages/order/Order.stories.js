@@ -201,7 +201,6 @@ NotBlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           branches: () => {
             return {
               result: [BRANCH_1, BRANCH_2],
-              agencyUrl: "balleripraprup.dekaa",
             };
           },
         },
@@ -231,7 +230,9 @@ BlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
         Query: {
           user: () => USER_4,
           branches: () => {
-            return { result: [BRANCH_4], agencyUrl: "balleripraprup.dekaa" };
+            return {
+              result: [BRANCH_4],
+            };
           },
         },
       },

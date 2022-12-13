@@ -42,12 +42,12 @@ import useWindowSize from "@/components/hooks/useWindowSize";
 
 // material Pages
 export const MATERIAL_PAGES = [
-  { path: "artikler", label: "article" },
-  { path: "spil", label: "game" },
   { path: "boeger", label: "literature" },
   { path: "film", label: "movie" },
   { path: "musik", label: "music" },
+  { path: "spil", label: "game" },
   { path: "noder", label: "sheetmusic" },
+  { path: "artikler", label: "article" },
 ];
 
 /**

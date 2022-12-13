@@ -320,5 +320,14 @@ describe("Order", () => {
 
       cy.get("[data-cy=button-godkend]").should("exist").should("be.disabled");
     });
+
+    it("should disable link if not present", () => {
+      cy.visit(
+        "/iframe.html?id=modal-order-blockeduserinformation--blocked-user-no-url&viewMode=story"
+      );
+
+      cy.get("[data-cy=blocked-user]").should("exist");
+      cy.get("[data-link-disabled='']").should("exist");
+    });
   });
 });

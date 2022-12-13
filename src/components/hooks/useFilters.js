@@ -243,12 +243,12 @@ const types = Object.values(FilterTypeEnum);
 
 // Visible Worktypes for work type selections
 export const workTypes = [
-  "article",
-  "game",
   "literature",
   "movie",
   "music",
+  "game",
   "sheetmusic",
+  "article",
 ];
 
 // Included categories/facets by selected workType
