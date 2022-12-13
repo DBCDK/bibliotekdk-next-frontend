@@ -41,7 +41,7 @@ describe("Filter", () => {
     cy.get("[data-cy=list-facets]").contains("Hans Hansen");
 
     // Sync with url, close modal
-    cy.contains("Vis 8 resultater").click();
+    cy.contains("Vis resultater").click();
 
     cy.get("[data-cy=router-query]").then((el) => {
       expect(JSON.parse(el.text())).to.deep.equal({

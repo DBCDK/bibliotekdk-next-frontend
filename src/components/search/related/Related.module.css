@@ -14,6 +14,29 @@
   padding: 0;
 }
 
+.wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrap > div {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+
+.filtersButton {
+  display: flex;
+  align-items: center;
+  padding: var(--pt1) var(--pt3) !important;
+  top:0;
+}
+
+.filtersButton i {
+  margin-right: var(--pt1);
+  margin-bottom: 2px;
+}
+
 .hitcount {
   color: var(--blue);
 }
@@ -21,7 +44,7 @@
 .related {
   display: flex;
   overflow-x: scroll;
-  padding: 0 var(--pt2) var(--pt1) var(--pt2);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
   align-items: baseline;
 }
 
