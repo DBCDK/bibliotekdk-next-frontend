@@ -27,7 +27,10 @@ export function Description({ className = "", data = "", skeleton = false }) {
   const context = { context: "description" };
 
   return (
-    <Section title={Translate({ ...context, label: "title" })}>
+    <Section
+      title={Translate({ ...context, label: "title" })}
+      space={{ top: "var(--pt0)", bottom: "var(--pt8)" }}
+    >
       <Row className={`${styles.description} ${className}`}>
         {data && (
           <Col xs={12} md>
@@ -36,6 +39,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
               type="text2"
               skeleton={skeleton}
               lines={4}
+              className={styles.description}
             >
               {data}
             </Text>

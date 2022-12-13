@@ -66,7 +66,7 @@ function Details({
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
-      space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
+      space={{ top: "var(--pt8)", bottom: "var(--pt8)" }}
       className={`${className}`}
     >
       <Row className={`${styles.details}`}>
