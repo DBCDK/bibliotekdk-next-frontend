@@ -5,7 +5,7 @@
 }
 
 .background a {
-  color: white;
+  color: white !important;
 }
 
 .containerback {

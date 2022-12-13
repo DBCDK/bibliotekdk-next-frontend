@@ -34,16 +34,19 @@ const Index = () => {
       <ArticleSection title={false} matchTag="section 4" template="single" />
       <InspirationSlider
         title={Translate({
-          context: "index",
-          label: "inspirationSliderTitle",
+          context: "inspiration",
+          label: "category-fiction-nyeste",
         })}
         backgroundColor="var(--parchment)"
         filters={[{ category: "fiction", subCategories: ["nyeste"] }]}
       />
-      <ArticleSection
-        title={Translate({ context: "index", label: "section2" })}
-        matchTag="section 2"
-        template="triple"
+      <InspirationSlider
+        title={Translate({
+          context: "inspiration",
+          label: "category-nonfiction-nyeste",
+        })}
+        divider={{ content: false }}
+        filters={[{ category: "nonfiction", subCategories: ["nyeste"] }]}
       />
     </div>
   );

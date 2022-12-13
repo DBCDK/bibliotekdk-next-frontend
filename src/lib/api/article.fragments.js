@@ -55,7 +55,7 @@ export function article({ articleId, language }) {
 /**
  * Articles that are promoted to the frontpage
  */
-export function promotedArticles({ language }) {
+export function promotedArticles({ language = "EN_GB" }) {
   const langcode = getLangcode(language);
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -103,7 +103,7 @@ export function promotedArticles({ language }) {
 /**
  * All published Articles
  */
-export function allArticles({ language }) {
+export function allArticles({ language = "EN_GB" }) {
   const langcode = getLangcode(language);
   return {
     apiUrl: ApiEnums.FBI_API,

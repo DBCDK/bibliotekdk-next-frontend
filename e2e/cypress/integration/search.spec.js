@@ -314,7 +314,8 @@ describe("Search", () => {
         .should("have.attr", "href", url);
     });
 
-    it(`Will show search result hitcount in the connected related subjects section`, () => {
+    // skip for now - hitcount has been disabled
+    it.skip(`Will show search result hitcount in the connected related subjects section`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--connected");
 
       cy.on("url:change", (url) => {
@@ -331,7 +332,6 @@ describe("Search", () => {
     it(`Will not show anything if empty`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--empty");
       cy.get("[data-cy=words-container]").should("not.exist");
-      cy.get("[data-cy=related-hitcount]").should("have.text", "0");
     });
   });
 });
