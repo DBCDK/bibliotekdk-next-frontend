@@ -35,7 +35,7 @@ function handleBooleans(obj, def) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Section({
   title = "Some section",
@@ -44,23 +44,22 @@ export default function Section({
   dataCy = "section",
   isLoading = false,
   backgroundColor = null,
-  divider = {},
-  space = {},
+  divider: dividerBeforeOverload = {},
+  space: spaceBeforeOverload = { top: "var(--pt8)", bottom: "var(--pt8)" },
   elRef = null,
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
-  // default space setting
-  const defSpace = { bottom: "var(--pt8)" };
   // support true/false on object attribute level
-  const _space = handleBooleans(space, "var(--pt8)");
-  space = space === false ? {} : { ...defSpace, ..._space };
+  const _space = handleBooleans(spaceBeforeOverload, "var(--pt8)");
+  const space = spaceBeforeOverload === false ? {} : { ..._space };
 
   // default divider setting
   const defDivider = { title: <Divider />, content: <Divider /> };
   // support true/false on object attribute level
-  const _divider = handleBooleans(divider, <Divider />);
-  divider = divider === false ? {} : { ...defDivider, ..._divider };
+  const _divider = handleBooleans(dividerBeforeOverload, <Divider />);
+  const divider =
+    dividerBeforeOverload === false ? {} : { ...defDivider, ..._divider };
 
   // divider class'
   const contentDividerClass = divider?.content ? styles.divider : "";
@@ -77,7 +76,7 @@ export default function Section({
       ...style,
       backgroundColor,
       paddingTop: space?.top || "var(--pt8)",
-      marginBottom: defSpace.bottom || "var(--pt8)",
+      paddingBottom: space?.bottom || "var(--pt8)",
     };
   }
 
