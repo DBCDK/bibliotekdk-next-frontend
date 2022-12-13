@@ -6,6 +6,7 @@ import { useData } from "@/lib/api/api";
 import Skeleton from "@/components/base/skeleton";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import Link from "@/components/base/link";
 
 export const BlockedUserInformation = memo(function BlockedUserInformation({
   agencyName,
@@ -29,28 +30,33 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
     label: "blocked-user-alternative-solution",
   });
 
+  const underlineColorScheme = {
+    "--underline-font-color": "var(--error_temp)",
+    "--underline-hover-font-color": "var(--mine-shaft)",
+    "--underline-line-color": "var(--mine-shaft)",
+  };
+
   return (
-    <div className={styles.varContainer}>
-      <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
-        <span>{titleText}</span>
-        <br />
-        {explanation}
-        <br />
-        <br />
-        <a
-          data-link-disabled={branchOrAgencyUrl}
-          className={styles.blockedLink}
-          data-cy={"blocked-user-link"}
-          href={branchOrAgencyUrl}
-          target={"_blank"}
-          rel={"noreferrer"}
-        >
-          {url}
-        </a>
-        &nbsp;
-        {alternativeSolution}
-      </Text>
-    </div>
+    <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
+      <span>{titleText}</span>
+      <br />
+      {explanation}
+      <br />
+      <br />
+      <Link
+        dataCy={"blocked-user-link"}
+        href={branchOrAgencyUrl}
+        target={"_blank"}
+        border={{ top: false, bottom: { keepVisible: true } }}
+        data_display="inline"
+        disabled={!Boolean(branchOrAgencyUrl)}
+        style={underlineColorScheme}
+      >
+        {url}
+      </Link>
+      &nbsp;
+      {alternativeSolution}
+    </Text>
   );
 });
 

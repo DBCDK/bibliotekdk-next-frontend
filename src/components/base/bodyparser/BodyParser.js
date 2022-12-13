@@ -5,7 +5,22 @@ import { useEffect, useMemo, useRef } from "react";
 import Text from "@/components/base/text";
 
 import styles from "./BodyParser.module.css";
+import animations from "@/components/base/animation/animations.module.css";
 import { signIn } from "@dbcdk/login-nextjs/client";
+
+function underlineOnAnchorElements(htmlString) {
+  const ela = document.createElement("div");
+  ela.innerHTML = htmlString;
+
+  const aInParsedBodyLength = ela.getElementsByTagName("a").length;
+
+  for (let i = 0; i < aInParsedBodyLength; i++) {
+    ela
+      .getElementsByTagName("a")
+      .item(i).className += `${animations.underlineContainer}`;
+  }
+  return ela.innerHTML;
+}
 
 /**
  * BodyParser
@@ -35,10 +50,7 @@ export default function BodyParser({
 
   useEffect(() => {
     // quickfix .. notifications caused this one to fail
-    if (!articleBody) {
-      return;
-    }
-    if (!articleBody.current) {
+    if (!articleBody || !articleBody?.current) {
       return;
     }
     // end quickfix
@@ -69,12 +81,14 @@ export default function BodyParser({
     return <Text type="text2" skeleton={true} lines={lines}></Text>;
   }
 
+  const parsedBodyWithUnderlines = underlineOnAnchorElements(parsedBody);
+
   return (
     <div
       data-cy={dataCy}
       ref={articleBody}
       className={`${styles.body} ${className}`}
-      dangerouslySetInnerHTML={{ __html: parsedBody }}
+      dangerouslySetInnerHTML={{ __html: parsedBodyWithUnderlines }}
     />
   );
 }

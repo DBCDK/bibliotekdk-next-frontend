@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function Text({
   children = "lorem ipsum dolor sit amet ...",
@@ -27,6 +27,8 @@ function Text({
   dataCy = null,
   tabIndex = null,
   id,
+  data_display = "block",
+  style: injectedStyle = {},
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -62,8 +64,9 @@ function Text({
       }`}
       onClick={onClick}
       data-cy={key}
-      style={style}
+      style={{ ...style, ...injectedStyle }}
       tabIndex={tabIndex}
+      data-display={data_display}
     >
       {children}
     </Tag>
@@ -76,7 +79,7 @@ function Text({
  * @param {obj} props
  *  See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function TextSkeleton(props) {
   if (!props.lines) {
@@ -105,7 +108,7 @@ function TextSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {
@@ -126,7 +129,13 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["text1", "text2", "text3", "text4"]),
+  type: PropTypes.oneOf([
+    "ignore_text_type",
+    "text1",
+    "text2",
+    "text3",
+    "text4",
+  ]),
   tag: PropTypes.oneOf(["p", "span", "div", "label"]),
   skeleton: PropTypes.bool,
 };

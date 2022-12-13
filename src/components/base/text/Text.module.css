@@ -1,10 +1,16 @@
 .text {
+  font-size: var(--text-element-font-size);
+  line-height: var(--text-element-line-height);
   font-family: var(--body-font);
   display: block;
   letter-spacing: 0.2px;
 
   /* Bootstrap default override */
   margin: 0;
+}
+
+.text[data-display="inline"] {
+  display: inline;
 }
 
 .text1 {
@@ -28,6 +34,7 @@
   line-height: 22px;
   font-family: var(--body-font-semibold);
 }
+
 .clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;

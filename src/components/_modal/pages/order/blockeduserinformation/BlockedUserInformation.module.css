@@ -1,20 +1,9 @@
-div.varContainer {
-  --underline-font-color: var(--error_temp);
-  --underline-background-color: var(--error-light_temp);
-  --underline-line-color: var(--mine-shaft);
-  display: contents;
-}
-
 /* Mobile first */
 div.redBorder {
-  --underline-font-color: inherit;
-  --underline-line-color: inherit;
-  --underline-background-color: inherit;
-
   padding: var(--pt2) var(--pt2);
-  color: var(--underline-font-color);
-  background: var(--underline-background-color);
-  word-break: break-word;
+  color: var(--error_temp);
+  background: var(--error-light_temp);
+  word-break: normal;
   white-space: normal;
   font-size: 17px;
 }
@@ -22,44 +11,6 @@ div.redBorder {
 div.redBorder span {
   padding: 0;
   font-family: var(--body-font-semibold);
-}
-
-div.redBorder a.blockedLink {
-  --underline-font-color: inherit;
-  --underline-line-color: inherit;
-
-  color: var(--underline-font-color);
-  text-decoration: none;
-  background-image: linear-gradient(var(--underline-line-color), var(--underline-line-color));
-  background-size: 100% 1px;
-  background-position: 50% 100%;
-  background-repeat: no-repeat;
-  padding-bottom: 1px;
-}
-
-div.redBorder a.blockedLink[data-link-disabled=""] {
-  pointer-events: none;
-  background-size: 0 0;
-}
-
-div.redBorder a.blockedLink:is(:hover, :focus, :focus-visible),
-div.redBorder a.blockedLink::before,
-div.redBorder a.blockedLink::after {
-  --underline-line-color: inherit;
-
-  animation: __underline 0.6s ease;
-  color: var(--underline-line-color);
-  border-color: var(--underline-line-color);
-  background-position: 50% 100%;
-}
-
-@keyframes __underline {
-  0% {
-    background-size: 0 1px;
-  }
-  100% {
-    background-size: 100% 1px;
-  }
 }
 
 /* Bigger than mobile */

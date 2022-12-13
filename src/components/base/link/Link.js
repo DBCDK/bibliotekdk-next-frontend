@@ -1,9 +1,21 @@
 import PropTypes from "prop-types";
 import { default as NextLink } from "next/link";
 
-import AnimationLine from "@/components/base/animation/line";
-
 import styles from "./Link.module.css";
+import animations from "@/components/base/animation/animations.module.css";
+
+function parseBorderPositioning(border) {
+  return [
+    `top:${Boolean(border?.top)}`,
+    `bottom:${Boolean(border?.bottom)}`,
+  ].join(",");
+}
+function parseBorderKeepVisible(border) {
+  return [
+    `top:${Boolean(border?.top?.keepVisible)}`,
+    `bottom:${Boolean(border?.bottom?.keepVisible)}`,
+  ].join(",");
+}
 
 /**
  * The Component function
@@ -11,11 +23,12 @@ import styles from "./Link.module.css";
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Link({
   children = "Im a hyperlink now!",
   a = true,
+  tag = "a",
   linkRef = null,
   href,
   target = "_self",
@@ -26,17 +39,24 @@ export default function Link({
   dataCy = "link",
   className = "",
   tabIndex = "0",
-  tag = "a",
   disabled = false,
   ariaLabel = "",
   scroll = true,
+  data_display = "inline-block",
+  data_underline_animation_disabled = false,
+  style = null,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
   if (a) {
-    const animationClass = !!border ? styles.border : "";
+    const underline_data_attributes = {
+      "data-underline-position": parseBorderPositioning(border),
+      "data-underline-keep-visible": parseBorderKeepVisible(border),
+      "data-underline-link-disabled": disabled,
+      "data-underline-animation-disabled": data_underline_animation_disabled,
+    };
 
-    const disabledClass = disabled ? styles.disabled : "";
+    const animationClass = !!border ? styles.border : "";
 
     children = (
       <Tag
@@ -53,15 +73,14 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${styles.link} ${animationClass} ${disabledClass} ${className}`}
+        className={`${animations.underlineContainer} ${animationClass} ${className}`}
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
+        data-display={data_display}
+        {...underline_data_attributes}
+        {...(style && { style: style })}
       >
-        {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
-        {border.bottom && (
-          <AnimationLine keepVisible={!!border.bottom.keepVisible} />
-        )}
       </Tag>
     );
   }
@@ -69,7 +88,6 @@ export default function Link({
   if (!href) {
     return children;
   }
-
   // Return the component
   return (
     <NextLink href={href} shallow={true} scroll={scroll}>
