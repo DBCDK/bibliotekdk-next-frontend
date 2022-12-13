@@ -18,18 +18,18 @@ describe("Related Keywords", () => {
     const url = `/find?q.subject=${tag}`;
 
     // Get selected tag
-    const item = cy.get(`[data-cy=related-subject-${tag}]`);
-
-    // Check link attributes
-    item.should("have.attr", "target", "_self");
-    item.should("have.attr", "href", url);
+    cy.get(`[data-cy=related-subject-${tag}]`)
+      // Check link attributes
+      .should("have.attr", "target", "_self")
+      .should("have.attr", "href", url);
   });
 
   it(`Can render and interact with connected related subjects`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--connected");
-    cy.get("[data-cy=words-container]").children().should("have.length", 2);
     cy.get("[data-cy=words-container]")
+      .should("exist")
       .children()
+      .should("have.length", 2)
       .each((el, idx) => {
         cy.get(el).click();
         cy.get("[data-cy=router-pathname]").should("have.text", "/find");

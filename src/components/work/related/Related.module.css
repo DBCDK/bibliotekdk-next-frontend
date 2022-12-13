@@ -1,8 +1,6 @@
-.section section {
-  padding-top: 0 !important;
-}
 .section {
-  margin-top: calc(var(--pt16) * -1);
+  /*margin-top: calc(var(--pt16) * -1);*/
+  margin-top: 0;
 }
 
 .skip {
@@ -11,14 +9,21 @@
   display: none;
 }
 
-.words {
-  padding-bottom: var(--pt1);
-}
-
 .word:last-child {
   margin-right: 0;
 }
 
 .word {
-  margin: 0 var(--pt3) var(--pt2) 0;
+  margin: 0 var(--pt2) var(--pt2) 0;
+}
+
+.words {
+  padding-bottom: var(--pt1);
+}
+
+@media (min-width: 576px) {
+  .word {
+    margin-right: var(--pt3);
+    margin-bottom: var(--pt2);
+  }
 }

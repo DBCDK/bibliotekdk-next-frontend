@@ -15,33 +15,21 @@ import styles from "./Related.module.css";
  *
  * Returns a item/word for the items/words component
  */
-function Word({ word, isLoading }) {
+function Word({ word, isLoading, dataCy_prefix }) {
   return (
     <Link
+      a={true}
+      tag={"a"}
       href={`/find?q.subject=${word}`}
-      dataCy={cyKey({ name: word, prefix: "related-subject" })}
+      dataCy={cyKey({ name: word, prefix: dataCy_prefix })}
       className={styles.word}
       disabled={isLoading}
-      border={{ bottom: { keepVisible: true } }}
+      border={{ top: false, bottom: { keepVisible: true } }}
+      data_display={"inline"}
     >
-      <Text type="text2" skeleton={isLoading} lines={1}>
-        {word}
-      </Text>
+      {word}
+      <wbr />
     </Link>
-  );
-}
-
-/**
- *
- * Returns a list of related subject words/items
- */
-export function Words({ data, isLoading }) {
-  return (
-    <div className={styles.words} data-cy="words-container">
-      {data.map((w) => (
-        <Word key={w} word={w} isLoading={isLoading} />
-      ))}
-    </div>
   );
 }
 
@@ -49,28 +37,50 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, isLoading }) {
+export function Related({
+  data,
+  isLoading,
+  titleText = (
+    <Text type={"text1"}>
+      {Translate({ context: "relatedKeywords", label: "title" })}
+    </Text>
+  ),
+  dataCy_prefix = "related-subject",
+  textType = "text2",
+  space,
+  style = {},
+}) {
   return (
     <Section
-      title={
-        <Text type="text1">
-          {Translate({ context: "relatedKeywords", label: "title" })}
-        </Text>
-      }
-      className={styles.section}
+      title={titleText}
+      className={`${styles.section}`}
       backgroundColor="var(--jagged-ice)"
+      {...(space && { space: space })}
     >
-      <div>
-        <Skip
-          id="view-all-filters"
-          className={styles.skip}
-          label={Translate({
-            context: "search",
-            label: "skipRelatedSubjects",
-          })}
-        />
-        <Words data={data} isLoading={isLoading} />
-      </div>
+      <Skip
+        id="view-all-filters"
+        className={styles.skip}
+        label={Translate({
+          context: "search",
+          label: "skipRelatedSubjects",
+        })}
+      />
+      <Text
+        type={textType}
+        skeleton={isLoading}
+        data_display={"inline"}
+        style={style}
+        dataCy={"words-container"}
+      >
+        {data.map((w) => (
+          <Word
+            key={w}
+            word={w}
+            isLoading={isLoading}
+            dataCy_prefix={dataCy_prefix}
+          />
+        ))}
+      </Text>
     </Section>
   );
 }

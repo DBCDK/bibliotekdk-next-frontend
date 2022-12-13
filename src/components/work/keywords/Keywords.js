@@ -3,103 +3,34 @@ import PropTypes from "prop-types";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
-import { cyKey } from "@/utils/trim";
-
-import Section from "@/components/base/section";
-import Title from "@/components/base/title";
-import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
+import { Related } from "@/components/work/related/Related";
 
-/**
- * bibliotek.dk url
- *
- * @param {string} keyword
- * Create search url including keyword in current bibliotek.dk version
- *
- * @returns {string}
- */
-function url(keyword) {
-  return `/find?q.subject=${keyword}`;
+export function mapFontStyles(len) {
+  const styleIndex = [
+    [0, 1, 2, 3].includes(len),
+    [4, 5, 6].includes(len),
+    true,
+  ].findIndex((idx) => idx === true);
 
-  //return `https://bibliotek.dk/da/search/work?search_block_form=phrase.subject%3D%22${keyword}%22#content`;
-}
-
-/**
- * getFontSize
- *
- * @param {Array} keywords Get fontsize according to amount of keywords
- *
- * @returns {obj} // styles.class
- */
-function getFontSize(keywords) {
-  if (!keywords) {
-    return styles.small;
-  }
-
-  if (keywords.length <= 3) {
-    return styles.large;
-  }
-
-  if (keywords.length <= 6) {
-    return styles.medium;
-  }
-
-  return styles.small;
-}
-
-/**
- * The Component function
- *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {JSX.Element}
- */
-export function Keywords({
-  className = "",
-  data: uniqueSubjects = [],
-  skeleton = false,
-}) {
-  // Get fontsize - based on subjects in data
-  const sizeClass = getFontSize(uniqueSubjects);
-
-  // Translate Context
-  const context = { context: "keywords" };
-
-  return (
-    <Section
-      title={Translate({ ...context, label: "title" })}
-      space={{ top: "var(--pt8)" }}
-      backgroundColor="var(--jagged-ice)"
-    >
-      <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
-        {uniqueSubjects.map((val) => {
-          const key = cyKey({ name: val, prefix: "keyword" });
-
-          return (
-            <span
-              data-cy={key}
-              className={`${styles.keyword} ${sizeClass}`}
-              key={`${key}-${JSON.stringify(val)}`}
-            >
-              <Link
-                a
-                href={url(val)}
-                border={{ bottom: { keepVisible: true } }}
-              >
-                <Title type="title4" skeleton={skeleton}>
-                  {val}
-                </Title>
-              </Link>
-            </span>
-          );
-        })}
-      </div>
-    </Section>
-  );
+  const styleMap = [
+    {
+      "--text-element-font-size": "var(--pt5)",
+      "--text-element-line-height": "var(--pt7)",
+    },
+    {
+      "--text-element-font-size": "var(--pt4)",
+      "--text-element-line-height": "var(--pt6)",
+    },
+    {
+      "--text-element-font-size": "var(--pt3)",
+      "--text-element-line-height": "var(--pt4)",
+    },
+  ];
+  return styleMap[styleIndex];
 }
 
 /**
@@ -112,22 +43,21 @@ export function Keywords({
  */
 export function KeywordsSkeleton(props) {
   const data = [
-    { type: "1", value: "someKeyword" },
-    { type: "2", value: "someKeyword" },
-    { type: "3", value: "someOtherKeyword" },
-    { type: "4", value: "someKeyword" },
-    { type: "5", value: "keyword" },
-    { type: "6", value: "someKeyword" },
-    { type: "7", value: "someOtherKeyword" },
-    { type: "8", value: "keyword" },
+    "someKeyword",
+    "someKeyword",
+    "someOtherKeyword",
+    "someKeyword",
+    "keyword",
+    "someKeyword",
+    "someOtherKeyword",
+    "keyword",
   ];
 
   return (
-    <Keywords
-      {...props}
+    <Related
       data={data}
       className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
+      isLoading={true}
     />
   );
 }
@@ -163,11 +93,22 @@ export default function Wrap(props) {
     return null;
   }
 
+  const keywords = uniqueSubjectEntries(subjectsDbcVerified);
+
+  const style = {
+    "--text-element-font-family": "var(--title-font)",
+    ...mapFontStyles(keywords?.length),
+  };
+
   return (
-    <Keywords
-      className={props.className}
-      skeleton={false}
-      data={uniqueSubjectEntries(subjectsDbcVerified)}
+    <Related
+      data={keywords}
+      isLoading={false}
+      titleText={Translate({ context: "keywords", label: "title" })}
+      dataCy_prefix="keywords"
+      textType={"ignore_text_type"}
+      style={style}
+      space={{ top: "var(--pt8)", bottom: "var(--pt0)" }}
     />
   );
 }
