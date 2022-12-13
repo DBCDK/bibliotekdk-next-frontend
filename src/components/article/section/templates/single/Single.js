@@ -19,7 +19,6 @@ import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
-import AnimationLine from "@/components/base/animation/line";
 import React from "react";
 
 /**
@@ -46,6 +45,12 @@ export default function Single({ articles, skeleton }) {
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
+  const underlineColorScheme = {
+    "--underline-font-color": "var(--mine-shaft)",
+    "--underline-hover-font-color": "var(--mine-shaft)",
+    "--underline-line-color": "var(--mine-shaft)",
+  };
+
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
@@ -60,9 +65,10 @@ export default function Single({ articles, skeleton }) {
               <div />
               <span className={styles.title}>
                 <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
-                  {article.title}
+                  <Link data_display={"inline"} style={underlineColorScheme}>
+                    {article?.title}
+                  </Link>
                 </Title>
-                <AnimationLine />
               </span>
               <div />
               <Link a={false} href={{ pathname, query }} target={`${target}`}>

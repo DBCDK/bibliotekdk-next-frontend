@@ -13,6 +13,8 @@
 
 .title {
   margin-bottom: var(--pt3);
+  position: relative;
+  display: inline-block;
 }
 
 .text {
@@ -26,22 +28,4 @@
 }
 .imageskeleton {
   padding-bottom: var(--pt05);
-}
-
-/* Custom AnimationLine */
-
-.title,
-.text {
-  position: relative;
-  display: inline-block;
-}
-
-.title:hover hr:last-child {
-  display: none;
-}
-
-.content:hover .title hr,
-.content:focus-within .title hr {
-  transform: scale(1);
-  background-color: var(--mine-shaft);
 }
