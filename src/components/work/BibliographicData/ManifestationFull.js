@@ -59,10 +59,10 @@ function ColumnOne({ workId, manifestation }) {
             />
           </span>
         </div>
+        &nbsp;
         <div>
           <Link
             dataCy="link-references"
-            border={{ bottom: { keepVisible: true } }}
             onClick={() =>
               openReferencesModal(
                 modal,
@@ -71,6 +71,8 @@ function ColumnOne({ workId, manifestation }) {
                 manifestation
               )
             }
+            border={{ top: false, bottom: { keepVisible: true } }}
+            data_display={"inline"}
           >
             <Text type="text3" className={styles.linkstyle}>
               {Translate({
@@ -80,6 +82,7 @@ function ColumnOne({ workId, manifestation }) {
             </Text>
           </Link>
         </div>
+        &nbsp;
       </div>
     </Col>
   );

@@ -47,6 +47,7 @@ export function LocalizationsLink({ localizations, openLocalizationsModal }) {
         border={{ top: false, bottom: { keepVisible: true } }}
         dataCy={localizationLinkKey}
         ariaLabel="open localizations"
+        data_display={"inline"}
       >
         <Text type="text3" className={styles.linkstyle}>
           {Translate({
