@@ -1,11 +1,10 @@
 .icon {
-  /* width: var(--pt2); */
-  /* height: 18px; */
   width: 20px;
   height: 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 .line {

@@ -21,15 +21,13 @@ export default function BurgerIcon(props) {
   return (
     <Action
       {...props}
-      className={`${className} ${styles.trigger}`}
+      className={`${className} ${styles.trigger} ${styles.parent}`}
       animation={true}
     >
-      <div className={styles.burger}>
-        <div className={styles.icon}>
-          <div className={styles.line} />
-          <div className={styles.line} />
-          <div className={styles.line} />
-        </div>
+      <div className={styles.icon}>
+        <div className={styles.line} />
+        <div className={styles.line} />
+        <div className={styles.line} />
       </div>
     </Action>
   );
