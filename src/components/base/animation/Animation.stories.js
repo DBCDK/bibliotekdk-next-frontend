@@ -83,9 +83,9 @@ export function CSS() {
         <p
           className={[
             animations["f-translate-right"],
-            animations["h-color-blue"],
-            animations["h-border-bottom"],
+            animations.underlineContainer,
           ].join(" ")}
+          data-underline-keep-visible="top:false,bottom:false"
         >
           hej
         </p>

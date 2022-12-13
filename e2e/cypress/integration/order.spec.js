@@ -316,7 +316,7 @@ describe("Order", () => {
       cy.get("[data-cy=blocked-user]")
         .should("exist")
         .find("a")
-        .should("have.attr", "href", "balleripraprup.dekaa");
+        .should("have.attr", "href", "/balleripraprup.dekaa");
 
       cy.get("[data-cy=button-godkend]").should("exist").should("be.disabled");
     });
@@ -327,7 +327,7 @@ describe("Order", () => {
       );
 
       cy.get("[data-cy=blocked-user]").should("exist");
-      cy.get("[data-link-disabled='']").should("exist");
+      cy.get("[data-underline-link-disabled=true]").should("exist");
     });
   });
 });

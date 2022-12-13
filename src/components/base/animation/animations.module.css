@@ -7,7 +7,7 @@
 .f-border-bottom::after {
   content: " ";
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 0;
   bottom: -1px;
   left: 0;
@@ -22,6 +22,7 @@
   transition: transform 0.4s;
 }
 
+/* Translation */
 .h-translate-right,
 .f-translate-right {
   transition: transform 0.3s;
@@ -49,7 +50,6 @@
 }
 
 /* Bounce */
-
 .h-bounce-right,
 .f-bounce-right,
 .h-bounce-left,
@@ -111,3 +111,89 @@
     transform: scale(1);
   }
 }
+
+/* ================================================================= */
+/* ================================================================= */
+/* CONTROL UNDERLINE */
+/* Set color of background image, when colors are overridden */
+/*   as used in etc. styles.underlineVarContainer (BlockedUserInformation) */
+.underlineContainer {
+  --underline-background-image: linear-gradient(var(--underline-line-color), var(--underline-line-color)), linear-gradient(var(--underline-line-color), var(--underline-line-color));
+  /*--underline-height: 0.06rem;*/
+}
+
+/* Positioning */
+/* "top:false,bottom:true" is default! */
+.underlineContainer[data-underline-position="top:false,bottom:false"] {
+  --underline-background-hover-size_100pct: 0 0, 0 0;
+}
+.underlineContainer[data-underline-position="top:true,bottom:false"] {
+  --underline-background-hover-size_100pct: 100% var(--underline-height), 0 0;
+}
+.underlineContainer[data-underline-position="top:false,bottom:true"] {
+  --underline-background-hover-size_100pct: 0 0, 100% var(--underline-height);
+}
+.underlineContainer[data-underline-position="top:true,bottom:true"] {
+  --underline-background-hover-size_100pct: 100% var(--underline-height), 100% var(--underline-height);
+}
+/* --- */
+
+/* Keep visible */
+/* "top:false,bottom:true" is default! */
+.underlineContainer[data-underline-keep-visible="top:false,bottom:false"] {
+  --underline-background-size: 0 0, 0 0;
+}
+.underlineContainer[data-underline-keep-visible="top:true,bottom:false"] {
+  --underline-background-size: 100% var(--underline-height), 0 var(--underline-height);
+}
+.underlineContainer[data-underline-keep-visible="top:false,bottom:true"] {
+  --underline-background-size: 0 var(--underline-height), 100% var(--underline-height);
+}
+.underlineContainer[data-underline-keep-visible="top:true,bottom:true"] {
+  --underline-background-size: 100% var(--underline-height), 100% var(--underline-height);
+}
+
+/* Turn off link */
+.underlineContainer[data-underline-link-disabled=true] {
+  pointer-events: none;
+  background-size: 0 0;
+}
+
+/* Turn off animation */
+.underlineContainer[data-underline-animation-disabled=true] {
+  --underline-background-hover-size_0pct: var(--underline-background-size);
+  --underline-background-hover-size_100pct: var(--underline-background-size);
+}
+/* ----------- */
+/* ----------- */
+
+.underlineContainer {
+  text-decoration: none;
+  color: var(--underline-font-color);
+  background-image: var(--underline-background-image);
+  background-size: var(--underline-background-size);
+  background-position: var(--underline-background-position);
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+}
+
+.underlineContainer:is(:hover, :focus, :focus-visible),
+.underlineContainer::before,
+.underlineContainer::after {
+  animation: __underline 0.6s ease;
+  color: var(--underline-hover-font-color);
+  border-color: var(--underline-line-color);
+  background-size: var(--underline-background-hover-size_100pct);
+  background-position: var(--underline-background-hover-position);
+}
+
+@keyframes __underline {
+  0% {
+    background-size: var(--underline-background-hover-size_0pct);
+  }
+  100% {
+    background-size: var(--underline-background-hover-size_100pct);
+  }
+}
+/* ================================================================= */
+
