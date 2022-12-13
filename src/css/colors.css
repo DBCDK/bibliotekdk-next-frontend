@@ -47,4 +47,21 @@
 
   --success: #27ae60;
   --success-light: #d0f1d2;
+
+  /* Underline defaults */
+  --underline-font-color: var(--mine-shaft);
+  --underline-hover-font-color: var(--blue);
+  --underline-line-color: var(--blue);
+
+  --underline-height: 0.06rem;
+  --underline-background-image: linear-gradient(var(--underline-line-color), var(--underline-line-color)), linear-gradient(var(--underline-line-color), var(--underline-line-color));
+  --underline-background-position: 50% 0%, 50% 100%;
+  --underline-background-hover-position: 50% 0%, 50% 100%;
+  --underline-background-size: 0 0, 100% var(--underline-height);
+  --underline-background-hover-size_0pct: 0 var(--underline-height), 0 var(--underline-height);
+  --underline-background-hover-size_100pct: 0 0, 100% var(--underline-height);
+
+  --text-element-font-size: 17px;
+  --text-element-line-height: 26px;
+  --text-element-font-family: var(--body-font-semibold);
 }
