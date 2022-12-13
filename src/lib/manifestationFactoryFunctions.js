@@ -1,4 +1,4 @@
-import { chain, isEqual, uniqWith } from "lodash";
+import { chain, isEqual, uniqWith, upperFirst } from "lodash";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
@@ -11,6 +11,14 @@ export function formatMaterialTypesToUrl(materialTypeArray) {
 
 export function formatMaterialTypesToCypress(materialTypeArray) {
   return materialTypeArray?.join("/").replace(" ", "-");
+}
+
+export function formatMaterialTypesToPresentation(materialTypeArray) {
+  return materialTypeArray?.map((mat, index) => {
+    return (
+      upperFirst(mat) + (index < materialTypeArray.length - 1 ? " / " : "")
+    );
+  });
 }
 
 export function flattenMaterialType(manifestation) {
