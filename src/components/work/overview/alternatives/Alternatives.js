@@ -3,6 +3,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
@@ -11,8 +12,9 @@ import Col from "react-bootstrap/Col";
 import { accessUtils } from "@/lib/accessFactory";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
+import useUser from "@/components/hooks/useUser";
 
-function AlternativeOptions({ modal = null, context = {} }) {
+function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
   const { manifestations, type, workId } = { ...context };
 
   const { allEnrichedAccesses: accesses, requestButtonIsTrue } = useMemo(() => {
@@ -21,12 +23,28 @@ function AlternativeOptions({ modal = null, context = {} }) {
 
   const requestButton = accesses && requestButtonIsTrue;
 
-  const onlineAccess = accesses?.filter(
-    (singleAccess) => singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
+  const onlineAccesses = accesses
+    ?.filter(
+      (singleAccess) =>
+        singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
+    )
+    ?.filter((singleAccess) => {
+      if (hasDigitalAccess === true) {
+        return true;
+      }
+      return singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE;
+    });
+
+  const physicalAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.loanIsPossible === true
   );
 
-  // digitalcopy and physical (orderPossible) are counted as one
-  const count = (requestButton ? 1 : 0) + onlineAccess?.length;
+  const allowedAccesses = [...onlineAccesses, ...physicalAccesses?.slice(0)];
+
+  // Count INTER_LIBRARY_LOAN as single access
+  const count = allowedAccesses?.length;
 
   if (!(count > 1)) {
     return null;
@@ -40,7 +58,7 @@ function AlternativeOptions({ modal = null, context = {} }) {
           modal.push("options", {
             title: Translate({ context: "modal", label: "title-options" }),
             type: type,
-            onlineAccess: onlineAccess,
+            allowedAccesses: allowedAccesses,
             workId: workId,
             orderPossible: requestButton,
             title_author: context.title_author,
@@ -63,6 +81,25 @@ export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
   const title_author = router.query.title_author;
 
+  const { loanerInfo } = useUser();
+
+  const {
+    data: branchUserData,
+    isLoading: branchIsLoading,
+    isSlow: branchIsSlow,
+  } = useData(
+    selectedPids &&
+      loanerInfo?.pickupBranch &&
+      branchesFragments.branchDigitalCopyAccess({
+        branchId: loanerInfo?.pickupBranch,
+      })
+  );
+
+  const hasDigitalAccess =
+    branchUserData?.branches?.result
+      ?.map((res) => res.digitalCopyAccess === true)
+      .findIndex((res) => res === true) > -1;
+
   const modal = useModal();
 
   const { data, isLoading, isSlow } = useData(
@@ -74,15 +111,20 @@ export default function Wrap({ workId, selectedPids }) {
 
   const type = manifestations?.[0]?.materialTypes?.[0]?.specific;
 
-  if (isLoading) {
+  if (isLoading || branchIsLoading) {
     return (
-      <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
+      <Skeleton
+        lines={1}
+        className={styles.skeletonstyle}
+        isSlow={isSlow || branchIsSlow}
+      />
     );
   }
 
   return (
     <AlternativeOptions
       modal={modal}
+      hasDigitalAccess={hasDigitalAccess}
       context={{
         workId,
         type,
