@@ -116,10 +116,8 @@ function Find() {
 
       <Header router={router} />
 
-      <div className="search-settings">
-        <Searchbar q={q} />
-        <Related q={q} />
-      </div>
+      <Searchbar q={q} />
+      <Related q={q} />
 
       {q && (
         <Result

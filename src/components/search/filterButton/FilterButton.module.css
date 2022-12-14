@@ -1,0 +1,11 @@
+.filterButton {
+  display: flex;
+  align-items: center;
+  padding: var(--pt1) var(--pt3) !important;
+  white-space: nowrap;
+}
+
+.filterButton i {
+  margin-right: var(--pt1);
+  margin-bottom: 2px;
+}
