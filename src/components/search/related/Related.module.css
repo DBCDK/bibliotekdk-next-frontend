@@ -1,4 +1,5 @@
 .section {
+  padding-top: var(--pt2);
   padding-bottom: 0 !important;
 }
 
@@ -58,7 +59,7 @@
   }
 
   .section.noRelatedSubjects {
-    padding-top: var(--pt8);
+    padding-top: var(--pt6);
   }
 
   .related {

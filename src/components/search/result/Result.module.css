@@ -3,7 +3,7 @@
 }
 
 .section.noRelatedSubjects {
-  padding-top: var(--pt3);
+  padding-top: var(--pt1);
 }
 
 .section :global(.section-title) {
@@ -52,7 +52,7 @@
 
 @media (min-width: 992px) {
   .section {
-    padding-top: var(--pt3);
+    padding-top: var(--pt1);
   }
 
   .section.noRelatedSubjects {

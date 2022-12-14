@@ -2,7 +2,6 @@
   /* override default section styling */
   padding: var(--pt3) 0 0 0 !important;
   margin-bottom: 0 !important;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .section section {
@@ -27,6 +26,10 @@
 }
 
 @media (min-width: 992px) {
+  .section {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  }
+
   .wrap {
     display: none;
   }
