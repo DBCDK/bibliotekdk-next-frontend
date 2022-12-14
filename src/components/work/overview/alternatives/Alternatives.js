@@ -41,7 +41,7 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
       singleAccess?.loanIsPossible === true
   );
 
-  const allowedAccesses = [...onlineAccesses, ...physicalAccesses?.slice(0)];
+  const allowedAccesses = [...onlineAccesses, ...physicalAccesses?.slice(0, 1)];
 
   // Count INTER_LIBRARY_LOAN as single access
   const count = allowedAccesses?.length;
