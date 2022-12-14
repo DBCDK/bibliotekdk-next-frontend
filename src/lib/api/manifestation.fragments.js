@@ -90,6 +90,12 @@ export function alternativesManifestations({ pid }) {
     query alternativesManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
         pid
+        titles {
+          main
+        }
+        creators {
+          display
+        }
         materialTypes {
           specific
         }
