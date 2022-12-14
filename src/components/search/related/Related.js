@@ -1,10 +1,9 @@
 import { useData } from "@/lib/api/api";
-import { hitcount } from "@/lib/api/search.fragments";
 import { subjects } from "@/lib/api/relatedSubjects.fragments";
 
-import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
-import useBreakpoint from "@/components/hooks/useBreakpoint";
+
+import FilterButton from "../filterButton";
 
 import { cyKey } from "@/utils/trim";
 
@@ -15,11 +14,6 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
-import { useModal } from "@/components/_modal";
-
-import Button from "@/components/base/button/Button";
-import Icon from "@/components/base/icon/Icon";
-import { FilterTypeEnum } from "@/lib/enums";
 
 /**
  *
@@ -66,46 +60,26 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, filtersCount, isLoading, modal, q }) {
-  const breakpoint = useBreakpoint();
-  const isMobile =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
+export function Related({ data, isLoading }) {
+  const noRelatedSubjects = data.length === 0 && !isLoading;
 
-  // remove entire section if no hits on mobile
-  if (data.length === 0 && !isLoading && isMobile) {
-    return null;
-  }
-
-  const filtersLabel = Translate({
-    context: "search",
-    label: filtersCount === "0" ? "showAllFilters" : "showAllFiltersCount",
-    vars: filtersCount === "0" ? null : [filtersCount],
-  });
+  const noRelatedSubjectsClass = noRelatedSubjects
+    ? styles.noRelatedSubjects
+    : "";
 
   return (
     <Section
+      className={`${styles.section} ${noRelatedSubjectsClass}`}
       divider={false}
-      space={{ bottom: "var(--pt4)" }}
-      className={styles.section}
+      space={{
+        bottom: "var(--pt4)",
+      }}
       title={
-        <div className={styles.wrap}>
-          <Button
-            id="view-all-filters"
-            className={styles.filtersButton}
-            type="secondary"
-            size="medium"
-            dataCy="view-all-filters"
-            onClick={() => modal.push("filter", { q })}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.keyCode === 13) {
-                modal.push("filter", { q });
-              }
-            }}
-          >
-            <Icon src="settings.svg" size={2} />
-            {filtersLabel}
-          </Button>
-        </div>
+        noRelatedSubjects ? (
+          <span />
+        ) : (
+          <FilterButton isLoading={isLoading} className={styles.filterButton} />
+        )
       }
     >
       {(data.length > 0 || isLoading) && (
@@ -130,16 +104,7 @@ export function Related({ data, filtersCount, isLoading, modal, q }) {
  * Wrap for fetching data for the subject Related component
  */
 export default function Wrap() {
-  const { filters } = useFilters();
-  const { getCount } = useFilters();
-  const filtersCount = getCount([FilterTypeEnum.WORK_TYPES]).toString();
-
   const q = useQ().getQuery();
-
-  const modal = useModal();
-
-  const hitcountResponse = useData(hitcount({ q, filters }));
-  const hits = hitcountResponse?.data?.search?.hitcount || 0;
 
   // prioritized q type to get related subjects for
   const query = q.subject || q.all || q.title || q.creator;
@@ -165,11 +130,7 @@ export default function Wrap() {
   return (
     <Related
       data={data?.relatedSubjects || (isLoading && dummy) || []}
-      hitcount={hits}
-      isLoading={hitcountResponse?.isLoading || isLoading}
-      modal={modal}
-      filtersCount={filtersCount}
-      q={q}
+      isLoading={isLoading}
     />
   );
 }

@@ -33,10 +33,6 @@
   align-items: center;
 }
 
-.search-settings {
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-}
-
 .inspiration-section-about h1 {
   margin-bottom: var(--pt1);
 }

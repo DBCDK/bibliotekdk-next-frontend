@@ -8,9 +8,9 @@
 .cover img {
   object-position: 50% 0%;
 }
-.cover{
+.cover {
   max-height: 160px;
-  min-height: 160px; 
+  min-height: 160px;
   min-width: 104px;
   max-width: 104px;
 }
@@ -61,13 +61,11 @@
   justify-content: center;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .wrapper:first-child {
     margin-top: 0;
   }
-}
 
-@media (min-width: 992px) {
   .leftcol {
     display: unset;
   }

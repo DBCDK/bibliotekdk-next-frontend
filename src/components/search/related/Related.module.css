@@ -1,6 +1,5 @@
 .section {
-  padding-top: var(--pt2);
-  background-color: var(--concrete);
+  padding-bottom: 0 !important;
 }
 
 .skip {
@@ -10,41 +9,20 @@
 }
 
 /* override section title default bootstrap styles */
-.section section > div:last-child {
-  padding: 0;
+.section :global(.section-title) {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
-.wrap {
-  display: flex;
-  justify-content: space-between;
-}
-
-.wrap > div {
-  display: flex;
-  align-items: center;
-  flex-direction: row-reverse;
-}
-
-.filtersButton {
-  display: flex;
-  align-items: center;
-  padding: var(--pt1) var(--pt3) !important;
-  top:0;
-}
-
-.filtersButton i {
-  margin-right: var(--pt1);
-  margin-bottom: 2px;
-}
-
-.hitcount {
-  color: var(--blue);
+.section :global(.section-content) {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .related {
   display: flex;
-  overflow-x: scroll;
-  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  overflow-x: auto;
+  padding: 0 var(--pt2) 0 var(--pt2);
   align-items: baseline;
 }
 
@@ -65,7 +43,24 @@
   min-width: fit-content;
 }
 
+.filterButton {
+  display: none;
+}
+
 @media (min-width: 992px) {
+  .filterButton {
+    display: unset;
+  }
+
+  .section {
+    padding-top: var(--pt3);
+    padding-bottom: unset;
+  }
+
+  .section.noRelatedSubjects {
+    padding-top: var(--pt8);
+  }
+
   .related {
     overflow: unset;
     padding-bottom: unset;
@@ -82,10 +77,5 @@
 
   .word {
     margin-bottom: var(--pt1);
-  }
-
-  .section {
-    padding-top: var(--pt3);
-    background-color: transparent;
   }
 }
