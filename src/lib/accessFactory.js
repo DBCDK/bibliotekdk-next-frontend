@@ -10,6 +10,9 @@ export function getAccessForSingleManifestation(manifestation) {
       ...(manifestation?.titles?.main?.length > 0 && {
         titles: manifestation?.titles?.main,
       }),
+      ...(manifestation?.creators?.length > 0 && {
+        creators: manifestation?.creators,
+      }),
     };
   });
 }
@@ -23,7 +26,10 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
     ? {
         ...singleInfomediaAccess,
         url: infomediaUrl(
-          encodeTitleCreator(singleInfomediaAccess?.titles?.[0]),
+          encodeTitleCreator(
+            singleInfomediaAccess?.titles?.[0],
+            singleInfomediaAccess?.creators?.[0]?.display
+          ),
           `work-of:${singleInfomediaAccess?.pid}`,
           singleInfomediaAccess.id
         ),
