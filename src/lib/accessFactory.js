@@ -1,6 +1,7 @@
 import { chain } from "lodash";
 import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 export function getAccessForSingleManifestation(manifestation) {
   return manifestation?.access?.map((singleAccess) => {
@@ -12,6 +13,9 @@ export function getAccessForSingleManifestation(manifestation) {
       }),
       ...(manifestation?.creators?.length > 0 && {
         creators: manifestation?.creators,
+      }),
+      ...(manifestation?.materialTypes?.length > 0 && {
+        materialTypesArray: flattenMaterialType(manifestation),
       }),
     };
   });
