@@ -25,6 +25,10 @@ const useBreakpoint = () => {
     const calcInnerWidth = throttle(function () {
       setBrkPnt(getDeviceConfig(window?.innerWidth));
     }, 200);
+
+    // exec on render
+    calcInnerWidth();
+
     window?.addEventListener("resize", calcInnerWidth);
     return () => window?.removeEventListener("resize", calcInnerWidth);
   }, []);
