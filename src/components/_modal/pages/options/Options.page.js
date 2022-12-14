@@ -7,6 +7,7 @@ import {
 } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
+import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryFunctions";
 
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { note, className } = props;
@@ -26,9 +27,6 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
 export function Options({ modal, context }) {
   const { allowedAccesses } = { ...context };
 
-  // no type selected - get the first one
-  const type = context.type;
-
   // quickfix - sort links from filmstriben - we want fjernleje on top
   const orderedOnlineAccess = allowedAccesses?.sort(specialSort);
 
@@ -38,15 +36,23 @@ export function Options({ modal, context }) {
         <Top title={context.title} />
         <ul className={styles.list} key="options-ul">
           {orderedOnlineAccess.map((access, index) => {
+            console.log(
+              "access.materialTypesArray: ",
+              formatMaterialTypesToPresentation(
+                access?.materialTypesArray
+              ).join("")
+            );
+
             const props = {
               ...access,
               className: styles.item,
-              materialType: type,
               onOrder: () =>
-                openOrderModal(modal, context.workId, "singleManifestation", {
-                  pid: access?.pid,
-                  materialTypes: { specific: type },
-                }),
+                openOrderModal(
+                  modal,
+                  access?.pid,
+                  context.workId,
+                  "singleManifestation"
+                ),
             };
 
             return (
