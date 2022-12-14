@@ -656,3 +656,26 @@ const workSliderFragment = `fragment workSliderFragment on Work {
     }
   }
 }`;
+
+export function pidToWorkId({ pid }) {
+  console.log(pid, "PID");
+
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidToWorkId($pid: String!) {
+      work(pid: $pid) {
+        titles {
+          main
+        }
+        creators{
+          display
+        }
+        workId
+      }
+      monitor(name: "bibdknext_pid_to_workid")
+    }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
