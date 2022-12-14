@@ -9,18 +9,16 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 
 export function OptionsLinkAndDescription({ props, templateProps }) {
-  const { note, className } = { ...props };
+  const { note, className } = props;
+  const { linkProps, linkText, descriptionText } = templateProps;
 
   return (
     <li className={`${className} ${styles.item}`}>
-      <Link
-        border={{ bottom: { keepVisible: true } }}
-        {...templateProps.linkProps}
-      >
-        <Text type="text1">{templateProps.linkText}</Text>
+      <Link border={{ bottom: { keepVisible: true } }} {...linkProps}>
+        <Text type="text1">{linkText}</Text>
       </Link>
       {note && <Text type="text3">{note}</Text>}
-      <Text type="text3">{templateProps.descriptionText}</Text>
+      <Text type="text3">{descriptionText}</Text>
     </li>
   );
 }
