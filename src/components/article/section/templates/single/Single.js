@@ -45,12 +45,6 @@ export default function Single({ articles, skeleton }) {
   // Strip body for html tags
   const bodyText = get(article, "body.value", "").replace(/(<([^>]+)>)/gi, "");
 
-  const underlineColorScheme = {
-    "--underline-font-color": "var(--mine-shaft)",
-    "--underline-hover-font-color": "var(--mine-shaft)",
-    "--underline-line-color": "var(--mine-shaft)",
-  };
-
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
@@ -65,7 +59,10 @@ export default function Single({ articles, skeleton }) {
               <div />
               <span className={styles.title}>
                 <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
-                  <Link data_display={"inline"} style={underlineColorScheme}>
+                  <Link
+                    data_display={"inline"}
+                    className={styles.underlineContainer}
+                  >
                     {article?.title}
                   </Link>
                 </Title>

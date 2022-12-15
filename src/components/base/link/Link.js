@@ -44,7 +44,6 @@ export default function Link({
   scroll = true,
   data_display = "inline-block",
   data_underline_animation_disabled = false,
-  style = null,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -78,7 +77,6 @@ export default function Link({
         aria-label={ariaLabel}
         data-display={data_display}
         {...underline_data_attributes}
-        {...(style && { style: style })}
       >
         {children}
       </Tag>

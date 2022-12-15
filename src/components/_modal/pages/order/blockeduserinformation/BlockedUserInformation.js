@@ -30,12 +30,6 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
     label: "blocked-user-alternative-solution",
   });
 
-  const underlineColorScheme = {
-    "--underline-font-color": "var(--error_temp)",
-    "--underline-hover-font-color": "var(--mine-shaft)",
-    "--underline-line-color": "var(--mine-shaft)",
-  };
-
   return (
     <Text tag={"div"} className={styles.redBorder} dataCy={"blocked-user"}>
       <span>{titleText}</span>
@@ -50,7 +44,7 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
         border={{ top: false, bottom: { keepVisible: true } }}
         data_display="inline"
         disabled={!Boolean(branchOrAgencyUrl)}
-        style={underlineColorScheme}
+        className={`${styles.underlineContainer}`}
       >
         {url}
       </Link>

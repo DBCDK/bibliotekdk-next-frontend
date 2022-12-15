@@ -118,12 +118,12 @@
 /* Set color of background image, when colors are overridden */
 /*   as used in etc. styles.underlineVarContainer (BlockedUserInformation) */
 .underlineContainer {
-  --underline-background-image: linear-gradient(var(--underline-line-color), var(--underline-line-color)), linear-gradient(var(--underline-line-color), var(--underline-line-color));
+  /*--underline-background-image: linear-gradient(var(--underline-line-color), var(--underline-line-color)), linear-gradient(var(--underline-line-color), var(--underline-line-color));*/
   /*--underline-height: 0.06rem;*/
 }
 
 /* Positioning */
-/* "top:false,bottom:true" is default! */
+/* "top:false,bottom:true" is default!*/
 .underlineContainer[data-underline-position="top:false,bottom:false"] {
   --underline-background-hover-size_100pct: 0 0, 0 0;
 }
@@ -156,7 +156,7 @@
 /* Turn off link */
 .underlineContainer[data-underline-link-disabled=true] {
   pointer-events: none;
-  background-size: 0 0;
+  background-size: 0 0, 0 0;
 }
 
 /* Turn off animation */

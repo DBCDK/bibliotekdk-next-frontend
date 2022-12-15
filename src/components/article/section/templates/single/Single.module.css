@@ -1,3 +1,16 @@
+.underlineContainer {
+  color: var(--mine-shaft);
+  background-image: linear-gradient(var(--mine-shaft), var(--mine-shaft)), linear-gradient(var(--mine-shaft), var(--mine-shaft));
+  border-color: var(--mine-shaft);
+
+  display: contents;
+}
+
+.underlineContainer:is(:hover, :focus, :focus-visible) {
+  color: var(--mine-shaft);
+  border-color: var(--mine-shaft);
+}
+
 .wrap {
   padding: 0;
 }
