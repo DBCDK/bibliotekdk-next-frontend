@@ -81,7 +81,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   // swr global confuguration options
   const swrConfigValue = {
-    fallback: pageProps.initialData,
+    fallback: pageProps.initialData || {},
     // catches all errors thrown in fetcher
     onError: async (err) => {
       switch (err.status) {
