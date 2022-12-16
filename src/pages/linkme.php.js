@@ -10,20 +10,17 @@ import { useRouter } from "next/router";
 import { pidToWorkId } from "@/lib/api/work.fragments";
 import { encodeTitleCreator } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
-import { useEffect } from "react";
 
 function LinkmePhp() {
   const router = useRouter();
 
   console.log(router, "ROUTER");
 
-  const { data, isLoading, error } = useData(
-    pidToWorkId({ pid: router.query["rec.id"] })
-  );
+  const { data, error } = useData(pidToWorkId({ pid: router.query["rec.id"] }));
 
-  if (error) {
-    console.log(error);
-    return <div>HEST</div>;
+  console.log(data, error, "USEDATA");
+  if (!data?.monitor) {
+    return <div>WORKING</div>;
   }
 
   console.log(data, "DATA");
@@ -37,16 +34,16 @@ function LinkmePhp() {
   const title_author = encodeTitleCreator(title, creator);
   const pathname = `/materiale/${title_author}/${workId}`;
 
-  useEffect(() => {
-    if (title_author && workId) {
-      router.push(pathname);
-    } else {
-      // TODO not found 404 redirect
-      router.push("/fisk");
-    }
-  });
+  console.log(title_author, workId, "VARS");
 
-  return <div>Redirecting</div>;
+  if (title_author && workId && data?.work) {
+    router.push(pathname);
+    console.log("ALL GOOD - REDIRECT");
+  } else {
+    console.log("HUNDEPRUT");
+    console.log(router, "ELSE ROUTER");
+    router?.push("/404");
+  }
 }
 
 export default LinkmePhp;
@@ -81,10 +78,13 @@ LinkmePhp.getInitialProps = async (ctx) => {
 
   const title_author = encodeTitleCreator(title, creator);
 
+  console.log(workId, creator, title, "SERVERSIDE DATA");
+
   // redirect serverside
   // if this is a bot title and author and workid has been fetched - redirect
   // to appropiate page. We use 301 (moved permanently) status code
   if (title_author && workId && ctx.res) {
+    console.log("ERROR - REDIRECTING");
     const path = `/materiale/${title_author}/${workId}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
