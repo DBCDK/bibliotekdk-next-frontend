@@ -4,6 +4,9 @@
  *  ccl=[ccl]
  *  cql=[cql]
  *  ref=worldcat&ccl=[ccl]
+ *
+ *  for now handle rec.id only - ccl & cql are searches - .. TODO - should we
+ *  handle searches ?? - some cql should be handled by complex search - check it out
  */
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
@@ -13,35 +16,30 @@ import { useData } from "@/lib/api/api";
 
 function LinkmePhp() {
   const router = useRouter();
-
-  console.log(router, "ROUTER");
-
-  const { data, error } = useData(pidToWorkId({ pid: router.query["rec.id"] }));
-
-  console.log(data, error, "USEDATA");
-  if (!data?.monitor) {
-    return <div>WORKING</div>;
+  const { data, isLoading, error } = useData(
+    pidToWorkId({ pid: router.query["rec.id"] })
+  );
+  // check if data fetching is done
+  if (isLoading) {
+    return <div>Rediricting ... </div>;
+  }
+  if (error) {
+    // TODO - something on error
+    throw "ERROR";
   }
 
-  console.log(data, "DATA");
-
+  // make a path to redirect to
   const workId = data?.work?.workId;
-
   const title = data?.work?.titles?.main?.[0];
-
   const creator = data?.work?.creators?.[0]?.display;
-
   const title_author = encodeTitleCreator(title, creator);
   const pathname = `/materiale/${title_author}/${workId}`;
 
-  console.log(title_author, workId, "VARS");
-
+  // if all is well - redirect to work page
   if (title_author && workId && data?.work) {
     router.push(pathname);
-    console.log("ALL GOOD - REDIRECT");
   } else {
-    console.log("HUNDEPRUT");
-    console.log(router, "ELSE ROUTER");
+    // something is  wrong - goto  404 (not found) page
     router?.push("/404");
   }
 }
@@ -61,7 +59,6 @@ export default LinkmePhp;
  *
  */
 LinkmePhp.getInitialProps = async (ctx) => {
-  console.log(ctx.query, "CONTEXT");
   const pid = ctx.query["rec.id"];
   const serverQueries = await fetchAll([pidToWorkId], ctx, {
     pid: pid,
@@ -77,14 +74,10 @@ LinkmePhp.getInitialProps = async (ctx) => {
     ?.creators?.[0]?.display;
 
   const title_author = encodeTitleCreator(title, creator);
-
-  console.log(workId, creator, title, "SERVERSIDE DATA");
-
   // redirect serverside
   // if this is a bot title and author and workid has been fetched - redirect
   // to appropiate page. We use 301 (moved permanently) status code
   if (title_author && workId && ctx.res) {
-    console.log("ERROR - REDIRECTING");
     const path = `/materiale/${title_author}/${workId}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
