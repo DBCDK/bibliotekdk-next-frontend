@@ -177,7 +177,7 @@ export function OrderButton({
     },
     /* (3) */
     {
-      onClick: () => openOrderModal(selectedManifestation),
+      onClick: () => openOrderModal(access?.[0]?.pid),
       dataCy: `button-order-overview-enabled`,
     },
   ];
@@ -270,8 +270,8 @@ function ReservationButton({
       work={workResponse.data?.work}
       manifestations={manifestations}
       onOnlineAccess={onOnlineAccess}
-      openOrderModal={(manifestation) =>
-        openOrderModal(modal, workId, singleManifestation, manifestation)
+      openOrderModal={(pid) =>
+        openOrderModal(modal, pid, workId, singleManifestation)
       }
       buttonType={buttonType}
       size={size}
