@@ -16,8 +16,7 @@
     "cy:run": "npx cypress@9 run --project ./e2e",
     "cy:open": "npx cypress@9 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js'",
-    "test:run": "jest src/",
-    "test:watch": "jest src/ --watch",
+    "test": "jest src/",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"
   },
   "author": "Frontend @ DBC",
@@ -62,7 +61,7 @@
     "lodash": "^4.17.21",
     "next": "^12.3.1",
     "next-auth": "^4.7.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^8.0.0",
     "nookies": "^2.5.2",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.8.1",
