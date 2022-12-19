@@ -35,9 +35,9 @@ export const MaterialTypeEnum = Object.freeze({
 });
 
 export const AccessEnum = Object.freeze({
-  INFOMEDIA_SERVICE: "InfomediaService",
   ACCESS_URL: "AccessUrl",
+  INFOMEDIA_SERVICE: "InfomediaService",
+  DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
   EREOL: "Ereol",
   INTER_LIBRARY_LOAN: "InterLibraryLoan",
-  DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
 });

@@ -92,7 +92,6 @@ function handleGoToLogin(access, user, modal, onOnlineAccess) {
  *  callback onclick handler for online access
  * @param {function} openOrderModal
  *  onclick handler for reservation
- * @param {boolean} singleManifestation
  * @param {string} buttonType of button for base button component
  * @param {string} size of button for base button component
  *
@@ -108,7 +107,6 @@ export function OrderButton({
   openOrderModal,
   onHandleGoToLogin = (access) =>
     handleGoToLogin(access, user, modal, onOnlineAccess),
-  singleManifestation,
   buttonType = "primary",
   size = "large",
 }) {
@@ -130,7 +128,6 @@ export function OrderButton({
     selectedManifestation?.materialTypes
   );
   const workTypeTranslated = workTypeTranslator(work?.workTypes);
-  const pid = selectedManifestation?.pid;
   const buttonSkeleton = !work || !selectedManifestation;
   const offlineAccess =
     access?.[0]?.__typename === AccessEnum.INTER_LIBRARY_LOAN;
@@ -154,15 +151,11 @@ export function OrderButton({
         !access?.[0]?.issn &&
         access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
     ),
-    /** (2) material is available for logged in library
-     * ---  --> prepare order button with parameters
-     * ? All is well ? - material can be ordered - order button */
-    Boolean(singleManifestation),
-    /** (3) material can not be ordered
+    /** (2) material can not be ordered
      * --- maybe it is too new or something else -> disable (with a reason?)
      * ? No online access ? - check if work can be ordered */
     Boolean(!requestButtonIsTrue && !digitalCopy),
-    /** (4) material is available as loan -> Enable */
+    /** (3) material is available as loan -> Enable */
     true,
   ];
 
@@ -179,17 +172,12 @@ export function OrderButton({
     },
     /* (2) */
     {
-      onClick: () => openOrderModal(selectedManifestation),
-      dataCy: `button-order-overview-enabled${pid}`,
-    },
-    /* (3) */
-    {
       dataCy: "button-order-overview",
       disabled: true,
     },
-    /* (4) */
+    /* (3) */
     {
-      onClick: () => openOrderModal(selectedManifestation),
+      onClick: () => openOrderModal(access?.[0]?.pid),
       dataCy: `button-order-overview-enabled`,
     },
   ];
@@ -213,16 +201,10 @@ export function OrderButton({
     /* (2) */
     () =>
       Translate({
-        context: "order",
-        label: "specific-edition",
-      }),
-    /* (3) */
-    () =>
-      Translate({
         context: "overview",
         label: !offlineAccess ? "Order-online-disabled" : "Order-disabled",
       }),
-    /* (4) */
+    /* (3) */
     () => Translate({ context: "general", label: "bestil" }),
   ];
 
@@ -288,10 +270,9 @@ function ReservationButton({
       work={workResponse.data?.work}
       manifestations={manifestations}
       onOnlineAccess={onOnlineAccess}
-      openOrderModal={(manifestation) =>
-        openOrderModal(modal, workId, singleManifestation, manifestation)
+      openOrderModal={(pid) =>
+        openOrderModal(modal, pid, workId, singleManifestation)
       }
-      singleManifestation={singleManifestation}
       buttonType={buttonType}
       size={size}
     />

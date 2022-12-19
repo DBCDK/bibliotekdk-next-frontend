@@ -12,17 +12,11 @@ export function openLocalizationsModal(modal, pids, workId, materialType) {
   });
 }
 
-export function openOrderModal(
-  modal,
-  workId,
-  singleManifestation,
-  manifestation
-) {
+export function openOrderModal(modal, pid, workId, singleManifestation) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
-    pid: manifestation.pid,
+    pid: pid,
     workId: workId,
-    type: manifestation.materialTypes.specific,
     ...(singleManifestation && { orderType: "singleManifestation" }),
   });
 }

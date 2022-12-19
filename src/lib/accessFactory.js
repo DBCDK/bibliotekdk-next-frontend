@@ -1,6 +1,7 @@
 import { chain } from "lodash";
 import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
+import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
 
 export function getAccessForSingleManifestation(manifestation) {
   return manifestation?.access?.map((singleAccess) => {
@@ -9,6 +10,12 @@ export function getAccessForSingleManifestation(manifestation) {
       ...(manifestation?.pid && { pid: manifestation?.pid }),
       ...(manifestation?.titles?.main?.length > 0 && {
         titles: manifestation?.titles?.main,
+      }),
+      ...(manifestation?.creators?.length > 0 && {
+        creators: manifestation?.creators,
+      }),
+      ...(manifestation?.materialTypes?.length > 0 && {
+        materialTypesArray: flattenMaterialType(manifestation),
       }),
     };
   });
@@ -23,7 +30,10 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
     ? {
         ...singleInfomediaAccess,
         url: infomediaUrl(
-          encodeTitleCreator(singleInfomediaAccess?.titles?.[0]),
+          encodeTitleCreator(
+            singleInfomediaAccess?.titles?.[0],
+            singleInfomediaAccess?.creators?.[0]?.display
+          ),
           `work-of:${singleInfomediaAccess?.pid}`,
           singleInfomediaAccess.id
         ),
