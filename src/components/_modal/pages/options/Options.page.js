@@ -25,7 +25,7 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
 }
 
 export function Options({ modal, context }) {
-  const { allowedAccesses } = { ...context };
+  const { title, allowedAccesses, workId } = { ...context };
 
   // quickfix - sort links from filmstriben - we want fjernleje on top
   const orderedOnlineAccess = allowedAccesses?.sort(specialSort);
@@ -33,7 +33,7 @@ export function Options({ modal, context }) {
   return (
     orderedOnlineAccess && (
       <div className={styles.options}>
-        <Top title={context.title} />
+        <Top title={title} />
         <ul className={styles.list} key="options-ul">
           {orderedOnlineAccess.map((access, index) => {
             console.log(
@@ -50,7 +50,7 @@ export function Options({ modal, context }) {
                 openOrderModal(
                   modal,
                   access?.pid,
-                  context.workId,
+                  workId,
                   "singleManifestation"
                 ),
             };
