@@ -15,25 +15,17 @@ import { useMemo } from "react";
 import useUser from "@/components/hooks/useUser";
 
 function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
-  const { manifestations, type, workId } = { ...context };
+  const { manifestations, workId } = { ...context };
 
-  const { allEnrichedAccesses: accesses, requestButtonIsTrue } = useMemo(() => {
+  const { allEnrichedAccesses: accesses } = useMemo(() => {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const requestButton = accesses && requestButtonIsTrue;
-
-  const onlineAccesses = accesses
-    ?.filter(
-      (singleAccess) =>
-        singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
-    )
-    ?.filter((singleAccess) => {
-      if (hasDigitalAccess === true) {
-        return true;
-      }
-      return singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE;
-    });
+  const onlineAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
+  );
 
   const physicalAccesses = accesses?.filter(
     (singleAccess) =>
@@ -41,9 +33,19 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
       singleAccess?.loanIsPossible === true
   );
 
-  const allowedAccesses = [...onlineAccesses, ...physicalAccesses?.slice(0, 1)];
+  const digitalArticleServiceAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE &&
+      hasDigitalAccess
+  );
 
-  // Count INTER_LIBRARY_LOAN as single access
+  const allowedAccesses = [
+    ...onlineAccesses,
+    ...physicalAccesses?.slice(0, 1),
+    ...digitalArticleServiceAccesses?.slice(0, 1),
+  ];
+
+  // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
   const count = allowedAccesses?.length;
 
   if (!(count > 1)) {
@@ -57,11 +59,8 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
         onClick={() =>
           modal.push("options", {
             title: Translate({ context: "modal", label: "title-options" }),
-            type: type,
             allowedAccesses: allowedAccesses,
             workId: workId,
-            orderPossible: requestButton,
-            title_author: context.title_author,
           })
         }
       >
