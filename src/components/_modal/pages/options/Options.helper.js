@@ -29,6 +29,7 @@ const templateProps = {
         label: "online-link-title",
         vars: [
           formatMaterialTypesToPresentation(props?.materialTypesArray).join(""),
+          props?.origin,
         ],
       }),
       descriptionText: Translate({

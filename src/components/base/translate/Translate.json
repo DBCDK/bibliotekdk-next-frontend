@@ -1522,8 +1522,8 @@
         "en": "LABEL mangler oversættelse"
       },
       "online-link-title": {
-        "da": "Link til %s",
-        "en": "Link to %s"
+        "da": "Link til %s på %s",
+        "en": "Link to %s on %s"
       },
       "online-link-description": {
         "da": " læses online på %s",
