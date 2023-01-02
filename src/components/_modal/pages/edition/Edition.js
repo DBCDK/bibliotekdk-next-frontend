@@ -13,6 +13,10 @@ import usePickupBranch from "@/components/hooks/usePickupBranch";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { memo, useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
+import {
+  formatMaterialTypesToPresentation,
+  manifestationMaterialTypeUtils,
+} from "@/lib/manifestationFactoryFunctions";
 
 export const Edition = memo(function Edition({
   isLoading,
@@ -28,7 +32,9 @@ export const Edition = memo(function Edition({
   const { isArticle, isPeriodicaLike, isArticleRequest, isDigitalCopy } =
     inferredAccessTypes;
 
-  const materialType = material?.materialTypes?.[0]?.specific;
+  const { flatMaterialTypes } = manifestationMaterialTypeUtils([material]);
+
+  const materialType = flatMaterialTypes?.[0];
 
   const materialPresentation = [
     material?.edition?.publicationYear?.display,
@@ -106,7 +112,7 @@ export const Edition = memo(function Edition({
           ) : null}
           <div>
             <Tag tag="span" skeleton={!materialType && isLoading}>
-              {materialType?.[0].toUpperCase() + materialType?.slice(1)}
+              {formatMaterialTypesToPresentation(materialType).join("")}
             </Tag>
           </div>
         </div>

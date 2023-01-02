@@ -14,9 +14,9 @@ import Link from "@/components/base/link";
 
 import styles from "./Row.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
-import { upperFirst } from "lodash";
 import {
   formatMaterialTypesToCypress,
+  formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
   manifestationMaterialTypeUtils,
 } from "@/lib/manifestationFactoryFunctions";
@@ -128,12 +128,7 @@ export default function ResultRow({
                         formatMaterialTypesToCypress(materialTypeArray)
                       }
                     >
-                      {materialTypeArray?.map((mat, index) => {
-                        return (
-                          upperFirst(mat) +
-                          (index < materialTypeArray.length - 1 ? " / " : "")
-                        );
-                      })}
+                      {formatMaterialTypesToPresentation(materialTypeArray)}
                     </Text>
                   </Link>
                 );

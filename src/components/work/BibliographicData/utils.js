@@ -1,23 +1,12 @@
-import { comparableYear, flattenWord, indexInArray } from "@/lib/utils";
-import groupBy from "lodash/groupBy";
-
-export const prettyAndOrderedMaterialTypesEnum = Object.freeze({
-  [flattenWord("Bog")]: "Bog",
-  [flattenWord("E-bog")]: "E-bog",
-  [flattenWord("Lydbog (net)")]: "Lydbog (net)",
-  [flattenWord("Lydbog (cd-mp3)")]: "Lydbog (cd-mp3)",
-  [flattenWord("Lydbog (cd)")]: "Lydbog (cd)",
-  [flattenWord("Lydbog (bånd)")]: "Lydbog (bånd)",
-});
+import { comparableYear } from "@/lib/utils";
+import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
 
 export function sortManifestations(manifestations) {
-  // materialType type priority list (for books only)
-  const groupOrder = Object.keys(prettyAndOrderedMaterialTypesEnum);
+  const { manifestationsByType } =
+    manifestationMaterialTypeUtils(manifestations);
 
-  return Object.entries(groupBy(manifestations, "materialTypes[0].specific"))
-    .sort(
-      (a, b) => indexInArray(groupOrder, a[0]) - indexInArray(groupOrder, b[0])
-    )
+  return Object.entries(manifestationsByType)
+    .sort((a, b) => a[0].localeCompare(b[0]))
     .flatMap((group) =>
       group[1].sort(
         (a, b) =>

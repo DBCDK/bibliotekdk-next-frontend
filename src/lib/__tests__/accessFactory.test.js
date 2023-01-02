@@ -117,6 +117,49 @@ describe("getAllAccess", () => {
     ];
     expect(actual).toEqual(expected);
   });
+  it("single manifestations with access and creators (expect access and creators)", () => {
+    const actual = getAllAccess([
+      {
+        pid: "1loan",
+        creators: [{ display: "Hejsa" }],
+        access: [{ url: "urla_1_0.dekaa" }],
+      },
+    ]);
+    const expected = [
+      { creators: [{ display: "Hejsa" }], pid: "1loan", url: "urla_1_0.dekaa" },
+    ];
+    expect(actual).toEqual(expected);
+  });
+  it("single manifestations with access and single materialTypes (expect access and materialTypes)", () => {
+    const actual = getAllAccess([
+      {
+        pid: "1loan",
+        materialTypes: [{ specific: "bog" }],
+        access: [{ url: "urla_1_0.dekaa" }],
+      },
+    ]);
+    const expected = [
+      { materialTypesArray: ["bog"], pid: "1loan", url: "urla_1_0.dekaa" },
+    ];
+    expect(actual).toEqual(expected);
+  });
+  it("single manifestations with access and multiple materialTypes (expect access and materialTypes)", () => {
+    const actual = getAllAccess([
+      {
+        pid: "1loan",
+        materialTypes: [{ specific: "bog" }, { specific: "lydbog (cd-mp3)" }],
+        access: [{ url: "urla_1_0.dekaa" }],
+      },
+    ]);
+    const expected = [
+      {
+        materialTypesArray: ["bog", "lydbog (cd-mp3)"],
+        pid: "1loan",
+        url: "urla_1_0.dekaa",
+      },
+    ];
+    expect(actual).toEqual(expected);
+  });
 });
 
 describe("enrichInfomediaAccess", () => {

@@ -60,6 +60,10 @@ export default function Wrap({ filters = [], limit = 30, ...props }) {
     merge({}, obj.work, { manifestations: { all: [obj.manifestation] } })
   );
 
+  if (works?.length === 0) {
+    return null;
+  }
+
   return <Slider data={works || []} isLoading={isLoading} {...props} />;
 }
 

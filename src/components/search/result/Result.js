@@ -7,6 +7,10 @@ import * as searchFragments from "@/lib/api/search.fragments";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
 
+import { subjects } from "@/lib/api/relatedSubjects.fragments";
+
+import FilterButton from "../filterButton";
+
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 import ResultPage from "./page";
@@ -26,19 +30,31 @@ export function Result({
   hitcount = 0,
   onWorkClick,
   onPageChange,
+  noRelatedSubjects,
 }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm" || false;
-  const isDesktop = breakpoint === "lg" || breakpoint === "xl" || false;
   const numPages = Math.ceil(hitcount / 10);
+
+  const visibleClass = noRelatedSubjects ? styles.visible : "";
+  const noRelatedSubjectsClass = noRelatedSubjects
+    ? styles.noRelatedSubjects
+    : "";
 
   return (
     <>
       <Section
+        className={`${styles.section} ${noRelatedSubjectsClass}`}
         divider={false}
-        space={{ top: isDesktop ? 0 : "var(--pt2)" }}
-        className={styles.section}
-        title=" "
+        title={
+          !isLoading ? (
+            <FilterButton
+              className={`${styles.filterButton} ${visibleClass}`}
+            />
+          ) : (
+            <span />
+          )
+        }
       >
         {Array(isMobile ? page : 1)
           .fill({})
@@ -52,7 +68,6 @@ export function Result({
           ))}
       </Section>
       <Pagination
-        isLoading={isLoading}
         numPages={numPages}
         currentPage={parseInt(page, 10)}
         onChange={onPageChange}
@@ -90,11 +105,14 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
     hasQuery && searchFragments.hitcount({ q, filters })
   );
 
+  // prioritized q type to get related subjects for
+  const query = q.subject || q.all || q.title || q.creator;
+
+  const relatedSubjects = useData(query && subjects({ q: [query], limit: 7 }));
+
   if (fastResponse.error) {
     return null;
   }
-
-  const data = fastResponse.data || {};
 
   if (fastResponse.isLoading) {
     return <Result page={page} isLoading={true} />;
@@ -104,7 +122,9 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
     <Result
       q={q}
       page={page}
-      hitcount={data.search?.hitcount}
+      noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
+      isLoading={relatedSubjects.isLoading}
+      hitcount={fastResponse.data.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
     />
