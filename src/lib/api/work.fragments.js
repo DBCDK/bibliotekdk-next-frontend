@@ -658,8 +658,6 @@ const workSliderFragment = `fragment workSliderFragment on Work {
 }`;
 
 export function pidToWorkId({ pid }) {
-  console.log(pid, "PID");
-
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

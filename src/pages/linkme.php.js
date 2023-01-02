@@ -14,18 +14,36 @@ import { pidToWorkId } from "@/lib/api/work.fragments";
 import { encodeTitleCreator } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 
+/**
+ * check if query is ok - for now we only check on rec.id.
+ * TODO check on cql also - what kind of cql is supported by complex search
+ * @param query
+ * @returns {boolean}
+ */
+export function checkQuery(query) {
+  return !!query["rec.id"];
+}
+
 function LinkmePhp() {
   const router = useRouter();
+
+  const check = checkQuery(router.query);
+
+  if (!check) {
+    typeof window !== "undefined" && router && router?.push("/404");
+  }
+
   const { data, isLoading, error } = useData(
     pidToWorkId({ pid: router.query["rec.id"] })
   );
+
+  if (error) {
+    router && router?.push("/404");
+  }
+
   // check if data fetching is done
   if (isLoading) {
     return <div>Rediricting ... </div>;
-  }
-  if (error) {
-    // TODO - something on error
-    throw "ERROR";
   }
 
   // make a path to redirect to
@@ -39,7 +57,7 @@ function LinkmePhp() {
   if (title_author && workId && data?.work) {
     router.push(pathname);
   } else {
-    // something is  wrong - goto  404 (not found) page
+    // something is wrong - we did not find title/author - goto  404 (not found) page
     router?.push("/404");
   }
 }
