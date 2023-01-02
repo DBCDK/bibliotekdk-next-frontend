@@ -30,6 +30,7 @@ function LinkmePhp() {
   const check = checkQuery(router.query);
 
   if (!check) {
+    // check if clientside
     typeof window !== "undefined" && router && router?.push("/404");
   }
 
@@ -58,7 +59,8 @@ function LinkmePhp() {
     router.push(pathname);
   } else {
     // something is wrong - we did not find title/author - goto  404 (not found) page
-    router?.push("/404");
+    // check if clientside
+    typeof window !== "undefined" && router && router?.push("/404");
   }
 }
 
