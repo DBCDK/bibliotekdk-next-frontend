@@ -8,15 +8,15 @@ export const SuggestTypeEnum = Object.freeze({
 });
 
 export const FilterTypeEnum = Object.freeze({
+  MATERIAL_TYPES: "materialTypes",
   ACCESS_TYPES: "accessTypes",
-  CHILDREN_OR_ADULTS: "childrenOrAdults",
+  SUBJECTS: "subjects",
   CREATORS: "creators",
   FICTION_NONFICTION: "fictionNonfiction",
-  // FICTIONAL_CHARACTERS: "fictionalCharacters",
-  GENRE_AND_FORM: "genreAndForm",
   MAIN_LANGUAGES: "mainLanguages",
-  MATERIAL_TYPES: "materialTypes",
-  SUBJECTS: "subjects",
+  GENRE_AND_FORM: "genreAndForm",
+  CHILDREN_OR_ADULTS: "childrenOrAdults",
+  //FICTIONAL_CHARACTERS: "fictionalCharacters",
   WORK_TYPES: "workTypes",
   ALWAYS_LOAN: "canAlwaysBeLoaned",
 });
