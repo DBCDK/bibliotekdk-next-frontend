@@ -30,7 +30,6 @@ describe(`linkme`, () => {
   it("serverside redirect", () => {
     const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     getPage(path).then((res) => {
-      console.log(res);
       const jsonld = JSON.parse(
         res.body.match(
           /<script type="application\/ld\+json">(.*?)<\/script>/
