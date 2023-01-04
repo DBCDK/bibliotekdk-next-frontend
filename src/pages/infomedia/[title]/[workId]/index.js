@@ -2,7 +2,7 @@ import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
 import { useData } from "@/lib/api/api";
 import * as infomediaFragments from "@/lib/api/infomedia.fragments";
-import { Custom } from "@/pages/404";
+import Custom404 from "@/pages/404";
 import useUser from "@/components/hooks/useUser";
 
 function parseForPid(workId) {
@@ -27,7 +27,7 @@ export default function Wrap() {
   if (infomediaIds?.length === 1) {
     router?.replace(`${router?.asPath}/${infomediaIds?.[0]}`);
   }
-  return <Custom />;
+  return <Custom404 />;
 }
 
 /**
