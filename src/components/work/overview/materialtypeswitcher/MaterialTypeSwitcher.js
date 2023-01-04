@@ -2,7 +2,7 @@ import { isEqual } from "lodash";
 import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,
-  formatMaterialTypesToPresentation,
+  formatMaterialTypesToPresentationUpperFirst,
 } from "@/lib/manifestationFactoryFunctions";
 
 export function MaterialTypeSwitcher({
@@ -29,7 +29,7 @@ export function MaterialTypeSwitcher({
         skeleton={skeleton}
         dataCy={"tag-" + formatMaterialTypesToCypress(materialTypeArray)}
       >
-        {formatMaterialTypesToPresentation(materialTypeArray)}
+        {formatMaterialTypesToPresentationUpperFirst(materialTypeArray)}
       </Tag>
     );
   });

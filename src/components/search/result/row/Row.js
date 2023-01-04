@@ -16,7 +16,7 @@ import styles from "./Row.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import {
   formatMaterialTypesToCypress,
-  formatMaterialTypesToPresentation,
+  formatMaterialTypesToPresentationUpperFirst,
   formatMaterialTypesToUrl,
   manifestationMaterialTypeUtils,
 } from "@/lib/manifestationFactoryFunctions";
@@ -128,7 +128,9 @@ export default function ResultRow({
                         formatMaterialTypesToCypress(materialTypeArray)
                       }
                     >
-                      {formatMaterialTypesToPresentation(materialTypeArray)}
+                      {formatMaterialTypesToPresentationUpperFirst(
+                        materialTypeArray
+                      )}
                     </Text>
                   </Link>
                 );
