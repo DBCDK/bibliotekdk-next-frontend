@@ -118,6 +118,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "originalYear",
     }),
+    valueParser: (value) => value.display || "",
   },
   // {
   //   dataField: "physicalDescriptions",
