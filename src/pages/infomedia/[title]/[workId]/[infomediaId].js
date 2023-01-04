@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
@@ -15,23 +14,23 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
+import Custom404 from "@/pages/404";
 
 export function InfomediaArticle(props) {
   const { articleId, article, notFound, isLoading } = props;
 
   const router = useRouter();
 
-  return (
+  return notFound ? (
+    <Custom404 />
+  ) : (
     <React.Fragment>
       <Header router={router} />
-      {notFound ? (
-        <Error statusCode={404} />
-      ) : isLoading ? (
+      {isLoading ? (
         <ContentSkeleton />
       ) : (
         <>
           {article && <Content data={{ article }} />}
-
           <ArticleLoginPrompt articleId={articleId} />
         </>
       )}

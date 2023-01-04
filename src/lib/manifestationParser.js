@@ -118,7 +118,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "originalYear",
     }),
-    valueParser: (value) => value.display || "",
+    valueParser: (workYear) => workYear.display || "",
   },
   // {
   //   dataField: "physicalDescriptions",
@@ -145,8 +145,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "shelf",
     }),
-    valueParser: (values) =>
-      values.map((value) => Object.values(value).join(", ")).join(", "),
+    valueParser: (values) => values.shelfmark,
   },
   {
     dataField: "notes",
@@ -258,12 +257,15 @@ function ManifestationLink({ children }) {
 }
 
 function ParsedLanguages({ languages }) {
+  const languagesNotesExist = languages?.notes?.length > 0;
+
   const languagesExist =
     [...languages?.main, ...languages?.spoken, ...languages?.subtitles].length >
     0;
 
   return (
-    languagesExist && (
+    (languagesNotesExist && <div>{languages.notes?.join(". ")}</div>) ||
+    (languagesExist && (
       <>
         {languages?.main?.length > 0 && (
           <div key={`anvendtSprog-main`}>
@@ -288,6 +290,6 @@ function ParsedLanguages({ languages }) {
           </div>
         )}
       </>
-    )
+    ))
   );
 }

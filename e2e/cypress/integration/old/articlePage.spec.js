@@ -1,5 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("ArticlePage", () => {
@@ -127,7 +126,7 @@ describe("ArticlePage", () => {
     // @TODO skipped next three tests - ENABLE
     it("Shows login prompt when not logged in", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", `${graphqlPath}`, (req) => {
+        cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -150,7 +149,7 @@ describe("ArticlePage", () => {
 
     it("Shows login prompt when logged in user is not granted access", () => {
       cy.fixture("articlepublicdata.json").then((fixture) => {
-        cy.intercept("POST", `${graphqlPath}`, (req) => {
+        cy.intercept("POST", `${fbiApiPath}`, (req) => {
           if (
             req?.body?.variables?.workId === "work-of:870971-tsart:39160846"
           ) {
@@ -208,8 +207,10 @@ describe("ArticlePage", () => {
         `${nextjsBaseUrl}/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee`
       );
 
-      cy.contains("404");
-      cy.contains("This page could not be found");
+      cy.contains("Siden blev ikke fundet");
+      cy.contains(
+        "Vi kunne ikke finde siden du leder efter. Prøv at lede efter noget andet"
+      );
     });
   });
 });

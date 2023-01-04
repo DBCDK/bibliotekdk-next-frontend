@@ -1,6 +1,5 @@
 import Translate from "@/components/base/translate";
 import { AccessEnum } from "@/lib/enums";
-import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryFunctions";
 
 export const getTemplateProps = {
   [AccessEnum.ACCESS_URL](props) {
@@ -27,10 +26,7 @@ const templateProps = {
       linkText: Translate({
         context: "options",
         label: "online-link-title",
-        vars: [
-          formatMaterialTypesToPresentation(props?.materialTypesArray).join(""),
-          props?.origin,
-        ],
+        vars: [props?.materialTypesArray?.join("/"), props?.origin],
       }),
       descriptionText: Translate({
         context: "options",

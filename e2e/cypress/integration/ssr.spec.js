@@ -79,13 +79,13 @@ describe("Server Side Rendering", () => {
   describe(`material`, () => {
     it(`has correct metadata`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res.description).to.equal(
-          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, lydbog eller ebog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
@@ -94,7 +94,7 @@ describe("Server Side Rendering", () => {
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
         expect(res["og:description"]).to.equal(
-          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, lydbog eller ebog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
         );
         expect(res["og:image"]).to.exist;
       });
@@ -102,7 +102,7 @@ describe("Server Side Rendering", () => {
 
     it(`has correct alternate links`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog"
       ).then((res) => {
         expect(res.alternate).to.deep.equal([
           '<link rel="alternate" hreflang="da" href="http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763"/>',
@@ -113,7 +113,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for book`, () => {
       getPageHead(
-        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=Ebog"
+        "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
@@ -124,7 +124,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for article`, () => {
       getPageHead(
-        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=Avisartikel"
+        "/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of:870971-avis:33301561"
@@ -168,7 +168,7 @@ describe("Server Side Rendering", () => {
 
     it(`has json-ld for creative work`, () => {
       getPageHead(
-        "/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=Node"
+        "/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
           "http://localhost:3000/materiale/midt-i-en-droem/work-of:870970-basis:53189148"
@@ -351,12 +351,12 @@ describe("Server Side Rendering", () => {
   describe(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {
-        //expect(res.title).to.equal("Bøger");
+        expect(res.title).to.equal("Skønlitteratur");
         expect(res.description).to.exist;
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/inspiration/boeger"
         );
-        //expect(res["og:title"]).to.equal("Bøger");
+        expect(res["og:title"]).to.equal("Skønlitteratur");
         expect(res["og:description"]).to.exist;
         expect(res["og:image"]).to.exist;
       });

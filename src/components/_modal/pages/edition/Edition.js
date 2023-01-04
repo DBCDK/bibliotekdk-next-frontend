@@ -14,7 +14,7 @@ import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 import { memo, useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import {
-  formatMaterialTypesToPresentationUpperFirst,
+  formatMaterialTypesToPresentation,
   manifestationMaterialTypeUtils,
 } from "@/lib/manifestationFactoryFunctions";
 
@@ -112,9 +112,7 @@ export const Edition = memo(function Edition({
           ) : null}
           <div>
             <Tag tag="span" skeleton={!materialType && isLoading}>
-              {formatMaterialTypesToPresentationUpperFirst(materialType).join(
-                ""
-              )}
+              {formatMaterialTypesToPresentation(materialType)}
             </Tag>
           </div>
         </div>

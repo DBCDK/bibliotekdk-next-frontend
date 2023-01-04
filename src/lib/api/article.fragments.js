@@ -28,7 +28,8 @@ export function article({ articleId, language }) {
             fieldRubrik
             body {
               value
-            }entityOwner {
+            }
+            entityOwner {
               name
             }
             fieldImage {

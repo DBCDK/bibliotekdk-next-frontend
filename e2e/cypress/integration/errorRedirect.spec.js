@@ -1,10 +1,9 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 
 it(`redirect to 404`, () => {
   // this is a normal request for a non existing work - we expect nothing serious to happen (200)
   cy.request(
-    `${nextjsBaseUrl}/materiale/deutsches-dichten-und-denken-vom-mittelalter-zur-neuzeit-1270-1700-_gunther-muller/work-of%3A800010-katalog%3A99122644637705763`
+    `${nextjsBaseUrl}/materiale/deutsches-dichten-und-denken-vom-mittelalter-zur-neuzeit-1270-1700-_gunther-muller/work-of%3A800010-katalog%3A9912264463770576`
   ).then((resp) => {
     expect(resp.status).to.eq(200);
   });

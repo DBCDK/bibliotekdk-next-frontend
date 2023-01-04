@@ -13,7 +13,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import {
   flattenMaterialType,
-  formatMaterialTypesToPresentationUpperFirst,
+  formatMaterialTypesToPresentation,
 } from "@/lib/manifestationFactoryFunctions";
 
 /**
@@ -48,14 +48,13 @@ export function BibliographicData({ manifestations, workId }) {
             ? " (" + manifestation.volume + ")"
             : "";
 
-          const formattedMaterialTypes =
-            formatMaterialTypesToPresentationUpperFirst(
-              flattenMaterialType(manifestation)
-            );
+          const formattedMaterialTypes = formatMaterialTypesToPresentation(
+            flattenMaterialType(manifestation)
+          );
 
           return (
             <Item
-              title={[...formattedMaterialTypes, volume].join("")}
+              title={[formattedMaterialTypes, volume].join("")}
               subTitle={manifestation?.edition?.publicationYear?.display}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
