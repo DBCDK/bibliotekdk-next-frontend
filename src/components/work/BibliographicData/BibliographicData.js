@@ -13,7 +13,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import {
   flattenMaterialType,
-  formatMaterialTypesToPresentation,
+  formatMaterialTypesToPresentationUpperFirst,
 } from "@/lib/manifestationFactoryFunctions";
 
 /**
@@ -48,9 +48,10 @@ export function BibliographicData({ manifestations, workId }) {
             ? " (" + manifestation.volume + ")"
             : "";
 
-          const formattedMaterialTypes = formatMaterialTypesToPresentation(
-            flattenMaterialType(manifestation)
-          );
+          const formattedMaterialTypes =
+            formatMaterialTypesToPresentationUpperFirst(
+              flattenMaterialType(manifestation)
+            );
 
           return (
             <Item
