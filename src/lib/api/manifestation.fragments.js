@@ -228,7 +228,9 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
       display
     }
   }
-  workYear
+  workYear{
+    display
+  }
   identifiers {
     type
     value
