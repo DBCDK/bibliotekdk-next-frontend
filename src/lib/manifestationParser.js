@@ -145,7 +145,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "shelf",
     }),
-    valueParser: (values) => values.shelfmark + ", " + values?.postfix,
+    valueParser: (values) => values.shelfmark,
   },
   {
     dataField: "notes",
