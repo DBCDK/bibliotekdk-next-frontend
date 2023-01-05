@@ -13,7 +13,7 @@ const KEY = "bibdk-search-history";
 function extractStoredValue(prevItemArray) {
   let newItemArray = [];
 
-  for (let i = 0; i < prevItemArray.length; i++) {
+  for (let i = 0; i < prevItemArray?.length; i++) {
     newItemArray.push({});
     if (prevItemArray?.[i]?.type && prevItemArray?.[i]?.term) {
       newItemArray[i] = prevItemArray[i];
@@ -56,8 +56,8 @@ export const useHistory = () => {
           term: value,
         };
         // Remove duplicates if any
-        let valueToStore = freshStoredValue.filter(
-          (h) => h.term.toLowerCase() !== value.toLowerCase()
+        let valueToStore = freshStoredValue?.filter(
+          (h) => h?.term?.toLowerCase() !== value?.toLowerCase()
         );
         // Add to beginning of history array
         valueToStore.unshift(obj);

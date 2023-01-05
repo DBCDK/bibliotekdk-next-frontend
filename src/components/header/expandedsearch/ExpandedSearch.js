@@ -140,7 +140,7 @@ function SingleSearchInput({ labelTranslation, suggestType }) {
  *
  * @param {boolean} collapseOpen
  * @param {function} setCollapseOpen
- * @returns {{q: any, collapseOpen: boolean, filtered: unknown[], onChange: onChange, onClear: onClear, workType: *, setCollapseOpen, onReset: (function(): void), doSearch: doSearch, onSelect: onSelect}}
+ * @returns {{collapseOpen: boolean, setCollapseOpen: Function, doSearch: doSearch, workTypes: *}}
  */
 export function useInitExpanded({ collapseOpen = false, setCollapseOpen }) {
   const { setQuery } = useQ();
