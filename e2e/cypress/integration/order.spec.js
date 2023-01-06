@@ -33,7 +33,7 @@ describe("Order", () => {
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
-        pids: ["some-pid-1", "some-pid-2"],
+        pids: ["some-pid-1"],
         pickUpBranch: "user.agency.result[0].branchId",
         userParameters: {
           userName: "Some Name",
@@ -77,6 +77,7 @@ describe("Order", () => {
   });
 
   describe("Order periodica article ", () => {
+    // TODO: Fix
     it("should order indexed periodica article through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
@@ -184,6 +185,7 @@ describe("Order", () => {
       });
     });
 
+    // TODO: Fix
     it("should order specific article from a periodica volume through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"

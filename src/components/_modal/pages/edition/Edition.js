@@ -17,6 +17,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeUtils,
 } from "@/lib/manifestationFactoryFunctions";
+import { AccessEnum } from "@/lib/enums";
 
 export const Edition = memo(function Edition({
   isLoading,
@@ -44,13 +45,15 @@ export const Edition = memo(function Edition({
     ?.flat()
     ?.join(", ");
 
-  const articleTypeLabel = isDigitalCopy
-    ? "will-order-digital-copy"
-    : isArticleRequest
-    ? "article"
-    : periodicaForm
-    ? "volume"
-    : null;
+  const articleTypeLabel =
+    isDigitalCopy &&
+    context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
+      ? "will-order-digital-copy"
+      : isArticleRequest
+      ? "article"
+      : periodicaForm
+      ? "volume"
+      : null;
 
   const specificEdition =
     showOrderTxt && !singleManifestation && !isArticle && !isPeriodicaLike
