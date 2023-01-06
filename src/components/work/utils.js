@@ -120,19 +120,6 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
       ?.map((res) => res.digitalCopyAccess === true)
       .findIndex((res) => res === true) > -1;
 
-  console.log(
-    "branchUserData?.branches?.result: ",
-    branchUserData?.branches?.result
-  );
-
-  console.log("branchUserData: ", branchUserData);
-
-  console.log("SelectedPids: ", selectedPids);
-
-  console.log("loanerInfo: ", loanerInfo);
-
-  console.log("hasDigitalAccess: ", hasDigitalAccess);
-
   return {
     branchUserData: branchUserData,
     branchIsLoading: branchIsLoading,
