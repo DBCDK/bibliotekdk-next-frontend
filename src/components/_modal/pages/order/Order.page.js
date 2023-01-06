@@ -231,7 +231,7 @@ export default function Wrap(props) {
   // context
   const { context, modal } = props;
   context.pids = context?.pids || [context?.pid];
-  context.pid = context?.pid?.[0] || context?.pids?.[0];
+  context.pid = context?.pid || context?.pids?.[0];
 
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
