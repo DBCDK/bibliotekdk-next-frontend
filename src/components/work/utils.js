@@ -1,6 +1,9 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
 import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
+import useUser from "@/components/hooks/useUser";
+import { useData } from "@/lib/api/api";
+import * as branchesFragments from "@/lib/api/branches.fragments";
 
 export function openLocalizationsModal(modal, pids, workId, materialType) {
   modal.push("localizations", {
@@ -11,10 +14,17 @@ export function openLocalizationsModal(modal, pids, workId, materialType) {
   });
 }
 
-export function openOrderModal(modal, pid, workId, singleManifestation) {
+export function openOrderModal({
+  modal,
+  pids,
+  selectedAccesses,
+  workId,
+  singleManifestation,
+}) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
-    pid: pid,
+    pids: pids,
+    selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
   });
@@ -87,5 +97,46 @@ export function getSeo(work) {
         : ""
     }`,
     description: getPageDescription(work),
+  };
+}
+
+export function useBranchUserAndHasDigitalAccess(selectedPids) {
+  const { loanerInfo } = useUser();
+
+  const {
+    data: branchUserData,
+    isLoading: branchIsLoading,
+    isSlow: branchIsSlow,
+  } = useData(
+    selectedPids &&
+      loanerInfo?.pickupBranch &&
+      branchesFragments.branchDigitalCopyAccess({
+        branchId: loanerInfo?.pickupBranch,
+      })
+  );
+
+  const hasDigitalAccess =
+    branchUserData?.branches?.result
+      ?.map((res) => res.digitalCopyAccess === true)
+      .findIndex((res) => res === true) > -1;
+
+  console.log(
+    "branchUserData?.branches?.result: ",
+    branchUserData?.branches?.result
+  );
+
+  console.log("branchUserData: ", branchUserData);
+
+  console.log("SelectedPids: ", selectedPids);
+
+  console.log("loanerInfo: ", loanerInfo);
+
+  console.log("hasDigitalAccess: ", hasDigitalAccess);
+
+  return {
+    branchUserData: branchUserData,
+    branchIsLoading: branchIsLoading,
+    branchIsSlow: branchIsSlow,
+    hasDigitalAccess: hasDigitalAccess,
   };
 }
