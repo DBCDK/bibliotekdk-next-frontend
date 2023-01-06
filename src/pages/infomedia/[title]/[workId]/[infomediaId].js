@@ -17,14 +17,16 @@ import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 
 export function InfomediaArticle(props) {
-  const { articleId, article, notFound, isLoading } = props;
+  const { articleId, article, notFound, isLoading, noAccess } = props;
 
   const router = useRouter();
 
   return (
     <React.Fragment>
       <Header router={router} />
-      {notFound ? (
+      {noAccess ? (
+        <ArticleLoginPrompt articleId={articleId} />
+      ) : notFound ? (
         <Error statusCode={404} />
       ) : isLoading ? (
         <ContentSkeleton />
@@ -104,6 +106,7 @@ export default function Wrap() {
         (infomediaPublicData && !infomediaPublicData.work) ||
         (infomediaArticleData && !infomediaArticleData?.infomedia?.article)
       }
+      noAccess={infomediaArticleData?.infomedia?.error === "BORROWER_NOT_FOUND"}
       isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
       articleId={infomediaId}
     />
