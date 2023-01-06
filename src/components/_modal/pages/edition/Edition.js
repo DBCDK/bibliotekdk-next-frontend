@@ -112,7 +112,7 @@ export const Edition = memo(function Edition({
           ) : null}
           <div>
             <Tag tag="span" skeleton={!materialType && isLoading}>
-              {formatMaterialTypesToPresentation(materialType).join("")}
+              {formatMaterialTypesToPresentation(materialType)}
             </Tag>
           </div>
         </div>

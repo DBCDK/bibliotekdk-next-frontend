@@ -58,7 +58,7 @@ export default function getSingleManifestation() {
         spoken: [],
         subtitles: [],
       },
-      workYear: "2015",
+      workYear: { display: "2015" },
       identifiers: [
         {
           type: "ISBN",

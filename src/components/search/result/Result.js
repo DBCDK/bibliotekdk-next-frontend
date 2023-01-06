@@ -124,7 +124,7 @@ export default function Wrap({ page, onWorkClick, onPageChange }) {
       page={page}
       noRelatedSubjects={!relatedSubjects?.data?.relatedSubjects?.length > 0}
       isLoading={relatedSubjects.isLoading}
-      hitcount={fastResponse.data.search?.hitcount}
+      hitcount={fastResponse?.data?.search?.hitcount}
       onWorkClick={onWorkClick}
       onPageChange={onPageChange}
     />

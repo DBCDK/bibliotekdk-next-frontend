@@ -14,11 +14,7 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
 }
 
 export function formatMaterialTypesToPresentation(materialTypeArray) {
-  return materialTypeArray?.map((mat, index) => {
-    return (
-      upperFirst(mat) + (index < materialTypeArray.length - 1 ? " / " : "")
-    );
-  });
+  return materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ");
 }
 
 export function flattenMaterialType(manifestation) {

@@ -54,7 +54,7 @@ export function BibliographicData({ manifestations, workId }) {
 
           return (
             <Item
-              title={[...formattedMaterialTypes, volume].join("")}
+              title={[formattedMaterialTypes, volume].join("")}
               subTitle={manifestation?.edition?.publicationYear?.display}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}

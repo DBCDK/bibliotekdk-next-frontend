@@ -7,7 +7,6 @@ import {
 } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryFunctions";
 
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { note, className } = props;
@@ -36,13 +35,6 @@ export function Options({ modal, context }) {
         <Top title={title} />
         <ul className={styles.list} key="options-ul">
           {orderedOnlineAccess.map((access, index) => {
-            console.log(
-              "access.materialTypesArray: ",
-              formatMaterialTypesToPresentation(
-                access?.materialTypesArray
-              ).join("")
-            );
-
             const props = {
               ...access,
               className: styles.item,

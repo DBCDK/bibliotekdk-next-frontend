@@ -227,8 +227,11 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     subtitles {
       display
     }
+    notes
   }
-  workYear
+  workYear {
+    display
+  }
   identifiers {
     type
     value
@@ -238,6 +241,10 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   }
   materialTypes {
     specific
+  }
+  shelfmark {
+    shelfmark
+    postfix
   }
   access {
 	  ...on DigitalArticleService {
