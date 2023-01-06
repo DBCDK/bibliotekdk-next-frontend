@@ -158,6 +158,43 @@ export function getAllEnrichedAccessSorted(manifestations) {
     ?.value();
 }
 
+// TODO: Test this!
+export function getAllowedAccesses(accesses, hasDigitalAccess) {
+  const onlineAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
+  );
+
+  const digitalArticleServiceAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE &&
+      hasDigitalAccess
+  );
+
+  const physicalAccesses = accesses?.filter(
+    (singleAccess) =>
+      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+      singleAccess?.loanIsPossible === true
+  );
+
+  return [
+    ...onlineAccesses,
+    ...digitalArticleServiceAccesses?.slice(0, 1),
+    ...physicalAccesses?.slice(0, 1),
+  ];
+}
+
+export function getAllAllowedEnrichedAccessSorted(
+  manifestations,
+  hasDigitalAccess
+) {
+  return getAllowedAccesses(
+    getAllEnrichedAccessSorted(manifestations),
+    hasDigitalAccess
+  );
+}
+
 /**
  * Check loanIsPossible on any access
  * @param allEnrichedAccesses
@@ -202,6 +239,12 @@ export function accessUtils(manifestations) {
 
   return {
     allEnrichedAccesses: allEnrichedAccesses,
+    getAllAllowedEnrichedAccessSorted(hasDigitalAccess) {
+      return getAllAllowedEnrichedAccessSorted(
+        manifestations,
+        hasDigitalAccess
+      );
+    },
     requestButtonIsTrue: requestButtonIsTrue,
     digitalCopy: digitalCopy,
     physicalCopy: physicalCopy,

@@ -7,7 +7,11 @@ import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import { context } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
-import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
+import {
+  onOnlineAccess,
+  openOrderModal,
+  useBranchUserAndHasDigitalAccess,
+} from "@/components/work/utils";
 import { AccessEnum, MaterialTypeEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { accessUtils } from "@/lib/accessFactory";
@@ -111,7 +115,7 @@ export function OrderButton({
   size = "large",
 }) {
   const {
-    allEnrichedAccesses: access,
+    getAllAllowedEnrichedAccessSorted,
     requestButtonIsTrue,
     digitalCopy,
   } = useMemo(() => {
