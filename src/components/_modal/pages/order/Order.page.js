@@ -14,10 +14,7 @@ import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfir
 import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import {
-  getOrderPids,
-  onMailChange,
-} from "@/components/_modal/pages/order/utils";
+import { onMailChange } from "@/components/_modal/pages/order/utils";
 
 /**
  *  Order component function
@@ -233,7 +230,8 @@ export function OrderSkeleton(props) {
 export default function Wrap(props) {
   // context
   const { context, modal } = props;
-  context.pids = context?.pids ? context?.pids : [context?.pid];
+  context.pids = context?.pids || [context?.pid];
+  context.pid = context?.pid?.[0] || context?.pids?.[0];
 
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
@@ -241,7 +239,7 @@ export default function Wrap(props) {
   const articleOrderMutation = useMutate();
 
   useEffect(() => {
-    if (context.pid) {
+    if (context?.pid?.length > 0) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
@@ -253,7 +251,7 @@ export default function Wrap(props) {
   const { userInfo, pickupBranchInfo, accessTypeInfo, workResponse } =
     useOrderPageInformation(
       context?.workId,
-      context?.pid,
+      context?.pid?.[0],
       context?.periodicaForm
     );
 
@@ -269,7 +267,7 @@ export default function Wrap(props) {
   const singleManifestation =
     context.orderType && context.orderType === "singleManifestation";
 
-  const orderPids = getOrderPids(pid, workData?.work, singleManifestation);
+  const orderPids = context?.pids;
 
   if (isWorkLoading) {
     return <OrderSkeleton isSlow={isSlow} />;
