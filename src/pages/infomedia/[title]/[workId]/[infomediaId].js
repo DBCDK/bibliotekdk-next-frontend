@@ -15,15 +15,14 @@ import {
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Custom404 from "@/pages/404";
+import Error from "next/error";
 
 export function InfomediaArticle(props) {
   const { articleId, article, notFound, isLoading, noAccess } = props;
 
   const router = useRouter();
 
-  return notFound ? (
-    <Custom404 />
-  ) : (
+  return (
     <React.Fragment>
       <Header router={router} />
       {noAccess ? (
@@ -35,6 +34,7 @@ export function InfomediaArticle(props) {
       ) : (
         <>
           {article && <Content data={{ article }} />}
+
           <ArticleLoginPrompt articleId={articleId} />
         </>
       )}
