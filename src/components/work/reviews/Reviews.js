@@ -22,24 +22,6 @@ import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 /**
- * Selecting the correct review template
- *
- * @param review
- *
- * @returns {component}
- */
-
-function getTemplate(review) {
-  if (review.librariansReview) {
-    return MaterialReview;
-  }
-  if (review.infomediaId) {
-    return InfomediaReview;
-  }
-  return ExternalReview;
-}
-
-/**
  * The Component function
  *
  * @param {obj} props
@@ -52,10 +34,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   const context = { context: "reviews" };
   const workId = data?.workId;
   const title = data?.titles?.main?.[0];
-  const reviews = useMemo(
-    () => [...data?.workReviews]?.sort(sortReviews),
-    [data]
-  );
+  const reviews = data?.relations?.hasReview;
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -110,6 +89,47 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     }
   }
 
+  const reviewElements = [];
+
+  reviews.forEach((review, idx) => {
+    const skeletonReview = skeleton
+      ? `${styles.skeleton} ${styles.custom}`
+      : "";
+
+    const props = {
+      title,
+      workId,
+      skeleton,
+      key: `review-${idx}`,
+      data: review,
+      className: `${styles.SlideWrapper} ${skeletonReview}`,
+      onFocus: () => {
+        // Make sure focused card become visible
+        // when tabbing through.
+        swiperRef.current.swiper.slideTo(idx);
+      },
+    };
+
+    review.review?.reviewByLibrarians?.forEach((lib, idx) => {
+      reviewElements.push(<MaterialReview idx={idx} {...props} />);
+    });
+
+    if (review.access?.find((a) => a.__typename === "InfomediaService")) {
+      reviewElements.push(<InfomediaReview {...props} />);
+    }
+
+    if (review.access?.find((a) => a.__typename === "AccessUrl")) {
+      reviewElements.push(<ExternalReview {...props} />);
+    }
+  });
+
+  // const sortedElements = useMemo(
+  //   () => reviewElements.sort(sortReviews),
+  //   [data]
+  // );
+
+  const sortedElements = reviewElements.sort(sortReviews);
+
   return (
     <Section
       className={`${styles.reviews} ${className}`}
@@ -123,28 +143,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
       backgroundColor="var(--parchment)"
     >
       <Swiper {...params} ref={swiperRef}>
-        {reviews.map((review, idx) => {
-          const Review = getTemplate(review);
-
-          const skeletonReview = skeleton
-            ? `${styles.skeleton} ${styles.custom}`
-            : "";
-          return (
-            <Review
-              skeleton={skeleton}
-              key={`review-${idx}`}
-              data={review}
-              className={`${styles.SlideWrapper} ${skeletonReview}`}
-              onFocus={() => {
-                // Make sure focused card become visible
-                // when tabbing through.
-                swiperRef.current.swiper.slideTo(idx);
-              }}
-              title={title}
-              workId={workId}
-            />
-          );
-        })}
+        {sortedElements}
       </Swiper>
 
       <ArrowLeft
@@ -166,16 +165,16 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
  * @returns {JSX.Element}
  */
 export function ReviewsSkeleton(props) {
-  const data = [
-    {
-      librariansReview: [],
+  const data = {
+    relations: {
+      hasReview: [{ access: [], review: { reviewByLibrarians: [{}] } }],
     },
-  ];
+  };
 
   return (
     <Reviews
       {...props}
-      data={{ workReviews: data }}
+      data={data}
       className={`${props.className} ${styles.skeleton}`}
       skeleton={true}
     />
@@ -203,7 +202,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  if (!data?.work?.workReviews?.length) {
+  if (!data?.work?.relations?.hasReview?.length) {
     return null;
   }
 

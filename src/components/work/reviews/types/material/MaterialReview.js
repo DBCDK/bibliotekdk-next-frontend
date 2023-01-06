@@ -27,11 +27,14 @@ import styles from "./MaterialReview.module.css";
 export function MaterialReview({
   className = "",
   data = [],
+  idx,
   skeleton = false,
   onFocus = null,
 }) {
   // Translate Context
   const context = { context: "reviews" };
+
+  console.log("MaterialReview data", data);
 
   return (
     <Col
@@ -50,7 +53,8 @@ export function MaterialReview({
           </Row>
 
           <Col xs={12} className={styles.content}>
-            <LectorReview data={data} skeleton={skeleton} />
+            {/* <LectorReview data={data} skeleton={skeleton} /> */}
+            hest
           </Col>
 
           <Col xs={12}>
@@ -74,10 +78,9 @@ export function MaterialReview({
                       alt=""
                     />
                     <Link
-                      href={data.url}
                       target="_blank"
                       onFocus={onFocus}
-                      disabled={!data.url}
+                      disabled={true}
                       border={{ top: false, bottom: { keepVisible: true } }}
                     >
                       <Text type="text2" skeleton={skeleton}>
@@ -96,7 +99,7 @@ export function MaterialReview({
                     {Translate({ context: "general", label: "by" })}
                   </Text>
                   <Text type="text3" skeleton={skeleton} lines={1}>
-                    {data.author}
+                    {data.creators?.map((c) => c.display).join(", ")}
                   </Text>
                 </span>
               </Col>
