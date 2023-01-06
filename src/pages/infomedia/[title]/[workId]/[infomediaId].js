@@ -14,7 +14,6 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
-import Custom404 from "@/pages/404";
 import Error from "next/error";
 
 export function InfomediaArticle(props) {
