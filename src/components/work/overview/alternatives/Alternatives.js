@@ -12,6 +12,49 @@ import { accessUtils } from "@/lib/accessFactory";
 import { useMemo } from "react";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
+/**
+ * Find and remove a tidsskriftsartikel with interlibraryloan if an artikel
+ * can be ordered with digital artikel service
+ * @param allowedAccesses
+ * @returns {*}
+ */
+function removePhsicalAccesIfDigital(allowedAccesses) {
+  // find all tidsskriftsartikler in given array
+  const tidskriftsArtikler = allowedAccesses?.filter(
+    (access) => access?.materialTypesArray[0] === "tidsskriftsartikel"
+  );
+
+  // check if there are tidsskriftsartikler as BOTH digital AND physical
+  if (
+    tidskriftsArtikler.find(
+      (artikel) => artikel.__typename === "DigitalArticleService"
+    ) &&
+    tidskriftsArtikler.find(
+      (artikel) => artikel.__typename === "InterLibraryLoan"
+    )
+  ) {
+    // get the key to check with
+    const tempkey = tidskriftsArtikler.indexOf(
+      tidskriftsArtikler.find(
+        (artikel) => artikel.__typename === "InterLibraryLoan"
+      )
+    );
+    // find index, in given array, of article to remove
+    const key = allowedAccesses.indexOf(
+      allowedAccesses.find(
+        (access) =>
+          access.pid === tidskriftsArtikler[tempkey].pid &&
+          access.__typename === "InterLibraryLoan"
+      )
+    );
+    // slice given array
+    return allowedAccesses.slice(key, 1);
+  }
+
+  // simply return given array
+  return allowedAccesses;
+}
+
 function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
   const { manifestations, workId } = { ...context };
 
@@ -19,7 +62,9 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+  const accesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+
+  const allowedAccesses = removePhsicalAccesIfDigital(accesses);
 
   // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
   const count = allowedAccesses?.length;
