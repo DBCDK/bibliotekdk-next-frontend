@@ -90,6 +90,7 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticle() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article"
@@ -112,6 +113,7 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -134,6 +136,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolume() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -156,6 +159,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
