@@ -99,7 +99,7 @@ describe("Order", () => {
 
       cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           pid: "some-pid-4",
           userMail: "some@mail.dk",
           userName: "Some Name",
@@ -129,7 +129,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-4"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -174,7 +174,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -226,7 +226,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pid: "some-pid-5",
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userName: "Some Name",
           userMail: "some@mail.dk",
           publicationDateOfComponent: "1992",
@@ -282,7 +282,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",

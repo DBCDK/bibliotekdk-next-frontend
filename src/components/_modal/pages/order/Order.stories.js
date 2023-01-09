@@ -19,6 +19,7 @@ const {
   USER_4,
   BRANCH_1,
   BRANCH_2,
+  BRANCH_3,
   BRANCH_4,
   DEFAULT_STORY_PARAMETERS,
   useMockLoanerInfo,
@@ -106,7 +107,14 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_3 },
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
+          },
+        },
       },
     },
   },
@@ -129,7 +137,14 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_1 },
+        Query: {
+          user: () => USER_1,
+          branches: () => {
+            return {
+              result: [BRANCH_1],
+            };
+          },
+        },
       },
     },
   },
@@ -152,7 +167,14 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_3 },
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
+          },
+        },
       },
     },
   },
@@ -176,7 +198,14 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_1 },
+        Query: {
+          user: () => USER_1,
+          branches: () => {
+            return {
+              result: [BRANCH_1, BRANCH_2],
+            };
+          },
+        },
       },
     },
   },
