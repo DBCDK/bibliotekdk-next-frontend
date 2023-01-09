@@ -7,10 +7,15 @@ import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
 import { context } from "@/components/work/reservationbutton/utils";
 import { useMemo } from "react";
-import { onOnlineAccess, openOrderModal } from "@/components/work/utils";
+import {
+  onOnlineAccess,
+  openOrderModal,
+  useBranchUserAndHasDigitalAccess,
+} from "@/components/work/utils";
 import { AccessEnum, MaterialTypeEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import { accessUtils } from "@/lib/accessFactory";
+import { uniq } from "lodash";
 
 function TextAboveButton({ access, user }) {
   return (
@@ -109,14 +114,19 @@ export function OrderButton({
     handleGoToLogin(access, user, modal, onOnlineAccess),
   buttonType = "primary",
   size = "large",
+  hasDigitalAccess,
 }) {
   const {
-    allEnrichedAccesses: access,
+    getAllAllowedEnrichedAccessSorted,
     requestButtonIsTrue,
     digitalCopy,
   } = useMemo(() => {
     return accessUtils(manifestations);
   }, [manifestations]);
+
+  const access = useMemo(() => {
+    return getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+  }, []);
 
   const selectedManifestation = useMemo(() => {
     return manifestations?.find(
@@ -177,8 +187,12 @@ export function OrderButton({
     },
     /* (3) */
     {
-      onClick: () => openOrderModal(access?.[0]?.pid),
       dataCy: `button-order-overview-enabled`,
+      onClick: () =>
+        openOrderModal({
+          pids: uniq(access?.map((singleAccess) => singleAccess.pid)),
+          selectedAccesses: access,
+        }),
     },
   ];
 
@@ -243,9 +257,13 @@ function ReservationButton({
     selectedManifestationsPids,
   } = useGetManifestationsForOrderButton(workId, selectedPids);
 
+  const { branchIsLoading, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess(selectedPids);
+
   if (
     workResponse?.isLoading ||
     manifestationsResponse?.isLoading ||
+    branchIsLoading ||
     !workId ||
     !selectedPids ||
     !selectedManifestationsPids
@@ -270,11 +288,18 @@ function ReservationButton({
       work={workResponse.data?.work}
       manifestations={manifestations}
       onOnlineAccess={onOnlineAccess}
-      openOrderModal={(pid) =>
-        openOrderModal(modal, pid, workId, singleManifestation)
+      openOrderModal={({ pids, selectedAccesses }) =>
+        openOrderModal({
+          modal: modal,
+          pids: pids,
+          selectedAccesses: selectedAccesses,
+          workId: workId,
+          singleManifestation: singleManifestation,
+        })
       }
       buttonType={buttonType}
       size={size}
+      hasDigitalAccess={hasDigitalAccess}
     />
   );
 }

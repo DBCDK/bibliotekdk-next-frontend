@@ -27,24 +27,25 @@ export function Options({ modal, context }) {
   const { title, allowedAccesses, workId } = { ...context };
 
   // quickfix - sort links from filmstriben - we want fjernleje on top
-  const orderedOnlineAccess = allowedAccesses?.sort(specialSort);
+  const orderedAccess = allowedAccesses?.sort(specialSort);
 
   return (
-    orderedOnlineAccess && (
+    orderedAccess && (
       <div className={styles.options}>
         <Top title={title} />
         <ul className={styles.list} key="options-ul">
-          {orderedOnlineAccess.map((access, index) => {
+          {orderedAccess.map((access, index) => {
             const props = {
               ...access,
               className: styles.item,
               onOrder: () =>
-                openOrderModal(
-                  modal,
-                  access?.pid,
-                  workId,
-                  "singleManifestation"
-                ),
+                openOrderModal({
+                  modal: modal,
+                  pids: [access?.pid],
+                  selectedAccesses: [access],
+                  workId: workId,
+                  singleManifestation: true,
+                }),
             };
 
             return (

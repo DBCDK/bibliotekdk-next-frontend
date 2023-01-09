@@ -3,47 +3,23 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useData } from "@/lib/api/api";
 import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
 import Col from "react-bootstrap/Col";
 import { accessUtils } from "@/lib/accessFactory";
-import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
-import useUser from "@/components/hooks/useUser";
+import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
 function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
   const { manifestations, workId } = { ...context };
 
-  const { allEnrichedAccesses: accesses } = useMemo(() => {
+  const { getAllAllowedEnrichedAccessSorted } = useMemo(() => {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const onlineAccesses = accesses?.filter(
-    (singleAccess) =>
-      singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
-      singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
-  );
-
-  const physicalAccesses = accesses?.filter(
-    (singleAccess) =>
-      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
-      singleAccess?.loanIsPossible === true
-  );
-
-  const digitalArticleServiceAccesses = accesses?.filter(
-    (singleAccess) =>
-      singleAccess?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE &&
-      hasDigitalAccess
-  );
-
-  const allowedAccesses = [
-    ...onlineAccesses,
-    ...physicalAccesses?.slice(0, 1),
-    ...digitalArticleServiceAccesses?.slice(0, 1),
-  ];
+  const allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
 
   // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
   const count = allowedAccesses?.length;
@@ -80,24 +56,8 @@ export default function Wrap({ workId, selectedPids }) {
   const router = useRouter();
   const title_author = router.query.title_author;
 
-  const { loanerInfo } = useUser();
-
-  const {
-    data: branchUserData,
-    isLoading: branchIsLoading,
-    isSlow: branchIsSlow,
-  } = useData(
-    selectedPids &&
-      loanerInfo?.pickupBranch &&
-      branchesFragments.branchDigitalCopyAccess({
-        branchId: loanerInfo?.pickupBranch,
-      })
-  );
-
-  const hasDigitalAccess =
-    branchUserData?.branches?.result
-      ?.map((res) => res.digitalCopyAccess === true)
-      .findIndex((res) => res === true) > -1;
+  const { branchIsLoading, branchIsSlow, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess(selectedPids);
 
   const modal = useModal();
 

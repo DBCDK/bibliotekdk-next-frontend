@@ -348,6 +348,7 @@ describe("Server Side Rendering", () => {
     });
   });
 
+  // @TODO pjo outcommented res.title + og:url .. fix later
   describe(`inspiration/material pages`, () => {
     it(`has correct metadata`, () => {
       getPageHead("/inspiration/boeger").then((res) => {

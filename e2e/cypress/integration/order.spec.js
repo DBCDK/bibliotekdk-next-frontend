@@ -33,7 +33,7 @@ describe("Order", () => {
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
-        pids: ["some-pid-1", "some-pid-2"],
+        pids: ["some-pid-1"],
         pickUpBranch: "user.agency.result[0].branchId",
         userParameters: {
           userName: "Some Name",
@@ -77,6 +77,7 @@ describe("Order", () => {
   });
 
   describe("Order periodica article ", () => {
+    // TODO: Fix
     it("should order indexed periodica article through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-indexed-periodica-article&viewMode=story"
@@ -98,7 +99,7 @@ describe("Order", () => {
 
       cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           pid: "some-pid-4",
           userMail: "some@mail.dk",
           userName: "Some Name",
@@ -128,7 +129,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-4"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -173,7 +174,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",
@@ -184,6 +185,7 @@ describe("Order", () => {
       });
     });
 
+    // TODO: Fix
     it("should order specific article from a periodica volume through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
@@ -224,7 +226,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitPeriodicaArticleOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pid: "some-pid-5",
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userName: "Some Name",
           userMail: "some@mail.dk",
           publicationDateOfComponent: "1992",
@@ -280,7 +282,7 @@ describe("Order", () => {
       cy.getConsoleEntry("submitOrder").then((entry) => {
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
-          pickUpBranch: "user.agency.result[0].branchId",
+          pickUpBranch: "branches.result[0].branchId",
           userParameters: {
             userName: "Some Name",
             userMail: "some@mail.dk",

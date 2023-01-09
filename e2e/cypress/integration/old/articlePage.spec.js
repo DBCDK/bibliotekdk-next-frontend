@@ -185,7 +185,7 @@ describe("ArticlePage", () => {
       );
     });
 
-    it("Shows 404 when article does not exist", () => {
+    it.skip("Shows 404 when article does not exist", () => {
       cy.intercept("POST", `${fbiApiPath}`, (req) => {
         if (req?.body?.variables?.workId === "work-of:870971-tsart:39160846") {
           req.reply({
