@@ -22,6 +22,35 @@ import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
 import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 /**
+ * Selecting the correct review template
+ *
+ * @param review
+ *
+ * @returns {component}
+ */
+
+function getTemplate(review) {
+  if (review.review?.reviewByLibrarians?.length > 0) {
+    console.log("fff MaterialReview", review);
+    return MaterialReview;
+  }
+
+  if (review.access?.find((a) => a.__typename === "InfomediaService")) {
+    console.log("fff InfomediaReview", review);
+    return InfomediaReview;
+  }
+
+  if (review.access?.find((a) => a.__typename === "AccessUrl")) {
+    console.log("fff ExternalReview", review);
+    return ExternalReview;
+  }
+
+  console.log("fff null", review);
+
+  return null;
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -34,7 +63,13 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
   const context = { context: "reviews" };
   const workId = data?.workId;
   const title = data?.titles?.main?.[0];
-  const reviews = data?.relations?.hasReview;
+
+  const reviews = useMemo(
+    () => [...data?.relations?.hasReview].sort(sortReviews),
+    [data]
+  );
+
+  console.log("hest r", reviews);
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -89,46 +124,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     }
   }
 
-  const reviewElements = [];
-
-  reviews.forEach((review, idx) => {
-    const skeletonReview = skeleton
-      ? `${styles.skeleton} ${styles.custom}`
-      : "";
-
-    const props = {
-      title,
-      workId,
-      skeleton,
-      key: `review-${idx}`,
-      data: review,
-      className: `${styles.SlideWrapper} ${skeletonReview}`,
-      onFocus: () => {
-        // Make sure focused card become visible
-        // when tabbing through.
-        swiperRef.current.swiper.slideTo(idx);
-      },
-    };
-
-    review.review?.reviewByLibrarians?.forEach((lib, idx) => {
-      reviewElements.push(<MaterialReview idx={idx} {...props} />);
-    });
-
-    if (review.access?.find((a) => a.__typename === "InfomediaService")) {
-      reviewElements.push(<InfomediaReview {...props} />);
-    }
-
-    if (review.access?.find((a) => a.__typename === "AccessUrl")) {
-      reviewElements.push(<ExternalReview {...props} />);
-    }
-  });
-
-  // const sortedElements = useMemo(
-  //   () => reviewElements.sort(sortReviews),
-  //   [data]
-  // );
-
-  const sortedElements = reviewElements.sort(sortReviews);
+  console.log("fff .............................");
 
   return (
     <Section
@@ -143,7 +139,33 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
       backgroundColor="var(--parchment)"
     >
       <Swiper {...params} ref={swiperRef}>
-        {sortedElements}
+        {reviews
+          .map((review, idx) => {
+            const Review = getTemplate(review);
+
+            if (Review) {
+              const skeletonReview = skeleton
+                ? `${styles.skeleton} ${styles.custom}`
+                : "";
+
+              return (
+                <Review
+                  skeleton={skeleton}
+                  key={`review-${idx}`}
+                  data={review}
+                  className={`${styles.SlideWrapper} ${skeletonReview}`}
+                  onFocus={() => {
+                    // Make sure focused card become visible
+                    // when tabbing through.
+                    swiperRef.current.swiper.slideTo(idx);
+                  }}
+                  title={title}
+                  workId={workId}
+                />
+              );
+            }
+          })
+          .filter((valid) => valid)}
       </Swiper>
 
       <ArrowLeft
@@ -193,6 +215,8 @@ export default function Wrap(props) {
   const { workId } = props;
 
   const { data, isLoading, error } = useData(workFragments.reviews({ workId }));
+
+  console.log("##### data", data, error);
 
   if (isLoading) {
     return <ReviewsSkeleton />;

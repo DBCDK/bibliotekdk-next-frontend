@@ -81,19 +81,12 @@ export function reviews({ workId }) {
                 titles {
                   main
                 }
-                subjects {
-                  dbcVerified {
-                    display
-                    type
-                  }
-                }
                 relations {
                   hasReview {
                     pid
                     creators {
                       display
                     }
-            
                     access {
                       __typename
                       ... on InfomediaService {
@@ -115,9 +108,6 @@ export function reviews({ workId }) {
                       issue
                     }
                     recordCreationDate
-                    physicalDescriptions {
-                      summary
-                    }
                     review {
                       rating
                       reviewByLibrarians {

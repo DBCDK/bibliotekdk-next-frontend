@@ -32,7 +32,7 @@ export function ExternalReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("ExternalReview data", data);
+  console.log("vvvv data", JSON.stringify(data, null, 2));
 
   const volume =
     data.hostPublication?.issue ||
@@ -133,10 +133,34 @@ export function ExternalReview({
  */
 export function ExternalReviewSkeleton(props) {
   const data = {
-    author: "Svend Svendsen",
-    date: "2013-06-25",
-    origin: "Litteratursiden.dk online",
-    urls: [{ url: "http://" }],
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "AccessUrl",
+        origin: "Some domain",
+        url: "Some url",
+        note: "Some note",
+        loginRequired: false,
+        type: "RESOURCE",
+      },
+      {
+        __typename: "DigitalArticleService",
+        issn: "Some issn",
+      },
+    ],
+    hostPublication: {
+      title: "Some title",
+      issue: "Nr. 1 (2006)",
+    },
+    recordCreationDate: "20061120",
+    review: {
+      rating: "5/6",
+    },
   };
 
   return (

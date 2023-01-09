@@ -12,9 +12,39 @@ import Translate from "@/components/base/translate";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
-import { dateToShortDate } from "@/utils/datetimeConverter";
+import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 
 import styles from "./MaterialReview.module.css";
+
+/**
+ * replaces reference in content with a link to the manifestation
+ * removes the \\ markup from the content where a title reference is missing from the manifestation list.
+ */
+export function contentParser({ content, manifestations }) {
+  const chunks = [];
+
+  if (manifestations?.length > 0) {
+    manifestations.forEach(({ ownerWork }, idx) => {
+      const arr = content.split(ownerWork?.titles?.main);
+      arr.forEach((chunk) => chunks.push(chunk));
+      chunks.splice(idx + 1, 0, <LectorLink work={ownerWork} />);
+    });
+  }
+
+  // No manifestation references was found, search and replace \\ notations with "" in paragraph content
+  else {
+    const regex = /(?<=\\)(.*?)(?=\\)/g;
+    const match = content?.match(regex);
+    content?.replace(`\\${match}\\`, `"${match}"`);
+
+    chunks.push(content);
+  }
+
+  // add tailing dot space after each paragraph
+  chunks.push(". ");
+
+  return chunks;
+}
 
 /**
  * The Component function
@@ -27,14 +57,13 @@ import styles from "./MaterialReview.module.css";
 export function MaterialReview({
   className = "",
   data = [],
-  idx,
   skeleton = false,
   onFocus = null,
 }) {
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("MaterialReview data", data);
+  console.log("ggggg", JSON.stringify(data, null, 2));
 
   return (
     <Col
@@ -47,14 +76,17 @@ export function MaterialReview({
           <Row>
             <Col xs={12} className={styles.date}>
               <Title type="title5" skeleton={skeleton}>
-                {data.date && dateToShortDate(data.date)}
+                {data.recordCreationDate &&
+                  dateToShortDate(numericToISO(data.recordCreationDate))}
               </Title>
             </Col>
           </Row>
 
           <Col xs={12} className={styles.content}>
-            {/* <LectorReview data={data} skeleton={skeleton} /> */}
-            hest
+            <LectorReview
+              data={data.review.reviewByLibrarians}
+              skeleton={skeleton}
+            />
           </Col>
 
           <Col xs={12}>
@@ -133,20 +165,19 @@ function LectorReview({ data, skeleton }) {
       skeleton={skeleton}
       clamp={true}
     >
-      {data?.librariansReview
+      {data
         ?.map((paragraph) => paragraph)
         .filter(
           (paragraph) =>
-            !paragraph.text.startsWith("Materialevurdering") &&
-            !paragraph.text.startsWith("Indscannet version")
+            !paragraph.content?.startsWith("Materialevurdering") &&
+            !paragraph.content?.startsWith("Indscannet version")
         )
         .map((paragraph, i) => {
           return (
             <span key={`paragraph-${i}`} className={styles.reviewTxt}>
               <Title type="title3" skeleton={skeleton} lines={1}>
-                {paragraph.text}
+                {contentParser(paragraph)}
               </Title>
-              <LectorLink paragraph={paragraph} skeleton={skeleton} />
             </span>
           );
         })}
@@ -162,19 +193,19 @@ function LectorReview({ data, skeleton }) {
  * @return {JSX.Element|string}
  * @constructor
  */
-function LectorLink({ paragraph }) {
-  if (!paragraph.work) {
+function LectorLink({ work }) {
+  if (!work) {
     return ". ";
   }
 
   // @TODO there may be more than one creator - for now simply grab the first
   // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
-  const creator = paragraph.work.creators[0]?.display || "";
-  const title = paragraph?.work?.titles?.main?.[0] || "";
+  const creator = work?.creators[0]?.display || "";
+  const title = work?.titles?.main?.[0] || "";
   const title_crator = encodeTitleCreator(title, creator);
 
-  const path = `/materiale/${title_crator}/${paragraph.work.workId}`;
-  return <Link href={path}>{paragraph.work?.titles?.main}</Link>;
+  const path = `/materiale/${title_crator}/${work.workId}`;
+  return <Link href={path}>{work?.titles?.main}</Link>;
 }
 
 /**
@@ -187,12 +218,44 @@ function LectorLink({ paragraph }) {
  */
 export function MaterialReviewSkeleton(props) {
   const data = {
-    author: "Svend Svendsen",
-    media: "Jyllandsposten",
-    rating: "4/5",
-    reviewType: "MATERIALREVIEW",
-    date: "2013-06-25",
-    url: "http://",
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    recordCreationDate: "20200512",
+    review: {
+      rating: null,
+      reviewByLibrarians: [
+        {
+          content: "This is some content",
+          heading: "The heading",
+          type: "Some content type",
+          manifestations: [],
+        },
+        {
+          content: "This is Some book title and more content",
+          heading: "The heading",
+          type: "Some content type",
+          manifestations: [
+            {
+              ownerWork: {
+                workId: "some-work-id",
+                titles: {
+                  main: ["Some book title"],
+                },
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   };
 
   return (

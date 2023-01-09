@@ -35,7 +35,7 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("infomedia data", data);
+  console.log("infomedia data", JSON.stringify(data, null, 2));
 
   // make an url for infomedia page
   const urlTxt = encodeString(title);
@@ -128,12 +128,26 @@ export function InfomediaReview({
  */
 export function InfomediaReviewSkeleton(props) {
   const data = {
-    author: "Svend Svendsen",
-    media: "Jyllandsposten",
-    rating: "4/5",
-    reviewType: "INFOMEDIA",
-    date: "2013-06-25",
-    url: "http://",
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "InfomediaService",
+        id: "Some id",
+      },
+    ],
+    hostPublication: {
+      title: "Some host publication",
+      issue: "2005-06-24",
+    },
+    recordCreationDate: "20050627",
+    review: {
+      rating: "5/6",
+    },
   };
 
   return (
@@ -156,6 +170,8 @@ export function InfomediaReviewSkeleton(props) {
  */
 export default function Wrap(props) {
   const { isSkeleton } = props;
+
+  console.log("calllllllllllllll?", props);
 
   if (isSkeleton) {
     return <InfomediaReviewSkeleton />;

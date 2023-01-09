@@ -13,7 +13,7 @@ export function sortReviews(a, b) {
       Number(!!a.access?.find((a) => a.url)) ||
     Number(!!b.access?.find((a) => a.id)) -
       Number(!!a.access?.find((a) => a.id)) ||
-    // Number(!!b.access?.find((a) => a.url )) - Number(!!a.access?.find((a) => a.url)) ||
+    Number(!!b.review?.rating) - Number(!!a.review?.rating) ||
     0
   );
 }

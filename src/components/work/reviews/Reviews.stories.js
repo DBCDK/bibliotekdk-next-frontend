@@ -40,65 +40,141 @@ WrappedReviewsSlider.story = {
           titles: () => ({
             main: ["Great book"],
           }),
-          workReviews: () => [
-            // Review that is not available anywhere
-            {
-              pid: "some-pid-1",
-              author: "Jens Jensen",
-              date: "1988-07-20",
-              librariansReview: null,
-              rating: null,
-              origin: "Some Periodica",
-              periodica: { volume: "1998. 8. årgang" },
-              infomediaId: null,
-              urls: [],
-            },
-            // Review that is available on external site
-            {
-              pid: "some-pid-2",
-              author: "Jens Jensen",
-              date: "1988-07-20",
-              librariansReview: null,
-              rating: null,
-              origin: "Litteratursiden",
-              periodica: { volume: null },
-              infomediaId: null,
-              urls: [{ url: "http://some-external-site/some-path" }],
-            },
-            // Review that is available via infomedia
-            {
-              pid: "some-pid-3",
-              author: "Hans Hansen",
-              date: "2021-06-20",
-              rating: "4/6",
-              librariansReview: null,
-              origin: "Politiken",
-              infomediaId: "some-infomedia-id",
-              urls: [],
-            },
-            // Librarians Review
-            {
-              pid: "some-pid-4",
-              author: "Some Librarian",
-              date: "1999-05-20",
-              rating: null,
-              urls: [],
-              infomediaId: null,
-              periodica: null,
-              librariansReview: [
-                {
-                  text: "Great book that is almost as good as ",
-                  work: {
-                    workId: "some-other-work-id",
-                    creators: [{ display: "Some Creator" }],
-                    titles: {
-                      main: ["Some other great book"],
-                    },
+          relations: () => ({
+            hasReview: [
+              // Review that is not available anywhere
+              {
+                pid: "Some pid",
+                creators: [
+                  {
+                    display: "Some creator",
                   },
+                ],
+                access: [
+                  {
+                    __typename: "AccessUrl",
+                    origin: "Some domain",
+                    url: "Some url",
+                    note: "Some note",
+                    loginRequired: false,
+                    type: "RESOURCE",
+                  },
+                  {
+                    __typename: "DigitalArticleService",
+                    issn: "Some issn",
+                  },
+                ],
+                hostPublication: {
+                  title: "Some title",
+                  issue: "Nr. 1 (2006)",
                 },
-              ],
-            },
-          ],
+                recordCreationDate: "20061120",
+                review: {
+                  rating: null,
+                  reviewByLibrarians: null,
+                },
+              },
+              // Review that is available on external site
+              {
+                pid: "Some pid",
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+                access: [
+                  {
+                    __typename: "AccessUrl",
+                    origin: "Some domain",
+                    url: "Some url",
+                    note: "Some note",
+                    loginRequired: false,
+                  },
+                  {
+                    __typename: "DigitalArticleService",
+                    issn: "Some issn",
+                  },
+                ],
+                hostPublication: {
+                  title: "Some title",
+                  issue: "Nr. 1 (2006)",
+                },
+                recordCreationDate: "20061120",
+                review: {
+                  rating: "3/6",
+                  reviewByLibrarians: null,
+                },
+              },
+              // Review that is available via infomedia
+              {
+                pid: "Some pid",
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+                access: [
+                  { __typename: "InterLibraryLoan" },
+                  {
+                    __typename: "InfomediaService",
+                    id: "Some id",
+                  },
+                ],
+                hostPublication: {
+                  title: "Some host publication",
+                  issue: "2005-06-24",
+                },
+                recordCreationDate: "20050627",
+                review: {
+                  rating: "5/6",
+                  reviewByLibrarians: null,
+                },
+              },
+              // Librarians Review
+              {
+                pid: "Some pid",
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+                access: [],
+                recordCreationDate: "20200512",
+                hostPublication: null,
+                review: {
+                  rating: null,
+                  reviewByLibrarians: [
+                    {
+                      content: "This is some content",
+                      heading: "The heading",
+                      type: "ABSTRACT",
+                      manifestations: [],
+                    },
+                    {
+                      content: "This is Some book title and more content",
+                      heading: "The heading",
+                      type: "ABSTRACT",
+                      manifestations: [
+                        {
+                          ownerWork: {
+                            workId: "some-work-id",
+                            titles: {
+                              main: ["Some book title"],
+                            },
+                            creators: [
+                              {
+                                display: "Some creator",
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+          }),
         },
       },
     },
@@ -125,25 +201,44 @@ export function LoadingSlider() {
 
 export function Material() {
   const data = {
-    pid: "some-pid-4",
-    author: "Some Librarian",
-    date: "1999-05-20",
-    rating: null,
-    urls: [],
-    infomediaId: null,
-    periodica: null,
-    librariansReview: [
+    pid: "Some pid",
+    creators: [
       {
-        text: "Great book that is almost as good as ",
-        work: {
-          workId: "some-other-work-id",
-          creators: [{ display: "Some Creator" }],
-          titles: {
-            main: ["Some other great book"],
-          },
-        },
+        display: "Some creator",
       },
     ],
+    recordCreationDate: "20200512",
+    review: {
+      rating: null,
+      reviewByLibrarians: [
+        {
+          content: "This is some content",
+          heading: "The heading",
+          type: "Some content type",
+          manifestations: [],
+        },
+        {
+          content: "This is Some book title and more content",
+          heading: "The heading",
+          type: "Some content type",
+          manifestations: [
+            {
+              ownerWork: {
+                workId: "some-work-id",
+                titles: {
+                  main: ["Some book title"],
+                },
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
   };
   return (
     <div>
@@ -170,14 +265,26 @@ export function Material() {
 
 export function Infomedia() {
   const data = {
-    pid: "some-pid-3",
-    author: "Hans Hansen",
-    date: "2021-06-20",
-    rating: "4/6",
-    librariansReview: null,
-    origin: "Politiken",
-    infomediaId: "some-infomedia-id",
-    urls: [],
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "InfomediaService",
+        id: "Some id",
+      },
+    ],
+    hostPublication: {
+      title: "Some host publication",
+      issue: "2005-06-24",
+    },
+    recordCreationDate: "20050627",
+    review: {
+      rating: "5/6",
+    },
   };
   return (
     <div>
@@ -202,14 +309,34 @@ export function Infomedia() {
 
 export function ExternalMedia() {
   const data = {
-    pid: "some-pid-2",
-    author: "Jens Jensen",
-    date: "1988-07-20",
-    librariansReview: null,
-    origin: "Litteratursiden",
-    periodica: { volume: null },
-    infomediaId: null,
-    urls: [{ url: "http://some-external-site/some-path" }],
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "AccessUrl",
+        origin: "Some domain",
+        url: "Some url",
+        note: "Some note",
+        loginRequired: false,
+        type: "RESOURCE",
+      },
+      {
+        __typename: "DigitalArticleService",
+        issn: "Some issn",
+      },
+    ],
+    hostPublication: {
+      title: "Some title",
+      issue: "Nr. 1 (2006)",
+    },
+    recordCreationDate: "20061120",
+    review: {
+      rating: "5/6",
+    },
   };
   return (
     <div>
