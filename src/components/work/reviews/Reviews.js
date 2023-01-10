@@ -30,24 +30,21 @@ import { ArrowRight } from "@/components/base/arrow/ArrowRight";
  */
 
 function getTemplate(review) {
+  console.log("fisk", JSON.stringify(review, null, 2));
+
   if (review.review?.reviewByLibrarians?.length > 0) {
-    console.log("fff MaterialReview", review);
     return MaterialReview;
   }
 
   if (review.access?.find((a) => a.__typename === "InfomediaService")) {
-    console.log("fff InfomediaReview", review);
     return InfomediaReview;
   }
 
-  if (review.access?.find((a) => a.__typename === "AccessUrl")) {
-    console.log("fff ExternalReview", review);
-    return ExternalReview;
-  }
+  // if (review.access?.find((a) => a.__typename === "AccessUrl")) {
+  return ExternalReview;
+  // }
 
-  console.log("fff null", review);
-
-  return null;
+  // return null;
 }
 
 /**
@@ -68,8 +65,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     () => [...data?.relations?.hasReview].sort(sortReviews),
     [data]
   );
-
-  console.log("hest r", reviews);
 
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
@@ -124,7 +119,7 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
     }
   }
 
-  console.log("fff .............................");
+  console.log("fisk .............................");
 
   return (
     <Section

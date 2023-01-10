@@ -35,7 +35,7 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("infomedia data", JSON.stringify(data, null, 2));
+  console.log("infomedia data", JSON.stringify(data, null, 2), title, workId);
 
   // make an url for infomedia page
   const urlTxt = encodeString(title);

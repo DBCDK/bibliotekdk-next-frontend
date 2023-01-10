@@ -32,8 +32,6 @@ export function ExternalReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("vvvv data", JSON.stringify(data, null, 2));
-
   const volume =
     data.hostPublication?.issue ||
     (data.recordCreationDate &&
@@ -88,34 +86,36 @@ export function ExternalReview({
 
         {data.access?.map((access) => {
           if (access.__typename === "AccessUrl") {
-            const shouldUseAlternateText =
-              access.url?.includes("https://moreinfo");
-            return (
-              <Col xs={12} className={styles.url} key={access.url}>
-                <Icon
-                  src="chevron.svg"
-                  size={{ w: 2, h: "auto" }}
-                  skeleton={skeleton}
-                  alt=""
-                />
-                <Link
-                  href={access.url}
-                  target="_blank"
-                  onFocus={onFocus}
-                  disabled={!access.url}
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                >
-                  <Text type="text2" skeleton={skeleton}>
-                    {Translate({
-                      ...context,
-                      label: shouldUseAlternateText
-                        ? "alternateReviewLinkText"
-                        : "reviewLinkText",
-                    })}
-                  </Text>
-                </Link>
-              </Col>
-            );
+            if (access.url && access.url !== "") {
+              const shouldUseAlternateText =
+                access.url?.includes("https://moreinfo");
+              return (
+                <Col xs={12} className={styles.url} key={access.url}>
+                  <Icon
+                    src="chevron.svg"
+                    size={{ w: 2, h: "auto" }}
+                    skeleton={skeleton}
+                    alt=""
+                  />
+                  <Link
+                    href={access.url}
+                    target="_blank"
+                    onFocus={onFocus}
+                    disabled={!access.url}
+                    border={{ top: false, bottom: { keepVisible: true } }}
+                  >
+                    <Text type="text2" skeleton={skeleton}>
+                      {Translate({
+                        ...context,
+                        label: shouldUseAlternateText
+                          ? "alternateReviewLinkText"
+                          : "reviewLinkText",
+                      })}
+                    </Text>
+                  </Link>
+                </Col>
+              );
+            }
           }
         })}
       </Row>
@@ -143,7 +143,7 @@ export function ExternalReviewSkeleton(props) {
       {
         __typename: "AccessUrl",
         origin: "Some domain",
-        url: "Some url",
+        url: "http://www.some-url.dk",
         note: "Some note",
         loginRequired: false,
         type: "RESOURCE",

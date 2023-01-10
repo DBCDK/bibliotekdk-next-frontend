@@ -17,6 +17,8 @@ import {
   ExternalReviewSkeleton,
 } from "./types/external/ExternalReview.js";
 
+import { AccessEnum } from "@/lib/enums.js";
+
 const exportedObject = {
   title: "work/Reviews",
 };
@@ -36,144 +38,139 @@ WrappedReviewsSlider.story = {
   parameters: {
     graphql: {
       resolvers: {
-        Work: {
-          titles: () => ({
-            main: ["Great book"],
-          }),
-          relations: () => ({
-            hasReview: [
-              // Review that is not available anywhere
-              {
-                pid: "Some pid",
-                creators: [
-                  {
-                    display: "Some creator",
-                  },
-                ],
-                access: [
-                  {
-                    __typename: "AccessUrl",
-                    origin: "Some domain",
-                    url: "Some url",
-                    note: "Some note",
-                    loginRequired: false,
-                    type: "RESOURCE",
-                  },
-                  {
-                    __typename: "DigitalArticleService",
-                    issn: "Some issn",
-                  },
-                ],
-                hostPublication: {
-                  title: "Some title",
-                  issue: "Nr. 1 (2006)",
-                },
-                recordCreationDate: "20061120",
-                review: {
-                  rating: null,
-                  reviewByLibrarians: null,
-                },
-              },
-              // Review that is available on external site
-              {
-                pid: "Some pid",
-                creators: [
-                  {
-                    display: "Some creator",
-                  },
-                ],
-                access: [
-                  {
-                    __typename: "AccessUrl",
-                    origin: "Some domain",
-                    url: "Some url",
-                    note: "Some note",
-                    loginRequired: false,
-                  },
-                  {
-                    __typename: "DigitalArticleService",
-                    issn: "Some issn",
-                  },
-                ],
-                hostPublication: {
-                  title: "Some title",
-                  issue: "Nr. 1 (2006)",
-                },
-                recordCreationDate: "20061120",
-                review: {
-                  rating: "3/6",
-                  reviewByLibrarians: null,
-                },
-              },
-              // Review that is available via infomedia
-              {
-                pid: "Some pid",
-                creators: [
-                  {
-                    display: "Some creator",
-                  },
-                ],
-                access: [
-                  { __typename: "InterLibraryLoan" },
-                  {
-                    __typename: "InfomediaService",
-                    id: "Some id",
-                  },
-                ],
-                hostPublication: {
-                  title: "Some host publication",
-                  issue: "2005-06-24",
-                },
-                recordCreationDate: "20050627",
-                review: {
-                  rating: "5/6",
-                  reviewByLibrarians: null,
-                },
-              },
-              // Librarians Review
-              {
-                pid: "Some pid",
-                creators: [
-                  {
-                    display: "Some creator",
-                  },
-                ],
-                access: [],
-                recordCreationDate: "20200512",
-                hostPublication: null,
-                review: {
-                  rating: null,
-                  reviewByLibrarians: [
+        Query: {
+          work: () => ({
+            workId: "some-work-id",
+            titles: {
+              main: ["Great book"],
+            },
+            relations: {
+              hasReview: [
+                // Review that is not available anywhere
+                {
+                  pid: "Some pid",
+                  creators: [
                     {
-                      content: "This is some content",
-                      heading: "The heading",
-                      type: "ABSTRACT",
-                      manifestations: [],
-                    },
-                    {
-                      content: "This is Some book title and more content",
-                      heading: "The heading",
-                      type: "ABSTRACT",
-                      manifestations: [
-                        {
-                          ownerWork: {
-                            workId: "some-work-id",
-                            titles: {
-                              main: ["Some book title"],
-                            },
-                            creators: [
-                              {
-                                display: "Some creator",
-                              },
-                            ],
-                          },
-                        },
-                      ],
+                      display: "Some creator",
                     },
                   ],
+                  access: [
+                    {
+                      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+                      issn: "Some issn",
+                    },
+                  ],
+                  hostPublication: {
+                    title: "External publication (no url)",
+                    issue: "Nr. 1 (2006)",
+                  },
+                  recordCreationDate: "20061120",
+                  review: {
+                    rating: "3/6",
+                    reviewByLibrarians: null,
+                  },
                 },
-              },
-            ],
+                // Review that is available on external site
+                {
+                  pid: "Some pid",
+                  creators: [
+                    {
+                      display: "Some creator",
+                    },
+                  ],
+                  access: [
+                    {
+                      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+                      issn: "Some issn",
+                    },
+                    {
+                      __resolveType: AccessEnum.ACCESS_URL,
+                      origin: "Some domain",
+                      url: "http://www.some-url.dk",
+                      note: "Some note",
+                      loginRequired: false,
+                    },
+                  ],
+                  hostPublication: {
+                    title: "External publication (url)",
+                    issue: "Nr. 1 (2006)",
+                  },
+                  recordCreationDate: "20061120",
+                  review: {
+                    rating: null,
+                    reviewByLibrarians: null,
+                  },
+                },
+                // Review that is available via infomedia
+                {
+                  pid: "heste pid",
+                  creators: [
+                    {
+                      display: "Some creator",
+                    },
+                  ],
+                  access: [
+                    {
+                      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+                      id: "some-infomedia-id",
+                    },
+                    { __resolveType: AccessEnum.INTER_LIBRARY_LOAN },
+                  ],
+                  hostPublication: {
+                    title: "Infomedia publication",
+                    issue: "2005-06-24",
+                  },
+                  recordCreationDate: "20050627",
+                  review: {
+                    rating: "5/6",
+                    reviewByLibrarians: null,
+                  },
+                },
+                // Librarians Review
+                {
+                  pid: "Some pid",
+                  creators: [
+                    {
+                      display: "Some creator",
+                    },
+                  ],
+                  access: [],
+                  recordCreationDate: "20200512",
+                  hostPublication: null,
+                  review: {
+                    rating: null,
+                    reviewByLibrarians: [
+                      {
+                        content: "This is some content",
+                        heading: "The heading",
+                        type: "ABSTRACT",
+                        manifestations: [],
+                      },
+                      {
+                        content: "This is Some book title and more content",
+                        heading: "The heading",
+                        type: "ABSTRACT",
+                        manifestations: [
+                          {
+                            ownerWork: {
+                              workId: "some-work-id",
+                              titles: {
+                                main: ["Some book title"],
+                              },
+                              creators: [
+                                {
+                                  display: "Some creator",
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
           }),
         },
       },
