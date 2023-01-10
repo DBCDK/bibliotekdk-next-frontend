@@ -30,8 +30,6 @@ import { ArrowRight } from "@/components/base/arrow/ArrowRight";
  */
 
 function getTemplate(review) {
-  console.log("fisk", JSON.stringify(review, null, 2));
-
   if (review.review?.reviewByLibrarians?.length > 0) {
     return MaterialReview;
   }
@@ -40,11 +38,7 @@ function getTemplate(review) {
     return InfomediaReview;
   }
 
-  // if (review.access?.find((a) => a.__typename === "AccessUrl")) {
   return ExternalReview;
-  // }
-
-  // return null;
 }
 
 /**
@@ -118,8 +112,6 @@ export function Reviews({ className = "", data = [], skeleton = false }) {
       swiperRef.current.swiper.slidePrev();
     }
   }
-
-  console.log("fisk .............................");
 
   return (
     <Section
@@ -210,8 +202,6 @@ export default function Wrap(props) {
   const { workId } = props;
 
   const { data, isLoading, error } = useData(workFragments.reviews({ workId }));
-
-  console.log("##### data", data, error);
 
   if (isLoading) {
     return <ReviewsSkeleton />;

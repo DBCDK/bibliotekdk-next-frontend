@@ -5,7 +5,7 @@ describe("Overview", () => {
         "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
       );
     });
-    it.skip(`Displays the contents of a review from infomedia`, () => {
+    it(`Displays the contents of a review from infomedia`, () => {
       cy.contains("infomedia.article.headLine");
       cy.contains(
         "infomedia.article.paper (work.workReviews[0].periodica.pages)"

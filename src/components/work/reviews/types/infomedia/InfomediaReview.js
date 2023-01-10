@@ -35,8 +35,6 @@ export function InfomediaReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("infomedia data", JSON.stringify(data, null, 2), title, workId);
-
   // make an url for infomedia page
   const urlTxt = encodeString(title);
   const infomediaAccess = data.access?.find((a) => a.id);
@@ -170,8 +168,6 @@ export function InfomediaReviewSkeleton(props) {
  */
 export default function Wrap(props) {
   const { isSkeleton } = props;
-
-  console.log("calllllllllllllll?", props);
 
   if (isSkeleton) {
     return <InfomediaReviewSkeleton />;

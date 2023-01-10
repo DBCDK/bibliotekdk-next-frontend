@@ -63,8 +63,6 @@ export function MaterialReview({
   // Translate Context
   const context = { context: "reviews" };
 
-  console.log("ggggg", JSON.stringify(data, null, 2));
-
   return (
     <Col
       xs={12}
