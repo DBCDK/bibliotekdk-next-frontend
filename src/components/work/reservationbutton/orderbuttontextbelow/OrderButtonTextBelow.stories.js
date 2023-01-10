@@ -1,6 +1,8 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { AccessEnum } from "@/lib/enums";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "work/ReservationButton/OrderButtonTextBelow",
@@ -11,12 +13,16 @@ export default exportedObject;
 const date = new Date();
 const time = date.getTime();
 
+const { USER_3, BRANCH_3, DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } =
+  automock_utils();
+
 function ButtonTxtComponentBuilder({
   type = ["bog"],
   workId = "some-id-builder" + time,
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
 }) {
+  useMockLoanerInfo("790900");
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>
@@ -54,48 +60,19 @@ export function BookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={["bog"]}
-      workId={"some-workId-bog" + time}
-      selectedPids={["some-pid-bog" + time]}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
     />
   );
 }
 
-BookButtonTxt.story = {
-  ...ButtonTxtStoryBuilder("Book", {
-    Query: {
-      work: () => {
-        return {
-          workId: "some-workId-bog" + time,
-          titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "bog" }],
-          workTypes: ["LITERATURE"],
-          manifestations: {
-            all: [
-              {
-                pid: "some-pid-bog" + time,
-              },
-            ],
-          },
-        };
-      },
-      manifestations: () => {
-        return [
-          {
-            pid: "some-pid-bog" + time,
-            materialTypes: [{ specific: "bog" }],
-            access: [
-              {
-                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-                loanIsPossible: true,
-              },
-            ],
-            workTypes: ["LITERATURE"],
-          },
-        ];
-      },
+BookButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
     },
-  }),
-};
+  },
+});
 
 export function EBookButtonTxt() {
   return (
@@ -248,42 +225,28 @@ export function PeriodicaButtonTxt() {
   return (
     <ButtonTxtComponentBuilder
       type={"Ebog"}
-      workId={"some-workId-periodica" + time}
-      selectedPids={["some-pid-periodica" + time]}
+      workId={"some-work-id-3"}
+      selectedPids={["some-pid-5"]}
       storyNameOverride={"Periodica"}
     />
   );
 }
-PeriodicaButtonTxt.story = {
-  ...ButtonTxtStoryBuilder("Periodica", {
-    Query: {
-      work: () => {
-        return {
-          titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Ebog" }],
-          workTypes: ["PERIODICA"],
-          manifestations: {
-            all: [
-              {
-                pid: "some-pid-periodica" + time,
-              },
-            ],
+PeriodicaButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
           },
-        };
-      },
-      manifestations: () => {
-        return [
-          {
-            pid: "some-pid-periodica" + time,
-            materialTypes: [{ specific: "Ebog" }],
-            access: [],
-            workTypes: ["PERIODICA"],
-          },
-        ];
+        },
       },
     },
-  }),
-};
+  },
+});
 
 export function SlowLoadingButtonTxt() {
   return (

@@ -17,6 +17,9 @@ export function getAccessForSingleManifestation(manifestation) {
       ...(manifestation?.materialTypes?.length > 0 && {
         materialTypesArray: flattenMaterialType(manifestation),
       }),
+      ...(manifestation?.workTypes?.length > 0 && {
+        workTypes: manifestation?.workTypes,
+      }),
     };
   });
 }
@@ -71,9 +74,6 @@ export function prioritiseAccessUrl(access) {
 export function prioritiseInfomediaService(access) {
   return typeof access?.id === "string" && access?.id ? 0 : 1;
 }
-export function prioritiseDigitalArticleService(access) {
-  return typeof access?.issn === "string" && access?.issn ? 0 : 1;
-}
 export function prioritiseEreol(access) {
   const ereol_priorityPenalty = [
     typeof access.url !== "string" || !access.url,
@@ -86,6 +86,9 @@ export function prioritiseEreol(access) {
     ereol_priorityPenalty?.findIndex((priority) => priority === true) -
     1
   );
+}
+export function prioritiseDigitalArticleService(access) {
+  return typeof access?.issn === "string" && access?.issn ? 0 : 1;
 }
 export function prioritiseInterLibraryLoan(access) {
   return typeof access?.loanIsPossible === "boolean" && access?.loanIsPossible
@@ -108,11 +111,11 @@ export function prioritisedAccess(access) {
     [AccessEnum.ACCESS_URL]: () => prioritiseAccessUrl(access),
     // INFOMEDIA_SERVICE: id > nederst! (manglende id)
     [AccessEnum.INFOMEDIA_SERVICE]: () => prioritiseInfomediaService(access),
+    // EREOL: Ereol > Ereolengo
+    [AccessEnum.EREOL]: () => prioritiseEreol(access),
     // DIGITAL_ARTICLE_SERVICE
     [AccessEnum.DIGITAL_ARTICLE_SERVICE]: () =>
       prioritiseDigitalArticleService(access),
-    // EREOL: Ereol > Ereolengo
-    [AccessEnum.EREOL]: () => prioritiseEreol(access),
     // INTER_LIBRARY_LOAN: LoanIsPossible true > false
     [AccessEnum.INTER_LIBRARY_LOAN]: () => prioritiseInterLibraryLoan(access),
   };
@@ -158,7 +161,6 @@ export function getAllEnrichedAccessSorted(manifestations) {
     ?.value();
 }
 
-// TODO: Test this!
 export function getAllowedAccesses(accesses, hasDigitalAccess) {
   const onlineAccesses = accesses?.filter(
     (singleAccess) =>
@@ -190,52 +192,81 @@ export function getAllAllowedEnrichedAccessSorted(
   hasDigitalAccess
 ) {
   return getAllowedAccesses(
-    getAllEnrichedAccessSorted(manifestations),
+    (manifestations && getAllEnrichedAccessSorted(manifestations)) || [],
     hasDigitalAccess
   );
 }
 
 /**
- * Check loanIsPossible on any access
- * @param allEnrichedAccesses
+ * Check digitalCopy on single
+ * @param singleAccess
  * @return {boolean}
  */
-export function checkRequestButtonIsTrue(allEnrichedAccesses) {
-  return (
-    allEnrichedAccesses?.filter(
-      (singleAccess) =>
-        singleAccess?.loanIsPossible && singleAccess?.loanIsPossible === true
-    ).length > 0
+function checkSingleDigitalCopy(singleAccess) {
+  return !!(
+    singleAccess?.__typename === AccessEnum.DIGITAL_ARTICLE_SERVICE &&
+    singleAccess?.issn
   );
 }
 
 /**
  * Check digitalCopy on any
- * @param allEnrichedAccesses
+ * @param enrichedAccesses
  * @return {boolean}
  */
-export function checkDigitalCopy(allEnrichedAccesses) {
-  return !!allEnrichedAccesses?.find((singleAccess) => singleAccess?.issn);
+export function checkDigitalCopy(enrichedAccesses) {
+  return enrichedAccesses?.map(checkSingleDigitalCopy);
+}
+
+/**
+ * Check physicalCopy on single
+ * @param singleAccess
+ * @return {boolean}
+ */
+function checkSinglePhysicalCopy(singleAccess) {
+  return !!(
+    singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+    singleAccess?.loanIsPossible === true
+  );
 }
 
 /**
  * Check physicalCopy on any
- * @param allEnrichedAccesses
+ * @param enrichedAccesses
  * @return {boolean}
  */
-export function checkPhysicalCopy(allEnrichedAccesses) {
-  return !!allEnrichedAccesses?.find(
-    (singleAccess) =>
-      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
-      singleAccess?.loanIsPossible === true
+export function checkPhysicalCopy(enrichedAccesses) {
+  return enrichedAccesses?.map(checkSinglePhysicalCopy);
+}
+
+function getIsSingleAccessPeriodicaLike(singleAccess) {
+  return (
+    !!singleAccess?.workTypes?.find(
+      (workType) => workType?.toLowerCase() === "periodica"
+    ) ||
+    !!singleAccess?.materialTypesArray?.find((mat) => mat.includes("årbog"))
   );
 }
 
+/**
+ * Handle this work as a periodica
+ *
+ * @returns {boolean}
+ * @param enrichedAccesses
+ */
+export function getAreAccessesPeriodicaLike(enrichedAccesses) {
+  return enrichedAccesses?.map(getIsSingleAccessPeriodicaLike);
+}
+
 export function accessUtils(manifestations) {
-  const allEnrichedAccesses = getAllEnrichedAccessSorted(manifestations);
-  const requestButtonIsTrue = checkRequestButtonIsTrue(allEnrichedAccesses);
-  const digitalCopy = checkDigitalCopy(allEnrichedAccesses);
-  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses);
+  const allEnrichedAccesses =
+    (manifestations && getAllEnrichedAccessSorted(manifestations)) || [];
+  const digitalCopy = checkDigitalCopy(allEnrichedAccesses)?.find(
+    (single) => single === true
+  );
+  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses)?.find(
+    (single) => single === true
+  );
 
   return {
     allEnrichedAccesses: allEnrichedAccesses,
@@ -245,7 +276,6 @@ export function accessUtils(manifestations) {
         hasDigitalAccess
       );
     },
-    requestButtonIsTrue: requestButtonIsTrue,
     digitalCopy: digitalCopy,
     physicalCopy: physicalCopy,
   };

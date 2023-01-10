@@ -12,10 +12,14 @@ import {
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
-import { AccessEnum, MaterialTypeEnum } from "@/lib/enums";
+import { MaterialTypeEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { accessUtils } from "@/lib/accessFactory";
-import { uniq } from "lodash";
+import {
+  accessUtils,
+  checkDigitalCopy,
+  checkPhysicalCopy,
+} from "@/lib/accessFactory";
+import { isEmpty, uniq } from "lodash";
 
 function TextAboveButton({ access, user }) {
   return (
@@ -33,15 +37,13 @@ function TextAboveButton({ access, user }) {
   );
 }
 
-function isOnlineTranslator(materialTypes) {
+function isOnlineTranslator(materialTypeArray) {
   const overrideWithIsOnline =
-    materialTypes
-      ?.flatMap((materialType) => materialType?.specific)
-      ?.filter((specificMaterialType) =>
-        [MaterialTypeEnum.EBOG, MaterialTypeEnum["LYDBOG (NET)"]].includes(
-          specificMaterialType
-        )
-      ).length > 0;
+    materialTypeArray?.filter((specificMaterialType) =>
+      [MaterialTypeEnum.EBOG, MaterialTypeEnum["LYDBOG (NET)"]].includes(
+        specificMaterialType
+      )
+    ).length > 0;
 
   return overrideWithIsOnline
     ? Translate({
@@ -106,73 +108,49 @@ function handleGoToLogin(access, user, modal, onOnlineAccess) {
 export function OrderButton({
   user,
   modal,
-  work,
-  manifestations,
+  access,
   onOnlineAccess,
   openOrderModal,
-  onHandleGoToLogin = (access) =>
+  onHandleGoToLogin = () =>
     handleGoToLogin(access, user, modal, onOnlineAccess),
   buttonType = "primary",
   size = "large",
-  hasDigitalAccess,
 }) {
-  const {
-    getAllAllowedEnrichedAccessSorted,
-    requestButtonIsTrue,
-    digitalCopy,
-  } = useMemo(() => {
-    return accessUtils(manifestations);
-  }, [manifestations]);
-
-  const access = useMemo(() => {
-    return getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
-  }, []);
-
-  const selectedManifestation = useMemo(() => {
-    return manifestations?.find(
-      (manifestation) => manifestation?.pid === access?.[0]?.pid
-    );
-  }, [manifestations, access]);
+  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
+  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
 
   const isOnlineTranslated = isOnlineTranslator(
-    selectedManifestation?.materialTypes
+    access?.[0]?.materialTypesArray
   );
-  const workTypeTranslated = workTypeTranslator(work?.workTypes);
-  const buttonSkeleton = !work || !selectedManifestation;
-  const offlineAccess =
-    access?.[0]?.__typename === AccessEnum.INTER_LIBRARY_LOAN;
+  const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
 
   /** order button acts on following scenarios: */
   const caseScenarioMap = [
     /** (0) selectedManifestations does not exist for some reason */
     Boolean(
-      selectedManifestation === null ||
-        typeof selectedManifestation === "undefined" ||
-        access === null
+      isEmpty(access)
+      // access === null ||
+      //   access === [] ||
+      //   access === [undefined] ||
+      //   typeof access === "undefined"
     ),
-    /** (1) material is accessible online (no user login) -> go to online url
-     * --- a. online url
-     * --- b. webarchive
-     * --- c. infomedia access (needs login)
-     * --- d. digital copy (needs login)
-     * ? online access ? - special handling of digital copy (access[0].issn) */
-    Boolean(
-      access?.length > 0 &&
-        !access?.[0]?.issn &&
-        access?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
-    ),
-    /** (2) material can not be ordered
-     * --- maybe it is too new or something else -> disable (with a reason?)
-     * ? No online access ? - check if work can be ordered */
-    Boolean(!requestButtonIsTrue && !digitalCopy),
-    /** (3) material is available as loan -> Enable */
+    /** (1) material is accessible online (no user login or will prompt at destination) -> go to online url
+     * --- a. ACCESS_URL
+     * --- b. INFOMEDIA
+     * --- c. EREOL
+     * */
+    Boolean(access?.length > 0 && !digitalCopy && !physicalCopy),
+    /** (2) material is available as loan either:
+     * --- d. DIGITAL_ARTICLE_SERVICE
+     * --- e. INTER_LIBRARY_LOAN
+     * */
     true,
   ];
 
   const buttonPropsMap = [
     /* (0) */
     {
-      dataCy: "button-order-overview",
+      dataCy: "button-order-overview-disabled",
       disabled: true,
     },
     /* (1) */
@@ -182,17 +160,8 @@ export function OrderButton({
     },
     /* (2) */
     {
-      dataCy: "button-order-overview",
-      disabled: true,
-    },
-    /* (3) */
-    {
       dataCy: `button-order-overview-enabled`,
-      onClick: () =>
-        openOrderModal({
-          pids: uniq(access?.map((singleAccess) => singleAccess.pid)),
-          selectedAccesses: access,
-        }),
+      onClick: openOrderModal,
     },
   ];
 
@@ -201,7 +170,7 @@ export function OrderButton({
     () =>
       Translate({
         context: "overview",
-        label: !offlineAccess ? "Order-online-disabled" : "Order-disabled",
+        label: !physicalCopy ? "Order-online-disabled" : "Order-disabled",
       }),
     /* (1) */
     () =>
@@ -213,12 +182,6 @@ export function OrderButton({
         isOnlineTranslated || workTypeTranslated,
       ].join(" "),
     /* (2) */
-    () =>
-      Translate({
-        context: "overview",
-        label: !offlineAccess ? "Order-online-disabled" : "Order-disabled",
-      }),
-    /* (3) */
     () => Translate({ context: "general", label: "bestil" }),
   ];
 
@@ -226,7 +189,7 @@ export function OrderButton({
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
   const buttonProps = {
     className: styles.externalLink,
-    skeleton: buttonPropsMap[index].disabled ? null : buttonSkeleton,
+    skeleton: buttonPropsMap[index].disabled ? null : !access,
     type: buttonType,
     size: size,
     ...buttonPropsMap[index],
@@ -250,23 +213,28 @@ function ReservationButton({
   const user = useUser();
   const modal = useModal();
 
-  const {
-    workResponse,
-    manifestations,
-    manifestationsResponse,
-    selectedManifestationsPids,
-  } = useGetManifestationsForOrderButton(workId, selectedPids);
+  const { workResponse, manifestations, manifestationsResponse } =
+    useGetManifestationsForOrderButton(workId, selectedPids);
 
   const { branchIsLoading, hasDigitalAccess } =
     useBranchUserAndHasDigitalAccess(selectedPids);
 
+  const { getAllAllowedEnrichedAccessSorted } = useMemo(
+    () => accessUtils(manifestations),
+    [manifestations]
+  );
+
+  const access = useMemo(
+    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
+    [workResponse?.data?.work, manifestations, hasDigitalAccess]
+  );
+
+  const pids = uniq(access?.map((singleAccess) => singleAccess?.pid));
+
   if (
-    workResponse?.isLoading ||
     manifestationsResponse?.isLoading ||
-    branchIsLoading ||
-    !workId ||
-    !selectedPids ||
-    !selectedManifestationsPids
+    workResponse?.isLoading ||
+    branchIsLoading
   ) {
     return (
       <Button
@@ -285,14 +253,13 @@ function ReservationButton({
     <OrderButton
       user={user}
       modal={modal}
-      work={workResponse.data?.work}
-      manifestations={manifestations}
+      access={access}
       onOnlineAccess={onOnlineAccess}
-      openOrderModal={({ pids, selectedAccesses }) =>
+      openOrderModal={() =>
         openOrderModal({
           modal: modal,
           pids: pids,
-          selectedAccesses: selectedAccesses,
+          selectedAccesses: access,
           workId: workId,
           singleManifestation: singleManifestation,
         })
