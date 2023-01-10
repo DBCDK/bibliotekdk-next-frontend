@@ -38,8 +38,11 @@ export function useWorkFromSelectedPids(workFragment, selectedPids) {
 }
 
 export function useGetManifestationsForOrderButton(workId, selectedPids) {
-  const pids = selectedPids?.filter((pid) => pid !== null && pid !== undefined);
+  const pids = selectedPids?.filter(
+    (pid) => pid !== null && pid !== undefined && typeof pid !== "undefined"
+  );
 
+  // We use Work and allPids to enhance load speeds when browsing materialTypes
   const workResponse = useData(workId && workFragments.buttonTxt({ workId }));
 
   const allPids = useMemo(() => {

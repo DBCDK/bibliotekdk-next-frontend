@@ -4,6 +4,7 @@ import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFuncti
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useMemo } from "react";
 
 export function openLocalizationsModal(modal, pids, workId, materialType) {
   modal.push("localizations", {
@@ -115,10 +116,13 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
       })
   );
 
-  const hasDigitalAccess =
-    branchUserData?.branches?.result
-      ?.map((res) => res.digitalCopyAccess === true)
-      .findIndex((res) => res === true) > -1;
+  const hasDigitalAccess = useMemo(() => {
+    return (
+      branchUserData?.branches?.result
+        ?.map((res) => res.digitalCopyAccess === true)
+        .findIndex((res) => res === true) > -1
+    );
+  }, [branchUserData, loanerInfo]);
 
   return {
     branchUserData: branchUserData,
