@@ -7,10 +7,13 @@
  */
 export function sortReviews(a, b) {
   return (
-    Number(!!b.librariansReview) - Number(!!a.librariansReview) ||
-    Number(!!b.urls?.length > 0) - Number(!!a.urls?.length > 0) ||
-    Number(!!b.infomediaId) - Number(!!a.infomediaId) ||
-    Number(!!b.rating) - Number(!!a.rating) ||
+    !!b.review?.reviewByLibrarians?.length -
+      !!a.review?.reviewByLibrarians?.length ||
+    Number(!!b.access?.find((a) => a.url)) -
+      Number(!!a.access?.find((a) => a.url)) ||
+    Number(!!b.access?.find((a) => a.id)) -
+      Number(!!a.access?.find((a) => a.id)) ||
+    Number(!!b.review?.rating) - Number(!!a.review?.rating) ||
     0
   );
 }

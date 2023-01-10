@@ -11,7 +11,7 @@ import Icon from "@/components/base/icon";
 import Rating from "@/components/base/rating";
 import Translate from "@/components/base/translate";
 
-import { dateToShortDate } from "@/utils/datetimeConverter";
+import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 
 import styles from "./ExternalReview.module.css";
 
@@ -33,7 +33,9 @@ export function ExternalReview({
   const context = { context: "reviews" };
 
   const volume =
-    data.periodica?.volume || (data.date && dateToShortDate(data.date, "d. "));
+    data.hostPublication?.issue ||
+    (data.recordCreationDate &&
+      dateToShortDate(numericToISO(data.recordCreationDate), "d. "));
 
   return (
     <Col
@@ -44,15 +46,15 @@ export function ExternalReview({
       data-cy={cyKey({ prefix: "review", name: "external" })}
     >
       <Row>
-        {data.origin && (
+        {data.hostPublication?.title && (
           <Col xs={12} className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
-              {data.origin}
+              {data.hostPublication?.title}
             </Title>
           </Col>
         )}
         <div className={styles.row}>
-          {data.author && (
+          {data.creators?.length > 0 && (
             <Col className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
@@ -61,52 +63,60 @@ export function ExternalReview({
           )}
 
           <Col xs={12} className={styles.right}>
-            {data.author && (
+            {data.creators?.length > 0 && (
               <Col xs={10} className={styles.author}>
-                {!skeleton && <Text type="text2">{data.author}</Text>}
+                {!skeleton && (
+                  <Text type="text2">
+                    {data.creators?.map((c) => c.display).join(", ")}
+                  </Text>
+                )}
                 <div className={styles.date}>
                   {!skeleton && volume && <Text type="text3">{volume}</Text>}
                 </div>
               </Col>
             )}
 
-            {data.rating && (
+            {data.review.rating && (
               <Col xs={12} className={styles.rating}>
-                <Rating rating={data.rating} skeleton={skeleton} />
+                <Rating rating={data.review.rating} skeleton={skeleton} />
               </Col>
             )}
           </Col>
         </div>
 
-        {data.urls?.map((accessUrl) => {
-          const shouldUseAlternateText =
-            accessUrl.url?.includes("https://moreinfo");
-          return (
-            <Col xs={12} className={styles.url} key={accessUrl.url}>
-              <Icon
-                src="chevron.svg"
-                size={{ w: 2, h: "auto" }}
-                skeleton={skeleton}
-                alt=""
-              />
-              <Link
-                href={accessUrl.url}
-                target="_blank"
-                onFocus={onFocus}
-                disabled={!accessUrl.url}
-                border={{ top: false, bottom: { keepVisible: true } }}
-              >
-                <Text type="text2" skeleton={skeleton}>
-                  {Translate({
-                    ...context,
-                    label: shouldUseAlternateText
-                      ? "alternateReviewLinkText"
-                      : "reviewLinkText",
-                  })}
-                </Text>
-              </Link>
-            </Col>
-          );
+        {data.access?.map((access) => {
+          if (access.__typename === "AccessUrl") {
+            if (access.url && access.url !== "") {
+              const shouldUseAlternateText =
+                access.url?.includes("https://moreinfo");
+              return (
+                <Col xs={12} className={styles.url} key={access.url}>
+                  <Icon
+                    src="chevron.svg"
+                    size={{ w: 2, h: "auto" }}
+                    skeleton={skeleton}
+                    alt=""
+                  />
+                  <Link
+                    href={access.url}
+                    target="_blank"
+                    onFocus={onFocus}
+                    disabled={!access.url}
+                    border={{ top: false, bottom: { keepVisible: true } }}
+                  >
+                    <Text type="text2" skeleton={skeleton}>
+                      {Translate({
+                        ...context,
+                        label: shouldUseAlternateText
+                          ? "alternateReviewLinkText"
+                          : "reviewLinkText",
+                      })}
+                    </Text>
+                  </Link>
+                </Col>
+              );
+            }
+          }
         })}
       </Row>
     </Col>
@@ -123,10 +133,34 @@ export function ExternalReview({
  */
 export function ExternalReviewSkeleton(props) {
   const data = {
-    author: "Svend Svendsen",
-    date: "2013-06-25",
-    origin: "Litteratursiden.dk online",
-    urls: [{ url: "http://" }],
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "AccessUrl",
+        origin: "Some domain",
+        url: "http://www.some-url.dk",
+        note: "Some note",
+        loginRequired: false,
+        type: "RESOURCE",
+      },
+      {
+        __typename: "DigitalArticleService",
+        issn: "Some issn",
+      },
+    ],
+    hostPublication: {
+      title: "Some title",
+      issue: "Nr. 1 (2006)",
+    },
+    recordCreationDate: "20061120",
+    review: {
+      rating: "5/6",
+    },
   };
 
   return (
@@ -148,13 +182,13 @@ export function ExternalReviewSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { data, skeleton } = props;
+  const { skeleton } = props;
 
   if (skeleton) {
     return <ExternalReviewSkeleton />;
   }
 
-  return <ExternalReview {...props} data={data} />;
+  return <ExternalReview {...props} />;
 }
 
 // PropTypes for component

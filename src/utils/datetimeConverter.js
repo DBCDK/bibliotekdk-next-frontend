@@ -29,6 +29,20 @@ export function timestampToShortDate(timestamp) {
 
 /**
  * date
+ * @param date yyyymmdd
+ * @returns {string} format: yyyy-mm-dd
+ */
+export function numericToISO(numeric) {
+  if (numeric.length === 8) {
+    const y = numeric.slice(0, 4);
+    const m = numeric.slice(4, 6);
+    const d = numeric.slice(6, 8);
+    return y + "-" + m + "-" + d;
+  }
+}
+
+/**
+ * date
  * @param date
  * @param prefix
  * @returns {string} format: dd. mmm. yyyy

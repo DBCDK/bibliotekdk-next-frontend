@@ -38,10 +38,10 @@ describe("Overview", () => {
     });
 
     it(`should link to mentioned work for librarians review`, () => {
-      cy.contains("Some other great book").should(
+      cy.contains("Some book title").should(
         "have.attr",
         "href",
-        "/materiale/some-other-great-book_some-creator/some-other-work-id"
+        "/materiale/some-book-title_some-creator/some-work-id"
       );
     });
 
@@ -51,14 +51,14 @@ describe("Overview", () => {
         .should(
           "have.attr",
           "href",
-          "/anmeldelse/great-book/work.workId/some-infomedia-id"
+          "/anmeldelse/great-book/some-work-id/some-infomedia-id"
         );
     });
 
     it(`external review should link to external site`, () => {
       cy.get("[data-cy=review-external]")
         .contains("Læs anmeldelse")
-        .should("have.attr", "href", "http://some-external-site/some-path");
+        .should("have.attr", "href", "http://www.some-url.dk");
     });
 
     it(`reviews are ordered correctly`, () => {
@@ -66,13 +66,13 @@ describe("Overview", () => {
       cy.get(".swiper-slide").eq(0).contains("Lektørudtalelse");
 
       // Then litteratursiden, because it has external url (accessible without login)
-      cy.get(".swiper-slide").eq(1).contains("Litteratursiden");
+      cy.get(".swiper-slide").eq(1).contains("External publication (url)");
 
       // Then Politiken, because it has a rating
-      cy.get(".swiper-slide").eq(2).contains("Politiken");
+      cy.get(".swiper-slide").eq(2).contains("Infomedia publication");
 
       // Finally Some Periodica, because it is not available anywhere
-      cy.get(".swiper-slide").eq(3).contains("Some Periodica");
+      cy.get(".swiper-slide").eq(3).contains("External publication (no url)");
     });
 
     //BETA-1 skip this test - material reviews are gone

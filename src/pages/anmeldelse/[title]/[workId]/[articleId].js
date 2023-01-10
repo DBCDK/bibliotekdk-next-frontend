@@ -75,7 +75,7 @@ export default function Wrap() {
   const { workId, articleId } = router.query;
   const user = useUser();
   const { data, isLoading: isLoadingWork } = useData(
-    workFragments.reviews({ workId })
+    workFragments._reviews({ workId })
   );
   const publicReviewData = data?.work?.workReviews?.find(
     (review) => review.infomediaId === articleId || review.pid === articleId

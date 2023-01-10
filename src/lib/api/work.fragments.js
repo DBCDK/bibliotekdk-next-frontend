@@ -71,7 +71,7 @@ export function recommendations({ workId }) {
  *
  * @return {Object} a query object
  */
-export function reviews({ workId }) {
+export function _reviews({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -124,6 +124,82 @@ export function reviews({ workId }) {
         }
       }
     }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Recommendations for a work
+ *
+ * This is still the old laesekompas recommender
+ * Will be changed at some point
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function reviews({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query Reviews($workId: String!) {
+              work(id: $workId) {
+                workId
+                titles {
+                  main
+                }
+                relations {
+                  hasReview {
+                    pid
+                    creators {
+                      display
+                    }
+                    access {
+                      __typename
+                      ... on InfomediaService {
+                        id
+                      }
+                      ... on AccessUrl {
+                        origin
+                        url
+                        note
+                        loginRequired
+                        type
+                      }
+                      ... on DigitalArticleService {
+                        issn
+                      }
+                    }
+                    hostPublication {
+                      title
+                      issue
+                    }
+                    recordCreationDate
+                    review {
+                      rating
+                      reviewByLibrarians {
+                        content
+                        heading
+                        type
+                        manifestations {
+                          ownerWork {
+                            workId
+                            titles {
+                              main
+                            }
+                            creators {
+                              display
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }`,
     variables: { workId },
     slowThreshold: 3000,
   };
