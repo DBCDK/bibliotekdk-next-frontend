@@ -102,6 +102,7 @@ export function alternativesManifestations({ pid }) {
         accessTypes {
           display
         }
+        workTypes
         ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestations")
