@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
 import Col from "react-bootstrap/Col";
-import { accessUtils } from "@/lib/accessFactory";
+import { accessUtils, checkDigitalCopy } from "@/lib/accessFactory";
 import { useMemo } from "react";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
@@ -19,7 +19,24 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+  let allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+
+  /**
+   * Sort away interlibrary loan if both that and digital access is possible
+   * we sort away the interlibrary loan !!
+   */
+  let key = -1;
+  if (hasDigitalAccess && checkDigitalCopy(allowedAccesses)) {
+    allowedAccesses.find((access, idx) => {
+      if (access.__typename === "InterLibraryLoan") {
+        key = idx;
+      }
+    });
+
+    if (key !== -1) {
+      allowedAccesses = allowedAccesses.slice(key, 1);
+    }
+  }
 
   // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
   const count = allowedAccesses?.length;
