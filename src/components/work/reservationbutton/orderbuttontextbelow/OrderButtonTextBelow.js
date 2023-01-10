@@ -1,15 +1,20 @@
 import { context, getBaseUrl } from "@/components/work/reservationbutton/utils";
-import { getIsPeriodicaLike } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Col from "react-bootstrap/Col";
 import styles from "./OrderButtonTextBelow.module.css";
-import { uniq } from "lodash";
+import { isEmpty } from "lodash";
 import Skeleton from "@/components/base/skeleton";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
-import { accessUtils } from "@/lib/accessFactory";
+import {
+  accessUtils,
+  checkDigitalCopy,
+  checkPhysicalCopy,
+  getAreAccessesPeriodicaLike,
+} from "@/lib/accessFactory";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
+import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
 /**
  * Set texts BELOW reservation button - also sets the text IN the button
@@ -20,32 +25,16 @@ import { useMemo } from "react";
  * @return {JSX.Element|null}
  * @constructor
  */
-export function OrderButtonTextBelow({ manifestations, skeleton }) {
-  const { allEnrichedAccesses: access } = useMemo(() => {
-    return accessUtils(manifestations);
-  }, [manifestations]);
+function OrderButtonTextBelow({ access, skeleton }) {
+  const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
+  const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
+  const isPeriodicaLike = getAreAccessesPeriodicaLike([access?.[0]])?.[0];
 
-  const workTypes = uniq(
-    manifestations?.flatMap((manifestation) => manifestation?.workTypes)
-  );
-
-  const materialTypes = uniq(
-    manifestations?.flatMap((manifestation) =>
-      manifestation?.materialTypes?.map((materialType) => materialType.specific)
-    )
-  );
-
-  const isPeriodicaLike = getIsPeriodicaLike(workTypes, materialTypes);
-
-  if (access?.[0]?.__typename === AccessEnum.INFOMEDIA_SERVICE) {
-    return null;
-  }
-
-  // @TODO infomedia
   const caseScenarioMap = [
     Boolean(access?.[0]?.url),
     Boolean(isPeriodicaLike),
-    Boolean(access?.[0]?.loanIsPossible),
+    Boolean(digitalCopy),
+    Boolean(physicalCopy),
   ];
 
   const translationForButtonText = [
@@ -60,6 +49,7 @@ export function OrderButtonTextBelow({ manifestations, skeleton }) {
         context: "options",
         label: "periodica-link-description",
       }),
+    () => Translate({ ...context, label: "addToCart-line2" }),
     () => Translate({ ...context, label: "addToCart-line1" }),
   ];
 
@@ -84,10 +74,30 @@ export function OrderButtonTextBelow({ manifestations, skeleton }) {
 }
 
 export default function Wrap({ workId, selectedPids, skeleton }) {
-  const { manifestations, manifestationsResponse } =
+  const { workResponse, manifestations, manifestationsResponse } =
     useGetManifestationsForOrderButton(workId, selectedPids);
 
-  if (manifestationsResponse?.isLoading) {
+  const { branchIsLoading, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess(selectedPids);
+
+  const { getAllAllowedEnrichedAccessSorted } = useMemo(
+    () => accessUtils(manifestations),
+    [manifestations]
+  );
+
+  const access = useMemo(
+    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess),
+    [workResponse?.data?.work, manifestations, hasDigitalAccess]
+  );
+
+  if (
+    isEmpty(access) ||
+    access?.[0]?.__typename === AccessEnum.INFOMEDIA_SERVICE
+  ) {
+    return null;
+  }
+
+  if (manifestationsResponse?.isLoading || branchIsLoading) {
     return (
       <Skeleton
         lines={1}
@@ -97,7 +107,5 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
     );
   }
 
-  return (
-    <OrderButtonTextBelow manifestations={manifestations} skeleton={skeleton} />
-  );
+  return <OrderButtonTextBelow access={access} skeleton={skeleton} />;
 }
