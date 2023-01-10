@@ -19,7 +19,20 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
     return accessUtils(manifestations);
   }, [manifestations]);
 
-  const allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+  let allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
+
+  let key = -1;
+  if (hasDigitalAccess) {
+    allowedAccesses.find((access, idx) => {
+      if (access.__typename === "InterLibraryLoan") {
+        key = idx;
+      }
+    });
+
+    if (key !== -1) {
+      allowedAccesses = allowedAccesses.slice(key, 1);
+    }
+  }
 
   // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
   const count = allowedAccesses?.length;

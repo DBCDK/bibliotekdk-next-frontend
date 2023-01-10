@@ -178,17 +178,6 @@ export function getAllowedAccesses(accesses, hasDigitalAccess) {
       singleAccess?.loanIsPossible === true
   );
 
-  // if both digital AND physical accces AND materialtype is tidsskriftsartikel - return digital only
-  if (
-    digitalArticleServiceAccesses.length > 0 &&
-    physicalAccesses.length > 0 &&
-    digitalArticleServiceAccesses[0].materialTypesArray[0] ===
-      "tidsskriftsartikel" &&
-    physicalAccesses[0].materialTypesArray[0] === "tidsskriftsartikel"
-  ) {
-    return [...onlineAccesses, ...digitalArticleServiceAccesses?.slice(0, 1)];
-  }
-
   return [
     ...onlineAccesses,
     ...digitalArticleServiceAccesses?.slice(0, 1),
