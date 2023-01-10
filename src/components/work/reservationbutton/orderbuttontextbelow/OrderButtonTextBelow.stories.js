@@ -74,43 +74,6 @@ BookButtonTxt.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
-// BookButtonTxt.story = {
-//   ...ButtonTxtStoryBuilder("Book", {
-//     Query: {
-//       work: () => {
-//         return {
-//           workId: "some-workId-bog" + time,
-//           titles: [{ main: "Hugo hejs" }],
-//           materialTypes: [{ specific: "bog" }],
-//           workTypes: ["LITERATURE"],
-//           manifestations: {
-//             all: [
-//               {
-//                 pid: "some-pid-bog" + time,
-//               },
-//             ],
-//           },
-//         };
-//       },
-//       manifestations: () => {
-//         return [
-//           {
-//             pid: "some-pid-bog" + time,
-//             materialTypes: [{ specific: "bog" }],
-//             access: [
-//               {
-//                 __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-//                 loanIsPossible: true,
-//               },
-//             ],
-//             workTypes: ["LITERATURE"],
-//           },
-//         ];
-//       },
-//     },
-//   }),
-// };
-
 export function EBookButtonTxt() {
   return (
     <ButtonTxtComponentBuilder

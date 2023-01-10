@@ -439,58 +439,60 @@ describe("sortPrioritisedAccess", () => {
   });
 });
 
+const manifestationsWithAccess = [
+  {
+    pid: "1loan",
+    access: [
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+    ],
+  },
+  {
+    pid: "2loan",
+    access: [
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
+      {
+        __typename: AccessEnum.ACCESS_URL,
+        origin: "DBC Webarkiv",
+        url: "urla_2_1.dekaa",
+      },
+    ],
+  },
+  {
+    pid: "3loan",
+    access: [
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
+      {
+        __typename: AccessEnum.ACCESS_URL,
+        origin: "urla.engo",
+        url: "urla_3_1.dekaa",
+      },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
+      {
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: 1231,
+      },
+    ],
+  },
+  {
+    pid: "4loan",
+    access: [
+      {
+        __typename: AccessEnum.EREOL,
+        origin: "Ereolen Go",
+        url: "urla_4_0.dekaa",
+      },
+      {
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "urla_4_1.dekaa",
+      },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
+    ],
+  },
+];
+
 describe("getAllEnrichedAccessSorted", () => {
   it("should prioritise correctly", () => {
-    const actual = getAllEnrichedAccessSorted([
-      {
-        pid: "1loan",
-        access: [
-          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
-        ],
-      },
-      {
-        pid: "2loan",
-        access: [
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
-          {
-            __typename: AccessEnum.ACCESS_URL,
-            origin: "DBC Webarkiv",
-            url: "urla_2_1.dekaa",
-          },
-        ],
-      },
-      {
-        pid: "3loan",
-        access: [
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
-          {
-            __typename: AccessEnum.ACCESS_URL,
-            origin: "urla.engo",
-            url: "urla_3_1.dekaa",
-          },
-          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
-          {
-            __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-            issn: 1231,
-          },
-        ],
-      },
-      {
-        pid: "4loan",
-        access: [
-          {
-            __typename: AccessEnum.EREOL,
-            origin: "Ereolen Go",
-            url: "urla_4_0.dekaa",
-          },
-          {
-            __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-            issn: "urla_4_1.dekaa",
-          },
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
-        ],
-      },
-    ]);
+    const actual = getAllEnrichedAccessSorted(manifestationsWithAccess);
     const expected = [
       { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
@@ -511,59 +513,7 @@ describe("getAllEnrichedAccessSorted", () => {
 describe("getAllAllowedEnrichedAccessSorted", () => {
   const actualFunction = (hasDigitalAccess) =>
     getAllAllowedEnrichedAccessSorted(
-      [
-        {
-          pid: "1loan",
-          access: [
-            {
-              __typename: AccessEnum.INTER_LIBRARY_LOAN,
-              loanIsPossible: false,
-            },
-          ],
-        },
-        {
-          pid: "2loan",
-          access: [
-            { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
-            {
-              __typename: AccessEnum.ACCESS_URL,
-              origin: "DBC Webarkiv",
-              url: "urla_2_1.dekaa",
-            },
-          ],
-        },
-        {
-          pid: "3loan",
-          access: [
-            { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
-            {
-              __typename: AccessEnum.ACCESS_URL,
-              origin: "urla.engo",
-              url: "urla_3_1.dekaa",
-            },
-            { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
-            {
-              __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-              issn: 1231,
-            },
-          ],
-        },
-        {
-          pid: "4loan",
-          access: [
-            {
-              __typename: AccessEnum.EREOL,
-              origin: "Ereolen Go",
-              url: "urla_4_0.dekaa",
-            },
-            {
-              __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-              issn: "urla_4_1.dekaa",
-            },
-            { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
-          ],
-        },
-      ],
+      manifestationsWithAccess,
       hasDigitalAccess
     );
 
