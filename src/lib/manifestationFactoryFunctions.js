@@ -74,9 +74,12 @@ export function getInUniqueMaterialTypes(typeArr, uniqueMaterialTypes) {
 
 export function getFlatPidsByType(typeArr, manifestationsByType) {
   return (
-    manifestationsByType?.[typeArr]?.flatMap(
-      (manifestation) => manifestation.pid
-    ) || []
+    (typeArr &&
+      manifestationsByType &&
+      manifestationsByType?.[typeArr]?.flatMap(
+        (manifestation) => manifestation.pid
+      )) ||
+    []
   );
 }
 

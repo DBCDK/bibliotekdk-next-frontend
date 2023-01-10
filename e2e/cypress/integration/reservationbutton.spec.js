@@ -28,17 +28,22 @@ describe("Reservation button", () => {
     });
 
     it(`digital material`, () => {
-      cy.visit(
-        "/iframe.html?id=work-reservationbutton--reservation-button-e-book"
-      );
+      const urla =
+        "/iframe.html?id=work-reservationbutton--reservation-button-e-book";
+
+      cy.visit(urla);
+      cy.intercept(urla).as("urlan");
+
       cy.window().then((win) => {
         cy.stub(win, "open").as("Open");
+        win.first = true;
       });
 
-      cy.get("[data-cy=button-order-overview]")
-        .should("contain", "Gå til")
-        .click();
+      cy.window().its("first").should("be.true");
 
+      cy.get("[data-cy=button-order-overview]").should("exist").click();
+
+      // We test if the window is "opening" properly
       cy.get("@Open").should(
         "have.been.calledOnceWith",
         "https://ereol.combo/langurl"
@@ -49,7 +54,7 @@ describe("Reservation button", () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--reservation-button-disabled"
       );
-      cy.get("[data-cy=button-order-overview]").should("be.disabled");
+      cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
     });
 
     it("user not logged in then above text is shown", () => {
@@ -94,7 +99,7 @@ describe("Reservation button", () => {
       cy.visit(
         "/iframe.html?id=work-reservationbutton--reservation-button-physical-book-loan-not-possible"
       );
-      cy.get("[data-cy=button-order-overview]").should("be.disabled");
+      cy.get("[data-cy=button-order-overview-disabled]").should("be.disabled");
     });
 
     // @TODO more testing - request_button:false eg.

@@ -2,8 +2,9 @@ import { StoryDescription, StoryTitle } from "@/storybook";
 import ReservationButton, {
   OrderButton,
 } from "@/components/work/reservationbutton/ReservationButton";
-import { dummy_workDataApi } from "@/components/work/dummy.workDataApi";
 import { AccessEnum } from "@/lib/enums";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "work/ReservationButton",
@@ -14,8 +15,10 @@ export default exportedObject;
 const date = new Date();
 const time = date.getTime();
 
+const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
+
 function ReservationButtonComponentBuilder({
-  type = "Bog",
+  type = "bog",
   workId = "some-id-builder" + time,
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
@@ -58,91 +61,38 @@ function ReservationButtonStoryBuilder(storyname, resolvers = {}, query = {}) {
 export function ReservationButtonPhysicalBook() {
   return (
     <ReservationButtonComponentBuilder
-      type={"Bog"}
-      selectedPids={["some-pid-bog" + time]}
+      type={"bog"}
+      workId={"some-work-id-1"}
+      selectedPids={["some-pid-1"]}
     />
   );
 }
-ReservationButtonPhysicalBook.story = {
-  ...ReservationButtonStoryBuilder("Book", {
-    Query: {
-      work: () => {
-        return {
-          titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Bog" }],
-          workTypes: ["LITERATURE"],
-          manifestations: {
-            all: [
-              {
-                pid: "some-pid-bog" + time,
-              },
-            ],
-          },
-        };
-      },
-      manifestations: () => {
-        return [
-          {
-            pid: "some-pid-bog" + time,
-            materialTypes: [{ specific: "Bog" }],
-            access: [
-              {
-                __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-                loanIsPossible: true,
-              },
-            ],
-            workTypes: ["LITERATURE"],
-          },
-        ];
-      },
+
+ReservationButtonPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
     },
-  }),
-};
+  },
+});
 
 export function ReservationButtonEBook() {
+  useMockLoanerInfo("790900");
   return (
     <ReservationButtonComponentBuilder
-      type={"Ebog"}
-      selectedPids={["some-pid-ebog" + time]}
+      type={["ebog"]}
+      workId={"some-work-id-4"}
+      selectedPids={["some-pid-7"]}
     />
   );
 }
-ReservationButtonEBook.story = {
-  ...ReservationButtonStoryBuilder("Ebog", {
-    Query: {
-      work: () => {
-        return {
-          titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "Ebog" }],
-          workTypes: ["LITERATURE"],
-          manifestations: {
-            all: [
-              {
-                pid: "some-pid-ebog" + time,
-              },
-            ],
-          },
-        };
-      },
-      manifestations: () => {
-        return [
-          {
-            pid: "some-pid-ebog" + time,
-            materialTypes: [{ specific: "Ebog" }],
-            access: [
-              {
-                __resolveType: AccessEnum.EREOL,
-                url: "https://ereol.combo/langurl",
-                origin: "https://ereol.combo",
-              },
-            ],
-            workTypes: ["LITERATURE"],
-          },
-        ];
-      },
+ReservationButtonEBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
     },
-  }),
-};
+  },
+});
 
 export function ReservationButtonEAudioBook() {
   return (
@@ -233,58 +183,54 @@ ReservationButtonGame.story = {
 export function ReservationButtonDisabled() {
   return (
     <ReservationButtonComponentBuilder
-      type={"Ebog"}
+      type={"ebog"}
+      workId={"some-id-disabled" + time}
       selectedPids={["some-pid-disabled" + time]}
+      storyNameOverride={"ebog disabled"}
     />
   );
 }
 ReservationButtonDisabled.story = {
   ...ReservationButtonStoryBuilder("Button disabled", {
     Query: {
+      manifestations: () => {
+        return [
+          {
+            pid: "some-pid-disabled" + time,
+            access: [],
+          },
+        ];
+      },
       work: () => {
         return {
+          workId: "some-id-disabled" + time,
           titles: [{ main: "Hugo hejs" }],
-          materialTypes: [{ specific: "EBog" }],
+          materialTypes: [{ specific: "ebog" }],
           workTypes: ["LITERATURE"],
           manifestations: {
             all: [
               {
                 pid: "some-pid-disabled" + time,
+                access: [],
               },
             ],
           },
         };
       },
-      manifestations: () => {
-        return [
-          {
-            pid: "some-pid-disabled" + time,
-            materialTypes: [{ specific: "EBog" }],
-            access: [],
-          },
-        ];
-      },
-    },
-    MaterialType: {
-      specific: () => "Ebog",
-    },
-    Access: {
-      __resolveType: () => "InfomediaService",
-    },
-    Work: {
-      workTypes: () => ["LITERATURE"],
-    },
-    Manifestations: {
-      all: () => [],
     },
   }),
 };
 
 export function OrderButtonNotLoggedIn() {
-  const workId = "some-id-button-not-logged-in";
   const descriptionName = "Not logged in";
   const user = { isAuthenticated: false };
-  const data = dummy_workDataApi({ workId });
+  const access = [
+    {
+      pid: "some-pid-1",
+      id: "infomediaUrl",
+      __typename: AccessEnum.INFOMEDIA_SERVICE,
+    },
+  ];
 
   return (
     <div>
@@ -294,9 +240,7 @@ export function OrderButtonNotLoggedIn() {
       </StoryDescription>
       <OrderButton
         user={user}
-        chosenMaterialType={"avisartikel"}
-        work={data?.work}
-        manifestations={data?.work?.manifestations?.all}
+        access={access}
         onHandleGoToLogin={() => alert("DU SKAL LOGGE IND")}
       />
     </div>
