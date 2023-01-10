@@ -59,7 +59,7 @@ export function InfomediaReview({
           </Col>
         )}
         <div className={styles.row}>
-          {data.creators.length > 0 && (
+          {data.creators?.length > 0 && (
             <Col className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
@@ -67,7 +67,7 @@ export function InfomediaReview({
             </Col>
           )}
           <Col xs={12} className={styles.right}>
-            {data.creators.length > 0 && (
+            {data.creators?.length > 0 && (
               <Text type="text2" skeleton={skeleton} lines={1}>
                 {data.creators?.map((c) => c.display).join(", ")}
               </Text>

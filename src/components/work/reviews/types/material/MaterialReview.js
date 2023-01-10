@@ -35,9 +35,9 @@ export function contentParser({ content, manifestations }) {
   else {
     const regex = /(?<=\\)(.*?)(?=\\)/g;
     const match = content?.match(regex);
-    content?.replace(`\\${match}\\`, `"${match}"`);
+    const trimmed = content?.replace(`\\${match}\\`, `"${match}"`);
 
-    chunks.push(content);
+    chunks.push(trimmed);
   }
 
   // add tailing dot space after each paragraph
@@ -202,7 +202,7 @@ function LectorLink({ work }) {
   const title = work?.titles?.main?.[0] || "";
   const title_crator = encodeTitleCreator(title, creator);
 
-  const path = `/materiale/${title_crator}/${work.workId}`;
+  const path = `/materiale/${title_crator}/${work?.workId}`;
   return <Link href={path}>{work?.titles?.main}</Link>;
 }
 

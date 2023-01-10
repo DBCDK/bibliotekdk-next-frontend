@@ -7,8 +7,8 @@
  */
 export function sortReviews(a, b) {
   return (
-    Number(!!b.review?.reviewByLibrarians?.length) -
-      Number(!!a.review?.reviewByLibrarians?.length) ||
+    !!b.review?.reviewByLibrarians?.length -
+      !!a.review?.reviewByLibrarians?.length ||
     Number(!!b.access?.find((a) => a.url)) -
       Number(!!a.access?.find((a) => a.url)) ||
     Number(!!b.access?.find((a) => a.id)) -

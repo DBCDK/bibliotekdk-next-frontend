@@ -54,7 +54,7 @@ export function ExternalReview({
           </Col>
         )}
         <div className={styles.row}>
-          {data.creators.length > 0 && (
+          {data.creators?.length > 0 && (
             <Col className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
@@ -63,7 +63,7 @@ export function ExternalReview({
           )}
 
           <Col xs={12} className={styles.right}>
-            {data.creators.length > 0 && (
+            {data.creators?.length > 0 && (
               <Col xs={10} className={styles.author}>
                 {!skeleton && (
                   <Text type="text2">
