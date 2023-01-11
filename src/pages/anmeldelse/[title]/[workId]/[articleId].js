@@ -89,11 +89,9 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
   const user = useUser();
-  const {
-    data,
-    isLoading: isLoadingWork,
-    error,
-  } = useData(workFragments.reviews({ workId }));
+  const { data, isLoading: isLoadingWork } = useData(
+    workFragments.reviews({ workId })
+  );
 
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
