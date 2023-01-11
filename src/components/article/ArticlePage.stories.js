@@ -35,6 +35,18 @@ WrappedInfomediaReviewPage.story = {
                   titles: {
                     main: ["Great book"],
                   },
+                  subjects: {
+                    dbcVerified: [
+                      {
+                        display: "Some topic",
+                        type: "TOPIC",
+                      },
+                      {
+                        display: "Some other topic",
+                        type: "TOPIC",
+                      },
+                    ],
+                  },
                   relations: {
                     hasReview: [
                       {
@@ -50,18 +62,7 @@ WrappedInfomediaReviewPage.story = {
                             id: "some-article-id",
                           },
                         ],
-                        subjects: {
-                          dbcVerified: [
-                            {
-                              display: "Some topic",
-                              type: "TOPIC",
-                            },
-                            {
-                              display: "Some other topic",
-                              type: "TOPIC",
-                            },
-                          ],
-                        },
+
                         physicalDescriptions: [
                           {
                             summary: "Some page number",
@@ -81,6 +82,7 @@ WrappedInfomediaReviewPage.story = {
                   },
                 }
               : null,
+
           infomedia: (args) =>
             args.variables.id === "some-article-id"
               ? {
@@ -183,7 +185,7 @@ export function InfomediaArticle() {
           '<p id="p1">Artiklens indhold er her</p><p id="p2"><em style="bold">Noget med fed</em></p><p id="p2"><em style="italic">Noget med kursiv</em></p>',
       },
       category: ["En kategori"],
-      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      creators: [{ display: "Gudrun Jensen" }, { display: "Anders Andersen" }],
       paper: "Computerworld",
       deliveredBy: "Infomedia",
       disclaimer: {
@@ -207,7 +209,7 @@ export function InfomediaArticlePublicData() {
       title: "Titel på Infomedia-artikel",
       entityCreated: "19. Marts 2021",
       category: ["En kategori"],
-      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      creators: [{ display: "Gudrun Jensen" }, { display: "Anders Andersen" }],
       deliveredBy: "Infomedia",
     },
   };
