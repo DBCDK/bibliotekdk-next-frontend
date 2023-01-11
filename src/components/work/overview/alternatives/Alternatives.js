@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
 import Col from "react-bootstrap/Col";
-import { accessUtils, checkDigitalCopy } from "@/lib/accessFactory";
+import { accessFactory, checkDigitalCopy } from "@/lib/accessFactoryUtils";
 import { useMemo } from "react";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
@@ -16,7 +16,7 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
   const { manifestations, workId } = { ...context };
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(() => {
-    return accessUtils(manifestations);
+    return accessFactory(manifestations);
   }, [manifestations]);
 
   let allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);

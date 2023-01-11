@@ -1,8 +1,15 @@
 import { chain } from "lodash";
 import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
-import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
+import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
+/**
+ * Returns accesses for a single manifestation
+ * these accesses have additional manifestation details
+ * used by {@link getAllAccess}
+ * @param manifestation
+ * @return {*}
+ */
 export function getAccessForSingleManifestation(manifestation) {
   return manifestation?.access?.map((singleAccess) => {
     return {
@@ -24,10 +31,22 @@ export function getAccessForSingleManifestation(manifestation) {
   });
 }
 
+/**
+ * Returns accesses for a all given manifestations
+ * these accesses have additional manifestation details
+ * from their respective manifestation
+ * @param manifestations
+ * @return {*}
+ */
 export function getAllAccess(manifestations) {
   return manifestations?.flatMap(getAccessForSingleManifestation);
 }
 
+/**
+ * Enrich InfomediaAccess with url, origin, and accessType
+ * @param singleInfomediaAccess
+ * @return {*|{accessType: string, origin: string, url: string}}
+ */
 export function enrichInfomediaAccess(singleInfomediaAccess) {
   return singleInfomediaAccess?.id
     ? {
@@ -46,6 +65,11 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
     : singleInfomediaAccess;
 }
 
+/**
+ * Enrich any type of access with __typename specific fields
+ * @param singleAccess
+ * @return {*}
+ */
 export function enrichSingleAccess(singleAccess) {
   const enrichMapper = {
     [AccessEnum.INFOMEDIA_SERVICE]: () => enrichInfomediaAccess(singleAccess),
@@ -54,8 +78,11 @@ export function enrichSingleAccess(singleAccess) {
   return enrichMapper ? enrichMapper() : singleAccess;
 }
 
-// Prioritisers
-//
+/**
+ * Prioritise a __typename AccessUrl-access
+ * @param access
+ * @return {number}
+ */
 export function prioritiseAccessUrl(access) {
   const accessUrl_priorityPenalty = [
     typeof access.url !== "string" || !access.url,
@@ -71,9 +98,21 @@ export function prioritiseAccessUrl(access) {
     1
   );
 }
+
+/**
+ * Prioritise a __typename InfomediaService-access
+ * @param access
+ * @return {number}
+ */
 export function prioritiseInfomediaService(access) {
   return typeof access?.id === "string" && access?.id ? 0 : 1;
 }
+
+/**
+ * Prioritise a __typename Ereol-access
+ * @param access
+ * @return {number}
+ */
 export function prioritiseEreol(access) {
   const ereol_priorityPenalty = [
     typeof access.url !== "string" || !access.url,
@@ -87,9 +126,21 @@ export function prioritiseEreol(access) {
     1
   );
 }
+
+/**
+ * Prioritise a __typename DigitalArticleService-access
+ * @param access
+ * @return {number}
+ */
 export function prioritiseDigitalArticleService(access) {
   return typeof access?.issn === "string" && access?.issn ? 0 : 1;
 }
+
+/**
+ * Prioritise a __typename InterLibraryLoan-access
+ * @param access
+ * @return {number}
+ */
 export function prioritiseInterLibraryLoan(access) {
   return typeof access?.loanIsPossible === "boolean" && access?.loanIsPossible
     ? 0
@@ -133,7 +184,6 @@ export function prioritisedAccess(access) {
     accessInternalValuePriority: accessInternalValuePriority,
   };
 }
-/** --------------------- **/
 
 /**
  * sortPrioritisedAccess sorts 2 accesses between each other using {@link prioritisedAccess}
@@ -153,6 +203,11 @@ export function sortPrioritisedAccess(a, b) {
   );
 }
 
+/**
+ * Provide a sorted array of all enriched accesses with manifestation details
+ * @param manifestations
+ * @return {*}
+ */
 export function getAllEnrichedAccessSorted(manifestations) {
   return chain(manifestations)
     ?.flatMap(getAccessForSingleManifestation)
@@ -161,6 +216,13 @@ export function getAllEnrichedAccessSorted(manifestations) {
     ?.value();
 }
 
+/**
+ * Provide a list of all allowed accesses
+ * For when user does not have DigitalArticleService-access
+ * @param accesses
+ * @param hasDigitalAccess
+ * @return {*[]}
+ */
 export function getAllowedAccesses(accesses, hasDigitalAccess) {
   const onlineAccesses = accesses?.filter(
     (singleAccess) =>
@@ -187,6 +249,13 @@ export function getAllowedAccesses(accesses, hasDigitalAccess) {
   ];
 }
 
+/**
+ * Provide the same as {@link getAllowedAccesses} but from manifestations
+ * instead of accesses
+ * @param manifestations
+ * @param hasDigitalAccess
+ * @return {*[]}
+ */
 export function getAllAllowedEnrichedAccessSorted(
   manifestations,
   hasDigitalAccess
@@ -210,7 +279,7 @@ function checkSingleDigitalCopy(singleAccess) {
 }
 
 /**
- * Check digitalCopy on any
+ * Check digitalCopy on all given accesses
  * @param enrichedAccesses
  * @return {boolean}
  */
@@ -231,7 +300,7 @@ function checkSinglePhysicalCopy(singleAccess) {
 }
 
 /**
- * Check physicalCopy on any
+ * Check physicalCopy on all given accesses
  * @param enrichedAccesses
  * @return {boolean}
  */
@@ -239,6 +308,11 @@ export function checkPhysicalCopy(enrichedAccesses) {
   return enrichedAccesses?.map(checkSinglePhysicalCopy);
 }
 
+/**
+ * Check isPeriodica on single
+ * @param singleAccess
+ * @return {boolean}
+ */
 function getIsSingleAccessPeriodicaLike(singleAccess) {
   return (
     !!singleAccess?.workTypes?.find(
@@ -249,8 +323,7 @@ function getIsSingleAccessPeriodicaLike(singleAccess) {
 }
 
 /**
- * Handle this work as a periodica
- *
+ * Check isPeriodica on all given accesses
  * @returns {boolean}
  * @param enrichedAccesses
  */
@@ -258,15 +331,17 @@ export function getAreAccessesPeriodicaLike(enrichedAccesses) {
   return enrichedAccesses?.map(getIsSingleAccessPeriodicaLike);
 }
 
-export function accessUtils(manifestations) {
+/**
+ * Provide accessFactory that controls enriched accesses for given manifestations
+ * @param manifestations
+ * @return {{getAllAllowedEnrichedAccessSorted(*): *[], digitalCopy: *, physicalCopy: *, allEnrichedAccesses: (*|*[])}|*[]}
+ */
+export function accessFactory(manifestations) {
   const allEnrichedAccesses =
     (manifestations && getAllEnrichedAccessSorted(manifestations)) || [];
-  const digitalCopy = checkDigitalCopy(allEnrichedAccesses)?.find(
-    (single) => single === true
-  );
-  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses)?.find(
-    (single) => single === true
-  );
+  const digitalCopy = checkDigitalCopy(allEnrichedAccesses);
+  const physicalCopy = checkPhysicalCopy(allEnrichedAccesses);
+  const isPeriodicaLikeArray = getAreAccessesPeriodicaLike(allEnrichedAccesses);
 
   return {
     allEnrichedAccesses: allEnrichedAccesses,
@@ -276,7 +351,8 @@ export function accessUtils(manifestations) {
         hasDigitalAccess
       );
     },
-    digitalCopy: digitalCopy,
-    physicalCopy: physicalCopy,
+    digitalCopyArray: digitalCopy,
+    physicalCopyArray: physicalCopy,
+    isPeriodicaLikeArray: isPeriodicaLikeArray,
   };
 }

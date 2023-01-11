@@ -1,9 +1,9 @@
 import { comparableYear } from "@/lib/utils";
-import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 export function sortManifestations(manifestations) {
   const { manifestationsByType } =
-    manifestationMaterialTypeUtils(manifestations);
+    manifestationMaterialTypeFactory(manifestations);
 
   return Object.entries(manifestationsByType)
     .sort((a, b) => a[0].localeCompare(b[0]))

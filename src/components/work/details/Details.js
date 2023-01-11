@@ -12,7 +12,7 @@ import styles from "./Details.module.css";
 import { useMemo } from "react";
 import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
 import { isEqual } from "lodash";
-import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
+import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
 function CreatorContributorTextHelper({ children }) {
   return (

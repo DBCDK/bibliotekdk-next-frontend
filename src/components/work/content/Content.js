@@ -12,7 +12,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Content.module.css";
 import { useMemo } from "react";
 import { isEqual } from "lodash";
-import { flattenMaterialType } from "@/lib/manifestationFactoryFunctions";
+import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
 /**
  * The Component function

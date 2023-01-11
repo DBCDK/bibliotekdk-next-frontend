@@ -1,6 +1,6 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
-import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
@@ -62,7 +62,7 @@ function getPageDescription(work) {
   const creator = work?.creators?.[0]?.display;
 
   const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
-    manifestationMaterialTypeUtils(work?.manifestations?.all);
+    manifestationMaterialTypeFactory(work?.manifestations?.all);
 
   // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
