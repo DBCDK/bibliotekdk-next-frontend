@@ -219,7 +219,7 @@ function ReservationButton({
   const { branchIsLoading, hasDigitalAccess } =
     useBranchUserAndHasDigitalAccess(selectedPids);
 
-  const { getAllAllowedEnrichedAccessSorted } = useMemo(
+  const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
     () => accessUtils(manifestations),
     [manifestations]
   );
@@ -259,7 +259,7 @@ function ReservationButton({
         openOrderModal({
           modal: modal,
           pids: pids,
-          selectedAccesses: access,
+          selectedAccesses: allEnrichedAccesses,
           workId: workId,
           singleManifestation: singleManifestation,
         })
