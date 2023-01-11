@@ -2,9 +2,17 @@ import { chain, isEqual, uniqWith, upperFirst } from "lodash";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 
 /**
+ * MaterialTypeArray with additional manifestation details, possibly enriched,
+ *   can any of these properties
+ * @typedef {Array} MaterialTypesArray
+ * @property {string} materialType
+ */
+
+/**
  * Format to array from url
+ * @example formatMaterialTypesFromUrl("fisk / hest") => ["fisk", "hest"]
  * @param materialTypesUrl
- * @return {*|*[]}
+ * @return {MaterialTypesArray}
  */
 export function formatMaterialTypesFromUrl(materialTypesUrl) {
   return materialTypesUrl !== "" ? materialTypesUrl?.split(" / ") : [];
@@ -12,15 +20,17 @@ export function formatMaterialTypesFromUrl(materialTypesUrl) {
 
 /**
  * Format to url from array
+ * @example formatMaterialTypesToUrl(["fisk", "hest"]) => "fisk / hest"
  * @param materialTypeArray
- * @return {*}
+ * @return {string}
  */
 export function formatMaterialTypesToUrl(materialTypeArray) {
   return materialTypeArray?.join(" / ");
 }
 
 /**
- * Format to cypress (cypress/dataCy does not like non-ascii)
+ * Format to cypress (cypress/dataCy does not like space)
+ * @example formatMaterialTypesToCypress(["fisk og hest", "ko og ged"]) => "fisk-og-hest/ko-og-ged"
  * @param materialTypeArray
  * @return {*}
  */
@@ -30,6 +40,7 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
 
 /**
  * Format to presentation is MaterialTypesSwitcher and searchResult
+ * @example formatMaterialTypesToPresentation(["fisk og hest", "ko og ged"]) => "Fisk og hest / Ko og ged"
  * @param materialTypeArray
  * @return {*}
  */
@@ -62,7 +73,7 @@ export function flatMapMaterialTypes(manifestations) {
 /**
  * All given manifestations grouped by materialTypes
  * @param manifestations
- * @return {unknown}
+ * @return {Object}
  */
 export function groupManifestations(manifestations) {
   return chain(manifestations)
@@ -80,9 +91,14 @@ export function groupManifestations(manifestations) {
 
 /**
  * Comparison of strings of arrays (by danish language)
+ *  MaterialTypeArrays can be compared against each other to
+ *  have the proper order
+ * @example compareArraysOfStrings(["fisk", "ko"], ["hest", "ged"]) => 0
+ * @example compareArraysOfStrings(["fisk"], ["fisk", "ko"]) => 0
+ * @example compareArraysOfStrings(["fisk", "ko"], ["fisk"]) => 1
  * @param a
  * @param b
- * @return {*|number}
+ * @return {number}
  */
 export function compareArraysOfStrings(a, b) {
   const jsonA = JSON.stringify(a).slice(1, -1);
@@ -99,9 +115,10 @@ export function compareArraysOfStrings(a, b) {
 }
 
 /**
- * All unique materialTypeArrays
+ * Provides all unique materialTypeArrays from a given array of materialTypeArrays
+ *  Sorting is also done by sort using {@link compareArraysOfStrings}
  * @param flatMaterialTypes
- * @return {*}
+ * @return {Array<MaterialTypesArray>}
  */
 export function getUniqueMaterialTypes(flatMaterialTypes) {
   // We use sort because we actually want to keep the unique arrays sorted
@@ -162,6 +179,12 @@ export function enrichManifestationsWithDefaultFrontpages(
 
 /**
  * Provide manifestationMaterialTypeFactory that controls manifestations sorted by type
+ * - flatMaterialTypes derived from {@link flatMapMaterialTypes}
+ * - uniqueMaterialTypes derived from {@link getUniqueMaterialTypes}
+ * - inUniqueMaterialTypes derived from {@link getInUniqueMaterialTypes}
+ * - manifestationsByType derived from {@link groupManifestations}
+ * - flatPidsByType derived from {@link getFlatPidsByType}
+ * - manifestationsEnrichedWithDefaultFrontpage derived from {@link enrichManifestationsWithDefaultFrontpages}
  * @param manifestations
  * @return {{manifestationsByType: *, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: *, flatPidsByType: (function(*): *|*[])}}
  */
