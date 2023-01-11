@@ -6,6 +6,8 @@ import { fetchAll } from "@/lib/api/apiServerOnly";
 import { infomediaArticle } from "@/lib/api/infomedia.fragments";
 import useUser from "@/components/hooks/useUser";
 
+import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
+
 import * as workFragments from "@/lib/api/work.fragments";
 
 import {
@@ -13,7 +15,6 @@ import {
   ContentSkeleton,
 } from "@/components/article/content/Content.js";
 
-import { timestampToShortDate } from "@/utils/datetimeConverter";
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
 
@@ -44,11 +45,23 @@ export function ReviewPage(props) {
  * Parse work/article data to a format the Content component likes
  */
 function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
+  // Review creation date
+  // if signed in, use the dateLine
+  // if public, use the hostPublication?.issue
+  // fallbacks to prettify recordCreationDate
+  const entityCreated =
+    infomediaArticle?.dateLine ||
+    dateToShortDate(
+      publicReviewData?.hostPublication?.issue ||
+        (publicReviewData?.recordCreationDate &&
+          numericToISO(publicReviewData?.recordCreationDate)),
+      "d. "
+    );
+
   return {
-    creators: [{ name: publicReviewData?.author }],
+    creators: publicReviewData?.creators,
     title: infomediaArticle?.headLine || work?.titles?.main?.[0],
-    entityCreated:
-      publicReviewData?.date && timestampToShortDate(publicReviewData?.date),
+    entityCreated,
     subHeadLine:
       infomediaArticle?.subHeadLine !== infomediaArticle?.headLine &&
       infomediaArticle?.subHeadLine,
@@ -56,7 +69,7 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
     body: {
       value: infomediaArticle?.text,
     },
-    paper: infomediaArticle?.paper || publicReviewData?.origin,
+    paper: infomediaArticle?.paper || publicReviewData?.hostPublication?.title,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
       .map((subject) => subject.display),
@@ -65,8 +78,10 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
       logo: "/infomedia_logo.svg",
       text: infomediaArticle?.logo?.match(/<p>(.*?)<\/p>/)?.[1],
     },
-    pages: publicReviewData?.periodica?.pages,
-    rating: publicReviewData?.rating,
+    pages: publicReviewData?.physicalDescriptions
+      ?.map((d) => d.summary)
+      ?.join(", "),
+    rating: publicReviewData?.review?.rating,
   };
 }
 
@@ -74,18 +89,22 @@ export default function Wrap() {
   const router = useRouter();
   const { workId, articleId } = router.query;
   const user = useUser();
-  const { data, isLoading: isLoadingWork } = useData(
-    workFragments._reviews({ workId })
+  const {
+    data,
+    isLoading: isLoadingWork,
+    error,
+  } = useData(workFragments.reviews({ workId }));
+
+  const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
+    el.access?.find((access) => access.id === articleId)
   );
-  const publicReviewData = data?.work?.workReviews?.find(
-    (review) => review.infomediaId === articleId || review.pid === articleId
-  );
+
   const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
     user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
 
   const article = parseInfomediaArticle(
-    publicReviewData,
+    publicReviewData?.[0],
     data?.work,
     infomediaArticleData?.infomedia?.article
   );
