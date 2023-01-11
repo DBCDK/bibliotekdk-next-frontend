@@ -16,9 +16,9 @@ export const FilterTypeEnum = Object.freeze({
   MAIN_LANGUAGES: "mainLanguages",
   GENRE_AND_FORM: "genreAndForm",
   CHILDREN_OR_ADULTS: "childrenOrAdults",
-  //FICTIONAL_CHARACTERS: "fictionalCharacters",
+  //FICTIONAL_CHARACTER: "fictionalCharacter",
   WORK_TYPES: "workTypes",
-  ALWAYS_LOAN: "canAlwaysBeLoaned",
+  //ALWAYS_LOAN: "canAlwaysBeLoaned",
 });
 
 /** TODO: Maybe use a map like this instead of
