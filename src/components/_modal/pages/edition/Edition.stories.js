@@ -9,7 +9,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { DEFAULT_STORY_PARAMETERS } = automock_utils();
+const { DEFAULT_STORY_PARAMETERS, USER_3, BRANCH_3 } = automock_utils();
 
 /** EditionComponentBuilder
  * @param {string} type
@@ -176,7 +176,16 @@ export function EditionAnyManifestationDigitalCopy() {
 EditionAnyManifestationDigitalCopy.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
-      resolvers: {},
+      resolvers: {
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
+          },
+        },
+      },
     },
   },
 });
