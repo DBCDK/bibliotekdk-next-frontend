@@ -1,5 +1,5 @@
 import { getIsPeriodicaLike } from "@/lib/utils";
-import { accessUtils } from "@/lib/accessFactory";
+import { accessFactory } from "@/lib/accessFactoryUtils";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
