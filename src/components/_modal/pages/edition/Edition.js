@@ -15,8 +15,8 @@ import { memo, useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import {
   formatMaterialTypesToPresentation,
-  manifestationMaterialTypeUtils,
-} from "@/lib/manifestationFactoryFunctions";
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 
 export const Edition = memo(function Edition({
@@ -38,7 +38,9 @@ export const Edition = memo(function Edition({
     availableAsDigitalCopy,
   } = inferredAccessTypes;
 
-  const { flatMaterialTypes } = manifestationMaterialTypeUtils([material]);
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+    manifestation,
+  ]);
 
   const materialType = flatMaterialTypes?.[0];
 

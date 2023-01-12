@@ -25,7 +25,7 @@ import React, { useMemo, useState } from "react";
 import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
-} from "@/lib/manifestationFactoryFunctions";
+} from "@/lib/manifestationFactoryUtils";
 
 /**
  * Renders the WorkPage component

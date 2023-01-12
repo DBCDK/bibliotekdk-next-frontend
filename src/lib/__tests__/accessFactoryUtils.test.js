@@ -12,7 +12,7 @@ import {
   prioritiseInfomediaService,
   prioritiseInterLibraryLoan,
   sortPrioritisedAccess,
-} from "@/lib/accessFactory";
+} from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 
 describe("getAllAccess", () => {
