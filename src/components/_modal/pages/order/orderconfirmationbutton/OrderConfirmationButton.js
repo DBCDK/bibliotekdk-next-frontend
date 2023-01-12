@@ -31,6 +31,7 @@ function OrderConfirmationButton({
               })}
             </Text>
           ) : isDigitalCopy &&
+            availableAsDigitalCopy &&
             context?.selectedAccesses?.[0]?.__typename !==
               AccessEnum.INTER_LIBRARY_LOAN ? (
             <Link
@@ -79,7 +80,6 @@ OrderConfirmationButton.propTypes = {
   skeleton: PropTypes.any,
   onClick: PropTypes.func,
 };
-
 export default function Wrap({
   context,
   validated,

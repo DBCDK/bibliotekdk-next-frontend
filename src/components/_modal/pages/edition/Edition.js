@@ -30,8 +30,13 @@ export const Edition = memo(function Edition({
   modal = {},
 }) {
   const { periodicaForm } = context;
-  const { isArticle, isPeriodicaLike, isArticleRequest, isDigitalCopy } =
-    inferredAccessTypes;
+  const {
+    isArticle,
+    isPeriodicaLike,
+    isArticleRequest,
+    isDigitalCopy,
+    availableAsDigitalCopy,
+  } = inferredAccessTypes;
 
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([
     manifestation,
@@ -49,6 +54,7 @@ export const Edition = memo(function Edition({
 
   const articleTypeLabel =
     isDigitalCopy &&
+    availableAsDigitalCopy &&
     context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
       ? "will-order-digital-copy"
       : isArticleRequest
