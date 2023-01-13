@@ -6,15 +6,15 @@ import animations from "@/components/base/animation/animations.module.css";
 
 function parseBorderPositioning(border) {
   return [
-    `top:${Boolean(border?.top)}`,
-    `bottom:${Boolean(border?.bottom)}`,
-  ].join(",");
+    `top_${Boolean(border?.top)}`,
+    `bottom_${Boolean(border?.bottom)}`,
+  ].join("_");
 }
 function parseBorderKeepVisible(border) {
   return [
-    `top:${Boolean(border?.top?.keepVisible)}`,
-    `bottom:${Boolean(border?.bottom?.keepVisible)}`,
-  ].join(",");
+    `top_${Boolean(border?.top?.keepVisible)}`,
+    `bottom_${Boolean(border?.bottom?.keepVisible)}`,
+  ].join("_");
 }
 
 /**
@@ -48,12 +48,14 @@ export default function Link({
   const Tag = tag;
   // Maybe wrap with an a-tag
   if (a) {
-    const underline_data_attributes = {
-      "data-underline-position": parseBorderPositioning(border),
-      "data-underline-keep-visible": parseBorderKeepVisible(border),
-      "data-underline-link-disabled": disabled,
-      "data-underline-animation-disabled": data_underline_animation_disabled,
-    };
+    const underline_data_exception_classes = [
+      animations[parseBorderPositioning(border)],
+      animations[parseBorderKeepVisible(border)],
+      ...(disabled ? [animations.link_disabled] : []),
+      ...(data_underline_animation_disabled
+        ? [animations.animation_disabled]
+        : []),
+    ].join(" ");
 
     const animationClass = !!border ? styles.border : "";
 
@@ -72,11 +74,11 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${animations.underlineContainer} ${animationClass} ${className}`}
+        className={`${animations.underlineContainer} ${underline_data_exception_classes} ${animationClass} ${className}`}
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
         data-display={data_display}
-        {...underline_data_attributes}
+        //{...underline_data_attributes}
       >
         {children}
       </Tag>

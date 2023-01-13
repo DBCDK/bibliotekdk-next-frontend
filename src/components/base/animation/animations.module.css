@@ -124,43 +124,43 @@
 
 /* Positioning */
 /* "top:false,bottom:true" is default!*/
-.underlineContainer[data-underline-position="top:false,bottom:false"] {
+.underlineContainer.position_top_false_bottom_false {
   --underline-background-hover-size_100pct: 0 0, 0 0;
 }
-.underlineContainer[data-underline-position="top:true,bottom:false"] {
+.underlineContainer.position_top_true_bottom_false {
   --underline-background-hover-size_100pct: 100% var(--underline-height), 0 0;
 }
-.underlineContainer[data-underline-position="top:false,bottom:true"] {
+.underlineContainer.position_top_false_bottom_true {
   --underline-background-hover-size_100pct: 0 0, 100% var(--underline-height);
 }
-.underlineContainer[data-underline-position="top:true,bottom:true"] {
+.underlineContainer.position_top_true_bottom_true {
   --underline-background-hover-size_100pct: 100% var(--underline-height), 100% var(--underline-height);
 }
 /* --- */
 
 /* Keep visible */
 /* "top:false,bottom:true" is default! */
-.underlineContainer[data-underline-keep-visible="top:false,bottom:false"] {
+.underlineContainer.keep_visible_top_false_bottom_false {
   --underline-background-size: 0 0, 0 0;
 }
-.underlineContainer[data-underline-keep-visible="top:true,bottom:false"] {
+.underlineContainer.keep_visible_top_true_bottom_false {
   --underline-background-size: 100% var(--underline-height), 0 var(--underline-height);
 }
-.underlineContainer[data-underline-keep-visible="top:false,bottom:true"] {
+.underlineContainer.keep_visible_top_false_bottom_true {
   --underline-background-size: 0 var(--underline-height), 100% var(--underline-height);
 }
-.underlineContainer[data-underline-keep-visible="top:true,bottom:true"] {
+.underlineContainer.keep_visible_top_true_bottom_true {
   --underline-background-size: 100% var(--underline-height), 100% var(--underline-height);
 }
 
 /* Turn off link */
-.underlineContainer[data-underline-link-disabled=true] {
+.underlineContainer.link_disabled {
   pointer-events: none;
   background-size: 0 0, 0 0;
 }
 
 /* Turn off animation */
-.underlineContainer[data-underline-animation-disabled=true] {
+.underlineContainer.animation_disabled {
   --underline-background-hover-size_0pct: var(--underline-background-size);
   --underline-background-hover-size_100pct: var(--underline-background-size);
 }
