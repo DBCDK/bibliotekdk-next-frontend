@@ -4,10 +4,7 @@ import {
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
-import {
-  specialSort,
-  getTemplateProps,
-} from "@/components/_modal/pages/options/Options.helper";
+import { getTemplateProps } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import { useData } from "@/lib/api/api";
@@ -15,6 +12,13 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 
+/**
+ * Component helper for link and description in options
+ * @param props
+ * @param templateProps
+ * @return {JSX.Element}
+ * @constructor
+ */
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { note, className } = props;
   const { linkProps, linkText, descriptionText } = templateProps;
@@ -27,6 +31,39 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
       {note && <Text type="text3">{note}</Text>}
       <Text type="text3">{descriptionText}</Text>
     </li>
+  );
+}
+
+/**
+ * OptionsListPrototyper is used for injecting modal and workId
+ * before used inside main code
+ * @param modal
+ * @param workId
+ * @param access
+ * @param index
+ * @param accessesArray
+ * @return {JSX.Element}
+ */
+function optionsListAllArgs(modal, workId, access, index, accessesArray) {
+  const props = {
+    ...access,
+    className: styles.item,
+    onOrder: () =>
+      openOrderModal({
+        modal: modal,
+        pids: accessesArray?.map((singleAccess) => singleAccess.pid),
+        selectedAccesses: [access],
+        workId: workId,
+        singleManifestation: true,
+      }),
+  };
+
+  return (
+    <OptionsLinkAndDescription
+      key={access.accessType + "-" + index}
+      props={props}
+      templateProps={getTemplateProps[access?.__typename](props)}
+    />
   );
 }
 
@@ -48,42 +85,25 @@ export function Options({ modal, context }) {
 
   const allowedAccessessByType = getAllowedAccessesByTypeName(hasDigitalAccess);
 
-  const allowedAccesses = [
-    ...allowedAccessessByType.onlineAccesses,
-    ...allowedAccessessByType.digitalArticleServiceAccesses,
-    ...allowedAccessessByType.interLibraryLoanAccesses,
-  ];
+  const onlineAccesses = allowedAccessessByType.onlineAccesses;
+  const digitalArticleServiceAccesses =
+    allowedAccessessByType.digitalArticleServiceAccesses;
+  const interLibraryLoanAccesses =
+    digitalArticleServiceAccesses.length > 0
+      ? []
+      : allowedAccessessByType.interLibraryLoanAccesses;
 
-  // quickfix - sort links from filmstriben - we want fjernleje on top
-  const orderedAccess = allowedAccesses?.sort(specialSort);
+  const optionsList = (access, index, accessesArray) =>
+    optionsListAllArgs(modal, workId, access, index, accessesArray);
 
   return (
-    orderedAccess && (
+    allowedAccessessByType && (
       <div className={styles.options}>
         <Top title={title} />
         <ul className={styles.list} key="options-ul">
-          {orderedAccess.map((access, index) => {
-            const props = {
-              ...access,
-              className: styles.item,
-              onOrder: () =>
-                openOrderModal({
-                  modal: modal,
-                  pids: [access?.pid],
-                  selectedAccesses: [access],
-                  workId: workId,
-                  singleManifestation: true,
-                }),
-            };
-
-            return (
-              <OptionsLinkAndDescription
-                key={access.accessType + "-" + index}
-                props={props}
-                templateProps={getTemplateProps[access?.__typename](props)}
-              />
-            );
-          })}
+          {onlineAccesses.map(optionsList)}
+          {digitalArticleServiceAccesses.slice(0, 1).map(optionsList)[0]}
+          {interLibraryLoanAccesses.map(optionsList)[0]}
         </ul>
       </div>
     )
