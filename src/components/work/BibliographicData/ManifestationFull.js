@@ -31,57 +31,60 @@ function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
 
   return (
-    <Col
-      key={"col1" + manifestation?.pid}
-      xs={12}
-      md={4}
-      data-cy="bibliographic-column1"
-      className={styles.fullmanifestation}
-    >
-      {manifestation?.cover?.detail && (
-        <Cover src={manifestation?.cover?.detail} size="thumbnail" />
-      )}
-      <div>
-        <ReservationButton
-          workId={workId}
-          selectedPids={[manifestation?.pid]}
-          singleManifestation={true}
-          buttonType="secondary"
-          size="small"
-        />
-      </div>
-      <div className={styles.addilinks}>
+    manifestation &&
+    manifestation?.pid && (
+      <Col
+        key={"col1" + manifestation?.pid}
+        xs={12}
+        md={4}
+        data-cy="bibliographic-column1"
+        className={styles.fullmanifestation}
+      >
+        {manifestation?.cover?.detail && (
+          <Cover src={manifestation?.cover?.detail} size="thumbnail" />
+        )}
         <div>
-          <span>
-            <LocalizationsLink
-              workId={workId}
-              selectedPids={[manifestation?.pid]}
-            />
-          </span>
+          <ReservationButton
+            workId={workId}
+            selectedPids={[manifestation?.pid]}
+            singleManifestation={true}
+            buttonType="secondary"
+            size="small"
+          />
         </div>
-        <div>
-          <Link
-            dataCy="link-references"
-            border={{ bottom: { keepVisible: true } }}
-            onClick={() =>
-              openReferencesModal(
-                modal,
-                [manifestation?.pid],
-                workId,
-                manifestation
-              )
-            }
-          >
-            <Text type="text3" className={styles.linkstyle}>
-              {Translate({
-                context: "references",
-                label: "label_references_title",
-              })}
-            </Text>
-          </Link>
+        <div className={styles.addilinks}>
+          <div>
+            <span>
+              <LocalizationsLink
+                workId={workId}
+                selectedPids={[manifestation?.pid]}
+              />
+            </span>
+          </div>
+          <div>
+            <Link
+              dataCy="link-references"
+              border={{ bottom: { keepVisible: true } }}
+              onClick={() =>
+                openReferencesModal(
+                  modal,
+                  [manifestation?.pid],
+                  workId,
+                  manifestation
+                )
+              }
+            >
+              <Text type="text3" className={styles.linkstyle}>
+                {Translate({
+                  context: "references",
+                  label: "label_references_title",
+                })}
+              </Text>
+            </Link>
+          </div>
         </div>
-      </div>
-    </Col>
+      </Col>
+    )
   );
 }
 
@@ -103,28 +106,31 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   }, [data?.manifestation]);
 
   return (
-    <Row>
-      <ColumnOne workId={workId} manifestation={data?.manifestation} />
-      <Col xs={12} md>
-        <div className={styles.container}>
-          {parsed?.map(({ label, value }) => {
-            return (
-              <div
-                className={styles.item}
-                key={label}
-                data-cy={cyKey({ name: `${label}`, prefix: "edition-data" })}
-              >
-                <Text type="text4" lines={1}>
-                  {label}
-                </Text>
-                <Text type="text3" lines={2} tag="span">
-                  {value}
-                </Text>
-              </div>
-            );
-          })}
-        </div>
-      </Col>
-    </Row>
+    data?.manifestation &&
+    data?.manifestation?.pid && (
+      <Row>
+        <ColumnOne workId={workId} manifestation={data?.manifestation} />
+        <Col xs={12} md>
+          <div className={styles.container}>
+            {parsed?.map(({ label, value }) => {
+              return (
+                <div
+                  className={styles.item}
+                  key={label}
+                  data-cy={cyKey({ name: `${label}`, prefix: "edition-data" })}
+                >
+                  <Text type="text4" lines={1}>
+                    {label}
+                  </Text>
+                  <Text type="text3" lines={2} tag="span">
+                    {value}
+                  </Text>
+                </div>
+              );
+            })}
+          </div>
+        </Col>
+      </Row>
+    )
   );
 }
