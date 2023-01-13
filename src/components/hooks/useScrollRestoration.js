@@ -37,7 +37,7 @@ export default function useScrollRestoration(router) {
         }
       };
 
-      if (!navigator.userAgent.includes("Cypress")) {
+      if (!window.navigator.userAgent.includes("Cypress")) {
         window.addEventListener("beforeunload", onBeforeUnload);
       }
       Router.events.on("routeChangeStart", onRouteChangeStart);
@@ -48,7 +48,7 @@ export default function useScrollRestoration(router) {
       });
 
       return () => {
-        if (!navigator.userAgent.includes("Cypress")) {
+        if (!window.navigator.userAgent.includes("Cypress")) {
           window.removeEventListener("beforeunload", onBeforeUnload);
         }
         Router.events.off("routeChangeStart", onRouteChangeStart);
