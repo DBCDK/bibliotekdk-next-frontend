@@ -1,12 +1,19 @@
 import styles from "./Options.module.css";
 import Top from "../base/top";
-import { openOrderModal } from "@/components/work/utils";
+import {
+  openOrderModal,
+  useBranchUserAndHasDigitalAccess,
+} from "@/components/work/utils";
 import {
   specialSort,
   getTemplateProps,
 } from "@/components/_modal/pages/options/Options.helper";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
+import { useData } from "@/lib/api/api";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { useMemo } from "react";
+import { accessFactory } from "@/lib/accessFactoryUtils";
 
 export function OptionsLinkAndDescription({ props, templateProps }) {
   const { note, className } = props;
@@ -24,7 +31,28 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
 }
 
 export function Options({ modal, context }) {
-  const { title, allowedAccesses, workId } = { ...context };
+  const { title, selectedPids, workId } = { ...context };
+
+  const manifestationResponse = useData(
+    selectedPids &&
+      manifestationFragments.alternativesManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = manifestationResponse?.data?.manifestations;
+
+  const { hasDigitalAccess } = useBranchUserAndHasDigitalAccess(selectedPids);
+
+  const { getAllowedAccessesByTypeName } = useMemo(() => {
+    return accessFactory(manifestations);
+  }, [manifestations]);
+
+  const allowedAccessessByType = getAllowedAccessesByTypeName(hasDigitalAccess);
+
+  const allowedAccesses = [
+    ...allowedAccessessByType.onlineAccesses,
+    ...allowedAccessessByType.digitalArticleServiceAccesses,
+    ...allowedAccessessByType.interLibraryLoanAccesses,
+  ];
 
   // quickfix - sort links from filmstriben - we want fjernleje on top
   const orderedAccess = allowedAccesses?.sort(specialSort);

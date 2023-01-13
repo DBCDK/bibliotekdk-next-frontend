@@ -8,38 +8,19 @@ import { useRouter } from "next/router";
 import Skeleton from "@/components/base/skeleton";
 import styles from "./Alternatives.module.css";
 import Col from "react-bootstrap/Col";
-import { accessFactory, checkDigitalCopy } from "@/lib/accessFactoryUtils";
+import { accessFactory } from "@/lib/accessFactoryUtils";
 import { useMemo } from "react";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
 
 function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
-  const { manifestations, workId } = { ...context };
+  const { manifestations, workId, selectedPids } = { ...context };
 
-  const { getAllAllowedEnrichedAccessSorted } = useMemo(() => {
+  const { getCountOfAllAllowedEnrichedAccessSorted } = useMemo(() => {
     return accessFactory(manifestations);
   }, [manifestations]);
 
-  let allowedAccesses = getAllAllowedEnrichedAccessSorted(hasDigitalAccess);
-
-  /**
-   * Sort away interlibrary loan if both that and digital access is possible
-   * we sort away the interlibrary loan !!
-   */
-  let key = -1;
-  if (hasDigitalAccess && checkDigitalCopy(allowedAccesses)) {
-    allowedAccesses.find((access, idx) => {
-      if (access.__typename === "InterLibraryLoan") {
-        key = idx;
-      }
-    });
-
-    if (key !== -1) {
-      allowedAccesses = allowedAccesses.slice(key, 1);
-    }
-  }
-
-  // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE each counted as single access
-  const count = allowedAccesses?.length;
+  // INTER_LIBRARY_LOAN and DIGITAL_ARTICLE_SERVICE counted as single access if either is present
+  const count = getCountOfAllAllowedEnrichedAccessSorted(hasDigitalAccess);
 
   if (!(count > 1)) {
     return null;
@@ -52,7 +33,7 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
         onClick={() =>
           modal.push("options", {
             title: Translate({ context: "modal", label: "title-options" }),
-            allowedAccesses: allowedAccesses,
+            selectedPids: selectedPids,
             workId: workId,
           })
         }
@@ -106,6 +87,7 @@ export default function Wrap({ workId, selectedPids }) {
         type,
         manifestations,
         title_author,
+        selectedPids,
       }}
     />
   );
