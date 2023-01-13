@@ -37,7 +37,9 @@ export default function useScrollRestoration(router) {
         }
       };
 
-      window.addEventListener("beforeunload", onBeforeUnload);
+      if (!navigator.userAgent.includes("Cypress")) {
+        window.addEventListener("beforeunload", onBeforeUnload);
+      }
       Router.events.on("routeChangeStart", onRouteChangeStart);
       Router.events.on("routeChangeComplete", onRouteChangeComplete);
       Router.beforePopState(() => {
@@ -46,7 +48,9 @@ export default function useScrollRestoration(router) {
       });
 
       return () => {
-        window.removeEventListener("beforeunload", onBeforeUnload);
+        if (!navigator.userAgent.includes("Cypress")) {
+          window.removeEventListener("beforeunload", onBeforeUnload);
+        }
         Router.events.off("routeChangeStart", onRouteChangeStart);
         Router.events.off("routeChangeComplete", onRouteChangeComplete);
         Router.beforePopState(() => true);
