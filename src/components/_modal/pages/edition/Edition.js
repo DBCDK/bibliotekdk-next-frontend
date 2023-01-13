@@ -33,9 +33,7 @@ export const Edition = memo(function Edition({
   const { isArticle, isPeriodicaLike, isArticleRequest, isDigitalCopy } =
     inferredAccessTypes;
 
-  const { flatMaterialTypes } = manifestationMaterialTypeFactory([
-    manifestation,
-  ]);
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([material]);
 
   const materialType = flatMaterialTypes?.[0];
 
