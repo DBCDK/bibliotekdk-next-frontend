@@ -271,13 +271,28 @@ export function getAllEnrichedAccessSorted(manifestations) {
 }
 
 /**
- * Provide a list of all allowed accesses
+ * Helper function for checking if single access is __typename valid interLibraryLoan
+ * @param singleAccess
+ * @return {boolean}
+ */
+export function validInterLibraryLoanAccess(singleAccess) {
+  return (
+    singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
+    singleAccess?.loanIsPossible === true
+  );
+}
+
+/**
+ * Provide allowed accesses, divided into 3 seperate arrays:
+ * - onlineAccesses: includes __typename: AccessUrl, InfomediaService, Ereol
+ * - digitalArticleServiceAccesses: for __typename DigitalArticleService
+ * - interLibraryLoanAccesses: for __typename InterLibraryLoanAccesses
  * For when user does not have DigitalArticleService-access
  * @param accesses
  * @param hasDigitalAccess
- * @return {Access[]}
+ * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}}
  */
-export function getAllowedAccesses(accesses, hasDigitalAccess) {
+export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
   const onlineAccesses = accesses?.filter(
     (singleAccess) =>
       singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
@@ -290,22 +305,20 @@ export function getAllowedAccesses(accesses, hasDigitalAccess) {
       hasDigitalAccess
   );
 
-  const physicalAccesses = accesses?.filter(
-    (singleAccess) =>
-      singleAccess?.__typename === AccessEnum.INTER_LIBRARY_LOAN &&
-      singleAccess?.loanIsPossible === true
+  const interLibraryLoanAccesses = accesses?.filter(
+    validInterLibraryLoanAccess
   );
 
-  return [
-    ...onlineAccesses,
-    ...digitalArticleServiceAccesses?.slice(0, 1),
-    ...physicalAccesses?.slice(0, 1),
-  ];
+  return {
+    onlineAccesses: onlineAccesses,
+    digitalArticleServiceAccesses: digitalArticleServiceAccesses,
+    interLibraryLoanAccesses: interLibraryLoanAccesses,
+  };
 }
 
 /**
- * Provide the same as {@link getAllowedAccesses} but from manifestations
- * instead of accesses
+ * Provide the list of all allowed accesses using {@link getAllowedAccessesByTypeName}
+ * argument is manifestations instead of accesses
  * @param manifestations
  * @param hasDigitalAccess
  * @return {Access[]}
@@ -314,9 +327,47 @@ export function getAllAllowedEnrichedAccessSorted(
   manifestations,
   hasDigitalAccess
 ) {
-  return getAllowedAccesses(
+  const {
+    onlineAccesses,
+    digitalArticleServiceAccesses,
+    interLibraryLoanAccesses,
+  } = getAllowedAccessesByTypeName(
     (manifestations && getAllEnrichedAccessSorted(manifestations)) || [],
     hasDigitalAccess
+  );
+
+  return [
+    ...onlineAccesses,
+    ...digitalArticleServiceAccesses,
+    ...interLibraryLoanAccesses,
+  ];
+}
+
+/**
+ * Provide the count as all allowed accesses using {@link getAllowedAccessesByTypeName}
+ * argument is manifestations instead of accesses
+ * - Counting DigitalArticleService and InterLibraryLoan only once together
+ * @param manifestations
+ * @param hasDigitalAccess
+ * @return {number}
+ */
+export function getCountOfAllAllowedEnrichedAccessSorted(
+  manifestations,
+  hasDigitalAccess
+) {
+  const {
+    onlineAccesses,
+    digitalArticleServiceAccesses,
+    interLibraryLoanAccesses,
+  } = getAllowedAccessesByTypeName(
+    (manifestations && getAllEnrichedAccessSorted(manifestations)) || [],
+    hasDigitalAccess
+  );
+
+  return (
+    onlineAccesses.length +
+    [...digitalArticleServiceAccesses, ...interLibraryLoanAccesses]?.slice(0, 1)
+      ?.length
   );
 }
 
@@ -388,12 +439,14 @@ export function getAreAccessesPeriodicaLike(enrichedAccesses) {
 /**
  * Provide accessFactory that controls enriched accesses for given manifestations
  * - allEnrichedAccesses derived from {@link getAllEnrichedAccessSorted}
+ * - getAllowedAccessesByTypeName derived from {@link getAllowedAccessesByTypeName}
  * - getAllAllowedEnrichedAccessSorted derived from {@link getAllAllowedEnrichedAccessSorted}
+ * - getCountOfAllAllowedEnrichedAccessSorted derived from {@link getCountOfAllAllowedEnrichedAccessSorted}
  * - digitalCopyArray derived from {@link checkDigitalCopy}
  * - physicalCopyArray derived from {@link checkPhysicalCopy}
  * - isPeriodicalLikeArray derived from {@link getAreAccessesPeriodicaLike}
  * @param manifestations
- * @return {{digitalCopyArray: Array<boolean>, isPeriodicaLikeArray: Array<boolean>, getAllAllowedEnrichedAccessSorted(*): Access[], physicalCopyArray: Array<boolean>, allEnrichedAccesses: (Access[]|*[])}}
+ * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}|{digitalCopyArray: Array<boolean>, isPeriodicaLikeArray: Array<boolean>, getAllowedAccessesByTypeName(*): {digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}, getAllAllowedEnrichedAccessSorted(*): Access[], physicalCopyArray: Array<boolean>, getCountOfAllAllowedEnrichedAccessSorted(*): number, allEnrichedAccesses: (Access[]|*[])}|number|Access[]}
  */
 export function accessFactory(manifestations) {
   const allEnrichedAccesses =
@@ -404,8 +457,20 @@ export function accessFactory(manifestations) {
 
   return {
     allEnrichedAccesses: allEnrichedAccesses,
+    getAllowedAccessesByTypeName(hasDigitalAccess) {
+      return getAllowedAccessesByTypeName(
+        allEnrichedAccesses,
+        hasDigitalAccess
+      );
+    },
     getAllAllowedEnrichedAccessSorted(hasDigitalAccess) {
       return getAllAllowedEnrichedAccessSorted(
+        manifestations,
+        hasDigitalAccess
+      );
+    },
+    getCountOfAllAllowedEnrichedAccessSorted(hasDigitalAccess) {
+      return getCountOfAllAllowedEnrichedAccessSorted(
         manifestations,
         hasDigitalAccess
       );
