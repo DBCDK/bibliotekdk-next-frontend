@@ -229,7 +229,9 @@ function ReservationButton({
     [workResponse?.data?.work, manifestations, hasDigitalAccess]
   );
 
-  const pids = uniq(access?.map((singleAccess) => singleAccess?.pid));
+  const pids = uniq(
+    allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
+  );
 
   if (
     manifestationsResponse?.isLoading ||
