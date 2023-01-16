@@ -169,7 +169,7 @@ function Order({
             if (availableAsDigitalCopy) {
               onArticleSubmit(
                 pid,
-                pickupBranch.branchId,
+
                 context?.periodicaForm
               );
             } else {
@@ -292,7 +292,6 @@ export default function Wrap(props) {
       onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) =>
         handleSubmitPeriodicaArticleOrder(
           pid,
-          pickUpBranch,
           periodicaForm,
           loanerInfo,
           articleOrderMutation

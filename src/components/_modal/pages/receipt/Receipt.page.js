@@ -47,12 +47,20 @@ export function Receipt({
   const isOrdering = orderIsLoading || articleOrderIsLoading || delay;
   const isOrdered =
     !!orderData?.submitOrder?.orderId ||
-    articleOrderData?.submitPeriodicaArticleOrder?.status === "OK";
+    articleOrderData?.elba?.placeCopyRequest?.status === "OK";
   const isFailed =
+    !!articleOrder ||
     !!orderError ||
     !!articleOrderError ||
-    (articleOrderData?.submitPeriodicaArticleOrder?.status &&
-      articleOrderData?.submitPeriodicaArticleOrder?.status !== "OK");
+    (articleOrderData?.elba?.placeCopyRequest &&
+      articleOrderData?.elba?.placeCopyRequest?.status !== "OK");
+
+  let failedMessage = null;
+  if (isFailed) {
+    failedMessage = !!articleOrder
+      ? "ORDER FAILED"
+      : articleOrderData?.elba?.placeCopyRequest?.status;
+  }
 
   // Define order status' class'
   const orderingClass = isOrdering ? styles.ordering : "";
@@ -127,7 +135,10 @@ export function Receipt({
               {Translate({ context: "general", label: "close" })}
             </Button>
           </div>
-          <div className={styles.error}>Some error occured :(</div>
+          <div className={styles.error}>
+            An error occured :(
+            <div>{isFailed && failedMessage ? failedMessage : ""}</div>
+          </div>
         </div>
       </div>
     </div>
