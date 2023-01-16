@@ -17,7 +17,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
   } = usePickupBranch(pid);
 
   const workResponse = useData(
-    workId && workFragments.orderPageManifestations({ workId })
+    workId && workFragments.orderPageWorkWithManifestations({ workId })
   );
 
   const { data: workData, isLoading: isWorkLoading } = workResponse;
@@ -32,7 +32,11 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     availableAsPhysicalCopy,
     requireDigitalAccess,
   } = useMemo(() => {
-    return inferAccessTypes(workData?.work, periodicaForm, pickupBranch);
+    return inferAccessTypes(
+      periodicaForm,
+      pickupBranch,
+      workData?.work?.manifestations?.all
+    );
   }, [workData?.work, periodicaForm, pickupBranch]);
 
   const blockedUserResponse = useData(
