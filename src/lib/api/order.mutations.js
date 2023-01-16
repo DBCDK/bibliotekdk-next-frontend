@@ -56,7 +56,7 @@ export function submitPeriodicaArticleOrder({
     query: `
     mutation ($input: CopyRequestInput!) {
       elba {
-        placeCopyRequest(input: $input, dryRun: true) {
+        placeCopyRequest(input: $input) {
           status
         }
       }
