@@ -70,6 +70,7 @@ export function editionManifestations({ pid }) {
         creators {
           display
         }
+        workTypes
         ...manifestationCoverFragment
         ...accessFragment
       }
@@ -118,7 +119,7 @@ export function reservationButtonManifestations({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    query orderButtonTextBelowManifestations($pid: [String!]!) {
+    query reservationButtonManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
         pid
         titles {
@@ -126,9 +127,6 @@ export function reservationButtonManifestations({ pid }) {
         }
         materialTypes {
           specific
-        }
-        accessTypes {
-          display
         }
         workTypes
         ...accessFragment
@@ -142,26 +140,72 @@ export function reservationButtonManifestations({ pid }) {
   };
 }
 
+export function orderPageManifestations({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query orderPageManifestations($pid: [String!]!) {
+      manifestations(pid: $pid) {
+        ...manifestationDetailsForAccessFactory
+        ...accessFragment
+      }
+      monitor(name: "bibdknext_manifestation_manifestations")
+    }
+    ${manifestationDetailsForAccessFactory}
+    ${accessFragment}
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
+  pid
+  titles {
+    main
+    full
+  }
+  creators {
+    display
+    nameSort
+    roles {
+      functionCode
+      function {
+        plural
+        singular
+      }
+    }
+  }
+  materialTypes {
+    specific
+  }
+  workTypes
+}`;
+
 const accessFragment = `fragment accessFragment on Manifestation {
   access {
     __typename
     ... on AccessUrl {
-      url
       origin
+      url
+      note
       loginRequired
-    }
-    ... on Ereol {
-      url
-      origin
-    }
-    ... on InterLibraryLoan {
-      loanIsPossible
+      type
     }
     ... on InfomediaService {
       id
     }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+      note
+    }
     ... on DigitalArticleService {
       issn
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
     }
   }
 }`;
