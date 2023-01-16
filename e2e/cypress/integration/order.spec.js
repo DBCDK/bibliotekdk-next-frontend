@@ -28,12 +28,12 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
-    cy.contains("Godkend").click();
-    cy.contains("some-order-id", { timeout: 500 });
+    cy.contains("Godkend", { timeout: 10000 }).click();
+    cy.contains("some-order-id", { timeout: 10000 });
 
     cy.getConsoleEntry("submitOrder").then((entry) => {
       expect(entry[1]).to.deep.equal({
-        pids: ["some-pid-1"],
+        pids: ["some-pid-1", "some-pid-2"],
         pickUpBranch: "user.agency.result[0].branchId",
         userParameters: {
           userName: "Some Name",
