@@ -49,7 +49,7 @@ export function useGetManifestationsForOrderButton(workId, selectedPids) {
     return workResponse?.data?.work?.manifestations?.all?.flatMap(
       (manifestation) => manifestation.pid
     );
-  }, [workId, workResponse?.data?.work?.manifestations?.all]);
+  }, [workId, selectedPids, workResponse?.data?.work?.manifestations?.all]);
 
   const manifestationsResponse = useData(
     allPids &&
@@ -72,8 +72,8 @@ export function useGetManifestationsForOrderButton(workId, selectedPids) {
     );
   }, [
     pids,
-    manifestationsResponse?.data?.manifestations,
     selectedManifestationsPids,
+    manifestationsResponse?.data?.manifestations,
   ]);
 
   return {
