@@ -15,10 +15,10 @@ import {
 import { MaterialTypeEnum } from "@/lib/enums";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
-  accessUtils,
+  accessFactory,
   checkDigitalCopy,
   checkPhysicalCopy,
-} from "@/lib/accessFactory";
+} from "@/lib/accessFactoryUtils";
 import { isEmpty, uniq } from "lodash";
 
 function TextAboveButton({ access, user }) {
@@ -220,7 +220,7 @@ function ReservationButton({
     useBranchUserAndHasDigitalAccess(selectedPids);
 
   const { getAllAllowedEnrichedAccessSorted, allEnrichedAccesses } = useMemo(
-    () => accessUtils(manifestations),
+    () => accessFactory(manifestations),
     [manifestations]
   );
 
@@ -229,7 +229,9 @@ function ReservationButton({
     [workResponse?.data?.work, manifestations, hasDigitalAccess]
   );
 
-  const pids = uniq(access?.map((singleAccess) => singleAccess?.pid));
+  const pids = uniq(
+    allEnrichedAccesses?.map((singleAccess) => singleAccess?.pid)
+  );
 
   if (
     manifestationsResponse?.isLoading ||

@@ -18,8 +18,8 @@ import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
   formatMaterialTypesToUrl,
-  manifestationMaterialTypeUtils,
-} from "@/lib/manifestationFactoryFunctions";
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 /**
  * Row representation of a search result entry
@@ -44,7 +44,7 @@ export default function ResultRow({
   }, [work?.manifestations]);
 
   const { uniqueMaterialTypes } = useMemo(() => {
-    return manifestationMaterialTypeUtils(work?.manifestations?.all);
+    return manifestationMaterialTypeFactory(work?.manifestations?.all);
   }, [work?.manifestations?.all]);
 
   return (

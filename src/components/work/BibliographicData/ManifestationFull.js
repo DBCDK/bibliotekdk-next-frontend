@@ -102,6 +102,10 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
     return parseManifestation(data?.manifestation);
   }, [data?.manifestation]);
 
+  if (!data?.manifestation || !data?.manifestation?.pid) {
+    return <></>;
+  }
+
   return (
     <Row>
       <ColumnOne workId={workId} manifestation={data?.manifestation} />

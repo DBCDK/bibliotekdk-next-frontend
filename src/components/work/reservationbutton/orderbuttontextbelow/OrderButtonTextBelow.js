@@ -7,11 +7,11 @@ import { isEmpty } from "lodash";
 import Skeleton from "@/components/base/skeleton";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
-  accessUtils,
+  accessFactory,
   checkDigitalCopy,
   checkPhysicalCopy,
   getAreAccessesPeriodicaLike,
-} from "@/lib/accessFactory";
+} from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import { useMemo } from "react";
 import { useBranchUserAndHasDigitalAccess } from "@/components/work/utils";
@@ -81,7 +81,7 @@ export default function Wrap({ workId, selectedPids, skeleton }) {
     useBranchUserAndHasDigitalAccess(selectedPids);
 
   const { getAllAllowedEnrichedAccessSorted } = useMemo(
-    () => accessUtils(manifestations),
+    () => accessFactory(manifestations),
     [manifestations]
   );
 

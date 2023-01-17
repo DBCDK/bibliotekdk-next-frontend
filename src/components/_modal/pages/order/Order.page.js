@@ -15,6 +15,7 @@ import BlockedUserInformation from "@/components/_modal/pages/order/blockeduseri
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { onMailChange } from "@/components/_modal/pages/order/utils";
+import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 
 /**
  *  Order component function
@@ -248,32 +249,51 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  const { userInfo, pickupBranchInfo, accessTypeInfo, workResponse } =
+  const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation(
       context?.workId,
       context?.pid?.[0],
       context?.periodicaForm
     );
 
-  const { loanerInfo, updateLoanerInfo } = userInfo;
+  const { allowedAccessesByTypeName, manifestationResponse } =
+    useRelevantAccessesForOrderPage(context?.pids);
 
-  const {
-    data: workData,
-    isLoading: isWorkLoading,
-    isSlow,
-    error,
-  } = workResponse;
+  const digitalArticleServiceAccess =
+    allowedAccessesByTypeName?.digitalArticleServiceAccesses;
+
+  const interLibraryLoanAccess =
+    digitalArticleServiceAccess?.length > 0
+      ? []
+      : allowedAccessesByTypeName?.interLibraryLoanAccesses;
+
+  const orderPids = [
+    ...digitalArticleServiceAccess,
+    ...interLibraryLoanAccess,
+  ]?.map((singleAccess) => singleAccess.pid);
+
+  context.selectedAccesses = [
+    ...digitalArticleServiceAccess,
+    ...interLibraryLoanAccess,
+  ];
 
   const singleManifestation =
     context.orderType && context.orderType === "singleManifestation";
 
-  const orderPids = context?.pids;
+  const { loanerInfo, updateLoanerInfo } = userInfo;
 
-  if (isWorkLoading) {
-    return <OrderSkeleton isSlow={isSlow} />;
+  const {
+    data: manifestationData,
+    isLoading: isManifestationsLoading,
+    isSlow: isManifestationsSlow,
+    error: manifestationError,
+  } = manifestationResponse;
+
+  if (isManifestationsLoading) {
+    return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
 
-  if (error || !workData?.work) {
+  if (manifestationError || !manifestationData?.manifestations) {
     return <div>Error :( !!!!!</div>;
   }
 

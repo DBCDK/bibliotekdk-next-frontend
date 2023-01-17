@@ -1,5 +1,4 @@
-import { getIsPeriodicaLike } from "@/lib/utils";
-import { accessUtils } from "@/lib/accessFactory";
+import { accessFactory } from "@/lib/accessFactoryUtils";
 
 /**
  * Get a coverimage to use from given manifestations - from moreinfo OR default cover service
@@ -16,24 +15,27 @@ export function editionCover(manifestations) {
 }
 
 export function inferAccessTypes(
-  work,
   periodicaForm,
   initialPickupBranch,
-  manifestationsBeforeCheck = null
+  manifestations
 ) {
-  const manifestations = manifestationsBeforeCheck || work?.manifestations?.all;
+  const {
+    allEnrichedAccesses,
+    digitalCopyArray,
+    physicalCopyArray,
+    isPeriodicaLikeArray,
+  } = accessFactory(manifestations);
 
-  const { digitalCopy: isDigitalCopy, physicalCopy: isPhysicalCopy } =
-    accessUtils(manifestations);
+  const isDigitalCopy = digitalCopyArray?.find((single) => single === true);
+  const isPhysicalCopy = physicalCopyArray?.find((single) => single === true);
+  const isPeriodicaLike = isPeriodicaLikeArray?.find(
+    (single) => single === true
+  );
 
-  const isArticle = !!work?.workTypes?.find(
+  const isArticle = !!allEnrichedAccesses?.workTypes?.find(
     (workType) => workType.toLowerCase() === "article"
   );
 
-  const isPeriodicaLike = getIsPeriodicaLike(
-    work?.workTypes,
-    work?.materialTypes
-  );
   const isArticleRequest =
     !!periodicaForm?.titleOfComponent ||
     !!periodicaForm?.authorOfComponent ||

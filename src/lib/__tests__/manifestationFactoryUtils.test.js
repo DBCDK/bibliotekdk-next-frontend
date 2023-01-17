@@ -19,8 +19,8 @@ import {
   getInUniqueMaterialTypes,
   getUniqueMaterialTypes,
   groupManifestations,
-  manifestationMaterialTypeUtils,
-} from "@/lib/manifestationFactoryFunctions";
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 
 test("manifestationFactoryFunctions", () => {
   const actual = "";
@@ -330,7 +330,7 @@ describe("getFlatPidsByType", () => {
 
 describe("manifestationMaterialTypeUtils", () => {
   it("expect exact keys from factory function (remember to update test)", () => {
-    const actual = manifestationMaterialTypeUtils(
+    const actual = manifestationMaterialTypeFactory(
       manifestationFactoryFunctionFixture
     );
     const expectedKeys = [
