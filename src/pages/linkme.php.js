@@ -11,7 +11,7 @@
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
 import { pidToWorkId } from "@/lib/api/work.fragments";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 
 /**
@@ -27,40 +27,32 @@ export function checkQuery(query) {
 function LinkmePhp() {
   const router = useRouter();
 
-  const check = checkQuery(router.query);
-
-  if (!check) {
-    // check if clientside
-    typeof window !== "undefined" && router && router?.push("/404");
-  }
-
-  const { data, isLoading, error } = useData(
-    pidToWorkId({ pid: router.query["rec.id"] })
+  const { data, isLoading } = useData(
+    router?.query?.["rec.id"] && pidToWorkId({ pid: router.query["rec.id"] })
   );
-
-  if (error) {
-    router && router?.push("/404");
-  }
 
   // check if data fetching is done
   if (isLoading) {
     return <div>Rediricting ... </div>;
   }
 
+  if (data === null || data?.error) {
+    return <Custom404 />;
+  }
+
   // make a path to redirect to
   const workId = data?.work?.workId;
   const title = data?.work?.titles?.main?.[0];
   const creator = data?.work?.creators?.[0]?.display;
-  const title_author = encodeTitleCreator(title, creator);
-  const pathname = `/materiale/${title_author}/${workId}`;
+  const pathname = getCanonicalWorkUrl(title, creator, workId);
 
   // if all is well - redirect to work page
-  if (title_author && workId && data?.work) {
+  if (workId && data?.work) {
     router.push(pathname);
   } else {
     // something is wrong - we did not find title/author - goto  404 (not found) page
     // check if clientside
-    typeof window !== "undefined" && router && router?.push("/404");
+    return <Custom404 />;
   }
 }
 
