@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { pidToWorkId } from "@/lib/api/work.fragments";
 import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
+import Custom404 from "@/pages/404";
 
 /**
  * check if query is ok - for now we only check on rec.id.
@@ -43,8 +44,8 @@ function LinkmePhp() {
   // make a path to redirect to
   const workId = data?.work?.workId;
   const title = data?.work?.titles?.main?.[0];
-  const creator = data?.work?.creators?.[0]?.display;
-  const pathname = getCanonicalWorkUrl(title, creator, workId);
+  const creators = data?.work?.creators;
+  const pathname = getCanonicalWorkUrl({ title, creators, id: workId });
 
   // if all is well - redirect to work page
   if (workId && data?.work) {
