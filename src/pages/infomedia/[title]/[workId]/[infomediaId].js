@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
@@ -15,9 +14,10 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import { timestampToShortDate } from "@/utils/datetimeConverter";
+import Error from "next/error";
 
 export function InfomediaArticle(props) {
-  const { articleId, article, notFound, isLoading } = props;
+  const { articleId, article, notFound, isLoading, noAccess } = props;
 
   const router = useRouter();
 
@@ -25,6 +25,10 @@ export function InfomediaArticle(props) {
     <React.Fragment>
       <Header router={router} />
       {notFound ? (
+        <Error statusCode={404} />
+      ) : noAccess ? (
+        <ArticleLoginPrompt articleId={articleId} />
+      ) : notFound ? (
         <Error statusCode={404} />
       ) : isLoading ? (
         <ContentSkeleton />
@@ -100,10 +104,8 @@ export default function Wrap() {
   return (
     <InfomediaArticle
       article={article}
-      notFound={
-        (infomediaPublicData && !infomediaPublicData.work) ||
-        (infomediaArticleData && !infomediaArticleData?.infomedia?.article)
-      }
+      notFound={infomediaPublicData && !infomediaPublicData.work}
+      noAccess={infomediaArticleData?.infomedia?.error === "BORROWER_NOT_FOUND"}
       isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
       articleId={infomediaId}
     />

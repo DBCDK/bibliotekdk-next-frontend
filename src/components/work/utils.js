@@ -1,7 +1,12 @@
 import Translate from "@/components/base/translate";
-import { uniq } from "lodash";
-import { uniqueEntries } from "@/lib/utils";
 import Router from "next/router";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import useUser from "@/components/hooks/useUser";
+import { useData } from "@/lib/api/api";
+import * as branchesFragments from "@/lib/api/branches.fragments";
+import { useMemo } from "react";
+import { accessFactory } from "@/lib/accessFactoryUtils";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
 export function openLocalizationsModal(modal, pids, workId, materialType) {
   modal.push("localizations", {
@@ -12,10 +17,17 @@ export function openLocalizationsModal(modal, pids, workId, materialType) {
   });
 }
 
-export function openOrderModal(modal, pid, workId, singleManifestation) {
+export function openOrderModal({
+  modal,
+  pids,
+  selectedAccesses,
+  workId,
+  singleManifestation,
+}) {
   modal.push("order", {
     title: Translate({ context: "modal", label: "title-order" }),
-    pid: pid,
+    pids: pids,
+    selectedAccesses: selectedAccesses,
     workId: workId,
     ...(singleManifestation && { orderType: "singleManifestation" }),
   });
@@ -47,56 +59,31 @@ export function onOnlineAccess(url, target = "_blank") {
  * @param {object} work The work
  * @returns {string}
  */
-export function getPageDescription({ title, creators, materialTypes }) {
-  const creator = creators?.[0]?.display;
-  const allowedTypes = ["lydbog", "ebog", "bog"];
-  const types = uniq(
-    materialTypes
-      .map((entry) => {
-        for (let i = 0; i < allowedTypes?.length; i++) {
-          if (entry?.toLowerCase().includes(allowedTypes?.[i])) {
-            return allowedTypes?.[i];
-          }
-        }
-      })
-      .filter((type) => !!type)
-  );
+function getPageDescription(work) {
+  const title = work?.titles?.main[0];
+  const creator = work?.creators?.[0]?.display;
 
-  let typesString = "";
-  types.forEach((type, idx) => {
-    if (idx > 0) {
-      if (idx === types.length - 1) {
-        // last element
-        typesString += " eller ";
-      } else {
-        // middle element
-        typesString += ", ";
-      }
-    } else {
-      // first element
-      typesString = " som ";
-    }
-    typesString += type;
-  });
+  const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
+    manifestationMaterialTypeFactory(work?.manifestations?.all);
+
+  // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
+  let types = [];
+
+  inUniqueMaterialTypes(["bog"]) && types.push("bog");
+  inUniqueMaterialTypes(["ebog"]) && types.push("ebog");
+  materialTypes
+    ?.filter((matArray) => matArray.length === 1)
+    .filter((matArray) => matArray?.[0].startsWith("lydbog")) &&
+    types.push("lydbog");
+  materialTypes?.filter((matArray) => matArray.length > 1).length > 1 &&
+    types.push("sammensat materiale");
+
+  const typesString =
+    "som " + types.slice(0, -1).join(", ") + " eller " + types.slice(-1);
 
   return `Lån ${title}${
-    creator ? ` af ${creator}` : ""
-  }${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
-}
-
-/**
- * Get materialtypes from given manifestations.
- * @param manifestations
- * @returns {*}
- */
-function getMaterialTypes(manifestations) {
-  return uniqueEntries(
-    manifestations?.flatMap((manifestation) => {
-      return manifestation.materialTypes?.map((materialType) => {
-        return materialType.specific;
-      });
-    })
-  );
+    creator && ` af ${creator}`
+  } ${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
 }
 
 /**
@@ -105,8 +92,6 @@ function getMaterialTypes(manifestations) {
  * @returns {{description: string, title: string}}
  */
 export function getSeo(work) {
-  const materialTypes = getMaterialTypes(work?.manifestations?.all);
-  //return materialTypes;
   // Return title and description
   return {
     title: `${work?.titles?.main[0]}${
@@ -114,10 +99,83 @@ export function getSeo(work) {
         ? ` af ${work?.creators[0].display}`
         : ""
     }`,
-    description: getPageDescription({
-      title: work?.titles?.main[0],
-      creators: work?.creators,
-      materialTypes,
-    }),
+    description: getPageDescription(work),
+  };
+}
+
+export function useBranchUserAndHasDigitalAccess(selectedPids) {
+  const { loanerInfo } = useUser();
+
+  const {
+    data: branchUserData,
+    isLoading: branchIsLoading,
+    isSlow: branchIsSlow,
+  } = useData(
+    selectedPids &&
+      loanerInfo?.pickupBranch &&
+      branchesFragments.branchDigitalCopyAccess({
+        branchId: loanerInfo?.pickupBranch,
+      })
+  );
+
+  const hasDigitalAccess = useMemo(() => {
+    return (
+      branchUserData?.branches?.result
+        ?.map((res) => res.digitalCopyAccess === true)
+        .findIndex((res) => res === true) > -1
+    );
+  }, [branchUserData, loanerInfo]);
+
+  return {
+    branchUserData: branchUserData,
+    branchIsLoading: branchIsLoading,
+    branchIsSlow: branchIsSlow,
+    hasDigitalAccess: hasDigitalAccess,
+  };
+}
+
+export function useRelevantAccessesForOrderPage(selectedPids) {
+  const { branchIsLoading, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess(selectedPids);
+
+  const manifestationsResponse = useData(
+    selectedPids &&
+      manifestationFragments.orderPageManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = manifestationsResponse?.data?.manifestations;
+
+  const {
+    getAllowedAccessesByTypeName,
+    getAllAllowedEnrichedAccessSorted,
+    allEnrichedAccesses,
+  } = useMemo(() => accessFactory(manifestations), [manifestations]);
+
+  const allAllowedEnrichedAccesses = useMemo(
+    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
+    [
+      manifestationsResponse?.data?.manifestations,
+      manifestations,
+      hasDigitalAccess,
+    ]
+  );
+
+  const allowedAccessesByTypeName = useMemo(
+    () => getAllowedAccessesByTypeName(hasDigitalAccess) || [],
+    [
+      manifestationsResponse?.data?.manifestations,
+      manifestations,
+      hasDigitalAccess,
+    ]
+  );
+
+  return {
+    branchIsLoading: branchIsLoading,
+    manifestationResponse: manifestationsResponse,
+    manifestations: manifestations,
+    allowedAccessesByTypeName: allowedAccessesByTypeName,
+    allEnrichedAccesses: allEnrichedAccesses,
+    allAllowedEnrichedAccesses: allAllowedEnrichedAccesses,
+    hasDigitalAccess: hasDigitalAccess,
   };
 }

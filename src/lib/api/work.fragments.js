@@ -71,7 +71,7 @@ export function recommendations({ workId }) {
  *
  * @return {Object} a query object
  */
-export function reviews({ workId }) {
+export function _reviews({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
@@ -124,6 +124,82 @@ export function reviews({ workId }) {
         }
       }
     }`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+/**
+ * Recommendations for a work
+ *
+ * This is still the old laesekompas recommender
+ * Will be changed at some point
+ *
+ * @param {Object} variables
+ * @param {string} variables.workId
+ *
+ * @return {Object} a query object
+ */
+export function reviews({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    // delay: 1000, // for debugging
+    query: `query Reviews($workId: String!) {
+              work(id: $workId) {
+                workId
+                titles {
+                  main
+                }
+                relations {
+                  hasReview {
+                    pid
+                    creators {
+                      display
+                    }
+                    access {
+                      __typename
+                      ... on InfomediaService {
+                        id
+                      }
+                      ... on AccessUrl {
+                        origin
+                        url
+                        note
+                        loginRequired
+                        type
+                      }
+                      ... on DigitalArticleService {
+                        issn
+                      }
+                    }
+                    hostPublication {
+                      title
+                      issue
+                    }
+                    recordCreationDate
+                    review {
+                      rating
+                      reviewByLibrarians {
+                        content
+                        heading
+                        type
+                        manifestations {
+                          ownerWork {
+                            workId
+                            titles {
+                              main
+                            }
+                            creators {
+                              display
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -332,39 +408,12 @@ export function fbiOverviewDetail({ workId }) {
           }                                  
           manifestations {
             all {
-              pid
-              access {
-                __typename
-                ... on InterLibraryLoan {
-                  loanIsPossible
-                }
-                ... on AccessUrl {
-                  origin
-                  url
-                  loginRequired
-                }
-                ... on Ereol {
-                  origin
-                  url
-                  canAlwaysBeLoaned
-                }
-                ... on InfomediaService {
-                  id
-                }
-                ... on DigitalArticleService {
-                  issn
-                }
-              }
+              ...manifestationDetailsForAccessFactory
+              ...manifestationAccess
               cover {
                 detail
                 origin
               }              
-              materialTypes {
-                specific
-              }
-              titles {
-                main
-              }
               genreAndForm
               languages {
                 subtitles {
@@ -395,20 +444,13 @@ export function fbiOverviewDetail({ workId }) {
                   }
                 }
               }
-              creators {
-                display
-                roles {
-                  functionCode
-                  function {
-                    singular
-                  }
-                }
-              }
             }
           }
         }
         monitor(name: "bibdknext_work_overview_details")
-      }`,
+      }
+      ${manifestationDetailsForAccessFactory}
+      ${manifestationAccess}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -437,7 +479,7 @@ export function workJsonLd({ workId }) {
               }
               manifestations {
                 all {
-                  pid
+                  ...manifestationDetailsForAccessFactory
                   cover {
                     detail
                     origin
@@ -445,12 +487,6 @@ export function workJsonLd({ workId }) {
                   identifiers {
                     type
                     value
-                  }
-                  materialTypes {
-                    specific
-                  }
-                  titles {
-                    main
                   }
                   languages {
                     main {
@@ -479,20 +515,12 @@ export function workJsonLd({ workId }) {
                     title      
                     summary
                   }
-                  creators {
-                    display
-                    roles {
-                      functionCode
-                      function {
-                        singular
-                      }
-                    }
-                  }
                 }
               }
             }
             monitor(name: "bibdknext_work_json_ld")
-          }`,
+          }
+          ${manifestationDetailsForAccessFactory}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -550,7 +578,7 @@ export function listOfAllManifestations({ workId }) {
   };
 }
 
-export function orderPageManifestations({ workId }) {
+export function orderPageWorkWithManifestations({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -562,38 +590,14 @@ export function orderPageManifestations({ workId }) {
         workTypes
         manifestations {
           all {
-            pid
-            materialTypes {
-              specific
-            }
-            accessTypes {
-              code
-              display
-            }
-            access {
-              __typename
-              ... on AccessUrl {
-                url
-                origin
-              }
-              ... on InfomediaService {
-                id
-              }
-              ... on DigitalArticleService {
-                issn
-              }
-              ... on Ereol {
-                url
-                origin
-              }
-              ... on InterLibraryLoan{
-                loanIsPossible
-              }
-            }
+            ...manifestationAccess
+            ...manifestationDetailsForAccessFactory
           }
         }
       }
-    }`,
+    }
+    ${manifestationDetailsForAccessFactory}
+    ${manifestationAccess}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -677,3 +681,54 @@ export function pidToWorkId({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
+  pid
+  titles {
+    main
+    full
+  }
+  creators {
+    display
+    nameSort
+    roles {
+      functionCode
+      function {
+        plural
+        singular
+      }
+    }
+  }
+  materialTypes {
+    specific
+  }
+  workTypes
+}`;
+
+const manifestationAccess = `fragment manifestationAccess on Manifestation {
+   access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      note
+      loginRequired
+      type
+    }
+    ... on InfomediaService {
+      id
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+      note
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+  }
+}`;

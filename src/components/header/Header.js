@@ -39,6 +39,7 @@ import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
 import useWindowSize from "@/components/hooks/useWindowSize";
+import { isEmpty, isEqual } from "lodash";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -68,7 +69,7 @@ export function Header({
 }) {
   const context = { context: "header" };
 
-  const { q, setQ, setQuery, getCount } = useQ();
+  const { q, setQ, setQuery, getCount, getQuery } = useQ();
   const countQ = getCount({ exclude: ["all"] });
 
   const query = q[SuggestTypeEnum.ALL];
@@ -154,12 +155,16 @@ export function Header({
         selectedMaterial !== SuggestTypeEnum.ALL ? selectedMaterial : null,
     };
 
-    setQuery({
-      include: { ...q, all: value },
-      pathname: "/find",
-      query: type,
-      method,
-    });
+    const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
+
+    if (!isEqual(newQ, getQuery())) {
+      setQuery({
+        include: newQ,
+        pathname: "/find",
+        query: type,
+        method,
+      });
+    }
 
     document.activeElement.blur();
 
@@ -246,7 +251,7 @@ export function Header({
               <div className={styles.bottom}>
                 <form
                   onSubmit={(e) => {
-                    e.preventDefault();
+                    e?.preventDefault();
                     doSearch(query);
 
                     // view query in storybook

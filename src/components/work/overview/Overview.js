@@ -17,7 +17,7 @@ import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbutto
 import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
-import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -62,8 +62,8 @@ export function Overview({
     flatPidsByType,
     manifestationsEnrichedWithDefaultFrontpage,
   } = useMemo(() => {
-    return manifestationMaterialTypeUtils(manifestations);
-  }, [manifestations]);
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [work, manifestations]);
 
   useInitMaterialType(
     uniqueMaterialTypes,

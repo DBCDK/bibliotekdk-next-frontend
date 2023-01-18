@@ -6,15 +6,18 @@ import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils";
+import { AccessEnum } from "@/lib/enums";
 
 function OrderConfirmationButton({
   invalidClass,
   actionMessage,
   availableAsDigitalCopy,
   availableAsPhysicalCopy,
+  isDigitalCopy,
   isLoading,
   blockedUser,
   onClick,
+  context,
 }) {
   return (
     <>
@@ -27,7 +30,10 @@ function OrderConfirmationButton({
                 label: `action-${actionMessage.label}`,
               })}
             </Text>
-          ) : availableAsDigitalCopy ? (
+          ) : isDigitalCopy &&
+            availableAsDigitalCopy &&
+            context?.selectedAccesses?.[0]?.__typename !==
+              AccessEnum.INTER_LIBRARY_LOAN ? (
             <Link
               target="_blank"
               disabled={false}
@@ -74,7 +80,6 @@ OrderConfirmationButton.propTypes = {
   skeleton: PropTypes.any,
   onClick: PropTypes.func,
 };
-
 export default function Wrap({
   context,
   validated,
@@ -103,7 +108,8 @@ export default function Wrap({
       ?.map((res) => res.userIsBlocked)
       .filter((singleUserIsBlocked) => singleUserIsBlocked === true).length > 0;
 
-  const { availableAsDigitalCopy, availableAsPhysicalCopy } = accessTypeInfo;
+  const { isDigitalCopy, availableAsDigitalCopy, availableAsPhysicalCopy } =
+    accessTypeInfo;
 
   return (
     <OrderConfirmationButton
@@ -111,9 +117,11 @@ export default function Wrap({
       actionMessage={actionMessage}
       availableAsDigitalCopy={availableAsDigitalCopy}
       availableAsPhysicalCopy={availableAsPhysicalCopy}
+      isDigitalCopy={isDigitalCopy}
       isLoading={isWorkLoading || isBlockedUserLoading || isPickupBranchLoading}
       blockedUser={blockedUser}
       onClick={onClick}
+      context={context}
     />
   );
 }

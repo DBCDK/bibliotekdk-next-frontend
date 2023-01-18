@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import Error from "next/error";
 import Header from "@/components/header/Header";
 import { useData } from "@/lib/api/api";
 import { fetchAll } from "@/lib/api/apiServerOnly";
@@ -16,18 +15,19 @@ import {
 
 import { timestampToShortDate } from "@/utils/datetimeConverter";
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
+import Custom404 from "@/pages/404";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId } = props;
 
   const router = useRouter();
 
-  return (
+  return notFound ? (
+    <Custom404 />
+  ) : (
     <React.Fragment>
       <Header router={router} />
-      {notFound ? (
-        <Error statusCode={404} />
-      ) : isLoading ? (
+      {isLoading ? (
         <ContentSkeleton />
       ) : (
         <>
@@ -75,7 +75,7 @@ export default function Wrap() {
   const { workId, articleId } = router.query;
   const user = useUser();
   const { data, isLoading: isLoadingWork } = useData(
-    workFragments.reviews({ workId })
+    workFragments._reviews({ workId })
   );
   const publicReviewData = data?.work?.workReviews?.find(
     (review) => review.infomediaId === articleId || review.pid === articleId

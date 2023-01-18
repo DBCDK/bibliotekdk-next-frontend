@@ -139,7 +139,9 @@ FullManifestation.story = {
       publisher: () => ["some-publisher - 1", "some-publisher - 2"],
       physicalDescriptions: () => [...new Array(10).fill({})],
       classifications: () => [...new Array(10).fill({})],
-      workYear: () => "some-workYear",
+      workYear: () => {
+        display: "some-workYear";
+      },
       identifiers: () => [...new Array(10).fill({})],
       notes: () => [...new Array(10).fill({})],
       materialTypes: () => [...new Array(10).fill({})],

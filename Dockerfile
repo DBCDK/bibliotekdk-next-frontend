@@ -15,7 +15,7 @@ RUN npm set progress=false && npm config set depth 0 && \
 
 # Run lint and tests
 RUN npm run lint
-RUN npm run test:run
+RUN npm run test
 
 # build for production
 RUN npm run build:storybook && \

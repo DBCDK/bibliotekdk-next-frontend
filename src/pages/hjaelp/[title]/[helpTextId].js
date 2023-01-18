@@ -20,6 +20,7 @@ import Header from "@/components/help/texts/header";
 
 import Page from "@/components/help/texts/page";
 import React from "react";
+import Custom404 from "@/pages/404";
 
 /**
  * Renders the help text component
@@ -27,6 +28,10 @@ import React from "react";
 export default function HelptextPage() {
   const router = useRouter();
   const { helpTextId } = router.query;
+
+  if (typeof helpTextId === "undefined" || helpTextId === null) {
+    return <Custom404 />;
+  }
 
   return (
     <React.Fragment>

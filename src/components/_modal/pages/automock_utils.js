@@ -1,6 +1,7 @@
 // A manifestation that may be ordered via ILL
 import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
+import { AccessEnum } from "@/lib/enums";
 
 const MANIFESTATION_1 = {
   titles: {
@@ -88,6 +89,24 @@ const MANIFESTATION_6 = {
   creators: [{ display: "Linoleum Gummigulv" }],
 };
 
+const MANIFESTATION_7 = {
+  ...MANIFESTATION_1,
+  pid: "some-pid-7",
+  materialTypes: [
+    {
+      specific: "ebog",
+    },
+  ],
+  access: [
+    {
+      __resolveType: AccessEnum.ACCESS_URL,
+      url: "https://ereol.combo/langurl",
+      origin: "https://ereol.combo",
+    },
+  ],
+  workTypes: ["LITERATURE"],
+};
+
 const ALL_MANIFESTATIONS = [
   MANIFESTATION_1,
   MANIFESTATION_2,
@@ -95,6 +114,7 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_4,
   MANIFESTATION_5,
   MANIFESTATION_6,
+  MANIFESTATION_7,
 ];
 
 const ALL_WORKS = [
@@ -116,6 +136,12 @@ const ALL_WORKS = [
     workId: "some-work-id-3",
     manifestations: { all: [MANIFESTATION_5] },
     workTypes: ["PERIODICA"],
+  },
+  // A work that is an ebog
+  {
+    workId: "some-work-id-4",
+    manifestations: { all: [MANIFESTATION_7] },
+    workTypes: ["LITERATURE"],
   },
 ];
 

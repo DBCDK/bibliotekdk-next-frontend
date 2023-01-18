@@ -37,8 +37,10 @@ export function InfomediaReview({
 
   // make an url for infomedia page
   const urlTxt = encodeString(title);
+  const infomediaAccess = data.access?.find((a) => a.id);
   const url =
-    data?.infomediaId && `/anmeldelse/${urlTxt}/${workId}/${data?.infomediaId}`;
+    infomediaAccess.id &&
+    `/anmeldelse/${urlTxt}/${workId}/${infomediaAccess.id}`;
 
   return (
     <Col
@@ -49,15 +51,15 @@ export function InfomediaReview({
       data-cy={cyKey({ prefix: "review", name: "infomedia" })}
     >
       <Row>
-        {data.origin && (
+        {data.hostPublication?.title && (
           <Col xs={12} className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
-              {data.origin}
+              {data.hostPublication?.title}
             </Title>
           </Col>
         )}
         <div className={styles.row}>
-          {data.author && (
+          {data.creators?.length > 0 && (
             <Col className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
@@ -65,19 +67,21 @@ export function InfomediaReview({
             </Col>
           )}
           <Col xs={12} className={styles.right}>
-            {data.author && (
+            {data.creators?.length > 0 && (
               <Text type="text2" skeleton={skeleton} lines={1}>
-                {data.author}
+                {data.creators?.map((c) => c.display).join(", ")}
               </Text>
             )}
             <Col className={styles.date}>
-              {!skeleton && data.date && (
-                <Text type="text3">{dateToShortDate(data.date, "d. ")}</Text>
+              {!skeleton && data.hostPublication?.issue && (
+                <Text type="text3">
+                  {dateToShortDate(data.hostPublication?.issue, "d. ")}
+                </Text>
               )}
             </Col>
-            {data.rating && (
+            {data.review?.rating && (
               <Col xs={12} className={styles.rating}>
-                <Rating rating={data.rating} skeleton={skeleton} />
+                <Rating rating={data.review?.rating} skeleton={skeleton} />
               </Col>
             )}
           </Col>
@@ -122,12 +126,26 @@ export function InfomediaReview({
  */
 export function InfomediaReviewSkeleton(props) {
   const data = {
-    author: "Svend Svendsen",
-    media: "Jyllandsposten",
-    rating: "4/5",
-    reviewType: "INFOMEDIA",
-    date: "2013-06-25",
-    url: "http://",
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __typename: "InfomediaService",
+        id: "Some id",
+      },
+    ],
+    hostPublication: {
+      title: "Some host publication",
+      issue: "2005-06-24",
+    },
+    recordCreationDate: "20050627",
+    review: {
+      rating: "5/6",
+    },
   };
 
   return (
@@ -149,13 +167,13 @@ export function InfomediaReviewSkeleton(props) {
  * @returns {component}
  */
 export default function Wrap(props) {
-  const { data, isSkeleton } = props;
+  const { isSkeleton } = props;
 
   if (isSkeleton) {
     return <InfomediaReviewSkeleton />;
   }
 
-  return <InfomediaReview {...props} data={data} />;
+  return <InfomediaReview {...props} />;
 }
 
 // PropTypes for component

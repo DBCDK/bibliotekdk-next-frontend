@@ -72,28 +72,6 @@
 }
 
 /**
-* Slow data-loading animation (Loading problems)
-* 
-*/
-
-.skeleton.slow .line {
-  background-color: var(--error-light);
-}
-
-.skeleton.slow .line::before {
-  opacity: 0.5;
-
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--error) 50%,
-    transparent 100%
-  );
-
-  animation-duration: 1.5s;
-}
-
-/**
 * Keyframes 
 * 
 */

@@ -14,10 +14,8 @@ import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfir
 import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import {
-  getOrderPids,
-  onMailChange,
-} from "@/components/_modal/pages/order/utils";
+import { onMailChange } from "@/components/_modal/pages/order/utils";
+import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 
 /**
  *  Order component function
@@ -233,7 +231,8 @@ export function OrderSkeleton(props) {
 export default function Wrap(props) {
   // context
   const { context, modal } = props;
-  context.pids = context?.pids ? context?.pids : [context?.pid];
+  context.pids = context?.pids || [context?.pid];
+  context.pid = context?.pid || context?.pids?.[0];
 
   // internal pid state -> used to reset modal
   const [pid, setPid] = useState(null);
@@ -241,7 +240,7 @@ export default function Wrap(props) {
   const articleOrderMutation = useMutate();
 
   useEffect(() => {
-    if (context.pid) {
+    if (context?.pid?.length > 0) {
       // When order modal opens, we reset previous order status
       // making it possible to order a manifestation multiple times
       orderMutation.reset();
@@ -250,32 +249,51 @@ export default function Wrap(props) {
     }
   }, [context.pid]);
 
-  const { userInfo, pickupBranchInfo, accessTypeInfo, workResponse } =
+  const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation(
       context?.workId,
-      context?.pid,
+      context?.pid?.[0],
       context?.periodicaForm
     );
 
-  const { loanerInfo, updateLoanerInfo } = userInfo;
+  const { allowedAccessesByTypeName, manifestationResponse } =
+    useRelevantAccessesForOrderPage(context?.pids);
 
-  const {
-    data: workData,
-    isLoading: isWorkLoading,
-    isSlow,
-    error,
-  } = workResponse;
+  const digitalArticleServiceAccess =
+    allowedAccessesByTypeName?.digitalArticleServiceAccesses;
+
+  const interLibraryLoanAccess =
+    digitalArticleServiceAccess?.length > 0
+      ? []
+      : allowedAccessesByTypeName?.interLibraryLoanAccesses;
+
+  const orderPids = [
+    ...digitalArticleServiceAccess,
+    ...interLibraryLoanAccess,
+  ]?.map((singleAccess) => singleAccess.pid);
+
+  context.selectedAccesses = [
+    ...digitalArticleServiceAccess,
+    ...interLibraryLoanAccess,
+  ];
 
   const singleManifestation =
     context.orderType && context.orderType === "singleManifestation";
 
-  const orderPids = getOrderPids(pid, workData?.work, singleManifestation);
+  const { loanerInfo, updateLoanerInfo } = userInfo;
 
-  if (isWorkLoading) {
-    return <OrderSkeleton isSlow={isSlow} />;
+  const {
+    data: manifestationData,
+    isLoading: isManifestationsLoading,
+    isSlow: isManifestationsSlow,
+    error: manifestationError,
+  } = manifestationResponse;
+
+  if (isManifestationsLoading) {
+    return <OrderSkeleton isSlow={isManifestationsSlow} />;
   }
 
-  if (error || !workData?.work) {
+  if (manifestationError || !manifestationData?.manifestations) {
     return <div>Error :( !!!!!</div>;
   }
 

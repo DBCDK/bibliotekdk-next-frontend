@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { SuggestTypeEnum } from "@/lib/enums";
+import { isEmpty } from "lodash";
 
 /**
  * Hook for q search param sync across components 🤯
@@ -227,7 +228,7 @@ function useQ() {
       router[method](
         {
           pathname: pathname || router.pathname,
-          query: merged,
+          query: !isEmpty(merged) ? merged : { "q.all": "" },
         },
         undefined,
         { scroll: router.pathname !== "/find" }

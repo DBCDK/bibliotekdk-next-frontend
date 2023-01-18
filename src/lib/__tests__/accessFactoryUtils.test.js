@@ -1,14 +1,19 @@
 import {
+  checkDigitalCopy,
+  checkPhysicalCopy,
   enrichInfomediaAccess,
   getAllAccess,
+  getAllAllowedEnrichedAccessSorted,
   getAllEnrichedAccessSorted,
+  getAreAccessesPeriodicaLike,
+  getCountOfAllAllowedEnrichedAccessSorted,
   prioritiseAccessUrl,
   prioritiseDigitalArticleService,
   prioritiseEreol,
   prioritiseInfomediaService,
   prioritiseInterLibraryLoan,
   sortPrioritisedAccess,
-} from "@/lib/accessFactory";
+} from "@/lib/accessFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 
 describe("getAllAccess", () => {
@@ -377,20 +382,20 @@ describe("sortPrioritisedAccess", () => {
     const expected = 1;
     expect(actual).toEqual(expected);
   });
-  it("AccessUrl, DigitalArticleService (expect -2)", () => {
+  it("AccessUrl, DigitalArticleService (expect -3)", () => {
     const actual = sortPrioritisedAccess(
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "3loan" }
     );
-    const expected = -2;
+    const expected = -3;
     expect(actual).toEqual(expected);
   });
-  it("DigitalArticleService, AccessUrl (expect +2)", () => {
+  it("DigitalArticleService, AccessUrl (expect +3)", () => {
     const actual = sortPrioritisedAccess(
       { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "3loan" },
       { __typename: AccessEnum.ACCESS_URL, pid: "2loan" }
     );
-    const expected = 2;
+    const expected = 3;
     expect(actual).toEqual(expected);
   });
   it("AccessUrl (DBC Webarkiv), AccessUrl (info.fifo) (expect 1)", () => {
@@ -435,9 +440,152 @@ describe("sortPrioritisedAccess", () => {
   });
 });
 
+const manifestationsWithAccess = [
+  {
+    pid: "1loan",
+    access: [
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+    ],
+  },
+  {
+    pid: "2loan",
+    access: [
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
+      {
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "urla_4_1.dekaa",
+      },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
+      {
+        __typename: AccessEnum.ACCESS_URL,
+        origin: "DBC Webarkiv",
+        url: "urla_2_1.dekaa",
+      },
+    ],
+  },
+  {
+    pid: "3loan",
+    access: [
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
+      {
+        __typename: AccessEnum.ACCESS_URL,
+        origin: "urla.engo",
+        url: "urla_3_1.dekaa",
+      },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
+      {
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: 1231,
+      },
+    ],
+  },
+  {
+    pid: "4loan",
+    access: [
+      {
+        __typename: AccessEnum.EREOL,
+        origin: "Ereolen Go",
+        url: "urla_4_0.dekaa",
+      },
+      {
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "urla_4_1.dekaa",
+      },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
+    ],
+  },
+];
+
 describe("getAllEnrichedAccessSorted", () => {
   it("should prioritise correctly", () => {
-    const actual = getAllEnrichedAccessSorted([
+    const actual = getAllEnrichedAccessSorted(manifestationsWithAccess);
+    const expected = [
+      { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
+      { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.EREOL, pid: "4loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "2loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "3loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "1loan" },
+    ];
+
+    expect(actual).toMatchObject(expected);
+  });
+});
+
+describe("getAllAllowedEnrichedAccessSorted", () => {
+  const actualFunction = (hasDigitalAccess) =>
+    getAllAllowedEnrichedAccessSorted(
+      manifestationsWithAccess,
+      hasDigitalAccess
+    );
+
+  it("should prioritise correctly (hasDigitalAccess === true)", () => {
+    const hasDigitalAccess = true;
+    const actual = actualFunction(hasDigitalAccess);
+    const expected = [
+      { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
+      { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.EREOL, pid: "4loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "2loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "3loan" },
+    ];
+
+    expect(actual).toMatchObject(expected);
+  });
+  it("should prioritise correctly (hasDigitalAccess === false)", () => {
+    const hasDigitalAccess = false;
+    const actual = actualFunction(hasDigitalAccess);
+    const expected = [
+      { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
+      { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
+      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
+      { __typename: AccessEnum.EREOL, pid: "4loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "2loan" },
+      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "3loan" },
+    ];
+
+    expect(actual).toMatchObject(expected);
+  });
+});
+
+describe("getCountOfAllAllowedEnrichedAccessSorted", () => {
+  const actualFunction = (hasDigitalAccess) =>
+    getCountOfAllAllowedEnrichedAccessSorted(
+      manifestationsWithAccess,
+      hasDigitalAccess
+    );
+
+  it("should count correct number of alternatives (hasDigitalAccess === true; expect 7)", () => {
+    const hasDigitalAccess = true;
+    const actual = actualFunction(hasDigitalAccess);
+    const expected = 7;
+
+    expect(actual).toEqual(expected);
+  });
+  it("should count correct number of alternatives (hasDigitalAccess === false; expect 7)", () => {
+    const hasDigitalAccess = false;
+    const actual = actualFunction(hasDigitalAccess);
+    const expected = 7;
+
+    expect(actual).toEqual(expected);
+  });
+  it("should count correct number of alternatives (No DigitalArticleService; expect 1)", () => {
+    const hasDigitalAccess = true;
+    const manifestation = [
       {
         pid: "1loan",
         access: [
@@ -447,59 +595,205 @@ describe("getAllEnrichedAccessSorted", () => {
       {
         pid: "2loan",
         access: [
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_2_0.dekaa" },
-          {
-            __typename: AccessEnum.ACCESS_URL,
-            origin: "DBC Webarkiv",
-            url: "urla_2_1.dekaa",
-          },
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
         ],
       },
       {
         pid: "3loan",
         access: [
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: "urla_3_0.dekaa" },
-          {
-            __typename: AccessEnum.ACCESS_URL,
-            origin: "urla.engo",
-            url: "urla_3_1.dekaa",
-          },
           { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: true },
-          {
-            __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-            issn: 1231,
-          },
+        ],
+      },
+    ];
+    const actual = getCountOfAllAllowedEnrichedAccessSorted(
+      manifestation,
+      hasDigitalAccess
+    );
+    const expected = 1;
+
+    expect(actual).toEqual(expected);
+  });
+  it("should count correct number of alternatives (hasDigitalAccess=false; expect 0)", () => {
+    const hasDigitalAccess = false;
+    const manifestation = [
+      {
+        pid: "1loan",
+        access: [
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+          { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, issn: "oaidjad" },
         ],
       },
       {
-        pid: "4loan",
+        pid: "2loan",
         access: [
-          {
-            __typename: AccessEnum.EREOL,
-            origin: "Ereolen Go",
-            url: "urla_4_0.dekaa",
-          },
-          {
-            __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-            issn: "urla_4_1.dekaa",
-          },
-          { __typename: AccessEnum.INFOMEDIA_SERVICE, id: 1231 },
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
         ],
+      },
+      {
+        pid: "3loan",
+        access: [
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+        ],
+      },
+    ];
+    const actual = getCountOfAllAllowedEnrichedAccessSorted(
+      manifestation,
+      hasDigitalAccess
+    );
+    const expected = 0;
+
+    expect(actual).toEqual(expected);
+  });
+  it("should count correct number of alternatives (expect 1)", () => {
+    const hasDigitalAccess = true;
+    const manifestation = [
+      {
+        pid: "1loan",
+        access: [
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+          { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, issn: "12312" },
+        ],
+      },
+      {
+        pid: "2loan",
+        access: [
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+        ],
+      },
+      {
+        pid: "3loan",
+        access: [
+          { __typename: AccessEnum.INTER_LIBRARY_LOAN, loanIsPossible: false },
+        ],
+      },
+    ];
+    const actual = getCountOfAllAllowedEnrichedAccessSorted(
+      manifestation,
+      hasDigitalAccess
+    );
+    const expected = 1;
+
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("checkDigitalCopy", () => {
+  it("check possibilities (false, false, true)", () => {
+    const actual = checkDigitalCopy([
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+      },
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        id: "id_hej",
+      },
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "213123412",
+      },
+    ]);
+    const expected = [false, false, true];
+    expect(actual).toEqual(expected);
+  });
+});
+describe("checkPhysicalCopy", () => {
+  it("check possibilities (false, false, false, true)", () => {
+    const actual = checkPhysicalCopy([
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.INTER_LIBRARY_LOAN,
+      },
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.INFOMEDIA_SERVICE,
+        id: "id_hej",
+      },
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.INTER_LIBRARY_LOAN,
+        loanIsPossible: false,
+      },
+      {
+        titles: ["HeJsÅ"],
+        pid: "1loan",
+        __typename: AccessEnum.INTER_LIBRARY_LOAN,
+        loanIsPossible: true,
+      },
+    ]);
+    const expected = [false, false, false, true];
+    expect(actual).toEqual(expected);
+  });
+});
+describe("getAreAccessesPeriodicaLike", () => {
+  it("check possibilities (false, false, false, false, false, false, true, true, true, true, true)", () => {
+    const actual = getAreAccessesPeriodicaLike([
+      {
+        titles: ["HeJsÅ"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        workTypes: ["notPeriodica"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        workTypes: [],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: ["notÅrbog", "neitherÅrbog"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: ["notÅrbog"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: [],
+      },
+      {
+        titles: ["HeJsÅ"],
+        workTypes: ["periodica"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: ["årbog"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: ["årbog", "neitherÅrbog"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        materialTypesArray: ["notÅrbog", "årbog"],
+      },
+      {
+        titles: ["HeJsÅ"],
+        workTypes: ["periodica"],
+        materialTypesArray: ["notÅrbog", "årbog"],
       },
     ]);
     const expected = [
-      { __typename: AccessEnum.ACCESS_URL, pid: "3loan" },
-      { __typename: AccessEnum.ACCESS_URL, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "2loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "3loan" },
-      { __typename: AccessEnum.INFOMEDIA_SERVICE, pid: "4loan" },
-      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "4loan" },
-      { __typename: AccessEnum.DIGITAL_ARTICLE_SERVICE, pid: "3loan" },
-      { __typename: AccessEnum.EREOL, pid: "4loan" },
-      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "3loan" },
-      { __typename: AccessEnum.INTER_LIBRARY_LOAN, pid: "1loan" },
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      true,
+      true,
     ];
-
-    expect(actual).toMatchObject(expected);
+    expect(actual).toEqual(expected);
   });
 });

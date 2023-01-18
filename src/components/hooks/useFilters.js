@@ -259,7 +259,7 @@ export const includedTypes = {
     FilterTypeEnum.CHILDREN_OR_ADULTS,
     FilterTypeEnum.CREATORS,
     FilterTypeEnum.FICTION_NONFICTION,
-    // FilterTypeEnum.FICTIONAL_CHARACTERS,
+    FilterTypeEnum.FICTIONAL_CHARACTER,
     FilterTypeEnum.GENRE_AND_FORM,
     FilterTypeEnum.MAIN_LANGUAGES,
     FilterTypeEnum.MATERIAL_TYPES,

@@ -19,6 +19,7 @@ const {
   USER_4,
   BRANCH_1,
   BRANCH_2,
+  BRANCH_3,
   BRANCH_4,
   DEFAULT_STORY_PARAMETERS,
   useMockLoanerInfo,
@@ -90,6 +91,7 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticle() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article"
@@ -105,13 +107,21 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_3 },
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
+          },
+        },
       },
     },
   },
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -127,13 +137,21 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_1 },
+        Query: {
+          user: () => USER_1,
+          branches: () => {
+            return {
+              result: [BRANCH_1],
+            };
+          },
+        },
       },
     },
   },
 });
 
 export function OrderPeriodicaVolume() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -149,13 +167,21 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_3 },
+        Query: {
+          user: () => USER_3,
+          branches: () => {
+            return {
+              result: [BRANCH_3],
+            };
+          },
+        },
       },
     },
   },
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
+  useMockLoanerInfo("790900");
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -172,7 +198,14 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   parameters: {
     graphql: {
       resolvers: {
-        Query: { user: () => USER_1 },
+        Query: {
+          user: () => USER_1,
+          branches: () => {
+            return {
+              result: [BRANCH_1, BRANCH_2],
+            };
+          },
+        },
       },
     },
   },
