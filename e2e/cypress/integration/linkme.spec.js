@@ -29,6 +29,8 @@ describe(`linkme`, () => {
 
   it("serverside redirect", () => {
     const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141&isBot=true";
+    const url = `${nextjsBaseUrl}${path}`;
+    cy.visit(url);
     getPage(path).then((res) => {
       const jsonld = JSON.parse(
         res.body.match(
