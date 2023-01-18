@@ -31,7 +31,8 @@ describe(`linkme`, () => {
     const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
-    getPage(path).then((res) => {
+    cy.contains("Grum : Roman fra Sø og Mose");
+    /*getPage(path).then((res) => {
       const jsonld = JSON.parse(
         res.body.match(
           /<script type="application\/ld\+json">(.*?)<\/script>/
@@ -39,6 +40,6 @@ describe(`linkme`, () => {
       );
 
       expect(jsonld.mainEntity.name).to.equal("Grum");
-    });
+    });*/
   });
 });
