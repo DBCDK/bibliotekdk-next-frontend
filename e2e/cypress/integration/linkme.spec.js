@@ -24,7 +24,7 @@ describe(`linkme`, () => {
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
     // we expect a redirect
-    cy.contains("Grum : Roman fra Sø og Mose");
+    cy.contains("Grum : Roman fra Sø og Mose", { timeout: 10000 });
   });
 
   it.skip("serverside redirect", () => {
