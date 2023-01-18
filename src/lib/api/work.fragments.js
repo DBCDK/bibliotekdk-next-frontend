@@ -661,6 +661,27 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   }
 }`;
 
+export function pidToWorkId({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidToWorkId($pid: String!) {
+      work(pid: $pid) {
+        titles {
+          main
+        }
+        creators{
+          display
+        }
+        workId
+      }
+      monitor(name: "bibdknext_pid_to_workid")
+    }`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
 const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
   titles {
