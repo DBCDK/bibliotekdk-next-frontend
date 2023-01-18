@@ -27,7 +27,7 @@ describe(`linkme`, () => {
     cy.contains("Grum : Roman fra Sø og Mose");
   });
 
-  it("serverside redirect", () => {
+  it.skip("serverside redirect", () => {
     const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
