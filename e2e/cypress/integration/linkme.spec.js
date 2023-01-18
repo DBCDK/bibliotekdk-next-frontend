@@ -12,7 +12,7 @@ function getPage(path = "/") {
 }
 describe(`linkme`, () => {
   it(`redirects on no rec.id`, () => {
-    const path = "/linkme.php?isBot=true";
+    const path = "/linkme.php/?isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
     // we expect a redirect
@@ -20,7 +20,7 @@ describe(`linkme`, () => {
   });
 
   it("redirect on correct rec.id", () => {
-    const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141";
+    const path = "/linkme.php/?rec.id=874310-katalog%3ADBB0422141";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
     // we expect a redirect
@@ -28,10 +28,10 @@ describe(`linkme`, () => {
   });
 
   it.skip("serverside redirect", () => {
-    const path = "/linkme.php?rec.id=874310-katalog%3ADBB0422141&isBot=true";
+    const path = "/linkme.php/?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
-    cy.contains("Grum : Roman fra Sø og Mose");
+    cy.contains("Grum");
     /*getPage(path).then((res) => {
       const jsonld = JSON.parse(
         res.body.match(
