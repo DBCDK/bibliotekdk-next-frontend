@@ -66,6 +66,7 @@ export function Header({
   user,
   modal,
   filters,
+  reset,
 }) {
   const context = { context: "header" };
 
@@ -267,67 +268,75 @@ export function Header({
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <DesktopMaterialSelect className={styles.select} />
+                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
+                  {!reset && (
+                    <DesktopMaterialSelect className={styles.select} />
+                  )}
 
-                  <div
-                    className={`${styles.suggester__wrap} ${
-                      !collapseOpen ? styles.collapsed : ""
-                    } ${suggesterVisibleMobileClass}`}
-                  >
-                    <Suggester
-                      className={`${styles.suggester}`}
-                      history={history}
-                      clearHistory={clearHistory}
-                      isMobile={suggesterVisibleMobile}
-                      onSelect={(val) => doSearch(val)}
-                      onChange={(val) => setQ({ ...q, all: val })}
-                      onClose={() => {
-                        if (router) {
-                          // remove suggester prop from query obj
-                          router.back();
-                        }
-                        // Remove suggester in storybook
-                        story && story.setSuggesterVisibleMobile(false);
-                      }}
-                      onKeyDown={keyPressed}
-                    />
+                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
+                  {!reset && (
+                    <div
+                      className={`${styles.suggester__wrap} ${
+                        !collapseOpen ? styles.collapsed : ""
+                      } ${suggesterVisibleMobileClass}`}
+                    >
+                      <Suggester
+                        className={`${styles.suggester}`}
+                        history={history}
+                        clearHistory={clearHistory}
+                        isMobile={suggesterVisibleMobile}
+                        onSelect={(val) => doSearch(val)}
+                        onChange={(val) => setQ({ ...q, all: val })}
+                        onClose={() => {
+                          if (router) {
+                            // remove suggester prop from query obj
+                            router.back();
+                          }
+                          // Remove suggester in storybook
+                          story && story.setSuggesterVisibleMobile(false);
+                        }}
+                        onKeyDown={keyPressed}
+                      />
 
-                    <MoreOptionsLink
-                      onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                      className={`${styles.linkshowmore} ${
+                      <MoreOptionsLink
+                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                        className={`${styles.linkshowmore} ${
+                          collapseOpen ? styles.hidden : ""
+                        }`}
+                      >
+                        {Translate({
+                          context: "search",
+                          label:
+                            countQ === 0
+                              ? "advancedSearchLink"
+                              : "advancedSearchLinkCount",
+                          vars: [countQ],
+                        })}
+                      </MoreOptionsLink>
+
+                      <ExpandedSearch
+                        className={styles.expandedSearch}
+                        collapseOpen={collapseOpen}
+                        setCollapseOpen={setCollapseOpen}
+                      />
+                    </div>
+                  )}
+                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
+                  {!reset && (
+                    <button
+                      className={`${styles.button} ${
                         collapseOpen ? styles.hidden : ""
                       }`}
-                    >
-                      {Translate({
-                        context: "search",
-                        label:
-                          countQ === 0
-                            ? "advancedSearchLink"
-                            : "advancedSearchLinkCount",
-                        vars: [countQ],
+                      type="submit"
+                      data-cy={cyKey({
+                        name: "searchbutton",
+                        prefix: "header",
                       })}
-                    </MoreOptionsLink>
-
-                    <ExpandedSearch
-                      className={styles.expandedSearch}
-                      collapseOpen={collapseOpen}
-                      setCollapseOpen={setCollapseOpen}
-                    />
-                  </div>
-
-                  <button
-                    className={`${styles.button} ${
-                      collapseOpen ? styles.hidden : ""
-                    }`}
-                    type="submit"
-                    data-cy={cyKey({
-                      name: "searchbutton",
-                      prefix: "header",
-                    })}
-                  >
-                    <span>{Translate({ ...context, label: "search" })}</span>
-                    <div className={styles.fill} />
-                  </button>
+                    >
+                      <span>{Translate({ ...context, label: "search" })}</span>
+                      <div className={styles.fill} />
+                    </button>
+                  )}
                 </form>
 
                 <div
@@ -396,19 +405,29 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
+  const reset = props?.reset || false;
 
   // if window changes size from small to larger (>992) we need to remove
   // the suggester url parameter (suggester=true) for the mobile
   // suggester to go away
   let wSize = useWindowSize();
   const changeMe = wSize.width > 992;
+
+  /** do NOT run useeffect if an error occurred (reset === true) **/
   useEffect(() => {
-    if (changeMe) {
+    if (changeMe && !reset) {
       let query = { ...router.query };
       delete query.suggester;
       router.replace({ pathname: router.pathname, query });
     }
-  }, [changeMe]);
+    /** - an error occured (reset === true) - we need to reset router somehow
+      there is probably a better wey than this **/
+    if (reset) {
+      router.replace({ pathname: "404", query: {} }, undefined, {
+        shallow: true,
+      });
+    }
+  }, [changeMe, reset]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
@@ -421,6 +440,7 @@ export default function Wrap(props) {
       modal={modal}
       filters={filters}
       router={router}
+      reset={reset}
     />
   );
 }

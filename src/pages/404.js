@@ -1,16 +1,14 @@
 // pages/404.js
 import Header from "@/components/header/Header";
-import { useRouter } from "next/router";
 import React from "react";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 
 export function Custom() {
-  const router = useRouter();
   return (
     <>
-      <Header router={router} />
+      <Header reset={true} />
       <Section
         title={Translate({
           context: "errorpages",
