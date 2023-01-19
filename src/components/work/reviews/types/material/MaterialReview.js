@@ -33,14 +33,18 @@ export function contentParser({ content, manifestations }) {
 
   /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/
   // No manifestation references was found, search and replace \\ notations with "" in paragraph content
+
   /*else {
     const regex = /(?<=\\)(.*?)(?=\\)/g;
     const match = content?.match(regex);
     const trimmed = content?.replace(`\\${match}\\`, `"${match}"`);
 
     chunks.push(trimmed);
+
   }*/
-  chunks.push(content.replace("\\", ""));
+
+  chunks.push(content?.replaceAll("\\", ""));
+
   // add tailing dot space after each paragraph
   chunks.push(". ");
 
