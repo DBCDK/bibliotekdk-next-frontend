@@ -252,7 +252,7 @@ export default function Wrap(props) {
   const { userInfo, pickupBranchInfo, accessTypeInfo } =
     useOrderPageInformation(
       context?.workId,
-      context?.pid?.[0],
+      context?.pid,
       context?.periodicaForm
     );
 
