@@ -294,7 +294,12 @@ export function subjects({ workId }) {
       work(id: $workId) {
         subjects {
           dbcVerified {
-            display
+              display
+              ... on SubjectText {
+              language {
+                isoCode
+              }
+            }
           }
         }
       }

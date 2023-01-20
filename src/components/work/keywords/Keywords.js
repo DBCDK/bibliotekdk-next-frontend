@@ -163,11 +163,15 @@ export default function Wrap(props) {
     return null;
   }
 
+  const subjectsFiltered = subjectsDbcVerified.filter((sub) => {
+    return sub?.language?.isoCode === "dan";
+  });
+
   return (
     <Keywords
       className={props.className}
       skeleton={false}
-      data={uniqueSubjectEntries(subjectsDbcVerified)}
+      data={uniqueSubjectEntries(subjectsFiltered)}
     />
   );
 }
