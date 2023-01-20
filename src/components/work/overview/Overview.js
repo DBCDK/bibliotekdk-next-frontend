@@ -54,7 +54,7 @@ export function Overview({
   className = "",
   skeleton = false,
 }) {
-  const manifestations = work?.manifestations.all;
+  const manifestations = work?.manifestations?.mostRelevant;
 
   const {
     uniqueMaterialTypes,
