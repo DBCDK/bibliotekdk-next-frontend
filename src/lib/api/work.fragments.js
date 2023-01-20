@@ -554,7 +554,7 @@ export function listOfAllManifestations({ workId }) {
     query listOfAllManifestations($workId: String!) {
       work(id: $workId) {
         manifestations {
-          all {
+          mostRelevant {
             pid
             volume
             titles {
@@ -619,7 +619,7 @@ export function overviewWork({ workId }) {
           specific
         }
         manifestations {
-          all {
+          mostRelevant {
             pid
             materialTypes {
               specific
@@ -627,6 +627,9 @@ export function overviewWork({ workId }) {
             cover {
               detail
               origin
+            }
+            access {
+              __typename
             }
           }
         }
