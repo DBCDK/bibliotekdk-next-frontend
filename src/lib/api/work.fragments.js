@@ -378,6 +378,9 @@ export function buttonTxt({ workId }) {
           all {
             pid
           }
+          mostRelevant {
+            pid
+          }
         }
         workTypes
       }
