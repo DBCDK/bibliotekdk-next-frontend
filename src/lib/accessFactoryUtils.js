@@ -131,7 +131,7 @@ const specialAccessTypes = {
  */
 function checkSpecialAccess(singleAccess) {
   return (
-    singleAccess.__typename === AccessEnum.ACCESS_URL &&
+    singleAccess?.__typename === AccessEnum.ACCESS_URL &&
     (specialAccessTypes.origins.includes(singleAccess?.origin) ||
       specialAccessTypes.urls.filter((singleUrl) =>
         singleAccess?.url?.startsWith(singleUrl)
