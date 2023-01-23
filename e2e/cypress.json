@@ -15,5 +15,6 @@
     "openMode": 0
   },
   "video": false,
-  "numTestsKeptInMemory": 20
+  "numTestsKeptInMemory": 20,
+  "chromeWebSecurity": false
 }

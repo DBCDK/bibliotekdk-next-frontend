@@ -123,24 +123,25 @@ const ALL_WORKS = [
     workId: "some-work-id-1",
     manifestations: {
       all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+      mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
     },
   },
   // A work that is an indexed periodica article
   {
     workId: "some-work-id-2",
-    manifestations: { all: [MANIFESTATION_4] },
+    manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
     workTypes: ["ARTICLE"],
   },
   // A work that is a periodica
   {
     workId: "some-work-id-3",
-    manifestations: { all: [MANIFESTATION_5] },
+    manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
     workTypes: ["PERIODICA"],
   },
   // A work that is an ebog
   {
     workId: "some-work-id-4",
-    manifestations: { all: [MANIFESTATION_7] },
+    manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
     workTypes: ["LITERATURE"],
   },
 ];

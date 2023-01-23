@@ -14,7 +14,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import {
   flattenMaterialType,
   formatMaterialTypesToPresentation,
-} from "@/lib/manifestationFactoryFunctions";
+} from "@/lib/manifestationFactoryUtils";
 
 /**
  * Export function of the Component
@@ -96,7 +96,7 @@ export default function Wrap({ workId }) {
 
   return (
     <BibliographicData
-      manifestations={data?.work?.manifestations?.all}
+      manifestations={data?.work?.manifestations?.mostRelevant}
       workId={workId}
     />
   );

@@ -3,7 +3,7 @@ import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,
   formatMaterialTypesToPresentation,
-} from "@/lib/manifestationFactoryFunctions";
+} from "@/lib/manifestationFactoryUtils";
 
 export function MaterialTypeSwitcher({
   uniqueMaterialTypes,

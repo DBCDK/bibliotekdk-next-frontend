@@ -1,10 +1,12 @@
 import Translate from "@/components/base/translate";
 import Router from "next/router";
-import { manifestationMaterialTypeUtils } from "@/lib/manifestationFactoryFunctions";
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
+import { accessFactory } from "@/lib/accessFactoryUtils";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
 export function openLocalizationsModal(modal, pids, workId, materialType) {
   modal.push("localizations", {
@@ -62,7 +64,7 @@ function getPageDescription(work) {
   const creator = work?.creators?.[0]?.display;
 
   const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
-    manifestationMaterialTypeUtils(work?.manifestations?.all);
+    manifestationMaterialTypeFactory(work?.manifestations?.all);
 
   // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
@@ -128,6 +130,52 @@ export function useBranchUserAndHasDigitalAccess(selectedPids) {
     branchUserData: branchUserData,
     branchIsLoading: branchIsLoading,
     branchIsSlow: branchIsSlow,
+    hasDigitalAccess: hasDigitalAccess,
+  };
+}
+
+export function useRelevantAccessesForOrderPage(selectedPids) {
+  const { branchIsLoading, hasDigitalAccess } =
+    useBranchUserAndHasDigitalAccess(selectedPids);
+
+  const manifestationsResponse = useData(
+    selectedPids &&
+      manifestationFragments.orderPageManifestations({ pid: selectedPids })
+  );
+
+  const manifestations = manifestationsResponse?.data?.manifestations;
+
+  const {
+    getAllowedAccessesByTypeName,
+    getAllAllowedEnrichedAccessSorted,
+    allEnrichedAccesses,
+  } = useMemo(() => accessFactory(manifestations), [manifestations]);
+
+  const allAllowedEnrichedAccesses = useMemo(
+    () => getAllAllowedEnrichedAccessSorted(hasDigitalAccess) || [],
+    [
+      manifestationsResponse?.data?.manifestations,
+      manifestations,
+      hasDigitalAccess,
+    ]
+  );
+
+  const allowedAccessesByTypeName = useMemo(
+    () => getAllowedAccessesByTypeName(hasDigitalAccess) || [],
+    [
+      manifestationsResponse?.data?.manifestations,
+      manifestations,
+      hasDigitalAccess,
+    ]
+  );
+
+  return {
+    branchIsLoading: branchIsLoading,
+    manifestationResponse: manifestationsResponse,
+    manifestations: manifestations,
+    allowedAccessesByTypeName: allowedAccessesByTypeName,
+    allEnrichedAccesses: allEnrichedAccesses,
+    allAllowedEnrichedAccesses: allAllowedEnrichedAccesses,
     hasDigitalAccess: hasDigitalAccess,
   };
 }

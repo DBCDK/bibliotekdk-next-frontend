@@ -7,46 +7,53 @@ import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import Cover from "@/components/base/cover";
 import { useModal } from "@/components/_modal";
 import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import usePickupBranch from "@/components/hooks/usePickupBranch";
 import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import {
   formatMaterialTypesToPresentation,
-  manifestationMaterialTypeUtils,
-} from "@/lib/manifestationFactoryFunctions";
+  manifestationMaterialTypeFactory,
+} from "@/lib/manifestationFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 
-export const Edition = memo(function Edition({
+export function Edition({
   isLoading,
   singleManifestation = false,
   coverImage = null,
   inferredAccessTypes = {},
   context,
-  material,
+  manifestation,
   showOrderTxt = true,
   modal = {},
 }) {
   const { periodicaForm } = context;
-  const { isArticle, isPeriodicaLike, isArticleRequest, isDigitalCopy } =
-    inferredAccessTypes;
+  const {
+    isArticle,
+    isPeriodicaLike,
+    isArticleRequest,
+    isDigitalCopy,
+    availableAsDigitalCopy,
+  } = inferredAccessTypes;
 
-  const { flatMaterialTypes } = manifestationMaterialTypeUtils([material]);
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([
+    manifestation,
+  ]);
 
   const materialType = flatMaterialTypes?.[0];
 
   const materialPresentation = [
-    material?.edition?.publicationYear?.display,
-    material?.publisher,
-    material?.edition?.edition,
+    manifestation?.edition?.publicationYear?.display,
+    manifestation?.publisher,
+    manifestation?.edition?.edition,
   ]
     ?.flat()
     ?.join(", ");
 
   const articleTypeLabel =
     isDigitalCopy &&
+    availableAsDigitalCopy &&
     context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
       ? "will-order-digital-copy"
       : isArticleRequest
@@ -68,21 +75,21 @@ export const Edition = memo(function Edition({
         <div className={styles.title}>
           <Text
             type="text1"
-            skeleton={!material?.titles?.full && isLoading}
+            skeleton={!manifestation?.titles?.full && isLoading}
             lines={1}
           >
-            {material?.titles?.full}
+            {manifestation?.titles?.full}
           </Text>
         </div>
         <div className={styles.creators}>
           <Text
             type="text3"
-            skeleton={!material?.creators && isLoading}
+            skeleton={!manifestation?.creators && isLoading}
             lines={1}
           >
-            {material?.creators?.map((c, i) =>
-              material?.creators?.length > i + 1 ? c.display + ", " : c.display
-            )}
+            {manifestation?.creators
+              ?.map((creator) => creator?.display)
+              .join(", ")}
           </Text>
         </div>
         {singleManifestation && (
@@ -163,16 +170,16 @@ export const Edition = memo(function Edition({
       </div>
       <div className={styles.right}>
         <Cover
-          src={coverImage?.detail || material?.cover?.detail}
+          src={coverImage?.detail || manifestation?.cover?.detail}
           size="thumbnail"
           skeleton={
-            (!coverImage?.detail || !material?.cover?.detail) && isLoading
+            (!coverImage?.detail || !manifestation?.cover?.detail) && isLoading
           }
         />
       </div>
     </div>
   );
-});
+}
 
 export default function Wrap({
   context,
@@ -180,7 +187,7 @@ export default function Wrap({
   showOrderTxt = true,
 }) {
   const modal = useModal();
-  const { workId, pids, orderPids: orderPidsBeforeFilter } = context;
+  const { orderPids: orderPidsBeforeFilter } = context;
 
   const orderPids = useMemo(() => {
     return orderPidsBeforeFilter?.filter(
@@ -199,17 +206,9 @@ export default function Wrap({
     return manifestationsData?.manifestations;
   }, [manifestationsData?.manifestations]);
 
-  const { data: workData, isLoading: workIsLoading } = useData(
-    workId && workFragments.editionWork({ workId: workId })
-  );
-  const work = useMemo(() => {
-    return workData?.work;
-  }, [workData?.work]);
-
-  const { pickupBranch } = usePickupBranch(pids?.[0]);
+  const { pickupBranch } = usePickupBranch(orderPids?.[0]);
 
   const inferredAccessTypes = inferAccessTypes(
-    work,
     context?.periodicaForm,
     pickupBranch,
     manifestations
@@ -219,14 +218,12 @@ export default function Wrap({
 
   return (
     <Edition
-      isLoading={
-        workIsLoading || manifestationIsLoading || !manifestations?.[0]
-      }
+      isLoading={manifestationIsLoading || !manifestations?.[0]}
       singleManifestation={singleManifestation}
       coverImage={coverImage}
       inferredAccessTypes={inferredAccessTypes}
       context={context}
-      material={manifestations?.[0]}
+      manifestation={manifestations?.[0]}
       showOrderTxt={showOrderTxt}
       modal={modal}
     />

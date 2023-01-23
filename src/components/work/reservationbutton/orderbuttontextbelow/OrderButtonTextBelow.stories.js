@@ -92,7 +92,7 @@ EBookButtonTxt.story = {
           materialTypes: [{ specific: "Ebog" }],
           workTypes: ["LITERATURE"],
           manifestations: {
-            all: [
+            mostRelevant: [
               {
                 pid: "some-pid-ebog" + time,
               },
@@ -143,7 +143,7 @@ EAudioBookPhysicalButtonTxt.story = {
           materialTypes: [{ specific: "Lydbog (cd-mp3)" }],
           workTypes: ["LITERATURE"],
           manifestations: {
-            all: [
+            mostRelevant: [
               {
                 pid: "some-pid-physical-audio-book" + time,
               },
@@ -188,7 +188,7 @@ EAudioBookDigitalButtonTxt.story = {
           materialTypes: [{ specific: "Lydbog (net)" }],
           workTypes: ["LITERATURE"],
           manifestations: {
-            all: [
+            mostRelevant: [
               {
                 pid: "some-pid-elydbog" + time,
               },

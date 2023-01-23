@@ -75,7 +75,7 @@ function resolvers(storyname) {
             creators: [{ display: "Lucky Luke" }, { display: "Ratata" }],
             workTypes: ["LITERATURE"],
             manifestations: {
-              all: [
+              mostRelevant: [
                 {
                   pid: "some-pid-bog" + time,
                   materialTypes: [{ specific: "bog" }],
