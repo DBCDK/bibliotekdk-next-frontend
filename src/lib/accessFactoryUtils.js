@@ -108,10 +108,43 @@ export function enrichSingleAccess(singleAccess) {
 }
 
 /**
+ * Manually maintained list of special access urls and origins.
+ *  Accesses can be considered special if they do not have an
+ *  url/origin that provides direct access
+ * - i.e. dfi.dk is a special access. It is a link to information on how to watch the
+ *   movie at a specific location
+ *
+ * Used by: {@link prioritiseAccessUrl} through {@link checkSpecialAccess}
+ * @type {{urls: string[], origins: string[]}}
+ */
+const specialAccessTypes = {
+  origins: ["www.dfi.dk"],
+  urls: ["www.filmstriben.dk/bibliotek/"],
+};
+
+/**
+ * Helper function for checking if single access is __typename AccessUrl and checks
+ * if the access origin is part of the {@link specialAccessTypes}.origins
+ * or if the access url startsWith elements in {@link specialAccessTypes}.urls
+ * @param singleAccess
+ * @return {boolean}
+ */
+function checkSpecialAccess(singleAccess) {
+  return (
+    singleAccess.__typename === AccessEnum.ACCESS_URL &&
+    (specialAccessTypes.origins.includes(singleAccess?.origin) ||
+      specialAccessTypes.urls.filter((singleUrl) =>
+        singleAccess?.url?.startsWith(singleUrl)
+      ).length > 0)
+  );
+}
+
+/**
  * Prioritise a __typename AccessUrl-access
  * From lowest (3) to highest (0) priority (lower number sorts higher)
- * - (3) Missing or Non-string url (assume string url is valid url)
- * - (2) Login required
+ * - (4) Missing or Non-string url (assume string url is valid url)
+ * - (3) Login required
+ * - (2) Origin is part of {@link specialAccessTypes}
  * - (1) Origin is DBC Webarkiv
  * - (0) None of the above
  * @param access
@@ -122,6 +155,7 @@ export function prioritiseAccessUrl(access) {
     typeof access.url !== "string" || !access.url,
     typeof access?.loginRequired === "boolean" &&
       access?.loginRequired === true,
+    checkSpecialAccess(access),
     access?.origin === "DBC Webarkiv",
     true,
   ];
@@ -283,21 +317,24 @@ export function validInterLibraryLoanAccess(singleAccess) {
 }
 
 /**
- * Provide allowed accesses, divided into 3 seperate arrays:
- * - onlineAccesses: includes __typename: AccessUrl, InfomediaService, Ereol
+ * Provide allowed accesses, divided into 4 seperate arrays:
+ * - onlineAccesses: includes __typename: AccessUrl, InfomediaService, Ereol (excluding {@link specialAccessTypes})
  * - digitalArticleServiceAccesses: for __typename DigitalArticleService
  * - interLibraryLoanAccesses: for __typename InterLibraryLoanAccesses
- * For when user does not have DigitalArticleService-access
+ *   and when user does not have DigitalArticleService-access
+ * - specialAccesses: includes __typename: AccessUrl and meets criteria in {@link checkSpecialAccess} {@link specialAccessTypes}
  * @param accesses
  * @param hasDigitalAccess
- * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[]}}
+ * @return {{digitalArticleServiceAccesses: Access[], interLibraryLoanAccesses: Access[], onlineAccesses: Access[], specialAccesses: Access[]}}
  */
 export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
-  const onlineAccesses = accesses?.filter(
-    (singleAccess) =>
-      singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
-      singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
-  );
+  const onlineAccesses = accesses
+    ?.filter(
+      (singleAccess) =>
+        singleAccess?.__typename !== AccessEnum.INTER_LIBRARY_LOAN &&
+        singleAccess?.__typename !== AccessEnum.DIGITAL_ARTICLE_SERVICE
+    )
+    .filter((singleAccess) => !checkSpecialAccess(singleAccess));
 
   const digitalArticleServiceAccesses = accesses?.filter(
     (singleAccess) =>
@@ -309,10 +346,13 @@ export function getAllowedAccessesByTypeName(accesses, hasDigitalAccess) {
     validInterLibraryLoanAccess
   );
 
+  const specialAccesses = accesses?.filter(checkSpecialAccess);
+
   return {
     onlineAccesses: onlineAccesses,
     digitalArticleServiceAccesses: digitalArticleServiceAccesses,
     interLibraryLoanAccesses: interLibraryLoanAccesses,
+    specialAccesses: specialAccesses,
   };
 }
 
@@ -331,6 +371,7 @@ export function getAllAllowedEnrichedAccessSorted(
     onlineAccesses,
     digitalArticleServiceAccesses,
     interLibraryLoanAccesses,
+    specialAccesses,
   } = getAllowedAccessesByTypeName(
     (manifestations && getAllEnrichedAccessSorted(manifestations)) || [],
     hasDigitalAccess
@@ -340,6 +381,7 @@ export function getAllAllowedEnrichedAccessSorted(
     ...onlineAccesses,
     ...digitalArticleServiceAccesses,
     ...interLibraryLoanAccesses,
+    ...specialAccesses,
   ];
 }
 
@@ -359,6 +401,7 @@ export function getCountOfAllAllowedEnrichedAccessSorted(
     onlineAccesses,
     digitalArticleServiceAccesses,
     interLibraryLoanAccesses,
+    specialAccesses,
   } = getAllowedAccessesByTypeName(
     (manifestations && getAllEnrichedAccessSorted(manifestations)) || [],
     hasDigitalAccess
@@ -367,7 +410,8 @@ export function getCountOfAllAllowedEnrichedAccessSorted(
   return (
     onlineAccesses.length +
     [...digitalArticleServiceAccesses, ...interLibraryLoanAccesses]?.slice(0, 1)
-      ?.length
+      ?.length +
+    specialAccesses.length
   );
 }
 
@@ -451,12 +495,14 @@ export function getAreAccessesPeriodicaLike(enrichedAccesses) {
 export function accessFactory(manifestations) {
   const allEnrichedAccesses =
     (manifestations && getAllEnrichedAccessSorted(manifestations)) || [];
+  const allEnrichedAccessesSortedInclSpecialUrls =
+    getAllAllowedEnrichedAccessSorted(manifestations, true);
   const digitalCopy = checkDigitalCopy(allEnrichedAccesses);
   const physicalCopy = checkPhysicalCopy(allEnrichedAccesses);
   const isPeriodicaLikeArray = getAreAccessesPeriodicaLike(allEnrichedAccesses);
 
   return {
-    allEnrichedAccesses: allEnrichedAccesses,
+    allEnrichedAccesses: allEnrichedAccessesSortedInclSpecialUrls,
     getAllowedAccessesByTypeName(hasDigitalAccess) {
       return getAllowedAccessesByTypeName(
         allEnrichedAccesses,
