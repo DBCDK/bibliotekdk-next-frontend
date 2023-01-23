@@ -6,19 +6,15 @@ describe("Overview", () => {
       );
     });
     it(`Displays the contents of a review from infomedia`, () => {
-      cy.contains("infomedia.article.headLine");
-      cy.contains(
-        "infomedia.article.paper (work.workReviews[0].periodica.pages)"
-      );
+      cy.contains("Some review headline");
+      cy.contains("Some paper (Some page number)");
       cy.contains("Læsetid: 1 min.");
-      cy.contains(
-        "work.subjects.dbcVerified[0].display, work.subjects.dbcVerified[1].display"
-      );
-      cy.contains("5 nov. 2022");
-      cy.contains("work.workReviews[0].author");
-      cy.contains("infomedia.article.subHeadLine");
-      cy.contains("infomedia.article.hedLine");
-      cy.contains("infomedia.article.text");
+      cy.contains("Some topic, Some other topic");
+      cy.contains("24. December 2000");
+      cy.contains("Some creator");
+      cy.contains("Some review subHeadLine");
+      cy.contains("Some hedline");
+      cy.contains("Some text given as html ...");
       cy.contains("Infomedia disclaimer");
     });
   });
