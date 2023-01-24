@@ -279,10 +279,12 @@ describe("Search", () => {
   describe("Related search subjects", () => {
     it(`Can tab through related keywords`, () => {
       cy.visit("/iframe.html?id=search-relatedsubjects--default");
-      cy.get("body").tab();
-      cy.focused().should("have.attr", "data-cy", "related-subject-heste");
-      cy.tabs(10);
-      cy.focused().should("have.attr", "data-cy", "related-subject-heste");
+      cy.get("[data-cy=related-subject-heste]")
+        .should("have.attr", "data-cy", "related-subject-heste")
+        .tab()
+        .should("have.attr", "data-cy", "related-subject-børnebøger")
+        .tabs(9)
+        .should("have.attr", "data-cy", "related-subject-heste");
     });
 
     it(`Can render and interact with connected related subjects`, () => {

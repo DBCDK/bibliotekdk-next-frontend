@@ -33,7 +33,7 @@ describe("Cards", () => {
     );
 
     // Tab to the second work card and click
-    cy.get("a").first().tab().click();
+    cy.get("[data-cy=work-card]").first().tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(

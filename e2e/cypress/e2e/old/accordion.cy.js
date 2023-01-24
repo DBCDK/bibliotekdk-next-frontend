@@ -74,7 +74,7 @@ describe("Accordion", () => {
   });
 
   it(`Can tab through sections`, () => {
-    cy.tab().tab().tab().tab().tab().type("{enter}");
+    cy.get("[data-cy=accordion-item]").first().tabs(5).type("{enter}");
 
     cy.get("[data-cy=accordion-item]")
       .last()
