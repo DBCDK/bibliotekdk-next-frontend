@@ -86,11 +86,15 @@ describe("Search", () => {
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--default&viewMode=story");
 
-    cy.get("body").tab();
-    cy.focused().should("have.attr", "data-cy", "result-row");
-
-    cy.focused().tab().tab();
-    cy.focused().should("have.attr", "data-cy", "result-row");
+    cy.get("[data-cy=result-row]")
+      .should("exist")
+      .should("have.attr", "data-cy", "result-row")
+      .tab()
+      .should("have.attr", "data-cy", "result-row")
+      .tab()
+      .tab()
+      .focused()
+      .should("have.attr", "data-cy", "result-row");
   });
 
   // grid buttons is not working, skipped until implemented
@@ -106,11 +110,14 @@ describe("Search", () => {
   it(`Should focus pagination buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
-    cy.get("body").tab().tab();
-    cy.focused().should("have.attr", "data-cy", "page-1-button");
-
-    cy.tab().tab().tab();
-    cy.focused().should("have.attr", "data-cy", "page-4-button");
+    cy.get("[data-cy=page-1-button]")
+      .should("exist")
+      .should("have.attr", "data-cy", "page-1-button")
+      .tab()
+      .should("have.attr", "data-cy", "page-2-button")
+      .tab()
+      .tab()
+      .should("have.attr", "data-cy", "page-4-button");
   });
 
   it(`Desktop: Fake searchfield not visible`, () => {

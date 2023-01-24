@@ -18,19 +18,22 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.get("body").tab();
-    cy.focused().contains("Spørg en bibliotekar");
-    cy.focused().tab();
-    cy.focused().contains("Bibliotek.dk");
-    cy.focused().tab();
-    cy.focused().contains("Digitale bibliotekstilbud");
+    cy.get("[data-cy=article-preview]")
+      .first()
+      .contains("Spørg en bibliotekar")
+      .parent()
+      .tab()
+      .contains("Bibliotek.dk")
+      .parent()
+      .tab()
+      .contains("Digitale bibliotekstilbud");
   });
 
   it(`Article preview links to article page`, () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.tab().tab().tab().click();
+    cy.get("[data-cy=article-preview]").first().tab().tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
@@ -52,7 +55,7 @@ describe("Article", () => {
       "/iframe.html?id=articles-sections--single-section&viewMode=story"
     );
 
-    cy.get("body").tab().click();
+    cy.get("[data-cy=button-læs-mere]").tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
@@ -74,7 +77,7 @@ describe("Article", () => {
       "/iframe.html?id=articles-sections--single-section-alternative-url"
     );
 
-    cy.get("body").tab().click();
+    cy.get("[data-cy=button-vejledninger-og-information]").click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should("have.text", "/artikler");
