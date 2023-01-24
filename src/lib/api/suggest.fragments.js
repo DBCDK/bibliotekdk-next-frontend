@@ -91,29 +91,5 @@ const suggestResponseFragment = `fragment suggestResponseFragment on SuggestResp
   result {
     type
     term
-    work {
-      __typename
-      workId
-      creators {
-        display
-        nameSort
-      }
-      subjects {
-        dbcVerified {
-          ... on SubjectText {
-            type
-          }
-        }
-      }
-      manifestations {
-        latest {
-          cover {
-            thumbnail
-            detail
-            origin
-          }
-        }
-      }
-    }
   }
 }`;
