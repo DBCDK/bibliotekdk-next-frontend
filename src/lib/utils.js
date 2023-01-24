@@ -56,7 +56,7 @@ export function encodeTitleCreator(title = "", creator = "") {
 export function getCanonicalWorkUrl({ title, creators, id }) {
   return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
-    creators?.[0]?.name
+    creators?.[0]?.display || creators?.[0]?.name || ""
   )}/${id}`;
 }
 

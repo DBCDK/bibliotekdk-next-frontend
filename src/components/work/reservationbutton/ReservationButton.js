@@ -234,6 +234,10 @@ function ReservationButton({
   );
 
   if (
+    !workId ||
+    !selectedPids ||
+    !workResponse ||
+    !manifestationsResponse ||
     manifestationsResponse?.isLoading ||
     workResponse?.isLoading ||
     branchIsLoading

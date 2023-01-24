@@ -92,6 +92,7 @@ export function Options({ modal, context }) {
     digitalArticleServiceAccesses.length > 0
       ? []
       : allowedAccessessByType.interLibraryLoanAccesses;
+  const specialAccesses = allowedAccessessByType.specialAccesses;
 
   const optionsList = (access, index, accessesArray) =>
     optionsListAllArgs(modal, workId, access, index, accessesArray);
@@ -104,6 +105,7 @@ export function Options({ modal, context }) {
           {onlineAccesses.map(optionsList)}
           {digitalArticleServiceAccesses.slice(0, 1).map(optionsList)[0]}
           {interLibraryLoanAccesses.map(optionsList)[0]}
+          {specialAccesses.map(optionsList)}
         </ul>
       </div>
     )

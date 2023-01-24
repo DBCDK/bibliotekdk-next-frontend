@@ -24,6 +24,7 @@ import Related from "@/components/search/related";
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
+import { useRef } from "react";
 
 /**
  * @file
@@ -36,6 +37,7 @@ function Find() {
   const q = useQ().getQuery();
   const dataCollect = useDataCollect();
   const router = useRouter();
+  const scrollRef = useRef();
 
   const { page = 1 } = router.query;
 
@@ -67,6 +69,10 @@ function Find() {
     label: "find-description",
     vars: [`${hits}`, titleToUse],
   });
+
+  function scrollToRef(ref) {
+    ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 
   /**
    * Updates URL query params
@@ -114,6 +120,7 @@ function Find() {
         ))}
       </Head>
 
+      <div ref={scrollRef} />
       <Header router={router} />
 
       <Searchbar q={q} />
@@ -122,9 +129,10 @@ function Find() {
       {q && (
         <Result
           page={parseInt(page, 10)}
-          onPageChange={(page, scroll) =>
-            updateQueryParams({ page }, { scroll })
-          }
+          onPageChange={(page, scroll) => {
+            updateQueryParams({ page }, { scroll });
+            scrollToRef(scrollRef);
+          }}
           onWorkClick={(index, work) => {
             dataCollect.collectSearchWorkClick({
               search_request: { q, filters },
