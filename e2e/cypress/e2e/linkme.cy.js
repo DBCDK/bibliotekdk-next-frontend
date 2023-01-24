@@ -1,15 +1,15 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-function getPage(path = "/") {
-  return cy.request({
-    url: `${nextjsBaseUrl}${path}`,
-    // bot
-    headers: {
-      "User-Agent":
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-    },
-  });
-}
+// function getPage(path = "/") {
+//   return cy.request({
+//     url: `${nextjsBaseUrl}${path}`,
+//     // bot
+//     headers: {
+//       "User-Agent":
+//         "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+//     },
+//   });
+// }
 describe(`linkme`, () => {
   it(`redirects on no rec.id`, () => {
     const path = "/linkme.php/?isBot=true";

@@ -18,11 +18,9 @@ describe("Related Keywords", () => {
     const url = `/find?q.subject=${tag}`;
 
     // Get selected tag
-    const item = cy.get(`[data-cy=related-subject-${tag}]`);
-
-    // Check link attributes
-    item.should("have.attr", "target", "_self");
-    item.should("have.attr", "href", url);
+    cy.get(`[data-cy=related-subject-${tag}]`)
+      .should("have.attr", "target", "_self")
+      .should("have.attr", "href", url);
   });
 
   it(`Can render and interact with connected related subjects`, () => {

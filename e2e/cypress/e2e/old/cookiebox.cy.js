@@ -4,7 +4,6 @@
  */
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 
 describe("CookieBox", () => {
   it(`can accept cookies`, () => {

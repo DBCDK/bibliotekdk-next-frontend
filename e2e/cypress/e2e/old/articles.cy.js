@@ -1,5 +1,3 @@
-const graphqlPath = Cypress.env("graphqlPath");
-
 describe("Article", () => {
   it(`Section display article previews`, () => {
     cy.visit(
