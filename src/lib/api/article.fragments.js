@@ -14,8 +14,6 @@ import { getLangcode } from "@/components/base/translate/Translate";
  * @param {string} params.articleId the id of the article
  */
 export function article({ articleId, language }) {
-  console.log("fisk", { articleId, language });
-
   return {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging

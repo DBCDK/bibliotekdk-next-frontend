@@ -36,8 +36,6 @@ export default function Header({ articleId }) {
 
   const article = data.data.article;
 
-  console.log("article", article);
-
   return (
     <Head>
       <title key="title">{article.title}</title>
