@@ -136,7 +136,7 @@ describe("Search", () => {
       cy.visit("/iframe.html?id=layout-header--nav-header");
 
       cy.get("header [data-cy=suggester-input]").clear().type("hest");
-      cy.tab();
+      cy.focused().tab();
 
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({});

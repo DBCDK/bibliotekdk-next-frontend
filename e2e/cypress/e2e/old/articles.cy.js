@@ -18,11 +18,11 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().contains("Spørg en bibliotekar");
-    cy.tab();
+    cy.focused().tab();
     cy.focused().contains("Bibliotek.dk");
-    cy.tab();
+    cy.focused().tab();
     cy.focused().contains("Digitale bibliotekstilbud");
   });
 
@@ -30,7 +30,7 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.tabs(3).click();
+    cy.get("body").tabs(3).click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
@@ -52,7 +52,7 @@ describe("Article", () => {
       "/iframe.html?id=articles-sections--single-section&viewMode=story"
     );
 
-    cy.tab().click();
+    cy.get("body").tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
@@ -74,7 +74,7 @@ describe("Article", () => {
       "/iframe.html?id=articles-sections--single-section-alternative-url"
     );
 
-    cy.tab().click();
+    cy.get("body").tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should("have.text", "/artikler");

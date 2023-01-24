@@ -15,7 +15,7 @@ describe("Filter", () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.get("button").contains("open filters").click();
     cy.wait(1000);
-    cy.tab();
+    cy.focused().tab();
     cy.focused().contains("Luk");
     cy.tabs(4);
     cy.focused().contains("Luk");
