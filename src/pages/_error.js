@@ -14,6 +14,7 @@ import { Custom } from "@/pages/404";
  */
 
 function Error({ statusCode }) {
+  console.log(statusCode, "STATUS CODE");
   return <Custom />;
 }
 
