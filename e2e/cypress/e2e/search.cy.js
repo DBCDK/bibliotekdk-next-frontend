@@ -1,3 +1,6 @@
+import "cypress-plugin-tab";
+import "./commands";
+
 describe("Search", () => {
   describe(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
