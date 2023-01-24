@@ -1,14 +1,15 @@
 // pages/404.js
-import { StaticHeader } from "@/components/header/Header";
+import { WrappedStaticHeader } from "@/components/header/Header";
 import React from "react";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text/Text";
 
 export function Custom() {
+  const context = { context: "header" };
   return (
     <>
-      <StaticHeader replace={true} />
+      <WrappedStaticHeader replace={true} context={context} />
       <Section
         title={Translate({
           context: "errorpages",
