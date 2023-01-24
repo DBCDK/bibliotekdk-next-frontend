@@ -331,6 +331,8 @@ export function ContentSkeleton(props) {
 export default function Wrap(props) {
   const langcode = { language: getLanguage() };
 
+  console.log("langcode", langcode);
+
   let articleArgs = { ...props, ...langcode };
   const { data, isLoading, error } = useData(
     articleFragments.article(articleArgs)
