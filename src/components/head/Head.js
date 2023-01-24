@@ -1,13 +1,10 @@
 import Head from "next/head";
 
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
-import { frontpageHero } from "@/lib/api/hero.fragments";
-import { useData } from "@/lib/api/api";
-import { parseHero } from "@/components/hero/Hero";
 
 import Translate from "@/components/base/translate";
 
-export default function DefaultHead() {
+export default function _Head() {
   const context = { context: "metadata" };
   const pageTitle = Translate({ ...context, label: "frontpage-title" });
   const pageDescription = Translate({
@@ -15,8 +12,6 @@ export default function DefaultHead() {
     label: "frontpage-description",
   });
 
-  const { data } = useData(frontpageHero());
-  const ogImage = parseHero(data);
   const { canonical, alternate } = useCanonicalUrl();
 
   return (
@@ -35,13 +30,11 @@ export default function DefaultHead() {
         property="og:description"
         content={pageDescription}
       />
-      {ogImage && ogImage.image && ogImage.image.ogurl && (
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`${ogImage?.image?.ogurl}`}
-        />
-      )}
+      <meta
+        key="og:image"
+        property="og:image"
+        content={"/img/bibdk-default-img.png"}
+      />
       <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
       <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
       <link rel="alternate icon" href="/favicon.ico" />
