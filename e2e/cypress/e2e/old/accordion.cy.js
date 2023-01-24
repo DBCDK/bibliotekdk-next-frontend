@@ -2,8 +2,6 @@
  * @file
  * Test functionality of Header
  */
-import "cypress-plugin-tab";
-import "./commands";
 
 describe("Accordion", () => {
   beforeEach(function () {

@@ -1,6 +1,3 @@
-import "cypress-plugin-tab";
-import "./commands";
-
 describe("Article", () => {
   it(`Section display article previews`, () => {
     cy.visit(

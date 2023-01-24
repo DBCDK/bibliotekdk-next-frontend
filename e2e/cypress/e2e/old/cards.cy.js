@@ -2,8 +2,6 @@
  * @file
  * Test functionality of cards
  */
-import "cypress-plugin-tab";
-import "./commands";
 
 describe("Cards", () => {
   it(`Clicking card links to work page`, () => {

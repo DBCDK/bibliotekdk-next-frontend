@@ -1,6 +1,4 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-import "cypress-plugin-tab";
-import "./commands";
 
 describe("Filter", () => {
   it(`workTypes facet is excluded from facets list`, () => {
