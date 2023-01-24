@@ -1,5 +1,5 @@
 // pages/404.js
-import Header from "@/components/header/Header";
+import Header, { StaticHeader } from "@/components/header/Header";
 import React from "react";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
@@ -8,7 +8,7 @@ import Text from "@/components/base/text/Text";
 export function Custom() {
   return (
     <>
-      <Header reset={true} />
+      <StaticHeader replace={true} />
       <Section
         title={Translate({
           context: "errorpages",

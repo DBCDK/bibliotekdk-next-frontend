@@ -252,7 +252,7 @@
   }
 
   .header .bottom {
-    padding: var(--pt2) 0 0 0;
+    padding: var(--pt1) 0 0 0;
   }
 
   .bottom .actions .action {

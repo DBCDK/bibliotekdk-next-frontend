@@ -51,6 +51,15 @@ export const MATERIAL_PAGES = [
   { path: "artikler", label: "article" },
 ];
 
+const actions = [
+  {
+    label: "digitalOffers",
+    href: "/artikel/digitale-bibliotekstilbud/5",
+  },
+  { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
+  { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
+];
+
 /**
  * The Component function
  *
@@ -66,7 +75,6 @@ export function Header({
   user,
   modal,
   filters,
-  reset,
 }) {
   const context = { context: "header" };
 
@@ -86,15 +94,6 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
-
-  const actions = [
-    {
-      label: "digitalOffers",
-      href: "/artikel/digitale-bibliotekstilbud/5",
-    },
-    { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
-    { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
-  ];
 
   const menu = [
     {
@@ -182,75 +181,17 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <Col xs={2}>
-              <Logo fill={"var(--blue)"} text={"default_logo_text"} />
-            </Col>
-            <Col xs={{ span: 9, offset: 1 }}>
-              <div className={styles.top}>
-                <div
-                  className={styles.materials}
-                  data-cy={cyKey({ name: "materials", prefix: "header" })}
-                >
-                  <Link href="/">
-                    <Text type="text3">
-                      {Translate({
-                        context: "general",
-                        label: "frontpage",
-                      })}
-                    </Text>
-                  </Link>
-
-                  {MATERIAL_PAGES.map(({ path, label }) => {
-                    const active = router.asPath.includes(
-                      `/inspiration/${path}`
-                    );
-
-                    return (
-                      <Link
-                        key={`link-${path}-${label}`}
-                        href={`/inspiration/${path}?workTypes=${label}`}
-                        border={{ bottom: { keepVisible: active } }}
-                        dataCy={`header-link-${label}`}
-                      >
-                        <Text type="text3">
-                          {Translate({
-                            context: "facets",
-                            label: `label-${label}`,
-                          })}
-                        </Text>
-                      </Link>
-                    );
-                  })}
-                </div>
-                <div
-                  className={styles.actions}
-                  data-cy={cyKey({ name: "actions", prefix: "header-top" })}
-                >
-                  {actions.map((m) => (
-                    <Link
-                      key={m.label}
-                      href={m.href}
-                      target={m.target}
-                      dataCy={cyKey({
-                        name: m.label,
-                        prefix: "header-link",
-                      })}
-                    >
-                      <Text type="text3">
-                        {Translate({ ...context, label: m.label })}
-                      </Text>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            <StaticHeader router={router} context={context} />
+            <Col xs={{ span: 9, offset: 3 }}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
+                {/** we do NOT want dynamic content on error page (reset===true) -  @see pages/404.js **/}
+
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();
@@ -268,75 +209,67 @@ export function Header({
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
-                  {!reset && (
-                    <DesktopMaterialSelect className={styles.select} />
-                  )}
+                  <DesktopMaterialSelect className={styles.select} />
 
-                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
-                  {!reset && (
-                    <div
-                      className={`${styles.suggester__wrap} ${
-                        !collapseOpen ? styles.collapsed : ""
-                      } ${suggesterVisibleMobileClass}`}
-                    >
-                      <Suggester
-                        className={`${styles.suggester}`}
-                        history={history}
-                        clearHistory={clearHistory}
-                        isMobile={suggesterVisibleMobile}
-                        onSelect={(val) => doSearch(val)}
-                        onChange={(val) => setQ({ ...q, all: val })}
-                        onClose={() => {
-                          if (router) {
-                            // remove suggester prop from query obj
-                            router.back();
-                          }
-                          // Remove suggester in storybook
-                          story && story.setSuggesterVisibleMobile(false);
-                        }}
-                        onKeyDown={keyPressed}
-                      />
+                  <div
+                    className={`${styles.suggester__wrap} ${
+                      !collapseOpen ? styles.collapsed : ""
+                    } ${suggesterVisibleMobileClass}`}
+                  >
+                    <Suggester
+                      className={`${styles.suggester}`}
+                      history={history}
+                      clearHistory={clearHistory}
+                      isMobile={suggesterVisibleMobile}
+                      onSelect={(val) => doSearch(val)}
+                      onChange={(val) => setQ({ ...q, all: val })}
+                      onClose={() => {
+                        if (router) {
+                          // remove suggester prop from query obj
+                          router.back();
+                        }
+                        // Remove suggester in storybook
+                        story && story.setSuggesterVisibleMobile(false);
+                      }}
+                      onKeyDown={keyPressed}
+                    />
 
-                      <MoreOptionsLink
-                        onSearchClick={() => setCollapseOpen(!collapseOpen)}
-                        className={`${styles.linkshowmore} ${
-                          collapseOpen ? styles.hidden : ""
-                        }`}
-                      >
-                        {Translate({
-                          context: "search",
-                          label:
-                            countQ === 0
-                              ? "advancedSearchLink"
-                              : "advancedSearchLinkCount",
-                          vars: [countQ],
-                        })}
-                      </MoreOptionsLink>
-
-                      <ExpandedSearch
-                        className={styles.expandedSearch}
-                        collapseOpen={collapseOpen}
-                        setCollapseOpen={setCollapseOpen}
-                      />
-                    </div>
-                  )}
-                  {/** we do NOT want dynamic content on error page - hence we pass reset parameter - @see pages/404.js **/}
-                  {!reset && (
-                    <button
-                      className={`${styles.button} ${
+                    <MoreOptionsLink
+                      onSearchClick={() => setCollapseOpen(!collapseOpen)}
+                      className={`${styles.linkshowmore} ${
                         collapseOpen ? styles.hidden : ""
                       }`}
-                      type="submit"
-                      data-cy={cyKey({
-                        name: "searchbutton",
-                        prefix: "header",
-                      })}
                     >
-                      <span>{Translate({ ...context, label: "search" })}</span>
-                      <div className={styles.fill} />
-                    </button>
-                  )}
+                      {Translate({
+                        context: "search",
+                        label:
+                          countQ === 0
+                            ? "advancedSearchLink"
+                            : "advancedSearchLinkCount",
+                        vars: [countQ],
+                      })}
+                    </MoreOptionsLink>
+
+                    <ExpandedSearch
+                      className={styles.expandedSearch}
+                      collapseOpen={collapseOpen}
+                      setCollapseOpen={setCollapseOpen}
+                    />
+                  </div>
+
+                  <button
+                    className={`${styles.button} ${
+                      collapseOpen ? styles.hidden : ""
+                    }`}
+                    type="submit"
+                    data-cy={cyKey({
+                      name: "searchbutton",
+                      prefix: "header",
+                    })}
+                  >
+                    <span>{Translate({ ...context, label: "search" })}</span>
+                    <div className={styles.fill} />
+                  </button>
                 </form>
 
                 <div
@@ -374,6 +307,102 @@ export function Header({
   );
 }
 
+export function WrappedStaticHeader({
+  context,
+  className = "",
+  replace = false,
+}) {
+  return (
+    <header className={`${styles.wrap} ${className}`}>
+      <div className={styles.headerWrap}>
+        <Container className={styles.header} fluid>
+          <Row>
+            <StaticHeader context={context} replace={replace} />
+          </Row>
+        </Container>
+      </div>
+    </header>
+  );
+}
+
+/**
+ * Static parts of header - logo, materialtypeslinks, header actions
+ * @param router
+ * @param context
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export function StaticHeader({ router = null, context, replace = false }) {
+  return (
+    <>
+      <Col xs={2}>
+        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      </Col>
+      <Col xs={{ span: 9, offset: 1 }}>
+        <div className={styles.top}>
+          <div
+            className={styles.materials}
+            data-cy={cyKey({ name: "materials", prefix: "header" })}
+          >
+            <Link href="/" replace={replace}>
+              <Text type="text3" tag="div">
+                {Translate({
+                  context: "general",
+                  label: "frontpage",
+                })}
+              </Text>
+            </Link>
+
+            {MATERIAL_PAGES.map(({ path, label }) => {
+              const active =
+                (router && router.asPath.includes(`/inspiration/${path}`)) ||
+                false;
+
+              return (
+                <Link
+                  key={`link-${path}-${label}`}
+                  href={`/inspiration/${path}?workTypes=${label}`}
+                  border={{ bottom: { keepVisible: active } }}
+                  dataCy={`header-link-${label}`}
+                  replace={replace}
+                >
+                  <Text type="text3">
+                    {Translate({
+                      context: "facets",
+                      label: `label-${label}`,
+                    })}
+                  </Text>
+                </Link>
+              );
+            })}
+          </div>
+          <div
+            className={styles.actions}
+            data-cy={cyKey({ name: "actions", prefix: "header-top" })}
+          >
+            {actions.map((m) => (
+              <Link
+                key={m.label}
+                href={m.href}
+                target={m.target}
+                dataCy={cyKey({
+                  name: m.label,
+                  prefix: "header-link",
+                })}
+                replace={replace}
+              >
+                <Text type="text3">
+                  {Translate({ ...context, label: m.label })}
+                </Text>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Col>
+    </>
+  );
+}
+
 /**
  * Function to return skeleton (Loading) version of the Component
  *
@@ -405,29 +434,20 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
-  const reset = props?.reset || false;
 
   // if window changes size from small to larger (>992) we need to remove
   // the suggester url parameter (suggester=true) for the mobile
   // suggester to go away
   let wSize = useWindowSize();
   const changeMe = wSize.width > 992;
-
   /** do NOT run useeffect if an error occurred (reset === true) **/
   useEffect(() => {
-    if (changeMe && !reset) {
+    if (changeMe) {
       let query = { ...router.query };
       delete query.suggester;
       router.replace({ pathname: router.pathname, query });
     }
-    /** - an error occured (reset === true) - we need to reset router somehow
-      there is probably a better wey than this **/
-    if (reset) {
-      router.replace({ pathname: "404", query: {} }, undefined, {
-        shallow: true,
-      });
-    }
-  }, [changeMe, reset]);
+  }, [changeMe]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
@@ -440,7 +460,6 @@ export default function Wrap(props) {
       modal={modal}
       filters={filters}
       router={router}
-      reset={reset}
     />
   );
 }
