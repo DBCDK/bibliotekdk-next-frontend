@@ -43,7 +43,7 @@ Cypress.Commands.add("typeTab", (shiftKey, ctrlKey) => {
  */
 Cypress.Commands.add("tabs", (n = 1) => {
   for (let i = 0; i < Number(n); i++) {
-    cy.typeTab();
+    cy.tab();
   }
 });
 

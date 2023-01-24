@@ -30,7 +30,7 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.get("body").tabs(3).click();
+    cy.tab().tab().tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(

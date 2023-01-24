@@ -86,30 +86,30 @@ describe("Search", () => {
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--default&viewMode=story");
 
-    cy.get("body").tabs(1);
+    cy.get("body").tab();
     cy.focused().should("have.attr", "data-cy", "result-row");
 
-    cy.tabs(2);
+    cy.focused().tab().tab();
     cy.focused().should("have.attr", "data-cy", "result-row");
   });
 
   // grid buttons is not working, skipped until implemented
   it.skip(`Should focus grid buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-quickfilters--default&viewMode=story");
-    cy.get("body").tabs(1);
+    cy.get("body").tab();
     cy.focused().should("have.attr", "data-cy", "grid-button");
 
-    cy.tabs(1);
+    cy.tab();
     cy.focused().should("have.attr", "data-cy", "list-button");
   });
 
   it(`Should focus pagination buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
-    cy.get("body").tabs(2);
+    cy.get("body").tab().tab();
     cy.focused().should("have.attr", "data-cy", "page-1-button");
 
-    cy.tabs(3);
+    cy.tab().tab().tab();
     cy.focused().should("have.attr", "data-cy", "page-4-button");
   });
 
