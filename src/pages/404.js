@@ -1,5 +1,5 @@
 // pages/404.js
-import Header, { StaticHeader } from "@/components/header/Header";
+import { StaticHeader } from "@/components/header/Header";
 import React from "react";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";

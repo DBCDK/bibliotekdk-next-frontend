@@ -13,9 +13,7 @@ import { Custom } from "@/pages/404";
  * @constructor
  */
 
-function Error({ statusCode, key }) {
-  console.log(arguments, "ERROR PROPS");
-
+function Error({ statusCode }) {
   return <Custom />;
 }
 
@@ -37,7 +35,7 @@ Error.getInitialProps = ({ res, err }) => {
   }
 
   const statusCode = res ? res.statusCode : err ? err.statusCode : 404;
-  return { statusCode, key: Number(new Date()) };
+  return { statusCode };
 };
 
 export default Error;
