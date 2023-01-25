@@ -190,8 +190,6 @@ export function Header({
             <Col xs={{ span: 9, offset: 3 }}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
-                {/** we do NOT want dynamic content on error page (reset===true) -  @see pages/404.js **/}
-
                 <form
                   onSubmit={(e) => {
                     e?.preventDefault();
@@ -329,6 +327,7 @@ export function WrappedStaticHeader({
  * Static parts of header - logo, materialtypeslinks, header actions
  * @param router
  * @param context
+ * @param replace
  * @returns {JSX.Element}
  * @constructor
  */
@@ -440,7 +439,6 @@ export default function Wrap(props) {
   // suggester to go away
   let wSize = useWindowSize();
   const changeMe = wSize.width > 992;
-  /** do NOT run useeffect if an error occurred (reset === true) **/
   useEffect(() => {
     if (changeMe) {
       let query = { ...router.query };
