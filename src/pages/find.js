@@ -42,7 +42,7 @@ function Find() {
   const { page = 1 } = router.query;
 
   // Add worktype and all q types to useCanonicalUrl func
-  const { canonical, alternate, root } = useCanonicalUrl({
+  const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["workTypes", ...typesQ.map((t) => `q.${t}`)],
   });
 
@@ -102,17 +102,11 @@ function Find() {
           content={pageDescription}
         ></meta>
         <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:type" property="og:type" content="website" />
         <meta key="og:title" property="og:title" content={pageTitle} />
         <meta
           key="og:description"
           property="og:description"
           content={pageDescription}
-        />
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`${root}/img/bibdk-og-cropped.jpg`}
         />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         {alternate.map(({ locale, url }) => (
