@@ -304,17 +304,13 @@ export function Header({
   );
 }
 
-export function WrappedStaticHeader({
-  context,
-  className = "",
-  replace = false,
-}) {
+export function WrappedStaticHeader({ context, className = "" }) {
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <StaticHeader context={context} replace={replace} />
+            <StaticHeader context={context} />
           </Row>
         </Container>
       </div>
@@ -326,11 +322,10 @@ export function WrappedStaticHeader({
  * Static parts of header - logo, materialtypeslinks, header actions
  * @param router
  * @param context
- * @param replace
  * @returns {JSX.Element}
  * @constructor
  */
-export function StaticHeader({ router = null, context, replace = false }) {
+export function StaticHeader({ router = null, context }) {
   return (
     <>
       <Col xs={2}>
@@ -342,7 +337,7 @@ export function StaticHeader({ router = null, context, replace = false }) {
             className={styles.materials}
             data-cy={cyKey({ name: "materials", prefix: "header" })}
           >
-            <Link href="/" replace={replace}>
+            <Link href="/">
               <Text type="text3" tag="div">
                 {Translate({
                   context: "general",
@@ -362,7 +357,6 @@ export function StaticHeader({ router = null, context, replace = false }) {
                   href={`/inspiration/${path}?workTypes=${label}`}
                   border={{ bottom: { keepVisible: active } }}
                   dataCy={`header-link-${label}`}
-                  replace={replace}
                 >
                   <Text type="text3">
                     {Translate({
@@ -387,7 +381,6 @@ export function StaticHeader({ router = null, context, replace = false }) {
                   name: m.label,
                   prefix: "header-link",
                 })}
-                replace={replace}
               >
                 <Text type="text3">
                   {Translate({ ...context, label: m.label })}

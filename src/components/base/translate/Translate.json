@@ -80,8 +80,8 @@
         "en": "Server is not responding"
       },
       "500_internal_server_error_description": {
-        "da": "Serveren vi brugte til at vise dig siden med, virkede ikke. Prøv at genlæse siden eller se om der er fejlbeskeder på dbc.kundeservice.hund.",
-        "en": "We used an unresponsive server to show you your request, but that does not work. Try refreshing the page, or look for error messages at dbc.kundeservice.hund."
+        "da": "Serveren vi brugte til at vise dig siden med, virkede ikke. Prøv at genlæse siden eller se om der er fejlbeskeder på",
+        "en": "We used an unresponsive server to show you your request, but that does not work. Try refreshing the page, or look for error messages at"
       },
       "500_internal_server_error_information_website_url": {
         "da": "kundeservice.dbc.hund",

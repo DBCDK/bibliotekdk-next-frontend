@@ -11,7 +11,7 @@ export default function Custom500() {
 
   return (
     <>
-      <WrappedStaticHeader replace={true} context={context} />
+      <WrappedStaticHeader context={context} />
       <Section
         title={Translate({
           context: "errorpages",
@@ -33,6 +33,7 @@ export default function Custom500() {
               context: "errorpages",
               label: "500_internal_server_error_information_website_title",
             })}
+            .
           </Link>
         </Text>
       </Section>

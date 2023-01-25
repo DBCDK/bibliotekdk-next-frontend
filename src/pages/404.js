@@ -9,7 +9,7 @@ export function Custom() {
   const context = { context: "header" };
   return (
     <>
-      <WrappedStaticHeader replace={true} context={context} />
+      <WrappedStaticHeader context={context} />
       <Section
         title={Translate({
           context: "errorpages",
