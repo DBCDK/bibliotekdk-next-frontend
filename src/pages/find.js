@@ -82,6 +82,10 @@ function Find() {
    */
   async function updateQueryParams(params, settings = {}) {
     const query = { ...router.query, ...params };
+
+    settings.scroll =
+      typeof settings.scroll !== "boolean" || settings.scroll !== false;
+
     await router.push(
       { pathname: router.pathname, query },
       {
