@@ -236,6 +236,13 @@ const DEFAULT_STORY_PARAMETERS = {
             return { result: [BRANCH_1, BRANCH_2, BRANCH_3] };
           },
         },
+        ElbaServices: {
+          placeCopyRequest: (args) => {
+            // Used for cypress testing
+            console.debug("elbaPlaceCopy", args?.variables?.input);
+            return { "elba.placeCopyRequest.status": "OK" };
+          },
+        },
         Mutation: {
           submitOrder: (args) => {
             // Used for cypress testing
@@ -248,7 +255,7 @@ const DEFAULT_STORY_PARAMETERS = {
               "submitPeriodicaArticleOrder",
               args?.variables?.input
             );
-            return { status: "OK" };
+            return { "elba.placeCopyRequest.status": "OK" };
           },
         },
       },
