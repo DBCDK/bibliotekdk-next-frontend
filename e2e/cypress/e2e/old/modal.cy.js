@@ -51,7 +51,7 @@ describe("Modal", () => {
     cy.focused().should("have.attr", "data-cy", "modal-dialog");
 
     // Tab to first element in modal
-    cy.tab();
+    cy.focused().tab();
     cy.focused().should("have.attr", "data-cy", "close-modal");
 
     // Tab to last element in modal

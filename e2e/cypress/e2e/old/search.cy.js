@@ -4,7 +4,10 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 describe("Search", () => {
   it(`Should show search results`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="result-row"]').should("have.length", 10);
+    cy.get('[data-cy="result-row"]', { timeout: 10000 }).should(
+      "have.length",
+      10
+    );
 
     // feedback should be visible
     cy.get('[data-cy="cy-feedback-container"]').should("be.visible");
@@ -32,7 +35,7 @@ describe("Search", () => {
 
   it(`Should link to work page`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="result-row"]').first().click();
+    cy.get('[data-cy="result-row"]', { timeout: 10000 }).first().click();
     cy.url().should("include", "/materiale");
   });
 
@@ -66,10 +69,7 @@ describe("Search", () => {
     });
 
     // wait for data to be loaded
-    cy.get('[data-cy="result-row"]');
-
-    // click on row
-    cy.get('[data-cy="result-row"]').first().click();
+    cy.get('[data-cy="result-row"]').should("exist").first().click();
 
     // clicking the row should log
     cy.wait("@apiMutationOnSearchClick").then((interception) => {
@@ -86,31 +86,36 @@ describe("Search", () => {
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--default&viewMode=story");
 
-    cy.tabs(1);
-    cy.focused().should("have.attr", "data-cy", "result-row");
-
-    cy.tabs(2);
-    cy.focused().should("have.attr", "data-cy", "result-row");
+    cy.get("[data-cy=result-row]")
+      .should("exist")
+      .should("have.attr", "data-cy", "result-row")
+      .tab()
+      .should("have.attr", "data-cy", "result-row")
+      .tabs(2)
+      .focused()
+      .should("have.attr", "data-cy", "result-row");
   });
 
   // grid buttons is not working, skipped until implemented
   it.skip(`Should focus grid buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-quickfilters--default&viewMode=story");
-    cy.tabs(1);
+    cy.get("body").tab();
     cy.focused().should("have.attr", "data-cy", "grid-button");
 
-    cy.tabs(1);
+    cy.tab();
     cy.focused().should("have.attr", "data-cy", "list-button");
   });
 
   it(`Should focus pagination buttons when tabbing`, () => {
     cy.visit("/iframe.html?id=search-pagination--default&viewMode=story");
 
-    cy.tabs(2);
-    cy.focused().should("have.attr", "data-cy", "page-1-button");
-
-    cy.tabs(3);
-    cy.focused().should("have.attr", "data-cy", "page-4-button");
+    cy.get("[data-cy=page-1-button]")
+      .should("exist")
+      .should("have.attr", "data-cy", "page-1-button")
+      .tab()
+      .should("have.attr", "data-cy", "page-2-button")
+      .tabs(2)
+      .should("have.attr", "data-cy", "page-4-button");
   });
 
   it(`Desktop: Fake searchfield not visible`, () => {

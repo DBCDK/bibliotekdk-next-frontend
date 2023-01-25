@@ -6,7 +6,7 @@ describe("Radio", () => {
   it(`Tab leads to active element`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().contains("Second");
     cy.focused().type("{downarrow}");
     cy.focused().contains("Third");
@@ -16,13 +16,13 @@ describe("Radio", () => {
       "/iframe.html?id=base-forms-list--radio-group-no-initial-selection"
     );
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().contains("First");
   });
   it(`Down arrow changes focus`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().type("{downarrow}");
     cy.focused().contains("Third");
     cy.focused().type("{downarrow}");
@@ -33,7 +33,7 @@ describe("Radio", () => {
   it(`Right arrow changes focus`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().type("{rightarrow}");
     cy.focused().contains("Third");
     cy.focused().type("{rightarrow}");
@@ -44,7 +44,7 @@ describe("Radio", () => {
   it(`Up arrow changes focus`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().type("{uparrow}");
     cy.focused().contains("First");
     cy.focused().type("{uparrow}");
@@ -55,7 +55,7 @@ describe("Radio", () => {
   it(`Left arrow changes focus`, () => {
     cy.visit("/iframe.html?id=base-forms-list--radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     cy.focused().type("{leftarrow}");
     cy.focused().contains("First");
     cy.focused().type("{leftarrow}");
@@ -66,7 +66,7 @@ describe("Radio", () => {
   it(`Disabled group can't be interacted with`, () => {
     cy.visit("/iframe.html?id=base-forms-list--disabled-radio-group");
     cy.wait(500);
-    cy.tab();
+    cy.get("body").tab();
     // It has focused element below radio button group
     cy.focused().contains("I am tabbable");
   });

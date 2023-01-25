@@ -2,6 +2,7 @@
  * @file
  * Test functionality of Header
  */
+
 describe("Accordion", () => {
   beforeEach(function () {
     cy.visit("/iframe.html?id=base-accordion--default");
@@ -73,9 +74,7 @@ describe("Accordion", () => {
   });
 
   it(`Can tab through sections`, () => {
-    cy.get("body");
-
-    cy.tabs(5).type("{enter}");
+    cy.get("[data-cy=accordion-item]").first().tabs(5).type("{enter}");
 
     cy.get("[data-cy=accordion-item]")
       .last()

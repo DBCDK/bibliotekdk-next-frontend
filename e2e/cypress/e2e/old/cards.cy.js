@@ -2,6 +2,7 @@
  * @file
  * Test functionality of cards
  */
+
 describe("Cards", () => {
   it(`Clicking card links to work page`, () => {
     cy.visit(
@@ -32,7 +33,7 @@ describe("Cards", () => {
     );
 
     // Tab to the second work card and click
-    cy.get("body").tabs(2).click();
+    cy.get("[data-cy=work-card]").first().tab().click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
