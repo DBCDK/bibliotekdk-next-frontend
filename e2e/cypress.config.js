@@ -15,7 +15,7 @@ module.exports = {
   },
   video: false,
   numTestsKeptInMemory: 0,
-  chromeWebSecurity: true,
+  chromeWebSecurity: false,
   videoUploadOnPasses: false,
   e2e: {
     // We've imported your old cypress plugins here.
