@@ -181,7 +181,6 @@ export function scrollLock(shouldLockScroll) {
 
 export function handleSubmitPeriodicaArticleOrder(
   pid,
-  pickUpBranch,
   periodicaForm,
   loanerInfo,
   articleOrderMutation
@@ -189,7 +188,6 @@ export function handleSubmitPeriodicaArticleOrder(
   articleOrderMutation.post(
     orderMutations.submitPeriodicaArticleOrder({
       pid,
-      pickUpBranch,
       userName: loanerInfo?.userParameters?.userName,
       userMail: loanerInfo?.userParameters?.userMail,
       ...periodicaForm,

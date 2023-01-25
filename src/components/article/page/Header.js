@@ -60,7 +60,7 @@ export default function Header({ articleId }) {
         <meta
           key="og:image"
           property="og:image"
-          content={article.fieldImage.url}
+          content={`/_next/image?url=${article.fieldImage.url}&w=1920&q=75`}
         />
       )}
 

@@ -71,75 +71,6 @@ export function recommendations({ workId }) {
  *
  * @return {Object} a query object
  */
-export function _reviews({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `query Reviews($workId: String!) {
-      work(id: $workId) {
-        workId
-        titles {
-          main
-        }
-        subjects {
-          dbcVerified {
-            display
-            type
-          }
-        }
-        workReviews {
-          pid
-          author
-          date
-          origin
-          rating
-          infomediaId
-          urls {
-            origin
-            url
-            note
-          }
-          periodica {
-            volume
-            pages
-            hostPublication {
-              workId
-              titles {
-                main
-              }
-            }
-          }
-          librariansReview {
-            text
-            work {
-              workId
-              creators {
-                display
-              }
-              titles {
-                main
-              }
-            }
-          }
-        }
-      }
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Recommendations for a work
- *
- * This is still the old laesekompas recommender
- * Will be changed at some point
- *
- * @param {Object} variables
- * @param {string} variables.workId
- *
- * @return {Object} a query object
- */
 export function reviews({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -149,6 +80,12 @@ export function reviews({ workId }) {
                 workId
                 titles {
                   main
+                }
+                subjects {
+                  dbcVerified {
+                    display
+                    type
+                  }
                 }
                 relations {
                   hasReview {
@@ -175,6 +112,9 @@ export function reviews({ workId }) {
                     hostPublication {
                       title
                       issue
+                    }
+                    physicalDescriptions {
+                      summary
                     }
                     recordCreationDate
                     review {
@@ -378,6 +318,9 @@ export function buttonTxt({ workId }) {
           all {
             pid
           }
+          mostRelevant {
+            pid
+          }
         }
         workTypes
       }
@@ -554,7 +497,7 @@ export function listOfAllManifestations({ workId }) {
     query listOfAllManifestations($workId: String!) {
       work(id: $workId) {
         manifestations {
-          all {
+          mostRelevant {
             pid
             volume
             titles {
@@ -619,7 +562,7 @@ export function overviewWork({ workId }) {
           specific
         }
         manifestations {
-          all {
+          mostRelevant {
             pid
             materialTypes {
               specific
@@ -627,6 +570,9 @@ export function overviewWork({ workId }) {
             cover {
               detail
               origin
+            }
+            access {
+              __typename
             }
           }
         }

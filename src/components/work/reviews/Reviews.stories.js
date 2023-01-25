@@ -103,7 +103,7 @@ WrappedReviewsSlider.story = {
                 },
                 // Review that is available via infomedia
                 {
-                  pid: "heste pid",
+                  pid: "some pid",
                   creators: [
                     {
                       display: "Some creator",

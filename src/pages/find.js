@@ -24,6 +24,7 @@ import Related from "@/components/search/related";
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
+import { useRef } from "react";
 
 /**
  * @file
@@ -36,11 +37,12 @@ function Find() {
   const q = useQ().getQuery();
   const dataCollect = useDataCollect();
   const router = useRouter();
+  const scrollRef = useRef();
 
   const { page = 1 } = router.query;
 
   // Add worktype and all q types to useCanonicalUrl func
-  const { canonical, alternate, root } = useCanonicalUrl({
+  const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["workTypes", ...typesQ.map((t) => `q.${t}`)],
   });
 
@@ -67,6 +69,10 @@ function Find() {
     label: "find-description",
     vars: [`${hits}`, titleToUse],
   });
+
+  function scrollToRef(ref) {
+    ref.current.scrollIntoView({ behavior: "smooth", block: "end" });
+  }
 
   /**
    * Updates URL query params
@@ -96,17 +102,11 @@ function Find() {
           content={pageDescription}
         ></meta>
         <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:type" property="og:type" content="website" />
         <meta key="og:title" property="og:title" content={pageTitle} />
         <meta
           key="og:description"
           property="og:description"
           content={pageDescription}
-        />
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`${root}/img/bibdk-og-cropped.jpg`}
         />
         <link rel="preconnect" href="https://moreinfo.addi.dk"></link>
         {alternate.map(({ locale, url }) => (
@@ -114,6 +114,7 @@ function Find() {
         ))}
       </Head>
 
+      <div ref={scrollRef} />
       <Header router={router} />
 
       <Searchbar q={q} />
@@ -122,9 +123,10 @@ function Find() {
       {q && (
         <Result
           page={parseInt(page, 10)}
-          onPageChange={(page, scroll) =>
-            updateQueryParams({ page }, { scroll })
-          }
+          onPageChange={(page, scroll) => {
+            updateQueryParams({ page }, { scroll });
+            scrollToRef(scrollRef);
+          }}
           onWorkClick={(index, work) => {
             dataCollect.collectSearchWorkClick({
               search_request: { q, filters },

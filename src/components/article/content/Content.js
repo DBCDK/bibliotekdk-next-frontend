@@ -231,8 +231,8 @@ export function Content({ className = "", data = {}, skeleton = false }) {
               </Text>
             ) : (
               article.creators.map((creator) => (
-                <Text type="text4" key={creator.name}>
-                  {creator.name}
+                <Text type="text4" key={creator.display}>
+                  {creator.display}
                 </Text>
               ))
             )}
