@@ -91,8 +91,7 @@ describe("Search", () => {
       .should("have.attr", "data-cy", "result-row")
       .tab()
       .should("have.attr", "data-cy", "result-row")
-      .tab()
-      .tab()
+      .tabs(2)
       .focused()
       .should("have.attr", "data-cy", "result-row");
   });
@@ -115,8 +114,7 @@ describe("Search", () => {
       .should("have.attr", "data-cy", "page-1-button")
       .tab()
       .should("have.attr", "data-cy", "page-2-button")
-      .tab()
-      .tab()
+      .tabs(2)
       .should("have.attr", "data-cy", "page-4-button");
   });
 
