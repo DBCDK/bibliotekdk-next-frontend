@@ -27,15 +27,6 @@
 const fbiApiPath = Cypress.env("fbiApiPath");
 require("cypress-plugin-tab");
 
-Cypress.Commands.add("typeTab", (shiftKey, ctrlKey) => {
-  cy.focused().trigger("keydown", {
-    keyCode: 9,
-    which: 9,
-    shiftKey: shiftKey,
-    ctrlKey: ctrlKey,
-  });
-});
-
 /**
  * Tabs function
  * @param {int} n // n is number of tabs -> default to 1
