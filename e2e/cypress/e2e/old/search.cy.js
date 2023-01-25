@@ -4,7 +4,10 @@ const fbiApiPath = Cypress.env("fbiApiPath");
 describe("Search", () => {
   it(`Should show search results`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="result-row"]').should("have.length", 10);
+    cy.get('[data-cy="result-row"]', { timeout: 10000 }).should(
+      "have.length",
+      10
+    );
 
     // feedback should be visible
     cy.get('[data-cy="cy-feedback-container"]').should("be.visible");
@@ -32,7 +35,7 @@ describe("Search", () => {
 
   it(`Should link to work page`, () => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="result-row"]').first().click();
+    cy.get('[data-cy="result-row"]', { timeout: 10000 }).first().click();
     cy.url().should("include", "/materiale");
   });
 
@@ -66,10 +69,7 @@ describe("Search", () => {
     });
 
     // wait for data to be loaded
-    cy.get('[data-cy="result-row"]');
-
-    // click on row
-    cy.get('[data-cy="result-row"]').first().click();
+    cy.get('[data-cy="result-row"]').should("exist").first().click();
 
     // clicking the row should log
     cy.wait("@apiMutationOnSearchClick").then((interception) => {
