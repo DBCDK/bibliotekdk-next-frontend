@@ -40,10 +40,14 @@ export function setLocale(locale = "da") {
 }
 
 export function getLanguage() {
+  // EN er drupal default sprog => dansk
+  // EN_GB er engelsk
   return lang === "en" ? "EN_GB" : "EN";
 }
 
 export function getLangcode(language) {
+  // en er drupal default sprog => dansk
+  // en-gb er engelsk
   return language === "EN_GB" ? "en-gb" : "en";
 }
 

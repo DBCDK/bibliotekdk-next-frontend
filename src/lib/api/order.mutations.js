@@ -43,7 +43,6 @@ export function submitOrder({
 
 export function submitPeriodicaArticleOrder({
   pid,
-  pickUpBranch,
   userName,
   userMail,
   publicationDateOfComponent,
@@ -55,16 +54,17 @@ export function submitPeriodicaArticleOrder({
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
-    mutation($input: PeriodicaArticleOrder!) {
-      submitPeriodicaArticleOrder(input: $input) {
-        status
+    mutation ($input: CopyRequestInput!) {
+      elba {
+        placeCopyRequest(input: $input) {
+          status
+        }
       }
     }
       `,
     variables: {
       input: {
         pid,
-        pickUpBranch,
         userName,
         userMail,
         publicationDateOfComponent,
