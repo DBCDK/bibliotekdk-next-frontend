@@ -80,9 +80,9 @@ function Find() {
    * @param {object} params
    * @param {object} settings
    */
-  function updateQueryParams(params, settings = {}) {
+  async function updateQueryParams(params, settings = {}) {
     const query = { ...router.query, ...params };
-    router.push(
+    await router.push(
       { pathname: router.pathname, query },
       {
         pathname: router.asPath.replace(/\?.*/, ""),
@@ -115,8 +115,8 @@ function Find() {
       </Head>
 
       <div ref={scrollRef} />
-      <Header router={router} />
 
+      <Header router={router} />
       <Searchbar q={q} />
       <Related q={q} />
 
@@ -124,8 +124,9 @@ function Find() {
         <Result
           page={parseInt(page, 10)}
           onPageChange={(page, scroll) => {
-            updateQueryParams({ page }, { scroll });
-            scrollToRef(scrollRef);
+            updateQueryParams({ page }, { scroll }).then(() => {
+              scrollToRef(scrollRef);
+            });
           }}
           onWorkClick={(index, work) => {
             dataCollect.collectSearchWorkClick({
