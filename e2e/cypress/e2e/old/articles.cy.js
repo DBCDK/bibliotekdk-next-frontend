@@ -33,7 +33,13 @@ describe("Article", () => {
     cy.visit(
       "/iframe.html?id=articles-sections--triple-section&viewMode=story"
     );
-    cy.get("[data-cy=article-preview]").first().tabs(2).click();
+    cy.get("[data-cy=article-preview]")
+      .first()
+      .should("exist")
+      .tab()
+      .should("exist")
+      .tab()
+      .click();
 
     // Check URL path is as expected
     cy.get("[data-cy=router-pathname]").should(
