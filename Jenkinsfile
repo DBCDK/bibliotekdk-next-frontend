@@ -4,7 +4,7 @@ def app
 
 pipeline {
     agent {
-        label 'devel10-head'
+        label 'devel11-head'
     }
     environment {
         IMAGE_NAME = "bibliotekdk-next-frontend${env.BRANCH_NAME != 'master' ? "-${env.BRANCH_NAME.toLowerCase()}" : ''}:${BUILD_NUMBER}"
@@ -58,7 +58,7 @@ pipeline {
         stage("Update staging version number") {
             agent {
                 docker {
-                    label 'devel10-head'
+                    label 'devel11-head'
                     image "docker-dbc.artifacts.dbccloud.dk/build-env:latest"
                     alwaysPull true
                 }
