@@ -115,8 +115,8 @@ function Find() {
       </Head>
 
       <div ref={scrollRef} />
-      <Header router={router} />
 
+      <Header router={router} />
       <Searchbar q={q} />
       <Related q={q} />
 
