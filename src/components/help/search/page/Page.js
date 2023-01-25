@@ -36,7 +36,7 @@ export function Page({ result, isLoading, query }) {
     label: "help-description",
   });
 
-  const { canonical, alternate, root } = useCanonicalUrl({
+  const { canonical, alternate } = useCanonicalUrl({
     preserveParams: ["q"],
   });
 
@@ -50,17 +50,11 @@ export function Page({ result, isLoading, query }) {
           content={pageDescription}
         ></meta>
         <meta key="og:url" property="og:url" content={canonical.url} />
-        <meta key="og:type" property="og:type" content="website" />
         <meta key="og:title" property="og:title" content={pageTitle} />
         <meta
           key="og:description"
           property="og:description"
           content={pageDescription}
-        />
-        <meta
-          key="og:image"
-          property="og:image"
-          content={`${root}/img/bibdk-og-cropped.jpg`}
         />
         {alternate.map(({ locale, url }) => (
           <link key={locale} rel="alternate" hreflang={locale} href={url} />

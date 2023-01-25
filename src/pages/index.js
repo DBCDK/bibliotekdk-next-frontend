@@ -4,6 +4,8 @@
  *
  */
 
+import Head from "next/head";
+
 import ArticleSection from "@/components/article/section";
 import Hero from "@/components/hero";
 import { promotedArticles } from "@/lib/api/article.fragments";
@@ -14,11 +16,26 @@ import React from "react";
 import { frontpageHero } from "@/lib/api/hero.fragments";
 import { InspirationSlider } from "@/components/inspiration";
 
+import { useData } from "@/lib/api/api";
+import { parseHero } from "@/components/hero/Hero";
+
 const Index = () => {
+  const { data } = useData(frontpageHero());
+  const ogImage = parseHero(data);
+
   return (
     <div>
       <Header />
       <Hero />
+      <Head>
+        {ogImage && ogImage.image && ogImage.image.ogurl && (
+          <meta
+            key="og:image"
+            property="og:image"
+            content={`${ogImage?.image?.ogurl}`}
+          />
+        )}
+      </Head>
 
       <ArticleSection
         title={Translate({ context: "index", label: "section1" })}

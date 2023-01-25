@@ -75,7 +75,7 @@ export default function Header({ helpTextId }) {
         <meta
           key="og:image"
           property="og:image"
-          content={helptext.fieldImage?.url}
+          content={`/_next/image?url=${helptext.fieldImage?.url}&w=1920&q=75`}
         />
       )}
 
