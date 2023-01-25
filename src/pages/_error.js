@@ -5,7 +5,7 @@
  */
 
 import { log } from "dbc-node-logger";
-import { Custom } from "@/pages/404";
+import Custom500 from "@/pages/500";
 
 /**
  * Handle 500 errorcode - return page not found
@@ -13,9 +13,8 @@ import { Custom } from "@/pages/404";
  * @constructor
  */
 
-function Error({ statusCode }) {
-  console.log(statusCode, "STATUS CODE");
-  return <Custom />;
+function Error() {
+  return <Custom500 />;
 }
 
 /**
