@@ -1,7 +1,7 @@
 .section section {
   padding-top: 0 !important;
 }
-.noSubjectSetTopMargin {
+.section {
   margin-top: calc(var(--pt16) * -1);
 }
 
