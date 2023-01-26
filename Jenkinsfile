@@ -34,7 +34,7 @@ pipeline {
                     ansiColor("xterm") {
                         sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
-                        sh "rm app/e2e/reports/* && IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
+                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
                 }
             }
@@ -88,6 +88,12 @@ pipeline {
 
             junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
+
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true
+                    )
         }
         failure {
             script {
