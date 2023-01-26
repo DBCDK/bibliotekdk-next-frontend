@@ -16,7 +16,9 @@ pipeline {
 	}
     stages {
         stage('clean workspace'){
-            cleanWs
+            steps {
+                cleanWs
+            }
         }
         stage('Build image') {
             steps {
