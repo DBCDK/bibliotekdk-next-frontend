@@ -13,8 +13,8 @@
     "dev": "run-p dev:storybook dev:next",
     "start": "run-p start:storybook start:next",
     "lint": "next lint",
-    "cy:run": "npx cypress@9 run --project ./e2e",
-    "cy:open": "npx cypress@9 open --project ./e2e",
+    "cy:run": "npx cypress@10.3.0 run --project ./e2e",
+    "cy:open": "npx cypress@10.3.0 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js'",
     "test": "jest src/",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"

@@ -7,6 +7,8 @@ import {
 import InfomediaReviewPage from "@/pages/anmeldelse/[title]/[workId]/[articleId]";
 import InfomediaArticlePage from "@/pages/infomedia/[title]/[workId]/[infomediaId]";
 
+import { AccessEnum } from "@/lib/enums.js";
+
 const exportedObject = {
   title: "articles/page",
 };
@@ -27,23 +29,77 @@ WrappedInfomediaReviewPage.story = {
       resolvers: {
         Query: {
           work: (args) =>
-            args.variables.workId === "some-work-id" ? {} : null,
+            args.variables.workId === "some-work-id"
+              ? {
+                  workId: "some-work-id",
+                  titles: {
+                    main: ["Great book"],
+                  },
+                  subjects: {
+                    dbcVerified: [
+                      {
+                        display: "Some topic",
+                        type: "TOPIC",
+                      },
+                      {
+                        display: "Some other topic",
+                        type: "TOPIC",
+                      },
+                    ],
+                  },
+                  relations: {
+                    hasReview: [
+                      {
+                        pid: "pid",
+                        creators: [
+                          {
+                            display: "Some creator",
+                          },
+                        ],
+                        access: [
+                          {
+                            __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+                            id: "some-article-id",
+                          },
+                        ],
+
+                        physicalDescriptions: [
+                          {
+                            summary: "Some page number",
+                          },
+                        ],
+                        hostPublication: {
+                          title: "Infomedia publication",
+                          issue: "2005-06-24",
+                        },
+                        recordCreationDate: "20050627",
+                        review: {
+                          rating: "5/6",
+                          reviewByLibrarians: null,
+                        },
+                      },
+                    ],
+                  },
+                }
+              : null,
+
           infomedia: (args) =>
-            args.variables.id === "some-article-id" ? {} : null,
+            args.variables.id === "some-article-id"
+              ? {
+                  article: {
+                    id: "some-article-id",
+                    headLine: "Some review headline",
+                    subHeadLine: "Some review subHeadLine",
+                    byLine: "Some byLine",
+                    dateLine: "24. December 2000",
+                    paper: "Some paper",
+                    text: '<p id="p1">Some text given as html ...</p>',
+                    hedLine: "Some hedline",
+                    logo: "<p>Infomedia disclaimer</p>",
+                  },
+                }
+              : null,
         },
-        WorkReview: {
-          infomediaId: () => "some-article-id",
-          librariansReview: () => null,
-          date: () => "2022-11-05",
-          rating: () => "3/5",
-        },
-        InfomediaArticle: {
-          logo: () => "<p>Infomedia disclaimer</p>",
-        },
-        Subject: {
-          __resolveType: () => "SubjectText",
-        },
-        SubjectText: { type: () => "TOPIC" },
       },
     },
     nextRouter: {
@@ -129,7 +185,7 @@ export function InfomediaArticle() {
           '<p id="p1">Artiklens indhold er her</p><p id="p2"><em style="bold">Noget med fed</em></p><p id="p2"><em style="italic">Noget med kursiv</em></p>',
       },
       category: ["En kategori"],
-      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      creators: [{ display: "Gudrun Jensen" }, { display: "Anders Andersen" }],
       paper: "Computerworld",
       deliveredBy: "Infomedia",
       disclaimer: {
@@ -153,7 +209,7 @@ export function InfomediaArticlePublicData() {
       title: "Titel på Infomedia-artikel",
       entityCreated: "19. Marts 2021",
       category: ["En kategori"],
-      creators: [{ name: "Gudrun Jensen" }, { name: "Anders Andersen" }],
+      creators: [{ display: "Gudrun Jensen" }, { display: "Anders Andersen" }],
       deliveredBy: "Infomedia",
     },
   };

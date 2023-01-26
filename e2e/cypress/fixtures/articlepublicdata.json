@@ -7,10 +7,10 @@
           "title": "Titel på Infomedia-artikel",
           "creators": [
             {
-              "name": "Gudrun Jensen"
+              "display": "Gudrun Jensen"
             },
             {
-              "name": "Anders Andersen"
+              "display": "Anders Andersen"
             }
           ],
           "datePublished": "11. maj 2021"

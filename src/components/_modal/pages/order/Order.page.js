@@ -168,11 +168,7 @@ function Order({
               pickupBranch,
             });
             if (availableAsDigitalCopy) {
-              onArticleSubmit(
-                pid,
-                pickupBranch.branchId,
-                context?.periodicaForm
-              );
+              onArticleSubmit(pid, context?.periodicaForm);
             } else {
               onSubmit &&
                 onSubmit(orderPids, pickupBranch, context?.periodicaForm);
@@ -309,10 +305,9 @@ export default function Wrap(props) {
       singleManifestation={singleManifestation}
       orderMutation={orderMutation}
       articleOrderMutation={articleOrderMutation}
-      onArticleSubmit={(pid, pickUpBranch, periodicaForm = {}) =>
+      onArticleSubmit={(pid, periodicaForm = {}) =>
         handleSubmitPeriodicaArticleOrder(
           pid,
-          pickUpBranch,
           periodicaForm,
           loanerInfo,
           articleOrderMutation

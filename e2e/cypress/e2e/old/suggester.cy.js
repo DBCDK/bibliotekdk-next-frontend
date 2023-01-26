@@ -3,7 +3,6 @@
  * Test functionality of Header
  */
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
-const graphqlPath = Cypress.env("graphqlPath");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Suggester", () => {

@@ -3,7 +3,7 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 describe("Filter", () => {
   it(`workTypes facet is excluded from facets list`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
 
     cy.contains("Emne");
     cy.contains("Forfatter");
@@ -13,18 +13,15 @@ describe("Filter", () => {
 
   it(`Tab is trapped inside modal`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
     cy.wait(1000);
-    cy.tab();
-    cy.focused().contains("Luk");
-    cy.tabs(4);
-    cy.focused().contains("Luk");
+    cy.focused().tab().contains("Luk");
+    cy.focused().tabs(4).contains("Luk");
   });
 
   it(`Can update filters in query and sync with url`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
-
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
 
     // Select some subjects
     cy.contains("Emne").click();
@@ -54,8 +51,7 @@ describe("Filter", () => {
 
   it(`Can clear all selected filters`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
-
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
 
     // Select some creators
     cy.contains("Forfatter").click();
@@ -66,7 +62,7 @@ describe("Filter", () => {
     // Sync with url, close modal
     cy.contains("resultater").click();
 
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
 
     // They are still selected
     cy.get("[data-cy=list-facets]").contains("Jens Jensen");
@@ -89,7 +85,7 @@ describe("Filter", () => {
   it(`Can parse facet containing ","`, () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
 
-    cy.get("button").contains("open filters").click();
+    cy.contains("button", "open filters").click();
 
     // Select some subjects
     cy.contains("Emne").click();

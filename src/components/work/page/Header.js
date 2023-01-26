@@ -74,7 +74,6 @@ export function Header({ details }) {
         content={pageDescription}
       ></meta>
       <meta key="og:url" property="og:url" content={canonicalWorkUrl} />
-      <meta key="og:type" property="og:type" content="website" />
       <meta key="og:title" property="og:title" content={pageTitle} />
       <meta
         key="og:description"
