@@ -72,7 +72,7 @@ function getBook({
       if (entry.cover) {
         manifestation.image = entry.cover.detail;
       }
-      if (entry.edition) {
+      if (entry.edition.publicationYear) {
         manifestation.bookEdition = entry.edition.publicationYear.display;
       }
       if (entry.publisher) {
