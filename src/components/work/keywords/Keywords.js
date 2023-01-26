@@ -12,7 +12,6 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
-import { lang } from "@/components/base/translate";
 
 /**
  * bibliotek.dk url
