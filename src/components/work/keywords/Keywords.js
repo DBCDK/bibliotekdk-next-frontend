@@ -12,6 +12,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
+import { lang } from "@/components/base/translate";
 
 /**
  * bibliotek.dk url
@@ -163,11 +164,19 @@ export default function Wrap(props) {
     return null;
   }
 
+  if (lang !== "da") {
+    return null;
+  }
+
+  const subjectsFiltered = subjectsDbcVerified.filter((sub) => {
+    return sub?.language?.isoCode === "dan";
+  });
+
   return (
     <Keywords
       className={props.className}
       skeleton={false}
-      data={uniqueSubjectEntries(subjectsDbcVerified)}
+      data={uniqueSubjectEntries(subjectsFiltered)}
     />
   );
 }
