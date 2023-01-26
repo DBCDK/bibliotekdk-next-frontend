@@ -34,7 +34,7 @@ pipeline {
                     ansiColor("xterm") {
                         sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
                         sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
-                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e" 
+                        sh "rm app/e2e/reports/* && IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
                 }
             }

@@ -10,7 +10,6 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
-import { lang } from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 /**
