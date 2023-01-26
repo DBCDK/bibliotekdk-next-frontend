@@ -10,6 +10,7 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
+import { lang } from "@/components/base/translate";
 
 /**
  *
@@ -49,7 +50,7 @@ export function Words({ data, isLoading }) {
  *
  * Related subjects used in a section component
  */
-export function Related({ data, isLoading }) {
+export function Related({ data, isLoading, hasSubjects }) {
   return (
     <Section
       title={
@@ -57,7 +58,9 @@ export function Related({ data, isLoading }) {
           {Translate({ context: "relatedKeywords", label: "title" })}
         </Text>
       }
-      className={styles.section}
+      className={`${styles.section} ${
+        hasSubjects && styles.noSubjectSetTopMargin
+      }`}
       backgroundColor="var(--jagged-ice)"
     >
       <div>
@@ -130,6 +133,7 @@ export default function Wrap({ workId }) {
     <Related
       data={data?.relatedSubjects || (isLoading && dummy) || []}
       isLoading={workIsLoading || isLoading}
+      hasSubjects={keywords?.length > 0 && lang === "da"}
     />
   );
 }
