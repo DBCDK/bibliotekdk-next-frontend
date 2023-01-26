@@ -15,6 +15,9 @@ pipeline {
         CLIENT_SECRET = credentials("bibdk_client_secret")
 	}
     stages {
+        stage('clean workspace'){
+            cleanWs
+        }
         stage('Build image') {
             steps {
                 script {
@@ -88,12 +91,6 @@ pipeline {
 
             junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
-
-            cleanWs(cleanWhenNotBuilt: false,
-                    deleteDirs: true,
-                    disableDeferredWipeout: true,
-                    notFailBuild: true
-                    )
         }
         failure {
             script {
