@@ -12,6 +12,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
+import { lang } from "@/components/base/translate";
 
 /**
  * bibliotek.dk url
@@ -160,6 +161,10 @@ export default function Wrap(props) {
   const subjectsDbcVerified = data?.work?.subjects?.dbcVerified;
 
   if (!subjectsDbcVerified || subjectsDbcVerified.length === 0) {
+    return null;
+  }
+
+  if (lang !== "da") {
     return null;
   }
 
