@@ -18,6 +18,7 @@ pipeline {
         stage('clean workspace'){
             steps {
                 cleanWs()
+                checkout scm
             }
         }
         stage('Build image') {
