@@ -160,6 +160,7 @@ export function Header({
     if (!isEqual(newQ, getQuery())) {
       setQuery({
         include: newQ,
+        exclude: ["page"],
         pathname: "/find",
         query: type,
         method,
