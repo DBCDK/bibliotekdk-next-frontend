@@ -38,9 +38,8 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
-import useWindowSize from "@/components/hooks/useWindowSize";
 import { isEmpty, isEqual } from "lodash";
-import useBreakpoint from "../hooks/useBreakpoint";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 // material Pages
 export const MATERIAL_PAGES = [
