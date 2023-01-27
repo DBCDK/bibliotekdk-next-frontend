@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { signOut } from "@dbcdk/login-nextjs/client";
 
@@ -38,8 +38,8 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
-import useWindowSize from "@/components/hooks/useWindowSize";
 import { isEmpty, isEqual } from "lodash";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 // material Pages
 export const MATERIAL_PAGES = [
@@ -68,6 +68,10 @@ export function Header({
   filters,
 }) {
   const context = { context: "header" };
+
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   const { q, setQ, setQuery, getCount, getQuery } = useQ();
   const countQ = getCount({ exclude: ["all"] });
@@ -138,7 +142,7 @@ export function Header({
   // Search modal suggester is visible
   const suggesterVisibleMobile =
     (story && story.suggesterVisibleMobile) ||
-    (router && router.query.suggester);
+    (isMobileSize && router && router.query.suggester);
 
   // suggester visible class
   const suggesterVisibleMobileClass = suggesterVisibleMobile
@@ -396,19 +400,6 @@ export default function Wrap(props) {
   const user = useUser();
   const modal = useModal();
   const filters = useFilters();
-
-  // if window changes size from small to larger (>992) we need to remove
-  // the suggester url parameter (suggester=true) for the mobile
-  // suggester to go away
-  let wSize = useWindowSize();
-  const changeMe = wSize.width > 992;
-  useEffect(() => {
-    if (changeMe) {
-      let query = { ...router.query };
-      delete query.suggester;
-      router.replace({ pathname: router.pathname, query });
-    }
-  }, [changeMe]);
 
   if (props.skeleton) {
     return <HeaderSkeleton {...props} />;
