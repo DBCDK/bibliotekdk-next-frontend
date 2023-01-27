@@ -1,6 +1,5 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import WrappedRelated, { Related } from "./Related";
-import { WrappedDetailsSection } from "@/components/work/details/Details.stories";
 
 const exportedObject = {
   title: "work/RelatedSubjects",
