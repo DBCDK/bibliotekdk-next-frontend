@@ -4,6 +4,7 @@
  *
  */
 
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 import styles from "./BodyScrollLock.module.css";
 
 /**
@@ -62,14 +63,21 @@ function scrollLock(shouldLockScroll) {
  */
 export default function BodyScrollLock({ router }) {
   // Query param targets to track
-  const targetList = ["suggester"];
+  // breakpoints are the breakpoints where the scroll is locked
+  const targetList = [{ param: "suggester", breakpoints: ["xs", "sm", "md"] }];
+
+  const breakpoint = useBreakpoint();
 
   if (typeof window !== "undefined") {
     /* Search for "modal" props in url query
      if any found lock body scroll */
     const shouldLockScroll =
       Object.keys(router.query).filter((k) =>
-        targetList.find((a) => a.toLowerCase().includes(k.toLowerCase()))
+        targetList.find(
+          (a) =>
+            a.breakpoints.includes(breakpoint) &&
+            a.param.toLowerCase().includes(k.toLowerCase())
+        )
       ).length > 0;
 
     scrollLock(shouldLockScroll);
