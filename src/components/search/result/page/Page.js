@@ -66,9 +66,7 @@ export default function Wrap({ page, onWorkClick }) {
   const q = getQuery();
 
   // use the useData hook to fetch data
-  const fastResponse = useData(
-    hasQuery && searchFragments.fast({ q, offset, limit, filters })
-  );
+
   const allResponse = useData(
     hasQuery && searchFragments.all({ q, limit, offset, filters })
   );
@@ -76,26 +74,26 @@ export default function Wrap({ page, onWorkClick }) {
   // This useEffect is responsible for collecting data about the search response.
   // The effect is run, when search response is fetched and shown to the user.
   useEffect(() => {
-    if (fastResponse?.data) {
+    if (allResponse?.data) {
       dataCollect.collectSearch({
         search_request: {
           q,
           filters,
         },
         search_response_works:
-          fastResponse?.data?.search?.works?.map((w) => w.workId) || [],
+          allResponse?.data?.search?.works?.map((w) => w.workId) || [],
         search_offset: offset,
       });
     }
-  }, [fastResponse?.data]);
+  }, [allResponse?.data]);
 
-  if (fastResponse.error || allResponse.error) {
+  if (allResponse.error) {
     return null;
   }
 
-  const data = allResponse.data || fastResponse.data || {};
+  const data = allResponse.data || {};
 
-  if (fastResponse.isLoading) {
+  if (allResponse.isLoading) {
     return <ResultPage isLoading={true} />;
   }
 
