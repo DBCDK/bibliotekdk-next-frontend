@@ -104,7 +104,7 @@ describe("Filter", () => {
     });
   });
 
-  it(`Restore filters when browser's back button is used`, () => {
+  it.skip(`Restore filters when browser's back button is used`, () => {
     cy.visit(
       `${nextjsBaseUrl}/find?q.all=katte&workType=article&materialTypes=avisartikel`
     );

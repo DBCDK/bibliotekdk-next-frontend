@@ -162,12 +162,19 @@ export default function Wrap(props) {
   if (!subjectsDbcVerified || subjectsDbcVerified.length === 0) {
     return null;
   }
+  const subjectsFiltered = subjectsDbcVerified.filter((sub) => {
+    return sub?.language?.isoCode === "dan";
+  });
+
+  if (!subjectsFiltered || subjectsFiltered.length === 0) {
+    return null;
+  }
 
   return (
     <Keywords
       className={props.className}
       skeleton={false}
-      data={uniqueSubjectEntries(subjectsDbcVerified)}
+      data={uniqueSubjectEntries(subjectsFiltered)}
     />
   );
 }

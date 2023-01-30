@@ -10,6 +10,7 @@ import Translate from "@/components/base/translate";
 import Section from "@/components/base/section";
 
 import styles from "./Related.module.css";
+import * as workFragments from "@/lib/api/work.fragments";
 
 /**
  *
@@ -80,32 +81,25 @@ export function Related({ data, isLoading }) {
  * Wrap for fetching data for the subject Related component
  */
 export default function Wrap({ workId }) {
-  // Move this section to some work fragment on fbi-api migration
-  const query = {
-    apiUrl: "fbi_api",
-    query: `query ($workId: String!) {
-          work(id: $workId) {
-            subjects {
-              dbcVerified {
-                display
-              }
-            }
-          }
-        }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-  // // // // // // // // // // // // // // // // // // // // // //
-
   // fetch work subjects
-  const { data: workData, isLoading: workIsLoading } = useData(query);
+  const { data: workData, isLoading: workIsLoading } = useData(
+    workFragments.subjects({ workId })
+  );
 
-  // flatten subjects to array of strings
-  const keywords = workData?.work?.subjects?.dbcVerified?.map((s) => s.display);
+  // filter on danish keywords && flatten subjects to array of strings
+  const keywords = workData?.work?.subjects?.dbcVerified
+    .filter((sub) => {
+      return sub?.language?.isoCode === "dan";
+    })
+    ?.map((s) => s.display);
   // get related subjects
   const { data, isLoading } = useData(
     keywords?.length && subjects({ q: keywords })
   );
+
+  if (!keywords || keywords.length === 0) {
+    return null;
+  }
 
   // Remove section if work contains no keywords
   if ((!data || data?.relatedSubjects?.length === 0) && !isLoading) {

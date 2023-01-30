@@ -48,10 +48,40 @@ export function Connected() {
 
 Connected.story = {
   parameters: {
-    nextRouter: {
-      showInfo: true,
-      pathname: "/materiale",
-      query: { workId: "work-of:870970-basis:51701763" },
+    graphql: {
+      debug: true,
+      resolvers: {
+        Subject: {
+          __resolveType: () => "SubjectText",
+        },
+        Work: {
+          subjects: () => ({
+            dbcVerified: [
+              {
+                display: "savn",
+                __typename: "SubjectText",
+                language: {
+                  display: "dansk",
+                  isoCode: "dan",
+                },
+              },
+              {
+                display: "melankoli",
+                __typename: "SubjectText",
+                language: {
+                  display: "dansk",
+                  isoCode: "dan",
+                },
+              },
+            ],
+          }),
+        },
+      },
     },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
   },
 };

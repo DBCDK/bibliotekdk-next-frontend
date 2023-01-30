@@ -29,45 +29,6 @@ export function hitcount({ q, filters = {} }) {
 }
 
 /**
- * Fast search
- *
- * @param {string} q the query
- * @param {number} limit number of results
- * @param {number} offset offset for pagination
- * @param {object} filters filters for searching
- */
-export function fast({ q, limit = 100, offset = 0, filters = {} }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    // delay: 1000, // for debugging
-    query: `
-    query ($q: SearchQuery!, $filters: SearchFilters, $offset: Int!, $limit: PaginationLimit!) {
-      search(q: $q, filters: $filters) {
-        works(limit: $limit, offset: $offset) {
-          workId
-          titles {
-            main
-            full
-          }
-          creators {
-            display
-          }
-        }
-        hitcount
-      }
-      monitor(name: "bibdknext_search_fast")
-    }`,
-    variables: {
-      q,
-      limit,
-      offset,
-      filters,
-    },
-    slowThreshold: 3000,
-  };
-}
-
-/**
  * Detailed search response
  *
  * @param {string} q the query

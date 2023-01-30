@@ -2,6 +2,7 @@
  * @file
  * Test functionality of Text
  */
+
 describe("Related Keywords", () => {
   it(`Can tab through related keywords`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--default");
@@ -29,12 +30,9 @@ describe("Related Keywords", () => {
     cy.get("[data-cy=words-container]")
       .children()
       .each((el, idx) => {
-        cy.get(el).click();
-        cy.get("[data-cy=router-pathname]").should("have.text", "/find");
-        cy.get("[data-cy=router-query]").should(
-          "have.text",
-          `{"q.subject":"relatedSubjects[${idx}]"}`
-        );
+        expect(
+          el[0].href.indexOf(`/find?q.subject=relatedSubjects[${idx}]`) !== -1
+        ).to.be.true;
       });
   });
 });
