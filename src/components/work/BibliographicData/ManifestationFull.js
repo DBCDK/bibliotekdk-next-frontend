@@ -53,10 +53,7 @@ function ColumnOne({ workId, manifestation }) {
       <div className={styles.addilinks}>
         <div>
           <span>
-            <LocalizationsLink
-              workId={workId}
-              selectedPids={[manifestation?.pid]}
-            />
+            <LocalizationsLink selectedPids={[manifestation?.pid]} />
           </span>
         </div>
         <div>
