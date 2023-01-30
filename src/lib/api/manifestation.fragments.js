@@ -140,7 +140,7 @@ export function reservationButtonManifestations({ pid }) {
   };
 }
 
-export function orderPageManifestations({ pid }) {
+export function manifestationsForAccessFactory({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `

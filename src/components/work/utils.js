@@ -8,12 +8,10 @@ import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 
-export function openLocalizationsModal(modal, pids, workId, materialType) {
+export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
     title: Translate({ context: "modal", label: "title-order" }),
     pids: pids,
-    workId: workId,
-    materialType: materialType,
   });
 }
 
@@ -140,7 +138,9 @@ export function useRelevantAccessesForOrderPage(selectedPids) {
 
   const manifestationsResponse = useData(
     selectedPids &&
-      manifestationFragments.orderPageManifestations({ pid: selectedPids })
+      manifestationFragments.manifestationsForAccessFactory({
+        pid: selectedPids,
+      })
   );
 
   const manifestations = manifestationsResponse?.data?.manifestations;
