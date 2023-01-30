@@ -88,7 +88,6 @@ function Find() {
         pathname: router.asPath.replace(/\?.*/, ""),
         query,
       },
-      // { shallow: true, ...settings }
       { shallow: true, scroll: false }
     );
   }
@@ -126,7 +125,7 @@ function Find() {
           page={parseInt(page, 10)}
           onPageChange={async (page, scroll) => {
             scroll = typeof scroll !== "boolean" || scroll !== false;
-            await updateQueryParams({ page }, { scroll });
+            await updateQueryParams({ page });
             scroll && scrollToRef(scrollRef);
           }}
           onWorkClick={(index, work) => {
