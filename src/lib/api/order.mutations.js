@@ -68,10 +68,10 @@ export function submitPeriodicaArticleOrder({
         userName,
         userMail,
         publicationDateOfComponent,
-        volume,
+        volumeOfComponent: volume,
         authorOfComponent,
         titleOfComponent,
-        pagination,
+        pagesOfComponent: pagination,
       },
     },
   };
