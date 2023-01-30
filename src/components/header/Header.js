@@ -309,20 +309,6 @@ export function Header({
   );
 }
 
-export function WrappedStaticHeader({ context, className = "" }) {
-  return (
-    <header className={`${styles.wrap} ${className}`}>
-      <div className={styles.headerWrap}>
-        <Container className={styles.header} fluid>
-          <Row>
-            <StaticHeader context={context} />
-          </Row>
-        </Container>
-      </div>
-    </header>
-  );
-}
-
 /**
  * Static parts of header - logo, materialtypeslinks, header actions
  * @param router
