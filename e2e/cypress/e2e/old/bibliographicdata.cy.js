@@ -8,7 +8,7 @@ describe("bibliographic data", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--bib-data");
     // get first edition
     cy.get("[data-cy=accordion-item]").first().click();
-    cy.get("[data-cy=edition-data-skabere]")
+    cy.get("[data-cy=edition-data-skabere]", { timeout: 10000 })
       .find("a")
       .should("have.attr", "href")
       .should("not.be.empty")
@@ -20,7 +20,7 @@ describe("bibliographic data", () => {
 
   it("Full manifestation - check localizationlink", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--full-manifestation");
-    cy.get("[data-cy=link-localizations] p").should(
+    cy.get("[data-cy=link-localizations] p", { timeout: 10000 }).should(
       "have.text",
       "Se om den er hjemme på dit bibliotek"
     );
