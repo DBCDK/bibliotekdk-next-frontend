@@ -104,21 +104,3 @@ WorkPage.getInitialProps = async (ctx) => {
   }
   return init;
 };
-
-// TODO: Remove when we have 500 error under control
-//  until then, this can be used to provoke an error 500
-// export async function getServerSideProps(ctx) {
-//   const init = await fetchAll(serverQueries, ctx);
-//   const queries = Object.values(init.initialData);
-//
-//   ctx.res.statusCode = 500;
-//   throw new Error("Internal Server Error");
-//
-//   if (queries[0]?.data && !queries[0]?.data?.work) {
-//     ctx.res.statusCode = 404;
-//     return {
-//       notFound: true,
-//     };
-//   }
-//   return { props: { init: init } };
-// }
