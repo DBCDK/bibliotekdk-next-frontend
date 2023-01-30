@@ -95,7 +95,9 @@ function ColumnOne({ workId, manifestation }) {
  */
 export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   const { data } = useData(
-    hasBeenSeen && pid && manifestationFragments.manifestation({ pid: pid })
+    hasBeenSeen &&
+      pid &&
+      manifestationFragments.manifestationFullManifestation({ pid: pid })
   );
 
   const parsed = useMemo(() => {
