@@ -78,13 +78,9 @@ function Find() {
    * Updates URL query params
    *
    * @param {object} params
-   * @param {object} settings
    */
-  async function updateQueryParams(params, settings = {}) {
+  async function updateQueryParams(params) {
     const query = { ...router.query, ...params };
-
-    settings.scroll =
-      typeof settings.scroll !== "boolean" || settings.scroll !== false;
 
     await router.push(
       { pathname: router.pathname, query },
@@ -92,7 +88,7 @@ function Find() {
         pathname: router.asPath.replace(/\?.*/, ""),
         query,
       },
-      { shallow: true, ...settings }
+      { shallow: true, scroll: false }
     );
   }
 
@@ -127,10 +123,10 @@ function Find() {
       {q && (
         <Result
           page={parseInt(page, 10)}
-          onPageChange={(page, scroll) => {
-            updateQueryParams({ page }, { scroll }).then(() => {
-              scrollToRef(scrollRef);
-            });
+          onPageChange={async (page, scroll) => {
+            scroll = typeof scroll !== "boolean" || scroll !== false;
+            await updateQueryParams({ page });
+            scroll && scrollToRef(scrollRef);
           }}
           onWorkClick={(index, work) => {
             dataCollect.collectSearchWorkClick({
