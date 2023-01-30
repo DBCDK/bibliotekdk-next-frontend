@@ -1,5 +1,3 @@
-import { flattenWord } from "@/lib/utils";
-
 // this is for the material links in header
 export const materials = [
   { label: "books", href: "/#!" },
@@ -26,25 +24,3 @@ export const actions = [
   { label: "mySearches", href: "/#!", hidden: true },
   { label: "helpCenter", href: "/hjaelp" },
 ];
-
-export const externalUrls = {
-  askLibrarianUrl:
-    "https://adm.biblioteksvagten.dk/embed/ask-question?agency_id=bibliotek.dk&agency_mail=servicedesk%40dbc.dk&require_postal_code=true&popup=n&url=https%3A%2F%2Fbibliotek.dk",
-};
-
-export const preferredOnline = [
-  "lydbog (net)",
-  "ebog",
-  "punktskrift",
-  "artikel",
-  "tidsskriftsartikel",
-  "film (net)",
-];
-
-export function checkPreferredOnline(materialType) {
-  return (
-    preferredOnline.findIndex(
-      (type) => flattenWord(type) === flattenWord(materialType)
-    ) !== -1
-  );
-}
