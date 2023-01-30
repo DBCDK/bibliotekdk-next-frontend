@@ -240,7 +240,7 @@ const DEFAULT_STORY_PARAMETERS = {
           placeCopyRequest: (args) => {
             // Used for cypress testing
             console.debug("elbaPlaceCopy", args?.variables?.input);
-            return { "elba.placeCopyRequest.status": "OK" };
+            return { status: "OK" };
           },
         },
         Mutation: {
@@ -255,7 +255,7 @@ const DEFAULT_STORY_PARAMETERS = {
               "submitPeriodicaArticleOrder",
               args?.variables?.input
             );
-            return { "elba.placeCopyRequest.status": "OK" };
+            return { status: "OK" };
           },
         },
       },

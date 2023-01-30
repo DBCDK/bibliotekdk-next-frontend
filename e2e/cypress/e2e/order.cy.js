@@ -186,8 +186,7 @@ describe("Order", () => {
       });
     });
 
-    // TODO: Fix
-    it.skip("should order specific article from a periodica volume through digital article service", () => {
+    it("should order specific article from a periodica volume through digital article service", () => {
       cy.visitWithConsoleSpy(
         "/iframe.html?id=modal-order--order-periodica-volume&viewMode=story"
       );
@@ -230,10 +229,10 @@ describe("Order", () => {
           userName: "Some Name",
           userMail: "some@mail.dk",
           publicationDateOfComponent: "1992",
-          volume: "8",
+          volumeOfComponent: "8",
           authorOfComponent: "Test Testesen",
           titleOfComponent: "some title",
-          pagination: "100-104",
+          pagesOfComponent: "100-104",
         });
       });
     });
