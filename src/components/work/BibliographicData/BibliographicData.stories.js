@@ -1,5 +1,8 @@
 import BibliographicData from "./BibliographicData";
 import ManifestationFull from "@/components/work/BibliographicData/ManifestationFull";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
+import { AccessEnum } from "@/lib/enums";
 
 const exportedObject = {
   title: "work/Bibliographic data",
@@ -7,35 +10,35 @@ const exportedObject = {
 
 export default exportedObject;
 
-function BibDataStoryBuilder(storyname, resolvers = {}, query = {}) {
-  return {
-    parameters: {
-      graphql: {
-        debug: true,
-        resolvers: resolvers,
-        url:
-          "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql" ||
-          "https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql",
-      },
-      nextRouter: {
-        showInfo: true,
-        pathname: `/materiale/${storyname}ReservationButton/work-of:870970-basis:${storyname}`,
-        query: query,
-      },
-    },
-  };
-}
+const { DEFAULT_STORY_PARAMETERS, useMockLoanerInfo } = automock_utils();
 
 /**
  * Returns bibliographic data component
  */
 export function BibData() {
-  // const data = dummyWorkManifestationsApi;
-  return <BibliographicData workId={"some-workId"} />;
+  return <BibliographicData workId={"some-work-id-1"} />;
 }
-BibData.story = {
-  ...BibDataStoryBuilder("book", {}),
-};
+BibData.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          manifestation: () => {
+            return {
+              pid: "some-pid-1",
+              access: [
+                {
+                  __typename: AccessEnum.INTER_LIBRARY_LOAN,
+                  loanIsPossible: true,
+                },
+              ],
+            };
+          },
+        },
+      },
+    },
+  },
+});
 
 /**
  * Returns bibliographic data component
@@ -119,33 +122,36 @@ export function Article() {
 /**
  * Return a full manifestation
  * @return {JSX.Element}
- * @constructor
  */
 export function FullManifestation() {
+  useMockLoanerInfo("790900");
   return (
     <ManifestationFull
-      workId={"some-work-id"}
-      pid={"some-pid"}
+      workId={"some-work-id-1"}
+      pid={"some-pid-1"}
       hasBeenSeen={true}
     />
   );
 }
-FullManifestation.story = {
-  ...BibDataStoryBuilder("EBook", {
-    Manifestation: {
-      pid: () => "some-pid",
-      creators: () => [...new Array(10).fill({})],
-      contributors: () => [...new Array(10).fill({})],
-      publisher: () => ["some-publisher - 1", "some-publisher - 2"],
-      physicalDescriptions: () => [...new Array(10).fill({})],
-      classifications: () => [...new Array(10).fill({})],
-      workYear: () => {
-        display: "some-workYear";
+
+FullManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          manifestation: () => {
+            return {
+              pid: "some-pid-1",
+              access: [
+                {
+                  __typename: AccessEnum.INTER_LIBRARY_LOAN,
+                  loanIsPossible: true,
+                },
+              ],
+            };
+          },
+        },
       },
-      identifiers: () => [...new Array(10).fill({})],
-      notes: () => [...new Array(10).fill({})],
-      materialTypes: () => [...new Array(10).fill({})],
-      access: () => [...new Array(10).fill({})],
     },
-  }),
-};
+  },
+});

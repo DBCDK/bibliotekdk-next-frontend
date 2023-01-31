@@ -1,5 +1,4 @@
 import { useData } from "@/lib/api/api";
-import * as workFragments from "@/lib/api/work.fragments";
 import * as localizationsFragments from "@/lib/api/localizations.fragments";
 import { useModal } from "@/components/_modal";
 import Skeleton from "@/components/base/skeleton";
@@ -8,18 +7,20 @@ import Text from "@/components/base/text/Text";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import styles from "./LocalizationsLink.module.css";
-import { checkPreferredOnline } from "@/lib/Navigation";
 import { openLocalizationsModal } from "@/components/work/utils";
-import { useWorkFromSelectedPids } from "@/components/hooks/useWorkAndSelectedPids";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { accessFactory } from "@/lib/accessFactoryUtils";
+import { AccessEnum } from "@/lib/enums";
 
-export function LocalizationsLink({ localizations, openLocalizationsModal }) {
+export function LocalizationsLink({
+  localizationsCount,
+  openLocalizationsModal,
+}) {
   // @TODO - if user is logged in - show localizations for logged in library
-
-  const count = localizations?.count?.toString() || "0";
   const localizationKey = cyKey({ name: "nolocalizations", prefix: "text" });
-
   const localizationLinkKey = cyKey({ name: "localizations", prefix: "link" });
-  if (count === "0") {
+
+  if (localizationsCount === 0) {
     return (
       <div>
         <Text type="text3" dataCy={localizationKey}>
@@ -38,7 +39,7 @@ export function LocalizationsLink({ localizations, openLocalizationsModal }) {
         {Translate({
           context: "overview",
           label: "label_library_holdings",
-          vars: [count],
+          vars: [localizationsCount],
         })}
         &nbsp;-&nbsp;
       </Text>
@@ -52,7 +53,7 @@ export function LocalizationsLink({ localizations, openLocalizationsModal }) {
           {Translate({
             context: "overview",
             label: "check_branch_holding",
-            vars: [count],
+            vars: [localizationsCount],
           })}
         </Text>
       </Link>
@@ -60,42 +61,45 @@ export function LocalizationsLink({ localizations, openLocalizationsModal }) {
   );
 }
 
-export default function Wrap({ selectedPids, workId }) {
+export default function Wrap({ selectedPids }) {
   // @TODO if user is logged in - do a holdingsitems request on user agency
   // const user = useUser();
   const modal = useModal();
 
-  const workFragment = workId && workFragments.pidsAndMaterialTypes({ workId });
-  const workFromSelectedPids = useWorkFromSelectedPids(
-    workFragment,
-    selectedPids
+  const manifestationResponse = useData(
+    selectedPids &&
+      manifestationFragments.manifestationsForAccessFactory({
+        pid: selectedPids,
+      })
   );
 
+  const manifestations = manifestationResponse?.data?.manifestations;
+  const { allEnrichedAccesses } = accessFactory(manifestations);
+
+  const preferredOnline =
+    allEnrichedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN;
+
   const { data, isLoading, isSlow } = useData(
-    selectedPids?.length > 0 &&
+    !preferredOnline &&
+      selectedPids?.length > 0 &&
       typeof selectedPids?.[0] !== "undefined" &&
       localizationsFragments.localizationsQuery({ pids: selectedPids })
   );
 
-  const materialType = workFromSelectedPids?.materialTypes?.[0]?.specific;
+  if (preferredOnline) {
+    return null;
+  }
 
-  if (isLoading) {
+  if (isLoading || !data || manifestationResponse?.isLoading) {
     return (
       <Skeleton lines={1} className={styles.skeletonstyle} isSlow={isSlow} />
     );
   }
 
-  // @see lib/Navigation.js :: preferredOnline
-  if (checkPreferredOnline(materialType)) {
-    return null;
-  }
-
   return (
     <LocalizationsLink
-      localizations={data?.localizations || "0"}
-      openLocalizationsModal={() =>
-        openLocalizationsModal(modal, selectedPids, workId, materialType)
-      }
+      localizationsCount={data?.localizations?.count || 0}
+      openLocalizationsModal={() => openLocalizationsModal(modal, selectedPids)}
     />
   );
 }

@@ -278,34 +278,6 @@ export function description({ workId }) {
  * @param {object} params
  * @param {string} params.workId the work id
  */
-export function pidsAndMaterialTypes({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query fetchPids($workId: String!) {
-      work(id: $workId) {
-        manifestations {
-          all {
-            pid
-            materialTypes {
-              specific
-            }
-          }
-        }
-      }
-      monitor(name: "bibdknext_work_pidsAndMaterialTypes")
-    }`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-/**
- * Description work info that is fast to fetch
- *
- * @param {object} params
- * @param {string} params.workId the work id
- */
 export function buttonTxt({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,

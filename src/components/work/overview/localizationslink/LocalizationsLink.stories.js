@@ -1,11 +1,15 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "work/Overview/LocalizationsLink",
 };
 
 export default exportedObject;
+
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /** LocalizationsLinkComponentBuilder
  * @param {string} type
@@ -17,16 +21,7 @@ function LocalizationsLinkComponentBuilder({
   type = "Bog",
   storyNameOverride = null,
 }) {
-  const date = new Date();
-  let time = date.getTime();
-
   const descriptionName = storyNameOverride ? storyNameOverride : type;
-
-  const workId = localizationsLinkProps?.workId || "some-workId" + time;
-  const selectedPids = localizationsLinkProps?.selectedPids || [
-    "some-pid-0" + time,
-    "some-pid-1" + time,
-  ];
 
   return (
     <div>
@@ -34,32 +29,14 @@ function LocalizationsLinkComponentBuilder({
       <StoryDescription>
         LocalizationsLink with description: {descriptionName}
       </StoryDescription>
-      <LocalizationsLink workId={workId} selectedPids={selectedPids} />
+      <LocalizationsLink selectedPids={localizationsLinkProps?.selectedPids} />
     </div>
   );
 }
 
-function LocalizationsLinkStoryBuilder(storyname, resolvers = {}, query = {}) {
-  return {
-    parameters: {
-      graphql: {
-        debug: true,
-        resolvers: resolvers,
-        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      },
-      nextRouter: {
-        showInfo: true,
-        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}`,
-        query: query,
-      },
-    },
-  };
-}
-
 export function LocalizationsLinkPreferredOnline() {
   const localizationsLinkProps = {
-    workId: "some-workId-not-available",
-    selectedPids: ["some-pid-0", "some-pid-1"],
+    selectedPids: ["some-pid-7"],
   };
 
   return (
@@ -69,73 +46,93 @@ export function LocalizationsLinkPreferredOnline() {
     />
   );
 }
-LocalizationsLinkPreferredOnline.story = {
-  ...LocalizationsLinkStoryBuilder("LocalizationsLinkPreferredOnline", {
-    Query: {
-      work: () => {
-        return {
-          manifestations: {
-            all: [
-              {
-                pid: "some-pid-0",
-                materialTypes: [{ specific: "lydbog (net)" }],
-              },
-            ],
-          },
-        };
-      },
+LocalizationsLinkPreferredOnline.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
     },
-  }),
-};
+  },
+});
 
 export function LocalizationsLinkNoAvailable() {
+  const localizationLinkProps = {
+    selectedPids: ["some-pid-1"],
+  };
+
   return (
     <LocalizationsLinkComponentBuilder
       storyNameOverride={"LocalizationsLinkNoAvailable"}
+      localizationsLinkProps={localizationLinkProps}
     />
   );
 }
-LocalizationsLinkNoAvailable.story = {
-  ...LocalizationsLinkStoryBuilder("LocalizationsLinkNoAvailable", {
-    Query: {
-      localizations: () => {
-        return {
-          count: 0,
-        };
+LocalizationsLinkNoAvailable.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          localizations: () => {
+            return {
+              count: 0,
+            };
+          },
+        },
       },
     },
-  }),
-};
+  },
+});
 
 export function LocalizationsLinkAvailableAtLibraries() {
+  const localizationLinkProps = {
+    selectedPids: ["some-pid-1"],
+  };
+
   return (
     <LocalizationsLinkComponentBuilder
       storyNameOverride={"LocalizationsLinkNoAvailable"}
+      localizationsLinkProps={localizationLinkProps}
     />
   );
 }
-LocalizationsLinkAvailableAtLibraries.story = {
-  ...LocalizationsLinkStoryBuilder("LocalizationsLinkAvailableAtLibraries", {}),
-};
-
-export function LocalizationsLinkSlowResponse() {
-  return (
-    <LocalizationsLinkComponentBuilder
-      storyNameOverride={"LocalizationsLinkNoAvailable"}
-    />
-  );
-}
-LocalizationsLinkSlowResponse.story = {
-  ...LocalizationsLinkStoryBuilder("LocalizationsLinkSlowResponse", {
-    Query: {
-      localizations: async () => {
-        // Simulate slow access response, wait 5000ms
-        await new Promise((r) => {
-          setTimeout(r, 5000);
-        });
-
-        return { count: 10 };
+LocalizationsLinkAvailableAtLibraries.story = merge(
+  {},
+  DEFAULT_STORY_PARAMETERS,
+  {
+    parameters: {
+      graphql: {
+        resolvers: {},
       },
     },
-  }),
-};
+  }
+);
+
+export function LocalizationsLinkSlowResponse() {
+  const localizationLinkProps = {
+    selectedPids: ["some-pid-1"],
+  };
+
+  return (
+    <LocalizationsLinkComponentBuilder
+      storyNameOverride={"LocalizationsLinkNoAvailable"}
+      localizationsLinkProps={localizationLinkProps}
+    />
+  );
+}
+
+LocalizationsLinkSlowResponse.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Query: {
+          localizations: async () => {
+            // Simulate slow access response, wait 5000ms
+            await new Promise((r) => {
+              setTimeout(r, 5000);
+            });
+            return { count: 10 };
+          },
+        },
+      },
+    },
+  },
+});

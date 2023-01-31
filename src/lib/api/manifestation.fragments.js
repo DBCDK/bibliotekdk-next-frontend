@@ -31,18 +31,20 @@ export function ris(pid) {
   };
 }
 
-export function manifestation({ pid }) {
+export function manifestationFullManifestation({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `query manifestation($pid: String!) {
       manifestation(pid: $pid) {
         ...manifestationCoverFragment
         ...manifestationFragment
+        ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestation")
     }
     ${manifestationFragment}
     ${manifestationCoverFragment}
+    ${accessFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -140,7 +142,7 @@ export function reservationButtonManifestations({ pid }) {
   };
 }
 
-export function orderPageManifestations({ pid }) {
+export function manifestationsForAccessFactory({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
     query: `
@@ -290,10 +292,5 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
   shelfmark {
     shelfmark
     postfix
-  }
-  access {
-	  ...on DigitalArticleService {
-      issn
-    }
   }
 }`;

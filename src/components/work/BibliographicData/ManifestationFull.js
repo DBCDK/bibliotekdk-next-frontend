@@ -53,10 +53,7 @@ function ColumnOne({ workId, manifestation }) {
       <div className={styles.addilinks}>
         <div>
           <span>
-            <LocalizationsLink
-              workId={workId}
-              selectedPids={[manifestation?.pid]}
-            />
+            <LocalizationsLink selectedPids={[manifestation?.pid]} />
           </span>
         </div>
         <div>
@@ -95,7 +92,9 @@ function ColumnOne({ workId, manifestation }) {
  */
 export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   const { data } = useData(
-    hasBeenSeen && pid && manifestationFragments.manifestation({ pid: pid })
+    hasBeenSeen &&
+      pid &&
+      manifestationFragments.manifestationFullManifestation({ pid: pid })
   );
 
   const parsed = useMemo(() => {
