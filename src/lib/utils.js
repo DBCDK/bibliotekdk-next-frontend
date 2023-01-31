@@ -1,4 +1,5 @@
 import getConfig from "next/config";
+import { uniq } from "lodash";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -82,22 +83,6 @@ export function getCanonicalArticleUrl(props) {
 }
 
 /**
- * Handle this work as a periodica
- *
- * @param {object} workTypes
- * @param {object} materialTypes
- * @returns {boolean}
- */
-export function getIsPeriodicaLike(workTypes, materialTypes) {
-  return (
-    !!workTypes?.find((workType) => workType?.toLowerCase() === "periodica") ||
-    !!materialTypes?.find(
-      (materialType) => materialType?.specific?.toLowerCase() === "årbog"
-    )
-  );
-}
-
-/**
  * Generalised infomediaUrl-builder
  *
  * @param {string} title
@@ -109,28 +94,12 @@ export function infomediaUrl(title, workId, infomadiaId) {
   return `/infomedia/${title}/${workId}/${infomadiaId}`;
 }
 
-export function flattenWord(word) {
-  return word?.toLowerCase().replace(/[^0-9a-z]/gi, "");
-}
-
 export function uniqueSubjectEntries(oldArray) {
-  return [
-    ...new Set(
-      oldArray?.map((s) => s?.display?.toLowerCase().replace(/\./g, ""))
-    ),
-  ];
+  return uniq(oldArray.map((subject) => subject.display));
 }
 
 export function uniqueEntries(oldArray) {
-  return [
-    ...new Set(oldArray?.map((s) => s?.toLowerCase().replace(/\./g, ""))),
-  ];
-}
-
-export function indexInArray(referenceArray, element, defaultValue = 2) {
-  return referenceArray?.indexOf(element) !== -1
-    ? referenceArray?.indexOf(element)
-    : defaultValue;
+  return uniq(oldArray);
 }
 
 export function comparableYear(a) {
