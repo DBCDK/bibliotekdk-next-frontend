@@ -1197,7 +1197,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-literature-fictionalCharacter": {
+      "label-literature-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
@@ -1237,7 +1237,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-article-fictionalCharacter": {
+      "label-article-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
@@ -1277,7 +1277,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-movie-fictionalCharacter": {
+      "label-movie-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
@@ -1317,7 +1317,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-game-fictionalCharacter": {
+      "label-game-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
@@ -1357,7 +1357,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-music-fictionalCharacter": {
+      "label-music-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },
@@ -1397,7 +1397,7 @@
         "da": "Materialetype",
         "en": "Format"
       },
-      "label-sheetmusic-fictionalCharacter": {
+      "label-sheetmusic-fictionalCharacters": {
         "da": "Fiktive hovedpersoner",
         "en": "Fictitious characters"
       },

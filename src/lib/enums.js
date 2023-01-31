@@ -16,7 +16,7 @@ export const FilterTypeEnum = Object.freeze({
   MAIN_LANGUAGES: "mainLanguages",
   GENRE_AND_FORM: "genreAndForm",
   CHILDREN_OR_ADULTS: "childrenOrAdults",
-  //FICTIONAL_CHARACTER: "fictionalCharacter",
+  FICTIONAL_CHARACTERS: "fictionalCharacters",
   WORK_TYPES: "workTypes",
   //ALWAYS_LOAN: "canAlwaysBeLoaned",
 });
