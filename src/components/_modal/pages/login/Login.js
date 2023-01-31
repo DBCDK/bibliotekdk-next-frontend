@@ -22,6 +22,7 @@ import Top from "@/components/_modal/pages/base/top";
 import Router from "next/router";
 
 import { LOGIN_MODE as LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import useUser from "@/components/hooks/useUser";
 
 function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
   // Check for a highlight key matching on "name" prop
@@ -109,8 +110,18 @@ export function LoginPickup({
   const regexp = /&modal=+[0-9]*/g;
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
 
-  // show loanerform for selected bracnch
+  const user = useUser();
   const onSelect = (branch) => {
+    // edge case: - user is already logged in .. and tries to login in again with same library ..
+    // @TODO .. we need a better way (than alert) to pass a message to the user - maybe we should use bootstraps toast ??
+    const sameOrigin = branch?.agencyId === user?.loanerInfo?.pickupBranch;
+    if (sameOrigin) {
+      alert("vælg et andet bibliotek");
+      modal.prev();
+      return;
+    }
+
+    // show loanerform for selected bracnch
     modal.push("loanerform", {
       branchId: branch.branchId,
       doPolicyCheck: false,
