@@ -34,7 +34,7 @@ function LinkmePhp() {
 
   // check if data fetching is done
   if (isLoading) {
-    return <div>Rediricting ... </div>;
+    return <div>Redirecting ... </div>;
   }
 
   if (data === null || data?.error) {
