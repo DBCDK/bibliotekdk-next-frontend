@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { SuggestTypeEnum } from "@/lib/enums";
 import { isEmpty } from "lodash";
-import { URLSearchParams } from "url";
 
 /**
  * Hook for q search param sync across components 🤯
