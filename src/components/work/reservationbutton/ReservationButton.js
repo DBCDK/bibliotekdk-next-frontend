@@ -109,6 +109,7 @@ export function OrderButton({
   user,
   modal,
   access,
+  singleManifestation = false,
   onOnlineAccess,
   openOrderModal,
   onHandleGoToLogin = () =>
@@ -119,21 +120,15 @@ export function OrderButton({
   const physicalCopy = checkPhysicalCopy([access?.[0]])?.[0];
   const digitalCopy = checkDigitalCopy([access?.[0]])?.[0];
 
-  const isOnlineTranslated = isOnlineTranslator(
-    access?.[0]?.materialTypesArray
-  );
+  const isOnlineTranslated = singleManifestation
+    ? isOnlineTranslator(access?.[0]?.materialTypesArray, singleManifestation)
+    : "";
   const workTypeTranslated = workTypeTranslator(access?.[0]?.workTypes);
 
   /** order button acts on following scenarios: */
   const caseScenarioMap = [
     /** (0) selectedManifestations does not exist for some reason */
-    Boolean(
-      isEmpty(access)
-      // access === null ||
-      //   access === [] ||
-      //   access === [undefined] ||
-      //   typeof access === "undefined"
-    ),
+    Boolean(isEmpty(access)),
     /** (1) material is accessible online (no user login or will prompt at destination) -> go to online url
      * --- a. ACCESS_URL
      * --- b. INFOMEDIA
@@ -260,6 +255,7 @@ function ReservationButton({
       user={user}
       modal={modal}
       access={access}
+      singleManifestation={singleManifestation}
       onOnlineAccess={onOnlineAccess}
       openOrderModal={() =>
         openOrderModal({
