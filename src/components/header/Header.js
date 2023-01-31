@@ -51,6 +51,15 @@ export const MATERIAL_PAGES = [
   { path: "artikler", label: "article" },
 ];
 
+const actions = [
+  {
+    label: "digitalOffers",
+    href: "/artikel/digitale-bibliotekstilbud/5",
+  },
+  { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
+  { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
+];
+
 /**
  * The Component function
  *
@@ -89,15 +98,6 @@ export function Header({
 
   // specific material workType selected
   const selectedMaterial = workTypes[0] || SuggestTypeEnum.ALL;
-
-  const actions = [
-    {
-      label: "digitalOffers",
-      href: "/artikel/digitale-bibliotekstilbud/5",
-    },
-    { label: "askLibrarian", href: "/artikel/spoerg-en-bibliotekar/7" },
-    { label: "becomeLoaner", href: "/artikel/bliv-laaner/43" },
-  ];
 
   const menu = [
     {
@@ -185,73 +185,13 @@ export function Header({
       doSearch(e.target.value);
     }
   };
-
   return (
     <header className={`${styles.wrap} ${className}`}>
       <div className={styles.headerWrap}>
         <Container className={styles.header} fluid>
           <Row>
-            <Col xs={2}>
-              <Logo fill={"var(--blue)"} text={"default_logo_text"} />
-            </Col>
-            <Col xs={{ span: 9, offset: 1 }}>
-              <div className={styles.top}>
-                <div
-                  className={styles.materials}
-                  data-cy={cyKey({ name: "materials", prefix: "header" })}
-                >
-                  <Link href="/">
-                    <Text type="text3">
-                      {Translate({
-                        context: "general",
-                        label: "frontpage",
-                      })}
-                    </Text>
-                  </Link>
-
-                  {MATERIAL_PAGES.map(({ path, label }) => {
-                    const active = router.asPath.includes(
-                      `/inspiration/${path}`
-                    );
-
-                    return (
-                      <Link
-                        key={`link-${path}-${label}`}
-                        href={`/inspiration/${path}?workTypes=${label}`}
-                        border={{ bottom: { keepVisible: active } }}
-                        dataCy={`header-link-${label}`}
-                      >
-                        <Text type="text3">
-                          {Translate({
-                            context: "facets",
-                            label: `label-${label}`,
-                          })}
-                        </Text>
-                      </Link>
-                    );
-                  })}
-                </div>
-                <div
-                  className={styles.actions}
-                  data-cy={cyKey({ name: "actions", prefix: "header-top" })}
-                >
-                  {actions.map((m) => (
-                    <Link
-                      key={m.label}
-                      href={m.href}
-                      target={m.target}
-                      dataCy={cyKey({
-                        name: m.label,
-                        prefix: "header-link",
-                      })}
-                    >
-                      <Text type="text3">
-                        {Translate({ ...context, label: m.label })}
-                      </Text>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+            <StaticHeader router={router} context={context} />
+            <Col xs={{ span: 9, offset: 3 }}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
@@ -366,6 +306,82 @@ export function Header({
         </Container>
       </div>
     </header>
+  );
+}
+
+/**
+ * Static parts of header - logo, materialtypeslinks, header actions
+ * @param router
+ * @param context
+ * @returns {JSX.Element}
+ * @constructor
+ */
+export function StaticHeader({ router = null, context }) {
+  return (
+    <>
+      <Col xs={2}>
+        <Logo fill={"var(--blue)"} text={"default_logo_text"} />
+      </Col>
+      <Col xs={{ span: 9, offset: 1 }}>
+        <div className={styles.top}>
+          <div
+            className={styles.materials}
+            data-cy={cyKey({ name: "materials", prefix: "header" })}
+          >
+            <Link href="/">
+              <Text type="text3" tag="div">
+                {Translate({
+                  context: "general",
+                  label: "frontpage",
+                })}
+              </Text>
+            </Link>
+
+            {MATERIAL_PAGES.map(({ path, label }) => {
+              const active =
+                (router && router.asPath.includes(`/inspiration/${path}`)) ||
+                false;
+
+              return (
+                <Link
+                  key={`link-${path}-${label}`}
+                  href={`/inspiration/${path}?workTypes=${label}`}
+                  border={{ bottom: { keepVisible: active } }}
+                  dataCy={`header-link-${label}`}
+                >
+                  <Text type="text3">
+                    {Translate({
+                      context: "facets",
+                      label: `label-${label}`,
+                    })}
+                  </Text>
+                </Link>
+              );
+            })}
+          </div>
+          <div
+            className={styles.actions}
+            data-cy={cyKey({ name: "actions", prefix: "header-top" })}
+          >
+            {actions.map((m) => (
+              <Link
+                key={m.label}
+                href={m.href}
+                target={m.target}
+                dataCy={cyKey({
+                  name: m.label,
+                  prefix: "header-link",
+                })}
+              >
+                <Text type="text3">
+                  {Translate({ ...context, label: m.label })}
+                </Text>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </Col>
+    </>
   );
 }
 

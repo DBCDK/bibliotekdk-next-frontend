@@ -74,6 +74,22 @@
       "404_not_found_description": {
         "da": "Vi kunne ikke finde siden du leder efter. Prøv at lede efter noget andet",
         "en": "We could not find the page you are looking for - try something else"
+      },
+      "500_internal_server_error_title": {
+        "da": "Serveren svarede ikke",
+        "en": "Server is not responding"
+      },
+      "500_internal_server_error_description": {
+        "da": "Serveren vi brugte til at vise dig siden med, virkede ikke. Prøv at genlæse siden eller se om der er fejlbeskeder på",
+        "en": "We used an unresponsive server to show you your request, but that does not work. Try refreshing the page, or look for error messages at"
+      },
+      "500_internal_server_error_information_website_url": {
+        "da": "kundeservice.dbc.hund",
+        "en": "kundeservice.dbc.hund"
+      },
+      "500_internal_server_error_information_website_title": {
+        "da": "DBC kundeservice",
+        "en": "DBC kundeservice"
       }
     },
     "cookiebox": {

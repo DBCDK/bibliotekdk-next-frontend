@@ -51,14 +51,16 @@ function buildQ() {
 /**
  * Get all q types from query params
  *
- * @param {object} query (defaults to router.query)
  *
  * @returns {object}
  *
+ * @param query
  */
 export const getQuery = (query = {}) => {
+  const urlSearchParams = new URLSearchParams(query);
+
   const params = {};
-  Object.entries(query).forEach(([key, val]) => {
+  urlSearchParams.forEach((val, key) => {
     // remove empty key values
     if (val && val !== "") {
       // check if key actually is a q. param
