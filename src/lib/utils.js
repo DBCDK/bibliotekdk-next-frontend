@@ -1,4 +1,5 @@
 import getConfig from "next/config";
+import { uniq } from "lodash";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
@@ -114,11 +115,7 @@ export function flattenWord(word) {
 }
 
 export function uniqueSubjectEntries(oldArray) {
-  return [
-    ...new Set(
-      oldArray?.map((s) => s?.display?.toLowerCase().replace(/\./g, ""))
-    ),
-  ];
+  return uniq(oldArray.map((subject) => subject.display));
 }
 
 export function uniqueEntries(oldArray) {
