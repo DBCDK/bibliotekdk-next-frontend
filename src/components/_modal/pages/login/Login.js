@@ -113,6 +113,7 @@ export function LoginPickup({
   const user = useUser();
   const onSelect = (branch) => {
     // edge case: - user is already logged in .. and tries to login in again with same library ..
+    // @TODO .. we need a better way (than alert) to pass a message to the user - maybe we should use bootstraps toast ??
     const sameOrigin = branch?.agencyId === user?.loanerInfo?.pickupBranch;
     if (sameOrigin) {
       alert("vælg et andet bibliotek");
