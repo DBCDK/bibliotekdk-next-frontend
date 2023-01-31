@@ -119,9 +119,7 @@ export function uniqueSubjectEntries(oldArray) {
 }
 
 export function uniqueEntries(oldArray) {
-  return [
-    ...new Set(oldArray?.map((s) => s?.toLowerCase().replace(/\./g, ""))),
-  ];
+  return uniq(oldArray);
 }
 
 export function indexInArray(referenceArray, element, defaultValue = 2) {
