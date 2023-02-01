@@ -27,6 +27,44 @@ export function Default() {
     </div>
   );
 }
+export function SevenPages() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  return (
+    <div>
+      <StoryTitle>Pagination</StoryTitle>
+      <StoryDescription>
+        Pagination for results at the search page
+      </StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <Pagination
+          currentPage={currentPage}
+          numPages={7}
+          onChange={setCurrentPage}
+        />
+      </div>
+    </div>
+  );
+}
+export function EightPages() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  return (
+    <div>
+      <StoryTitle>Pagination</StoryTitle>
+      <StoryDescription>
+        Pagination for results at the search page
+      </StoryDescription>
+      <div style={{ maxWidth: "800px", margin: "auto" }}>
+        <Pagination
+          currentPage={currentPage}
+          numPages={8}
+          onChange={setCurrentPage}
+        />
+      </div>
+    </div>
+  );
+}
 
 export function Loading() {
   return (
