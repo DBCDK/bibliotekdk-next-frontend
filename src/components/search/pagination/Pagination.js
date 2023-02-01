@@ -56,17 +56,12 @@ export default function Pagination({
   isLoading,
   MAX_VISIBLE_PAGES = 9,
 }) {
-  const paginationValues = calculatePaginationValues(
-    currentPage,
-    numPages,
-    MAX_VISIBLE_PAGES
-  );
   const {
     showPreviousPageArrow,
     bottomVisiblePage,
     topVisiblePage,
     showNextPageArrow,
-  } = paginationValues;
+  } = calculatePaginationValues(currentPage, numPages, MAX_VISIBLE_PAGES);
 
   const arrayOfPaginationPages = _.range(
     bottomVisiblePage,
