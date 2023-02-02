@@ -186,6 +186,7 @@ export function infomediaArticlePublicInfo({ workId }) {
     // delay: 4000, // for debugging
     query: `query InfomediaPublic($workId: String!) {
       work(id: $workId) {
+        abstract
         workTypes
         titles {
           main
@@ -197,6 +198,11 @@ export function infomediaArticlePublicInfo({ workId }) {
           dbcVerified {
             display
             type
+            ... on SubjectText {
+              language {
+                isoCode
+              }
+            }
           }
         }
         manifestations {
