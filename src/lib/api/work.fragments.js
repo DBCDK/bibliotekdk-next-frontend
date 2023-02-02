@@ -85,10 +85,16 @@ export function reviews({ workId }) {
                   dbcVerified {
                     display
                     type
+                    ... on SubjectText {
+                      language {
+                        isoCode
+                      }
+                    }
                   }
                 }
                 relations {
                   hasReview {
+                    abstract
                     pid
                     creators {
                       display

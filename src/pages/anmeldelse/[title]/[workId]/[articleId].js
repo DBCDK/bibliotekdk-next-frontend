@@ -59,7 +59,9 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
     );
 
   return {
-    creators: publicReviewData?.creators,
+    creators: publicReviewData?.creators?.map((creator) => {
+      return { name: creator?.display };
+    }),
     title: infomediaArticle?.headLine || work?.titles?.main?.[0],
     entityCreated,
     subHeadLine:
@@ -72,6 +74,7 @@ function parseInfomediaArticle(publicReviewData, work, infomediaArticle) {
     paper: infomediaArticle?.paper || publicReviewData?.hostPublication?.title,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
+      ?.filter((subject) => subject?.language?.isoCode === "dan")
       .map((subject) => subject.display),
     deliveredBy: "Infomedia",
     disclaimer: {
@@ -106,6 +109,8 @@ export default function Wrap() {
     data?.work,
     infomediaArticleData?.infomedia?.article
   );
+
+  console.log("publicReviewData: ", publicReviewData);
 
   return (
     <ReviewPage
