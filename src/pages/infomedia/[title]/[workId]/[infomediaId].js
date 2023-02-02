@@ -17,7 +17,7 @@ import { timestampToShortDate } from "@/utils/datetimeConverter";
 import Error from "next/error";
 
 export function InfomediaArticle(props) {
-  const { articleId, article, notFound, isLoading, noAccess } = props;
+  const { articleId, article, notFound, isLoading } = props;
 
   const router = useRouter();
 
@@ -26,15 +26,11 @@ export function InfomediaArticle(props) {
       <Header router={router} />
       {notFound ? (
         <Error statusCode={404} />
-      ) : noAccess ? (
-        <ArticleLoginPrompt articleId={articleId} />
-      ) : notFound ? (
-        <Error statusCode={404} />
       ) : isLoading ? (
         <ContentSkeleton />
       ) : (
         <>
-          {article && <Content data={{ article }} />}
+          <Content data={{ article }} />
 
           <ArticleLoginPrompt articleId={articleId} />
         </>
@@ -46,14 +42,12 @@ export function InfomediaArticle(props) {
 /**
  * Parse work/article data to a format the Content component likes
  */
-function parseInfomediaArticle(work, infomediaArticle) {
+function parseInfomediaArticle(work, infomediaArticle = {}) {
   const manifestation = work?.manifestations?.latest;
   return {
-    creators: [
-      {
-        name: work?.creators?.[0]?.display,
-      },
-    ],
+    creators: work?.creators?.map((creator) => {
+      return { name: creator?.display };
+    }),
     title: infomediaArticle?.headLine || work?.titles?.main?.[0],
     entityCreated:
       infomediaArticle?.dateLine ||
@@ -62,13 +56,14 @@ function parseInfomediaArticle(work, infomediaArticle) {
     subHeadLine:
       infomediaArticle?.subHeadLine !== infomediaArticle?.headLine &&
       infomediaArticle?.subHeadLine,
-    fieldRubrik: infomediaArticle?.hedLine,
+    fieldRubrik: infomediaArticle?.hedLine || work?.abstract,
     body: {
       value: infomediaArticle?.text,
     },
     paper: infomediaArticle?.paper || manifestation?.hostPublication?.title,
     category: work?.subjects?.dbcVerified
       ?.filter((subject) => subject.type === "TOPIC")
+      ?.filter((subject) => subject?.language?.isoCode === "dan")
       .map((subject) => subject.display),
     deliveredBy: "Infomedia",
     disclaimer: {
@@ -90,7 +85,7 @@ export default function Wrap() {
   const { data: infomediaPublicData, isLoading: isLoadingInfomediaPublic } =
     useData(workId && workFragments.infomediaArticlePublicInfo({ workId }));
 
-  const { data: infomediaArticleData, isLoadingInfomedia } = useData(
+  const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
     user.isAuthenticated &&
       infomediaId &&
       infomediaFragments.infomediaArticle({ id: infomediaId })
@@ -105,7 +100,6 @@ export default function Wrap() {
     <InfomediaArticle
       article={article}
       notFound={infomediaPublicData && !infomediaPublicData.work}
-      noAccess={infomediaArticleData?.infomedia?.error === "BORROWER_NOT_FOUND"}
       isLoading={isLoadingInfomediaPublic || isLoadingInfomedia}
       articleId={infomediaId}
     />
