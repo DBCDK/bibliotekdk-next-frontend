@@ -28,7 +28,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
   // Not logged in, no access
-  if (!user?.isLoggedIn) {
+  if (!user || !user?.isLoggedIn) {
     return (
       <LoginPrompt
         title={Translate({ context: "articles", label: "getAccess" })}
