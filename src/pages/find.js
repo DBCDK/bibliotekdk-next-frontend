@@ -24,7 +24,7 @@ import Related from "@/components/search/related";
 import Header from "@/components/header/Header";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 /**
  * @file
@@ -50,6 +50,21 @@ function Find() {
   const hitcountResponse = useData(searchFragments.hitcount({ q, filters }));
 
   const hits = hitcountResponse?.data?.search?.hitcount || 0;
+
+  const [prevHits, setPrevHits] = useState();
+  function updateQueryParamsOnFilterChange() {
+    if (prevHits > hits) {
+      const updatedPage = hits / 10 > page ? page : 1;
+      updateQueryParams({ page: updatedPage }, "replace").then(
+        (query) => query.page
+      );
+    }
+    setPrevHits(hits);
+  }
+
+  useEffect(() => {
+    updateQueryParamsOnFilterChange();
+  }, [hits]);
 
   const context = { context: "metadata" };
 
@@ -78,11 +93,12 @@ function Find() {
    * Updates URL query params
    *
    * @param {object} params
+   * @param method
    */
-  async function updateQueryParams(params) {
+  async function updateQueryParams(params, method = "push") {
     const query = { ...router.query, ...params };
 
-    await router.push(
+    await router[method](
       { pathname: router.pathname, query },
       {
         pathname: router.asPath.replace(/\?.*/, ""),
@@ -90,6 +106,7 @@ function Find() {
       },
       { shallow: true, scroll: false }
     );
+    return query;
   }
 
   return (
