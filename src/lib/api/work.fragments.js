@@ -85,10 +85,16 @@ export function reviews({ workId }) {
                   dbcVerified {
                     display
                     type
+                    ... on SubjectText {
+                      language {
+                        isoCode
+                      }
+                    }
                   }
                 }
                 relations {
                   hasReview {
+                    abstract
                     pid
                     creators {
                       display
@@ -186,6 +192,7 @@ export function infomediaArticlePublicInfo({ workId }) {
     // delay: 4000, // for debugging
     query: `query InfomediaPublic($workId: String!) {
       work(id: $workId) {
+        abstract
         workTypes
         titles {
           main
@@ -197,6 +204,11 @@ export function infomediaArticlePublicInfo({ workId }) {
           dbcVerified {
             display
             type
+            ... on SubjectText {
+              language {
+                isoCode
+              }
+            }
           }
         }
         manifestations {
@@ -234,8 +246,8 @@ export function subjects({ workId }) {
       work(id: $workId) {
         subjects {
           dbcVerified {
-              display
-              ... on SubjectText {
+            display
+            ... on SubjectText {
               language {
                 isoCode
               }
