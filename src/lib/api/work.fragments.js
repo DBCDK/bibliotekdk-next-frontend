@@ -246,8 +246,8 @@ export function subjects({ workId }) {
       work(id: $workId) {
         subjects {
           dbcVerified {
-              display
-              ... on SubjectText {
+            display
+            ... on SubjectText {
               language {
                 isoCode
               }
