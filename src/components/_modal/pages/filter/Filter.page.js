@@ -387,8 +387,8 @@ export default function Wrap(props) {
   // update query params when modal closes
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
-      const page = !isSynced ? "page" : "";
-      setQuery({ exclude: ["modal", [page]] });
+      const page = !isSynced ? ["page"] : [];
+      setQuery({ exclude: ["modal", ...page] });
     }
   }, [modal.isVisible]);
 
@@ -453,8 +453,8 @@ export default function Wrap(props) {
       }}
       onSubmit={() => {
         // exclude modal param -> will close the modal on submit
-        const page = !isSynced ? "page" : "";
-        setQuery({ exclude: ["modal", [page]] });
+        const page = !isSynced ? ["page"] : [];
+        setQuery({ exclude: ["modal", ...page] });
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}
