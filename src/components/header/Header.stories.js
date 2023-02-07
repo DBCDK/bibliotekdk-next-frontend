@@ -17,7 +17,7 @@ const graphql = {
     SuggestResponse: {
       result: ({ variables }) =>
         variables?.q === "hest" || "suggest.".startsWith(variables?.q)
-          ? [...new Array(3).fill({})]
+          ? [...new Array(3).fill({ type: "CREATOR" })]
           : [],
     },
   },
@@ -74,6 +74,7 @@ NavHeaderPrefilled.story = {
         "q.creator": "some creator",
         "q.subject": "some subject",
         workTypes: "movie",
+        materialTypes: "bog",
       },
     },
   },
