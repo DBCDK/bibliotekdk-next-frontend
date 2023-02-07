@@ -39,7 +39,7 @@ export default function ResultRow({
 
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.all) {
-      return getCoverImage(work.manifestations.all)?.detail;
+      return getCoverImage(work.manifestations.mostRelevant)?.detail;
     }
   }, [work?.manifestations]);
 

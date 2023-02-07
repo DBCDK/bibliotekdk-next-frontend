@@ -46,7 +46,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
         works(limit: $limit, offset: $offset) {
           workId
           manifestations {
-            all{
+            mostRelevant{
               cover {
                 detail
                 origin
@@ -54,12 +54,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
               materialTypes {
                 specific
               }
-            }
-            mostRelevant {
-              materialTypes {
-                specific
-              }
-            }
+            }            
           }
           creators {
             display
