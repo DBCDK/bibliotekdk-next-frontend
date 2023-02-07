@@ -120,9 +120,9 @@ describe("Search", () => {
       // Check URL query parameters are as expected
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({
-          "q.all": "something else",
+          "q.all": "some all",
           "q.title": "some title",
-          "q.creator": "some creator",
+          "q.creator": "suggest.result[0].term",
           "q.subject": "some subject",
           workTypes: "movie",
         });

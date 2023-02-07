@@ -241,15 +241,13 @@ export default function useFilters() {
     return isEqual(remote, locale);
   }
 
-  const isSynced = _isSynced();
-
   return {
     filters: _filters || {},
     setFilters,
     getQuery: _getQuery,
     setQuery,
     getCount,
-    isSynced,
+    isSynced: _isSynced(),
     types,
     workTypes,
   };

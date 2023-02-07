@@ -201,14 +201,6 @@ function useQ() {
 
     include = { ...base, ...include };
 
-    console.log("### setQuery", {
-      include,
-      exclude,
-      pathname,
-      query,
-      method,
-    });
-
     const params = {};
     // include
     Object.entries(include).forEach(([key, val]) => {
