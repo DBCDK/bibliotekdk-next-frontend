@@ -13,9 +13,9 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-    }
+	}
     stages {
-        stage('clean workspace') {
+        stage('clean workspace'){
             steps {
                 cleanWs()
                 checkout scm
@@ -51,14 +51,13 @@ pipeline {
             }
             steps {
                 script {
-                    if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                        docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
-                            app.push()
-                            app.push("latest")
-                        }
+                if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
+                    docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
+                        app.push()
+                        app.push("latest")
                     }
                 }
-            }
+            } }
         }
         stage("Update staging version number") {
             agent {
@@ -68,18 +67,18 @@ pipeline {
                     alwaysPull true
                 }
             }
-            when {
-                branch 'main'
-            }
-            steps {
-                dir("deploy") {
+		        when {
+			    branch 'main'
+			}
+			steps {
+				dir("deploy") {
                     sh '''
                         #!/usr/bin/env bash
 						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
 					'''
-                }
-            }
-        }
+				}
+			}
+		}
     }
     post {
         always {
@@ -98,9 +97,9 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                            color: 'warning',
-                            message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
-                            tokenCredentialId: 'slack-global-integration-token')
+                        color: 'warning',
+                        message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
+                        tokenCredentialId: 'slack-global-integration-token')
                 }
             }
         }
@@ -108,18 +107,18 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                            color: 'good',
-                            message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
-                            tokenCredentialId: 'slack-global-integration-token')
+                        color: 'good',
+                        message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
+                        tokenCredentialId: 'slack-global-integration-token')
 
                 }
             }
         }
         fixed {
             slackSend(channel: 'fe-drift',
-                    color: 'good',
-                    message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
-                    tokenCredentialId: 'slack-global-integration-token')
+                color: 'good',
+                message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
+                tokenCredentialId: 'slack-global-integration-token')
 
         }
     }
