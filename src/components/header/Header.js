@@ -191,7 +191,7 @@ export function Header({
         <Container className={styles.header} fluid>
           <Row>
             <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 9, offset: 3 }}>
+            <Col xs={{ span: 9, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
@@ -322,7 +322,10 @@ export function StaticHeader({ router = null, context }) {
       <Col xs={2}>
         <Logo fill={"var(--blue)"} text={"default_logo_text"} />
       </Col>
-      <Col xs={{ span: 9, offset: 1 }}>
+      <Col
+        xs={{ span: 9, offset: 1 }}
+        className={styles.mobileHeaderNoActionCol}
+      >
         <div className={styles.top}>
           <div
             className={styles.materials}
