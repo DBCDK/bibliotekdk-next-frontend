@@ -44,8 +44,8 @@ export default function ResultRow({
   }, [work?.manifestations]);
 
   const { uniqueMaterialTypes } = useMemo(() => {
-    return manifestationMaterialTypeFactory(work?.manifestations?.all);
-  }, [work?.manifestations?.all]);
+    return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
+  }, [work?.manifestations?.mostRelevant]);
 
   return (
     <Link

@@ -46,11 +46,16 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
         works(limit: $limit, offset: $offset) {
           workId
           manifestations {
-            all {
+            all{
               cover {
                 detail
                 origin
               }
+              materialTypes {
+                specific
+              }
+            }
+            mostRelevant {
               materialTypes {
                 specific
               }
