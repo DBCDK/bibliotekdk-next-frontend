@@ -38,14 +38,14 @@ export default function ResultRow({
   const creatorName = work?.creators?.[0]?.display;
 
   const coverDetail = useMemo(() => {
-    if (work?.manifestations?.all) {
-      return getCoverImage(work.manifestations.all)?.detail;
+    if (work?.manifestations?.mostRelevant) {
+      return getCoverImage(work.manifestations.mostRelevant)?.detail;
     }
   }, [work?.manifestations]);
 
   const { uniqueMaterialTypes } = useMemo(() => {
-    return manifestationMaterialTypeFactory(work?.manifestations?.all);
-  }, [work?.manifestations?.all]);
+    return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
+  }, [work?.manifestations?.mostRelevant]);
 
   return (
     <Link
