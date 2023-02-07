@@ -192,6 +192,15 @@
     display: none;
   }
 
+
+  .mobileHeader{
+    margin-left: 0;
+  }
+
+  .mobileHeaderNoActionCol{
+    display: none;
+  }
+
   .suggester__wrap {
     position: fixed;
     top: 0;
