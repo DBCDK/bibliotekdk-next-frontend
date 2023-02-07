@@ -57,7 +57,7 @@ export function WithAllData() {
 
 export function WithoutCover() {
   const rowProps = {
-    work: omit(work, ["manifestations.all[0].cover"]),
+    work: omit(work, ["manifestations.mostRelevant[0].cover"]),
     className: "",
     onClick: () => {},
   };
@@ -151,6 +151,10 @@ const work = {
   manifestations: {
     mostRelevant: [
       {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
         materialTypes: [
           {
             specific: "bog",
