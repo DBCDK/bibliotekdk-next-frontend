@@ -7,6 +7,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import isEqual from "lodash/isEqual";
 
 import useSWR from "swr";
 import { FilterTypeEnum } from "@/lib/enums";
@@ -228,12 +229,27 @@ export default function useFilters() {
     return count;
   }
 
+  /**
+   * hasChanged returns true if url and filters is different (out of sync)
+   *
+   *
+   * @returns {boolean}
+   */
+  function _isSynced() {
+    const remote = _getQuery();
+    const locale = _filters || {};
+    return isEqual(remote, locale);
+  }
+
+  const isSynced = _isSynced();
+
   return {
     filters: _filters || {},
     setFilters,
     getQuery: _getQuery,
     setQuery,
     getCount,
+    isSynced,
     types,
     workTypes,
   };

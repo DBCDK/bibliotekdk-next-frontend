@@ -57,16 +57,19 @@ ResultPage.propTypes = {
 export default function Wrap({ page, onWorkClick }) {
   // settings
   const limit = 10; // limit
-  const offset = limit * (page - 1); // offset
+  let offset = limit * (page - 1); // offset
 
-  const { filters } = useFilters();
+  const { filters, isSynced } = useFilters();
   const { getQuery, hasQuery } = useQ();
   const dataCollect = useDataCollect();
 
   const q = getQuery();
 
-  // use the useData hook to fetch data
+  if (!isSynced) {
+    offset = 0;
+  }
 
+  // use the useData hook to fetch data
   const allResponse = useData(
     hasQuery && searchFragments.all({ q, limit, offset, filters })
   );

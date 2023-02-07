@@ -64,7 +64,9 @@ export default function Wrap({ title = "", type = "" }) {
   const { q, setQ, setQuery } = useQ();
 
   // connected filters hook
-  const { filters } = useFilters();
+  const { filters, types } = useFilters();
+
+  const exclude = types.filter((t) => t !== "workTypes");
 
   // extract selected workType, if any
   const workType = filters.workTypes?.[0];
@@ -102,7 +104,7 @@ export default function Wrap({ title = "", type = "" }) {
     setQuery({
       pathname: "/find",
       include: { ...q, [type]: val },
-      exclude: ["page"],
+      exclude: ["page", ...exclude],
     });
     document.activeElement.blur();
   };
