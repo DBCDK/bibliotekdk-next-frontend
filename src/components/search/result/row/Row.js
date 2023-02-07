@@ -38,7 +38,7 @@ export default function ResultRow({
   const creatorName = work?.creators?.[0]?.display;
 
   const coverDetail = useMemo(() => {
-    if (work?.manifestations?.all) {
+    if (work?.manifestations?.mostRelevant) {
       return getCoverImage(work.manifestations.mostRelevant)?.detail;
     }
   }, [work?.manifestations]);
