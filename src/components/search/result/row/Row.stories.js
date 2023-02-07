@@ -149,6 +149,15 @@ export function SlowLoading() {
 const work = {
   workId: "some-id-1",
   manifestations: {
+    mostRelevant: [
+      {
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
     all: [
       {
         cover: {
