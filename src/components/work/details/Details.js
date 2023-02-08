@@ -63,11 +63,18 @@ function Details({
     return [...new Set(mixed)];
   }, [manifestation]);
 
+  const materialType = manifestation?.materialTypes?.[0]?.specific;
+  const subtitle = Translate({
+    ...context,
+    label: "subtitle",
+    vars: [materialType],
+  });
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
       space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
       className={`${className}`}
+      subtitle={subtitle}
     >
       <Row className={`${styles.details}`}>
         {manifestation.languages && (

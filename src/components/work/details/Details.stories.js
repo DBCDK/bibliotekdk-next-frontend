@@ -41,6 +41,7 @@ WrappedDetailsSection.story = {
               loanIsPossible: true,
             },
           ],
+          materialTypes: () => [{ specific: "Musik (dvd)" }],
         },
       },
     },

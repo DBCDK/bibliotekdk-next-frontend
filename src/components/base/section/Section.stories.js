@@ -25,6 +25,19 @@ export function Basic() {
   );
 }
 
+export function Subtitle() {
+  return (
+    <div>
+      <StoryTitle>Section</StoryTitle>
+      <StoryDescription>Section component with a subtitle.</StoryDescription>
+      <StorySpace direction="v" space="8" />
+      <Section title="Some Title" subtitle="Some Subtitle">
+        Some section content
+      </Section>
+    </div>
+  );
+}
+
 export function backgroundColor() {
   return (
     <div>
