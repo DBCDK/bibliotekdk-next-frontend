@@ -30,5 +30,9 @@ describe("Details", () => {
       .find("p")
       .eq(1)
       .should("have.text", "actionfilm, thriller, science fiction");
+
+    cy.get("[data-cy=section-title]")
+      .find("p")
+      .should("have.text", "Seneste udgave, Musik (dvd)");
   });
 });

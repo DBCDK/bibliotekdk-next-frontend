@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 
 import { cyKey } from "@/utils/trim";
 
@@ -47,6 +48,7 @@ export default function Section({
   divider = {},
   space = {},
   elRef = null,
+  subtitle = "",
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -111,8 +113,10 @@ export default function Section({
             >
               {divider?.title}
               {title}
+              {subtitle && <Text type="text2">{subtitle}</Text>}
             </Col>
           )}
+
           <Col
             xs={12}
             lg={{ offset: title ? 1 : 0 }}

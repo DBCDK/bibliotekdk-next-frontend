@@ -709,6 +709,10 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "subtitle": {
+        "da": "Seneste udgave, %s",
+        "en": "Latest edition, %s"
+      },
       "language": {
         "da": "Sprog",
         "en": "Language"
