@@ -145,13 +145,16 @@ function SingleSearchInput({ labelTranslation, suggestType }) {
 export function useInitExpanded({ collapseOpen = false, setCollapseOpen }) {
   const { setQuery } = useQ();
   // connected filters hook
-  const { filters } = useFilters();
+  const { filters, types } = useFilters();
+
+  const exclude = types.filter((t) => t !== "workTypes");
 
   const workTypes = filters.workTypes?.[0];
   const doSearch = () => {
     setQuery({
       pathname: "/find",
       query: { workTypes },
+      exclude: ["page", ...exclude],
     });
     document.activeElement.blur();
   };
@@ -183,8 +186,7 @@ export default function Wrap({
   });
   return (
     <ExpandedSearch
-      doSearch={init.doSearch}
-      workType={init.workType}
+      workType={init.workTypes}
       className={className}
       collapseOpen={init.collapseOpen}
       setCollapseOpen={init.setCollapseOpen}
