@@ -125,7 +125,6 @@ function fieldsForRows(materialType, manifestation, work, context) {
     ...(fieldsMap[materialType] || []),
   ];
 
-  console.log(merged, "MERGED");
   return merged;
 }
 
