@@ -38,7 +38,10 @@ export default async function handler(req, res) {
       service: `api-work-${name}`,
       handler: () =>
         fetcher({
-          ...func({ workId: "work-of:870970-basis:23154382" }),
+          ...func({
+            workId: "work-of:870970-basis:23154382",
+            pid: "870970-basis:23154382",
+          }),
           accessToken: session?.accessToken,
         }),
     })),
