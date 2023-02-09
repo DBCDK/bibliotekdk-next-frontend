@@ -204,6 +204,9 @@ export function createMockedFetcher({
             // If this field is for resolving union types
             // we return the next possible type
             if (fieldName === "__resolveType") {
+              if (parent?.__typename) {
+                return parent?.__typename;
+              }
               return getNext(implementations || []);
             }
 
