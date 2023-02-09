@@ -1,5 +1,6 @@
 import { chain, isEqual, uniqWith, upperFirst } from "lodash";
 import { getCoverImage } from "@/components/utils/getCoverImage";
+import { comparableYear } from "@/lib/utils";
 
 /**
  * MaterialTypeArray with additional manifestation details, possibly enriched,
@@ -71,18 +72,36 @@ export function flatMapMaterialTypes(manifestations) {
 }
 
 /**
+ * Sorter for sorting by publication year
+ * @param a
+ * @param b
+ * @return {number}
+ */
+export function sorterByPublicationYear(a, b) {
+  return (
+    comparableYear(b?.edition?.publicationYear?.display) -
+    comparableYear(a?.edition?.publicationYear?.display)
+  );
+}
+
+/**
  * All given manifestations grouped by materialTypes
  * @param manifestations
+ * @param sorter
  * @return {Object}
  */
-export function groupManifestations(manifestations) {
+export function groupManifestations(
+  manifestations,
+  sorter = sorterByPublicationYear
+) {
   return chain(manifestations)
+    ?.sort(sorter)
     ?.map((manifestation) => {
       return {
         ...manifestation,
         materialTypesArray: manifestation?.materialTypes
           ?.map((mat) => mat.specific)
-          .sort(),
+          .sort(compareArraysOfStrings),
       };
     })
     ?.groupBy("materialTypesArray")
@@ -178,20 +197,32 @@ export function enrichManifestationsWithDefaultFrontpages(
 }
 
 /**
+ * Function used for BibliographicData, for showing all manifestations of a work
+ * @param manifestationsByType
+ * @return {unknown[]}
+ */
+export function flattenGroupedSortedManifestations(manifestationsByType) {
+  return Object.entries(manifestationsByType).flatMap((group) => group[1]);
+}
+
+/**
  * Provide manifestationMaterialTypeFactory that controls manifestations sorted by type
  * - flatMaterialTypes derived from {@link flatMapMaterialTypes}
  * - uniqueMaterialTypes derived from {@link getUniqueMaterialTypes}
  * - inUniqueMaterialTypes derived from {@link getInUniqueMaterialTypes}
  * - manifestationsByType derived from {@link groupManifestations}
  * - flatPidsByType derived from {@link getFlatPidsByType}
+ * - flattenedGroupedSortedManifestations derived from {@link flattenGroupedSortedManifestations}
  * - manifestationsEnrichedWithDefaultFrontpage derived from {@link enrichManifestationsWithDefaultFrontpages}
  * @param manifestations
- * @return {{manifestationsByType: *, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: *, flatPidsByType: (function(*): *|*[])}}
+ * @return {{manifestationsByType: *, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: *, flatPidsByType: (function(*): *|*[]), flattenedGroupedSortedManifestations: *, manifestationsEnrichedWithDefaultFrontpage: *}}}
  */
 export function manifestationMaterialTypeFactory(manifestations) {
   const flatMaterialTypes = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(flatMaterialTypes);
   const manifestationsByType = groupManifestations(manifestations);
+  const flattenedGroupedSortedManifestations =
+    flattenGroupedSortedManifestations(manifestationsByType);
 
   return {
     flatMaterialTypes: flatMaterialTypes,
@@ -201,6 +232,7 @@ export function manifestationMaterialTypeFactory(manifestations) {
     manifestationsByType: manifestationsByType,
     flatPidsByType: (typeArr) =>
       getFlatPidsByType(typeArr, manifestationsByType),
+    flattenedGroupedSortedManifestations: flattenedGroupedSortedManifestations,
     manifestationsEnrichedWithDefaultFrontpage: (typeArr) =>
       enrichManifestationsWithDefaultFrontpages(typeArr, manifestationsByType),
   };

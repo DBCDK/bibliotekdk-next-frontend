@@ -7,13 +7,13 @@ import React, { useMemo } from "react";
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
 import ManifestationFull from "./ManifestationFull";
-import { sortManifestations } from "./utils";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import {
   flattenMaterialType,
   formatMaterialTypesToPresentation,
+  manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 
 /**
@@ -26,13 +26,12 @@ import {
  * @returns {JSX.Element}
  */
 export function BibliographicData({ manifestations, workId }) {
-  const sortedMaterialTypes = useMemo(
-    () => sortManifestations(manifestations),
-    [manifestations]
-  );
+  const { flattenedGroupedSortedManifestations } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [manifestations]);
 
   // TODO: Fix this temporary fix: temporary fix for large manifestation lists
-  const sliced = sortedMaterialTypes.slice(0, 150);
+  const sliced = flattenedGroupedSortedManifestations.slice(0, 150);
 
   return (
     <Section
