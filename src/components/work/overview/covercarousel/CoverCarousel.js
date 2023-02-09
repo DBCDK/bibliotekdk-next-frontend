@@ -51,6 +51,7 @@ const CoverElement = forwardRef(function CoverElement(
       ref={elementRef}
       id={`slide-${thisIndex}`}
       className={`${styles.cover_element} ${isVisible && styles.active_cover}`}
+      data-cy={"cover_carousel"}
     >
       {/*<Cover src={manifestations?.[thisIndex]?.cover?.detail} size="fill-width">*/}
       {/*<Bookmark title={fullTitle?.[0]} />*/}

@@ -6,7 +6,12 @@ import animations from "@/components/base/animation/animations.module.css";
 import Translate from "@/components/base/translate";
 import React from "react";
 
-export function Arrow({ clickCallback, orientation, arrowClass }) {
+export function Arrow({
+  clickCallback,
+  orientation,
+  arrowClass,
+  dataCy = `${orientation}_arrow`,
+}) {
   const ArrowTag = orientation === "right" ? RightSvg : LeftSvg;
 
   return (
@@ -20,6 +25,7 @@ export function Arrow({ clickCallback, orientation, arrowClass }) {
       bgColor={"override"}
       onClick={clickCallback}
       tag={"button"}
+      dataCy={dataCy}
     >
       <ArrowTag />
     </Icon>

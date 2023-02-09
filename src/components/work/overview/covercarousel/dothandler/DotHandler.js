@@ -16,6 +16,7 @@ export function DotHandler({ index, visibleElement, length, clickCallback }) {
           }`}
           tabIndex={-1}
           onClick={() => modifiedCallback(thisIndex)}
+          data-cy={`dot_handler_dot_index_${thisIndex}`}
         />
       ))}
     </div>
