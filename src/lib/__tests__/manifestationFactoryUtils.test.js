@@ -339,6 +339,7 @@ describe("manifestationMaterialTypeUtils", () => {
       "inUniqueMaterialTypes",
       "manifestationsByType",
       "flatPidsByType",
+      "flattenedGroupedSortedManifestations",
       "manifestationsEnrichedWithDefaultFrontpage",
     ];
     expect(Object.keys(actual)).toEqual(expectedKeys);
