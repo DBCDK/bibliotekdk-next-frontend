@@ -31,7 +31,7 @@ KeywordsSection.story = {
     graphql: {
       resolvers: {
         SubjectContainer: {
-          all: (args) => [
+          all: () => [
             {
               __typename: "SubjectText",
               display: "historie",
