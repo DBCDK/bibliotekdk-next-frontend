@@ -97,7 +97,6 @@ const MANIFESTATION_6 = {
   publisher: ["Sølvbakke"],
   edition: { publicationYear: { display: 3001 }, edition: "109. udgave" },
   creators: [{ display: "Linoleum Gummigulv" }],
-  cover: null,
 };
 
 const MANIFESTATION_7 = {
