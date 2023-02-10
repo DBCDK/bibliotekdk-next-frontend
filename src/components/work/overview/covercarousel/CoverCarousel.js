@@ -22,6 +22,7 @@ import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
 import Translate from "@/components/base/translate";
+import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
 
 const CoverElement = forwardRef(function CoverElement(
   {
@@ -80,6 +81,7 @@ export function CoverCarousel({
   materialType,
   workTitles,
   sliderId = "slide",
+  maxLength = 10,
 }) {
   const [index, setIndex] = useState(0);
   const [visibleElement, setVisibleElement] = useState(0);
@@ -136,12 +138,19 @@ export function CoverCarousel({
             dataDisabled={!(index < length - 1)}
           />
           <div className={styles.dots}>
-            <DotHandler
-              clickCallback={(newIndex) => clickCallback(newIndex)}
-              index={index}
-              visibleElement={visibleElement}
-              length={length}
-            />
+            {maxLength >= length ? (
+              <DotHandler
+                clickCallback={(newIndex) => clickCallback(newIndex)}
+                index={index}
+                length={length}
+              />
+            ) : (
+              <RangeSlider
+                clickCallback={(newIndex) => clickCallback(newIndex)}
+                index={index}
+                length={length}
+              />
+            )}
           </div>
         </>
       )}
