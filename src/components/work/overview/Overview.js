@@ -4,8 +4,6 @@ import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
-import Cover from "@/components/base/cover";
-import Bookmark from "@/components/base/bookmark";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
 import { useData } from "@/lib/api/api";
@@ -18,6 +16,7 @@ import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -56,14 +55,10 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
 
-  const {
-    uniqueMaterialTypes,
-    inUniqueMaterialTypes,
-    flatPidsByType,
-    manifestationsEnrichedWithDefaultFrontpage,
-  } = useMemo(() => {
-    return manifestationMaterialTypeFactory(manifestations);
-  }, [work, manifestations]);
+  const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
+    useMemo(() => {
+      return manifestationMaterialTypeFactory(manifestations);
+    }, [work, manifestations]);
 
   useInitMaterialType(
     uniqueMaterialTypes,
@@ -74,11 +69,6 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const selectedMaterial = useMemo(
-    () => manifestationsEnrichedWithDefaultFrontpage(type),
-    [type]
-  );
-
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -86,19 +76,14 @@ export function Overview({
           <Col xs={12} lg={3} className={styles.breadcrumbs} />
           <Col
             xs={12}
-            lg={3}
+            lg={4}
             md={{ span: 4, order: 3 }}
             className={styles.cover}
           >
-            <Row>
-              <Cover
-                src={selectedMaterial?.cover?.detail || work?.materialTypes}
-                skeleton={skeleton || !selectedMaterial.cover}
-                size="large"
-              >
-                <Bookmark title={work?.titles?.full?.[0]} />
-              </Cover>
-            </Row>
+            <CoverCarousel
+              selectedPids={selectedPids}
+              workTitles={work?.titles}
+            />
           </Col>
 
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>

@@ -47,4 +47,11 @@
 
   --success: #27ae60;
   --success-light: #d0f1d2;
+
+  --arrow__background_color: var(--blue);
+  --arrow__fill_color: var(--white);
+  --arrow__background_color_hover: var(--mine-shaft);
+  --arrow__fill_color_hover: var(--white);
+  --arrow__disabled_fill_color: var(--white);
+  --arrow__disabled_background_color: var(--iron);
 }

@@ -1,0 +1,31 @@
+.arrow_functionality {
+  display: none;
+
+  background-color: var(--arrow__background_color);
+  fill: var(--arrow__fill_color);
+
+  cursor: pointer;
+  z-index: 1;
+  border-radius: 50%;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.arrow_functionality:is(:hover, :focus) {
+  background-color: var(--arrow__background_color_hover);
+  fill: var(--arrow__fill_color_hover);
+}
+
+.arrow_functionality.disabled_icon {
+  display: none;
+  cursor: default;
+  pointer-events: none;
+  background-color: var(--arrow__disabled_background_color);
+  fill: var(--arrow__disabled_fill_color);
+}
+
+@media (min-width: 768px) {
+  .arrow_functionality,
+  .arrow_functionality.disabled_icon {
+    display: block;
+  }
+}
