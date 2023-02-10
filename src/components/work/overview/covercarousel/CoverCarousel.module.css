@@ -1,0 +1,102 @@
+.full_cover_carousel {
+  display: grid;
+  grid-template-areas:
+    "⬅️ 🖼️ ➡️"
+    "🎱️ 🎱️ 🎱️"
+  ;
+
+  --carousel-height: auto;
+  --carousel-width: 100%;
+  --carousel-cover-max-width: 200px;
+
+  width: calc(var(--carousel-width));
+  height: calc(var(--carousel-height));
+  max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
+
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+}
+
+.left_arrow {
+  grid-area: ⬅️;
+}
+.right_arrow {
+  grid-area: ➡️;
+}
+.grid_cover_area {
+  grid-area: 🖼️;
+}
+.dots {
+  grid-area: 🎱️;
+}
+
+/* MOBILE FIRST */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  width: 100%;
+  scrollbar-width: none;
+  gap: var(--pt2);
+}
+
+ /*Hide scroll bar*/
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.cover_element {
+  flex-shrink: 0;
+  width: 100%;
+  scroll-snap-align: start;
+  text-align: center;
+  opacity: 0.25;
+}
+
+.cover_element.active_cover {
+  animation: navItemSelected;
+  animation-duration: 0.3s;
+  /*delay longer than the time nav item is in frame*/
+  animation-delay: 0.1s;
+  /*fill mode to hold animation at the end*/
+  animation-fill-mode: forwards;
+}
+
+.cover_image {
+  max-width: var(--carousel-cover-max-width);
+  max-height: 90%;
+  width: 90%;
+  height: auto;
+}
+
+.image_skeleton {
+  padding-bottom: var(--pt05);
+  width: var(--carousel-width);
+}
+/* END COVER */
+
+/* START OVERRIDING STYLE OF ARROWS */
+.arrow_styling {
+  --arrow__background_color: var(--white);
+  --arrow__fill_color: var(--blue);
+  --arrow__background_color_hover: var(--blue);
+  --arrow__fill_color_hover: var(--white);
+}
+/* END ARROWS */
+
+@keyframes navItemSelected {
+  from {}
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  button.icon,
+  button.disabled_icon {
+    display: block;
+  }
+}

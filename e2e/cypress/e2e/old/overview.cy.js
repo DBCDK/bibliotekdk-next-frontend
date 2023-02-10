@@ -28,11 +28,6 @@ describe("Overview", () => {
         .focus()
         .should("contain", "Lucky Luke")
         .tab({ shift: true })
-        .should(
-          "have.attr",
-          "data-cy",
-          "bookmark-asterix-og-obelix-i-det-vilde-vesten"
-        )
         .get("[data-cy=tag-ebog]")
         .focus()
         .should("have.attr", "data-cy", "tag-ebog")
@@ -43,7 +38,8 @@ describe("Overview", () => {
     });
 
     // Clicks
-    it(`Can click on bookmark button`, () => {
+    // TODO: Skip until bookmark is back
+    it.skip(`Can click on bookmark button`, () => {
       cy.get(`[data-cy=bookmark-asterix-og-obelix-i-det-vilde-vesten]`)
         .focus()
         .click();

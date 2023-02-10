@@ -7,6 +7,19 @@ import styles from "./Icon.module.css";
 /**
  * The Component function
  *
+ * @param alt
+ * @param src
+ * @param className
+ * @param children
+ * @param bgColor
+ * @param size
+ * @param onClick
+ * @param onKeyDown
+ * @param disabled
+ * @param tabIndex
+ * @param dataCy
+ * @param ariaHidden
+ * @param tag
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -25,10 +38,13 @@ function Icon({
   tabIndex = null,
   dataCy = null,
   ariaHidden = true,
+  tag = "i",
   ...props
 }) {
   const disabledStyle = disabled ? styles.disabled : "";
   const shapeStyle = bgColor ? styles.round : "";
+
+  const Tag = tag;
 
   // Scale according to W or H
   const hasAuto = !!(size.h === "auto" || size.w === "auto");
@@ -58,7 +74,7 @@ function Icon({
   };
 
   return (
-    <i
+    <Tag
       style={dynamicStyles}
       className={`${styles.icon} ${className} ${shapeStyle} ${disabledStyle} ${scaleStyle}`}
       onClick={onClick}
@@ -68,7 +84,7 @@ function Icon({
       data-cy={props["data-cy"] || dataCy || ""}
     >
       {children || <img src={`/icons/${src}`} alt={alt} />}
-    </i>
+    </Tag>
   );
 }
 
@@ -100,7 +116,7 @@ function IconSkeleton(props) {
  * @param {obj} props
  * See propTypes for specific props and types
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 export default function Container(props) {
   if (props.skeleton) {
@@ -133,4 +149,5 @@ Container.propTypes = {
   onKeyDown: PropTypes.func,
   "data-cy": PropTypes.string,
   tabIndex: PropTypes.string,
+  tag: PropTypes.oneOf(["i", "button"]),
 };
