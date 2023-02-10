@@ -45,7 +45,7 @@ function parseGenreAndForm(work) {
 
 function parsePhysicalDescriptions(manifestation) {
   return manifestation?.physicalDescriptions
-    .map((description) => description.summary)
+    ?.map((description) => description.summary)
     .join(" ");
 }
 
@@ -63,6 +63,28 @@ function parseContributors(manifestation) {
       />
     )
   );
+}
+
+function parseMovieContributors(manifestation) {
+  console.log(manifestation, "MANIFESTATION");
+
+  const actors = manifestation?.contributors?.filter((cont) =>
+    cont?.roles?.find((rol) => rol.functionCode === "act")
+  );
+
+  const others =
+    manifestation?.contributors?.manifestation?.contributors?.filter((cont) =>
+      cont?.roles?.find((rol) => rol.functionCode !== "act")
+    );
+  console.log(others, "INSTRUCTORS");
+  console.log(actors, "ACTORS");
+
+  const actorslabel =
+    actors?.length > 1
+      ? actors?.[0]?.roles?.[0]?.function.singular
+      : actors?.[0]?.roles?.[0]?.function.plural;
+
+  return actors?.map((act) => act.display).join(", ");
 }
 
 function fieldsForRows(materialType, manifestation, work, context) {
@@ -113,6 +135,15 @@ function fieldsForRows(materialType, manifestation, work, context) {
         },
       },
     ],
+    MOVIE: [
+      {
+        contributors: {
+          label: "",
+          value: parseMovieContributors(manifestation),
+          jsxParser: MovieContributorValues,
+        },
+      },
+    ],
   };
 
   const merged = [
@@ -126,6 +157,22 @@ function fieldsForRows(materialType, manifestation, work, context) {
   ];
 
   return merged;
+}
+
+function MovieContributorValues({ values, skeleton }) {
+  return (
+    <Text type="text4" skeleton={skeleton} lines={0}>
+      {values}
+    </Text>
+  );
+}
+
+function DefaultDetailValues({ values, skeleton }) {
+  return (
+    <Text type="text4" skeleton={skeleton} lines={0}>
+      {values}
+    </Text>
+  );
 }
 
 /**
@@ -153,7 +200,7 @@ function Details({
   });
 
   const fieldsToShow = useMemo(() => {
-    return fieldsForRows("", manifestation, work, context);
+    return fieldsForRows("MOVIE", manifestation, work, context);
   }, [manifestation, materialType]);
 
   return (
@@ -178,9 +225,18 @@ function Details({
                   >
                     {field[fieldName].label}
                   </Text>
-                  <Text type="text4" skeleton={skeleton} lines={0}>
-                    {field[fieldName].value}
-                  </Text>
+                  {/** some fields has a custom jsx parser .. **/}
+                  {field[fieldName].jsxParser ? (
+                    field[fieldName].jsxParser({
+                      values: field[fieldName].value,
+                      skeleton: skeleton,
+                    })
+                  ) : (
+                    <DefaultDetailValues
+                      skeleton={skeleton}
+                      values={field[fieldName].value}
+                    />
+                  )}
                 </Col>
               )
             );
