@@ -1,13 +1,19 @@
 import styles from "@/components/work/overview/covercarousel/dothandler/DotHandler.module.css";
 import React from "react";
 
-export function DotHandler({ index, visibleElement, length, clickCallback }) {
+export function DotHandler({
+  index,
+  visibleElement,
+  length,
+  clickCallback,
+  dotClass = "",
+}) {
   function modifiedCallback(thisIndex) {
     index === visibleElement && clickCallback(thisIndex);
   }
 
   return (
-    <div className={styles.dots_container}>
+    <div className={`${styles.dots_container} ${dotClass}`}>
       {[...Array(length).keys()].map((thisIndex) => (
         <button
           key={thisIndex}

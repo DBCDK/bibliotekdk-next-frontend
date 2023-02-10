@@ -31,12 +31,13 @@ const CoverElement = forwardRef(function CoverElement(
     fullTitle,
     visibleElement,
     setVisibleElement,
+    sliderId,
   },
   carouselRef
 ) {
   const { elementRef, isVisible } = useElementVisible({
     root: carouselRef,
-    rootMargin: "4000px 0px 4000px 0px",
+    rootMargin: "500px 0px 500px 0px",
     threshold: 0.9,
   });
 
@@ -49,13 +50,10 @@ const CoverElement = forwardRef(function CoverElement(
   return (
     <div
       ref={elementRef}
-      id={`slide-${thisIndex}`}
+      id={`${sliderId}-${thisIndex}`}
       className={`${styles.cover_element} ${isVisible && styles.active_cover}`}
       data-cy={"cover_carousel"}
     >
-      {/*<Cover src={manifestations?.[thisIndex]?.cover?.detail} size="fill-width">*/}
-      {/*<Bookmark title={fullTitle?.[0]} />*/}
-      {/*</Cover>*/}
       <img
         src={manifestations?.[thisIndex]?.cover?.detail}
         className={styles.cover_image}
@@ -77,7 +75,12 @@ const CoverElement = forwardRef(function CoverElement(
  * @param {string} iconStyle
  * @return {JSX.Element}
  */
-export function CoverCarousel({ manifestations, materialType, workTitles }) {
+export function CoverCarousel({
+  manifestations,
+  materialType,
+  workTitles,
+  sliderId = "slide",
+}) {
   const [index, setIndex] = useState(0);
   const [visibleElement, setVisibleElement] = useState(0);
   const carouselId = useId();
@@ -90,6 +93,10 @@ export function CoverCarousel({ manifestations, materialType, workTitles }) {
   }, [visibleElement]);
 
   const length = manifestations?.length;
+
+  function clickCallback(newIndex) {
+    visibleElement === index && scrollToElement(newIndex, sliderId);
+  }
 
   return (
     <div className={styles.full_cover_carousel}>
@@ -108,6 +115,7 @@ export function CoverCarousel({ manifestations, materialType, workTitles }) {
               materialType={materialType}
               visibleElement={visibleElement}
               setVisibleElement={setVisibleElement}
+              sliderId={sliderId}
               carouselRef={carouselRef}
             />
           );
@@ -115,34 +123,24 @@ export function CoverCarousel({ manifestations, materialType, workTitles }) {
       </div>
       {length > 1 && (
         <>
-          <div className={styles.left_arrow}>
-            <Arrow
-              clickCallback={() =>
-                visibleElement === index &&
-                scrollToElement(moveCarousel(-1, length, index))
-              }
-              orientation={"left"}
-              arrowClass={index > 0 ? styles.icon : styles.disabled_icon}
-            />
-          </div>
-          <div className={styles.right_arrow}>
-            <Arrow
-              clickCallback={() =>
-                visibleElement === index &&
-                scrollToElement(moveCarousel(1, length, index))
-              }
-              orientation={"right"}
-              arrowClass={
-                index < length - 1 ? styles.icon : styles.disabled_icon
-              }
-            />
-          </div>
+          <Arrow
+            clickCallback={() => clickCallback(moveCarousel(-1, length, index))}
+            orientation={"left"}
+            arrowClass={`${styles.arrow_styling} ${styles.left_arrow}`}
+            dataDisabled={!(index > 0)}
+          />
+          <Arrow
+            clickCallback={() => clickCallback(moveCarousel(1, length, index))}
+            orientation={"right"}
+            arrowClass={`${styles.arrow_styling} ${styles.right_arrow}`}
+            dataDisabled={!(index < length - 1)}
+          />
           <div className={styles.dots}>
             <DotHandler
+              clickCallback={(newIndex) => clickCallback(newIndex)}
               index={index}
               visibleElement={visibleElement}
               length={length}
-              clickCallback={(newIndex) => scrollToElement(newIndex)}
             />
           </div>
         </>

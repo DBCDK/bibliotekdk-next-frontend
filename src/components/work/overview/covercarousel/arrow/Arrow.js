@@ -10,14 +10,23 @@ export function Arrow({
   clickCallback,
   orientation,
   arrowClass,
+  dataDisabled = false,
   dataCy = `${orientation}_arrow`,
 }) {
   const ArrowTag = orientation === "right" ? RightSvg : LeftSvg;
 
+  const classNames = [
+    styles.arrow_functionality,
+    dataDisabled && styles.disabled_icon,
+    arrowClass,
+    animations["h-elastic"],
+    animations["f-elastic"],
+  ].join(" ");
+
   return (
     <Icon
       size={{ w: 5, h: 5 }}
-      className={`${arrowClass} ${styles.arrow_functionality} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+      className={classNames}
       alt={Translate({
         context: "recommendations",
         label: `arrow-${orientation}`,

@@ -37,8 +37,8 @@ export function getTextDescription(materialType, manifestation) {
     .join(", ");
 }
 
-export function scrollToElement(idx) {
-  document.querySelector(`#slide-${idx}`).scrollIntoView({
+export function scrollToElement(idx, passedId = "slide") {
+  document.querySelector(`#${passedId}-${idx}`).scrollIntoView({
     behavior: "smooth",
     block: "nearest",
     inline: "center",

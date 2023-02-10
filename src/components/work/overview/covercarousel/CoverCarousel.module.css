@@ -29,7 +29,6 @@
 }
 .dots {
   grid-area: 🎱️;
-  align-self: end;
 }
 
 /* MOBILE FIRST */
@@ -79,27 +78,14 @@
 }
 /* END COVER */
 
-/* START IMPLEMENTATION OF ARROWS */
-button.icon {
-  display: none;
-  background-color: var(--white);
-  fill: var(--blue);
-}
-
-button.icon:is(:hover, :focus) {
-  background-color: var(--blue);
-  fill: var(--white);
-}
-
-button.disabled_icon {
-  display: none;
-  cursor: default;
-  pointer-events: none;
-  background-color: var(--iron);
-  fill: var(--white);
+/* START OVERRIDING STYLE OF ARROWS */
+.arrow_styling {
+  --arrow__background_color: var(--white);
+  --arrow__fill_color: var(--blue);
+  --arrow__background_color_hover: var(--blue);
+  --arrow__fill_color_hover: var(--white);
 }
 /* END ARROWS */
-
 
 @keyframes navItemSelected {
   from {}
