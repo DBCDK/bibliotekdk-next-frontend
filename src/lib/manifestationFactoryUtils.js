@@ -1,4 +1,7 @@
-import { chain, isEqual, uniqWith, upperFirst } from "lodash";
+import { chain } from "lodash";
+import isEqual from "lodash/isEqual";
+import uniqWith from "lodash/uniqWith";
+import upperFirst from "lodash/upperFirst";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
 

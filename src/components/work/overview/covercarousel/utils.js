@@ -2,7 +2,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 export function moveCarousel(indexChange, numManifestations, index) {
   return (numManifestations + index + indexChange) % numManifestations;

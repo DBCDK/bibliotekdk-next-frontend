@@ -17,7 +17,7 @@ import {
   moveCarousel,
   scrollToElement,
 } from "@/components/work/overview/covercarousel/utils";
-import { range } from "lodash";
+import range from "lodash/range";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
