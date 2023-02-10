@@ -11,7 +11,8 @@
 }
 .arrow.hidden {
   opacity: 0;
-  cursor: unset;
+  cursor: default;
+  pointer-events: none;
 }
 .arrow path {
   fill: var(--blue);

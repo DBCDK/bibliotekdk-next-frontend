@@ -45,6 +45,19 @@ function calculatePaginationValues(currentPage, numPages, MAX_VISIBLE_PAGES) {
   };
 }
 
+function ButtonWrap({ onClick, onKeyDown, classNames, children }) {
+  return (
+    <div
+      className={classNames}
+      tabIndex="0"
+      onKeyDown={onKeyDown}
+      onClick={onClick}
+    >
+      {children}
+    </div>
+  );
+}
+
 /**
  * Pagination buttons
  *
@@ -78,10 +91,10 @@ export default function Pagination({
             size="medium"
             tabIndex="0"
             skeleton={isLoading}
-            onClick={onChange && (() => onChange(currentPage + 1, false))}
+            onClick={() => onChange && onChange(currentPage + 1, false)}
             onKeyDown={(event) => {
-              if (event.key === "Enter" && onChange) {
-                onChange(currentPage + 1, false);
+              if (event.key === "Enter") {
+                onChange && onChange(currentPage + 1, false);
               }
             }}
           >
@@ -90,20 +103,19 @@ export default function Pagination({
         </div>
       )}
       <div className={`${styles.pagination} ${styles.desktop}`}>
-        <div
-          tabIndex="0"
-          className={`${styles.arrow} ${
-            !isLoading && showPreviousPageArrow ? "" : styles.hidden
-          }`}
+        <ButtonWrap
           onKeyDown={(event) => {
-            if (event.key === "Enter" && onChange) {
-              onChange(Math.max(currentPage - 1, 1));
+            if (event.key === "Enter") {
+              onChange && onChange(currentPage - 1);
             }
           }}
-          onClick={onChange && (() => onChange(Math.max(currentPage - 1, 1)))}
+          onClick={() => onChange && onChange(currentPage - 1)}
+          classNames={`${styles.arrow} ${
+            !isLoading && showPreviousPageArrow ? "" : styles.hidden
+          }`}
         >
           <LeftSvg />
-        </div>
+        </ButtonWrap>
 
         {arrayOfPaginationPages.map((page, index) => {
           return (
@@ -114,10 +126,10 @@ export default function Pagination({
               className={
                 !isLoading && page === currentPage ? styles.selected : ""
               }
-              onClick={onChange && (() => onChange(page))}
+              onClick={() => onChange && onChange(page)}
               onKeyDown={(event) => {
-                if (event.key === "Enter" && onChange) {
-                  onChange(page);
+                if (event.key === "Enter") {
+                  onChange && onChange(page);
                 }
               }}
               skeleton={isLoading}
@@ -129,22 +141,19 @@ export default function Pagination({
             </Icon>
           );
         })}
-        <div
-          className={`${styles.arrow} ${
-            !isLoading && showNextPageArrow ? "" : styles.hidden
-          }`}
-          tabIndex="0"
+        <ButtonWrap
           onKeyDown={(event) => {
-            if (event.key === "Enter" && onChange) {
-              onChange(Math.min(currentPage + 1, numPages));
+            if (event.key === "Enter") {
+              onChange && onChange(currentPage + 1);
             }
           }}
-          onClick={
-            onChange && (() => onChange(Math.min(currentPage + 1, numPages)))
-          }
+          onClick={() => onChange && onChange(currentPage + 1)}
+          classNames={`${styles.arrow} ${
+            !isLoading && showNextPageArrow ? "" : styles.hidden
+          }`}
         >
           <RightSvg />
-        </div>
+        </ButtonWrap>
       </div>
     </React.Fragment>
   );
