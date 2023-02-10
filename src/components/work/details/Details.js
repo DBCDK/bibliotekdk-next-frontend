@@ -66,8 +66,6 @@ function parseContributors(manifestation) {
 }
 
 function parseMovieContributors(manifestation) {
-  console.log(manifestation, "MANIFESTATION");
-
   const actors = manifestation?.contributors?.filter((cont) =>
     cont?.roles?.find((rol) => rol.functionCode === "act")
   );
@@ -76,18 +74,51 @@ function parseMovieContributors(manifestation) {
     manifestation?.contributors?.manifestation?.contributors?.filter((cont) =>
       cont?.roles?.find((rol) => rol.functionCode !== "act")
     );
-  console.log(others, "INSTRUCTORS");
-  console.log(actors, "ACTORS");
-
   const actorslabel =
     actors?.length > 1
-      ? actors?.[0]?.roles?.[0]?.function.singular
-      : actors?.[0]?.roles?.[0]?.function.plural;
+      ? actors?.[0]?.roles?.[0]?.function.plural
+      : actors?.[0]?.roles?.[0]?.function.singular;
 
-  return actors?.map((act) => act.display).join(", ");
+  const returnObject = {};
+  returnObject[actorslabel] = actors?.length > 0 ? actors : null;
+  returnObject["ophav"] = others?.length > 0 ? others : null;
+
+  return returnObject;
 }
 
-function fieldsForRows(materialType, manifestation, work, context) {
+function parseMovieCreators(manifestation) {
+  return manifestation?.creators || null;
+}
+
+function parsePersonAndFunction(person) {
+  const display = person?.display;
+  const roles = person?.roles?.map((role) => role?.function?.singular || "");
+  return display + (roles.length > 0 ? " (" + roles.join(", ") + ")" : "");
+}
+
+/**
+ * jsxParser for movie creators
+ * @param values
+ * @param skeleton
+ * @returns {unknown[]}
+ * @constructor
+ */
+function MovieCreatorValues({ values, skeleton }) {
+  return (
+    values &&
+    values.map((person, index) => {
+      return (
+        <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+          {parsePersonAndFunction(person)}
+        </Text>
+      );
+    })
+  );
+}
+
+function fieldsForRows(manifestation, work, context) {
+  const materialType = work?.workTypes?.[0] || null;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -143,6 +174,13 @@ function fieldsForRows(materialType, manifestation, work, context) {
           jsxParser: MovieContributorValues,
         },
       },
+      {
+        creators: {
+          label: Translate({ ...context, label: "creators" }),
+          value: parseMovieCreators(manifestation),
+          jsxParser: MovieCreatorValues,
+        },
+      },
     ],
   };
 
@@ -159,11 +197,36 @@ function fieldsForRows(materialType, manifestation, work, context) {
   return merged;
 }
 
+/**
+ * jsxParser for movies - contributors. Parse given values for html output - @see parseMovieContributors for given values
+ * @param values {object}
+ *  eg. {skuespillere:["jens", "hans", ..], ophav:["kurt", ...]}
+ * @param skeleton
+ * @returns {any[]}
+ * @constructor
+ */
 function MovieContributorValues({ values, skeleton }) {
-  return (
-    <Text type="text4" skeleton={skeleton} lines={0}>
-      {values}
-    </Text>
+  return Object.keys(values).map(
+    (val) =>
+      values[val] && (
+        <>
+          <Text
+            type="text3"
+            className={styles.title}
+            skeleton={skeleton}
+            lines={2}
+          >
+            {val}
+          </Text>
+          {values[val].map((person, index) => {
+            return (
+              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+                {person?.display}
+              </Text>
+            );
+          })}
+        </>
+      )
   );
 }
 
@@ -192,6 +255,7 @@ function Details({
   // Translate Context
   const context = { context: "details" };
 
+  // this materialtype is for displaying subtitle in section (seneste udgave)
   const materialType = manifestation?.materialTypes?.[0]?.specific;
   const subtitle = Translate({
     ...context,
@@ -200,7 +264,7 @@ function Details({
   });
 
   const fieldsToShow = useMemo(() => {
-    return fieldsForRows("MOVIE", manifestation, work, context);
+    return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType]);
 
   return (
@@ -225,7 +289,8 @@ function Details({
                   >
                     {field[fieldName].label}
                   </Text>
-                  {/** some fields has a custom jsx parser .. **/}
+                  {/** some fields has a custom jsx parser ..
+                   @TODO .. empty values should not be shown **/}
                   {field[fieldName].jsxParser ? (
                     field[fieldName].jsxParser({
                       values: field[fieldName].value,
