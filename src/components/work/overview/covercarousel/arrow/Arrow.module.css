@@ -3,11 +3,14 @@
 
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
+  box-shadow: var(--arrow__box_shadow);
 
   cursor: pointer;
   z-index: 1;
   border-radius: 50%;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+  align-items: center;
+  justify-content: center;
 }
 
 .arrow_functionality:is(:hover, :focus) {
