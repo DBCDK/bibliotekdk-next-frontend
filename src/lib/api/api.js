@@ -29,6 +29,12 @@ export function generateKey(query) {
   return JSON.stringify(query);
 }
 
+let debug = false;
+
+export function enableDebug() {
+  debug = true;
+}
+
 /**
  * Our custom fetcher
  *
@@ -76,6 +82,27 @@ export async function fetcher(
       variables,
     }),
   });
+
+  if (debug && typeof window !== "undefined") {
+    const normalStyle = "text-decoration: none;font-weight:normal;";
+    const boldStyle = "font-weight:bold;";
+    const headerStyle = "text-decoration: underline;padding-bottom: 8px;";
+    console.log(
+      `%cFBI-API DEBUG
+%cOperation: %c${query.match(/query\s+(.*?)\s*\(/)?.[1] || "UNNAMED"}
+%cHTTP status: ${res.status}
+GraphiQL: https://fbi-api.dbc.dk/graphiql?query=${encodeURIComponent(
+        query
+      )}&variables=${encodeURIComponent(JSON.stringify(variables))}
+      
+`,
+      headerStyle,
+      normalStyle,
+      boldStyle,
+      normalStyle,
+      { variables }
+    );
+  }
 
   if (res.status !== 200) {
     throw { status: res.status, message: res.statusText };
