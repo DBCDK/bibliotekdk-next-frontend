@@ -75,7 +75,7 @@ export default function Pagination({
   }
   function onKeyDown(event, page, scroll = true) {
     if (["Enter", "Space"].includes(event.key)) {
-      onChange && onChange(page, scroll);
+      onChangeChecked(page, scroll);
     }
   }
 
