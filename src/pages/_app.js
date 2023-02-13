@@ -50,6 +50,7 @@ import Head from "@/components/head";
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
+import { enableDebug } from "@/lib/api/api";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -92,6 +93,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
       }
     },
   };
+
+  if (router?.query?.debug === "true") {
+    enableDebug();
+  }
 
   return (
     <SWRConfig value={swrConfigValue}>
