@@ -2,19 +2,20 @@ import PropTypes from "prop-types";
 
 import styles from "./Pagination.module.css";
 import Icon from "@/components/base/icon";
-import LeftSvg from "@/public/icons/arrowleft.svg";
-import RightSvg from "@/public/icons/arrowright.svg";
 import Button from "@/components/base/button";
 import Translate from "@/components/base/translate";
 import React from "react";
-import _ from "lodash";
+import max from "lodash/max";
+import ceil from "lodash/ceil";
+import range from "lodash/range";
+import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 
 function calculatePaginationValues(currentPage, numPages, MAX_VISIBLE_PAGES) {
   const numVisiblePages =
     numPages > MAX_VISIBLE_PAGES ? MAX_VISIBLE_PAGES : numPages;
 
-  const theoreticalBottomOffset = _.max([
-    _.ceil((numVisiblePages - 1) / 2),
+  const theoreticalBottomOffset = max([
+    ceil((numVisiblePages - 1) / 2),
     numVisiblePages - 1 - (numPages - currentPage),
   ]);
   const actualBottomOffset =
@@ -63,11 +64,20 @@ export default function Pagination({
     showNextPageArrow,
   } = calculatePaginationValues(currentPage, numPages, MAX_VISIBLE_PAGES);
 
-  const arrayOfPaginationPages = _.range(
+  const arrayOfPaginationPages = range(
     bottomVisiblePage,
     topVisiblePage + 1,
     1
   );
+
+  function onChangeChecked(page, scroll = true) {
+    onChange && onChange(page, scroll);
+  }
+  function onKeyDown(event, page, scroll = true) {
+    if (["Enter", "Space"].includes(event.key)) {
+      onChangeChecked(page, scroll);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -78,73 +88,54 @@ export default function Pagination({
             size="medium"
             tabIndex="0"
             skeleton={isLoading}
-            onClick={onChange && (() => onChange(currentPage + 1, false))}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && onChange) {
-                onChange(currentPage + 1, false);
-              }
-            }}
+            onClick={() => onChangeChecked(currentPage + 1, false)}
+            onKeyDown={(event) => onKeyDown(event, currentPage + 1, false)}
           >
             {Translate({ context: "search", label: "more" })}
           </Button>
         </div>
       )}
       <div className={`${styles.pagination} ${styles.desktop}`}>
-        <div
-          tabIndex="0"
-          className={`${styles.arrow} ${
-            !isLoading && showPreviousPageArrow ? "" : styles.hidden
+        <Arrow
+          clickCallback={() => onChangeChecked(currentPage - 1)}
+          arrowClass={`${styles.arrow_styling} ${
+            !showPreviousPageArrow && styles.arrow_hidden
           }`}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && onChange) {
-              onChange(Math.max(currentPage - 1, 1));
-            }
-          }}
-          onClick={onChange && (() => onChange(Math.max(currentPage - 1, 1)))}
-        >
-          <LeftSvg />
-        </div>
+          orientation={"left"}
+          dataDisabled={!(!isLoading && showPreviousPageArrow)}
+          size={{ w: 4, h: 4 }}
+        />
 
         {arrayOfPaginationPages.map((page, index) => {
           return (
             <Icon
+              onClick={() => onChangeChecked(page)}
+              onKeyDown={(event) => onKeyDown(event, page)}
               key={index}
               size={{ w: 4, h: 4 }}
-              bgColor={"var(--blue)"}
+              bgColor={"override"}
               className={
                 !isLoading && page === currentPage ? styles.selected : ""
               }
-              onClick={onChange && (() => onChange(page))}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && onChange) {
-                  onChange(page);
-                }
-              }}
               skeleton={isLoading}
               tabIndex="0"
               data-cy={`page-${page}-button`}
               alt=""
+              tag={"button"}
             >
-              <span>{page}</span>
+              {page}
             </Icon>
           );
         })}
-        <div
-          className={`${styles.arrow} ${
-            !isLoading && showNextPageArrow ? "" : styles.hidden
+        <Arrow
+          clickCallback={() => onChangeChecked(currentPage + 1)}
+          arrowClass={`${styles.arrow_styling} ${
+            !showNextPageArrow && styles.arrow_hidden
           }`}
-          tabIndex="0"
-          onKeyDown={(event) => {
-            if (event.key === "Enter" && onChange) {
-              onChange(Math.min(currentPage + 1, numPages));
-            }
-          }}
-          onClick={
-            onChange && (() => onChange(Math.min(currentPage + 1, numPages)))
-          }
-        >
-          <RightSvg />
-        </div>
+          orientation={"right"}
+          dataDisabled={!(!isLoading && showNextPageArrow)}
+          size={{ w: 4, h: 4 }}
+        />
       </div>
     </React.Fragment>
   );
