@@ -19,7 +19,8 @@ import {
   checkDigitalCopy,
   checkPhysicalCopy,
 } from "@/lib/accessFactoryUtils";
-import { isEmpty, uniq } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import uniq from "lodash/uniq";
 
 function TextAboveButton({ access, user }) {
   return (

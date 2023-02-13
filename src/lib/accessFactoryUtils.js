@@ -1,4 +1,3 @@
-import { chain } from "lodash";
 import { AccessEnum } from "@/lib/enums";
 import { encodeTitleCreator, infomediaUrl } from "@/lib/utils";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
@@ -297,11 +296,10 @@ export function sortPrioritisedAccess(a, b) {
  * @return {Access[]}
  */
 export function getAllEnrichedAccessSorted(manifestations) {
-  return chain(manifestations)
+  return manifestations
     ?.flatMap(getAccessForSingleManifestation)
     ?.map(enrichSingleAccess)
-    ?.sort(sortPrioritisedAccess)
-    ?.value();
+    ?.sort(sortPrioritisedAccess);
 }
 
 /**

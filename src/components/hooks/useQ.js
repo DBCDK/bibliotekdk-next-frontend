@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Hook for q search param sync across components 🤯

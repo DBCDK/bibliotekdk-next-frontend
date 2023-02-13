@@ -11,7 +11,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
 import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
 function CreatorContributorTextHelper({ children }) {

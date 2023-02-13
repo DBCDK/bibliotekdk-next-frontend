@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { Dropdown as BootstrapDropdown } from "react-bootstrap";
+import { default as BootstrapDropdown } from "react-bootstrap/Dropdown";
 import { cyKey } from "@/utils/trim";
 import styles from "./Dropdown.module.css";
 

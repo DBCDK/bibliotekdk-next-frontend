@@ -38,7 +38,8 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { isEmpty, isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 // material Pages
