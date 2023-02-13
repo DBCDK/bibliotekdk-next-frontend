@@ -25,6 +25,7 @@
 }
 
 .dot::after {
+  isolation: isolate;
   content: '';
   position: absolute;
 
@@ -64,7 +65,7 @@
 }
 
 .dot.active_dot {
-  z-index: 1000;
+  z-index: 1;
 }
 
 .dot.active_dot::after {

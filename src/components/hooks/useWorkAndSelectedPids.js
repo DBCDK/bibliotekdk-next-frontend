@@ -3,7 +3,7 @@ import * as workFragments from "@/lib/api/work.fragments";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import { useMemo } from "react";
 import { uniqueEntries } from "@/lib/utils";
-import { at } from "lodash";
+import at from "lodash/at";
 
 function filteredWork(work, selectedPids) {
   const manifestations = work?.manifestations?.all?.filter((manifestation) =>
