@@ -51,15 +51,24 @@ export function Edition({
     ?.flat()
     ?.join(", ");
 
-  const articleTypeLabel =
+  const articleTypeTranslation =
     isDigitalCopy &&
     availableAsDigitalCopy &&
     context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
-      ? "will-order-digital-copy"
+      ? {
+          context: "order",
+          label: "will-order-digital-copy",
+        }
       : isArticleRequest
-      ? "article"
+      ? {
+          context: "general",
+          label: "article",
+        }
       : periodicaForm
-      ? "volume"
+      ? {
+          context: "general",
+          label: "volume",
+        }
       : null;
 
   const specificEdition =
@@ -126,14 +135,9 @@ export function Edition({
             </Tag>
           </div>
         </div>
-        {articleTypeLabel ? (
+        {articleTypeTranslation ? (
           <div className={styles.articletype}>
-            <Text type="text4">
-              {Translate({
-                context: "order",
-                label: articleTypeLabel,
-              })}
-            </Text>
+            <Text type="text4">{Translate(articleTypeTranslation)}</Text>
           </div>
         ) : null}
         {periodicaForm && (
