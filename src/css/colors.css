@@ -50,6 +50,7 @@
 
   --transparent: #FF000000;
   --link-background: rgba(0, 0, 0, 0.1);
+  --basic_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 
   /* Underline defaults */
   --underline-font-color: var(--mine-shaft);
@@ -73,4 +74,5 @@
   --arrow__fill_color_hover: var(--white);
   --arrow__disabled_fill_color: var(--white);
   --arrow__disabled_background_color: var(--iron);
+  --arrow__box_shadow: 0;
 }

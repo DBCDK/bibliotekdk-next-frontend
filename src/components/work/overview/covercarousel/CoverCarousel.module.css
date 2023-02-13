@@ -84,6 +84,7 @@
   --arrow__fill_color: var(--blue);
   --arrow__background_color_hover: var(--blue);
   --arrow__fill_color_hover: var(--white);
+  --arrow__box_shadow: var(--basic_box_shadow);
 }
 /* END ARROWS */
 
