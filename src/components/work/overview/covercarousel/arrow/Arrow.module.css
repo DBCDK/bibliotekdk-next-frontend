@@ -8,9 +8,6 @@
   cursor: pointer;
   z-index: 1;
   border-radius: 50%;
-
-  align-items: center;
-  justify-content: center;
 }
 
 .arrow_functionality:is(:hover, :focus) {

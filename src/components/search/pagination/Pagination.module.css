@@ -8,8 +8,6 @@
 
 .arrow_hidden {
   opacity: 0;
-  cursor: default;
-  pointer-events: none;
 }
 
 .pagination {
