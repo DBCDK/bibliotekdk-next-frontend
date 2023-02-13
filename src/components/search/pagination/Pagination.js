@@ -99,7 +99,7 @@ export default function Pagination({
         <Arrow
           clickCallback={() => onChangeChecked(currentPage - 1)}
           arrowClass={`${styles.arrow_styling} ${
-            !(currentPage > 1) && styles.arrow_hidden
+            !showPreviousPageArrow && styles.arrow_hidden
           }`}
           orientation={"left"}
           dataDisabled={!(!isLoading && showPreviousPageArrow)}
@@ -130,7 +130,7 @@ export default function Pagination({
         <Arrow
           clickCallback={() => onChangeChecked(currentPage + 1)}
           arrowClass={`${styles.arrow_styling} ${
-            !(currentPage < numPages) && styles.arrow_hidden
+            !showNextPageArrow && styles.arrow_hidden
           }`}
           orientation={"right"}
           dataDisabled={!(!isLoading && showNextPageArrow)}
