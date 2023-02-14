@@ -7,7 +7,7 @@
 .f-border-bottom::after {
   content: " ";
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 0;
   bottom: -1px;
   left: 0;
@@ -22,6 +22,7 @@
   transition: transform 0.4s;
 }
 
+/* Translation */
 .h-translate-right,
 .f-translate-right {
   transition: transform 0.3s;
@@ -49,7 +50,6 @@
 }
 
 /* Bounce */
-
 .h-bounce-right,
 .f-bounce-right,
 .h-bounce-left,
@@ -91,7 +91,8 @@
 }
 
 /* elastic */
-
+.underlineContainer:hover .h-elastic,
+.underlineContainer:hover .f-elastic,
 .on-hover:hover.h-elastic,
 .on-hover:hover .h-elastic,
 .on-focus:focus-visible.f-elastic,
@@ -111,3 +112,85 @@
     transform: scale(1);
   }
 }
+
+/* ================================================================= */
+/* ================================================================= */
+/* CONTROL UNDERLINE */
+
+/* Exceptional behaviour */
+/* Additional background hover effects */
+
+/* Positioning */
+.underlineContainer.top_line_false {
+  --underline-top-hover-color: var(--transparent);
+}
+.underlineContainer.top_line_keep_false {
+  --underline-top-color: var(--transparent);
+}
+.underlineContainer.bottom_line_false {
+  --underline-bottom-hover-color: var(--transparent);
+}
+.underlineContainer.bottom_line_keep_false {
+  --underline-bottom-color: var(--transparent);
+}
+
+/* Turn off link */
+.underlineContainer.link_disabled {
+  pointer-events: none;
+  background-size: 0 0, 0 0, 0 0;
+}
+
+/* Turn off animation */
+.underlineContainer.animation_disabled {
+  --underline-top-hover-color: var(--transparent);
+  --underline-bottom-hover-color: var(--transparent);
+}
+/* ----------- */
+/* ----------- */
+
+/* Set color of background image, when colors are overridden */
+/*   as used in etc. styles.underlineVarContainer (BlockedUserInformation) */
+.underlineContainer {
+  --underline-height: 0.073rem;
+  --underline-background-position: 50% 0%, 50% 100%, 50% 50%;
+  --underline-background-size: 100% var(--underline-height), 100% var(--underline-height), 100% 100%;
+  --underline-background-hover-size_0pct: 0% var(--underline-height), 0 var(--underline-height), 100% 100%;
+  --underline-background-hover-size_100pct: 100% var(--underline-height), 100% var(--underline-height), 100% 100%;
+
+  --underline-background-image:
+    linear-gradient(var(--underline-top-color), var(--underline-top-color)),
+    linear-gradient(var(--underline-bottom-color), var(--underline-bottom-color)),
+    linear-gradient(var(--underline-middle-color), var(--underline-middle-color));
+  --underline-hover-background-image:
+    linear-gradient(var(--underline-top-hover-color), var(--underline-top-hover-color)),
+    linear-gradient(var(--underline-bottom-hover-color), var(--underline-bottom-hover-color)),
+    linear-gradient(var(--underline-middle-hover-color), var(--underline-middle-hover-color));
+
+  text-decoration: none;
+  color: var(--underline-font-color);
+  background-image: var(--underline-background-image);
+  background-size: var(--underline-background-size);
+  background-position: var(--underline-background-position);
+  background-repeat: no-repeat;
+  padding-bottom: 1px;
+}
+
+.underlineContainer:is(:hover, :focus, :focus-visible),
+.underlineContainer:is(:hover, :focus, :focus-visible) .underlineContainer__icon_sibling {
+  animation: __underline 0.6s ease;
+  color: var(--underline-font-hover-color);
+  background-image: var(--underline-hover-background-image);
+  background-size: var(--underline-background-hover-size_100pct);
+  background-position: var(--underline-background-position);
+}
+
+@keyframes __underline {
+  0% {
+    background-size: var(--underline-background-hover-size_0pct);
+  }
+  100% {
+    background-size: var(--underline-background-hover-size_100pct);
+  }
+}
+/* ================================================================= */
+
