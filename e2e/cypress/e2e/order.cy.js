@@ -28,6 +28,7 @@ describe("Order", () => {
     cy.get("[data-cy=input]").should("have.value", "some@mail.dk");
 
     // Submit the order
+    cy.wait(1000);
     cy.contains("Godkend", { timeout: 10000 }).click();
     cy.contains("some-order-id", { timeout: 10000 });
 
