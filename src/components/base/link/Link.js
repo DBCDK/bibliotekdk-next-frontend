@@ -30,6 +30,7 @@ export default function Link({
   disabled = false,
   ariaLabel = "",
   scroll = true,
+  data_display = "inline-block",
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -53,7 +54,11 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${styles.link} ${animationClass} ${disabledClass} ${className}`}
+        className={`${
+          styles.link
+        } ${animationClass} ${disabledClass} ${className} ${
+          data_display === "inline" && styles.display_inline
+        }`}
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
       >
