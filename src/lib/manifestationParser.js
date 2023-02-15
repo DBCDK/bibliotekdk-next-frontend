@@ -234,7 +234,7 @@ export function ParsedCreatorsOrContributors({
   }
 
   return creatorsOrContributors?.map((C, idx) => (
-    <Text key={`${C?.display}${idx}`}>
+    <Text tag={"div"} key={`${C?.display}${idx}`}>
       <Tag>{C?.display}</Tag>
       {C?.roles?.length > 0 &&
         ` (${C?.roles
