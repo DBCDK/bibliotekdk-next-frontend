@@ -69,7 +69,7 @@ function useUserImpl() {
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
-  if (userData) {
+  if (userData?.user) {
     const user = userData.user;
     if (user.name) {
       loggedInUser.userName = user.name;
