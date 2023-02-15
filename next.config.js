@@ -81,6 +81,9 @@ module.exports = {
       },
     ];
   },
+  experimental: {
+    scrollRestoration: true,
+  },
   serverRuntimeConfig: {
     // Will only be available on the server side
     clientId: process.env.CLIENT_ID,
