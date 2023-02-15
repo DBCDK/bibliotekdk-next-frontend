@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import Recommendations from "../recommendations";
-import Content from "../content";
-import Description from "../description";
-import Details from "../details";
 import Overview from "../overview";
+import Details from "../details";
+import Description from "../description";
+import RelatedWorks from "../relatedworks";
+import Content from "../content";
 import Keywords from "../keywords";
 import Related from "../related";
 import Reviews from "../reviews";
@@ -26,6 +27,7 @@ import Anchor from "@/components/base/anchor";
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
   const router = useRouter();
+
   return (
     <main>
       <Header router={router} />
@@ -48,6 +50,11 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
+        />
+        <RelatedWorks
+          workId={workId}
+          type={type}
+          anchor-label={Translate({ context: "relatedworks", label: "title" })}
         />
         <Content
           workId={workId}
