@@ -10,225 +10,12 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
-import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
-function CreatorContributorTextHelper({ children }) {
-  return (
-    <span
-      data-cy={"creator-contributor-text-helper"}
-      className={styles.creatorContributorTextHelper}
-    >
-      {children}
-    </span>
-  );
-}
-
-function parseLanguages(manifestation) {
-  // languages - main + subtitles + spoken - useMemo for performance;
-  const main =
-    manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
-  const spoken =
-    manifestation?.languages?.spoken?.map((spok) => spok.display) || [];
-  const subtitles =
-    manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
-  const mixed = [...main, ...spoken, ...subtitles];
-  // filter out duplicates
-  return [...new Set(mixed)].join(", ");
-}
-
-function parseGenreAndForm(work) {
-  const genreForm = work?.genreAndForm || [];
-  return genreForm.join(", ");
-}
-
-function parsePhysicalDescriptions(manifestation) {
-  return manifestation?.physicalDescriptions
-    ?.map((description) => description.summary)
-    .join(" ");
-}
-
-function parseContributors(manifestation) {
-  const contributors = [
-    ...(manifestation?.creators || []),
-    ...(manifestation?.contributors || []),
-  ];
-
-  return (
-    contributors?.length > 0 && (
-      <ParsedCreatorsOrContributors
-        creatorsOrContributors={contributors}
-        Tag={CreatorContributorTextHelper}
-      />
-    )
-  );
-}
-
-function parseMovieContributors(manifestation) {
-  const actors = manifestation?.contributors?.filter((cont) =>
-    cont?.roles?.find((rol) => rol.functionCode === "act")
-  );
-
-  const others =
-    manifestation?.contributors?.manifestation?.contributors?.filter((cont) =>
-      cont?.roles?.find((rol) => rol.functionCode !== "act")
-    );
-  const actorslabel =
-    actors?.length > 1
-      ? actors?.[0]?.roles?.[0]?.function.plural
-      : actors?.[0]?.roles?.[0]?.function.singular;
-
-  const returnObject = {};
-  returnObject[actorslabel] = actors?.length > 0 ? actors : null;
-  returnObject["ophav"] = others?.length > 0 ? others : null;
-
-  return returnObject;
-}
-
-function parseMovieCreators(manifestation) {
-  return manifestation?.creators || null;
-}
-
-function parsePersonAndFunction(person) {
-  const display = person?.display;
-  const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles.length > 0 ? " (" + roles.join(", ") + ")" : "");
-}
-
-/**
- * jsxParser for movie creators
- * @param values
- * @param skeleton
- * @returns {unknown[]}
- * @constructor
- */
-function MovieCreatorValues({ values, skeleton }) {
-  return (
-    values &&
-    values.map((person, index) => {
-      return (
-        <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-          {parsePersonAndFunction(person)}
-        </Text>
-      );
-    })
-  );
-}
-
-function fieldsForRows(manifestation, work, context) {
-  const materialType = work?.workTypes?.[0] || null;
-
-  const fieldsMap = {
-    DEFAULT: [
-      {
-        languages: {
-          label: Translate({ ...context, label: "language" }),
-          value: parseLanguages(manifestation),
-        },
-      },
-      {
-        physicalDescriptions: {
-          label: Translate({ ...context, label: "physicalDescription" }),
-          value: parsePhysicalDescriptions(manifestation),
-        },
-      },
-      {
-        publicationYear: {
-          label: Translate({ ...context, label: "released" }),
-          value: manifestation?.edition?.publicationYear?.display || "",
-        },
-      },
-      {
-        contributors: {
-          label: Translate({ ...context, label: "contribution" }),
-          value: parseContributors(manifestation),
-        },
-      },
-      {
-        genre: {
-          label: Translate({ ...context, label: "genre/form" }),
-          value: parseGenreAndForm(work),
-        },
-      },
-      {
-        hundeprut: {
-          label: "hundeprut",
-          value: "",
-        },
-      },
-    ],
-    MUSIK: [
-      {
-        genre: {
-          label: Translate({ ...context, label: "genre/form" }),
-          value: "hest",
-        },
-      },
-    ],
-    MOVIE: [
-      {
-        contributors: {
-          label: "",
-          value: parseMovieContributors(manifestation),
-          jsxParser: MovieContributorValues,
-        },
-      },
-      {
-        creators: {
-          label: Translate({ ...context, label: "creators" }),
-          value: parseMovieCreators(manifestation),
-          jsxParser: MovieCreatorValues,
-        },
-      },
-    ],
-  };
-
-  const merged = [
-    ...fieldsMap["DEFAULT"].filter((def) => {
-      const fisk =
-        fieldsMap[materialType] &&
-        fieldsMap[materialType].find((mat) => mat[Object.keys(def)[0]]);
-      return !fisk;
-    }),
-    ...(fieldsMap[materialType] || []),
-  ];
-
-  return merged;
-}
-
-/**
- * jsxParser for movies - contributors. Parse given values for html output - @see parseMovieContributors for given values
- * @param values {object}
- *  eg. {skuespillere:["jens", "hans", ..], ophav:["kurt", ...]}
- * @param skeleton
- * @returns {any[]}
- * @constructor
- */
-function MovieContributorValues({ values, skeleton }) {
-  return Object.keys(values).map(
-    (val) =>
-      values[val] && (
-        <>
-          <Text
-            type="text3"
-            className={styles.title}
-            skeleton={skeleton}
-            lines={2}
-          >
-            {val}
-          </Text>
-          {values[val].map((person, index) => {
-            return (
-              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-                {person?.display}
-              </Text>
-            );
-          })}
-        </>
-      )
-  );
-}
+import { fieldsForRows } from "@/components/work/details/details.utils";
 
 function DefaultDetailValues({ values, skeleton }) {
   return (
@@ -237,7 +24,6 @@ function DefaultDetailValues({ values, skeleton }) {
     </Text>
   );
 }
-
 /**
  * The Component function
  *
@@ -279,7 +65,8 @@ function Details({
           fieldsToShow.map((field) => {
             const fieldName = Object.keys(field)[0];
             return (
-              field[fieldName].value && (
+              !isEmpty(field[fieldName].value) && (
+                /** this is the label **/
                 <Col xs={6} md={{ span: 3 }}>
                   <Text
                     type="text3"
@@ -289,8 +76,7 @@ function Details({
                   >
                     {field[fieldName].label}
                   </Text>
-                  {/** some fields has a custom jsx parser ..
-                   @TODO .. empty values should not be shown **/}
+                  {/** some fields has a custom jsx parser .. **/}
                   {field[fieldName].jsxParser ? (
                     field[fieldName].jsxParser({
                       values: field[fieldName].value,
