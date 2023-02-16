@@ -13,16 +13,18 @@ import Text from "@/components/base/text";
 import styles from "./CoverCarousel.module.css";
 import {
   getManifestationsWithCorrectCover,
+  getIndicesForCoverCarousel,
   getTextDescription,
   moveCarousel,
   scrollToElement,
 } from "@/components/work/overview/covercarousel/utils";
-import range from "lodash/range";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
 import Translate from "@/components/base/translate";
 import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
+import range from "lodash/range";
+import at from "lodash/at";
 
 const CoverElement = forwardRef(function CoverElement(
   {
@@ -173,13 +175,20 @@ export default function Wrap({ selectedPids, workTitles }) {
     );
   }, [manifestationsData?.manifestations]);
 
+  const manifestations =
+    manifestationsWithCover &&
+    at(
+      manifestationsWithCover,
+      getIndicesForCoverCarousel(manifestationsWithCover?.length)
+    );
+
   if (manifestationsIsLoading) {
     <Skeleton className={styles.image_skeleton} />;
   }
 
   return (
     <CoverCarousel
-      manifestations={manifestationsWithCover}
+      manifestations={manifestations}
       materialType={materialType}
       workTitles={workTitles}
     />
