@@ -2,7 +2,7 @@ import {
   extractGoodCover,
   filterFieldsInElement,
   parseRelations,
-  parseSingleManifestation,
+  parseSingleRelationObject,
   parseSingleRelation,
 } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import { RelationTypeEnum, WorkTypeEnum } from "@/lib/enums";
@@ -161,9 +161,9 @@ describe("parseSingleRelation", () => {
   });
 });
 
-describe("parseSingleManifestation", () => {
+describe("parseSingleRelationObject", () => {
   it("empty relationTypeArray (expect empty result)", () => {
-    const actual = parseSingleManifestation([]);
+    const actual = parseSingleRelationObject([]);
     const expected = [];
     expect(actual).toEqual(expected);
   });
@@ -172,7 +172,7 @@ describe("parseSingleManifestation", () => {
       RelationTypeEnum.CONTINUES.key
     )[0];
 
-    const actual = parseSingleManifestation(relationTypeArray);
+    const actual = parseSingleRelationObject(relationTypeArray);
     const expected = [
       {
         ...relationTypeArray[1][0],
