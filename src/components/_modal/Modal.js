@@ -276,7 +276,9 @@ function Container({ children, className = {}, mock = {} }) {
   }, [modal.stack]);
 
   // Debug -> remove me in future
-  console.debug("Debug: ", { stack: modal.stack });
+  if (typeof window !== "undefined") {
+    console.debug("Debug: ", { stack: modal.stack });
+  }
 
   if (children.length <= 0) {
     return null;

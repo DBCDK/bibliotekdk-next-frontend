@@ -50,10 +50,51 @@ import Head from "@/components/head";
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
+import { enableDebug } from "@/lib/api/api";
+
+import ErrorPage from "./500";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
   smoothscroll.polyfill();
+}
+
+/**
+ * Error Boundary for handling client side errors
+ */
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // Define a state variable to track whether is an error or not
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    // Update state so the next render will show the fallback UI
+    return { hasError: true };
+  }
+  componentDidCatch(error, errorInfo) {
+    // Log the error on the server
+    if (typeof window !== "undefined") {
+      fetch("/api/errorLogger", {
+        method: "POST",
+        body: JSON.stringify({
+          message: error.message,
+          stack: error.stack,
+          componentStack: errorInfo.componentStack,
+        }),
+      });
+    }
+  }
+  render() {
+    // Check if the error is thrown
+    if (this.state.hasError) {
+      return <ErrorPage />;
+    }
+
+    // Return children components in case of no error
+    return this.props.children;
+  }
 }
 
 let pageProps;
@@ -93,57 +134,64 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
     },
   };
 
+  if (router?.query?.debug === "true") {
+    enableDebug();
+  }
+
   return (
-    <SWRConfig value={swrConfigValue}>
-      <SessionProvider
-        session={
-          router.query.disablePagePropsSession ? undefined : pageProps.session
-        }
-        options={{
-          clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
-          keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
-        }}
-      >
-        <Modal.Provider
-          router={{
-            pathname: router.pathname,
-            query: router.query,
-            push: (obj) => router.push(obj),
-            replace: (obj) => router.replace(obj),
-            go: (index) => window.history.go(index),
+    <ErrorBoundary>
+      <SWRConfig value={swrConfigValue}>
+        <SessionProvider
+          session={
+            router.query.disablePagePropsSession ? undefined : pageProps.session
+          }
+          options={{
+            clientMaxAge: 60, // Re-fetch session if cache is older than 60 seconds
+            keepAlive: 5 * 60, // Send keepAlive message every 5 minutes
           }}
         >
-          <Modal.Container>
-            <Modal.Page id="menu" component={Pages.Menu} />
-            <Modal.Page id="options" component={Pages.Options} />
-            <Modal.Page id="order" component={Pages.Order} />
-            <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
-            <Modal.Page id="pickup" component={Pages.Pickup} />
-            <Modal.Page id="loanerform" component={Pages.Loanerform} />
-            <Modal.Page id="receipt" component={Pages.Receipt} />
-            <Modal.Page id="login" component={Pages.Login} />
-            <Modal.Page id="filter" component={Pages.Filter} />
-            <Modal.Page id="localizations" component={Pages.Localizations} />
-            <Modal.Page id="references" component={Pages.References} />
-          </Modal.Container>
-          <Matomo allowCookies={allowCookies} />
-          <BodyScrollLock router={router} />
-          <div id="layout">
-            <Head />
-            <SkipToMainLink />
-            <Banner />
-            <Notifications />
-            <HelpHeader />
-            <Component {...pageProps} />
-            <FeedBackLink />
-            <CookieBox />
-            <Footer />
-          </div>
-        </Modal.Provider>
-        {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
-        <SetPickupBranch router={router} />
-      </SessionProvider>
-    </SWRConfig>
+          <Modal.Provider
+            router={{
+              pathname: router.pathname,
+              query: router.query,
+              push: (obj) => router.push(obj),
+              replace: (obj) => router.replace(obj),
+              go: (index) => window.history.go(index),
+            }}
+          >
+            <Modal.Container>
+              <Modal.Page id="menu" component={Pages.Menu} />
+              <Modal.Page id="options" component={Pages.Options} />
+              <Modal.Page id="order" component={Pages.Order} />
+              <Modal.Page id="periodicaform" component={Pages.PeriodicaForm} />
+              <Modal.Page id="pickup" component={Pages.Pickup} />
+              <Modal.Page id="loanerform" component={Pages.Loanerform} />
+              <Modal.Page id="receipt" component={Pages.Receipt} />
+              <Modal.Page id="login" component={Pages.Login} />
+              <Modal.Page id="filter" component={Pages.Filter} />
+              <Modal.Page id="localizations" component={Pages.Localizations} />
+              <Modal.Page id="references" component={Pages.References} />
+            </Modal.Container>
+            <Matomo allowCookies={allowCookies} />
+            <BodyScrollLock router={router} />
+            <div id="layout">
+              <Head />
+              <SkipToMainLink />
+              <Banner />
+              <Notifications />
+              <HelpHeader />
+              <Component {...pageProps} />
+              <FeedBackLink />
+              <CookieBox />
+              <Footer />
+            </div>
+          </Modal.Provider>
+
+          {/* SetPickupBranch listens for users just logged in via adgangsplatformen */}
+          <SetPickupBranch router={router} />
+        </SessionProvider>
+      </SWRConfig>
+    </ErrorBoundary>
   );
 }
 

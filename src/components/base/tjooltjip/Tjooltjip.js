@@ -1,4 +1,5 @@
-import { OverlayTrigger, Popover } from "react-bootstrap";
+import Popover from "react-bootstrap/Popover";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Icon from "@/components/base/icon";
 import styles from "./TjoolTjip.module.css";
 import Text from "@/components/base/text";

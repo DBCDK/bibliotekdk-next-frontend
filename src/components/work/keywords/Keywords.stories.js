@@ -1,8 +1,6 @@
 import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
-import { getSubjectsDbcVerified } from "../dummy.materialTypesApi";
 
-import { Keywords, KeywordsSkeleton } from "./Keywords";
-import { uniqueSubjectEntries } from "@/lib/utils";
+import Keywords, { KeywordsSkeleton } from "./Keywords";
 
 const exportedObject = {
   title: "work/Keywords",
@@ -16,8 +14,6 @@ export default exportedObject;
  */
 export function KeywordsSection() {
   const workId = "some-id";
-  const data = getSubjectsDbcVerified({ workId });
-  const uniqueSubjects = uniqueSubjectEntries(data[workId]);
 
   return (
     <div>
@@ -26,10 +22,77 @@ export function KeywordsSection() {
         Work keywords component. The Section component is used for layout.
       </StoryDescription>
       <StorySpace direction="v" space="8" />
-      <Keywords data={uniqueSubjects} />
+      <Keywords workId={workId} />
     </div>
   );
 }
+KeywordsSection.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        SubjectContainer: {
+          all: () => [
+            {
+              __typename: "SubjectText",
+              display: "historie",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+              type: "TOPIC",
+            },
+            {
+              __typename: "SubjectText",
+              display: "historie",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+              type: "TOPIC",
+            },
+            {
+              __typename: "SubjectText",
+              display: "den 2. verdenskrig",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+              type: "TOPIC",
+            },
+            {
+              __typename: "SubjectText",
+              display: "Tyskland",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
+              },
+              type: "LOCATION",
+            },
+            {
+              __typename: "SubjectText",
+              display: "2. heimsbardagi",
+              language: {
+                display: "færøsk",
+                isoCode: "fao",
+              },
+              type: "TOPIC",
+            },
+            {
+              __typename: "TimePeriod",
+              display: "1930-1939",
+              type: "TIME_PERIOD",
+            },
+          ],
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: {},
+    },
+  },
+};
 
 /**
  * Returns Loading description section

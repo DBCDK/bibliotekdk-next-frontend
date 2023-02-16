@@ -1,6 +1,6 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import ResultRow from "@/components/search/result/row/Row";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 
 const exportedObject = {
   title: "search/Result/ResultRow",

@@ -6,6 +6,22 @@
     "mocha/no-exclusive-tests": "error",
     "cypress/no-unnecessary-waiting": 0,
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-bootstrap",
+            "message": "usage of react-bootstrap without tree-shaking is not allowed. Use 'react-bootstrap/*', eg. 'react-bootstrap/Col'"
+          },
+          {
+            "name": "lodash",
+            "message": "usage of lodash without tree-shaking is not allowed. Use 'lodash/*', eg. 'lodash/isEmpty'"
+          }
+        ],
+        "patterns": ["!react-bootstrap/*", "!lodash/*"]
+      }
+    ],
 
     // TODO: Turn these on at some point
     /* next/core-web-vitals */

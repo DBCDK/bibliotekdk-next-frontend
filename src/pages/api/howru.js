@@ -6,6 +6,7 @@ import { getServerSession } from "@dbcdk/login-nextjs/server";
 import { getErrorCount, resetErrorCount } from "@/utils/errorCount";
 import getConfig from "next/config";
 import { log } from "dbc-node-logger";
+import { getClientSideErrorCount } from "./errorLogger";
 const { serverRuntimeConfig } = getConfig();
 const { maxError500Count } = serverRuntimeConfig;
 
@@ -38,7 +39,10 @@ export default async function handler(req, res) {
       service: `api-work-${name}`,
       handler: () =>
         fetcher({
-          ...func({ workId: "work-of:870970-basis:23154382" }),
+          ...func({
+            workId: "work-of:870970-basis:23154382",
+            pid: "870970-basis:23154382",
+          }),
           accessToken: session?.accessToken,
         }),
     })),
@@ -83,7 +87,20 @@ export default async function handler(req, res) {
   // push error500 object to results
   results.push(error500);
 
-  res.status(ok ? 200 : 500).json({ ok, upSince, services: results });
+  const clientErrors = getClientSideErrorCount();
+  const clientErrorsOk = clientErrors < maxError500Count;
+  if (!clientErrorsOk) {
+    ok = false;
+  }
+  results.push({
+    service: "client-errors",
+    count: clientErrors,
+    ok: clientErrorsOk,
+  });
+
+  res
+    .status(ok ? 200 : 500)
+    .json({ ok, upSince, services: results, clientErrors });
 }
 
 async function errorCode500() {

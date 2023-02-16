@@ -20,11 +20,21 @@ const MANIFESTATION_1 = {
       loanIsPossible: true,
     },
   ],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
+    origin: "moreinfo",
+  },
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
   ...MANIFESTATION_1,
   pid: "some-pid-2",
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
+    origin: "moreinfo",
+  },
 };
 // A manifestation that may not be ordered via ILL
 const MANIFESTATION_3 = {

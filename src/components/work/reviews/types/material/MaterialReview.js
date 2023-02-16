@@ -24,11 +24,13 @@ export function contentParser({ content, manifestations }) {
   const chunks = [];
 
   if (manifestations?.length > 0) {
-    manifestations.forEach(({ ownerWork }, idx) => {
-      const arr = content.split(ownerWork?.titles?.main);
-      arr.forEach((chunk) => chunks.push(chunk));
-      chunks.splice(idx + 1, 0, <LectorLink work={ownerWork} />);
-    });
+    manifestations
+      .filter((manifestation) => !!manifestation)
+      .forEach(({ ownerWork }, idx) => {
+        const arr = content.split(ownerWork?.titles?.main);
+        arr.forEach((chunk) => chunks.push(chunk));
+        chunks.splice(idx + 1, 0, <LectorLink work={ownerWork} />);
+      });
   }
 
   /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/

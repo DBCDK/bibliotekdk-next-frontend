@@ -27,6 +27,7 @@ export function Edition({
   manifestation,
   showOrderTxt = true,
   modal = {},
+  showChangeManifestation = true,
 }) {
   const { periodicaForm } = context;
   const {
@@ -51,15 +52,24 @@ export function Edition({
     ?.flat()
     ?.join(", ");
 
-  const articleTypeLabel =
+  const articleTypeTranslation =
     isDigitalCopy &&
     availableAsDigitalCopy &&
     context?.selectedAccesses?.[0]?.__typename !== AccessEnum.INTER_LIBRARY_LOAN
-      ? "will-order-digital-copy"
+      ? {
+          context: "order",
+          label: "will-order-digital-copy",
+        }
       : isArticleRequest
-      ? "article"
+      ? {
+          context: "general",
+          label: "article",
+        }
       : periodicaForm
-      ? "volume"
+      ? {
+          context: "general",
+          label: "volume",
+        }
       : null;
 
   const specificEdition =
@@ -126,14 +136,9 @@ export function Edition({
             </Tag>
           </div>
         </div>
-        {articleTypeLabel ? (
+        {articleTypeTranslation ? (
           <div className={styles.articletype}>
-            <Text type="text4">
-              {Translate({
-                context: "order",
-                label: articleTypeLabel,
-              })}
-            </Text>
+            <Text type="text4">{Translate(articleTypeTranslation)}</Text>
           </div>
         ) : null}
         {periodicaForm && (
@@ -149,7 +154,7 @@ export function Edition({
             ))}
           </div>
         )}
-        {isPeriodicaLike && (
+        {isPeriodicaLike && showChangeManifestation && (
           <LinkArrow
             onClick={() => {
               modal.push("periodicaform", {
@@ -185,6 +190,7 @@ export default function Wrap({
   context,
   singleManifestation = false,
   showOrderTxt = true,
+  showChangeManifestation,
 }) {
   const modal = useModal();
   const { orderPids: orderPidsBeforeFilter } = context;
@@ -226,6 +232,7 @@ export default function Wrap({
       manifestation={manifestations?.[0]}
       showOrderTxt={showOrderTxt}
       modal={modal}
+      showChangeManifestation={showChangeManifestation}
     />
   );
 }

@@ -1998,6 +1998,10 @@
       "blocked-user-alternative-solution": {
         "da": "eller skift evt. til et andet bibliotek.",
         "en": "or change to another library."
+      },
+      "volume": {
+        "da": "Udgave",
+        "en": "Volume"
       }
     },
     "login": {
