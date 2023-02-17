@@ -736,6 +736,10 @@
       "genre/form": {
         "da": "genre/form",
         "en": "genre/form"
+      },
+      "creators": {
+        "da": "Ophav",
+        "en": "Authors"
       }
     },
     "description": {

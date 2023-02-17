@@ -10,21 +10,20 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 import styles from "./Details.module.css";
 import { useMemo } from "react";
-import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
-function CreatorContributorTextHelper({ children }) {
+import { fieldsForRows } from "@/components/work/details/details.utils";
+
+function DefaultDetailValues({ values, skeleton }) {
   return (
-    <span
-      data-cy={"creator-contributor-text-helper"}
-      className={styles.creatorContributorTextHelper}
-    >
-      {children}
-    </span>
+    <Text type="text4" skeleton={skeleton} lines={0}>
+      {values}
+    </Text>
   );
 }
-
 /**
  * The Component function
  *
@@ -36,39 +35,24 @@ function CreatorContributorTextHelper({ children }) {
 function Details({
   className = "",
   manifestation = {},
+  work = {},
   skeleton = false,
-  genreAndForm = null,
 }) {
   // Translate Context
   const context = { context: "details" };
 
-  // bidrag - contributors + creators - useMemo for performance
-  const creatorsAndContributors = useMemo(() => {
-    return [
-      ...(manifestation?.creators || []),
-      ...(manifestation?.contributors || []),
-    ];
-  }, [manifestation]);
-
-  // languages - main + subtitles + spoken - useMemo for performance;
-  const languages = useMemo(() => {
-    const main =
-      manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
-    const spoken =
-      manifestation?.languages?.spoken?.map((spok) => spok.display) || [];
-    const subtitles =
-      manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
-    const mixed = [...main, ...spoken, ...subtitles];
-    // filter out duplicates
-    return [...new Set(mixed)];
-  }, [manifestation]);
-
+  // this materialtype is for displaying subtitle in section (seneste udgave)
   const materialType = manifestation?.materialTypes?.[0]?.specific;
   const subtitle = Translate({
     ...context,
     label: "subtitle",
     vars: [materialType],
   });
+
+  const fieldsToShow = useMemo(() => {
+    return fieldsForRows(manifestation, work, context);
+  }, [manifestation, materialType]);
+
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -77,103 +61,37 @@ function Details({
       subtitle={subtitle}
     >
       <Row className={`${styles.details}`}>
-        {manifestation.languages && (
-          <Col xs={6} md={{ span: 3 }}>
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={2}
-            >
-              {Translate({ ...context, label: "language" })}
-            </Text>
-            <Text type="text4" skeleton={skeleton} lines={0}>
-              {languages && languages.join(", ")}
-            </Text>
-          </Col>
-        )}
-        {manifestation.physicalDescriptions && (
-          <Col xs={6} md={{ span: 3 }}>
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={2}
-            >
-              {Translate({ ...context, label: "physicalDescription" })}
-            </Text>
-            {manifestation.physicalDescriptions.map((description, i) => {
-              return (
-                <Text
-                  type="text4"
-                  skeleton={skeleton}
-                  lines={0}
-                  key={`${description.summary}-${i}`}
-                >
-                  {description.summary}
-                </Text>
-              );
-            })}
-          </Col>
-        )}
-
-        {manifestation.edition?.publicationYear?.display && (
-          <Col xs={6} md={{ span: 3 }}>
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={2}
-            >
-              {Translate({ ...context, label: "released" })}
-            </Text>
-            <Text type="text4" skeleton={skeleton} lines={0}>
-              {manifestation.edition.publicationYear.display}
-            </Text>
-          </Col>
-        )}
-        <Col xs={6} md={{ span: 3 }}>
-          <Text
-            type="text3"
-            className={styles.title}
-            skeleton={skeleton}
-            lines={3}
-          >
-            {Translate({ ...context, label: "contribution" })}
-          </Text>
-          {creatorsAndContributors?.length > 0 && (
-            <ParsedCreatorsOrContributors
-              creatorsOrContributors={creatorsAndContributors}
-              Tag={CreatorContributorTextHelper}
-            />
-          )}
-        </Col>
-
-        {genreAndForm && genreAndForm.length > 0 && (
-          <Col
-            xs={{ span: 6, offset: 0 }}
-            md={{ span: 3, offset: 0 }}
-            data-cy="genre-form-container"
-          >
-            <Text
-              type="text3"
-              className={styles.title}
-              skeleton={skeleton}
-              lines={2}
-              dataCy="genre-form-title"
-            >
-              {Translate({ ...context, label: "genre/form" })}
-            </Text>
-            <Text
-              type="text4"
-              skeleton={skeleton}
-              lines={0}
-              dataCy="text-genre-form"
-            >
-              {genreAndForm.join(", ")}
-            </Text>
-          </Col>
-        )}
+        {fieldsToShow &&
+          fieldsToShow.map((field) => {
+            const fieldName = Object.keys(field)[0];
+            return (
+              !isEmpty(field[fieldName].value) && (
+                /** this is the label **/
+                <Col xs={6} md={{ span: 3 }}>
+                  <Text
+                    type="text3"
+                    className={styles.title}
+                    skeleton={skeleton}
+                    lines={2}
+                  >
+                    {field[fieldName].label}
+                  </Text>
+                  {/** some fields has a custom jsx parser .. **/}
+                  {field[fieldName].jsxParser ? (
+                    field[fieldName].jsxParser({
+                      values: field[fieldName].value,
+                      skeleton: skeleton,
+                    })
+                  ) : (
+                    <DefaultDetailValues
+                      skeleton={skeleton}
+                      values={field[fieldName].value}
+                    />
+                  )}
+                </Col>
+              )
+            );
+          })}
       </Row>
     </Section>
   );
@@ -242,6 +160,7 @@ export default function Wrap(props) {
     <Details
       {...props}
       manifestation={manifestationByMaterialType}
+      work={data?.work}
       genreAndForm={genreAndForm}
     />
   );

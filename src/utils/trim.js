@@ -20,7 +20,10 @@ export function cyKey({
     name = "cypress";
   }
 
-  const n = `${prefix}-${name.replace(/\s/g, seperator).replace("*", "")}`;
+  const n = `${prefix}-${name
+    .replace(/\s/g, seperator)
+    .replace("*", "")
+    .replace("/", "-")}`;
 
   if (lowerCase) {
     return n.toLowerCase();

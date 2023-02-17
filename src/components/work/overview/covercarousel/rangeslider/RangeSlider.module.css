@@ -27,7 +27,7 @@
   width: var(--pt2);
   height: var(--pt2);
   background: var(--mine-shaft);
-  cursor: pointer;
+  cursor: initial;
 }
 
 .input_range::-moz-range-thumb {
@@ -36,7 +36,7 @@
   width: var(--pt2);
   height: var(--pt2);
   background: var(--mine-shaft);
-  cursor: pointer;
+  cursor: initial;
 }
 /* END THUMB */
 

@@ -111,7 +111,7 @@ export function setTranslations(translations) {
   // if they are not in context - set them from file
   if (!contexts) {
     // @TODO log
-    console.log(translations, "TRANS FROM FILE");
+    // console.log(translations, "TRANS FROM FILE");
     contexts = translation.contexts;
   }
 }

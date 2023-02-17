@@ -27,6 +27,7 @@ export function Edition({
   manifestation,
   showOrderTxt = true,
   modal = {},
+  showChangeManifestation = true,
 }) {
   const { periodicaForm } = context;
   const {
@@ -153,7 +154,7 @@ export function Edition({
             ))}
           </div>
         )}
-        {isPeriodicaLike && (
+        {isPeriodicaLike && showChangeManifestation && (
           <LinkArrow
             onClick={() => {
               modal.push("periodicaform", {
@@ -189,6 +190,7 @@ export default function Wrap({
   context,
   singleManifestation = false,
   showOrderTxt = true,
+  showChangeManifestation,
 }) {
   const modal = useModal();
   const { orderPids: orderPidsBeforeFilter } = context;
@@ -230,6 +232,7 @@ export default function Wrap({
       manifestation={manifestations?.[0]}
       showOrderTxt={showOrderTxt}
       modal={modal}
+      showChangeManifestation={showChangeManifestation}
     />
   );
 }
