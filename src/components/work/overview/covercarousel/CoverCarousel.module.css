@@ -48,6 +48,12 @@
   display: none;
 }
 
+.carousel_skeleton {
+  background-image: linear-gradient(var(--black-squeeze), var(--black-squeeze));
+  width: auto;
+  height: 300px;
+}
+
 .cover_element {
   flex-shrink: 0;
   width: 100%;
@@ -76,9 +82,12 @@
   height: auto;
 }
 
-.image_skeleton {
-  padding-bottom: var(--pt05);
-  width: var(--carousel-width);
+.cover_image_skeleton {
+  display: block;
+  background-image: linear-gradient(var(--iron), var(--iron));
+  /*border: 1px solid red;*/
+  width: auto;
+  height: 300px;
 }
 /* END COVER */
 

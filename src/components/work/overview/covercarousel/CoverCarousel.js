@@ -21,7 +21,6 @@ import {
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
-import Translate from "@/components/base/translate";
 import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
 import range from "lodash/range";
 import at from "lodash/at";
@@ -29,7 +28,7 @@ import at from "lodash/at";
 const CoverElement = forwardRef(function CoverElement(
   {
     thisIndex,
-    manifestations,
+    manifestation,
     materialType,
     fullTitle,
     visibleElement,
@@ -40,15 +39,19 @@ const CoverElement = forwardRef(function CoverElement(
 ) {
   const { elementRef, isVisible } = useElementVisible({
     root: carouselRef,
-    rootMargin: "500px 10px 500px 10px",
-    threshold: 1,
+    rootMargin: "500px 0px 500px 0px",
+    threshold: 0.9,
   });
+
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (visibleElement !== thisIndex && isVisible) {
       setVisibleElement(thisIndex);
     }
   }, [isVisible, thisIndex, visibleElement]);
+
+  const src = manifestation?.cover?.detail;
 
   return (
     <div
@@ -60,16 +63,16 @@ const CoverElement = forwardRef(function CoverElement(
       // TODO: figure out if we need transition
       // ${isVisible && styles.active_cover}
       data-cy={"cover_carousel"}
+      title={fullTitle}
     >
       <img
-        src={manifestations?.[thisIndex]?.cover?.detail}
-        className={styles.cover_image}
-        title={fullTitle}
-        alt={Translate({ context: "general", label: "frontpage" })}
+        src={src}
+        className={loaded ? styles.cover_image : styles.cover_image_skeleton}
+        // rel={"prefetch"}
+        onLoad={() => setLoaded(true)}
+        alt={""}
       />
-      <Text>
-        {getTextDescription(materialType, manifestations?.[thisIndex])}
-      </Text>
+      <Text>{getTextDescription(materialType, manifestation)}</Text>
     </div>
   );
 });
@@ -119,6 +122,7 @@ export function CoverCarousel({
               key={idx}
               thisIndex={idx}
               manifestations={manifestations}
+              manifestation={manifestations?.[idx]}
               fullTitle={workTitles?.full}
               materialType={materialType}
               visibleElement={visibleElement}
@@ -180,14 +184,15 @@ export default function Wrap({ selectedPids, workTitles }) {
   }, [manifestationsData?.manifestations]);
 
   const manifestations =
-    manifestationsWithCover &&
-    at(
-      manifestationsWithCover,
-      getIndicesForCoverCarousel(manifestationsWithCover?.length)
-    );
+    manifestationsWithCover && manifestationsWithCover.length > 10
+      ? at(
+          manifestationsWithCover,
+          getIndicesForCoverCarousel(manifestationsWithCover?.length)
+        )
+      : manifestationsWithCover;
 
   if (manifestationsIsLoading) {
-    <Skeleton className={styles.image_skeleton} />;
+    <Skeleton className={styles.carousel_skeleton} />;
   }
 
   return (
