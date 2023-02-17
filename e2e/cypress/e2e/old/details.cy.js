@@ -24,11 +24,8 @@ describe("Details", () => {
       .should("contain", "roles")
       .should("contain", "function.singular");
 
-    cy.get("[data-cy=genre-form-container]").find("p").should("have.length", 2);
-
-    cy.get("[data-cy=genre-form-container]")
-      .find("p")
-      .eq(1)
+    cy.get("[data-cy=text-genre-form]")
+      .next("p")
       .should("have.text", "actionfilm, thriller, science fiction");
 
     cy.get("[data-cy=section-title]")
