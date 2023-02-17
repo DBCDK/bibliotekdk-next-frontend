@@ -339,13 +339,16 @@ export function fbiOverviewDetail({ workId }) {
             full
           }                                  
           manifestations {
-            all {
+            mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
               cover {
                 detail
                 origin
-              }              
+              }    
+              audience {
+                generalAudience
+              }          
               genreAndForm
               languages {
                 subtitles {

@@ -146,7 +146,7 @@ export default function Wrap(props) {
     return <DetailsSkeleton {...props} />;
   }
 
-  const manifestations = data?.work?.manifestations?.all;
+  const manifestations = data?.work?.manifestations?.mostRelevant;
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =

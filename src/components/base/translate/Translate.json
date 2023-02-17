@@ -740,6 +740,10 @@
       "creators": {
         "da": "Ophav",
         "en": "Authors"
+      },
+      "audience": {
+        "da": "Målgruppe",
+        "en": "Audience"
       }
     },
     "description": {
@@ -2231,7 +2235,6 @@
         "da": "Beskrivende tekst om sidens indhold ...",
         "en": "Label: mangler oversættelse"
       },
-
       "category-articles-(30,-39]": {
         "da": "category-articles-(30,-39]",
         "en": "category-articles-(30,-39]"
@@ -2616,7 +2619,6 @@
         "da": "Trommeskoler",
         "en": "Drumming schools"
       },
-
       "title-nonfiction": {
         "da": "title-nonfiction",
         "en": "Label: mangler oversættelse"
@@ -2673,7 +2675,6 @@
         "da": "category-nonfiction-37.1",
         "en": "Label: mangler oversættelse"
       },
-
       "title-childrenbooksnonfiction": {
         "da": "title-childrenbooksnonfiction",
         "en": "Label: mangler oversættelse"
@@ -2702,7 +2703,6 @@
         "da": "category-childrenbooksnonfiction-12-16",
         "en": "Label: mangler oversættelse"
       },
-
       "title-childrenbooksfiction": {
         "da": "title-childrenbooksfiction",
         "en": "Label: mangler oversættelse"
@@ -2731,7 +2731,6 @@
         "da": "category-childrenbooksfiction-12-16",
         "en": "Label: mangler oversættelse"
       },
-
       "title-ebooks": {
         "da": "title-ebooks",
         "en": "Label: mangler oversættelse"

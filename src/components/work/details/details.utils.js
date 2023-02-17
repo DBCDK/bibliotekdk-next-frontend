@@ -36,6 +36,12 @@ function parseLanguages(manifestation) {
     manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
   const mixed = [...main, ...spoken, ...subtitles];
   // filter out duplicates
+
+  console.log(main, "MAIN");
+  console.log(spoken, "SPOKEN");
+  console.log(subtitles, "SUB");
+  console.log(mixed, "ALL LANGUAGES");
+
   return [...new Set(mixed)].join(", ");
 }
 
@@ -237,6 +243,8 @@ function MovieContributorValues({ values, skeleton }) {
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
 
+  console.log(materialType, "TYPE");
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -299,6 +307,12 @@ export function fieldsForRows(manifestation, work, context) {
           jsxParser: MovieCreatorValues,
         },
       },
+      {
+        audience: {
+          label: Translate({ ...context, label: "audience" }),
+          value: manifestation?.audience?.generalAudience || "",
+        },
+      },
     ],
   };
 
@@ -311,6 +325,8 @@ export function fieldsForRows(manifestation, work, context) {
     }),
     ...(fieldsMap[materialType] || []),
   ];
+
+  console.log(merged, "MERGED");
 
   return merged;
 }
