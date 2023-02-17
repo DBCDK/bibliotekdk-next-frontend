@@ -1,5 +1,7 @@
 import React from "react";
-import CoverCarousel from "./CoverCarousel";
+import CoverCarousel, {
+  CoverCarousel as NamedCoverCarousel,
+} from "./CoverCarousel";
 import { StoryDescription, StoryTitle } from "@/storybook";
 import automock_utils from "@/components/_modal/pages/automock_utils";
 import merge from "lodash/merge";
@@ -10,7 +12,8 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { DEFAULT_STORY_PARAMETERS } = automock_utils();
+const { MANIFESTATION_1, MANIFESTATION_2, DEFAULT_STORY_PARAMETERS } =
+  automock_utils();
 
 /** CoverCarouselComponentBuilder
  * @param {string} type
@@ -114,3 +117,55 @@ CoverCarouselMultipleManifestationsSingleCover.story = merge(
     },
   }
 );
+export function NamedCoverCarouselTenManifestations() {
+  const manifestations = Array(5)
+    .fill([])
+    .map(() => [MANIFESTATION_1, MANIFESTATION_2])
+    .flat();
+  const materialType = ["bog"];
+  const workTitles = {
+    titles: {
+      full: ["Hugo i Sølvskoven"],
+    },
+  };
+
+  return (
+    <div>
+      <StoryTitle>CoverCarousel - {"NamedCoverCarousel"}</StoryTitle>
+      <StoryDescription>
+        The CoverCarousel: {"NamedCoverCarousel"}
+      </StoryDescription>
+      <NamedCoverCarousel
+        manifestations={manifestations}
+        materialType={materialType}
+        workTitles={workTitles}
+      />
+    </div>
+  );
+}
+export function NamedCoverCarouselTwentyManifestations() {
+  const manifestations = Array(10)
+    .fill([])
+    .map(() => [MANIFESTATION_1, MANIFESTATION_2])
+    .flat();
+  const materialType = ["bog"];
+  const workTitles = {
+    titles: {
+      full: ["Hugo i Sølvskoven"],
+    },
+  };
+
+  return (
+    <div>
+      <StoryTitle>CoverCarousel - {"NamedCoverCarousel"}</StoryTitle>
+      <StoryDescription>
+        The CoverCarousel: {"NamedCoverCarousel"}
+      </StoryDescription>
+      <NamedCoverCarousel
+        manifestations={manifestations}
+        materialType={materialType}
+        workTitles={workTitles}
+      />
+    </div>
+  );
+}

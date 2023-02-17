@@ -40,8 +40,8 @@ const CoverElement = forwardRef(function CoverElement(
 ) {
   const { elementRef, isVisible } = useElementVisible({
     root: carouselRef,
-    rootMargin: "500px 0px 500px 0px",
-    threshold: 0.9,
+    rootMargin: "500px 10px 500px 10px",
+    threshold: 1,
   });
 
   useEffect(() => {
@@ -54,7 +54,11 @@ const CoverElement = forwardRef(function CoverElement(
     <div
       ref={elementRef}
       id={`${sliderId}-${thisIndex}`}
-      className={`${styles.cover_element} ${isVisible && styles.active_cover}`}
+      className={`
+        ${styles.cover_element} 
+      `}
+      // TODO: figure out if we need transition
+      // ${isVisible && styles.active_cover}
       data-cy={"cover_carousel"}
     >
       <img

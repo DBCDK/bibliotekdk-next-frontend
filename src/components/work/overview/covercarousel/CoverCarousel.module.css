@@ -53,17 +53,21 @@
   width: 100%;
   scroll-snap-align: start;
   text-align: center;
-  opacity: 0.25;
+
+  /*TODO: figure out if we need transition */
+  /*opacity: 1;*/
+  /*transition-property: opacity;*/
+  /*!*transition-delay: 0.1s;*!*/
+  /*transition-duration: 0.3s;*/
 }
 
-.cover_element.active_cover {
-  animation: navItemSelected;
-  animation-duration: 0.3s;
-  /*delay longer than the time nav item is in frame*/
-  animation-delay: 0.1s;
-  /*fill mode to hold animation at the end*/
-  animation-fill-mode: forwards;
-}
+/*TODO: figure out if we need transition */
+/*.cover_element.active_cover {*/
+  /*opacity: 1;*/
+  /*transition-property: opacity;*/
+  /*transition-delay: 0.1s;*/
+  /*transition-duration: 0.3s;*/
+/*}*/
 
 .cover_image {
   max-width: var(--carousel-cover-max-width);
@@ -86,13 +90,6 @@
   --arrow__fill_color_hover: var(--white);
 }
 /* END ARROWS */
-
-@keyframes navItemSelected {
-  from {}
-  to {
-    opacity: 1;
-  }
-}
 
 @media (min-width: 768px) {
   button.icon,
