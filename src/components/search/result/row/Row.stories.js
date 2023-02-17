@@ -1,6 +1,6 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import ResultRow from "@/components/search/result/row/Row";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 
 const exportedObject = {
   title: "search/Result/ResultRow",
@@ -57,7 +57,7 @@ export function WithAllData() {
 
 export function WithoutCover() {
   const rowProps = {
-    work: omit(work, ["manifestations.all[0].cover"]),
+    work: omit(work, ["manifestations.mostRelevant[0].cover"]),
     className: "",
     onClick: () => {},
   };
@@ -149,6 +149,19 @@ export function SlowLoading() {
 const work = {
   workId: "some-id-1",
   manifestations: {
+    mostRelevant: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
     all: [
       {
         cover: {

@@ -3,7 +3,7 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Col from "react-bootstrap/Col";
 import styles from "./OrderButtonTextBelow.module.css";
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 import Skeleton from "@/components/base/skeleton";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {

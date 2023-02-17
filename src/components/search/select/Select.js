@@ -114,6 +114,7 @@ function Wrap({ children }) {
       setQuery({
         pathname: router.pathname,
         query: { ...router.query, ...param },
+        exclude: ["page"],
       });
     },
     selected,

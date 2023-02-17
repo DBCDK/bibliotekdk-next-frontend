@@ -1,18 +1,13 @@
 // pages/500.js
 import React from "react";
-import Header from "@/components/header/Header";
 import Section from "@/components/base/section";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
-import { useRouter } from "next/router";
 
 export default function Custom500() {
-  const router = useRouter();
-
   return (
     <>
-      <Header router={router} />
       <Section
         title={Translate({
           context: "errorpages",

@@ -245,7 +245,8 @@ export function subjects({ workId }) {
     query subjects($workId: String!) {
       work(id: $workId) {
         subjects {
-          dbcVerified {
+          selectedSubjects: all {
+            type
             display
             ... on SubjectText {
               language {
@@ -255,7 +256,6 @@ export function subjects({ workId }) {
           }
         }
       }
-      monitor(name: "bibdknext_work_basic")
     }`,
     variables: { workId },
     slowThreshold: 3000,

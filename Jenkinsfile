@@ -30,16 +30,16 @@ pipeline {
                         sh "docker build -t ${IMAGE_NAME} --pull ."
                         app = docker.image(IMAGE_NAME)
                     }
-                } 
+                }
             }
         }
         stage('Integration test') {
-            steps { 
+            steps {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
                         sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
-                        sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"                        
+                        sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
                         sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
                 }
@@ -47,11 +47,9 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                anyOf {
-                    branch 'master'; branch 'alfa-0'
-                }
+                branch 'main'
             }
-            steps { 
+            steps {
                 script {
                 if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
                     docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
@@ -70,13 +68,13 @@ pipeline {
                 }
             }
 		        when {
-			    branch 'alfa-0'
+			    branch 'main'
 			}
 			steps {
 				dir("deploy") {
                     sh '''
                         #!/usr/bin/env bash
-						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
 					'''
 				}
 			}
@@ -97,7 +95,7 @@ pipeline {
         }
         failure {
             script {
-                if ("${BRANCH_NAME}" == 'master') {
+                if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
                         color: 'warning',
                         message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
@@ -107,7 +105,7 @@ pipeline {
         }
         success {
             script {
-                if ("${BRANCH_NAME}" == 'master') {
+                if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
                         color: 'good',
                         message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",

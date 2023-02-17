@@ -56,6 +56,7 @@ export function References({ context }) {
           context={context}
           singleManifestation={true}
           showOrderTxt={false}
+          showChangeManifestation={false}
         />
       </div>
 

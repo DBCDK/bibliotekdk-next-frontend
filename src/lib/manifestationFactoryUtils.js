@@ -1,7 +1,7 @@
-import { chain } from "lodash";
 import isEqual from "lodash/isEqual";
 import uniqWith from "lodash/uniqWith";
 import upperFirst from "lodash/upperFirst";
+import groupBy from "lodash/groupBy";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
 
@@ -97,18 +97,17 @@ export function groupManifestations(
   manifestations,
   sorter = sorterByPublicationYear
 ) {
-  return chain(manifestations)
-    ?.sort(sorter)
-    ?.map((manifestation) => {
+  return groupBy(
+    manifestations?.sort(sorter)?.map((manifestation) => {
       return {
         ...manifestation,
         materialTypesArray: manifestation?.materialTypes
           ?.map((mat) => mat.specific)
           .sort(compareArraysOfStrings),
       };
-    })
-    ?.groupBy("materialTypesArray")
-    ?.value();
+    }),
+    "materialTypesArray"
+  );
 }
 
 /**

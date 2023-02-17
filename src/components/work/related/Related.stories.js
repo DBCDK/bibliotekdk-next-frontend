@@ -56,7 +56,7 @@ Connected.story = {
         },
         Work: {
           subjects: () => ({
-            dbcVerified: [
+            all: [
               {
                 display: "savn",
                 __typename: "SubjectText",

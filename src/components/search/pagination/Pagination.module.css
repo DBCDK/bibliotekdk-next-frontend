@@ -1,61 +1,56 @@
-.arrow {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 1;
-  transition: opacity 0.25s;
-  border-radius: 50%;
+.arrow_styling {
+  --arrow__background_color: var(--white);
+  --arrow__fill_color: var(--blue);
+  --arrow__background_color_hover: var(--blue);
+  --arrow__fill_color_hover: var(--blue);
+  --arrow__box_shadow: 0;
 }
-.arrow.hidden {
+
+.arrow_hidden {
   opacity: 0;
-  cursor: unset;
 }
-.arrow path {
-  fill: var(--blue);
-  stroke: var(--blue);
-}
+
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: var(--pt4);
 }
+
 .desktop {
   display: none;
 }
-.pagination > * {
-  margin: var(--pt05);
-}
-.pagination i {
-  font-size: 18px;
-  line-height: 18px;
+
+.pagination button:not(.arrow_styling) {
+  font-size: var(--pt2);
+  line-height: var(--pt3);
   font-family: var(--body-font-medium);
   font-style: normal;
   user-select: none;
   cursor: pointer;
-  background-color: unset !important;
-  /* transition: all 0.25s; */
+  background-color: transparent;
 }
 
-.pagination i:focus,
-.pagination i:hover,
-.arrow:focus,
-.arrow:hover {
-  background-color: var(--white) !important;
+.pagination button:focus,
+.pagination button:hover {
+  background-color: var(--white);
   border: 1px solid var(--blue);
 }
 
-.pagination i.selected {
+.pagination button:not(.arrow_styling):focus:not(:focus-visible) {
+  border: 0;
+  outline: 0;
+}
+
+.pagination button.selected {
   color: white;
-  background-color: var(--blue) !important;
+  background-color: var(--blue);
 }
 
 @media (min-width: 768px) {
   .desktop {
     display: flex;
+    gap: var(--pt1);
   }
   .mobile {
     display: none;

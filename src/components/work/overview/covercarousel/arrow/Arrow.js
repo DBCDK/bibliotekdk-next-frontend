@@ -12,6 +12,7 @@ export function Arrow({
   arrowClass,
   dataDisabled = false,
   dataCy = `${orientation}_arrow`,
+  size = { w: 5, h: 5 },
 }) {
   const ArrowTag = orientation === "right" ? RightSvg : LeftSvg;
 
@@ -25,7 +26,7 @@ export function Arrow({
 
   return (
     <Icon
-      size={{ w: 5, h: 5 }}
+      size={size}
       className={classNames}
       alt={Translate({
         context: "recommendations",

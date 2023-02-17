@@ -12,6 +12,7 @@ import Translate from "@/components/base/translate";
 
 import styles from "./Keywords.module.css";
 import { uniqueSubjectEntries } from "@/lib/utils";
+import { useMemo } from "react";
 
 /**
  * bibliotek.dk url
@@ -50,6 +51,71 @@ function getFontSize(keywords) {
   return styles.small;
 }
 
+// How we want to group the subjects by type
+const SUBJECT_GROUPS = [
+  [
+    "TOPIC",
+    "FICTIONAL_CHARACTER",
+    "MEDICAL_SUBJECT_HEADING",
+    "MUSIC_COUNTRY_OF_ORIGIN",
+    "MUSIC_TIME_PERIOD",
+    "MUSICAL_INSTRUMENTATION",
+    "NATIONAL_AGRICULTURAL_LIBRARY",
+    "TITLE",
+    "FILM_NATIONALITY",
+    "LIBRARY_OF_CONGRESS_SUBJECT_HEADING",
+    "PERSON",
+    "CORPORATION",
+  ],
+  ["LOCATION", "TIME_PERIOD"],
+];
+
+/**
+ * Group subjects according to types, and remove duplicates
+ *
+ * Ex. output
+ * [
+ *   {
+ *     key: "historie-2. verdenskrig",
+ *     subjects: [
+ *       {type: "TOPIC", display: "historie"},
+ *       {type: "TOPIC", display: "2. verdenskrig"}
+ *     ]
+ *   },
+ *   {
+ *     key: "Tyskland-1930-1939",
+ *     subjects: [
+ *       {type: "LOCATION", display: "Tyskland"},
+ *       {type: "TIME_PERIOD", display: "1930-1939"}
+ *     ]
+ *   }
+ * ]
+ */
+function groupSubjects(subjects) {
+  const seen = {};
+  const groups = [];
+
+  SUBJECT_GROUPS.forEach((types) => {
+    const group = subjects.filter(({ type, display }) => {
+      if (seen[display]) {
+        return false;
+      }
+      if (types.includes(type)) {
+        seen[display] = true;
+        return true;
+      }
+    });
+    if (group.length > 0) {
+      groups.push({
+        key: group.map((s) => s.display).join("-"),
+        subjects: group,
+      });
+    }
+  });
+
+  return groups;
+}
+
 /**
  * The Component function
  *
@@ -58,13 +124,14 @@ function getFontSize(keywords) {
  *
  * @returns {JSX.Element}
  */
-export function Keywords({
-  className = "",
-  data: uniqueSubjects = [],
-  skeleton = false,
-}) {
+export function Keywords({ className = "", data = [], skeleton = false }) {
+  const uniqueSubjects = uniqueSubjectEntries(data);
   // Get fontsize - based on subjects in data
   const sizeClass = getFontSize(uniqueSubjects);
+
+  const grouped = useMemo(() => {
+    return groupSubjects(data);
+  }, [data]);
 
   // Translate Context
   const context = { context: "keywords" };
@@ -76,25 +143,31 @@ export function Keywords({
       backgroundColor="var(--jagged-ice)"
     >
       <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
-        {uniqueSubjects.map((val) => {
-          const key = cyKey({ name: val, prefix: "keyword" });
-
+        {grouped?.map((group, idx) => {
           return (
-            <span
-              data-cy={key}
-              className={`${styles.keyword} ${sizeClass}`}
-              key={`${key}-${JSON.stringify(val)}`}
-            >
-              <Link
-                a
-                href={url(val)}
-                border={{ bottom: { keepVisible: true } }}
-              >
-                <Title type="title4" skeleton={skeleton}>
-                  {val}
-                </Title>
-              </Link>
-            </span>
+            <div key={group.key} data-cy={`keyword-group-${idx}`}>
+              {group.subjects.map(({ display }) => {
+                const key = cyKey({ name: display, prefix: "keyword" });
+
+                return (
+                  <span
+                    data-cy={key}
+                    className={`${styles.keyword} ${sizeClass}`}
+                    key={`${key}-${JSON.stringify(display)}`}
+                  >
+                    <Link
+                      a
+                      href={url(display)}
+                      border={{ bottom: { keepVisible: true } }}
+                    >
+                      <Title type="title4" skeleton={skeleton}>
+                        {display}
+                      </Title>
+                    </Link>
+                  </span>
+                );
+              })}
+            </div>
           );
         })}
       </div>
@@ -112,14 +185,14 @@ export function Keywords({
  */
 export function KeywordsSkeleton(props) {
   const data = [
-    { type: "1", value: "someKeyword" },
-    { type: "2", value: "someKeyword" },
-    { type: "3", value: "someOtherKeyword" },
-    { type: "4", value: "someKeyword" },
-    { type: "5", value: "keyword" },
-    { type: "6", value: "someKeyword" },
-    { type: "7", value: "someOtherKeyword" },
-    { type: "8", value: "keyword" },
+    { type: "TOPIC", display: "someKeyword" },
+    { type: "TOPIC", display: "someKeyword" },
+    { type: "TOPIC", display: "someOtherKeyword" },
+    { type: "TOPIC", display: "someKeyword" },
+    { type: "TOPIC", display: "keyword" },
+    { type: "TOPIC", display: "someKeyword" },
+    { type: "TOPIC", display: "someOtherKeyword" },
+    { type: "TOPIC", display: "keyword" },
   ];
 
   return (
@@ -157,13 +230,13 @@ export default function Wrap(props) {
   }
 
   // get subjects from response
-  const subjectsDbcVerified = data?.work?.subjects?.dbcVerified;
+  const subjects = data?.work?.subjects?.selectedSubjects;
 
-  if (!subjectsDbcVerified || subjectsDbcVerified.length === 0) {
+  if (!subjects || subjects.length === 0) {
     return null;
   }
-  const subjectsFiltered = subjectsDbcVerified.filter((sub) => {
-    return sub?.language?.isoCode === "dan";
+  const subjectsFiltered = subjects.filter((sub) => {
+    return !sub?.language || sub?.language?.isoCode === "dan";
   });
 
   if (!subjectsFiltered || subjectsFiltered.length === 0) {
@@ -174,7 +247,7 @@ export default function Wrap(props) {
     <Keywords
       className={props.className}
       skeleton={false}
-      data={uniqueSubjectEntries(subjectsFiltered)}
+      data={subjectsFiltered}
     />
   );
 }

@@ -48,10 +48,31 @@
   --success: #27ae60;
   --success-light: #d0f1d2;
 
+  --transparent: #FF000000;
+  --link-background: rgba(0, 0, 0, 0.1);
+  --basic_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+
+  /* Underline defaults */
+  --underline-font-color: var(--mine-shaft);
+  --underline-font-hover-color: var(--blue);
+
+  --underline-top-color: var(--blue);
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+  --underline-middle-color: var(--transparent);
+  --underline-middle-hover-color: var(--transparent);
+
+  --text-element-font-size: 17px;
+  --text-element-line-height: 26px;
+  --text-element-font-family: var(--body-font-semibold);
+
+  /* Arrow defaults */
   --arrow__background_color: var(--blue);
   --arrow__fill_color: var(--white);
   --arrow__background_color_hover: var(--mine-shaft);
   --arrow__fill_color_hover: var(--white);
   --arrow__disabled_fill_color: var(--white);
   --arrow__disabled_background_color: var(--iron);
+  --arrow__box_shadow: 0;
 }

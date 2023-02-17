@@ -1,4 +1,4 @@
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 import Tag from "@/components/base/forms/tag";
 import {
   formatMaterialTypesToCypress,

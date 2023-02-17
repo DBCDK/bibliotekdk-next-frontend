@@ -59,45 +59,6 @@
   padding-top: 0;
 }
 
-/* Links with animated underline */
-.body a {
-  position: relative;
-  color: var(--mine-shaft);
-  text-decoration: none;
-  display: inline-flex;
-}
-.body a::before,
-.body a::after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  margin-bottom: 0;
-  border-bottom: solid 1px var(--blue);
-}
-.body a::before {
-  transform: scaleX(1);
-}
-.body a::after {
-  transform: scaleX(0);
-  transition: transform 0.4s;
-}
-.body a:focus,
-.body a:hover {
-  color: var(--blue);
-}
-.body a:focus::before,
-.body a:hover::before {
-  transform: scaleX(0);
-}
-.body a:focus::after,
-.body a:hover::after {
-  transform: scaleX(1);
-}
-
 @media (min-width: 992px) {
   .body figure img {
     max-width: 100%;

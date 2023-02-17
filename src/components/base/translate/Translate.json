@@ -709,6 +709,10 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "subtitle": {
+        "da": "Seneste udgave, %s",
+        "en": "Latest edition, %s"
+      },
       "language": {
         "da": "Sprog",
         "en": "Language"
@@ -732,6 +736,10 @@
       "genre/form": {
         "da": "genre/form",
         "en": "genre/form"
+      },
+      "creators": {
+        "da": "Ophav",
+        "en": "Authors"
       }
     },
     "description": {
@@ -1990,6 +1998,10 @@
       "blocked-user-alternative-solution": {
         "da": "eller skift evt. til et andet bibliotek.",
         "en": "or change to another library."
+      },
+      "volume": {
+        "da": "Udgave",
+        "en": "Volume"
       }
     },
     "login": {

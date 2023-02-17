@@ -89,14 +89,18 @@ function SelectedFilter({
     const selectedWithHits = valuecopy?.filter(
       (value) => terms.includes(value.term) || terms.includes(value.key)
     );
-    // the rest of the facets
-    const selectedNoHits = valuecopy
-      .filter((el) => !selectedWithHits.includes(el))
-      .sort(sortFilters);
+
+    // selected, but term is not not in facet result
+    const selectedNoHits = terms
+      .filter(
+        (term) => !valuecopy.find((el) => term === el.term || term === el.key)
+      )
+      .map((term) => ({ key: term, term, score: 0 }));
 
     const nonSelected = valuecopy
       .filter((el) => !selectedWithHits.includes(el))
-      .filter((el) => !selectedNoHits.includes(el));
+      .filter((el) => !selectedNoHits.includes(el))
+      .sort(sortFilters);
 
     setOrderedValues([...selectedWithHits, ...selectedNoHits, ...nonSelected]);
   }, [name, active, sortOrder]);
@@ -280,7 +284,6 @@ export function Filter(props) {
               </Text>
             </Link>
           </span>
-
           <List.Group
             enabled={!isLoading}
             data-cy="list-facets"
@@ -387,7 +390,8 @@ export default function Wrap(props) {
   // update query params when modal closes
   useEffect(() => {
     if (!modal.isVisible && modal.hasBeenVisible) {
-      setQuery({ exclude: ["modal"] });
+      const page = !isSynced ? ["page"] : [];
+      setQuery({ exclude: ["modal", ...page] });
     }
   }, [modal.isVisible]);
 
@@ -395,7 +399,7 @@ export default function Wrap(props) {
   const { facet } = context;
 
   // connected filters hook
-  const { filters, setFilters, setQuery } = useFilters();
+  const { filters, setFilters, setQuery, isSynced } = useFilters();
 
   // connected q hook
   const { hasQuery, getQuery } = useQ();
@@ -452,7 +456,8 @@ export default function Wrap(props) {
       }}
       onSubmit={() => {
         // exclude modal param -> will close the modal on submit
-        setQuery({ exclude: ["modal"] });
+        const page = !isSynced ? ["page"] : [];
+        setQuery({ exclude: ["modal", ...page] });
       }}
       onClear={() => setFilters({ ...excludeOnClear })}
       {...props}

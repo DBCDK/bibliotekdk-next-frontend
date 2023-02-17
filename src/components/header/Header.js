@@ -38,7 +38,8 @@ import { openMobileSuggester } from "@/components/header/suggester/Suggester";
 import styles from "./Header.module.css";
 import { useRouter } from "next/router";
 import { SuggestTypeEnum } from "@/lib/enums";
-import { isEmpty, isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
+import isEmpty from "lodash/isEmpty";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 // material Pages
@@ -191,7 +192,7 @@ export function Header({
         <Container className={styles.header} fluid>
           <Row>
             <StaticHeader router={router} context={context} />
-            <Col xs={{ span: 9, offset: 3 }}>
+            <Col xs={{ span: 9, offset: 3 }} className={styles.mobileHeader}>
               <SkipToMainAnchor />
               <div className={styles.bottom}>
                 <form
@@ -322,7 +323,10 @@ export function StaticHeader({ router = null, context }) {
       <Col xs={2}>
         <Logo fill={"var(--blue)"} text={"default_logo_text"} />
       </Col>
-      <Col xs={{ span: 9, offset: 1 }}>
+      <Col
+        xs={{ span: 9, offset: 1 }}
+        className={styles.mobileHeaderNoActionCol}
+      >
         <div className={styles.top}>
           <div
             className={styles.materials}

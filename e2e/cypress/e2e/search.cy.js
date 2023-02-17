@@ -1,18 +1,24 @@
+function checkPrefilledQueryParameters() {
+  // Check URL query parameters are as expected
+  cy.get("[data-cy=router-query]").then((el) => {
+    expect(JSON.parse(el.text())).to.deep.equal({
+      "q.all": "some all",
+      "q.title": "some title",
+      "q.creator": "some creator",
+      "q.subject": "some subject",
+      workTypes: "movie",
+      materialTypes: "bog",
+    });
+  });
+}
+
 describe("Search", () => {
   describe(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
       // Check URL query parameters are as expected
-      cy.get("[data-cy=router-query]").then((el) => {
-        expect(JSON.parse(el.text())).to.deep.equal({
-          "q.all": "some all",
-          "q.title": "some title",
-          "q.creator": "some creator",
-          "q.subject": "some subject",
-          workTypes: "movie",
-        });
-      });
+      checkPrefilledQueryParameters();
 
       // Check URL path is as expected
       cy.get("[data-cy=router-pathname]").should("have.text", "/find");
@@ -77,19 +83,14 @@ describe("Search", () => {
       cy.get("header [data-cy=search-input-subject-clear]").click();
 
       // Check URL query parameters are as expected
-      cy.get("[data-cy=router-query]").then((el) => {
-        expect(JSON.parse(el.text())).to.deep.equal({
-          "q.all": "some all",
-          "q.title": "some title",
-          "q.creator": "some creator",
-          "q.subject": "some subject",
-          workTypes: "movie",
-        });
-      });
+      checkPrefilledQueryParameters();
     });
 
-    it(`Editing default search input, should not wipe other input`, () => {
+    it(`Editing default search input, should not wipe other input, filters should be wiped`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+      // Check URL query parameters are as expected
+      checkPrefilledQueryParameters();
 
       cy.get("[data-cy=suggester-input]").clear().type("something else");
 
@@ -101,6 +102,27 @@ describe("Search", () => {
           "q.all": "something else",
           "q.title": "some title",
           "q.creator": "some creator",
+          "q.subject": "some subject",
+          workTypes: "movie",
+        });
+      });
+    });
+
+    it(`Selecting suggestion, should not wipe other input, filters should be wiped`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
+
+      // Check URL query parameters are as expected
+      checkPrefilledQueryParameters();
+
+      cy.get("header [data-cy=search-input-creator]").clear().type("hest");
+      cy.contains("suggest.result").first().click();
+
+      // Check URL query parameters are as expected
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({
+          "q.all": "some all",
+          "q.title": "some title",
+          "q.creator": "suggest.result[0].term",
           "q.subject": "some subject",
           workTypes: "movie",
         });
@@ -152,6 +174,17 @@ describe("Search", () => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
       });
     });
+
+    it(`Searching should reset filters and page`, () => {
+      cy.visit("/iframe.html?id=layout-header--nav-header");
+
+      cy.get("header [data-cy=suggester-input]").clear().type("hest{enter}");
+
+      cy.get("[data-cy=router-query]").then((el) => {
+        expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
+      });
+    });
+
     describe(`Mobile`, () => {
       it(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");
@@ -190,6 +223,7 @@ describe("Search", () => {
             "q.creator": "some creator",
             "q.subject": "some subject",
             workTypes: "movie",
+            materialTypes: "bog",
           });
         });
 

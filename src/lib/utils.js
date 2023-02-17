@@ -1,5 +1,5 @@
 import getConfig from "next/config";
-import { uniq } from "lodash";
+import uniq from "lodash/uniq";
 
 const APP_URL =
   getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000";
