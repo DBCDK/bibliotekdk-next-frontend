@@ -138,14 +138,14 @@ function parsePersonAndFunction(person) {
 }
 
 /**
- * jsxParser for movie creators
+ * jsxParser for movie creators - render function
  * @param values
  * @param skeleton
  * @returns {unknown[]}
  *  jsx element to be parsed by react
  * @constructor
  */
-function MovieCreatorValues({ values, skeleton }) {
+function RenderMovieCreatorValues({ values, skeleton }) {
   return (
     values &&
     values.map((person, index) => {
@@ -166,7 +166,7 @@ function MovieCreatorValues({ values, skeleton }) {
  * @returns {any[]}
  * @constructor
  */
-function MovieContributorValues({ values, skeleton }) {
+function RenderMovieContributorValues({ values, skeleton }) {
   return Object.keys(values).map(
     (val) =>
       values[val] && (
@@ -284,33 +284,50 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
     ],
+
     MOVIE: [
+      // overwrite contributors from base array - add a new one (moviecontributors) for correct order
       {
         contributors: {
           label: "",
+          value: "",
+        },
+      },
+      {
+        moviecontributors: {
+          label: "",
           value: parseMovieContributors(manifestation),
-          jsxParser: MovieContributorValues,
+          jsxParser: RenderMovieContributorValues,
         },
       },
       {
         creators: {
           label: Translate({ ...context, label: "creators" }),
           value: parseMovieCreators(manifestation),
-          jsxParser: MovieCreatorValues,
+          jsxParser: RenderMovieCreatorValues,
         },
       },
     ],
   };
 
-  const merged = [
-    ...fieldsMap["DEFAULT"].filter((def) => {
-      const fisk =
-        fieldsMap[materialType] &&
-        fieldsMap[materialType].find((mat) => mat[Object.keys(def)[0]]);
-      return !fisk;
-    }),
-    ...(fieldsMap[materialType] || []),
-  ];
+  return filterAndMerge({
+    baseArray: fieldsMap["DEFAULT"],
+    extendingArray: fieldsMap[materialType],
+  });
+}
 
-  return merged;
+export function filterAndMerge({ baseArray, extendingArray }) {
+  // find index in basearray of key in extending array
+  extendingArray?.forEach((ext) => {
+    const key = Object.keys(ext)[0];
+    const baseindex = baseArray?.findIndex(
+      (base) => Object.keys(base)[0] === key
+    );
+    if (baseindex !== -1) {
+      baseArray[baseindex] = ext;
+    } else {
+      baseArray.push(ext);
+    }
+  });
+  return baseArray;
 }
