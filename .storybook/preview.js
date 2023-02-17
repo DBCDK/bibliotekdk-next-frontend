@@ -16,6 +16,12 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Router from "next/router";
 
+export const parameters = {
+  nextRouter: {
+    Provider: RouterContext.Provider,
+  },
+};
+
 export const decorators = [
   (Story) => {
     return (
