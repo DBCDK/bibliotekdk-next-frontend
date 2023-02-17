@@ -40,11 +40,19 @@ export function getTextDescription(materialType, manifestation) {
     .join(", ");
 }
 
-export function scrollToElement(idx, passedId = "slide") {
-  document.querySelector(`#${passedId}-${idx}`).scrollIntoView({
+export function scrollToElement(sliderElementId) {
+  document.querySelector(`#${sliderElementId}`).scrollIntoView({
     behavior: "smooth",
     block: "nearest",
     inline: "center",
+  });
+}
+
+export function scrollDistance(sliderId, slideTranslation) {
+  document.querySelector(`#${sliderId}`).scrollBy({
+    left: slideTranslation,
+    top: 0,
+    behavior: "smooth",
   });
 }
 

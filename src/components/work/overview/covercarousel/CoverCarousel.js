@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { forwardRef, useEffect, useId, useMemo, useRef } from "react";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Skeleton from "@/components/base/skeleton";
@@ -22,8 +15,7 @@ import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
 import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
-import range from "lodash/range";
-import at from "lodash/at";
+import useScrollSlider from "@/components/hooks/useScrollSlider";
 
 const CoverElement = forwardRef(function CoverElement(
   {
@@ -92,21 +84,21 @@ export function CoverCarousel({
   sliderId = "slide",
   maxLength = 10,
 }) {
-  const [index, setIndex] = useState(0);
-  const [visibleElement, setVisibleElement] = useState(0);
   const carouselId = useId();
   const carouselRef = useRef(null);
 
-  useEffect(() => {
-    if (visibleElement !== index) {
-      setIndex(visibleElement);
-    }
-  }, [visibleElement]);
+  const { visibleElement, index, sliderElementId, setVisibleElement } =
+    useScrollSlider({
+      sliderId: sliderId,
+      parentRef: carouselRef,
+      disableScrollRestoration: true,
+    });
 
   const length = manifestations?.length;
 
   function clickCallback(newIndex) {
-    visibleElement === index && scrollToElement(newIndex, sliderId);
+    visibleElement === index &&
+      scrollToElement(sliderElementId(newIndex, sliderId));
   }
 
   return (

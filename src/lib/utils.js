@@ -109,3 +109,8 @@ export function comparableYear(a) {
     ? 1
     : a;
 }
+
+export function chainFunctions(functions) {
+  return (initialValue) =>
+    functions.reduce((accumulator, func) => func(accumulator), initialValue);
+}

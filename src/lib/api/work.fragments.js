@@ -415,7 +415,7 @@ export function workJsonLd({ workId }) {
                   cover {
                     detail
                     origin
-                  }                  
+                  }
                   identifiers {
                     type
                     value
@@ -617,8 +617,18 @@ export function pidToWorkId({ pid }) {
   };
 }
 
+const coverFragment = `fragment coverFragment on Manifestation {
+  cover {
+    detail
+    origin
+  }
+}`;
+
 const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
+  ownerWork {
+    workId
+  }
   titles {
     main
     full
@@ -667,3 +677,75 @@ const manifestationAccess = `fragment manifestationAccess on Manifestation {
     }
   }
 }`;
+
+export function workForWorkRelationsWorkTypeFactory({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query workForWorkRelationsWorkTypeFactory($workId: String!) {
+      work(id: $workId) {
+        ...workRelationsWorkTypeFactory
+        relations {
+          ...relationsForWorkRelations
+        }
+      }
+      monitor(name: "bibdknext_pid_to_workid")
+    }
+    ${workRelationsWorkTypeFactory}
+    ${relationsForWorkRelations}`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on Work {
+  manifestations {
+    mostRelevant {
+      cover {
+        detail
+        origin
+      }
+    }
+  }
+  titles {
+    main
+    full
+  }
+  creators {
+    display
+  }
+  materialTypes {
+    specific
+  }
+  workId
+  workTypes
+}`;
+
+const relationsForWorkRelations = `fragment relationsForWorkRelations on Relations {
+  hasAdaptation {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+  isAdaptationOf {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+  continues {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+  continuedIn {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+  discusses {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+  discussedIn {
+    ...coverFragment
+    ...manifestationDetailsForAccessFactory
+  }
+}
+${manifestationDetailsForAccessFactory}
+${coverFragment}`;

@@ -748,6 +748,12 @@
         "en": "Description"
       }
     },
+    "relatedworks": {
+      "title": {
+        "da": "Relaterede værker",
+        "en": "Related works"
+      }
+    },
     "content": {
       "title": {
         "da": "Indhold",

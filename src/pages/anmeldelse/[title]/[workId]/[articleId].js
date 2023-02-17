@@ -110,8 +110,6 @@ export default function Wrap() {
     infomediaArticleData?.infomedia?.article
   );
 
-  console.log("publicReviewData: ", publicReviewData);
-
   return (
     <ReviewPage
       article={article}
