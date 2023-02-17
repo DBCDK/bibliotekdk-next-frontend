@@ -16,7 +16,14 @@ import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+
+/* TODO: USE COVERCAROUSEL WHEN APPROVED
+ *   Remove 'import Cover' and 'import Bookmark'
+ *   Instead import:
+     import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+ * */
+import Cover from "@/components/base/cover";
+import Bookmark from "@/components/base/bookmark";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -55,10 +62,16 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
 
-  const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
-    useMemo(() => {
-      return manifestationMaterialTypeFactory(manifestations);
-    }, [work, manifestations]);
+  const {
+    uniqueMaterialTypes,
+    inUniqueMaterialTypes,
+    flatPidsByType,
+    /* TODO: USE COVERCAROUSEL WHEN APPROVED
+     *   Remove below line */
+    manifestationsEnrichedWithDefaultFrontpage,
+  } = useMemo(() => {
+    return manifestationMaterialTypeFactory(manifestations);
+  }, [work, manifestations]);
 
   useInitMaterialType(
     uniqueMaterialTypes,
@@ -69,6 +82,13 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
+  /* TODO: USE COVERCAROUSEL WHEN APPROVED
+   *    Remove selectedMaterial */
+  const selectedMaterial = useMemo(
+    () => manifestationsEnrichedWithDefaultFrontpage(type),
+    [type]
+  );
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -76,14 +96,32 @@ export function Overview({
           <Col xs={12} lg={3} className={styles.breadcrumbs} />
           <Col
             xs={12}
-            lg={4}
+            /* TODO: USE COVERCAROUSEL WHEN APPROVED
+             * Remove below line
+             * Use instead
+                lg={4}
+             * */
+            lg={3}
             md={{ span: 4, order: 3 }}
             className={styles.cover}
           >
-            <CoverCarousel
-              selectedPids={selectedPids}
-              workTitles={work?.titles}
-            />
+            {/* TODO: USE COVERCAROUSEL WHEN APPROVED
+             *  Remove belov
+             *  Use instead
+                <CoverCarousel
+                  selectedPids={selectedPids}
+                  workTitles={work?.titles}
+                />
+             */}
+            <Row>
+              <Cover
+                src={selectedMaterial?.cover?.detail || work?.materialTypes}
+                skeleton={skeleton || !selectedMaterial.cover}
+                size="large"
+              >
+                <Bookmark title={work?.titles?.full?.[0]} />
+              </Cover>
+            </Row>
           </Col>
 
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
