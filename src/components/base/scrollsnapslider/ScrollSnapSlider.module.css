@@ -1,0 +1,39 @@
+.flex_row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--pt2);
+}
+
+.flex_arrow {
+  align-self: center;
+}
+
+.flex_box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+
+  gap: var(--pt2);
+
+  padding-bottom: var(--pt2);
+
+  overflow-x: scroll;
+  scroll-snap-type: x proximity;
+}
+
+.flex_box::-webkit-scrollbar {
+  width: 10px;
+  height: var(--pt05);
+}
+
+.flex_box::-webkit-scrollbar-track {
+  background: var(--concrete);
+}
+
+.flex_box::-webkit-scrollbar-thumb {
+  background: var(--iron);
+}
+
+.flex_box::-webkit-scrollbar-thumb:hover {
+  background: var(--gray);
+}

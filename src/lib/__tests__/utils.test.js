@@ -1,4 +1,8 @@
-import { encodeTitleCreator, getCanonicalWorkUrl } from "../utils";
+import {
+  encodeTitleCreator,
+  getCanonicalWorkUrl,
+  chainFunctions,
+} from "../utils";
 
 test("encodeTitleCreator", () => {
   const actual = encodeTitleCreator("en Bogtitel", "En Forfatter");
@@ -16,4 +20,32 @@ test("getCanonicalWorkUrl", () => {
   const expected =
     "http://localhost:3000/materiale/en-bogtitel_en-forfatter/some-work-id";
   expect(actual).toEqual(expected);
+});
+
+describe("pipe", () => {
+  it("empty functions give initial value", () => {
+    const actual = chainFunctions([])([]);
+    const expected = [];
+    expect(actual).toEqual(expected);
+  });
+  it("empty functions give initial value 2", () => {
+    const actual = chainFunctions([])([{ hej: "123" }, { hej: "321" }]);
+    const expected = [{ hej: "123" }, { hej: "321" }];
+    expect(actual).toEqual(expected);
+  });
+  it("one function give initial value 2", () => {
+    const actual = chainFunctions([(curr) => curr.slice(0, 1)])([
+      { hej: "123" },
+      { hej: "321" },
+    ]);
+    const expected = [{ hej: "123" }];
+    expect(actual).toEqual(expected);
+  });
+  it("2 functions give initial value 2", () => {
+    const addOne = (accum) => accum + 1;
+
+    const actual = chainFunctions([addOne, addOne])(1);
+    const expected = 3;
+    expect(actual).toEqual(expected);
+  });
 });

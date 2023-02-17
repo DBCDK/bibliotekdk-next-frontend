@@ -1,0 +1,49 @@
+.link_style {
+  cursor: pointer;
+  display: contents;
+}
+
+.related_element {
+  /* Add underline colors */
+  --underline-middle-hover-color: var(--link-background);
+  --underline-font-hover-color: var(--mine-shaft);
+  /* -- */
+
+  /* Reset anchor tag */
+  text-decoration: none;
+  color: var(--mine-shaft);
+
+  flex-basis: 30%;
+  width: 400px;
+  height: 160px;
+
+  padding: var(--pt05);
+
+  display: flex;
+  gap: 1rem;
+}
+
+.wrap_text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;        /* number of lines to show */
+  line-height: 1.5em;           /* fallback */
+  max-height: calc(1.5em * 2);  /* fallback */
+}
+
+.text {
+  min-width: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt05);
+  flex-grow: 1;
+}
+
+.margin_auto {
+  margin-top: auto;
+  margin-bottom: auto;
+  flex: 1;
+}

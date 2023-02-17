@@ -12,6 +12,11 @@
   display: inline-block;
 }
 
+.border.display_inline {
+  white-space: normal;
+  display: inline;
+}
+
 /* real focus */
 .border:focus-visible {
   color: var(--blue);

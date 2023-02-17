@@ -37,7 +37,6 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import useScrollRestoration from "@/components/hooks/useScrollRestoration";
 import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
@@ -117,8 +116,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // pass translations to Translate component - it might be false -
   // let Translate component handle whatever could be wrong with the result
   setTranslations(pageProps.translations);
-  // Restore scrollPosition on page change (where page using getServersideProps)
-  useScrollRestoration(router);
 
   // swr global confuguration options
   const swrConfigValue = {

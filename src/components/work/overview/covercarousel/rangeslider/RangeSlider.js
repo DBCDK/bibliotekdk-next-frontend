@@ -8,12 +8,13 @@ export default function RangeSlider({
 }) {
   return (
     <input
-      className={`${sliderClass} ${styles.input_range}`}
+      className={`${styles.input_range} ${sliderClass}`}
       type={"range"}
       min={0}
       max={length - 1}
       value={index}
-      onChange={(event) => clickCallback(event.target.value)}
+      onInput={(event) => clickCallback(event.target.value)}
+      onMouseMove={(e) => e.preventDefault()}
     />
   );
 }

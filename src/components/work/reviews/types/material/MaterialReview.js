@@ -29,7 +29,7 @@ export function contentParser({ content, manifestations }) {
       .forEach(({ ownerWork }, idx) => {
         const arr = content.split(ownerWork?.titles?.main);
         arr.forEach((chunk) => chunks.push(chunk));
-        chunks.splice(idx + 1, 0, <LectorLink work={ownerWork} />);
+        chunks.splice(idx + 1, 0, <LectorLink key={idx} work={ownerWork} />);
       });
   }
 
@@ -193,10 +193,8 @@ function LectorReview({ data, skeleton }) {
 /**
  * Check if a paragraph holds a link to another work - if so parse as link
  * if not return a period (.)
- * @param paragraph
- * @param skeleton
+ * @param work
  * @return {JSX.Element|string}
- * @constructor
  */
 function LectorLink({ work }) {
   if (!work) {

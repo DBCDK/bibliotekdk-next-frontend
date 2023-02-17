@@ -41,3 +41,19 @@ export const AccessEnum = Object.freeze({
   DIGITAL_ARTICLE_SERVICE: "DigitalArticleService",
   INTER_LIBRARY_LOAN: "InterLibraryLoan",
 });
+
+export const WorkTypeEnum = Object.freeze({
+  ARTICLE: "ARTICLE",
+  MOVIE: "MOVIE",
+  LITERATURE: "LITERATURE",
+  DEBATEARTICLE: "DEBATEARTICLE",
+});
+
+export const RelationTypeEnum = Object.freeze({
+  CONTINUES: { key: "continues", workType: WorkTypeEnum.ARTICLE },
+  CONTINUEDIN: { key: "continuedIn", workType: WorkTypeEnum.ARTICLE },
+  ISADAPTATIONOF: { key: "isAdaptationOf", workType: WorkTypeEnum.MOVIE },
+  HASADAPTATION: { key: "hasAdaptation", workType: WorkTypeEnum.LITERATURE },
+  DISCUSSES: { key: "discusses", workType: WorkTypeEnum.DEBATEARTICLE },
+  DISCUSSEDIN: { key: "discussedIn", workType: WorkTypeEnum.DEBATEARTICLE },
+});
