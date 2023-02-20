@@ -44,18 +44,34 @@ export function Body() {
   );
 }
 
+export function LineClamping() {
+  return (
+    <div>
+      <StoryTitle>Line clamping: Max 2 lines</StoryTitle>
+      <div style={{ maxWidth: 400 }}>
+        <Text type="text2" lines={2} clamp={true}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
+          purus a iaculis finibus. Integer lacus dui, condimentum quis elit in,
+          feugiat hendrerit urna. Etiam facilisis id ligula congue ultrices.
+        </Text>
+      </div>
+    </div>
+  );
+}
+
 /**
  * Show how to line clamp
  *
  */
-export function LineClamping() {
+export function LineClampingViewport() {
   return (
     <div>
       <StoryTitle>
-        Line clamping: Max 4 lines on XS devices, 2 lines on SM devices and up
+        Line clamping based on viewport size: Max 4 lines on XS devices, 2 lines
+        on SM devices and up
       </StoryTitle>
       <div style={{ maxWidth: 400 }}>
-        <Text type="text2" clamp={{ xs: 4, sm: 2 }}>
+        <Text type="text2" lines={{ xs: 4, sm: 2 }} clamp={true}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
           purus a iaculis finibus. Integer lacus dui, condimentum quis elit in,
           feugiat hendrerit urna. Etiam facilisis id ligula congue ultrices.

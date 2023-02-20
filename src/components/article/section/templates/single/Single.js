@@ -53,12 +53,7 @@ export default function Single({ articles, skeleton }) {
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
-                <Text
-                  type="text2"
-                  lines={1}
-                  clamp={{ xs: 1 }}
-                  skeleton={skeleton}
-                >
+                <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
                   {bodyText}
                 </Text>
               </span>

@@ -158,7 +158,12 @@ export function MaterialReview({
  */
 function LectorReview({ data, skeleton }) {
   return (
-    <Title type="title3" lines={3} clamp={{ xs: 5, lg: 3 }} skeleton={skeleton}>
+    <Title
+      type="title3"
+      lines={{ xs: 5, lg: 3 }}
+      clamp={true}
+      skeleton={skeleton}
+    >
       {data
         ?.map((paragraph) => paragraph)
         .filter(

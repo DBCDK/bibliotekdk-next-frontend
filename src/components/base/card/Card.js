@@ -79,7 +79,7 @@ export default function Card({
             className={`${styles.Title}`}
             type="text1"
             lines={2}
-            clamp={{ xs: 2 }}
+            clamp={true}
           >
             {title}
           </Text>
@@ -89,7 +89,7 @@ export default function Card({
               className={`${styles.Creator}`}
               type="text2"
               lines={2}
-              clamp={{ xs: 2 }}
+              clamp={true}
             >
               {creators?.[0]?.display}
             </Text>

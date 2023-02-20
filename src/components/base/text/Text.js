@@ -25,20 +25,24 @@ function Text({
   dataCy = null,
   tabIndex = null,
   id,
+  lines,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
   // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
 
-  const clampClasses = clamp
-    ? [
-        clampStyles.clamp,
-        ...Object.entries(clamp || {})
-          .map(([size, lines]) => clampStyles[`clamp-${size}-${lines}`])
-          .filter((style) => !!style),
-      ]
-    : [];
+  lines = typeof lines === "number" ? { xs: lines } : lines;
+
+  const clampClasses =
+    lines && clamp
+      ? [
+          clampStyles.clamp,
+          ...Object.entries(lines)
+            .map(([size, numLines]) => clampStyles[`clamp-${size}-${numLines}`])
+            .filter((style) => !!style),
+        ]
+      : [];
 
   // generate data-cy key if none given
   const key = dataCy || cyKey({ name: children, prefix: "text" });
@@ -71,7 +75,12 @@ function TextSkeleton(props) {
     return null;
   }
 
-  const lines = props.lines || 3;
+  // TODO skeleton to support number of lines based on media queries
+  // For now we use the first entry of lines for calculating skeleton
+  const lines =
+    typeof props.lines === "number"
+      ? props.lines
+      : Object.values(props.lines || {})?.[0] || 3;
 
   return (
     <Text

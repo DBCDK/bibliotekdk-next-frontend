@@ -25,18 +25,22 @@ export const Title = ({
   tag = "h1",
   type = "title1",
   clamp,
+  lines,
   ...props
 }) => {
   const Tag = tag;
 
-  const clampClasses = clamp
-    ? [
-        clampStyles.clamp,
-        ...Object.entries(clamp || {})
-          .map(([size, lines]) => clampStyles[`clamp-${size}-${lines}`])
-          .filter((style) => !!style),
-      ]
-    : [];
+  lines = typeof lines === "number" ? { xs: lines } : lines;
+
+  const clampClasses =
+    lines && clamp
+      ? [
+          clampStyles.clamp,
+          ...Object.entries(lines)
+            .map(([size, numLines]) => clampStyles[`clamp-${size}-${numLines}`])
+            .filter((style) => !!style),
+        ]
+      : [];
 
   delete props.skeleton;
 
@@ -61,7 +65,12 @@ export const Title = ({
  * @returns {component}
  */
 export const TitleSkeleton = (props) => {
-  const lines = props.lines || 1;
+  // TODO skeleton to support number of lines based on media queries
+  // For now we use the first entry of lines for calculating skeleton
+  const lines =
+    typeof props.lines === "number"
+      ? props.lines
+      : Object.values(props.lines || {})?.[0] || 1;
 
   return (
     <Title {...props} className={`${props.className} ${styles.skeleton}`}>
