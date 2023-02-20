@@ -25,6 +25,7 @@ const MANIFESTATION_1 = {
       "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
     origin: "moreinfo",
   },
+  creators: [{ display: "Linoleum Gummigulv" }],
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
@@ -168,6 +169,18 @@ const ALL_WORKS = [
     workId: "some-work-id-4",
     manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
     workTypes: ["LITERATURE"],
+    titles: {
+      full: [
+        "Hugo i Gulvskoven",
+        "Rita vender tilbage til Gulvskoven fra Sølvskoven",
+      ],
+    },
+    creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+    materialTypes: [
+      {
+        specific: "Bog",
+      },
+    ],
     relations: {
       continues: [MANIFESTATION_2, MANIFESTATION_3],
       continuedIn: [MANIFESTATION_4, MANIFESTATION_5],
