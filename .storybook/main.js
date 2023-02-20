@@ -13,9 +13,5 @@ const path = require("path");
 module.exports = {
   stories: ["../src/components/**/*.stories.js"],
   presets: [path.resolve(__dirname, "./next-preset.js")],
-  addons: [
-    "@storybook/addon-a11y",
-    "@storybook/addon-storysource",
-    "storybook-addon-next-router",
-  ],
+  addons: ["@storybook/addon-a11y", "@storybook/addon-storysource"],
 };
