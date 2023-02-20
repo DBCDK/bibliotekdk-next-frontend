@@ -14,13 +14,13 @@
   color: var(--mine-shaft);
 
   flex-basis: 30%;
-  width: 400px;
-  height: 160px;
+  width: var(--related_works_width);
+  height: fit-content;
 
   padding: var(--pt05);
 
   display: flex;
-  gap: 1rem;
+  gap: var(--pt2);
 }
 
 .wrap_text {
@@ -31,6 +31,19 @@
   -webkit-line-clamp: 2;        /* number of lines to show */
   line-height: 1.5em;           /* fallback */
   max-height: calc(1.5em * 2);  /* fallback */
+}
+
+.cover {
+  --background_image: var(--iron);
+  object-fit: contain;
+  max-width: var(--pt12);
+  min-height: var(--min_card_height);
+  align-self: center;
+  width: 100%;
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.5)
+  ), var(--background_image);
 }
 
 .text {

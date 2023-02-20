@@ -18,6 +18,8 @@ export default function SingleRelatedManifestation({ manifestation }) {
     animations.bottom_line_keep_false,
   ].join(" ");
 
+  const src = manifestation?.cover?.detail;
+
   return (
     <Link
       href={{
@@ -35,8 +37,11 @@ export default function SingleRelatedManifestation({ manifestation }) {
     >
       <div className={`${styles.related_element} ${animationStyle}`}>
         <img
-          src={manifestation?.cover?.detail}
-          className={styles.cover}
+          src={src}
+          className={`${styles.cover}`}
+          style={{
+            "--background_image": `url(${src})`,
+          }}
           title={fullTitle}
           alt={Translate({ context: "general", label: "frontpage" })}
         />
