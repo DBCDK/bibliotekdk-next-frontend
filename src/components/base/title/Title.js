@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Title.module.css";
-import { useEffect, useRef, useState } from "react";
-import { getStyle } from "@/utils/css";
+import clampStyles from "@/components/base/clamp/Clamp.module.css";
 
 /**
  * The Component function
@@ -31,36 +30,23 @@ export const Title = ({
 }) => {
   const Tag = tag;
 
-  // ref to dom element
-  const el = useRef(null);
-
-  // style used for line clamping
-  const [style, setStyle] = useState();
-
-  // Calc lineheight if clamp is set
-  const lineHeight =
-    clamp && el && el.current && getStyle(el.current, "line-height");
-
-  // calculate height when lineclamping is on and set style
-  useEffect(() => {
-    if (clamp && lines && lineHeight) {
-      setStyle({
-        WebkitLineClamp: lines,
-        maxHeight: lines * parseInt(lineHeight, 10),
-      });
-    }
-  }, [lineHeight, lines]);
+  const clampClasses = clamp
+    ? [
+        clampStyles.clamp,
+        ...Object.entries(clamp || {})
+          .map(([size, lines]) => clampStyles[`clamp-${size}-${lines}`])
+          .filter((style) => !!style),
+      ]
+    : [];
 
   delete props.skeleton;
 
   return (
     <Tag
       {...props}
-      ref={el}
       className={`${styles.title} ${styles[type]} ${className} ${
         clamp && styles.clamp
-      }`}
-      style={style}
+      } ${clampClasses.join(" ")}`}
     >
       {children}
     </Tag>

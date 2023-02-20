@@ -51,9 +51,11 @@ export function Body() {
 export function LineClamping() {
   return (
     <div>
-      <StoryTitle>Line clamping: Max 3 lines</StoryTitle>
+      <StoryTitle>
+        Line clamping: Max 4 lines on XS devices, 2 lines on SM devices and up
+      </StoryTitle>
       <div style={{ maxWidth: 400 }}>
-        <Text type="text2" lines={3} clamp={true}>
+        <Text type="text2" clamp={{ xs: 4, sm: 2 }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla mollis
           purus a iaculis finibus. Integer lacus dui, condimentum quis elit in,
           feugiat hendrerit urna. Etiam facilisis id ligula congue ultrices.

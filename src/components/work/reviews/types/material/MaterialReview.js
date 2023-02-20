@@ -10,8 +10,6 @@ import Icon from "@/components/base/icon";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
-import useBreakpoint from "@/components/hooks/useBreakpoint";
-
 import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 
 import styles from "./MaterialReview.module.css";
@@ -159,17 +157,8 @@ export function MaterialReview({
  * @constructor
  */
 function LectorReview({ data, skeleton }) {
-  const breakpoint = useBreakpoint();
-  const isMobile =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md" || false;
-
   return (
-    <Title
-      type="title3"
-      lines={isMobile ? 5 : 3}
-      skeleton={skeleton}
-      clamp={true}
-    >
+    <Title type="title3" lines={3} clamp={{ xs: 5, lg: 3 }} skeleton={skeleton}>
       {data
         ?.map((paragraph) => paragraph)
         .filter(

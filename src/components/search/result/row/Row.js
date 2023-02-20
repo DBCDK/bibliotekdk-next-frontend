@@ -71,7 +71,7 @@ export default function ResultRow({
             type="title5"
             tag="h2"
             lines={3}
-            clamp={true}
+            clamp={{ xs: 3 }}
             title={work?.titles?.full}
             data-cy={"ResultRow-title"}
             skeleton={!work?.titles?.main && !work?.titles?.full && isLoading}
@@ -90,7 +90,7 @@ export default function ResultRow({
             <Text
               type="text3"
               lines={2}
-              clamp={true}
+              clamp={{ xs: 2 }}
               skeleton={
                 (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
               }

@@ -5,8 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
-import { getStyle } from "@/utils/css";
-import { useEffect, useRef, useState } from "react";
+import clampStyles from "@/components/base/clamp/Clamp.module.css";
 
 /**
  * The Component function
@@ -20,7 +19,6 @@ function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text3",
-  lines,
   clamp,
   tag = "p",
   onClick = null,
@@ -33,22 +31,14 @@ function Text({
   // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
 
-  // ref to dom element
-  const el = useRef(null);
-
-  // style used for line clamping
-  const [style, setStyle] = useState();
-
-  // calculate height when lineclamping is on and set style
-  useEffect(() => {
-    if (clamp && lines) {
-      const lineHeight = getStyle(el.current, "line-height");
-      setStyle({
-        WebkitLineClamp: lines,
-        maxHeight: lines * parseInt(lineHeight, 10),
-      });
-    }
-  }, []);
+  const clampClasses = clamp
+    ? [
+        clampStyles.clamp,
+        ...Object.entries(clamp || {})
+          .map(([size, lines]) => clampStyles[`clamp-${size}-${lines}`])
+          .filter((style) => !!style),
+      ]
+    : [];
 
   // generate data-cy key if none given
   const key = dataCy || cyKey({ name: children, prefix: "text" });
@@ -56,13 +46,11 @@ function Text({
   return (
     <Tag
       id={id}
-      ref={el}
-      className={`${styles.text} ${styles[type]} ${className} ${
-        clamp && styles.clamp
-      }`}
+      className={`${styles.text} ${
+        styles[type]
+      } ${className} ${clampClasses.join(" ")}`}
       onClick={onClick}
       data-cy={key}
-      style={style}
       tabIndex={tabIndex}
     >
       {children}
