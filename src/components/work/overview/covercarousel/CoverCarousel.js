@@ -24,6 +24,7 @@ import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/Ra
 import useScrollSlider from "@/components/hooks/useScrollSlider";
 import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
+import at from "lodash/at";
 
 const CoverElement = forwardRef(function CoverElement(
   {
