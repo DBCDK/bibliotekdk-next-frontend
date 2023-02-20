@@ -25,7 +25,6 @@ export const Title = ({
   tag = "h1",
   type = "title1",
   clamp,
-  lines,
   ...props
 }) => {
   const Tag = tag;
