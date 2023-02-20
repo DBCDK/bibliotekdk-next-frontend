@@ -26,6 +26,7 @@ function Text({
   onClick = null,
   dataCy = null,
   tabIndex = null,
+  title = null,
   id,
 }) {
   // Set type of tag.
@@ -64,6 +65,7 @@ function Text({
       data-cy={key}
       style={style}
       tabIndex={tabIndex}
+      {...(title && { title: title })}
     >
       {children}
     </Tag>

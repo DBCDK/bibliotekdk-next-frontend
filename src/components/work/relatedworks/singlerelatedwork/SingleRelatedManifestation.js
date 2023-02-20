@@ -10,6 +10,10 @@ export default function SingleRelatedManifestation({ manifestation }) {
   const fullTitle = manifestation?.titles?.full?.join(": ");
   const creator = manifestation?.creators?.[0]?.display;
   const workId = manifestation?.workId;
+  const formattedMaterialTypes = formatMaterialTypesToPresentation(
+    manifestation?.materialTypesArray
+  );
+  const src = manifestation?.cover?.detail;
 
   const animationStyle = [
     animations.underlineContainer,
@@ -17,8 +21,6 @@ export default function SingleRelatedManifestation({ manifestation }) {
     animations.top_line_keep_false,
     animations.bottom_line_keep_false,
   ].join(" ");
-
-  const src = manifestation?.cover?.detail;
 
   return (
     <Link
@@ -47,21 +49,38 @@ export default function SingleRelatedManifestation({ manifestation }) {
         />
         <div className={styles.text}>
           {manifestation.partInSeries && (
-            <Text type={"text1"}>{manifestation.partInSeries}</Text>
+            <Text
+              type={"text1"}
+              data_disply={"inline"}
+              className={`${styles.wrap_one_line}`}
+            >
+              {manifestation.partInSeries}
+            </Text>
           )}
           <Text
             type={"text1"}
             data_disply={"inline"}
-            className={styles.wrap_text}
+            className={`${styles.wrap_two_lines}`}
+            title={fullTitle}
           >
             {fullTitle}
           </Text>
           <div className={styles.margin_auto} />
-          <Text type={"text2"}>{creator}</Text>
-          <Text type={"text2"}>
-            {formatMaterialTypesToPresentation(
-              manifestation?.materialTypesArray
-            )}
+          <Text
+            type={"text2"}
+            data_disply={"inline"}
+            className={`${styles.wrap_one_line}`}
+            title={creator}
+          >
+            {creator}
+          </Text>
+          <Text
+            type={"text2"}
+            data_disply={"inline"}
+            className={`${styles.wrap_one_line}`}
+            title={formattedMaterialTypes}
+          >
+            {formattedMaterialTypes}
           </Text>
         </div>
       </div>

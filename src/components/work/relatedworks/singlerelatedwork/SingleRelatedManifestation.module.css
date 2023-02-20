@@ -23,16 +23,6 @@
   gap: var(--pt2);
 }
 
-.wrap_text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;        /* number of lines to show */
-  line-height: 1.5em;           /* fallback */
-  max-height: calc(1.5em * 2);  /* fallback */
-}
-
 .cover {
   --background_image: var(--iron);
   object-fit: contain;
@@ -53,6 +43,23 @@
   flex-direction: column;
   gap: var(--pt05);
   flex-grow: 1;
+}
+
+.text > .wrap_one_line {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+.text > .wrap_two_lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;        /* number of lines to show */
+  line-height: 1.5em;           /* fallback */
+  max-height: calc(1.5em * 2);  /* fallback */
 }
 
 .margin_auto {
