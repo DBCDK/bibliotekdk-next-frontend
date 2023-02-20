@@ -245,7 +245,7 @@ export function subjects({ workId }) {
     query subjects($workId: String!) {
       work(id: $workId) {
         subjects {
-          selectedSubjects: all {
+          selectedSubjects: dbcVerified {
             type
             display
             ... on SubjectText {
