@@ -55,7 +55,7 @@ export default function ArticlePreview({ article, skeleton, rubrik = true }) {
           {article.title}
         </Title>
         {rubrik && (
-          <Text type="text2" lines={3} clamp={{ xs: 2 }} skeleton={skeleton}>
+          <Text type="text2" lines={3} clamp={{ xs: 3 }} skeleton={skeleton}>
             {article.fieldRubrik}
           </Text>
         )}
