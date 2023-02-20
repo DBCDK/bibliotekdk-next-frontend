@@ -29,7 +29,7 @@ function RelatedWorks({ relations, className, subtitle }) {
   );
 }
 
-export default function Wrap({ workId, subtitle }) {
+export default function Wrap({ workId, subtitle = "" }) {
   const workForWorkRelationsWorkTypeFactory_response = useData(
     workId && workForWorkRelationsWorkTypeFactory({ workId: workId })
   );
