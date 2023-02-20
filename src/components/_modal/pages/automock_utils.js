@@ -46,6 +46,11 @@ const MANIFESTATION_3 = {
       loanIsPossible: false,
     },
   ],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777057&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=4d9e99b14209aef2a5d6",
+    origin: "moreinfo",
+  },
 };
 // Indexed article, that may be ordered via digital article copy
 const MANIFESTATION_4 = {
@@ -67,6 +72,11 @@ const MANIFESTATION_4 = {
     },
   ],
   workTypes: ["ARTICLE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    origin: "moreinfo",
+  },
 };
 // A periodica
 const MANIFESTATION_5 = {
@@ -88,6 +98,11 @@ const MANIFESTATION_5 = {
     },
   ],
   workTypes: ["PERIODICA"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25504097&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=f9383e2279f840a4f31e",
+    origin: "moreinfo",
+  },
 };
 
 // A manifestation with edition, publisher, creator
@@ -153,6 +168,14 @@ const ALL_WORKS = [
     workId: "some-work-id-4",
     manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
     workTypes: ["LITERATURE"],
+    relations: {
+      continues: [MANIFESTATION_2, MANIFESTATION_3],
+      continuedIn: [MANIFESTATION_4, MANIFESTATION_5],
+      hasAdaptation: [],
+      isAdaptationOf: [],
+      discusses: [],
+      discussedIn: [],
+    },
   },
 ];
 
