@@ -40,22 +40,6 @@ export function getTextDescription(materialType, manifestation) {
     .join(", ");
 }
 
-export function scrollToElement(sliderElementId) {
-  document.querySelector(`#${sliderElementId}`).scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-    inline: "center",
-  });
-}
-
-export function scrollDistance(sliderId, slideTranslation) {
-  document.querySelector(`#${sliderId}`).scrollBy({
-    left: slideTranslation,
-    top: 0,
-    behavior: "smooth",
-  });
-}
-
 /**
  * Get a subset of elements in an array.
  *  Used to get evenly spread out indices of given array
