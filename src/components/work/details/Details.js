@@ -16,6 +16,10 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/details.utils";
+import {
+  parseRelations,
+  workRelationsWorkTypeFactory,
+} from "@/lib/workRelationsWorkTypeFactoryUtils";
 
 function DefaultDetailValues({ values, skeleton }) {
   return (
@@ -24,6 +28,7 @@ function DefaultDetailValues({ values, skeleton }) {
     </Text>
   );
 }
+
 /**
  * The Component function
  *
@@ -134,19 +139,28 @@ export function DetailsSkeleton(props) {
 export default function Wrap(props) {
   const { workId, type } = props;
 
-  const { data, isLoading, error } = useData(
-    workFragments.fbiOverviewDetail({ workId })
-  );
+  const {
+    data,
+    isLoading: overViewIsLoading,
+    error,
+  } = useData(workFragments.fbiOverviewDetail({ workId }));
 
-  if (error) {
+  const {
+    data: relationData,
+    isLoading: relationsIsLoading,
+    error: relationsError,
+  } = useData(workFragments.workForWorkRelationsWorkTypeFactory({ workId }));
+
+  const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
+
+  if (error || relationsError) {
     return null;
   }
 
-  if (isLoading) {
+  if (overViewIsLoading || relationsIsLoading) {
     return <DetailsSkeleton {...props} />;
   }
-
-  const manifestations = data?.work?.manifestations?.all;
+  const manifestations = data?.work?.manifestations?.mostRelevant;
 
   // find the selected materialType (manifestation), use first manifestation as fallback
   const manifestationByMaterialType =
@@ -154,6 +168,8 @@ export default function Wrap(props) {
       return isEqual(flattenMaterialType(manifestation), type);
     }) || manifestations?.[0];
 
+  // attach relations for manifestation to display
+  manifestationByMaterialType.relations = groupedRelations;
   const genreAndForm = data?.work?.genreAndForm || [];
 
   return (

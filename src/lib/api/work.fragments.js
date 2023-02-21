@@ -339,13 +339,16 @@ export function fbiOverviewDetail({ workId }) {
             full
           }                                  
           manifestations {
-            all {
+            mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
               cover {
                 detail
                 origin
-              }              
+              }    
+              audience {
+                generalAudience
+              }          
               genreAndForm
               languages {
                 subtitles {
@@ -689,7 +692,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
           ...relationsForWorkRelations
         }
       }
-      monitor(name: "bibdknext_pid_to_workid")
     }
     ${workRelationsWorkTypeFactory}
     ${relationsForWorkRelations}`,
