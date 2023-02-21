@@ -1,9 +1,10 @@
 .full_cover_carousel {
   display: grid;
-  grid-template-areas:
-    "⬅️ 🖼️ ➡️"
-    "🎱️ 🎱️ 🎱️"
+  --grid_template:
+    "🖼️"
+    "🎱️"
   ;
+  grid-template-areas: var(--grid_template);
 
   --carousel-height: auto;
   --carousel-width: 100%;
@@ -11,7 +12,6 @@
 
   width: calc(var(--carousel-width));
   height: calc(var(--carousel-height));
-  max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
 
   margin-left: auto;
   margin-right: auto;
@@ -59,21 +59,7 @@
   width: 100%;
   scroll-snap-align: start;
   text-align: center;
-
-  /*TODO: figure out if we need transition */
-  /*opacity: 1;*/
-  /*transition-property: opacity;*/
-  /*!*transition-delay: 0.1s;*!*/
-  /*transition-duration: 0.3s;*/
 }
-
-/*TODO: figure out if we need transition */
-/*.cover_element.active_cover {*/
-  /*opacity: 1;*/
-  /*transition-property: opacity;*/
-  /*transition-delay: 0.1s;*/
-  /*transition-duration: 0.3s;*/
-/*}*/
 
 .cover_image {
   max-width: var(--carousel-cover-max-width);
@@ -101,12 +87,15 @@
 /* END ARROWS */
 
 @media (min-width: 768px) {
-  button.icon,
-  button.disabled_icon {
-    display: block;
-  }
-
   .arrow_styling {
     display: initial;
+  }
+
+  .full_cover_carousel {
+    --grid_template:
+      "⬅️ 🖼️ ➡️"
+      "🎱️ 🎱️ 🎱️"
+    ;
+    max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
   }
 }
