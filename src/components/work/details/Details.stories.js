@@ -7,11 +7,6 @@ const exportedObject = {
 
 export default exportedObject;
 
-/**
- * Returns details section
- *
- */
-
 export function WrappedDetailsSection() {
   return (
     <div>
@@ -26,6 +21,53 @@ export function WrappedDetailsSection() {
 }
 
 WrappedDetailsSection.story = {
+  parameters: {
+    graphql: {
+      debug: true,
+      resolvers: {
+        Work: {
+          genreAndForm: () => ["actionfilm", "thriller", "science fiction"],
+          workTypes: () => ["LITERATURE"],
+        },
+
+        Manifestation: {
+          access: () => [
+            {
+              __typename: "InterLibraryLoan",
+              loanIsPossible: true,
+            },
+          ],
+
+          materialTypes: () => [{ specific: "Musik (dvd)" }],
+        },
+      },
+    },
+  },
+  nextRouter: {
+    showInfo: true,
+    pathname: "/",
+    query: {},
+  },
+};
+/**
+ * Returns details section
+ *
+ */
+
+export function WrappedDetailsSectionMovie() {
+  return (
+    <div>
+      <StoryTitle>Detials section</StoryTitle>
+      <StoryDescription>
+        Work details component. The Section component is used for layout.
+      </StoryDescription>
+      <StorySpace direction="v" space="8" />
+      <WrappedDetails workId="fisk" type="bog" />
+    </div>
+  );
+}
+
+WrappedDetailsSectionMovie.story = {
   parameters: {
     graphql: {
       debug: true,
@@ -48,7 +90,20 @@ WrappedDetailsSection.story = {
               roles: [],
             },
           ],
-          contributors: () => [],
+          contributors: () => [
+            {
+              display: "Nikolaj Lie Kaas",
+              roles: [
+                {
+                  function: {
+                    plural: "skuespillere",
+                    singular: "skuespiller",
+                  },
+                  functionCode: "act",
+                },
+              ],
+            },
+          ],
           audience: () => ({
             generalAudience: [
               "Mærkning: Tilladt for alle men frarådes børn under 7 år",
@@ -99,7 +154,7 @@ WrappedDetailsSection.story = {
             },
           ],
 
-          materialTypes: () => [{ specific: "Musik (dvd)" }],
+          materialTypes: () => [{ specific: "Film (dvd)" }],
           edition: () => ({
             publicationYear: {
               display: "2011",

@@ -216,7 +216,7 @@ function RenderMovieCreatorValues({ values, skeleton }) {
  */
 
 function RenderMovieActorValues({ values, skeleton }) {
-  const actors = values["skuespillere"] || [];
+  const actors = values["skuespillere"] || values["skuespiller"] || [];
   // check if there are too many to display - we want to display at most 4.
   const tooLong = actors?.length > 3;
   const actorsToRender = tooLong ? actors.splice(0, 4) : actors;
