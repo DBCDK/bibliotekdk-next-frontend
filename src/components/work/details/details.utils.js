@@ -41,6 +41,11 @@ function parseLanguages(manifestation) {
   return [...new Set(flatLanguages)].join(", ");
 }
 
+/**
+ * Get languages from given manifestion. We sort with "Dansk" first.
+ * @param manifestation
+ * @returns {{subtitles: (*|*[]), spoken: (*|*[]), main: (*|*[])}}
+ */
 function getLanguageValues(manifestation) {
   const main =
     manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
@@ -156,6 +161,12 @@ function parsePersonAndFunction(person) {
   return display + (roles.length > 0 ? " (" + roles.join(", ") + ") " : "");
 }
 
+/**
+ * Get óne work with the relation of type adaption - we want the DBC work - so we look
+ * for pid that starts with 870970
+ * @param manifestation
+ * @returns {*}
+ */
 function parseIsAdaptionOf(manifestation) {
   const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
     rel?.pid?.startsWith("870970")
@@ -196,7 +207,7 @@ function RenderMovieCreatorValues({ values, skeleton }) {
 }
 
 /**
- * jsxParser for movies - contributors. Parse given values for html output - @see parseMovieContributors for given values
+ * jsxParser for movies - actors. Parse given values for html output - @see parseMovieContributors for given values
  * @param values {object}
  *  eg. {skuespillere:["jens", "hans", ..], ophav:["kurt", ...]}
  * @param skeleton
@@ -206,6 +217,7 @@ function RenderMovieCreatorValues({ values, skeleton }) {
 
 function RenderMovieActorValues({ values, skeleton }) {
   const actors = values["skuespillere"] || [];
+  // check if there are too many to display - we want to display at most 4.
   const tooLong = actors?.length > 3;
   const actorsToRender = tooLong ? actors.splice(0, 4) : actors;
   return (
@@ -241,6 +253,14 @@ function RenderMovieActorValues({ values, skeleton }) {
   );
 }
 
+/**
+ * Render adaption (movie based on .. a book or something)
+ * We give a link to the material the movie is  base on.
+ * @param values
+ * @param skeleton
+ * @returns {""|JSX.Element}
+ * @constructor
+ */
 function RenderMovieAdaption({ values, skeleton }) {
   const title = values?.titles?.main[0];
   const creators = values?.creators;
@@ -252,6 +272,7 @@ function RenderMovieAdaption({ values, skeleton }) {
         disabled={skeleton}
         href={workurl}
         border={{ top: false, bottom: { keepVisible: true } }}
+        className={styles.link}
       >
         <Text type="text4" skeleton={skeleton} lines={1}>
           {title}
@@ -261,6 +282,13 @@ function RenderMovieAdaption({ values, skeleton }) {
   );
 }
 
+/**
+ * We want a special display for movies - like subtitles and synchronization.
+ * @param values
+ * @param skeleton
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function RenderMovieLanguages({ values, skeleton }) {
   // main is the spoken language ??
   const mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
@@ -290,6 +318,13 @@ function RenderMovieLanguages({ values, skeleton }) {
   );
 }
 
+/**
+ * Link to the genre of the movie.
+ * @param values
+ * @param skeleton
+ * @returns {*}
+ * @constructor
+ */
 function RenderMovieGenre({ values, skeleton }) {
   return values.map((val, index) => (
     <Link
@@ -470,6 +505,13 @@ export function fieldsForRows(manifestation, work, context) {
   });
 }
 
+/**
+ * Merge given arrays - keys in extending array overwrites keys in base array.
+ * New keys are appended to base arrray.
+ * @param baseArray
+ * @param extendingArray
+ * @returns {*}
+ */
 export function filterAndMerge({ baseArray, extendingArray }) {
   // find index in basearray of key in extending array
   extendingArray?.forEach((ext) => {

@@ -15,7 +15,10 @@
 
 .link{
   display: table;
+  white-space: normal;
 }
+
+
 
 @media (min-width: 768px) {
   .details {
