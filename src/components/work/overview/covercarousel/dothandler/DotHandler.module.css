@@ -60,7 +60,6 @@
 .dot.active_dot::after {
   transform:
     translate(-50%, -50%)
-    scale(2)
   ;
 }
 
