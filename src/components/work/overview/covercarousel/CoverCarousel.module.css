@@ -85,7 +85,6 @@
 .cover_image_skeleton {
   display: block;
   background-image: linear-gradient(var(--iron), var(--iron));
-  /*border: 1px solid red;*/
   width: auto;
   height: 300px;
 }
@@ -93,6 +92,7 @@
 
 /* START OVERRIDING STYLE OF ARROWS */
 .arrow_styling {
+  display: none;
   --arrow__background_color: var(--white);
   --arrow__fill_color: var(--blue);
   --arrow__background_color_hover: var(--blue);
@@ -104,5 +104,9 @@
   button.icon,
   button.disabled_icon {
     display: block;
+  }
+
+  .arrow_styling {
+    display: initial;
   }
 }

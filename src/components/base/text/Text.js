@@ -24,6 +24,7 @@ function Text({
   onClick = null,
   dataCy = null,
   tabIndex = null,
+  title = null,
   id,
   lines,
 }) {
@@ -56,6 +57,7 @@ function Text({
       onClick={onClick}
       data-cy={key}
       tabIndex={tabIndex}
+      {...(title && { title: title })}
     >
       {children}
     </Tag>

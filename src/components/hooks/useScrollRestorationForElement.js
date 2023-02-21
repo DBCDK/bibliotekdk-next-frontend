@@ -32,7 +32,7 @@ function restoreScrollPos(url, sliderId, parentRef) {
     });
   }
 }
-export default function useScrollRestorationForElement(
+function useScrollRestorationForElementImpl(
   router,
   sliderId,
   parentRef,
@@ -82,3 +82,9 @@ export default function useScrollRestorationForElement(
     }
   }, [router]);
 }
+
+const useScrollRestorationForElement = process.env.STORYBOOK_ACTIVE
+  ? () => {}
+  : useScrollRestorationForElementImpl;
+
+export default useScrollRestorationForElement;

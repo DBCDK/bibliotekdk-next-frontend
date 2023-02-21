@@ -1,17 +1,31 @@
 .flex_row {
+  isolation: isolate;
+
   display: flex;
   flex-direction: row;
-  gap: var(--pt2);
 }
 
 .flex_arrow {
   align-self: center;
+  display: none;
+}
+
+.flex_arrow.flex_arrow_left {
+  margin-right: var(--pt5);
+  margin-left: calc(var(--pt5) * -2);
+}
+
+.flex_arrow.flex_arrow_right {
+  margin-left: var(--pt5);
+  margin-right: calc(var(--pt5) * -2);
+  transform: translateX(calc(var(--pt5) * -2 - var(--pt2)));
 }
 
 .flex_box {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  width: 100%;
 
   gap: var(--pt2);
 
@@ -36,4 +50,16 @@
 
 .flex_box::-webkit-scrollbar-thumb:hover {
   background: var(--gray);
+}
+
+@media (min-width: 992px) {
+  .flex_arrow {
+    display: initial;
+  }
+}
+
+@media (min-width: 1550px) {
+  .flex_arrow.flex_arrow_right {
+    transform: none;
+  }
 }

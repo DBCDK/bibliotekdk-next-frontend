@@ -1,4 +1,11 @@
-import React, { forwardRef, useEffect, useId, useMemo, useRef } from "react";
+import React, {
+  forwardRef,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import Skeleton from "@/components/base/skeleton";
@@ -9,13 +16,15 @@ import {
   getIndicesForCoverCarousel,
   getTextDescription,
   moveCarousel,
-  scrollToElement,
 } from "@/components/work/overview/covercarousel/utils";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
 import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
 import useScrollSlider from "@/components/hooks/useScrollSlider";
+import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
+import range from "lodash/range";
+import at from "lodash/at";
 
 const CoverElement = forwardRef(function CoverElement(
   {
