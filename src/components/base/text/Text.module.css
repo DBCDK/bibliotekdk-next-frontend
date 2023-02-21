@@ -22,10 +22,18 @@
   font-size: 14px;
   line-height: 22px;
 }
-
 .text4 {
   font-size: 14px;
   line-height: 22px;
+  font-family: var(--body-font-semibold);
+}
+.text5 {
+  font-size: 11px;
+  line-height: 17px;
+}
+.text6 {
+  font-size: 11px;
+  line-height: 17px;
   font-family: var(--body-font-semibold);
 }
 .clamp {
