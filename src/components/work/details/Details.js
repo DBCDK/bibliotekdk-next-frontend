@@ -16,10 +16,7 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/details.utils";
-import {
-  parseRelations,
-  workRelationsWorkTypeFactory,
-} from "@/lib/workRelationsWorkTypeFactoryUtils";
+import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 
 function DefaultDetailValues({ values, skeleton }) {
   return (
