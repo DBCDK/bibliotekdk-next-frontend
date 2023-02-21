@@ -7,6 +7,10 @@ import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import { capitalize } from "lodash";
+import Link from "@/components/base/link";
+import { getCanonicalWorkUrl } from "@/lib/utils";
+import { cyKey } from "@/utils/trim";
 
 function CreatorContributorTextHelper({ children }) {
   return (
@@ -23,20 +27,35 @@ function CreatorContributorTextHelper({ children }) {
  * Parse languages in given manifestation.
  * split languages in main, spoken, subtitles.
  * @param manifestation
- * @returns {string}
+ * @returns [any]
  *  comma seperated string of ALL the languages
  */
 function parseLanguages(manifestation) {
-  // languages - main + subtitles + spoken - useMemo for performance;
+  const lanagueges = getLanguageValues(manifestation);
+
+  let flatLanguages = [];
+  for (const [, value] of Object.entries(lanagueges)) {
+    flatLanguages = [...flatLanguages, ...value];
+  }
+  // filter out duplicates*/
+  return [...new Set(flatLanguages)].join(", ");
+}
+
+function getLanguageValues(manifestation) {
   const main =
     manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
+  // speken languages - put "dansk" first
   const spoken =
-    manifestation?.languages?.spoken?.map((spok) => spok.display) || [];
+    manifestation?.languages?.spoken
+      ?.map((spok) => spok.display)
+      .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
+  // subtitles - put "dansk" first
   const subtitles =
-    manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
-  const mixed = [...main, ...spoken, ...subtitles];
-  // filter out duplicates
-  return [...new Set(mixed)].join(", ");
+    manifestation?.languages?.subtitles
+      .map((sub) => sub.display)
+      .sort((a) => (a === "dansk" ? -1 : 0)) || [];
+
+  return { main: main, spoken: spoken, subtitles: subtitles };
 }
 
 /**
@@ -137,12 +156,16 @@ function parsePersonAndFunction(person) {
   return display + (roles.length > 0 ? " (" + roles.join(", ") + ")" : "");
 }
 
+function parseIsAdaptionOf(manifestation) {
+  const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
+    rel?.pid?.startsWith("870970")
+  );
+
+  return work;
+}
+
 /**
- <<<<<<< HEAD
- * jsxParser for movie creators
- =======
  * jsxParser for movie creators - render function
- >>>>>>> main
  * @param values
  * @param skeleton
  * @returns {unknown[]}
@@ -155,9 +178,18 @@ function RenderMovieCreatorValues({ values, skeleton }) {
     values &&
     values.map((person, index) => {
       return (
-        <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-          {parsePersonAndFunction(person)}
-        </Text>
+        <Link
+          href={`/find?q.creator=${person.display}`}
+          dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
+          disabled={skeleton}
+          border={{ bottom: { keepVisible: true } }}
+          key={`"${person.display}-${index}"`}
+          className={styles.link}
+        >
+          <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+            {parsePersonAndFunction(person)}
+          </Text>
+        </Link>
       );
     })
   );
@@ -172,29 +204,112 @@ function RenderMovieCreatorValues({ values, skeleton }) {
  * @constructor
  */
 
-function RenderMovieContributorValues({ values, skeleton }) {
-  return Object.keys(values).map(
-    (val) =>
-      values[val] && (
-        <>
-          <Text
-            type="text3"
-            className={styles.title}
-            skeleton={skeleton}
-            lines={2}
+function RenderMovieActorValues({ values, skeleton }) {
+  console.log(values, values.length, "VALUES");
+  const actors = values["skuespillere"] || [];
+  const tooLong = actors?.length > 3;
+
+  const actorsToRender = tooLong ? actors.splice(0, 4) : actors;
+
+  console.log(actorsToRender, "VALUES TO RENDER");
+
+  return (
+    <>
+      <Text type="text3" className={styles.title} skeleton={skeleton} lines={2}>
+        Skuespillere
+      </Text>
+      {actorsToRender.map((person, index) => {
+        return (
+          <Link
+            href={`/find?q.creator=${person.display}`}
+            dataCy={cyKey({
+              name: person?.display,
+              prefix: "overview-genre",
+            })}
+            disabled={skeleton}
+            border={{ bottom: { keepVisible: true } }}
+            key={`"${person?.display}-${index}"`}
+            className={styles.link}
           >
-            {val}
-          </Text>
-          {values[val].map((person, index) => {
-            return (
-              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-                {person?.display}
-              </Text>
-            );
-          })}
-        </>
-      )
+            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              {person?.display}
+            </Text>
+          </Link>
+        );
+      })}
+      {tooLong && (
+        <Text type="text4" skeleton={skeleton} lines={0}>
+          m.fl.
+        </Text>
+      )}
+    </>
   );
+}
+
+function RenderMovieAdaption({ values, skeleton }) {
+  const title = values?.titles?.main[0];
+  const creators = values?.creators;
+  const workurl = getCanonicalWorkUrl({ title, creators, id: values?.workId });
+
+  return (
+    workurl && (
+      <Link
+        disabled={skeleton}
+        href={workurl}
+        border={{ top: false, bottom: { keepVisible: true } }}
+      >
+        <Text type="text4" skeleton={skeleton} lines={1}>
+          {title}
+        </Text>
+      </Link>
+    )
+  );
+}
+
+function RenderMovieLanguages({ values, skeleton }) {
+  // main is the spoken language ??
+  const mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
+  // get the first 2 languages of the subtitle
+  const subtitles =
+    values["subtitles"]?.length > 0
+      ? values["subtitles"]
+          ?.splice(0, 2)
+          .map((sub) => capitalize(sub))
+          .join(", ")
+      : null;
+
+  const spoken =
+    values["spoken"]?.length > 0
+      ? values["spoken"]
+          ?.splice(0, 2)
+          .map((sub) => capitalize(sub))
+          .join(", ")
+      : null;
+
+  const fullstring = `${mainlanguage} tale, synkronisering på ${spoken} og andre sprog, Undertekster på ${subtitles} og andre sprog`;
+
+  return (
+    <Text type="text4" skeleton={skeleton} lines={2}>
+      {fullstring}
+    </Text>
+  );
+}
+
+function RenderMovieGenre({ values, skeleton }) {
+  return values.map((val, index) => (
+    <Link
+      href={`/find?q.subject=${val}`}
+      className={styles.link}
+      dataCy={cyKey({ name: val, prefix: "overview-genre" })}
+      disabled={skeleton}
+      border={{ bottom: { keepVisible: true } }}
+      key={`"${val}-${index}"`}
+    >
+      <Text type="text4" skeleton={skeleton} lines={1}>
+        {val}
+      </Text>
+    </Link>
+  ));
 }
 
 /**
@@ -298,11 +413,38 @@ export function fieldsForRows(manifestation, work, context) {
           value: "",
         },
       },
+      // overwrite default languages - add a new one (movielanguages)
+      {
+        languages: {
+          label: "",
+          value: "",
+        },
+      },
+      {
+        movielanguages: {
+          label: Translate({ ...context, label: "language" }),
+          value: getLanguageValues(manifestation),
+          jsxParser: RenderMovieLanguages,
+        },
+      },
+      {
+        genre: {
+          label: "",
+          value: "",
+        },
+      },
+      {
+        moviegenre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
+        },
+      },
       {
         moviecontributors: {
           label: "",
           value: parseMovieContributors(manifestation),
-          jsxParser: RenderMovieContributorValues,
+          jsxParser: RenderMovieActorValues,
         },
       },
       {
@@ -318,9 +460,15 @@ export function fieldsForRows(manifestation, work, context) {
           value: manifestation?.audience?.generalAudience || "",
         },
       },
+      {
+        adaption: {
+          label: Translate({ ...context, label: "adaption" }),
+          value: parseIsAdaptionOf(manifestation),
+          jsxParser: RenderMovieAdaption,
+        },
+      },
     ],
   };
-
   return filterAndMerge({
     baseArray: fieldsMap["DEFAULT"],
     extendingArray: fieldsMap[materialType],

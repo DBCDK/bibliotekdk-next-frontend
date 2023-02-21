@@ -744,6 +744,10 @@
       "audience": {
         "da": "Målgruppe",
         "en": "Audience"
+      },
+      "adaption": {
+        "da": "Filmatisering af",
+        "en": "Adaption of"
       }
     },
     "description": {

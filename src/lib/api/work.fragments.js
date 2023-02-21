@@ -692,7 +692,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
           ...relationsForWorkRelations
         }
       }
-      monitor(name: "bibdknext_pid_to_workid")
     }
     ${workRelationsWorkTypeFactory}
     ${relationsForWorkRelations}`,
