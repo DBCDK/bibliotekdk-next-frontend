@@ -5,8 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
-import { getStyle } from "@/utils/css";
-import { useEffect, useRef, useState } from "react";
+import clampStyles from "@/components/base/clamp/Clamp.module.css";
 
 /**
  * The Component function
@@ -20,7 +19,6 @@ function Text({
   children = "lorem ipsum dolor sit amet ...",
   className = "",
   type = "text3",
-  lines,
   clamp,
   tag = "p",
   onClick = null,
@@ -28,28 +26,24 @@ function Text({
   tabIndex = null,
   title = null,
   id,
+  lines,
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
   // Other tags can be used for none-semantic purposes. (eg. skeleton)
   const Tag = tag;
 
-  // ref to dom element
-  const el = useRef(null);
+  lines = typeof lines === "number" ? { xs: lines } : lines;
 
-  // style used for line clamping
-  const [style, setStyle] = useState();
-
-  // calculate height when lineclamping is on and set style
-  useEffect(() => {
-    if (clamp && lines) {
-      const lineHeight = getStyle(el.current, "line-height");
-      setStyle({
-        WebkitLineClamp: lines,
-        maxHeight: lines * parseInt(lineHeight, 10),
-      });
-    }
-  }, []);
+  const clampClasses =
+    lines && clamp
+      ? [
+          clampStyles.clamp,
+          ...Object.entries(lines)
+            .map(([size, numLines]) => clampStyles[`clamp-${size}-${numLines}`])
+            .filter((style) => !!style),
+        ]
+      : [];
 
   // generate data-cy key if none given
   const key = dataCy || cyKey({ name: children, prefix: "text" });
@@ -57,13 +51,11 @@ function Text({
   return (
     <Tag
       id={id}
-      ref={el}
-      className={`${styles.text} ${styles[type]} ${className} ${
-        clamp && styles.clamp
-      }`}
+      className={`${styles.text} ${
+        styles[type]
+      } ${className} ${clampClasses.join(" ")}`}
       onClick={onClick}
       data-cy={key}
-      style={style}
       tabIndex={tabIndex}
       {...(title && { title: title })}
     >
@@ -85,7 +77,12 @@ function TextSkeleton(props) {
     return null;
   }
 
-  const lines = props.lines || 3;
+  // TODO skeleton to support number of lines based on media queries
+  // For now we use the first entry of lines for calculating skeleton
+  const lines =
+    typeof props.lines === "number"
+      ? props.lines
+      : Object.values(props.lines || {})?.[0] || 3;
 
   return (
     <Text

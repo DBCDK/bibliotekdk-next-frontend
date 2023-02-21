@@ -7,6 +7,10 @@ import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
+import capitalize from "lodash/capitalize";
+import Link from "@/components/base/link";
+import { getCanonicalWorkUrl } from "@/lib/utils";
+import { cyKey } from "@/utils/trim";
 
 function CreatorContributorTextHelper({ children }) {
   return (
@@ -23,20 +27,40 @@ function CreatorContributorTextHelper({ children }) {
  * Parse languages in given manifestation.
  * split languages in main, spoken, subtitles.
  * @param manifestation
- * @returns {string}
+ * @returns [any]
  *  comma seperated string of ALL the languages
  */
 function parseLanguages(manifestation) {
-  // languages - main + subtitles + spoken - useMemo for performance;
+  const languages = getLanguageValues(manifestation);
+
+  let flatLanguages = [];
+  for (const [, value] of Object.entries(languages)) {
+    flatLanguages = [...flatLanguages, ...value];
+  }
+  // filter out duplicates*/
+  return [...new Set(flatLanguages)].join(", ");
+}
+
+/**
+ * Get languages from given manifestion. We sort with "Dansk" first.
+ * @param manifestation
+ * @returns {{subtitles: (*|*[]), spoken: (*|*[]), main: (*|*[])}}
+ */
+function getLanguageValues(manifestation) {
   const main =
     manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
+  // speken languages - put "dansk" first
   const spoken =
-    manifestation?.languages?.spoken?.map((spok) => spok.display) || [];
+    manifestation?.languages?.spoken
+      ?.map((spok) => spok.display)
+      .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
+  // subtitles - put "dansk" first
   const subtitles =
-    manifestation?.languages?.subtitles.map((sub) => sub.display) || [];
-  const mixed = [...main, ...spoken, ...subtitles];
-  // filter out duplicates
-  return [...new Set(mixed)].join(", ");
+    manifestation?.languages?.subtitles
+      .map((sub) => sub.display)
+      .sort((a) => (a === "dansk" ? -1 : 0)) || [];
+
+  return { main: main, spoken: spoken, subtitles: subtitles };
 }
 
 /**
@@ -134,7 +158,21 @@ function parseMovieCreators(manifestation) {
 function parsePersonAndFunction(person) {
   const display = person?.display;
   const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles.length > 0 ? " (" + roles.join(", ") + ")" : "");
+  return display + (roles.length > 0 ? " (" + roles.join(", ") + ") " : "");
+}
+
+/**
+ * Get óne work with the relation of type adaption - we want the DBC work - so we look
+ * for pid that starts with 870970
+ * @param manifestation
+ * @returns {*}
+ */
+function parseIsAdaptionOf(manifestation) {
+  const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
+    rel?.pid?.startsWith("870970")
+  );
+
+  return work;
 }
 
 /**
@@ -145,50 +183,163 @@ function parsePersonAndFunction(person) {
  *  jsx element to be parsed by react
  * @constructor
  */
+
 function RenderMovieCreatorValues({ values, skeleton }) {
   return (
     values &&
     values.map((person, index) => {
       return (
-        <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-          {parsePersonAndFunction(person)}
-        </Text>
+        <Link
+          href={`/find?q.creator=${person.display}`}
+          dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
+          disabled={skeleton}
+          border={{ bottom: { keepVisible: true } }}
+          key={`crators-${index}`}
+          className={styles.link}
+        >
+          <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+            {parsePersonAndFunction(person)}
+          </Text>
+        </Link>
       );
     })
   );
 }
 
 /**
- * jsxParser for movies - contributors. Parse given values for html output - @see parseMovieContributors for given values
+ * jsxParser for movies - actors. Parse given values for html output - @see parseMovieContributors for given values
  * @param values {object}
  *  eg. {skuespillere:["jens", "hans", ..], ophav:["kurt", ...]}
  * @param skeleton
  * @returns {any[]}
  * @constructor
  */
-function RenderMovieContributorValues({ values, skeleton }) {
-  return Object.keys(values).map(
-    (val) =>
-      values[val] && (
-        <>
-          <Text
-            type="text3"
-            className={styles.title}
-            skeleton={skeleton}
-            lines={2}
+
+function RenderMovieActorValues({ values, skeleton }) {
+  const actors = values["skuespillere"] || values["skuespiller"] || [];
+  // check if there are too many to display - we want to display at most 4.
+  const tooLong = actors?.length > 3;
+  const actorsToRender = tooLong ? actors.splice(0, 4) : actors;
+  return (
+    <>
+      <Text type="text3" className={styles.title} skeleton={skeleton} lines={2}>
+        Skuespillere
+      </Text>
+      {actorsToRender.map((person, index) => {
+        return (
+          <Link
+            href={`/find?q.creator=${person.display}`}
+            dataCy={cyKey({
+              name: person?.display,
+              prefix: "overview-genre",
+            })}
+            disabled={skeleton}
+            border={{ bottom: { keepVisible: true } }}
+            key={`actors-${index}`}
+            className={styles.link}
           >
-            {val}
-          </Text>
-          {values[val].map((person, index) => {
-            return (
-              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-                {person?.display}
-              </Text>
-            );
-          })}
-        </>
-      )
+            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              {person?.display}
+            </Text>
+          </Link>
+        );
+      })}
+      {tooLong && (
+        <Text type="text4" skeleton={skeleton} lines={0}>
+          m.fl.
+        </Text>
+      )}
+    </>
   );
+}
+
+/**
+ * Render adaption (movie based on .. a book or something)
+ * We give a link to the material the movie is  base on.
+ * @param values
+ * @param skeleton
+ * @returns {""|JSX.Element}
+ * @constructor
+ */
+function RenderMovieAdaption({ values, skeleton }) {
+  const title = values?.titles?.main[0];
+  const creators = values?.creators;
+  const workurl = getCanonicalWorkUrl({ title, creators, id: values?.workId });
+
+  return (
+    workurl && (
+      <Link
+        disabled={skeleton}
+        href={workurl}
+        border={{ top: false, bottom: { keepVisible: true } }}
+        className={styles.link}
+      >
+        <Text type="text4" skeleton={skeleton} lines={1}>
+          {title}
+        </Text>
+      </Link>
+    )
+  );
+}
+
+/**
+ * We want a special display for movies - like subtitles and synchronization.
+ * @param values
+ * @param skeleton
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function RenderMovieLanguages({ values, skeleton }) {
+  // main is the spoken language ??
+  const mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
+  // get the first 2 languages of the subtitle
+  const subtitles =
+    values["subtitles"]?.length > 0
+      ? values["subtitles"]
+          ?.splice(0, 2)
+          .map((sub) => capitalize(sub))
+          .join(", ")
+      : null;
+
+  const spoken =
+    values["spoken"]?.length > 0
+      ? values["spoken"]
+          ?.splice(0, 2)
+          .map((sub) => capitalize(sub))
+          .join(", ")
+      : null;
+
+  const fullstring = `${mainlanguage} tale, synkronisering på ${spoken} og andre sprog, Undertekster på ${subtitles} og andre sprog`;
+
+  return (
+    <Text type="text4" skeleton={skeleton} lines={2}>
+      {fullstring}
+    </Text>
+  );
+}
+
+/**
+ * Link to the genre of the movie.
+ * @param values
+ * @param skeleton
+ * @returns {*}
+ * @constructor
+ */
+function RenderMovieGenre({ values, skeleton }) {
+  return values.map((val, index) => (
+    <Link
+      href={`/find?q.subject=${val}`}
+      className={styles.link}
+      dataCy={cyKey({ name: val, prefix: "overview-genre" })}
+      disabled={skeleton}
+      border={{ bottom: { keepVisible: true } }}
+      key={`${val}-${index}`}
+    >
+      <Text type="text4" skeleton={skeleton} lines={1}>
+        {val}
+      </Text>
+    </Link>
+  ));
 }
 
 /**
@@ -236,7 +387,6 @@ function RenderMovieContributorValues({ values, skeleton }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-
   const fieldsMap = {
     DEFAULT: [
       {
@@ -293,11 +443,38 @@ export function fieldsForRows(manifestation, work, context) {
           value: "",
         },
       },
+      // overwrite default languages - add a new one (movielanguages)
+      {
+        languages: {
+          label: "",
+          value: "",
+        },
+      },
+      {
+        movielanguages: {
+          label: Translate({ ...context, label: "language" }),
+          value: getLanguageValues(manifestation),
+          jsxParser: RenderMovieLanguages,
+        },
+      },
+      {
+        genre: {
+          label: "",
+          value: "",
+        },
+      },
+      {
+        moviegenre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
+        },
+      },
       {
         moviecontributors: {
           label: "",
           value: parseMovieContributors(manifestation),
-          jsxParser: RenderMovieContributorValues,
+          jsxParser: RenderMovieActorValues,
         },
       },
       {
@@ -307,15 +484,34 @@ export function fieldsForRows(manifestation, work, context) {
           jsxParser: RenderMovieCreatorValues,
         },
       },
+      {
+        audience: {
+          label: Translate({ ...context, label: "audience" }),
+          value: manifestation?.audience?.generalAudience || "",
+        },
+      },
+      {
+        adaption: {
+          label: Translate({ ...context, label: "adaption" }),
+          value: parseIsAdaptionOf(manifestation),
+          jsxParser: RenderMovieAdaption,
+        },
+      },
     ],
   };
-
   return filterAndMerge({
     baseArray: fieldsMap["DEFAULT"],
     extendingArray: fieldsMap[materialType],
   });
 }
 
+/**
+ * Merge given arrays - keys in extending array overwrites keys in base array.
+ * New keys are appended to base arrray.
+ * @param baseArray
+ * @param extendingArray
+ * @returns {*}
+ */
 export function filterAndMerge({ baseArray, extendingArray }) {
   // find index in basearray of key in extending array
   extendingArray?.forEach((ext) => {

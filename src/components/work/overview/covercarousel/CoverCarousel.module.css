@@ -98,4 +98,8 @@
     ;
     max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
   }
+
+  .arrow_styling {
+    display: initial;
+  }
 }

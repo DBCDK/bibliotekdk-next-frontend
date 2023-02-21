@@ -7,6 +7,7 @@ import {
 import { RelationTypeEnum, WorkTypeEnum } from "@/lib/enums";
 import uniq from "lodash/uniq";
 import { chainFunctions, encodeTitleCreator } from "@/lib/utils";
+import groupBy from "lodash/groupBy";
 
 /**
  * Extract covers that are not default
@@ -265,6 +266,7 @@ export function workRelationsWorkTypeFactory(work) {
   const parsedRelations = work && parseRelations(work);
 
   return {
+    groupedRelations: groupBy(parsedRelations, "relationType"),
     flatRelations: parsedRelations,
   };
 }
