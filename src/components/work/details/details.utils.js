@@ -194,7 +194,7 @@ function RenderMovieCreatorValues({ values, skeleton }) {
           dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
           disabled={skeleton}
           border={{ bottom: { keepVisible: true } }}
-          key={`${person.display}-${index}`}
+          key={`crators-${index}`}
           className={styles.link}
         >
           <Text type="text4" skeleton={skeleton} lines={0} key={index}>
@@ -235,7 +235,7 @@ function RenderMovieActorValues({ values, skeleton }) {
             })}
             disabled={skeleton}
             border={{ bottom: { keepVisible: true } }}
-            key={`${person.display}-${index}`}
+            key={`actors-${index}`}
             className={styles.link}
           >
             <Text type="text4" skeleton={skeleton} lines={0} key={index}>
