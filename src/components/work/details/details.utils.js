@@ -153,7 +153,7 @@ function parseMovieCreators(manifestation) {
 function parsePersonAndFunction(person) {
   const display = person?.display;
   const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles.length > 0 ? " (" + roles.join(", ") + ")" : "");
+  return display + (roles.length > 0 ? " (" + roles.join(", ") + ") " : "");
 }
 
 function parseIsAdaptionOf(manifestation) {
@@ -183,7 +183,7 @@ function RenderMovieCreatorValues({ values, skeleton }) {
           dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
           disabled={skeleton}
           border={{ bottom: { keepVisible: true } }}
-          key={`"${person.display}-${index}"`}
+          key={`${person.display}-${index}`}
           className={styles.link}
         >
           <Text type="text4" skeleton={skeleton} lines={0} key={index}>
@@ -205,14 +205,9 @@ function RenderMovieCreatorValues({ values, skeleton }) {
  */
 
 function RenderMovieActorValues({ values, skeleton }) {
-  console.log(values, values.length, "VALUES");
   const actors = values["skuespillere"] || [];
   const tooLong = actors?.length > 3;
-
   const actorsToRender = tooLong ? actors.splice(0, 4) : actors;
-
-  console.log(actorsToRender, "VALUES TO RENDER");
-
   return (
     <>
       <Text type="text3" className={styles.title} skeleton={skeleton} lines={2}>
@@ -228,7 +223,7 @@ function RenderMovieActorValues({ values, skeleton }) {
             })}
             disabled={skeleton}
             border={{ bottom: { keepVisible: true } }}
-            key={`"${person?.display}-${index}"`}
+            key={`${person.display}-${index}`}
             className={styles.link}
           >
             <Text type="text4" skeleton={skeleton} lines={0} key={index}>
@@ -303,7 +298,7 @@ function RenderMovieGenre({ values, skeleton }) {
       dataCy={cyKey({ name: val, prefix: "overview-genre" })}
       disabled={skeleton}
       border={{ bottom: { keepVisible: true } }}
-      key={`"${val}-${index}"`}
+      key={`${val}-${index}`}
     >
       <Text type="text4" skeleton={skeleton} lines={1}>
         {val}
