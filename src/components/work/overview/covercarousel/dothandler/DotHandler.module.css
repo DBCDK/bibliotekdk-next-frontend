@@ -70,3 +70,11 @@
 .dot.active_dot::after {
   background-color: var(--mine-shaft);
 }
+
+.plus_covers {
+  cursor: default;
+  color: var(--gray);
+  transform:
+    translateX(calc(var(--pt1) * -1))
+  ;
+}
