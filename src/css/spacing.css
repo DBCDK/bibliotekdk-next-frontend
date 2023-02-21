@@ -22,4 +22,7 @@
   --pt14: 112px;
   --pt15: 120px;
   --pt16: 128px;
+
+  --min_card_height: 148px;
+  --related_works_width: 326px;
 }

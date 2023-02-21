@@ -13,9 +13,7 @@ describe("Order", () => {
 
     // Show info about the manifestation/work
     cy.contains("Hugo i Sølvskoven");
-    cy.contains(
-      "manifestations[0].creators[0].display, manifestations[0].creators[1].display"
-    );
+    cy.contains("Linoleum Gummigulv");
 
     // Info about pickupbranch
     cy.contains("Test Bib");

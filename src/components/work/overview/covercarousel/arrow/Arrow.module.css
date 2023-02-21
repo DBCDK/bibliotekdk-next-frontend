@@ -1,5 +1,5 @@
 .arrow_functionality {
-  display: none;
+  display: block;
 
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
@@ -16,16 +16,8 @@
 }
 
 .arrow_functionality.disabled_icon {
-  display: none;
   cursor: default;
   pointer-events: none;
   background-color: var(--arrow__disabled_background_color);
   fill: var(--arrow__disabled_fill_color);
-}
-
-@media (min-width: 768px) {
-  .arrow_functionality,
-  .arrow_functionality.disabled_icon {
-    display: block;
-  }
 }

@@ -22,17 +22,21 @@ const MANIFESTATION_1 = {
   ],
   cover: {
     detail:
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
     origin: "moreinfo",
   },
+  creators: [{ display: "Linoleum Gummigulv" }],
 };
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
   ...MANIFESTATION_1,
   pid: "some-pid-2",
+  titles: {
+    full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
   cover: {
     detail:
-      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53588697&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=06bb715d932ba34098b2",
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=21678783&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=54646db03d538703e6c1",
     origin: "moreinfo",
   },
 };
@@ -40,17 +44,31 @@ const MANIFESTATION_2 = {
 const MANIFESTATION_3 = {
   ...MANIFESTATION_1,
   pid: "some-pid-3",
+  titles: {
+    full: ["Hugo i Sølvskoven 3", "Gulvguldets hemmelighed"],
+  },
   access: [
     {
       __typename: "InterLibraryLoan",
       loanIsPossible: false,
     },
   ],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777057&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=4d9e99b14209aef2a5d6",
+    origin: "moreinfo",
+  },
 };
 // Indexed article, that may be ordered via digital article copy
 const MANIFESTATION_4 = {
   ...MANIFESTATION_1,
   pid: "some-pid-4",
+  titles: {
+    full: [
+      "Hugo i Sølvskoven 4",
+      "Guldet glimter, sølvet smelter, gulvet vælter",
+    ],
+  },
   materialTypes: [
     {
       specific: "tidsskriftsartikel",
@@ -67,11 +85,19 @@ const MANIFESTATION_4 = {
     },
   ],
   workTypes: ["ARTICLE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23637189&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=72eb2ae9d91fb0ffbb7f",
+    origin: "moreinfo",
+  },
 };
 // A periodica
 const MANIFESTATION_5 = {
   ...MANIFESTATION_1,
   pid: "some-pid-5",
+  titles: {
+    full: ["Hugo i Sølvskoven 5", "Gulvguldmonstrene mod Grullerne"],
+  },
   materialTypes: [
     {
       specific: "tidsskrift",
@@ -88,15 +114,33 @@ const MANIFESTATION_5 = {
     },
   ],
   workTypes: ["PERIODICA"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=25504097&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=f9383e2279f840a4f31e",
+    origin: "moreinfo",
+  },
 };
 
 // A manifestation with edition, publisher, creator
 const MANIFESTATION_6 = {
   ...MANIFESTATION_1,
   pid: "some-pid-6",
+  titles: {
+    full: ["Hugo i Sølvskoven 6", "Gulvguldmonstrene vender tilbage"],
+  },
+  materialTypes: [
+    {
+      specific: "bog",
+    },
+  ],
   publisher: ["Sølvbakke"],
   edition: { publicationYear: { display: 3001 }, edition: "109. udgave" },
   creators: [{ display: "Linoleum Gummigulv" }],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=24777014&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=1965ebb8c60f848c3b2c",
+    origin: "moreinfo",
+  },
 };
 
 const MANIFESTATION_7 = {
@@ -115,6 +159,11 @@ const MANIFESTATION_7 = {
     },
   ],
   workTypes: ["LITERATURE"],
+  cover: {
+    detail:
+      "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=27052509&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=3ff650fe66ef8432973c",
+    origin: "moreinfo",
+  },
 };
 
 const ALL_MANIFESTATIONS = [
@@ -153,6 +202,26 @@ const ALL_WORKS = [
     workId: "some-work-id-4",
     manifestations: { all: [MANIFESTATION_7], mostRelevant: [MANIFESTATION_7] },
     workTypes: ["LITERATURE"],
+    titles: {
+      full: [
+        "Hugo i Sølvskoven 3½",
+        "Ritas mellemværende i Gulvskoven med Grullerne",
+      ],
+    },
+    creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
+    materialTypes: [
+      {
+        specific: "Bog",
+      },
+    ],
+    relations: {
+      continues: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
+      continuedIn: [MANIFESTATION_4, MANIFESTATION_5, MANIFESTATION_6],
+      hasAdaptation: [],
+      isAdaptationOf: [],
+      discusses: [],
+      discussedIn: [],
+    },
   },
 ];
 

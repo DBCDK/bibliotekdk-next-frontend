@@ -1,66 +1,83 @@
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
-import { scrollDistance } from "@/components/work/overview/covercarousel/utils";
 import styles from "./ScrollSnapSlider.module.css";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useScrollSlider from "@/components/hooks/useScrollSlider";
 import debounce from "lodash/debounce";
-
-function scrollSetter(target) {
-  return {
-    x: target.scrollLeft,
-    y: target.scrollTop,
-    scrollableWidth: target.scrollWidth - target.offsetWidth,
-    scrollableHeight: target.scrollHeight - target.offsetHeight,
-  };
-}
+import {
+  childSetter,
+  getScrollToNextCoveredChild,
+  scrollDistance,
+  scrollSetter,
+} from "@/components/base/scrollsnapslider/utils";
 
 export default function ScrollSnapSlider({
   sliderId,
-  slideDistance = 600,
+  slideDistanceOverride = null,
   children,
 }) {
   const parentRef = useRef(null);
-  const [scroll, setScroll] = useState({
-    x: parentRef?.current?.scrollLeft || 0,
-    y: parentRef?.current?.scrollTop || 0,
-    scrollableWidth:
-      parentRef?.current?.scrollWidth - parentRef?.current?.offsetWidth || 1,
-    scrollableHeight:
-      parentRef?.current?.scrollHeight - parentRef?.current?.offsetHeight || 1,
-  });
+  const [containerScroll, setContainerScroll] = useState({});
+  const [childScroll, setChildScroll] = useState([]);
+
+  useEffect(() => {
+    if (parentRef.current.childNodes) {
+      setContainerScroll(scrollSetter(parentRef.current));
+      setChildScroll(childSetter(parentRef.current.childNodes));
+    }
+
+    // OBS for Dependencies: Children are NECESSARY for render timing
+  }, [children]);
 
   useScrollSlider({
     sliderId: sliderId,
     parentRef: parentRef,
   });
 
+  function scrollFunction(orientation) {
+    scrollDistance(
+      sliderId,
+      slideDistanceOverride ||
+        getScrollToNextCoveredChild(orientation, childScroll, containerScroll)
+    );
+  }
+
+  const debouncedOnScroll = debounce(
+    (event) => event?.target && setContainerScroll(scrollSetter(event?.target)),
+    // Debounce timing condition
+    containerScroll?.x === 0 ||
+      containerScroll?.x === containerScroll?.xScrollable
+      ? 0
+      : 200
+  );
+
   return (
-    <div className={`${styles.flex_row}`}>
-      <>
-        <Arrow
-          arrowClass={`${styles.flex_arrow}`}
-          orientation={"left"}
-          clickCallback={() => scrollDistance(sliderId, -slideDistance)}
-          dataDisabled={scroll.x === 0}
-        />
+    <>
+      <div className={`${styles.flex_row}`}>
+        {containerScroll.xScrollable > 0 && (
+          <Arrow
+            arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
+            orientation={"left"}
+            clickCallback={() => scrollFunction("left")}
+            dataDisabled={containerScroll.x === 0}
+          />
+        )}
         <div
           ref={parentRef}
           id={sliderId}
-          onScroll={debounce(
-            (event) => event?.target && setScroll(scrollSetter(event?.target)),
-            scroll?.x === 0 || scroll?.x === scroll?.scrollableWidth ? 0 : 200
-          )}
+          onScroll={debouncedOnScroll}
           className={`${styles.flex_box}`}
         >
           {children}
         </div>
-        <Arrow
-          arrowClass={styles.flex_arrow}
-          orientation={"right"}
-          clickCallback={() => scrollDistance(sliderId, slideDistance)}
-          dataDisabled={scroll.x === scroll?.scrollableWidth}
-        />
-      </>
-    </div>
+        {containerScroll.xScrollable > 0 && (
+          <Arrow
+            arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right}`}
+            orientation={"right"}
+            clickCallback={() => scrollFunction("right")}
+            dataDisabled={containerScroll.x === containerScroll?.xScrollable}
+          />
+        )}
+      </div>
+    </>
   );
 }

@@ -26,7 +26,9 @@ describe("Related Keywords", () => {
 
   it(`Can render and interact with connected related subjects`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--connected");
-    cy.get("[data-cy=words-container]").children().should("have.length", 2);
+    cy.get("[data-cy=words-container]", { timeout: 10000 })
+      .children()
+      .should("have.length", 2);
     cy.get("[data-cy=words-container]")
       .children()
       .each((el, idx) => {
