@@ -31,7 +31,7 @@ KeywordsSection.story = {
     graphql: {
       resolvers: {
         SubjectContainer: {
-          all: () => [
+          dbcVerified: () => [
             {
               __typename: "SubjectText",
               display: "historie",
