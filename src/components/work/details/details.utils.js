@@ -7,7 +7,7 @@ import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
-import { capitalize } from "lodash";
+import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import { cyKey } from "@/utils/trim";

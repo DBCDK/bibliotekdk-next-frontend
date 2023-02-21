@@ -1,10 +1,19 @@
 import styles from "@/components/work/overview/covercarousel/dothandler/DotHandler.module.css";
 import React from "react";
+import Text from "@/components/base/text";
 
-export function DotHandler({ index, length, clickCallback, dotClass = "" }) {
+export function DotHandler({
+  index,
+  length,
+  clickCallback,
+  maxLength = 10,
+  dotClass = "",
+}) {
+  const numDots = maxLength && maxLength < length ? maxLength - 1 : length;
+
   return (
     <div className={`${styles.dots_container} ${dotClass}`}>
-      {[...Array(length).keys()].map((thisIndex) => (
+      {[...Array(numDots).keys()].map((thisIndex) => (
         <button
           key={thisIndex}
           className={`${styles.dot} ${
@@ -15,6 +24,14 @@ export function DotHandler({ index, length, clickCallback, dotClass = "" }) {
           data-cy={`dot_handler_dot_index_${thisIndex}`}
         />
       ))}
+      {maxLength && maxLength < length && (
+        <Text
+          type={index >= numDots ? "text6" : "text5"}
+          className={`${styles.plus_covers}`}
+        >
+          +{length - numDots}
+        </Text>
+      )}
     </div>
   );
 }

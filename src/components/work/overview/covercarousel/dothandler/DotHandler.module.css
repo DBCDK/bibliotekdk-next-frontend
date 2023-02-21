@@ -60,7 +60,6 @@
 .dot.active_dot::after {
   transform:
     translate(-50%, -50%)
-    scale(2)
   ;
 }
 
@@ -70,4 +69,12 @@
 
 .dot.active_dot::after {
   background-color: var(--mine-shaft);
+}
+
+.plus_covers {
+  cursor: default;
+  color: var(--gray);
+  transform:
+    translateX(calc(var(--pt1) * -1))
+  ;
 }

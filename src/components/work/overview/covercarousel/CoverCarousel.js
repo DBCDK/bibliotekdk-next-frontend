@@ -13,18 +13,15 @@ import Text from "@/components/base/text";
 import styles from "./CoverCarousel.module.css";
 import {
   getManifestationsWithCorrectCover,
-  getIndicesForCoverCarousel,
   getTextDescription,
   moveCarousel,
 } from "@/components/work/overview/covercarousel/utils";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { Arrow } from "@/components/work/overview/covercarousel/arrow/Arrow";
 import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/DotHandler";
-import RangeSlider from "@/components/work/overview/covercarousel/rangeslider/RangeSlider";
 import useScrollSlider from "@/components/hooks/useScrollSlider";
 import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
-import at from "lodash/at";
 
 const CoverElement = forwardRef(function CoverElement(
   {
@@ -149,19 +146,12 @@ export function CoverCarousel({
             dataDisabled={!(index < length - 1)}
           />
           <div className={styles.dots}>
-            {maxLength >= length ? (
-              <DotHandler
-                clickCallback={(newIndex) => clickCallback(newIndex)}
-                index={index}
-                length={length}
-              />
-            ) : (
-              <RangeSlider
-                clickCallback={(newIndex) => clickCallback(newIndex)}
-                index={index}
-                length={length}
-              />
-            )}
+            <DotHandler
+              clickCallback={(newIndex) => clickCallback(newIndex)}
+              index={index}
+              length={length}
+              maxLength={maxLength}
+            />
           </div>
         </>
       )}
@@ -184,21 +174,13 @@ export default function Wrap({ selectedPids, workTitles }) {
     );
   }, [manifestationsData?.manifestations]);
 
-  const manifestations =
-    manifestationsWithCover && manifestationsWithCover.length > 10
-      ? at(
-          manifestationsWithCover,
-          getIndicesForCoverCarousel(manifestationsWithCover?.length)
-        )
-      : manifestationsWithCover;
-
   if (manifestationsIsLoading) {
     <Skeleton className={styles.carousel_skeleton} />;
   }
 
   return (
     <CoverCarousel
-      manifestations={manifestations}
+      manifestations={manifestationsWithCover}
       materialType={materialType}
       workTitles={workTitles}
     />
