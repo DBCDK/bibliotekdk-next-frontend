@@ -45,7 +45,7 @@ export function Item({ title, subTitle, children, eventKey, onChange, id }) {
   const isCurrentEventKey = !!(currentEventKey === eventKey);
 
   const onClick = useAccordionToggle(eventKey, () => {
-    if (`#${id}` !== window.location.hash) {
+    if (id && `#${id}` !== window.location.hash) {
       router.replace(`${router.asPath.split("#")[0]}#${id}`);
     }
     if (onChange) {
