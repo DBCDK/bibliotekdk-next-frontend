@@ -31,10 +31,10 @@ function CreatorContributorTextHelper({ children }) {
  *  comma seperated string of ALL the languages
  */
 function parseLanguages(manifestation) {
-  const lanagueges = getLanguageValues(manifestation);
+  const languages = getLanguageValues(manifestation);
 
   let flatLanguages = [];
-  for (const [, value] of Object.entries(lanagueges)) {
+  for (const [, value] of Object.entries(languages)) {
     flatLanguages = [...flatLanguages, ...value];
   }
   // filter out duplicates*/
