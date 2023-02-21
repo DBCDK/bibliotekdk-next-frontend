@@ -6,7 +6,7 @@ export default function useElementVisible(options) {
   const [hasBeenSeen, setHasBeenSeen] = useState(false);
 
   function handleIntersection(entries) {
-    const isIntersecting = entries[entries.length - 1].isIntersecting;
+    const isIntersecting = entries.some((entry) => entry.isIntersecting);
     setIsVisible(isIntersecting);
     if (!hasBeenSeen && isIntersecting) {
       setHasBeenSeen(true);
