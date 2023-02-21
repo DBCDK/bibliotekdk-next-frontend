@@ -27,7 +27,7 @@ let firstAccordionRender = true;
  * @param {obj} props
  * @param {obj} props.title
  * @param {obj} props.children
- * @param {obj} props.eventKey (required!)
+ * @param {string} props.eventKey (required!)
  * See propTypes for specific props and types
  *
  * @returns {component}
@@ -42,7 +42,7 @@ export function Item({ title, subTitle, children, eventKey, onChange, id }) {
     threshold: 1.0,
   });
 
-  const isCurrentEventKey = !!(currentEventKey === eventKey);
+  const isCurrentEventKey = currentEventKey === eventKey;
 
   const onClick = useAccordionToggle(eventKey, () => {
     if (id && `#${id}` !== window.location.hash) {
