@@ -12,8 +12,14 @@ import styles from "./Accordion.module.css";
 import animations from "@/components/base/animation/animations.module.css";
 
 import BodyParser from "@/components/base/bodyparser";
-import React from "react";
+import React, { useEffect } from "react";
 import useElementVisible from "@/components/hooks/useElementVisible";
+import { useRouter } from "next/router";
+
+// A variable indicating if an accordion has been rendered
+// Used to determine if we should scroll to anchor.
+// We only want to scroll at initial load
+let firstAccordionRender = true;
 
 /**
  * The Component function
@@ -26,7 +32,8 @@ import useElementVisible from "@/components/hooks/useElementVisible";
  *
  * @returns {component}
  */
-export function Item({ title, subTitle, children, eventKey, onChange }) {
+export function Item({ title, subTitle, children, eventKey, onChange, id }) {
+  const router = useRouter();
   const currentEventKey = React.useContext(AccordionContext);
 
   const { elementRef, hasBeenSeen } = useElementVisible({
@@ -38,6 +45,9 @@ export function Item({ title, subTitle, children, eventKey, onChange }) {
   const isCurrentEventKey = !!(currentEventKey === eventKey);
 
   const onClick = useAccordionToggle(eventKey, () => {
+    if (`#${id}` !== window.location.hash) {
+      router.replace(`${router.asPath.split("#")[0]}#${id}`);
+    }
     if (onChange) {
       onChange(!isCurrentEventKey);
     }
@@ -49,6 +59,23 @@ export function Item({ title, subTitle, children, eventKey, onChange }) {
       onClick();
     }
   };
+
+  // Check if this item should be opened at mount time,
+  // considering the anchor hash from the URL
+  useEffect(() => {
+    if (firstAccordionRender && id && `#${id}` === window.location.hash) {
+      setTimeout(() => {
+        onClick();
+        window.scrollTo({
+          behavior: "smooth",
+          top:
+            elementRef?.current?.getBoundingClientRect()?.top -
+            document.body.getBoundingClientRect().top -
+            80,
+        });
+      }, 500);
+    }
+  }, []);
 
   if (typeof children === "string") {
     children = <Text type="text2">{children}</Text>;
@@ -104,6 +131,7 @@ Item.propTypes = {
     PropTypes.func,
   ]),
   eventKey: PropTypes.string.isRequired,
+  id: PropTypes.string,
 };
 
 /**
@@ -124,6 +152,10 @@ export default function Accordion({
   className = "",
   children,
 }) {
+  useEffect(() => {
+    firstAccordionRender = false;
+  }, []);
+
   data =
     data &&
     data.map((a, i) => (
