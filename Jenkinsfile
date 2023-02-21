@@ -47,7 +47,7 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                branch 'main'
+                branch 'cookiebot-test'
             }
             steps {
                 script {

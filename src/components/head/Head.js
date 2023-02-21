@@ -16,6 +16,13 @@ export default function _Head() {
 
   return (
     <Head>
+      <script
+        id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
+        data-blockingmode="auto"
+        type="text/javascript"
+      ></script>
       <title key="title">{pageTitle}</title>
       <meta
         key="description"
