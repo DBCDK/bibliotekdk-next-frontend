@@ -22,6 +22,7 @@
         "patterns": ["!react-bootstrap/*", "!lodash/*"]
       }
     ],
+    "@next/next/no-sync-scripts": "off",
 
     // TODO: Turn these on at some point
     /* next/core-web-vitals */
