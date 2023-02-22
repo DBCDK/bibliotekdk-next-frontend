@@ -29,7 +29,8 @@ function useInitMaterialType(
   uniqueMaterialTypes,
   inUniqueMaterialTypes,
   type,
-  onTypeChange
+  onTypeChange,
+  workId
 ) {
   useEffect(() => {
     if (
@@ -41,7 +42,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, []);
+  }, [workId]);
 }
 
 /**
@@ -77,7 +78,8 @@ export function Overview({
     uniqueMaterialTypes,
     inUniqueMaterialTypes,
     type,
-    onTypeChange
+    onTypeChange,
+    workId
   );
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
