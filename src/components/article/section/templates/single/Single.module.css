@@ -1,3 +1,8 @@
+.underlineContainer__colors {
+  --underline-font-hover-color: var(--mine-shaft);
+  --underline-bottom-hover-color: var(--mine-shaft);
+}
+
 .wrap {
   padding: 0;
 }
@@ -14,6 +19,7 @@
 .title {
   margin-bottom: var(--pt3);
 }
+
 
 .text {
   margin-bottom: var(--pt1);
