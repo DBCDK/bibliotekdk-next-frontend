@@ -2,7 +2,6 @@ import styles from "./SingleRelatedManifestation.module.css";
 import Text from "@/components/base/text";
 import { formatMaterialTypesToPresentation } from "@/lib/manifestationFactoryUtils";
 import Translate from "@/components/base/translate";
-import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import { encodeTitleCreator } from "@/lib/utils";
 
@@ -15,13 +14,6 @@ export default function SingleRelatedManifestation({ manifestation }) {
   );
   const src = manifestation?.cover?.detail;
 
-  const animationStyle = [
-    animations.underlineContainer,
-    animations.top_line_false,
-    animations.top_line_keep_false,
-    animations.bottom_line_keep_false,
-  ].join(" ");
-
   return (
     <Link
       href={{
@@ -32,12 +24,13 @@ export default function SingleRelatedManifestation({ manifestation }) {
         },
       }}
       className={`${styles.link_style}`}
-      border={{ top: false, bottom: false }}
+      border={{ top: false, bottom: true }}
       data_display={"inline"}
       a={true}
       tag={"a"}
+      data_use_new_underline={true}
     >
-      <div className={`${styles.related_element} ${animationStyle}`}>
+      <div className={`${styles.related_element}`}>
         <img
           src={src}
           className={`${styles.cover}`}

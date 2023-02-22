@@ -1,14 +1,12 @@
 .link_style {
-  cursor: pointer;
   display: contents;
-}
-
-.related_element {
+  cursor: pointer;
   /* Add underline colors */
   --underline-middle-hover-color: var(--link-background);
   --underline-font-hover-color: var(--mine-shaft);
-  /* -- */
+}
 
+.related_element {
   /* Reset anchor tag */
   text-decoration: none;
   color: var(--mine-shaft);
