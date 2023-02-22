@@ -64,17 +64,6 @@ function getLanguageValues(manifestation) {
 }
 
 /**
- * Genre and form from given work.
- * @param work
- * @returns {string}
- *  comma seperated string.
- */
-function parseGenreAndForm(work) {
-  const genreForm = work?.genreAndForm || [];
-  return genreForm.join(", ");
-}
-
-/**
  * Physical description of given manifestations.
  * @param manifestation
  * @returns {string | undefined}
@@ -84,27 +73,6 @@ function parsePhysicalDescriptions(manifestation) {
   return manifestation?.physicalDescriptions
     ?.map((description) => description.summary)
     .join(" ");
-}
-
-/**
- * Creators AND contributors for given manifestation
- * @param manifestation
- * @returns {false|JSX.Element}
- */
-function parseContributors(manifestation) {
-  const contributors = [
-    ...(manifestation?.creators || []),
-    ...(manifestation?.contributors || []),
-  ];
-
-  return (
-    contributors?.length > 0 && (
-      <ParsedCreatorsOrContributors
-        creatorsOrContributors={contributors}
-        Tag={CreatorContributorTextHelper}
-      />
-    )
-  );
 }
 
 /**
