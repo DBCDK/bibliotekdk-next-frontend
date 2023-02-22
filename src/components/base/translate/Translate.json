@@ -748,6 +748,14 @@
       "adaption": {
         "da": "Filmatisering af",
         "en": "Adaption of"
+      },
+      "hasadaption" : {
+        "da": "Filmatisering",
+        "en": "Film adaption"
+      },
+      "firstEdition": {
+        "da": "Originaludgave",
+        "en": "Original edition"
       }
     },
     "description": {

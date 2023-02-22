@@ -416,7 +416,8 @@ export function fieldsForRows(manifestation, work, context) {
       {
         genre: {
           label: Translate({ ...context, label: "genre/form" }),
-          value: parseGenreAndForm(work),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
         },
       },
       {
@@ -426,11 +427,22 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
     ],
-    MUSIK: [
+    LITERATURE: [
       {
-        genre: {
-          label: Translate({ ...context, label: "genre/form" }),
-          value: "hest",
+        hasadaption: {
+          label: Translate({ ...context, label: "hasadaption" }),
+          value: manifestation?.relations?.hasAdaptation?.find((rel) =>
+            rel?.pid?.startsWith("870970")
+          ),
+          jsxParser: RenderMovieAdaption,
+        },
+      },
+      {
+        firstEdition: {
+          label: Translate({ ...context, label: "firstEdition" }),
+          value:
+            work?.manifestations?.first?.edition?.publicationYear?.display ||
+            "",
         },
       },
     ],
