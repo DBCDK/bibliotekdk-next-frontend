@@ -145,8 +145,15 @@ function parseMovieContributors(manifestation) {
  * @param manifestation
  * @returns {*|null}
  */
-function parseMovieCreators(manifestation) {
+function getCreators(manifestation) {
   return manifestation?.creators || null;
+}
+
+function getCreatorsAndContributors(manifestation) {
+  const creators = manifestation?.creators || [];
+  const contributors = manifestation?.contributors || [];
+
+  return [...creators, ...contributors];
 }
 
 /**
@@ -176,7 +183,7 @@ function parseIsAdaptionOf(manifestation) {
 }
 
 /**
- * jsxParser for movie creators - render function
+ * jsxParser for creators - render function
  * @param values
  * @param skeleton
  * @returns {unknown[]}
@@ -184,7 +191,7 @@ function parseIsAdaptionOf(manifestation) {
  * @constructor
  */
 
-function RenderMovieCreatorValues({ values, skeleton }) {
+function RenderCreatorValues({ values, skeleton }) {
   return (
     values &&
     values.map((person, index) => {
@@ -410,7 +417,8 @@ export function fieldsForRows(manifestation, work, context) {
       {
         contributors: {
           label: Translate({ ...context, label: "contribution" }),
-          value: parseContributors(manifestation),
+          value: getCreatorsAndContributors(manifestation),
+          jsxParser: RenderCreatorValues,
         },
       },
       {
@@ -492,8 +500,8 @@ export function fieldsForRows(manifestation, work, context) {
       {
         creators: {
           label: Translate({ ...context, label: "creators" }),
-          value: parseMovieCreators(manifestation),
-          jsxParser: RenderMovieCreatorValues,
+          value: getCreators(manifestation),
+          jsxParser: RenderCreatorValues,
         },
       },
       {
