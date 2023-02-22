@@ -19,7 +19,7 @@ import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
-import AnimationLine from "@/components/base/animation/line";
+import animations from "@/components/base/animation/animations.module.css";
 import React from "react";
 
 /**
@@ -49,7 +49,13 @@ export default function Single({ articles, skeleton }) {
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link a={false} href={{ pathname, query }} target={`${target}`}>
+        <Link
+          data_display={"inline"}
+          border={{ top: false, bottom: false }}
+          className={animations.underlineContainer__is_parent_link}
+          href={{ pathname, query }}
+          target={`${target}`}
+        >
           <Row className={`${styles.content} ${skeletonClass}`}>
             <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
               <span className={styles.text}>
@@ -60,9 +66,19 @@ export default function Single({ articles, skeleton }) {
               <div />
               <span className={styles.title}>
                 <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
-                  {article.title}
+                  <Link
+                    className={`
+                      ${styles.title} 
+                      ${styles.underlineContainer__colors} 
+                      ${animations.underlineContainer__has_parent_link}
+                    `}
+                    border={{ top: false, bottom: true }}
+                    data_display={"inline"}
+                    data_use_new_underline={true}
+                  >
+                    {article.title}
+                  </Link>
                 </Title>
-                <AnimationLine />
               </span>
               <div />
               <Link a={false} href={{ pathname, query }} target={`${target}`}>
