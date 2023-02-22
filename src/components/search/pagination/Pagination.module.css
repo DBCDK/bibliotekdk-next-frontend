@@ -17,6 +17,13 @@
   margin-bottom: var(--pt4);
 }
 
+.mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--pt4);
+}
+
 .desktop {
   display: none;
 }
@@ -34,12 +41,13 @@
 .pagination button:focus,
 .pagination button:hover {
   background-color: var(--white);
-  border: 1px solid var(--blue);
+  outline: 1px solid var(--blue);
+  border: 0;
 }
 
 .pagination button:not(.arrow_styling):focus:not(:focus-visible) {
-  border: 0;
   outline: 0;
+  border: 0;
 }
 
 .pagination button.selected {

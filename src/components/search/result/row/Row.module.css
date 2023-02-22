@@ -3,6 +3,7 @@
   margin-bottom: var(--pt2);
   white-space: normal;
   color: var(--mine-shaft);
+  min-height: 160px;
 }
 
 .cover img {
