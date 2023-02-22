@@ -53,7 +53,7 @@ function Details({
 
   const fieldsToShow = useMemo(() => {
     return fieldsForRows(manifestation, work, context);
-  }, [manifestation, materialType]);
+  }, [manifestation, materialType, work, context]);
 
   return (
     <Section

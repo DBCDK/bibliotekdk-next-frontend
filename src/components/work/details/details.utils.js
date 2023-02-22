@@ -145,8 +145,15 @@ function parseMovieContributors(manifestation) {
  * @param manifestation
  * @returns {*|null}
  */
-function parseMovieCreators(manifestation) {
+function getCreators(manifestation) {
   return manifestation?.creators || null;
+}
+
+function getCreatorsAndContributors(manifestation) {
+  const creators = manifestation?.creators || [];
+  const contributors = manifestation?.contributors || [];
+
+  return [...creators, ...contributors];
 }
 
 /**
@@ -158,7 +165,7 @@ function parseMovieCreators(manifestation) {
 function parsePersonAndFunction(person) {
   const display = person?.display;
   const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles.length > 0 ? " (" + roles.join(", ") + ") " : "");
+  return display + (roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "");
 }
 
 /**
@@ -176,7 +183,7 @@ function parseIsAdaptionOf(manifestation) {
 }
 
 /**
- * jsxParser for movie creators - render function
+ * jsxParser for creators - render function
  * @param values
  * @param skeleton
  * @returns {unknown[]}
@@ -184,25 +191,26 @@ function parseIsAdaptionOf(manifestation) {
  * @constructor
  */
 
-function RenderMovieCreatorValues({ values, skeleton }) {
+function RenderCreatorValues({ values, skeleton }) {
   return (
-    values &&
-    values.map((person, index) => {
-      return (
-        <Link
-          href={`/find?q.creator=${person.display}`}
-          dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
-          disabled={skeleton}
-          border={{ bottom: { keepVisible: true } }}
-          key={`crators-${index}`}
-          className={styles.link}
-        >
-          <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-            {parsePersonAndFunction(person)}
-          </Text>
-        </Link>
-      );
-    })
+    values && (
+      <div data-cy={"creator-contributor-text-helper"}>
+        {values.map((person, index) => (
+          <Link
+            href={`/find?q.creator=${person.display}`}
+            dataCy={cyKey({ name: person.display, prefix: "details-creatore" })}
+            disabled={skeleton}
+            border={{ bottom: { keepVisible: true } }}
+            key={`crators-${index}`}
+            className={styles.link}
+          >
+            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              {parsePersonAndFunction(person)}
+            </Text>
+          </Link>
+        ))}
+      </div>
+    )
   );
 }
 
@@ -410,13 +418,15 @@ export function fieldsForRows(manifestation, work, context) {
       {
         contributors: {
           label: Translate({ ...context, label: "contribution" }),
-          value: parseContributors(manifestation),
+          value: getCreatorsAndContributors(manifestation),
+          jsxParser: RenderCreatorValues,
         },
       },
       {
         genre: {
           label: Translate({ ...context, label: "genre/form" }),
-          value: parseGenreAndForm(work),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
         },
       },
       {
@@ -426,11 +436,22 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
     ],
-    MUSIK: [
+    LITERATURE: [
       {
-        genre: {
-          label: Translate({ ...context, label: "genre/form" }),
-          value: "hest",
+        hasadaption: {
+          label: Translate({ ...context, label: "hasadaption" }),
+          value: manifestation?.relations?.hasAdaptation?.find((rel) =>
+            rel?.pid?.startsWith("870970")
+          ),
+          jsxParser: RenderMovieAdaption,
+        },
+      },
+      {
+        firstEdition: {
+          label: Translate({ ...context, label: "firstEdition" }),
+          value:
+            work?.manifestations?.first?.edition?.publicationYear?.display ||
+            "",
         },
       },
     ],
@@ -480,8 +501,8 @@ export function fieldsForRows(manifestation, work, context) {
       {
         creators: {
           label: Translate({ ...context, label: "creators" }),
-          value: parseMovieCreators(manifestation),
-          jsxParser: RenderMovieCreatorValues,
+          value: getCreators(manifestation),
+          jsxParser: RenderCreatorValues,
         },
       },
       {

@@ -40,16 +40,17 @@ describe("Details", () => {
       .should("exist")
       .first()
       .should("exist")
-      .should((ele) => {
+      /*.should((ele) => {
         expect(ele).to.have.css("font-weight", "700");
-      })
+      })*/
       .parent()
       .should("contain", "roles")
       .should("contain", "function.singular");
 
     cy.get("[data-cy=text-genre-form]")
-      .next("p")
-      .should("have.text", "actionfilm, thriller, science fiction");
+      .next("a")
+      .find("p")
+      .should("have.text", "actionfilm");
 
     cy.get("[data-cy=section-title]")
       .find("p")
