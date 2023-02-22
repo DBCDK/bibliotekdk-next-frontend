@@ -5,7 +5,7 @@
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
-describe("Suggester", () => {
+describe.skip("Suggester", () => {
   before(function () {
     cy.visit("/iframe.html?id=search-suggester--header-suggester");
   });

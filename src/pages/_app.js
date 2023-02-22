@@ -11,7 +11,7 @@
  */
 import React from "react";
 
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -37,7 +37,7 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
+// import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
@@ -104,10 +104,13 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   // If this is rendered on server, allowCookies will be in pageProps
   // In the browser, we use Cookies.get
-  const allowCookies =
-    typeof window === "undefined"
-      ? pageProps.allowCookies
-      : !!Cookies.get(COOKIES_ALLOWED);
+  // const allowCookies =
+  //   typeof window === "undefined"
+  //     ? pageProps.allowCookies
+  //     : !!Cookies.get(COOKIES_ALLOWED);
+
+  // Testing out cookiebot that will automatically block cookies
+  const allowCookies = true;
 
   // Enable data collect, when cookies are approved
   enableDataCollect(allowCookies);
@@ -179,7 +182,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <HelpHeader />
               <Component {...pageProps} />
               <FeedBackLink />
-              <CookieBox />
+              {/* <CookieBox /> */}
               <Footer />
             </div>
           </Modal.Provider>
