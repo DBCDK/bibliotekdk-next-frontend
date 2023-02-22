@@ -17,7 +17,7 @@ import useDataCollect from "@/lib/useDataCollect";
 export function ResultPage({ rows, onWorkClick, isLoading }) {
   if (isLoading) {
     // Create some skeleton rows
-    rows = [{}, {}, {}, {}, {}, {}];
+    rows = Array(10).fill({});
   }
 
   const resultRows = rows?.map((row, index) => (

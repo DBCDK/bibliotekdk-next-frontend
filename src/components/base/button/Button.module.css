@@ -30,24 +30,24 @@
 
 .primary.disabled {
   background-color: var(--concrete);
-  border: 2px solid var(--iron);
+  outline: 2px solid var(--iron);
 }
 
 /* Secondary */
 
 .secondary {
   color: var(--blue);
-  border: 2px solid var(--blue);
+  outline: 2px solid var(--blue);
   line-height: 23px;
 }
 
 .secondary:hover {
-  border: 2px solid var(--mine-shaft);
+  outline: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
 .secondary.disabled {
-  border: 2px solid var(--concrete);
+  outline: 2px solid var(--concrete);
 }
 
 /* 
@@ -99,8 +99,7 @@
 }
 
 .secondary:focus {
-  outline: 1px solid var(--mine-shaft);
-  border: 2px solid var(--mine-shaft);
+  outline: 2px solid var(--mine-shaft);
   color: var(--mine-shaft);
 }
 
