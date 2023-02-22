@@ -3,7 +3,7 @@
  */
 
 import styles from "@/components/work/details/Details.module.css";
-import { ParsedCreatorsOrContributors } from "@/lib/manifestationParser";
+
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
@@ -11,17 +11,6 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import { cyKey } from "@/utils/trim";
-
-function CreatorContributorTextHelper({ children }) {
-  return (
-    <span
-      data-cy={"creator-contributor-text-helper"}
-      className={styles.creatorContributorTextHelper}
-    >
-      {children}
-    </span>
-  );
-}
 
 /**
  * Parse languages in given manifestation.
