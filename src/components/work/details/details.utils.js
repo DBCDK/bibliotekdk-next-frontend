@@ -165,7 +165,7 @@ function getCreatorsAndContributors(manifestation) {
 function parsePersonAndFunction(person) {
   const display = person?.display;
   const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles.length > 0 ? " (" + roles.join(", ") + ") " : "");
+  return display + (roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "");
 }
 
 /**
@@ -193,23 +193,24 @@ function parseIsAdaptionOf(manifestation) {
 
 function RenderCreatorValues({ values, skeleton }) {
   return (
-    values &&
-    values.map((person, index) => {
-      return (
-        <Link
-          href={`/find?q.creator=${person.display}`}
-          dataCy={cyKey({ name: person.display, prefix: "overview-genre" })}
-          disabled={skeleton}
-          border={{ bottom: { keepVisible: true } }}
-          key={`crators-${index}`}
-          className={styles.link}
-        >
-          <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-            {parsePersonAndFunction(person)}
-          </Text>
-        </Link>
-      );
-    })
+    values && (
+      <div data-cy={"creator-contributor-text-helper"}>
+        {values.map((person, index) => (
+          <Link
+            href={`/find?q.creator=${person.display}`}
+            dataCy={cyKey({ name: person.display, prefix: "details-creatore" })}
+            disabled={skeleton}
+            border={{ bottom: { keepVisible: true } }}
+            key={`crators-${index}`}
+            className={styles.link}
+          >
+            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              {parsePersonAndFunction(person)}
+            </Text>
+          </Link>
+        ))}
+      </div>
+    )
   );
 }
 
