@@ -23,6 +23,11 @@ export default function _Head() {
         data-blockingmode="auto"
         type="text/javascript"
       ></script>
+      <script
+        id="teststat"
+        src="/test-statistics-script.js"
+        type="text/javascript"
+      ></script>
       <title key="title">{pageTitle}</title>
       <meta
         key="description"
