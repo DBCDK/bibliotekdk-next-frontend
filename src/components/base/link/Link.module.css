@@ -4,6 +4,14 @@
   cursor: pointer;
 }
 
+.border_like {
+  position: relative;
+  text-decoration: none;
+  /* !Dangerous: Prevent multiline */
+  white-space: nowrap;
+  display: inline-block;
+}
+
 .border {
   position: relative;
   text-decoration: none;
@@ -12,18 +20,23 @@
   display: inline-block;
 }
 
-.border.display_inline {
+.border.display_inline,
+.border_like.display_inline {
   white-space: normal;
+  display: inline;
+}
+
+div.display_inline {
   display: inline;
 }
 
 /* real focus */
 .border:focus-visible {
-  color: var(--blue);
   text-decoration: none;
 }
 
 .link.border:focus-visible > div > hr:last-child {
+  color: var(--blue);
   display: none;
 }
 

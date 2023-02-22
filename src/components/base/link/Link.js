@@ -4,7 +4,20 @@ import { default as NextLink } from "next/link";
 import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
+import animations from "@/components/base/animation/animations.module.css";
 
+function parseBorders(border) {
+  return [
+    ...(!Boolean(border?.top) ? [animations.top_line_false] : []),
+    ...(!Boolean(border?.top?.keepVisible)
+      ? [animations.top_line_keep_false]
+      : []),
+    ...(!Boolean(border?.bottom) ? [animations.bottom_line_false] : []),
+    ...(!Boolean(border?.bottom?.keepVisible)
+      ? [animations.bottom_line_keep_false]
+      : []),
+  ];
+}
 /**
  * The Component function
  *
@@ -13,7 +26,7 @@ import styles from "./Link.module.css";
  *
  * @returns {component}
  */
-export default function Link({
+function Link({
   children = "Im a hyperlink now!",
   a = true,
   linkRef = null,
@@ -31,6 +44,7 @@ export default function Link({
   ariaLabel = "",
   scroll = true,
   data_display = "inline-block",
+  data_use_new_underline = false,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -54,11 +68,13 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${
-          styles.link
-        } ${animationClass} ${disabledClass} ${className} ${
-          data_display === "inline" && styles.display_inline
-        }`}
+        className={
+          data_use_new_underline
+            ? className
+            : `${styles.link} ${animationClass} ${disabledClass} ${className} ${
+                data_display === "inline" && styles.display_inline
+              }`
+        }
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
       >
@@ -124,3 +140,86 @@ Link.propTypes = {
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
 };
+
+/**
+ * Wrapper for using new underline that allows line wrap
+ * @param className
+ * @param disabled
+ * @param border
+ * @param data_display
+ * @param data_use_new_underline
+ * @param data_underline_animation_disabled
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
+export default function Wrap({
+  className = "",
+  disabled = false,
+  border = { top: false, bottom: true },
+  data_display = "inline-block",
+  data_use_new_underline = false,
+  data_underline_animation_disabled = false,
+  ...props
+}) {
+  let newBorder = border;
+  let newClassName = className;
+
+  const underline_data_exception_classes = [
+    ...parseBorders(border),
+    ...(disabled ? [animations.link_disabled] : []),
+    ...(data_underline_animation_disabled
+      ? [animations.animation_disabled]
+      : []),
+  ].join(" ");
+
+  if (data_use_new_underline === true) {
+    newBorder = { top: false, bottom: false };
+
+    newClassName = [
+      styles.border_like,
+      animations.underlineContainer,
+      underline_data_exception_classes,
+      `${data_display === "inline" && styles.display_inline}`,
+      className,
+    ].join(" ");
+  }
+  //
+  // const newChildren =
+  //   data_display !== "inline" ? (
+  //     <>props.children</>
+  //   ) : (
+  //     <StyleInjector addedClass={styles.display_inline}>
+  //       {props.children}
+  //     </StyleInjector>
+  //   );
+
+  return (
+    <Link
+      border={newBorder}
+      className={newClassName}
+      disabled={disabled}
+      data_display={data_display}
+      data_use_new_underline={data_use_new_underline}
+      data_underline_animation_disabled={data_underline_animation_disabled}
+      {...props}
+    >
+      <div className={data_display !== "inline" ? "" : styles.display_inline}>
+        {props.children}
+      </div>
+    </Link>
+  );
+}
+
+// function StyleInjector({ addedClass, children }) {
+//   console.log("addedClass: ", addedClass);
+//   console.log("children: ", children);
+//
+//   const newChildren = Children.map(children, (child) =>
+//     cloneElement(child, {
+//       className: `${child?.props?.className} ${addedClass}`,
+//     })
+//   );
+//
+//   return <div>{newChildren}</div>;
+// }
