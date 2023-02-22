@@ -172,10 +172,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
+            <Head />
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
-              <Head />
               <SkipToMainLink />
               <Banner />
               <Notifications />
