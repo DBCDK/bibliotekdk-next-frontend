@@ -1,5 +1,6 @@
 .text {
   font-family: var(--body-font);
+  /* TODO: What is the reason for block? It is quite often troublesome */
   display: block;
   letter-spacing: 0.2px;
 
