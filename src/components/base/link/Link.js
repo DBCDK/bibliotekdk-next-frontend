@@ -184,15 +184,6 @@ export default function Wrap({
       className,
     ].join(" ");
   }
-  //
-  // const newChildren =
-  //   data_display !== "inline" ? (
-  //     <>props.children</>
-  //   ) : (
-  //     <StyleInjector addedClass={styles.display_inline}>
-  //       {props.children}
-  //     </StyleInjector>
-  //   );
 
   return (
     <Link
@@ -204,9 +195,7 @@ export default function Wrap({
       data_underline_animation_disabled={data_underline_animation_disabled}
       {...props}
     >
-      <div className={data_display !== "inline" ? "" : styles.display_inline}>
-        {props.children}
-      </div>
+      {props.children}
     </Link>
   );
 }
