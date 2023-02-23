@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import merge from "lodash/merge";
@@ -17,7 +17,7 @@ import Top from "../base/top";
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import useUser, { useAccessToken } from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
 import TjoolTjip from "@/components/base/tjooltjip";
 
