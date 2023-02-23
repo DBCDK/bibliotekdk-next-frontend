@@ -50,7 +50,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
         <div className={styles.text}>
           {manifestation.partInSeries && (
             <Text
-              type={"text1"}
+              type={"text4"}
               data_disply={"inline"}
               className={`${styles.wrap_one_line}`}
             >
@@ -58,7 +58,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
             </Text>
           )}
           <Text
-            type={"text1"}
+            type={"text4"}
             data_disply={"inline"}
             className={`${styles.wrap_two_lines}`}
             title={fullTitle}
@@ -67,15 +67,15 @@ export default function SingleRelatedManifestation({ manifestation }) {
           </Text>
           <div className={styles.margin_auto} />
           <Text
-            type={"text2"}
+            type={"text3"}
             data_disply={"inline"}
-            className={`${styles.wrap_one_line}`}
+            className={`${styles.wrap_two_lines}`}
             title={creator}
           >
             {creator}
           </Text>
           <Text
-            type={"text2"}
+            type={"text3"}
             data_disply={"inline"}
             className={`${styles.wrap_one_line}`}
             title={formattedMaterialTypes}
