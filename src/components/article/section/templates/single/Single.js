@@ -19,8 +19,8 @@ import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
-import animations from "@/components/base/animation/animations.module.css";
 import React from "react";
+import { LinkOnlyInternalAnimations } from "@/components/base/link/Link";
 
 /**
  * A section displaying three articles
@@ -49,10 +49,7 @@ export default function Single({ articles, skeleton }) {
   return (
     <Row className={styles.wrap}>
       <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link
-          data_display={"inline"}
-          border={{ top: false, bottom: false }}
-          className={animations.underlineContainer__is_parent_link}
+        <LinkOnlyInternalAnimations
           href={{ pathname, query }}
           target={`${target}`}
         >
@@ -69,10 +66,8 @@ export default function Single({ articles, skeleton }) {
                   <Link
                     className={`
                       ${styles.title} 
-                      ${styles.underlineContainer__colors} 
-                      ${animations.underlineContainer__has_parent_link}
+                      ${styles.underlineContainer__colors}
                     `}
-                    border={{ top: false, bottom: true }}
                     data_display={"inline"}
                     data_use_new_underline={true}
                   >
@@ -101,7 +96,7 @@ export default function Single({ articles, skeleton }) {
               </div>
             </Col>
           </Row>
-        </Link>
+        </LinkOnlyInternalAnimations>
       </Col>
     </Row>
   );
