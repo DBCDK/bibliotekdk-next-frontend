@@ -12,7 +12,7 @@ import Image from "@/components/base/image";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
-import Link from "@/components/base/link";
+import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
 import Button from "@/components/base/button";
 
 import { articlePathAndTarget } from "@/components/articles/utils";
@@ -20,7 +20,6 @@ import { articlePathAndTarget } from "@/components/articles/utils";
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
 import React from "react";
-import { LinkOnlyInternalAnimations } from "@/components/base/link/Link";
 
 /**
  * A section displaying three articles

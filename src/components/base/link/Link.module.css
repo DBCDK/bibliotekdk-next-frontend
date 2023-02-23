@@ -32,11 +32,11 @@ div.display_inline {
 
 /* real focus */
 .border:focus-visible {
-  color: var(--blue);
   text-decoration: none;
 }
 
 .link.border:focus-visible > div > hr:last-child {
+  color: var(--blue);
   display: none;
 }
 

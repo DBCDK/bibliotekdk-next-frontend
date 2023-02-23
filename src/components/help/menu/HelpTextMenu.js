@@ -4,7 +4,7 @@ import Text from "@/components/base/text/Text";
 import styles from "@/components/help/menu/HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
 import classNames from "classnames/bind";
-import Link from "@/components/base/link";
+import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
@@ -14,7 +14,6 @@ import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
-import { LinkOnlyInternalAnimations } from "@/components/base/link/Link";
 
 /**
  * Other menu links
