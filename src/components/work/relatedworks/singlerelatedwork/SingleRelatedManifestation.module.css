@@ -1,44 +1,43 @@
 .link_style {
+  /* Add underline colors */
+  --underline-middle-hover-color: var(--link-background);
+  --underline-font-hover-color: var(--mine-shaft);
+  /* -- */
   cursor: pointer;
   display: contents;
 }
 
 .related_element {
-  /* Add underline colors */
-  --underline-middle-hover-color: var(--link-background);
-  --underline-font-hover-color: var(--mine-shaft);
-  /* -- */
-
-  /* Reset anchor tag */
-  text-decoration: none;
-  color: var(--mine-shaft);
-
-  flex-basis: 30%;
-  width: var(--related_works_width);
-  height: fit-content;
-
-  padding: var(--pt05);
-
   display: flex;
   gap: var(--pt2);
+  box-sizing: border-box;
+
+  padding: var(--pt1) var(--pt1_5);
+
+  /* TODO: Find the number of cols when
+   *  width is full
+   */
+  --related_works_width: calc(
+    calc(
+      var(--container_width)
+      / 12
+      * var(--cols_per_card)
+    ) - 0.5 * var(--pt2)
+  );
+  width: var(--related_works_width);
+
+  /* Reset anchor tag */
+  color: var(--mine-shaft);
 }
 
 .cover {
-  --background_image: var(--iron);
   object-fit: contain;
-  max-width: var(--pt12);
-  min-height: var(--min_card_height);
+  object-position: 50% 0;
+  width: var(--pt11);
   align-self: center;
-  width: 100%;
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.75),
-    rgba(255, 255, 255, 0.75)
-  ), var(--background_image);
 }
 
 .text {
-  min-width: 200px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--pt05);
@@ -50,7 +49,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 
 .text > .wrap_two_lines {
   overflow: hidden;

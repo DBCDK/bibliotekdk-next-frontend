@@ -31,13 +31,13 @@ export default function SingleRelatedManifestation({ manifestation }) {
           workId,
         },
       }}
-      className={`${styles.link_style}`}
+      className={`${styles.link_style} ${animationStyle}`}
       border={{ top: false, bottom: false }}
       data_display={"inline"}
       a={true}
       tag={"a"}
     >
-      <div className={`${styles.related_element} ${animationStyle}`}>
+      <div className={`${styles.related_element}`}>
         <img
           src={src}
           className={`${styles.cover}`}
