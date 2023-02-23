@@ -211,15 +211,16 @@ export default function Wrap({
   );
 }
 
-// function StyleInjector({ addedClass, children }) {
-//   console.log("addedClass: ", addedClass);
-//   console.log("children: ", children);
-//
-//   const newChildren = Children.map(children, (child) =>
-//     cloneElement(child, {
-//       className: `${child?.props?.className} ${addedClass}`,
-//     })
-//   );
-//
-//   return <div>{newChildren}</div>;
-// }
+export function LinkOnlyInternalAnimations({ href, target, children }) {
+  return (
+    <Link
+      data_display={"inline"}
+      border={{ top: false, bottom: false }}
+      className={animations.underlineContainer__only_internal_animations}
+      href={href}
+      target={`${target}`}
+    >
+      {children}
+    </Link>
+  );
+}
