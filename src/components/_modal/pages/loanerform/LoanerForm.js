@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import merge from "lodash/merge";
@@ -17,7 +17,7 @@ import Top from "../base/top";
 import styles from "./LoanerForm.module.css";
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
-import useUser, { useAccessToken } from "@/components/hooks/useUser";
+import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
 import TjoolTjip from "@/components/base/tjooltjip";
 
@@ -438,7 +438,6 @@ export default function Wrap(props) {
   const mergedData = merge({}, data, policyData);
 
   const { isAuthenticated } = useUser();
-  const accessToken = useAccessToken();
 
   const { loanerInfo, updateLoanerInfo } = useUser();
 
@@ -466,26 +465,6 @@ export default function Wrap(props) {
     }
   }
 
-  // When beginLogout is true, we mount the iframe
-  // that logs out the user
-  const [beginLogout, setBeginLogout] = useState(false);
-
-  // When loggedOut is true, we redirect to the signIn page
-  const [loggedOut, setLoggedOut] = useState(false);
-
-  useEffect(() => {
-    if (loggedOut && branch?.agencyId) {
-      const callback = getCallbackUrl(props.modal, branch?.branchId);
-      (async () => {
-        signIn(
-          "adgangsplatformen",
-          { callbackUrl: callback },
-          { agency: branch?.agencyId }
-        );
-      })();
-    }
-  }, [loggedOut]);
-
   if (!branchId) {
     return null;
   }
@@ -493,30 +472,19 @@ export default function Wrap(props) {
   const digitalCopyAccess = branch?.digitalCopyAccess;
   return (
     <>
-      {beginLogout && (
-        // Iframe hack - for logging out
-        // When iframe is done loading, the user is assumed to be logged out
-        // Remove this, when its possible to log in via an agency without logging out first
-        <iframe
-          style={{ display: "none" }}
-          onLoad={() =>
-            setTimeout(() => {
-              setLoggedOut(true);
-            }, 100)
-          }
-          src={`https://login.bib.dk/logout?access_token=${accessToken}`}
-        />
-      )}
-
       <LoanerForm
         {...props}
         branch={branch}
         initial={loanerInfo.userParameters}
         onLogin={() => {
-          setBeginLogout(true);
+          const callback = getCallbackUrl(props.modal, branch?.branchId);
+          signIn(
+            "adgangsplatformen",
+            { callbackUrl: callback },
+            { agency: branch?.agencyId, force_login: 1 }
+          );
         }}
         onSubmit={onSubmit}
-        submitting={beginLogout || loggedOut}
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
         digitalCopyAccess={digitalCopyAccess}
