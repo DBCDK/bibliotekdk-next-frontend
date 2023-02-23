@@ -26,6 +26,7 @@
 /* content wrapper */
 .container {
   height: 100%;
+  --cols_per_card: var(--base_cols_per_card);
 }
 
 /* Align items center in review slider */
@@ -37,13 +38,35 @@
   margin-bottom: var(--pt1);
 }
 
+@media (max-width: 375px) {
+  .container,
+  .container-fluid {
+    --cols_per_card: 11;
+  }
+}
+
+@media (max-width: 550px) {
+  .container,
+  .container-fluid {
+    --cols_per_card: 9;
+  }
+}
+
 @media (min-width: 768px) {
+  .container,
+  .container-fluid {
+    --cols_per_card: 3.75;
+  }
   .inspiration-section-about {
     max-width: 60%;
   }
 }
 
 @media (min-width: 992px) {
+  .container,
+  .container-fluid {
+    --cols_per_card: 3;
+  }
   .search-settings {
     box-shadow: unset;
   }
@@ -52,7 +75,8 @@
 @media screen and (min-width: 1400px) {
   .container,
   .container-fluid {
-    max-width: 1400px;
+    --cols_per_card: 3;
+    max-width: var(--container_width);
 
     /* override grid spacing prop margin */
     margin: auto;
