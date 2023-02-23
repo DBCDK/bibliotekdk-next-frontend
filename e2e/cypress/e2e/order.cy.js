@@ -316,7 +316,7 @@ describe("Order", () => {
       cy.get("[data-cy=blocked-user]")
         .should("exist")
         .find("a")
-        .should("have.attr", "href", "balleripraprup.dekaa");
+        .should("have.attr", "href", "/balleripraprup.dekaa");
 
       cy.get("[data-cy=button-godkend]").should("exist").should("be.disabled");
     });
@@ -326,8 +326,10 @@ describe("Order", () => {
         "/iframe.html?id=modal-order-blockeduserinformation--blocked-user-no-url&viewMode=story"
       );
 
-      cy.get("[data-cy=blocked-user]").should("exist");
-      cy.get("[data-link-disabled='']").should("exist");
+      cy.get("[data-cy=blocked-user]")
+        .should("exist")
+        .find("a")
+        .should("not.have.attr", "url");
     });
   });
 });
