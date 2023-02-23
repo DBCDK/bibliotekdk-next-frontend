@@ -47,7 +47,7 @@ function getLanguageValues(manifestation) {
   const subtitles =
     manifestation?.languages?.subtitles
       .map((sub) => sub.display)
-      .sort((a) => (a === "dansk" ? -1 : 0)) || [];
+      .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
 
   return { main: main, spoken: spoken, subtitles: subtitles };
 }
@@ -247,6 +247,31 @@ function RenderMovieAdaption({ values, skeleton }) {
   );
 }
 
+function RenderGameLanguages({ values }) {
+  // main is the spoken language ??
+  const mainlanguage =
+    values["main"].length > 0
+      ? values["main"]
+          ?.splice(0, 2)
+          .map((sub) => capitalize(sub))
+          .join(", ")
+      : null;
+
+  const fullstring = mainlanguage
+    ? `Vejledning på ${mainlanguage} ${
+        values["main"].length > 0 ? "og andre sprog" : ""
+      }`
+    : "";
+
+  return (
+    fullstring && (
+      <Text type="text4" lines={2}>
+        {fullstring}
+      </Text>
+    )
+  );
+}
+
 /**
  * We want a special display for movies - like subtitles and synchronization.
  * @param values
@@ -256,7 +281,7 @@ function RenderMovieAdaption({ values, skeleton }) {
  */
 function RenderMovieLanguages({ values, skeleton }) {
   // main is the spoken language ??
-  const mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
+  let mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
   // get the first 2 languages of the subtitle
   const subtitles =
     values["subtitles"]?.length > 0
@@ -265,6 +290,13 @@ function RenderMovieLanguages({ values, skeleton }) {
           .map((sub) => capitalize(sub))
           .join(", ")
       : null;
+  mainlanguage = mainlanguage ? mainlanguage + " tale ," : mainlanguage;
+
+  const subtitlesAsString = subtitles
+    ? `, Undertekster på ${subtitles} ${
+        values["subtitles"]?.length > 1 ? "og andre sprog" : ""
+      }`
+    : "";
 
   const spoken =
     values["spoken"]?.length > 0
@@ -273,8 +305,13 @@ function RenderMovieLanguages({ values, skeleton }) {
           .map((sub) => capitalize(sub))
           .join(", ")
       : null;
+  const spokenAsString = spoken
+    ? `synkronisering på ${spoken} ${
+        values["spoken"]?.length > 1 ? "og andre sprog" : ""
+      }`
+    : "";
 
-  const fullstring = `${mainlanguage} tale, synkronisering på ${spoken} og andre sprog, Undertekster på ${subtitles} og andre sprog`;
+  const fullstring = `${mainlanguage} ${spokenAsString} ${subtitlesAsString}`;
 
   return (
     <Text type="text4" skeleton={skeleton} lines={2}>
@@ -352,6 +389,7 @@ function RenderMovieGenre({ values, skeleton }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -390,6 +428,66 @@ export function fieldsForRows(manifestation, work, context) {
         hundeprut: {
           label: "hundeprut",
           value: "",
+        },
+      },
+    ],
+    GAME: [
+      // remove genre - we want it first
+      {
+        genre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: "",
+        },
+      },
+      {
+        languages: {
+          label: Translate({ ...context, label: "language" }),
+          value: getLanguageValues(manifestation),
+          jsxParser: RenderGameLanguages,
+        },
+      },
+      {
+        gamegenre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
+          index: 0,
+        },
+      },
+      {
+        audience: {
+          label: Translate({ ...context, label: "game-audience" }),
+          value: manifestation?.audience?.generalAudience || "",
+        },
+      },
+    ],
+    OTHER: [
+      // remove genre - we want it first
+      {
+        genre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: "",
+        },
+      },
+      {
+        languages: {
+          label: Translate({ ...context, label: "language" }),
+          value: getLanguageValues(manifestation),
+          jsxParser: RenderGameLanguages,
+        },
+      },
+      {
+        gamegenre: {
+          label: Translate({ ...context, label: "genre/form" }),
+          value: work?.genreAndForm || [],
+          jsxParser: RenderMovieGenre,
+          index: 0,
+        },
+      },
+      {
+        audience: {
+          label: Translate({ ...context, label: "other-audience" }),
+          value: manifestation?.audience?.generalAudience?.join(", ") || "",
         },
       },
     ],
@@ -485,6 +583,7 @@ export function fieldsForRows(manifestation, work, context) {
 
 /**
  * Merge given arrays - keys in extending array overwrites keys in base array.
+ * If an index is given in object it is inserted as desired.
  * New keys are appended to base arrray.
  * @param baseArray
  * @param extendingArray
@@ -494,11 +593,16 @@ export function filterAndMerge({ baseArray, extendingArray }) {
   // find index in basearray of key in extending array
   extendingArray?.forEach((ext) => {
     const key = Object.keys(ext)[0];
+    const desiredIndex =
+      ext[key]?.index || ext[key]?.index === 0 ? ext[key]?.index : false;
+
     const baseindex = baseArray?.findIndex(
       (base) => Object.keys(base)[0] === key
     );
     if (baseindex !== -1) {
       baseArray[baseindex] = ext;
+    } else if (desiredIndex !== false) {
+      baseArray.splice(desiredIndex, 0, ext);
     } else {
       baseArray.push(ext);
     }
