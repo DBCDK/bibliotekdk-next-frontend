@@ -65,7 +65,6 @@ export default function SingleRelatedManifestation({ manifestation }) {
           >
             {fullTitle}
           </Text>
-          <div className={styles.margin_auto} />
           <Text
             type={"text3"}
             data_disply={"inline"}
