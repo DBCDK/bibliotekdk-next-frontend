@@ -283,8 +283,6 @@ function RenderGameLanguages({ values }) {
  * @constructor
  */
 function RenderMovieLanguages({ values, skeleton }) {
-  // main is the spoken language ??
-  let mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
   // get the first 2 languages of the subtitle
   const subtitles =
     values["subtitles"]?.length > 0
@@ -293,14 +291,14 @@ function RenderMovieLanguages({ values, skeleton }) {
           .map((sub) => capitalize(sub))
           .join(", ")
       : null;
-  mainlanguage = mainlanguage ? mainlanguage + " tale ," : mainlanguage;
 
   const subtitlesAsString = subtitles
-    ? `, Undertekster på ${subtitles} ${
+    ? `Undertekster på ${subtitles} ${
         values["subtitles"]?.length > 1 ? "og andre sprog" : ""
       }`
     : "";
 
+  // spoken is synchronized languages
   const spoken =
     values["spoken"]?.length > 0
       ? values["spoken"]
@@ -308,11 +306,17 @@ function RenderMovieLanguages({ values, skeleton }) {
           .map((sub) => capitalize(sub))
           .join(", ")
       : null;
-  const spokenAsString = spoken
+  let spokenAsString = spoken
     ? `synkronisering på ${spoken} ${
         values["spoken"]?.length > 1 ? "og andre sprog" : ""
       }`
     : "";
+  spokenAsString += spokenAsString && subtitlesAsString ? "," : "";
+
+  // main is the spoken language ??
+  let mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
+  mainlanguage = mainlanguage ? mainlanguage + " tale " : "";
+  mainlanguage += subtitlesAsString || spokenAsString ? "," : "";
 
   const fullstring = `${mainlanguage} ${spokenAsString} ${subtitlesAsString}`;
 
