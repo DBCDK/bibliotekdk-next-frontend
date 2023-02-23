@@ -14,6 +14,7 @@ import { helpTextParseMenu } from "../utils.js";
 import Skeleton from "@/components/base/skeleton";
 import { getLanguage } from "@/components/base/translate/Translate";
 import Translate from "@/components/base/translate";
+import { LinkOnlyInternalAnimations } from "@/components/base/link/Link";
 
 /**
  * Other menu links
@@ -26,7 +27,12 @@ function MenuLink({ label, href = "#!", active = false }) {
 
   return (
     <div className={`${styles.link} ${activeClass}`}>
-      <Link href={href} dataCy="menu-fixed-links">
+      <Link
+        href={href}
+        dataCy="menu-fixed-links"
+        data_use_new_underline={true}
+        data_display={"inline"}
+      >
         <Text type={type}>{Translate({ context: "help", label })}</Text>
       </Link>
       <Icon src="arrowrightblue.svg" size={1} />
@@ -143,7 +149,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => (
     <div className={styles.helplink} key={`div-menulink-${index}`}>
-      <Link
+      <LinkOnlyInternalAnimations
         href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
         key={`menulink-${index}`}
         className={classNames(
@@ -153,14 +159,16 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
         )}
       >
         <Text type="text2" lines={2}>
-          {item.title}
-          {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
-            <span className={styles.helpiconlink}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-            </span>
-          )}
+          <Link data_use_new_underline={true} data_display={"inline"}>
+            {item.title}
+            {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
+              <span className={styles.helpiconlink}>
+                <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+              </span>
+            )}
+          </Link>
         </Text>
-      </Link>
+      </LinkOnlyInternalAnimations>
     </div>
   ));
 }
