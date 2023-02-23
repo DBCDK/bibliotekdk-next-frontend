@@ -14,11 +14,12 @@ import Reviews from "../reviews";
 import BibliographicData from "../BibliographicData";
 import Series from "../series";
 import Header from "@/components/header/Header";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
 
 import Anchor from "@/components/base/anchor";
+import min from "lodash/min";
 
 /**
  * The work page React component
@@ -30,9 +31,36 @@ import Anchor from "@/components/base/anchor";
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
   const router = useRouter();
+  const mainRef = useRef();
+  const [containerWidth, setContainerWidth] = useState();
+
+  useEffect(() => {
+    // TODO: Make a more elegant solution, when someone has an idea.
+    //  We need to be able to tap into the width of the container
+    function setContainerWidthCssProp() {
+      // 1400 is the container's fullscreen default width
+      const widthBeforeMin = min([mainRef.current.clientWidth, 1400]);
+      setContainerWidth(widthBeforeMin);
+    }
+
+    if (mainRef?.current) {
+      setContainerWidthCssProp();
+      window.addEventListener("resize", setContainerWidthCssProp);
+      return () => {
+        window.removeEventListener("resize", setContainerWidthCssProp);
+      };
+    }
+  }, [workId, login, type]);
 
   return (
-    <main>
+    <main
+      ref={mainRef}
+      {...(containerWidth && {
+        style: {
+          "--container_width": `${containerWidth}px`,
+        },
+      })}
+    >
       <Header router={router} />
       <Anchor.Wrap>
         <Overview
