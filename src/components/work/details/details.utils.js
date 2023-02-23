@@ -49,6 +49,9 @@ function getLanguageValues(manifestation) {
       .map((sub) => sub.display)
       .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
 
+  if (isEmpty(main) && isEmpty(spoken) && isEmpty(subtitles)) {
+    return {};
+  }
   return { main: main, spoken: spoken, subtitles: subtitles };
 }
 
