@@ -11,6 +11,7 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { getCanonicalWorkUrl } from "@/lib/utils";
 import { cyKey } from "@/utils/trim";
+import groupBy from "lodash/groupBy";
 
 /**
  * Parse languages in given manifestation.
@@ -133,14 +134,49 @@ function parsePersonAndFunction(person) {
  * for pid that starts with 870970
  * @param manifestation
  * @returns {*}
+ *
+ * @TODO - this one is  outcommented while we wait for data to be fixed
  */
-function parseIsAdaptionOf(manifestation) {
-  const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
-    rel?.pid?.startsWith("870970")
-  );
-
-  return work;
-}
+// function parseIsAdaptionOf(manifestation) {
+//   console.log(manifestation, "MANIFESTATIONS");
+//
+//   const work = manifestation?.relations?.isAdaptationOf?.find((rel) =>
+//     rel?.pid?.startsWith("870970")
+//   );
+//
+//   const unique = [
+//     ...new Set(
+//       manifestation?.relations?.isAdaptationOf?.map((item) => item.workId)
+//     ),
+//   ];
+//
+//   //return [];
+//
+//   const adaptations = manifestation?.relations?.isAdaptationOf?.filter(
+//     (rel) =>
+//       rel.pid.indexOf("870970") !== -1 && rel.workId.indexOf("870970") !== -1
+//   );
+//
+//   console.log(adaptations, "ADAPTIONS");
+//
+//   const result = [];
+//   const map = new Map();
+//   if (adaptations) {
+//     for (const item of adaptations) {
+//       if (!map.has(item.workId)) {
+//         map.set(item.workId, true); // set any value to Map
+//         result.push({
+//           id: item.workId,
+//           item,
+//         });
+//       }
+//     }
+//   }
+//   console.log(result, "RESULT");
+//   return result;
+//
+//   //return work;
+// }
 
 /**
  * jsxParser for creators - render function
@@ -156,18 +192,24 @@ function RenderCreatorValues({ values, skeleton }) {
     values && (
       <div data-cy={"creator-contributor-text-helper"}>
         {values.map((person, index) => (
-          <Link
-            href={`/find?q.creator=${person.display}`}
-            dataCy={cyKey({ name: person.display, prefix: "details-creatore" })}
-            disabled={skeleton}
-            border={{ bottom: { keepVisible: true } }}
-            key={`crators-${index}`}
-            className={styles.link}
-          >
-            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-              {parsePersonAndFunction(person)}
-            </Text>
-          </Link>
+          <>
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person.display,
+                prefix: "details-creatore",
+              })}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+              key={`crators-${index}`}
+              className={styles.link}
+            >
+              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+                {parsePersonAndFunction(person)}
+              </Text>
+            </Link>
+            <span>{index < values.length - 1 ? ", " : ""}</span>
+          </>
         ))}
       </div>
     )
@@ -229,26 +271,32 @@ function RenderMovieActorValues({ values, skeleton }) {
  * @returns {""|JSX.Element}
  * @constructor
  */
-function RenderMovieAdaption({ values, skeleton }) {
-  const title = values?.titles?.main[0];
-  const creators = values?.creators;
-  const workurl = getCanonicalWorkUrl({ title, creators, id: values?.workId });
-
-  return (
-    workurl && (
-      <Link
-        disabled={skeleton}
-        href={workurl}
-        border={{ top: false, bottom: { keepVisible: true } }}
-        className={styles.link}
-      >
-        <Text type="text4" skeleton={skeleton} lines={1}>
-          {title}
-        </Text>
-      </Link>
-    )
-  );
-}
+// function RenderMovieAdaption({ values, skeleton }) {
+//   return values?.map((work) => {
+//
+//     const title = work?.item?.titles?.main[0];
+//     const creators = work?.item?.creators;
+//     const workurl = getCanonicalWorkUrl({
+//       title,
+//       creators,
+//       id: work?.item?.workId,
+//     });
+//     return (
+//       workurl && (
+//         <Link
+//           disabled={skeleton}
+//           href={workurl}
+//           border={{ top: false, bottom: { keepVisible: true } }}
+//           className={styles.link}
+//         >
+//           <Text type="text4" skeleton={skeleton} lines={1}>
+//             {title}
+//           </Text>
+//         </Link>
+//       )
+//     );
+//   });
+// }
 
 function RenderGameLanguages({ values }) {
   // main is the spoken language ??
@@ -336,18 +384,20 @@ function RenderMovieLanguages({ values, skeleton }) {
  */
 function RenderMovieGenre({ values, skeleton }) {
   return values.map((val, index) => (
-    <Link
-      href={`/find?q.subject=${val}`}
-      className={styles.link}
-      dataCy={cyKey({ name: val, prefix: "overview-genre" })}
-      disabled={skeleton}
-      border={{ bottom: { keepVisible: true } }}
-      key={`${val}-${index}`}
-    >
-      <Text type="text4" skeleton={skeleton} lines={1}>
-        {val}
-      </Text>
-    </Link>
+    <>
+      <Link
+        href={`/find?q.subject=${val}`}
+        dataCy={cyKey({ name: val, prefix: "overview-genre" })}
+        disabled={skeleton}
+        border={{ bottom: { keepVisible: true } }}
+        key={`${val}-${index}`}
+      >
+        <Text type="text4" skeleton={skeleton} lines={1}>
+          {val}
+        </Text>
+      </Link>
+      <span>{index < values.length - 1 ? ", " : ""}</span>
+    </>
   ));
 }
 
@@ -494,7 +544,15 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audience: {
           label: Translate({ ...context, label: "other-audience" }),
-          value: manifestation?.audience?.generalAudience?.join(", ") || "",
+          value:
+            manifestation?.audience?.generalAudience?.join(", ") ||
+            manifestation?.audience?.childrenOrAdults
+              ?.map((dis) => {
+                console.log(dis, "DIS");
+                return dis.display;
+              })
+              .join(", ") ||
+            "",
         },
       },
     ],
@@ -502,10 +560,11 @@ export function fieldsForRows(manifestation, work, context) {
       {
         hasadaption: {
           label: Translate({ ...context, label: "hasadaption" }),
-          value: manifestation?.relations?.hasAdaptation?.find((rel) =>
-            rel?.pid?.startsWith("870970")
-          ),
-          jsxParser: RenderMovieAdaption,
+          value: "",
+          // value: manifestation?.relations?.hasAdaptation?.find((rel) =>
+          //   rel?.pid?.startsWith("870970")
+          // ),
+          // jsxParser: RenderMovieAdaption,
         },
       },
       {
@@ -576,8 +635,8 @@ export function fieldsForRows(manifestation, work, context) {
       {
         adaption: {
           label: Translate({ ...context, label: "adaption" }),
-          value: parseIsAdaptionOf(manifestation),
-          jsxParser: RenderMovieAdaption,
+          value: "", // @TODO removed this one for now - data is fucked up parseIsAdaptionOf(manifestation),
+          // jsxParser: RenderMovieAdaption,
         },
       },
     ],

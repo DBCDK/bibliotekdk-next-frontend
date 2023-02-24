@@ -18,9 +18,9 @@ import isEmpty from "lodash/isEmpty";
 import { fieldsForRows } from "@/components/work/details/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 
-function DefaultDetailValues({ values }) {
+function DefaultDetailValues({ values, skeleton }) {
   return (
-    <Text type="text4" lines={0}>
+    <Text type="text4" lines={0} skeleton={skeleton}>
       {values}
     </Text>
   );
@@ -34,7 +34,7 @@ function DefaultDetailValues({ values }) {
  *
  * @returns {JSX.Element}
  */
-function Details({ className = "", manifestation = {}, work = {} }) {
+function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
   // Translate Context
   const context = { context: "details" };
 
@@ -75,7 +75,10 @@ function Details({ className = "", manifestation = {}, work = {} }) {
                       values: field[fieldName].value,
                     })
                   ) : (
-                    <DefaultDetailValues values={field[fieldName].value} />
+                    <DefaultDetailValues
+                      values={field[fieldName].value}
+                      skeleton={skeleton}
+                    />
                   )}
                 </Col>
               )
@@ -159,6 +162,7 @@ export default function Wrap(props) {
       {...props}
       manifestation={manifestationByMaterialType}
       work={data?.work}
+      skeleton={overViewIsLoading || relationsIsLoading}
     />
   );
 }
