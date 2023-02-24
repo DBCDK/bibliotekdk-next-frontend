@@ -20,7 +20,7 @@ import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactory
 
 function DefaultDetailValues({ values, skeleton }) {
   return (
-    <Text type="text4" skeleton={skeleton} lines={0}>
+    <Text type="text4" lines={0} skeleton={skeleton}>
       {values}
     </Text>
   );
@@ -34,12 +34,7 @@ function DefaultDetailValues({ values, skeleton }) {
  *
  * @returns {JSX.Element}
  */
-function Details({
-  className = "",
-  manifestation = {},
-  work = {},
-  skeleton = false,
-}) {
+function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
   // Translate Context
   const context = { context: "details" };
 
@@ -55,6 +50,7 @@ function Details({
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
 
+  //const fieldsToShow = fieldsForRows(manifestation, work, context);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -70,24 +66,18 @@ function Details({
               !isEmpty(field[fieldName].value) && (
                 /** this is the label **/
                 <Col xs={6} md={{ span: 3 }}>
-                  <Text
-                    type="text3"
-                    className={styles.title}
-                    skeleton={skeleton}
-                    lines={2}
-                  >
+                  <Text type="text3" className={styles.title} lines={2}>
                     {field[fieldName].label}
                   </Text>
                   {/** some fields has a custom jsx parser .. **/}
                   {field[fieldName].jsxParser ? (
                     field[fieldName].jsxParser({
                       values: field[fieldName].value,
-                      skeleton: skeleton,
                     })
                   ) : (
                     <DefaultDetailValues
-                      skeleton={skeleton}
                       values={field[fieldName].value}
+                      skeleton={skeleton}
                     />
                   )}
                 </Col>
@@ -120,7 +110,6 @@ export function DetailsSkeleton(props) {
       {...props}
       manifestation={mock}
       className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
     />
   );
 }
@@ -167,14 +156,13 @@ export default function Wrap(props) {
 
   // attach relations for manifestation to display
   manifestationByMaterialType.relations = groupedRelations;
-  const genreAndForm = data?.work?.genreAndForm || [];
 
   return (
     <Details
       {...props}
       manifestation={manifestationByMaterialType}
       work={data?.work}
-      genreAndForm={genreAndForm}
+      skeleton={overViewIsLoading || relationsIsLoading}
     />
   );
 }

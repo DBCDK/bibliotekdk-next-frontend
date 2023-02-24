@@ -355,6 +355,9 @@ export function fbiOverviewDetail({ workId }) {
               }    
               audience {
                 generalAudience
+                childrenOrAdults {
+                  display
+                }
               }          
               genreAndForm
               languages {
