@@ -204,7 +204,6 @@ function RenderCreatorValues({ values, skeleton }) {
                 {parsePersonAndFunction(person)}
               </Text>
             </Link>
-            <span>{index < values.length - 1 ? ", " : ""}</span>
           </>
         ))}
       </div>
