@@ -3,16 +3,12 @@
  */
 
 import styles from "@/components/work/details/Details.module.css";
-
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
-import { getCanonicalWorkUrl } from "@/lib/utils";
 import { cyKey } from "@/utils/trim";
-import groupBy from "lodash/groupBy";
-
 /**
  * Parse languages in given manifestation.
  * split languages in main, spoken, subtitles.
