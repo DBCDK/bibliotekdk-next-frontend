@@ -55,18 +55,13 @@ const CoverElement = forwardRef(function CoverElement(
     <div
       ref={elementRef}
       id={`${sliderId}-${thisIndex}`}
-      className={`
-        ${styles.cover_element} 
-      `}
-      // TODO: figure out if we need transition
-      // ${isVisible && styles.active_cover}
+      className={`${styles.cover_element}`}
       data-cy={"cover_carousel"}
       title={fullTitle}
     >
       <img
         src={src}
         className={loaded ? styles.cover_image : styles.cover_image_skeleton}
-        // rel={"prefetch"}
         onLoad={() => setLoaded(true)}
         alt={""}
       />
