@@ -66,6 +66,7 @@
   max-height: 90%;
   width: 90%;
   height: auto;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .cover_image_skeleton {
@@ -87,10 +88,6 @@
 /* END ARROWS */
 
 @media (min-width: 768px) {
-  .arrow_styling {
-    display: initial;
-  }
-
   .full_cover_carousel {
     --grid_template:
       "⬅️ 🖼️ ➡️"
