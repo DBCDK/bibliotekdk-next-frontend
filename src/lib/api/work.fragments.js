@@ -627,6 +627,27 @@ export function pidToWorkId({ pid }) {
   };
 }
 
+export function genreAndFormAndWorkTypes({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query bibdk__genreAndFormAndWorkTypes($workId: String!) {
+      work(id: $workId) {
+        ...genreAndFormAndWorkTypesFragment
+      }
+    }
+    ${genreAndFormAndWorkTypesFragment}
+    `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
+  genreAndForm
+  workTypes
+}`;
+
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
