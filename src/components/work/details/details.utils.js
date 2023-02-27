@@ -184,10 +184,13 @@ function parsePersonAndFunction(person) {
  */
 
 function RenderCreatorValues({ values, skeleton }) {
+  const length = values?.length;
+  // we want at most 4 contributors
+  const valuesToRender = length > 4 ? values.splice(0, 4) : values;
   return (
-    values && (
+    valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
-        {values.map((person, index) => (
+        {valuesToRender.map((person, index) => (
           <>
             <Link
               href={`/find?q.creator=${person.display}`}
@@ -206,6 +209,11 @@ function RenderCreatorValues({ values, skeleton }) {
             </Link>
           </>
         ))}
+        {length > 4 && (
+          <Text type="text4" skeleton={skeleton} lines={0}>
+            m.fl
+          </Text>
+        )}
       </div>
     )
   );
@@ -543,7 +551,6 @@ export function fieldsForRows(manifestation, work, context) {
             manifestation?.audience?.generalAudience?.join(", ") ||
             manifestation?.audience?.childrenOrAdults
               ?.map((dis) => {
-                console.log(dis, "DIS");
                 return dis.display;
               })
               .join(", ") ||
