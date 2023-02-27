@@ -18,12 +18,12 @@ import isEmpty from "lodash/isEmpty";
  * @param creators
  * @returns {string}
  */
-function parseCratorsForInterview(creators) {
+function parseCreatorsForInterview(creators) {
   if (isEmpty(creators)) {
     return "";
   }
   // person(s) being interviewed
-  const interviewe = creators
+  const interviewee = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
     .map((creator) => creator.display)
     .join(", ");
@@ -34,7 +34,7 @@ function parseCratorsForInterview(creators) {
     .join(", ");
 
   return (
-    `${interviewe ? `Interview med  ${interviewe} ` : ""}` +
+    `${interviewee ? `Interview med  ${interviewee} ` : ""}` +
     `${interviewer ? `af  ${interviewer}` : ""}`
   );
 }
@@ -52,7 +52,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
     return null;
   }
   const abstract = data?.abstract?.join(", ");
-  const preAbstract = parseCratorsForInterview(data?.creators);
+  const preAbstract = parseCreatorsForInterview(data?.creators);
   // Translate Context
   const context = { context: "description" };
 
