@@ -327,13 +327,15 @@ export function getSubjectsDbcVerified({ workId }) {
   return { [workId]: [...response?.work.subjects?.dbcVerified] };
 }
 
-export function getDescription({ workId }) {
+export function getDescription() {
   //  Mock data
   const response = {
     work: {
-      abstract: examples.ABSTRACT,
+      abstract: [examples.ABSTRACT],
     },
   };
+
+  return response;
 
   // WorkId or type was not found
   if (!response?.work?.abstract) {

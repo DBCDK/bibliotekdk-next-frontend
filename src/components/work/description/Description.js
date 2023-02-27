@@ -25,8 +25,17 @@ function parseCreatorsForInterview(creators) {
   // person(s) being interviewed
   const interviewee = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
-    .map((creator) => creator.display)
-    .join(", ");
+    .map((creator) => creator.display);
+  // if there are more persons we want the last person to be seperated with "og"
+  // like: "jens, peter og hans"
+  let intervieweeAsString = "";
+  if (interviewee.length > 1) {
+    const last = interviewee.pop();
+    intervieweeAsString = interviewee.join(", ") + " og " + last;
+  } else {
+    intervieweeAsString = interviewee.join(", ");
+  }
+
   // person(s) interviewing
   const interviewer = creators
     .filter((creator) => creator?.roles?.[0]?.functionCode === "ivr")
@@ -34,7 +43,7 @@ function parseCreatorsForInterview(creators) {
     .join(", ");
 
   return (
-    `${interviewee ? `Interview med  ${interviewee} ` : ""}` +
+    `${interviewee ? `Interview med  ${intervieweeAsString} ` : ""}` +
     `${interviewer ? `af  ${interviewer}` : ""}`
   );
 }
@@ -60,7 +69,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
         {abstract && (
-          <Col xs={12} md>
+          <Col xs={12} md={8}>
             {preAbstract && (
               <Text
                 dataCy={"predescription"}
