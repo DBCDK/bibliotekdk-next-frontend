@@ -78,7 +78,7 @@ export function Overview({
           <Col xs={12} lg={3} className={styles.breadcrumbs} />
           <Col
             xs={12}
-            lg={4}
+            lg={3}
             md={{ span: 4, order: 3 }}
             className={styles.cover}
           >
