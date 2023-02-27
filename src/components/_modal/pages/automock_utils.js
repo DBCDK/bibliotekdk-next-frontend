@@ -10,9 +10,15 @@ const MANIFESTATION_1 = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      specific: "Bog",
+      specific: "bog",
     },
   ],
+  edition: {
+    edition: "3. udgave",
+    publicationYear: {
+      display: "2009",
+    },
+  },
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
@@ -211,7 +217,7 @@ const ALL_WORKS = [
     creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
     materialTypes: [
       {
-        specific: "Bog",
+        specific: "bog",
       },
     ],
     relations: {
@@ -221,6 +227,33 @@ const ALL_WORKS = [
       isAdaptationOf: [],
       discusses: [],
       discussedIn: [],
+    },
+  },
+  {
+    workId: "some-work-id-5",
+    titles: {
+      full: ["Hugo i Sølvskoven"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      all: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
+      mostRelevant: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
     },
   },
 ];
