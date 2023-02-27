@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
@@ -17,6 +18,13 @@ function SeriesOverview({ partInSeries, seriesTitle, seriesLink }) {
     </Text>
   );
 }
+
+// PropTypes for component
+SeriesOverview.propTypes = {
+  partInSeries: PropTypes.string,
+  seriesTitle: PropTypes.string,
+  seriesLink: PropTypes.string,
+};
 
 export default function Wrap({ workId, type }) {
   const work_response = useData(
@@ -55,3 +63,9 @@ export default function Wrap({ workId, type }) {
     />
   );
 }
+
+// PropTypes for component
+Wrap.propTypes = {
+  workId: PropTypes.string,
+  type: PropTypes.string,
+};
