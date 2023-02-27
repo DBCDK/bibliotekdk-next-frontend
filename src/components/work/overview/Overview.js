@@ -71,6 +71,8 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
+  const titles = work?.titles?.full;
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -96,7 +98,11 @@ export function Overview({
                   skeleton={skeleton}
                   data-cy={"title-overview"}
                 >
-                  {work?.titles?.full[0]}
+                  {titles?.map((title, index, array) => (
+                    <>
+                      {title} {index < array.length ? <br /> : <></>}
+                    </>
+                  ))}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
