@@ -100,7 +100,7 @@ export function Overview({
                 >
                   {titles?.map((title, index, array) => (
                     <>
-                      {title} {index < array.length ? <br /> : <></>}
+                      {title} {index < array.length - 1 && <br />}
                     </>
                   ))}
                 </Title>
