@@ -410,15 +410,14 @@ export function workJsonLd({ workId }) {
     query: `query workJsonLd($workId: String!) {
             work(id: $workId) {
               workId
-              workTypes
-              abstract
               titles {
                 main
               }
-              abstract
               creators {
                 display
               }
+              workTypes
+              abstract
               manifestations {
                 all {
                   ...manifestationDetailsForAccessFactory
@@ -555,7 +554,14 @@ export function overviewWork({ workId }) {
           full
         }
         creators {
-          display
+          ... on Corporation {
+            __typename
+            display
+          }
+          ... on Person {
+            __typename
+            display
+          }
         }
         materialTypes {
           specific
