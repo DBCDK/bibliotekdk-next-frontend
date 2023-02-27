@@ -228,6 +228,25 @@ Element.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
+export function getUniqueIdForAnchor(anchorLabel, idx) {
+  if (!anchorLabel || !idx || idx < 0) {
+    return "";
+  }
+
+  return `${encodeString(anchorLabel)}-${idx}`;
+}
+
+function getAnchorLabelForChild(child) {
+  return child?.props?.["anchor-label"];
+}
+
+let theChildren = [];
+export function getIndexForAnchor(anchorLabel, anchorChildren = theChildren) {
+  return anchorChildren?.findIndex(
+    (child) => getAnchorLabelForChild(child) === anchorLabel
+  );
+}
+
 /**
  * The Component function
  *
@@ -245,6 +264,7 @@ function Wrap({ children }) {
   const refs = useRef({});
   const [sections] = useState(refs);
   const titles = {};
+  theChildren = children;
 
   const onChange = useMemo(
     () => throttle(() => menu.current && menu.current.updateMenu(), 10),
@@ -275,8 +295,9 @@ function Wrap({ children }) {
         return null;
       }
 
+      const anchorLabel = getAnchorLabelForChild(child);
       // create uniq id
-      const id = `${encodeString(child.props["anchor-label"])}-${idx}`;
+      const id = getUniqueIdForAnchor(anchorLabel, idx);
 
       // Create ref if not already exist
       sections.current[id] = sections.current[id] ?? createRef();
