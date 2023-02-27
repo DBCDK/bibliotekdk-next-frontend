@@ -657,13 +657,6 @@ const seriesForOverviewFragment = `fragment seriesForOverviewFragment on Work {
     creators {
       display
     }
-    series {
-      title
-      numberInSeries {
-        display
-        number
-      }
-    }
   }
   series {
     title
