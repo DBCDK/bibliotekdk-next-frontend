@@ -646,6 +646,10 @@ export function genreAndFormAndWorkTypes({ workId }) {
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
+  fictionNonfiction {
+    display
+    code
+  }
 }`;
 
 const coverFragment = `fragment coverFragment on Manifestation {

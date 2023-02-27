@@ -19,11 +19,15 @@ export default function Wrap({ workId }) {
     label: `label-${work?.workTypes?.[0]?.toLowerCase()}`,
   });
 
-  const genreAndForm = work?.genreAndForm?.[0];
+  const fictionNonfiction = work?.fictionNonfiction?.display;
+
+  const genreAndForm = work?.genreAndForm?.[0] || null;
 
   if (work_response.isLoading || !work_response.data || work_response.error) {
     return null;
   }
 
-  return <Breadcrumbs>{[workType, genreAndForm]}</Breadcrumbs>;
+  return (
+    <Breadcrumbs>{[workType, fictionNonfiction, genreAndForm]}</Breadcrumbs>
+  );
 }
