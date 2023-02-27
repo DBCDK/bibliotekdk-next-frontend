@@ -5,6 +5,13 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import { encodeTitleCreator } from "@/lib/utils";
 
+/**
+ * Presenter for SeriesOverview
+ * @param partInSeries
+ * @param seriesTitle
+ * @param seriesLink
+ * @return {JSX.Element}
+ */
 function SeriesOverview({ partInSeries, seriesTitle, seriesLink }) {
   return (
     <Text tag={"div"}>
@@ -26,6 +33,12 @@ SeriesOverview.propTypes = {
   seriesLink: PropTypes.string,
 };
 
+/**
+ * Wrapper for SeriesOverview
+ * @param workId
+ * @param type
+ * @return {JSX.Element|null}
+ */
 export default function Wrap({ workId, type }) {
   const work_response = useData(
     workId && workFragments.series({ workId: workId })
