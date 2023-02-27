@@ -20,7 +20,7 @@ function SeriesOverview({ partInSeries, seriesTitle, seriesLink }) {
 
 export default function Wrap({ workId, type }) {
   const work_response = useData(
-    workId && workFragments.seriesForOverview({ workId: workId })
+    workId && workFragments.series({ workId: workId })
   );
 
   const work = work_response?.data?.work;

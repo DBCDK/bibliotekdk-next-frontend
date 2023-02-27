@@ -168,24 +168,12 @@ export function series({ workId }) {
         seriesMembers {
           ...workSliderFragment
         }
+        ...seriesFragment
       }
     }
     ${workSliderFragment}
+    ${seriesFragment}
   `,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-export function seriesForOverview({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `query seriesForOverview($workId: String!) {
-      work(id: $workId) {
-        ...seriesForOverviewFragment
-      }
-    }
-    ${seriesForOverviewFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -648,16 +636,7 @@ const coverFragment = `fragment coverFragment on Manifestation {
   }
 }`;
 
-const seriesForOverviewFragment = `fragment seriesForOverviewFragment on Work {
-  seriesMembers {
-    workId
-    titles {
-      main
-    }
-    creators {
-      display
-    }
-  }
+const seriesFragment = `fragment seriesFragment on Work {
   series {
     title
     numberInSeries {
