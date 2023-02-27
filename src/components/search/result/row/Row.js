@@ -36,7 +36,7 @@ function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
     >
       {titles.map((title, index) => (
         <>
-          {title} {index < titles.length ? <br /> : <></>}
+          {title} {index < titles.length - 1 && <br />}
         </>
       ))}
     </Title>
