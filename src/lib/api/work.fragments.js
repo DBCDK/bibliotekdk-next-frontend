@@ -177,6 +177,20 @@ export function series({ workId }) {
   };
 }
 
+export function seriesForOverview({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `query seriesForOverview($workId: String!) {
+      work(id: $workId) {
+        ...seriesForOverviewFragment
+      }
+    }
+    ${seriesForOverviewFragment}`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
 /**
  * Infomedia
  *
@@ -631,6 +645,32 @@ const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
     origin
+  }
+}`;
+
+const seriesForOverviewFragment = `fragment seriesForOverviewFragment on Work {
+  seriesMembers {
+    workId
+    titles {
+      main
+    }
+    creators {
+      display
+    }
+    series {
+      title
+      numberInSeries {
+        display
+        number
+      }
+    }
+  }
+  series {
+    title
+    numberInSeries {
+      display
+      number
+    }
   }
 }`;
 
