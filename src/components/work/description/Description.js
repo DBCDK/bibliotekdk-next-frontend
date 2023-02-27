@@ -10,6 +10,34 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import styles from "./Description.module.css";
+import isEmpty from "lodash/isEmpty";
+
+/**
+ * Parse creators array to see if description should include information
+ * about people interviewing and/or being interviewed.
+ * @param creators
+ * @returns {string}
+ */
+function parseCreatorsForInterview(creators) {
+  if (isEmpty(creators)) {
+    return "";
+  }
+  // person(s) being interviewed
+  const interviewee = creators
+    .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
+    .map((creator) => creator.display)
+    .join(", ");
+  // person(s) interviewing
+  const interviewer = creators
+    .filter((creator) => creator?.roles?.[0]?.functionCode === "ivr")
+    .map((creator) => creator.display)
+    .join(", ");
+
+  return (
+    `${interviewee ? `Interview med  ${interviewee} ` : ""}` +
+    `${interviewer ? `af  ${interviewer}` : ""}`
+  );
+}
 
 /**
  * The Component function
@@ -20,25 +48,39 @@ import styles from "./Description.module.css";
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  if (!data || data?.length === 0) {
+  if (!data?.abstract || data?.abstract?.length === 0) {
     return null;
   }
+  const abstract = data?.abstract?.join(", ");
+  const preAbstract = parseCreatorsForInterview(data?.creators);
   // Translate Context
   const context = { context: "description" };
 
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
-        {data && (
+        {abstract && (
           <Col xs={12} md>
-            <Text
-              dataCy={"description"}
-              type="text2"
-              skeleton={skeleton}
-              lines={4}
-            >
-              {data}
-            </Text>
+            {preAbstract && (
+              <Text
+                dataCy={"predescription"}
+                type="text2"
+                skeleton={skeleton}
+                lines={4}
+              >
+                {preAbstract}.
+              </Text>
+            )}
+            {abstract && (
+              <Text
+                dataCy={"description"}
+                type="text2"
+                skeleton={skeleton}
+                lines={4}
+              >
+                {abstract}
+              </Text>
+            )}
           </Col>
         )}
       </Row>
@@ -88,7 +130,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Description {...props} data={data?.work?.abstract} />;
+  return <Description {...props} data={data?.work} />;
 }
 
 // PropTypes for component

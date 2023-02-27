@@ -276,6 +276,16 @@ export function description({ workId }) {
     query description($workId: String!) {
       work(id: $workId) {
         abstract
+        creators {
+          display
+          roles {
+            function {
+              plural
+              singular
+            }
+            functionCode
+          }
+        }
       }
       monitor(name: "bibdknext_work_basic")
     }`,
