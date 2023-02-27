@@ -14,9 +14,9 @@ const MANIFESTATION_1 = {
     },
   ],
   edition: {
-    edition: "3. udgave",
+    edition: "101. udgave",
     publicationYear: {
-      display: "2009",
+      display: "2009-1",
     },
   },
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
@@ -39,6 +39,12 @@ const MANIFESTATION_2 = {
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
+  edition: {
+    edition: "102. udgave",
+    publicationYear: {
+      display: "2009-2",
+    },
   },
   cover: {
     detail:
