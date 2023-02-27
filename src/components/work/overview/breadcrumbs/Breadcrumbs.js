@@ -1,5 +1,5 @@
 import { useData } from "@/lib/api/api";
-import { genreAndFormAndWorkTypes } from "@/lib/api/work.fragments";
+import * as workFragments from "@/lib/api/work.fragments";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 
@@ -9,7 +9,7 @@ export function Breadcrumbs({ children }) {
 
 export default function Wrap({ workId }) {
   const work_response = useData(
-    workId && genreAndFormAndWorkTypes({ workId: workId })
+    workId && workFragments.overviewWork({ workId: workId })
   );
 
   const work = work_response?.data?.work;

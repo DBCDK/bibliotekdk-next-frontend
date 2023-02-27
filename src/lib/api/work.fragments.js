@@ -575,9 +575,12 @@ export function overviewWork({ workId }) {
             }
           }
         }
+        ...genreAndFormAndWorkTypesFragment
       }
       monitor(name: "bibdknext_overview_work")
-    }`,
+    }
+    ${genreAndFormAndWorkTypesFragment}
+    `,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -623,22 +626,6 @@ export function pidToWorkId({ pid }) {
       monitor(name: "bibdknext_pid_to_workid")
     }`,
     variables: { pid },
-    slowThreshold: 3000,
-  };
-}
-
-export function genreAndFormAndWorkTypes({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query bibdk__genreAndFormAndWorkTypes($workId: String!) {
-      work(id: $workId) {
-        ...genreAndFormAndWorkTypesFragment
-      }
-    }
-    ${genreAndFormAndWorkTypesFragment}
-    `,
-    variables: { workId },
     slowThreshold: 3000,
   };
 }
