@@ -17,6 +17,7 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -75,7 +76,9 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} lg={3} className={styles.breadcrumbs} />
+          <Col xs={12} lg={3} className={styles.breadcrumbs}>
+            <Breadcrumbs workId={workId} />
+          </Col>
           <Col
             xs={12}
             lg={4}

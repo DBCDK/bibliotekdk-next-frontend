@@ -575,9 +575,12 @@ export function overviewWork({ workId }) {
             }
           }
         }
+        ...genreAndFormAndWorkTypesFragment
       }
       monitor(name: "bibdknext_overview_work")
-    }`,
+    }
+    ${genreAndFormAndWorkTypesFragment}
+    `,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -626,6 +629,15 @@ export function pidToWorkId({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
+  genreAndForm
+  workTypes
+  fictionNonfiction {
+    display
+    code
+  }
+}`;
 
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
