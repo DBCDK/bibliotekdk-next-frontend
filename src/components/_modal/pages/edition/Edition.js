@@ -79,6 +79,8 @@ export function Edition({
       ? "specific-edition"
       : null;
 
+  const titles = manifestation?.titles?.full;
+
   return (
     <div className={styles.edition}>
       <div className={styles.left}>
@@ -88,7 +90,11 @@ export function Edition({
             skeleton={!manifestation?.titles?.full && isLoading}
             lines={1}
           >
-            {manifestation?.titles?.full}
+            {titles.map((title, index) => (
+              <>
+                {title} {index < titles.length - 1 && <br />}
+              </>
+            ))}
           </Text>
         </div>
         <div className={styles.creators}>
