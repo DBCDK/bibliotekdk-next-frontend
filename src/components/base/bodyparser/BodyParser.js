@@ -1,6 +1,6 @@
 import parseArticleBody from "@/components/article/content/utils";
 import PropTypes from "prop-types";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import Text from "@/components/base/text";
 
@@ -14,12 +14,14 @@ function underlineOnAnchorElements(htmlString) {
 
   const aInParsedBodyLength = ela.getElementsByTagName("a").length;
 
+  const animationsStyles = [
+    animations.top_line_keep_false,
+    animations.top_line_false,
+    animations.underlineContainer,
+  ].join(" ");
+
   for (let i = 0; i < aInParsedBodyLength; i++) {
-    ela
-      .getElementsByTagName("a")
-      .item(
-        i
-      ).className += `${animations.top_line_keep_false} ${animations.top_line_false} ${animations.underlineContainer}`;
+    ela.getElementsByTagName("a").item(i).className += `${animationsStyles}`;
   }
   return ela.innerHTML;
 }
@@ -45,6 +47,13 @@ export default function BodyParser({
     }
     return "";
   }, [body]);
+
+  const [parsedBodyWithUnderlines, setParsedBodyWithUnderlines] =
+    useState(null);
+
+  useEffect(() => {
+    setParsedBodyWithUnderlines(underlineOnAnchorElements(parsedBody));
+  }, [parsedBody]);
 
   // handle login links (https://login.bib.dk/login) - replace
   // with click event to use login platform
@@ -83,14 +92,14 @@ export default function BodyParser({
     return <Text type="text2" skeleton={true} lines={lines}></Text>;
   }
 
-  const parsedBodyWithUnderlines = underlineOnAnchorElements(parsedBody);
-
   return (
     <div
       data-cy={dataCy}
       ref={articleBody}
       className={`${styles.body} ${className}`}
-      dangerouslySetInnerHTML={{ __html: parsedBodyWithUnderlines }}
+      dangerouslySetInnerHTML={{
+        __html: parsedBodyWithUnderlines || parsedBody,
+      }}
     />
   );
 }
