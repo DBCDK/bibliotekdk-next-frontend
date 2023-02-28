@@ -97,7 +97,9 @@ export default function BodyParser({
       data-cy={dataCy}
       ref={articleBody}
       className={`${styles.body} ${className}`}
-      dangerouslySetInnerHTML={{ __html: parsedBodyWithUnderlines }}
+      dangerouslySetInnerHTML={{
+        __html: parsedBodyWithUnderlines || parsedBody,
+      }}
     />
   );
 }
