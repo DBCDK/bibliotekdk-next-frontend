@@ -24,12 +24,18 @@ function Error() {
  * @param err
  * @returns {{statusCode: (*|number)}}
  */
-Error.getInitialProps = ({ res, err }) => {
+Error.getInitialProps = ({ req, res, err }) => {
   let incErrors = null;
   if (typeof window === "undefined") {
     incErrors = require("../utils/errorCount").incErrorCount;
+
     // log for kibana
-    log.error(`INTERNAL ERROR`, { severity: "ERROR" });
+    log.error("SERVER SIDE ERROR", {
+      error: String(err),
+      stacktrace: err.stack,
+      url: req.url,
+    });
+
     // increase error count for howru function
     incErrors();
   }
