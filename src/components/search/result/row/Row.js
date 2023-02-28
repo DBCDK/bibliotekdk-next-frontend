@@ -21,6 +21,32 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 
+function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
+  const titles = titlesBeforeFilter?.full || titlesBeforeFilter?.main || [" "];
+
+  return (
+    <Title
+      type="title5"
+      tag="h2"
+      lines={3}
+      clamp={true}
+      title={titles?.join(" ")}
+      data-cy={"ResultRow-title"}
+      skeleton={!titles && isLoading}
+    >
+      {titles.map((title, index) => (
+        <>
+          {title} {index < titles.length - 1 && <br />}
+        </>
+      ))}
+    </Title>
+  );
+}
+
+TitlesForSearch.propTypes = {
+  titles: PropTypes.any,
+  loading: PropTypes.bool,
+};
 /**
  * Row representation of a search result entry
  *
@@ -67,17 +93,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <Title
-            type="title5"
-            tag="h2"
-            lines={3}
-            clamp={true}
-            title={work?.titles?.full}
-            data-cy={"ResultRow-title"}
-            skeleton={!work?.titles?.main && !work?.titles?.full && isLoading}
-          >
-            {work?.titles?.full || work?.titles?.main || " "}
-          </Title>
+          <TitlesForSearch titles={work?.titles} loading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}
