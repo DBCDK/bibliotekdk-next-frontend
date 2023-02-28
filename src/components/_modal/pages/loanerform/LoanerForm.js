@@ -20,6 +20,8 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import useUser from "@/components/hooks/useUser";
 import * as userFragments from "@/lib/api/user.fragments";
 import TjoolTjip from "@/components/base/tjooltjip";
+import { manifestationsForAccessFactory } from "@/lib/api/manifestation.fragments";
+import { inferAccessTypes } from "@/components/_modal/pages/edition/utils";
 
 const ERRORS = {
   MISSING_INPUT: "error-missing-input",
@@ -465,11 +467,19 @@ export default function Wrap(props) {
     }
   }
 
+  const { data: manifestationData } = useData(
+    pid && manifestationsForAccessFactory({ pid })
+  );
+  const { isDigitalCopy, isPeriodicaLike } = inferAccessTypes(
+    null,
+    branch?.agencyId,
+    manifestationData?.manifestations
+  );
+
   if (!branchId) {
     return null;
   }
 
-  const digitalCopyAccess = branch?.digitalCopyAccess;
   return (
     <>
       <LoanerForm
@@ -487,7 +497,9 @@ export default function Wrap(props) {
         onSubmit={onSubmit}
         skeleton={skeleton}
         doPolicyCheck={doPolicyCheck}
-        digitalCopyAccess={digitalCopyAccess}
+        digitalCopyAccess={
+          isDigitalCopy && !isPeriodicaLike && branch?.digitalCopyAccess
+        }
         onClose={() => props.modal.prev()}
       />
     </>
