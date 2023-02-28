@@ -14,7 +14,7 @@ const { log } = require("dbc-node-logger");
 
 // Unhandled server errors logged by logError in the next server
 // https://github.com/vercel/next.js/blob/eb629c15ca55c247d216963a16abc1bea60d7f91/packages/next/server/base-server.ts#L436
-console.error = (e) => {
+console.error = () => {
   // We do not log here, because this error is logged in _error.js
   // where we also have information about which url is visited
 };
