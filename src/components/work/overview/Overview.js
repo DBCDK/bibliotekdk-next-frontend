@@ -208,8 +208,6 @@ export default function Wrap({ workId, type, onTypeChange, login }) {
     return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
   }
 
-  console.log("fbiWork: ", fbiWork);
-
   if (fbiWork.error || fbiWork.error) {
     return <OverviewError />;
   }
