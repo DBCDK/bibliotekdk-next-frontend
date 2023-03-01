@@ -565,6 +565,7 @@ export function overviewWork({ workId }) {
       work(id: $workId) {
         titles {
           full
+          parallel
         }
         creators {
           ... on Corporation {

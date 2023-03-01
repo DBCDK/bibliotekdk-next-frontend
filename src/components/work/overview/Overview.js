@@ -72,7 +72,10 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const titles = work?.titles?.full;
+  const titles = [
+    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
+  ];
 
   return (
     <div className={`${styles.background} ${className}`}>
