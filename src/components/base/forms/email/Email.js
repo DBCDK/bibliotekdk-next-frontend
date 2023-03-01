@@ -1,11 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-
-import Text from "@/components/base/text";
 import Input from "@/components/base/forms/input";
-
 import { validateEmail } from "@/utils/validateEmail";
-
 import styles from "./Email.module.css";
 
 /**
@@ -32,7 +28,6 @@ function Email(props) {
 
   // validation state
   const [valid, setValid] = useState(null);
-  const [phonyValue, setPhonyValue] = useState(value);
 
   // Error messages for translate
   const emptyField = {
@@ -100,25 +95,16 @@ function Email(props) {
       }}
     />
   ) : (
-    <>
-      <Input
-        id={"input"}
-        value={value}
-        disabled={true}
-        readOnly={true}
-        onChange={(e) => setPhonyValue(e.target.value)}
-        type="email"
-        className={`${className} ${styles.email} ${statusClass} ${
-          phonyValue && phonyValue !== value && styles.red_bg
-        }`}
-      />
-      {phonyValue && phonyValue !== value && (
-        <Text type={"text6"} className={styles.red_text}>
-          Ændringen slår ikke igennem, og du bekræfter stadig med emailen{" "}
-          {value}
-        </Text>
-      )}
-    </>
+    // if the input is disabled: don't allow change of emailadress
+    <Input
+      id={"input"}
+      value={value}
+      disabled={true}
+      readOnly={true}
+      onChange={() => {}}
+      type="email"
+      className={`${className} ${styles.email} ${statusClass}`}
+    />
   );
 }
 
