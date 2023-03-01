@@ -5,3 +5,12 @@
   border: 1px solid var(--error);
   outline: 1px solid var(--error);
 }
+
+.red_text {
+  padding-top: var(--pt05);
+  color: var(--error_temp);
+}
+
+.red_bg {
+  background-color: var(--error-light_temp) !important;
+}
