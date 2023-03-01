@@ -90,9 +90,9 @@ export function Edition({
             skeleton={!manifestation?.titles?.full && isLoading}
             lines={1}
           >
-            {titles.map((title, index) => (
+            {titles?.map((title, index) => (
               <>
-                {title} {index < titles.length - 1 && <br />}
+                {title} {index < titles?.length - 1 && <br />}
               </>
             ))}
           </Text>
