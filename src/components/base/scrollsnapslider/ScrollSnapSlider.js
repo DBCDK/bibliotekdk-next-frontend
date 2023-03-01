@@ -3,7 +3,6 @@ import styles from "./ScrollSnapSlider.module.css";
 import { useEffect, useRef, useState } from "react";
 import useScrollSlider from "@/components/hooks/useScrollSlider";
 import debounce from "lodash/debounce";
-import floor from "lodash/floor";
 import {
   childSetter,
   getScrollToNextCoveredChild,
@@ -59,7 +58,7 @@ export default function ScrollSnapSlider({
             arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
             orientation={"left"}
             clickCallback={() => scrollFunction("left")}
-            dataDisabled={floor(containerScroll.x) <= 0}
+            dataDisabled={Math.floor(containerScroll.x) <= 0}
           />
         )}
         <div
@@ -76,7 +75,7 @@ export default function ScrollSnapSlider({
             orientation={"right"}
             clickCallback={() => scrollFunction("right")}
             dataDisabled={
-              floor(containerScroll.xScrollable - containerScroll.x) <= 0
+              Math.floor(containerScroll.xScrollable - containerScroll.x) <= 0
             }
           />
         )}

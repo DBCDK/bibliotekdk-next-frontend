@@ -18,11 +18,10 @@
    *  width is full
    */
   --related_works_width: calc(
-    calc(
-      var(--container_width)
-      / 12
-      * var(--cols_per_card)
-    ) - 0.5 * var(--pt2)
+    var(--container_width)
+    / 12
+    * var(--cols_per_card)
+    - (0.5 * var(--pt2))
   );
   width: var(--related_works_width);
 
