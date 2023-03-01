@@ -749,7 +749,7 @@
         "da": "Filmatisering af",
         "en": "Adaption of"
       },
-      "hasadaption" : {
+      "hasadaption": {
         "da": "Filmatisering",
         "en": "Film adaption"
       },
@@ -1494,6 +1494,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",
