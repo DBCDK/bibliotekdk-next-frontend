@@ -423,15 +423,14 @@ export function workJsonLd({ workId }) {
     query: `query workJsonLd($workId: String!) {
             work(id: $workId) {
               workId
-              workTypes
-              abstract
               titles {
                 main
               }
-              abstract
               creators {
                 display
               }
+              workTypes
+              abstract
               manifestations {
                 all {
                   ...manifestationDetailsForAccessFactory
@@ -568,7 +567,14 @@ export function overviewWork({ workId }) {
           full
         }
         creators {
-          display
+          ... on Corporation {
+            __typename
+            display
+          }
+          ... on Person {
+            __typename
+            display
+          }
         }
         materialTypes {
           specific
@@ -588,9 +594,12 @@ export function overviewWork({ workId }) {
             }
           }
         }
+        ...genreAndFormAndWorkTypesFragment
       }
       monitor(name: "bibdknext_overview_work")
-    }`,
+    }
+    ${genreAndFormAndWorkTypesFragment}
+    `,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -639,6 +648,15 @@ export function pidToWorkId({ pid }) {
     slowThreshold: 3000,
   };
 }
+
+const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
+  genreAndForm
+  workTypes
+  fictionNonfiction {
+    display
+    code
+  }
+}`;
 
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
