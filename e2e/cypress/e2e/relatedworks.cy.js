@@ -3,10 +3,9 @@ function assertCurrentLeftScroll(current, comparable) {
     comparable,
     `Expected element scroll to be less than or equal to ${comparable} but was ${current}`
   );
-  console.log("current: ", current);
 }
 
-function appendCurrentLeftScrollToArray($el, arrayOfScrolls) {
+function appendScrollToArray($el, arrayOfScrolls) {
   arrayOfScrolls.push($el.scrollLeft());
   assertCurrentLeftScroll(arrayOfScrolls.at(-1), arrayOfScrolls.at(-2));
 }
@@ -18,13 +17,13 @@ describe("Related works", () => {
     cy.viewport(1920, 1080);
 
     let leftScroll = [0];
-    function appendCurrentLeftScrollToArrayInner($el) {
-      appendCurrentLeftScrollToArray($el, leftScroll);
+    function appendScrollToArrayWithProps($el) {
+      appendScrollToArray($el, leftScroll);
     }
 
     cy.get("#relatedWorks_slide")
       .should("exist")
-      .should(appendCurrentLeftScrollToArrayInner);
+      .should(appendScrollToArrayWithProps);
 
     cy.contains("Hugo i Sølvskoven 2");
     cy.contains("Hugo i Sølvskoven 3");
@@ -32,7 +31,7 @@ describe("Related works", () => {
     // First scroll
     cy.get("[data-cy=right_arrow]", { timeout: 10000 }).click();
 
-    cy.get("#relatedWorks_slide").should(appendCurrentLeftScrollToArrayInner);
+    cy.get("#relatedWorks_slide").should(appendScrollToArrayWithProps);
 
     cy.contains("Hugo i Sølvskoven 2").should(($el) =>
       assertCurrentLeftScroll(
@@ -47,7 +46,7 @@ describe("Related works", () => {
     // Second scroll
     cy.get("[data-cy=right_arrow]", { timeout: 10000 }).click();
 
-    cy.get("#relatedWorks_slide").should(appendCurrentLeftScrollToArrayInner);
+    cy.get("#relatedWorks_slide").should(appendScrollToArrayWithProps);
 
     cy.contains("Hugo i Sølvskoven 3").should(($el) =>
       assertCurrentLeftScroll(
