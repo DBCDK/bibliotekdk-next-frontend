@@ -383,6 +383,16 @@ export function fbiOverviewDetail({ workId }) {
               }
               physicalDescriptions {
                 summary
+                accompanyingMaterial
+                additionalDescription
+                extent
+                numberOfPages
+                numberOfUnits
+                playingTime
+                requirements
+                size
+                technicalInformation
+                textVsIllustrations
               }
               edition {
                 publicationYear {

@@ -53,15 +53,21 @@ function getLanguageValues(manifestation) {
 }
 
 /**
- * Physical description of given manifestations.
+ * Physical description of given manifestations (summary).
  * @param manifestation
  * @returns {string | undefined}
  *  description summary (ies) seperated by space
  */
 function parsePhysicalDescriptions(manifestation) {
-  return manifestation?.physicalDescriptions
-    ?.map((description) => description.summary)
-    .join(" ");
+  return manifestation?.physicalDescriptions?.map(
+    (description) => description.summary
+  );
+}
+
+function getRequirementsFromPhysicalDesc(manifestation) {
+  return manifestation?.physicalDescriptions?.map(
+    (description) => description.requirements
+  );
 }
 
 /**
@@ -385,7 +391,7 @@ function RenderMovieLanguages({ values, skeleton }) {
  * @returns {*}
  * @constructor
  */
-function RenderMovieGenre({ values, skeleton }) {
+function RenderGenre({ values, skeleton }) {
   return values.map((val, index) => (
     <>
       <Link
@@ -481,7 +487,7 @@ export function fieldsForRows(manifestation, work, context) {
         genre: {
           label: Translate({ ...context, label: "genre/form" }),
           value: work?.genreAndForm || [],
-          jsxParser: RenderMovieGenre,
+          jsxParser: RenderGenre,
         },
       },
       {
@@ -510,7 +516,7 @@ export function fieldsForRows(manifestation, work, context) {
         gamegenre: {
           label: Translate({ ...context, label: "genre/form" }),
           value: work?.genreAndForm || [],
-          jsxParser: RenderMovieGenre,
+          jsxParser: RenderGenre,
           index: 0,
         },
       },
@@ -518,6 +524,12 @@ export function fieldsForRows(manifestation, work, context) {
         audience: {
           label: Translate({ ...context, label: "game-audience" }),
           value: manifestation?.audience?.generalAudience || "",
+        },
+      },
+      {
+        requirements: {
+          label: Translate({ ...context, label: "game-requirements" }),
+          value: getRequirementsFromPhysicalDesc(manifestation) || "",
         },
       },
     ],
@@ -540,7 +552,7 @@ export function fieldsForRows(manifestation, work, context) {
         gamegenre: {
           label: Translate({ ...context, label: "genre/form" }),
           value: work?.genreAndForm || [],
-          jsxParser: RenderMovieGenre,
+          jsxParser: RenderGenre,
           index: 0,
         },
       },
@@ -611,7 +623,7 @@ export function fieldsForRows(manifestation, work, context) {
         moviegenre: {
           label: Translate({ ...context, label: "genre/form" }),
           value: work?.genreAndForm || [],
-          jsxParser: RenderMovieGenre,
+          jsxParser: RenderGenre,
         },
       },
       {
