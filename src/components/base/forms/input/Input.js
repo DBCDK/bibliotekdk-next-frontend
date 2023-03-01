@@ -82,6 +82,7 @@ function Input({
       required={required}
       aria-labelledby={ariaLabelledby}
       aria-label={ariaLabel}
+      {...(disabled && { contentEditable: false })}
     />
   );
 }

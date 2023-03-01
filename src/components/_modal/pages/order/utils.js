@@ -15,42 +15,6 @@ export function onMailChange(value, valid, updateLoanerInfo, setMail) {
   setMail({ value, valid });
 }
 
-/**
- *
- * @param pid
- * @param work
- * @param singleManifestation
- * @returns {*[]}
- */
-export function getOrderPids(pid, work, singleManifestation) {
-  // Work props
-  const manifestations = work?.manifestations?.all;
-
-  // Material by pid
-  const material = manifestations?.filter(
-    (manifestation) => manifestation.pid === pid
-  )?.[0];
-
-  const materialsSameType = manifestations?.filter((manifestation) => {
-    return (
-      manifestation?.materialTypes?.[0]?.specific ===
-        material?.materialTypes?.[0]?.specific &&
-      (manifestation?.access?.find((singleAccess) => singleAccess.issn) ||
-        manifestation?.access?.find(
-          (singleAccess) => singleAccess.loanIsPossible
-        ))
-    );
-  });
-
-  let orderPids;
-  if (singleManifestation) {
-    orderPids = [pid];
-  } else {
-    orderPids = materialsSameType?.map((m) => m.pid);
-  }
-  return orderPids;
-}
-
 export function extractClassNameAndMessage(validated, failedSubmission) {
   // Get email messages (from validate object)
   const emailStatus = validated?.details?.hasMail?.status;
