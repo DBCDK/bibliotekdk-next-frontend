@@ -22,7 +22,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build image') {
+        /*stage('Build image') {
             steps {
                 script {
                     sh " echo building ${IMAGE_NAME}"
@@ -36,7 +36,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('CHECK BRANCH NAME') {
             when {
                 anyOf {
