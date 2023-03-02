@@ -99,7 +99,7 @@ pipeline {
 		}*/
     }
     post {
-        always {
+        /*always {
             sh '''
                 echo Clean up
                 mkdir -p logs
@@ -110,7 +110,7 @@ pipeline {
 
             junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
-        }
+        }*/
         failure {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
