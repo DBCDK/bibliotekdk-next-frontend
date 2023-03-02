@@ -41,7 +41,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'main';
-                    FEATURE_BRANCH 'YES'
+                    expression{env.BRANCH_NAME.startsWith('feature')}
                 }
             }
             steps {
