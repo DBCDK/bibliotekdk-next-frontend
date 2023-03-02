@@ -47,7 +47,10 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                branch 'main'
+                anyOf {
+                    branch 'main';
+                    branch 'alfa-0'
+                }
             }
             steps {
                 script {
@@ -68,13 +71,26 @@ pipeline {
                 }
             }
 		        when {
-			    branch 'main'
+                    anyOf {
+                        branch 'main';
+                        branch 'alfa-0'
+                    }
 			}
 			steps {
 				dir("deploy") {
+                    when{
+                        branch 'main'
+                    }
                     sh '''
-                        #!/usr/bin/env bash
+                        #!/usr/bin/env bash                        
 						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
+					'''
+                    when{
+                        branch 'alfa-0'
+                    }
+                    sh '''
+                        #!/usr/bin/env bash                        
+						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
 					'''
 				}
 			}
