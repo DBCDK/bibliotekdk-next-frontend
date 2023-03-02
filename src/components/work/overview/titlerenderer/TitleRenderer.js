@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
 import styles from "./TitleRenderer.module.css";
+import Translate from "@/components/base/translate";
 
 export function TitleRenderer({
   skeleton,
@@ -58,7 +59,7 @@ export default function Wrap({ workId }) {
 
   const renderLanguages =
     mainLanguages?.length > 1
-      ? "(flere sprog)"
+      ? `(${Translate({ context: "general", label: "multipleLanguages" })})`
       : nonDanishLanguages?.length > 0 // If nonDanishLanguage.length > 1, then previous condition strikes through
       ? `(${nonDanishLanguages?.[0]?.display})`
       : null;
