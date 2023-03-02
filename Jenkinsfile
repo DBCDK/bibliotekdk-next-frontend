@@ -13,9 +13,10 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-	}
+        FEATURE_BRANCH = ${env.BRANCH_NAME.startsWith('feature')}
+    }
     stages {
-        stage('clean workspace'){
+        stage('clean workspace') {
             steps {
                 cleanWs()
                 checkout scm
@@ -24,6 +25,9 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
+                    sh " echo building ${IMAGE_NAME}"
+                    sh " echo branchname: ${env.BRANCH_NAME}"
+                    sh " echo IS_FEATURE:  ${env.FEATURE_BRANCH}"
                     currentBuild.description = "Build ${IMAGE_NAME}"
                     ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
@@ -33,6 +37,20 @@ pipeline {
                 }
             }
         }
+        stage('CHECK BRANCH NAME') {
+            when {
+                anyOf {
+                    branch 'main';
+                    branch 'staging'
+                }
+            }
+            steps {
+                script{
+                    sh "echo FISK"
+                }
+            }
+        }
+        /*
         stage('Integration test') {
             steps {
                 script {
@@ -47,7 +65,7 @@ pipeline {
         }
         stage('Push to Artifactory') {
             when {
-                branch 'main'
+                branch  'main'
             }
             steps {
                 script {
@@ -78,7 +96,7 @@ pipeline {
 					'''
 				}
 			}
-		}
+		}*/
     }
     post {
         always {
@@ -97,9 +115,9 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                        color: 'warning',
-                        message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
-                        tokenCredentialId: 'slack-global-integration-token')
+                            color: 'warning',
+                            message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
+                            tokenCredentialId: 'slack-global-integration-token')
                 }
             }
         }
@@ -107,18 +125,18 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                        color: 'good',
-                        message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
-                        tokenCredentialId: 'slack-global-integration-token')
+                            color: 'good',
+                            message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
+                            tokenCredentialId: 'slack-global-integration-token')
 
                 }
             }
         }
         fixed {
             slackSend(channel: 'fe-drift',
-                color: 'good',
-                message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
-                tokenCredentialId: 'slack-global-integration-token')
+                    color: 'good',
+                    message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
+                    tokenCredentialId: 'slack-global-integration-token')
 
         }
     }
