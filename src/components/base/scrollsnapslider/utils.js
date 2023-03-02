@@ -9,7 +9,7 @@ export function scrollToElement(sliderElementId) {
 export function scrollToElementWithOffset(
   sliderElementId,
   orientation = "y",
-  offset = -65
+  offset = -64 // --pt8 fra spacing.css
 ) {
   const element = document.querySelector(`#${sliderElementId}`);
   const elementPosition =
