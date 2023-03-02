@@ -41,7 +41,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'main';
-                    branch 'staging'
+                    env.FEATURE_BRANCH 'true'
                 }
             }
             steps {
