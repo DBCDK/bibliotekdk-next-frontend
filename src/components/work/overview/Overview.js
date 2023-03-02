@@ -2,7 +2,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
-import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
@@ -17,6 +16,7 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+import TitleRenderer from "@/components/work/overview/titlerenderer/TItleRenderer";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -71,8 +71,6 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  const titles = work?.titles?.full;
-
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
@@ -93,17 +91,7 @@ export function Overview({
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
             <Row>
               <Col xs={12}>
-                <Title
-                  type="title3"
-                  skeleton={skeleton}
-                  data-cy={"title-overview"}
-                >
-                  {titles?.map((title, index, array) => (
-                    <>
-                      {title} {index < array.length - 1 && <br />}
-                    </>
-                  ))}
-                </Title>
+                <TitleRenderer workId={workId} />
               </Col>
               <Col xs={12} className={styles.ornament}>
                 <Icon

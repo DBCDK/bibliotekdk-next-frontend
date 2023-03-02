@@ -5,6 +5,10 @@
   margin: 0;
 }
 
+.display_inline {
+  display: inline;
+}
+
 .title1 {
   font-size: 32px;
   line-height: 40px;

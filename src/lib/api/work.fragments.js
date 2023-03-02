@@ -583,6 +583,13 @@ export function overviewWork({ workId }) {
         materialTypes {
           specific
         }
+        mainLanguages {
+          display
+          isoCode
+        }
+        fictionNonfiction {
+          code
+        }
         manifestations {
           mostRelevant {
             pid

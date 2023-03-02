@@ -7,6 +7,10 @@
   margin: 0;
 }
 
+.display_inline {
+  display: inline;
+}
+
 .text1 {
   font-size: 17px;
   line-height: 26px;

@@ -14,6 +14,7 @@ import clampStyles from "@/components/base/clamp/Clamp.module.css";
  * @param type
  * @param clamp
  * @param lines
+ * @param data_display
  * @param {obj} props
  * See propTypes for specific props and types
  *
@@ -26,6 +27,7 @@ export const Title = ({
   type = "title1",
   clamp,
   lines,
+  data_display = "block",
   ...props
 }) => {
   const Tag = tag;
@@ -49,7 +51,9 @@ export const Title = ({
       {...props}
       className={`${styles.title} ${styles[type]} ${className} ${
         clamp && styles.clamp
-      } ${clampClasses.join(" ")}`}
+      } ${clampClasses.join(" ")} ${
+        data_display === "inline" && styles.display_inline
+      }`}
     >
       {children}
     </Tag>
