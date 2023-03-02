@@ -168,9 +168,11 @@ export function series({ workId }) {
         seriesMembers {
           ...workSliderFragment
         }
+        ...seriesFragment
       }
     }
     ${workSliderFragment}
+    ${seriesFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -663,6 +665,16 @@ const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
     origin
+  }
+}`;
+
+const seriesFragment = `fragment seriesFragment on Work {
+  series {
+    title
+    numberInSeries {
+      display
+      number
+    }
   }
 }`;
 

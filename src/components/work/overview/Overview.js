@@ -6,6 +6,7 @@ import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
+import SeriesOverview from "./seriesoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
@@ -110,6 +111,9 @@ export function Overview({
                     </>
                   ))}
                 </Title>
+              </Col>
+              <Col xs={12}>
+                <SeriesOverview workId={workId} type={type} />
               </Col>
               <Col xs={12} className={styles.ornament}>
                 <Icon

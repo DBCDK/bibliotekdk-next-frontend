@@ -20,6 +20,7 @@ import Translate from "@/components/base/translate";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
+import { AnchorsEnum } from "@/lib/enums";
 
 /**
  * The work page React component
@@ -100,10 +101,8 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           <Keywords workId={workId} />
           <Related workId={workId} />
         </div>
-        <Series
-          workId={workId}
-          anchor-label={Translate({ context: "workmenu", label: "series" })}
-        />
+        {/* TODO: SeriesOverview.js refererer til dennes oversættelse */}
+        <Series workId={workId} anchor-label={Translate(AnchorsEnum.SERIES)} />
         <Recommendations
           workId={workId}
           anchor-label={Translate({

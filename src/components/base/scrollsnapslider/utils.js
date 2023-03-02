@@ -6,6 +6,21 @@ export function scrollToElement(sliderElementId) {
   });
 }
 
+export function scrollToElementWithOffset(
+  sliderElementId,
+  orientation = "y",
+  offset = -64 // --pt8 fra spacing.css
+) {
+  const element = document.querySelector(`#${sliderElementId}`);
+  const elementPosition =
+    orientation === "x" ? element.offsetLeft : element.offsetTop;
+
+  window.scrollTo({
+    top: elementPosition + offset,
+    behavior: "smooth",
+  });
+}
+
 export function scrollDistance(sliderId, slideTranslation) {
   document.querySelector(`#${sliderId}`).scrollBy({
     left: slideTranslation,
