@@ -13,7 +13,7 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-        FEATURE_BRANCH = ${env.BRANCH_NAME.startsWith('feature')}
+        FEATURE_BRANCH = "${env.BRANCH_NAME.startsWith('feature')}"
     }
     stages {
         stage('clean workspace') {
