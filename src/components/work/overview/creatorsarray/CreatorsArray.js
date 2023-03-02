@@ -2,8 +2,16 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import styles from "@/components/work/overview/Overview.module.css";
 
-export function CreatorsArray({ creators, skeleton }) {
+export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
   const searchOnUrl = "/find?q.creator=";
+
+  const corporations = creatorsBeforeFilter?.filter(
+    (creator) => creator.__typename === "Corporation"
+  );
+
+  const creators =
+    corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+
   return (
     creators?.map((creator, index) => {
       return (

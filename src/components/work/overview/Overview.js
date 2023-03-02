@@ -18,6 +18,7 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -72,11 +73,18 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
+  const titles = [
+    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
+  ];
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} lg={3} className={styles.breadcrumbs} />
+          <Col xs={12} lg={3} className={styles.breadcrumbs}>
+            <Breadcrumbs workId={workId} />
+          </Col>
           <Col
             xs={12}
             lg={4}
@@ -97,7 +105,11 @@ export function Overview({
                   skeleton={skeleton}
                   data-cy={"title-overview"}
                 >
-                  {work?.titles?.full[0]}
+                  {titles?.map((title, index, array) => (
+                    <>
+                      {title} {index < array.length - 1 && <br />}
+                    </>
+                  ))}
                 </Title>
               </Col>
               <Col xs={12}>

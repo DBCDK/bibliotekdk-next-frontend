@@ -749,13 +749,21 @@
         "da": "Filmatisering af",
         "en": "Adaption of"
       },
-      "hasadaption" : {
+      "hasadaption": {
         "da": "Filmatisering",
         "en": "Film adaption"
       },
       "firstEdition": {
         "da": "Originaludgave",
         "en": "Original edition"
+      },
+      "game-audience": {
+        "da": "Aldersmærkning",
+        "en": "Age"
+      },
+      "other-audience": {
+        "da": "Deltagere",
+        "en": "Audience"
       }
     },
     "description": {
@@ -1486,6 +1494,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",

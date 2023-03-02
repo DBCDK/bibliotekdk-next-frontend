@@ -229,8 +229,8 @@ const work = {
     },
   ],
   titles: {
-    main: "Harry Potter og De Vises Sten",
-    full: "Harry Potter og De Vises Sten",
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
   },
 };
 
@@ -254,7 +254,7 @@ const noMaterialTypesWork = {
   ],
   materialTypes: [],
   titles: {
-    main: "Harry Potter og De Vises Sten",
-    full: "Harry Potter og De Vises Sten",
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
   },
 };
