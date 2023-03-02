@@ -456,6 +456,10 @@ function RenderGenre({ values, skeleton }) {
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
 
+  console.log(materialType, "TYPE");
+  console.log(manifestation, "MANIFESTATION");
+  console.log(work, "WORK");
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -587,6 +591,24 @@ export function fieldsForRows(manifestation, work, context) {
           value:
             work?.manifestations?.first?.edition?.publicationYear?.display ||
             "",
+        },
+      },
+    ],
+    MUSIC: [
+      {
+        hasadaption: {
+          label: Translate({ ...context, label: "hasadaption" }),
+          value: "",
+          // value: manifestation?.relations?.hasAdaptation?.find((rel) =>
+          //   rel?.pid?.startsWith("870970")
+          // ),
+          // jsxParser: RenderMovieAdaption,
+        },
+      },
+      {
+        creatorsfromdescription: {
+          label: Translate({ ...context, label: "creatorsfromdescription" }),
+          value: manifestation?.creatorsFromDescription || [],
         },
       },
     ],

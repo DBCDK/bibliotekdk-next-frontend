@@ -768,6 +768,10 @@
       "other-audience": {
         "da": "Deltagere",
         "en": "Audience"
+      },
+      "creatorsfromdescription": {
+        "da": "Gruppe",
+        "en": "Group"
       }
     },
     "description": {

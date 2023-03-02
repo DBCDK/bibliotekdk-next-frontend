@@ -381,6 +381,7 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              creatorsFromDescription
               physicalDescriptions {
                 summary
                 accompanyingMaterial
