@@ -18,9 +18,9 @@ import isEmpty from "lodash/isEmpty";
 import { fieldsForRows } from "@/components/work/details/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 
-function DefaultDetailValues({ values, skeleton }) {
+function DefaultDetailValues({ values }) {
   return (
-    <Text type="text4" lines={0} skeleton={skeleton}>
+    <Text type="text4" lines={2}>
       {values}
     </Text>
   );
@@ -92,25 +92,31 @@ function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export function DetailsSkeleton(props) {
-  const mock = {
-    language: ["..."],
-    physicalDescription: "...",
-    datePublished: "...",
-    creators: [{ type: "...", name: "..." }],
-  };
-
+export function DetailsSkeleton() {
+  const texts = [1, 2, 3, 4, 5, 6];
   return (
-    <Details
-      {...props}
-      manifestation={mock}
-      className={`${props.className} ${styles.skeleton}`}
-    />
+    <Section
+      title={Translate({ context: "details", label: "title" })}
+      space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
+      subtitle=" ... "
+    >
+      <Row className={`${styles.details}`}>
+        {texts.map((txt) => (
+          <Col xs={6} md={{ span: 3 }} key={`skeleton-${txt}`}>
+            <Text
+              type="text3"
+              className={styles.title}
+              lines={2}
+              skeleton={true}
+            >
+              ...
+            </Text>
+          </Col>
+        ))}
+      </Row>
+    </Section>
   );
 }
 
@@ -124,7 +130,6 @@ export function DetailsSkeleton(props) {
  */
 export default function Wrap(props) {
   const { workId, type } = props;
-
   const {
     data,
     isLoading: overViewIsLoading,
@@ -144,7 +149,7 @@ export default function Wrap(props) {
   }
 
   if (overViewIsLoading || relationsIsLoading) {
-    return <DetailsSkeleton {...props} />;
+    return <DetailsSkeleton />;
   }
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
