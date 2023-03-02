@@ -7,7 +7,6 @@
 **/
 import Title from "@/components/base/title";
 import { Fragment } from "react";
-import Text from "@/components/base/text";
 import PropTypes from "prop-types";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
@@ -16,7 +15,7 @@ import styles from "./TitleRenderer.module.css";
 export function TitleRenderer({
   skeleton,
   titles,
-  isFiction = false,
+  isLiterature = false,
   renderLanguages = null,
 }) {
   return (
@@ -27,13 +26,14 @@ export function TitleRenderer({
             {title} {index < array.length - 1 && <br />}
           </Fragment>
         ))}
-        {renderLanguages && isFiction && (
-          <Text
+        {renderLanguages && isLiterature && (
+          <Title
+            tag={"div"}
             className={`${titles.length === 1 && styles.display_inline}`}
-            type={"text2"}
+            type={"title5"}
           >
             {renderLanguages}
-          </Text>
+          </Title>
         )}
       </Title>
     </>
@@ -63,7 +63,7 @@ export default function Wrap({ workId }) {
       ? `(${nonDanishLanguages?.[0]?.display})`
       : null;
 
-  const isFiction = work?.fictionNonfiction?.code === "FICTION";
+  const isLiterature = work?.workTypes?.includes("LITERATURE");
 
   if (work_response?.isLoading) {
     return <TitleRenderer skeleton={true} />;
@@ -73,7 +73,7 @@ export default function Wrap({ workId }) {
     <TitleRenderer
       titles={titles}
       renderLanguages={renderLanguages}
-      isFiction={isFiction}
+      isLiterature={isLiterature}
     />
   );
 }

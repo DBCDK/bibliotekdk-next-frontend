@@ -590,6 +590,7 @@ export function overviewWork({ workId }) {
         fictionNonfiction {
           code
         }
+        workTypes
         manifestations {
           mostRelevant {
             pid
