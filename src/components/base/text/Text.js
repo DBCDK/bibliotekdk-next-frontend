@@ -27,7 +27,6 @@ function Text({
   title = null,
   id,
   lines,
-  data_display = "block",
 }) {
   // Set type of tag.
   // Because this is a text component, p(aragraph) should always be used if possible!
@@ -54,9 +53,7 @@ function Text({
       id={id}
       className={`${styles.text} ${
         styles[type]
-      } ${className} ${clampClasses.join(" ")} ${
-        data_display === "inline" && styles.display_inline
-      }`}
+      } ${className} ${clampClasses.join(" ")}`}
       onClick={onClick}
       data-cy={key}
       tabIndex={tabIndex}

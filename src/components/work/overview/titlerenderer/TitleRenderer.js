@@ -1,9 +1,17 @@
+/**
+  @ file
+  this file renders the title
+  The rendering includes
+  - multiple titles,
+  - languages where not danish
+**/
 import Title from "@/components/base/title";
 import { Fragment } from "react";
 import Text from "@/components/base/text";
 import PropTypes from "prop-types";
 import { useData } from "@/lib/api/api";
 import { overviewWork } from "@/lib/api/work.fragments";
+import styles from "./TitleRenderer.module.css";
 
 export function TitleRenderer({
   skeleton,
@@ -21,7 +29,7 @@ export function TitleRenderer({
         ))}
         {renderLanguages && isFiction && (
           <Text
-            {...(titles?.length === 1 && { data_display: "inline" })}
+            className={`${titles.length === 1 && styles.display_inline}`}
             type={"text2"}
           >
             {renderLanguages}
@@ -51,7 +59,7 @@ export default function Wrap({ workId }) {
   const renderLanguages =
     mainLanguages?.length > 1
       ? "(flere sprog)"
-      : nonDanishLanguages.length > 0 // If nonDanishLanguage.length > 1, then previous condition strikes through
+      : nonDanishLanguages?.length > 0 // If nonDanishLanguage.length > 1, then previous condition strikes through
       ? `(${nonDanishLanguages?.[0]?.display})`
       : null;
 

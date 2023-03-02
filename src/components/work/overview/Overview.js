@@ -16,7 +16,7 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
-import TitleRenderer from "@/components/work/overview/titlerenderer/TItleRenderer";
+import TitleRenderer from "@/components/work/overview/titlerenderer/TitleRenderer";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
