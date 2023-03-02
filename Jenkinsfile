@@ -22,26 +22,26 @@ pipeline {
                 checkout scm
             }
         }
-        /*stage('Build image') {
+        stage('Build image') {
             steps {
                 script {
                     sh " echo building ${IMAGE_NAME}"
                     sh " echo branchname: ${env.BRANCH_NAME}"
                     sh " echo IS_FEATURE:  ${env.FEATURE_BRANCH}"
                     currentBuild.description = "Build ${IMAGE_NAME}"
-                    ansiColor("xterm") {
+                    /*ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
                         sh "docker build -t ${IMAGE_NAME} --pull ."
                         app = docker.image(IMAGE_NAME)
-                    }
+                    }*/
                 }
             }
-        }*/
+        }
         stage('CHECK BRANCH NAME') {
             when {
                 anyOf {
                     branch 'main';
-                    env.FEATURE_BRANCH 'true'
+                    env.FEATURE_BRANCH true
                 }
             }
             steps {
