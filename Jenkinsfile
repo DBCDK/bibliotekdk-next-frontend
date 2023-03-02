@@ -13,7 +13,7 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-        FEATURE_BRANCH = "${env.BRANCH_NAME.startsWith('feature')}"
+        FEATURE_BRANCH = "${env.BRANCH_NAME.startsWith('feature') ? "YES" : "NO"}"
     }
     stages {
         stage('clean workspace') {
@@ -41,11 +41,12 @@ pipeline {
             when {
                 anyOf {
                     branch 'main';
-                    env.FEATURE_BRANCH true
+                    env.FEATURE_BRANCH "YES"
                 }
             }
             steps {
                 script{
+                    sh "echo ${env.FEATURE_BRANCH}"
                     sh "echo FISK"
                 }
             }
