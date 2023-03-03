@@ -21,42 +21,29 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import {
-  getNonDanishLanguages,
-  parseLanguage,
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 
-function TitlesForSearch({
-  titles: titlesBeforeFilter,
-  mainLanguages,
-  workTypes,
-  isLoading,
-}) {
-  const titles = titlesBeforeFilter?.full || titlesBeforeFilter?.main || [" "];
-
-  const nonDanishLanguages = getNonDanishLanguages(mainLanguages);
-  const parsedLanguages = parseLanguage(mainLanguages, nonDanishLanguages);
-  const isLiterature = workTypes?.includes("LITERATURE");
+function TitlesForSearch({ work, isLoading }) {
+  const titles = work?.titles;
 
   return (
-    <Title
-      type="title5"
-      tag="h2"
-      lines={3}
-      clamp={true}
-      title={titles?.join(" ")}
-      data-cy={"ResultRow-title"}
-      skeleton={!titles && isLoading}
-    >
-      <RenderTitlesWithoutLanguage titles={titles} />
-      <RenderLanguageAddition
-        parsedLanguages={parsedLanguages}
-        isLiterature={isLiterature}
-        length={titles?.length}
-        type={"title6"}
-      />
-    </Title>
+    <>
+      <Title
+        type="title5"
+        tag="h2"
+        lines={3}
+        clamp={true}
+        title={titles?.full?.join(" ")}
+        data-cy={"ResultRow-title"}
+        skeleton={!titles && isLoading}
+        className={styles.display_inline}
+      >
+        <RenderTitlesWithoutLanguage titles={titles} />
+        <RenderLanguageAddition work={work} type={"title6"} />
+      </Title>
+    </>
   );
 }
 
@@ -110,12 +97,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch
-            titles={work?.titles}
-            mainLanguages={work?.mainLanguages}
-            workTypes={work?.workTypes}
-            loading={isLoading}
-          />
+          <TitlesForSearch work={work} loading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}

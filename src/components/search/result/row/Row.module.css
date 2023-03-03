@@ -6,6 +6,10 @@
   min-height: 160px;
 }
 
+.display_inline {
+  display: inline;
+}
+
 .cover img {
   object-position: 50% 0%;
 }

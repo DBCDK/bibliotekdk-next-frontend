@@ -8,8 +8,6 @@
 import Title from "@/components/base/title";
 import { Fragment } from "react";
 import PropTypes from "prop-types";
-import { useData } from "@/lib/api/api";
-import { overviewWork } from "@/lib/api/work.fragments";
 import styles from "./TitleRenderer.module.css";
 import Translate from "@/components/base/translate";
 
@@ -25,34 +23,40 @@ export function getNonDanishLanguages(mainLanguages) {
   return mainLanguages?.filter((language) => language?.isoCode !== "dan");
 }
 
-export function RenderLanguageAddition({
-  parsedLanguages,
-  isLiterature,
-  length,
-  tag = "div",
-  type = "title5",
-}) {
+export function RenderLanguageAddition({ work, tag = "div", type = "title5" }) {
+  const titles = work?.titles?.full;
+  const mainLanguages = work?.mainLanguages;
+
+  const nonDanishLanguages = getNonDanishLanguages(mainLanguages);
+  const parsedLanguages = parseLanguage(mainLanguages, nonDanishLanguages);
+
+  const isLiterature = work?.workTypes?.includes("LITERATURE");
+  const length = titles?.length;
+
   return (
-    <>
-      {parsedLanguages && isLiterature && (
-        <Title
-          tag={tag}
-          className={`${length === 1 && styles.display_inline}`}
-          type={type}
-        >
-          {parsedLanguages}
-        </Title>
-      )}
-    </>
+    parsedLanguages &&
+    isLiterature && (
+      <Title
+        tag={tag}
+        className={`${length === 1 && styles.display_inline}`}
+        type={type}
+      >
+        {parsedLanguages}
+      </Title>
+    )
   );
 }
 RenderLanguageAddition.propTypes = {
   parsedLanguages: PropTypes.any,
   literature: PropTypes.bool,
   length: PropTypes.number,
+  tag: PropTypes.string,
+  type: PropTypes.string,
 };
 
-export function RenderTitlesWithoutLanguage({ titles }) {
+export function RenderTitlesWithoutLanguage({ titles: titlesBeforeFilter }) {
+  const titles = titlesBeforeFilter?.full;
+
   return titles?.map((title, index, titlesArray) => (
     <Fragment key={`${title}-${index}`}>
       {title} {index < titlesArray.length - 1 && <br />}
@@ -62,55 +66,3 @@ export function RenderTitlesWithoutLanguage({ titles }) {
 RenderTitlesWithoutLanguage.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string),
 };
-
-export function TitleRenderer({
-  skeleton,
-  titles,
-  isLiterature = false,
-  parsedLanguages = null,
-  dataCy = "title-overview",
-  titleType = "title3",
-}) {
-  return (
-    <>
-      <Title type={titleType} skeleton={skeleton} data-cy={dataCy}>
-        <RenderTitlesWithoutLanguage titles={titles} />
-        <RenderLanguageAddition
-          parsedLanguages={parsedLanguages}
-          isLiterature={isLiterature}
-          length={titles?.length}
-        />
-      </Title>
-    </>
-  );
-}
-TitleRenderer.propTypes = {
-  skeleton: PropTypes.any,
-  titles: PropTypes.any,
-  prop2: PropTypes.func,
-};
-
-export default function Wrap({ workId }) {
-  const work_response = useData(workId && overviewWork({ workId: workId }));
-
-  const work = work_response?.data?.work;
-  const titles = work?.titles?.full;
-  const mainLanguages = work?.mainLanguages;
-
-  const nonDanishLanguages = getNonDanishLanguages(mainLanguages);
-  const parsedLanguages = parseLanguage(mainLanguages, nonDanishLanguages);
-
-  const isLiterature = work?.workTypes?.includes("LITERATURE");
-
-  if (work_response?.isLoading) {
-    return <TitleRenderer skeleton={true} />;
-  }
-
-  return (
-    <TitleRenderer
-      titles={titles}
-      parsedLanguages={parsedLanguages}
-      isLiterature={isLiterature}
-    />
-  );
-}

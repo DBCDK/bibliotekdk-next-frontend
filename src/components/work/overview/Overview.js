@@ -16,7 +16,11 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
-import TitleRenderer from "@/components/work/overview/titlerenderer/TitleRenderer";
+import {
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
+import { Title } from "@/components/base/title/Title";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -91,7 +95,14 @@ export function Overview({
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
             <Row>
               <Col xs={12}>
-                <TitleRenderer workId={workId} />
+                <Title
+                  type={"title3"}
+                  skeleton={skeleton}
+                  data-cy={"title-overview"}
+                >
+                  <RenderTitlesWithoutLanguage titles={work?.titles} />
+                  <RenderLanguageAddition work={work} />
+                </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>
                 <Icon
