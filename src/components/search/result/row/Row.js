@@ -29,26 +29,24 @@ function TitlesForSearch({ work, isLoading }) {
   const titles = work?.titles;
 
   return (
-    <>
-      <Title
-        type="title5"
-        tag="h2"
-        lines={3}
-        clamp={true}
-        title={titles?.full?.join(" ")}
-        data-cy={"ResultRow-title"}
-        skeleton={!titles && isLoading}
-        className={styles.display_inline}
-      >
-        <RenderTitlesWithoutLanguage titles={titles} />
-        <RenderLanguageAddition work={work} type={"title6"} />
-      </Title>
-    </>
+    <Title
+      type="title5"
+      tag="h2"
+      lines={3}
+      clamp={true}
+      title={titles?.full?.join(" ")}
+      data-cy={"ResultRow-title"}
+      skeleton={!titles && isLoading}
+      className={styles.display_inline}
+    >
+      <RenderTitlesWithoutLanguage titles={titles} />
+      <RenderLanguageAddition work={work} type={"title6"} />
+    </Title>
   );
 }
 
 TitlesForSearch.propTypes = {
-  titles: PropTypes.object,
+  work: PropTypes.object,
   loading: PropTypes.bool,
 };
 /**
