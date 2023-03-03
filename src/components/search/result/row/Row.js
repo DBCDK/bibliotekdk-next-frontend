@@ -20,9 +20,24 @@ import {
   formatMaterialTypesToUrl,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import {
+  getNonDanishLanguages,
+  parseLanguage,
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
 
-function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
+function TitlesForSearch({
+  titles: titlesBeforeFilter,
+  mainLanguages,
+  workTypes,
+  isLoading,
+}) {
   const titles = titlesBeforeFilter?.full || titlesBeforeFilter?.main || [" "];
+
+  const nonDanishLanguages = getNonDanishLanguages(mainLanguages);
+  const parsedLanguages = parseLanguage(mainLanguages, nonDanishLanguages);
+  const isLiterature = workTypes?.includes("LITERATURE");
 
   return (
     <Title
@@ -34,17 +49,19 @@ function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
       data-cy={"ResultRow-title"}
       skeleton={!titles && isLoading}
     >
-      {titles.map((title, index) => (
-        <>
-          {title} {index < titles.length - 1 && <br />}
-        </>
-      ))}
+      <RenderTitlesWithoutLanguage titles={titles} />
+      <RenderLanguageAddition
+        parsedLanguages={parsedLanguages}
+        isLiterature={isLiterature}
+        length={titles?.length}
+        type={"title6"}
+      />
     </Title>
   );
 }
 
 TitlesForSearch.propTypes = {
-  titles: PropTypes.any,
+  titles: PropTypes.object,
   loading: PropTypes.bool,
 };
 /**
@@ -93,7 +110,12 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch titles={work?.titles} loading={isLoading} />
+          <TitlesForSearch
+            titles={work?.titles}
+            mainLanguages={work?.mainLanguages}
+            workTypes={work?.workTypes}
+            loading={isLoading}
+          />
           <Text
             type="text3"
             className={styles.creator}
