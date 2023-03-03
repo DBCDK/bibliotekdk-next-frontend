@@ -1,10 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-
 import Input from "@/components/base/forms/input";
-
 import { validateEmail } from "@/utils/validateEmail";
-
 import styles from "./Email.module.css";
 
 /**
@@ -15,7 +12,7 @@ import styles from "./Email.module.css";
  *
  * Get you value like <Email onChange={(value, valid) => console.log(value, valid)} ... />
  *
- * @returns {component}
+ * @returns {JSX.Element}
  */
 function Email(props) {
   const {
@@ -66,7 +63,7 @@ function Email(props) {
   // email valid / invalid status class
   const statusClass = valid ? validClass : invalidClass;
 
-  return (
+  return !props.disabled ? (
     <Input
       {...props}
       type="email"
@@ -96,6 +93,17 @@ function Email(props) {
           });
         }
       }}
+    />
+  ) : (
+    // if the input is disabled: don't allow change of emailadress
+    <Input
+      id={"input"}
+      value={value}
+      disabled={true}
+      readOnly={true}
+      onChange={() => {}}
+      type="email"
+      className={`${className} ${styles.email} ${statusClass}`}
     />
   );
 }

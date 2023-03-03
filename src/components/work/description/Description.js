@@ -43,7 +43,7 @@ function parseCreatorsForInterview(creators) {
     .join(", ");
 
   return (
-    `${interviewee ? `Interview med  ${intervieweeAsString} ` : ""}` +
+    `${intervieweeAsString ? `Interview med  ${intervieweeAsString} ` : ""}` +
     `${interviewer ? `af  ${interviewer}` : ""}`
   );
 }

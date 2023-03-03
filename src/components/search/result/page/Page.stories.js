@@ -74,8 +74,8 @@ export function Default() {
         },
       ],
       titles: {
-        main: "Harry Potter og De Vises Sten",
-        full: "Harry Potter og De Vises Sten",
+        main: ["Harry Potter og De Vises Sten"],
+        full: ["Harry Potter og De Vises Sten"],
       },
     },
     {
@@ -122,8 +122,8 @@ export function Default() {
         },
       ],
       titles: {
-        main: "Harry Potter og Hemmelighedernes Kammer",
-        full: "Harry Potter og Hemmelighedernes Kammer",
+        main: ["Harry Potter og Hemmelighedernes Kammer"],
+        full: ["Harry Potter og Hemmelighedernes Kammer"],
       },
     },
     {
@@ -170,8 +170,8 @@ export function Default() {
         },
       ],
       titles: {
-        main: "Harry Potter og Fønixordenen",
-        full: "Harry Potter og Fønixordenen",
+        main: ["Harry Potter og Fønixordenen"],
+        full: ["Harry Potter og Fønixordenen"],
       },
     },
   ];

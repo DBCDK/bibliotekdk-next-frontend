@@ -29,7 +29,6 @@ const CoverElement = forwardRef(function CoverElement(
     manifestation,
     materialType,
     fullTitle,
-    visibleElement,
     setVisibleElement,
     sliderId,
   },
@@ -44,10 +43,10 @@ const CoverElement = forwardRef(function CoverElement(
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (visibleElement !== thisIndex && isVisible) {
-      setVisibleElement(thisIndex);
+    if (isVisible) {
+      setVisibleElement((prev) => prev !== thisIndex && thisIndex);
     }
-  }, [isVisible, thisIndex, visibleElement]);
+  }, [isVisible, thisIndex, manifestation]);
 
   const src = manifestation?.cover?.detail;
 
@@ -118,7 +117,6 @@ export function CoverCarousel({
               manifestation={manifestations?.[idx]}
               fullTitle={workTitles?.full}
               materialType={materialType}
-              visibleElement={visibleElement}
               setVisibleElement={setVisibleElement}
               sliderId={sliderId}
               carouselRef={carouselRef}
