@@ -45,6 +45,11 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
       search(q: $q, filters: $filters) {
         works(limit: $limit, offset: $offset) {
           workId
+          mainLanguages {
+            isoCode
+            display
+          }
+          workTypes
           manifestations {
             mostRelevant{
               cover {

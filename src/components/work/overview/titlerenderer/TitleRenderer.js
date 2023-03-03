@@ -8,73 +8,61 @@
 import Title from "@/components/base/title";
 import { Fragment } from "react";
 import PropTypes from "prop-types";
-import { useData } from "@/lib/api/api";
-import { overviewWork } from "@/lib/api/work.fragments";
 import styles from "./TitleRenderer.module.css";
 import Translate from "@/components/base/translate";
 
-export function TitleRenderer({
-  skeleton,
-  titles,
-  isLiterature = false,
-  renderLanguages = null,
-}) {
-  return (
-    <>
-      <Title type="title3" skeleton={skeleton} data-cy={"title-overview"}>
-        {titles?.map((title, index, array) => (
-          <Fragment key={title}>
-            {title} {index < array.length - 1 && <br />}
-          </Fragment>
-        ))}
-        {renderLanguages && isLiterature && (
-          <Title
-            tag={"div"}
-            className={`${titles.length === 1 && styles.display_inline}`}
-            type={"title5"}
-          >
-            {renderLanguages}
-          </Title>
-        )}
-      </Title>
-    </>
-  );
+export function parseLanguage(mainLanguages, nonDanishLanguages) {
+  return mainLanguages?.length > 1
+    ? `(${Translate({ context: "general", label: "multipleLanguages" })})`
+    : nonDanishLanguages?.length > 0 // If nonDanishLanguage.length > 1, then previous condition strikes through
+    ? `(${nonDanishLanguages?.[0]?.display})`
+    : null;
 }
-TitleRenderer.propTypes = {
-  skeleton: PropTypes.any,
-  titles: PropTypes.any,
-  prop2: PropTypes.func,
-};
 
-export default function Wrap({ workId }) {
-  const work_response = useData(workId && overviewWork({ workId: workId }));
+export function getNonDanishLanguages(mainLanguages) {
+  return mainLanguages?.filter((language) => language?.isoCode !== "dan");
+}
 
-  const work = work_response?.data?.work;
+export function RenderLanguageAddition({ work, tag = "div", type = "title5" }) {
   const titles = work?.titles?.full;
   const mainLanguages = work?.mainLanguages;
 
-  const nonDanishLanguages = mainLanguages?.filter(
-    (language) => language?.isoCode !== "dan"
-  );
-
-  const renderLanguages =
-    mainLanguages?.length > 1
-      ? `(${Translate({ context: "general", label: "multipleLanguages" })})`
-      : nonDanishLanguages?.length > 0 // If nonDanishLanguage.length > 1, then previous condition strikes through
-      ? `(${nonDanishLanguages?.[0]?.display})`
-      : null;
+  const nonDanishLanguages = getNonDanishLanguages(mainLanguages);
+  const parsedLanguages = parseLanguage(mainLanguages, nonDanishLanguages);
 
   const isLiterature = work?.workTypes?.includes("LITERATURE");
-
-  if (work_response?.isLoading) {
-    return <TitleRenderer skeleton={true} />;
-  }
+  const length = titles?.length;
 
   return (
-    <TitleRenderer
-      titles={titles}
-      renderLanguages={renderLanguages}
-      isLiterature={isLiterature}
-    />
+    parsedLanguages &&
+    isLiterature && (
+      <Title
+        tag={tag}
+        className={`${length === 1 && styles.display_inline}`}
+        type={type}
+      >
+        {parsedLanguages}
+      </Title>
+    )
   );
 }
+RenderLanguageAddition.propTypes = {
+  parsedLanguages: PropTypes.any,
+  literature: PropTypes.bool,
+  length: PropTypes.number,
+  tag: PropTypes.string,
+  type: PropTypes.string,
+};
+
+export function RenderTitlesWithoutLanguage({ titles: titlesBeforeFilter }) {
+  const titles = titlesBeforeFilter?.full;
+
+  return titles?.map((title, index, titlesArray) => (
+    <Fragment key={`${title}-${index}`}>
+      {title} {index < titlesArray.length - 1 && <br />}
+    </Fragment>
+  ));
+}
+RenderTitlesWithoutLanguage.propTypes = {
+  titles: PropTypes.arrayOf(PropTypes.string),
+};
