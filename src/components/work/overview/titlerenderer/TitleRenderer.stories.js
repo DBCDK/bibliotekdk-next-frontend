@@ -1,15 +1,15 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
-import TitleRenderer from "@/components/work/overview/titlerenderer/TitleRenderer";
-import automock_utils from "@/components/_modal/pages/automock_utils";
-import merge from "lodash/merge";
+import {
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
+import { Title } from "@/components/base/title/Title";
 
 const exportedObject = {
   title: "work/Overview/TitleRenderer",
 };
 
 export default exportedObject;
-
-const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /** TitleRendererComponentBuilder
  * @param {string} type
@@ -29,14 +29,24 @@ function TitleRendererComponentBuilder({
       <StoryDescription>
         TitleRenderer with description: {descriptionName}
       </StoryDescription>
-      <TitleRenderer workId={titleRendererProps?.workId} />
+      <Title type={"title3"} skeleton={false} data-cy={"title-overview"}>
+        <RenderTitlesWithoutLanguage titles={titleRendererProps?.titles} />
+        <RenderLanguageAddition work={titleRendererProps} />
+      </Title>
     </div>
   );
 }
 
 export function TitleRendererMultipleLanguages() {
   const titleRendererProps = {
-    workId: "some-work-id-1",
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    },
+    mainLanguages: [
+      { isoCode: "dan", display: "dansk" },
+      { isoCode: "eng", display: "engelsk" },
+    ],
+    workTypes: ["LITERATURE"],
   };
 
   return (
@@ -46,40 +56,13 @@ export function TitleRendererMultipleLanguages() {
     />
   );
 }
-TitleRendererMultipleLanguages.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: () => {
-            return {
-              titles: {
-                full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-              },
-              mainLanguages: [
-                { isoCode: "dan", display: "dansk" },
-                { isoCode: "eng", display: "engelsk" },
-              ],
-              workTypes: ["LITERATURE"],
-              manifestations: {
-                mostRelevant: [
-                  {
-                    access: [
-                      { __typename: "InterLibraryLoan", loanIsPossible: true },
-                    ],
-                  },
-                ],
-              },
-            };
-          },
-        },
-      },
-    },
-  },
-});
 export function TitleRendererOnlyDanish() {
   const titleRendererProps = {
-    workId: "some-work-id-1",
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    },
+    mainLanguages: [{ isoCode: "dan", display: "dansk" }],
+    workTypes: ["LITERATURE"],
   };
 
   return (
@@ -89,37 +72,13 @@ export function TitleRendererOnlyDanish() {
     />
   );
 }
-TitleRendererOnlyDanish.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: () => {
-            return {
-              titles: {
-                full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-              },
-              mainLanguages: [{ isoCode: "dan", display: "dansk" }],
-              workTypes: ["LITERATURE"],
-              manifestations: {
-                mostRelevant: [
-                  {
-                    access: [
-                      { __typename: "InterLibraryLoan", loanIsPossible: true },
-                    ],
-                  },
-                ],
-              },
-            };
-          },
-        },
-      },
-    },
-  },
-});
 export function TitleRenderer1NonDanish() {
   const titleRendererProps = {
-    workId: "some-work-id-1",
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    },
+    mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
+    workTypes: ["LITERATURE"],
   };
 
   return (
@@ -129,37 +88,13 @@ export function TitleRenderer1NonDanish() {
     />
   );
 }
-TitleRenderer1NonDanish.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: () => {
-            return {
-              titles: {
-                full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-              },
-              mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
-              workTypes: ["LITERATURE"],
-              manifestations: {
-                mostRelevant: [
-                  {
-                    access: [
-                      { __typename: "InterLibraryLoan", loanIsPossible: true },
-                    ],
-                  },
-                ],
-              },
-            };
-          },
-        },
-      },
-    },
-  },
-});
 export function TitleRendererNonLiterature() {
   const titleRendererProps = {
-    workId: "some-work-id-1",
+    titles: {
+      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
+    },
+    mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
+    workTypes: ["ARTICLE"],
   };
 
   return (
@@ -169,31 +104,3 @@ export function TitleRendererNonLiterature() {
     />
   );
 }
-TitleRendererNonLiterature.story = merge({}, DEFAULT_STORY_PARAMETERS, {
-  parameters: {
-    graphql: {
-      resolvers: {
-        Query: {
-          work: () => {
-            return {
-              titles: {
-                full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-              },
-              mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
-              workTypes: ["ARTICLE"],
-              manifestations: {
-                mostRelevant: [
-                  {
-                    access: [
-                      { __typename: "InterLibraryLoan", loanIsPossible: true },
-                    ],
-                  },
-                ],
-              },
-            };
-          },
-        },
-      },
-    },
-  },
-});
