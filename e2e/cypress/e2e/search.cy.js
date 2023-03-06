@@ -185,6 +185,26 @@ describe("Search", () => {
       });
     });
 
+    it(`When on another page than /find, it should go to find page when performing search`, () => {
+      // Open story with pathname set to "/some-page"
+      cy.visit(
+        "/iframe.html?id=layout-header--nav-header&nextRouter.pathname=/some-page"
+      );
+
+      cy.get("[data-cy=router-pathname]").contains("/some-page");
+
+      // We do not submit, only fill out input
+      cy.get("header [data-cy=suggester-input]").clear().type("hest");
+
+      cy.get("[data-cy=header-material-selector]").click();
+
+      cy.get("[data-cy=item-movie]").click();
+
+      cy.get("header [data-cy=suggester-input]").type("{enter}");
+
+      cy.get("[data-cy=router-pathname]").contains("/find");
+    });
+
     describe(`Mobile`, () => {
       it(`Maintains input value when opening mobile suggester`, () => {
         cy.viewport("iphone-6");

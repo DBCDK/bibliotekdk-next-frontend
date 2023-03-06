@@ -51,7 +51,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
           {manifestation.partInSeries && (
             <Text
               type={"text4"}
-              data_disply={"inline"}
+              data_display={"inline"}
               className={`${styles.wrap_one_line}`}
             >
               {manifestation.partInSeries}
@@ -59,7 +59,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
           )}
           <Text
             type={"text4"}
-            data_disply={"inline"}
+            data_display={"inline"}
             className={`${styles.wrap_two_lines}`}
             title={fullTitle}
           >
@@ -67,7 +67,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
           </Text>
           <Text
             type={"text3"}
-            data_disply={"inline"}
+            data_display={"inline"}
             className={`${styles.wrap_two_lines}`}
             title={creator}
           >
@@ -75,7 +75,7 @@ export default function SingleRelatedManifestation({ manifestation }) {
           </Text>
           <Text
             type={"text3"}
-            data_disply={"inline"}
+            data_display={"inline"}
             className={`${styles.wrap_one_line}`}
             title={formattedMaterialTypes}
           >

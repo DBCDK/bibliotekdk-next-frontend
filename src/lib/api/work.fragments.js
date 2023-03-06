@@ -381,6 +381,7 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              creatorsFromDescription
               physicalDescriptions {
                 summary
                 accompanyingMaterial
@@ -583,6 +584,14 @@ export function overviewWork({ workId }) {
         materialTypes {
           specific
         }
+        mainLanguages {
+          display
+          isoCode
+        }
+        fictionNonfiction {
+          code
+        }
+        workTypes
         manifestations {
           mostRelevant {
             pid

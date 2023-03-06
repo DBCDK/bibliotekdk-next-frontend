@@ -344,6 +344,10 @@
       "skip": {
         "da": "Spring over",
         "en": "Skip"
+      },
+      "multipleLanguages": {
+        "da": "flere sprog",
+        "en": "multiple languages"
       }
     },
     "articles": {
@@ -749,7 +753,7 @@
         "da": "Filmatisering af",
         "en": "Adaption of"
       },
-      "hasadaption" : {
+      "hasadaption": {
         "da": "Filmatisering",
         "en": "Film adaption"
       },
@@ -768,6 +772,10 @@
       "other-audience": {
         "da": "Deltagere",
         "en": "Audience"
+      },
+      "creatorsfromdescription": {
+        "da": "Gruppe",
+        "en": "Group"
       }
     },
     "description": {
