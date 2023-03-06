@@ -77,11 +77,11 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} lg={3} className={styles.breadcrumbs} />
+          <Col xs={12} xl={3} className={styles.breadcrumbs} />
           <Col
             xs={12}
             lg={3}
-            md={{ span: 4, order: 3 }}
+            md={{ span: 5, order: 3 }}
             className={styles.cover}
           >
             <CoverCarousel
