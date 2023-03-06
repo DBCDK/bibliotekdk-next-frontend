@@ -394,21 +394,11 @@ function RenderMovieLanguages({ values }) {
  * @constructor
  */
 function RenderGenre({ values }) {
-  return values.map((val, index) => (
-    <>
-      <Link
-        href={`/find?q.subject=${val}`}
-        dataCy={cyKey({ name: val, prefix: "overview-genre" })}
-        border={{ bottom: { keepVisible: true } }}
-        key={`${val}-${index}`}
-      >
-        <Text type="text4" lines={1}>
-          {val}
-        </Text>
-      </Link>
-      <span>{index < values.length - 1 ? ", " : ""}</span>
-    </>
-  ));
+  return (
+    <Text type="text4" lines={1} tag="span">
+      {values.join(", ")}
+    </Text>
+  );
 }
 
 function RenderMovieAudience({ values }) {
