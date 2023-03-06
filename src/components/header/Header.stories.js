@@ -5,6 +5,11 @@ import Searchbar from "@/components/search/searchbar";
 
 import useFilters from "@/components/hooks/useFilters";
 
+const urlParams =
+  typeof window === "undefined"
+    ? new URLSearchParams("")
+    : new URLSearchParams(document.location.search);
+
 const exportedObject = {
   title: "layout/Header",
 };
@@ -43,7 +48,7 @@ NavHeader.story = {
     graphql,
     nextRouter: {
       showInfo: true,
-      pathname: "/find",
+      pathname: urlParams.get("nextRouter.pathname") || "/find",
       query: {},
     },
   },
