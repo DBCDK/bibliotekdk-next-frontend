@@ -8,14 +8,13 @@ describe("CoverCarousel", () => {
     cy.get("[data-cy=cover_carousel]")
       .should("exist")
       .find("img")
-      .trigger("mouseover")
       .should("exist");
 
     cy.contains("manifestations[0].edition.edition");
     cy.should("not.contain", "manifestations[1].edition.edition");
 
     cy.get("[data-cy=left_arrow]").should("have.attr", "aria-hidden");
-    cy.get("[data-cy=right_arrow]").should("exist").click();
+    cy.get("[data-cy=right_arrow]").should("exist").focus().type(" ");
 
     cy.contains("manifestations[1].edition.edition");
     cy.should("not.contain", "manifestations[0].edition.edition");
