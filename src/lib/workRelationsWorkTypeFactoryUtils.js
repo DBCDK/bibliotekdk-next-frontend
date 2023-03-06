@@ -110,7 +110,7 @@ export function enrichLiterature(manifestations) {
  * @param manifestation
  * @return {*}
  */
-export function mapRelationTypes(manifestation) {
+export function mapRelationWorkTypes(manifestation) {
   return RelationTypeEnum[manifestation?.relationType?.toUpperCase()]?.workType;
 }
 
@@ -122,18 +122,24 @@ export function mapRelationTypes(manifestation) {
  * @return {*}
  */
 export function enrichBySpecificWorkType(manifestations, work) {
-  const relationTypes = uniq(manifestations.map(mapRelationTypes));
+  const relationWorkTypes = uniq(manifestations.map(mapRelationWorkTypes));
 
   const enrichMapper = {
     [WorkTypeEnum.ARTICLE]: () => enrichArticleSeries(manifestations, work),
     [WorkTypeEnum.MOVIE]: () => enrichMovie(manifestations),
-    [WorkTypeEnum.DEBATEARTICLE]: () =>
-      enrichDebateArticle(manifestations, work),
-    [WorkTypeEnum.LITERATURE]: () => enrichLiterature(manifestations, work),
+    [WorkTypeEnum.DEBATEARTICLE]: () => enrichDebateArticle(manifestations),
+    [WorkTypeEnum.LITERATURE]: () => enrichLiterature(manifestations),
   };
 
-  return relationTypes
-    .map((relationType) => enrichMapper[relationType]?.())
+  return relationWorkTypes
+    .map((relationWorkType) =>
+      enrichMapper[relationWorkType]?.().map((manifestation) => {
+        return {
+          ...manifestation,
+          relationWorkType: relationWorkType,
+        };
+      })
+    )
     .filter(
       (manifestation) => manifestation && typeof manifestation !== "undefined"
     )
@@ -260,12 +266,13 @@ export function parseRelations(work) {
  * Returns the factory given work
  * - flatRelations derived from {@link parseRelations}
  * @param work
- * @return {{flatRelations: *}}
+ * @return {{groupedRelations, groupedByRelationWorkTypes, flatRelations: *}}
  */
 export function workRelationsWorkTypeFactory(work) {
   const parsedRelations = work && parseRelations(work);
 
   return {
+    groupedByRelationWorkTypes: groupBy(parsedRelations, "relationWorkType"),
     groupedRelations: groupBy(parsedRelations, "relationType"),
     flatRelations: parsedRelations,
   };
