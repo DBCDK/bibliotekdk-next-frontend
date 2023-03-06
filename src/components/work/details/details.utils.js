@@ -9,6 +9,8 @@ import Translate from "@/components/base/translate";
 import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
+import Image from "@/components/base/image";
+
 /**
  * Parse languages in given manifestation.
  * split languages in main, spoken, subtitles.
@@ -339,7 +341,7 @@ function RenderGameLanguages({ values }) {
  * @returns {JSX.Element}
  * @constructor
  */
-function RenderMovieLanguages({ values, skeleton }) {
+function RenderMovieLanguages({ values }) {
   // get the first 2 languages of the subtitle
   const subtitles =
     values["subtitles"]?.length > 0
@@ -378,7 +380,7 @@ function RenderMovieLanguages({ values, skeleton }) {
   const fullstring = `${mainlanguage} ${spokenAsString} ${subtitlesAsString}`;
 
   return (
-    <Text type="text4" skeleton={skeleton} lines={2}>
+    <Text type="text4" lines={2}>
       {fullstring}
     </Text>
   );
@@ -391,23 +393,76 @@ function RenderMovieLanguages({ values, skeleton }) {
  * @returns {*}
  * @constructor
  */
-function RenderGenre({ values, skeleton }) {
+function RenderGenre({ values }) {
   return values.map((val, index) => (
     <>
       <Link
         href={`/find?q.subject=${val}`}
         dataCy={cyKey({ name: val, prefix: "overview-genre" })}
-        disabled={skeleton}
         border={{ bottom: { keepVisible: true } }}
         key={`${val}-${index}`}
       >
-        <Text type="text4" skeleton={skeleton} lines={1}>
+        <Text type="text4" lines={1}>
           {val}
         </Text>
       </Link>
       <span>{index < values.length - 1 ? ", " : ""}</span>
     </>
   ));
+}
+
+function RenderMovieAudience({ values }) {
+  const string = values?.[0];
+  let image = null;
+  // regexp to extract age eg 15 år .. or 7 år
+  const regex = / ([0-9]?[0-9]) (år)/;
+  const age = string?.match(regex);
+  if (!age) {
+    if (string.indexOf("Tilladt for alle") !== -1) {
+      image = "/img/ageany.png";
+    }
+  }
+  const txt =
+    string.indexOf("Mærkning:") != -1
+      ? string.replace("Mærkning: ", "")
+      : string;
+  if (age) {
+    switch (age[1]) {
+      case "7":
+        image = "/img/age7.png";
+        break;
+      case "11":
+        image = "/img/age11.png";
+        break;
+      case "15":
+        image = "/img/age15.png";
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      {!image && (
+        <Text type="text4" lines={2}>
+          {values?.join(", ")}
+        </Text>
+      )}
+      {image && (
+        <div className={styles.pegiimage}>
+          <div className={styles.spacemaker}>
+            <Image src={image} width={40} height={40} />
+          </div>
+          {txt && (
+            <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+              {txt}
+            </Text>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 /**
@@ -455,11 +510,6 @@ function RenderGenre({ values, skeleton }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-
-  console.log(materialType, "TYPE");
-  console.log(manifestation, "MANIFESTATION");
-  console.log(work, "WORK");
-
   const fieldsMap = {
     DEFAULT: [
       {
@@ -666,6 +716,7 @@ export function fieldsForRows(manifestation, work, context) {
         audience: {
           label: Translate({ ...context, label: "audience" }),
           value: manifestation?.audience?.generalAudience || "",
+          jsxParser: RenderMovieAudience,
         },
       },
       {
