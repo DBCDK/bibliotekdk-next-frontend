@@ -402,20 +402,20 @@ function RenderGenre({ values }) {
 }
 
 function RenderMovieAudience({ values }) {
-  const pegimark = values?.[0];
+  const agerecommendation = values?.[0];
   let image = null;
   // regexp to extract age eg 15 år .. or 7 år
   const regex = / ([0-9]?[0-9]) (år)/;
-  const age = pegimark?.match(regex);
+  const age = agerecommendation?.match(regex);
   if (!age) {
-    if (pegimark.indexOf("Tilladt for alle") !== -1) {
+    if (agerecommendation.indexOf("Tilladt for alle") !== -1) {
       image = "/img/ageany.png";
     }
   }
   const txt =
-    pegimark.indexOf("Mærkning:") != -1
-      ? pegimark.replace("Mærkning: ", "")
-      : pegimark;
+    agerecommendation.indexOf("Mærkning:") != -1
+      ? agerecommendation.replace("Mærkning: ", "")
+      : agerecommendation;
   if (age) {
     switch (age[1]) {
       case "7":
