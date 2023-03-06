@@ -92,7 +92,9 @@ export function createMockedFetcher({
               Accept: "application/json",
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ query: getIntrospectionQuery() }),
+            body: JSON.stringify({
+              query: getIntrospectionQuery({ inputValueDeprecation: true }),
+            }),
           });
           return await tempRes.json();
         } catch (error) {

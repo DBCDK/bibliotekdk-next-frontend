@@ -34,7 +34,7 @@ function DefaultDetailValues({ values }) {
  *
  * @returns {JSX.Element}
  */
-function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
+function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
 
@@ -75,10 +75,7 @@ function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
                       values: field[fieldName].value,
                     })
                   ) : (
-                    <DefaultDetailValues
-                      values={field[fieldName].value}
-                      skeleton={skeleton}
-                    />
+                    <DefaultDetailValues values={field[fieldName].value} />
                   )}
                 </Col>
               )
