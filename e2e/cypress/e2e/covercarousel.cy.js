@@ -8,6 +8,7 @@ describe("CoverCarousel", () => {
     cy.get("[data-cy=cover_carousel]")
       .should("exist")
       .find("img")
+      .trigger("mouseover")
       .should("exist");
 
     cy.contains("manifestations[0].edition.edition");
