@@ -87,7 +87,7 @@ export function CoverCarousel({
   const carouselId = useId();
   const carouselRef = useRef(null);
 
-  const { visibleElement, index, sliderElementId, setVisibleElement } =
+  const { visibleElement, sliderElementId, setVisibleElement } =
     useScrollSlider({
       sliderId: sliderId,
       parentRef: carouselRef,
@@ -97,8 +97,7 @@ export function CoverCarousel({
   const length = manifestations?.length;
 
   function clickCallback(newIndex) {
-    visibleElement === index &&
-      scrollToElement(sliderElementId(newIndex, sliderId));
+    scrollToElement(sliderElementId(newIndex, sliderId));
   }
 
   return (
@@ -127,21 +126,25 @@ export function CoverCarousel({
       {length > 1 && (
         <>
           <Arrow
-            clickCallback={() => clickCallback(moveCarousel(-1, length, index))}
+            clickCallback={() =>
+              clickCallback(moveCarousel(-1, length, visibleElement))
+            }
             orientation={"left"}
             arrowClass={`${styles.arrow_styling} ${styles.left_arrow}`}
-            dataDisabled={!(index > 0)}
+            dataDisabled={!(visibleElement > 0)}
           />
           <Arrow
-            clickCallback={() => clickCallback(moveCarousel(1, length, index))}
+            clickCallback={() =>
+              clickCallback(moveCarousel(1, length, visibleElement))
+            }
             orientation={"right"}
             arrowClass={`${styles.arrow_styling} ${styles.right_arrow}`}
-            dataDisabled={!(index < length - 1)}
+            dataDisabled={!(visibleElement < length - 1)}
           />
           <div className={styles.dots}>
             <DotHandler
               clickCallback={(newIndex) => clickCallback(newIndex)}
-              index={index}
+              index={visibleElement}
               length={length}
               maxLength={maxLength}
             />
