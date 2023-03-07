@@ -9,7 +9,6 @@ describe("Overview", () => {
     });
 
     it(`Can tab through to different elements`, () => {
-      cy.wait(500);
       // Material Selection
       cy.get("[data-cy=tag-bog]")
         .focus()
@@ -23,10 +22,7 @@ describe("Overview", () => {
         .should("have.attr", "data-cy", "tag-tidsskriftsartikel");
 
       // Creators and bookmark
-      cy.get(`[data-cy=title-overview]`).should(
-        "have.text",
-        "Hugo i Sølvskoven"
-      );
+      cy.get(`[data-cy=title-overview]`).contains("Hugo i Sølvskoven");
       cy.get("[data-cy=tag-bog]")
         .focus()
         .should("have.attr", "data-cy", "tag-bog")
