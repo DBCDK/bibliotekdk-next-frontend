@@ -29,11 +29,11 @@ pipeline {
                     sh " echo branchname: ${env.BRANCH_NAME}"
                     sh " echo IS_FEATURE:  ${env.FEATURE_BRANCH}"
                     currentBuild.description = "Build ${IMAGE_NAME}"
-                    /*ansiColor("xterm") {
+                    ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
                         sh "docker build -t ${IMAGE_NAME} --pull ."
                         app = docker.image(IMAGE_NAME)
-                    }*/
+                    }
                 }
             }
         }
@@ -63,21 +63,27 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('Push to Artifactory') {
             when {
-                branch  'main'
+                anyOf {
+                    branch 'main';
+                    branch 'alfa-0'
+                    expression{env.BRANCH_NAME.startsWith('feature')}
+                }
             }
             steps {
                 script {
-                if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                    docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
-                        app.push()
-                        app.push("latest")
+                    if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
+                        docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
+                            app.push()
+                            app.push("latest")
+                        }
                     }
                 }
-            } }
+            }
         }
+
         stage("Update staging version number") {
             agent {
                 docker {
@@ -86,21 +92,33 @@ pipeline {
                     alwaysPull true
                 }
             }
-		        when {
-			    branch 'main'
-			}
-			steps {
-				dir("deploy") {
-                    sh '''
-                        #!/usr/bin/env bash
-						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
-					'''
-				}
-			}
-		}*/
+            when {
+                anyOf {
+                    branch 'main';
+                    branch 'alfa-0'
+                }
+            }
+            steps {
+                dir("deploy") {
+                    script {
+                        if (env.BRANCH_NAME == 'main') {
+                            sh '''
+                                #!/usr/bin/env bash                        
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
+                            '''
+                        } else if (env.BRANCH_NAME == 'alfa-0') {
+                            sh '''
+                                #!/usr/bin/env bash                        
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
-        /*always {
+        always {
             sh '''
                 echo Clean up
                 mkdir -p logs
@@ -111,7 +129,7 @@ pipeline {
 
             junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
             archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
-        }*/
+        }
         failure {
             script {
                 if ("${BRANCH_NAME}" == 'main') {

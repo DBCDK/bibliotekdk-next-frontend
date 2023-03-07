@@ -78,7 +78,6 @@ export function Header({
   filters,
 }) {
   const context = { context: "header" };
-
   const breakpoint = useBreakpoint();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -162,7 +161,10 @@ export function Header({
 
     const newQ = isEmpty(value) ? { ...q, all: "" } : { ...q, all: value };
 
-    if (!isEqual(newQ, getQuery())) {
+    if (
+      !isEqual(newQ, getQuery()) ||
+      !router?.pathname?.startsWith?.("/find")
+    ) {
       setQuery({
         include: newQ,
         exclude: ["page"],
