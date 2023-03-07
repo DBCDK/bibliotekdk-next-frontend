@@ -13,7 +13,6 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-        FEATURE_BRANCH = "${env.BRANCH_NAME.startsWith('feature') ? "YES" : "NO"}"
     }
     stages {
         stage('clean workspace') {
@@ -25,9 +24,6 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    sh " echo building ${IMAGE_NAME}"
-                    sh " echo branchname: ${env.BRANCH_NAME}"
-                    sh " echo IS_FEATURE:  ${env.FEATURE_BRANCH}"
                     currentBuild.description = "Build ${IMAGE_NAME}"
                     ansiColor("xterm") {
                         // Work around bug https://issues.jenkins-ci.org/browse/JENKINS-44609 , https://issues.jenkins-ci.org/browse/JENKINS-44789
@@ -37,21 +33,6 @@ pipeline {
                 }
             }
         }
-        stage('CHECK BRANCH NAME') {
-            when {
-                anyOf {
-                    branch 'main';
-                    expression{env.BRANCH_NAME.startsWith('feature')}
-                }
-            }
-            steps {
-                script{
-                    sh "echo ${env.FEATURE_BRANCH}"
-                    sh "echo FISK"
-                }
-            }
-        }
-        /*
         stage('Integration test') {
             steps {
                 script {
@@ -63,7 +44,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('Push to Artifactory') {
             when {
                 anyOf {
