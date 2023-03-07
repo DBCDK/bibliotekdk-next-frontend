@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="15.2910" tests="22" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-07T12:32:08" tests="0" file="cypress/e2e/ssr.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Server Side Rendering" timestamp="2023-02-07T12:32:08" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="frontpage" timestamp="2023-02-07T12:32:08" tests="2" time="1.3810" failures="0">
+    <testcase name="Server Side Rendering frontpage has correct metadata" time="0.9640" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering frontpage has correct alternate links" time="0.4170" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="material" timestamp="2023-02-07T12:32:10" tests="6" time="4.8340" failures="0">
+    <testcase name="Server Side Rendering material has correct metadata" time="1.0700" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering material has correct alternate links" time="0.3390" classname="has correct alternate links">
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for book" time="0.3680" classname="has json-ld for book">
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for article" time="0.3860" classname="has json-ld for article">
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for movie" time="2.1520" classname="has json-ld for movie">
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for creative work" time="0.5190" classname="has json-ld for creative work">
+    </testcase>
+  </testsuite>
+  <testsuite name="artikler" timestamp="2023-02-07T12:32:14" tests="2" time="0.9880" failures="0">
+    <testcase name="Server Side Rendering artikler has correct metadata" time="0.6170" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering artikler has correct alternate links" time="0.3710" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp" timestamp="2023-02-07T12:32:15" tests="2" time="0.5830" failures="0">
+    <testcase name="Server Side Rendering hjaelp has correct metadata" time="0.4400" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp has correct alternate links" time="0.1430" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp/faq" timestamp="2023-02-07T12:32:16" tests="2" time="0.5890" failures="0">
+    <testcase name="Server Side Rendering hjaelp/faq has correct metadata" time="0.4440" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp/faq has correct alternate links" time="0.1450" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="/hjaelp/find" timestamp="2023-02-07T12:32:17" tests="2" time="0.8910" failures="0">
+    <testcase name="Server Side Rendering /hjaelp/find has correct metadata" time="0.5710" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering /hjaelp/find has correct alternate links" time="0.3200" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="find" timestamp="2023-02-07T12:32:18" tests="4" time="0.9060" failures="0">
+    <testcase name="Server Side Rendering find has correct metadata" time="0.2720" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering find has correct alternate links" time="0.1920" classname="has correct alternate links">
+    </testcase>
+    <testcase name="Server Side Rendering find hitcount must be greater than 0" time="0.1600" classname="hitcount must be greater than 0">
+    </testcase>
+    <testcase name="Server Side Rendering find Applying a filter results in lower hitcount" time="0.2820" classname="Applying a filter results in lower hitcount">
+    </testcase>
+  </testsuite>
+  <testsuite name="inspiration/material pages" timestamp="2023-02-07T12:32:18" tests="2" time="5.1190" failures="0">
+    <testcase name="Server Side Rendering inspiration/material pages has correct metadata" time="3.0450" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering inspiration/material pages has correct alternate links" time="2.0740" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+</testsuites>

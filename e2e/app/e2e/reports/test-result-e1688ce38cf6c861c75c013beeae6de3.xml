@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.0210" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T14:50:39" tests="0" file="cypress/e2e/tableOfContents.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Table of Contents" timestamp="2023-03-07T14:50:39" tests="1" time="1.0210" failures="0">
+    <testcase name="Table of Contents Displays the table of contents for a work" time="1.0210" classname="Displays the table of contents for a work">
+    </testcase>
+  </testsuite>
+</testsuites>

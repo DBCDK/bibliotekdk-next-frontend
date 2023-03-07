@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.7450" tests="1" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-07T12:34:16" tests="0" file="cypress/e2e/old/references.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="References" timestamp="2023-02-07T12:34:16" tests="1" time="0.7450" failures="0">
+    <testcase name="References Reference links present" time="0.7450" classname="Reference links present">
+    </testcase>
+  </testsuite>
+</testsuites>

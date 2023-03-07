@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="15.0000" tests="22" failures="6">
+  <testsuite name="Root Suite" timestamp="2023-03-07T06:58:29" tests="0" file="cypress/e2e/ssr.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Server Side Rendering" timestamp="2023-03-07T06:58:29" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="frontpage" timestamp="2023-03-07T06:58:29" tests="2" time="0.8810" failures="0">
+    <testcase name="Server Side Rendering frontpage has correct metadata" time="0.4680" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering frontpage has correct alternate links" time="0.4130" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="material" timestamp="2023-03-07T06:58:30" tests="6" time="3.3120" failures="6">
+    <testcase name="Server Side Rendering material has correct metadata" time="0.4710" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..y7tUTvdxHFYajyuB.uAukuLbjbFTOgDnZakaCUzisXF_WavAO7VFayJhdo5l_cvgVpfJZMHGeAd9qr0cdFuaddMv7Qvi1K3re0kv7TQ8lNA82rESXmakz5JEPdWgqjgrGDCUPbRfqFSrbblF1PU9gbBo4euZLDNDdnmzBB790LN1PyuSOIM652c3mYQL6C5DqK2Lvy04.pvBcCQ5d2763IuQzg9VuAA; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;105nh51meg2kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:33 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172313319&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172313319&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172313319&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..y7tUTvdxHFYajyuB.uAukuLbjbFTOgDnZakaCUzisXF_WavAO7VFayJhdo5l_cvgVpfJZMHGeAd9qr0cdFuaddMv7Qvi1K3re0kv7TQ8lNA82rESXmakz5JEPdWgqjgrGDCUPbRfqFSrbblF1PU9gbBo4euZLDNDdnmzBB790LN1PyuSOIM652c3mYQL6C5DqK2Lvy04.pvBcCQ5d2763IuQzg9VuAA; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"105nh51meg2kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:33 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172313319"></script><script src="/_next/static/chunks/webpack.js?ts=1678172313319" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172313319" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172313319" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172313319" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172313319" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172313319" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172313319"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:156:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has correct alternate links" time="0.4540" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..j4qrRn7zHjYicEXx.vUBjxmdNptVcXV2Rne9FENDeZ2au8arBg26fFUAT6bE-D2b4LIDWIeIBDV1XnOimQoaBXgpZUF4LuS6sczuLo2ayXX8-oQrnKNXBKocHv37JwIdfH2e124DrjXFAxoccJNo7J8UrkSEuXpzc1Yk5PmpiZR7kXJOQ_mBHPp_mR9ZHIfuzuy6GBCQ.0PDh2M4bA0XZmRYYrZrKbw; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;hyantk3xan2kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:35 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172315116&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172315116&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172315116&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..j4qrRn7zHjYicEXx.vUBjxmdNptVcXV2Rne9FENDeZ2au8arBg26fFUAT6bE-D2b4LIDWIeIBDV1XnOimQoaBXgpZUF4LuS6sczuLo2ayXX8-oQrnKNXBKocHv37JwIdfH2e124DrjXFAxoccJNo7J8UrkSEuXpzc1Yk5PmpiZR7kXJOQ_mBHPp_mR9ZHIfuzuy6GBCQ.0PDh2M4bA0XZmRYYrZrKbw; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"hyantk3xan2kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:35 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172315116"></script><script src="/_next/static/chunks/webpack.js?ts=1678172315116" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172315116" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172315116" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172315116" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172315116" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172315116" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172315116"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:166:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for book" time="0.6640" classname="has json-ld for book">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..swfBVAPFHGv4LU2h.OvRXoT-7jjKUwJ0v8-3NEzLmCs3nCB-0fIS3w3G67p2m1zE9omZ6tkP2xi2CbFdTbXGoQbq4o7jt-rXCMV0c_1TlEeULcVFTNXq_tppZE2N6hOEeu8ipBshDL6aeiWWI-Uac-PnfI53UzxLDhUmfLhbhjNfefrId15uNBiCgtITyIxdMCrKLEjg.iQGToehDrV6t8uSmp2ULzQ; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;egv340j7202kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:37 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172317151&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172317151&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172317151&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..swfBVAPFHGv4LU2h.OvRXoT-7jjKUwJ0v8-3NEzLmCs3nCB-0fIS3w3G67p2m1zE9omZ6tkP2xi2CbFdTbXGoQbq4o7jt-rXCMV0c_1TlEeULcVFTNXq_tppZE2N6hOEeu8ipBshDL6aeiWWI-Uac-PnfI53UzxLDhUmfLhbhjNfefrId15uNBiCgtITyIxdMCrKLEjg.iQGToehDrV6t8uSmp2ULzQ; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"egv340j7202kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:37 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172317151"></script><script src="/_next/static/chunks/webpack.js?ts=1678172317151" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172317151" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172317151" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172317151" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172317151" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172317151" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172317151"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:171:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for article" time="0.4600" classname="has json-ld for article">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..eE-udTUz_X-oBP_l.sH5hW4bpqgAJ-NFi_uyrZyM_0D5lPyDA3cD2y_VKPx-BVXJ7mEmPmMEKfz1WNt0dt0A1DkBMogpTMHSrwqxilQfZE2UVuAVJtFcrftpAHqVDz-4YPijMSwC3Qn8KRFgEuRrA_HpedgsieoPmrhKKsAELmsingcRYz_dMmUE4phmn7Aqrs3X9T00.40AWIbrAPpTDQxIU-nMPjQ; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;dzj2oikzo02kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:38 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172318801&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172318801&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172318801&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..eE-udTUz_X-oBP_l.sH5hW4bpqgAJ-NFi_uyrZyM_0D5lPyDA3cD2y_VKPx-BVXJ7mEmPmMEKfz1WNt0dt0A1DkBMogpTMHSrwqxilQfZE2UVuAVJtFcrftpAHqVDz-4YPijMSwC3Qn8KRFgEuRrA_HpedgsieoPmrhKKsAELmsingcRYz_dMmUE4phmn7Aqrs3X9T00.40AWIbrAPpTDQxIU-nMPjQ; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"dzj2oikzo02kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:38 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172318801"></script><script src="/_next/static/chunks/webpack.js?ts=1678172318801" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172318801" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172318801" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172318801" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172318801" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172318801" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172318801"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:177:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for movie" time="0.8560" classname="has json-ld for movie">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Z2K9GfmxC41JzTH8.kBhy9nre92GgLNn0J8wphXiqr9tWdA2M0oMjVvL1Kq0rLdYGaAOw1lSXqSI94mHRmpdhwBxriKhCf54uFX9Ey7CmwrQO1K0mX-klho-djKBA2xwKlVxGtvfmd4NM9KinIHrP3G8OU31I2df0ZrJ9LykS7mVKwlc5pHNPT-pqtKP2dsLnAU3V-OM.ANWp1TIipnw3ajrX46-BRQ; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;5bhfawjrx02kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:44 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172324356&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172324356&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172324356&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Z2K9GfmxC41JzTH8.kBhy9nre92GgLNn0J8wphXiqr9tWdA2M0oMjVvL1Kq0rLdYGaAOw1lSXqSI94mHRmpdhwBxriKhCf54uFX9Ey7CmwrQO1K0mX-klho-djKBA2xwKlVxGtvfmd4NM9KinIHrP3G8OU31I2df0ZrJ9LykS7mVKwlc5pHNPT-pqtKP2dsLnAU3V-OM.ANWp1TIipnw3ajrX46-BRQ; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"5bhfawjrx02kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:44 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172324356"></script><script src="/_next/static/chunks/webpack.js?ts=1678172324356" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172324356" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172324356" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172324356" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172324356" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172324356" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172324356"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:190:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for creative work" time="0.4070" classname="has json-ld for creative work">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;set-cookie&quot;: [
+    &quot;next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Av5SK6X17eRV9fPg.Jn8351349A0CDjmOwf1HZK-kQivQXzC80lpW1EiyyJicb4HkGV_nEwwtjE9Krp0p7-o5QGDYDOhE4H2dnKPYEBSSNXeP0Hpui_g5-oZDBiYKt7zhBF_x-hhdMf57ByyZNpAQgWdP4RhCA3dkC9Wx34Hjse5jRSPhPij6fyQeyadiNfYH0rqzz9g.fj3Jug92iCq163aw4ZNoRg; Path=/; SameSite=Lax&quot;
+  ],
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;qzm2ktdxag2kt\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 06:58:46 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678172326391&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/webpack.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/main.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_app.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/pages/_error.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_buildManifest.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/development/_ssgManifest.js?ts=1678172326391&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/react-refresh.js?ts=1678172326391&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;__NEXT_PAGE&quot;:&quot;/materiale/[title_author]/[workId]&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;TypeError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.&quot;,&quot;stack&quot;:&quot;TypeError: Cannot destructure property &apos;activeEventKey&apos; of &apos;(0 , React.useContext)(...)&apos; as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "set-cookie": [
+    "next-auth.anon-session=eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Av5SK6X17eRV9fPg.Jn8351349A0CDjmOwf1HZK-kQivQXzC80lpW1EiyyJicb4HkGV_nEwwtjE9Krp0p7-o5QGDYDOhE4H2dnKPYEBSSNXeP0Hpui_g5-oZDBiYKt7zhBF_x-hhdMf57ByyZNpAQgWdP4RhCA3dkC9Wx34Hjse5jRSPhPij6fyQeyadiNfYH0rqzz9g.fj3Jug92iCq163aw4ZNoRg; Path=/; SameSite=Lax"
+  ],
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"qzm2ktdxag2kt\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 06:58:46 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678172326391"></script><script src="/_next/static/chunks/webpack.js?ts=1678172326391" defer=""></script><script src="/_next/static/chunks/main.js?ts=1678172326391" defer=""></script><script src="/_next/static/chunks/pages/_app.js?ts=1678172326391" defer=""></script><script src="/_next/static/chunks/pages/_error.js?ts=1678172326391" defer=""></script><script src="/_next/static/development/_buildManifest.js?ts=1678172326391" defer=""></script><script src="/_next/static/development/_ssgManifest.js?ts=1678172326391" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/react-refresh.js?ts=1678172326391"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"__NEXT_PAGE":"/materiale/[title_author]/[workId]"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"TypeError","source":"server","message":"Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.","stack":"TypeError: Cannot destructure property 'activeEventKey' of '(0 , React.useContext)(...)' as it is null.\n    at useAccordionButton (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/react-bootstrap/cjs/AccordionButton.js:17:5)\n    at Item (webpack-internal:///./src/co...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:206:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="artikler" timestamp="2023-03-07T06:58:46" tests="2" time="1.2120" failures="0">
+    <testcase name="Server Side Rendering artikler has correct metadata" time="0.9010" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering artikler has correct alternate links" time="0.3110" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp" timestamp="2023-03-07T06:58:47" tests="2" time="0.9490" failures="0">
+    <testcase name="Server Side Rendering hjaelp has correct metadata" time="0.7910" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp has correct alternate links" time="0.1580" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp/faq" timestamp="2023-03-07T06:58:48" tests="2" time="0.7790" failures="0">
+    <testcase name="Server Side Rendering hjaelp/faq has correct metadata" time="0.6110" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp/faq has correct alternate links" time="0.1680" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="/hjaelp/find" timestamp="2023-03-07T06:58:49" tests="2" time="0.9390" failures="0">
+    <testcase name="Server Side Rendering /hjaelp/find has correct metadata" time="0.5830" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering /hjaelp/find has correct alternate links" time="0.3560" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+  <testsuite name="find" timestamp="2023-03-07T06:58:50" tests="4" time="2.3610" failures="0">
+    <testcase name="Server Side Rendering find has correct metadata" time="1.2790" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering find has correct alternate links" time="0.1980" classname="has correct alternate links">
+    </testcase>
+    <testcase name="Server Side Rendering find hitcount must be greater than 0" time="0.4840" classname="hitcount must be greater than 0">
+    </testcase>
+    <testcase name="Server Side Rendering find Applying a filter results in lower hitcount" time="0.4000" classname="Applying a filter results in lower hitcount">
+    </testcase>
+  </testsuite>
+  <testsuite name="inspiration/material pages" timestamp="2023-03-07T06:58:52" tests="2" time="4.5670" failures="0">
+    <testcase name="Server Side Rendering inspiration/material pages has correct metadata" time="2.9490" classname="has correct metadata">
+    </testcase>
+    <testcase name="Server Side Rendering inspiration/material pages has correct alternate links" time="1.6180" classname="has correct alternate links">
+    </testcase>
+  </testsuite>
+</testsuites>

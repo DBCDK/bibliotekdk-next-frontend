@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import BootstrapAccordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
 import AccordionContext from "react-bootstrap/AccordionContext";
 
 import ExpandIcon from "@/components/base/animation/expand";
@@ -34,7 +34,7 @@ let firstAccordionRender = true;
  */
 export function Item({ title, subTitle, children, eventKey, onChange, id }) {
   const router = useRouter();
-  const currentEventKey = React.useContext(AccordionContext);
+  const context = React.useContext(AccordionContext);
 
   const { elementRef, hasBeenSeen } = useElementVisible({
     root: null,
@@ -42,9 +42,9 @@ export function Item({ title, subTitle, children, eventKey, onChange, id }) {
     threshold: 1.0,
   });
 
-  const isCurrentEventKey = currentEventKey === eventKey;
+  const isCurrentEventKey = context.activeEventKey === eventKey;
 
-  const onClick = useAccordionToggle(eventKey, () => {
+  const onClick = useAccordionButton(eventKey, () => {
     if (id && `#${id}` !== window.location.hash) {
       router.replace(`${router.asPath.split("#")[0]}#${id}`);
     }

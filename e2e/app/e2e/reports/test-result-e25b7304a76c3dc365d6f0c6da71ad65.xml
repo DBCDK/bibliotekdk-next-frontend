@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="2.7870" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:20:23" tests="0" file="cypress/e2e/recommendations.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Series" timestamp="2023-03-07T08:20:23" tests="3" time="2.7870" failures="0">
+    <testcase name="Series Verify title and creator are shown" time="1.0570" classname="Verify title and creator are shown">
+    </testcase>
+    <testcase name="Series Should collect data for recommender" time="0.6940" classname="Should collect data for recommender">
+    </testcase>
+    <testcase name="Series Should collect all shown recommendations, when slider is scrolled" time="1.0360" classname="Should collect all shown recommendations, when slider is scrolled">
+    </testcase>
+  </testsuite>
+</testsuites>

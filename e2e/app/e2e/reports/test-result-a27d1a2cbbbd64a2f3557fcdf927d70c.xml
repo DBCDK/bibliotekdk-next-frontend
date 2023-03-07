@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.7710" tests="10" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-01-26T07:55:29" tests="0" file="cypress/e2e/old/articlePage.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="ArticlePage" timestamp="2023-01-26T07:55:29" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="News article (from drupal)" timestamp="2023-01-26T07:55:29" tests="5" time="0.8790" failures="0">
+    <testcase name="ArticlePage News article (from drupal) Check if article has parsed body image" time="0.7170" classname="Check if article has parsed body image">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Check if article has parsed body image" time="0.0320" classname="Check if article has parsed body image">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Shows calculated read time" time="0.0150" classname="Shows calculated read time">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Shows correct category for news article (the ones from drupal)" time="0.0130" classname="Shows correct category for news article (the ones from drupal)">
+    </testcase>
+    <testcase name="ArticlePage News article (from drupal) Print article" time="0.1020" classname="Print article">
+    </testcase>
+  </testsuite>
+  <testsuite name="Infomedia article" timestamp="2023-01-26T07:55:30" tests="5" time="4.8920" failures="0">
+    <testcase name="ArticlePage Infomedia article Shows infomedia data" time="0.2590" classname="Shows infomedia data">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Print article" time="0.2390" classname="Print article">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when not logged in" time="2.1940" classname="Shows login prompt when not logged in">
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when logged in user is not granted access" time="2.2000" classname="Shows login prompt when logged in user is not granted access">
+    </testcase>
+  </testsuite>
+</testsuites>

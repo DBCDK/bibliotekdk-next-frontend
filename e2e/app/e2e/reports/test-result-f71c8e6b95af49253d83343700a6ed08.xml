@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="2.7380" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T14:48:27" tests="0" file="cypress/e2e/edition.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Edition" timestamp="2023-03-07T14:48:27" tests="5" time="2.7380" failures="0">
+    <testcase name="Edition Single Edition with year, publisher, ordertext" time="1.0490" classname="Single Edition with year, publisher, ordertext">
+    </testcase>
+    <testcase name="Edition Single Edition with year, publisher, no ordertext" time="0.4520" classname="Single Edition with year, publisher, no ordertext">
+    </testcase>
+    <testcase name="Edition Any Edition with no year, publisher, with ordertext" time="0.1600" classname="Any Edition with no year, publisher, with ordertext">
+    </testcase>
+    <testcase name="Edition Any Edition no year, publisher, ordertext" time="0.1510" classname="Any Edition no year, publisher, ordertext">
+    </testcase>
+    <testcase name="Edition Any Edition no year, publisher, with ordertext, Digital copy" time="0.9260" classname="Any Edition no year, publisher, with ordertext, Digital copy">
+    </testcase>
+  </testsuite>
+</testsuites>

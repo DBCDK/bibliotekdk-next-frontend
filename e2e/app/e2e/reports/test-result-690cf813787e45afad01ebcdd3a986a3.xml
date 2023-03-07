@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.0850" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T09:52:58" tests="0" file="cypress/e2e/old/logo.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Logo" timestamp="2023-03-07T09:52:58" tests="2" time="1.0850" failures="0">
+    <testcase name="Logo View in BIG viewport" time="0.8500" classname="View in BIG viewport">
+    </testcase>
+    <testcase name="Logo View in SMALL viewport" time="0.2350" classname="View in SMALL viewport">
+    </testcase>
+  </testsuite>
+</testsuites>

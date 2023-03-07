@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.6640" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-07T12:32:48" tests="0" file="cypress/e2e/old/bibliographicdata.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="bibliographic data" timestamp="2023-02-07T12:32:48" tests="2" time="1.6640" failures="0">
+    <testcase name="bibliographic data open edition - check contents" time="1.2350" classname="open edition - check contents">
+    </testcase>
+    <testcase name="bibliographic data Full manifestation - check localizationlink" time="0.4290" classname="Full manifestation - check localizationlink">
+    </testcase>
+  </testsuite>
+</testsuites>

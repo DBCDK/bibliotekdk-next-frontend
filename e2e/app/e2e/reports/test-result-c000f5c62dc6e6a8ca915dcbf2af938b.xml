@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="2.7030" tests="8" failures="0" skipped="2">
+  <testsuite name="Root Suite" timestamp="2023-03-07T06:57:56" tests="0" file="cypress/e2e/reviews.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Overview" timestamp="2023-03-07T06:57:56" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Page" timestamp="2023-03-07T06:57:56" tests="1" time="2.1270" failures="0">
+    <testcase name="Overview Page Displays the contents of a review from infomedia" time="2.1270" classname="Displays the contents of a review from infomedia">
+    </testcase>
+  </testsuite>
+  <testsuite name="Review Slider" timestamp="2023-03-07T06:57:58" tests="7" time="0.5760" failures="0">
+    <testcase name="Overview Review Slider First review should be visible - last not visible" time="0.4930" classname="First review should be visible - last not visible">
+    </testcase>
+    <testcase name="Overview Review Slider should link to mentioned work for librarians review" time="0.0210" classname="should link to mentioned work for librarians review">
+    </testcase>
+    <testcase name="Overview Review Slider infomedia review should link to infomedia page" time="0.0140" classname="infomedia review should link to infomedia page">
+    </testcase>
+    <testcase name="Overview Review Slider external review should link to external site" time="0.0140" classname="external review should link to external site">
+    </testcase>
+    <testcase name="Overview Review Slider reviews are ordered correctly" time="0.0340" classname="reviews are ordered correctly">
+    </testcase>
+  </testsuite>
+</testsuites>

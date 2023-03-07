@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="7.1120" tests="5" failures="1">
+  <testsuite name="Root Suite" timestamp="2023-03-07T06:59:00" tests="0" file="cypress/e2e/old/accordion.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Accordion" timestamp="2023-03-07T06:59:00" tests="5" time="7.1120" failures="1">
+    <testcase name="Accordion All 5 items in accorion is visible" time="0.6490" classname="All 5 items in accorion is visible">
+    </testcase>
+    <testcase name="Accordion All 5 items should have visible expand icons" time="0.2040" classname="All 5 items should have visible expand icons">
+    </testcase>
+    <testcase name="Accordion Can expand and close sections" time="0.9880" classname="Can expand and close sections">
+    </testcase>
+    <testcase name="Accordion Expand icon changes on click" time="4.6990" classname="Expand icon changes on click">
+      <failure message="Timed out retrying after 4000ms: expected &apos;&lt;span&gt;&apos; to have CSS property &apos;opacity&apos; with the value &apos;0&apos;, but the value was &apos;1&apos;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: expected '<span>' to have CSS property 'opacity' with the value '0', but the value was '1'
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/old/accordion.cy.js:126:95)]]></failure>
+    </testcase>
+    <testcase name="Accordion Can tab through sections" time="0.5720" classname="Can tab through sections">
+    </testcase>
+  </testsuite>
+</testsuites>

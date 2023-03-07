@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="11.6660" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-07T12:33:10" tests="0" file="cypress/e2e/old/feedback.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="feedback" timestamp="2023-02-07T12:33:10" tests="6" time="11.6660" failures="0">
+    <testcase name="feedback View in BIG viewport" time="0.8450" classname="View in BIG viewport">
+    </testcase>
+    <testcase name="feedback View in SMALL viewport" time="0.0220" classname="View in SMALL viewport">
+    </testcase>
+    <testcase name="feedback toggle feedback" time="0.1030" classname="toggle feedback">
+    </testcase>
+    <testcase name="feedback toggle feedback" time="0.1030" classname="toggle feedback">
+    </testcase>
+    <testcase name="feedback test session timer" time="5.2350" classname="test session timer">
+    </testcase>
+    <testcase name="feedback test cookie timer" time="5.3580" classname="test cookie timer">
+    </testcase>
+  </testsuite>
+</testsuites>

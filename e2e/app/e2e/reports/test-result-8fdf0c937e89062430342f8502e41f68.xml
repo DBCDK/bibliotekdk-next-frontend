@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="8.3750" tests="2" failures="2">
+  <testsuite name="Root Suite" timestamp="2023-03-07T06:59:54" tests="0" file="cypress/e2e/old/details.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Details-Movie" timestamp="2023-03-07T06:59:54" tests="1" time="4.1810" failures="1">
+    <testcase name="Details-Movie Elements in details present" time="4.1810" classname="Elements in details present">
+      <failure message="Timed out retrying after 4000ms: Expected to find element: `a`, but never found it. Queried from element: &lt;p._7XiSFncSI1uFeTHbDzHTA._1jREab4ZOhMrzSxvXeDiTC.-NgNFXLhv_VaI87n-3J3i.&gt;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: Expected to find element: `a`, but never found it. Queried from element: <p._7XiSFncSI1uFeTHbDzHTA._1jREab4ZOhMrzSxvXeDiTC.-NgNFXLhv_VaI87n-3J3i.>
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/old/details.cy.js:112:41)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Details" timestamp="2023-03-07T07:00:12" tests="1" time="4.1940" failures="1">
+    <testcase name="Details Elements in details present" time="4.1940" classname="Elements in details present">
+      <failure message="Timed out retrying after 4000ms: Expected to find element: `a`, but never found it. Queried from element: &lt;p._7XiSFncSI1uFeTHbDzHTA._1jREab4ZOhMrzSxvXeDiTC.-NgNFXLhv_VaI87n-3J3i.&gt;" type="AssertionError"><![CDATA[AssertionError: Timed out retrying after 4000ms: Expected to find element: `a`, but never found it. Queried from element: <p._7XiSFncSI1uFeTHbDzHTA._1jREab4ZOhMrzSxvXeDiTC.-NgNFXLhv_VaI87n-3J3i.>
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/old/details.cy.js:131:41)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.6500" tests="3" failures="2">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:33:41" tests="0" file="cypress/e2e/recommendations.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Series" timestamp="2023-03-07T08:33:41" tests="3" time="6.6500" failures="2">
+    <testcase name="Series Verify title and creator are shown" time="1.0750" classname="Verify title and creator are shown">
+    </testcase>
+    <testcase name="Series Should collect data for recommender" time="0.7060" classname="Should collect data for recommender">
+      <failure message="expected { Object (recommender_click) } to deeply equal { Object (recommender_click) }" type="AssertionError"><![CDATA[AssertionError: expected { Object (recommender_click) } to deeply equal { Object (recommender_click) }
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/recommendations.cy.js:121:32)]]></failure>
+    </testcase>
+    <testcase name="Series Should collect all shown recommendations, when slider is scrolled" time="4.8690" classname="Should collect all shown recommendations, when slider is scrolled">
+      <failure message="Timed out retrying after 4050ms: `cy.click()` failed because this element:
+
+`&lt;a class=&quot;_2rw1H3auOtKZ_MGXDn8b4V swiper-slide _2rilaUaTngdeVCZQgUKlBI swiper-slide-prev&quot; tabindex=&quot;0&quot; data-cy=&quot;work-card&quot; href=&quot;/materiale/recommend-result-11-work-titles-main-0-_recommend-result-11-work-creators-0-display/recommend.result%5B11%5D.work.workId?type=recommend.result%5B11%5D.work.manifestations.all%5B0%5D.materialTypes%5B0%5D.specific&quot;&gt;...&lt;/a&gt;`
+
+is being covered by another element:
+
+`&lt;section class=&quot;row&quot;&gt;...&lt;/section&gt;`
+
+Fix this problem, or use {force: true} to disable error checking.
+
+https://on.cypress.io/element-cannot-be-interacted-with" type="CypressError"><![CDATA[CypressError: Timed out retrying after 4050ms: `cy.click()` failed because this element:
+
+`<a class="_2rw1H3auOtKZ_MGXDn8b4V swiper-slide _2rilaUaTngdeVCZQgUKlBI swiper-slide-prev" tabindex="0" data-cy="work-card" href="/materiale/recommend-result-11-work-titles-main-0-_recommend-result-11-work-creators-0-display/recommend.result%5B11%5D.work.workId?type=recommend.result%5B11%5D.work.manifestations.all%5B0%5D.materialTypes%5B0%5D.specific">...</a>`
+
+is being covered by another element:
+
+`<section class="row">...</section>`
+
+Fix this problem, or use {force: true} to disable error checking.
+
+https://on.cypress.io/element-cannot-be-interacted-with
+    at $Cy.ensureDescendents (http://localhost:4000/__cypress/runner/cypress_runner.js:162005:78)
+    at ensureDescendents (http://localhost:4000/__cypress/runner/cypress_runner.js:147397:8)
+    at ensureDescendentsAndScroll (http://localhost:4000/__cypress/runner/cypress_runner.js:147404:14)
+    at ensureElIsNotCovered (http://localhost:4000/__cypress/runner/cypress_runner.js:147536:5)
+    at runAllChecks (http://localhost:4000/__cypress/runner/cypress_runner.js:147726:52)
+    at retryActionability (http://localhost:4000/__cypress/runner/cypress_runner.js:147750:16)
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Function.Promise.attempt.Promise.try (http://localhost:4000/__cypress/runner/cypress_runner.js:10286:29)
+    at whenStable (http://localhost:4000/__cypress/runner/cypress_runner.js:166931:65)
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:166385:14
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at Promise._fulfill (http://localhost:4000/__cypress/runner/cypress_runner.js:11073:18)
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:12687:46
+From Your Spec Code:
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/recommendations.cy.js:138:61)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

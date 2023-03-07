@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="12.7750" tests="22" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-01-26T07:54:19" tests="0" file="cypress/e2e/search.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Search" timestamp="2023-01-26T07:54:19" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Form" timestamp="2023-01-26T07:54:19" tests="7" time="8.0880" failures="0">
+    <testcase name="Search Form Maps query parameters from url to input fields" time="0.7750" classname="Maps query parameters from url to input fields">
+    </testcase>
+    <testcase name="Search Form Maps query parameters from input fields to url to input fields" time="2.3750" classname="Maps query parameters from input fields to url to input fields">
+    </testcase>
+    <testcase name="Search Form Click input clear button should NOT be reflected in URL immediately" time="0.4630" classname="Click input clear button should NOT be reflected in URL immediately">
+    </testcase>
+    <testcase name="Search Form Editing default search input, should not wipe other input" time="1.1320" classname="Editing default search input, should not wipe other input">
+    </testcase>
+    <testcase name="Search Form All default input suggestions will search with q.all" time="1.9900" classname="All default input suggestions will search with q.all">
+    </testcase>
+    <testcase name="Search Form Tab away from input will not sync with URL immediately" time="0.6260" classname="Tab away from input will not sync with URL immediately">
+    </testcase>
+    <testcase name="Search Form Pressing enter will sync with URL immediately" time="0.7270" classname="Pressing enter will sync with URL immediately">
+    </testcase>
+  </testsuite>
+  <testsuite name="Mobile" timestamp="2023-01-26T07:54:27" tests="3" time="1.4670" failures="0">
+    <testcase name="Search Form Mobile Maintains input value when opening mobile suggester" time="0.4440" classname="Maintains input value when opening mobile suggester">
+    </testcase>
+    <testcase name="Search Form Mobile Hide mobile search button when expanded" time="0.3340" classname="Hide mobile search button when expanded">
+    </testcase>
+    <testcase name="Search Form Mobile Click input clear on mobile should NOT be reflected in URL immediately" time="0.6890" classname="Click input clear on mobile should NOT be reflected in URL immediately">
+    </testcase>
+  </testsuite>
+  <testsuite name="Result" timestamp="2023-01-26T07:54:29" tests="1" time="0.5840" failures="0">
+    <testcase name="Search Result Maps from URL params to a search result" time="0.5840" classname="Maps from URL params to a search result">
+    </testcase>
+  </testsuite>
+  <testsuite name="ResultRow" timestamp="2023-01-26T07:54:29" tests="6" time="1.3690" failures="0">
+    <testcase name="Search ResultRow Should have all data" time="0.2090" classname="Should have all data">
+    </testcase>
+    <testcase name="Search ResultRow should not have cover" time="0.2140" classname="should not have cover">
+    </testcase>
+    <testcase name="Search ResultRow should not have creator" time="0.2710" classname="should not have creator">
+    </testcase>
+    <testcase name="Search ResultRow should not have titles" time="0.2570" classname="should not have titles">
+    </testcase>
+    <testcase name="Search ResultRow should not have materialTypes" time="0.2170" classname="should not have materialTypes">
+    </testcase>
+    <testcase name="Search ResultRow slow loading" time="0.2010" classname="slow loading">
+    </testcase>
+  </testsuite>
+  <testsuite name="Related search subjects" timestamp="2023-01-26T07:54:31" tests="5" time="1.2670" failures="0">
+    <testcase name="Search Related search subjects Can tab through related keywords" time="0.3410" classname="Can tab through related keywords">
+    </testcase>
+    <testcase name="Search Related search subjects Can render and interact with connected related subjects" time="0.5490" classname="Can render and interact with connected related subjects">
+    </testcase>
+    <testcase name="Search Related search subjects Can visit keywords" time="0.1940" classname="Can visit keywords">
+    </testcase>
+    <testcase name="Search Related search subjects Will not show anything if empty" time="0.1830" classname="Will not show anything if empty">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.2970" tests="5" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:20:01" tests="0" file="cypress/e2e/keywords.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Keywords" timestamp="2023-03-07T08:20:01" tests="5" time="1.2970" failures="0">
+    <testcase name="Keywords When keyword has language, it must be danish" time="1.1420" classname="When keyword has language, it must be danish">
+    </testcase>
+    <testcase name="Keywords Keywords must be unique" time="0.0190" classname="Keywords must be unique">
+    </testcase>
+    <testcase name="Keywords Subjects should be grouped" time="0.0260" classname="Subjects should be grouped">
+    </testcase>
+    <testcase name="Keywords Can tab through keywords" time="0.0920" classname="Can tab through keywords">
+    </testcase>
+    <testcase name="Keywords Can visit keywords" time="0.0180" classname="Can visit keywords">
+    </testcase>
+  </testsuite>
+</testsuites>

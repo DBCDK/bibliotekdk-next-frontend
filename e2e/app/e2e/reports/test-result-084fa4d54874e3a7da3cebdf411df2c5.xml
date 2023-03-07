@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="9.2250" tests="6" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-03-07T14:48:34" tests="0" file="cypress/e2e/filter.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Filter" timestamp="2023-03-07T14:48:34" tests="6" time="9.2250" failures="0">
+    <testcase name="Filter workTypes facet is excluded from facets list" time="1.9820" classname="workTypes facet is excluded from facets list">
+    </testcase>
+    <testcase name="Filter Tab is trapped inside modal" time="1.3830" classname="Tab is trapped inside modal">
+    </testcase>
+    <testcase name="Filter Can update filters in query and sync with url" time="2.3100" classname="Can update filters in query and sync with url">
+    </testcase>
+    <testcase name="Filter Can clear all selected filters" time="1.8200" classname="Can clear all selected filters">
+    </testcase>
+    <testcase name="Filter Can parse facet containing &quot;,&quot;" time="1.7300" classname="Can parse facet containing &quot;,&quot;">
+    </testcase>
+  </testsuite>
+</testsuites>

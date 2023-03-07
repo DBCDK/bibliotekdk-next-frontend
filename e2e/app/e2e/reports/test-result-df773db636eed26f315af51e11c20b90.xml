@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.8270" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-01-26T07:54:33" tests="0" file="cypress/e2e/searchFeedBack.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="searchfeedback" timestamp="2023-01-26T07:54:33" tests="2" time="6.8270" failures="0">
+    <testcase name="searchfeedback thumbsup click" time="6.1500" classname="thumbsup click">
+    </testcase>
+    <testcase name="searchfeedback thumbsdown click" time="0.6770" classname="thumbsdown click">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="3.4090" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-02-07T13:50:13" tests="0" file="cypress/e2e/old/login.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Login" timestamp="2023-02-07T13:50:13" tests="2" time="3.4090" failures="0">
+    <testcase name="Login should send bearer token to API" time="1.8730" classname="should send bearer token to API">
+    </testcase>
+    <testcase name="Login should set user pickupagency from url parameter" time="1.5360" classname="should set user pickupagency from url parameter">
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,2355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="5.6360" tests="22" failures="22">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:17:35" tests="0" file="cypress/e2e/ssr.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Server Side Rendering" timestamp="2023-03-07T08:17:35" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="frontpage" timestamp="2023-03-07T08:17:35" tests="2" time="0.4720" failures="2">
+    <testcase name="Server Side Rendering frontpage has correct metadata" time="0.2010" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;n1o7s2e4412ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:37 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177057262&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177057262&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177057262&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177057262&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177057262&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177057262&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"n1o7s2e4412ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:37 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177057262"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177057262" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177057262" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177057262" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177057262" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177057262"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:139:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering frontpage has correct alternate links" time="0.2710" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;ymwbxsordf2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:38 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177058306&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177058306&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177058306&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177058306&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177058306&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177058306&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"ymwbxsordf2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:38 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177058306"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177058306" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177058306" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177058306" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177058306" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177058306"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:149:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="material" timestamp="2023-03-07T08:17:38" tests="6" time="1.3270" failures="6">
+    <testcase name="Server Side Rendering material has correct metadata" time="0.2700" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;363brcbcss2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:39 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177059480&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177059480&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177059480&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177059480&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177059480&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177059480&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;type&quot;:&quot;ebog&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"363brcbcss2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:39 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177059480"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177059480" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177059480" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177059480" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177059480" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177059480"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"type":"ebog"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:156:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has correct alternate links" time="0.2050" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;qqkebkit4i2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:40 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177060519&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177060519&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177060519&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177060519&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177060519&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177060519&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;type&quot;:&quot;ebog&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"qqkebkit4i2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:40 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177060519"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177060519" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177060519" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177060519" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177060519" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177060519"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"type":"ebog"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:166:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for book" time="0.2380" classname="has json-ld for book">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;1tgi4mizar2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:41 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177061514&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177061514&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177061514&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177061514&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177061514&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177061514&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;type&quot;:&quot;ebog&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of%3A870970-basis%3A51701763?type=ebog
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"1tgi4mizar2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:41 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177061514"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177061514" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177061514" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177061514" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177061514" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177061514"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"type":"ebog"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:171:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for article" time="0.1980" classname="has json-ld for article">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;7tpy3mfjsw2i8\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:42 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177062371&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177062371&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177062371&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177062371&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177062371&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177062371&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;type&quot;:&quot;avisartikel&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modul...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/psykopaten-paa-den-hvide-hest_nils-thorsen/work-of%3A870971-avis%3A33301561?type=avisartikel
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"7tpy3mfjsw2i8\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:42 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177062371"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177062371" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177062371" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177062371" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177062371" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177062371"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"type":"avisartikel"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modul...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:177:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for movie" time="0.1920" classname="has json-ld for movie">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;ve3b4ysjpv2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:43 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177063167&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177063167&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177063167&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177063167&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177063167&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177063167&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"ve3b4ysjpv2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:43 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177063167"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177063167" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177063167" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177063167" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177063167" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177063167"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:190:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering material has json-ld for creative work" time="0.2240" classname="has json-ld for creative work">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;qiea0y4u8h2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:44 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177064066&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177064066&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177064066&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177064066&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177064066&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177064066&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;type&quot;:&quot;node&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"qiea0y4u8h2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:44 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177064066"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177064066" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177064066" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177064066" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177064066" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177064066"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"type":"node"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:206:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="artikler" timestamp="2023-03-07T08:17:44" tests="2" time="0.5400" failures="2">
+    <testcase name="Server Side Rendering artikler has correct metadata" time="0.3100" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/artikler
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/artikler
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;h7kurpjbw42ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:45 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177065149&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177065149&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177065149&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177065149&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177065149&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177065149&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/artikler
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/artikler
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"h7kurpjbw42ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:45 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177065149"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177065149" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177065149" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177065149" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177065149" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177065149"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:220:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering artikler has correct alternate links" time="0.2300" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/artikler
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/artikler
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;urz162y00f2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:46 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177066176&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177066176&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177066176&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177066176&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177066176&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177066176&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/artikler
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/artikler
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"urz162y00f2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:46 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177066176"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177066176" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177066176" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177066176" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177066176" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177066176"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:230:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp" timestamp="2023-03-07T08:17:46" tests="2" time="0.5180" failures="2">
+    <testcase name="Server Side Rendering hjaelp has correct metadata" time="0.2490" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;2q6t82rcte2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:47 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177067202&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177067202&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177067202&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177067202&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177067202&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177067202&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"2q6t82rcte2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:47 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177067202"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177067202" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177067202" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177067202" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177067202" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177067202"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:237:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp has correct alternate links" time="0.2690" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;f0pu6egn2t2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:48 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177068247&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177068247&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177068247&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177068247&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177068247&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177068247&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"f0pu6egn2t2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:48 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177068247"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177068247" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177068247" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177068247" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177068247" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177068247"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:247:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="hjaelp/faq" timestamp="2023-03-07T08:17:48" tests="2" time="0.4850" failures="2">
+    <testcase name="Server Side Rendering hjaelp/faq has correct metadata" time="0.2430" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp/faq
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/faq
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;c5r5us6qvw2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:49 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177069340&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177069340&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177069340&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177069340&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177069340&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177069340&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp/faq
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/faq
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"c5r5us6qvw2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:49 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177069340"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177069340" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177069340" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177069340" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177069340" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177069340"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:254:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering hjaelp/faq has correct alternate links" time="0.2420" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp/faq
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/faq
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;ws5tj6yawi2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:50 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177070388&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177070388&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177070388&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177070388&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177070388&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177070388&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp/faq
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/faq
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"ws5tj6yawi2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:50 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177070388"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177070388" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177070388" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177070388" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177070388" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177070388"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:264:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="/hjaelp/find" timestamp="2023-03-07T08:17:50" tests="2" time="0.4740" failures="2">
+    <testcase name="Server Side Rendering /hjaelp/find has correct metadata" time="0.2250" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp/find?q=ost
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/find?q=ost
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;shkq0cigu12hx\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:51 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177071521&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177071521&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177071521&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177071521&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177071521&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177071521&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q&quot;:&quot;ost&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dis...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp/find?q=ost
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/find?q=ost
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"shkq0cigu12hx\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:51 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177071521"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177071521" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177071521" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177071521" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177071521" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177071521"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q":"ost"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dis...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:271:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering /hjaelp/find has correct alternate links" time="0.2490" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/hjaelp/find?q=ost
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/find?q=ost
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;p7u7gu9gr82hx\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:52 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177072717&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177072717&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177072717&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177072717&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177072717&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177072717&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q&quot;:&quot;ost&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dis...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/hjaelp/find?q=ost
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/hjaelp/find?q=ost
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"p7u7gu9gr82hx\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:52 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177072717"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177072717" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177072717" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177072717" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177072717" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177072717"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q":"ost"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dis...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:281:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="find" timestamp="2023-03-07T08:17:52" tests="4" time="1.2730" failures="4">
+    <testcase name="Server Side Rendering find has correct metadata" time="0.3290" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;fdsitz2nok2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:53 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177073896&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177073896&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177073896&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177073896&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177073896&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177073896&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q.all&quot;:&quot;ost&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"fdsitz2nok2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:53 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177073896"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177073896" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177073896" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177073896" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177073896" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177073896"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q.all":"ost"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:288:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering find has correct alternate links" time="0.2740" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost&amp;workTypes=movie
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost&amp;workTypes=movie
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;11myr6y0uij2il\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:55 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177075058&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177075058&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177075058&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177075058&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177075058&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177075058&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q.all&quot;:&quot;ost&quot;,&quot;workTypes&quot;:&quot;movie&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-fronte...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost&workTypes=movie
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost&workTypes=movie
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"11myr6y0uij2il\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:55 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177075058"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177075058" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177075058" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177075058" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177075058" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177075058"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q.all":"ost","workTypes":"movie"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-fronte...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:298:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering find hitcount must be greater than 0" time="0.3970" classname="hitcount must be greater than 0">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;cf5k6gffag2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:56 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177076304&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177076304&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177076304&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177076304&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177076304&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177076304&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q.all&quot;:&quot;ost&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"cf5k6gffag2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:56 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177076304"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177076304" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177076304" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177076304" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177076304" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177076304"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q.all":"ost"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:303:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering find Applying a filter results in lower hitcount" time="0.2730" classname="Applying a filter results in lower hitcount">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;5jljqipaig2i1\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:57 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177077512&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177077512&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177077512&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177077512&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177077512&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177077512&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{&quot;q.all&quot;:&quot;ost&quot;},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/find?q.all=ost
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/find?q.all=ost
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"5jljqipaig2i1\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:57 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177077512"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177077512" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177077512" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177077512" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177077512" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177077512"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{"q.all":"ost"},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:309:7)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="inspiration/material pages" timestamp="2023-03-07T08:17:57" tests="2" time="0.5470" failures="2">
+    <testcase name="Server Side Rendering inspiration/material pages has correct metadata" time="0.2750" classname="has correct metadata">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/inspiration/boeger
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/inspiration/boeger
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;2z6kpq00502ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:58 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177078715&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177078715&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177078715&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177078715&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177078715&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177078715&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/inspiration/boeger
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/inspiration/boeger
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"2z6kpq00502ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:58 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177078715"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177078715" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177078715" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177078715" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177078715" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177078715"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:324:7)]]></failure>
+    </testcase>
+    <testcase name="Server Side Rendering inspiration/material pages has correct alternate links" time="0.2720" classname="has correct alternate links">
+      <failure message="`cy.request()` failed on:
+
+http://localhost:3000/inspiration/boeger
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/inspiration/boeger
+Headers: {
+  &quot;Connection&quot;: &quot;keep-alive&quot;,
+  &quot;User-Agent&quot;: &quot;Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)&quot;,
+  &quot;accept&quot;: &quot;*/*&quot;,
+  &quot;accept-encoding&quot;: &quot;gzip, deflate&quot;
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  &quot;cache-control&quot;: &quot;no-store, must-revalidate&quot;,
+  &quot;x-powered-by&quot;: &quot;Next.js&quot;,
+  &quot;etag&quot;: &quot;\&quot;2xp1k7fo7l2ho\&quot;&quot;,
+  &quot;content-type&quot;: &quot;text/html; charset=utf-8&quot;,
+  &quot;vary&quot;: &quot;Accept-Encoding&quot;,
+  &quot;content-encoding&quot;: &quot;gzip&quot;,
+  &quot;date&quot;: &quot;Tue, 07 Mar 2023 08:17:59 GMT&quot;,
+  &quot;connection&quot;: &quot;keep-alive&quot;,
+  &quot;keep-alive&quot;: &quot;timeout=5&quot;,
+  &quot;transfer-encoding&quot;: &quot;chunked&quot;
+}
+Body: &lt;!DOCTYPE html&gt;&lt;html lang=&quot;da&quot;&gt;&lt;head&gt;&lt;style data-next-hide-fouc=&quot;true&quot;&gt;body{display:none}&lt;/style&gt;&lt;noscript data-next-hide-fouc=&quot;true&quot;&gt;&lt;style&gt;body{display:block}&lt;/style&gt;&lt;/noscript&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;/&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;2&quot;/&gt;&lt;noscript data-n-css=&quot;&quot;&gt;&lt;/noscript&gt;&lt;script defer=&quot;&quot; nomodule=&quot;&quot; src=&quot;/_next/static/chunks/polyfills.js?ts=1678177079879&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/webpack.js?ts=1678177079879&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/main.js?ts=1678177079879&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_app.js?ts=1678177079879&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/_next/static/chunks/fallback/pages/_error.js?ts=1678177079879&quot; defer=&quot;&quot;&gt;&lt;/script&gt;&lt;noscript id=&quot;__next_css__DO_NOT_USE__&quot;&gt;&lt;/noscript&gt;&lt;/head&gt;&lt;body&gt;&lt;div id=&quot;__next&quot;&gt;&lt;/div&gt;&lt;script src=&quot;/_next/static/chunks/fallback/react-refresh.js?ts=1678177079879&quot;&gt;&lt;/script&gt;&lt;script id=&quot;__NEXT_DATA__&quot; type=&quot;application/json&quot;&gt;{&quot;props&quot;:{&quot;pageProps&quot;:{&quot;statusCode&quot;:500}},&quot;page&quot;:&quot;/_error&quot;,&quot;query&quot;:{},&quot;buildId&quot;:&quot;development&quot;,&quot;runtimeConfig&quot;:{&quot;useFixedSessionId&quot;:true,&quot;api&quot;:{&quot;url&quot;:&quot;https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;fbi_api&quot;:{&quot;url&quot;:&quot;https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql&quot;,&quot;timeout&quot;:150},&quot;app&quot;:{&quot;url&quot;:&quot;http://localhost:3000&quot;}},&quot;isFallback&quot;:false,&quot;err&quot;:{&quot;name&quot;:&quot;ModuleBuildError&quot;,&quot;source&quot;:&quot;server&quot;,&quot;message&quot;:&quot;Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;&quot;,&quot;stack&quot;:&quot;ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open &apos;/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js&apos;\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request" type="CypressError"><![CDATA[CypressError: `cy.request()` failed on:
+
+http://localhost:3000/inspiration/boeger
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx` or `3xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+
+-----------------------------------------------------------
+
+The request we sent was:
+
+Method: GET
+URL: http://localhost:3000/inspiration/boeger
+Headers: {
+  "Connection": "keep-alive",
+  "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  "accept": "*/*",
+  "accept-encoding": "gzip, deflate"
+}
+
+-----------------------------------------------------------
+
+The response we got was:
+
+Status: 500 - Internal Server Error
+Headers: {
+  "cache-control": "no-store, must-revalidate",
+  "x-powered-by": "Next.js",
+  "etag": "\"2xp1k7fo7l2ho\"",
+  "content-type": "text/html; charset=utf-8",
+  "vary": "Accept-Encoding",
+  "content-encoding": "gzip",
+  "date": "Tue, 07 Mar 2023 08:17:59 GMT",
+  "connection": "keep-alive",
+  "keep-alive": "timeout=5",
+  "transfer-encoding": "chunked"
+}
+Body: <!DOCTYPE html><html lang="da"><head><style data-next-hide-fouc="true">body{display:none}</style><noscript data-next-hide-fouc="true"><style>body{display:block}</style></noscript><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><meta name="next-head-count" content="2"/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills.js?ts=1678177079879"></script><script src="/_next/static/chunks/fallback/webpack.js?ts=1678177079879" defer=""></script><script src="/_next/static/chunks/fallback/main.js?ts=1678177079879" defer=""></script><script src="/_next/static/chunks/fallback/pages/_app.js?ts=1678177079879" defer=""></script><script src="/_next/static/chunks/fallback/pages/_error.js?ts=1678177079879" defer=""></script><noscript id="__next_css__DO_NOT_USE__"></noscript></head><body><div id="__next"></div><script src="/_next/static/chunks/fallback/react-refresh.js?ts=1678177079879"></script><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"statusCode":500}},"page":"/_error","query":{},"buildId":"development","runtimeConfig":{"useFixedSessionId":true,"api":{"url":"https://alfa-api.stg.bibliotek.dk/190101/bibdk21/graphql","timeout":150},"fbi_api":{"url":"https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql","timeout":150},"app":{"url":"http://localhost:3000"}},"isFallback":false,"err":{"name":"ModuleBuildError","source":"server","message":"Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'","stack":"ModuleBuildError: Module build failed: Error: ENOENT: no such file or directory, open '/home/mtni/projects/bibliotekdk-next-frontend/node_modules/@restart/ui/esm/Anchor.js'\n    at processResult (/home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compiled/webpack/bundle5.js:28:394802)\n    at /home/mtni/projects/bibliotekdk-next-frontend/node_modules/next/dist/compile...
+
+
+https://on.cypress.io/request
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:158473:80
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11129:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at getPageHead (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:102:13)
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/ssr.cy.js:334:7)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

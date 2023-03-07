@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.0250" tests="10" failures="5" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:18:17" tests="0" file="cypress/e2e/old/articlePage.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="ArticlePage" timestamp="2023-03-07T08:18:17" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="News article (from drupal)" timestamp="2023-03-07T08:18:17" tests="5" time="0.0000" failures="1">
+    <testcase name="ArticlePage News article (from drupal) &quot;before all&quot; hook for &quot;Check if article has parsed body image&quot;" time="0.0000" classname="&quot;before all&quot; hook for &quot;Check if article has parsed body image&quot;">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+
+Because this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `News article (from drupal)`
+
+Although you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+
+Because this error occurred during a `before all` hook we are skipping the remaining tests in the current suite: `News article (from drupal)`
+
+Although you have test retries enabled, we do not retry tests when `before all` or `after all` hooks fail
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Infomedia article" timestamp="2023-03-07T08:18:18" tests="5" time="1.0250" failures="4">
+    <testcase name="ArticlePage Infomedia article Shows infomedia data" time="0.2790" classname="Shows infomedia data">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Print article" time="0.2940" classname="Print article">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when not logged in" time="0.2280" classname="Shows login prompt when not logged in">
+      <failure message="`cy.visit()` failed trying to load:
+
+http://localhost:3000/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`" type="CypressError"><![CDATA[CypressError: `cy.visit()` failed trying to load:
+
+http://localhost:3000/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:156624:84
+    at visitFailedByErr (http://localhost:4000/__cypress/runner/cypress_runner.js:155945:12)
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:156604:13
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11125:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/old/articlePage.cy.js:187:10)]]></failure>
+    </testcase>
+    <testcase name="ArticlePage Infomedia article Shows login prompt when logged in user is not granted access" time="0.2240" classname="Shows login prompt when logged in user is not granted access">
+      <failure message="`cy.visit()` failed trying to load:
+
+http://localhost:3000/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee
+
+The response we received from your web server was:
+
+  &gt; 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`" type="CypressError"><![CDATA[CypressError: `cy.visit()` failed trying to load:
+
+http://localhost:3000/infomedia/en-artikel/work-of:870971-tsart:39160846/e842b5ee
+
+The response we received from your web server was:
+
+  > 500: Internal Server Error
+
+This was considered a failure because the status code was not `2xx`.
+
+If you do not want status codes to cause failures pass the option: `failOnStatusCode: false`
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:156624:84
+    at visitFailedByErr (http://localhost:4000/__cypress/runner/cypress_runner.js:155945:12)
+    at http://localhost:4000/__cypress/runner/cypress_runner.js:156604:13
+    at tryCatcher (http://localhost:4000/__cypress/runner/cypress_runner.js:13012:23)
+    at Promise._settlePromiseFromHandler (http://localhost:4000/__cypress/runner/cypress_runner.js:10947:31)
+    at Promise._settlePromise (http://localhost:4000/__cypress/runner/cypress_runner.js:11004:18)
+    at Promise._settlePromise0 (http://localhost:4000/__cypress/runner/cypress_runner.js:11049:10)
+    at Promise._settlePromises (http://localhost:4000/__cypress/runner/cypress_runner.js:11125:18)
+    at _drainQueueStep (http://localhost:4000/__cypress/runner/cypress_runner.js:7719:12)
+    at _drainQueue (http://localhost:4000/__cypress/runner/cypress_runner.js:7712:9)
+    at Async.../../node_modules/bluebird/js/release/async.js.Async._drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7728:5)
+    at Async.drainQueues (http://localhost:4000/__cypress/runner/cypress_runner.js:7598:14)
+From Your Spec Code:
+    at Context.eval (http://localhost:4000/__cypress/tests?p=cypress/e2e/old/articlePage.cy.js:221:10)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="1.1950" tests="2" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:35:54" tests="0" file="cypress/e2e/old/cards.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Cards" timestamp="2023-03-07T08:35:54" tests="2" time="1.1950" failures="0">
+    <testcase name="Cards Clicking card links to work page" time="0.8660" classname="Clicking card links to work page">
+    </testcase>
+    <testcase name="Cards Tabbing will focus cards" time="0.3290" classname="Tabbing will focus cards">
+    </testcase>
+  </testsuite>
+</testsuites>

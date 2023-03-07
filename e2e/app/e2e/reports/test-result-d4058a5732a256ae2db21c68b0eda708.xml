@@ -1,0 +1,1193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="7.9560" tests="25" failures="24" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:16:53" tests="0" file="cypress/e2e/search.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Search" timestamp="2023-03-07T08:16:53" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Form" timestamp="2023-03-07T08:16:53" tests="10" time="3.0480" failures="10">
+    <testcase name="Search Form Maps query parameters from url to input fields" time="0.2800" classname="Maps query parameters from url to input fields">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Maps query parameters from input fields to url to input fields" time="0.2900" classname="Maps query parameters from input fields to url to input fields">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Click input clear button should NOT be reflected in URL immediately" time="0.2980" classname="Click input clear button should NOT be reflected in URL immediately">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Editing default search input, should not wipe other input, filters should be wiped" time="0.3420" classname="Editing default search input, should not wipe other input, filters should be wiped">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Selecting suggestion, should not wipe other input, filters should be wiped" time="0.3650" classname="Selecting suggestion, should not wipe other input, filters should be wiped">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form All default input suggestions will search with q.all" time="0.2870" classname="All default input suggestions will search with q.all">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Tab away from input will not sync with URL immediately" time="0.2850" classname="Tab away from input will not sync with URL immediately">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Pressing enter will sync with URL immediately" time="0.2950" classname="Pressing enter will sync with URL immediately">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Searching should reset filters and page" time="0.3260" classname="Searching should reset filters and page">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form When on another page than /find, it should go to find page when performing search" time="0.2800" classname="When on another page than /find, it should go to find page when performing search">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Mobile" timestamp="2023-03-07T08:17:06" tests="3" time="1.0950" failures="3">
+    <testcase name="Search Form Mobile Maintains input value when opening mobile suggester" time="0.4360" classname="Maintains input value when opening mobile suggester">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Mobile Hide mobile search button when expanded" time="0.3260" classname="Hide mobile search button when expanded">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Form Mobile Click input clear on mobile should NOT be reflected in URL immediately" time="0.3330" classname="Click input clear on mobile should NOT be reflected in URL immediately">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Result" timestamp="2023-03-07T08:17:10" tests="1" time="0.2960" failures="1">
+    <testcase name="Search Result Maps from URL params to a search result" time="0.2960" classname="Maps from URL params to a search result">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="ResultRow" timestamp="2023-03-07T08:17:12" tests="6" time="2.0930" failures="6">
+    <testcase name="Search ResultRow Should have all data" time="0.3440" classname="Should have all data">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search ResultRow should not have cover" time="0.3290" classname="should not have cover">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search ResultRow should not have creator" time="0.3420" classname="should not have creator">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search ResultRow should not have titles" time="0.3390" classname="should not have titles">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search ResultRow should not have materialTypes" time="0.3540" classname="should not have materialTypes">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search ResultRow slow loading" time="0.3850" classname="slow loading">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="Related search subjects" timestamp="2023-03-07T08:17:20" tests="5" time="1.4240" failures="4">
+    <testcase name="Search Related search subjects Can tab through related keywords" time="0.3390" classname="Can tab through related keywords">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Related search subjects Can render and interact with connected related subjects" time="0.3490" classname="Can render and interact with connected related subjects">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Related search subjects Can visit keywords" time="0.3800" classname="Can visit keywords">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+    <testcase name="Search Related search subjects Will not show anything if empty" time="0.3560" classname="Will not show anything if empty">
+      <failure message="The following error originated from your application code, not from Cypress.
+
+  &gt; Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application" type="Error"><![CDATA[Error: The following error originated from your application code, not from Cypress.
+
+  > Module build failed (from ./node_modules/sass-loader/dist/cjs.js):
+SassError: Undefined variable.
+    ╷
+114 │       @each $key, $value in $gutters {
+    │                             ^^^^^^^^
+    ╵
+  node_modules/bootstrap/scss/mixins/_grid.scss 114:29       @content
+  node_modules/bootstrap/scss/mixins/_breakpoints.scss 68:5  media-breakpoint-up()
+  node_modules/bootstrap/scss/mixins/_grid.scss 72:5         make-grid-columns()
+  node_modules/bootstrap/scss/_grid.scss 32:3                @import
+  src/scss/custom-bootstrap.scss 20:9                        root stylesheet
+
+When Cypress detects uncaught errors originating from your application it will automatically fail the current test.
+
+This behavior is configurable, and you can choose to turn this off by listening to the `uncaught:exception` event.
+
+https://on.cypress.io/uncaught-exception-from-application
+    at Object../node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:460:7)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Object../src/scss/custom-bootstrap.scss (http://localhost:4000/main.iframe.bundle.js:82215:27)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js (http://localhost:4000/main.iframe.bundle.js:25:89)
+    at __webpack_require__ (http://localhost:4000/runtime~main.iframe.bundle.js:854:30)
+    at fn (http://localhost:4000/runtime~main.iframe.bundle.js:151:20)
+    at Module../.storybook/preview.js-generated-config-entry.js (http://localhost:4000/main.iframe.bundle.js:309:124)]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

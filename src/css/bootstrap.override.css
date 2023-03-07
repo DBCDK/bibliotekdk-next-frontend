@@ -1,3 +1,17 @@
 *:focus {
   outline: unset;
 }
+
+/* react-bootstrap-v2 fix's */
+
+/* fix removed padding on containers */
+.container,
+.container-fluid {
+  padding-left: var(--pt2);
+  padding-right: var(--pt2);
+}
+
+/* fix breakpoints span object prop - so span:true will fill up remaining space */
+.row > * {
+  min-width: 0px;
+}

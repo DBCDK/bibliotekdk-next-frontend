@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.5830" tests="7" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-03-07T08:37:10" tests="0" file="cypress/e2e/old/radio.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Radio" timestamp="2023-03-07T08:37:10" tests="7" time="6.5830" failures="0">
+    <testcase name="Radio Tab leads to active element" time="1.5160" classname="Tab leads to active element">
+    </testcase>
+    <testcase name="Radio Tab leads to first element" time="0.6950" classname="Tab leads to first element">
+    </testcase>
+    <testcase name="Radio Down arrow changes focus" time="0.9220" classname="Down arrow changes focus">
+    </testcase>
+    <testcase name="Radio Right arrow changes focus" time="0.9000" classname="Right arrow changes focus">
+    </testcase>
+    <testcase name="Radio Up arrow changes focus" time="0.8960" classname="Up arrow changes focus">
+    </testcase>
+    <testcase name="Radio Left arrow changes focus" time="0.9320" classname="Left arrow changes focus">
+    </testcase>
+    <testcase name="Radio Disabled group can&apos;t be interacted with" time="0.7220" classname="Disabled group can&apos;t be interacted with">
+    </testcase>
+  </testsuite>
+</testsuites>

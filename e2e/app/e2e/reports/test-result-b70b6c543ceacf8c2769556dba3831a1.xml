@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="20.7260" tests="8" failures="0" skipped="1">
+  <testsuite name="Root Suite" timestamp="2023-01-26T07:57:17" tests="0" file="cypress/e2e/old/search.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Search" timestamp="2023-01-26T07:57:17" tests="8" time="20.7260" failures="0">
+    <testcase name="Search Should show search results" time="8.8840" classname="Should show search results">
+    </testcase>
+    <testcase name="Search Should link to work page" time="2.5270" classname="Should link to work page">
+    </testcase>
+    <testcase name="Search Should collect data when searching and clicking work" time="5.3990" classname="Should collect data when searching and clicking work">
+    </testcase>
+    <testcase name="Search Should focus elements when tabbing" time="0.9350" classname="Should focus elements when tabbing">
+    </testcase>
+    <testcase name="Search Should focus pagination buttons when tabbing" time="0.2580" classname="Should focus pagination buttons when tabbing">
+    </testcase>
+    <testcase name="Search Desktop: Fake searchfield not visible" time="1.1390" classname="Desktop: Fake searchfield not visible">
+    </testcase>
+    <testcase name="Search Mobile: Has searchfield including query" time="1.5840" classname="Mobile: Has searchfield including query">
+    </testcase>
+  </testsuite>
+</testsuites>

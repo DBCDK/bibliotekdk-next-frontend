@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="9.1230" tests="3" failures="0">
+  <testsuite name="Root Suite" timestamp="2023-01-26T07:55:47" tests="0" file="cypress/e2e/old/cookiebox.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="CookieBox" timestamp="2023-01-26T07:55:47" tests="3" time="9.1230" failures="0">
+    <testcase name="CookieBox can accept cookies" time="3.0920" classname="can accept cookies">
+    </testcase>
+    <testcase name="CookieBox can deny cookies" time="2.8750" classname="can deny cookies">
+    </testcase>
+    <testcase name="CookieBox can show cookie policy article" time="3.1560" classname="can show cookie policy article">
+    </testcase>
+  </testsuite>
+</testsuites>
