@@ -1,3 +1,6 @@
+/**
+ * @file Hook for easy access to use workRelationsWorkTypeFactory
+ */
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";

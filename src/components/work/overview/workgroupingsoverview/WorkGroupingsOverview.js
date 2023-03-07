@@ -1,3 +1,8 @@
+/**
+ * @file Render continuation for overview
+ *  Continuation covers Series, articleSeries.
+ *  Can be expanded
+ */
 import PropTypes from "prop-types";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
