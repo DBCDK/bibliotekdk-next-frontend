@@ -761,9 +761,17 @@
         "da": "Aldersmærkning",
         "en": "Age"
       },
+      "game-requirements": {
+        "da": "Nødvendigt udstyr",
+        "en": "Required gear"
+      },
       "other-audience": {
         "da": "Deltagere",
         "en": "Audience"
+      },
+      "creatorsfromdescription": {
+        "da": "Gruppe",
+        "en": "Group"
       }
     },
     "description": {
