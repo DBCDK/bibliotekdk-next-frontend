@@ -19,6 +19,7 @@ import {
 } from "@/components/base/scrollsnapslider/utils";
 import Translate from "@/components/base/translate";
 import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataForWorkRelationsWorkTypeFactory";
+import { useEffect, useState } from "react";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
@@ -35,21 +36,27 @@ function getAnchor(anchorReference) {
  * @return {JSX.Element}
  */
 function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
+  const [element, setElement] = useState("");
+  const [clickFunction, setClickFunction] = useState(() => {});
+
+  useEffect(() => {
+    if (anchorId) {
+      setElement(getElementById(anchorId));
+      setClickFunction(() => {
+        return () => scrollToElementWithOffset(anchorId, "y", scrollOffset);
+      });
+    }
+  }, [anchorId, scrollOffset]);
+
   return (
     title && (
       <Text tag={"div"}>
         {description}
         <Link
           border={{ top: false, bottom: { keepVisible: true } }}
-          disabled={!getElementById(anchorId)}
+          disabled={!element}
         >
-          <div
-            onClick={() =>
-              scrollToElementWithOffset(anchorId, "y", scrollOffset)
-            }
-          >
-            {title}
-          </div>
+          <div onClick={clickFunction}>{title}</div>
         </Link>
       </Text>
     )
@@ -61,14 +68,16 @@ WorkGroupingsOverview.propTypes = {
   seriesLink: PropTypes.string,
 };
 
-function getSeriesMap(series) {
-  return {
-    partNumber: series?.numberInSeries?.number,
-    description: `Del ${series?.numberInSeries?.number + " "} af `,
-    title: series?.title,
-    anchorId: getAnchor(AnchorsEnum.SERIES),
-    scrollOffset: -64,
-  };
+function getSeriesMap(series, seriesMembers) {
+  return (
+    seriesMembers?.length > 0 && {
+      partNumber: series?.numberInSeries?.number,
+      description: `Del ${series?.numberInSeries?.number + " "} af `,
+      title: series?.title,
+      anchorId: getAnchor(AnchorsEnum.SERIES),
+      scrollOffset: -64,
+    }
+  );
 }
 
 function getContinuationMap(groupedByRelationWorkTypes) {
@@ -102,7 +111,8 @@ export default function Wrap({ workId }) {
   const { groupedByRelationWorkTypes } = workRelationsWorkTypeFactory;
 
   const series = work_response?.data?.work?.series?.[0];
-  const seriesMap = getSeriesMap(series);
+  const seriesMembers = work_response?.data?.work?.seriesMembers;
+  const seriesMap = getSeriesMap(series, seriesMembers);
 
   const continuationMap = getContinuationMap(groupedByRelationWorkTypes);
 
