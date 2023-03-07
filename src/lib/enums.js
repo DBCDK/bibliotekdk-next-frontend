@@ -60,4 +60,5 @@ export const RelationTypeEnum = Object.freeze({
 
 export const AnchorsEnum = Object.freeze({
   SERIES: { context: "workmenu", label: "series" },
+  RELATED_WORKS: { context: "relatedworks", label: "title" },
 });

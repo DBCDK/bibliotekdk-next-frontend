@@ -5,7 +5,7 @@ import Details from "../details";
 import Description from "../description";
 /*
  * TODO: Insert below when relatedWorks has been approved
- * import RelatedWorks from "../relatedworks";
+   import RelatedWorks from "../relatedworks";
  */
 import Content from "../content";
 import Keywords from "../keywords";
@@ -87,7 +87,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
         {/*<RelatedWorks*/}
         {/*  workId={workId}*/}
         {/*  type={type}*/}
-        {/*  anchor-label={Translate({ context: "relatedworks", label: "title" })}*/}
+        {/*  anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}*/}
         {/*/>*/}
         <Content
           workId={workId}
@@ -101,7 +101,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           <Keywords workId={workId} />
           <Related workId={workId} />
         </div>
-        {/* TODO: SeriesOverview.js refererer til dennes oversættelse */}
+        {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
         <Series workId={workId} anchor-label={Translate(AnchorsEnum.SERIES)} />
         <Recommendations
           workId={workId}
