@@ -20,6 +20,7 @@ import {
 import Translate from "@/components/base/translate";
 import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataForWorkRelationsWorkTypeFactory";
 import { useEffect, useState } from "react";
+import styles from "./WorkGroupingsOverview.module.css";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
@@ -50,7 +51,7 @@ function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
 
   return (
     title && (
-      <Text tag={"div"}>
+      <Text tag={"div"} className={styles.display_inline}>
         {description}
         <Link
           border={{ top: false, bottom: { keepVisible: true } }}
@@ -92,6 +93,16 @@ function getContinuationMap(groupedByRelationWorkTypes) {
   );
 }
 
+function RenderHostPublication({ hostPublication }) {
+  return (
+    hostPublication && (
+      <Text className={styles.display_inline}>
+        {hostPublication?.title}, {hostPublication?.issue}
+      </Text>
+    )
+  );
+}
+
 /**
  * Wrapper for WorkGroupingsOverview
  * @param workId
@@ -109,6 +120,13 @@ export default function Wrap({ workId }) {
     });
 
   const { groupedByRelationWorkTypes } = workRelationsWorkTypeFactory;
+
+  const current = groupedByRelationWorkTypes?.[WorkTypeEnum.ARTICLE]?.find(
+    (current) => current.relationType === "current"
+  );
+
+  const hostPublication =
+    current?.manifestations?.mostRelevant?.[0]?.hostPublication;
 
   const series = work_response?.data?.work?.series?.[0];
   const seriesMembers = work_response?.data?.work?.seriesMembers;
@@ -131,12 +149,18 @@ export default function Wrap({ workId }) {
     return null;
   }
 
-  return workGroupings?.map((mapping) => (
-    <WorkGroupingsOverview
-      key={mapping?.title + "-" + mapping?.partNumber}
-      {...mapping}
-    />
-  ));
+  return (
+    <>
+      <RenderHostPublication hostPublication={hostPublication} />
+      {hostPublication && workGroupings?.length > 0 && ". "}
+      {workGroupings?.map((mapping) => (
+        <WorkGroupingsOverview
+          key={mapping?.title + "-" + mapping?.partNumber}
+          {...mapping}
+        />
+      ))}
+    </>
+  );
 }
 
 // PropTypes for component

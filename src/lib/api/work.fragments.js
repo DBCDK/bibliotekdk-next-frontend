@@ -769,6 +769,10 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
         detail
         origin
       }
+      hostPublication {
+        title
+        issue
+      }
     }
   }
   titles {
