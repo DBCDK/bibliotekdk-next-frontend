@@ -32,6 +32,12 @@ export function getScrollToNextCoveredChild(
   const nextCoveredChild =
     orientation === "left" ? nextCoveredChildLeft : nextCoveredChildRight;
 
+  console.log(
+    "fisk",
+    nextCoveredChild.posLeft,
+    containerScroll.x + containerScroll.xGap
+  );
+
   return !nextCoveredChild
     ? false
     : nextCoveredChild.posLeft - (containerScroll.x + containerScroll.xGap / 2);
@@ -67,13 +73,22 @@ export function childSetter(childNodes) {
   const childWidths = [];
   // Everything is slightly offset. I noticed 15px at one point
   // TODO: Please fix this if you know how to
-  const offset = childNodes?.[0]?.offsetLeft;
-  childNodes.forEach((child) =>
+  const offset = childNodes?.[0]?.clientLeft;
+
+  childNodes.forEach((child) => {
+    console.log("child", {
+      child,
+      offset,
+      width: child.offsetWidth,
+      posLeft: child.offsetLeft - offset,
+      posRight: child.offsetLeft + child.offsetWidth - offset,
+    });
+
     childWidths.push({
       width: child.offsetWidth,
       posLeft: child.offsetLeft - offset,
       posRight: child.offsetLeft + child.offsetWidth - offset,
-    })
-  );
+    });
+  });
   return childWidths;
 }

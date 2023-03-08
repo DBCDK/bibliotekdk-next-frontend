@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="1.0160" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-01-26T07:57:55" tests="0" file="cypress/e2e/old/text.cy.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="Text" timestamp="2023-01-26T07:57:55" tests="1" time="1.0160" failures="0">
-    <testcase name="Text Can clamp lines" time="1.0160" classname="Can clamp lines">
-    </testcase>
-  </testsuite>
-</testsuites>

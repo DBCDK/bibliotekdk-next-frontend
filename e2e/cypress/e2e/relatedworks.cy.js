@@ -11,7 +11,7 @@ function appendScrollToArray($el, arrayOfScrolls) {
 }
 
 describe("Related works", () => {
-  it("desktop", () => {
+  it.only("desktop", () => {
     cy.visit("/iframe.html?id=work-relatedworks--related-works-physical-book");
 
     cy.viewport(1920, 1080);

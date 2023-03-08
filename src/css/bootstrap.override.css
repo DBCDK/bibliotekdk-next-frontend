@@ -3,15 +3,20 @@
 }
 
 /* react-bootstrap-v2 fix's */
+.row > * {
+  min-width: 0px;
+}
 
 /* fix removed padding on containers */
 .container,
 .container-fluid {
-  padding-left: var(--pt2);
-  padding-right: var(--pt2);
+  /* padding-left: 15px;
+  padding-right: 15px; */
 }
 
 /* fix breakpoints span object prop - so span:true will fill up remaining space */
-.row > * {
-  min-width: 0px;
+
+.row {
+  /* --bs-gutter-x: 30px; */
+  /* margin: 0 -15px; */
 }

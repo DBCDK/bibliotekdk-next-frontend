@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="1.3940" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-03-07T08:32:36" tests="0" file="cypress/e2e/covercarousel.cy.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="CoverCarousel" timestamp="2023-03-07T08:32:36" tests="1" time="1.3940" failures="0">
-    <testcase name="CoverCarousel CoverCarousel" time="1.3940" classname="CoverCarousel">
-    </testcase>
-  </testsuite>
-</testsuites>

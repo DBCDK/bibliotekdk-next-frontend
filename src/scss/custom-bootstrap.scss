@@ -10,21 +10,27 @@
 // @import "~bootstrap/scss/bootstrap-utilities.scss";
 
 
+
 // Configuration
 @import "~bootstrap/scss/_functions";
+
+// ---
+$grid-gutter-width: 2rem;
+$container-padding-x: $grid-gutter-width;
+
 @import "~bootstrap/scss/_variables";
 @import "~bootstrap/scss/_mixins";
 @import "~bootstrap/scss/_maps";
 @import "~bootstrap/scss/_utilities";
 
 // Layout & components
-// @import "~bootstrap/scss/vendor/_rfs";
+@import "~bootstrap/scss/vendor/_rfs";
 // @import "~bootstrap/scss/_root";
 // @import "~bootstrap/scss/_reboot";
 // @import "~bootstrap/scss/_type";
 @import "~bootstrap/scss/_grid";
 // @import "~bootstrap/scss/_images";
-// @import "~bootstrap/scss/_containers";
+@import "~bootstrap/scss/_containers";
 // @import "~bootstrap/scss/_tables";
 // @import "~bootstrap/scss/_forms";
 // @import "~bootstrap/scss/_buttons";

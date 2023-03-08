@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.9120" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-01-26T08:55:31" tests="1" file="cypress/e2e/errorRedirect.cy.js" time="0.9120" failures="0">
-    <testcase name="redirect to 404" time="0.9120" classname="redirect to 404">
-    </testcase>
-  </testsuite>
-</testsuites>

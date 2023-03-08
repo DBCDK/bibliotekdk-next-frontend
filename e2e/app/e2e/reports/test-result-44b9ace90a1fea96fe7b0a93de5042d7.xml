@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="1.0120" tests="3" failures="0" skipped="2">
-  <testsuite name="Root Suite" timestamp="2023-01-26T13:09:18" tests="0" file="cypress/e2e/linkme.cy.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="linkme" timestamp="2023-01-26T13:09:18" tests="3" time="1.0120" failures="0">
-    <testcase name="linkme redirects on no rec.id" time="1.0120" classname="redirects on no rec.id">
-    </testcase>
-  </testsuite>
-</testsuites>
