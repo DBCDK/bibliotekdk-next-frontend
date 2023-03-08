@@ -50,6 +50,7 @@ pipeline {
                 anyOf {
                     branch 'main';
                     branch 'alfa-0'
+                    expression{env.BRANCH_NAME.startsWith('feature')}
                 }
             }
             steps {
@@ -63,6 +64,7 @@ pipeline {
                 }
             }
         }
+
         stage("Update staging version number") {
             agent {
                 docker {
