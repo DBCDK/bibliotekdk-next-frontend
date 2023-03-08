@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -27,21 +27,42 @@ import {
 
 function TitlesForSearch({ work, isLoading }) {
   const titles = work?.titles;
+  const titlesElementId = `TitlesForSearch__RenderTitlesWithoutLanguage-${work?.workId?.replace(
+    /\W/g,
+    ""
+  )}`;
+  const [titleClamped, setTitleClamped] = useState(null);
+
+  useEffect(() => {
+    function checkLineClamp(element) {
+      return element?.scrollHeight > element?.clientHeight;
+    }
+    setTitleClamped(checkLineClamp(document?.getElementById(titlesElementId)));
+  }, [work, titlesElementId]);
 
   return (
-    <Title
-      type="title5"
-      tag="h2"
-      lines={3}
-      clamp={true}
-      title={titles?.full?.join(" ")}
-      data-cy={"ResultRow-title"}
-      skeleton={!titles && isLoading}
-      className={styles.display_inline}
-    >
-      <RenderTitlesWithoutLanguage titles={titles} />
-      <RenderLanguageAddition work={work} type={"title6"} />
-    </Title>
+    <>
+      <Title
+        type="title5"
+        tag="h2"
+        lines={4}
+        clamp={true}
+        title={titles?.full?.join(" ")}
+        data-cy={"ResultRow-title"}
+        skeleton={!titles && isLoading}
+        className={`${styles.display_inline}`}
+      >
+        <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
+          <RenderTitlesWithoutLanguage titles={titles} />
+          {!titleClamped && titles?.full?.length < 2 && (
+            <RenderLanguageAddition work={work} type={"title6"} />
+          )}
+        </div>
+        {(titleClamped || titles?.full?.length > 1) && (
+          <RenderLanguageAddition work={work} type={"title6"} />
+        )}
+      </Title>
+    </>
   );
 }
 
