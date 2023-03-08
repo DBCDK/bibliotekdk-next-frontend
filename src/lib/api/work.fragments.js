@@ -276,6 +276,16 @@ export function description({ workId }) {
     query description($workId: String!) {
       work(id: $workId) {
         abstract
+        creators {
+          display
+          roles {
+            function {
+              plural
+              singular
+            }
+            functionCode
+          }
+        }
       }
       monitor(name: "bibdknext_work_basic")
     }`,
@@ -339,6 +349,13 @@ export function fbiOverviewDetail({ workId }) {
             full
           }                                  
           manifestations {
+            first {
+              edition {
+                publicationYear {
+                  display
+                }
+              }
+            }
             mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
@@ -348,6 +365,9 @@ export function fbiOverviewDetail({ workId }) {
               }    
               audience {
                 generalAudience
+                childrenOrAdults {
+                  display
+                }
               }          
               genreAndForm
               languages {
@@ -361,8 +381,19 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              creatorsFromDescription
               physicalDescriptions {
                 summary
+                accompanyingMaterial
+                additionalDescription
+                extent
+                numberOfPages
+                numberOfUnits
+                playingTime
+                requirements
+                size
+                technicalInformation
+                textVsIllustrations
               }
               edition {
                 publicationYear {

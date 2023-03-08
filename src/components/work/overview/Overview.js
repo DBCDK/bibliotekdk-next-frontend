@@ -16,20 +16,14 @@ import { useEffect, useMemo } from "react";
 import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswitcher/MaterialTypeSwitcher";
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
-
-/* TODO: USE COVERCAROUSEL WHEN APPROVED
- *   Remove 'import Cover' and 'import Bookmark'
- *   Instead import:
-     import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
- * */
-import Cover from "@/components/base/cover";
-import Bookmark from "@/components/base/bookmark";
+import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
   inUniqueMaterialTypes,
   type,
-  onTypeChange
+  onTypeChange,
+  workId
 ) {
   useEffect(() => {
     if (
@@ -41,7 +35,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, []);
+  }, [workId]);
 }
 
 /**
@@ -62,32 +56,22 @@ export function Overview({
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
 
-  const {
-    uniqueMaterialTypes,
-    inUniqueMaterialTypes,
-    flatPidsByType,
-    /* TODO: USE COVERCAROUSEL WHEN APPROVED
-     *   Remove below line */
-    manifestationsEnrichedWithDefaultFrontpage,
-  } = useMemo(() => {
-    return manifestationMaterialTypeFactory(manifestations);
-  }, [work, manifestations]);
+  const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
+    useMemo(() => {
+      return manifestationMaterialTypeFactory(manifestations);
+    }, [work, manifestations]);
 
   useInitMaterialType(
     uniqueMaterialTypes,
     inUniqueMaterialTypes,
     type,
-    onTypeChange
+    onTypeChange,
+    workId
   );
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
-  /* TODO: USE COVERCAROUSEL WHEN APPROVED
-   *    Remove selectedMaterial */
-  const selectedMaterial = useMemo(
-    () => manifestationsEnrichedWithDefaultFrontpage(type),
-    [type]
-  );
+  const titles = work?.titles?.full;
 
   return (
     <div className={`${styles.background} ${className}`}>
@@ -96,32 +80,14 @@ export function Overview({
           <Col xs={12} lg={3} className={styles.breadcrumbs} />
           <Col
             xs={12}
-            /* TODO: USE COVERCAROUSEL WHEN APPROVED
-             * Remove below line
-             * Use instead
-                lg={4}
-             * */
-            lg={3}
+            lg={4}
             md={{ span: 4, order: 3 }}
             className={styles.cover}
           >
-            {/* TODO: USE COVERCAROUSEL WHEN APPROVED
-             *  Remove belov
-             *  Use instead
-                <CoverCarousel
-                  selectedPids={selectedPids}
-                  workTitles={work?.titles}
-                />
-             */}
-            <Row>
-              <Cover
-                src={selectedMaterial?.cover?.detail || work?.materialTypes}
-                skeleton={skeleton || !selectedMaterial.cover}
-                size="large"
-              >
-                <Bookmark title={work?.titles?.full?.[0]} />
-              </Cover>
-            </Row>
+            <CoverCarousel
+              selectedPids={selectedPids}
+              workTitles={work?.titles}
+            />
           </Col>
 
           <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
@@ -132,7 +98,11 @@ export function Overview({
                   skeleton={skeleton}
                   data-cy={"title-overview"}
                 >
-                  {work?.titles?.full[0]}
+                  {titles?.map((title, index, array) => (
+                    <>
+                      {title} {index < array.length - 1 && <br />}
+                    </>
+                  ))}
                 </Title>
               </Col>
               <Col xs={12} className={styles.ornament}>

@@ -82,13 +82,16 @@ export default function Pagination({
   return (
     <React.Fragment>
       {numPages > 1 && numPages > currentPage && (
-        <div className={`${styles.pagination} ${styles.mobile}`}>
+        <div className={`${styles.mobile}`}>
           <Button
             type="secondary"
             size="medium"
             tabIndex="0"
             skeleton={isLoading}
-            onClick={() => onChangeChecked(currentPage + 1, false)}
+            onClick={(e) => {
+              onChangeChecked(currentPage + 1, false);
+              e.target.scrollTo({ bottom: 0 });
+            }}
             onKeyDown={(event) => onKeyDown(event, currentPage + 1, false)}
           >
             {Translate({ context: "search", label: "more" })}

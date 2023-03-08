@@ -29,7 +29,6 @@ const CoverElement = forwardRef(function CoverElement(
     manifestation,
     materialType,
     fullTitle,
-    visibleElement,
     setVisibleElement,
     sliderId,
   },
@@ -44,10 +43,10 @@ const CoverElement = forwardRef(function CoverElement(
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    if (visibleElement !== thisIndex && isVisible) {
-      setVisibleElement(thisIndex);
+    if (isVisible) {
+      setVisibleElement((prev) => prev !== thisIndex && thisIndex);
     }
-  }, [isVisible, thisIndex, visibleElement]);
+  }, [isVisible, thisIndex, manifestation]);
 
   const src = manifestation?.cover?.detail;
 
@@ -55,18 +54,13 @@ const CoverElement = forwardRef(function CoverElement(
     <div
       ref={elementRef}
       id={`${sliderId}-${thisIndex}`}
-      className={`
-        ${styles.cover_element} 
-      `}
-      // TODO: figure out if we need transition
-      // ${isVisible && styles.active_cover}
+      className={`${styles.cover_element}`}
       data-cy={"cover_carousel"}
       title={fullTitle}
     >
       <img
         src={src}
         className={loaded ? styles.cover_image : styles.cover_image_skeleton}
-        // rel={"prefetch"}
         onLoad={() => setLoaded(true)}
         alt={""}
       />
@@ -123,7 +117,6 @@ export function CoverCarousel({
               manifestation={manifestations?.[idx]}
               fullTitle={workTitles?.full}
               materialType={materialType}
-              visibleElement={visibleElement}
               setVisibleElement={setVisibleElement}
               sliderId={sliderId}
               carouselRef={carouselRef}

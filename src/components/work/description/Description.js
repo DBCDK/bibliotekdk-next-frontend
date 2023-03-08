@@ -10,6 +10,43 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 
 import styles from "./Description.module.css";
+import isEmpty from "lodash/isEmpty";
+
+/**
+ * Parse creators array to see if description should include information
+ * about people interviewing and/or being interviewed.
+ * @param creators
+ * @returns {string}
+ */
+function parseCreatorsForInterview(creators) {
+  if (isEmpty(creators)) {
+    return "";
+  }
+  // person(s) being interviewed
+  const interviewee = creators
+    .filter((creator) => creator?.roles?.[0]?.functionCode === "ive")
+    .map((creator) => creator.display);
+  // if there are more persons we want the last person to be seperated with "og"
+  // like: "jens, peter og hans"
+  let intervieweeAsString = "";
+  if (interviewee.length > 1) {
+    const last = interviewee.pop();
+    intervieweeAsString = interviewee.join(", ") + " og " + last;
+  } else {
+    intervieweeAsString = interviewee.join(", ");
+  }
+
+  // person(s) interviewing
+  const interviewer = creators
+    .filter((creator) => creator?.roles?.[0]?.functionCode === "ivr")
+    .map((creator) => creator.display)
+    .join(", ");
+
+  return (
+    `${intervieweeAsString ? `Interview med  ${intervieweeAsString} ` : ""}` +
+    `${interviewer ? `af  ${interviewer}` : ""}`
+  );
+}
 
 /**
  * The Component function
@@ -20,25 +57,39 @@ import styles from "./Description.module.css";
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  if (!data || data?.length === 0) {
+  if (!data?.abstract || data?.abstract?.length === 0) {
     return null;
   }
+  const abstract = data?.abstract?.join(", ");
+  const preAbstract = parseCreatorsForInterview(data?.creators);
   // Translate Context
   const context = { context: "description" };
 
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
-        {data && (
-          <Col xs={12} md>
-            <Text
-              dataCy={"description"}
-              type="text2"
-              skeleton={skeleton}
-              lines={4}
-            >
-              {data}
-            </Text>
+        {abstract && (
+          <Col xs={12} md={8}>
+            {preAbstract && (
+              <Text
+                dataCy={"predescription"}
+                type="text2"
+                skeleton={skeleton}
+                lines={4}
+              >
+                {preAbstract}.
+              </Text>
+            )}
+            {abstract && (
+              <Text
+                dataCy={"description"}
+                type="text2"
+                skeleton={skeleton}
+                lines={4}
+              >
+                {abstract}
+              </Text>
+            )}
           </Col>
         )}
       </Row>
@@ -88,7 +139,7 @@ export default function Wrap(props) {
     return null;
   }
 
-  return <Description {...props} data={data?.work?.abstract} />;
+  return <Description {...props} data={data?.work} />;
 }
 
 // PropTypes for component

@@ -49,9 +49,15 @@
 }
 
 .carousel_skeleton {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  outline: 0;
   background-image: linear-gradient(var(--black-squeeze), var(--black-squeeze));
-  width: auto;
-  height: 300px;
+
+  width: calc(var(--carousel-width));
+  height: calc(var(--carousel-height));
 }
 
 .cover_element {
@@ -66,12 +72,16 @@
   max-height: 90%;
   width: 90%;
   height: auto;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .cover_image_skeleton {
   display: block;
-  background-image: linear-gradient(var(--iron), var(--iron));
-  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  border: 0;
+  outline: 0;
+  width: 200px;
   height: 300px;
 }
 /* END COVER */
@@ -97,9 +107,5 @@
       "🎱️ 🎱️ 🎱️"
     ;
     max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
-  }
-
-  .arrow_styling {
-    display: initial;
   }
 }

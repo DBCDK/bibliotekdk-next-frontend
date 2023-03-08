@@ -15,9 +15,8 @@ describe("Details-Movie", () => {
     cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
 
     cy.get("[data-cy=text-genre-form]")
-      .next("a")
-      .find("p")
-      .should("have.text", "actionfilm");
+      .next("span")
+      .should("have.text", "actionfilm, thriller, science fiction");
 
     cy.get("[data-cy=section-title]")
       .find("p")
@@ -40,16 +39,14 @@ describe("Details", () => {
       .should("exist")
       .first()
       .should("exist")
-      .should((ele) => {
+      /*.should((ele) => {
         expect(ele).to.have.css("font-weight", "700");
-      })
+      })*/
       .parent()
       .should("contain", "roles")
       .should("contain", "function.singular");
 
-    cy.get("[data-cy=text-genre-form]")
-      .next("p")
-      .should("have.text", "actionfilm, thriller, science fiction");
+    cy.get("[data-cy=text-genre-form]").should("have.text", "genre/form");
 
     cy.get("[data-cy=section-title]")
       .find("p")

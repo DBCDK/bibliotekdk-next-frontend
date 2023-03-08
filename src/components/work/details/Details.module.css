@@ -13,12 +13,25 @@
   font-weight: bold;
 }
 
-.link{
-  display: table;
+.link {
   white-space: normal;
+  display: table;
 }
 
+.pegiimage {
+  border: 1px solid var(--iron);
+  display: flex;
+  padding: var(--pt1);
+  align-items: center;
+}
 
+.spacemaker {
+  min-width: 25%;
+}
+
+.imgtext {
+  margin-left: var(--pt05);
+}
 
 @media (min-width: 768px) {
   .details {

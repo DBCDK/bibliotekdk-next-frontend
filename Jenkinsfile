@@ -13,9 +13,9 @@ pipeline {
         GITLAB_ID = "704"
         CLIENT_ID = credentials("bibdk_client_id")
         CLIENT_SECRET = credentials("bibdk_client_secret")
-	}
+    }
     stages {
-        stage('clean workspace'){
+        stage('clean workspace') {
             steps {
                 cleanWs()
                 checkout scm
@@ -38,25 +38,33 @@ pipeline {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
                     ansiColor("xterm") {
-                     
+                        sh "docker pull docker-dbc.artifacts.dbccloud.dk/cypress:latest"
+                        sh "docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} build"
+                        sh "IMAGE=${IMAGE_NAME} docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} run --rm e2e"
                     }
                 }
             }
         }
         stage('Push to Artifactory') {
             when {
-                branch 'cookiebot-test'
+                anyOf {
+                    branch 'main';
+                    branch 'alfa-0'
+                    expression{env.BRANCH_NAME.startsWith('feature')}
+                }
             }
             steps {
                 script {
-                if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
-                    docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
-                        app.push()
-                        app.push("latest")
+                    if (currentBuild.resultIsBetterOrEqualTo('SUCCESS')) {
+                        docker.withRegistry('https://docker-frontend.artifacts.dbccloud.dk', 'docker') {
+                            app.push()
+                            app.push("latest")
+                        }
                     }
                 }
-            } }
+            }
         }
+
         stage("Update staging version number") {
             agent {
                 docker {
@@ -65,26 +73,38 @@ pipeline {
                     alwaysPull true
                 }
             }
-		        when {
-			    branch 'main'
-			}
-			steps {
-				dir("deploy") {
-                    sh '''
-                        #!/usr/bin/env bash
-						set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
-					'''
-				}
-			}
-		}
+            when {
+                anyOf {
+                    branch 'main';
+                    branch 'alfa-0'
+                }
+            }
+            steps {
+                dir("deploy") {
+                    script {
+                        if (env.BRANCH_NAME == 'main') {
+                            sh '''
+                                #!/usr/bin/env bash                        
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b staging
+                            '''
+                        } else if (env.BRANCH_NAME == 'alfa-0') {
+                            sh '''
+                                #!/usr/bin/env bash                        
+                                set-new-version configuration.yaml ${GITLAB_PRIVATE_TOKEN} ${GITLAB_ID} ${BUILD_NUMBER} -b alfa-0
+                            '''
+                        }
+                    }
+                }
+            }
+        }
     }
     post {
         always {
             sh '''
                 echo Clean up
                 mkdir -p logs
-                # docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
-                # docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} logs web > logs/web-log.txt
+                docker-compose -f docker-compose-cypress.yml -p ${DOCKER_COMPOSE_NAME} down -v
                 docker rmi ${IMAGE_NAME}
             '''
 
@@ -95,9 +115,9 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                        color: 'warning',
-                        message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
-                        tokenCredentialId: 'slack-global-integration-token')
+                            color: 'warning',
+                            message: "${JOB_NAME} #${BUILD_NUMBER} failed and needs attention: ${BUILD_URL}",
+                            tokenCredentialId: 'slack-global-integration-token')
                 }
             }
         }
@@ -105,18 +125,18 @@ pipeline {
             script {
                 if ("${BRANCH_NAME}" == 'main') {
                     slackSend(channel: 'fe-drift',
-                        color: 'good',
-                        message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
-                        tokenCredentialId: 'slack-global-integration-token')
+                            color: 'good',
+                            message: "${JOB_NAME} #${BUILD_NUMBER} completed, and pushed ${IMAGE_NAME} to artifactory.",
+                            tokenCredentialId: 'slack-global-integration-token')
 
                 }
             }
         }
         fixed {
             slackSend(channel: 'fe-drift',
-                color: 'good',
-                message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
-                tokenCredentialId: 'slack-global-integration-token')
+                    color: 'good',
+                    message: "${JOB_NAME} #${BUILD_NUMBER} back to normal: ${BUILD_URL}",
+                    tokenCredentialId: 'slack-global-integration-token')
 
         }
     }

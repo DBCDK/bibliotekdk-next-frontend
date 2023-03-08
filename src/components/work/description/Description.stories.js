@@ -14,8 +14,7 @@ export default exportedObject;
  *
  */
 export function DescriptionSection() {
-  const workId = "some-id";
-  const abstract = getDescription({ workId });
+  const abstract = getDescription();
   return (
     <div>
       <StoryTitle>Description section</StoryTitle>
@@ -24,7 +23,7 @@ export function DescriptionSection() {
       </StoryDescription>
       <StorySpace direction="v" space="8" />
 
-      <Description data={abstract[workId]} />
+      <Description data={abstract.work} />
     </div>
   );
 }
