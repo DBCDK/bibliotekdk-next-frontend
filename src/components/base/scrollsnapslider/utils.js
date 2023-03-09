@@ -67,7 +67,7 @@ export function childSetter(childNodes) {
   const childWidths = [];
   // Everything is slightly offset. I noticed 15px at one point
   // TODO: Please fix this if you know how to
-  const offset = childNodes?.[0]?.clientLeft;
+  const offset = childNodes?.[0]?.offsetLeft;
 
   childNodes.forEach((child) =>
     childWidths.push({
