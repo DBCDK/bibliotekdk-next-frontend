@@ -27,6 +27,10 @@
   padding-right: var(--pt7);
 }
 
+.skeleton {
+  pointer-events: none;
+}
+
 @media (min-width: 992px) {
   .content p {
     padding-right: var(--pt10);

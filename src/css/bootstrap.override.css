@@ -2,21 +2,9 @@
   outline: unset;
 }
 
-/* react-bootstrap-v2 fix's */
+/* react-bootstrap-v2 fixes */
+
+/* fill up remaining col space */
 .row > * {
   min-width: 0px;
-}
-
-/* fix removed padding on containers */
-.container,
-.container-fluid {
-  /* padding-left: 15px;
-  padding-right: 15px; */
-}
-
-/* fix breakpoints span object prop - so span:true will fill up remaining space */
-
-.row {
-  /* --bs-gutter-x: 30px; */
-  /* margin: 0 -15px; */
 }

@@ -65,7 +65,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
             return (
               !isEmpty(field[fieldName].value) && (
                 /** this is the label **/
-                <Col xs={6} md={{ span: 3 }}>
+                <Col xs={6} md={3}>
                   <Text type="text3" className={styles.title} lines={2}>
                     {field[fieldName].label}
                   </Text>
@@ -101,7 +101,7 @@ export function DetailsSkeleton() {
     >
       <Row className={`${styles.details}`}>
         {texts.map((txt) => (
-          <Col xs={6} md={{ span: 3 }} key={`skeleton-${txt}`}>
+          <Col xs={6} md={3} key={`skeleton-${txt}`}>
             <Text
               type="text3"
               className={styles.title}
