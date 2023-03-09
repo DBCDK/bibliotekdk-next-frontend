@@ -14,31 +14,28 @@
 // Configuration
 @import "~bootstrap/scss/_functions";
 
-// ---
+// Custom bootstrap scss variables override
 $grid-gutter-width: 2rem;
 $container-padding-x: $grid-gutter-width;
 
 @import "~bootstrap/scss/_variables";
-@import "~bootstrap/scss/_mixins";
 @import "~bootstrap/scss/_maps";
+@import "~bootstrap/scss/_mixins";
 @import "~bootstrap/scss/_utilities";
 
 // Layout & components
-@import "~bootstrap/scss/vendor/_rfs";
-// @import "~bootstrap/scss/_root";
+@import "~bootstrap/scss/_root";
 // @import "~bootstrap/scss/_reboot";
 // @import "~bootstrap/scss/_type";
-@import "~bootstrap/scss/_grid";
 // @import "~bootstrap/scss/_images";
 @import "~bootstrap/scss/_containers";
+@import "~bootstrap/scss/_grid";
 // @import "~bootstrap/scss/_tables";
 // @import "~bootstrap/scss/_forms";
 // @import "~bootstrap/scss/_buttons";
 @import "~bootstrap/scss/_transitions";
-// @import "~bootstrap/scss/_dropdown";
+@import "~bootstrap/scss/_dropdown";
 // @import "~bootstrap/scss/_button-group";
-
-// @import "~bootstrap/scss/_custom-forms";
 // @import "~bootstrap/scss/_nav";
 // @import "~bootstrap/scss/_navbar";
 // @import "~bootstrap/scss/_card";
@@ -49,7 +46,6 @@ $container-padding-x: $grid-gutter-width;
 // @import "~bootstrap/scss/_alert";
 // @import "~bootstrap/scss/_progress";
 // @import "~bootstrap/scss/_list-group";
-
 // @import "~bootstrap/scss/_close";
 // @import "~bootstrap/scss/_toasts";
 // @import "~bootstrap/scss/_modal";
@@ -65,3 +61,6 @@ $container-padding-x: $grid-gutter-width;
 
 // Utilities
 @import "~bootstrap/scss/utilities/_api";
+
+// vendor
+// @import "~bootstrap/scss/vendor/_rfs";
