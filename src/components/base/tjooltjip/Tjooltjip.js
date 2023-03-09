@@ -21,7 +21,7 @@ export default function TjoolTjip({
         delayHide={150}
         placement={placement}
         overlay={
-          <Popover show={true} id={`tooltip-${labelToTranslate}`}>
+          <Popover id={`tooltip-${labelToTranslate}`}>
             <div
               className={styles.tooltipcontainer}
               data-cy="popover-container"
