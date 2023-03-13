@@ -52,17 +52,26 @@ export function BibliographicData({ manifestations, workId }) {
             flattenMaterialType(manifestation)
           );
 
-          console.log(manifestation, "MANIFESTATIONS");
-
           // Pass an array of additional text (s) for the folded accordion
-          const additinalText = [
-            [formattedMaterialTypes, volume].join(""),
+          // show the materialtype
+          const shortMaterialType = [formattedMaterialTypes, volume].join("");
+          // show a person involved
+          const shortPerson =
             manifestation.titles.identifyingAddition ||
-              manifestation?.creators?.[0]?.display,
+            manifestation?.creators?.[0]?.display;
+          // show some publishing info
+          const shortPublishing =
+            manifestation?.hostPublication?.title ||
             manifestation?.publisher +
               (manifestation?.edition?.edition
                 ? `, ${manifestation?.edition?.edition}`
-                : ""),
+                : "");
+
+          // the list to pass to accordion
+          const additinalText = [
+            shortMaterialType,
+            shortPerson,
+            shortPublishing,
           ];
 
           return (

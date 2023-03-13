@@ -527,6 +527,9 @@ export function listOfAllManifestations({ workId }) {
               main
               identifyingAddition
             }
+            hostPublication {
+              title
+            }
             materialTypes {
               specific
             }
