@@ -525,6 +525,7 @@ export function listOfAllManifestations({ workId }) {
             volume
             titles {
               main
+              identifyingAddition
             }
             materialTypes {
               specific
@@ -533,7 +534,12 @@ export function listOfAllManifestations({ workId }) {
               publicationYear {
                 display
               }
+              edition
             }
+            creators{
+              display
+            }
+            publisher
           }
         }
       }

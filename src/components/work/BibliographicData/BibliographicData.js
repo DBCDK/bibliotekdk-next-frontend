@@ -15,6 +15,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import styles from "./BibliographicData.module.css";
 
 /**
  * Export function of the Component
@@ -51,10 +52,23 @@ export function BibliographicData({ manifestations, workId }) {
             flattenMaterialType(manifestation)
           );
 
+          console.log(manifestation, "MANIFESTATIONS");
+
+          // Pass an array of additional text (s) for the folded accordion
+          const additinalText = [
+            [formattedMaterialTypes, volume].join(""),
+            manifestation.titles.identifyingAddition ||
+              manifestation?.creators?.[0]?.display,
+            manifestation?.publisher +
+              (manifestation?.edition?.edition
+                ? `, ${manifestation?.edition?.edition}`
+                : ""),
+          ];
+
           return (
             <Item
-              title={[formattedMaterialTypes, volume].join("")}
-              subTitle={manifestation?.edition?.publicationYear?.display}
+              title={manifestation?.edition?.publicationYear?.display}
+              additionalTxt={additinalText}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
               id={manifestation?.pid}
