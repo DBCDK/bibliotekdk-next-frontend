@@ -10,31 +10,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: var(--pt2) 0;
   cursor: pointer;
 }
 
 .element .header p {
   margin-right: var(--pt2);
-  border: 1px solid green;
 }
 
 .firstelement {
   width: 10%;
-  background-color: var(--iron);
 }
 
 .textbox {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-columns: 5fr 7fr 6fr;
   align-items: center;
   width: 100%;
 }
+
 .textbox p {
-  background-color: yellow;
   justify-self: start;
-  border: 3px solid red;
 }
 
 .content > div {
