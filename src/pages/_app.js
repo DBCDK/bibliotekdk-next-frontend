@@ -9,9 +9,7 @@
  * via getServerSideProps is used when the React app
  * is rendered.
  */
-import React from "react";
-
-// import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
@@ -37,7 +35,6 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-// import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
@@ -52,6 +49,7 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
+import Script from "next/script";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -104,13 +102,35 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
 
   // If this is rendered on server, allowCookies will be in pageProps
   // In the browser, we use Cookies.get
-  // const allowCookies =
-  //   typeof window === "undefined"
-  //     ? pageProps.allowCookies
-  //     : !!Cookies.get(COOKIES_ALLOWED);
+  // const [allowClientCookies, setAllowClientCookies] = useState();
+  // const allowServerCookies =
+  //   typeof window === "undefined" && pageProps?.allowCookies;
+  // allowCookies = typeof window === "undefined" && pageProps?.allowCookies;
+  let allowCookies =
+    typeof window === "undefined"
+      ? pageProps.allowCookies
+      : window?.Cookiebot?.consent?.statistics;
+  // window?.CookieConsent?.consented;
 
-  // Testing out cookiebot that will automatically block cookies
-  const allowCookies = true;
+  // console.log("allowCookies: ", allowCookies);
+  // typeof window !== "undefined" && console.log("window: ", window);
+  // console.log("pageprops: ", pageProps);
+  // console.log("allowCookies: ", allowCookies);
+
+  // window && console.log("window: ", window);
+  // const allowCookies = typeof window === "undefined" && pageProps?.allowCookies;
+
+  // const [Cookiebot, setCookiebot] = useState();
+  // // const [_paq, setPaq] = useState();
+  //
+  // useEffect(() => {
+  //   setCookiebot(window?.Cookiebot?.consented);
+  //   // setPaq(window?._paq);
+  // }, [allowCookies]);
+
+  // console.log("allowServerCookies: ", allowServerCookies);
+  // console.log("allowClientCookies: ", allowClientCookies);
+  // console.log("allowCookies: ", allowCookies);
 
   // Enable data collect, when cookies are approved
   enableDataCollect(allowCookies);
@@ -172,8 +192,15 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
+            <Script
+              id="Cookiebot"
+              src="https://consent.cookiebot.com/uc.js"
+              data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
+              data-blockingmode="auto"
+              type="text/javascript"
+            ></Script>
+            <Matomo />
             <Head />
-            <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
               <SkipToMainLink />
