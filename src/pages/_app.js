@@ -37,7 +37,7 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
+import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
