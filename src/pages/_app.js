@@ -52,6 +52,7 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
+import Script from "next/script";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -68,10 +69,12 @@ class ErrorBoundary extends React.Component {
     // Define a state variable to track whether is an error or not
     this.state = { hasError: false };
   }
+
   static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI
     return { hasError: true };
   }
+
   componentDidCatch(error, errorInfo) {
     // Log the error on the server
     if (typeof window !== "undefined") {
@@ -85,6 +88,7 @@ class ErrorBoundary extends React.Component {
       });
     }
   }
+
   render() {
     // Check if the error is thrown
     if (this.state.hasError) {
@@ -169,7 +173,19 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
-            <Matomo allowCookies={allowCookies} />
+            <Script
+              id="Cookiebot"
+              src="https://consent.cookiebot.com/uc.js"
+              data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
+              data-blockingmode="auto"
+              type="text/javascript"
+            ></Script>
+            <Script
+              id="Matomotracker"
+              src="/mat_tracker.js"
+              type="text/javascript"
+            ></Script>
+            <Matomo />
             <BodyScrollLock router={router} />
             <div id="layout">
               <Head />
@@ -179,7 +195,6 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <HelpHeader />
               <Component {...pageProps} />
               <FeedBackLink />
-              <CookieBox />
               <Footer />
             </div>
           </Modal.Provider>
