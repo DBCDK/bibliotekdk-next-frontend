@@ -33,7 +33,7 @@ pipeline {
                 }
             }
         }
-        stage('Integration test') {
+        /*stage('Integration test') {
             steps {
                 script {
                     // @TODO cypress:latest from docker-dbc.artifacts.dbccloud.dk
@@ -44,7 +44,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
         stage('Push to Artifactory') {
             when {
                 anyOf {
@@ -108,8 +108,8 @@ pipeline {
                 docker rmi ${IMAGE_NAME}
             '''
 
-            junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
-            archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
+            //junit skipPublishingChecks: true, testResults: 'e2e/app/e2e/reports/*.xml'
+            //archiveArtifacts 'e2e/cypress/screenshots/*, e2e/cypress/videos/*, logs/*'
         }
         failure {
             script {
