@@ -18,10 +18,10 @@ function matomoWaitForTracker() {
 }
 
 function consentSet() {
-  if (Cookiebot.consented) {
-    _paq.push(["setCookieConsentGiven"]);
+  if (Cookiebot.consented || Cookiebot.consent.statistics) {
     _paq.push(["trackPageView"]);
     _paq.push(["enableLinkTracking"]);
+    _paq.push(["setCookieConsentGiven"]);
   } else {
     _paq.push(["requireCookieConsent"]);
     _paq.push(["forgetCookieConsentGiven"]);
