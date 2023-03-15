@@ -32,7 +32,15 @@ let firstAccordionRender = true;
  *
  * @returns {component}
  */
-export function Item({ title, subTitle, children, eventKey, onChange, id }) {
+export function Item({
+  title,
+  subTitle,
+  additionalTxt,
+  children,
+  eventKey,
+  onChange,
+  id,
+}) {
   const router = useRouter();
   const currentEventKey = React.useContext(AccordionContext);
 
@@ -94,7 +102,12 @@ export function Item({ title, subTitle, children, eventKey, onChange, id }) {
         onClick={onClick}
         onKeyPress={handleKeypress}
       >
-        <div className={animations["f-translate-right"]}>
+        <div
+          className={[
+            animations["f-translate-right"],
+            styles.firstelement,
+          ].join(" ")}
+        >
           <Text
             type="text2"
             className={[
@@ -106,6 +119,15 @@ export function Item({ title, subTitle, children, eventKey, onChange, id }) {
           </Text>
           {subTitle && <Text type="text4">{subTitle}</Text>}
         </div>
+        {additionalTxt && (
+          <div className={styles.textbox}>
+            {additionalTxt.map((txt, index) => (
+              <Text type="text2" key={`addition-${index}`}>
+                {txt}
+              </Text>
+            ))}
+          </div>
+        )}
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse
