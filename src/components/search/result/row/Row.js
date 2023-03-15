@@ -41,28 +41,26 @@ function TitlesForSearch({ work, isLoading }) {
   }, [work, titlesElementId]);
 
   return (
-    <>
-      <Title
-        type="title5"
-        tag="h2"
-        lines={4}
-        clamp={true}
-        title={titles?.full?.join(" ")}
-        data-cy={"ResultRow-title"}
-        skeleton={!titles && isLoading}
-        className={`${styles.display_inline}`}
-      >
-        <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
-          <RenderTitlesWithoutLanguage titles={titles} />
-          {!titleClamped && titles?.full?.length < 2 && (
-            <RenderLanguageAddition work={work} type={"title6"} />
-          )}
-        </div>
-        {(titleClamped || titles?.full?.length > 1) && (
+    <Title
+      type="title5"
+      tag="h2"
+      lines={4}
+      clamp={true}
+      title={titles?.full?.join(" ")}
+      data-cy={"ResultRow-title"}
+      skeleton={!titles && isLoading}
+      className={`${styles.display_inline}`}
+    >
+      <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
+        <RenderTitlesWithoutLanguage titles={titles} />
+        {!titleClamped && titles?.full?.length < 2 && (
           <RenderLanguageAddition work={work} type={"title6"} />
         )}
-      </Title>
-    </>
+      </div>
+      {(titleClamped || titles?.full?.length > 1) && (
+        <RenderLanguageAddition work={work} type={"title6"} />
+      )}
+    </Title>
   );
 }
 
