@@ -15,7 +15,6 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
-import styles from "./BibliographicData.module.css";
 
 /**
  * Export function of the Component
