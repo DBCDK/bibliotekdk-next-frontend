@@ -200,7 +200,9 @@ function RenderCreatorValues({ values, skeleton }) {
     valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
         {valuesToRender.map((person, index) => (
-          <Fragment key={`RenderCreatorValues__${person}_${index}`}>
+          <Fragment
+            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+          >
             <Link
               href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
