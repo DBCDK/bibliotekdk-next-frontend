@@ -33,7 +33,6 @@ import {
 
 import Banner from "@/components/banner/Banner";
 import Footer from "@/components/footer";
-import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
@@ -175,17 +174,27 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
             </Modal.Container>
             <Script
               id="Cookiebot"
+              type="text/javascript"
               src="https://consent.cookiebot.com/uc.js"
               data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
               data-blockingmode="auto"
-              type="text/javascript"
-            ></Script>
+            />
             <Script
-              id="Matomotracker"
-              src="/mat_tracker.js"
+              id="MatomoConnect"
               type="text/javascript"
-            ></Script>
-            <Matomo />
+              src="/matomo-connect.js"
+            />
+            <Script
+              id="MatomoScript"
+              type="text/javascript"
+              src="/matomo-script.js"
+            />
+            {/* Test script */}
+            <Script
+              id="Teststatistics"
+              type="text/javascript"
+              src="/test-statistics-script.js"
+            />
             <BodyScrollLock router={router} />
             <div id="layout">
               <Head />

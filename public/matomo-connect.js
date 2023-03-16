@@ -1,5 +1,4 @@
 var waitForTrackerCount = 0;
-
 function matomoWaitForTracker() {
   if (typeof _paq === "undefined" || typeof Cookiebot === "undefined") {
     if (waitForTrackerCount < 40) {
@@ -20,11 +19,11 @@ function matomoWaitForTracker() {
 function consentSet() {
   if (Cookiebot.consented) {
     _paq.push(["setCookieConsentGiven"]);
+    _paq.push(["setConsentGiven"]);
     _paq.push(["trackPageView"]);
-    _paq.push(["enableLinkTracking"]);
   } else {
-    _paq.push(["requireCookieConsent"]);
     _paq.push(["forgetCookieConsentGiven"]);
+    _paq.push(["forgetConsentGiven"]);
   }
 }
 
