@@ -10,13 +10,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: var(--pt2) 0;
   cursor: pointer;
 }
 
 .element .header p {
   margin-right: var(--pt2);
+}
+
+.firstelement {
+  width: 10%;
+}
+
+.textbox {
+  display: grid;
+  grid-template-columns: 5fr 7fr 6fr;
+  align-items: center;
+  width: 100%;
+}
+
+.textbox p {
+  justify-self: start;
 }
 
 .content > div {

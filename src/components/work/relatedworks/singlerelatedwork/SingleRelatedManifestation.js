@@ -43,33 +43,32 @@ export default function SingleRelatedManifestation({ manifestation }) {
         <div className={styles.text}>
           {manifestation.partInSeries && (
             <Text
-              type={"text1"}
-              data_disply={"inline"}
+              type={"text4"}
+              data_display={"inline"}
               className={`${styles.wrap_one_line}`}
             >
               {manifestation.partInSeries}
             </Text>
           )}
           <Text
-            type={"text1"}
-            data_disply={"inline"}
+            type={"text4"}
+            data_display={"inline"}
             className={`${styles.wrap_two_lines}`}
             title={fullTitle}
           >
             {fullTitle}
           </Text>
-          <div className={styles.margin_auto} />
           <Text
-            type={"text2"}
-            data_disply={"inline"}
-            className={`${styles.wrap_one_line}`}
+            type={"text3"}
+            data_display={"inline"}
+            className={`${styles.wrap_two_lines}`}
             title={creator}
           >
             {creator}
           </Text>
           <Text
-            type={"text2"}
-            data_disply={"inline"}
+            type={"text3"}
+            data_display={"inline"}
             className={`${styles.wrap_one_line}`}
             title={formattedMaterialTypes}
           >

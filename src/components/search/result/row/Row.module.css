@@ -6,6 +6,20 @@
   min-height: 160px;
 }
 
+.display_inline {
+  display: inline;
+}
+
+.wrap_3_lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;        /* number of lines to show */
+  line-height: 1.5em;           /* fallback */
+  max-height: calc(1.5em * 3);  /* fallback */
+}
+
 .cover img {
   object-position: 50% 0%;
 }

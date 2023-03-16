@@ -18,9 +18,9 @@ import isEmpty from "lodash/isEmpty";
 import { fieldsForRows } from "@/components/work/details/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 
-function DefaultDetailValues({ values, skeleton }) {
+function DefaultDetailValues({ values }) {
   return (
-    <Text type="text4" skeleton={skeleton} lines={0}>
+    <Text type="text4" lines={2}>
       {values}
     </Text>
   );
@@ -34,12 +34,7 @@ function DefaultDetailValues({ values, skeleton }) {
  *
  * @returns {JSX.Element}
  */
-function Details({
-  className = "",
-  manifestation = {},
-  work = {},
-  skeleton = false,
-}) {
+function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
 
@@ -55,6 +50,7 @@ function Details({
     return fieldsForRows(manifestation, work, context);
   }, [manifestation, materialType, work, context]);
 
+  //const fieldsToShow = fieldsForRows(manifestation, work, context);
   return (
     <Section
       title={Translate({ ...context, label: "title" })}
@@ -64,31 +60,26 @@ function Details({
     >
       <Row className={`${styles.details}`}>
         {fieldsToShow &&
-          fieldsToShow.map((field) => {
+          fieldsToShow.map((field, index) => {
             const fieldName = Object.keys(field)[0];
             return (
               !isEmpty(field[fieldName].value) && (
                 /** this is the label **/
-                <Col xs={6} md={{ span: 3 }}>
-                  <Text
-                    type="text3"
-                    className={styles.title}
-                    skeleton={skeleton}
-                    lines={2}
-                  >
+                <Col
+                  xs={6}
+                  md={{ span: 3 }}
+                  key={`details__${fieldName}_${index}`}
+                >
+                  <Text type="text3" className={styles.title} lines={2}>
                     {field[fieldName].label}
                   </Text>
                   {/** some fields has a custom jsx parser .. **/}
                   {field[fieldName].jsxParser ? (
                     field[fieldName].jsxParser({
                       values: field[fieldName].value,
-                      skeleton: skeleton,
                     })
                   ) : (
-                    <DefaultDetailValues
-                      skeleton={skeleton}
-                      values={field[fieldName].value}
-                    />
+                    <DefaultDetailValues values={field[fieldName].value} />
                   )}
                 </Col>
               )
@@ -102,26 +93,31 @@ function Details({
 /**
  * Function to return skeleton (Loading) version of the Component
  *
- * @param {obj} props
- * See propTypes for specific props and types
- *
- * @returns {component}
+ * @returns {JSX.Element}
  */
-export function DetailsSkeleton(props) {
-  const mock = {
-    language: ["..."],
-    physicalDescription: "...",
-    datePublished: "...",
-    creators: [{ type: "...", name: "..." }],
-  };
-
+export function DetailsSkeleton() {
+  const texts = [1, 2, 3, 4, 5, 6];
   return (
-    <Details
-      {...props}
-      manifestation={mock}
-      className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
-    />
+    <Section
+      title={Translate({ context: "details", label: "title" })}
+      space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
+      subtitle=" ... "
+    >
+      <Row className={`${styles.details}`}>
+        {texts.map((txt) => (
+          <Col xs={6} md={{ span: 3 }} key={`skeleton-${txt}`}>
+            <Text
+              type="text3"
+              className={styles.title}
+              lines={2}
+              skeleton={true}
+            >
+              ...
+            </Text>
+          </Col>
+        ))}
+      </Row>
+    </Section>
   );
 }
 
@@ -135,7 +131,6 @@ export function DetailsSkeleton(props) {
  */
 export default function Wrap(props) {
   const { workId, type } = props;
-
   const {
     data,
     isLoading: overViewIsLoading,
@@ -155,7 +150,7 @@ export default function Wrap(props) {
   }
 
   if (overViewIsLoading || relationsIsLoading) {
-    return <DetailsSkeleton {...props} />;
+    return <DetailsSkeleton />;
   }
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
@@ -167,14 +162,13 @@ export default function Wrap(props) {
 
   // attach relations for manifestation to display
   manifestationByMaterialType.relations = groupedRelations;
-  const genreAndForm = data?.work?.genreAndForm || [];
 
   return (
     <Details
       {...props}
       manifestation={manifestationByMaterialType}
       work={data?.work}
-      genreAndForm={genreAndForm}
+      skeleton={overViewIsLoading || relationsIsLoading}
     />
   );
 }

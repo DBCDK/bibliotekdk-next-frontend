@@ -276,6 +276,16 @@ export function description({ workId }) {
     query description($workId: String!) {
       work(id: $workId) {
         abstract
+        creators {
+          display
+          roles {
+            function {
+              plural
+              singular
+            }
+            functionCode
+          }
+        }
       }
       monitor(name: "bibdknext_work_basic")
     }`,
@@ -355,6 +365,9 @@ export function fbiOverviewDetail({ workId }) {
               }    
               audience {
                 generalAudience
+                childrenOrAdults {
+                  display
+                }
               }          
               genreAndForm
               languages {
@@ -368,8 +381,19 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              creatorsFromDescription
               physicalDescriptions {
                 summary
+                accompanyingMaterial
+                additionalDescription
+                extent
+                numberOfPages
+                numberOfUnits
+                playingTime
+                requirements
+                size
+                technicalInformation
+                textVsIllustrations
               }
               edition {
                 publicationYear {
@@ -501,6 +525,10 @@ export function listOfAllManifestations({ workId }) {
             volume
             titles {
               main
+              identifyingAddition
+            }
+            hostPublication {
+              title
             }
             materialTypes {
               specific
@@ -509,7 +537,12 @@ export function listOfAllManifestations({ workId }) {
               publicationYear {
                 display
               }
+              edition
             }
+            creators{
+              display
+            }
+            publisher
           }
         }
       }
@@ -560,6 +593,14 @@ export function overviewWork({ workId }) {
         materialTypes {
           specific
         }
+        mainLanguages {
+          display
+          isoCode
+        }
+        fictionNonfiction {
+          code
+        }
+        workTypes
         manifestations {
           mostRelevant {
             pid

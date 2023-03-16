@@ -32,6 +32,12 @@
   font-family: var(--title-font);
 }
 
+.title6 {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: var(--title-font);
+}
+
 .clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;

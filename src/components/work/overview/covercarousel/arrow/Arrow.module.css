@@ -1,6 +1,4 @@
 .arrow_functionality {
-  display: block;
-
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
   box-shadow: var(--arrow__box_shadow);
