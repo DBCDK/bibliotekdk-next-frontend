@@ -1,5 +1,4 @@
 import nookies from "nookies";
-import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import { generateKey, fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
@@ -57,9 +56,11 @@ export async function fetchAll(queries, context, customQueryVariables) {
       });
   }
 
+  const CookiesConsent = nookies.get(context)?.["CookieConsent"];
+
   return {
     initialData,
-    allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
+    allowCookies: !!CookiesConsent.includes("statistics:true"),
     session,
   };
 }

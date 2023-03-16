@@ -112,7 +112,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   const allowCookies =
     typeof window === "undefined"
       ? pageProps.allowCookies
-      : !!Cookies.get(COOKIES_ALLOWED);
+      : !!Cookies.get("CookieConsent")?.includes("statistics:true");
 
   // Enable data collect, when cookies are approved
   enableDataCollect(allowCookies);
