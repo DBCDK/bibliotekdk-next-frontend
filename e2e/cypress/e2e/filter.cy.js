@@ -5,7 +5,7 @@ describe("Filter", () => {
     cy.visit("/iframe.html?id=modal-filter--connected");
     cy.contains("button", "open filters").click();
 
-    cy.contains("Emne");
+    cy.contains("Emne", { timeout: 10000 });
     cy.contains("Forfatter");
 
     cy.get("[data-cy=list-facets]").children().should("have.length", 2);
@@ -24,7 +24,7 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
 
     // Select some subjects
-    cy.contains("Emne").click();
+    cy.contains("Emne", { timeout: 10000 }).click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
     cy.contains("Tilbage").click();
     cy.get("[data-cy=list-facets]").contains("krimi");

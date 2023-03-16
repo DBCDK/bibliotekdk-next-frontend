@@ -593,6 +593,14 @@ export function overviewWork({ workId }) {
         materialTypes {
           specific
         }
+        mainLanguages {
+          display
+          isoCode
+        }
+        fictionNonfiction {
+          code
+        }
+        workTypes
         manifestations {
           mostRelevant {
             pid

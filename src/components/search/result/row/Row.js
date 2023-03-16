@@ -20,9 +20,13 @@ import {
   formatMaterialTypesToUrl,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import {
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
 
-function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
-  const titles = titlesBeforeFilter?.full || titlesBeforeFilter?.main || [" "];
+function TitlesForSearch({ work, isLoading }) {
+  const titles = work?.titles;
 
   return (
     <Title
@@ -30,21 +34,19 @@ function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
       tag="h2"
       lines={3}
       clamp={true}
-      title={titles?.join(" ")}
+      title={titles?.full?.join(" ")}
       data-cy={"ResultRow-title"}
       skeleton={!titles && isLoading}
+      className={styles.display_inline}
     >
-      {titles.map((title, index) => (
-        <>
-          {title} {index < titles.length - 1 && <br />}
-        </>
-      ))}
+      <RenderTitlesWithoutLanguage titles={titles} />
+      <RenderLanguageAddition work={work} type={"title6"} />
     </Title>
   );
 }
 
 TitlesForSearch.propTypes = {
-  titles: PropTypes.any,
+  work: PropTypes.object,
   loading: PropTypes.bool,
 };
 /**
@@ -93,7 +95,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch titles={work?.titles} loading={isLoading} />
+          <TitlesForSearch work={work} loading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}
