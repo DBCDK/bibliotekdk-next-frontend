@@ -36,7 +36,6 @@ import Footer from "@/components/footer";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";

@@ -60,7 +60,7 @@ export async function fetchAll(queries, context, customQueryVariables) {
 
   return {
     initialData,
-    allowCookies: !!CookiesConsent.includes("statistics:true"),
+    allowCookies: !!CookiesConsent?.includes("statistics:true"),
     session,
   };
 }
