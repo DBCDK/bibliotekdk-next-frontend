@@ -45,7 +45,6 @@
   color: var(--blue);
 }
 
-
 .column {
   margin-bottom: var(--pt1);
 }
@@ -64,7 +63,7 @@
   max-height: 100%;
 }
 
-.addilinks a{
+.addilinks a {
   margin-bottom: var(--pt2);
 }
 
@@ -87,7 +86,7 @@
   padding-right: var(--pt5);
 }
 
-.linkstyle{
+.linkstyle {
   display: contents;
 }
 
