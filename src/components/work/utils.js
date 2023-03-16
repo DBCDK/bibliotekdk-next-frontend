@@ -59,19 +59,18 @@ export function onOnlineAccess(url, target = "_blank") {
  */
 function getPageDescription(work) {
   const title = work?.titles?.main[0];
-  const creator = work?.creators?.[0]?.display;
+  const creator = work?.creators?.[0]?.display || "";
 
   const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
     manifestationMaterialTypeFactory(work?.manifestations?.all);
 
   // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
-
   inUniqueMaterialTypes(["bog"]) && types.push("bog");
   inUniqueMaterialTypes(["ebog"]) && types.push("ebog");
   materialTypes
     ?.filter((matArray) => matArray.length === 1)
-    .filter((matArray) => matArray?.[0].startsWith("lydbog")) &&
+    .filter((matArray) => matArray?.[0].startsWith("lydbog")).length > 0 &&
     types.push("lydbog");
   materialTypes?.filter((matArray) => matArray.length > 1).length > 1 &&
     types.push("sammensat materiale");
