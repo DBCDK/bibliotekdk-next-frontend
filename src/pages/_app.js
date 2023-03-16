@@ -45,6 +45,8 @@ import { enableDataCollect } from "@/lib/useDataCollect";
 
 import Head from "@/components/head";
 
+import Matomo from "@/components/matomo";
+
 import fetchTranslations from "@/lib/api/backend";
 import App from "next/app";
 import SetPickupBranch from "@/components/utils/SetPickupBranch";
@@ -172,6 +174,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
+
             <Script
               id="Cookiebot"
               type="text/javascript"
@@ -179,22 +182,29 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
               data-blockingmode="auto"
             />
+
             <Script
               id="MatomoConnect"
               type="text/javascript"
               src="/matomo-connect.js"
             />
+
             <Script
               id="MatomoScript"
               type="text/javascript"
               src="/matomo-script.js"
             />
+
             {/* Test script */}
             <Script
               id="Teststatistics"
               type="text/javascript"
               src="/test-statistics-script.js"
             />
+
+            {/* matomo update url on singlepage applications */}
+            <Matomo />
+
             <BodyScrollLock router={router} />
             <div id="layout">
               <Head />
