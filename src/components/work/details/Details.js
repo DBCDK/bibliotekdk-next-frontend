@@ -60,12 +60,16 @@ function Details({ className = "", manifestation = {}, work = {} }) {
     >
       <Row className={`${styles.details}`}>
         {fieldsToShow &&
-          fieldsToShow.map((field) => {
+          fieldsToShow.map((field, index) => {
             const fieldName = Object.keys(field)[0];
             return (
               !isEmpty(field[fieldName].value) && (
                 /** this is the label **/
-                <Col xs={6} md={{ span: 3 }}>
+                <Col
+                  xs={6}
+                  md={{ span: 3 }}
+                  key={`details__${fieldName}_${index}`}
+                >
                   <Text type="text3" className={styles.title} lines={2}>
                     {field[fieldName].label}
                   </Text>

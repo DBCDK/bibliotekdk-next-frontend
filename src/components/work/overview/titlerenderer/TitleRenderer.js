@@ -64,5 +64,5 @@ export function RenderTitlesWithoutLanguage({ titles: titlesBeforeFilter }) {
   ));
 }
 RenderTitlesWithoutLanguage.propTypes = {
-  titles: PropTypes.arrayOf(PropTypes.string),
+  titles: PropTypes.object,
 };
