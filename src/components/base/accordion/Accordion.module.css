@@ -29,6 +29,9 @@
   width: 100%;
 }
 
+.textbox p:first-of-type {
+  font-weight: bold;
+}
 .textbox p {
   justify-self: start;
 }
