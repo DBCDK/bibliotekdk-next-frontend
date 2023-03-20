@@ -4,6 +4,10 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
+import {
+  FlatSubjectsForFullManifestation,
+  groupSubjects,
+} from "@/components/work/keywords/Keywords";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -121,6 +125,15 @@ const fields = () => [
     }),
     valueParser: (workYear) => workYear.display || "",
   },
+
+  {
+    dataField: "subjects",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "subject",
+    }),
+    valueParser: FlatSubjectsForFullManifestation,
+  },
   // {
   //   dataField: "physicalDescriptions",
   //   label: Translate({
@@ -171,7 +184,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: ParsedLanguages,
+    valueParser: (languages) =>
+      <ParsedLanguages languages={languages} /> || null,
   },
   {
     dataField: "edition",
@@ -233,6 +247,8 @@ function RenderManifestationParts(value) {
  * @returns {array}
  */
 export function parseManifestation(manifestation) {
+  console.log(manifestation, "MANIFESTATION");
+
   return (
     fields()
       // Remove fields that are not in the manifestation

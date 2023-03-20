@@ -550,6 +550,10 @@
       "manifestationParts": {
         "da": "Indhold",
         "en": "Contents"
+      },
+      "subject": {
+        "da": "Tags",
+        "en": "Tags"
       }
     },
     "references": {
