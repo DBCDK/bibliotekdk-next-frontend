@@ -171,7 +171,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: ParsedLanguages,
+    valueParser: (languages) =>
+      <ParsedLanguages languages={languages} /> || null,
   },
   {
     dataField: "edition",
