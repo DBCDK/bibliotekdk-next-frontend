@@ -50,15 +50,6 @@ li.language {
   --underline-font-hover-color: var(--white);
 }
 
-/*.link,*/
-/*.link:hover,*/
-/*.link:focus-within {*/
-/*  color: white !important;*/
-/*}*/
-/*.link div hr {*/
-/*  background-color: white;*/
-/*}*/
-
 @media (min-width: 576px) {
   .menu {
     padding: 0 var(--pt6) var(--pt6) var(--pt6);
