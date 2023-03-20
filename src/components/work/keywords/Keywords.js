@@ -92,7 +92,7 @@ const SUBJECT_GROUPS = [
  *   }
  * ]
  */
-export function groupSubjects(subjects) {
+function groupSubjects(subjects) {
   const seen = {};
   const groups = [];
 
