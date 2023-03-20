@@ -142,7 +142,7 @@ Link.propTypes = {
 };
 
 /**
- * Wrapper for using new underline that allows line wrap
+ * Wrapper for using link
  * @param className
  * @param disabled
  * @param border
@@ -157,8 +157,8 @@ export default function Wrap({
   className = "",
   disabled = false,
   border = { top: false, bottom: true },
-  data_display = "inline-block",
-  data_use_new_underline = false,
+  data_display = "inline",
+  data_use_new_underline = true,
   data_underline_animation_disabled = false,
   ...props
 }) {
