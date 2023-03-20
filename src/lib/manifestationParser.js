@@ -247,8 +247,6 @@ function RenderManifestationParts(value) {
  * @returns {array}
  */
 export function parseManifestation(manifestation) {
-  console.log(manifestation, "MANIFESTATION");
-
   return (
     fields()
       // Remove fields that are not in the manifestation
