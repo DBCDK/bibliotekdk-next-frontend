@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import BootstrapAccordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
+import { useAccordionButton } from "react-bootstrap/AccordionButton";
 import AccordionContext from "react-bootstrap/AccordionContext";
 
 import ExpandIcon from "@/components/base/animation/expand";
@@ -40,9 +40,10 @@ export function Item({
   eventKey,
   onChange,
   id,
+  isLoading,
 }) {
   const router = useRouter();
-  const currentEventKey = React.useContext(AccordionContext);
+  const context = React.useContext(AccordionContext);
 
   const { elementRef, hasBeenSeen } = useElementVisible({
     root: null,
@@ -50,9 +51,9 @@ export function Item({
     threshold: 1.0,
   });
 
-  const isCurrentEventKey = currentEventKey === eventKey;
+  const isCurrentEventKey = context.activeEventKey === eventKey;
 
-  const onClick = useAccordionToggle(eventKey, () => {
+  const onClick = useAccordionButton(eventKey, () => {
     if (id && `#${id}` !== window.location.hash) {
       router.replace(`${router.asPath.split("#")[0]}#${id}`);
     }
@@ -100,7 +101,7 @@ export function Item({
           animations["f-outline"],
         ].join(" ")}
         onClick={onClick}
-        onKeyPress={handleKeypress}
+        onKeyDown={handleKeypress}
       >
         <div
           className={[
@@ -110,6 +111,8 @@ export function Item({
         >
           <Text
             type="text2"
+            skeleton={isLoading}
+            lines="1"
             className={[
               animations["h-color-blue"],
               animations["h-border-bottom"],
@@ -156,6 +159,31 @@ Item.propTypes = {
   id: PropTypes.string,
 };
 
+export function AccordionSkeleton({ className }) {
+  const dummy = [
+    { title: "lorem ipsum dolor sit amet" },
+    { title: "lorem ipsum dolor" },
+  ];
+
+  return (
+    <BootstrapAccordion
+      className={`${styles.skeleton} ${className}`}
+      data-cy="accordion"
+    >
+      {dummy?.map((a, i) => (
+        <Item
+          title={a.title}
+          key={`${a.title}_${i}`}
+          eventKey={a.key || i.toString()}
+          isLoading={true}
+        >
+          <BodyParser body={a.content} />
+        </Item>
+      ))}
+    </BootstrapAccordion>
+  );
+}
+
 /**
  * The Component function
  *
@@ -173,23 +201,26 @@ export default function Accordion({
   data = null,
   className = "",
   children,
+  isLoading,
 }) {
   useEffect(() => {
     firstAccordionRender = false;
   }, []);
 
-  data =
-    data &&
-    data.map((a, i) => (
-      <Item
-        title={a.title}
-        subTitle={a.subTitle}
-        key={`${a.title}_${i}`}
-        eventKey={a.key || i.toString()}
-      >
-        <BodyParser body={a.content} />
-      </Item>
-    ));
+  if (isLoading) {
+    return <AccordionSkeleton className={className} />;
+  }
+
+  data = data?.map((a, i) => (
+    <Item
+      title={a.title}
+      subTitle={a.subTitle}
+      key={`${a.title}_${i}`}
+      eventKey={a.key || i.toString()}
+    >
+      <BodyParser body={a.content} />
+    </Item>
+  ));
 
   return (
     <BootstrapAccordion

@@ -13,7 +13,6 @@ import { sortData } from "../utils";
 
 import { useData } from "@/lib/api/api";
 import { promotedFaqs } from "@/lib/api/faq.fragments";
-import Skeleton from "@/components/base/skeleton";
 
 import { getLanguage } from "@/components/base/translate/Translate";
 
@@ -29,7 +28,7 @@ import styles from "./Promoted.module.css";
  *
  * @returns {component}
  */
-export function Promoted({ className, data }) {
+export function Promoted({ className = "", data = [], isLoading }) {
   data = useMemo(() => sortData(data), [data]);
 
   return (
@@ -38,12 +37,22 @@ export function Promoted({ className, data }) {
       title={Translate({ context: "help", label: "faq-title" })}
       dataCy="faq"
       space={{ bottom: false }}
+      isLoading={isLoading}
     >
       <Row>
-        <Col lg="8">
-          <Accordion data={data} className={styles.accordion} />
+        <Col lg={8}>
+          <Accordion
+            data={data}
+            isLoading={isLoading}
+            className={styles.accordion}
+          />
           <Link href="/hjaelp/faq" a={false}>
-            <Button type="secondary" size="medium" className={styles.button}>
+            <Button
+              type="secondary"
+              size="medium"
+              className={styles.button}
+              skeleton={isLoading}
+            >
               {Translate({ context: "help", label: "show-more-faq" })}
             </Button>
           </Link>
@@ -73,18 +82,14 @@ export default function Wrap(props) {
   // real data goes here ...
   const { isLoading, data, error } = useData(promotedFaqs(langcode));
 
-  if (isLoading) {
-    return <Skeleton lines={2} />;
-  }
-
-  if (!data || !data.faq || error) {
+  if ((!data || !data.faq || error) && !isLoading) {
     // @TODO some error here .. message for user .. log ??
     return null;
   }
 
-  const realdata = data.faq.entities;
+  const realdata = data?.faq?.entities;
 
-  return <Promoted {...props} data={realdata} />;
+  return <Promoted {...props} isLoading={isLoading} data={realdata} />;
 }
 
 Wrap.propTypes = {

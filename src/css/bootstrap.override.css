@@ -1,3 +1,10 @@
 *:focus {
   outline: unset;
 }
+
+/* react-bootstrap-v2 fixes */
+
+/* fill up remaining col space */
+.row > * {
+  min-width: 0px;
+}
