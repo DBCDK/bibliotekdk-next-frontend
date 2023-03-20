@@ -23,8 +23,8 @@ describe("Overview", () => {
         .should("have.attr", "data-cy", "tag-lydbog-(net)");
 
       // Creators and bookmark
-      cy.get(`[data-cy=text-lucky-luke]`)
-        .parent()
+      cy.get("a")
+        .contains("Lucky Luke")
         .focus()
         .should("contain", "Lucky Luke")
         .tab({ shift: true })
