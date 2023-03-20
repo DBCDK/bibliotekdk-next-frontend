@@ -174,12 +174,20 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
 
-            <Script
+            {/* <Script
               id="Cookiebot"
               type="text/javascript"
               src="https://consent.cookiebot.com/uc.js"
               data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
               data-blockingmode="auto"
+            /> */}
+
+            <Script
+              id="Cookiebot"
+              src="https://consent.cookiebot.com/uc.js"
+              data-cbid="e6e5768a-bc9b-4540-9cbe-169ed94baa07"
+              data-blockingmode="auto"
+              type="text/javascript"
             />
 
             <Script
