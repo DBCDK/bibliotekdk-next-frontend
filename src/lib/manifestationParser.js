@@ -298,15 +298,14 @@ function ManifestationLink({ children }) {
   );
 }
 
-function ParsedLanguages(languages) {
+function ParsedLanguages({ languages }) {
   const languagesNotesExist = languages?.notes?.length > 0;
 
   const languagesExist =
     [...languages?.main, ...languages?.spoken, ...languages?.subtitles].length >
     0;
-
   return (
-    (languagesNotesExist && <div>{languages.notes?.join(". ")}</div>) ||
+    (languagesNotesExist && <div>{languages?.notes?.join(". ")}</div>) ||
     (languagesExist && (
       <>
         {languages?.main?.length > 0 && (
