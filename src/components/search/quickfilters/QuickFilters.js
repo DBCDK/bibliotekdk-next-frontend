@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import useFilters from "@/components/hooks/useFilters";
 
 import Text from "@/components/base/text";
-import Link from "@/components/base/link";
+import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
 import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 
@@ -31,24 +31,22 @@ export function QuickFilters({ onFiltersClick }) {
             <Col xs={{ span: 9, offset: 3 }}>
               <div>
                 <div className={styles.links}>
-                  <Link
+                  <LinkOnlyInternalAnimations
                     tabIndex="-1"
-                    className={styles.link}
                     onClick={() => onFiltersClick()}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.keyCode === 13) {
                         onFiltersClick();
                       }
                     }}
-                    border={false}
                   >
-                    <Icon src="settings.svg" size={2} />
-                    <Link
-                      dataCy="view-all-filters"
-                      onClick={(e) => e.preventDefault()}
-                      border={{ bottom: { keepVisible: true } }}
-                    >
-                      <Text type="text3">
+                    <Text type="text3" className={styles.link_items}>
+                      <Icon src="settings.svg" size={2} />
+                      <Link
+                        dataCy="view-all-filters"
+                        onClick={(e) => e.preventDefault()}
+                        border={{ bottom: { keepVisible: true } }}
+                      >
                         {Translate({
                           context: "search",
                           label:
@@ -57,9 +55,9 @@ export function QuickFilters({ onFiltersClick }) {
                               : "showAllFiltersCount",
                           vars: countFilters === "0" ? null : [countFilters],
                         })}
-                      </Text>
-                    </Link>
-                  </Link>
+                      </Link>
+                    </Text>
+                  </LinkOnlyInternalAnimations>
                 </div>
               </div>
             </Col>

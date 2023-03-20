@@ -334,14 +334,14 @@ export function StaticHeader({ router = null, context }) {
             className={styles.materials}
             data-cy={cyKey({ name: "materials", prefix: "header" })}
           >
-            <Link href="/">
-              <Text type="text3" tag="div">
+            <Text type="text3" tag="div">
+              <Link href="/">
                 {Translate({
                   context: "general",
                   label: "frontpage",
                 })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
 
             {MATERIAL_PAGES.map(({ path, label }) => {
               const active =
@@ -349,19 +349,18 @@ export function StaticHeader({ router = null, context }) {
                 false;
 
               return (
-                <Link
-                  key={`link-${path}-${label}`}
-                  href={`/inspiration/${path}?workTypes=${label}`}
-                  border={{ bottom: { keepVisible: active } }}
-                  dataCy={`header-link-${label}`}
-                >
-                  <Text type="text3">
+                <Text type="text3" tag="div" key={`link-${path}-${label}`}>
+                  <Link
+                    href={`/inspiration/${path}?workTypes=${label}`}
+                    border={{ bottom: { keepVisible: active } }}
+                    dataCy={`header-link-${label}`}
+                  >
                     {Translate({
                       context: "facets",
                       label: `label-${label}`,
                     })}
-                  </Text>
-                </Link>
+                  </Link>
+                </Text>
               );
             })}
           </div>
@@ -370,19 +369,18 @@ export function StaticHeader({ router = null, context }) {
             data-cy={cyKey({ name: "actions", prefix: "header-top" })}
           >
             {actions.map((m) => (
-              <Link
-                key={m.label}
-                href={m.href}
-                target={m.target}
-                dataCy={cyKey({
-                  name: m.label,
-                  prefix: "header-link",
-                })}
-              >
-                <Text type="text3">
+              <Text type="text3" tag="div" key={m.label}>
+                <Link
+                  href={m.href}
+                  target={m.target}
+                  dataCy={cyKey({
+                    name: m.label,
+                    prefix: "header-link",
+                  })}
+                >
                   {Translate({ ...context, label: m.label })}
-                </Text>
-              </Link>
+                </Link>
+              </Text>
             ))}
           </div>
         </div>

@@ -22,16 +22,16 @@ export function References({ context }) {
 
   const linkslist = Object.keys(links).map((onlinekey) => (
     <li className={styles.list} key={onlinekey}>
-      <Link
-        dataCy={onlinekey}
-        border={{ bottom: { keepVisible: true } }}
-        href={links[onlinekey]}
-        target="_blank"
-      >
-        <Text type="text3">
+      <Text type="text3">
+        <Link
+          dataCy={onlinekey}
+          border={{ bottom: { keepVisible: true } }}
+          href={links[onlinekey]}
+          target="_blank"
+        >
           {Translate({ context: "references", label: `${onlinekey}_label` })}
-        </Text>
-      </Link>
+        </Link>
+      </Text>
       <Text type="text3">
         {Translate({
           context: "references",

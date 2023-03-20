@@ -6,7 +6,7 @@
   border-top: 1px solid var(--iron);
 }
 
-.element .header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,7 +14,7 @@
   cursor: pointer;
 }
 
-.element .header p {
+.header p {
   margin-right: var(--pt2);
 }
 
@@ -46,7 +46,7 @@
     padding-right: var(--pt10);
   }
 
-  .element .header {
+  .header {
     padding: var(--pt2) var(--pt3) var(--pt2) 0;
   }
 }

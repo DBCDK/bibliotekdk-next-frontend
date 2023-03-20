@@ -204,6 +204,7 @@ function RenderCreatorValues({ values, skeleton }) {
             key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
           >
             <Link
+              data_use_new_underline={false}
               href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
                 name: person.display,

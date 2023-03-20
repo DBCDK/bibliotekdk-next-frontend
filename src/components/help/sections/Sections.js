@@ -70,16 +70,20 @@ export function Sections({ className, data, skeleton }) {
                 <Divider className={styles.divider} />
                 {links.map((l, i) => {
                   return (
-                    <div className={styles.links} key={`${l.title}_${i}`}>
+                    <Text
+                      className={styles.links}
+                      key={`${l.title}_${i}`}
+                      type="text1"
+                      skeleton={skeleton}
+                      lines={3}
+                    >
                       <Link
                         href={`/hjaelp/${encodeString(l.title)}/${l.id}`}
                         border={{ bottom: !skeleton }}
                       >
-                        <Text type="text1" skeleton={skeleton} lines={3}>
-                          {l.title}
-                        </Text>
+                        {l.title}
                       </Link>
-                    </div>
+                    </Text>
                   );
                 })}
               </Col>

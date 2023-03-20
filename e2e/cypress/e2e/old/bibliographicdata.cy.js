@@ -13,7 +13,7 @@ describe("bibliographic data", () => {
       .should("have.attr", "href")
       .should("not.be.empty")
       .and("contain", "/find?q.creator=manifestation.creators[0].display");
-    cy.get("[data-cy=link-references] p")
+    cy.get("[data-cy=link-references]")
       .first()
       .should("have.text", "Download til referencesystemer");
   });

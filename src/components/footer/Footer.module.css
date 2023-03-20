@@ -12,10 +12,6 @@
   background-color: var(--blue);
 }
 
-.footerlink hr {
-  background-color: white;
-}
-
 .spacer {
   height: var(--pt1);
 }
@@ -24,10 +20,11 @@
   padding-bottom: var(--pt5);
 }
 
-.footerlink span,
-.footerlink:hover span,
-.footerlink:focus span {
-  color: var(--white);
+.footerlink {
+  display: inline;
+  --underline-font-color: var(--white);
+  --underline-bottom-color: var(--white);
+  --underline-bottom-hover-color: var(--white);
 }
 
 .disabled {

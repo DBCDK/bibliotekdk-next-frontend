@@ -67,8 +67,6 @@ export default function Single({ articles, skeleton }) {
                       ${styles.title} 
                       ${styles.underlineContainer__colors}
                     `}
-                    data_display={"inline"}
-                    data_use_new_underline={true}
                   >
                     {article.title}
                   </Link>

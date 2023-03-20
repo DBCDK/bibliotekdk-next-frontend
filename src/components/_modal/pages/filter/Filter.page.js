@@ -138,23 +138,22 @@ function SelectedFilter({
           {category}
         </Text>
         {showSort && (
-          <Link
-            dataCy={`${category}-SORT`}
-            border={{ top: false, bottom: { keepVisible: true } }}
-            onClick={() => {
-              setSortOrder(
-                sortOrder === "numerical" ? "alphabetically" : "numerical"
-              );
-            }}
-            className={styles.sortlink}
-          >
-            <Text type="text3">
+          <Text type="text3" className={styles.sortlink}>
+            <Link
+              dataCy={`${category}-SORT`}
+              border={{ top: false, bottom: { keepVisible: true } }}
+              onClick={() => {
+                setSortOrder(
+                  sortOrder === "numerical" ? "alphabetically" : "numerical"
+                );
+              }}
+            >
               {Translate({
                 context: "facets",
                 label: `label-sortorder-${sortOrder}`,
               })}
-            </Text>
-          </Link>
+            </Link>
+          </Text>
         )}
       </div>
       <List.Group
@@ -270,19 +269,19 @@ export function Filter(props) {
                 label: "title-filter",
               })}
             </Title>
-            <Link
-              dataCy="clear-all-filters"
-              className={styles.clear}
-              onClick={() => onClear && onClear()}
-              border={{ bottom: { keepVisible: true } }}
-            >
-              <Text type="text3">
+            <Text type="text3">
+              <Link
+                dataCy="clear-all-filters"
+                className={styles.clear}
+                onClick={() => onClear && onClear()}
+                border={{ bottom: { keepVisible: true } }}
+              >
                 {Translate({
                   context: "general",
                   label: "clearAll",
                 })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </span>
           <List.Group
             enabled={!isLoading}

@@ -28,24 +28,24 @@ function AlternativeOptions({ modal = null, hasDigitalAccess, context = {} }) {
 
   return (
     <Col xs={12} className={styles.info}>
-      <Link
-        border={{ bottom: { keepVisible: true } }}
-        onClick={() =>
-          modal.push("options", {
-            title: Translate({ context: "modal", label: "title-options" }),
-            selectedPids: selectedPids,
-            workId: workId,
-          })
-        }
-      >
-        <Text tag="span">
+      <Text tag="span">
+        <Link
+          border={{ bottom: { keepVisible: true } }}
+          onClick={() =>
+            modal.push("options", {
+              title: Translate({ context: "modal", label: "title-options" }),
+              selectedPids: selectedPids,
+              workId: workId,
+            })
+          }
+        >
           {Translate({
             context: "overview",
             label: "all-options-link",
             vars: [count],
           })}
-        </Text>
-      </Link>
+        </Link>
+      </Text>
     </Col>
   );
 }

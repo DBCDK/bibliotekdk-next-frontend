@@ -137,18 +137,18 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
             </span>
             {showLink && (
               <div aria-live="polite" aria-busy="false">
-                <Link
-                  href={lookupurl}
-                  target="_blank"
-                  border={{ top: false, bottom: { keepVisible: true } }}
-                >
-                  <Text type="text3" tag="span">
+                <Text type="text3" tag="span">
+                  <Link
+                    href={lookupurl}
+                    target="_blank"
+                    border={{ top: false, bottom: { keepVisible: true } }}
+                  >
                     {Translate({
                       context: "holdings",
                       label: "label_check_local_library",
                     })}
-                  </Text>
-                </Link>
+                  </Link>
+                </Text>
               </div>
             )}
           </>

@@ -57,25 +57,25 @@ function ColumnOne({ workId, manifestation }) {
           </span>
         </div>
         <div>
-          <Link
-            dataCy="link-references"
-            border={{ bottom: { keepVisible: true } }}
-            onClick={() =>
-              openReferencesModal(
-                modal,
-                [manifestation?.pid],
-                workId,
-                manifestation
-              )
-            }
-          >
-            <Text type="text3" className={styles.linkstyle}>
+          <Text type="text3" className={styles.references}>
+            <Link
+              dataCy="link-references"
+              border={{ bottom: { keepVisible: true } }}
+              onClick={() =>
+                openReferencesModal(
+                  modal,
+                  [manifestation?.pid],
+                  workId,
+                  manifestation
+                )
+              }
+            >
               {Translate({
                 context: "references",
                 label: "label_references_title",
               })}
-            </Text>
-          </Link>
+            </Link>
+          </Text>
         </div>
       </div>
     </Col>

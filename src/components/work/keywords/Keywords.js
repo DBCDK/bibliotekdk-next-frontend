@@ -155,15 +155,15 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
                     className={`${styles.keyword} ${sizeClass}`}
                     key={`${key}-${JSON.stringify(display)}`}
                   >
-                    <Link
-                      a
-                      href={url(display)}
-                      border={{ bottom: { keepVisible: true } }}
-                    >
-                      <Title type="title4" skeleton={skeleton}>
+                    <Title type="title4" skeleton={skeleton}>
+                      <Link
+                        a
+                        href={url(display)}
+                        border={{ bottom: { keepVisible: true } }}
+                      >
                         {display}
-                      </Title>
-                    </Link>
+                      </Link>
+                    </Title>
                   </span>
                 );
               })}

@@ -41,11 +41,11 @@ function Breadcrumb({
       data-cy={key}
     >
       {link ? (
-        <Link href={href} className={`${styles.link}`}>
-          <Text tag="span" type="text3">
+        <Text tag="span" type="text3">
+          <Link href={href} className={`${styles.link}`}>
             {children}
-          </Text>
-        </Link>
+          </Link>
+        </Text>
       ) : (
         <Text tag="span" type="text3">
           {children}

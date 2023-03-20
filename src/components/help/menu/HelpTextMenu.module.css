@@ -50,18 +50,6 @@
   top: 5px;
 }
 
-.helpgroup {
-  cursor: pointer;
-}
-
-.helpgroup:hover {
-  text-decoration: underline;
-}
-
-.helpgroup:focus {
-  text-decoration: underline;
-}
-
 .helpactive p {
   font-family: var(--body-font-semibold);
 }

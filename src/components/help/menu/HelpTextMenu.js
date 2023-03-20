@@ -4,7 +4,7 @@ import Text from "@/components/base/text/Text";
 import styles from "@/components/help/menu/HelpTextMenu.module.css";
 import Icon from "@/components/base/icon/Icon";
 import classNames from "classnames/bind";
-import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
+import Link from "@/components/base/link";
 import { useData } from "@/lib/api/api";
 import { publishedHelptexts } from "@/lib/api/helptexts.fragments";
 import PropTypes from "prop-types";
@@ -26,14 +26,11 @@ function MenuLink({ label, href = "#!", active = false }) {
 
   return (
     <div className={`${styles.link} ${activeClass}`}>
-      <Link
-        href={href}
-        dataCy="menu-fixed-links"
-        data_use_new_underline={true}
-        data_display={"inline"}
-      >
-        <Text type={type}>{Translate({ context: "help", label })}</Text>
-      </Link>
+      <Text type={type}>
+        <Link href={href} dataCy="menu-fixed-links" data_display={"inline"}>
+          {Translate({ context: "help", label })}
+        </Link>
+      </Text>
       <Icon src="arrowrightblue.svg" size={1} />
     </div>
   );
@@ -86,9 +83,9 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
                 )}
               />
             </span>
-            <span>
+            <Link>
               {Translate({ context: "helpmenu", label: `${group.name}` })}
-            </span>
+            </Link>
           </Text>
         </div>
         <div
@@ -148,26 +145,27 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
   return menuItems[group.name].map((item, index) => (
     <div className={styles.helplink} key={`div-menulink-${index}`}>
-      <LinkOnlyInternalAnimations
-        href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
-        key={`menulink-${index}`}
+      <Text
+        type="text2"
+        lines={2}
         className={classNames(
           menuItems[group.name][index].id === parseInt(helpTextId, "10")
             ? styles.helpactive
             : ""
         )}
       >
-        <Text type="text2" lines={2}>
-          <Link data_use_new_underline={true} data_display={"inline"}>
-            {item.title}
-            {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
-              <span className={styles.helpiconlink}>
-                <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-              </span>
-            )}
-          </Link>
-        </Text>
-      </LinkOnlyInternalAnimations>
+        <Link
+          data_display={"inline"}
+          href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
+        >
+          {item.title}
+          {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
+            <span className={styles.helpiconlink}>
+              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            </span>
+          )}
+        </Link>
+      </Text>
     </div>
   ));
 }

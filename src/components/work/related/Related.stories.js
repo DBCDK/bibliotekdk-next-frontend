@@ -51,30 +51,28 @@ Connected.story = {
     graphql: {
       debug: true,
       resolvers: {
-        Subject: {
-          __resolveType: () => "SubjectText",
+        Query: {
+          relatedSubjects: () => ["savn", "melankoli"],
         },
-        Work: {
-          subjects: () => ({
-            dbcVerified: [
-              {
-                display: "savn",
-                __typename: "SubjectText",
-                language: {
-                  display: "dansk",
-                  isoCode: "dan",
-                },
+        SubjectContainer: {
+          dbcVerified: () => [
+            {
+              display: "savn",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
               },
-              {
-                display: "melankoli",
-                __typename: "SubjectText",
-                language: {
-                  display: "dansk",
-                  isoCode: "dan",
-                },
+            },
+            {
+              display: "melankoli",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
               },
-            ],
-          }),
+            },
+          ],
         },
       },
     },

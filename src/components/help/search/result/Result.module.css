@@ -1,23 +1,23 @@
-.rowwrapper hr:last-child {
-  background-color: var(--iron);
-}
-.rowwrapper hr:first-child {
-  background-color: var(--blue);
-}
-
-.rowwrapper:first-child {
-  margin-top: var(--pt2);
-}
 .rowwrapper:last-child {
   margin-bottom: var(--pt4);
 }
+
 .rowwrapper:focus,
 .rowwrapper:hover {
-  background: var(--concrete);
-  color: var(--mine-shaft);
+  z-index: 2;
 }
+
 .rowwrapper {
   width: 100%;
+
+  --underline-middle-hover-color: var(--link-background);
+  --underline-font-hover-color: var(--mine-shaft);
+
+  --underline-top-hover-color: var(--blue);
+  --underline-bottom-hover-color: var(--blue);
+  --underline-bottom-color: var(--iron);
+  --underline-top-color: var(--iron);
+  margin-bottom: calc(var(--underline-height) * -1);
 }
 
 .skeleton:focus,
@@ -99,6 +99,12 @@
   width: 100%;
 }
 
+.search {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--pt4);
+}
+
 .search form {
   display: flex;
   margin-bottom: var(--pt4);
@@ -111,7 +117,7 @@
 .row mark {
   font-family: var(--body-font-semibold);
   background-color: transparent;
-  color: darker;
+  /*color: darker;*/
 }
 
 @media (min-width: 768px) {

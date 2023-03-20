@@ -112,19 +112,18 @@ export function MaterialReview({
                       skeleton={skeleton}
                       alt=""
                     />
-                    <Link
-                      target="_blank"
-                      onFocus={onFocus}
-                      disabled={true}
-                      border={{ top: false, bottom: { keepVisible: true } }}
-                    >
-                      <Text type="text2" skeleton={skeleton}>
+                    <Text type="text2" skeleton={skeleton}>
+                      <Link
+                        target="_blank"
+                        onFocus={onFocus}
+                        border={{ top: false, bottom: { keepVisible: true } }}
+                      >
                         {Translate({
                           ...context,
                           label: "materialReviewLinkText",
                         })}
-                      </Text>
-                    </Link>
+                      </Link>
+                    </Text>
                   </Col>
                 </Row>
               </Col>

@@ -222,6 +222,8 @@ describe("Search", () => {
           "[data-cy=expanded-search-mobile] [data-cy=text-færre-søgemuligheder]"
         )
           .scrollIntoView()
+          .children()
+          .first()
           .click();
         cy.get("[data-cy=fake-search-input-button]").should("exist");
       });

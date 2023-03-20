@@ -28,7 +28,6 @@ export default function SingleRelatedManifestation({ manifestation }) {
       data_display={"inline"}
       a={true}
       tag={"a"}
-      data_use_new_underline={true}
     >
       <div className={`${styles.related_element}`}>
         <img

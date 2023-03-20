@@ -25,24 +25,8 @@ function Word({ word, isLoading }) {
       disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
     >
-      <Text type="text2" skeleton={isLoading} lines={1}>
-        {word}
-      </Text>
+      {word}
     </Link>
-  );
-}
-
-/**
- *
- * Returns a list of related subject words/items
- */
-export function Words({ data, isLoading }) {
-  return (
-    <div className={styles.words} data-cy="words-container">
-      {data.map((w) => (
-        <Word key={w} word={w} isLoading={isLoading} />
-      ))}
-    </div>
   );
 }
 
@@ -61,7 +45,13 @@ export function Related({ data, isLoading }) {
       className={styles.section}
       backgroundColor="var(--jagged-ice)"
     >
-      <div>
+      <Text
+        type="text2"
+        skeleton={isLoading}
+        lines={1}
+        className={styles.words}
+        dataCy="words-container"
+      >
         <Skip
           id="view-all-filters"
           className={styles.skip}
@@ -70,8 +60,10 @@ export function Related({ data, isLoading }) {
             label: "skipRelatedSubjects",
           })}
         />
-        <Words data={data} isLoading={isLoading} />
-      </div>
+        {data.map((w) => (
+          <Word key={w} word={w} isLoading={isLoading} />
+        ))}
+      </Text>
     </Section>
   );
 }

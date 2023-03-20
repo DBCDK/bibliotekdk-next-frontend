@@ -40,6 +40,10 @@
   padding: var(--pt1) 0 var(--pt1) 0;
 }
 
+.top .materials {
+  display: flex;
+}
+
 .bottom .actions .action,
 .top .materials a,
 .top .actions a {
@@ -285,7 +289,8 @@
   }
 
   .top .actions {
-    display: block;
+    display: flex;
+    gap: var(--pt3);
   }
 }
 

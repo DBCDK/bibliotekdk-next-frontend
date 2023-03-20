@@ -59,6 +59,7 @@ export default function Logo({
         dataCy={cyKey({
           name: "logo",
         })}
+        data_display={"inline-block"}
       >
         <SvgParser fill={fill} />
 

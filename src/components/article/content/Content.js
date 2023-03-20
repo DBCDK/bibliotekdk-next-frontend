@@ -75,21 +75,21 @@ function ArticleHeader({ article, skeleton }) {
           </Col>
           <Col xs={6} md={"auto"}>
             {!skeleton && (
-              <Link
-                dataCy="article-print"
-                tag="span"
-                border={{ bottom: { keepVisible: true } }}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (typeof window !== "undefined") {
-                    window.print();
-                  }
-                }}
-              >
-                <Text type="text3">
+              <Text type="text3">
+                <Link
+                  dataCy="article-print"
+                  tag="span"
+                  border={{ bottom: { keepVisible: true } }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (typeof window !== "undefined") {
+                      window.print();
+                    }
+                  }}
+                >
                   {Translate({ ...context, label: "printButton" })}
-                </Text>
-              </Link>
+                </Link>
+              </Text>
             )}
           </Col>
         </Row>

@@ -42,10 +42,8 @@ export const BlockedUserInformation = memo(function BlockedUserInformation({
         href={branchOrAgencyUrl}
         target={"_blank"}
         border={{ top: false, bottom: { keepVisible: true } }}
-        data_display="inline"
         disabled={!Boolean(branchOrAgencyUrl)}
         className={`${styles.underlineContainer__colors}`}
-        data_use_new_underline={true}
       >
         {url}
       </Link>

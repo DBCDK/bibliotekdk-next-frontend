@@ -14,25 +14,25 @@ import styles from "./Skip.module.css";
  */
 export default function Skip({ id, className = "", label, dataCy = "skip" }) {
   return (
-    <Link
-      className={`${styles.skip} ${className}`}
-      onClick={() => document.getElementById(id)?.focus()}
-      dataCy={dataCy}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          e.preventDefault();
-          document.getElementById(id)?.focus();
-        }
-      }}
-      aria-label={label}
-    >
-      <Text>
+    <Text>
+      <Link
+        className={`${styles.skip} ${className}`}
+        onClick={() => document.getElementById(id)?.focus()}
+        dataCy={dataCy}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            e.preventDefault();
+            document.getElementById(id)?.focus();
+          }
+        }}
+        aria-label={label}
+      >
         {Translate({
           context: "general",
           label: "skip",
         })}
-      </Text>
-    </Link>
+      </Link>
+    </Text>
   );
 }
 

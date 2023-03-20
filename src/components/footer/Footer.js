@@ -40,18 +40,18 @@ const FirstColumn = () => {
         {label}
       </Text>
       <div className={styles.spacer}></div>
-      <Link
-        border={{ bottom: { keepVisible: true } }}
-        href={POLICY_ARTICLE_PATH}
-        className={styles.footerlink}
-      >
-        <Text tag="span" type="text3">
+      <Text tag="span" type="text3">
+        <Link
+          border={{ bottom: { keepVisible: true } }}
+          href={POLICY_ARTICLE_PATH}
+          className={styles.footerlink}
+        >
           {Translate({
             context: "general",
             label: "administer_cookies",
           })}
-        </Text>
-      </Link>
+        </Link>
+      </Text>
     </div>
   );
 };
@@ -103,18 +103,18 @@ const ContactLinks = () => {
 
   const FooterLink = function ({ href, children, onClick, target = "_self" }) {
     return (
-      <Link
-        href={href}
-        border={{ bottom: { keepVisible: true } }}
-        className={styles.footerlink}
-        dataCy="contactlink"
-        onClick={onClick}
-        target={target}
-      >
-        <Text tag="span" type="text3">
+      <Text tag="span" type="text3">
+        <Link
+          href={href}
+          border={{ bottom: { keepVisible: true } }}
+          className={styles.footerlink}
+          dataCy="contactlink"
+          onClick={onClick}
+          target={target}
+        >
           {children}
-        </Text>
-      </Link>
+        </Link>
+      </Text>
     );
   };
 
@@ -175,19 +175,19 @@ const ThirdColumn = () => {
 const BranchLinks = () => {
   return MATERIAL_PAGES.map(({ path, label }) => (
     <div key={`link-${path}-${label}`}>
-      <Link
-        href={`/inspiration/${path}?workTypes=${label}`}
-        className={styles.footerlink}
-        border={{ bottom: { keepVisible: true } }}
-        dataCy="branchlink"
-      >
-        <Text type="text3">
+      <Text type="text3">
+        <Link
+          href={`/inspiration/${path}?workTypes=${label}`}
+          className={styles.footerlink}
+          border={{ bottom: { keepVisible: true } }}
+          dataCy="branchlink"
+        >
           {Translate({
             context: "facets",
             label: `label-${label}`,
           })}
-        </Text>
-      </Link>
+        </Link>
+      </Text>
     </div>
   ));
 };

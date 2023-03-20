@@ -87,7 +87,11 @@
 }
 
 .linkstyle {
-  display: contents;
+  display: inline;
+}
+
+.references {
+  margin-top: var(--pt2);
 }
 
 @media (min-width: 768px) {

@@ -5,10 +5,15 @@
   margin-top: calc(var(--pt16) * -1);
 }
 
+.display_inline {
+  display: inline;
+}
+
 .skip {
   position: absolute;
   transform: translateX(-100%);
   display: none;
+  margin-left: calc(var(--pt3) * -1);
 }
 
 .words {

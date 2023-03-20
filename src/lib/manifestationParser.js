@@ -250,6 +250,7 @@ function ManifestationLink({ children }) {
     <Link
       href={`/find?q.creator=${children}`}
       border={{ top: false, bottom: { keepVisible: true } }}
+      data_display={"inline"}
     >
       {children}
     </Link>

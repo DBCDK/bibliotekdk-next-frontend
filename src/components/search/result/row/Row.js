@@ -96,6 +96,8 @@ export default function ResultRow({
 
   return (
     <Link
+      data_use_new_underline={false}
+      data_display={"inline-block"}
       a={true}
       border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
       className={`${styles.wrapper} ${className}`}

@@ -151,10 +151,15 @@ function Menu({
 
                 return (
                   <Link
+                    border={{
+                      bottom: {
+                        keepVisible: [isClicked, activeItemId].includes(id),
+                      },
+                    }}
                     tabIndex="-1"
                     key={`link-${id}`}
                     linkRef={itemRef}
-                    className={`anchor-menu-item ${styles.item} ${activeClass} ${isClickedClass}`}
+                    className={`anchor-menu-item ${styles.item} ${isClickedClass} ${activeClass}`}
                     dataCy="anchor-menu-item"
                     tag="span"
                     onClick={(e) => {

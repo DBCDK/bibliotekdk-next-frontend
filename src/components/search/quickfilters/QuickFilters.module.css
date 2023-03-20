@@ -4,20 +4,10 @@
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
 }
 
-.links {
-  display: inline-flex;
-  -moz-box-align: center;
-  align-items: center;
-  margin-right: var(--pt2);
-}
-
-.links > a {
+.link_items {
   display: flex;
+  gap: var(--pt1);
   align-items: center;
-}
-
-.links > a i {
-  margin-right: var(--pt1);
 }
 
 .nopadding{

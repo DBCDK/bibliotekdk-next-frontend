@@ -34,19 +34,19 @@ function OrderConfirmationButton({
             availableAsDigitalCopy &&
             context?.selectedAccesses?.[0]?.__typename !==
               AccessEnum.INTER_LIBRARY_LOAN ? (
-            <Link
-              target="_blank"
-              disabled={false}
-              href={"/hjaelp/digital-artikelservice/84"}
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text3">
+            <Text type="text3">
+              <Link
+                target="_blank"
+                disabled={false}
+                href={"/hjaelp/digital-artikelservice/84"}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
                 {Translate({
                   context: "order",
                   label: "will-order-digital-copy-delivered-by",
                 })}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           ) : (
             <Text type="text3">
               {Translate({

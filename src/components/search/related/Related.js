@@ -22,6 +22,8 @@ import styles from "./Related.module.css";
 function Word({ word, isLoading }) {
   return (
     <Link
+      data_use_new_underline={false}
+      data_display={"inline-block"}
       href={`/find?q.subject=${word}`}
       dataCy={cyKey({ name: word, prefix: "related-subject" })}
       className={styles.word}
