@@ -145,6 +145,15 @@ export function FlatSubjectsForFullManifestation(subjects) {
   });
 }
 
+/**
+ * The actual list of subjects
+ * @param className
+ * @param grouped
+ * @param skeleton
+ * @param sizeClass
+ * @returns {JSX.Element}
+ * @constructor
+ */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
     <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
