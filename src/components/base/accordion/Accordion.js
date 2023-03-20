@@ -35,6 +35,7 @@ let firstAccordionRender = true;
 export function Item({
   title,
   subTitle,
+  additionalTxt,
   children,
   eventKey,
   onChange,
@@ -102,7 +103,12 @@ export function Item({
         onClick={onClick}
         onKeyDown={handleKeypress}
       >
-        <div className={animations["f-translate-right"]}>
+        <div
+          className={[
+            animations["f-translate-right"],
+            styles.firstelement,
+          ].join(" ")}
+        >
           <Text
             type="text2"
             skeleton={isLoading}
@@ -116,6 +122,15 @@ export function Item({
           </Text>
           {subTitle && <Text type="text4">{subTitle}</Text>}
         </div>
+        {additionalTxt && (
+          <div className={styles.textbox}>
+            {additionalTxt.map((txt, index) => (
+              <Text type="text2" key={`addition-${index}`}>
+                {txt}
+              </Text>
+            ))}
+          </div>
+        )}
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse

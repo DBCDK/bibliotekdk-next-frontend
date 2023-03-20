@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -20,31 +20,52 @@ import {
   formatMaterialTypesToUrl,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import {
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
 
-function TitlesForSearch({ titles: titlesBeforeFilter, isLoading }) {
-  const titles = titlesBeforeFilter?.full || titlesBeforeFilter?.main || [" "];
+function TitlesForSearch({ work, isLoading }) {
+  const titles = work?.titles;
+  const titlesElementId = `TitlesForSearch__RenderTitlesWithoutLanguage-${work?.workId?.replace(
+    /\W/g,
+    ""
+  )}`;
+  const [titleClamped, setTitleClamped] = useState(null);
+
+  useEffect(() => {
+    function checkLineClamp(element) {
+      return element?.scrollHeight > element?.clientHeight;
+    }
+    setTitleClamped(checkLineClamp(document?.getElementById(titlesElementId)));
+  }, [work, titlesElementId]);
 
   return (
     <Title
       type="title5"
       tag="h2"
-      lines={3}
+      lines={4}
       clamp={true}
-      title={titles?.join(" ")}
+      title={titles?.full?.join(" ")}
       data-cy={"ResultRow-title"}
       skeleton={!titles && isLoading}
+      className={`${styles.display_inline}`}
     >
-      {titles.map((title, index) => (
-        <>
-          {title} {index < titles.length - 1 && <br />}
-        </>
-      ))}
+      <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
+        <RenderTitlesWithoutLanguage titles={titles} />
+        {!titleClamped && titles?.full?.length < 2 && (
+          <RenderLanguageAddition work={work} type={"title6"} />
+        )}
+      </div>
+      {(titleClamped || titles?.full?.length > 1) && (
+        <RenderLanguageAddition work={work} type={"title6"} />
+      )}
     </Title>
   );
 }
 
 TitlesForSearch.propTypes = {
-  titles: PropTypes.any,
+  work: PropTypes.object,
   loading: PropTypes.bool,
 };
 /**
@@ -93,7 +114,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch titles={work?.titles} loading={isLoading} />
+          <TitlesForSearch work={work} loading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}
