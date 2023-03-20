@@ -313,7 +313,7 @@ function ManifestationLink({ children }) {
   );
 }
 
-function ParsedLanguages(languages) {
+function ParsedLanguages({ languages }) {
   const languagesNotesExist = languages?.notes?.length > 0;
 
   const languagesExist =

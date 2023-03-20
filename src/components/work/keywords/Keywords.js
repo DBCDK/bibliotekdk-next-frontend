@@ -117,6 +117,12 @@ export function groupSubjects(subjects) {
   return groups;
 }
 
+/**
+ * Used in manifestationParser to get a list of links to subjects.
+ * @param subjects
+ * @returns {unknown[] | undefined}
+ * @constructor
+ */
 export function FlatSubjectsForFullManifestation(subjects) {
   // const grouped = groupSubjects(subjects?.dbcVerified);
   // @TODO .. should we use this group shit for anything in full manifestation ?
