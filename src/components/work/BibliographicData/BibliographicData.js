@@ -15,6 +15,7 @@ import {
   formatMaterialTypesToPresentation,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Export function of the Component
@@ -54,10 +55,50 @@ export function BibliographicData({ manifestations, workId }) {
           // Pass an array of additional text (s) for the folded accordion
           // show the materialtype
           const shortMaterialType = [formattedMaterialTypes, volume].join("");
-          // show a person involved
+
+          // show a person involved - prioritized
+          // 1. contributor (dkind) - indlæser
+          // 2. illustrator
+          // 3. titles.identifyingAddition - text describing contribution
+          // 4. creator
+          // 5. .. nothing
+
+          // priority 1
+          const personsReading = manifestation?.contributors?.filter((con) => {
+            return !isEmpty(
+              con?.roles?.find((rol) => rol.functionCode === "dkind")
+            );
+          });
+          // priority 2
+          const personIllustrating = manifestation?.contributors?.filter(
+            (con) => {
+              return !isEmpty(
+                con?.roles?.find((rol) => rol.functionCode === "ill")
+              );
+            }
+          );
           const shortPerson =
-            manifestation.titles.identifyingAddition ||
-            manifestation?.creators?.[0]?.display;
+            (personsReading.length > 0 &&
+              personsReading
+                ?.map(
+                  (person) =>
+                    `${person.roles?.[0]?.function?.singular} : ${person.display}`
+                )
+                .join(", ")) ||
+            (personIllustrating.length > 0 &&
+              personIllustrating
+                ?.map(
+                  (person) =>
+                    `${person.roles?.[0]?.function?.singular} : ${person.display}`
+                )
+                .join(", ")) ||
+            // priority 3
+            manifestation?.titles?.identifyingAddition ||
+            // priority 4
+            manifestation?.creators?.[0]?.display ||
+            // priority 5
+            "";
+
           // show some publishing info
           const shortPublishing =
             manifestation?.hostPublication?.title ||
@@ -75,7 +116,7 @@ export function BibliographicData({ manifestations, workId }) {
 
           return (
             <Item
-              title={manifestation?.edition?.publicationYear?.display}
+              title={manifestation?.edition?.publicationYear?.display || "-"}
               additionalTxt={additinalText}
               key={`${manifestation?.titles?.main?.[0]}_${index}`}
               eventKey={index.toString()}
