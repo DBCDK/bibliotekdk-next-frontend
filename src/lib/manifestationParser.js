@@ -227,11 +227,14 @@ function RenderTitleArray(value) {
     value.alternative && (
       <>
         <div>FISK</div>
-        {value.alternative.map((val, index) => (
-          <div key={`alternate-${index}`}>
-            <Text type="text3">{val}</Text>
-          </div>
-        ))}
+        {value.alternative.map((val, index) => {
+          console.log(val, "VAL");
+          return (
+            <div key={`alternate-${index}`}>
+              <Text type="text3">{val}</Text>
+            </div>
+          );
+        })}
         <div>HEST</div>
       </>
     )
