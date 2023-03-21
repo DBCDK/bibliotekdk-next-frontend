@@ -178,36 +178,31 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               id="Cookiebot"
               type="text/javascript"
               src="https://consent.cookiebot.com/uc.js"
-              data-cbid="0fbb22bb-3956-42c3-bf83-d7551c5f70d2"
+              data-cbid="0945225b-6b16-4166-82dd-ea5947b897b3"
               data-blockingmode="auto"
+              async
             /> */}
 
-            <Script
-              id="Cookiebot"
-              src="https://consent.cookiebot.com/uc.js"
-              data-cbid="e6e5768a-bc9b-4540-9cbe-169ed94baa07"
-              data-blockingmode="auto"
-              type="text/javascript"
-            />
-
-            <Script
+            {/* <Script
               id="MatomoConnect"
               type="text/javascript"
               src="/matomo-connect.js"
-            />
+            /> */}
 
-            <Script
+            {/* <Script
               id="MatomoScript"
               type="text/javascript"
               src="/matomo-script.js"
-            />
+            /> */}
 
             {/* Test script */}
-            <Script
+            {/* <Script
               id="Teststatistics"
+              // type="text/plain"
               type="text/javascript"
               src="/test-statistics-script.js"
-            />
+              // data-cookieconsent="statistics"
+            /> */}
 
             {/* matomo update url on singlepage applications */}
             <Matomo />
