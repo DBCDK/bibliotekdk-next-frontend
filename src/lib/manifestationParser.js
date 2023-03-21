@@ -4,6 +4,10 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
+import {
+  FlatSubjectsForFullManifestation,
+  groupSubjects,
+} from "@/components/work/keywords/Keywords";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -120,6 +124,15 @@ const fields = () => [
       label: "originalYear",
     }),
     valueParser: (workYear) => workYear.display || "",
+  },
+
+  {
+    dataField: "subjects",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "subject",
+    }),
+    valueParser: FlatSubjectsForFullManifestation,
   },
   // {
   //   dataField: "physicalDescriptions",

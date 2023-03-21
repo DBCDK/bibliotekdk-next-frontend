@@ -261,6 +261,12 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     system
     display
   }
+  subjects {
+    dbcVerified {
+     display
+      type
+    }
+  }  
   languages {
     original {
       display
