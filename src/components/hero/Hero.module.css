@@ -43,6 +43,7 @@
   right: 0;
   bottom: 0;
   filter: drop-shadow(0 0 var(--pt05) var(--mine-shaft));
+  width: auto;
 }
 
 .bluebox {
