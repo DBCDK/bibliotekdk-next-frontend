@@ -4,11 +4,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
-import {
-  FlatSubjectsForFullManifestation,
-  groupSubjects,
-} from "@/components/work/keywords/Keywords";
-import styles from "@/components/work/overview/titlerenderer/TitleRenderer.module.css";
+import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
