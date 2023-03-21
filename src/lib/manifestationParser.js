@@ -8,6 +8,7 @@ import {
   FlatSubjectsForFullManifestation,
   groupSubjects,
 } from "@/components/work/keywords/Keywords";
+import styles from "@/components/work/overview/titlerenderer/TitleRenderer.module.css";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -118,6 +119,14 @@ const fields = () => [
     valueParser: (value) => value.original || "",
   },
   {
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "otherTitles",
+    }),
+    valueParser: RenderTitleArray,
+  },
+  {
     dataField: "workYear",
     label: Translate({
       context: "bibliographic-data",
@@ -204,6 +213,34 @@ const fields = () => [
     valueParser: RenderManifestationParts,
   },
 ];
+
+/**
+ * Value potentially holds MANY titles.
+ * main * full * alternative * original * parallel * standard * identifyingAddition * translated * titlePlusLanguage
+ *
+ * main and original titles are handled seperately - make a mix of the other ones
+ * @param value
+ * @returns {*}
+ * @constructor
+ */
+function RenderTitleArray(value) {
+  console.log(value, "VALUE");
+  const fullTitle = value?.full || null;
+
+  return (
+    value.alternative && (
+      <>
+        <div>FISK</div>
+        {value.alternative.map((val, index) => (
+          <div key={`alternate-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        ))}
+        <div>HEST</div>
+      </>
+    )
+  );
+}
 
 /**
  * Render manifestationParts (content of music, node etc) as a
@@ -312,6 +349,7 @@ function ManifestationLink({ children }) {
 }
 
 function ParsedLanguages({ languages }) {
+  return null;
   const languagesNotesExist = languages?.notes?.length > 0;
 
   const languagesExist =
