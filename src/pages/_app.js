@@ -52,7 +52,6 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
-import Script from "next/script";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
