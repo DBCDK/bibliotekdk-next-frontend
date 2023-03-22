@@ -42,7 +42,7 @@ export function Sections({ className, data, skeleton }) {
         divider={false}
       >
         <Row>
-          <Col lg="8">
+          <Col lg={8}>
             <Title type="title3">
               {Translate({ context: "help", label: "all-pages" })}
             </Title>
@@ -66,7 +66,7 @@ export function Sections({ className, data, skeleton }) {
             key={`${group_name}_${i}`}
           >
             <Row className={styles.content}>
-              <Col lg="8">
+              <Col lg={8}>
                 <Divider className={styles.divider} />
                 {links.map((l, i) => {
                   return (

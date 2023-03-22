@@ -34,7 +34,7 @@ export default function Searchbar({ q }) {
         className={styles.section}
       >
         <Row>
-          <Col xs={12} md={{ span: 12, offset: 0 }}>
+          <Col xs={12}>
             <Row>
               <Col xs={12}>
                 <FakeSearchInput q={q} showButton={!expandedOpen} />

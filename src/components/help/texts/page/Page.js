@@ -19,10 +19,10 @@ export default function HelpTextPage({ helpTextId }) {
   return (
     <Container fluid className={styles.content}>
       <Row>
-        <Col md={{ span: 3 }} className={styles.helpmenu}>
+        <Col md={3} className={styles.helpmenu}>
           <HelpTextMenu helpTextId={helpTextId} />
         </Col>
-        <Col lg={{ span: 6 }} md={{ span: 9 }} className={styles.helptext}>
+        <Col lg={6} md={9} className={styles.helptext}>
           <HelpText helpTextId={helpTextId} />
         </Col>
       </Row>

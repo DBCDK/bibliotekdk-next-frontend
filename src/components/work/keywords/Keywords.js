@@ -7,6 +7,7 @@ import { cyKey } from "@/utils/trim";
 
 import Section from "@/components/base/section";
 import Title from "@/components/base/title";
+import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
@@ -117,6 +118,78 @@ function groupSubjects(subjects) {
 }
 
 /**
+ * Used in manifestationParser to get a list of links to subjects.
+ * @param subjects
+ * @returns {unknown[] | undefined}
+ * @constructor
+ */
+export function FlatSubjectsForFullManifestation(subjects) {
+  // const grouped = groupSubjects(subjects?.dbcVerified);
+  // @TODO .. should we use this group shit for anything in full manifestation ?
+
+  return subjects?.dbcVerified?.map((sub, index) => {
+    return (
+      <>
+        <Link
+          a
+          href={url(sub.display)}
+          border={{ bottom: { keepVisible: true } }}
+          className={styles.bibliographickeywordslink}
+          key={`flat-subject-${index}`}
+        >
+          <Text type="text3" tag="span">
+            {sub.display}
+          </Text>
+        </Link>
+        {index < subjects?.dbcVerified?.length - 1 && <>,&nbsp;</>}
+      </>
+    );
+  });
+}
+
+/**
+ * The actual list of subjects
+ * @param className
+ * @param grouped
+ * @param skeleton
+ * @param sizeClass
+ * @returns {JSX.Element}
+ */
+function KeyWordList({ className, grouped, skeleton, sizeClass }) {
+  return (
+    <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
+      {grouped?.map((group, idx) => {
+        return (
+          <div key={group.key} data-cy={`keyword-group-${idx}`}>
+            {group.subjects.map(({ display }) => {
+              const key = cyKey({ name: display, prefix: "keyword" });
+
+              return (
+                <span
+                  data-cy={key}
+                  className={`${styles.keyword} ${sizeClass}`}
+                  key={`${key}-${JSON.stringify(display)}`}
+                >
+                  <Title type="title4" skeleton={skeleton}>
+                    <Link
+                      a
+                      href={url(display)}
+                      border={{ bottom: { keepVisible: true } }}
+                    >
+                      {display}
+                    </Link>
+                  </Title>
+                </span>
+              );
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -142,35 +215,12 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
       space={{ top: "var(--pt8)" }}
       backgroundColor="var(--jagged-ice)"
     >
-      <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
-        {grouped?.map((group, idx) => {
-          return (
-            <div key={group.key} data-cy={`keyword-group-${idx}`}>
-              {group.subjects.map(({ display }) => {
-                const key = cyKey({ name: display, prefix: "keyword" });
-
-                return (
-                  <span
-                    data-cy={key}
-                    className={`${styles.keyword} ${sizeClass}`}
-                    key={`${key}-${JSON.stringify(display)}`}
-                  >
-                    <Title type="title4" skeleton={skeleton}>
-                      <Link
-                        a
-                        href={url(display)}
-                        border={{ bottom: { keepVisible: true } }}
-                      >
-                        {display}
-                      </Link>
-                    </Title>
-                  </span>
-                );
-              })}
-            </div>
-          );
-        })}
-      </div>
+      <KeyWordList
+        className={className}
+        grouped={grouped}
+        skeleton={skeleton}
+        sizeClass={sizeClass}
+      />
     </Section>
   );
 }
