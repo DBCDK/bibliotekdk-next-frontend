@@ -87,7 +87,7 @@
 }
 
 .linkstyle {
-  display: contents;
+  padding-top: var(--pt2);
 }
 
 @media (min-width: 768px) {

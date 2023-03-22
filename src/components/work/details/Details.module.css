@@ -13,6 +13,11 @@
   font-weight: bold;
 }
 
+.link_list {
+  line-height: 22px;
+  margin-bottom: calc(var(--pt05) * -0.5);
+}
+
 .link {
   white-space: normal;
   display: table;

@@ -75,7 +75,12 @@ export function Sections({ className, data, skeleton }) {
                         href={`/hjaelp/${encodeString(l.title)}/${l.id}`}
                         border={{ bottom: !skeleton }}
                       >
-                        <Text type="text1" skeleton={skeleton} lines={3}>
+                        <Text
+                          type="text1"
+                          skeleton={skeleton}
+                          tag="span"
+                          lines={3}
+                        >
                           {l.title}
                         </Text>
                       </Link>

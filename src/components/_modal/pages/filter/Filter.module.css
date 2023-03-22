@@ -35,17 +35,10 @@
   padding: 0 var(--pt4) 0 var(--pt2);
 }
 
-.category {
-  padding: 0 0 var(--pt3) 0;
-  display: inline-block;
-}
-
 .divflex{
   display: flex;
-}
-
-.sortlink{
-  margin-left:auto;
+  padding: 0 0 var(--pt3) 0;
+  justify-content: space-between;
 }
 
 .select > div {

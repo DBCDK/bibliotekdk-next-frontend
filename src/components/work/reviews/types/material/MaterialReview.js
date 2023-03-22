@@ -118,7 +118,7 @@ export function MaterialReview({
                       disabled={true}
                       border={{ top: false, bottom: { keepVisible: true } }}
                     >
-                      <Text type="text2" skeleton={skeleton}>
+                      <Text type="text2" skeleton={skeleton} tag="span">
                         {Translate({
                           ...context,
                           label: "materialReviewLinkText",

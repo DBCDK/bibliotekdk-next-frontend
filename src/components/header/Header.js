@@ -335,7 +335,7 @@ export function StaticHeader({ router = null, context }) {
             data-cy={cyKey({ name: "materials", prefix: "header" })}
           >
             <Link href="/">
-              <Text type="text3" tag="div">
+              <Text type="text3" tag="span">
                 {Translate({
                   context: "general",
                   label: "frontpage",
@@ -355,7 +355,7 @@ export function StaticHeader({ router = null, context }) {
                   border={{ bottom: { keepVisible: active } }}
                   dataCy={`header-link-${label}`}
                 >
-                  <Text type="text3">
+                  <Text type="text3" tag="span">
                     {Translate({
                       context: "facets",
                       label: `label-${label}`,
@@ -379,7 +379,7 @@ export function StaticHeader({ router = null, context }) {
                   prefix: "header-link",
                 })}
               >
-                <Text type="text3">
+                <Text type="text3" tag="span">
                   {Translate({ ...context, label: m.label })}
                 </Text>
               </Link>
