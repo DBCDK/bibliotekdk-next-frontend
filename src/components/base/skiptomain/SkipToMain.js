@@ -10,24 +10,25 @@ import Text from "@/components/base/text";
  */
 export function SkipToMainLink() {
   return (
-    <Link
-      className={styles.skiptomainlink}
-      onClick={() => {
-        location.href = "#nav-main";
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
+    <div className={styles.skiptomainlink}>
+      <Link
+        onClick={() => {
           location.href = "#nav-main";
-        }
-      }}
-    >
-      <Text type="text4">
-        {Translate({
-          context: "general",
-          label: "SkipToMain",
-        })}
-      </Text>
-    </Link>
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            location.href = "#nav-main";
+          }
+        }}
+      >
+        <Text type="text4" tag="span">
+          {Translate({
+            context: "general",
+            label: "SkipToMain",
+          })}
+        </Text>
+      </Link>
+    </div>
   );
 }
 

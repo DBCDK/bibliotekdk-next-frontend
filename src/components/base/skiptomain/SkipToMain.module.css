@@ -1,21 +1,16 @@
 .skiptomainlink {
-    border: 0;
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    position: absolute !important;
+  margin: -1px;
+  padding: 1rem;
+  top: 10px;
+  left: 10px;
+  background: white;
+  width: auto;
+  height: auto;
+  border: 1px solid var(--mine-shaft);
+  position: absolute;
+  transform: translateX(-120%);
 }
 
-.skiptomainlink:focus {
-    padding: 1rem;
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    background: white;
-    z-index: 10;
-    width: auto;
-    height: auto;
-    border: 1px solid var(--mine-shaft);
+.skiptomainlink:focus-within {
+  transform: translateX(0);
 }
