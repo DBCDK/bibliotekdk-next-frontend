@@ -106,7 +106,9 @@ export function Item({
         <div
           className={[
             animations["f-translate-right"],
-            styles.firstelement,
+            // if additional text is to be shown we need to set a wwidth (.firstelement)
+            // of first element in accordion header
+            additionalTxt && styles.firstelement,
           ].join(" ")}
         >
           <Text
