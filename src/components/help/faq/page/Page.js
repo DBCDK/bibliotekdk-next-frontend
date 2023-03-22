@@ -49,7 +49,7 @@ export default function Page() {
       <main>
         <Container className={styles.top} fluid>
           <Row>
-            <Col xs={12} lg={{ span: 3 }}>
+            <Col xs={12} lg={3}>
               <HelpTextMenu className={styles.menu} />
               <Breadcrumbs
                 path={[
@@ -60,7 +60,7 @@ export default function Page() {
                 className={styles.breadcrumbs}
               />
             </Col>
-            <Col xs={12} lg={{ span: 6 }}>
+            <Col xs={12} lg={6}>
               <Faq className={styles.faq} />
             </Col>
           </Row>

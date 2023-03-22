@@ -29,6 +29,9 @@
   width: 100%;
 }
 
+.textbox p:first-of-type {
+  font-weight: bold;
+}
 .textbox p {
   justify-self: start;
 }
@@ -39,6 +42,10 @@
 
 .content p {
   padding-right: var(--pt7);
+}
+
+.skeleton {
+  pointer-events: none;
 }
 
 @media (min-width: 992px) {

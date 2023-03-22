@@ -1,6 +1,6 @@
 .flex_row {
   isolation: isolate;
-
+  position: relative;
   display: flex;
   flex-direction: row;
 }
