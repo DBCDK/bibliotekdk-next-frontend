@@ -192,12 +192,11 @@
     display: none;
   }
 
-
-  .mobileHeader{
+  .mobileHeader {
     margin-left: 0;
   }
 
-  .mobileHeaderNoActionCol{
+  .mobileHeaderNoActionCol {
     display: none;
   }
 

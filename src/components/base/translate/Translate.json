@@ -546,6 +546,14 @@
       "notes": {
         "da": "Note",
         "en": "Note"
+      },
+      "manifestationParts": {
+        "da": "Indhold",
+        "en": "Contents"
+      },
+      "subject": {
+        "da": "Tags",
+        "en": "Tags"
       }
     },
     "references": {
