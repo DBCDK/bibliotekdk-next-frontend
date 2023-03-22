@@ -57,6 +57,9 @@
 .row > div {
   /* align-self: flex-start; */
 }
+.inputOuterWrapper {
+  position: relative;
+}
 .inputwrapper {
   position: absolute;
   top: 0;

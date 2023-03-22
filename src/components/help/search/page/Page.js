@@ -63,10 +63,10 @@ export function Page({ result, isLoading, query }) {
       <main>
         <Container className={styles.top} fluid>
           <Row>
-            <Col xs={12} lg={{ span: 3 }}>
+            <Col xs={12} lg={3}>
               <HelpTextMenu className={styles.menu} />
             </Col>
-            <Col xs={12} lg={{ span: 6 }}>
+            <Col xs={12} lg={6}>
               <Result result={result} isLoading={isLoading} query={query} />
             </Col>
           </Row>
