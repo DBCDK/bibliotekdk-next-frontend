@@ -17,6 +17,11 @@ const fields = () => [
     valueParser: (value) => value.main || "",
   },
   {
+    dataField: "titles",
+    label: "otherTitles :",
+    valueParser: RenderTitles,
+  },
+  {
     dataField: "creators",
     label: Translate({
       context: "bibliographic-data",
@@ -106,22 +111,14 @@ const fields = () => [
   //       </span>
   //     )),
   // },
-  {
+  /* {
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
       label: "originalTitle",
     }),
     valueParser: (value) => value.original || "",
-  },
-  {
-    dataField: "titles",
-    label: Translate({
-      context: "bibliographic-data",
-      label: "otherTitles",
-    }),
-    valueParser: RenderTitleArray,
-  },
+  },*/
   {
     dataField: "workYear",
     label: Translate({
@@ -219,25 +216,99 @@ const fields = () => [
  * @returns {*}
  * @constructor
  */
-function RenderTitleArray(value) {
-  console.log(value, "VALUE");
-  const fullTitle = value?.full || null;
-
+function RenderTitles(value) {
   return (
-    value.alternative && (
-      <>
-        <div>FISK</div>
-        {value.alternative.map((val, index) => {
-          console.log(val, "VAL");
-          return (
-            <div key={`alternate-${index}`}>
-              <Text type="text3">{val}</Text>
-            </div>
-          );
-        })}
-        <div>HEST</div>
-      </>
-    )
+    <>
+      {value.main?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Main titles</Text>
+          </div>
+          {value.main.map((val, index) => {
+            return (
+              <div key={`main-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {value.full?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Full titles</Text>
+          </div>
+          {value.full.map((val, index) => {
+            return (
+              <div key={`full-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {value.alternative?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Alternative titles</Text>
+          </div>
+          {value.alternative.map((val, index) => {
+            return (
+              <div key={`alternate-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {value.original?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Original titles</Text>
+          </div>
+          {value.original.map((val, index) => {
+            return (
+              <div key={`original-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {value.parallel?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Parallel titles</Text>
+          </div>
+          {value.parallel.map((val, index) => {
+            return (
+              <div key={`parllel-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+
+      {value.translated?.length > 0 && (
+        <>
+          <div>
+            <Text type="text4">Translated titles</Text>
+          </div>
+          {value.translated.map((val, index) => {
+            return (
+              <div key={`translated-${index}`}>
+                <Text type="text3">{val}</Text>
+              </div>
+            );
+          })}
+        </>
+      )}
+    </>
   );
 }
 

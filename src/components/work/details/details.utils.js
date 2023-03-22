@@ -203,21 +203,21 @@ function RenderCreatorValues({ values, skeleton }) {
           <Fragment
             key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
           >
-            <Link
-              href={`/find?q.creator=${person.display}`}
-              dataCy={cyKey({
-                name: person.display,
-                prefix: "details-creatore",
-              })}
-              disabled={skeleton}
-              border={{ bottom: { keepVisible: true } }}
-              key={`crators-${index}`}
-              className={styles.link}
-            >
-              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              <Link
+                href={`/find?q.creator=${person.display}`}
+                dataCy={cyKey({
+                  name: person.display,
+                  prefix: "details-creatore",
+                })}
+                disabled={skeleton}
+                border={{ bottom: { keepVisible: true } }}
+                key={`crators-${index}`}
+                className={styles.link}
+              >
                 {parsePersonAndFunction(person)}
-              </Text>
-            </Link>
+              </Link>
+            </Text>
           </Fragment>
         ))}
         {length > 4 && (
@@ -225,6 +225,11 @@ function RenderCreatorValues({ values, skeleton }) {
             m.fl
           </Text>
         )}
+        <Text type="text4">
+          <Link href={`/fiks`} className={styles.link}>
+            a extremely long link that goes aboslutely nowhre
+          </Link>
+        </Text>
       </div>
     )
   );
