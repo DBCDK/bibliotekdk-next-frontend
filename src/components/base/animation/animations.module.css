@@ -173,6 +173,7 @@
   background-position: var(--underline-background-position);
   background-repeat: no-repeat;
   padding-bottom: 1px;
+  cursor: pointer;
 }
 
 .underlineContainer:is(:hover, :focus, :focus-visible),
