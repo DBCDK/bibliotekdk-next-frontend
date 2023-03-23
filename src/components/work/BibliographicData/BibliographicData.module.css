@@ -71,6 +71,18 @@
   margin-bottom: var(--pt1);
 }
 
+.fisk {
+  list-style-type: circle;
+}
+
+.fisk li:nth-child(even) {
+  background: none;
+}
+
+.fisk li:nth-child(odd) {
+  background: none;
+}
+
 .container {
   column-count: 1;
   -webkit-column-count: 1;

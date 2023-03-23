@@ -8,7 +8,7 @@ export default exportedObject;
 
 export function ManifestationPartsStory() {
   const pid = "870970-basis:39533928";
-  return <ManifestationParts pid={pid} />;
+  return <ManifestationParts pid={pid} titleOnly={false} />;
 }
 
 ManifestationPartsStory.story = {

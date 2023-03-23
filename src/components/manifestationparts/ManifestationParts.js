@@ -2,10 +2,11 @@ import { useData } from "@/lib/api/api";
 import { manifestationParts } from "@/lib/api/manifestation.fragments";
 import styles from "./ManifestationParts.module.css";
 import Text from "@/components/base/text/Text";
+import animations from "@/components/base/animation/animations.module.css";
 
-export function ManifestationParts({ parts }) {
+export function ManifestationParts({ parts, titlesOnly = true, className }) {
   return (
-    <ul className={styles.manifestionlist}>
+    <ul className={(className && className) || styles.manifestionlist}>
       {parts?.map(
         (part) =>
           part && (
@@ -13,7 +14,7 @@ export function ManifestationParts({ parts }) {
               <Text type="text3" lines={1}>
                 {part.title}
               </Text>
-              {part.playingTime && (
+              {part.playingTime && !titlesOnly && (
                 <Text type="text3" lines={1}>
                   {part.playingTime}
                 </Text>
@@ -25,7 +26,12 @@ export function ManifestationParts({ parts }) {
   );
 }
 
-export default function Wrap({ pid }) {
+export default function Wrap({
+  pid,
+  numberToShow,
+  titlesOnly = false,
+  className,
+}) {
   const { data, isLoading, error } = useData(
     pid && manifestationParts({ pid: pid })
   );
@@ -38,5 +44,25 @@ export default function Wrap({ pid }) {
   }
 
   const parts = data?.manifestation?.manifestationParts?.parts;
-  return <ManifestationParts parts={parts} />;
+
+  console.log(parts?.length, numberToShow, "VARTS");
+
+  const partsToShow = (numberToShow && parts?.splice(0, numberToShow)) || parts;
+
+  /*const partsToShow =
+    parts && numberToShow
+      ? parts.splice(0, numberToShow)
+      : parts
+      ? parts
+      : null;
+
+  console.log(partsToShow, "PARTS");*/
+  return (
+    <ManifestationParts
+      parts={parts}
+      titlesOnly={titlesOnly}
+      className={className}
+      // @TODO - we need a title also
+    />
+  );
 }

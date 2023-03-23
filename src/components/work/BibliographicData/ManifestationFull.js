@@ -19,6 +19,7 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 
 /**
  * Column one of full view. Some links and a button.
@@ -126,6 +127,12 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
               </div>
             );
           })}
+          <ManifestationParts
+            pid={data?.manifestation?.pid}
+            titlesOnly={true}
+            className={styles.fisk}
+            numberToShow={5}
+          />
         </div>
       </Col>
     </Row>

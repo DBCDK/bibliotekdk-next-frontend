@@ -5,6 +5,7 @@ import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { cyKey } from "@/utils/trim";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
+import Button from "@/components/base/button/Button";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -192,14 +193,14 @@ const fields = () => [
     }),
     valueParser: (value) => value.edition || "",
   },
-  {
+  /*{
     dataField: "manifestationParts",
     label: Translate({
       context: "bibliographic-data",
       label: "manifestationParts",
     }),
     valueParser: RenderManifestationParts,
-  },
+  },*/
 ];
 
 /**
@@ -210,8 +211,11 @@ const fields = () => [
  * @constructor
  */
 function RenderManifestationParts(value) {
-  const tooLong = value?.parts?.length > 10;
-  const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
+  const lengthOfList = 5;
+  const tooLong = value?.parts?.length > lengthOfList;
+  const valuesToMap = tooLong
+    ? value?.parts?.slice(0, lengthOfList)
+    : value?.parts;
   return (
     <>
       <ul>
@@ -230,6 +234,8 @@ function RenderManifestationParts(value) {
         ))}
       </ul>
       {tooLong && <div>....</div>}
+      {/* Show a button to open a modal*/}
+      <Button type="secondary" size="small" />
     </>
   );
 }
