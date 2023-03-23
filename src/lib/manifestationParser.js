@@ -14,12 +14,39 @@ const fields = () => [
       context: "bibliographic-data",
       label: "title",
     }),
-    valueParser: (value) => value.main || "",
+    valueParser: renderFullAndParallellTitles,
   },
   {
     dataField: "titles",
-    label: "otherTitles :",
-    valueParser: RenderTitles,
+    label: Translate({
+      context: "bibliographic-data",
+      label: "originaltitle",
+    }),
+    valueParser: renderOriginalTitle,
+  },
+  {
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "alternative",
+    }),
+    valueParser: (value) => value.alternative || "",
+  },
+  {
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "standard",
+    }),
+    valueParser: (value) => value.standard || "",
+  },
+  {
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "translated",
+    }),
+    valueParser: renderTranslatedTitle,
   },
   {
     dataField: "creators",
@@ -208,109 +235,202 @@ const fields = () => [
 ];
 
 /**
- * Value potentially holds MANY titles.
- * main * full * alternative * original * parallel * standard * identifyingAddition * translated * titlePlusLanguage
+ * From designer (thank you anders friis brødsgaard) - how to show titles :
  *
- * main and original titles are handled seperately - make a mix of the other ones
+ * Titel:
+ * Alle titles.full med linjeskift mellem hver titel
+ * Herefter på ny linje alle titles.parallel med linjeskift mellem hver titel
+ *
+ * Originaltitel:
+ * Alle titles.original med komma og mellemrum mellem hver titel
+ * OBS: Vises kun hvis de adskiller sig fra titlerne i title.main og titles.full ved en toLowerCase sammenligning.
+ *
+ * Alternativ titel:
+ * Alle titles.alternative med komma og mellemrum mellem hver titel
+ *
+ * Standardtitel:
+ * Alle titles.standard med komma og mellemrum mellem hver titel
+ *
+ * Oversat titel:
+ * Alle titles.translated med komma og mellemrum mellem hver titel
+ * OBS: Vises kun hvis de adskiller sig fra titlerne i title.main og titles.full ved en toLowerCase sammenligning.
+ *
  * @param value
+ *  the titles (manifestation.titles)
  * @returns {*}
  * @constructor
  */
-function RenderTitles(value) {
+function renderFullAndParallellTitles(value) {
   return (
     <>
-      {value.main?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Main titles</Text>
+      {value?.full?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`full-${index}`}>
+            <Text type="text3">{val}</Text>
           </div>
-          {value.main.map((val, index) => {
-            return (
-              <div key={`main-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {value.full?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Full titles</Text>
+        );
+      })}
+      {value?.parallel?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`parallel-${index}`}>
+            <Text type="text3">{val}</Text>
           </div>
-          {value.full.map((val, index) => {
-            return (
-              <div key={`full-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {value.alternative?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Alternative titles</Text>
-          </div>
-          {value.alternative.map((val, index) => {
-            return (
-              <div key={`alternate-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {value.original?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Original titles</Text>
-          </div>
-          {value.original.map((val, index) => {
-            return (
-              <div key={`original-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {value.parallel?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Parallel titles</Text>
-          </div>
-          {value.parallel.map((val, index) => {
-            return (
-              <div key={`parllel-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
-
-      {value.translated?.length > 0 && (
-        <>
-          <div>
-            <Text type="text4">Translated titles</Text>
-          </div>
-          {value.translated.map((val, index) => {
-            return (
-              <div key={`translated-${index}`}>
-                <Text type="text3">{val}</Text>
-              </div>
-            );
-          })}
-        </>
-      )}
+        );
+      })}
     </>
   );
 }
+
+function renderTranslatedTitle(value) {
+  // only render if values are not rendered before - compare with full, parallel and main
+  const alreadyHandled = titlesToFilterOn(value);
+  const toRender = value?.translated?.filter(
+    (val) => !alreadyHandled.includes(val)
+  );
+
+  console.log(toRender, "TORENDER");
+
+  if (!toRender || toRender?.length < 1) {
+    return null;
+  }
+  return (
+    <>
+      {toRender?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`translated-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+function titlesToFilterOn(value) {
+  return [
+    ...(value?.full ? value?.full : []),
+    ...(value.parallel ? value.parallel : []),
+    ...(value?.main ? value.main : []),
+  ];
+}
+
+function renderOriginalTitle(value) {
+  // only render if values are not rendered before - compare with full, parallel and main
+  const alreadyHandled = titlesToFilterOn(value);
+  const toRender = value?.original.filter(
+    (val) => !alreadyHandled.includes(val)
+  );
+  if (toRender?.length < 1) {
+    return null;
+  }
+  return (
+    <>
+      {toRender?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`original-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+// return (
+//   <>
+//     {/*FULL TITLES */}
+//     {value.full?.length > 0 && (
+//       <>
+//         <div>
+//           <Text type="text4">
+//             {Translate({
+//               context: "bibliographic-data",
+//               label: "title",
+//             })}
+//           </Text>
+//         </div>
+//         {value.full.map((val, index) => {
+//           // collect for comparison
+//           renderedTitles.push(val);
+//           return (
+//             <div key={`full-${index}`}>
+//               <Text type="text3">{val}</Text>
+//             </div>
+//           );
+//         })}
+//       </>
+//     )}
+//
+//     {/* ALTERNATIVE TITLES */}
+//
+//     {value?.alternative && value?.length > 0 && (
+//       <>
+//         <div>
+//           <Text type="text4">Alternative titles</Text>
+//         </div>
+//         {value?.alternative.map((val, index) => {
+//           if (!renderedTitles.includes(val)) {
+//             return (
+//               <div key={`alternate-${index}`}>
+//                 <Text type="text3">{val}</Text>
+//               </div>
+//             );
+//           }
+//         })}
+//       </>
+//     )}
+//
+//     {value.original?.length > 0 && (
+//       <>
+//         <div>
+//           <Text type="text4">Original titles</Text>
+//         </div>
+//         {value.original.map((val, index) => {
+//           return (
+//             <div key={`original-${index}`}>
+//               <Text type="text3">{val}</Text>
+//             </div>
+//           );
+//         })}
+//       </>
+//     )}
+//
+//     {value.parallel?.length > 0 && (
+//       <>
+//         <div>
+//           <Text type="text4">Parallel titles</Text>
+//         </div>
+//         {value.parallel.map((val, index) => {
+//           return (
+//             <div key={`parllel-${index}`}>
+//               <Text type="text3">{val}</Text>
+//             </div>
+//           );
+//         })}
+//       </>
+//     )}
+//
+//     {value.translated?.length > 0 && (
+//       <>
+//         <div>
+//           <Text type="text4">Translated titles</Text>
+//         </div>
+//         {value.translated.map((val, index) => {
+//           return (
+//             <div key={`translated-${index}`}>
+//               <Text type="text3">{val}</Text>
+//             </div>
+//           );
+//         })}
+//       </>
+//     )}
+//   </>
+// );
+//}
 
 /**
  * Render manifestationParts (content of music, node etc) as a
@@ -367,7 +487,7 @@ export function parseManifestation(manifestation) {
           : manifestation?.[field?.dataField];
         return {
           dataField: field.dataField,
-          label: field.label,
+          label: field.label || null,
           value,
         };
       })
