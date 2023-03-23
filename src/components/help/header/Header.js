@@ -44,7 +44,11 @@ export function Header({
           <Logo fill={"var(--blue)"} text={"default_logo_text"} />
         </Col>
 
-        <Col xs={{ span: 12, order: 4 }} lg={{ span: 5, order: 2 }}>
+        <Col
+          className={styles.inputOuterWrapper}
+          xs={{ span: 12, order: 4 }}
+          lg={{ span: 5, order: 2 }}
+        >
           <div className={styles.inputwrapper}>
             <Title type="title3">
               {Translate({ context: "help", label: "help-title" })}

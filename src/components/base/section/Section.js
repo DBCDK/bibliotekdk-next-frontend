@@ -119,7 +119,7 @@ export default function Section({
 
           <Col
             xs={12}
-            lg={{ offset: title ? 1 : 0 }}
+            lg={{ offset: title ? 1 : 0, span: true }}
             data-cy={cyKey({ name: "content", prefix: "section" })}
             className={`section-content ${styles.content} ${contentDividerClass}`}
           >

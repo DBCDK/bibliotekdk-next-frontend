@@ -322,7 +322,7 @@ export function Header({
 export function StaticHeader({ router = null, context }) {
   return (
     <>
-      <Col xs={2}>
+      <Col xs={3} lg={2}>
         <Logo fill={"var(--blue)"} text={"default_logo_text"} />
       </Col>
       <Col

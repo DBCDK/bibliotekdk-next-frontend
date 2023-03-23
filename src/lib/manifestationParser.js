@@ -2,7 +2,9 @@
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { cyKey } from "@/utils/trim";
+import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -120,6 +122,15 @@ const fields = () => [
     }),
     valueParser: (workYear) => workYear.display || "",
   },
+
+  {
+    dataField: "subjects",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "subject",
+    }),
+    valueParser: FlatSubjectsForFullManifestation,
+  },
   // {
   //   dataField: "physicalDescriptions",
   //   label: Translate({
@@ -170,7 +181,8 @@ const fields = () => [
       context: "bibliographic-data",
       label: "usedLanguage",
     }),
-    valueParser: (languages) => <ParsedLanguages languages={languages} /> || "",
+    valueParser: (languages) =>
+      <ParsedLanguages languages={languages} /> || null,
   },
   {
     dataField: "edition",
@@ -180,7 +192,47 @@ const fields = () => [
     }),
     valueParser: (value) => value.edition || "",
   },
+  {
+    dataField: "manifestationParts",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "manifestationParts",
+    }),
+    valueParser: RenderManifestationParts,
+  },
 ];
+
+/**
+ * Render manifestationParts (content of music, node etc) as a
+ * unordered list. Show at most 10.
+ * @param value
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function RenderManifestationParts(value) {
+  const tooLong = value?.parts?.length > 10;
+  const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
+  return (
+    <>
+      <ul>
+        {valuesToMap?.map((val, index) => (
+          <li
+            data-cy={cyKey({
+              name: `${val.title}`,
+              prefix: "manifestation-parts",
+            })}
+            key={`manifestation-parts-${index}`}
+          >
+            <Text type="text3" lines={2} tag="span">
+              {val.title}
+            </Text>
+          </li>
+        ))}
+      </ul>
+      {tooLong && <div>....</div>}
+    </>
+  );
+}
 
 /**
  * Parse manifestation into array of objects
@@ -262,9 +314,8 @@ function ParsedLanguages({ languages }) {
   const languagesExist =
     [...languages?.main, ...languages?.spoken, ...languages?.subtitles].length >
     0;
-
   return (
-    (languagesNotesExist && <div>{languages.notes?.join(". ")}</div>) ||
+    (languagesNotesExist && <div>{languages?.notes?.join(". ")}</div>) ||
     (languagesExist && (
       <>
         {languages?.main?.length > 0 && (

@@ -92,7 +92,11 @@ export function Overview({
             />
           </Col>
 
-          <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
+          <Col
+            xs={12}
+            md={{ order: 2, span: true }}
+            className={`${styles.about}`}
+          >
             <Row>
               <Col xs={12}>
                 <Title

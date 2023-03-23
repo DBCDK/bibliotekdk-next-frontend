@@ -522,7 +522,7 @@ export function listOfAllManifestations({ workId }) {
         manifestations {
           mostRelevant {
             pid
-            volume
+            volume            
             titles {
               main
               identifyingAddition
@@ -541,6 +541,10 @@ export function listOfAllManifestations({ workId }) {
             }
             creators{
               display
+            }
+            contributors{
+              display
+              roles{functionCode function{plural singular}}
             }
             publisher
           }
