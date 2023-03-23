@@ -115,13 +115,13 @@ export function groupManifestations(
 }
 
 /**
- * Gets the prioritisation of elements based on the heuristics sorting defined in
+ * Gets the prioritisation of elements based on the custom sorting defined in
  * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
  * @param materialTypesOrder
  * @param jsonedMaterialTypeArray
  * @return {*}
  */
-function getElementByHeuristicSorting(
+function getElementByCustomSorting(
   materialTypesOrder,
   jsonedMaterialTypeArray
 ) {
@@ -159,8 +159,8 @@ export function compareArraysOfStrings(
     return emptyA - emptyB;
   }
 
-  const aBySort = getElementByHeuristicSorting(materialTypesOrder, jsonA);
-  const bBySort = getElementByHeuristicSorting(materialTypesOrder, jsonB);
+  const aBySort = getElementByCustomSorting(materialTypesOrder, jsonA);
+  const bBySort = getElementByCustomSorting(materialTypesOrder, jsonB);
 
   if (aBySort !== bBySort) {
     return aBySort - bBySort;
