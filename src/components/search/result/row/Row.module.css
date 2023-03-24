@@ -16,8 +16,8 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;        /* number of lines to show */
-  line-height: 1.5em;           /* fallback */
-  max-height: calc(1.5em * 3);  /* fallback */
+  line-height: 32px;            /* fallback */
+  max-height: calc(32px * 3);   /* fallback */
 }
 
 .cover img {
