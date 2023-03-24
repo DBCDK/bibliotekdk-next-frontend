@@ -1,6 +1,13 @@
+/**
+ * @file
+ * The file for testing {@link MaterialTypeOrderEnum}
+ *   and {@link getOrderedFlatMaterialTypes}
+ *   and {@link prioritiseByWorkType}.
+ */
+
 import {
   getOrderedFlatMaterialTypes,
-  MaterialTypeEnum2,
+  MaterialTypeOrderEnum,
   prioritiseByWorkType,
 } from "@/lib/enums_MaterialTypes";
 
@@ -51,7 +58,7 @@ describe("getOrderedFlatMaterialTypes", () => {
   it("should return ordered properly if no workType is given (expect LITERATURE materialTypes first)", () => {
     const workTypes = [];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = Object.values(MaterialTypeEnum2)
+    const expected = Object.values(MaterialTypeOrderEnum)
       .flatMap((mat) => Object.values(mat))
       .map((mat) => mat.display);
     expect(actual).toEqual(expected);

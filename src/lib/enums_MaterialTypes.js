@@ -1,3 +1,11 @@
+/**
+ * @file
+ * The file for handling the materialType enums.
+ * The order of the {@link MaterialTypeOrderEnum} is
+ * based on the work of the User Experience Designer
+ * and is subject for gradual change
+ */
+
 /** TODO: Maybe use a map like this instead of
  *   flattening the materialTypes as in
  *   "selectMaterialBasedOnType"
@@ -11,7 +19,8 @@ export const MaterialTypeEnum = Object.freeze({
   "LYDBOG (BÅND)": "lydbog (bånd)",
 });
 
-export const MaterialTypeEnum2 = Object.freeze({
+/* This */
+export const MaterialTypeOrderEnum = Object.freeze({
   LITERATURE: {
     BOG: { display: "bog", code: "123" },
     EBOG: { display: "ebog", code: "123" },
@@ -68,7 +77,7 @@ export function prioritiseByWorkType(a, b, workTypes) {
 
 export function getOrderedFlatMaterialTypes(
   workTypes = [],
-  materialTypeEnum = MaterialTypeEnum2
+  materialTypeEnum = MaterialTypeOrderEnum
 ) {
   return Object.entries(materialTypeEnum)
     .sort((a, b) => prioritiseByWorkType(a, b, workTypes))
