@@ -381,6 +381,7 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              creatorsFromDescription
               physicalDescriptions {
                 summary
                 accompanyingMaterial
@@ -521,9 +522,13 @@ export function listOfAllManifestations({ workId }) {
         manifestations {
           mostRelevant {
             pid
-            volume
+            volume            
             titles {
               main
+              identifyingAddition
+            }
+            hostPublication {
+              title
             }
             materialTypes {
               specific
@@ -532,7 +537,16 @@ export function listOfAllManifestations({ workId }) {
               publicationYear {
                 display
               }
+              edition
             }
+            creators{
+              display
+            }
+            contributors{
+              display
+              roles{functionCode function{plural singular}}
+            }
+            publisher
           }
         }
       }
@@ -583,6 +597,14 @@ export function overviewWork({ workId }) {
         materialTypes {
           specific
         }
+        mainLanguages {
+          display
+          isoCode
+        }
+        fictionNonfiction {
+          code
+        }
+        workTypes
         manifestations {
           mostRelevant {
             pid

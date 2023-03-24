@@ -34,7 +34,7 @@ function DefaultDetailValues({ values }) {
  *
  * @returns {JSX.Element}
  */
-function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
+function Details({ className = "", manifestation = {}, work = {} }) {
   // Translate Context
   const context = { context: "details" };
 
@@ -60,12 +60,12 @@ function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
     >
       <Row className={`${styles.details}`}>
         {fieldsToShow &&
-          fieldsToShow.map((field) => {
+          fieldsToShow.map((field, index) => {
             const fieldName = Object.keys(field)[0];
             return (
               !isEmpty(field[fieldName].value) && (
                 /** this is the label **/
-                <Col xs={6} md={{ span: 3 }}>
+                <Col xs={6} md={3} key={`details__${fieldName}_${index}`}>
                   <Text type="text3" className={styles.title} lines={2}>
                     {field[fieldName].label}
                   </Text>
@@ -75,10 +75,7 @@ function Details({ className = "", manifestation = {}, work = {}, skeleton }) {
                       values: field[fieldName].value,
                     })
                   ) : (
-                    <DefaultDetailValues
-                      values={field[fieldName].value}
-                      skeleton={skeleton}
-                    />
+                    <DefaultDetailValues values={field[fieldName].value} />
                   )}
                 </Col>
               )
@@ -104,7 +101,7 @@ export function DetailsSkeleton() {
     >
       <Row className={`${styles.details}`}>
         {texts.map((txt) => (
-          <Col xs={6} md={{ span: 3 }} key={`skeleton-${txt}`}>
+          <Col xs={6} md={3} key={`skeleton-${txt}`}>
             <Text
               type="text3"
               className={styles.title}

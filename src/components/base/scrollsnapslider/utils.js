@@ -32,9 +32,9 @@ export function getScrollToNextCoveredChild(
   const nextCoveredChild =
     orientation === "left" ? nextCoveredChildLeft : nextCoveredChildRight;
 
-  return (
-    nextCoveredChild.posLeft - (containerScroll.x + containerScroll.xGap / 2)
-  );
+  return !nextCoveredChild
+    ? false
+    : nextCoveredChild.posLeft - (containerScroll.x + containerScroll.xGap / 2);
 }
 
 function getGaps(childNodes) {
@@ -56,6 +56,8 @@ export function scrollSetter(target) {
     yOffset: target.offsetHeight,
     xScrollable: target.scrollWidth - target.offsetWidth,
     yScrollable: target.scrollHeight - target.offsetHeight,
+    xScrollWidth: target.scrollWidth,
+    yScrollHeight: target.scrollHeight,
     xGap: getGaps(target.childNodes).xGap,
     yGap: getGaps(target.childNodes).yGap,
   };
@@ -63,11 +65,15 @@ export function scrollSetter(target) {
 
 export function childSetter(childNodes) {
   const childWidths = [];
+  // Everything is slightly offset. I noticed 15px at one point
+  // TODO: Please fix this if you know how to
+  const offset = childNodes?.[0]?.offsetLeft;
+
   childNodes.forEach((child) =>
     childWidths.push({
       width: child.offsetWidth,
-      posLeft: child.offsetLeft,
-      posRight: child.offsetLeft + child.offsetWidth,
+      posLeft: child.offsetLeft - offset,
+      posRight: child.offsetLeft + child.offsetWidth - offset,
     })
   );
   return childWidths;

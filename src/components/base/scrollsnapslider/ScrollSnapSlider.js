@@ -58,7 +58,7 @@ export default function ScrollSnapSlider({
             arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
             orientation={"left"}
             clickCallback={() => scrollFunction("left")}
-            dataDisabled={containerScroll.x === 0}
+            dataDisabled={Math.floor(containerScroll.x) <= 0}
           />
         )}
         <div
@@ -74,7 +74,9 @@ export default function ScrollSnapSlider({
             arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right}`}
             orientation={"right"}
             clickCallback={() => scrollFunction("right")}
-            dataDisabled={containerScroll.x === containerScroll?.xScrollable}
+            dataDisabled={
+              Math.floor(containerScroll.xScrollable - containerScroll.x) <= 0
+            }
           />
         )}
       </div>

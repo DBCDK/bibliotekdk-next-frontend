@@ -23,6 +23,7 @@
   --pt15: 120px;
   --pt16: 128px;
 
-  --min_card_height: 148px;
-  --related_works_width: 326px;
+  --base_cols_per_card: 5.5;
+  --cols_per_card: var(--base_cols_per_card);
+  --container_width: 1400px;
 }

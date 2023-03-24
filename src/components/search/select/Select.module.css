@@ -35,10 +35,17 @@
   background: linear-gradient(to right, var(--blue) 10px, var(--concrete) 10px);
 }
 
+.dropdownwrap :global(.dropdown-toggle::after) {
+  display: none;
+}
+
 .dropdownmenu {
   border: 1px solid var(--blue);
   background-color: var(--white);
   z-index: 1;
+  /* bootstrap default styles override */
+  border-radius: 0;
+  padding: 0;
 }
 
 .dropdowntoggle:focus {

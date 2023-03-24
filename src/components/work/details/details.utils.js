@@ -9,6 +9,9 @@ import Translate from "@/components/base/translate";
 import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
+import Image from "@/components/base/image";
+import { Fragment } from "react";
+
 /**
  * Parse languages in given manifestation.
  * split languages in main, spoken, subtitles.
@@ -197,7 +200,9 @@ function RenderCreatorValues({ values, skeleton }) {
     valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
         {valuesToRender.map((person, index) => (
-          <>
+          <Fragment
+            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+          >
             <Link
               href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
@@ -213,7 +218,7 @@ function RenderCreatorValues({ values, skeleton }) {
                 {parsePersonAndFunction(person)}
               </Text>
             </Link>
-          </>
+          </Fragment>
         ))}
         {length > 4 && (
           <Text type="text4" skeleton={skeleton} lines={0}>
@@ -339,7 +344,7 @@ function RenderGameLanguages({ values }) {
  * @returns {JSX.Element}
  * @constructor
  */
-function RenderMovieLanguages({ values, skeleton }) {
+function RenderMovieLanguages({ values }) {
   // get the first 2 languages of the subtitle
   const subtitles =
     values["subtitles"]?.length > 0
@@ -378,7 +383,7 @@ function RenderMovieLanguages({ values, skeleton }) {
   const fullstring = `${mainlanguage} ${spokenAsString} ${subtitlesAsString}`;
 
   return (
-    <Text type="text4" skeleton={skeleton} lines={2}>
+    <Text type="text4" lines={2}>
       {fullstring}
     </Text>
   );
@@ -391,23 +396,62 @@ function RenderMovieLanguages({ values, skeleton }) {
  * @returns {*}
  * @constructor
  */
-function RenderGenre({ values, skeleton }) {
-  return values.map((val, index) => (
-    <>
-      <Link
-        href={`/find?q.subject=${val}`}
-        dataCy={cyKey({ name: val, prefix: "overview-genre" })}
-        disabled={skeleton}
-        border={{ bottom: { keepVisible: true } }}
-        key={`${val}-${index}`}
-      >
-        <Text type="text4" skeleton={skeleton} lines={1}>
-          {val}
-        </Text>
-      </Link>
-      <span>{index < values.length - 1 ? ", " : ""}</span>
-    </>
-  ));
+
+function RenderGenre({ values }) {
+  return (
+    <Text type="text4" lines={1} tag="span">
+      {values.join(", ")}
+    </Text>
+  );
+}
+
+function RenderMovieAudience({ values }) {
+  const agerecommendation = values?.[0];
+  let image = null;
+  // regexp to extract age eg 15 år .. or 7 år
+  const regex = / ([0-9]?[0-9]) (år)/;
+  const age = agerecommendation?.match(regex);
+  if (!age) {
+    if (agerecommendation.indexOf("Tilladt for alle") !== -1) {
+      image = "/img/ageany.png";
+    }
+  }
+  const txt =
+    agerecommendation.indexOf("Mærkning:") !== -1
+      ? agerecommendation.replace("Mærkning: ", "")
+      : agerecommendation;
+  if (age) {
+    switch (age[1]) {
+      case "7":
+        image = "/img/age7.png";
+        break;
+      case "11":
+        image = "/img/age11.png";
+        break;
+      case "15":
+        image = "/img/age15.png";
+        break;
+      default:
+        break;
+    }
+  }
+
+  return (
+    <div className={styles.wrapper}>
+      {image && (
+        <div className={styles.pegiimage}>
+          <div className={styles.spacemaker}>
+            <Image src={image} width={40} height={40} alt={txt ?? ""} />
+          </div>
+          {txt && (
+            <Text type="text3" lines={1} tag="span" className={styles.imgtext}>
+              {txt}
+            </Text>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 /**
@@ -455,7 +499,6 @@ function RenderGenre({ values, skeleton }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
-
   const fieldsMap = {
     DEFAULT: [
       {
@@ -590,6 +633,24 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
     ],
+    MUSIC: [
+      {
+        hasadaption: {
+          label: Translate({ ...context, label: "hasadaption" }),
+          value: "",
+          // value: manifestation?.relations?.hasAdaptation?.find((rel) =>
+          //   rel?.pid?.startsWith("870970")
+          // ),
+          // jsxParser: RenderMovieAdaption,
+        },
+      },
+      {
+        creatorsfromdescription: {
+          label: Translate({ ...context, label: "creatorsfromdescription" }),
+          value: manifestation?.creatorsFromDescription || [],
+        },
+      },
+    ],
 
     MOVIE: [
       // overwrite contributors from base array - add a new one (moviecontributors) for correct order
@@ -644,6 +705,7 @@ export function fieldsForRows(manifestation, work, context) {
         audience: {
           label: Translate({ ...context, label: "audience" }),
           value: manifestation?.audience?.generalAudience || "",
+          jsxParser: RenderMovieAudience,
         },
       },
       {

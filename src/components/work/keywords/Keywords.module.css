@@ -3,6 +3,14 @@
 * 
 */
 
+.bibliographickeywordslink {
+  display: inline-block;
+}
+
+.bibliographickeywordslink p {
+  display: contents;
+}
+
 .keywords {
   overflow: hidden;
 }
@@ -21,6 +29,10 @@
   color: var(--mine-shaft);
   text-decoration: none;
   display: block;
+}
+
+.keyword a p {
+  color: red;
 }
 
 .keyword a h1 {
