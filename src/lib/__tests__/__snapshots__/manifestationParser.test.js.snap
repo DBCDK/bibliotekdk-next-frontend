@@ -5,9 +5,15 @@ Array [
   Object {
     "dataField": "titles",
     "label": "Titel",
-    "value": Array [
-      "Warcraft",
-    ],
+    "value": <React.Fragment>
+      <div>
+        <Container
+          type="text3"
+        >
+          Warcraft
+        </Container>
+      </div>
+    </React.Fragment>,
   },
   Object {
     "dataField": "creators",
