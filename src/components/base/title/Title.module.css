@@ -38,6 +38,8 @@
   font-family: var(--title-font);
 }
 
+/* TODO: WARNING: Don't use this other
+     places than work overview */
 .title7 {
   font-size: 18px;
   line-height: 24px;
