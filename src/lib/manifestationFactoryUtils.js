@@ -121,7 +121,7 @@ export function groupManifestations(
  * @param jsonedMaterialTypeArray
  * @return {*}
  */
-function getElementByCustomSorting(
+export function getElementByCustomSorting(
   materialTypesOrder,
   jsonedMaterialTypeArray
 ) {

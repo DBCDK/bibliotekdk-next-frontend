@@ -35,18 +35,20 @@ export const MaterialTypeEnum2 = Object.freeze({
     "CD (MUSIK)": { display: "cd (musik)", code: "123" },
     GRAMMOFONPLADE: { display: "grammofonplade", code: "123" },
   },
-  NODE: {
+  SHEETMUSIC: {
     "E-NODE": { display: "e-node", code: "123" },
     NODE: { display: "node", code: "123" },
     "NODE (CD)": { display: "node (cd)", code: "123" },
   },
-  VIDEOGAMES: {
-    "PLAYSTATION 5": { display: "Playstation 5", code: "123" },
-    "PLAYSTATION 4": { display: "Playstation 4", code: "123" },
-    "PLAYSTATION 3": { display: "Playstation 3", code: "123" },
+  GAME: {
+    "PLAYSTATION 5": { display: "playstation 5", code: "123" },
+    "PLAYSTATION 4": { display: "playstation 4", code: "123" },
+    "PLAYSTATION 3": { display: "playstation 3", code: "123" },
+    PLAYSTATION: { display: "playstation", code: "123" },
     "XBOX SERIES": { display: "xbox series", code: "123" },
     "XBOX ONE": { display: "xbox one", code: "123" },
     "XBOX 360": { display: "xbox 360", code: "123" },
+    XBOX: { display: "xbox 360", code: "123" },
     "PC-SPIL": { display: "pc-spil", code: "123" },
     COMPUTERSPIL: { display: "computerspil", code: "123" },
     "NINTENDO SWITCH": { display: "nintendo switch", code: "123" },
@@ -64,8 +66,11 @@ export function prioritiseByWorkType(a, b, workTypes) {
   return indexAFilterNull - indexBFilterNull;
 }
 
-export function getOrderedFlatMaterialTypes(workTypes = []) {
-  return Object.entries(MaterialTypeEnum2)
+export function getOrderedFlatMaterialTypes(
+  workTypes = [],
+  materialTypeEnum = MaterialTypeEnum2
+) {
+  return Object.entries(materialTypeEnum)
     .sort((a, b) => prioritiseByWorkType(a, b, workTypes))
     .flatMap((mat) => Object.values(mat[1]))
     .map((mat) => mat.display);
