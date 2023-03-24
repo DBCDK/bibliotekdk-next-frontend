@@ -203,21 +203,21 @@ function RenderCreatorValues({ values, skeleton }) {
           <Fragment
             key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
           >
-            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-              <Link
-                href={`/find?q.creator=${person.display}`}
-                dataCy={cyKey({
-                  name: person.display,
-                  prefix: "details-creatore",
-                })}
-                disabled={skeleton}
-                border={{ bottom: { keepVisible: true } }}
-                key={`crators-${index}`}
-                f
-              >
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person.display,
+                prefix: "details-creatore",
+              })}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+              key={`crators-${index}`}
+              f
+            >
+              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
                 {parsePersonAndFunction(person)}
-              </Link>
-            </Text>
+              </Text>
+            </Link>
           </Fragment>
         ))}
         {length > 4 && (
