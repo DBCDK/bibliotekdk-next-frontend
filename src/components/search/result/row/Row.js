@@ -24,6 +24,8 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
+import { useRouter } from "next/router";
+import isEqual from "lodash/isEqual";
 
 function TitlesForSearch({ work, isLoading }) {
   const titles = work?.titles;
@@ -68,6 +70,23 @@ TitlesForSearch.propTypes = {
   work: PropTypes.object,
   loading: PropTypes.bool,
 };
+
+function sortMaterialTypesByRouter(routerMaterialTypes) {
+  return (a, b) => {
+    const promoteA = routerMaterialTypes?.findIndex((mat) =>
+      isEqual(a.join(","), mat)
+    );
+    const promoteB = routerMaterialTypes?.findIndex((mat) =>
+      isEqual(b.join(","), mat)
+    );
+
+    const indexA = promoteA !== -1 ? promoteA : routerMaterialTypes?.length;
+    const indexB = promoteB !== -1 ? promoteB : routerMaterialTypes?.length;
+
+    return indexA - indexB;
+  };
+}
+
 /**
  * Row representation of a search result entry
  *
@@ -84,6 +103,8 @@ export default function ResultRow({
 }) {
   const creatorName = work?.creators?.[0]?.display;
 
+  const router = useRouter();
+
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.mostRelevant) {
       return getCoverImage(work.manifestations.mostRelevant)?.detail;
@@ -93,6 +114,9 @@ export default function ResultRow({
   const { uniqueMaterialTypes } = useMemo(() => {
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
+
+  const routerMaterialTypes = router?.query?.materialTypes?.split(",");
+  uniqueMaterialTypes.sort(sortMaterialTypesByRouter(routerMaterialTypes));
 
   return (
     <Link
