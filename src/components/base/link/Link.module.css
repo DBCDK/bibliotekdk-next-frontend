@@ -4,60 +4,6 @@
   cursor: pointer;
 }
 
-/*.link {
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  transition: 1s;
-
-
-  -webkit-text-decoration-color: transparent;
-  -moz-text-decoration-color: transparent;
-}
-
-.link:hover {
-  text-decoration-color: red;
-
-
-  -webkit-text-decoration-color: red;
-  -moz-text-decoration-color: red;
-}*/
-
-/*.link {
-  --thickness: 0.1em;
-  --strike: 0;
-
-  color: var(--mine-shaft);
-  text-decoration: none;
-  cursor: pointer;
-  background: linear-gradient(90deg, transparent, currentColor 0) no-repeat
-    right center / calc(var(--strike) * 100%) var(--thickness);
-
-  transition: background-size 0.4s ease;
-  font: 25px Arial;
-  padding: 0 0.2em;
-}
-
-.link:hover {
-  --strike: 1;  "1" means "true" (show the strike line)
-  background-position-x: left;
-}*/
-
-/*.link::before {
-  content: "";
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
-}
-.link:hover::before {
-  transform: scaleX(1);
-}*/
-
 .border {
   position: relative;
   text-decoration: none;
