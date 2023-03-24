@@ -17,10 +17,14 @@ describe("Overview", () => {
         .should("contain", "Bog")
         .tabs(1)
         .should("have.attr", "data-cy", "tag-ebog")
-        .tabs(2)
+        .tabs(1)
+        .should("have.attr", "data-cy", "tag-lydbog-(net)")
+        .tabs(1)
+        .should("have.attr", "data-cy", "tag-lydbog-(net)/soloplade")
+        .tabs(1)
         .should("have.attr", "data-cy", "tag-lydbog-(cd-mp3)")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(net)");
+        .should("have.attr", "data-cy", "tag-lydbog-(bånd)");
 
       // Creators and bookmark
       cy.get(`[data-cy=text-lucky-luke]`)
@@ -31,9 +35,11 @@ describe("Overview", () => {
         .get("[data-cy=tag-ebog]")
         .focus()
         .should("have.attr", "data-cy", "tag-ebog")
-        .tabs(4)
+        .tabs(2)
         .should("have.attr", "data-cy", "tag-lydbog-(net)/soloplade")
-        .tab()
+        .tabs(1)
+        .should("have.attr", "data-cy", "tag-lydbog-(cd-mp3)")
+        .tabs(2)
         .should("have.attr", "data-cy", "button-order-overview-enabled");
     });
 
