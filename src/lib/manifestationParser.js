@@ -229,14 +229,14 @@ const fields = () => [
     }),
     valueParser: (value) => value.edition || "",
   },
-  {
+  /*{
     dataField: "manifestationParts",
     label: Translate({
       context: "bibliographic-data",
       label: "manifestationParts",
     }),
     valueParser: RenderManifestationParts,
-  },
+  },*/
 ];
 
 /**
@@ -372,7 +372,7 @@ function renderOriginalTitle(value) {
  * @returns {JSX.Element}
  * @constructor
  */
-function RenderManifestationParts(value) {
+/*function RenderManifestationParts(value) {
   const tooLong = value?.parts?.length > 10;
   const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
   return (
@@ -395,7 +395,7 @@ function RenderManifestationParts(value) {
       {tooLong && <div>....</div>}
     </>
   );
-}
+}*/
 
 /**
  * Parse manifestation into array of objects
