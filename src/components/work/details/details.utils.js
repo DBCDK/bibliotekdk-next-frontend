@@ -213,7 +213,7 @@ function RenderCreatorValues({ values, skeleton }) {
                 disabled={skeleton}
                 border={{ bottom: { keepVisible: true } }}
                 key={`crators-${index}`}
-                className={styles.link}
+                f
               >
                 {parsePersonAndFunction(person)}
               </Link>
@@ -225,11 +225,6 @@ function RenderCreatorValues({ values, skeleton }) {
             m.fl
           </Text>
         )}
-        <Text type="text4">
-          <Link href={`/fiks`} className={styles.link}>
-            a extremely long link that goes aboslutely nowhre
-          </Link>
-        </Text>
       </div>
     )
   );
