@@ -3,18 +3,54 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
-import { cyKey } from "@/utils/trim";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
   {
+    // main title
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
       label: "title",
     }),
-    valueParser: (value) => value.main || "",
+    valueParser: renderFullAndParallelTitles,
+  },
+  {
+    // originalt title
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "originalTitle",
+    }),
+    valueParser: renderOriginalTitle,
+  },
+  {
+    // alternative titles
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "alternativeTitle",
+    }),
+    valueParser: (value) => value?.alternative?.join(", "),
+  },
+  {
+    // standard titles
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "standardTitle",
+    }),
+    valueParser: (value) => value?.standard?.join(", "),
+  },
+  {
+    // translated titles
+    dataField: "titles",
+    label: Translate({
+      context: "bibliographic-data",
+      label: "translated",
+    }),
+    valueParser: renderTranslatedTitle,
   },
   {
     dataField: "creators",
@@ -106,14 +142,14 @@ const fields = () => [
   //       </span>
   //     )),
   // },
-  {
+  /* {
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
       label: "originalTitle",
     }),
     valueParser: (value) => value.original || "",
-  },
+  },*/
   {
     dataField: "workYear",
     label: Translate({
@@ -192,15 +228,141 @@ const fields = () => [
     }),
     valueParser: (value) => value.edition || "",
   },
-  {
+  /*{
     dataField: "manifestationParts",
     label: Translate({
       context: "bibliographic-data",
       label: "manifestationParts",
     }),
     valueParser: RenderManifestationParts,
-  },
+  },*/
 ];
+
+/**
+ *   ABOUT TITLES:
+ *
+ * From designer (thank you anders friis brødsgaard) - how to show titles :
+ *
+ * Titel:
+ * Alle titles.full med linjeskift mellem hver titel
+ * Herefter på ny linje alle titles.parallel med linjeskift mellem hver titel
+ *
+ * Originaltitel:
+ * Alle titles.original med komma og mellemrum mellem hver titel
+ * OBS: Vises kun hvis de adskiller sig fra titlerne i title.main og titles.full ved en toLowerCase sammenligning.
+ *
+ * Alternativ titel:
+ * Alle titles.alternative med komma og mellemrum mellem hver titel
+ *
+ * Standardtitel:
+ * Alle titles.standard med komma og mellemrum mellem hver titel
+ *
+ * Oversat titel:
+ * Alle titles.translated med komma og mellemrum mellem hver titel
+ * OBS: Vises kun hvis de adskiller sig fra titlerne i title.main og titles.full ved en toLowerCase sammenligning.
+ *
+ *
+ **/
+
+/**
+ * Render full and parallel titles as one block to show.
+ * @param value
+ * @returns {JSX.Element}
+ */
+function renderFullAndParallelTitles(value) {
+  return (
+    <>
+      {value?.full?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`full-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+      {value?.parallel?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`parallel-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+/**
+ * Render translated titles - do not show if shown before in another title
+ * @param value
+ * @returns {JSX.Element|null}
+ */
+function renderTranslatedTitle(value) {
+  // only render if values are not rendered before - compare with full, parallel and main
+  const alreadyHandled = titlesToFilterOn(value);
+  const toRender = value?.translated?.filter(
+    (val) => !alreadyHandled.includes(val)
+  );
+
+  if (!toRender || toRender?.length < 1) {
+    return null;
+  }
+  return (
+    <>
+      {toRender?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`translated-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+/**
+ * Some titles should not be shown if shown before - these are the arrays of titles
+ * to look in for reappearing titles.
+ *
+ * @param value
+ * @returns {*[]}
+ */
+function titlesToFilterOn(value) {
+  return [
+    ...(value?.full ? value?.full : []),
+    ...(value.parallel ? value.parallel : []),
+    ...(value?.main ? value.main : []),
+  ];
+}
+
+/**
+ * Render original titles
+ * @param value
+ * @returns {JSX.Element|null}
+ */
+function renderOriginalTitle(value) {
+  // only render if values are not rendered before - compare with full, parallel and main
+  const alreadyHandled = titlesToFilterOn(value);
+  const toRender = value?.original.filter(
+    (val) => !alreadyHandled.includes(val)
+  );
+  if (toRender?.length < 1) {
+    return null;
+  }
+  return (
+    <>
+      {toRender?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`original-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
 
 /**
  * Render manifestationParts (content of music, node etc) as a
@@ -209,7 +371,7 @@ const fields = () => [
  * @returns {JSX.Element}
  * @constructor
  */
-function RenderManifestationParts(value) {
+/*function RenderManifestationParts(value) {
   const tooLong = value?.parts?.length > 10;
   const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
   return (
@@ -232,7 +394,7 @@ function RenderManifestationParts(value) {
       {tooLong && <div>....</div>}
     </>
   );
-}
+}*/
 
 /**
  * Parse manifestation into array of objects
@@ -257,7 +419,7 @@ export function parseManifestation(manifestation) {
           : manifestation?.[field?.dataField];
         return {
           dataField: field.dataField,
-          label: field.label,
+          label: field.label || null,
           value,
         };
       })
