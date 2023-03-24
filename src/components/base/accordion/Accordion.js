@@ -99,6 +99,7 @@ export function Item({
           animations["on-hover"],
           animations["on-focus"],
           animations["f-outline"],
+          isCurrentEventKey && styles.open,
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
