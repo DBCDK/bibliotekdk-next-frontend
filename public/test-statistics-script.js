@@ -1,2 +1,2 @@
 console.log("Am I blocked?");
-document.cookie = "teststatcookie=hello world";
+document.cookie = "teststatcookie=hello world;";

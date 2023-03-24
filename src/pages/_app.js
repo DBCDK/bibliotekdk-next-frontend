@@ -11,6 +11,8 @@
  */
 import React from "react";
 
+import Script from "next/script";
+
 import Cookies from "js-cookie";
 
 import { SessionProvider } from "next-auth/react";
@@ -173,35 +175,35 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
 
-            {/* <Script
+            <Script
+              strategy="beforeInteractive"
               id="Cookiebot"
               type="text/javascript"
               src="https://consent.cookiebot.com/uc.js"
               data-cbid="0945225b-6b16-4166-82dd-ea5947b897b3"
               data-blockingmode="auto"
-              async
-            /> */}
+            />
 
-            {/* <Script
+            <Script
               id="MatomoConnect"
               type="text/javascript"
               src="/matomo-connect.js"
-            /> */}
+            />
 
-            {/* <Script
+            <Script
               id="MatomoScript"
               type="text/javascript"
               src="/matomo-script.js"
-            /> */}
+            />
 
             {/* Test script */}
-            {/* <Script
+            <Script
               id="Teststatistics"
               // type="text/plain"
               type="text/javascript"
               src="/test-statistics-script.js"
               // data-cookieconsent="statistics"
-            /> */}
+            />
 
             {/* matomo update url on singlepage applications */}
             <Matomo />
