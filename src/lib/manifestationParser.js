@@ -472,7 +472,6 @@ function ManifestationLink({ children }) {
 }
 
 function ParsedLanguages({ languages }) {
-  return null;
   const languagesNotesExist = languages?.notes?.length > 0;
 
   const languagesExist =
