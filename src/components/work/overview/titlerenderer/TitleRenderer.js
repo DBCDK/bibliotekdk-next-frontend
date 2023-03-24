@@ -23,7 +23,11 @@ export function getNonDanishLanguages(mainLanguages) {
   return mainLanguages?.filter((language) => language?.isoCode !== "dan");
 }
 
-export function RenderLanguageAddition({ work, tag = "div", type = "title6" }) {
+export function RenderLanguageAddition({
+  work,
+  tag = "span",
+  type = "title7",
+}) {
   const titles = work?.titles?.full;
   const mainLanguages = work?.mainLanguages;
 
