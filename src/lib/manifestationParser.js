@@ -42,7 +42,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "standardTitle",
     }),
-    valueParser: (value) => value.standard || "",
+    valueParser: (value) => value?.standard?.join(", "),
   },
   {
     // translated titles
