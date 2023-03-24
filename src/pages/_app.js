@@ -52,6 +52,7 @@ import SetPickupBranch from "@/components/utils/SetPickupBranch";
 import { enableDebug } from "@/lib/api/api";
 
 import ErrorPage from "./500";
+import useCookieConsent from "@/components/hooks/useCookieConsent";
 
 // kick off the polyfill!
 if (typeof window !== "undefined") {
@@ -112,6 +113,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // Enable data collect, when cookies are approved
   enableDataCollect(allowCookies);
 
+  const consent = useCookieConsent();
+
+  console.log("consent", consent);
+
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
   // let Translate component handle whatever could be wrong with the result
@@ -169,10 +174,10 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
             </Modal.Container>
+            <Head />
             <Matomo allowCookies={allowCookies} />
             <BodyScrollLock router={router} />
             <div id="layout">
-              <Head />
               <SkipToMainLink />
               <Banner />
               <Notifications />

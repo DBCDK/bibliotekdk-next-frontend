@@ -7,15 +7,14 @@ import {
   collectSearchFeedback,
 } from "@/lib/api/datacollect.mutations";
 import { useFetcher } from "@/lib/api/api";
-
-let enabled = false;
-
-export function enableDataCollect(enable) {
-  enabled = enable;
-}
+import useCookieConsent from "@/components/hooks/useCookieConsent";
 
 export default function useDataCollect() {
   const fetcher = useFetcher();
+  const consent = useCookieConsent();
+  const enabled = !!consent.statistics;
+
+  console.log("use data collect is ", enabled);
 
   return {
     collectSearch: (obj) => enabled && fetcher(collectSearch(obj)),

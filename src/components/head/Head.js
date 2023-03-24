@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Script from "next/script";
 
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 
@@ -16,6 +17,14 @@ export default function _Head() {
 
   return (
     <Head>
+      <Script
+        id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="0945225b-6b16-4166-82dd-ea5947b897b3"
+        data-blockingmode="auto"
+        type="text/javascript"
+        strategy="beforeInteractive"
+      ></Script>
       <title key="title">{pageTitle}</title>
       <meta
         key="description"

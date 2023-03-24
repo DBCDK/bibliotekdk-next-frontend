@@ -42,8 +42,12 @@ const FirstColumn = () => {
       <div className={styles.spacer}></div>
       <Link
         border={{ bottom: { keepVisible: true } }}
-        href={POLICY_ARTICLE_PATH}
+        // href={POLICY_ARTICLE_PATH}
         className={styles.footerlink}
+        onClick={(e) => {
+          e.preventDefault();
+          Cookiebot.renew();
+        }}
       >
         <Text tag="span" type="text3">
           {Translate({
