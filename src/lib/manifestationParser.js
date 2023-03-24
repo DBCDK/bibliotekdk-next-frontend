@@ -9,38 +9,43 @@ import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Key
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
   {
+    // main title
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
       label: "title",
     }),
-    valueParser: renderFullAndParallellTitles,
+    valueParser: renderFullAndParallelTitles,
   },
   {
+    // originalt title
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
-      label: "originaltitle",
+      label: "originalTitle",
     }),
     valueParser: renderOriginalTitle,
   },
   {
+    // alternative titles
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
-      label: "alternative",
+      label: "alternativeTitle",
     }),
     valueParser: (value) => value.alternative || "",
   },
   {
+    // standard titles
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
-      label: "standard",
+      label: "standardTitle",
     }),
     valueParser: (value) => value.standard || "",
   },
   {
+    // translated titles
     dataField: "titles",
     label: Translate({
       context: "bibliographic-data",
@@ -235,6 +240,8 @@ const fields = () => [
 ];
 
 /**
+ *   ABOUT TITLES:
+ *
  * From designer (thank you anders friis brødsgaard) - how to show titles :
  *
  * Titel:
@@ -255,12 +262,15 @@ const fields = () => [
  * Alle titles.translated med komma og mellemrum mellem hver titel
  * OBS: Vises kun hvis de adskiller sig fra titlerne i title.main og titles.full ved en toLowerCase sammenligning.
  *
+ *
+ **/
+
+/**
+ * Render full and parallel titles as one block to show.
  * @param value
- *  the titles (manifestation.titles)
- * @returns {*}
- * @constructor
+ * @returns {JSX.Element}
  */
-function renderFullAndParallellTitles(value) {
+function renderFullAndParallelTitles(value) {
   return (
     <>
       {value?.full?.map((val, index) => {
@@ -283,14 +293,17 @@ function renderFullAndParallellTitles(value) {
   );
 }
 
+/**
+ * Render translated titles - do not show if shown before in another title
+ * @param value
+ * @returns {JSX.Element|null}
+ */
 function renderTranslatedTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
   const alreadyHandled = titlesToFilterOn(value);
   const toRender = value?.translated?.filter(
     (val) => !alreadyHandled.includes(val)
   );
-
-  console.log(toRender, "TORENDER");
 
   if (!toRender || toRender?.length < 1) {
     return null;
@@ -309,6 +322,13 @@ function renderTranslatedTitle(value) {
   );
 }
 
+/**
+ * Some titles should not be shown if shown before - these are the arrays of titles
+ * to look in for reappearing titles.
+ *
+ * @param value
+ * @returns {*[]}
+ */
 function titlesToFilterOn(value) {
   return [
     ...(value?.full ? value?.full : []),
@@ -317,6 +337,11 @@ function titlesToFilterOn(value) {
   ];
 }
 
+/**
+ * Render original titles
+ * @param value
+ * @returns {JSX.Element|null}
+ */
 function renderOriginalTitle(value) {
   // only render if values are not rendered before - compare with full, parallel and main
   const alreadyHandled = titlesToFilterOn(value);
@@ -339,98 +364,6 @@ function renderOriginalTitle(value) {
     </>
   );
 }
-
-// return (
-//   <>
-//     {/*FULL TITLES */}
-//     {value.full?.length > 0 && (
-//       <>
-//         <div>
-//           <Text type="text4">
-//             {Translate({
-//               context: "bibliographic-data",
-//               label: "title",
-//             })}
-//           </Text>
-//         </div>
-//         {value.full.map((val, index) => {
-//           // collect for comparison
-//           renderedTitles.push(val);
-//           return (
-//             <div key={`full-${index}`}>
-//               <Text type="text3">{val}</Text>
-//             </div>
-//           );
-//         })}
-//       </>
-//     )}
-//
-//     {/* ALTERNATIVE TITLES */}
-//
-//     {value?.alternative && value?.length > 0 && (
-//       <>
-//         <div>
-//           <Text type="text4">Alternative titles</Text>
-//         </div>
-//         {value?.alternative.map((val, index) => {
-//           if (!renderedTitles.includes(val)) {
-//             return (
-//               <div key={`alternate-${index}`}>
-//                 <Text type="text3">{val}</Text>
-//               </div>
-//             );
-//           }
-//         })}
-//       </>
-//     )}
-//
-//     {value.original?.length > 0 && (
-//       <>
-//         <div>
-//           <Text type="text4">Original titles</Text>
-//         </div>
-//         {value.original.map((val, index) => {
-//           return (
-//             <div key={`original-${index}`}>
-//               <Text type="text3">{val}</Text>
-//             </div>
-//           );
-//         })}
-//       </>
-//     )}
-//
-//     {value.parallel?.length > 0 && (
-//       <>
-//         <div>
-//           <Text type="text4">Parallel titles</Text>
-//         </div>
-//         {value.parallel.map((val, index) => {
-//           return (
-//             <div key={`parllel-${index}`}>
-//               <Text type="text3">{val}</Text>
-//             </div>
-//           );
-//         })}
-//       </>
-//     )}
-//
-//     {value.translated?.length > 0 && (
-//       <>
-//         <div>
-//           <Text type="text4">Translated titles</Text>
-//         </div>
-//         {value.translated.map((val, index) => {
-//           return (
-//             <div key={`translated-${index}`}>
-//               <Text type="text3">{val}</Text>
-//             </div>
-//           );
-//         })}
-//       </>
-//     )}
-//   </>
-// );
-//}
 
 /**
  * Render manifestationParts (content of music, node etc) as a

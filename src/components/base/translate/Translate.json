@@ -499,6 +499,18 @@
         "da": "Titel",
         "en": "Title"
       },
+      "originalTitle": {
+        "da": "Originaltitel",
+        "en": "Original Title"
+      },
+      "alternativeTitle": {
+        "da": "Alternativ titel",
+        "en": "Alternative Title"
+      },
+      "standardTitle": {
+        "da": "Standard titel",
+        "en": "Standard title"
+      },
       "creators": {
         "da": "Af",
         "en": "By"
@@ -526,10 +538,6 @@
       "originals": {
         "da": "Originaludgivelse",
         "en": "Original"
-      },
-      "originalTitle": {
-        "da": "Originaltitel",
-        "en": "Original Title"
       },
       "originalYear": {
         "da": "Originaludgivelsesår",

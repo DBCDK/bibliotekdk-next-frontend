@@ -227,6 +227,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     full
     original
     alternative
+    parallel
   }
   creators {
     display
