@@ -33,7 +33,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "alternativeTitle",
     }),
-    valueParser: (value) => value.alternative || "",
+    valueParser: (value) => value?.alternative?.join(", "),
   },
   {
     // standard titles
