@@ -212,7 +212,6 @@ function RenderCreatorValues({ values, skeleton }) {
               disabled={skeleton}
               border={{ bottom: { keepVisible: true } }}
               key={`crators-${index}`}
-              className={styles.link}
             >
               <Text type="text4" skeleton={skeleton} lines={0} key={index}>
                 {parsePersonAndFunction(person)}
