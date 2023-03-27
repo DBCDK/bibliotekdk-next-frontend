@@ -52,6 +52,9 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           workTypes
           manifestations {
             mostRelevant{
+              ownerWork {
+                workTypes
+              }
               cover {
                 detail
                 origin

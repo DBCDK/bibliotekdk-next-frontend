@@ -38,6 +38,14 @@
   font-family: var(--title-font);
 }
 
+/* TODO: WARNING: Don't use this other
+     places than work overview */
+.title7 {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: var(--title-font);
+}
+
 .clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -64,6 +72,10 @@
   .title3 {
     font-size: 40px;
     line-height: 52px;
+  }
+  .title7 {
+    font-size: 24px;
+    line-height: 32px;
   }
 }
 

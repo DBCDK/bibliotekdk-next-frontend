@@ -607,6 +607,9 @@ export function overviewWork({ workId }) {
         workTypes
         manifestations {
           mostRelevant {
+            ownerWork {
+              workTypes
+            }
             pid
             materialTypes {
               specific

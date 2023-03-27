@@ -12,7 +12,7 @@ import {
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
-import { MaterialTypeEnum } from "@/lib/enums";
+import { MaterialTypeEnum } from "@/lib/enums_MaterialTypes";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
   accessFactory,
