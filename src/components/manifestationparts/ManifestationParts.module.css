@@ -1,3 +1,6 @@
+.manifestionlistContainer {
+}
+
 .manifestionlist {
   list-style-type: none;
 }
@@ -13,5 +16,9 @@
 }
 
 .manifestionlist li:nth-child(odd) {
-  background: purple;
+  background: none;
+}
+
+.manifestionPartsButton {
+  margin: var(--pt2) 0 var(--pt2) 0;
 }

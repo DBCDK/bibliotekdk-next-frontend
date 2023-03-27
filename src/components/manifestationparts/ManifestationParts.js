@@ -2,27 +2,62 @@ import { useData } from "@/lib/api/api";
 import { manifestationParts } from "@/lib/api/manifestation.fragments";
 import styles from "./ManifestationParts.module.css";
 import Text from "@/components/base/text/Text";
-import animations from "@/components/base/animation/animations.module.css";
+import Button from "@/components/base/button";
+import React from "react";
+import Translate from "@/components/base/translate";
+import isEmpty from "lodash/isEmpty";
+import { useModal } from "@/components/_modal";
 
-export function ManifestationParts({ parts, titlesOnly = true, className }) {
+export function ManifestationParts({
+  parts,
+  titlesOnly = true,
+  className,
+  label,
+  modalOpen,
+  showMoreButton = true,
+}) {
+  if (isEmpty(parts)) {
+    return null;
+  }
+
   return (
-    <ul className={(className && className) || styles.manifestionlist}>
-      {parts?.map(
-        (part) =>
-          part && (
-            <li>
-              <Text type="text3" lines={1}>
-                {part.title}
-              </Text>
-              {part.playingTime && !titlesOnly && (
-                <Text type="text3" lines={1}>
-                  {part.playingTime}
-                </Text>
-              )}
-            </li>
-          )
+    <div className={styles.manifestionlistContainer}>
+      {label && (
+        <Text type="text4" lines={1}>
+          {label}
+        </Text>
       )}
-    </ul>
+      <ul className={(className && className) || styles.manifestionlist}>
+        {parts?.map(
+          (part) =>
+            part && (
+              <li>
+                <Text type="text3" lines={1}>
+                  {part.title}
+                </Text>
+                {part.playingTime && !titlesOnly && (
+                  <Text type="text3" lines={1}>
+                    {part.playingTime}
+                  </Text>
+                )}
+              </li>
+            )
+        )}
+      </ul>
+      {showMoreButton && (
+        <Button
+          type="secondary"
+          size="small"
+          className={styles.manifestionPartsButton}
+          onClick={() => modalOpen()}
+        >
+          {Translate({
+            context: "bibliographic-data",
+            label: "manifestationPartsButton",
+          })}
+        </Button>
+      )}
+    </div>
   );
 }
 
@@ -31,10 +66,14 @@ export default function Wrap({
   numberToShow,
   titlesOnly = false,
   className,
+  label,
+  showMoreButton = true,
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationParts({ pid: pid })
   );
+
+  const modal = useModal();
 
   if (error || !data) {
     return null;
@@ -44,25 +83,25 @@ export default function Wrap({
   }
 
   const parts = data?.manifestation?.manifestationParts?.parts;
+  const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
 
-  console.log(parts?.length, numberToShow, "VARTS");
+  const modalOpen = () => {
+    modal.push("manifestationContent", {
+      pid: pid,
+      showOrderTxt: false,
+      singleManifestation: true,
+      showmoreButtone: false,
+    });
+  };
 
-  const partsToShow = (numberToShow && parts?.splice(0, numberToShow)) || parts;
-
-  /*const partsToShow =
-    parts && numberToShow
-      ? parts.splice(0, numberToShow)
-      : parts
-      ? parts
-      : null;
-
-  console.log(partsToShow, "PARTS");*/
   return (
     <ManifestationParts
-      parts={parts}
+      parts={partsToShow}
       titlesOnly={titlesOnly}
       className={className}
-      // @TODO - we need a title also
+      label={label}
+      modalOpen={modalOpen}
+      showMoreButton={showMoreButton}
     />
   );
 }

@@ -27,9 +27,12 @@ import isEmpty from "lodash/isEmpty";
  * @returns {JSX.Element}
  */
 export function BibliographicData({ manifestations, workId }) {
-  const { flattenedGroupedSortedManifestations } = useMemo(() => {
+  /* const { flattenedGroupedSortedManifestations } = useMemo(() => {
     return manifestationMaterialTypeFactory(manifestations);
-  }, [manifestations]);
+  }, [manifestations]);*/
+
+  const { flattenedGroupedSortedManifestations } =
+    manifestationMaterialTypeFactory(manifestations);
 
   // TODO: Fix this temporary fix: temporary fix for large manifestation lists
   const sliced = flattenedGroupedSortedManifestations.slice(0, 150);

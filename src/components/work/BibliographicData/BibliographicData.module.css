@@ -71,15 +71,16 @@
   margin-bottom: var(--pt1);
 }
 
-.fisk {
-  list-style-type: circle;
+.manifestationPartsList {
+  list-style-type: disc;
+  margin-left: var(--pt2);
 }
 
-.fisk li:nth-child(even) {
+.manifestationPartsList li:nth-child(even) {
   background: none;
 }
 
-.fisk li:nth-child(odd) {
+.manifestationPartsList li:nth-child(odd) {
   background: none;
 }
 

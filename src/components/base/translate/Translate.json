@@ -559,6 +559,10 @@
         "da": "Indhold",
         "en": "Contents"
       },
+      "manifestationPartsButton": {
+        "da": "Se fuldt indhold",
+        "en": "Full content"
+      },
       "subject": {
         "da": "Tags",
         "en": "Tags"

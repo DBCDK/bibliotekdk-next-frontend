@@ -20,6 +20,7 @@ import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
+import translate from "@/components/base/translate";
 
 /**
  * Column one of full view. Some links and a button.
@@ -130,8 +131,12 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
           <ManifestationParts
             pid={data?.manifestation?.pid}
             titlesOnly={true}
-            className={styles.fisk}
-            numberToShow={5}
+            className={styles.manifestationPartsList}
+            numberToShow={3}
+            label={Translate({
+              context: "bibliographic-data",
+              label: "manifestationParts",
+            })}
           />
         </div>
       </Col>
