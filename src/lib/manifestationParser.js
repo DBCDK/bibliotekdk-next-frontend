@@ -4,7 +4,6 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
-import Button from "@/components/base/button/Button";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [

@@ -3,8 +3,7 @@ import Edition from "@/components/_modal/pages/edition/Edition";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 
 export default function ManifestationContent(props) {
-  const { pid, showOrderTxt, singleManifestation, showMoreButton } =
-    props.context;
+  const { pid, showOrderTxt, singleManifestation } = props.context;
 
   const fisk = { orderPids: [pid] };
 
