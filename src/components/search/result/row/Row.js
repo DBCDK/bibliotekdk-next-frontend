@@ -74,10 +74,10 @@ TitlesForSearch.propTypes = {
 function sortMaterialTypesByRouter(routerMaterialTypes) {
   return (a, b) => {
     const promoteA = routerMaterialTypes?.findIndex((mat) =>
-      isEqual(a.join(","), mat)
+      isEqual(formatMaterialTypesToUrl(a), mat)
     );
     const promoteB = routerMaterialTypes?.findIndex((mat) =>
-      isEqual(b.join(","), mat)
+      isEqual(formatMaterialTypesToUrl(b), mat)
     );
 
     const indexA = promoteA !== -1 ? promoteA : routerMaterialTypes?.length;
