@@ -226,6 +226,8 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     main
     full
     original
+    alternative
+    parallel
   }
   creators {
     display
@@ -261,6 +263,12 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     system
     display
   }
+  subjects {
+    dbcVerified {
+     display
+      type
+    }
+  }  
   languages {
     original {
       display
@@ -293,4 +301,9 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     shelfmark
     postfix
   }
+manifestationParts {
+     parts {
+        title
+     }
+  }  
 }`;

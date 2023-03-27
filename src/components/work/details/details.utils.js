@@ -10,6 +10,7 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
+import { Fragment } from "react";
 
 /**
  * Parse languages in given manifestation.
@@ -199,7 +200,9 @@ function RenderCreatorValues({ values, skeleton }) {
     valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
         {valuesToRender.map((person, index) => (
-          <>
+          <Fragment
+            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+          >
             <Link
               href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
@@ -209,13 +212,12 @@ function RenderCreatorValues({ values, skeleton }) {
               disabled={skeleton}
               border={{ bottom: { keepVisible: true } }}
               key={`crators-${index}`}
-              className={styles.link}
             >
               <Text type="text4" skeleton={skeleton} lines={0} key={index}>
                 {parsePersonAndFunction(person)}
               </Text>
             </Link>
-          </>
+          </Fragment>
         ))}
         {length > 4 && (
           <Text type="text4" skeleton={skeleton} lines={0}>
@@ -413,7 +415,7 @@ function RenderMovieAudience({ values }) {
     }
   }
   const txt =
-    agerecommendation.indexOf("Mærkning:") != -1
+    agerecommendation.indexOf("Mærkning:") !== -1
       ? agerecommendation.replace("Mærkning: ", "")
       : agerecommendation;
   if (age) {
@@ -442,7 +444,7 @@ function RenderMovieAudience({ values }) {
       {image && (
         <div className={styles.pegiimage}>
           <div className={styles.spacemaker}>
-            <Image src={image} width={40} height={40} />
+            <Image src={image} width={40} height={40} alt={txt ?? ""} />
           </div>
           {txt && (
             <Text type="text3" lines={1} tag="span" className={styles.imgtext}>

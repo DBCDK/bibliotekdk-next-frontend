@@ -45,8 +45,16 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
       search(q: $q, filters: $filters) {
         works(limit: $limit, offset: $offset) {
           workId
+          mainLanguages {
+            isoCode
+            display
+          }
+          workTypes
           manifestations {
             mostRelevant{
+              ownerWork {
+                workTypes
+              }
               cover {
                 detail
                 origin
@@ -69,6 +77,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
           titles {
             main
             full
+            parallel
           }
         }
         hitcount

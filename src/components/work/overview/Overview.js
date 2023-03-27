@@ -2,7 +2,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import PropTypes from "prop-types";
-import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
@@ -18,6 +17,11 @@ import { MaterialTypeSwitcher } from "@/components/work/overview/materialtypeswi
 import { CreatorsArray } from "@/components/work/overview/creatorsarray/CreatorsArray";
 import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
 import CoverCarousel from "@/components/work/overview/covercarousel/CoverCarousel";
+import {
+  RenderLanguageAddition,
+  RenderTitlesWithoutLanguage,
+} from "@/components/work/overview/titlerenderer/TitleRenderer";
+import { Title } from "@/components/base/title/Title";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
 function useInitMaterialType(
@@ -82,13 +86,13 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} lg={3} className={styles.breadcrumbs}>
+          <Col xs={12} xl={3} className={styles.breadcrumbs}>
             <Breadcrumbs workId={workId} />
           </Col>
           <Col
             xs={12}
-            lg={4}
-            md={{ span: 4, order: 3 }}
+            lg={3}
+            md={{ span: 5, order: 3 }}
             className={styles.cover}
           >
             <CoverCarousel
@@ -97,19 +101,20 @@ export function Overview({
             />
           </Col>
 
-          <Col xs={12} md={{ order: 2 }} className={`${styles.about}`}>
+          <Col
+            xs={12}
+            md={{ order: 2, span: true }}
+            className={`${styles.about}`}
+          >
             <Row>
               <Col xs={12}>
                 <Title
-                  type="title3"
+                  type={"title3"}
                   skeleton={skeleton}
                   data-cy={"title-overview"}
                 >
-                  {titles?.map((title, index, array) => (
-                    <>
-                      {title} {index < array.length - 1 && <br />}
-                    </>
-                  ))}
+                  <RenderTitlesWithoutLanguage titles={titles} />
+                  <RenderLanguageAddition work={work} />
                 </Title>
               </Col>
               <Col xs={12}>

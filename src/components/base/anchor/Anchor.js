@@ -126,7 +126,7 @@ function Menu({
       >
         <Container fluid>
           <Row>
-            <Col xs={12} lg={{ offset: 3 }}>
+            <Col xs={12} lg={{ offset: 3, span: true }}>
               {Object.keys(items).map((id) => {
                 // target section
                 const section = getSectionById(id, items, menuT, height);

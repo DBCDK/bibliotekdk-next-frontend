@@ -10,7 +10,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: var(--pt2) 0;
   cursor: pointer;
 }
@@ -19,12 +18,34 @@
   margin-right: var(--pt2);
 }
 
+.firstelement {
+  width: 10%;
+}
+
+.textbox {
+  display: grid;
+  grid-template-columns: 5fr 7fr 6fr;
+  align-items: center;
+  width: 100%;
+}
+
+.textbox p:first-of-type {
+  font-weight: bold;
+}
+.textbox p {
+  justify-self: start;
+}
+
 .content > div {
   padding-top: var(--pt2);
 }
 
 .content p {
   padding-right: var(--pt7);
+}
+
+.skeleton {
+  pointer-events: none;
 }
 
 @media (min-width: 992px) {

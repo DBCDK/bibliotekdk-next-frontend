@@ -18,10 +18,7 @@
    *  width is full
    */
   --related_works_width: calc(
-    var(--container_width)
-    / 12
-    * var(--cols_per_card)
-    - (0.5 * var(--pt2))
+    var(--container_width) / 12 * var(--cols_per_card) - (0.5 * var(--pt2))
   );
   width: var(--related_works_width);
 
@@ -54,9 +51,9 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;        /* number of lines to show */
-  line-height: 1.5em;           /* fallback */
-  max-height: calc(1.5em * 2);  /* fallback */
+  -webkit-line-clamp: 2; /* number of lines to show */
+  line-height: 1.5em; /* fallback */
+  max-height: calc(1.5em * 2); /* fallback */
 }
 
 .margin_auto {

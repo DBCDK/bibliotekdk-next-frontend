@@ -344,6 +344,10 @@
       "skip": {
         "da": "Spring over",
         "en": "Skip"
+      },
+      "multipleLanguages": {
+        "da": "flere sprog",
+        "en": "multiple languages"
       }
     },
     "articles": {
@@ -495,6 +499,18 @@
         "da": "Titel",
         "en": "Title"
       },
+      "originalTitle": {
+        "da": "Originaltitel",
+        "en": "Original Title"
+      },
+      "alternativeTitle": {
+        "da": "Alternativ titel",
+        "en": "Alternative Title"
+      },
+      "standardTitle": {
+        "da": "Standard titel",
+        "en": "Standard title"
+      },
       "creators": {
         "da": "Af",
         "en": "By"
@@ -523,10 +539,6 @@
         "da": "Originaludgivelse",
         "en": "Original"
       },
-      "originalTitle": {
-        "da": "Originaltitel",
-        "en": "Original Title"
-      },
       "originalYear": {
         "da": "Originaludgivelsesår",
         "en": "Original Year"
@@ -542,6 +554,14 @@
       "notes": {
         "da": "Note",
         "en": "Note"
+      },
+      "manifestationParts": {
+        "da": "Indhold",
+        "en": "Contents"
+      },
+      "subject": {
+        "da": "Tags",
+        "en": "Tags"
       }
     },
     "references": {
