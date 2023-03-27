@@ -56,8 +56,14 @@ function WorkGroupingsOverview({ description, title, anchorId, scrollOffset }) {
         <Link
           border={{ top: false, bottom: { keepVisible: true } }}
           disabled={!element}
+          onClick={clickFunction}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.keyCode === 13) {
+              clickFunction();
+            }
+          }}
         >
-          <div onClick={clickFunction}>{title}</div>
+          {title}
         </Link>
       </Text>
     )
@@ -70,10 +76,15 @@ WorkGroupingsOverview.propTypes = {
 };
 
 function getSeriesMap(series, seriesMembers) {
+  const numberInSeries =
+    series?.numberInSeries?.number?.length !== 1
+      ? " "
+      : series?.numberInSeries?.number + " ";
+
   return (
     seriesMembers?.length > 0 && {
       partNumber: series?.numberInSeries?.number,
-      description: `Del ${series?.numberInSeries?.number + " "} af `,
+      description: `Del ${numberInSeries + " "} af `,
       title: series?.title,
       anchorId: getAnchor(AnchorsEnum.SERIES),
       scrollOffset: -64,
