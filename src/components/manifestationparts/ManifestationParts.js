@@ -44,7 +44,7 @@ export function ManifestationParts({
             )
         )}
       </ul>
-      {showMoreButton && (
+      {showMoreButton && parts?.length > 3 && (
         <Button
           type="secondary"
           size="small"
