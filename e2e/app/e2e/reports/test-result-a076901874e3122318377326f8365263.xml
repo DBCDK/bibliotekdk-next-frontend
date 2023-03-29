@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.6700" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-03-29T12:32:05" tests="0" file="cypress/e2e/old/feedbacklink.cy.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="feedbacklink" timestamp="2023-03-29T12:32:05" tests="1" time="0.6700" failures="0">
-    <testcase name="feedbacklink check link to kunderservice" time="0.6700" classname="check link to kunderservice">
-    </testcase>
-  </testsuite>
-</testsuites>

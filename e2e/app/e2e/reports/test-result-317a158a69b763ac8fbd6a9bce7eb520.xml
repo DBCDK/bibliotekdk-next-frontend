@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="Mocha Tests" time="0.8340" tests="1" failures="0">
-  <testsuite name="Root Suite" timestamp="2023-03-29T12:34:47" tests="0" file="cypress/e2e/old/tooltip.cy.js" time="0.0000" failures="0">
-  </testsuite>
-  <testsuite name="feedback" timestamp="2023-03-29T12:34:47" tests="1" time="0.8340" failures="0">
-    <testcase name="feedback Tooltip present on click" time="0.8340" classname="Tooltip present on click">
-    </testcase>
-  </testsuite>
-</testsuites>
