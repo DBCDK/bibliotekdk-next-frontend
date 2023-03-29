@@ -17,8 +17,6 @@ function matomoWaitForTracker() {
 }
 
 function consentSet() {
-  console.log("CONSENT??????????");
-
   if (Cookiebot.consent.statistics) {
     _paq.push(["setCookieConsentGiven"]);
     _paq.push(["setConsentGiven"]);
