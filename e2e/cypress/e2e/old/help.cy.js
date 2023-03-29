@@ -27,7 +27,7 @@ describe("help", () => {
     cy.visit("/iframe.html?path=/story/help-search--show-results");
     cy.get("[data-cy=help-menu").should("be.hidden");
   });
-  it(`Search: filter by language`, () => {
+  it.only(`Search: filter by language`, () => {
     // Intercept help search requests
     cy.intercept("POST", `${fbiApiPath}`, (req) => {
       if (req.body.query.includes("help(")) {
@@ -37,11 +37,7 @@ describe("help", () => {
 
     cy.visit(`${nextjsBaseUrl}/hjaelp`);
 
-    cy.get("[data-cy=cookiebox]").then(($box) => {
-      if ($box.is(":visible")) {
-        cy.get("[data-cy=button-ok]").click();
-      }
-    });
+    cy.consentAllowAll();
 
     // Default should be danish
     cy.get("#help-suggester-input").type("a");

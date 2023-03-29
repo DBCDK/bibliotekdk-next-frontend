@@ -10,9 +10,15 @@ import {
   collectSearchFeedback,
 } from "@/lib/api/datacollect.mutations";
 
+// For storybook/cypress test purposes
+let _dangerouslyForceConsent;
+export function dangerouslyForceConsent(consent) {
+  _dangerouslyForceConsent = consent;
+}
+
 export default function useDataCollect() {
   const fetcher = useFetcher();
-  const consent = useCookieConsent();
+  const consent = _dangerouslyForceConsent || useCookieConsent();
   const enabled = !!consent.statistics;
 
   return {
