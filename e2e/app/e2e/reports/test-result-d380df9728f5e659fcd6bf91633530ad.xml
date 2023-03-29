@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="7.3390" tests="15" failures="0" skipped="5">
+  <testsuite name="Root Suite" timestamp="2023-03-29T12:32:55" tests="0" file="cypress/e2e/old/overview.cy.js" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Overview" timestamp="2023-03-29T12:32:55" tests="0" time="0.0000" failures="0">
+  </testsuite>
+  <testsuite name="Overview parent" timestamp="2023-03-29T12:32:55" tests="8" time="4.7230" failures="0">
+    <testcase name="Overview Overview parent Can tab through to different elements" time="2.3470" classname="Can tab through to different elements">
+    </testcase>
+    <testcase name="Overview Overview parent Can click on button tag" time="0.7420" classname="Can click on button tag">
+    </testcase>
+    <testcase name="Overview Overview parent Can default its first materialType: " time="1.6340" classname="Can default its first materialType: ">
+    </testcase>
+  </testsuite>
+  <testsuite name="LocalizationsLink" timestamp="2023-03-29T12:33:00" tests="4" time="1.5840" failures="0">
+    <testcase name="Overview LocalizationsLink Preferred online" time="0.1620" classname="Preferred online">
+    </testcase>
+    <testcase name="Overview LocalizationsLink Not available for loan at any library" time="0.4970" classname="Not available for loan at any library">
+    </testcase>
+    <testcase name="Overview LocalizationsLink Available at libraries" time="0.4640" classname="Available at libraries">
+    </testcase>
+    <testcase name="Overview LocalizationsLink Slow loading" time="0.4610" classname="Slow loading">
+    </testcase>
+  </testsuite>
+  <testsuite name="Alternative Options" timestamp="2023-03-29T12:33:01" tests="3" time="1.0320" failures="0">
+    <testcase name="Overview Alternative Options No alternatives" time="0.4290" classname="No alternatives">
+    </testcase>
+    <testcase name="Overview Alternative Options With alternatives" time="0.4380" classname="With alternatives">
+    </testcase>
+    <testcase name="Overview Alternative Options Slow loading" time="0.1650" classname="Slow loading">
+    </testcase>
+  </testsuite>
+</testsuites>

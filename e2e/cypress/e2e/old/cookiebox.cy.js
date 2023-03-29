@@ -5,59 +5,67 @@
 
 const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 
-describe("CookieBox", () => {
-  it(`can accept cookies`, () => {
+describe("CookieBot", () => {
+  beforeEach(function () {
     cy.visit(`${nextjsBaseUrl}`);
+  });
 
-    cy.get("[data-cy=cookiebox")
+  it(`can accept cookies`, () => {
+    cy.get("#CybotCookiebotDialog")
       .should("exist")
-      .should("contain.text", "Vi går op i at anvende data ansvarligt");
+      .should("contain.text", "Denne hjemmeside bruger cookies");
 
-    // Check matomo cookies are disabled by default
-    cy.request(`${nextjsBaseUrl}`)
-      .its("body")
-      .then((html) => {
-        expect(html).to.have.string('_paq.push(["disableCookies"])');
-      });
+    cy.getCookies().should("have.length", 1);
+    cy.getCookie("next-auth.anon-session").should("exist");
 
-    cy.get("[data-cy=button-ok]").click();
+    cy.get("#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll").click();
 
-    cy.get("[data-cy=cookiebox").should("not.exist");
+    cy.wait(1000);
 
     // Check matomo does not disable cookies when they are allowed
-    cy.request(`${nextjsBaseUrl}`)
-      .its("body")
-      .then((html) => {
-        expect(html).to.not.have.string('_paq.push(["disableCookies"])');
+    cy.getCookies()
+      .should("have.length", 2)
+      .then(() => {
+        cy.getCookie("CookieConsent").should("exist");
+        cy.getCookie("next-auth.anon-session").should("exist");
+
+        cy.getCookie("CookieConsent").then((cookie) => {
+          expect(cookie.value).to.contain("necessary:true");
+          expect(cookie.value).to.contain("preferences:true");
+          expect(cookie.value).to.contain("statistics:true");
+          expect(cookie.value).to.contain("marketing:true");
+        });
       });
+
+    // widget always visible
+    cy.get("#CookiebotWidget").should("be.visible");
   });
 
   it(`can deny cookies`, () => {
-    cy.visit(`${nextjsBaseUrl}`);
+    cy.get("#CybotCookiebotDialogBodyButtonDecline").click();
 
-    cy.get("[data-cy=button-nej-tak]").click();
+    cy.wait(1000);
 
-    cy.get("[data-cy=cookiebox").should("not.exist");
+    cy.getCookies()
+      .should("have.length", 2)
+      .then(() => {
+        cy.getCookie("CookieConsent").should("exist");
+        cy.getCookie("next-auth.anon-session").should("exist");
 
-    // Check matomo cookies are disabled
-    cy.request(`${nextjsBaseUrl}`)
-      .its("body")
-      .then((html) => {
-        expect(html).to.have.string('_paq.push(["disableCookies"])');
+        cy.getCookie("CookieConsent").then((cookie) => {
+          expect(cookie.value).to.contain("necessary:true");
+          expect(cookie.value).to.contain("preferences:false");
+          expect(cookie.value).to.contain("statistics:false");
+          expect(cookie.value).to.contain("marketing:false");
+        });
       });
   });
 
   it(`can show cookie policy article`, () => {
     cy.visit(`${nextjsBaseUrl}`);
 
-    cy.get("[data-cy=cookiebox] a").click();
+    cy.get("[data-cy=footer-column] [data-cy=link]").click();
 
     cy.contains("En cookie er en lille tekstfil, som lægges på din computer");
-
-    // Check that we show the small cookiebox variant on article page
-    // where the description is hidden
-    cy.get(
-      '[data-cy="text-vi-går-op-i-at-anvende-data-ansvarligt,-og-bruger-kun-cookies-til-at-forbedre-din-brugeroplevelse."]'
-    ).should("not.be.visible");
   });
 });
