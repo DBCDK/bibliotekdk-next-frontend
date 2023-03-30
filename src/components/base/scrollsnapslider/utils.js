@@ -94,8 +94,6 @@ export function childSetter(childNodes) {
   // TODO: Please fix this if you know how to
   const offset = childNodes?.[0]?.offsetLeft;
 
-  console.log("offset: ", offset);
-
   childNodes.forEach((child) =>
     childWidths.push({
       width: child.offsetWidth,
