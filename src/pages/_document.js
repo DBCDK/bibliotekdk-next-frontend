@@ -4,6 +4,9 @@ import getConfig from "next/config";
 
 const COOKIEBOT = getConfig()?.publicRuntimeConfig?.cookiebot;
 
+// Cookiebot script added to _document.js def template as recommended by the docs
+// https://nextjs.org/docs/api-reference/next/script#strategy
+
 export default function Document() {
   return (
     <Html>

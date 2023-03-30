@@ -13,7 +13,7 @@ import {
 // For storybook/cypress test purposes
 let _dangerouslyForceConsent;
 export function dangerouslyForceConsent(consent) {
-  _dangerouslyForceConsent = consent;
+  _dangerouslyForceConsent = process.env.STORYBOOK_ACTIVE && consent;
 }
 
 export default function useDataCollect() {
