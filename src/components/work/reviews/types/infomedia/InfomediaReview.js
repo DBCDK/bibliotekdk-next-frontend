@@ -51,7 +51,7 @@ export function InfomediaReview({
     >
       <div>
         {data.hostPublication?.title && (
-          <div xs={12} className={styles.media}>
+          <div className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
               {data.hostPublication?.title}
             </Title>
@@ -65,7 +65,7 @@ export function InfomediaReview({
               </Text>
             </div>
           )}
-          <div xs={12} className={styles.right}>
+          <div className={styles.right}>
             {data.creators?.length > 0 && (
               <Text type="text2" skeleton={skeleton} lines={1}>
                 {data.creators?.map((c) => c.display).join(", ")}
@@ -79,7 +79,7 @@ export function InfomediaReview({
               )}
             </div>
             {data.review?.rating && (
-              <div xs={12} className={styles.rating}>
+              <div className={styles.rating}>
                 <Rating rating={data.review?.rating} skeleton={skeleton} />
               </div>
             )}
@@ -87,7 +87,7 @@ export function InfomediaReview({
         </div>
 
         {url && (
-          <div xs={12} className={styles.url}>
+          <div className={styles.url}>
             <Icon
               src="chevron.svg"
               size={{ w: 2, h: "auto" }}

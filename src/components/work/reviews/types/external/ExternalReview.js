@@ -89,7 +89,7 @@ export function ExternalReview({
               const shouldUseAlternateText =
                 access.url?.includes("https://moreinfo");
               return (
-                <div xs={12} className={styles.url} key={access.url}>
+                <div className={styles.url} key={access.url}>
                   <Icon
                     src="chevron.svg"
                     size={{ w: 2, h: "auto" }}
