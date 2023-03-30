@@ -3,6 +3,20 @@
   height: auto;
 }
 
+.only_content {
+  display: contents;
+}
+
+.slider > div > div {
+  scroll-snap-align: start;
+}
+
+.slider .trio {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: row;
+}
+
 /* Slider */
 
 .SlideWrapper {
