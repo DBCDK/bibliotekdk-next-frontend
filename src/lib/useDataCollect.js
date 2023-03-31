@@ -18,8 +18,8 @@ export function dangerouslyForceConsent(consent) {
 
 export default function useDataCollect() {
   const fetcher = useFetcher();
-  const consent = _dangerouslyForceConsent || useCookieConsent();
-  const enabled = !!consent.statistics;
+  const consent = useCookieConsent();
+  const enabled = !!(_dangerouslyForceConsent.statistics || consent.statistics);
 
   return {
     collectSearch: (obj) => enabled && fetcher(collectSearch(obj)),
