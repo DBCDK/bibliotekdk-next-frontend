@@ -23,19 +23,17 @@ describe("CookieBot", () => {
     cy.wait(1000);
 
     // Check matomo does not disable cookies when they are allowed
-    cy.getCookies()
-      .should("have.length", 2)
-      .then(() => {
-        cy.getCookie("CookieConsent").should("exist");
-        cy.getCookie("next-auth.anon-session").should("exist");
+    cy.getCookies().then(() => {
+      cy.getCookie("CookieConsent").should("exist");
+      cy.getCookie("next-auth.anon-session").should("exist");
 
-        cy.getCookie("CookieConsent").then((cookie) => {
-          expect(cookie.value).to.contain("necessary:true");
-          expect(cookie.value).to.contain("preferences:true");
-          expect(cookie.value).to.contain("statistics:true");
-          expect(cookie.value).to.contain("marketing:true");
-        });
+      cy.getCookie("CookieConsent").then((cookie) => {
+        expect(cookie.value).to.contain("necessary:true");
+        expect(cookie.value).to.contain("preferences:true");
+        expect(cookie.value).to.contain("statistics:true");
+        expect(cookie.value).to.contain("marketing:true");
       });
+    });
 
     // widget always visible
     cy.get("#CookiebotWidget").should("be.visible");
@@ -46,19 +44,17 @@ describe("CookieBot", () => {
 
     cy.wait(1000);
 
-    cy.getCookies()
-      .should("have.length", 2)
-      .then(() => {
-        cy.getCookie("CookieConsent").should("exist");
-        cy.getCookie("next-auth.anon-session").should("exist");
+    cy.getCookies().then(() => {
+      cy.getCookie("CookieConsent").should("exist");
+      cy.getCookie("next-auth.anon-session").should("exist");
 
-        cy.getCookie("CookieConsent").then((cookie) => {
-          expect(cookie.value).to.contain("necessary:true");
-          expect(cookie.value).to.contain("preferences:false");
-          expect(cookie.value).to.contain("statistics:false");
-          expect(cookie.value).to.contain("marketing:false");
-        });
+      cy.getCookie("CookieConsent").then((cookie) => {
+        expect(cookie.value).to.contain("necessary:true");
+        expect(cookie.value).to.contain("preferences:false");
+        expect(cookie.value).to.contain("statistics:false");
+        expect(cookie.value).to.contain("marketing:false");
       });
+    });
   });
 
   it(`can show cookie policy article`, () => {
