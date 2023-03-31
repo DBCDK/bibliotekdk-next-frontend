@@ -69,7 +69,7 @@ export function MaterialReview({
 
   return (
     <Col
-      xs={9}
+      xs={11}
       lg={12}
       className={`${styles.materialReview} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "material" })}
@@ -122,6 +122,7 @@ export function MaterialReview({
               </Link>
             </div>
           </div>
+
           <div className={styles.author}>
             <span>
               <Text type="text3" skeleton={skeleton} lines={1}>

@@ -43,7 +43,7 @@ export function InfomediaReview({
 
   return (
     <Col
-      xs={12}
+      xs={11}
       sm={6}
       md={4}
       className={`${styles.infomedia} ${className}`}

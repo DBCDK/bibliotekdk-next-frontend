@@ -30,10 +30,6 @@
   display: inline;
 }
 
-.right p {
-  white-space: nowrap;
-}
-
 .date {
   padding: 0;
 }
