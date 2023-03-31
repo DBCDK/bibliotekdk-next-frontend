@@ -92,20 +92,6 @@
         "en": "DBC kundeservice"
       }
     },
-    "cookiebox": {
-      "title": {
-        "da": "Cookies",
-        "en": "Cookies"
-      },
-      "description": {
-        "da": "Vi går op i at anvende data ansvarligt, og bruger kun cookies til at forbedre din brugeroplevelse.",
-        "en": "We strive to use data responsibly, and only use cookies to improve your user experience."
-      },
-      "policyTitle": {
-        "da": "Privatlivspolitik",
-        "en": "Privacy policy"
-      }
-    },
     "tooltip": {
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",

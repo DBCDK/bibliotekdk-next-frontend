@@ -37,11 +37,7 @@ describe("help", () => {
 
     cy.visit(`${nextjsBaseUrl}/hjaelp`);
 
-    cy.get("[data-cy=cookiebox]").then(($box) => {
-      if ($box.is(":visible")) {
-        cy.get("[data-cy=button-ok]").click();
-      }
-    });
+    cy.consentAllowAll();
 
     // Default should be danish
     cy.get("#help-suggester-input").type("a");
