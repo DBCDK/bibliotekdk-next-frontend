@@ -19,7 +19,9 @@ export function dangerouslyForceConsent(consent) {
 export default function useDataCollect() {
   const fetcher = useFetcher();
   const consent = useCookieConsent();
-  const enabled = !!(_dangerouslyForceConsent.statistics || consent.statistics);
+  const enabled = !!(
+    _dangerouslyForceConsent?.statistics || consent.statistics
+  );
 
   return {
     collectSearch: (obj) => enabled && fetcher(collectSearch(obj)),
