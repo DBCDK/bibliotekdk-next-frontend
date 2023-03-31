@@ -15,12 +15,14 @@ import {
   flattenMaterialType,
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
+  getElementByCustomSorting,
   getFlatPidsByType,
   getInUniqueMaterialTypes,
   getUniqueMaterialTypes,
   groupManifestations,
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
+import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 
 test("manifestationFactoryFunctions", () => {
   const actual = "";
@@ -196,6 +198,46 @@ describe("compareArraysOfStrings", () => {
     const expected = -1;
     expect(actual).toEqual(expected);
   });
+  it("should compare array strings properly with custom order (ebog vs billedbog; expect positive number)", () => {
+    const materialTypeOrder = getOrderedFlatMaterialTypes();
+    const actual = compareArraysOfStrings(
+      ["ebog"],
+      ["billedbog"],
+      materialTypeOrder
+    );
+    const expected = 0;
+    expect(actual).toBeLessThan(expected);
+  });
+  it("should compare array strings properly with custom order (billedbog vs ebog; expect negative number)", () => {
+    const materialTypeOrder = getOrderedFlatMaterialTypes();
+    const actual = compareArraysOfStrings(
+      ["billedbog"],
+      ["ebog"],
+      materialTypeOrder
+    );
+    const expected = 0;
+    expect(actual).toBeGreaterThan(expected);
+  });
+  it("should compare array strings properly with custom order (tegneserie vs computerspil; expect negative number)", () => {
+    const materialTypeOrder = getOrderedFlatMaterialTypes();
+    const actual = compareArraysOfStrings(
+      ["tegneserie"],
+      ["computerspil"],
+      materialTypeOrder
+    );
+    const expected = 0;
+    expect(actual).toBeLessThan(expected);
+  });
+  it("should compare array strings properly with custom order (computerspil vs tegneserie; expect positive number)", () => {
+    const materialTypeOrder = getOrderedFlatMaterialTypes();
+    const actual = compareArraysOfStrings(
+      ["computerspil"],
+      ["tegneserie"],
+      materialTypeOrder
+    );
+    const expected = 0;
+    expect(actual).toBeGreaterThan(expected);
+  });
   it("should compare array strings properly (bog/ebog vs bog/ebog; expect 0)", () => {
     const actual = compareArraysOfStrings(["bog", "ebog"], ["bog", "ebog"]);
     const expected = 0;
@@ -224,6 +266,36 @@ describe("compareArraysOfStrings", () => {
   it("should compare (empty vs bog; expect -1)", () => {
     const actual = compareArraysOfStrings([], ["bog"]);
     const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("getElementByCustomSorting", () => {
+  it("should be 0 if materialTypesOrder is empty", () => {
+    const materialTypesOrder = [];
+    const actual = getElementByCustomSorting(materialTypesOrder, "bog");
+    const expected = 0;
+    expect(actual).toEqual(expected);
+  });
+  it("should be length of materialTypesOrder if no match", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes();
+    const actual = getElementByCustomSorting(
+      materialTypesOrder,
+      "toilet-humor"
+    );
+    const expected = materialTypesOrder.length;
+    expect(actual).toEqual(expected);
+  });
+  it("should be less than length of materialTypesOrder if match", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes();
+    const actual = getElementByCustomSorting(materialTypesOrder, "bog");
+    const expected = materialTypesOrder.length;
+    expect(actual).toBeLessThan(expected);
+  });
+  it("should be length of materialTypes order if empty materialType", () => {
+    const materialTypesOrder = getOrderedFlatMaterialTypes();
+    const actual = getElementByCustomSorting(materialTypesOrder, "");
+    const expected = materialTypesOrder.length;
     expect(actual).toEqual(expected);
   });
 });
