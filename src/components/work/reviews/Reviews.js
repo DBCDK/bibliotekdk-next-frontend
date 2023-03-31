@@ -83,13 +83,6 @@ export function Reviews({ data = [], skeleton = false }) {
     [data]
   );
 
-  const lectorReviews = reviews.filter(
-    (review) => review?.review?.reviewByLibrarians?.length > 0
-  );
-  const otherReviews = reviews.filter(
-    (review) => review?.review?.reviewByLibrarians?.length === 0
-  );
-
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
@@ -131,15 +124,6 @@ export function Reviews({ data = [], skeleton = false }) {
             />
           ))
           .filter((valid) => valid)}
-        {/*{otherReviews*/}
-        {/*  .map((review, idx) => (*/}
-        {/*    <ReviewFromTemplateWithProps*/}
-        {/*      key={`review_non_lector_${idx}`}*/}
-        {/*      review={review}*/}
-        {/*      idx={idx}*/}
-        {/*    />*/}
-        {/*  ))*/}
-        {/*  .filter((valid) => valid)}*/}
       </ScrollSnapSlider>
     </Section>
   );
