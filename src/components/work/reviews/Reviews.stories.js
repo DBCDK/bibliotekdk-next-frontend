@@ -46,18 +46,18 @@ WrappedReviewsSlider.story = {
             },
             relations: {
               hasReview: [
-                unavailableReview,
-                unavailableReview,
-                unavailableReview,
-                reviewAvailableAtExternalSite,
-                reviewAvailableAtExternalSite,
-                reviewAvailableAtExternalSite,
-                reviewAvailableAtExternalSite,
-                reviewAvailableAtInfomedia,
-                reviewAvailableAtInfomedia,
-                reviewAvailableAtInfomedia,
-                librariansReview,
-                librariansReview,
+                unavailableReview(1),
+                unavailableReview(2),
+                unavailableReview(3),
+                reviewAvailableAtExternalSite(4),
+                reviewAvailableAtExternalSite(5),
+                reviewAvailableAtExternalSite(6),
+                reviewAvailableAtExternalSite(7),
+                reviewAvailableAtInfomedia(8),
+                reviewAvailableAtInfomedia(9),
+                reviewAvailableAtInfomedia(10),
+                librariansReview(11),
+                librariansReview(12),
               ],
             },
           }),
@@ -244,128 +244,136 @@ export function ExternalMedia() {
 }
 
 // Review that is not available anywhere
-const unavailableReview = {
-  pid: "Some pid",
-  creators: [
-    {
-      display: "Some creator",
+const unavailableReview = (number = 1) => {
+  return {
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "Some issn",
+      },
+    ],
+    hostPublication: {
+      title: "External publication (no url)",
+      issue: `Nr. ${number} (2006)`,
     },
-  ],
-  access: [
-    {
-      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-      issn: "Some issn",
+    recordCreationDate: "20061120",
+    review: {
+      rating: "3/6",
+      reviewByLibrarians: [],
     },
-  ],
-  hostPublication: {
-    title: "External publication (no url)",
-    issue: "Nr. 1 (2006)",
-  },
-  recordCreationDate: "20061120",
-  review: {
-    rating: "3/6",
-    reviewByLibrarians: [],
-  },
+  };
 };
 
 // Review that is available on external site
-const reviewAvailableAtExternalSite = {
-  pid: "Some pid",
-  creators: [
-    {
-      display: "Some creator",
+const reviewAvailableAtExternalSite = (number = 1) => {
+  return {
+    pid: "Some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
+        issn: "Some issn",
+      },
+      {
+        __resolveType: AccessEnum.ACCESS_URL,
+        origin: "Some domain",
+        url: "http://www.some-url.dk",
+        note: "Some note",
+        loginRequired: false,
+      },
+    ],
+    hostPublication: {
+      title: "External publication (url)",
+      issue: `Nr. ${number} (2006)`,
     },
-  ],
-  access: [
-    {
-      __resolveType: AccessEnum.DIGITAL_ARTICLE_SERVICE,
-      issn: "Some issn",
+    recordCreationDate: "20061120",
+    review: {
+      rating: null,
+      reviewByLibrarians: [],
     },
-    {
-      __resolveType: AccessEnum.ACCESS_URL,
-      origin: "Some domain",
-      url: "http://www.some-url.dk",
-      note: "Some note",
-      loginRequired: false,
-    },
-  ],
-  hostPublication: {
-    title: "External publication (url)",
-    issue: "Nr. 1 (2006)",
-  },
-  recordCreationDate: "20061120",
-  review: {
-    rating: null,
-    reviewByLibrarians: [],
-  },
+  };
 };
 
 // Review that is available via infomedia
-const reviewAvailableAtInfomedia = {
-  pid: "some pid",
-  creators: [
-    {
-      display: "Some creator",
+const reviewAvailableAtInfomedia = (day = 1) => {
+  return {
+    pid: "some pid",
+    creators: [
+      {
+        display: "Some creator",
+      },
+    ],
+    access: [
+      {
+        __resolveType: AccessEnum.INFOMEDIA_SERVICE,
+        id: "some-infomedia-id",
+      },
+      { __resolveType: AccessEnum.INTER_LIBRARY_LOAN },
+    ],
+    hostPublication: {
+      title: "Infomedia publication",
+      issue: `2005-06-${day}`,
     },
-  ],
-  access: [
-    {
-      __resolveType: AccessEnum.INFOMEDIA_SERVICE,
-      id: "some-infomedia-id",
+    recordCreationDate: "20050627",
+    review: {
+      rating: "5/6",
+      reviewByLibrarians: [],
     },
-    { __resolveType: AccessEnum.INTER_LIBRARY_LOAN },
-  ],
-  hostPublication: {
-    title: "Infomedia publication",
-    issue: "2005-06-24",
-  },
-  recordCreationDate: "20050627",
-  review: {
-    rating: "5/6",
-    reviewByLibrarians: [],
-  },
+  };
 };
 
 // Librarians Review
-const librariansReview = {
-  pid: "Some pid",
-  creators: [
-    {
-      display: "Some creator",
-    },
-  ],
-  access: [],
-  recordCreationDate: "20200512",
-  hostPublication: null,
-  review: {
-    rating: null,
-    reviewByLibrarians: [
+const librariansReview = (day = 1) => {
+  return {
+    pid: "Some pid",
+    creators: [
       {
-        content: "This is some content",
-        heading: "The heading",
-        type: "ABSTRACT",
-        manifestations: [],
-      },
-      {
-        content: "This is Some book title and more content",
-        heading: "The heading",
-        type: "ABSTRACT",
-        manifestations: [
-          {
-            ownerWork: {
-              workId: "some-work-id",
-              titles: {
-                main: ["Some book title"],
-              },
-              creators: [
-                {
-                  display: "Some creator",
-                },
-              ],
-            },
-          },
-        ],
+        display: "Some creator",
       },
     ],
-  },
+    access: [],
+    recordCreationDate: `202005${day}`,
+    hostPublication: null,
+    review: {
+      rating: null,
+      reviewByLibrarians: [
+        {
+          content: "This is some content",
+          heading: "The heading",
+          type: "ABSTRACT",
+          manifestations: [],
+        },
+        {
+          content: "This is Some book title and more content",
+          heading: "The heading",
+          type: "ABSTRACT",
+          manifestations: [
+            {
+              ownerWork: {
+                workId: "some-work-id",
+                titles: {
+                  main: ["Some book title"],
+                },
+                creators: [
+                  {
+                    display: "Some creator",
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ],
+    },
+  };
 };
