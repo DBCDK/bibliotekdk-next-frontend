@@ -19,7 +19,6 @@ import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import { getScrollToNextFullWidth } from "@/components/base/scrollsnapslider/utils";
-import range from "lodash/range";
 
 /**
  * Selecting the correct review template
