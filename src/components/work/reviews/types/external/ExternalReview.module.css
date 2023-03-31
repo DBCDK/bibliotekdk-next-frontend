@@ -40,10 +40,6 @@
   padding: 0;
 }
 
-.author p {
-  white-space: nowrap;
-}
-
 .rating {
   padding: var(--pt2) 0 0 0;
 }

@@ -38,7 +38,7 @@ export function ExternalReview({
 
   return (
     <Col
-      xs={12}
+      xs={11}
       sm={6}
       md={4}
       className={`${styles.litteratursiden} ${className}`}

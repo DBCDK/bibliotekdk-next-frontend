@@ -1,6 +1,5 @@
 import { useMemo } from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
 
 import useWindowSize from "@/lib/useWindowSize";
 import { useData } from "@/lib/api/api";
@@ -20,7 +19,6 @@ import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import { getScrollToNextFullWidth } from "@/components/base/scrollsnapslider/utils";
-import range from "lodash/range";
 
 /**
  * Selecting the correct review template
@@ -51,16 +49,14 @@ function ReviewFromTemplate({ review, idx, skeleton, title, workId }) {
       : "";
 
     return (
-      <div className={styles.only_content}>
-        <Review
-          skeleton={skeleton}
-          key={`review-${idx}`}
-          data={review}
-          className={`${styles.SlideWrapper} ${skeletonReview}`}
-          title={title}
-          workId={workId}
-        />
-      </div>
+      <Review
+        skeleton={skeleton}
+        key={`review-${idx}`}
+        data={review}
+        className={`${styles.SlideWrapper} ${skeletonReview}`}
+        title={title}
+        workId={workId}
+      />
     );
   }
 }
@@ -84,13 +80,6 @@ export function Reviews({ data = [], skeleton = false }) {
   const reviews = useMemo(
     () => [...data?.relations?.hasReview].sort(sortReviews),
     [data]
-  );
-
-  const lectorReviews = reviews.filter(
-    (review) => review?.review?.reviewByLibrarians?.length > 0
-  );
-  const otherReviews = reviews.filter(
-    (review) => review?.review?.reviewByLibrarians?.length === 0
   );
 
   // Setup a window resize listener, triggering a component
@@ -123,8 +112,9 @@ export function Reviews({ data = [], skeleton = false }) {
         sliderId={sliderId}
         slideDistanceFunctionOverride={getScrollToNextFullWidth}
         childContainerClassName={styles.slider}
+        arrowClass={styles.arrow_overwrite}
       >
-        {lectorReviews
+        {reviews
           .map((review, idx) => (
             <ReviewFromTemplateWithProps
               key={`review_lector_${idx}`}
@@ -133,17 +123,6 @@ export function Reviews({ data = [], skeleton = false }) {
             />
           ))
           .filter((valid) => valid)}
-        {range(0, otherReviews.length, 3).map((review, idx) => (
-          <Col key={"trio" + review + idx} xs={12} className={styles.trio}>
-            {otherReviews.slice(idx * 3, idx * 3 + 3).map((review, idx2) => (
-              <ReviewFromTemplateWithProps
-                key={`review_non_lector_${idx2}`}
-                review={review}
-                idx={idx}
-              />
-            ))}
-          </Col>
-        ))}
       </ScrollSnapSlider>
     </Section>
   );

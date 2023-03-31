@@ -16,7 +16,16 @@
 
 .flex__information {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: none;
+  grid-template-rows: auto 1fr;
+}
+
+@media (min-width: 576px) {
+  .flex__information {
+    display: grid;
+    grid-template-rows: none;
+    grid-template-columns: 2fr 1fr;
+  }
 }
 
 .link_container {
