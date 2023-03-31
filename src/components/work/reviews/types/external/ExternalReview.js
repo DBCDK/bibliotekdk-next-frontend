@@ -75,6 +75,21 @@ export function ExternalReview({
               </div>
             )}
 
+            {data?.creators?.length === 0 && !skeleton && volume && (
+              <>
+                <Text type="text3" className={styles.date}>
+                  Udgivet: {volume}
+                </Text>
+                {data?.physicalDescriptions?.length > 0 && (
+                  <Text type="text3" className={styles.date}>
+                    {data?.physicalDescriptions
+                      ?.map((desc) => desc.summary)
+                      .join(", ")}
+                  </Text>
+                )}
+              </>
+            )}
+
             {data?.review?.rating && (
               <div className={styles.rating}>
                 <Rating rating={data?.review?.rating} skeleton={skeleton} />
