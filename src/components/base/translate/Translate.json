@@ -221,6 +221,14 @@
         "da": "Spil",
         "en": "Games"
       },
+      "computergames": {
+        "da": "computerspil",
+        "en": "computergames"
+      },
+      "boardgames": {
+        "da": "brætspil",
+        "en": "boardgames"
+      },
       "music": {
         "da": "Musik",
         "en": "Music"

@@ -605,6 +605,7 @@ export function overviewWork({ workId }) {
         }
         materialTypes {
           specific
+          general
         }
         mainLanguages {
           display
@@ -618,6 +619,12 @@ export function overviewWork({ workId }) {
           mostRelevant {
             ownerWork {
               workTypes
+            }
+            audience {
+              childrenOrAdults {
+                code
+                display
+              }
             }
             pid
             materialTypes {
