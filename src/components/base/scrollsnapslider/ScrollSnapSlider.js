@@ -12,7 +12,9 @@ import {
 
 export default function ScrollSnapSlider({
   sliderId,
-  slideDistanceOverride = null,
+  slideDistanceFunctionOverride = getScrollToNextCoveredChild,
+  className = null,
+  childContainerClassName = null,
   children,
 }) {
   const parentRef = useRef(null);
@@ -36,8 +38,11 @@ export default function ScrollSnapSlider({
   function scrollFunction(orientation) {
     scrollDistance(
       sliderId,
-      slideDistanceOverride ||
-        getScrollToNextCoveredChild(orientation, childScroll, containerScroll)
+      slideDistanceFunctionOverride({
+        orientation,
+        childScroll,
+        containerScroll,
+      })
     );
   }
 
@@ -52,7 +57,7 @@ export default function ScrollSnapSlider({
 
   return (
     <>
-      <div className={`${styles.flex_row}`}>
+      <div className={`${styles.flex_row} ${className}`}>
         {containerScroll.xScrollable > 0 && (
           <Arrow
             arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
@@ -65,7 +70,7 @@ export default function ScrollSnapSlider({
           ref={parentRef}
           id={sliderId}
           onScroll={debouncedOnScroll}
-          className={`${styles.flex_box}`}
+          className={`${styles.flex_box} ${childContainerClassName}`}
         >
           {children}
         </div>

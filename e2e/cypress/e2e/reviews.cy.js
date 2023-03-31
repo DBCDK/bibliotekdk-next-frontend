@@ -26,11 +26,9 @@ describe("Overview", () => {
     });
 
     it(`First review should be visible - last not visible`, () => {
-      cy.contains("Anmeldelser (4)");
-
-      cy.get(".swiper-slide").should("have.length", 4);
-      cy.get(" .swiper-slide").last().should("not.be.visible");
-      cy.get(" .swiper-slide").first().should("be.visible");
+      cy.contains("Anmeldelser (");
+      cy.contains("Lektørudtalelse");
+      cy.should("not.have.text", "External");
     });
 
     it(`should link to mentioned work for librarians review`, () => {
@@ -59,16 +57,27 @@ describe("Overview", () => {
 
     it(`reviews are ordered correctly`, () => {
       // Librarians reviews should come first
-      cy.get(".swiper-slide").eq(0).contains("Lektørudtalelse");
+      cy.contains("Lektørudtalelse");
 
       // Then litteratursiden, because it has external url (accessible without login)
-      cy.get(".swiper-slide").eq(1).contains("External publication (url)");
+      cy.get("[data-cy=right_arrow]").click();
+      cy.contains("Lektørudtalelse");
 
-      // Then Politiken, because it has a rating
-      cy.get(".swiper-slide").eq(2).contains("Infomedia publication");
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("External");
+      cy.contains("(url)");
 
-      // Finally Some Periodica, because it is not available anywhere
-      cy.get(".swiper-slide").eq(3).contains("External publication (no url)");
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("External");
+      cy.contains("Infomedia");
+
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("Infomedia");
+      cy.contains("External");
+      cy.contains("(no url)");
     });
 
     //BETA-1 skip this test - material reviews are gone

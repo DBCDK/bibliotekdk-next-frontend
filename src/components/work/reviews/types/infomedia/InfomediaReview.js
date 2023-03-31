@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 import { cyKey } from "@/utils/trim";
 
@@ -50,45 +49,45 @@ export function InfomediaReview({
       className={`${styles.infomedia} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "infomedia" })}
     >
-      <Row>
+      <div>
         {data.hostPublication?.title && (
-          <Col xs={12} className={styles.media}>
+          <div className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
               {data.hostPublication?.title}
             </Title>
-          </Col>
+          </div>
         )}
         <div className={styles.row}>
           {data.creators?.length > 0 && (
-            <Col className={styles.left}>
+            <div className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
               </Text>
-            </Col>
+            </div>
           )}
-          <Col xs={12} className={styles.right}>
+          <div className={styles.right}>
             {data.creators?.length > 0 && (
               <Text type="text2" skeleton={skeleton} lines={1}>
                 {data.creators?.map((c) => c.display).join(", ")}
               </Text>
             )}
-            <Col className={styles.date}>
+            <div className={styles.date}>
               {!skeleton && data.hostPublication?.issue && (
                 <Text type="text3">
                   {dateToShortDate(data.hostPublication?.issue, "d. ")}
                 </Text>
               )}
-            </Col>
+            </div>
             {data.review?.rating && (
-              <Col xs={12} className={styles.rating}>
+              <div className={styles.rating}>
                 <Rating rating={data.review?.rating} skeleton={skeleton} />
-              </Col>
+              </div>
             )}
-          </Col>
+          </div>
         </div>
 
         {url && (
-          <Col xs={12} className={styles.url}>
+          <div className={styles.url}>
             <Icon
               src="chevron.svg"
               size={{ w: 2, h: "auto" }}
@@ -109,9 +108,9 @@ export function InfomediaReview({
                 })}
               </Text>
             </Link>
-          </Col>
+          </div>
         )}
-      </Row>
+      </div>
     </Col>
   );
 }
