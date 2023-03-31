@@ -20,7 +20,7 @@ import { accessFactory } from "@/lib/accessFactoryUtils";
  * @constructor
  */
 export function OptionsLinkAndDescription({ props, templateProps }) {
-  const { note, className } = props;
+  const { className } = props;
   const { linkProps, linkText, descriptionText } = templateProps;
 
   return (
@@ -28,7 +28,6 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
       <Link border={{ bottom: { keepVisible: true } }} {...linkProps}>
         <Text type="text1">{linkText}</Text>
       </Link>
-      {note && <Text type="text3">{note}</Text>}
       <Text type="text3">{descriptionText}</Text>
     </li>
   );
