@@ -1,3 +1,8 @@
+/**
+ * @file - Manifestationparts.js
+ * Show a list of manifestationParts - eg. tracks from music - contents of sheetmusic etc.
+ */
+
 import { useData } from "@/lib/api/api";
 import { manifestationParts } from "@/lib/api/manifestation.fragments";
 import styles from "./ManifestationParts.module.css";
@@ -85,12 +90,13 @@ export default function Wrap({
   const parts = data?.manifestation?.manifestationParts?.parts;
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
 
+  // Open a modal
   const modalOpen = () => {
     modal.push("manifestationContent", {
       pid: pid,
       showOrderTxt: false,
       singleManifestation: true,
-      showmoreButtone: false,
+      showmoreButton: false,
     });
   };
 
