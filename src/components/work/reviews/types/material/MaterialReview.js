@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { cyKey } from "@/utils/trim";
@@ -70,78 +69,72 @@ export function MaterialReview({
 
   return (
     <Col
-      xs={12}
+      xs={11}
+      lg={12}
       className={`${styles.materialReview} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "material" })}
     >
-      <Row>
-        <Col xs={12} md={10}>
-          <Row>
-            <Col xs={12} className={styles.date}>
-              <Title type="title5" skeleton={skeleton}>
-                {data.recordCreationDate &&
-                  dateToShortDate(numericToISO(data.recordCreationDate))}
-              </Title>
-            </Col>
-          </Row>
+      <div className={styles.flex__container}>
+        <div>
+          <Title type="title5" skeleton={skeleton}>
+            {data.recordCreationDate &&
+              dateToShortDate(numericToISO(data.recordCreationDate))}
+          </Title>
+        </div>
 
-          <Col xs={12} className={styles.content}>
-            <LectorReview
-              data={data.review.reviewByLibrarians}
-              skeleton={skeleton}
-            />
-          </Col>
+        <div>
+          <LectorReview
+            data={data.review.reviewByLibrarians}
+            skeleton={skeleton}
+          />
+        </div>
 
-          <Col xs={12}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Row>
-                  <Col className={styles.type}>
-                    <Text type="text3" skeleton={skeleton} lines={1}>
-                      {Translate({
-                        context: "general",
-                        label: "lecturerStatement",
-                      })}
-                    </Text>
-                  </Col>
+        <div className={styles.flex__information}>
+          <div className={styles.link_container}>
+            <div className={styles.type}>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({
+                  context: "general",
+                  label: "lecturerStatement",
+                })}
+              </Text>
+            </div>
 
-                  <Col xs={12} className={styles.url}>
-                    <Icon
-                      src="chevron.svg"
-                      size={{ w: 2, h: "auto" }}
-                      skeleton={skeleton}
-                      alt=""
-                    />
-                    <Link
-                      target="_blank"
-                      onFocus={onFocus}
-                      disabled={true}
-                      border={{ top: false, bottom: { keepVisible: true } }}
-                    >
-                      <Text type="text2" skeleton={skeleton}>
-                        {Translate({
-                          ...context,
-                          label: "materialReviewLinkText",
-                        })}
-                      </Text>
-                    </Link>
-                  </Col>
-                </Row>
-              </Col>
-              <Col xs={12} md={4} className={styles.author}>
-                <span>
-                  <Text type="text3" skeleton={skeleton} lines={1}>
-                    {Translate({ context: "general", label: "by" })}
-                  </Text>
-                  <Text type="text3" skeleton={skeleton} lines={1}>
-                    {data.creators?.map((c) => c.display).join(", ")}
-                  </Text>
-                </span>
-              </Col>
-            </Row>
-          </Col>
-        </Col>
-      </Row>
+            <div className={styles.url}>
+              <Icon
+                src="chevron.svg"
+                size={{ w: 2, h: "auto" }}
+                skeleton={skeleton}
+                alt=""
+              />
+              <Link
+                target="_blank"
+                onFocus={onFocus}
+                disabled={true}
+                border={{ top: false, bottom: { keepVisible: true } }}
+              >
+                <Text type="text2" skeleton={skeleton}>
+                  {Translate({
+                    ...context,
+                    label: "materialReviewLinkText",
+                  })}
+                </Text>
+              </Link>
+            </div>
+          </div>
+
+          <div className={styles.author}>
+            <span>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {Translate({ context: "general", label: "by" })}
+              </Text>
+              <Text type="text3" skeleton={skeleton} lines={1}>
+                {data.creators?.map((c) => c.display).join(", ")}
+              </Text>
+            </span>
+          </div>
+        </div>
+      </div>
     </Col>
   );
 }
@@ -154,7 +147,6 @@ export function MaterialReview({
  * @param data
  * @param skeleton
  * @return {JSX.Element}
- * @constructor
  */
 function LectorReview({ data, skeleton }) {
   return (

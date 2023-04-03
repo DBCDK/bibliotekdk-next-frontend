@@ -1,3 +1,5 @@
+import range from "lodash/range";
+
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${sliderElementId}`).scrollIntoView({
     behavior: "smooth",
@@ -14,11 +16,11 @@ export function scrollDistance(sliderId, slideTranslation) {
   });
 }
 
-export function getScrollToNextCoveredChild(
+export function getScrollToNextCoveredChild({
   orientation = "left",
   childScroll,
-  containerScroll
-) {
+  containerScroll,
+}) {
   const nextCoveredChildLeft = childScroll
     .filter((child) => child.posLeft < containerScroll.x)
     .slice(-2)[0];
@@ -35,6 +37,27 @@ export function getScrollToNextCoveredChild(
   return !nextCoveredChild
     ? false
     : nextCoveredChild.posLeft - (containerScroll.x + containerScroll.xGap / 2);
+}
+
+export function getScrollToNextFullWidth({
+  orientation = "left",
+  containerScroll,
+}) {
+  const anchorPoints = getAnchors(containerScroll);
+
+  const nextFullWidthLeft = -(
+    containerScroll.x -
+    anchorPoints.filter((anchor) => anchor < containerScroll.x).at(-1)
+  );
+
+  const nextFullWidthRight =
+    anchorPoints.filter((anchor) => anchor > containerScroll.x).at(0) -
+    containerScroll.x;
+
+  const nextFullWidth =
+    orientation === "left" ? nextFullWidthLeft : nextFullWidthRight;
+
+  return !nextFullWidth ? false : nextFullWidth;
 }
 
 function getGaps(childNodes) {
@@ -58,6 +81,8 @@ export function scrollSetter(target) {
     yScrollable: target.scrollHeight - target.offsetHeight,
     xScrollWidth: target.scrollWidth,
     yScrollHeight: target.scrollHeight,
+    xClient: target.clientWidth,
+    yClient: target.clientHeight,
     xGap: getGaps(target.childNodes).xGap,
     yGap: getGaps(target.childNodes).yGap,
   };
@@ -77,4 +102,16 @@ export function childSetter(childNodes) {
     })
   );
   return childWidths;
+}
+
+export function getAnchors(containerScroll) {
+  const fullPages = Math.floor(
+    containerScroll.xScrollWidth / containerScroll.xClient
+  );
+
+  const scrollAreas = range(0, fullPages, 0).map(
+    (value, index) => containerScroll.xClient * index
+  );
+
+  return [...scrollAreas, containerScroll?.xScrollable];
 }

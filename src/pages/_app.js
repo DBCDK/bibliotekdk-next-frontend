@@ -11,8 +11,6 @@
  */
 import React from "react";
 
-import Cookies from "js-cookie";
-
 import { SessionProvider } from "next-auth/react";
 import smoothscroll from "smoothscroll-polyfill";
 
@@ -37,12 +35,10 @@ import Matomo from "@/components/matomo";
 import BodyScrollLock from "@/components/scroll/lock";
 import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
-import CookieBox, { COOKIES_ALLOWED } from "@/components/cookiebox";
 import Notifications from "@/components/base/notifications/Notifications";
 import HelpHeader from "@/components/help/header";
 import FeedBackLink from "@/components/feedbacklink";
 import { SkipToMainLink } from "@/components/base/skiptomain/SkipToMain";
-import { enableDataCollect } from "@/lib/useDataCollect";
 
 import Head from "@/components/head";
 
@@ -101,16 +97,6 @@ let pageProps;
 export default function MyApp({ Component, pageProps: _pageProps, router }) {
   // sync pageProps
   pageProps = { ...pageProps, ..._pageProps };
-
-  // If this is rendered on server, allowCookies will be in pageProps
-  // In the browser, we use Cookies.get
-  const allowCookies =
-    typeof window === "undefined"
-      ? pageProps.allowCookies
-      : !!Cookies.get(COOKIES_ALLOWED);
-
-  // Enable data collect, when cookies are approved
-  enableDataCollect(allowCookies);
 
   setLocale(router.locale);
   // pass translations to Translate component - it might be false -
@@ -173,17 +159,16 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
                 component={Pages.ManifestationContent}
               />
             </Modal.Container>
-            <Matomo allowCookies={allowCookies} />
+            <Head />
+            <Matomo />
             <BodyScrollLock router={router} />
             <div id="layout">
-              <Head />
               <SkipToMainLink />
               <Banner />
               <Notifications />
               <HelpHeader />
               <Component {...pageProps} />
               <FeedBackLink />
-              <CookieBox />
               <Footer />
             </div>
           </Modal.Provider>

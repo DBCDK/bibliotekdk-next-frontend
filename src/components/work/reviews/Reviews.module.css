@@ -3,17 +3,26 @@
   height: auto;
 }
 
+.only_content {
+  display: contents;
+}
+
+.slider > div > div {
+  scroll-snap-align: start;
+}
+
+.slider .trio {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: row;
+}
+
 /* Slider */
 
 .SlideWrapper {
   height: auto;
   padding-right: var(--pt3);
-  max-width: 75%;
   align-self: flex-start;
-}
-
-.SlideWrapper:last-child {
-  max-width: 100%;
 }
 
 /* Skeleton */

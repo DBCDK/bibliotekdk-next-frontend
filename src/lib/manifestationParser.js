@@ -32,7 +32,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "alternativeTitle",
     }),
-    valueParser: (value) => value?.alternative?.join(", "),
+    valueParser: renderAlternativeTitles,
   },
   {
     // standard titles
@@ -284,6 +284,29 @@ function renderFullAndParallelTitles(value) {
         // collect for comparison
         return (
           <div key={`parallel-${index}`}>
+            <Text type="text3">{val}</Text>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+function renderAlternativeTitles(value) {
+  const alreadyHandled = titlesToFilterOn(value);
+  const toRender = value?.alternative?.filter(
+    (val) => !alreadyHandled.includes(val)
+  );
+
+  if (!toRender || toRender?.length < 1) {
+    return null;
+  }
+  return (
+    <>
+      {toRender?.map((val, index) => {
+        // collect for comparison
+        return (
+          <div key={`alternative-${index}`}>
             <Text type="text3">{val}</Text>
           </div>
         );

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 import { cyKey } from "@/utils/trim";
 
@@ -39,32 +38,32 @@ export function ExternalReview({
 
   return (
     <Col
-      xs={12}
+      xs={11}
       sm={6}
       md={4}
       className={`${styles.litteratursiden} ${className}`}
       data-cy={cyKey({ prefix: "review", name: "external" })}
     >
-      <Row>
+      <div>
         {data.hostPublication?.title && (
-          <Col xs={12} className={styles.media}>
+          <div className={styles.media}>
             <Title type="title4" skeleton={skeleton}>
               {data.hostPublication?.title}
             </Title>
-          </Col>
+          </div>
         )}
         <div className={styles.row}>
           {data.creators?.length > 0 && (
-            <Col className={styles.left}>
+            <div className={styles.left}>
               <Text type="text3" skeleton={skeleton} lines={1}>
                 {Translate({ context: "general", label: "by" })}
               </Text>
-            </Col>
+            </div>
           )}
 
-          <Col xs={12} className={styles.right}>
+          <div className={styles.right}>
             {data.creators?.length > 0 && (
-              <Col xs={10} className={styles.author}>
+              <div className={styles.author}>
                 {!skeleton && (
                   <Text type="text2">
                     {data.creators?.map((c) => c.display).join(", ")}
@@ -73,15 +72,30 @@ export function ExternalReview({
                 <div className={styles.date}>
                   {!skeleton && volume && <Text type="text3">{volume}</Text>}
                 </div>
-              </Col>
+              </div>
             )}
 
-            {data.review.rating && (
-              <Col xs={12} className={styles.rating}>
-                <Rating rating={data.review.rating} skeleton={skeleton} />
-              </Col>
+            {data?.creators?.length === 0 && !skeleton && volume && (
+              <>
+                <Text type="text3" className={styles.date}>
+                  Udgivet: {volume}
+                </Text>
+                {data?.physicalDescriptions?.length > 0 && (
+                  <Text type="text3" className={styles.date}>
+                    {data?.physicalDescriptions
+                      ?.map((desc) => desc.summary)
+                      .join(", ")}
+                  </Text>
+                )}
+              </>
             )}
-          </Col>
+
+            {data?.review?.rating && (
+              <div className={styles.rating}>
+                <Rating rating={data?.review?.rating} skeleton={skeleton} />
+              </div>
+            )}
+          </div>
         </div>
 
         {data.access?.map((access) => {
@@ -90,7 +104,7 @@ export function ExternalReview({
               const shouldUseAlternateText =
                 access.url?.includes("https://moreinfo");
               return (
-                <Col xs={12} className={styles.url} key={access.url}>
+                <div className={styles.url} key={access.url}>
                   <Icon
                     src="chevron.svg"
                     size={{ w: 2, h: "auto" }}
@@ -113,12 +127,12 @@ export function ExternalReview({
                       })}
                     </Text>
                   </Link>
-                </Col>
+                </div>
               );
             }
           }
         })}
-      </Row>
+      </div>
     </Col>
   );
 }
