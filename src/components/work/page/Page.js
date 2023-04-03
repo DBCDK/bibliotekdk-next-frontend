@@ -17,6 +17,7 @@ import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
+import Parts from "../parts";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
@@ -30,6 +31,8 @@ import min from "lodash/min";
  * @returns {JSX.Element}
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
+  console.log("HESTEFISK");
+
   const router = useRouter();
   const mainRef = useRef();
   const [containerWidth, setContainerWidth] = useState();
@@ -72,16 +75,20 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
         />
 
         <Anchor.Menu />
+        <Parts workId={workId} type={type} anchor-label="HEST" />
+
         <Details
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "details", label: "title" })}
         />
+
         <Description
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
         />
+
         {/* TODO: Insert below when relatedWorks has been approved */}
         {/*<RelatedWorks*/}
         {/*  workId={workId}*/}
