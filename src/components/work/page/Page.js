@@ -73,19 +73,16 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
         />
 
         <Anchor.Menu />
-
         <Details
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "details", label: "title" })}
         />
-
         <Description
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
         />
-
         <Parts
           workId={workId}
           type={type}
@@ -94,7 +91,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
             label: "manifestationParts",
           })}
         />
-
         {/* TODO: Insert below when relatedWorks has been approved */}
         {/*<RelatedWorks*/}
         {/*  workId={workId}*/}
