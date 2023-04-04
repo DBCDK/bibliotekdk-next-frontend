@@ -20,10 +20,15 @@ export function ManifestationParts({
   label,
   modalOpen,
   showMoreButton = true,
+  numberToShow = 5,
 }) {
   if (isEmpty(parts)) {
     return null;
   }
+
+  const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
+
+  const showMore = showMoreButton && parts > partsToShow;
 
   return (
     <div className={styles.manifestionlistContainer}>
@@ -33,7 +38,7 @@ export function ManifestationParts({
         </Text>
       )}
       <ul className={(className && className) || styles.manifestionlist}>
-        {parts?.map(
+        {partsToShow?.map(
           (part) =>
             part && (
               <li>
@@ -49,7 +54,7 @@ export function ManifestationParts({
             )
         )}
       </ul>
-      {showMoreButton && parts?.length > 3 && (
+      {showMore && (
         <Button
           type="secondary"
           size="small"
@@ -88,7 +93,6 @@ export default function Wrap({
   }
 
   const parts = data?.manifestation?.manifestationParts?.parts;
-  const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
 
   // Open a modal
   const modalOpen = () => {
@@ -102,12 +106,13 @@ export default function Wrap({
 
   return (
     <ManifestationParts
-      parts={partsToShow}
+      parts={parts}
       titlesOnly={titlesOnly}
       className={className}
       label={label}
       modalOpen={modalOpen}
       showMoreButton={showMoreButton}
+      numberToShow={numberToShow}
     />
   );
 }

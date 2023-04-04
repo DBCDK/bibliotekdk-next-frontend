@@ -75,7 +75,6 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
         />
 
         <Anchor.Menu />
-        <Parts workId={workId} type={type} anchor-label="HEST" />
 
         <Details
           workId={workId}
@@ -87,6 +86,15 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
+        />
+
+        <Parts
+          workId={workId}
+          type={type}
+          anchor-label={Translate({
+            context: "bibliographic-data",
+            label: "manifestationParts",
+          })}
         />
 
         {/* TODO: Insert below when relatedWorks has been approved */}

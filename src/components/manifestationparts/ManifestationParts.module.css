@@ -8,14 +8,14 @@
 .manifestionlist li {
   display: flex;
   justify-content: space-between;
-  padding: 0 var(--pt2) 0 var(--pt2);
-}
-
-.manifestionlist li:nth-child(even) {
-  background: var(--iron);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
 }
 
 .manifestionlist li:nth-child(odd) {
+  background: var(--iron);
+}
+
+.manifestionlist li:nth-child(even) {
   background: none;
 }
 
