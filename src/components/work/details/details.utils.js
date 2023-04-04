@@ -397,6 +397,7 @@ function RenderMovieLanguages({ values }) {
  * @returns {*}
  * @constructor
  */
+
 function RenderGenre({ values }) {
   return (
     <Text type="text4" lines={1} tag="span">
@@ -438,11 +439,6 @@ function RenderMovieAudience({ values }) {
 
   return (
     <div className={styles.wrapper}>
-      {!image && (
-        <Text type="text4" lines={2}>
-          {values?.join(", ")}
-        </Text>
-      )}
       {image && (
         <div className={styles.pegiimage}>
           <div className={styles.spacemaker}>

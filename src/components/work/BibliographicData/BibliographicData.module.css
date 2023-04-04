@@ -71,6 +71,19 @@
   margin-bottom: var(--pt1);
 }
 
+.manifestationPartsList {
+  list-style-type: disc;
+  margin-left: var(--pt2);
+}
+
+.manifestationPartsList li:nth-child(even) {
+  background: none;
+}
+
+.manifestationPartsList li:nth-child(odd) {
+  background: none;
+}
+
 .container {
   column-count: 1;
   -webkit-column-count: 1;

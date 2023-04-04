@@ -24,13 +24,13 @@
 
 .textbox {
   display: grid;
-  grid-template-columns: 5fr 7fr 6fr;
+  grid-template-columns: 30% 38% 32%;
   align-items: center;
   width: 100%;
 }
 
 .textbox p:first-of-type {
-  font-weight: bold;
+  font-weight: var(--body-font-semibold);
 }
 .textbox p {
   justify-self: start;
@@ -46,6 +46,10 @@
 
 .skeleton {
   pointer-events: none;
+}
+
+.open {
+  background-color: var(--concrete);
 }
 
 @media (min-width: 992px) {

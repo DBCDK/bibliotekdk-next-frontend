@@ -327,7 +327,7 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     shelfmark
     postfix
   }
-manifestationParts {
+  manifestationParts {
      parts {
         title
      }

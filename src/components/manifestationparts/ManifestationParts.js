@@ -52,6 +52,7 @@ export function ManifestationParts({
             )
         )}
       </ul>
+
       {showMore && (
         <>
           <span className={styles.arrowAndTxtContainer}>

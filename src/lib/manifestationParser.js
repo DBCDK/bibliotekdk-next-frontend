@@ -394,9 +394,11 @@ function renderOriginalTitle(value) {
  * @returns {JSX.Element}
  * @constructor
  */
+
 /*function RenderManifestationParts(value) {
   const tooLong = value?.parts?.length > 10;
   const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
+
   return (
     <>
       <ul>
@@ -415,6 +417,7 @@ function renderOriginalTitle(value) {
         ))}
       </ul>
       {tooLong && <div>....</div>}
+      <Button type="secondary" size="small" />
     </>
   );
 }*/
