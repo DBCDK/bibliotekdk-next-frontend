@@ -22,3 +22,20 @@
 .manifestionPartsButton {
   margin: var(--pt2) 0 var(--pt2) 0;
 }
+
+.arrowContainer {
+  /*transform: rotate(90deg);*/
+}
+
+.showMore {
+  display: flex;
+  align-items: center;
+  padding-left: var(--pt2);
+  cursor: pointer;
+}
+
+.arrowAndTxtContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

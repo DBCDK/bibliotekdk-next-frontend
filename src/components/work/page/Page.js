@@ -31,8 +31,6 @@ import min from "lodash/min";
  * @returns {JSX.Element}
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {
-  console.log("HESTEFISK");
-
   const router = useRouter();
   const mainRef = useRef();
   const [containerWidth, setContainerWidth] = useState();

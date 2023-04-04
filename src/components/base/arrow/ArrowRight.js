@@ -9,10 +9,11 @@ import { Arrow } from "@/components/base/arrow/Arrow";
  * @param {boolean} props.disabled true if button is disabled
  *
  */
-export function ArrowRight({ onClick, disabled }) {
-  return <Arrow onClick={onClick} disabled={disabled} />;
+export function ArrowRight({ onClick, disabled, style }) {
+  return <Arrow onClick={onClick} disabled={disabled} style={style} />;
 }
 ArrowRight.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
+  style: PropTypes.object,
 };

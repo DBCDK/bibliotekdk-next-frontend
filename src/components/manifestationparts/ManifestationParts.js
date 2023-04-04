@@ -4,14 +4,13 @@
  */
 
 import { useData } from "@/lib/api/api";
-import { manifestationParts } from "@/lib/api/manifestation.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import styles from "./ManifestationParts.module.css";
 import Text from "@/components/base/text/Text";
-import Button from "@/components/base/button";
 import React from "react";
-import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
+import { ArrowRight } from "@/components/base/arrow/ArrowRight";
 
 export function ManifestationParts({
   parts,
@@ -37,6 +36,7 @@ export function ManifestationParts({
           {label}
         </Text>
       )}
+
       <ul className={(className && className) || styles.manifestionlist}>
         {partsToShow?.map(
           (part) =>
@@ -55,17 +55,26 @@ export function ManifestationParts({
         )}
       </ul>
       {showMore && (
-        <Button
-          type="secondary"
-          size="small"
-          className={styles.manifestionPartsButton}
-          onClick={() => modalOpen()}
-        >
-          {Translate({
-            context: "bibliographic-data",
-            label: "manifestationPartsButton",
-          })}
-        </Button>
+        <>
+          <span className={styles.arrowAndTxtContainer}>
+            <div className={styles.arrowContainer}>
+              <ArrowRight
+                onClick={modalOpen}
+                disabled={false}
+                style={{ position: "inherit" }}
+              />
+            </div>
+
+            <Text
+              type="text3"
+              lines={1}
+              className={styles.showMore}
+              onClick={modalOpen}
+            >
+              Vis mere
+            </Text>
+          </span>
+        </>
       )}
     </div>
   );
@@ -80,7 +89,7 @@ export default function Wrap({
   showMoreButton = true,
 }) {
   const { data, isLoading, error } = useData(
-    pid && manifestationParts({ pid: pid })
+    pid && manifestationFragments.manifestationParts({ pid: pid })
   );
 
   const modal = useModal();
@@ -96,6 +105,7 @@ export default function Wrap({
 
   // Open a modal
   const modalOpen = () => {
+    alert("fisk");
     modal.push("manifestationContent", {
       pid: pid,
       showOrderTxt: false,
