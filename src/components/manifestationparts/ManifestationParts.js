@@ -26,7 +26,6 @@ export function ManifestationParts({
   }
 
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
-
   const showMore = showMoreButton && parts > partsToShow;
 
   return (
@@ -36,7 +35,6 @@ export function ManifestationParts({
           {label}
         </Text>
       )}
-
       <ul className={(className && className) || styles.manifestionlist}>
         {partsToShow?.map(
           (part) =>
