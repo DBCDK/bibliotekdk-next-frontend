@@ -12,7 +12,7 @@
 }
 
 .manifestionlist li:nth-child(odd) {
-  background: var(--iron);
+  background: var(--concrete);
 }
 
 .manifestionlist li:nth-child(even) {

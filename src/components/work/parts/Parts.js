@@ -18,7 +18,7 @@ import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import { useModal } from "@/components/_modal";
 
-function Parts({ parts, type, modalOpen }) {
+export function Parts({ parts, type, modalOpen }) {
   const subtitle = Translate({
     context: "details",
     label: "subtitle",
