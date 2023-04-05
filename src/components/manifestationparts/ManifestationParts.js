@@ -56,14 +56,9 @@ export function ManifestationParts({
       {showMore && (
         <>
           <span className={`${styles.arrowAndTxtContainer} ${className}`}>
-            <div className={`${styles.arrowContainer}`}>
+            <div>
               <LinkArrow>
-                <Text
-                  type="text3"
-                  lines={1}
-                  className={styles.showMore}
-                  onClick={modalOpen}
-                >
+                <Text type="text3" lines={1} onClick={modalOpen}>
                   Vis mere
                 </Text>
               </LinkArrow>
