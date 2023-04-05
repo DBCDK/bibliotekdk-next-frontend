@@ -71,6 +71,7 @@
   margin-bottom: var(--pt1);
 }
 
+/** styling the manifestation parts list **/
 .manifestationPartsList {
   list-style-type: disc;
   margin: 0 0 var(--pt2) 0;
@@ -95,6 +96,7 @@
 .manifestationPartsList p {
   padding: 0;
 }
+/** end manifestation parts list **/
 
 .container {
   column-count: 1;
