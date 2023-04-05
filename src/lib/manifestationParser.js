@@ -386,42 +386,6 @@ function renderOriginalTitle(value) {
     </>
   );
 }
-
-/**
- * Render manifestationParts (content of music, node etc) as a
- * unordered list. Show at most 10.
- * @param value
- * @returns {JSX.Element}
- * @constructor
- */
-
-/*function RenderManifestationParts(value) {
-  const tooLong = value?.parts?.length > 10;
-  const valuesToMap = tooLong ? value?.parts?.slice(0, 10) : value?.parts;
-
-  return (
-    <>
-      <ul>
-        {valuesToMap?.map((val, index) => (
-          <li
-            data-cy={cyKey({
-              name: `${val.title}`,
-              prefix: "manifestation-parts",
-            })}
-            key={`manifestation-parts-${index}`}
-          >
-            <Text type="text3" lines={2} tag="span">
-              {val.title}
-            </Text>
-          </li>
-        ))}
-      </ul>
-      {tooLong && <div>....</div>}
-      <Button type="secondary" size="small" />
-    </>
-  );
-}*/
-
 /**
  * Parse manifestation into array of objects
  * containing a label and a value
