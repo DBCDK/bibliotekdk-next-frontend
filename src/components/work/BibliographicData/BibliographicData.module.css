@@ -80,7 +80,6 @@
 
 .manifestationPartsList li {
   display: list-item;
-  background-color: blue;
   padding: 0;
   margin-left: var(--pt3);
 }
