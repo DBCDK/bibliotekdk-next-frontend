@@ -37,9 +37,9 @@ export function ManifestationParts({
       )}
       <ul className={`${styles.manifestionlist} ${className}`}>
         {partsToShow?.map(
-          (part) =>
+          (part, index) =>
             part && (
-              <li>
+              <li key={`manifestationlist-${index}`}>
                 <Text type="text3" lines={1}>
                   {part.title}
                 </Text>

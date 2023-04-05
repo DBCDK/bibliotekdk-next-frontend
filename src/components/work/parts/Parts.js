@@ -83,6 +83,7 @@ function PartsSkeleton() {
 }
 
 export default function Wrap(props) {
+  const modal = useModal();
   const { workId, type } = props;
   // we reuse workfragments.buttontxt - for better performence
   // get manifestations from workid
@@ -116,7 +117,6 @@ export default function Wrap(props) {
     return <PartsSkeleton />;
   }
 
-  const modal = useModal();
   const modalOpen = () => {
     modal.push("manifestationContent", {
       pid: manifestationByMaterialType?.pid,
