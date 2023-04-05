@@ -3,6 +3,7 @@
 
 .manifestionlist {
   list-style-type: none;
+  border-top: 1px solid var(--iron);
 }
 
 .manifestionlist li {

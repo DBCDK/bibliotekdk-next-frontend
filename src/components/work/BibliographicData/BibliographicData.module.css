@@ -76,6 +76,7 @@
   list-style-type: disc;
   margin: 0 0 var(--pt2) 0;
   justify-content: flex-start;
+  border: 0;
 }
 
 .manifestationPartsList li {
@@ -94,6 +95,10 @@
 
 .manifestationPartsList p {
   padding: 0;
+}
+
+.manifestationPartsList a {
+  padding-bottom: var(--pt2);
 }
 /** end manifestation parts list **/
 
