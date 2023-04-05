@@ -20,7 +20,6 @@ import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
-import translate from "@/components/base/translate";
 
 /**
  * Column one of full view. Some links and a button.

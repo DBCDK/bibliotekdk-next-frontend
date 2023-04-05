@@ -10,7 +10,7 @@ import Text from "@/components/base/text/Text";
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
-import { ArrowRight } from "@/components/base/arrow/ArrowRight";
+import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 
 export function ManifestationParts({
   parts,
@@ -19,7 +19,7 @@ export function ManifestationParts({
   label,
   modalOpen,
   showMoreButton = true,
-  numberToShow = 5,
+  numberToShow,
 }) {
   if (isEmpty(parts)) {
     return null;
@@ -35,7 +35,7 @@ export function ManifestationParts({
           {label}
         </Text>
       )}
-      <ul className={(className && className) || styles.manifestionlist}>
+      <ul className={`${styles.manifestionlist} ${className}`}>
         {partsToShow?.map(
           (part) =>
             part && (
@@ -55,23 +55,19 @@ export function ManifestationParts({
 
       {showMore && (
         <>
-          <span className={styles.arrowAndTxtContainer}>
-            <div className={styles.arrowContainer}>
-              <ArrowRight
-                onClick={modalOpen}
-                disabled={false}
-                style={{ position: "inherit" }}
-              />
+          <span className={`${styles.arrowAndTxtContainer} ${className}`}>
+            <div className={`${styles.arrowContainer}`}>
+              <LinkArrow>
+                <Text
+                  type="text3"
+                  lines={1}
+                  className={styles.showMore}
+                  onClick={modalOpen}
+                >
+                  Vis mere
+                </Text>
+              </LinkArrow>
             </div>
-
-            <Text
-              type="text3"
-              lines={1}
-              className={styles.showMore}
-              onClick={modalOpen}
-            >
-              Vis mere
-            </Text>
           </span>
         </>
       )}
@@ -104,7 +100,6 @@ export default function Wrap({
 
   // Open a modal
   const modalOpen = () => {
-    alert("fisk");
     modal.push("manifestationContent", {
       pid: pid,
       showOrderTxt: false,

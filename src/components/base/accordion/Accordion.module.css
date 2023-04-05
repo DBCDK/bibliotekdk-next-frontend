@@ -14,12 +14,20 @@
   cursor: pointer;
 }
 
+.element .header:hover {
+  border-style: solid;
+  border-width: 1px 0 1px 0;
+  border-color: var(--blue);
+  margin: -1px 0 -1px 0;
+}
+
 .element .header p {
   margin-right: var(--pt2);
 }
 
 .firstelement {
   width: 10%;
+  padding-left: var(--pt2);
 }
 
 .textbox {

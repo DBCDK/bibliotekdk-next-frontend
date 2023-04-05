@@ -28,10 +28,10 @@
 }
 
 .showMore {
-  display: flex;
+  /*display: flex;
   align-items: center;
   padding-left: var(--pt2);
-  cursor: pointer;
+  cursor: pointer;*/
 }
 
 .arrowAndTxtContainer {

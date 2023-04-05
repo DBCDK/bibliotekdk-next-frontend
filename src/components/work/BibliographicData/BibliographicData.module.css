@@ -73,7 +73,15 @@
 
 .manifestationPartsList {
   list-style-type: disc;
-  margin-left: var(--pt2);
+  margin: 0 0 var(--pt2) 0;
+  justify-content: flex-start;
+}
+
+.manifestationPartsList li {
+  display: list-item;
+  background-color: blue;
+  padding: 0;
+  margin-left: var(--pt3);
 }
 
 .manifestationPartsList li:nth-child(even) {
@@ -82,6 +90,10 @@
 
 .manifestationPartsList li:nth-child(odd) {
   background: none;
+}
+
+.manifestationPartsList p {
+  padding: 0;
 }
 
 .container {

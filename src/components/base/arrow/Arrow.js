@@ -17,7 +17,6 @@ export function Arrow({
   disabled,
   isLeft = false,
   leftAdjust = false,
-  style = null,
 }) {
   const orientation = isLeft ? "left" : "right";
 
@@ -28,7 +27,6 @@ export function Arrow({
       } ${disabled && styles.disabled}`}
       data-cy={`arrow-${orientation}`}
       onClick={onClick}
-      style={style}
     >
       <Icon
         src={`arrow${orientation}.svg`}
@@ -42,10 +40,10 @@ export function Arrow({
     </span>
   );
 }
+
 Arrow.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   isLeft: PropTypes.bool,
   leftAdjust: PropTypes.bool,
-  style: PropTypes.object,
 };
