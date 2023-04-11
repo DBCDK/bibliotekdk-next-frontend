@@ -63,9 +63,9 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
  */
 export function flattenMaterialType(manifestation) {
   return (
-    manifestation?.materialTypes?.flatMap(
-      (materialType) => materialType?.specific
-    ) || []
+    manifestation?.materialTypes
+      ?.flatMap((materialType) => materialType?.specific)
+      .sort(compareArraysOfStrings) || []
   );
 }
 
@@ -263,6 +263,7 @@ export function manifestationMaterialTypeFactory(manifestations) {
   );
   const flatMaterialTypes = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(flatMaterialTypes);
+
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =
     flattenGroupedSortedManifestations(manifestationsByType);
