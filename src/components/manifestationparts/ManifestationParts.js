@@ -26,7 +26,7 @@ export function ManifestationParts({
   }
 
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
-  const showMore = showMoreButton && parts > partsToShow;
+  const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
   return (
     <div className={styles.manifestionlistContainer}>
@@ -36,8 +36,8 @@ export function ManifestationParts({
         </Text>
       )}
       <ul className={`${styles.manifestionlist} ${className}`}>
-        {partsToShow?.map(
-          (part, index) =>
+        {partsToShow?.map((part, index) => {
+          return (
             part &&
             part?.title && (
               <li key={`manifestationlist-${index}`}>
@@ -51,7 +51,8 @@ export function ManifestationParts({
                 )}
               </li>
             )
-        )}
+          );
+        })}
       </ul>
 
       {showMore && (
