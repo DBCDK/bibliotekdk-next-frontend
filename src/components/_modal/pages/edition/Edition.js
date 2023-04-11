@@ -200,7 +200,6 @@ export default function Wrap({
 }) {
   const modal = useModal();
   let { orderPids: orderPidsBeforeFilter } = context;
-  showOrderTxt = context.showOrderTxt;
 
   if (!Array.isArray(orderPidsBeforeFilter)) {
     orderPidsBeforeFilter = [orderPidsBeforeFilter];
