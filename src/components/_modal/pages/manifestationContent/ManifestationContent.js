@@ -1,3 +1,7 @@
+/**
+ * @file ManifestationContent.js
+ * Show manifesttionParts in modal
+ */
 import Top from "@/components/_modal/pages/base/top";
 import Edition from "@/components/_modal/pages/edition/Edition";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
