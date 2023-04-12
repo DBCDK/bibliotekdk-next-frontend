@@ -16,6 +16,7 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
+import capitalize from "lodash/capitalize";
 
 /**
  * Export function of the Component
@@ -95,7 +96,11 @@ export function BibliographicData({ manifestations, workId }) {
                   (person, index) =>
                     `${
                       index < 1
-                        ? person.roles?.[0]?.function?.singular + ":"
+                        ? personIllustrating.length > 1
+                          ? capitalize(person.roles?.[0]?.function?.plural) +
+                            ":"
+                          : capitalize(person.roles?.[0]?.function?.singular) +
+                            ":"
                         : ""
                     } ${person.display}`
                 )
