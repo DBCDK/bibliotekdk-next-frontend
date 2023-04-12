@@ -42,21 +42,30 @@ function getLanguageValues(manifestation) {
   // speken languages - put "dansk" first
   const spoken =
     manifestation?.languages?.spoken
-      ?.map((spok) => spok.display)
-      .sort((a) =>
-        toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0
-      ) || [];
+      ?.map((spok) => spok?.display)
+      ?.sort((a) => {
+        try {
+          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+        } catch (e) {
+          return 0;
+        }
+      }) || [];
   // subtitles - put "dansk" first
   const subtitles =
     manifestation?.languages?.subtitles
-      .map((sub) => sub.display)
-      .sort((a) =>
-        toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0
-      ) || [];
+      .map((sub) => sub?.display)
+      ?.sort((a) => {
+        try {
+          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+        } catch (e) {
+          return 0;
+        }
+      }) || [];
 
   if (isEmpty(main) && isEmpty(spoken) && isEmpty(subtitles)) {
     return {};
   }
+
   return { main: main, spoken: spoken, subtitles: subtitles };
 }
 
