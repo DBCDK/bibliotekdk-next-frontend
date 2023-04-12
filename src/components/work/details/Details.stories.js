@@ -37,6 +37,15 @@ WrappedDetailsSection.story = {
               loanIsPossible: true,
             },
           ],
+          languages: () => ({
+            subtitles: [],
+            spoken: [],
+            main: [
+              {
+                display: "dansk",
+              },
+            ],
+          }),
 
           materialTypes: () => [{ specific: "Musik (dvd)" }],
         },
@@ -49,6 +58,7 @@ WrappedDetailsSection.story = {
     query: {},
   },
 };
+
 /**
  * Returns details section
  *
@@ -110,40 +120,11 @@ WrappedDetailsSectionMovie.story = {
             ],
           }),
           languages: () => ({
-            spoken: [
-              {
-                display: "dansk",
-              },
-              {
-                display: "norsk",
-              },
-              {
-                display: "finsk",
-              },
-              {
-                display: "svensk",
-              },
-            ],
-            subtitles: [
-              {
-                display: "dansk",
-              },
-              {
-                display: "engelsk",
-              },
-              {
-                display: "norsk",
-              },
-              {
-                display: "finsk",
-              },
-              {
-                display: "svensk",
-              },
-            ],
+            subtitles: [],
+            spoken: [],
             main: [
               {
-                display: "engelsk",
+                display: "dansk",
               },
             ],
           }),
