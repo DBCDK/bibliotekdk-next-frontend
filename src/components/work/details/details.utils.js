@@ -11,7 +11,7 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
 import { Fragment } from "react";
-import { toLower } from "lodash";
+import { toLower } from "lodash/toLower";
 
 /**
  * Parse languages in given manifestation.
