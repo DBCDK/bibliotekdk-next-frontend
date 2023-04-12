@@ -286,7 +286,16 @@ export function description({ workId }) {
             functionCode
           }
         }
-      }
+        manifestations {
+          bestRepresentation {
+            notes {
+              type
+              heading
+              display
+            }
+          }
+        }
+      }      
       monitor(name: "bibdknext_work_basic")
     }`,
     variables: { workId },

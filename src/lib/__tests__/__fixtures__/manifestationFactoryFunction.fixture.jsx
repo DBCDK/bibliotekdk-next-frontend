@@ -8,6 +8,17 @@ export const oneSpecificMaterialType_Ebog = {
   materialTypes: [{ specific: "ebog" }],
 };
 
+export const combinedMaterialType_GraphicNovel_Tegneserie = {
+  materialTypes: [
+    {
+      specific: "graphic novel",
+    },
+    {
+      specific: "tegneserie",
+    },
+  ],
+};
+
 export const oneManifestation_bog_ebog = [
   { ...twoSpecificMaterialType_Bog_Ebog, pid: "1bog2ebog" },
 ];
