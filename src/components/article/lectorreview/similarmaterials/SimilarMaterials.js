@@ -1,0 +1,47 @@
+/**
+ * @file SimilarMaterials handles the slider for similarMaterials for the LectorReviewPage
+ */
+
+import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtils";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import Section from "@/components/base/section";
+import Translate from "@/components/base/translate";
+import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
+import * as PropTypes from "prop-types";
+import uniqWith from "lodash/uniqWith";
+
+export function SimilarMaterials({
+  similarMaterials,
+  sliderId = "lector_review_page__section__slider",
+}) {
+  const { flattenedGroupedSortedManifestations: manifestations } =
+    manifestationMaterialTypeFactory(similarMaterials);
+
+  const renderingSimilarMaterials = uniqWith(
+    manifestations,
+    (a, b) => a.pid === b.pid
+  ).map((similarMaterial, index) => {
+    return (
+      <MaterialCard
+        key={JSON.stringify(similarMaterial) + index}
+        propAndChildrenInput={similarMaterial}
+      />
+    );
+  });
+
+  return (
+    <Section
+      title={Translate({ context: "reviews", label: "similar_materials-2" })}
+      space={{ bottom: "var(--pt0)", top: "var(--pt4)" }}
+      backgroundColor="var(--parchment)"
+    >
+      <ScrollSnapSlider sliderId={sliderId}>
+        {renderingSimilarMaterials}
+      </ScrollSnapSlider>
+    </Section>
+  );
+}
+SimilarMaterials.propTypes = {
+  id: PropTypes.string,
+  similarMaterials: PropTypes.arrayOf(PropTypes.object),
+};

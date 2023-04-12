@@ -17,6 +17,8 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
+import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
+import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId } = props;
@@ -100,7 +102,17 @@ export default function Wrap() {
     el.access?.find((access) => access.id === articleId)
   );
 
-  const { data: infomediaArticleData, isLoading: isLoadingInfomedia } = useData(
+  const {
+    data: lectorReviewData,
+    isLoading: lectorReviewIsLoading,
+    error: lectorReviewError,
+  } = useData(articleId && manifestationForLectorReview({ pid: articleId }));
+
+  const {
+    data: infomediaArticleData,
+    isLoading: isLoadingInfomedia,
+    error: infomediaError,
+  } = useData(
     user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
 
@@ -109,6 +121,23 @@ export default function Wrap() {
     data?.work,
     infomediaArticleData?.infomedia?.article
   );
+
+  if (lectorReviewError && infomediaError) {
+    return <Custom404 />;
+  }
+
+  if (lectorReviewIsLoading || isLoadingWork || isLoadingInfomedia) {
+    return <ContentSkeleton></ContentSkeleton>;
+  }
+
+  if (lectorReviewData?.manifestation) {
+    return (
+      <LectorReviewPage
+        workId={workId}
+        review={lectorReviewData.manifestation}
+      />
+    );
+  }
 
   return (
     <ReviewPage
