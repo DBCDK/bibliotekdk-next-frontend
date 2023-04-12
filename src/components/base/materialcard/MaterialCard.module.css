@@ -4,7 +4,6 @@
   --underline-font-hover-color: var(--mine-shaft);
   /* -- */
   cursor: pointer;
-  display: contents;
 }
 
 .related_element {
@@ -17,10 +16,10 @@
   /* TODO: Find the number of cols when
    *  width is full
    */
-  --related_works_width: calc(
-    var(--container_width) / 12 * var(--cols_per_card) - (0.5 * var(--pt2))
-  );
-  width: var(--related_works_width);
+  /*--related_works_width: calc(*/
+  /*  var(--container_width) / 12 * var(--cols_per_card) - (0.5 * var(--pt2))*/
+  /*);*/
+  /*width: var(--related_works_width);*/
 
   /* Reset anchor tag */
   color: var(--mine-shaft);

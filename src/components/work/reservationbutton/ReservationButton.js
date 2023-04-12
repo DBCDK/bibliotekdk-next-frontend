@@ -54,7 +54,7 @@ function isOnlineTranslator(materialTypeArray) {
     : "";
 }
 
-function workTypeTranslator(workTypes) {
+export function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
   return hasTranslation({
     context: "workTypeDistinctForm",

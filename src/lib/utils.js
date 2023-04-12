@@ -48,6 +48,10 @@ export function encodeTitleCreator(title = "", creator = "") {
     : encodeString(title);
 }
 
+export function getWorkUrl(fullTitle, creator, workId) {
+  return `/materiale/${encodeTitleCreator(fullTitle, creator)}/${workId}`;
+}
+
 /**
  * Create canonical URL for given work
  * @param {object} work

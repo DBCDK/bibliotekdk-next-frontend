@@ -108,6 +108,7 @@ export function groupManifestations(
         materialTypesArray: manifestation?.materialTypes
           ?.map((mat) => mat.specific)
           .sort(compareArraysOfStrings),
+        workId: manifestation?.ownerWork?.workId,
       };
     }),
     "materialTypesArray"
