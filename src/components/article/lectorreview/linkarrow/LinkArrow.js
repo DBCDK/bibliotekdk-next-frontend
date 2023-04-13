@@ -1,5 +1,7 @@
 /**
- * LinkArrow is used by LectorReviewPage to go back to the origin book
+ * @file LinkArrow is used by LectorReviewPage to go back to the origin book
+ * TODO: We should refactor LinkArrow so it is the same across the project.
+ *  Currently we have 2 LinkArrows. Top.js implements its own "LinkArrow"
  */
 
 import Link from "@/components/base/link";

@@ -49,6 +49,21 @@ function parseCreatorsForInterview(creators) {
 }
 
 /**
+ * Check if a note in manifestations holds relevant info ( type:OCCASION_FOR_PUBLICATION )
+ * @param manifestations
+ * @returns {*|string}
+ */
+function parseForOccasion(manifestations) {
+  const occasions = manifestations?.bestRepresentation?.notes?.filter(
+    (note) => {
+      return note.type === "OCCASION_FOR_PUBLICATION";
+    }
+  );
+  // if there are more than one occasion - simply return the first
+  return occasions?.[0]?.display || "";
+}
+
+/**
  * The Component function
  *
  * @param {obj} props
@@ -57,19 +72,31 @@ function parseCreatorsForInterview(creators) {
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  if (!data?.abstract || data?.abstract?.length === 0) {
+  const abstract = data?.abstract?.join(", ");
+  const occasion = parseForOccasion(data?.manifestations);
+  const preAbstract = parseCreatorsForInterview(data?.creators);
+
+  if (!(abstract || occasion || preAbstract)) {
     return null;
   }
-  const abstract = data?.abstract?.join(", ");
-  const preAbstract = parseCreatorsForInterview(data?.creators);
   // Translate Context
   const context = { context: "description" };
 
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
-        {abstract && (
+        {(abstract || preAbstract || occasion) && (
           <Col xs={12} md={8}>
+            {occasion && (
+              <Text
+                dataCy={"predescription"}
+                type="text2"
+                skeleton={skeleton}
+                lines={4}
+              >
+                {occasion}.
+              </Text>
+            )}
             {preAbstract && (
               <Text
                 dataCy={"predescription"}

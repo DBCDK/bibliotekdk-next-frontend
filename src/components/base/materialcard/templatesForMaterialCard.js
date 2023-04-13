@@ -6,24 +6,24 @@ import isEmpty from "lodash/isEmpty";
 import { getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
 
-export function templateForHeaderWorkCard(input) {
-  const fullTitle = input?.titles?.full?.join(": ");
-  const firstCreator = input?.creators?.[0]?.display;
-  const { flatMaterialTypes } = manifestationMaterialTypeFactory([input]);
+export function templateForHeaderWorkCard(material) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const firstCreator = material?.creators?.[0]?.display;
+  const { flatMaterialTypes } = manifestationMaterialTypeFactory([material]);
   const formattedMaterialTypes =
     formatMaterialTypesToPresentation(flatMaterialTypes);
 
   const edition = [
-    input?.edition?.edition,
-    input?.edition?.publicationYear?.display,
+    material?.edition?.edition,
+    material?.edition?.publicationYear?.display,
   ]
     .filter((el) => !isEmpty(el))
     .join(", ");
 
   return {
-    link_href: getWorkUrl(fullTitle, firstCreator, input?.ownerWork?.workId),
+    link_href: getWorkUrl(fullTitle, firstCreator, material?.ownerWork?.workId),
     fullTitle: fullTitle,
-    image_src: input.cover.detail,
+    image_src: material.cover.detail,
     children: (
       <>
         <Text
@@ -67,17 +67,17 @@ export function templateForHeaderWorkCard(input) {
   };
 }
 
-export function templateForRelatedWorks(input) {
-  const fullTitle = input?.titles?.full?.join(": ");
-  const firstCreator = input?.creators?.[0]?.display;
+export function templateForRelatedWorks(material) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const firstCreator = material?.creators?.[0]?.display;
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
-    input?.materialTypesArray
+    material?.materialTypesArray
   );
 
   return {
-    link_href: getWorkUrl(fullTitle, firstCreator, input?.workId),
+    link_href: getWorkUrl(fullTitle, firstCreator, material?.workId),
     fullTitle: fullTitle,
-    image_src: input?.cover?.detail,
+    image_src: material?.cover?.detail,
     children: (
       <>
         <Text
