@@ -5,7 +5,6 @@ import { useData } from "@/lib/api/api";
 import { workForWorkRelationsWorkTypeFactory } from "@/lib/api/work.fragments";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
-import { templateForRelatedWorks } from "@/components/base/materialcard/templatesForMaterialCard";
 
 function RelatedWorks({ relations, className, subtitle }) {
   const context = { context: "relatedworks" };
