@@ -334,6 +334,10 @@
       "multipleLanguages": {
         "da": "flere sprog",
         "en": "multiple languages"
+      },
+      "back-to": {
+        "da": "Tilbage til",
+        "en": "Back to"
       }
     },
     "articles": {
@@ -865,9 +869,49 @@
         "da": "Bibliotekernes vurdering",
         "en": "The libraries' assessment"
       },
+      "materialTitle-1": {
+        "da": "Bibliotekernes",
+        "en": "The libraries'"
+      },
+      "materialTitle-2": {
+        "da": "vurdering",
+        "en": "assessment"
+      },
       "litteratursiden": {
         "da": "Litteratursiden",
         "en": "Litteratursiden"
+      },
+      "abstract": {
+        "da": "Kort om bogen",
+        "en": "Abstract"
+      },
+      "audience": {
+        "da": "Anvendelse/målgruppe/niveau",
+        "en": "Audience"
+      },
+      "description": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "evaluation": {
+        "da": "Vurdering",
+        "en": "Evaluation"
+      },
+      "conclusion": {
+        "da": "Samlet konklusion",
+        "en": "Conclusion"
+      },
+      "acquisition_recommendations": {
+        "da": "Anbefaling til bibliotekerne",
+        "en": "Acquisition recommendations"
+      },
+      "similar_materials": {
+        "da": "Andre bøger om samme emne",
+        "en": "Other books on the same subject"
+      },
+      "similar_materials-2": {
+        "da": "Lignende bøger",
+        "en": "Similar books"
       }
     },
     "header": {
