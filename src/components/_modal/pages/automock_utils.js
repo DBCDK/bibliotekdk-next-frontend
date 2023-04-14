@@ -289,6 +289,73 @@ const USER_4 = {
   },
 };
 
+const REVIEW_1 = {
+  rating: "5/6",
+  reviewByLibrarians: [
+    {
+      type: "ABSTRACT",
+      heading: "ABSTRACT",
+      contentSubstitute: "contentSubtitute",
+      content: "content",
+      manifestations: [],
+    },
+    {
+      type: "AUDIENCE",
+      heading: "AUDIENCE",
+      contentSubstitute: "AUDIENCE contentSubtitute",
+      content: "AUDIENCE content",
+      manifestations: [],
+    },
+    {
+      type: "DESCRIPTION",
+      heading: "DESCRIPTION",
+      contentSubstitute: `DESCRIPTION contentSubtitute. Denne er efterfølger til [${"some-pid-4"}]`,
+      content: "DESCRIPTION content",
+      manifestations: [MANIFESTATION_4],
+    },
+    {
+      type: "ACQUISITION_RECOMMENDATIONS",
+      heading: "ACQUISITION_RECOMMENDATIONS",
+      contentSubstitute: "ACQUISITION_RECOMMENDATIONS contentSubtitute",
+      content: "ACQUISITION_RECOMMENDATIONS content",
+      manifestations: [],
+    },
+    {
+      type: "CONCLUSION",
+      heading: "CONCLUSION",
+      contentSubstitute: "CONCLUSION contentSubtitute",
+      content: "CONCLUSION content",
+      manifestations: [],
+    },
+    {
+      type: "EVALUATION",
+      heading: "EVALUATION",
+      contentSubstitute: "EVALUATION contentSubtitute",
+      content: "EVALUATION content",
+      manifestations: [],
+    },
+    {
+      type: "SIMILAR_MATERIALS",
+      heading: "SIMILAR_MATERIALS",
+      contentSubstitute: `
+                          SIMILAR_MATERIALS contentSubtitute
+                          * Hugo 1 [${"some-pid-1"}]
+                          * Hugo 2 [${"some-pid-2"}]
+                          * Hugo 3 [${"some-pid-3"}]
+                          * Hugo 4 [${"some-pid-4"}]
+                          * Hugo 5 [${"some-pid-5"}]
+                        `,
+      content: "SIMILAR_MATERIALS content",
+      manifestations: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+      ],
+    },
+  ],
+};
+
 const DEFAULT_STORY_PARAMETERS = {
   parameters: {
     graphql: {
@@ -374,6 +441,7 @@ export default function automock_utils() {
     USER_2,
     USER_3,
     USER_4,
+    REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
   };
