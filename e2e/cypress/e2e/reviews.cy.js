@@ -17,7 +17,7 @@ describe("Overview", () => {
       cy.contains("Some text given as html ...");
       cy.contains("Infomedia disclaimer");
     });
-    it.only(`Displays the contents of a lector review`, () => {
+    it(`Displays the contents of a lector review`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--wrapped-lector-review-page&viewMode=story"
       );
