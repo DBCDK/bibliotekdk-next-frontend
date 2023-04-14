@@ -165,7 +165,7 @@ function SelectedFilter({
       >
         {orderedValues
           // TODO: Remove when AI has fixed their thing
-          ?.filter((term) => term.key !== "sammensat materiale")
+          ?.filter((term) => term.term !== "sammensat materiale")
           ?.map((term, idx) => {
             const title = term.term;
             const key = term.key;
@@ -176,7 +176,7 @@ function SelectedFilter({
               <List.Select
                 key={`${key}-${idx}`}
                 selected={false}
-                onSelect={() => handleTermSelect(key)}
+                onSelect={() => handleTermSelect(title)}
                 label={title}
                 className={`${styles.select} ${animations["on-hover"]}`}
                 includeArrows={false}

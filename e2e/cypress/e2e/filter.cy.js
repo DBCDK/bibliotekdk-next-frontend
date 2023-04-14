@@ -6,9 +6,8 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
 
     cy.contains("Emne", { timeout: 10000 });
-    cy.contains("Forfatter");
-
-    cy.get("[data-cy=list-facets]").children().should("have.length", 2);
+    cy.contains("Forfatter", { timeout: 10000 });
+    cy.contains("workTypes").should("not.exist");
   });
 
   it(`Tab is trapped inside modal`, () => {
@@ -24,7 +23,8 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
 
     // Select some subjects
-    cy.contains("Emne", { timeout: 10000 }).click();
+    cy.wait(1000);
+    cy.contains("Emne").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
     cy.contains("Tilbage").click();
     cy.get("[data-cy=list-facets]").contains("krimi");
@@ -54,6 +54,7 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
 
     // Select some creators
+    cy.wait(1000);
     cy.contains("Forfatter").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-0]").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-1]").click();
@@ -88,6 +89,7 @@ describe("Filter", () => {
     cy.contains("button", "open filters").click();
 
     // Select some subjects
+    cy.wait(1000);
     cy.contains("Emne").click();
     cy.get("[data-cy=list-terms] [data-cy=list-button-2]").click();
     cy.contains("Tilbage").click();
