@@ -1,11 +1,11 @@
 describe("Overview", () => {
   describe("Page", () => {
-    before(function () {
+    // before(function () {
+    // });
+    it(`Displays the contents of a review from infomedia`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
       );
-    });
-    it(`Displays the contents of a review from infomedia`, () => {
       cy.contains("Some review headline");
       cy.contains("Some paper (Some page number)");
       cy.contains("Læsetid: 1 min.");
@@ -16,6 +16,33 @@ describe("Overview", () => {
       cy.contains("Some hedline");
       cy.contains("Some text given as html ...");
       cy.contains("Infomedia disclaimer");
+    });
+    it.only(`Displays the contents of a lector review`, () => {
+      cy.visit(
+        "/iframe.html?id=articles-page--wrapped-lector-review-page&viewMode=story"
+      );
+      cy.contains("Bibliotekernes");
+      cy.contains("vurdering");
+
+      cy.contains("Hugo i Sølvskoven 5: Gulvguldmonstrene mod Grullerne");
+
+      // "Hugo i Sølvskoven 4":
+      //  in DESCRIPTION === 1
+      //  + SIMILAR_MATERIALS === 1
+      //  + once in "lignende materialer" === 1
+      //  ===> 3
+      cy.get(
+        "a:contains('Hugo i Sølvskoven 4: Guldet glimter, sølvet smelter, gulvet vælter')"
+      ).should("have.length", 3);
+
+      // "Hugo i Sølvskoven 2":
+      //  in SIMILAR_MATERIALS === 1
+      //  + once in "lignende materialer" === 1
+      //  ===> 2
+      cy.get("a:contains('Hugo i Sølvskoven 2: Rise of Rita')").should(
+        "have.length",
+        2
+      );
     });
   });
   describe("Review Slider", () => {
