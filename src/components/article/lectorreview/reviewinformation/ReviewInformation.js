@@ -11,6 +11,14 @@ import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import * as PropTypes from "prop-types";
 
+/**
+ * ReviewInformation renders the date, reviewCreator, and Print option
+ * of the {@link LectorReviewPage}
+ * @param creationDate
+ * @param reviewCreator
+ * @param onClick
+ * @return {JSX.Element}
+ */
 export function ReviewInformation({
   creationDate,
   reviewCreator,
@@ -58,4 +66,8 @@ export function ReviewInformation({
   );
 }
 
-ReviewInformation.propTypes = { onClick: PropTypes.func };
+ReviewInformation.propTypes = {
+  creationDate: PropTypes.string,
+  reviewCreator: PropTypes.string,
+  onClick: PropTypes.func,
+};

@@ -13,6 +13,12 @@ import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForHeaderWorkCard } from "@/components/base/materialcard/templatesForMaterialCard";
 import * as PropTypes from "prop-types";
 
+/**
+ * ReviewHeading includes the title of LectorReviews (Bibliotekets vurdering / Librarian's Assessment)
+ * It also renders the {@link MaterialCard} of the reviewed material + the back button.
+ * @param propAndChildrenInput
+ * @return {JSX.Element}
+ */
 export function ReviewHeading({ propAndChildrenInput }) {
   const workTypeTranslated = workTypeTranslator(
     propAndChildrenInput?.workTypes
@@ -57,6 +63,5 @@ export function ReviewHeading({ propAndChildrenInput }) {
   );
 }
 ReviewHeading.propTypes = {
-  className: PropTypes.any,
   propAndChildrenInput: PropTypes.any,
 };

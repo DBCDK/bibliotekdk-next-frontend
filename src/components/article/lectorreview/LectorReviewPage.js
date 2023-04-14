@@ -11,6 +11,16 @@ import { ReviewInformation } from "@/components/article/lectorreview/reviewinfor
 import { ReviewContent } from "@/components/article/lectorreview/reviewcontent/ReviewContent";
 import { SimilarMaterials } from "@/components/article/lectorreview/similarmaterials/SimilarMaterials";
 
+/**
+ * LectorReviewPage displays the reviewByLibrarians.
+ *  The {@link review} param is the manifestation of the actual review.
+ *  It contains 3 important parts:
+ *  - Its own details
+ *  - review -> reviewByLibrarian
+ *  - relations -> isReviewOf
+ * @param review
+ * @return {JSX.Element}
+ */
 export function LectorReviewPage({ review }) {
   const router = useRouter();
 

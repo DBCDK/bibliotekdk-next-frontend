@@ -12,6 +12,15 @@ import { getWorkUrl } from "@/lib/utils";
 import BodyParser from "@/components/base/bodyparser";
 import * as PropTypes from "prop-types";
 
+/**
+ * substituteContentSubstitute handles the subtitution of
+ * pids in review parts into their respective titles and turns them into links
+ * using the {@link BodyParser}.
+ * In the cases where references are written '\reference\' we write replace \ with "
+ * to indicate a named reference.
+ * @param single
+ * @return {JSX.Element}
+ */
 function substituteContentSubstitute(single) {
   const replacers = single.manifestations?.map((manifestation) => {
     return {
@@ -36,9 +45,15 @@ function substituteContentSubstitute(single) {
     );
   });
 
-  return <BodyParser body={placeholder} Tag={"p"} />;
+  return <BodyParser body={placeholder.replaceAll("\\", '"')} Tag={"p"} />;
 }
 
+/**
+ * ReviewContent handles the actual content within the {@link reviewByLibrarians}.
+ * This includes ABSTRACT, DESCRIPTION, SIMILAR_MATERIALS, etc.
+ * @param lectorReviews
+ * @return {JSX.Element}
+ */
 export function ReviewContent({ lectorReviews }) {
   return (
     <Section
@@ -61,7 +76,7 @@ export function ReviewContent({ lectorReviews }) {
                 tag={"div"}
                 type="title5"
               >
-                {single.content}
+                {single.content.replaceAll("\\", '"')}
               </Title>
             );
           }
@@ -88,6 +103,5 @@ export function ReviewContent({ lectorReviews }) {
   );
 }
 ReviewContent.propTypes = {
-  className: PropTypes.string,
   lectorReviews: PropTypes.arrayOf(PropTypes.object),
 };

@@ -10,6 +10,13 @@ import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlide
 import * as PropTypes from "prop-types";
 import uniqWith from "lodash/uniqWith";
 
+/**
+ * SimilarMaterial render the Materials mentioned in a lectorReview.
+ * Important props:
+ * @param similarMaterials The similar materials found in the actual lectorReviews
+ * @param sliderId is used by the ScrollSnapSlider. We pass it in case we need specials handling of the scrolling
+ * @return {JSX.Element}
+ */
 export function SimilarMaterials({
   similarMaterials,
   sliderId = "lector_review_page__section__slider",
@@ -42,6 +49,6 @@ export function SimilarMaterials({
   );
 }
 SimilarMaterials.propTypes = {
-  id: PropTypes.string,
   similarMaterials: PropTypes.arrayOf(PropTypes.object),
+  sliderId: PropTypes.string,
 };

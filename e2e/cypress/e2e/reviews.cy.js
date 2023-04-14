@@ -1,7 +1,5 @@
 describe("Overview", () => {
   describe("Page", () => {
-    // before(function () {
-    // });
     it(`Displays the contents of a review from infomedia`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
