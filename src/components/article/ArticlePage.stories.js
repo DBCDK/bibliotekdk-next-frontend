@@ -16,7 +16,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const { MANIFESTATION_5, REVIEW_1 } = automock_utils();
+const { MANIFESTATION_6, REVIEW_1 } = automock_utils();
 
 export function WrappedInfomediaReviewPage() {
   return (
@@ -148,7 +148,7 @@ WrappedLectorReviewPage.story = {
                   pid: "some-article-id",
                   review: REVIEW_1,
                   relations: {
-                    isReviewOf: [MANIFESTATION_5],
+                    isReviewOf: [MANIFESTATION_6],
                   },
                 }
               : null,

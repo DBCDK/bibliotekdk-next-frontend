@@ -344,6 +344,7 @@ const REVIEW_1 = {
                           * Hugo 3 [${"some-pid-3"}]
                           * Hugo 4 [${"some-pid-4"}]
                           * Hugo 5 [${"some-pid-5"}]
+                          * Hugo 6 [${"some-pid-6"}]
                         `,
       content: "SIMILAR_MATERIALS content",
       manifestations: [
@@ -351,6 +352,8 @@ const REVIEW_1 = {
         MANIFESTATION_2,
         MANIFESTATION_3,
         MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
       ],
     },
   ],
@@ -431,6 +434,8 @@ export default function automock_utils() {
     MANIFESTATION_3,
     MANIFESTATION_4,
     MANIFESTATION_5,
+    MANIFESTATION_6,
+    MANIFESTATION_7,
     ALL_MANIFESTATIONS,
     ALL_WORKS,
     BRANCH_1,
