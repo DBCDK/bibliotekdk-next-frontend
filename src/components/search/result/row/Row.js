@@ -24,8 +24,8 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { useRouter } from "next/router";
 import isEqual from "lodash/isEqual";
+import useFilters from "@/components/hooks/useFilters";
 
 function TitlesForSearch({ work, isLoading }) {
   const titles = work?.titles;
@@ -71,17 +71,17 @@ TitlesForSearch.propTypes = {
   loading: PropTypes.bool,
 };
 
-function sortMaterialTypesByRouter(routerMaterialTypes) {
+function sortMaterialTypesByFilter(materialTypesInFilter) {
   return (a, b) => {
-    const promoteA = routerMaterialTypes?.findIndex((mat) =>
+    const promoteA = materialTypesInFilter?.findIndex((mat) =>
       isEqual(formatMaterialTypesToUrl(a), mat)
     );
-    const promoteB = routerMaterialTypes?.findIndex((mat) =>
+    const promoteB = materialTypesInFilter?.findIndex((mat) =>
       isEqual(formatMaterialTypesToUrl(b), mat)
     );
 
-    const indexA = promoteA !== -1 ? promoteA : routerMaterialTypes?.length;
-    const indexB = promoteB !== -1 ? promoteB : routerMaterialTypes?.length;
+    const indexA = promoteA !== -1 ? promoteA : materialTypesInFilter?.length;
+    const indexB = promoteB !== -1 ? promoteB : materialTypesInFilter?.length;
 
     return indexA - indexB;
   };
@@ -103,7 +103,7 @@ export default function ResultRow({
 }) {
   const creatorName = work?.creators?.[0]?.display;
 
-  const router = useRouter();
+  const { filters } = useFilters();
 
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.mostRelevant) {
@@ -115,8 +115,8 @@ export default function ResultRow({
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
 
-  const routerMaterialTypes = router?.query?.materialTypes?.split(",");
-  uniqueMaterialTypes.sort(sortMaterialTypesByRouter(routerMaterialTypes));
+  const materialTypes = filters.materialTypes;
+  uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
     <Link

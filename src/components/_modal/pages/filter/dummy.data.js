@@ -33,7 +33,7 @@ const data = {
           ],
         },
         {
-          name: "language",
+          name: "mainLanguages",
           values: [
             {
               term: "Dansk",
@@ -63,7 +63,7 @@ const data = {
           ],
         },
         {
-          name: "materialType",
+          name: "materialTypes",
           values: [
             {
               term: "e-bog",
@@ -93,7 +93,7 @@ const data = {
           ],
         },
         {
-          name: "fictiveCharacter",
+          name: "fictionalCharacter",
           values: [
             {
               term: "Rasmus Klump",
@@ -123,7 +123,7 @@ const data = {
           ],
         },
         {
-          name: "genre",
+          name: "genreAndForm",
           values: [
             {
               term: "krimi",
@@ -153,7 +153,7 @@ const data = {
           ],
         },
         {
-          name: "audience",
+          name: "childrenOrAdults",
           values: [
             {
               term: "voksenmaterialer",
@@ -168,7 +168,7 @@ const data = {
           ],
         },
         {
-          name: "accessType",
+          name: "accessTypes",
           values: [
             {
               term: "online",
@@ -203,7 +203,7 @@ const data = {
           ],
         },
         {
-          name: "subject",
+          name: "subjects",
           values: [
             {
               term: "historie",
@@ -233,7 +233,7 @@ const data = {
           ],
         },
         {
-          name: "creator",
+          name: "creators",
           values: [
             {
               term: "Association for Computing Machinery-Digital Library",
