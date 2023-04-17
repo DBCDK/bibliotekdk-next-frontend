@@ -34,14 +34,22 @@ describe("moveCarousel", () => {
 describe("getTextDescription", () => {
   it(`materialtype, edition, pubYear (expect: "Bog, 9. udgave, 2009")`, () => {
     const actual = getTextDescription(["bog"], {
-      edition: { edition: "9. udgave", publicationYear: { display: "2009" } },
+      edition: {
+        edition: "9. udgave",
+        publicationYear: { display: "2009" },
+      },
+      cover: { origin: "moreinfo" },
     });
     const expected = "Bog, 9. udgave, 2009";
     expect(actual).toEqual(expected);
   });
   it(`no materialtype, edition, pubYear (expect: "9. udgave, 2009")`, () => {
     const actual = getTextDescription([], {
-      edition: { edition: "9. udgave", publicationYear: { display: "2009" } },
+      edition: {
+        edition: "9. udgave",
+        publicationYear: { display: "2009" },
+      },
+      cover: { origin: "moreinfo" },
     });
     const expected = "9. udgave, 2009";
     expect(actual).toEqual(expected);
@@ -49,6 +57,7 @@ describe("getTextDescription", () => {
   it(`no materialtype, no edition, pubYear (expect: "2009")`, () => {
     const actual = getTextDescription([], {
       edition: { edition: null, publicationYear: { display: "2009" } },
+      cover: { origin: "moreinfo" },
     });
     const expected = "2009";
     expect(actual).toEqual(expected);
@@ -63,6 +72,7 @@ describe("getTextDescription", () => {
   it(`materialtype, no edition, no pubYear (expect: "Bog")`, () => {
     const actual = getTextDescription(["Bog"], {
       edition: null,
+      cover: { origin: "moreinfo" },
     });
     const expected = "Bog";
     expect(actual).toEqual(expected);
