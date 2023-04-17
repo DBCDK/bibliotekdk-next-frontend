@@ -731,6 +731,11 @@
         "da": "Sideantal",
         "en": "Number of pages"
       },
+      "ensemble": {
+        "da": "Besætning",
+        "en": "Ensemble"
+      },
+
       "physicalDescription": {
         "da": "Længde",
         "en": "Length"

@@ -409,6 +409,11 @@ export function fbiOverviewDetail({ workId }) {
                   display
                 }
               }
+              notes {
+                type
+                heading
+                display
+              }
               contributors {
                 display
                 roles {
