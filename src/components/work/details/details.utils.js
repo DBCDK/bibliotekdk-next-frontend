@@ -531,6 +531,7 @@ function RenderMovieAudience({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -662,6 +663,17 @@ export function fieldsForRows(manifestation, work, context) {
           value:
             work?.manifestations?.first?.edition?.publicationYear?.display ||
             "",
+        },
+      },
+    ],
+    SHEETMUSIC: [
+      {
+        ensemble: {
+          label: Translate({ ...context, label: "ensemble" }),
+          value: manifestation?.notes
+            ?.filter((note) => note.type === "MUSICAL_ENSEMBLE_OR_CAST")
+            .map((note) => note.display)
+            .join(", "),
         },
       },
     ],
