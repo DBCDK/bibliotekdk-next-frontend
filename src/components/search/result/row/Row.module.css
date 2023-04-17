@@ -52,15 +52,23 @@
 }
 
 .materials {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-table;
   margin-top: var(--pt2);
-  word-break: break-word;
   column-gap: var(--pt2);
 
   --underline-bottom-color: var(--blue);
   --underline-middle-hover-color: var(--transparent);
 }
+
+.materials > * {
+  margin-right: var(--pt2);
+}
+
+.materials > :last-child {
+  margin-right: initial;
+}
+
+
 
 .creator {
   margin-top: var(--pt1);

@@ -178,7 +178,6 @@ export default function ResultRow({
                       }}
                       key={materialTypeArray}
                       tabIndex="-1"
-                      tag="span"
                     >
                       <Text
                         type={"text4"}
