@@ -138,7 +138,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch work={work} loading={isLoading} />
+          <TitlesForSearch work={work} isLoading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}
