@@ -1,3 +1,6 @@
+import { useFetcher } from "@/lib/api/api";
+import useCookieConsent from "@/components/hooks/useCookieConsent";
+
 import {
   collectRecommenderClick,
   collectSuggestPresented,
@@ -6,16 +9,19 @@ import {
   collectSearchWorkClick,
   collectSearchFeedback,
 } from "@/lib/api/datacollect.mutations";
-import { useFetcher } from "@/lib/api/api";
 
-let enabled = false;
-
-export function enableDataCollect(enable) {
-  enabled = enable;
+// For storybook/cypress test purposes
+let _dangerouslyForceConsent;
+export function dangerouslyForceConsent(consent) {
+  _dangerouslyForceConsent = process.env.STORYBOOK_ACTIVE && consent;
 }
 
 export default function useDataCollect() {
   const fetcher = useFetcher();
+  const consent = useCookieConsent();
+  const enabled = !!(
+    _dangerouslyForceConsent?.statistics || consent.statistics
+  );
 
   return {
     collectSearch: (obj) => enabled && fetcher(collectSearch(obj)),

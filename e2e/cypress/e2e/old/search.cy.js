@@ -2,8 +2,12 @@ const nextjsBaseUrl = Cypress.env("nextjsBaseUrl");
 const fbiApiPath = Cypress.env("fbiApiPath");
 
 describe("Search", () => {
-  it(`Should show search results`, () => {
+  beforeEach(() => {
     cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
+    cy.consentAllowAll();
+  });
+
+  it(`Should show search results`, () => {
     cy.get('[data-cy="result-row"]', { timeout: 10000 }).should(
       "have.length",
       10
@@ -34,7 +38,6 @@ describe("Search", () => {
   });
 
   it(`Should link to work page`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
     cy.get('[data-cy="result-row"]', { timeout: 10000 }).first().click();
     cy.url().should("include", "/materiale");
   });
@@ -51,11 +54,7 @@ describe("Search", () => {
       }
     });
 
-    // Allow cookies
-    cy.visit(`${nextjsBaseUrl}`);
-    cy.get("[data-cy=button-ok]").click();
-
-    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
+    cy.reload();
 
     // When search begin query should be logged
     cy.wait("@apiMutationOnSearch").then((interception) => {
@@ -83,6 +82,17 @@ describe("Search", () => {
     });
   });
 
+  it(`Desktop: Fake searchfield not visible`, () => {
+    cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
+  });
+
+  it(`Mobile: Has searchfield including query`, () => {
+    cy.viewport(411, 731);
+    cy.get('[data-cy="fake-search-input"]').contains("harry potter");
+  });
+});
+
+describe("Search => storybook", () => {
   it(`Should focus elements when tabbing`, () => {
     cy.visit("/iframe.html?id=search-result--default&viewMode=story");
 
@@ -116,16 +126,5 @@ describe("Search", () => {
       .should("have.attr", "data-cy", "page-2-button")
       .tabs(2)
       .should("have.attr", "data-cy", "page-4-button");
-  });
-
-  it(`Desktop: Fake searchfield not visible`, () => {
-    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="fake-search-input"]').should("not.be.visible");
-  });
-
-  it(`Mobile: Has searchfield including query`, () => {
-    cy.viewport(411, 731);
-    cy.visit(`${nextjsBaseUrl}/find?q.all=harry potter`);
-    cy.get('[data-cy="fake-search-input"]').contains("harry potter");
   });
 });

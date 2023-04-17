@@ -6,7 +6,6 @@ import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import Language from "@/components/base/language";
 import Link from "@/components/base/link";
-import { POLICY_ARTICLE_PATH } from "@/components/cookiebox";
 import styles from "./Footer.module.css";
 import Logo from "@/components/base/logo/Logo";
 import { MATERIAL_PAGES } from "@/components/header";
@@ -42,7 +41,7 @@ const FirstColumn = () => {
       <div className={styles.spacer}></div>
       <Link
         border={{ bottom: { keepVisible: true } }}
-        href={POLICY_ARTICLE_PATH}
+        href="/artikel/privatlivspolitik/11"
         className={styles.footerlink}
       >
         <Text tag="span" type="text3">

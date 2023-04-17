@@ -1,5 +1,3 @@
-import nookies from "nookies";
-import { COOKIES_ALLOWED } from "@/components/cookiebox";
 import { generateKey, fetcher } from "@/lib/api/api";
 import { getServerSession } from "@dbcdk/login-nextjs/server";
 
@@ -59,7 +57,6 @@ export async function fetchAll(queries, context, customQueryVariables) {
 
   return {
     initialData,
-    allowCookies: !!nookies.get(context)[COOKIES_ALLOWED],
     session,
   };
 }

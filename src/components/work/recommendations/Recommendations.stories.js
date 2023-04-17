@@ -1,6 +1,6 @@
 import { StoryTitle, StoryDescription } from "@/storybook";
 import WrappedRecommendations from "./Recommendations";
-import { enableDataCollect } from "@/lib/useDataCollect";
+import { dangerouslyForceConsent } from "@/lib/useDataCollect";
 
 const exportedObject = {
   title: "work/Recommendations",
@@ -11,8 +11,7 @@ export default exportedObject;
 const WORK_ID = "work-of:870970-basis:07276346";
 
 export function WrappedRecommendationsSlider() {
-  enableDataCollect(true);
-
+  dangerouslyForceConsent({ statistics: true });
   return (
     <div>
       <StoryTitle>Wrapped Recommendations Slider</StoryTitle>

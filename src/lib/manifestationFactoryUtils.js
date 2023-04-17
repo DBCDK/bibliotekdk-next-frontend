@@ -4,6 +4,10 @@ import upperFirst from "lodash/upperFirst";
 import groupBy from "lodash/groupBy";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 import { comparableYear } from "@/lib/utils";
+import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
+
+let manifestationWorkType = [];
+let materialTypesOrderFromEnum = [];
 
 /**
  * MaterialTypeArray with additional manifestation details, possibly enriched,
@@ -59,9 +63,9 @@ export function formatMaterialTypesToPresentation(materialTypeArray) {
  */
 export function flattenMaterialType(manifestation) {
   return (
-    manifestation?.materialTypes?.flatMap(
-      (materialType) => materialType?.specific
-    ) || []
+    manifestation?.materialTypes
+      ?.flatMap((materialType) => materialType?.specific)
+      .sort(compareArraysOfStrings) || []
   );
 }
 
@@ -104,10 +108,32 @@ export function groupManifestations(
         materialTypesArray: manifestation?.materialTypes
           ?.map((mat) => mat.specific)
           .sort(compareArraysOfStrings),
+        ...(manifestation?.ownerWork?.workId && {
+          workId: manifestation?.ownerWork?.workId,
+        }),
       };
     }),
     "materialTypesArray"
   );
+}
+
+/**
+ * Gets the prioritisation of elements based on the custom sorting defined in
+ * {@link getOrderedFlatMaterialTypes}. Also uses workType to prefer the order
+ * @param materialTypesOrder
+ * @param jsonedMaterialTypeArray
+ * @return {*}
+ */
+export function getElementByCustomSorting(
+  materialTypesOrder,
+  jsonedMaterialTypeArray
+) {
+  const index = materialTypesOrder.findIndex((mat) => {
+    return jsonedMaterialTypeArray.startsWith(mat);
+  });
+
+  // If the materialType is not in the array, index -1 becomes the highest index + 1
+  return index === -1 ? materialTypesOrder.length : index;
 }
 
 /**
@@ -119,16 +145,28 @@ export function groupManifestations(
  * @example compareArraysOfStrings(["fisk", "ko"], ["fisk"]) => 1
  * @param a
  * @param b
+ * @param materialTypesOrder
  * @return {number}
  */
-export function compareArraysOfStrings(a, b) {
-  const jsonA = JSON.stringify(a).slice(1, -1);
-  const jsonB = JSON.stringify(b).slice(1, -1);
+export function compareArraysOfStrings(
+  a,
+  b,
+  materialTypesOrder = materialTypesOrderFromEnum || []
+) {
+  const jsonA = JSON.stringify(a).slice(1, -1).replaceAll(`"`, "");
+  const jsonB = JSON.stringify(b).slice(1, -1).replaceAll(`"`, "");
   const emptyA = jsonA === "" ? 1 : 0;
   const emptyB = jsonB === "" ? 1 : 0;
 
   if (emptyA || emptyB) {
     return emptyA - emptyB;
+  }
+
+  const aBySort = getElementByCustomSorting(materialTypesOrder, jsonA);
+  const bBySort = getElementByCustomSorting(materialTypesOrder, jsonB);
+
+  if (aBySort !== bBySort) {
+    return aBySort - bBySort;
   }
 
   const collator = Intl.Collator("da");
@@ -143,7 +181,9 @@ export function compareArraysOfStrings(a, b) {
  */
 export function getUniqueMaterialTypes(flatMaterialTypes) {
   // We use sort because we actually want to keep the unique arrays sorted
-  return uniqWith(flatMaterialTypes, (a, b) => isEqual(a.sort(), b.sort()))
+  return uniqWith(flatMaterialTypes, (a, b) =>
+    isEqual(a.sort(compareArraysOfStrings), b.sort(compareArraysOfStrings))
+  )
     ?.sort(compareArraysOfStrings)
     ?.filter((arr) => arr.length > 0);
 }
@@ -220,8 +260,13 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  * @return {{manifestationsByType: *, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: *, flatPidsByType: (function(*): *|*[]), flattenedGroupedSortedManifestations: *, manifestationsEnrichedWithDefaultFrontpage: *}}}
  */
 export function manifestationMaterialTypeFactory(manifestations) {
+  manifestationWorkType = manifestations?.[0]?.ownerWork?.workTypes || [];
+  materialTypesOrderFromEnum = getOrderedFlatMaterialTypes(
+    manifestationWorkType
+  );
   const flatMaterialTypes = flatMapMaterialTypes(manifestations);
   const uniqueMaterialTypes = getUniqueMaterialTypes(flatMaterialTypes);
+
   const manifestationsByType = groupManifestations(manifestations);
   const flattenedGroupedSortedManifestations =
     flattenGroupedSortedManifestations(manifestationsByType);

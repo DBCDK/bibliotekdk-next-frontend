@@ -81,8 +81,8 @@ function getPageDescription(work) {
       : "";
 
   return `Lån ${title}${
-    creator && ` af ${creator}`
-  } ${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
+    creator && ` af ${creator} `
+  }${typesString}. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.`;
 }
 
 /**

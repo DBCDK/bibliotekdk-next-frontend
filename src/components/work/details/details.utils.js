@@ -10,6 +10,8 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
+import { Fragment } from "react";
+import { toLower } from "lodash/toLower";
 
 /**
  * Parse languages in given manifestation.
@@ -40,17 +42,30 @@ function getLanguageValues(manifestation) {
   // speken languages - put "dansk" first
   const spoken =
     manifestation?.languages?.spoken
-      ?.map((spok) => spok.display)
-      .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
+      ?.map((spok) => spok?.display)
+      ?.sort((a) => {
+        try {
+          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+        } catch (e) {
+          return 0;
+        }
+      }) || [];
   // subtitles - put "dansk" first
   const subtitles =
     manifestation?.languages?.subtitles
-      .map((sub) => sub.display)
-      .sort((a) => (a === "dansk" || a === "Dansk" ? -1 : 0)) || [];
+      .map((sub) => sub?.display)
+      ?.sort((a) => {
+        try {
+          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+        } catch (e) {
+          return 0;
+        }
+      }) || [];
 
   if (isEmpty(main) && isEmpty(spoken) && isEmpty(subtitles)) {
     return {};
   }
+
   return { main: main, spoken: spoken, subtitles: subtitles };
 }
 
@@ -127,10 +142,9 @@ function getCreatorsAndContributors(manifestation) {
  * @returns {*}
  *  a string "disploy (function)" .. eg "ebbe fisk (instruktør)"
  */
-function parsePersonAndFunction(person) {
-  const display = person?.display;
+function parseFunction(person) {
   const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return display + (roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "");
+  return roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "";
 }
 
 /**
@@ -202,24 +216,43 @@ function RenderCreatorValues({ values, skeleton }) {
         className={styles.link_list}
       >
         {valuesToRender.map((person, index) => (
-          <div key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}>
-            <Link
-              href={`/find?q.creator=${person.display}`}
-              dataCy={cyKey({
-                name: person.display,
-                prefix: "details-creatore",
-              })}
-              disabled={skeleton}
-              border={{ bottom: { keepVisible: true } }}
-            >
-              <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
-                {parsePersonAndFunction(person)}
+          <Fragment
+            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+          >
+            <div>
+              <Link
+                href={`/find?q.creator=${person.display}`}
+                dataCy={cyKey({
+                  name: person.display,
+                  prefix: "details-creatore",
+                })}
+                disabled={skeleton}
+                border={{ bottom: { keepVisible: true } }}
+                key={`crators-${index}`}
+              >
+                <Text type="text4" tag="span" lines={0} key={index}>
+                  {person?.display}
+                </Text>
+              </Link>
+              <Text
+                type="text4"
+                lines={0}
+                key={index}
+                tag="span"
+                className={styles.txtInline}
+              >
+                {parseFunction(person)}
               </Text>
-            </Link>
-          </div>
+            </div>
+          </Fragment>
         ))}
         {length > 4 && (
-          <Text type="text4" skeleton={skeleton} lines={0}>
+          <Text
+            type="text4"
+            skeleton={skeleton}
+            lines={0}
+            className={styles.txtInline}
+          >
             m.fl
           </Text>
         )}
@@ -649,7 +682,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         creatorsfromdescription: {
           label: Translate({ ...context, label: "creatorsfromdescription" }),
-          value: manifestation?.creatorsFromDescription || [],
+          value: manifestation?.creatorsFromDescription.join("; ") || [],
         },
       },
     ],

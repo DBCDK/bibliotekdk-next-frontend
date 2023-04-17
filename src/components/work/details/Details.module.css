@@ -23,6 +23,10 @@
   display: table;
 }
 
+.txtInline {
+  display: inline;
+}
+
 .pegiimage {
   border: 1px solid var(--iron);
   display: flex;

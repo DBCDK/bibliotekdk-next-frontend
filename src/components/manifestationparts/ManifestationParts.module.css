@@ -1,0 +1,24 @@
+.manifestionlistContainer {
+}
+
+.manifestionlist {
+  list-style-type: none;
+}
+
+.manifestionlist li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--pt2) 0 var(--pt2);
+}
+
+.manifestionlist li:nth-child(even) {
+  background: var(--iron);
+}
+
+.manifestionlist li:nth-child(odd) {
+  background: none;
+}
+
+.manifestionPartsButton {
+  margin: var(--pt2) 0 var(--pt2) 0;
+}

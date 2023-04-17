@@ -12,7 +12,7 @@ import {
   openOrderModal,
   useBranchUserAndHasDigitalAccess,
 } from "@/components/work/utils";
-import { MaterialTypeEnum } from "@/lib/enums";
+import { MaterialTypeEnum } from "@/lib/enums_MaterialTypes";
 import { useGetManifestationsForOrderButton } from "@/components/hooks/useWorkAndSelectedPids";
 import {
   accessFactory,
@@ -54,7 +54,7 @@ function isOnlineTranslator(materialTypeArray) {
     : "";
 }
 
-function workTypeTranslator(workTypes) {
+export function workTypeTranslator(workTypes) {
   const workType = workTypes?.[0] || "fallback";
   return hasTranslation({
     context: "workTypeDistinctForm",

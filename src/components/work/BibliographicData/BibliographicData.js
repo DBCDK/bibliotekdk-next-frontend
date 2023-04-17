@@ -81,15 +81,23 @@ export function BibliographicData({ manifestations, workId }) {
             (personsReading.length > 0 &&
               personsReading
                 ?.map(
-                  (person) =>
-                    `${person.roles?.[0]?.function?.singular} : ${person.display}`
+                  (person, index) =>
+                    `${
+                      index < 1
+                        ? person.roles?.[0]?.function?.singular + ":"
+                        : ""
+                    } ${person.display}`
                 )
                 .join(", ")) ||
             (personIllustrating.length > 0 &&
               personIllustrating
                 ?.map(
-                  (person) =>
-                    `${person.roles?.[0]?.function?.singular} : ${person.display}`
+                  (person, index) =>
+                    `${
+                      index < 1
+                        ? person.roles?.[0]?.function?.singular + ":"
+                        : ""
+                    } ${person.display}`
                 )
                 .join(", ")) ||
             // priority 3

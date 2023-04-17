@@ -286,7 +286,16 @@ export function description({ workId }) {
             functionCode
           }
         }
-      }
+        manifestations {
+          bestRepresentation {
+            notes {
+              type
+              heading
+              display
+            }
+          }
+        }
+      }      
       monitor(name: "bibdknext_work_basic")
     }`,
     variables: { workId },
@@ -607,6 +616,9 @@ export function overviewWork({ workId }) {
         workTypes
         manifestations {
           mostRelevant {
+            ownerWork {
+              workTypes
+            }
             pid
             materialTypes {
               specific

@@ -92,20 +92,6 @@
         "en": "DBC kundeservice"
       }
     },
-    "cookiebox": {
-      "title": {
-        "da": "Cookies",
-        "en": "Cookies"
-      },
-      "description": {
-        "da": "Vi går op i at anvende data ansvarligt, og bruger kun cookies til at forbedre din brugeroplevelse.",
-        "en": "We strive to use data responsibly, and only use cookies to improve your user experience."
-      },
-      "policyTitle": {
-        "da": "Privatlivspolitik",
-        "en": "Privacy policy"
-      }
-    },
     "tooltip": {
       "tooltip_change_email": {
         "da": "For at ændre din email skal du logge ind på dit biblioteks hjemmeside og ændre email-adresse i din profil",
@@ -348,6 +334,10 @@
       "multipleLanguages": {
         "da": "flere sprog",
         "en": "multiple languages"
+      },
+      "back-to": {
+        "da": "Tilbage til",
+        "en": "Back to"
       }
     },
     "articles": {
@@ -499,6 +489,18 @@
         "da": "Titel",
         "en": "Title"
       },
+      "originalTitle": {
+        "da": "Originaltitel",
+        "en": "Original Title"
+      },
+      "alternativeTitle": {
+        "da": "Alternativ titel",
+        "en": "Alternative Title"
+      },
+      "standardTitle": {
+        "da": "Standard titel",
+        "en": "Standard title"
+      },
       "creators": {
         "da": "Af",
         "en": "By"
@@ -527,10 +529,6 @@
         "da": "Originaludgivelse",
         "en": "Original"
       },
-      "originalTitle": {
-        "da": "Originaltitel",
-        "en": "Original Title"
-      },
       "originalYear": {
         "da": "Originaludgivelsesår",
         "en": "Original Year"
@@ -552,8 +550,8 @@
         "en": "Contents"
       },
       "subject": {
-        "da": "Tags",
-        "en": "Tags"
+        "da": "Emneord",
+        "en": "Emneord"
       }
     },
     "references": {
@@ -871,9 +869,49 @@
         "da": "Bibliotekernes vurdering",
         "en": "The libraries' assessment"
       },
+      "materialTitle-1": {
+        "da": "Bibliotekernes",
+        "en": "The libraries'"
+      },
+      "materialTitle-2": {
+        "da": "vurdering",
+        "en": "assessment"
+      },
       "litteratursiden": {
         "da": "Litteratursiden",
         "en": "Litteratursiden"
+      },
+      "abstract": {
+        "da": "Kort om bogen",
+        "en": "Abstract"
+      },
+      "audience": {
+        "da": "Anvendelse/målgruppe/niveau",
+        "en": "Audience"
+      },
+      "description": {
+        "da": "Beskrivelse",
+        "en": "Description"
+      },
+      "evaluation": {
+        "da": "Vurdering",
+        "en": "Evaluation"
+      },
+      "conclusion": {
+        "da": "Samlet konklusion",
+        "en": "Conclusion"
+      },
+      "acquisition_recommendations": {
+        "da": "Anbefaling til bibliotekerne",
+        "en": "Acquisition recommendations"
+      },
+      "similar_materials": {
+        "da": "Andre bøger om samme emne",
+        "en": "Other books on the same subject"
+      },
+      "similar_materials-2": {
+        "da": "Lignende bøger",
+        "en": "Similar books"
       }
     },
     "header": {
