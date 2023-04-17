@@ -98,10 +98,11 @@
   }
 
   .title {
-    padding-left: var(--pt5);
+    padding-left: 0;
   }
 
   .work_card {
+    padding-top: 0;
     padding-left: var(--pt2);
     border-left: var(--card_border);
     border-top: none;
@@ -114,6 +115,10 @@
     --grid_template_areas:
       "back title title work_card work_card"
     ;
+  }
+
+  .title {
+    padding-left: var(--pt5);
   }
 }
 
