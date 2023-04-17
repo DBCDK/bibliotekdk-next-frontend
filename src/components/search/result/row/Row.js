@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 import Translate from "@/components/base/translate";
 
@@ -95,94 +93,93 @@ export default function ResultRow({
   }, [work?.manifestations?.mostRelevant]);
 
   return (
-    <Link
-      a={true}
-      border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
-      className={`${styles.wrapper} ${className}`}
-      href={{
-        pathname: "/materiale/[title_author]/[workId]",
-        query: {
-          title_author: encodeTitleCreator(
-            work?.titles?.main?.[0],
-            work?.creators?.[0]?.display
-          ),
-          workId: work?.workId,
-        },
-      }}
-      dataCy={`result-row${work?.workId ? "" : "-skeleton"}`}
-      onClick={onClick}
-    >
-      <Row className={styles.row}>
-        <Col>
-          <TitlesForSearch work={work} loading={isLoading} />
-          <Text
-            type="text3"
-            className={styles.creator}
-            skeleton={(!work?.creators && isLoading) || !work?.creators}
-            lines={1}
-          >
-            {creatorName || " "}
-          </Text>
-          <div className={styles.materials}>
+    <div className={styles.search}>
+      <Link
+        a={true}
+        border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
+        className={`${styles.wrapper} ${className}`}
+        href={{
+          pathname: "/materiale/[title_author]/[workId]",
+          query: {
+            title_author: encodeTitleCreator(
+              work?.titles?.main?.[0],
+              work?.creators?.[0]?.display
+            ),
+            workId: work?.workId,
+          },
+        }}
+        dataCy={`result-row${work?.workId ? "" : "-skeleton"}`}
+        onClick={onClick}
+      >
+        <div className={styles.row_wrapper}>
+          <div className={styles.col_wrapper}>
+            <TitlesForSearch work={work} loading={isLoading} />
             <Text
               type="text3"
-              lines={2}
-              clamp={true}
-              skeleton={
-                (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
-              }
-              dataCy={"result-row-laanemuligheder-wrap"}
+              className={styles.creator}
+              skeleton={(!work?.creators && isLoading) || !work?.creators}
+              lines={1}
             >
-              {uniqueMaterialTypes?.length > 0 &&
-                Translate({ context: "search", label: "loanOptions" })}
+              {creatorName || " "}
             </Text>
-            {uniqueMaterialTypes?.length > 0 &&
-              uniqueMaterialTypes?.map((materialTypeArray) => {
-                return (
-                  <Link
-                    border={{ top: false, bottom: { keepVisible: true } }}
-                    className={`${styles.materiallink}`}
-                    href={{
-                      pathname: "/materiale/[title_author]/[workId]",
-                      query: {
-                        title_author: encodeTitleCreator(
-                          work?.titles?.main?.[0],
-                          work?.creators?.[0]?.display
-                        ),
-                        type: formatMaterialTypesToUrl(materialTypeArray),
-                        workId: work?.workId,
-                      },
-                    }}
-                    key={materialTypeArray}
-                    tabIndex="-1"
-                    tag="span"
-                  >
-                    <Text
-                      type={"text4"}
-                      tag={"p"}
-                      dataCy={
-                        "text-" +
-                        formatMaterialTypesToCypress(materialTypeArray)
-                      }
+            <div className={styles.materials}>
+              <Text
+                tag="span"
+                type="text3"
+                lines={2}
+                clamp={true}
+                skeleton={
+                  (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
+                }
+                dataCy={"result-row-laanemuligheder-wrap"}
+              >
+                {uniqueMaterialTypes?.length > 0 &&
+                  Translate({ context: "search", label: "loanOptions" })}
+              </Text>
+              {uniqueMaterialTypes?.length > 0 &&
+                uniqueMaterialTypes?.map((materialTypeArray) => {
+                  return (
+                    <Link
+                      border={{ top: false, bottom: { keepVisible: true } }}
+                      href={{
+                        pathname: "/materiale/[title_author]/[workId]",
+                        query: {
+                          title_author: encodeTitleCreator(
+                            work?.titles?.main?.[0],
+                            work?.creators?.[0]?.display
+                          ),
+                          type: formatMaterialTypesToUrl(materialTypeArray),
+                          workId: work?.workId,
+                        },
+                      }}
+                      key={materialTypeArray}
+                      tabIndex="-1"
+                      tag="span"
                     >
-                      {formatMaterialTypesToPresentation(materialTypeArray)}
-                    </Text>
-                  </Link>
-                );
-              })}
+                      <Text
+                        type={"text4"}
+                        tag={"span"}
+                        dataCy={
+                          "text-" +
+                          formatMaterialTypesToCypress(materialTypeArray)
+                        }
+                      >
+                        {formatMaterialTypesToPresentation(materialTypeArray)}
+                      </Text>
+                    </Link>
+                  );
+                })}
+            </div>
           </div>
-        </Col>
-        {/* BETA-1 changed column width 3->4 */}
-        <Col xs={4}>
           <Cover
             className={styles.cover}
             src={coverDetail}
             skeleton={!coverDetail && !work?.manifestations}
             size="fill-width"
           />
-        </Col>
-      </Row>
-    </Link>
+        </div>
+      </Link>
+    </div>
   );
 }
 ResultRow.propTypes = {

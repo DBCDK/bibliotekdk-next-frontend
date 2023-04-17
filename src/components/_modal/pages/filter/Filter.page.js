@@ -134,9 +134,7 @@ function SelectedFilter({
     <>
       <Top modal={modal} back sticky />
       <div className={styles.divflex}>
-        <Text type="text1" className={styles.category}>
-          {category}
-        </Text>
+        <Text type="text1">{category}</Text>
         {showSort && (
           <Link
             dataCy={`${category}-SORT`}
@@ -146,9 +144,8 @@ function SelectedFilter({
                 sortOrder === "numerical" ? "alphabetically" : "numerical"
               );
             }}
-            className={styles.sortlink}
           >
-            <Text type="text3">
+            <Text type="text3" tag="span">
               {Translate({
                 context: "facets",
                 label: `label-sortorder-${sortOrder}`,

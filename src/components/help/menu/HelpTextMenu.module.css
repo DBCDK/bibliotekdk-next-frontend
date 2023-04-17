@@ -3,35 +3,13 @@
 }
 
 .link {
-  margin-bottom: var(--pt1);
+  margin-bottom: calc(var(--pt1) * 0.9);
   display: flex;
   align-items: center;
 }
 
-.link i {
-  display: none;
-  margin: 0 0 0 var(--pt1);
-}
-
-.link.active i {
-  display: block;
-}
-
 .helplink {
   padding-left: var(--pt4);
-}
-.helplink p {
-  white-space: normal;
-}
-
-.helpmenu {
-  display: none;
-}
-
-@media (min-width: 992px) {
-  .helpmenu {
-    display: block;
-  }
 }
 
 .helpicongroup {
@@ -48,22 +26,6 @@
   transform: rotate(90deg);
   position: relative;
   top: 5px;
-}
-
-.helpgroup {
-  cursor: pointer;
-}
-
-.helpgroup:hover {
-  text-decoration: underline;
-}
-
-.helpgroup:focus {
-  text-decoration: underline;
-}
-
-.helpactive p {
-  font-family: var(--body-font-semibold);
 }
 
 .helphide {

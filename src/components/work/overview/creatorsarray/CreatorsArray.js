@@ -15,6 +15,7 @@ export function CreatorsArray({ creators, skeleton }) {
           >
             <Text
               type="text3"
+              tag="span"
               className={styles.creators}
               skeleton={skeleton}
               lines={1}

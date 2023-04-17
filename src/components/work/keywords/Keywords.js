@@ -137,7 +137,9 @@ export function FlatSubjectsForFullManifestation(subjects) {
           className={styles.bibliographickeywordslink}
           key={`flat-subject-${index}`}
         >
-          <Text type="text3">{sub.display}</Text>
+          <Text type="text3" tag="span">
+            {sub.display}
+          </Text>
         </Link>
         {index < subjects?.dbcVerified?.length - 1 && <>,&nbsp;</>}
       </>
@@ -152,7 +154,6 @@ export function FlatSubjectsForFullManifestation(subjects) {
  * @param skeleton
  * @param sizeClass
  * @returns {JSX.Element}
- * @constructor
  */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
@@ -169,15 +170,15 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
                   className={`${styles.keyword} ${sizeClass}`}
                   key={`${key}-${JSON.stringify(display)}`}
                 >
-                  <Link
-                    a
-                    href={url(display)}
-                    border={{ bottom: { keepVisible: true } }}
-                  >
-                    <Title type="title4" skeleton={skeleton}>
+                  <Title type="title4" skeleton={skeleton}>
+                    <Link
+                      a
+                      href={url(display)}
+                      border={{ bottom: { keepVisible: true } }}
+                    >
                       {display}
-                    </Title>
-                  </Link>
+                    </Link>
+                  </Title>
                 </span>
               );
             })}

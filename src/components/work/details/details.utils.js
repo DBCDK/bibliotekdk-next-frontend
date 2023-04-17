@@ -10,7 +10,6 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
-import { Fragment } from "react";
 
 /**
  * Parse languages in given manifestation.
@@ -198,11 +197,12 @@ function RenderCreatorValues({ values, skeleton }) {
   const valuesToRender = length > 4 ? values.splice(0, 4) : values;
   return (
     valuesToRender && (
-      <div data-cy={"creator-contributor-text-helper"}>
+      <div
+        data-cy={"creator-contributor-text-helper"}
+        className={styles.link_list}
+      >
         {valuesToRender.map((person, index) => (
-          <Fragment
-            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
-          >
+          <div key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}>
             <Link
               href={`/find?q.creator=${person.display}`}
               dataCy={cyKey({
@@ -211,14 +211,12 @@ function RenderCreatorValues({ values, skeleton }) {
               })}
               disabled={skeleton}
               border={{ bottom: { keepVisible: true } }}
-              key={`crators-${index}`}
-              className={styles.link}
             >
-              <Text type="text4" skeleton={skeleton} lines={0} key={index}>
+              <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
                 {parsePersonAndFunction(person)}
               </Text>
             </Link>
-          </Fragment>
+          </div>
         ))}
         {length > 4 && (
           <Text type="text4" skeleton={skeleton} lines={0}>
@@ -251,21 +249,21 @@ function RenderMovieActorValues({ values, skeleton }) {
       </Text>
       {actorsToRender.map((person, index) => {
         return (
-          <Link
-            href={`/find?q.creator=${person.display}`}
-            dataCy={cyKey({
-              name: person?.display,
-              prefix: "overview-genre",
-            })}
-            disabled={skeleton}
-            border={{ bottom: { keepVisible: true } }}
-            key={`actors-${index}`}
-            className={styles.link}
-          >
-            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-              {person?.display}
-            </Text>
-          </Link>
+          <div key={`actors-${index}`} className={styles.link_list}>
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person?.display,
+                prefix: "overview-genre",
+              })}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+            >
+              <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
+                {person?.display}
+              </Text>
+            </Link>
+          </div>
         );
       })}
       {tooLong && (

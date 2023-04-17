@@ -181,7 +181,7 @@ const BranchLinks = () => {
         border={{ bottom: { keepVisible: true } }}
         dataCy="branchlink"
       >
-        <Text type="text3">
+        <Text type="text3" tag="span">
           {Translate({
             context: "facets",
             label: `label-${label}`,

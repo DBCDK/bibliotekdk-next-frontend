@@ -28,7 +28,7 @@ function Word({ word, isLoading }) {
       disabled={isLoading}
       border={{ bottom: { keepVisible: true } }}
     >
-      <Text skeleton={isLoading} lines={1}>
+      <Text skeleton={isLoading} lines={1} tag="span">
         {word}
       </Text>
     </Link>

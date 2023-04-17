@@ -1,34 +1,23 @@
-
-.logo {
-    display: inline-block;
-    cursor: pointer;
-}
-.wrapper{
-    display: flex ;
-    justify-content: space-between;
-    padding: var(--pt1) 0 0 0;
-
+.display_flex {
+  width: fit-content;
+  padding-top: var(--pt1);
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
 }
 
-.logoWrap{
-    display: flex;
+.white {
+  color: var(--white);
 }
 
-.logotxt{
-    font-size: 17px !important;
-    line-height: 22px !important;
-    font-family: var(--body-font-semibold) !important;
-    margin-left: 8px !important;
-    transform: scale(1, 1.05);
+.text {
+  margin-top: calc(var(--pt05) * -0.25);
+  line-height: 22px;
+  display: flex;
+  flex-direction: column;
+  transform: scale(1, 1.05);
 }
 
-.logotxt span{
-    display: block;
-    margin-bottom: -5px;
+.logotxt1 {
+  margin-bottom: calc(var(--pt05) * -1.2);
 }
-
-.white{
-    color: var(--white);
-}
-
-
