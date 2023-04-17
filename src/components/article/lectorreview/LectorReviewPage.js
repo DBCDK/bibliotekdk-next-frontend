@@ -41,7 +41,9 @@ export function LectorReviewPage({ review }) {
       <ReviewHeading propAndChildrenInput={reviewedManifestation} />
       <ReviewInformation
         creationDate={review?.recordCreationDate}
-        reviewCreator={review?.creators?.[0]?.display}
+        reviewCreators={review?.creators
+          ?.map((creator) => creator.display)
+          .join(", ")}
       />
       <ReviewContent lectorReviews={lectorReviews} />
       {!isEmpty(similarMaterials) && (

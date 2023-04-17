@@ -12,16 +12,16 @@ import Link from "@/components/base/link";
 import * as PropTypes from "prop-types";
 
 /**
- * ReviewInformation renders the date, reviewCreator, and Print option
+ * ReviewInformation renders the date, reviewCreators, and Print option
  * of the {@link LectorReviewPage}
  * @param creationDate
- * @param reviewCreator
+ * @param reviewCreators
  * @param onClick
  * @return {JSX.Element}
  */
 export function ReviewInformation({
   creationDate,
-  reviewCreator,
+  reviewCreators,
   onClick = (e) => {
     e.preventDefault();
     if (typeof window !== "undefined") {
@@ -48,7 +48,7 @@ export function ReviewInformation({
         <Text className={styles.info__lector}>
           {Translate({ context: "general", label: "lecturerStatement" })}
           {" " + Translate({ context: "general", label: "by" })}
-          {" " + reviewCreator}
+          {" " + reviewCreators}
         </Text>
         <Link
           className={styles.info__print}
@@ -68,6 +68,6 @@ export function ReviewInformation({
 
 ReviewInformation.propTypes = {
   creationDate: PropTypes.string,
-  reviewCreator: PropTypes.string,
+  reviewCreators: PropTypes.string,
   onClick: PropTypes.func,
 };
