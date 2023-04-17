@@ -4,10 +4,11 @@ import {
   ContentSkeleton,
 } from "@/components/article/content/Content.js";
 
-import InfomediaReviewPage from "@/pages/anmeldelse/[title]/[workId]/[articleId]";
+import ReviewPage from "@/pages/anmeldelse/[title]/[workId]/[articleId]";
 import InfomediaArticlePage from "@/pages/infomedia/[title]/[workId]/[infomediaId]";
 
 import { AccessEnum } from "@/lib/enums.js";
+import automock_utils from "@/components/_modal/pages/automock_utils";
 
 const exportedObject = {
   title: "articles/page",
@@ -15,11 +16,13 @@ const exportedObject = {
 
 export default exportedObject;
 
+const { MANIFESTATION_6, REVIEW_1 } = automock_utils();
+
 export function WrappedInfomediaReviewPage() {
   return (
     <div>
       <StoryTitle>Article Page</StoryTitle>
-      <InfomediaReviewPage />
+      <ReviewPage />
     </div>
   );
 }
@@ -86,13 +89,15 @@ WrappedInfomediaReviewPage.story = {
                         recordCreationDate: "20050627",
                         review: {
                           rating: "5/6",
-                          reviewByLibrarians: null,
+                          reviewByLibrarians: [],
                         },
                       },
                     ],
                   },
                 }
               : null,
+
+          manifestation: () => null,
 
           infomedia: (args) =>
             args.variables.id === "some-article-id"
@@ -110,6 +115,44 @@ WrappedInfomediaReviewPage.story = {
                   },
                 }
               : null,
+        },
+      },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/",
+      query: { workId: "some-work-id", articleId: "some-article-id" },
+    },
+  },
+};
+
+export function WrappedLectorReviewPage() {
+  return (
+    <div>
+      <StoryTitle>Lector Review Page</StoryTitle>
+      <ReviewPage />
+    </div>
+  );
+}
+WrappedLectorReviewPage.story = {
+  parameters: {
+    graphql: {
+      resolvers: {
+        Subject: {
+          __resolveType: () => "SubjectText",
+        },
+        Query: {
+          manifestation: (args) =>
+            args.variables.pid === "some-article-id"
+              ? {
+                  pid: "some-article-id",
+                  review: REVIEW_1,
+                  relations: {
+                    isReviewOf: [MANIFESTATION_6],
+                  },
+                }
+              : null,
+          infomedia: () => null,
         },
       },
     },

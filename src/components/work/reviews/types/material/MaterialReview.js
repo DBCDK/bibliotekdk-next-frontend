@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 
 import { cyKey } from "@/utils/trim";
-import { encodeTitleCreator } from "@/lib/utils";
+import { encodeString, encodeTitleCreator } from "@/lib/utils";
 import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Icon from "@/components/base/icon";
@@ -63,9 +63,16 @@ export function MaterialReview({
   data = [],
   skeleton = false,
   onFocus = null,
+  title = null,
+  workId = null,
 }) {
   // Translate Context
   const context = { context: "reviews" };
+
+  // make an url for infomedia page
+  const urlTxt = title && encodeString(title);
+  const pid = data.pid;
+  const url = pid && `/anmeldelse/${urlTxt}/${workId}/${pid}`;
 
   return (
     <Col
@@ -108,9 +115,10 @@ export function MaterialReview({
                 alt=""
               />
               <Link
-                target="_blank"
+                target="_self"
                 onFocus={onFocus}
-                disabled={true}
+                href={url}
+                disabled={!url}
                 border={{ top: false, bottom: { keepVisible: true } }}
               >
                 <Text type="text2" skeleton={skeleton}>
