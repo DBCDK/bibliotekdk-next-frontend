@@ -31,8 +31,6 @@ import AlternativeOptions from "@/components/work/overview/alternatives/Alternat
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
 
-  console.log(manifestation, "MANIFESTATION");
-
   return (
     <Col
       key={"col1" + manifestation?.pid}
