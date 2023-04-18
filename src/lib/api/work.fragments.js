@@ -357,7 +357,7 @@ export function fbiOverviewDetail({ workId }) {
           titles {
             full
           }                                  
-          manifestations {            
+          manifestations {
             mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
