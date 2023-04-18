@@ -45,6 +45,10 @@
   color: var(--blue);
 }
 
+.alternativeoptions {
+  margin-bottom: var(--pt2);
+}
+
 .column {
   margin-bottom: var(--pt1);
 }

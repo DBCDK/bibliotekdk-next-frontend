@@ -45,22 +45,22 @@ function ColumnOne({ workId, manifestation }) {
         <Cover src={manifestation?.cover?.detail} size="thumbnail" />
       )}
 
-      {manifestation?.access?.length < 2 ? (
-        <div>
-          <ReservationButton
-            workId={workId}
-            selectedPids={[manifestation?.pid]}
-            singleManifestation={true}
-            buttonType="secondary"
-            size="small"
-          />
-        </div>
-      ) : (
+      <div>
+        <ReservationButton
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+          singleManifestation={true}
+          buttonType="secondary"
+          size="small"
+        />
+      </div>
+
+      <div className={styles.alternativeoptions}>
         <AlternativeOptions
           workId={workId}
           selectedPids={[manifestation?.pid]}
         />
-      )}
+      </div>
 
       <div className={styles.addilinks}>
         <div>
