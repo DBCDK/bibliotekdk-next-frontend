@@ -37,9 +37,29 @@
   margin-left: var(--pt05);
 }
 
+.container {
+  column-count: 2;
+  -webkit-column-count: 2;
+  column-gap: 0;
+  -webkit-column-gap: 0;
+}
+
+.item {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  overflow-wrap: break-word;
+  padding-bottom: var(--pt3);
+  padding-right: var(--pt5);
+}
+
 @media (min-width: 768px) {
   .details {
     min-height: 75px;
+  }
+
+  .container {
+    column-count: 4;
+    -webkit-column-count: 4;
   }
 
   .details > div {
