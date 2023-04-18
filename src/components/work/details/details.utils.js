@@ -658,11 +658,9 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        firstEdition: {
+        workYear: {
           label: Translate({ ...context, label: "firstEdition" }),
-          value:
-            work?.manifestations?.first?.edition?.publicationYear?.display ||
-            "",
+          value: manifestation?.workYear?.display || "",
         },
       },
     ],

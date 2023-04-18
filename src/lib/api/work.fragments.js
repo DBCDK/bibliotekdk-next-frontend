@@ -357,14 +357,7 @@ export function fbiOverviewDetail({ workId }) {
           titles {
             full
           }                                  
-          manifestations {
-            first {
-              edition {
-                publicationYear {
-                  display
-                }
-              }
-            }
+          manifestations {            
             mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
@@ -412,6 +405,9 @@ export function fbiOverviewDetail({ workId }) {
               notes {
                 type
                 heading
+                display
+              }
+              workYear {
                 display
               }
               contributors {
