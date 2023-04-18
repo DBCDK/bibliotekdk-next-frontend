@@ -244,7 +244,9 @@ export function enrichManifestationsWithDefaultFrontpages(
  * @return {unknown[]}
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
-  return Object.entries(manifestationsByType).flatMap((group) => group[1]);
+  return Object.entries(manifestationsByType)
+    .sort(compareArraysOfStrings)
+    .flatMap((group) => group[1]);
 }
 
 /**
