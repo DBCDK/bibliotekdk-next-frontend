@@ -1,17 +1,18 @@
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
-import SingleRelatedManifestation from "@/components/work/relatedworks/singlerelatedwork/SingleRelatedManifestation";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { useData } from "@/lib/api/api";
 import { workForWorkRelationsWorkTypeFactory } from "@/lib/api/work.fragments";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
+
 function RelatedWorks({ relations, className, subtitle }) {
   const context = { context: "relatedworks" };
   const sliderId = "relatedWorks_slide";
 
-  const relatedWorks = relations?.map((manifestation, index) => (
-    <SingleRelatedManifestation key={index} manifestation={manifestation} />
-  ));
+  const relatedWorks = relations?.map((relation, index) => {
+    return <MaterialCard key={index} propAndChildrenInput={relation} />;
+  });
 
   if (relations?.length === 0) {
     return null;

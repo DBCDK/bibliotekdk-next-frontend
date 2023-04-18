@@ -8,6 +8,7 @@ import {
   fiveManifestations_bog_ebog_x2__bog_x2__ebog_x1,
   grouped5Manifestations_bog_ebog_x2__bog_x2__ebog_x1,
   manifestationFactoryFunctionFixture,
+  combinedMaterialType_GraphicNovel_Tegneserie,
 } from "@/lib/__tests__/__fixtures__/manifestationFactoryFunction.fixture";
 import {
   compareArraysOfStrings,
@@ -80,6 +81,14 @@ describe("flattenMaterialType", () => {
   it("should flatten no materialTypes in manifestation properly", () => {
     const actual = flattenMaterialType({});
     const expected = [];
+    expect(actual).toEqual(expected);
+  });
+  it("should give correct order for combined materialtypes", () => {
+    // @TODO write a test here
+    const actual = flattenMaterialType(
+      combinedMaterialType_GraphicNovel_Tegneserie
+    );
+    const expected = ["graphic novel", "tegneserie"];
     expect(actual).toEqual(expected);
   });
 });

@@ -121,7 +121,7 @@ describe("Suggester data collect", () => {
   it(`Should collect data for suggester`, () => {
     // Allow cookies
     cy.visit(`${nextjsBaseUrl}`);
-    cy.get("[data-cy=button-ok]").click();
+    cy.consentAllowAll();
 
     // Intercept requests to graphql
     cy.intercept("POST", `${fbiApiPath}`, (req) => {

@@ -93,6 +93,10 @@ module.exports = {
     maxError500Count: process.env.MAX_ERROR_COUNT || 2,
   },
   publicRuntimeConfig: {
+    cookiebot: {
+      id: process.env.COOKIEBOT_ID || "0945225b-6b16-4166-82dd-ea5947b897b3",
+      mode: process.env.COOKIEBOT_MODE || "auto",
+    },
     // Set to false in production. When set to true, the session id is set to "test", when collecting data.
     // This allow AI to remove entries with session_id=test
     useFixedSessionId:

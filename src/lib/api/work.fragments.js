@@ -288,7 +288,16 @@ export function description({ workId }) {
             functionCode
           }
         }
-      }
+        manifestations {
+          bestRepresentation {
+            notes {
+              type
+              heading
+              display
+            }
+          }
+        }
+      }      
       monitor(name: "bibdknext_work_basic")
     }`,
     variables: { workId },
@@ -351,13 +360,6 @@ export function fbiOverviewDetail({ workId }) {
             full
           }                                  
           manifestations {
-            first {
-              edition {
-                publicationYear {
-                  display
-                }
-              }
-            }
             mostRelevant {
               ...manifestationDetailsForAccessFactory
               ...manifestationAccess
@@ -401,6 +403,14 @@ export function fbiOverviewDetail({ workId }) {
                 publicationYear {
                   display
                 }
+              }
+              notes {
+                type
+                heading
+                display
+              }
+              workYear {
+                display
               }
               contributors {
                 display

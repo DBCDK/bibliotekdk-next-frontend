@@ -24,6 +24,8 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
+import isEqual from "lodash/isEqual";
+import useFilters from "@/components/hooks/useFilters";
 
 function TitlesForSearch({ work, isLoading }) {
   const titles = [
@@ -71,6 +73,23 @@ TitlesForSearch.propTypes = {
   work: PropTypes.object,
   loading: PropTypes.bool,
 };
+
+function sortMaterialTypesByFilter(materialTypesInFilter) {
+  return (a, b) => {
+    const promoteA = materialTypesInFilter?.findIndex((mat) =>
+      isEqual(formatMaterialTypesToUrl(a), mat)
+    );
+    const promoteB = materialTypesInFilter?.findIndex((mat) =>
+      isEqual(formatMaterialTypesToUrl(b), mat)
+    );
+
+    const indexA = promoteA !== -1 ? promoteA : materialTypesInFilter?.length;
+    const indexB = promoteB !== -1 ? promoteB : materialTypesInFilter?.length;
+
+    return indexA - indexB;
+  };
+}
+
 /**
  * Row representation of a search result entry
  *
@@ -87,6 +106,8 @@ export default function ResultRow({
 }) {
   const creatorName = work?.creators?.[0]?.display;
 
+  const { filters } = useFilters();
+
   const coverDetail = useMemo(() => {
     if (work?.manifestations?.mostRelevant) {
       return getCoverImage(work.manifestations.mostRelevant)?.detail;
@@ -96,6 +117,9 @@ export default function ResultRow({
   const { uniqueMaterialTypes } = useMemo(() => {
     return manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
   }, [work?.manifestations?.mostRelevant]);
+
+  const materialTypes = filters.materialTypes;
+  uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
     <Link
@@ -117,7 +141,7 @@ export default function ResultRow({
     >
       <Row className={styles.row}>
         <Col>
-          <TitlesForSearch work={work} loading={isLoading} />
+          <TitlesForSearch work={work} isLoading={isLoading} />
           <Text
             type="text3"
             className={styles.creator}

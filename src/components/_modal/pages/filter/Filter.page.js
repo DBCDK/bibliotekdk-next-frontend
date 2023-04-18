@@ -163,49 +163,52 @@ function SelectedFilter({
         enabled={!isLoading}
         data-cy="list-terms"
       >
-        {orderedValues?.map((term, idx) => {
-          const title = term.term;
-          const key = term.key;
+        {orderedValues
+          // TODO: Remove when AI has fixed their thing
+          ?.filter((term) => term.term !== "sammensat materiale")
+          ?.map((term, idx) => {
+            const title = term.term;
+            const key = term.key;
 
-          const isCheked = terms.includes(title);
+            const isCheked = terms.includes(title);
 
-          return (
-            <List.Select
-              key={`${key}-${idx}`}
-              selected={false}
-              onSelect={() => handleTermSelect(title)}
-              label={title}
-              className={`${styles.select} ${animations["on-hover"]}`}
-              includeArrows={false}
-              labelledBy={`checkbox-item-${name}-${idx}`}
-            >
-              <div className={styles.wrap}>
-                <Checkbox
-                  checked={isCheked}
-                  id={`checkbox-${title}`}
-                  ariaLabel={Translate({
-                    context: "facets",
-                    label: "checkbox-aria-label",
-                    vars: [title],
-                  })}
-                  readOnly
-                  tabIndex="-1"
-                />
-                <Text
-                  id={`checkbox-item-${name}-${idx}`}
-                  lines={1}
-                  skeleton={isLoading}
-                  type="text3"
-                  dataCy={`text-${title}`}
-                  className={[
-                    styles.term,
-                    animations["h-border-bottom"],
-                    animations["h-color-blue"],
-                  ].join(" ")}
-                >
-                  {title}
-                </Text>
-                {/* outcommented for now - let's see ..
+            return (
+              <List.Select
+                key={`${key}-${idx}`}
+                selected={false}
+                onSelect={() => handleTermSelect(title)}
+                label={title}
+                className={`${styles.select} ${animations["on-hover"]}`}
+                includeArrows={false}
+                labelledBy={`checkbox-item-${name}-${idx}`}
+              >
+                <div className={styles.wrap}>
+                  <Checkbox
+                    checked={isCheked}
+                    id={`checkbox-${title}`}
+                    ariaLabel={Translate({
+                      context: "facets",
+                      label: "checkbox-aria-label",
+                      vars: [title],
+                    })}
+                    readOnly
+                    tabIndex="-1"
+                  />
+                  <Text
+                    id={`checkbox-item-${name}-${idx}`}
+                    lines={1}
+                    skeleton={isLoading}
+                    type="text3"
+                    dataCy={`text-${title}`}
+                    className={[
+                      styles.term,
+                      animations["h-border-bottom"],
+                      animations["h-color-blue"],
+                    ].join(" ")}
+                  >
+                    {title}
+                  </Text>
+                  {/* outcommented for now - let's see ..
                 <Text
                   lines={1}
                   skeleton={isLoading}
@@ -215,10 +218,10 @@ function SelectedFilter({
                 >
                   {score}
                 </Text>*/}
-              </div>
-            </List.Select>
-          );
-        })}
+                </div>
+              </List.Select>
+            );
+          })}
       </List.Group>
     </>
   );

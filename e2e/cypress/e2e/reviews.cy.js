@@ -1,11 +1,9 @@
 describe("Overview", () => {
   describe("Page", () => {
-    before(function () {
+    it(`Displays the contents of a review from infomedia`, () => {
       cy.visit(
         "/iframe.html?id=articles-page--wrapped-infomedia-review-page&viewMode=story"
       );
-    });
-    it(`Displays the contents of a review from infomedia`, () => {
       cy.contains("Some review headline");
       cy.contains("Some paper (Some page number)");
       cy.contains("Læsetid: 1 min.");
@@ -17,6 +15,33 @@ describe("Overview", () => {
       cy.contains("Some text given as html ...");
       cy.contains("Infomedia disclaimer");
     });
+    it(`Displays the contents of a lector review`, () => {
+      cy.visit(
+        "/iframe.html?id=articles-page--wrapped-lector-review-page&viewMode=story"
+      );
+      cy.contains("Bibliotekernes");
+      cy.contains("vurdering");
+
+      cy.contains("Hugo i Sølvskoven 5: Gulvguldmonstrene mod Grullerne");
+
+      // "Hugo i Sølvskoven 4":
+      //  in DESCRIPTION === 1
+      //  + SIMILAR_MATERIALS === 1
+      //  + once in "lignende materialer" === 1
+      //  ===> 3
+      cy.get(
+        "a:contains('Hugo i Sølvskoven 4: Guldet glimter, sølvet smelter, gulvet vælter')"
+      ).should("have.length", 3);
+
+      // "Hugo i Sølvskoven 2":
+      //  in SIMILAR_MATERIALS === 1
+      //  + once in "lignende materialer" === 1
+      //  ===> 2
+      cy.get("a:contains('Hugo i Sølvskoven 2: Rise of Rita')").should(
+        "have.length",
+        2
+      );
+    });
   });
   describe("Review Slider", () => {
     before(function () {
@@ -26,11 +51,9 @@ describe("Overview", () => {
     });
 
     it(`First review should be visible - last not visible`, () => {
-      cy.contains("Anmeldelser (4)");
-
-      cy.get(".swiper-slide").should("have.length", 4);
-      cy.get(" .swiper-slide").last().should("not.be.visible");
-      cy.get(" .swiper-slide").first().should("be.visible");
+      cy.contains("Anmeldelser (");
+      cy.contains("Lektørudtalelse");
+      cy.should("not.have.text", "External");
     });
 
     it(`should link to mentioned work for librarians review`, () => {
@@ -59,16 +82,27 @@ describe("Overview", () => {
 
     it(`reviews are ordered correctly`, () => {
       // Librarians reviews should come first
-      cy.get(".swiper-slide").eq(0).contains("Lektørudtalelse");
+      cy.contains("Lektørudtalelse");
 
       // Then litteratursiden, because it has external url (accessible without login)
-      cy.get(".swiper-slide").eq(1).contains("External publication (url)");
+      cy.get("[data-cy=right_arrow]").click();
+      cy.contains("Lektørudtalelse");
 
-      // Then Politiken, because it has a rating
-      cy.get(".swiper-slide").eq(2).contains("Infomedia publication");
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("External");
+      cy.contains("(url)");
 
-      // Finally Some Periodica, because it is not available anywhere
-      cy.get(".swiper-slide").eq(3).contains("External publication (no url)");
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("External");
+      cy.contains("Infomedia");
+
+      cy.wait(200);
+      cy.get("[data-cy=right_arrow]").click({ force: true });
+      cy.contains("Infomedia");
+      cy.contains("External");
+      cy.contains("(no url)");
     });
 
     //BETA-1 skip this test - material reviews are gone
