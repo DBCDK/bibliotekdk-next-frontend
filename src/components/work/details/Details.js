@@ -59,7 +59,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
       subtitle={subtitle}
     >
       <Row className={`${styles.details}`}>
-        <Col xs={12} md>
+        <Col xs={12}>
           <div className={styles.container}>
             {fieldsToShow &&
               fieldsToShow.map((field, index) => {
