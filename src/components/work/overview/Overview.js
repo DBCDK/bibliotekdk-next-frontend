@@ -118,7 +118,7 @@ export function Overview({
                 </Title>
               </Col>
               <Col xs={12}>
-                <WorkGroupingsOverview workId={workId} type={type} />
+                <WorkGroupingsOverview workId={workId} />
               </Col>
               <Col xs={12} className={styles.ornament}>
                 <Icon

@@ -117,7 +117,6 @@ function RenderHostPublication({ hostPublication }) {
 /**
  * Wrapper for WorkGroupingsOverview
  * @param workId
- * @param type
  * @return {JSX.Element}
  */
 export default function Wrap({ workId }) {
@@ -177,5 +176,4 @@ export default function Wrap({ workId }) {
 // PropTypes for component
 Wrap.propTypes = {
   workId: PropTypes.string,
-  type: PropTypes.string,
 };
