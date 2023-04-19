@@ -130,3 +130,13 @@
     ;
   }
 }
+
+@media print {
+  .back_button {
+    display: none;
+  }
+
+  .info__print {
+    display: none;
+  }
+}
