@@ -685,6 +685,33 @@ export function pidToWorkId({ pid }) {
   };
 }
 
+export function workIdToTitleCreator({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query workIdToTitleCreator($workId: String!) {
+      work(id: $workId) {
+        ...titleCreatorFragment
+      }
+    }
+    ${titleCreatorFragment}
+    `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+const titleCreatorFragment = `fragment titleCreatorFragment on Work {
+  titles {
+    main
+    full
+  }
+  creators {
+    display
+  }
+  workId
+}`;
+
 const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
