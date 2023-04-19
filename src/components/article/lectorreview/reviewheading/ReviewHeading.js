@@ -38,7 +38,11 @@ export function ReviewHeading({ propAndChildrenInput }) {
         className={`${styles.overview}`}
       >
         <div className={styles.back_button}>
-          <LinkArrow orientation={"left"} textBorder={{ bottom: true }}>
+          <LinkArrow
+            orientation={"left"}
+            link={templateForHeaderWorkCard(propAndChildrenInput).link_href}
+            textBorder={{ bottom: true }}
+          >
             {[
               Translate({ context: "general", label: "back-to" }),
               " ",
