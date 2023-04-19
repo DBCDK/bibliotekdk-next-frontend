@@ -21,11 +21,16 @@ import * as workFragments from "@/lib/api/work.fragments";
 import Page from "@/components/work/page";
 import Header from "@/components/work/page/Header";
 import { signIn } from "@dbcdk/login-nextjs/client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
+import { workIdToTitleCreator } from "@/lib/api/work.fragments";
+import { encodeTitleCreator } from "@/lib/utils";
+import isEmpty from "lodash/isEmpty";
+import { useData } from "@/lib/api/api";
+import isEqual from "lodash/isEqual";
 
 /**
  * Renders the WorkPage component
@@ -47,6 +52,29 @@ export default function WorkPage() {
       );
     }
   }, [query]);
+
+  const { data: workForTitleCreatorData } = useData(
+    workId && workIdToTitleCreator({ workId: workId })
+  );
+
+  useEffect(() => {
+    if (workForTitleCreatorData) {
+      const title_author = encodeTitleCreator(
+        workForTitleCreatorData?.work?.titles?.full?.[0],
+        workForTitleCreatorData?.work?.creators?.[0]?.display
+      );
+
+      if (title_author && !isEqual(title_author, router?.query?.title_author)) {
+        router.replace({
+          pathname: router.pathname,
+          query: {
+            ...router.query,
+            title_author: title_author,
+          },
+        });
+      }
+    }
+  }, [workForTitleCreatorData]);
 
   /**
    * Updates the query params in the url
@@ -86,6 +114,37 @@ export default function WorkPage() {
 const serverQueries = Object.values(workFragments);
 
 /**
+ * Extract fixed url for getInitialProps to fix the url when the title_author is mucked up
+ * @param init
+ * @param queries
+ * @param ctx
+ * @return {string|null}
+ */
+function extractFixedUrl(init, queries, ctx) {
+  const index = Object.keys(init.initialData).findIndex((key) =>
+    key.includes("workIdToTitleCreator")
+  );
+
+  const title = queries[index]?.data?.work?.titles?.full?.[0];
+  const creator = queries[index]?.data?.work?.creators?.[0]?.display;
+  const title_creator = encodeTitleCreator(title, creator);
+
+  const urlParams = Object.entries(ctx.query)
+    .filter((entry) => !["workId", "title_author"].includes(entry[0]))
+    .map((single) => single[0] + "=" + single[1])
+    .join("&")
+    .replaceAll(" ", "+");
+
+  const fixedUrl = `/materiale/${title_creator}/${ctx.query.workId}${
+    !isEmpty(urlParams) && "?" + urlParams
+  }`;
+
+  return title_creator && title_creator !== ctx.query.title_author && fixedUrl
+    ? fixedUrl
+    : null;
+}
+
+/**
  * We use getInitialProps to let Next.js
  * fetch the data server side
  *
@@ -96,11 +155,29 @@ const serverQueries = Object.values(workFragments);
 WorkPage.getInitialProps = async (ctx) => {
   const init = await fetchAll(serverQueries, ctx);
   const queries = Object.values(init.initialData);
+
+  const fixedUrl = extractFixedUrl(init, queries, ctx);
+
   if (queries[0]?.data && !queries[0]?.data?.work) {
     ctx.res.statusCode = 404;
     return {
       notFound: true,
     };
   }
+
+  if (fixedUrl) {
+    if (typeof window !== "undefined") {
+      return {};
+    }
+    if (ctx.res) {
+      ctx.res.writeHead(302, {
+        Location: fixedUrl,
+        "Content-Type": "text/html; charset=utf-8",
+      });
+      ctx.res.end();
+    }
+    return {};
+  }
+
   return init;
 };
