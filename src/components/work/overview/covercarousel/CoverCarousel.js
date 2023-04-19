@@ -63,6 +63,7 @@ const CoverElement = forwardRef(function CoverElement(
         className={loaded ? styles.cover_image : styles.cover_image_skeleton}
         onLoad={() => setLoaded(true)}
         alt={""}
+        {...(isVisible && { tabIndex: "0" })}
       />
       <Text>{getTextDescription(materialType, manifestation)}</Text>
     </div>
