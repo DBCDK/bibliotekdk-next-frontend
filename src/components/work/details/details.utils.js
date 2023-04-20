@@ -12,7 +12,6 @@ import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
 import { Fragment } from "react";
 import { toLower } from "lodash/toLower";
-import TjoolTjip from "@/components/base/tjooltjip";
 
 /**
  * Parse languages in given manifestation.
