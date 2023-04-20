@@ -48,6 +48,8 @@ describe("Details", () => {
 
     cy.get("[data-cy=text-genre-form]").should("have.text", "genre/form");
 
+    cy.get("[data-cy*=text-lix]").should("have.text", "lix: 2222");
+
     cy.get("[data-cy=section-title]")
       .find("p")
       .should("have.text", "Seneste udgave, Musik (dvd)");
