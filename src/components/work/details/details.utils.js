@@ -487,8 +487,7 @@ function RenderMovieAudience({ values }) {
 }
 
 /**
- * Audience for litterature - childrenOrAdults, generalAudience, lix, let .. and
- * a tooltip for lix and let.
+ * lex and lit for literature (difficulty level)
  *
  * @param values
  * @returns {JSX.Element}
