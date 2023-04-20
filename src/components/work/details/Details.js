@@ -17,6 +17,7 @@ import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
+import TjoolTjip from "@/components/base/tjooltjip";
 
 function DefaultDetailValues({ values }) {
   return (
@@ -64,13 +65,28 @@ function Details({ className = "", manifestation = {}, work = {} }) {
             {fieldsToShow &&
               fieldsToShow.map((field, index) => {
                 const fieldName = Object.keys(field)[0];
+
                 return (
                   !isEmpty(field[fieldName].value) && (
                     /** this is the label **/
                     <div className={styles.item} key={index}>
-                      <Text type="text3" className={styles.title} lines={2}>
+                      <Text
+                        type="text3"
+                        className={`${styles.title} ${
+                          field[fieldName]?.tooltip ? styles.txtInline : ""
+                        }`}
+                        lines={2}
+                        tag="span"
+                      >
                         {field[fieldName].label}
                       </Text>
+                      {/** some labels has a tooltip attached .. **/}
+                      {field[fieldName]?.tooltip && (
+                        <TjoolTjip
+                          labelToTranslate={field[fieldName].tooltip}
+                          customClass={styles.tooltipinline}
+                        ></TjoolTjip>
+                      )}
                       {/** some fields has a custom jsx parser .. **/}
                       {field[fieldName].jsxParser ? (
                         field[fieldName].jsxParser({
