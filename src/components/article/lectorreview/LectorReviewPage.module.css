@@ -101,8 +101,8 @@
 @media (min-width: 768px) {
   .top {
     padding-inline: var(--pt2);
-  padding-top: var(--pt5);
-  padding-bottom: var(--pt5);
+    padding-top: var(--pt5);
+    padding-bottom: var(--pt5);
   }
 
   .overview {
