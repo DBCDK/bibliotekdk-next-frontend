@@ -17,3 +17,61 @@ export function sortReviews(a, b) {
     0
   );
 }
+
+/**
+ * replaces reference in content with a link to the manifestation
+ * removes the \\ markup from the content where a title reference is missing from the manifestation list.
+ */
+export function contentParser({ content, manifestations }) {
+  const chunks = [];
+
+  if (manifestations?.length > 0) {
+    manifestations
+      .filter((manifestation) => !!manifestation)
+      .forEach(({ ownerWork }, idx) => {
+        const arr = content.split(ownerWork?.titles?.main);
+        arr.forEach((chunk) => chunks.push(chunk));
+        chunks.splice(idx + 1, 0, <LectorLink key={idx} work={ownerWork} />);
+      });
+  }
+
+  /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/
+  // No manifestation references was found, search and replace \\ notations with "" in paragraph content
+
+  /*else {
+    const regex = /(?<=\\)(.*?)(?=\\)/g;
+    const match = content?.match(regex);
+    const trimmed = content?.replace(`\\${match}\\`, `"${match}"`);
+
+    chunks.push(trimmed);
+
+  }*/
+
+  chunks.push(content?.replaceAll("\\", ""));
+
+  // add tailing dot space after each paragraph
+  chunks.push(". ");
+
+  return chunks;
+}
+
+/**
+ * Check if a paragraph holds a link to another work - if so parse as link
+ * if not return a period (.)
+ * @param work
+ * @return {JSX.Element|string}
+ */
+function LectorLink({ work }) {
+  if (!work) {
+    return ". ";
+  }
+
+  // @TODO there may be more than one creator - for now simply grab the first
+  // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
+  const creator = work?.creators[0]?.display || "";
+  const title = work?.titles?.main?.[0] || "";
+  const title_crator = encodeTitleCreator(title, creator);
+
+  const path = `/materiale/${title_crator}/${work?.workId}`;
+  return <Link href={path}>{work?.titles?.main}</Link>;
+}

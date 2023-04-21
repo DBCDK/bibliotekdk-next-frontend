@@ -1,0 +1,111 @@
+.item,
+.item.isMaterialReview {
+  min-width: 70%;
+  margin-right: var(--pt5);
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.details div {
+  min-width: 100%;
+  display: flex;
+}
+
+.details > div:last-child p {
+  flex-shrink: 1;
+}
+
+.item .date {
+  order: 1;
+}
+
+.item .rating {
+  order: 1;
+}
+
+.break {
+  flex-basis: 100%;
+}
+
+.details {
+  margin-bottom: var(--pt1);
+}
+
+.details > div:first-child {
+  align-items: baseline;
+  margin-bottom: var(--pt2);
+}
+
+.details div:first-child .date {
+  display: none;
+}
+
+.details .by {
+  margin-right: var(--pt1);
+  display: none;
+}
+
+.details > div > .by {
+  display: block;
+}
+
+.details > div:last-child > div {
+  display: unset;
+}
+
+.details .link {
+  margin-top: var(--pt2);
+}
+
+@media (min-width: 992px) {
+  .item {
+    min-width: 33%;
+    margin-right: var(--pt15);
+  }
+
+  .item.isMaterialReview {
+    min-width: 80%;
+  }
+
+  .details > div:last-child > p {
+    display: none;
+  }
+  .details > * {
+    min-width: unset;
+  }
+
+  .details > div:last-child > div {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+  }
+
+  .details > div:last-child > div > * {
+    min-width: unset;
+    align-items: baseline;
+  }
+
+  .details > div:last-child .date {
+    display: none;
+  }
+
+  .details > div:first-child {
+    margin-bottom: var(--pt4);
+  }
+
+  .details div:first-child .date {
+    margin-left: var(--pt2);
+    display: block;
+  }
+
+  .details .by {
+    display: block;
+  }
+
+  .details > div > .by {
+    display: none;
+  }
+}

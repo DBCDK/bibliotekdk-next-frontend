@@ -20,6 +20,9 @@
 .clamp-xs-5 {
   -webkit-line-clamp: 5;
 }
+.clamp-xs-6 {
+  -webkit-line-clamp: 6;
+}
 
 /* sm */
 @media (min-width: 576px) {
@@ -37,6 +40,9 @@
   }
   .clamp-sm-5 {
     -webkit-line-clamp: 5;
+  }
+  .clamp-sm-6 {
+    -webkit-line-clamp: 6;
   }
 }
 
@@ -57,6 +63,9 @@
   .clamp-md-5 {
     -webkit-line-clamp: 5;
   }
+  .clamp-md-6 {
+    -webkit-line-clamp: 6;
+  }
 }
 
 /* lg */
@@ -75,6 +84,9 @@
   }
   .clamp-lg-5 {
     -webkit-line-clamp: 5;
+  }
+  .clamp-lg-6 {
+    -webkit-line-clamp: 6;
   }
 }
 
@@ -95,6 +107,9 @@
   .clamp-xl-5 {
     -webkit-line-clamp: 5;
   }
+  .clamp-xl-6 {
+    -webkit-line-clamp: 6;
+  }
 }
 
 /* xxl */
@@ -113,5 +128,8 @@
   }
   .clamp-xxl-5 {
     -webkit-line-clamp: 5;
+  }
+  .clamp-xxl-6 {
+    -webkit-line-clamp: 6;
   }
 }

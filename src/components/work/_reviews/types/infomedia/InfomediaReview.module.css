@@ -1,0 +1,54 @@
+.infomedia {
+  padding-top: var(--pt7);
+  padding-bottom: var(--pt1);
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+}
+
+.media {
+  padding: 0 0 var(--pt2) 0;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+}
+
+.left {
+  min-width: 24px;
+  padding: 2px 0 0 0;
+  flex-shrink: 2;
+}
+
+.right {
+  padding: 0;
+}
+
+.right p,
+.right h3 {
+  display: inline;
+}
+
+.date {
+  padding: 0;
+}
+
+.rating {
+  padding: var(--pt2) 0 0 0;
+}
+
+.url {
+  padding: var(--pt2) 0 0 0;
+  align-items: center;
+}
+
+.url a {
+  margin: 0 0 0 var(--pt2);
+  vertical-align: bottom;
+}
+
+/* Skeleton */
+
+.skeleton {
+}

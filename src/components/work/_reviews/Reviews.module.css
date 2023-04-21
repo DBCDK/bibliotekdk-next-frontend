@@ -3,20 +3,26 @@
   height: auto;
 }
 
-.sliderContainer {
-  margin: 0 calc(var(--pt2) * -1);
-}
-
-.slider {
-  scroll-padding-left: var(--pt2) !important;
-}
-
-.slider > div:first-child {
-  margin-left: var(--pt2);
+.only_content {
+  display: contents;
 }
 
 .slider > div > div {
   scroll-snap-align: start;
+}
+
+.slider .trio {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: row;
+}
+
+/* Slider */
+
+.SlideWrapper {
+  height: auto;
+  padding-right: var(--pt3);
+  align-self: flex-start;
 }
 
 /* Skeleton */
@@ -42,7 +48,7 @@
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 992px) {
-  .sliderContainer {
-    margin: unset;
+  .SlideWrapper {
+    max-width: unset;
   }
 }

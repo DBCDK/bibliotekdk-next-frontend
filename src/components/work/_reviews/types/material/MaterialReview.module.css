@@ -1,0 +1,109 @@
+.materialReview {
+  padding: 0;
+
+  /* Ensure link lines are visible */
+  padding-bottom: var(--pt1);
+}
+
+.flex__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pt3);
+  margin-right: var(--pt8);
+  box-sizing: border-box;
+  padding: var(--pt1) 0;
+}
+
+.flex__information {
+  display: grid;
+  grid-template-columns: none;
+  grid-template-rows: auto 1fr;
+}
+
+@media (min-width: 576px) {
+  .flex__information {
+    display: grid;
+    grid-template-rows: none;
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.link_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.author {
+  padding: var(--pt2) 0 0 0;
+  display: flex;
+}
+
+.author span {
+  display: flex;
+  align-self: flex-end;
+}
+
+.author span > p {
+  padding: 0 var(--pt1) 0 0;
+}
+
+.type {
+  padding-left: 0;
+}
+
+.url {
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.url i {
+  display: none;
+}
+
+.skeleton hr {
+  display: none;
+}
+
+.skeleton a {
+  border: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.reviewTxt h1 {
+  font-family: var(--title-font);
+  display: inline;
+}
+
+.reviewTxt a {
+  color: var(--blue);
+  font-family: var(--title-font);
+}
+
+@media (min-width: 1200px) {
+  .reviewTxt a,
+  .reviewTxt h1 {
+    font-size: var(--pt4);
+    line-height: var(--pt5);
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .type {
+    padding: 0 0 0 var(--pt4);
+  }
+
+  .url a {
+    margin: 0 0 0 var(--pt2);
+  }
+
+  .url i {
+    display: block;
+  }
+
+  .author {
+    padding: 0;
+  }
+}

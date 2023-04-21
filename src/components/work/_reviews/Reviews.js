@@ -10,13 +10,56 @@ import { cyKey } from "@/utils/trim";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 
-import Item from "./item";
+import InfomediaReview from "./types/infomedia";
+import ExternalReview from "./types/external";
+import MaterialReview from "./types/material";
 
 import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
 import { getScrollToNextFullWidth } from "@/components/base/scrollsnapslider/utils";
+
+/**
+ * Selecting the correct review template
+ *
+ * @param review
+ *
+ * @returns {component}
+ */
+
+function getTemplate(review) {
+  if (review.review?.reviewByLibrarians?.length > 0) {
+    return MaterialReview;
+  }
+
+  if (review.access?.find((a) => a.__typename === "InfomediaService")) {
+    return InfomediaReview;
+  }
+
+  return ExternalReview;
+}
+
+function ReviewFromTemplate({ review, idx, skeleton, title, workId }) {
+  const Review = getTemplate(review);
+
+  if (Review) {
+    const skeletonReview = skeleton
+      ? `${styles.skeleton} ${styles.custom}`
+      : "";
+
+    return (
+      <Review
+        skeleton={skeleton}
+        key={`review-${idx}`}
+        data={review}
+        className={`${styles.SlideWrapper} ${skeletonReview}`}
+        title={title}
+        workId={workId}
+      />
+    );
+  }
+}
 
 /**
  * The Component function
@@ -31,6 +74,8 @@ export function Reviews({ data = [], skeleton = false }) {
   const sliderId = "review_scrollSnapSlider";
 
   const context = { context: "reviews" };
+  const workId = data?.workId;
+  const title = data?.titles?.main?.[0];
 
   const reviews = useMemo(
     () => [...data?.relations?.hasReview].sort(sortReviews),
@@ -40,6 +85,16 @@ export function Reviews({ data = [], skeleton = false }) {
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
+
+  const ReviewFromTemplateWithProps = ({ review, idx }) => (
+    <ReviewFromTemplate
+      review={review}
+      idx={idx}
+      skeleton={skeleton}
+      title={title}
+      workId={workId}
+    />
+  );
 
   return (
     <Section
@@ -54,7 +109,6 @@ export function Reviews({ data = [], skeleton = false }) {
       backgroundColor="var(--parchment)"
     >
       <ScrollSnapSlider
-        className={styles.sliderContainer}
         sliderId={sliderId}
         slideDistanceFunctionOverride={getScrollToNextFullWidth}
         childContainerClassName={styles.slider}
@@ -62,11 +116,10 @@ export function Reviews({ data = [], skeleton = false }) {
       >
         {reviews
           .map((review, idx) => (
-            <Item
-              key={`review_item_${idx}`}
-              data={review}
-              work={data}
-              skeleton={skeleton}
+            <ReviewFromTemplateWithProps
+              key={`review_lector_${idx}`}
+              review={review}
+              idx={idx}
             />
           ))
           .filter((valid) => valid)}
