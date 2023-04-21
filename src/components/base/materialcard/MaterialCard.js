@@ -13,11 +13,13 @@ import { templateForRelatedWorks } from "@/components/base/materialcard/template
  *
  * @param {function} propAndChildrenTemplate
  * @param propAndChildrenInput
+ * @param {Object<string, any>}} colSizing
  * @return {JSX.Element}
  */
 export default function MaterialCard({
   propAndChildrenTemplate = templateForRelatedWorks,
   propAndChildrenInput,
+  colSizing = { xs: 11, sm: 5, lg: 4 },
 }) {
   const renderProps = propAndChildrenTemplate?.(propAndChildrenInput);
   const { link_href, fullTitle, image_src, children } = renderProps;
@@ -31,26 +33,27 @@ export default function MaterialCard({
 
   return (
     <Col
-      as={Link}
       // Col props
-      xs={11}
-      sm={5}
-      lg={4}
-      // Link props
-      href={link_href}
-      className={`${styles.link_style} ${animationStyle}`}
-      border={{ top: false, bottom: false }}
-      data_display={"inline"}
+      {...colSizing}
+      className={`${styles.col_flex}`}
     >
-      <div className={`${styles.related_element}`}>
-        <img
-          src={image_src}
-          className={`${styles.cover}`}
-          title={fullTitle}
-          alt={Translate({ context: "general", label: "frontpage" })}
-        />
-        <div className={styles.text}>{children}</div>
-      </div>
+      <Link
+        href={link_href}
+        // Link props
+        className={`${animationStyle} ${styles.link_style}`}
+        border={{ top: false, bottom: false }}
+        data_display={"inline"}
+      >
+        <div className={`${styles.related_element}`}>
+          <img
+            src={image_src}
+            className={`${styles.cover}`}
+            title={fullTitle}
+            alt={Translate({ context: "general", label: "frontpage" })}
+          />
+          <div className={styles.text}>{children}</div>
+        </div>
+      </Link>
     </Col>
   );
 }

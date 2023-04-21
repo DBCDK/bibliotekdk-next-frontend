@@ -31,12 +31,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
       title={null}
       className={`${styles.top}`}
     >
-      <Col
-        xs={12}
-        md={{ span: 10, offset: 1 }}
-        lg={{ span: 12, offset: 0 }}
-        className={`${styles.overview}`}
-      >
+      <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.back_button}>
           <LinkArrow
             orientation={"left"}
@@ -60,6 +55,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
           <MaterialCard
             propAndChildrenTemplate={templateForHeaderWorkCard}
             propAndChildrenInput={propAndChildrenInput}
+            colSizing={{ xs: "auto", lg: 10, xl: 8 }}
           />
         </div>
       </Col>
