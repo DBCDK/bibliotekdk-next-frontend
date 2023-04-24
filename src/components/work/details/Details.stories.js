@@ -46,6 +46,12 @@ WrappedDetailsSection.story = {
               },
             ],
           }),
+          audience: () => ({
+            generalAudience: [
+              "Mærkning: Tilladt for alle men frarådes børn under 7 år",
+            ],
+            lix: "2222",
+          }),
 
           materialTypes: () => [{ specific: "Musik (dvd)" }],
         },
