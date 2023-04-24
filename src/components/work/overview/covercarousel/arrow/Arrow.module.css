@@ -1,3 +1,14 @@
+.arrow_functionality:global {
+  /* Arrow defaults */
+  --arrow__background_color: var(--blue);
+  --arrow__fill_color: var(--white);
+  --arrow__background_color_hover: var(--mine-shaft);
+  --arrow__fill_color_hover: var(--white);
+  --arrow__disabled_fill_color: var(--white);
+  --arrow__disabled_background_color: var(--iron);
+  --arrow__box_shadow: 0;
+}
+
 .arrow_functionality {
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
