@@ -1,10 +1,10 @@
-.full_cover_carousel:global {
+.full_cover_carousel {
+  /* Cover Carousel default colors */
   --basic_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   --basic_box_border: 1px solid rgba(0, 0, 0, 0.1);
   --basic_big_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
 
-.full_cover_carousel {
+  /* Setting up CoverCarousel */
   display: grid;
   --grid_template:
     "🖼️"

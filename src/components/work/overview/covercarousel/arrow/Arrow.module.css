@@ -1,4 +1,4 @@
-.arrow_functionality:global {
+.arrow_functionality {
   /* Arrow defaults */
   --arrow__background_color: var(--blue);
   --arrow__fill_color: var(--white);
@@ -7,9 +7,8 @@
   --arrow__disabled_fill_color: var(--white);
   --arrow__disabled_background_color: var(--iron);
   --arrow__box_shadow: 0;
-}
 
-.arrow_functionality {
+  /* Setting up arrow */
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
   box-shadow: var(--arrow__box_shadow);
