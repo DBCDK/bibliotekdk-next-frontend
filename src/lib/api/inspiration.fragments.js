@@ -41,6 +41,7 @@ export function inspiration({ filters = [], limit = 10 } = {}) {
                   workId
                   titles {
                     main
+                    full
                   }
                   creators {
                     display

@@ -21,13 +21,15 @@ import {
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import { Title } from "@/components/base/title/Title";
+import { useRouter } from "next/router";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
   inUniqueMaterialTypes,
   type,
   onTypeChange,
-  workId
+  workId,
+  router
 ) {
   useEffect(() => {
     if (
@@ -39,7 +41,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [workId]);
+  }, [workId, router.query]);
 }
 
 /**
@@ -59,6 +61,7 @@ export function Overview({
   skeleton = false,
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
+  const router = useRouter();
 
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
@@ -70,7 +73,8 @@ export function Overview({
     inUniqueMaterialTypes,
     type,
     onTypeChange,
-    workId
+    workId,
+    router
   );
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);

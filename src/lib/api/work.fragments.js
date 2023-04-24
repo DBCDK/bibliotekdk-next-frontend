@@ -649,12 +649,13 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   workId
   titles {
     main
+    full
   }
   creators {
     display
   }
   manifestations {
-    all {
+    mostRelevant {
       materialTypes {
         specific
       }
