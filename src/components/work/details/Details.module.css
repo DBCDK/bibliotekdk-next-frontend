@@ -13,13 +13,24 @@
   font-weight: bold;
 }
 
+.lixwithtooltip {
+  display: flex;
+  align-items: center;
+}
+
 .link {
   white-space: normal;
   display: table;
 }
 
+.tooltipinline {
+  display: inline-block;
+  margin-left: var(--pt1);
+  position: absolute;
+}
+
 .txtInline {
-  display: inline;
+  display: inline-block;
 }
 
 .pegiimage {
