@@ -5,6 +5,8 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
+import styles from "./MaterialCard.module.css";
+import { getCoverImage } from "@/components/utils/getCoverImage";
 
 function propFunc(textType, lines) {
   return {
@@ -12,6 +14,33 @@ function propFunc(textType, lines) {
     type: textType,
     lines: lines,
     data_display: "inline",
+  };
+}
+
+export function templateForVerticalWorkCard(material) {
+  const fullTitle = material?.titles?.full?.join(": ");
+  const firstCreator = material?.creators?.[0]?.display;
+
+  const coverSrc = getCoverImage(material.manifestations.mostRelevant);
+
+  return {
+    link_href: getWorkUrl(fullTitle, firstCreator, material?.workId),
+    fullTitle: fullTitle,
+    image_src: coverSrc?.detail,
+    workId: material?.workId,
+    children: (
+      <>
+        <Text {...propFunc("text1", 2)} title={fullTitle}>
+          {fullTitle}
+        </Text>
+        <Text {...propFunc("text2", 2)} title={firstCreator}>
+          {firstCreator}
+        </Text>
+      </>
+    ),
+    // Styling
+    relatedElementClassName: styles.related_element__vertical_version,
+    coverImageClassName: styles.cover__vertical_version,
   };
 }
 
@@ -33,6 +62,7 @@ export function templateForHeaderWorkCard(material) {
     link_href: getWorkUrl(fullTitle, firstCreator, material?.ownerWork?.workId),
     fullTitle: fullTitle,
     image_src: material.cover.detail,
+    workId: material?.ownerWork?.workId,
     children: (
       <>
         <Text {...propFunc("text4", 2)} title={fullTitle}>
@@ -63,6 +93,7 @@ export function templateForRelatedWorks(material) {
     link_href: getWorkUrl(fullTitle, firstCreator, material?.workId),
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
+    workId: material?.workId,
     children: (
       <>
         <Text {...propFunc("text4", 2)} title={fullTitle}>

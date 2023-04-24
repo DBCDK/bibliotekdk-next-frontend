@@ -8,6 +8,7 @@ import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templatesForMaterialCard";
+import { forwardRef } from "react";
 
 /**
  *
@@ -16,13 +17,17 @@ import { templateForRelatedWorks } from "@/components/base/materialcard/template
  * @param {Object<string, any>}} colSizing
  * @return {JSX.Element}
  */
-export default function MaterialCard({
-  propAndChildrenTemplate = templateForRelatedWorks,
-  propAndChildrenInput,
-  colSizing = { xs: 11, sm: 5, lg: 4 },
-}) {
+const MaterialCard = forwardRef(function MaterialCard(
+  {
+    propAndChildrenTemplate = templateForRelatedWorks,
+    propAndChildrenInput,
+    colSizing = { xs: 11, sm: 5, lg: 4 },
+    onClick = null,
+  },
+  ref
+) {
   const renderProps = propAndChildrenTemplate?.(propAndChildrenInput);
-  const { link_href, fullTitle, image_src, children } = renderProps;
+  const { link_href, fullTitle, image_src, children, workId } = renderProps;
 
   const animationStyle = [
     animations.underlineContainer,
@@ -43,11 +48,16 @@ export default function MaterialCard({
         className={`${animationStyle} ${styles.link_style}`}
         border={{ top: false, bottom: false }}
         data_display={"inline"}
+        onClick={onClick}
       >
-        <div className={`${styles.related_element}`}>
+        <div
+          ref={ref}
+          id={workId}
+          className={`${styles.related_element} ${renderProps.relatedElementClassName}`}
+        >
           <img
             src={image_src}
-            className={`${styles.cover}`}
+            className={`${styles.cover} ${renderProps.coverImageClassName}`}
             title={fullTitle}
             alt={Translate({ context: "general", label: "frontpage" })}
           />
@@ -56,4 +66,6 @@ export default function MaterialCard({
       </Link>
     </Col>
   );
-}
+});
+
+export default MaterialCard;
