@@ -1,3 +1,6 @@
+import { encodeTitleCreator } from "@/lib/utils";
+import Link from "@/components/base/link";
+
 /**
  * Sort reviews by
  * 1. ReviewMatVurd
@@ -28,10 +31,10 @@ export function contentParser({ content, manifestations }) {
   if (manifestations?.length > 0) {
     manifestations
       .filter((manifestation) => !!manifestation)
-      .forEach(({ ownerWork }, idx) => {
-        const arr = content.split(ownerWork?.titles?.main);
+      .forEach(({ ownerWork: work }, idx) => {
+        const arr = content.split(work?.titles?.main);
         arr.forEach((chunk) => chunks.push(chunk));
-        chunks.splice(idx + 1, 0, <LectorLink key={idx} work={ownerWork} />);
+        chunks.splice(idx + 1, 0, lectorLink({ work, key: `link-${idx}` }));
       });
   }
 
@@ -61,7 +64,7 @@ export function contentParser({ content, manifestations }) {
  * @param work
  * @return {JSX.Element|string}
  */
-function LectorLink({ work }) {
+function lectorLink({ work, key }) {
   if (!work) {
     return ". ";
   }
@@ -73,5 +76,9 @@ function LectorLink({ work }) {
   const title_crator = encodeTitleCreator(title, creator);
 
   const path = `/materiale/${title_crator}/${work?.workId}`;
-  return <Link href={path}>{work?.titles?.main}</Link>;
+  return (
+    <Link key={key} href={path}>
+      {work?.titles?.main}
+    </Link>
+  );
 }

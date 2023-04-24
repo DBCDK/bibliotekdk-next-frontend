@@ -1,6 +1,7 @@
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link/Link";
+import Icon from "@/components/base/icon";
 
 import { Rating } from "@/components/base/rating/Rating";
 
@@ -9,6 +10,7 @@ import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
 import Translate from "@/components/base/translate";
 
 import { contentParser } from "../utils";
+import { encodeString } from "@/lib/utils";
 
 import styles from "./Item.module.css";
 
@@ -78,7 +80,42 @@ function getContent(data) {
       );
   }
 
-  return [data.abstract];
+  if (data.abstract) {
+    return data.abstract;
+  }
+
+  return [];
+}
+
+/**
+ *
+ * @param {*} data
+ * @returns {string}
+ */
+function getUrls(data, work) {
+  const { workId, title } = work;
+  const isType = getReviewType(data);
+  const isMaterialReview = isType === "isMaterialReview";
+  const isInfomediaReview = isType === "isInfomediaReview";
+
+  const urlTxt = title && encodeString(title);
+
+  if (isMaterialReview) {
+    return data.pid && [`/anmeldelse/${urlTxt}/${workId}/${data.pid}`];
+  }
+
+  if (isInfomediaReview) {
+    const infomediaAccess = data.access?.find((a) => a.id);
+    return (
+      infomediaAccess.id && [
+        `/anmeldelse/${urlTxt}/${workId}/${infomediaAccess.id}`,
+      ]
+    );
+  }
+
+  return data.access
+    .filter((d) => d.__typename === "AccessUrl" && d.url !== "")
+    .map((a) => a.url);
 }
 
 /**
@@ -97,7 +134,7 @@ function Item({ data, work, skeleton }) {
   const hasCreator = data.creators?.map(({ display }) => display).join(", ");
   const hasPublisher = getPublisher(data);
   const hasContent = getContent(data);
-  const hasUrl = "";
+  const hasUrls = getUrls(data, work) || [];
 
   const typeClass = styles[isType];
   const hasDateClass = !!hasDate ? styles.hasDate : "";
@@ -105,6 +142,7 @@ function Item({ data, work, skeleton }) {
   const hasCreatorClass = !!hasCreator ? styles.hasCreator : "";
   const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
   const hasContentClass = !!hasContent.length ? styles.hasContent : "";
+  const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
 
   const classNames = [
     typeClass,
@@ -113,6 +151,7 @@ function Item({ data, work, skeleton }) {
     hasCreatorClass,
     hasPublisherClass,
     hasContentClass,
+    hasUrlClass,
   ].join(" ");
 
   return (
@@ -150,7 +189,9 @@ function Item({ data, work, skeleton }) {
               {hasDate}
             </Text>
 
-            <Rating className={styles.rating} />
+            {hasRating && (
+              <Rating rating={hasRating} className={styles.rating} />
+            )}
           </div>
         </div>
       </div>
@@ -173,9 +214,35 @@ function Item({ data, work, skeleton }) {
           })}
         </Text>
       </div>
-      <Link href="/" className={styles.link}>
-        <Text type="text2">Læs here</Text>
-      </Link>
+
+      {hasUrls.map((url) => {
+        const shouldUseAlternateText = url?.includes("https://moreinfo");
+        return (
+          <div className={styles.link} key={url}>
+            <Icon
+              src="chevron.svg"
+              size={{ w: 2, h: "auto" }}
+              skeleton={skeleton}
+              alt=""
+            />
+            <Link
+              href={url}
+              target="_blank"
+              disabled={!url}
+              border={{ top: false, bottom: { keepVisible: true } }}
+            >
+              <Text type="text2" skeleton={skeleton}>
+                {Translate({
+                  context: "reviews",
+                  label: shouldUseAlternateText
+                    ? "alternateReviewLinkText"
+                    : "reviewLinkText",
+                })}
+              </Text>
+            </Link>
+          </div>
+        );
+      })}
     </div>
   );
 }
