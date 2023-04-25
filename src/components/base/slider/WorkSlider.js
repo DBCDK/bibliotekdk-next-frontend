@@ -104,7 +104,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
               propAndChildrenTemplate={templateForVerticalWorkCard}
               propAndChildrenInput={work}
               colSizing={{ xs: 4, sm: 3, md: 2, lg: 2 }}
-              onClick={(work, idx) => onClick(work, idx)}
+              onClick={() => onClick(work, idx)}
               ref={(element) => (elementRef.current[idx] = element)}
             />
           );
