@@ -80,3 +80,10 @@ textarea:disabled::placeholder {
     font-size: 18px;
   }
 }
+
+/* Remove CookiebotWidget from print */
+@media print {
+  #CookiebotWidget {
+    display: none;
+  }
+}

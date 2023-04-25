@@ -17,6 +17,7 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
+import isEmpty from "lodash/isEmpty";
 
 export function Edition({
   isLoading,
@@ -50,6 +51,7 @@ export function Edition({
     manifestation?.edition?.edition,
   ]
     ?.flat()
+    .filter((pre) => !isEmpty(pre))
     ?.join(", ");
 
   const articleTypeTranslation =

@@ -2,6 +2,11 @@
   padding-bottom: var(--pt8);
 }
 
+.helpskeleton {
+  max-height: 250px;
+  position: relative;
+}
+
 .wrap {
   padding-bottom: var(--pt8);
 }

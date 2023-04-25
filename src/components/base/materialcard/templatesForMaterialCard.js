@@ -6,6 +6,15 @@ import isEmpty from "lodash/isEmpty";
 import { getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
 
+function propFunc(textType, lines) {
+  return {
+    clamp: true,
+    type: textType,
+    lines: lines,
+    data_display: "inline",
+  };
+}
+
 export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const firstCreator = material?.creators?.[0]?.display;
@@ -26,40 +35,16 @@ export function templateForHeaderWorkCard(material) {
     image_src: material.cover.detail,
     children: (
       <>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text4"}
-          lines={2}
-          title={fullTitle}
-        >
+        <Text {...propFunc("text4", 2)} title={fullTitle}>
           {fullTitle}
         </Text>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text3"}
-          lines={2}
-          title={firstCreator}
-        >
+        <Text {...propFunc("text3", 2)} title={firstCreator}>
           {firstCreator}
         </Text>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text3"}
-          lines={1}
-          title={formattedMaterialTypes}
-        >
+        <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
           {formattedMaterialTypes}
         </Text>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text3"}
-          lines={1}
-          title={edition}
-        >
+        <Text {...propFunc("text3", 1)} title={edition}>
           {edition}
         </Text>
       </>
@@ -80,31 +65,13 @@ export function templateForRelatedWorks(material) {
     image_src: material?.cover?.detail,
     children: (
       <>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text4"}
-          lines={2}
-          title={fullTitle}
-        >
+        <Text {...propFunc("text4", 2)} title={fullTitle}>
           {fullTitle}
         </Text>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text3"}
-          lines={2}
-          title={firstCreator}
-        >
+        <Text {...propFunc("text3", 2)} title={firstCreator}>
           {firstCreator}
         </Text>
-        <Text
-          data_display={"inline"}
-          clamp={true}
-          type={"text3"}
-          lines={1}
-          title={formattedMaterialTypes}
-        >
+        <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
           {formattedMaterialTypes}
         </Text>
       </>

@@ -370,6 +370,8 @@ export function fbiOverviewDetail({ workId }) {
                 childrenOrAdults {
                   display
                 }
+                lix
+                let
               }          
               genreAndForm
               languages {

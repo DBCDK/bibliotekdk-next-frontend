@@ -100,6 +100,10 @@
       "tooltip_digtital_copy": {
         "da": "Dit bibliotek skal have abonnement på tjenesten Digital Artikelservice, for at du kan bestille digitale kopier af Det Kgl. Biblioteks artikler.",
         "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
+      },
+      "tooltip_lix": {
+        "da": "Lix står for læsbarhedsindeks. Lix-tal er opdelt efter klassetrin:\\n0.-1. klasse: lix 2-10\\n2. klasse: lix 11-15\\n3. klasse: lix 16-19\\n4. klasse: lix 20+\\n \\n Let-tal står for læseegnethedstal. \\n Begynderlæsningsbøgerne er inddelt i 16 niveauer, hvor det laveste er 5, og det højeste er 20. ",
+        "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
       }
     },
     "general": {
@@ -718,6 +722,10 @@
       "title": {
         "da": "Detaljer",
         "en": "Details"
+      },
+      "level": {
+        "da": "Sværhedsgrad",
+        "en": "level"
       },
       "subtitle": {
         "da": "Seneste udgave, %s",
