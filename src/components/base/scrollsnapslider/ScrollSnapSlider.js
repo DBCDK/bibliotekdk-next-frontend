@@ -16,6 +16,8 @@ export default function ScrollSnapSlider({
   className = "",
   childContainerClassName = null,
   children,
+  arrowClass,
+  ignoreElements = ["hr"],
 }) {
   const parentRef = useRef(null);
   const [containerScroll, setContainerScroll] = useState({});
@@ -24,7 +26,7 @@ export default function ScrollSnapSlider({
   useEffect(() => {
     if (parentRef.current.childNodes) {
       setContainerScroll(scrollSetter(parentRef.current));
-      setChildScroll(childSetter(parentRef.current.childNodes));
+      setChildScroll(childSetter(parentRef.current.childNodes, ignoreElements));
     }
 
     // OBS for Dependencies: Children are NECESSARY for render timing
@@ -59,7 +61,7 @@ export default function ScrollSnapSlider({
     <div className={`${styles.flex_row} ${className}`}>
       {containerScroll.xScrollable > 0 && (
         <Arrow
-          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
+          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left} ${arrowClass}`}
           orientation={"left"}
           clickCallback={() => scrollFunction("left")}
           dataDisabled={Math.floor(containerScroll.x) <= 0}
@@ -75,7 +77,7 @@ export default function ScrollSnapSlider({
       </div>
       {containerScroll.xScrollable > 0 && (
         <Arrow
-          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right}`}
+          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right} ${arrowClass}`}
           orientation={"right"}
           clickCallback={() => scrollFunction("right")}
           dataDisabled={

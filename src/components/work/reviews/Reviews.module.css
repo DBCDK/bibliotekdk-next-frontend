@@ -17,13 +17,28 @@
 }
 
 .slider > div > div {
-  scroll-snap-align: start;
+  /* scroll-snap-align: start; */
 }
 
 .slider > div:last-child {
   /* hide last seperator */
   display: none;
 }
+
+/* seperator element between items */
+
+.seperator {
+  min-width: 1px;
+  height: 100%;
+  background-color: var(--iron);
+  border: 0;
+}
+
+.seperator:last-child {
+  display: none;
+}
+
+/* skeleton */
 
 .reviews.skeleton .arrow_overwrite {
   display: none;

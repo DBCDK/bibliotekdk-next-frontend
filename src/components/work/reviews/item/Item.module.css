@@ -1,5 +1,6 @@
 .item,
 .item.hasContent {
+  position: relative;
   min-width: 70%;
   /* margin-right: var(--pt5); */
   margin: 0 var(--pt5);
@@ -77,12 +78,6 @@
 
 .item .link i {
   margin-right: var(--pt1);
-}
-
-.seperator {
-  min-width: 1px;
-  height: 100%;
-  background-color: var(--iron);
 }
 
 /* Skeleton */

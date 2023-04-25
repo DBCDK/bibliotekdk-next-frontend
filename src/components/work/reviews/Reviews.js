@@ -16,7 +16,10 @@ import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
-import { getScrollToNextFullWidth } from "@/components/base/scrollsnapslider/utils";
+import {
+  getScrollToNextFullWidth,
+  getScrollToNextCoveredChild,
+} from "@/components/base/scrollsnapslider/utils";
 
 /**
  * The Component function
@@ -59,19 +62,22 @@ export function Reviews({ data = [], isLoading = false }) {
       <ScrollSnapSlider
         className={styles.sliderContainer}
         sliderId={sliderId}
-        slideDistanceFunctionOverride={getScrollToNextFullWidth}
+        slideDistanceFunctionOverride={getScrollToNextCoveredChild}
         childContainerClassName={styles.slider}
         arrowClass={styles.arrow_overwrite}
       >
         {reviews
           .map((review, idx) => (
-            <Item
-              key={`review_item_${idx}`}
-              idx={idx}
-              data={review}
-              work={data}
-              isLoading={isLoading}
-            />
+            <>
+              <Item
+                key={`review_item_${idx}`}
+                idx={idx}
+                data={review}
+                work={data}
+                isLoading={isLoading}
+              />
+              <hr className={styles.seperator} />
+            </>
           ))
           .filter((valid) => valid)}
       </ScrollSnapSlider>
@@ -136,8 +142,8 @@ export default function Wrap(props) {
   const { data, isLoading, error } = useData(workFragments.reviews({ workId }));
 
   if (isLoading) {
+    return <ReviewsSkeleton />;
   }
-  return <ReviewsSkeleton />;
 
   if (error) {
     return null;
