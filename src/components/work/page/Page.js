@@ -25,9 +25,12 @@ import { AnchorsEnum } from "@/lib/enums";
 /**
  * The work page React component
  *
- * @param {obj} props
  * See propTypes for specific props and types
  *
+ * @param {string} workId
+ * @param {function} onTypeChange
+ * @param {function} login
+ * @param {MaterialTypesArray} type
  * @returns {JSX.Element}
  */
 export default function WorkPage({ workId, onTypeChange, login, type }) {

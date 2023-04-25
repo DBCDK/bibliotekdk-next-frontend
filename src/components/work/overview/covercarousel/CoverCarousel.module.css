@@ -1,4 +1,10 @@
 .full_cover_carousel {
+  /* Cover Carousel default colors */
+  --basic_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  --basic_box_border: 1px solid rgba(0, 0, 0, 0.1);
+  --basic_big_box_shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  /* Setting up CoverCarousel */
   display: grid;
   --grid_template:
     "🖼️"
@@ -13,10 +19,8 @@
   --carousel-height: auto;
   --carousel-width: 280px;
   --carousel-cover-max-width: 280px;
-  width: calc(var(--carousel-width));
+  width: 100%;
   height: calc(var(--carousel-height));
-
-  margin-inline: auto;
 
   --arrow_transition: all 0.5s;
   --arrow_opacity: 1;
@@ -57,7 +61,7 @@
   z-index: -1;
 
   width: calc(var(--arrow_size) * 1.8);
-  height: calc(var(--arrow_size) * 1.6);
+  height: calc(var(--arrow_size) * 8);
   top: calc(var(--arrow_size) * 0.5);
 
   transform: translateX(-50%) translateY(-50%);
@@ -71,8 +75,8 @@
   left: 0;
 }
 
-.full_cover_carousel:hover :is(.left_arrow, .right_arrow),
-:is(.left_arrow, .right_arrow):hover {
+.full_cover_carousel:is(:hover, :focus-visible, :focus-within) :is(.left_arrow, .right_arrow),
+:is(.left_arrow, .right_arrow):is(:hover, :focus-visible) {
   --left_transform: translateX(calc(var(--pt11) * -2));
   --right_transform: translateX(calc(var(--pt11) * 2));
   --arrow_opacity: 1;
@@ -86,7 +90,7 @@
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
 
-  width: var(--carousel-width);
+  width: 100%;
   scrollbar-width: none;
   gap: var(--pt2);
 }
@@ -111,7 +115,12 @@
   max-width: var(--carousel-cover-max-width);
   height: auto;
 
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--basic_box_shadow);
+  outline: var(--basic_box_border);
+}
+
+.cover_image:is(:focus-visible, :focus-within) {
+  box-shadow: var(--basic_big_box_shadow);
 }
 
 .carousel_skeleton {
@@ -159,6 +168,7 @@
   .full_cover_carousel {
     --carousel-width: 240px;
     --carousel-cover-max-width: 240px;
+    width: calc(var(--carousel-width));
     max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
     margin-right: var(--arrow_size);
   }

@@ -1,7 +1,7 @@
 import range from "lodash/range";
 
 export function scrollToElement(sliderElementId) {
-  document.querySelector(`#${sliderElementId}`).scrollIntoView({
+  document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
     behavior: "smooth",
     block: "nearest",
     inline: "center",
@@ -32,7 +32,7 @@ export function scrollToElementWithOffset(
 }
 
 export function scrollDistance(sliderId, slideTranslation) {
-  document.querySelector(`#${sliderId}`).scrollBy({
+  document.querySelector(`#${CSS.escape(sliderId)}`).scrollBy({
     left: slideTranslation,
     top: 0,
     behavior: "smooth",

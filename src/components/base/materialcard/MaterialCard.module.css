@@ -1,4 +1,9 @@
+.col_flex {
+  display: flex;
+}
+
 .link_style {
+  flex-grow: 1;
   /* Add underline colors */
   --underline-middle-hover-color: var(--link-background);
   --underline-font-hover-color: var(--mine-shaft);
@@ -11,7 +16,7 @@
   gap: var(--pt2);
   box-sizing: border-box;
 
-  padding: var(--pt1) var(--pt1_5);
+  padding: var(--pt1);
 
   /* Reset anchor tag */
   color: var(--mine-shaft);
@@ -27,28 +32,17 @@
 .text {
   display: flex;
   flex-direction: column;
-  gap: var(--pt05);
   flex-grow: 1;
 }
 
-.text > .wrap_one_line {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.text > *:first-child {
+  padding-bottom: var(--pt05);
 }
 
-.text > .wrap_two_lines {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* number of lines to show */
-  line-height: 1.5em; /* fallback */
-  max-height: calc(1.5em * 2); /* fallback */
+.text > *:nth-child(2) {
+  padding-bottom: var(--pt2);
 }
 
-.margin_auto {
-  margin-top: auto;
-  margin-bottom: auto;
-  flex: 1;
+.text > *:nth-child(n+3) {
+  padding-bottom: 0;
 }

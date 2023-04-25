@@ -9,13 +9,21 @@ import { getOrderedFlatMaterialTypes } from "@/lib/enums_MaterialTypes";
 let manifestationWorkType = [];
 let materialTypesOrderFromEnum = [];
 
+/* Typedefs for JSDOC */
 /**
- * MaterialTypeArray with additional manifestation details, possibly enriched,
- *   can any of these properties
- * @typedef {Array} MaterialTypesArray
- * @property {string} materialType
+ * MaterialType
+ * @typedef MaterialType
+ * @type {string}
+ * @example "bog"
+ */
+/**
+ * MaterialTypeArray is an array of {@link MaterialType}
+ * @typedef MaterialTypesArray
+ * @type {Array<MaterialType>}
+ * @example ["bog", "ebog"]
  */
 
+/* Code */
 /**
  * Format to array from url
  * @example formatMaterialTypesFromUrl("fisk / hest") => ["fisk", "hest"]
@@ -40,7 +48,7 @@ export function formatMaterialTypesToUrl(materialTypeArray) {
  * Format to cypress (cypress/dataCy does not like space)
  * @example formatMaterialTypesToCypress(["fisk og hest", "ko og ged"]) => "fisk-og-hest/ko-og-ged"
  * @param materialTypeArray
- * @return {*}
+ * @return {string}
  */
 export function formatMaterialTypesToCypress(materialTypeArray) {
   return materialTypeArray?.join("/").replace(" ", "-");
@@ -50,7 +58,7 @@ export function formatMaterialTypesToCypress(materialTypeArray) {
  * Format to presentation is MaterialTypesSwitcher and searchResult
  * @example formatMaterialTypesToPresentation(["fisk og hest", "ko og ged"]) => "Fisk og hest / Ko og ged"
  * @param materialTypeArray
- * @return {*}
+ * @return {string}
  */
 export function formatMaterialTypesToPresentation(materialTypeArray) {
   return materialTypeArray?.map((mat) => upperFirst(mat)).join(" / ");
@@ -244,7 +252,11 @@ export function enrichManifestationsWithDefaultFrontpages(
  * @return {unknown[]}
  */
 export function flattenGroupedSortedManifestations(manifestationsByType) {
-  return Object.entries(manifestationsByType).flatMap((group) => group[1]);
+  return Object.entries(manifestationsByType)
+    ?.sort((a, b) => compareArraysOfStrings(a[0].split(","), b[0].split(",")))
+    ?.flatMap((group) => {
+      return group[1];
+    });
 }
 
 /**

@@ -372,6 +372,8 @@ export function fbiOverviewDetail({ workId }) {
                 childrenOrAdults {
                   display
                 }
+                lix
+                let
               }          
               genreAndForm
               languages {
@@ -711,6 +713,33 @@ const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragm
     display
     code
   }
+}`;
+
+export function workIdToTitleCreator({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query workIdToTitleCreator($workId: String!) {
+      work(id: $workId) {
+        ...titleCreatorFragment
+      }
+    }
+    ${titleCreatorFragment}
+    `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+const titleCreatorFragment = `fragment titleCreatorFragment on Work {
+  titles {
+    main
+    full
+  }
+  creators {
+    display
+  }
+  workId
 }`;
 
 const coverFragment = `fragment coverFragment on Manifestation {

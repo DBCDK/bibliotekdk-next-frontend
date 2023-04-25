@@ -66,7 +66,7 @@ export default function Wrap(props) {
   );
 
   if (isLoading) {
-    return <Skeleton lines={2} />;
+    return <Skeleton lines={6} className={styles.helpskeleton} />;
   }
 
   if (!data || !data.faq || error) {

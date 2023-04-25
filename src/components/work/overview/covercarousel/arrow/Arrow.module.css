@@ -1,4 +1,14 @@
 .arrow_functionality {
+  /* Arrow defaults */
+  --arrow__background_color: var(--blue);
+  --arrow__fill_color: var(--white);
+  --arrow__background_color_hover: var(--mine-shaft);
+  --arrow__fill_color_hover: var(--white);
+  --arrow__disabled_fill_color: var(--white);
+  --arrow__disabled_background_color: var(--iron);
+  --arrow__box_shadow: 0;
+
+  /* Setting up arrow */
   background-color: var(--arrow__background_color);
   fill: var(--arrow__fill_color);
   box-shadow: var(--arrow__box_shadow);
@@ -8,7 +18,7 @@
   border-radius: 50%;
 }
 
-.arrow_functionality:is(:hover, :focus) {
+.arrow_functionality:is(:hover, :focus-visible) {
   background-color: var(--arrow__background_color_hover);
   fill: var(--arrow__fill_color_hover);
 }

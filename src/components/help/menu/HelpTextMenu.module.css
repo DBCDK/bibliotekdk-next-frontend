@@ -1,5 +1,6 @@
 .helpskeleton {
   max-height: 250px;
+  position: relative;
 }
 
 .link {
