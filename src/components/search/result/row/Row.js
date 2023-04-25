@@ -28,7 +28,10 @@ import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
 
 function TitlesForSearch({ work, isLoading }) {
-  const titles = work?.titles;
+  const titles = [
+    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
+  ];
   const titlesElementId = `TitlesForSearch__RenderTitlesWithoutLanguage-${work?.workId?.replace(
     /\W/g,
     ""

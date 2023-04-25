@@ -168,9 +168,11 @@ export function series({ workId }) {
         seriesMembers {
           ...workSliderFragment
         }
+        ...seriesFragment
       }
     }
     ${workSliderFragment}
+    ${seriesFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -446,15 +448,14 @@ export function workJsonLd({ workId }) {
     query: `query workJsonLd($workId: String!) {
             work(id: $workId) {
               workId
-              workTypes
-              abstract
               titles {
                 main
               }
-              abstract
               creators {
                 display
               }
+              workTypes
+              abstract
               manifestations {
                 all {
                   ...manifestationDetailsForAccessFactory
@@ -602,12 +603,21 @@ export function overviewWork({ workId }) {
       work(id: $workId) {
         titles {
           full
+          parallel
         }
         creators {
-          display
+          ... on Corporation {
+            __typename
+            display
+          }
+          ... on Person {
+            __typename
+            display
+          }
         }
         materialTypes {
           specific
+          general
         }
         mainLanguages {
           display
@@ -622,6 +632,12 @@ export function overviewWork({ workId }) {
             ownerWork {
               workTypes
             }
+            audience {
+              childrenOrAdults {
+                code
+                display
+              }
+            }
             pid
             materialTypes {
               specific
@@ -635,9 +651,12 @@ export function overviewWork({ workId }) {
             }
           }
         }
+        ...genreAndFormAndWorkTypesFragment
       }
       monitor(name: "bibdknext_overview_work")
-    }`,
+    }
+    ${genreAndFormAndWorkTypesFragment}
+    `,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -687,6 +706,15 @@ export function pidToWorkId({ pid }) {
   };
 }
 
+const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
+  genreAndForm
+  workTypes
+  fictionNonfiction {
+    display
+    code
+  }
+}`;
+
 export function workIdToTitleCreator({ workId }) {
   return {
     apiUrl: ApiEnums.FBI_API,
@@ -718,6 +746,16 @@ const coverFragment = `fragment coverFragment on Manifestation {
   cover {
     detail
     origin
+  }
+}`;
+
+const seriesFragment = `fragment seriesFragment on Work {
+  series {
+    title
+    numberInSeries {
+      display
+      number
+    }
   }
 }`;
 
@@ -800,6 +838,10 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
       cover {
         detail
         origin
+      }
+      hostPublication {
+        title
+        issue
       }
     }
   }

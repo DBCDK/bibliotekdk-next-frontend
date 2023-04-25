@@ -211,6 +211,14 @@
         "da": "Spil",
         "en": "Games"
       },
+      "computergames": {
+        "da": "computerspil",
+        "en": "computergames"
+      },
+      "boardgames": {
+        "da": "brætspil",
+        "en": "boardgames"
+      },
       "music": {
         "da": "Musik",
         "en": "Music"
@@ -1565,6 +1573,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",

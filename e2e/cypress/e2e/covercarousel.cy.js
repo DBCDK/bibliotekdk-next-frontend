@@ -10,18 +10,18 @@ describe("CoverCarousel", () => {
       .find("img")
       .should("exist");
 
-    cy.contains("manifestations[0].edition.edition");
-    cy.should("not.contain", "manifestations[1].edition.edition");
+    cy.contains("101. udgave");
+    cy.should("not.contain", "102. udgave");
 
     cy.get("[data-cy=left_arrow]").should("have.attr", "aria-hidden");
     cy.get("[data-cy=right_arrow]").should("exist").focus().type(" ");
 
-    cy.contains("manifestations[1].edition.edition");
-    cy.should("not.contain", "manifestations[0].edition.edition");
+    cy.contains("102. udgave");
+    cy.should("not.contain", "101. udgave");
 
     cy.get("[data-cy=dot_handler_dot_index_0]").should("exist").click();
 
-    cy.contains("manifestations[0].edition.edition");
-    cy.should("not.contain", "manifestations[1].edition.edition");
+    cy.contains("101. udgave");
+    cy.should("not.contain", "102. udgave");
   });
 });
