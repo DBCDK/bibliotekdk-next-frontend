@@ -16,10 +16,7 @@ import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
-import {
-  getScrollToNextFullWidth,
-  getScrollToNextCoveredChild,
-} from "@/components/base/scrollsnapslider/utils";
+import { getScrollToNextCoveredChild } from "@/components/base/scrollsnapslider/utils";
 
 /**
  * The Component function
