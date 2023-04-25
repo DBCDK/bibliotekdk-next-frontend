@@ -5,8 +5,8 @@ import Details from "../details";
 import Description from "../description";
 /*
  * TODO: Insert below when relatedWorks has been approved
-   import RelatedWorks from "../relatedworks";
  */
+import RelatedWorks from "../relatedworks";
 import Content from "../content";
 import Keywords from "../keywords";
 import Related from "../related";
@@ -87,11 +87,11 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           anchor-label={Translate({ context: "description", label: "title" })}
         />
         {/* TODO: Insert below when relatedWorks has been approved */}
-        {/*<RelatedWorks*/}
-        {/*  workId={workId}*/}
-        {/*  type={type}*/}
-        {/*  anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}*/}
-        {/*/>*/}
+        <RelatedWorks
+          workId={workId}
+          type={type}
+          anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
+        />
         <Content
           workId={workId}
           type={type}
