@@ -2,6 +2,11 @@
   padding-left: var(--pt4);
 }
 
+.helpskeleton {
+  max-height: 250px;
+  position: relative;
+}
+
 .helpbreadcrumb {
   margin: var(--pt2) 0 var(--pt2) 0;
   text-decoration: underline;
