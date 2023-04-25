@@ -9,6 +9,7 @@
 
 .slider {
   scroll-padding-left: var(--pt2) !important;
+  align-items: center;
 }
 
 .slider > div:first-child {
@@ -19,25 +20,18 @@
   scroll-snap-align: start;
 }
 
-/* Skeleton */
-
-.skeleton .button {
+.slider > div:last-child {
+  /* hide last seperator */
   display: none;
 }
 
-.skeleton.custom div div div i div,
-.skeleton.custom div > div div,
-.skeleton.custom div span div div div {
-  background-color: var(--parchment);
+.reviews.skeleton .arrow_overwrite {
+  display: none;
 }
 
-.skeleton.custom div div::before {
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--chamois) 50%,
-    transparent 100%
-  );
+.reviews.skeleton {
+  --skeleton-bg-color: var(--chamois);
+  --skeleton-gradient-color: var(--parchment);
 }
 
 /* Medium devices (tablets, 768px and up) */

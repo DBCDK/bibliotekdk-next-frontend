@@ -1,7 +1,8 @@
 .item,
 .item.hasContent {
   min-width: 70%;
-  margin-right: var(--pt5);
+  /* margin-right: var(--pt5); */
+  margin: 0 var(--pt5);
 }
 
 .details {
@@ -60,8 +61,34 @@
   display: unset;
 }
 
-.details .link {
+.item .links {
   margin-top: var(--pt2);
+}
+
+.item .link {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt2);
+}
+
+.item .link:last-child {
+  margin-bottom: unset;
+}
+
+.item .link i {
+  margin-right: var(--pt1);
+}
+
+.seperator {
+  min-width: 1px;
+  height: 100%;
+  background-color: var(--iron);
+}
+
+/* Skeleton */
+
+.item.skeleton {
+  width: 600px;
 }
 
 @media (min-width: 992px) {
@@ -73,7 +100,8 @@
 
   .item.hasContent {
     max-width: 600px;
-    margin-right: var(--pt15);
+    /* margin-right: var(--pt15); */
+    margin: 0 var(--pt15);
   }
 
   .item.hasContent .details > div:last-child > p {
@@ -99,7 +127,7 @@
     display: none;
   }
 
-  .details > div:first-child {
+  .item.hasContent .details > div:first-child {
     margin-bottom: var(--pt4);
   }
 

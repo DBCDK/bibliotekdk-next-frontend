@@ -123,7 +123,7 @@ function getUrls(data, work) {
  * @param {*} param0
  * @returns {JSX}
  */
-function Item({ data, work, skeleton }) {
+function Item({ data, work, isLoading }) {
   console.log("Item", { data, work });
 
   const isType = getReviewType(data);
@@ -144,6 +144,8 @@ function Item({ data, work, skeleton }) {
   const hasContentClass = !!hasContent.length ? styles.hasContent : "";
   const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
 
+  const isLoadingClass = isLoading ? styles.skeleton : "";
+
   const classNames = [
     typeClass,
     hasDateClass,
@@ -152,98 +154,122 @@ function Item({ data, work, skeleton }) {
     hasPublisherClass,
     hasContentClass,
     hasUrlClass,
+    isLoadingClass,
   ].join(" ");
 
   return (
-    <div className={`${styles.item} ${classNames}`}>
-      <div className={styles.details}>
-        <div>
-          {hasPublisher && (
-            <Title type="title5" className={styles.publisher}>
-              {hasPublisher}
-            </Title>
-          )}
-          {hasDate && (
-            <Text type="text2" className={styles.date}>
-              {hasDate}
-            </Text>
-          )}
-        </div>
-        <div>
-          <Text type="text3" className={styles.by}>
-            {Translate({ context: "general", label: "by" })}
-          </Text>
+    <>
+      <div className={`${styles.item} ${classNames}`}>
+        <div className={styles.details}>
           <div>
-            {hasCreator && (
-              <div>
-                <Text type="text3" className={styles.by}>
-                  {Translate({ context: "general", label: "by" })}
-                </Text>
-                <Text type="text2" skeleton={skeleton} lines={1}>
-                  {hasCreator}
-                </Text>
-              </div>
+            {hasPublisher && (
+              <Title
+                type="title5"
+                className={styles.publisher}
+                skeleton={isLoading}
+              >
+                {hasPublisher}
+              </Title>
             )}
-
-            <Text type="text2" className={styles.date}>
-              {hasDate}
-            </Text>
-
-            {hasRating && (
-              <Rating rating={hasRating} className={styles.rating} />
+            {hasDate && (
+              <Text
+                type="text2"
+                className={styles.date}
+                lines={1}
+                skeleton={isLoading}
+              >
+                {hasDate}
+              </Text>
             )}
           </div>
+          <div>
+            <Text type="text3" className={styles.by}>
+              {Translate({ context: "general", label: "by" })}
+            </Text>
+            <div>
+              {hasCreator && (
+                <div>
+                  <Text type="text3" className={styles.by} skeleton={isLoading}>
+                    {Translate({ context: "general", label: "by" })}
+                  </Text>
+                  <Text type="text2" skeleton={isLoading} lines={1}>
+                    {hasCreator}
+                  </Text>
+                </div>
+              )}
+
+              <Text
+                type="text2"
+                className={styles.date}
+                skeleton={isLoading}
+                lines={1}
+              >
+                {hasDate}
+              </Text>
+
+              {hasRating && (
+                <Rating
+                  rating={hasRating}
+                  skeleton={isLoading}
+                  className={styles.rating}
+                />
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <Text
-          tag="span"
-          type="text2"
-          lines={6}
-          clamp={true}
-          skeleton={skeleton}
-        >
-          {hasContent.map((content, i) => {
+        <div>
+          <Title
+            type="title4"
+            tag="span"
+            lines={6}
+            clamp={true}
+            skeleton={isLoading}
+          >
+            {hasContent.map((content, i) => {
+              return (
+                <span key={`content-${i}`} className={styles.reviewTxt}>
+                  <Text type="text2" skeleton={isLoading} lines={1}>
+                    {isMaterialReview ? contentParser(content) : content}
+                  </Text>
+                </span>
+              );
+            })}
+          </Title>
+        </div>
+
+        <div className={styles.links}>
+          {hasUrls.map((url) => {
+            const shouldUseAlternateText = url?.includes("https://moreinfo");
             return (
-              <span key={`content-${i}`} className={styles.reviewTxt}>
-                <Text type="text2" skeleton={skeleton} lines={1}>
-                  {isMaterialReview ? contentParser(content) : content}
-                </Text>
-              </span>
+              <div className={styles.link} key={url}>
+                <Icon
+                  src="chevron.svg"
+                  size={{ w: 2, h: "auto" }}
+                  skeleton={isLoading}
+                  alt=""
+                />
+                <Link
+                  href={url}
+                  target="_blank"
+                  disabled={isLoading || !url}
+                  border={{ top: false, bottom: { keepVisible: true } }}
+                >
+                  <Text type="text2" skeleton={isLoading} lines={1}>
+                    {Translate({
+                      context: "reviews",
+                      label: shouldUseAlternateText
+                        ? "alternateReviewLinkText"
+                        : "reviewLinkText",
+                    })}
+                  </Text>
+                </Link>
+              </div>
             );
           })}
-        </Text>
+        </div>
       </div>
-
-      {hasUrls.map((url) => {
-        const shouldUseAlternateText = url?.includes("https://moreinfo");
-        return (
-          <div className={styles.link} key={url}>
-            <Icon
-              src="chevron.svg"
-              size={{ w: 2, h: "auto" }}
-              skeleton={skeleton}
-              alt=""
-            />
-            <Link
-              href={url}
-              target="_blank"
-              disabled={!url}
-              border={{ top: false, bottom: { keepVisible: true } }}
-            >
-              <Text type="text2" skeleton={skeleton}>
-                {Translate({
-                  context: "reviews",
-                  label: shouldUseAlternateText
-                    ? "alternateReviewLinkText"
-                    : "reviewLinkText",
-                })}
-              </Text>
-            </Link>
-          </div>
-        );
-      })}
-    </div>
+      <div className={styles.seperator} />
+    </>
   );
 }
 
