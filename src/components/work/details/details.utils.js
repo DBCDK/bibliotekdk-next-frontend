@@ -483,6 +483,33 @@ function RenderMovieAudience({ values }) {
 }
 
 /**
+ * lex and lit for literature (difficulty level)
+ *
+ * @param values
+ * @returns {JSX.Element}
+ * @constructor
+ */
+function RenderLitteratureAudience({ values }) {
+  const lix = values?.lix ? "lix: " + values.lix : "";
+  const lettal = values?.let ? "let: " + values.let : "";
+
+  return (
+    <div>
+      {lix && (
+        <Text type="text4" lines={1}>
+          {lix}
+        </Text>
+      )}
+      {lettal && (
+        <Text type="text4" lines={1}>
+          {lettal}
+        </Text>
+      )}
+    </div>
+  );
+}
+
+/**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
  * configured objects to be shown - the DEFAULT is the base and may be overwritten if desired.
@@ -499,9 +526,18 @@ function RenderMovieAudience({ values }) {
  *     ],
  * fields are shown in the order of the objects
  *
- * For more complicated valued you may pass a jsx parser and thus overwrite the
- * default presentation like this:
+ * You may pass a tooltip for the label like this:
+ * audience: {
+ *           label: Translate({ ...context, label: "level" }),
+ *           tooltip: "tooltip_lix",
+ *           value: "fisk"
+ *         },
+ * A tooltip icon will be shown next to the label of the field - the value of
+ * the toolitp (here "tooltip_lix") is taken from the translations object.
  *
+ *
+ * For more complicated valued you may pass a jsx parser and thus overwrite the
+ * default presentation like this: *
  * MUSIC: [
  *       {
  *         languages: {
@@ -653,11 +689,31 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
-        firstEdition: {
-          label: Translate({ ...context, label: "firstEdition" }),
+        audience: {
+          label: Translate({ ...context, label: "level" }),
+          tooltip: "tooltip_lix",
           value:
-            work?.manifestations?.first?.edition?.publicationYear?.display ||
-            "",
+            manifestation?.audience?.let || manifestation?.audience?.lix
+              ? manifestation.audience
+              : null,
+          jsxParser: RenderLitteratureAudience,
+        },
+      },
+      {
+        workYear: {
+          label: Translate({ ...context, label: "firstEdition" }),
+          value: manifestation?.workYear?.display || "",
+        },
+      },
+    ],
+    SHEETMUSIC: [
+      {
+        ensemble: {
+          label: Translate({ ...context, label: "ensemble" }),
+          value: manifestation?.notes
+            ?.filter((note) => note.type === "MUSICAL_ENSEMBLE_OR_CAST")
+            .map((note) => note.display)
+            .join(", "),
         },
       },
     ],
@@ -679,7 +735,6 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
     ],
-
     MOVIE: [
       // overwrite contributors from base array - add a new one (moviecontributors) for correct order
       {

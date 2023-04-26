@@ -295,7 +295,7 @@ describe("parseRelations", () => {
     const expected = [];
     expect(actual).toEqual(expected);
   });
-  it("empty relationTypeArray (expect empty result)", () => {
+  it("with work (expect parsedRelations)", () => {
     const work = getWork(["work_with_stuff__0"])[0];
 
     const actual = parseRelations(work);
@@ -306,6 +306,7 @@ describe("parseRelations", () => {
         cover: { detail: "default.dk", origin: "default" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "ARTICLE",
         workId: "continues__0__321",
       },
       {
@@ -314,6 +315,7 @@ describe("parseRelations", () => {
         cover: { detail: "default.dk", origin: "default" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "ARTICLE",
         workId: "continues__1__321",
       },
       {
@@ -323,6 +325,7 @@ describe("parseRelations", () => {
         workId: "work_with_stuff__0",
         workTypes: [WorkTypeEnum.ARTICLE],
         materialTypes: [{ specific: "avisartikel" }],
+        relationWorkType: "ARTICLE",
         titles: {
           main: ["hejmain"],
           full: ["hejfull"],
@@ -344,6 +347,7 @@ describe("parseRelations", () => {
         cover: { detail: "moreinfo.dk", origin: "moreinfo" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "ARTICLE",
         workId: "continued_in__0__321",
       },
       {
@@ -352,6 +356,7 @@ describe("parseRelations", () => {
         cover: { detail: "moreinfo.dk", origin: "moreinfo" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "ARTICLE",
         workId: "continued_in__1__321",
       },
       {
@@ -360,6 +365,7 @@ describe("parseRelations", () => {
         cover: { detail: "default.dk", origin: "default" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "LITERATURE",
         workId: "has_adaptation__0__321",
       },
       {
@@ -368,6 +374,7 @@ describe("parseRelations", () => {
         cover: { detail: "moreinfo.dk", origin: "moreinfo" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "LITERATURE",
         workId: "has_adaptation__1__321",
       },
       {
@@ -376,6 +383,7 @@ describe("parseRelations", () => {
         cover: { detail: "moreinfo.dk", origin: "moreinfo" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "MOVIE",
         workId: "is_adaptation_of__0__321",
       },
       {
@@ -384,6 +392,7 @@ describe("parseRelations", () => {
         cover: { detail: "default.dk", origin: "default" },
         materialTypes: [{ specific: "avisartikel" }],
         materialTypesArray: ["avisartikel"],
+        relationWorkType: "MOVIE",
         workId: "is_adaptation_of__1__321",
       },
     ];

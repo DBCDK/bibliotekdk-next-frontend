@@ -26,22 +26,28 @@
 }
 
 .firstelement {
-  width: 10%;
   padding-left: var(--pt2);
+  width: 20%;
 }
 
 .textbox {
   display: grid;
   grid-template-columns: 30% 38% 32%;
   align-items: center;
+}
+
+.textbox {
+  display: block;
   width: 100%;
 }
 
 .textbox p:first-of-type {
   font-weight: var(--body-font-semibold);
+  display: block;
 }
 .textbox p {
   justify-self: start;
+  display: none;
 }
 
 .content > div {
@@ -63,6 +69,21 @@
 @media (min-width: 992px) {
   .content p {
     padding-right: var(--pt10);
+  }
+
+  .textbox p {
+    display: block;
+  }
+
+  .firstelement {
+    width: 10%;
+  }
+
+  .textbox {
+    display: grid;
+    grid-template-columns: 5fr 7fr 6fr;
+    align-items: center;
+    width: 100%;
   }
 
   .element .header {

@@ -10,9 +10,15 @@ const MANIFESTATION_1 = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      specific: "Bog",
+      specific: "bog",
     },
   ],
+  edition: {
+    edition: "101. udgave",
+    publicationYear: {
+      display: "2009-1",
+    },
+  },
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
@@ -33,6 +39,12 @@ const MANIFESTATION_2 = {
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
+  edition: {
+    edition: "102. udgave",
+    publicationYear: {
+      display: "2009-2",
+    },
   },
   cover: {
     detail:
@@ -184,18 +196,25 @@ const ALL_WORKS = [
       all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
       mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
     },
+    workTypes: ["LITERATURE"],
+    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+    genreAndForm: ["roman"],
   },
   // A work that is an indexed periodica article
   {
     workId: "some-work-id-2",
     manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
     workTypes: ["ARTICLE"],
+    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+    genreAndForm: [],
   },
   // A work that is a periodica
   {
     workId: "some-work-id-3",
     manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
     workTypes: ["PERIODICA"],
+    fictionNonfiction: null,
+    genreAndForm: ["roman"],
   },
   // A work that is an ebog
   {
@@ -211,7 +230,7 @@ const ALL_WORKS = [
     creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
     materialTypes: [
       {
-        specific: "Bog",
+        specific: "bog",
       },
     ],
     relations: {
@@ -221,6 +240,33 @@ const ALL_WORKS = [
       isAdaptationOf: [],
       discusses: [],
       discussedIn: [],
+    },
+  },
+  {
+    workId: "some-work-id-5",
+    titles: {
+      full: ["Hugo i Sølvskoven"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      all: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
+      mostRelevant: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
     },
   },
 ];
@@ -287,6 +333,76 @@ const USER_4 = {
   agency: {
     result: [BRANCH_4],
   },
+};
+
+const REVIEW_1 = {
+  rating: "5/6",
+  reviewByLibrarians: [
+    {
+      type: "ABSTRACT",
+      heading: "ABSTRACT",
+      contentSubstitute: "contentSubtitute",
+      content: "content",
+      manifestations: [],
+    },
+    {
+      type: "AUDIENCE",
+      heading: "AUDIENCE",
+      contentSubstitute: "AUDIENCE contentSubtitute",
+      content: "AUDIENCE content",
+      manifestations: [],
+    },
+    {
+      type: "DESCRIPTION",
+      heading: "DESCRIPTION",
+      contentSubstitute: `DESCRIPTION contentSubtitute. Denne er efterfølger til [${"some-pid-4"}]`,
+      content: "DESCRIPTION content",
+      manifestations: [MANIFESTATION_4],
+    },
+    {
+      type: "ACQUISITION_RECOMMENDATIONS",
+      heading: "ACQUISITION_RECOMMENDATIONS",
+      contentSubstitute: "ACQUISITION_RECOMMENDATIONS contentSubtitute",
+      content: "ACQUISITION_RECOMMENDATIONS content",
+      manifestations: [],
+    },
+    {
+      type: "CONCLUSION",
+      heading: "CONCLUSION",
+      contentSubstitute: "CONCLUSION contentSubtitute",
+      content: "CONCLUSION content",
+      manifestations: [],
+    },
+    {
+      type: "EVALUATION",
+      heading: "EVALUATION",
+      contentSubstitute: "EVALUATION contentSubtitute",
+      content: "EVALUATION content",
+      manifestations: [],
+    },
+    {
+      type: "SIMILAR_MATERIALS",
+      heading: "SIMILAR_MATERIALS",
+      contentSubstitute: `
+                          SIMILAR_MATERIALS contentSubtitute
+                          * Hugo 1 [${"some-pid-1"}]
+                          * Hugo 2 [${"some-pid-2"}]
+                          * Hugo 3 [${"some-pid-3"}]
+                          * Hugo 4 [${"some-pid-4"}]
+                          * Hugo 5 [${"some-pid-5"}]
+                          * Hugo 6 [${"some-pid-6"}]
+                        `,
+      content: "SIMILAR_MATERIALS content",
+      manifestations: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+      ],
+    },
+  ],
 };
 
 const DEFAULT_STORY_PARAMETERS = {
@@ -364,6 +480,8 @@ export default function automock_utils() {
     MANIFESTATION_3,
     MANIFESTATION_4,
     MANIFESTATION_5,
+    MANIFESTATION_6,
+    MANIFESTATION_7,
     ALL_MANIFESTATIONS,
     ALL_WORKS,
     BRANCH_1,
@@ -374,6 +492,7 @@ export default function automock_utils() {
     USER_2,
     USER_3,
     USER_4,
+    REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
   };

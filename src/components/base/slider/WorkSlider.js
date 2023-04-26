@@ -40,7 +40,7 @@ function WorkSliderSkeleton() {
  * @param {string} str
  * @returns {string}
  */
-function hashCode(str) {
+export function hashCode(str) {
   return (
     str
       .split("")

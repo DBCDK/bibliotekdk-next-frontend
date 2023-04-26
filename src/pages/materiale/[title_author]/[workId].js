@@ -26,6 +26,10 @@ import {
   formatMaterialTypesFromUrl,
   formatMaterialTypesToUrl,
 } from "@/lib/manifestationFactoryUtils";
+import { workIdToTitleCreator } from "@/lib/api/work.fragments";
+import { encodeTitleCreator } from "@/lib/utils";
+import { fetcher } from "@/lib/api/api";
+import { getServerSession } from "@dbcdk/login-nextjs/server";
 
 /**
  * Renders the WorkPage component
@@ -86,6 +90,28 @@ export default function WorkPage() {
 const serverQueries = Object.values(workFragments);
 
 /**
+ * Extract fixed url for getInitialProps to fix the url when the title_author is mucked up
+ * @param queryRes
+ * @param ctx
+ * @return {string|null}
+ */
+function extractFixedUrl(queryRes, ctx) {
+  const title = queryRes?.data?.work?.titles?.full?.[0];
+  const creator = queryRes?.data?.work?.creators?.[0]?.display;
+  const title_creator = encodeTitleCreator(title, creator);
+
+  // look for materiale to handle "/materiale/materiale/[workId]" in url
+  const fixedUrl = ctx.asPath.replace(
+    `materiale/${ctx.query.title_author}`,
+    `materiale/${title_creator}`
+  );
+
+  return title_creator && title_creator !== ctx.query.title_author && fixedUrl
+    ? fixedUrl
+    : null;
+}
+
+/**
  * We use getInitialProps to let Next.js
  * fetch the data server side
  *
@@ -96,11 +122,40 @@ const serverQueries = Object.values(workFragments);
 WorkPage.getInitialProps = async (ctx) => {
   const init = await fetchAll(serverQueries, ctx);
   const queries = Object.values(init.initialData);
+
+  // user session
+  let session = await getServerSession(ctx.req, ctx.res);
+  const queryRes = await fetcher(
+    {
+      ...workIdToTitleCreator({ workId: ctx.query.workId }),
+      accessToken: session?.accessToken,
+    },
+    ctx.req.headers["user-agent"],
+    ctx.req.headers["x-forwarded-for"] || ctx.req.connection.remoteAddress
+  );
+
+  const fixedUrl = extractFixedUrl(queryRes, ctx);
+
   if (queries[0]?.data && !queries[0]?.data?.work) {
     ctx.res.statusCode = 404;
     return {
       notFound: true,
     };
   }
+
+  if (fixedUrl) {
+    if (typeof window !== "undefined") {
+      return {};
+    }
+    if (ctx.res) {
+      ctx.res.writeHead(302, {
+        Location: fixedUrl,
+        "Content-Type": "text/html; charset=utf-8",
+      });
+      ctx.res.end();
+    }
+    return {};
+  }
+
   return init;
 };

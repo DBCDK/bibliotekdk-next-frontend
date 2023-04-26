@@ -145,6 +145,6 @@ Section.propTypes = {
   isLoading: PropTypes.bool,
   backgroundColor: PropTypes.string,
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  space: PropTypes.object,
+  space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };

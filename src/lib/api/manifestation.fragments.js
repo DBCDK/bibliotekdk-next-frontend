@@ -187,6 +187,26 @@ export function manifestationsForAccessFactory({ pid }) {
   };
 }
 
+export function manifestationForLectorReview({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query manifestationForLectorReview($pid: String!) {
+      manifestation(pid: $pid) {
+        ...manifestationDetailsForAccessFactory
+        ...lectorReviewFragment
+        ...reviewOfFragment
+      }
+    }
+    ${manifestationDetailsForAccessFactory}
+    ${lectorReviewFragment}
+    ${reviewOfFragment}
+    `,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
 const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
   titles {
@@ -236,6 +256,75 @@ const accessFragment = `fragment accessFragment on Manifestation {
       loanIsPossible
     }
   }
+}`;
+
+const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
+   abstract
+   review {
+     reviewByLibrarians {
+       content
+       contentSubstitute
+       heading
+       manifestations {
+         cover {
+           detail
+         }
+         pid
+         titles {
+           full
+           identifyingAddition
+           standard
+           titlePlusLanguage
+         }
+         creators {
+           display
+         }
+         materialTypes {
+           specific
+         }
+         ownerWork {
+           workId
+         }
+       }
+       type
+     }
+   }
+   pid
+   creators {
+     display
+   }
+   recordCreationDate
+}`;
+
+const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
+   relations {
+     isReviewOf {
+       pid
+       creators {
+         display
+       }
+       materialTypes {
+         specific
+       }
+       titles {
+         full
+       }
+       ownerWork {
+         workId
+       }
+       cover {
+         detail
+         origin
+       }
+       edition {
+         edition
+         publicationYear {
+           display
+         }
+       }
+       workTypes
+     }
+   }
 }`;
 
 const manifestationCoverFragment = `fragment manifestationCoverFragment on Manifestation {

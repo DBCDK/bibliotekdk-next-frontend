@@ -9,7 +9,6 @@ describe("Overview", () => {
     });
 
     it(`Can tab through to different elements`, () => {
-      cy.wait(500);
       // Material Selection
       cy.get("[data-cy=tag-bog]")
         .focus()
@@ -18,28 +17,16 @@ describe("Overview", () => {
         .tabs(1)
         .should("have.attr", "data-cy", "tag-ebog")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(net)")
+        .should("have.attr", "data-cy", "tag-tidsskrift")
         .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(net)/soloplade")
-        .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(cd-mp3)")
-        .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(bånd)");
+        .should("have.attr", "data-cy", "tag-tidsskriftsartikel");
 
       // Creators and bookmark
-      cy.get(`[data-cy=text-lucky-luke]`)
-        .parent()
+      cy.get(`[data-cy=title-overview]`).contains("Hugo i Sølvskoven");
+      cy.get("[data-cy=tag-bog]")
         .focus()
-        .should("contain", "Lucky Luke")
-        .tab({ shift: true })
-        .get("[data-cy=tag-ebog]")
-        .focus()
-        .should("have.attr", "data-cy", "tag-ebog")
-        .tabs(2)
-        .should("have.attr", "data-cy", "tag-lydbog-(net)/soloplade")
-        .tabs(1)
-        .should("have.attr", "data-cy", "tag-lydbog-(cd-mp3)")
-        .tabs(2)
+        .should("have.attr", "data-cy", "tag-bog")
+        .tabs(4)
         .should("have.attr", "data-cy", "button-order-overview-enabled");
     });
 

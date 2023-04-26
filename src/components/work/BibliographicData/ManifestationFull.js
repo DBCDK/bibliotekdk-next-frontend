@@ -20,6 +20,7 @@ import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
+import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
 
 /**
  * Column one of full view. Some links and a button.
@@ -42,6 +43,7 @@ function ColumnOne({ workId, manifestation }) {
       {manifestation?.cover?.detail && (
         <Cover src={manifestation?.cover?.detail} size="thumbnail" />
       )}
+
       <div>
         <ReservationButton
           workId={workId}
@@ -51,6 +53,14 @@ function ColumnOne({ workId, manifestation }) {
           size="small"
         />
       </div>
+
+      <div className={styles.alternativeoptions}>
+        <AlternativeOptions
+          workId={workId}
+          selectedPids={[manifestation?.pid]}
+        />
+      </div>
+
       <div className={styles.addilinks}>
         <div>
           <span>

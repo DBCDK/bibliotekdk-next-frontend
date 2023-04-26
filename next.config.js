@@ -79,6 +79,16 @@ module.exports = {
         destination: "https://www.was.digst.dk/beta-bibliotek-dk",
         permanent: false,
       },
+      {
+        source: "/work/((?!work-of)):workId",
+        destination: "/materiale/titel_skaber/work-of%3A:workId",
+        permanent: true,
+      },
+      {
+        source: "/work/work-of:workId",
+        destination: "/materiale/titel_skaber/work-of:workId",
+        permanent: true,
+      },
     ];
   },
   experimental: {
