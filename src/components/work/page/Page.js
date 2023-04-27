@@ -17,6 +17,7 @@ import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
+import Parts from "../parts";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
@@ -85,6 +86,14 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           workId={workId}
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
+        />
+        <Parts
+          workId={workId}
+          type={type}
+          anchor-label={Translate({
+            context: "bibliographic-data",
+            label: "manifestationParts",
+          })}
         />
         {/* TODO: Insert below when relatedWorks has been approved */}
         {/*<RelatedWorks*/}
