@@ -10,10 +10,12 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import { useModal } from "@/components/_modal";
+import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
 
 /**
  * The Component function
@@ -23,34 +25,40 @@ import { useModal } from "@/components/_modal";
  *
  * @returns {JSX.Element}
  */
-export function Content({ className = "", data = {}, skeleton = false }) {
+export function Content({
+  className = "",
+  manifestation = {},
+  skeleton = false,
+}) {
   const modal = useModal();
 
-  if (!data?.tableOfContents?.listOfContent?.length) {
+  if (!manifestation?.tableOfContents?.listOfContent?.length) {
     return null;
   }
   // Translate Context
   const context = { context: "content" };
 
-  const numberToShow = 15;
+  const numberToShow = 25;
 
-  const morecontent = data?.tableOfContents?.listOfContent?.map((n, i) => {
-    return {
-      title: n?.content,
-    };
-  });
-  const pid = data?.pid;
-  console.log(data, "DATA");
-  console.log(morecontent, "MoreconTENT");
-
-  const contentToShow = data?.tableOfContents?.listOfContent?.slice(
-    0,
-    numberToShow
+  const morecontent = manifestation?.tableOfContents?.listOfContent?.map(
+    (n, i) => {
+      return {
+        title: n?.content,
+      };
+    }
   );
+
+  const contentToShow = manifestation?.tableOfContents?.listOfContent
+    ?.slice(0, numberToShow)
+    .map((n, i) => {
+      return {
+        title: n?.content,
+      };
+    });
 
   const modalOpen = () => {
     modal.push("manifestationContent", {
-      pid: null,
+      pid: manifestation?.pid,
       showOrderTxt: false,
       singleManifestation: true,
       showmoreButton: false,
@@ -58,9 +66,22 @@ export function Content({ className = "", data = {}, skeleton = false }) {
     });
   };
 
+  //const showModalLink = morecontent.length > numberToShow;
+
   return (
     <Section title={Translate({ ...context, label: "title" })}>
-      <Row className={`${styles.content} ${className}`}>
+      <Row>
+        <Col xs={12} md={8}>
+          <ManifestationParts
+            parts={morecontent}
+            showMoreButton={true}
+            titlesOnly={false}
+            numberToShow={numberToShow}
+            modalOpen={modalOpen}
+          />
+        </Col>
+      </Row>
+      {/*<Row className={`${styles.content} ${className}`}>
         {contentToShow?.map((n, i) => {
           return (
             <Col key={n.content + i} xs={12}>
@@ -71,7 +92,17 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           );
         })}
       </Row>
-      <div onClick={() => modalOpen()}>FISK</div>
+      {showModalLink && (
+        <span className={`${styles.arrowAndTxtContainer}`}>
+          <div>
+            <LinkArrow>
+              <Text type="text3" lines={1} onClick={modalOpen}>
+                Vis mere
+              </Text>
+            </LinkArrow>
+          </div>
+        </span>
+      )}*/}
     </Section>
   );
 }
@@ -111,13 +142,18 @@ export default function Wrap(props) {
   );
 
   // Find manifestation of the right type that contains tableOfContents
-  const manifestation = useMemo(() => {
+  /* const manifestation = useMemo(() => {
     return data?.work?.manifestations?.mostRelevant?.find(
       (manifestation) =>
         manifestation?.tableOfContents &&
         isEqual(flattenMaterialType(manifestation), type)
     );
-  }, [data]);
+  }, [data]);*/
+  const manifestation = data?.work?.manifestations?.mostRelevant?.find(
+    (manifestation) =>
+      manifestation?.tableOfContents &&
+      isEqual(flattenMaterialType(manifestation), type)
+  );
 
   if (error) {
     return null;
@@ -126,7 +162,7 @@ export default function Wrap(props) {
     return <ContentSkeleton {...props} />;
   }
 
-  return <Content {...props} data={manifestation} />;
+  return <Content {...props} manifestation={manifestation} />;
 }
 
 // PropTypes for component

@@ -8,7 +8,7 @@ import ManifestationParts from "@/components/manifestationparts/ManifestationPar
 
 export default function ManifestationContent(props) {
   const { pid, showOrderTxt, singleManifestation, parts } = props.context;
-  console.log(parts, "PARTS");
+
   return (
     <div>
       <Top />

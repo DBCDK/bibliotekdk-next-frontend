@@ -87,15 +87,20 @@ export default function Wrap({
     pid && manifestationFragments.manifestationParts({ pid: pid })
   );
 
+  console.log(data, "DTAT");
+
   const modal = useModal();
 
   if (error || (!data && isEmpty(parts))) {
     return null;
   }
   if (isLoading) {
+    // @TODO -> skeleton
     return null;
   }
 
+  // if we have manifestation parts from usedata hook we use them before data given in props.
+  // TODO .. is that correct ?
   const manifestationparts =
     data?.manifestation?.manifestationParts?.parts || parts;
 
