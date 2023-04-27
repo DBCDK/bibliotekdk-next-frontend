@@ -21,6 +21,8 @@ export function ManifestationParts({
   modalOpen,
   showMoreButton = true,
 }) {
+  console.log(parts, "MANIFESTATIONPARTS");
+
   if (isEmpty(parts)) {
     return null;
   }
@@ -73,6 +75,7 @@ export default function Wrap({
   className,
   label,
   showMoreButton = true,
+  parts = [],
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationParts({ pid: pid })
@@ -80,15 +83,15 @@ export default function Wrap({
 
   const modal = useModal();
 
-  if (error || !data) {
+  if (error || (!data && isEmpty(parts))) {
     return null;
   }
   if (isLoading) {
     return null;
   }
 
-  const parts = data?.manifestation?.manifestationParts?.parts;
-  const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
+  const manifestationparts =
+    data?.manifestation?.manifestationParts?.parts || parts;
 
   // Open a modal
   const modalOpen = () => {
@@ -102,7 +105,7 @@ export default function Wrap({
 
   return (
     <ManifestationParts
-      parts={partsToShow}
+      parts={manifestationparts}
       titlesOnly={titlesOnly}
       className={className}
       label={label}

@@ -13,6 +13,7 @@ import styles from "./Content.module.css";
 import { useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import { useModal } from "@/components/_modal";
 
 /**
  * The Component function
@@ -23,16 +24,44 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
  * @returns {JSX.Element}
  */
 export function Content({ className = "", data = {}, skeleton = false }) {
+  const modal = useModal();
+
   if (!data?.tableOfContents?.listOfContent?.length) {
     return null;
   }
   // Translate Context
   const context = { context: "content" };
 
+  const numberToShow = 15;
+
+  const morecontent = data?.tableOfContents?.listOfContent?.map((n, i) => {
+    return {
+      title: n?.content,
+    };
+  });
+  const pid = data?.pid;
+  console.log(data, "DATA");
+  console.log(morecontent, "MoreconTENT");
+
+  const contentToShow = data?.tableOfContents?.listOfContent?.slice(
+    0,
+    numberToShow
+  );
+
+  const modalOpen = () => {
+    modal.push("manifestationContent", {
+      pid: null,
+      showOrderTxt: false,
+      singleManifestation: true,
+      showmoreButton: false,
+      parts: morecontent,
+    });
+  };
+
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.content} ${className}`}>
-        {data?.tableOfContents?.listOfContent?.map((n, i) => {
+        {contentToShow?.map((n, i) => {
           return (
             <Col key={n.content + i} xs={12}>
               <Text type="text3" skeleton={skeleton} lines={8}>
@@ -42,6 +71,7 @@ export function Content({ className = "", data = {}, skeleton = false }) {
           );
         })}
       </Row>
+      <div onClick={() => modalOpen()}>FISK</div>
     </Section>
   );
 }
@@ -82,7 +112,7 @@ export default function Wrap(props) {
 
   // Find manifestation of the right type that contains tableOfContents
   const manifestation = useMemo(() => {
-    return data?.work?.manifestations?.all?.find(
+    return data?.work?.manifestations?.mostRelevant?.find(
       (manifestation) =>
         manifestation?.tableOfContents &&
         isEqual(flattenMaterialType(manifestation), type)

@@ -12,7 +12,8 @@ export function tableOfContents({ workId }) {
     query: `query TableOfContents($workId: String!) {
       work(id: $workId) {
         manifestations {
-          all {
+          mostRelevant {
+            pid
             materialTypes {
               specific
             }
