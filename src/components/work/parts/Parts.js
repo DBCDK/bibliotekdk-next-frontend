@@ -42,7 +42,7 @@ export function Parts({ parts, type, modalOpen }) {
       divider={{ content: false }}
     >
       <Row>
-        <Col xs={12} md={8}>
+        <Col xs={12} md={9}>
           <ManifestationParts
             parts={parts}
             showMoreButton={true}

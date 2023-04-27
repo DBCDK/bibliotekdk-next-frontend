@@ -78,7 +78,7 @@
 /** styling the manifestation parts list **/
 .manifestationPartsList {
   list-style-type: disc;
-  margin: 0 0 var(--pt2) 0;
+  margin: 0 0 var(--pt05) 0;
   justify-content: flex-start;
   border: 0;
 }
@@ -101,9 +101,6 @@
   padding: 0;
 }
 
-.manifestationPartsList a {
-  padding-bottom: var(--pt2);
-}
 /** end manifestation parts list **/
 
 .container {

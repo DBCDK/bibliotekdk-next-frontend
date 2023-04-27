@@ -59,9 +59,9 @@ export function ManifestationParts({
         <>
           <span className={`${styles.arrowAndTxtContainer} ${className}`}>
             <div>
-              <LinkArrow>
-                <Text type="text3" lines={1} onClick={modalOpen}>
-                  Vis mere
+              <LinkArrow className={styles.arrowchanges}>
+                <Text type="text2" lines={1} onClick={modalOpen}>
+                  Se alle ({parts.length})
                 </Text>
               </LinkArrow>
             </div>
