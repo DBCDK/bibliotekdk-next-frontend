@@ -331,6 +331,9 @@ export function buttonTxt({ workId }) {
           }
           mostRelevant {
             pid
+            materialTypes {
+              specific
+            }
           }
         }
         workTypes

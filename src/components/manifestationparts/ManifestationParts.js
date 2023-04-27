@@ -4,14 +4,13 @@
  */
 
 import { useData } from "@/lib/api/api";
-import { manifestationParts } from "@/lib/api/manifestation.fragments";
+import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import styles from "./ManifestationParts.module.css";
 import Text from "@/components/base/text/Text";
-import Button from "@/components/base/button";
 import React from "react";
-import Translate from "@/components/base/translate";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
+import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 
 export function ManifestationParts({
   parts,
@@ -20,12 +19,16 @@ export function ManifestationParts({
   label,
   modalOpen,
   showMoreButton = true,
+  numberToShow,
 }) {
   console.log(parts, "MANIFESTATIONPARTS");
 
   if (isEmpty(parts)) {
     return null;
   }
+
+  const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
+  const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
   return (
     <div className={styles.manifestionlistContainer}>
@@ -34,11 +37,12 @@ export function ManifestationParts({
           {label}
         </Text>
       )}
-      <ul className={(className && className) || styles.manifestionlist}>
-        {parts?.map(
-          (part) =>
-            part && (
-              <li>
+      <ul className={`${styles.manifestionlist} ${className}`}>
+        {partsToShow?.map((part, index) => {
+          return (
+            part &&
+            part?.title && (
+              <li key={`manifestationlist-${index}`}>
                 <Text type="text3" lines={1}>
                   {part.title}
                 </Text>
@@ -49,20 +53,22 @@ export function ManifestationParts({
                 )}
               </li>
             )
-        )}
+          );
+        })}
       </ul>
-      {showMoreButton && parts?.length > 3 && (
-        <Button
-          type="secondary"
-          size="small"
-          className={styles.manifestionPartsButton}
-          onClick={() => modalOpen()}
-        >
-          {Translate({
-            context: "bibliographic-data",
-            label: "manifestationPartsButton",
-          })}
-        </Button>
+
+      {showMore && (
+        <>
+          <span className={`${styles.arrowAndTxtContainer} ${className}`}>
+            <div>
+              <LinkArrow>
+                <Text type="text3" lines={1} onClick={modalOpen}>
+                  Vis mere
+                </Text>
+              </LinkArrow>
+            </div>
+          </span>
+        </>
       )}
     </div>
   );
@@ -78,7 +84,7 @@ export default function Wrap({
   parts = [],
 }) {
   const { data, isLoading, error } = useData(
-    pid && manifestationParts({ pid: pid })
+    pid && manifestationFragments.manifestationParts({ pid: pid })
   );
 
   const modal = useModal();
@@ -111,6 +117,7 @@ export default function Wrap({
       label={label}
       modalOpen={modalOpen}
       showMoreButton={showMoreButton}
+      numberToShow={numberToShow}
     />
   );
 }
