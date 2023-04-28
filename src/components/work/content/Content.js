@@ -10,11 +10,9 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
-import React, { useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import { useModal } from "@/components/_modal";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
 
 /**
@@ -42,7 +40,7 @@ export function Content({
   const numberToShow = 25;
 
   const morecontent = manifestation?.tableOfContents?.listOfContent?.map(
-    (n, i) => {
+    (n) => {
       return {
         title: n?.content,
       };
