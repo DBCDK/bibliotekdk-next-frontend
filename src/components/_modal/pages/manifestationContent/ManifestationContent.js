@@ -17,6 +17,7 @@ export default function ManifestationContent(props) {
         singleManifestation={singleManifestation}
         context={{ orderPids: [pid] }}
       />
+
       <ManifestationParts
         pid={pid}
         showMoreButton={false}

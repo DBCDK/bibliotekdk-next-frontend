@@ -1,6 +1,7 @@
 /**
  * @file - Manifestationparts.js
  * Show a list of manifestationParts - eg. tracks from music - contents of sheetmusic etc.
+ * Is also used to show content of litterature (tableOfContents)
  */
 
 import { useData } from "@/lib/api/api";
@@ -21,8 +22,6 @@ export function ManifestationParts({
   showMoreButton = true,
   numberToShow,
 }) {
-  console.log(parts, "MANIFESTATIONPARTS");
-
   if (isEmpty(parts)) {
     return null;
   }
@@ -61,9 +60,9 @@ export function ManifestationParts({
         <>
           <span className={`${styles.arrowAndTxtContainer} ${className}`}>
             <div>
-              <LinkArrow>
-                <Text type="text3" lines={1} onClick={modalOpen}>
-                  Vis mere
+              <LinkArrow className={styles.arrowchanges}>
+                <Text type="text2" lines={1} onClick={modalOpen}>
+                  Se alle ({parts.length})
                 </Text>
               </LinkArrow>
             </div>
@@ -87,8 +86,6 @@ export default function Wrap({
     pid && manifestationFragments.manifestationParts({ pid: pid })
   );
 
-  console.log(data, "DTAT");
-
   const modal = useModal();
 
   if (error || (!data && isEmpty(parts))) {
@@ -98,7 +95,6 @@ export default function Wrap({
     // @TODO -> skeleton
     return null;
   }
-
   // if we have manifestation parts from usedata hook we use them before data given in props.
   // TODO .. is that correct ?
   const manifestationparts =

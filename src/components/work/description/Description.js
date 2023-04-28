@@ -72,11 +72,18 @@ function parseForOccasion(manifestations) {
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  const abstract = data?.abstract?.join(", ");
+  const abstract = data?.abstract?.map((abs, index) => (
+    <div
+      key={index}
+      className={index < data?.abstract?.length - 1 ? styles.chapter : ""}
+    >
+      {abs}
+    </div>
+  ));
   const occasion = parseForOccasion(data?.manifestations);
   const preAbstract = parseCreatorsForInterview(data?.creators);
 
-  if (!(abstract || occasion || preAbstract)) {
+  if (!(!isEmpty(abstract) || occasion || preAbstract)) {
     return null;
   }
   // Translate Context

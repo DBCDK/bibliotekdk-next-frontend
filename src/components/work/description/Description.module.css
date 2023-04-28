@@ -1,3 +1,7 @@
 .description {
   min-height: 75px;
 }
+
+.chapter {
+  margin-bottom: var(--pt2);
+}

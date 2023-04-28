@@ -4,6 +4,8 @@
 .manifestionlist {
   list-style-type: none;
   border-top: 1px solid var(--iron);
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt2);
 }
 
 .manifestionlist li {
@@ -27,5 +29,10 @@
 .arrowAndTxtContainer {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
+}
+
+.arrowchanges {
+  display: flex;
+  align-items: center;
 }

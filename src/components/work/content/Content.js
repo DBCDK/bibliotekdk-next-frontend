@@ -35,6 +35,7 @@ export function Content({
   if (!manifestation?.tableOfContents?.listOfContent?.length) {
     return null;
   }
+
   // Translate Context
   const context = { context: "content" };
 
@@ -47,15 +48,6 @@ export function Content({
       };
     }
   );
-
-  const contentToShow = manifestation?.tableOfContents?.listOfContent
-    ?.slice(0, numberToShow)
-    .map((n, i) => {
-      return {
-        title: n?.content,
-      };
-    });
-
   const modalOpen = () => {
     modal.push("manifestationContent", {
       pid: manifestation?.pid,
@@ -66,11 +58,10 @@ export function Content({
     });
   };
 
-  //const showModalLink = morecontent.length > numberToShow;
-
   return (
     <Section title={Translate({ ...context, label: "title" })}>
-      <Row>
+      <Row className={`${styles.content} ${className}`}>
+        {skeleton && <Text skeleton={skeleton}></Text>}
         <Col xs={12} md={8}>
           <ManifestationParts
             parts={morecontent}
@@ -81,28 +72,6 @@ export function Content({
           />
         </Col>
       </Row>
-      {/*<Row className={`${styles.content} ${className}`}>
-        {contentToShow?.map((n, i) => {
-          return (
-            <Col key={n.content + i} xs={12}>
-              <Text type="text3" skeleton={skeleton} lines={8}>
-                {n.content}
-              </Text>
-            </Col>
-          );
-        })}
-      </Row>
-      {showModalLink && (
-        <span className={`${styles.arrowAndTxtContainer}`}>
-          <div>
-            <LinkArrow>
-              <Text type="text3" lines={1} onClick={modalOpen}>
-                Vis mere
-              </Text>
-            </LinkArrow>
-          </div>
-        </span>
-      )}*/}
     </Section>
   );
 }
