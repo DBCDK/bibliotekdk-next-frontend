@@ -111,13 +111,6 @@ export default function Wrap(props) {
   );
 
   // Find manifestation of the right type that contains tableOfContents
-  /* const manifestation = useMemo(() => {
-    return data?.work?.manifestations?.mostRelevant?.find(
-      (manifestation) =>
-        manifestation?.tableOfContents &&
-        isEqual(flattenMaterialType(manifestation), type)
-    );
-  }, [data]);*/
   const manifestation = data?.work?.manifestations?.mostRelevant?.find(
     (manifestation) =>
       manifestation?.tableOfContents &&
