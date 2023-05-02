@@ -67,6 +67,7 @@ export function Content({
             titlesOnly={false}
             numberToShow={numberToShow}
             modalOpen={modalOpen}
+            className={styles.contenlist}
           />
         </Col>
       </Row>
