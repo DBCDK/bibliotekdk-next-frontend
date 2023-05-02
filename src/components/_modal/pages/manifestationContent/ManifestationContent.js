@@ -5,13 +5,14 @@
 import Top from "@/components/_modal/pages/base/top";
 import Edition from "@/components/_modal/pages/edition/Edition";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
+import styles from "./ManifestationContent.module.css";
 
 export default function ManifestationContent(props) {
   const { pid, showOrderTxt, singleManifestation, parts } = props.context;
 
   return (
     <div>
-      <Top />
+      <Top className={styles} title="Indhold" />
       <Edition
         showOrderTxt={showOrderTxt}
         singleManifestation={singleManifestation}
@@ -23,6 +24,7 @@ export default function ManifestationContent(props) {
         showMoreButton={false}
         titlesOnly={false}
         parts={parts}
+        className={styles.contentlist}
       />
     </div>
   );

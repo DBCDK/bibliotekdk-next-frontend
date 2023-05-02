@@ -22,6 +22,14 @@
   background: none;
 }
 
+.nobreak {
+  white-space: nowrap;
+}
+
+.partstitle {
+  max-width: 80%;
+}
+
 .manifestionPartsButton {
   margin: var(--pt2) 0 var(--pt2) 0;
 }

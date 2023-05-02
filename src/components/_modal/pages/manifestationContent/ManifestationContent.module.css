@@ -1,0 +1,20 @@
+.top {
+  padding: var(--pt3) var(--pt6);
+}
+
+.contentlist {
+  margin: 0 var(--pt6) 0 var(--pt6);
+  border-top: none;
+}
+
+.contentlist li {
+  padding: var(--pt1) 0 var(--pt1) var(--pt05);
+}
+
+.contentlist li:nth-child(odd) {
+  background: none;
+}
+
+.contentlist li:nth-child(even) {
+  background: var(--concrete);
+}

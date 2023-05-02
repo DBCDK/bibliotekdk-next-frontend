@@ -42,11 +42,11 @@ export function ManifestationParts({
             part &&
             part?.title && (
               <li key={`manifestationlist-${index}`}>
-                <Text type="text3" lines={1}>
+                <Text type="text3" lines={1} className={styles.partstitle}>
                   {part.title}
                 </Text>
                 {part.playingTime && !titlesOnly && (
-                  <Text type="text3" lines={1}>
+                  <Text type="text3" lines={1} className={styles.nobreak}>
                     {part.playingTime}
                   </Text>
                 )}
