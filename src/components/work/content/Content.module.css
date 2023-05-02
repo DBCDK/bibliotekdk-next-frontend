@@ -3,10 +3,6 @@
   background-color: transparent;
 }
 
-.content div:nth-child(2n) p {
-  background-color: var(--concrete);
-}
-
 .skeleton p {
   /* Remove above concrete bg-color from p in skeleton mode */
   background-color: transparent;
