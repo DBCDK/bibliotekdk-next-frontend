@@ -3,12 +3,11 @@
 }
 
 .contentlist {
-  margin: 0 var(--pt6) 0 var(--pt6);
   border-top: none;
 }
 
 .contentlist li {
-  padding: var(--pt1) 0 var(--pt1) var(--pt05);
+  padding: var(--pt1) var(--pt6) var(--pt1) var(--pt6);
 }
 
 .contentlist li:nth-child(odd) {

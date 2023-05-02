@@ -113,6 +113,7 @@ export function Edition({
         {singleManifestation && (
           <div>
             <Text
+              className={styles.editiontxt}
               type="text3"
               skeleton={!materialPresentation && isLoading}
               lines={1}
