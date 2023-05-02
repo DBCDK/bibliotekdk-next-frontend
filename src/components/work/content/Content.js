@@ -57,7 +57,10 @@ export function Content({
   };
 
   return (
-    <Section title={Translate({ ...context, label: "title" })}>
+    <Section
+      title={Translate({ ...context, label: "title" })}
+      divider={{ content: false }}
+    >
       <Row className={`${styles.content} ${className}`}>
         {skeleton && <Text skeleton={skeleton}></Text>}
         <Col xs={12} md={8}>
@@ -67,7 +70,6 @@ export function Content({
             titlesOnly={false}
             numberToShow={numberToShow}
             modalOpen={modalOpen}
-            className={styles.contenlist}
           />
         </Col>
       </Row>
