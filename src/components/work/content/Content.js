@@ -14,6 +14,7 @@ import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import { useModal } from "@/components/_modal";
 import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * The Component function
@@ -34,18 +35,24 @@ export function Content({
     return null;
   }
 
+  const morecontent = manifestation?.tableOfContents?.listOfContent
+    ?.map((n) => {
+      return {
+        title: n?.content,
+      };
+    })
+    // we have arrays with empty content in data - TODO tell jedi team
+    .filter((more) => !isEmpty(more.title));
+
+  if (isEmpty(morecontent)) {
+    return null;
+  }
+
   // Translate Context
   const context = { context: "content" };
 
   const numberToShow = 25;
 
-  const morecontent = manifestation?.tableOfContents?.listOfContent?.map(
-    (n) => {
-      return {
-        title: n?.content,
-      };
-    }
-  );
   const modalOpen = () => {
     modal.push("manifestationContent", {
       pid: manifestation?.pid,
