@@ -755,6 +755,10 @@
         "da": "Besætning",
         "en": "Ensemble"
       },
+      "schooluse": {
+        "da": "Undervisning",
+        "en": "Education"
+      },
 
       "physicalDescription": {
         "da": "Længde",

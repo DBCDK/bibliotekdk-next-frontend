@@ -509,6 +509,37 @@ function RenderLitteratureAudience({ values }) {
   );
 }
 
+// TODO implement
+function RenderLitteratureAudienceAge({ values }) {
+  console.log(value);
+  const txt = values?.ages.join(", ") || values?.libraryRecommendation;
+
+  return (
+    <Text type="text4" lines={1}>
+      {txt}
+    </Text>
+  );
+  return "AGE";
+  return values;
+}
+d;
+// TODO implement
+function RenderLitteratureAudienceSchool({ values }) {
+  console.log(values);
+
+  const txt = values?.generalAudience.join(", ") || values?.schoolUse;
+
+  return (
+    <Text type="text4" lines={1}>
+      {txt}
+    </Text>
+  );
+
+  return "SCHOOL";
+
+  return values;
+}
+
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -562,6 +593,8 @@ function RenderLitteratureAudience({ values }) {
  * @returns {*[]}
  */
 export function fieldsForRows(manifestation, work, context) {
+  console.log(manifestation, "MANIFESTATION");
+  console.log(work, "WORK");
   const materialType = work?.workTypes?.[0] || null;
   const fieldsMap = {
     DEFAULT: [
@@ -699,6 +732,32 @@ export function fieldsForRows(manifestation, work, context) {
           jsxParser: RenderLitteratureAudience,
         },
       },
+
+      // @TODO implement
+      {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          tooltip: "tooltip_lix",
+          value:
+            manifestation?.audience?.ages ||
+            manifestation?.audience?.libraryRecommendation
+              ? manifestation.audience
+              : null,
+          jsxParser: RenderLitteratureAudienceAge,
+        },
+      },
+      // @TODO implement
+      {
+        audienceschool: {
+          label: Translate({ ...context, label: "schooluse" }),
+          value:
+            manifestation?.audience?.generalAudience ||
+            manifestation?.audience?.schoolUse
+              ? manifestation.audience
+              : null,
+          jsxParser: RenderLitteratureAudienceSchool,
+        },
+      },
       {
         workYear: {
           label: Translate({ ...context, label: "firstEdition" }),
@@ -807,9 +866,9 @@ export function fieldsForRows(manifestation, work, context) {
 }
 
 /**
- * Merge given arrays - keys in extending array overwrites keys in base array.
+ * Merge given arrays - keys in extending array overwrites keys in base (DEFAULT) array.
  * If an index is given in object it is inserted as desired.
- * New keys are appended to base arrray.
+ * New keys are appended to base array.
  * @param baseArray
  * @param extendingArray
  * @returns {*}
