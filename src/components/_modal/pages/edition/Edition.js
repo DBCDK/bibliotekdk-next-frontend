@@ -113,6 +113,7 @@ export function Edition({
         {singleManifestation && (
           <div>
             <Text
+              className={styles.editiontxt}
               type="text3"
               skeleton={!materialPresentation && isLoading}
               lines={1}
@@ -123,7 +124,7 @@ export function Edition({
           </div>
         )}
         <div className={styles.material}>
-          {specificEdition ? (
+          {specificEdition && showOrderTxt ? (
             <Link onClick={() => {}} disabled>
               <Text
                 type="text3"
@@ -201,7 +202,11 @@ export default function Wrap({
   showChangeManifestation,
 }) {
   const modal = useModal();
-  const { orderPids: orderPidsBeforeFilter } = context;
+  let { orderPids: orderPidsBeforeFilter } = context;
+
+  if (!Array.isArray(orderPidsBeforeFilter)) {
+    orderPidsBeforeFilter = [orderPidsBeforeFilter];
+  }
 
   const orderPids = useMemo(() => {
     return orderPidsBeforeFilter?.filter(
@@ -227,7 +232,6 @@ export default function Wrap({
     pickupBranch,
     manifestations
   );
-
   const coverImage = getCoverImage(manifestations);
 
   return (
@@ -238,7 +242,7 @@ export default function Wrap({
       inferredAccessTypes={inferredAccessTypes}
       context={context}
       manifestation={manifestations?.[0]}
-      showOrderTxt={showOrderTxt}
+      showOrderTxt={context?.showOrderTxt || showOrderTxt}
       modal={modal}
       showChangeManifestation={showChangeManifestation}
     />

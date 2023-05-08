@@ -1,0 +1,25 @@
+.top {
+  padding: var(--pt3) var(--pt6);
+}
+
+.contentlist {
+  border-top: none;
+}
+
+.contentlist li:nth-child(odd) {
+  background: none;
+}
+
+.contentlist li:nth-child(even) {
+  background: var(--concrete);
+}
+
+.contentlist li {
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+}
+
+@media (min-width: 576px) {
+  .contentlist li {
+    padding: var(--pt1) var(--pt6) var(--pt1) var(--pt6);
+  }
+}

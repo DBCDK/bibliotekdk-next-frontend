@@ -87,10 +87,10 @@ describe("getOrderedFlatMaterialTypes", () => {
     const expected = "e-node";
     expect(actual[0]).toEqual(expected);
   });
-  it("should return ordered properly if workType is given (MUSIC; expect 'musik (net)' first)", () => {
+  it("should return ordered properly if workType is given (MUSIC; expect 'cd (musik)' first)", () => {
     const workTypes = ["MUSIC"];
     const actual = getOrderedFlatMaterialTypes(workTypes);
-    const expected = "musik (net)";
+    const expected = "cd (musik)";
     expect(actual[0]).toEqual(expected);
   });
 });

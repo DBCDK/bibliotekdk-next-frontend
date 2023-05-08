@@ -8,6 +8,29 @@ export function scrollToElement(sliderElementId) {
   });
 }
 
+export function getElementById(elementId) {
+  return elementId && document.querySelector(`#${elementId}`);
+}
+
+export function scrollToElementWithOffset(
+  sliderElementId,
+  orientation = "y",
+  offset = -64 // --pt8 fra spacing.css
+) {
+  const element = getElementById(sliderElementId);
+
+  if (!element) {
+    return;
+  }
+  const elementPosition =
+    orientation === "x" ? element.offsetLeft : element.offsetTop;
+
+  window.scrollTo({
+    top: elementPosition + offset,
+    behavior: "smooth",
+  });
+}
+
 export function scrollDistance(sliderId, slideTranslation) {
   document.querySelector(`#${CSS.escape(sliderId)}`).scrollBy({
     left: slideTranslation,

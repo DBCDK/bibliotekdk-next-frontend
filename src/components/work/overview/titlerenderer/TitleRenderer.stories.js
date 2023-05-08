@@ -39,9 +39,7 @@ function TitleRendererComponentBuilder({
 
 export function TitleRendererMultipleLanguages() {
   const titleRendererProps = {
-    titles: {
-      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-    },
+    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
     mainLanguages: [
       { isoCode: "dan", display: "dansk" },
       { isoCode: "eng", display: "engelsk" },
@@ -58,9 +56,7 @@ export function TitleRendererMultipleLanguages() {
 }
 export function TitleRendererOnlyDanish() {
   const titleRendererProps = {
-    titles: {
-      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-    },
+    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
     mainLanguages: [{ isoCode: "dan", display: "dansk" }],
     workTypes: ["LITERATURE"],
   };
@@ -74,9 +70,7 @@ export function TitleRendererOnlyDanish() {
 }
 export function TitleRenderer1NonDanish() {
   const titleRendererProps = {
-    titles: {
-      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-    },
+    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
     mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
     workTypes: ["LITERATURE"],
   };
@@ -90,9 +84,7 @@ export function TitleRenderer1NonDanish() {
 }
 export function TitleRendererNonLiterature() {
   const titleRendererProps = {
-    titles: {
-      full: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
-    },
+    titles: ["Hugo i Sølvskoven", "Hugo og Rita fra Sølvskoven"],
     mainLanguages: [{ isoCode: "eng", display: "engelsk" }],
     workTypes: ["ARTICLE"],
   };

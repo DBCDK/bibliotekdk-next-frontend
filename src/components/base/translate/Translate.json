@@ -211,6 +211,14 @@
         "da": "Spil",
         "en": "Games"
       },
+      "computergames": {
+        "da": "computerspil",
+        "en": "computergames"
+      },
+      "boardgames": {
+        "da": "brætspil",
+        "en": "boardgames"
+      },
       "music": {
         "da": "Musik",
         "en": "Music"
@@ -552,6 +560,10 @@
       "manifestationParts": {
         "da": "Indhold",
         "en": "Contents"
+      },
+      "manifestationPartsButton": {
+        "da": "Se fuldt indhold",
+        "en": "Full content"
       },
       "subject": {
         "da": "Emneord",
@@ -1565,6 +1577,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",

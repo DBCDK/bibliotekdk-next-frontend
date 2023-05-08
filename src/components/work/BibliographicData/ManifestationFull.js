@@ -19,6 +19,7 @@ import ReservationButton from "@/components/work/reservationbutton/ReservationBu
 import { openReferencesModal } from "@/components/work/utils";
 import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
 
 /**
@@ -136,6 +137,16 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
               </div>
             );
           })}
+          <ManifestationParts
+            pid={data?.manifestation?.pid}
+            titlesOnly={true}
+            className={styles.manifestationPartsList}
+            numberToShow={3}
+            label={Translate({
+              context: "bibliographic-data",
+              label: "manifestationParts",
+            })}
+          />
         </div>
       </Col>
     </Row>

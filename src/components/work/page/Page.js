@@ -5,7 +5,7 @@ import Details from "../details";
 import Description from "../description";
 /*
  * TODO: Insert below when relatedWorks has been approved
- * import RelatedWorks from "../relatedworks";
+   import RelatedWorks from "../relatedworks";
  */
 import Content from "../content";
 import Keywords from "../keywords";
@@ -17,9 +17,11 @@ import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import Translate from "@/components/base/translate";
+import Parts from "../parts";
 
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
+import { AnchorsEnum } from "@/lib/enums";
 
 /**
  * The work page React component
@@ -85,11 +87,19 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           type={type}
           anchor-label={Translate({ context: "description", label: "title" })}
         />
+        <Parts
+          workId={workId}
+          type={type}
+          anchor-label={Translate({
+            context: "bibliographic-data",
+            label: "manifestationParts",
+          })}
+        />
         {/* TODO: Insert below when relatedWorks has been approved */}
         {/*<RelatedWorks*/}
         {/*  workId={workId}*/}
         {/*  type={type}*/}
-        {/*  anchor-label={Translate({ context: "relatedworks", label: "title" })}*/}
+        {/*  anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}*/}
         {/*/>*/}
         <Content
           workId={workId}
@@ -103,10 +113,8 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           <Keywords workId={workId} />
           <Related workId={workId} />
         </div>
-        <Series
-          workId={workId}
-          anchor-label={Translate({ context: "workmenu", label: "series" })}
-        />
+        {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
+        <Series workId={workId} anchor-label={Translate(AnchorsEnum.SERIES)} />
         <Recommendations
           workId={workId}
           anchor-label={Translate({
