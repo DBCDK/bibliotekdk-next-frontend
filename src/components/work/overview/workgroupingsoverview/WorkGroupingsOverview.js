@@ -109,7 +109,7 @@ function RenderHostPublication({ hostPublication }) {
   return (
     hostPublication && (
       <Text className={styles.display_inline}>
-        {hostPublication?.title}, {hostPublication?.issue}
+        {hostPublication?.title}, {dateToShortDate(hostPublication?.issue)}
       </Text>
     )
   );
