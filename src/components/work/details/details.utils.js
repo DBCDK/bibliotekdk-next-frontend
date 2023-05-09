@@ -522,7 +522,6 @@ function RenderLitteratureAudienceAge({ values }) {
   return "AGE";
   return values;
 }
-d;
 // TODO implement
 function RenderLitteratureAudienceSchool({ values }) {
   console.log(values);
