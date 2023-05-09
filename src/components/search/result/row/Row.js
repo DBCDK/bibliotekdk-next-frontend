@@ -26,7 +26,10 @@ import isEqual from "lodash/isEqual";
 import useFilters from "@/components/hooks/useFilters";
 
 function TitlesForSearch({ work, isLoading }) {
-  const titles = work?.titles;
+  const titles = [
+    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
+  ];
   const titlesElementId = `TitlesForSearch__RenderTitlesWithoutLanguage-${work?.workId?.replace(
     /\W/g,
     ""
@@ -48,7 +51,7 @@ function TitlesForSearch({ work, isLoading }) {
       clamp={true}
       title={titles?.full?.join(" ")}
       data-cy={"ResultRow-title"}
-      skeleton={!titles && isLoading}
+      skeleton={isLoading}
       className={`${styles.display_inline}`}
     >
       <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
@@ -137,7 +140,7 @@ export default function ResultRow({
       >
         <div className={styles.row_wrapper}>
           <div className={styles.col_wrapper}>
-            <TitlesForSearch work={work} loading={isLoading} />
+            <TitlesForSearch work={work} isLoading={isLoading} />
             <Text
               type="text3"
               className={styles.creator}

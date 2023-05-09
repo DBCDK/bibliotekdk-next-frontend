@@ -100,6 +100,10 @@
       "tooltip_digtital_copy": {
         "da": "Dit bibliotek skal have abonnement på tjenesten Digital Artikelservice, for at du kan bestille digitale kopier af Det Kgl. Biblioteks artikler.",
         "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
+      },
+      "tooltip_lix": {
+        "da": "Lix står for læsbarhedsindeks. Lix-tal er opdelt efter klassetrin:\\n0.-1. klasse: lix 2-10\\n2. klasse: lix 11-15\\n3. klasse: lix 16-19\\n4. klasse: lix 20+\\n \\n Let-tal står for læseegnethedstal. \\n Begynderlæsningsbøgerne er inddelt i 16 niveauer, hvor det laveste er 5, og det højeste er 20. ",
+        "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
       }
     },
     "general": {
@@ -206,6 +210,14 @@
       "games": {
         "da": "Spil",
         "en": "Games"
+      },
+      "computergames": {
+        "da": "computerspil",
+        "en": "computergames"
+      },
+      "boardgames": {
+        "da": "brætspil",
+        "en": "boardgames"
       },
       "music": {
         "da": "Musik",
@@ -549,6 +561,10 @@
         "da": "Indhold",
         "en": "Contents"
       },
+      "manifestationPartsButton": {
+        "da": "Se fuldt indhold",
+        "en": "Full content"
+      },
       "subject": {
         "da": "Emneord",
         "en": "Emneord"
@@ -719,6 +735,10 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "level": {
+        "da": "Sværhedsgrad",
+        "en": "level"
+      },
       "subtitle": {
         "da": "Seneste udgave, %s",
         "en": "Latest edition, %s"
@@ -731,6 +751,11 @@
         "da": "Sideantal",
         "en": "Number of pages"
       },
+      "ensemble": {
+        "da": "Besætning",
+        "en": "Ensemble"
+      },
+
       "physicalDescription": {
         "da": "Længde",
         "en": "Length"
@@ -1552,6 +1577,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",

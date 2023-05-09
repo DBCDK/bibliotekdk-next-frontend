@@ -44,3 +44,8 @@ export const RelationTypeEnum = Object.freeze({
   DISCUSSES: { key: "discusses", workType: WorkTypeEnum.DEBATEARTICLE },
   DISCUSSEDIN: { key: "discussedIn", workType: WorkTypeEnum.DEBATEARTICLE },
 });
+
+export const AnchorsEnum = Object.freeze({
+  SERIES: { context: "workmenu", label: "series" },
+  RELATED_WORKS: { context: "relatedworks", label: "title" },
+});

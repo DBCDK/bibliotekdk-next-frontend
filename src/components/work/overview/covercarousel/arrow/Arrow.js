@@ -36,6 +36,7 @@ export function Arrow({
       onClick={clickCallback}
       tag={"button"}
       dataCy={dataCy}
+      tabIndex="0"
     >
       <ArrowTag />
     </Icon>

@@ -40,3 +40,9 @@ div.notification i{
 div.notification .cancelicon:hover {
   cursor: pointer;
 }
+
+@media print {
+  .info {
+    display: none;
+  }
+}

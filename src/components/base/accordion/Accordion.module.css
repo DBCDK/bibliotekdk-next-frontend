@@ -14,23 +14,35 @@
   cursor: pointer;
 }
 
+.element .header:hover {
+  border-style: solid;
+  border-width: 1px 0 1px 0;
+  border-color: var(--blue);
+  margin: -1px 0 -1px 0;
+}
+
 .element .header p {
   margin-right: var(--pt2);
 }
 
 .firstelement {
-  width: 15%;
+  padding-left: var(--pt2);
+  width: 20%;
 }
 
 .textbox {
   display: grid;
-  grid-template-columns: 5fr 7fr 6fr;
+  grid-template-columns: 30% 38% 32%;
   align-items: center;
+}
+
+.textbox {
+  display: block;
   width: 100%;
 }
 
 .textbox p:first-of-type {
-  font-weight: bold;
+  font-weight: var(--body-font-semibold);
   display: block;
 }
 .textbox p {
@@ -50,6 +62,10 @@
   pointer-events: none;
 }
 
+.open {
+  background-color: var(--concrete);
+}
+
 @media (min-width: 992px) {
   .content p {
     padding-right: var(--pt10);
@@ -61,6 +77,13 @@
 
   .firstelement {
     width: 10%;
+  }
+
+  .textbox {
+    display: grid;
+    grid-template-columns: 5fr 7fr 6fr;
+    align-items: center;
+    width: 100%;
   }
 
   .element .header {

@@ -3,22 +3,44 @@
 
 .manifestionlist {
   list-style-type: none;
+  border-top: 1px solid var(--iron);
+  border-bottom: 1px solid var(--iron);
+  margin-bottom: var(--pt2);
 }
 
 .manifestionlist li {
   display: flex;
   justify-content: space-between;
-  padding: 0 var(--pt2) 0 var(--pt2);
-}
-
-.manifestionlist li:nth-child(even) {
-  background: var(--iron);
+  padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
 }
 
 .manifestionlist li:nth-child(odd) {
+  background: var(--concrete);
+}
+
+.manifestionlist li:nth-child(even) {
   background: none;
+}
+
+.nobreak {
+  white-space: nowrap;
+}
+
+.partstitle {
+  max-width: 80%;
 }
 
 .manifestionPartsButton {
   margin: var(--pt2) 0 var(--pt2) 0;
+}
+
+.arrowAndTxtContainer {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+}
+
+.arrowchanges {
+  display: flex;
+  align-items: center;
 }
