@@ -22,16 +22,10 @@ import { DotHandler } from "@/components/work/overview/covercarousel/dothandler/
 import useScrollSlider from "@/components/hooks/useScrollSlider";
 import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
+import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 
 const CoverElement = forwardRef(function CoverElement(
-  {
-    thisIndex,
-    manifestation,
-    materialType,
-    fullTitle,
-    setVisibleElement,
-    sliderId,
-  },
+  { thisIndex, manifestation, fullTitle, setVisibleElement, sliderId },
   carouselRef
 ) {
   const { elementRef, isVisible } = useElementVisible({
@@ -60,12 +54,15 @@ const CoverElement = forwardRef(function CoverElement(
     >
       <img
         src={src}
-        className={loaded ? styles.cover_image : styles.cover_image_skeleton}
+        className={`${styles.cover_image} ${
+          !loaded && styles.cover_image_skeleton
+        }`}
         onLoad={() => setLoaded(true)}
         alt={""}
-        {...(isVisible && { tabIndex: "0" })}
       />
-      <Text>{getTextDescription(materialType, manifestation)}</Text>
+      <Text>
+        {getTextDescription(flattenMaterialType(manifestation), manifestation)}
+      </Text>
     </div>
   );
 });
@@ -73,14 +70,13 @@ const CoverElement = forwardRef(function CoverElement(
 /**
  * CoverCarousel
  * @param {array} manifestations
- * @param {array} materialType
  * @param {object} workTitles
- * @param {string} iconStyle
+ * @param sliderId
+ * @param maxLength
  * @return {JSX.Element}
  */
 export function CoverCarousel({
   manifestations,
-  materialType,
   workTitles,
   sliderId = "slide",
   maxLength = 10,
@@ -102,21 +98,21 @@ export function CoverCarousel({
   }
 
   return (
-    <div className={styles.full_cover_carousel}>
+    <div className={`${styles.full_cover_carousel}`}>
       <div
         className={`${styles.carousel} ${styles.grid_cover_area}`}
         ref={carouselRef}
         id={carouselId}
+        tabIndex="0"
+        alt=""
       >
         {range(0, length, 1)?.map((value, idx) => {
           return (
             <CoverElement
               key={idx}
               thisIndex={idx}
-              manifestations={manifestations}
               manifestation={manifestations?.[idx]}
               fullTitle={workTitles?.full}
-              materialType={materialType}
               setVisibleElement={setVisibleElement}
               sliderId={sliderId}
               carouselRef={carouselRef}
@@ -131,7 +127,7 @@ export function CoverCarousel({
               clickCallback(moveCarousel(-1, length, visibleElement))
             }
             orientation={"left"}
-            arrowClass={`${styles.arrow_styling} ${styles.left_arrow}`}
+            arrowClass={`${styles.left_arrow} ${styles.arrow_styling}`}
             dataDisabled={!(visibleElement > 0)}
           />
           <Arrow
@@ -139,7 +135,7 @@ export function CoverCarousel({
               clickCallback(moveCarousel(1, length, visibleElement))
             }
             orientation={"right"}
-            arrowClass={`${styles.arrow_styling} ${styles.right_arrow}`}
+            arrowClass={`${styles.right_arrow} ${styles.arrow_styling}`}
             dataDisabled={!(visibleElement < length - 1)}
           />
           <div className={styles.dots}>
@@ -156,29 +152,30 @@ export function CoverCarousel({
   );
 }
 
-export default function Wrap({ selectedPids, workTitles }) {
+export default function Wrap({ allPids, selectedPids, workTitles }) {
   const { data: manifestationsData, isLoading: manifestationsIsLoading } =
     useData(
       selectedPids?.length > 0 &&
         manifestationFragments.editionManifestations({
-          pid: selectedPids,
+          pid: allPids,
         })
     );
 
-  const { manifestationsWithCover, materialType } = useMemo(() => {
+  const { manifestationsWithCover } = useMemo(() => {
     return getManifestationsWithCorrectCover(
-      manifestationsData?.manifestations
+      manifestationsData?.manifestations?.filter((manifestation) =>
+        selectedPids?.includes(manifestation?.pid)
+      )
     );
-  }, [manifestationsData?.manifestations]);
+  }, [manifestationsData?.manifestations, selectedPids]);
 
-  if (manifestationsIsLoading) {
-    <Skeleton className={styles.carousel_skeleton} />;
+  if (!manifestationsData || manifestationsIsLoading) {
+    return <Skeleton className={styles.carousel_skeleton} />;
   }
 
   return (
     <CoverCarousel
       manifestations={manifestationsWithCover}
-      materialType={materialType}
       workTitles={workTitles}
     />
   );
