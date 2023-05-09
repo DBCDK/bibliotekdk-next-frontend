@@ -430,7 +430,7 @@ function RenderMovieLanguages({ values }) {
 
 function RenderGenre({ values }) {
   return (
-    <Text type="text4" lines={1} tag="span">
+    <Text type="text4" lines={1} tag="p">
       {values.join(", ")}
     </Text>
   );
