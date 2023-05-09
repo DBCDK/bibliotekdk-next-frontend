@@ -52,7 +52,7 @@ describe("Overview", () => {
 
     it(`First review should be visible - last not visible`, () => {
       cy.contains("Anmeldelser (");
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
       cy.should("not.have.text", "External");
     });
 
@@ -82,11 +82,11 @@ describe("Overview", () => {
 
     it(`reviews are ordered correctly`, () => {
       // Librarians reviews should come first
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
 
       // Then litteratursiden, because it has external url (accessible without login)
       cy.get("[data-cy=right_arrow]").click();
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
 
       cy.wait(200);
       cy.get("[data-cy=right_arrow]").click({ force: true });

@@ -17,7 +17,7 @@
 }
 
 .slider > div > div {
-  /* scroll-snap-align: start; */
+  scroll-snap-align: start;
 }
 
 .slider > div:last-child {
@@ -32,6 +32,7 @@
   height: 100%;
   background-color: var(--iron);
   border: 0;
+  margin: 0 var(--pt5);
 }
 
 .seperator:last-child {
@@ -53,5 +54,13 @@
 @media (min-width: 992px) {
   .sliderContainer {
     margin: unset;
+  }
+
+  .slider > div:first-child {
+    margin-left: 0;
+  }
+
+  .seperator {
+    margin: 0 var(--pt10);
   }
 }

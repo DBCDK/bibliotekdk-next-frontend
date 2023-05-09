@@ -58,6 +58,12 @@ function getDate(data) {
     data.hostPublication?.issue ||
     (data.recordCreationDate && numericToISO(data.recordCreationDate));
 
+  console.log("date", date);
+
+  if (date === "1970-01-01") {
+    return data.edition?.publicationYear?.display || null;
+  }
+
   return dateToShortDate(date, "d. ");
 }
 

@@ -1,14 +1,21 @@
 .item,
 .item.hasContent {
   position: relative;
-  min-width: 70%;
   /* margin-right: var(--pt5); */
-  margin: 0 var(--pt5);
+  /* margin: 0 var(--pt5); */
+}
+
+.item {
+  max-width: 400px;
+}
+
+.item.hasContent {
+  min-width: 70%;
 }
 
 .details {
-  display: flex;
   flex-wrap: wrap;
+  margin-bottom: var(--pt1);
 }
 
 .details div {
@@ -26,14 +33,6 @@
 
 .item .rating {
   order: 1;
-}
-
-.break {
-  flex-basis: 100%;
-}
-
-.details {
-  margin-bottom: var(--pt1);
 }
 
 .details > div:first-child {
@@ -90,13 +89,16 @@
   .item,
   .item.hasContent {
     flex-shrink: 0;
-    min-width: 33%;
+    /* margin: 0 var(--pt10); */
+  }
+
+  .item {
+    min-width: min-content;
   }
 
   .item.hasContent {
+    flex-shrink: 0;
     max-width: 600px;
-    /* margin-right: var(--pt15); */
-    margin: 0 var(--pt15);
   }
 
   .item.hasContent .details > div:last-child > p {
@@ -110,6 +112,9 @@
   .item.hasContent .details > div:last-child > div {
     display: flex;
     justify-content: space-between;
+  }
+
+  .item.hasContent.hasRating .details > div:last-child > div {
     flex-direction: row-reverse;
   }
 
