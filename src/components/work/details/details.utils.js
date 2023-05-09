@@ -82,9 +82,9 @@ function parsePhysicalDescriptions(manifestation) {
 }
 
 function getRequirementsFromPhysicalDesc(manifestation) {
-  return manifestation?.physicalDescriptions?.map(
-    (description) => description.requirements
-  );
+  return manifestation?.physicalDescriptions
+    ?.map((description) => description.requirements)
+    .join(", ");
 }
 
 /**
@@ -306,8 +306,9 @@ function RenderMovieActorValues({ values, skeleton }) {
 }
 
 /**
+ * OUTCOMMENTED -> pjo 090523 - jed data is fucked up, let's wait a little to see if it gets better
  * Render adaption (movie based on .. a book or something)
- * We give a link to the material the movie is  base on.
+ * We give a link to the material the movie is  based on.
  * @param values
  * @param skeleton
  * @returns {""|JSX.Element}
@@ -509,36 +510,6 @@ function RenderLitteratureAudience({ values }) {
   );
 }
 
-// TODO implement
-function RenderLitteratureAudienceAge({ values }) {
-  console.log(value);
-  const txt = values?.ages.join(", ") || values?.libraryRecommendation;
-
-  return (
-    <Text type="text4" lines={1}>
-      {txt}
-    </Text>
-  );
-  return "AGE";
-  return values;
-}
-// TODO implement
-function RenderLitteratureAudienceSchool({ values }) {
-  console.log(values);
-
-  const txt = values?.generalAudience.join(", ") || values?.schoolUse;
-
-  return (
-    <Text type="text4" lines={1}>
-      {txt}
-    </Text>
-  );
-
-  return "SCHOOL";
-
-  return values;
-}
-
 /**
  * Main method for retrieving fields to show in details section on workpage.
  * Configurable arrays for different materialtypes - the fieldsMap holds array of
@@ -592,8 +563,6 @@ function RenderLitteratureAudienceSchool({ values }) {
  * @returns {*[]}
  */
 export function fieldsForRows(manifestation, work, context) {
-  console.log(manifestation, "MANIFESTATION");
-  console.log(work, "WORK");
   const materialType = work?.workTypes?.[0] || null;
   const fieldsMap = {
     DEFAULT: [
@@ -714,6 +683,7 @@ export function fieldsForRows(manifestation, work, context) {
         hasadaption: {
           label: Translate({ ...context, label: "hasadaption" }),
           value: "",
+          // pjo 090523 commented out for now - jed data is fucked up
           // value: manifestation?.relations?.hasAdaptation?.find((rel) =>
           //   rel?.pid?.startsWith("870970")
           // ),
@@ -731,30 +701,24 @@ export function fieldsForRows(manifestation, work, context) {
           jsxParser: RenderLitteratureAudience,
         },
       },
-
-      // @TODO implement
       {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
-          tooltip: "tooltip_lix",
-          value:
-            manifestation?.audience?.ages ||
-            manifestation?.audience?.libraryRecommendation
-              ? manifestation.audience
-              : null,
-          jsxParser: RenderLitteratureAudienceAge,
+          value: !isEmpty(manifestation?.audience?.ages)
+            ? manifestation?.audience?.ages.join(", ")
+            : !isEmpty(manifestation?.audience?.childrenOrAdults)
+            ? manifestation?.audience?.childrenOrAdults
+                .map((child) => child.display)
+                .join(", ")
+            : null,
         },
       },
-      // @TODO implement
       {
         audienceschool: {
           label: Translate({ ...context, label: "schooluse" }),
-          value:
-            manifestation?.audience?.generalAudience ||
-            manifestation?.audience?.schoolUse
-              ? manifestation.audience
-              : null,
-          jsxParser: RenderLitteratureAudienceSchool,
+          value: !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
+            : manifestation?.audience?.schoolUse || null,
         },
       },
       {
