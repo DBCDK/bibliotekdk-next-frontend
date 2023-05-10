@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import WrappedReviews, { ReviewsSkeleton } from "./Reviews.js";
 
