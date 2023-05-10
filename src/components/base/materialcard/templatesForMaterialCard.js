@@ -68,9 +68,11 @@ export function templateForRelatedWorks(material) {
         <Text {...propFunc("text4", 2)} title={fullTitle}>
           {fullTitle}
         </Text>
-        <Text {...propFunc("text3", 2)} title={firstCreator}>
-          {firstCreator}
-        </Text>
+        {firstCreator && (
+          <Text {...propFunc("text3", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
         <Text {...propFunc("text3", 1)} title={formattedMaterialTypes}>
           {formattedMaterialTypes}
         </Text>
