@@ -51,7 +51,7 @@ export function Content({
   // Translate Context
   const context = { context: "content" };
 
-  const numberToShow = 25;
+  const numberToShow = 10;
 
   const modalOpen = () => {
     modal.push("manifestationContent", {
