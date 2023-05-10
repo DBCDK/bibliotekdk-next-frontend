@@ -119,7 +119,6 @@ export function childSetter(childNodes, ignoreElements = []) {
 
   childNodes.forEach((child) => {
     if (!ignoreElements.includes(child.localName)) {
-      console.log("222", child.localName);
       return childWidths.push({
         width: child.offsetWidth,
         posLeft: child.offsetLeft - offset,

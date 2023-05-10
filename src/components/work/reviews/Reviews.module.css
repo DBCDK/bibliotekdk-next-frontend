@@ -8,12 +8,14 @@
 }
 
 .slider {
-  scroll-padding-left: var(--pt2) !important;
+  scroll-padding-left: var(--pt2);
   align-items: center;
 }
 
 .slider > div:first-child {
-  margin-left: var(--pt2);
+  margin-left: calc(var(--pt3) * -1);
+  /* padding-left: var(--pt2); */
+  /* padding-left: calc(var(--pt10) * -1); */
 }
 
 .slider > div > div {
@@ -32,7 +34,8 @@
   height: 100%;
   background-color: var(--iron);
   border: 0;
-  margin: 0 var(--pt5);
+
+  /* margin: 0 var(--pt5); */
 }
 
 .seperator:last-child {
@@ -56,11 +59,17 @@
     margin: unset;
   }
 
+  .slider {
+    scroll-padding-left: 0;
+  }
+
   .slider > div:first-child {
-    margin-left: 0;
+    /* margin-left: 0; */
+    /* padding-left: 0; */
+    margin-left: calc(var(--pt8) * -1);
   }
 
   .seperator {
-    margin: 0 var(--pt10);
+    /* margin: 0 var(--pt10); */
   }
 }
