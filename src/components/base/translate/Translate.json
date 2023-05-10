@@ -2930,6 +2930,16 @@
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
       }
+    },
+    "profile": {
+      "myLibraries": {
+        "da": "Mine biblioteker",
+        "en": "My libraries"
+      },
+      "loanAndReservations": {
+        "da": "Lån og reseveringer",
+        "en": "Loan and reservations "
+      }
     }
   }
 }

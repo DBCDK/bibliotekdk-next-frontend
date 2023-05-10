@@ -1,3 +1,4 @@
+import Translate from "@/components/base/translate/Translate";
 import Layout from "../Layout";
 
 /**
@@ -7,7 +8,9 @@ import Layout from "../Layout";
  */
 export default function LoanAndReservations() {
   return (
-    <Layout title="Lån og reseveringer">
+    <Layout
+      title={Translate({ context: "profile", label: "loanAndReservations" })}
+    >
       <h1>hej med dig</h1>
     </Layout>
   );
