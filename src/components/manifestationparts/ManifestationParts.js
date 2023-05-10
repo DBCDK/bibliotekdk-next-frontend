@@ -35,6 +35,15 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  const creatorsDisplay = (part) => {
+    const creatorString = !isEmpty(part.creators)
+      ? "  -  " + part.creators.map((creator) => creator.display).join(", ")
+      : !isEmpty(part.creatorsFromDescription)
+      ? "  -  " + part.creatorsFromDescription.join(", ")
+      : "";
+    return creatorString;
+  };
+
   // show some kind of contributors also
   // we take creators [{display:string}] array first if any - else we look in
   // creatorsFromDescription [string]
@@ -45,13 +54,7 @@ export function ManifestationParts({
         <li key={`manifestationlist-${index}`}>
           <Text type="text3" lines={1} className={styles.partstitle}>
             {part.title}
-            {!titlesOnly &&
-              (!isEmpty(part.creators)
-                ? "  -  " +
-                  part.creators.map((creator) => creator.display).join(", ")
-                : !isEmpty(part.creatorsFromDescription)
-                ? "  -  " + part.creatorsFromDescription.join(", ")
-                : "")}
+            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
           </Text>
 
           {!titlesOnly && part.playingTime && (
