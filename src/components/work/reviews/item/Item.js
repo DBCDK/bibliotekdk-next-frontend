@@ -60,8 +60,6 @@ function getDate(data) {
     data.hostPublication?.issue ||
     (data.recordCreationDate && numericToISO(data.recordCreationDate));
 
-  console.log("date", date);
-
   if (date === "1970-01-01") {
     return data.edition?.publicationYear?.display || null;
   }
@@ -101,7 +99,8 @@ function getContent(data) {
  * @returns {string}
  */
 function getUrls(data, work) {
-  const { workId, title } = work;
+  const { workId, titles } = work;
+  const title = titles?.main?.[0];
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
   const isInfomediaReview = isType === "isInfomediaReview";
@@ -132,8 +131,6 @@ function getUrls(data, work) {
  * @returns {JSX}
  */
 function Item({ data, work, isLoading }) {
-  console.log("Item", { data, work });
-
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
 
@@ -168,6 +165,7 @@ function Item({ data, work, isLoading }) {
   return (
     <Col
       sm={!!hasContent.length ? 8 : 4}
+      data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
     >
       <div className={styles.wrap}>
@@ -230,7 +228,7 @@ function Item({ data, work, isLoading }) {
         </div>
         <div>
           <Title
-            type="title4"
+            type="title6"
             tag="span"
             lines={6}
             clamp={true}
@@ -238,11 +236,9 @@ function Item({ data, work, isLoading }) {
           >
             {hasContent.map((content, i) => {
               return (
-                <span key={`content-${i}`} className={styles.reviewTxt}>
-                  <Title type="title6" skeleton={isLoading} lines={1}>
-                    {isMaterialReview ? contentParser(content) : content}
-                  </Title>
-                </span>
+                <p key={`content-${i}`} className={styles.reviewTxt}>
+                  {isMaterialReview ? contentParser(content) : content}
+                </p>
               );
             })}
           </Title>

@@ -28,29 +28,25 @@ export function sortReviews(a, b) {
 export function contentParser({ content, manifestations }) {
   const chunks = [];
 
-  if (manifestations?.length > 0) {
+  if (manifestations?.length === 0) {
+    chunks.push(content?.replaceAll("\\", ""));
+  } else {
     manifestations
-      .filter((manifestation) => !!manifestation)
+      ?.filter((manifestation) => !!manifestation)
       .forEach(({ ownerWork: work }, idx) => {
         const arr = content.split(work?.titles?.main);
         arr.forEach((chunk) => chunks.push(chunk));
         chunks.splice(idx + 1, 0, lectorLink({ work, key: `link-${idx}` }));
       });
-  }
-
-  /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/
-  // No manifestation references was found, search and replace \\ notations with "" in paragraph content
-
-  /*else {
+    /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/
+    // No manifestation references was found, search and replace \\ notations with "" in paragraph content
+    /*else {
     const regex = /(?<=\\)(.*?)(?=\\)/g;
     const match = content?.match(regex);
     const trimmed = content?.replace(`\\${match}\\`, `"${match}"`);
-
     chunks.push(trimmed);
-
   }*/
-
-  chunks.push(content?.replaceAll("\\", ""));
+  }
 
   // add tailing dot space after each paragraph
   chunks.push(". ");

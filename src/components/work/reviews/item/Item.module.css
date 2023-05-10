@@ -10,6 +10,10 @@
   box-sizing: border-box;
 }
 
+.item.hasContent .wrap {
+  width: 100%;
+}
+
 .item {
   /* max-width: 400px; */
 }

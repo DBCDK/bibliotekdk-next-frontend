@@ -65,7 +65,7 @@ describe("Overview", () => {
     });
 
     it(`infomedia review should link to infomedia page`, () => {
-      cy.get("[data-cy=review-infomedia]")
+      cy.get("[data-cy=review-item-isInfomediaReview]")
         .contains("Læs anmeldelse")
         .should(
           "have.attr",
@@ -75,7 +75,7 @@ describe("Overview", () => {
     });
 
     it(`external review should link to external site`, () => {
-      cy.get("[data-cy=review-external]")
+      cy.get("[data-cy=review-item-isExternalReview]")
         .contains("Læs anmeldelse")
         .should("have.attr", "href", "http://www.some-url.dk");
     });
