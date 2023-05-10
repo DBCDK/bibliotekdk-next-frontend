@@ -103,8 +103,6 @@ export default function Wrap({
     pid && manifestationFragments.manifestationParts({ pid: pid })
   );
 
-  console.log(pid, "PID");
-
   const modal = useModal();
 
   if (error || !data) {
