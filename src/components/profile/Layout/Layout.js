@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -15,10 +14,10 @@ export default function Layout({ title, children }) {
     <Container fluid>
       <Row>
         <Col md={3}>
-              {/**replace with side menu: */}
+          {/**replace with side menu: */}
 
           <div
-            style={{ width: "100%", height: "300px", backgroundColor: "grey" }}
+            style={{ width: "100%", height: "300px", backgroundColor: "coral" }}
           />
         </Col>
         <Col lg={6} md={9}>
@@ -26,7 +25,11 @@ export default function Layout({ title, children }) {
           {children}
           {/**insert page content here */}
           <div
-            style={{ width: "100%", height: "300px", backgroundColor: "grey" }}
+            style={{
+              width: "100%",
+              height: "300px",
+              backgroundColor: "burlywood",
+            }}
           />
         </Col>
       </Row>

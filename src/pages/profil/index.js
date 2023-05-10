@@ -1,14 +1,13 @@
-export async function getServerSideProps() {
-  return {
-    redirect: {
-      destination: "/profil/mine-biblioteker",
-      permanent: true,
-    },
-  };
-}
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 function Profile() {
-  // This component won't be rendered because it's redirected
+  const router = useRouter();
+
+  useEffect(() => {
+    //for now there is no /profil endpoint. /profil will redirect to /profil/mine-biblioteker
+    router.push("/profil/mine-biblioteker");
+  }, []);
   return null;
 }
 
