@@ -1,6 +1,13 @@
 /**
  * @file - Manifestationparts.js
  * Show a list of manifestationParts - eg. tracks from music - contents of sheetmusic etc.
+ * NOTICE
+ * data input for this component is the 'parts' prop. It must be in the form :
+ *  [title(string), creators[{display:string}] || creatorsFromDescription[string], playingTime(string)]
+ * The title is always shown.
+ * The titlesOnly prop tells whether to show more than title.
+ * Remaining data is shown if present
+ *
  */
 
 import { useData } from "@/lib/api/api";
@@ -28,8 +35,6 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
-  console.log(partsToShow, "PARTS TOP SHOW");
-
   // show some kind of contributors also
   // we take creators [{display:string}] array first if any - else we look in
   // creatorsFromDescription [string]
@@ -40,20 +45,15 @@ export function ManifestationParts({
         <li key={`manifestationlist-${index}`}>
           <Text type="text3" lines={1} className={styles.partstitle}>
             {part.title}
+            {!titlesOnly &&
+              (!isEmpty(part.creators)
+                ? "  -  " +
+                  part.creators.map((creator) => creator.display).join(", ")
+                : !isEmpty(part.creatorsFromDescription)
+                ? "  -  " + part.creatorsFromDescription.join(", ")
+                : "")}
           </Text>
 
-          {!titlesOnly &&
-            (!isEmpty(part.creators) ? (
-              <Text type="text3" lines={1} className={styles.nobreak}>
-                {part.creators.map((creator) => creator.display).join(", ")}
-              </Text>
-            ) : !isEmpty(part.creatorsFromDescription) ? (
-              <Text type="text3" lines={1} className={styles.nobreak}>
-                {part.creatorsFromDescription.join(", ")}
-              </Text>
-            ) : (
-              ""
-            ))}
           {!titlesOnly && part.playingTime && (
             <Text type="text3" lines={1} className={styles.nobreak}>
               {part.playingTime}
