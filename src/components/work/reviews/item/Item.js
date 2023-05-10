@@ -7,123 +7,18 @@ import Icon from "@/components/base/icon";
 
 import { Rating } from "@/components/base/rating/Rating";
 
-import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
-
 import Translate from "@/components/base/translate";
 
-import { contentParser } from "../utils";
-import { encodeString } from "@/lib/utils";
+import {
+  contentParser,
+  getReviewType,
+  getPublisher,
+  getDate,
+  getContent,
+  getUrls,
+} from "../utils";
 
 import styles from "./Item.module.css";
-
-/**
- * Selecting the correct review template
- *
- * @param review
- *
- * @returns {component}
- */
-
-function getReviewType(data) {
-  if (data.review?.reviewByLibrarians?.length > 0) {
-    return "isMaterialReview";
-  }
-  if (data.access?.find((a) => a.__typename === "InfomediaService")) {
-    return "isInfomediaReview";
-  }
-  return "isExternalReview";
-}
-
-/**
- *
- * @param {*} data
- * @returns {string}
- */
-function getPublisher(data) {
-  const isType = getReviewType(data);
-  const isMaterialReview = isType === "isMaterialReview";
-
-  if (isMaterialReview) {
-    return Translate({ context: "general", label: "lecturerStatement" });
-  }
-
-  return data.hostPublication?.title;
-}
-
-/**
- *
- * @param {*} data
- * @returns {string}
- */
-function getDate(data) {
-  const date =
-    data.hostPublication?.issue ||
-    (data.recordCreationDate && numericToISO(data.recordCreationDate));
-
-  if (date === "1970-01-01") {
-    return data.edition?.publicationYear?.display || null;
-  }
-
-  return dateToShortDate(date, "d. ");
-}
-
-/**
- *
- * @param {*} data
- * @returns {string}
- */
-function getContent(data) {
-  const isType = getReviewType(data);
-  const isMaterialReview = isType === "isMaterialReview";
-
-  if (isMaterialReview) {
-    return data.review?.reviewByLibrarians
-      ?.map((p) => p)
-      .filter(
-        (p) =>
-          !p.content?.startsWith("Materialevurdering") &&
-          !p.content?.startsWith("Indscannet version")
-      );
-  }
-
-  if (data.abstract) {
-    return data.abstract;
-  }
-
-  return [];
-}
-
-/**
- *
- * @param {*} data
- * @returns {string}
- */
-function getUrls(data, work) {
-  const { workId, titles } = work;
-  const title = titles?.main?.[0];
-  const isType = getReviewType(data);
-  const isMaterialReview = isType === "isMaterialReview";
-  const isInfomediaReview = isType === "isInfomediaReview";
-
-  const urlTxt = title && encodeString(title);
-
-  if (isMaterialReview) {
-    return data.pid && [`/anmeldelse/${urlTxt}/${workId}/${data.pid}`];
-  }
-
-  if (isInfomediaReview) {
-    const infomediaAccess = data.access?.find((a) => a.id);
-    return (
-      infomediaAccess.id && [
-        `/anmeldelse/${urlTxt}/${workId}/${infomediaAccess.id}`,
-      ]
-    );
-  }
-
-  return data.access
-    .filter((d) => d.__typename === "AccessUrl" && d.url !== "")
-    .map((a) => a.url);
-}
 
 /**
  *
