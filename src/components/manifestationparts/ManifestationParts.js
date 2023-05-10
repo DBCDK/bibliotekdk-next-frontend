@@ -28,6 +28,41 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  console.log(partsToShow, "PARTS TOP SHOW");
+
+  // show some kind of contributors also
+  // we take creators [{display:string}] array first if any - else we look in
+  // creatorsFromDescription [string]
+  // we need to transform orignal array into something parsable
+  const displayarray = partsToShow.map(
+    (part, index) =>
+      part?.title && (
+        <li key={`manifestationlist-${index}`}>
+          <Text type="text3" lines={1} className={styles.partstitle}>
+            {part.title}
+          </Text>
+
+          {!titlesOnly &&
+            (!isEmpty(part.creators) ? (
+              <Text type="text3" lines={1} className={styles.nobreak}>
+                {part.creators.map((creator) => creator.display).join(", ")}
+              </Text>
+            ) : !isEmpty(part.creatorsFromDescription) ? (
+              <Text type="text3" lines={1} className={styles.nobreak}>
+                {part.creatorsFromDescription.join(", ")}
+              </Text>
+            ) : (
+              ""
+            ))}
+          {!titlesOnly && part.playingTime && (
+            <Text type="text3" lines={1} className={styles.nobreak}>
+              {part.playingTime}
+            </Text>
+          )}
+        </li>
+      )
+  );
+
   return (
     <div className={styles.manifestionlistContainer}>
       {label && (
@@ -36,23 +71,7 @@ export function ManifestationParts({
         </Text>
       )}
       <ul className={`${styles.manifestionlist} ${className}`}>
-        {partsToShow?.map((part, index) => {
-          return (
-            part &&
-            part?.title && (
-              <li key={`manifestationlist-${index}`}>
-                <Text type="text3" lines={1} className={styles.partstitle}>
-                  {part.title}
-                </Text>
-                {part.playingTime && !titlesOnly && (
-                  <Text type="text3" lines={1} className={styles.nobreak}>
-                    {part.playingTime}
-                  </Text>
-                )}
-              </li>
-            )
-          );
-        })}
+        {!isEmpty(displayarray) && displayarray}
       </ul>
 
       {showMore && (
@@ -83,6 +102,8 @@ export default function Wrap({
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
   );
+
+  console.log(pid, "PID");
 
   const modal = useModal();
 
