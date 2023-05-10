@@ -73,7 +73,9 @@ function parseForOccasion(manifestations) {
  */
 export function Description({ className = "", data = "", skeleton = false }) {
   const abstract = data?.abstract?.map((abs, index) => (
-    <div key={abs + index}>{abs}</div>
+    <div key={abs + index} className={styles.chapter}>
+      {abs}
+    </div>
   ));
 
   const occasion = parseForOccasion(data?.manifestations);
