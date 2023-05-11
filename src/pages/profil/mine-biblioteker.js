@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
 
-import Page from "@/components/profile/MyLibraries/Page";
+import Page from "@/components/profile/MyLibrariesPage";
 /**
  * Renders the MyLibraries component
  */

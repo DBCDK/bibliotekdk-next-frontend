@@ -1,5 +1,5 @@
 import Header from "@/components/header/Header";
-import Page from "@/components/profile/Loan/Page";
+import Page from "@/components/profile/LoanPage";
 import { useRouter } from "next/router";
 
 export default function LoanAndReservations() {
