@@ -1,5 +1,5 @@
 import Translate from "@/components/base/translate/Translate";
-import Layout from "../Layout";
+import Layout from "../layout";
 
 /**
  * MyLibraries page React component
