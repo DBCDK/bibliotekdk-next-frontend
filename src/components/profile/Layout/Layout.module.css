@@ -1,0 +1,6 @@
+.container {
+  padding-top: var(--pt6);
+}
+.title {
+  margin-bottom: var(--pt3);
+}
