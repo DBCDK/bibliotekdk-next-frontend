@@ -52,6 +52,6 @@ describe("Details", () => {
 
     cy.get("[data-cy=section-title]")
       .find("p")
-      .should("have.text", "Seneste udgave, Musik (dvd)");
+      .should("have.text", "Seneste udgave, Bog");
   });
 });

@@ -80,6 +80,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
       {abs}
     </div>
   ));
+
   const occasion = parseForOccasion(data?.manifestations);
   const preAbstract = parseCreatorsForInterview(data?.creators);
 
@@ -92,7 +93,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
-        {(abstract || preAbstract || occasion) && (
+        {(!isEmpty(abstract) || preAbstract || occasion) && (
           <Col xs={12} md={8}>
             {occasion && (
               <Text
@@ -114,7 +115,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
                 {preAbstract}.
               </Text>
             )}
-            {abstract && (
+            {!isEmpty(abstract) && (
               <Text
                 dataCy={"description"}
                 type="text2"
