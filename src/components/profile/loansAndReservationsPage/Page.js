@@ -1,5 +1,5 @@
 import Translate from "@/components/base/translate/Translate";
-import Layout from "../layout";
+import ProfileLayout from "../profileLayout";
 
 /**
  * LoansAndReservations React component
@@ -8,10 +8,10 @@ import Layout from "../layout";
  */
 export default function LoansAndReservationsPage() {
   return (
-    <Layout
+    <ProfileLayout
       title={Translate({ context: "profile", label: "loansAndReservations" })}
     >
       <h1>hej med dig</h1>
-    </Layout>
+    </ProfileLayout>
   );
 }

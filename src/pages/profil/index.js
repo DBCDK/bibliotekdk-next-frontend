@@ -6,7 +6,7 @@ function Profile() {
 
   useEffect(() => {
     //for now there is no /profil endpoint. /profil will redirect to /profil/mine-biblioteker
-    router.push("/profil/mine-biblioteker");
+    router.replace("/profil/mine-biblioteker");
   }, []);
   return null;
 }
