@@ -13,7 +13,7 @@ describe("CookieBot", () => {
   it(`can accept cookies`, () => {
     cy.get("#CybotCookiebotDialog")
       .should("exist")
-      .should("contain.text", "Denne hjemmeside bruger cookies");
+      .should("contain.text", "Hjemmesiden bruger cookies");
 
     cy.getCookies().should("have.length", 1);
     cy.getCookie("next-auth.anon-session").should("exist");
@@ -36,7 +36,7 @@ describe("CookieBot", () => {
     });
 
     // widget always visible
-    cy.get("#CookiebotWidget").should("be.visible");
+    cy.get("#CookiebotWidget").should("not.exist");
   });
 
   it(`can deny cookies`, () => {
@@ -57,11 +57,11 @@ describe("CookieBot", () => {
     });
   });
 
-  it(`can show cookie policy article`, () => {
+  it(`can trigger cookie consent dialog from footer`, () => {
     cy.visit(`${nextjsBaseUrl}`);
-
     cy.get("[data-cy=footer-column] [data-cy=link]").click();
-
-    cy.contains("En cookie er en lille tekstfil, som lægges på din computer");
+    cy.get("#CybotCookiebotDialog")
+      .should("exist")
+      .should("contain.text", "Hjemmesiden bruger cookies");
   });
 });
