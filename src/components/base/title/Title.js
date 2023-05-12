@@ -116,6 +116,7 @@ Container.propTypes = {
     "title5",
     "title6",
     "title7",
+    "title8",
   ]),
   skeleton: PropTypes.bool,
 };

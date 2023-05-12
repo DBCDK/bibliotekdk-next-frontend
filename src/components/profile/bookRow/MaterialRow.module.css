@@ -1,0 +1,17 @@
+.materialRow {
+  display: grid;
+  grid-column-gap: var(--pt3);
+  grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
+  padding: var(--pt2);
+  border-top: 1px solid var(--iron);
+}
+
+.materialRow:last-of-type() {
+  border-bottom: 1px solid var(--iron);
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+}
