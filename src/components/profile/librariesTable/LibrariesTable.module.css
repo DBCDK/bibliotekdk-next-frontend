@@ -1,0 +1,28 @@
+.tableContainer {
+  padding-right: var(--pt4);
+}
+
+.tableItem {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 1fr;
+  padding: var(--pt3) var(--pt2);
+  align-items: center;
+}
+
+.tableItem {
+  border-bottom: 1px solid var(--iron);
+}
+
+.tableItem:first-child {
+  border-top: 1px solid var(--iron);
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  width: fit-content;
+}
+.removeButtonIcon {
+  margin-left: var(--pt1);
+}
