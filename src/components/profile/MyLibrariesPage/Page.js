@@ -1,5 +1,5 @@
 import Translate from "@/components/base/translate/Translate";
-import Layout from "../layout";
+import ProfileLayout from "../profileLayout";
 
 /**
  * MyLibraries page React component
@@ -8,8 +8,10 @@ import Layout from "../layout";
  */
 export default function MyLibrariesPage() {
   return (
-    <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
+    <ProfileLayout
+      title={Translate({ context: "profile", label: "myLibraries" })}
+    >
       <p>hej med dig</p>
-    </Layout>
+    </ProfileLayout>
   );
 }
