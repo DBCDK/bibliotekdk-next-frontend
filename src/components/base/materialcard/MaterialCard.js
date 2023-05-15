@@ -27,7 +27,15 @@ const MaterialCard = forwardRef(function MaterialCard(
   ref
 ) {
   const renderProps = propAndChildrenTemplate?.(propAndChildrenInput);
-  const { link_href, fullTitle, image_src, children, workId } = renderProps;
+  const {
+    link_href,
+    fullTitle,
+    image_src,
+    children,
+    workId,
+    relatedElementClassName,
+    coverImageClassName,
+  } = renderProps;
 
   const animationStyle = [
     animations.underlineContainer,
@@ -53,11 +61,11 @@ const MaterialCard = forwardRef(function MaterialCard(
         <div
           ref={ref}
           id={workId}
-          className={`${styles.related_element} ${renderProps.relatedElementClassName}`}
+          className={`${styles.related_element} ${relatedElementClassName}`}
         >
           <img
             src={image_src}
-            className={`${styles.cover} ${renderProps.coverImageClassName}`}
+            className={`${styles.cover} ${coverImageClassName}`}
             title={fullTitle}
             alt={Translate({ context: "general", label: "frontpage" })}
           />
