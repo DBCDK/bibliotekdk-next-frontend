@@ -2943,6 +2943,18 @@
       "loansAndReservations": {
         "da": "Lån og reseveringer",
         "en": "Loan and reservations"
+      },
+      "loan": {
+        "da": "Lån",
+        "en": "Loan"
+      },
+      "debt": {
+        "da": "Mellemværende",
+        "en": "Debt"
+      },
+      "reservations": {
+        "da": "Reseveringer",
+        "en": "Reservations"
       }
     }
   }

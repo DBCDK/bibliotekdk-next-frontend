@@ -1,0 +1,67 @@
+.link {
+  margin-bottom: var(--pt1);
+  display: flex;
+  align-items: center;
+}
+
+.link i {
+  display: none;
+  margin: 0 0 0 var(--pt1);
+}
+
+.link.active i {
+  display: block;
+}
+
+.helplink {
+  padding-left: var(--pt4);
+}
+.helplink p {
+  white-space: normal;
+}
+
+.helpmenu {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .helpmenu {
+    display: block;
+  }
+}
+
+.helpicongroup {
+  padding-right: var(--pt1);
+}
+
+.helpiconlink {
+  padding-left: var(--pt1);
+  position: relative;
+  top: 2px;
+}
+
+.helpiconrotate {
+  transform: rotate(90deg);
+  position: relative;
+  top: 5px;
+}
+
+.helpgroup {
+  cursor: pointer;
+}
+
+.helpgroup:hover {
+  text-decoration: underline;
+}
+
+.helpgroup:focus {
+  text-decoration: underline;
+}
+
+.helpactive p {
+  font-family: var(--body-font-semibold);
+}
+
+.helphide {
+  display: none;
+}
