@@ -1,14 +1,11 @@
 import useUser from "@/components/hooks/useUser";
-import MaterialRow from "../bookRow/MaterialRow";
+import MaterialRow from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
 
-const reduceLoan = () => {};
-
 export default ({}) => {
   const { loans } = useUser();
-  console.log(loans);
   return (
     <>
       <section className={styles.section}>
