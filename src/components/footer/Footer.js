@@ -41,7 +41,7 @@ const FirstColumn = () => {
       <div className={styles.spacer}></div>
       <Link
         border={{ bottom: { keepVisible: true } }}
-        href="/artikel/privatlivspolitik/11"
+        onClick={() => Cookiebot.show()}
         className={styles.footerlink}
       >
         <Text tag="span" type="text3">

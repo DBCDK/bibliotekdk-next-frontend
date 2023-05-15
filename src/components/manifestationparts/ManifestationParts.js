@@ -1,6 +1,15 @@
 /**
  * @file - Manifestationparts.js
  * Show a list of manifestationParts - eg. tracks from music - contents of sheetmusic etc.
+ * Is also used to show content of litterature (tableOfContents)
+ *
+ * NOTICE
+ * data input for this component is the 'parts' prop. It must be in the form :
+ *  [title(string), creators[{display:string}] || creatorsFromDescription[string], playingTime(string)]
+ * The title is always shown.
+ * The titlesOnly prop tells whether to show more than title.
+ * Remaining data is shown if present
+ *
  */
 
 import { useData } from "@/lib/api/api";
@@ -28,6 +37,37 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  const creatorsDisplay = (part) => {
+    const creatorString = !isEmpty(part.creators)
+      ? "  -  " + part.creators.map((creator) => creator.display).join(", ")
+      : !isEmpty(part.creatorsFromDescription)
+      ? "  -  " + part.creatorsFromDescription.join(", ")
+      : "";
+    return creatorString;
+  };
+
+  // show some kind of contributors also
+  // we take creators [{display:string}] array first if any - else we look in
+  // creatorsFromDescription [string]
+  // we need to transform orignal array into something parsable
+  const displayarray = partsToShow.map(
+    (part, index) =>
+      part?.title && (
+        <li key={`manifestationlist-${index}`}>
+          <Text type="text3" lines={1} className={styles.partstitle}>
+            {part.title}
+            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
+          </Text>
+
+          {!titlesOnly && part.playingTime && (
+            <Text type="text3" lines={1} className={styles.nobreak}>
+              {part.playingTime}
+            </Text>
+          )}
+        </li>
+      )
+  );
+
   return (
     <div className={styles.manifestionlistContainer}>
       {label && (
@@ -36,23 +76,7 @@ export function ManifestationParts({
         </Text>
       )}
       <ul className={`${styles.manifestionlist} ${className}`}>
-        {partsToShow?.map((part, index) => {
-          return (
-            part &&
-            part?.title && (
-              <li key={`manifestationlist-${index}`}>
-                <Text type="text3" lines={1} className={styles.partstitle}>
-                  {part.title}
-                </Text>
-                {part.playingTime && !titlesOnly && (
-                  <Text type="text3" lines={1} className={styles.nobreak}>
-                    {part.playingTime}
-                  </Text>
-                )}
-              </li>
-            )
-          );
-        })}
+        {!isEmpty(displayarray) && displayarray}
       </ul>
 
       {showMore && (
@@ -79,6 +103,7 @@ export default function Wrap({
   className,
   label,
   showMoreButton = true,
+  parts = [],
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
@@ -86,14 +111,17 @@ export default function Wrap({
 
   const modal = useModal();
 
-  if (error || !data) {
+  if (error || (!data && isEmpty(parts))) {
     return null;
   }
   if (isLoading) {
+    // @TODO -> skeleton
     return null;
   }
-
-  const parts = data?.manifestation?.manifestationParts?.parts;
+  // if we have manifestation parts from usedata hook we use them before data given in props.
+  // TODO .. is that correct ?
+  const manifestationparts =
+    data?.manifestation?.manifestationParts?.parts || parts;
 
   // Open a modal
   const modalOpen = () => {
@@ -107,7 +135,7 @@ export default function Wrap({
 
   return (
     <ManifestationParts
-      parts={parts}
+      parts={manifestationparts}
       titlesOnly={titlesOnly}
       className={className}
       label={label}

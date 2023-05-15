@@ -155,6 +155,10 @@ export function manifestationParts({ pid }) {
             classifications {
               display
             }
+            creators {
+              display
+            }
+            creatorsFromDescription            
             subjects {
               display
             }
