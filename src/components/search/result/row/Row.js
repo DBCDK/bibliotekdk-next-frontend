@@ -153,8 +153,6 @@ export default function ResultRow({
               <Text
                 tag="span"
                 type="text3"
-                lines={2}
-                clamp={true}
                 skeleton={
                   (!uniqueMaterialTypes && isLoading) || !uniqueMaterialTypes
                 }

@@ -151,7 +151,8 @@
 /* Set color of background image, when colors are overridden */
 /*   as used in etc. styles.underlineVarContainer (BlockedUserInformation) */
 .underlineContainer {
-  --underline-height: 0.073rem;
+  /*--underline-height: 0.073rem;*/
+  --underline-height: 1px;
   --underline-background-position: 50% 0%, 50% 100%, 50% 50%;
   --underline-background-size: 100% var(--underline-height), 100% var(--underline-height), 100% 100%;
   --underline-background-hover-size_0pct: 0% var(--underline-height), 0 var(--underline-height), 100% 100%;

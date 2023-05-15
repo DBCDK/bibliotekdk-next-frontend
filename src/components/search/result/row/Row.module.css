@@ -52,7 +52,9 @@
 }
 
 .materials {
-  display: inline-table;
+  /*display: inline-table;*/
+  /*display: flex;*/
+  display: inline;
   margin-top: var(--pt2);
   column-gap: var(--pt2);
 
@@ -79,6 +81,7 @@
 }
 
 .cover img {
+  box-sizing: border-box;
   object-position: 50% 0%;
 }
 .cover {
@@ -86,7 +89,6 @@
   min-height: 160px;
   min-width: 104px;
   max-width: 104px;
-  margin-right: auto;
 }
 
 @media (min-width: 992px) {

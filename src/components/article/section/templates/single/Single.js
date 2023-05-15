@@ -47,55 +47,54 @@ export default function Single({ articles, skeleton }) {
 
   return (
     <Row className={styles.wrap}>
-      <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <LinkOnlyInternalAnimations
-          href={{ pathname, query }}
-          target={`${target}`}
-        >
-          <Row className={`${styles.content} ${skeletonClass}`}>
-            <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
-              <span className={styles.text}>
-                <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
-                  {bodyText}
-                </Text>
-              </span>
-              <div />
-              <span className={styles.title}>
-                <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
-                  <Link
-                    className={`
+      <Col
+        as={LinkOnlyInternalAnimations}
+        href={{ pathname, query }}
+        target={`${target}`}
+        xs={12}
+        lg={{ span: 10, offset: 1 }}
+      >
+        <Row className={`${styles.content} ${skeletonClass}`}>
+          <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
+            <span className={styles.text}>
+              <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
+                {bodyText}
+              </Text>
+            </span>
+            <div />
+            <span className={styles.title}>
+              <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
+                <Link
+                  className={`
                       ${styles.title} 
                       ${styles.underlineContainer__colors}
                     `}
-                    data_display={"inline"}
-                    data_use_new_underline={true}
-                  >
-                    {article.title}
-                  </Link>
-                </Title>
-              </span>
-              <div />
-              <Link a={false} href={{ pathname, query }} target={`${target}`}>
-                <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {btnLabel}
-                </Button>
-              </Link>
-            </Col>
-            <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
-              <div className={styles.imagewrapper}>
-                {image && (
-                  <Image
-                    src={image.url}
-                    alt={image.alt}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                )}
-                {skeleton && <Skeleton className={styles.imageskeleton} />}
-              </div>
-            </Col>
-          </Row>
-        </LinkOnlyInternalAnimations>
+                >
+                  {article.title}
+                </Link>
+              </Title>
+            </span>
+            <div />
+            <Link a={false} href={{ pathname, query }} target={`${target}`}>
+              <Button type="secondary" size="medium" skeleton={skeleton}>
+                {btnLabel}
+              </Button>
+            </Link>
+          </Col>
+          <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
+            <div className={styles.imagewrapper}>
+              {image && (
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
+              {skeleton && <Skeleton className={styles.imageskeleton} />}
+            </div>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );
