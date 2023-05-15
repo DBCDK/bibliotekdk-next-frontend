@@ -59,7 +59,9 @@ describe("CookieBot", () => {
 
   it(`can trigger cookie consent dialog from footer`, () => {
     cy.visit(`${nextjsBaseUrl}`);
+    cy.get("#CybotCookiebotDialogBodyButtonDecline").click();
     cy.get("[data-cy=footer-column] [data-cy=link]").scrollIntoView().click();
+
     cy.get("#CybotCookiebotDialog")
       .should("exist")
       .should("contain.text", "Hjemmesiden bruger cookies");
