@@ -3,6 +3,7 @@ import MaterialRow from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
+import Translate from "@/components/base/translate";
 import { useState } from "react";
 
 export default ({}) => {
@@ -18,7 +19,7 @@ export default ({}) => {
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title type="title5" tag="h3">
-            Mellemværende
+            {Translate({ context: "profile", label: "dept" })}
           </Title>
         </div>
 
@@ -38,7 +39,7 @@ export default ({}) => {
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title type="title5" tag="h3">
-            Lån
+            {Translate({ context: "profile", label: "loans" })}
           </Title>
           <Button
             type="secondary"
@@ -47,7 +48,7 @@ export default ({}) => {
               setIsCheckbox({ ...isCheckbox, loans: !isCheckbox.loans })
             }
           >
-            Forny flere
+            {Translate({ context: "profile", label: "renew-more" })}
           </Button>
         </div>
 
@@ -60,7 +61,7 @@ export default ({}) => {
             materialType={loan.manifestation.materialTypes[0].specific}
             creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
             library={"Herlev bibliotek"}
-            buttonText="Forny"
+            buttonText={Translate({ context: "profile", label: "renew" })}
             hasCheckbox={isCheckbox.loans}
             id={loan.loanId}
           />
@@ -70,7 +71,7 @@ export default ({}) => {
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title type="title5" tag="h3">
-            Reserveringer
+            {Translate({ context: "profile", label: "orders" })}
           </Title>
           <Button
             type="secondary"
@@ -79,7 +80,7 @@ export default ({}) => {
               setIsCheckbox({ ...isCheckbox, orders: !isCheckbox.orders })
             }
           >
-            Slet flere
+            {Translate({ context: "profile", label: "delete-more" })}
           </Button>
         </div>
 
@@ -92,7 +93,7 @@ export default ({}) => {
             materialType={loan.manifestation.materialTypes[0].specific}
             creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
             library={"Herlev bibliotek"}
-            buttonText="Slet"
+            buttonText={Translate({ context: "profile", label: "delete" })}
           />
         ))}
       </section>

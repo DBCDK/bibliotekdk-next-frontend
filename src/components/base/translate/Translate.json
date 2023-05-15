@@ -2930,6 +2930,36 @@
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
       }
+    },
+    "profile": {
+      "dept": {
+        "da": "Mellemværende",
+        "en": "Intermediate"
+      },
+      "loans": {
+        "da": "Lån",
+        "en": "Loans"
+      },
+      "orders": {
+        "da": "Reserveringer",
+        "en": "Reservations"
+      },
+      "renew": {
+        "da": "Forny",
+        "en": "Renew"
+      },
+      "renew-more": {
+        "da": "Forny flere",
+        "en": "Renew several"
+      },
+      "delete": {
+        "da": "Slet",
+        "en": "Delete"
+      },
+      "delete-more": {
+        "da": "Slet flere",
+        "en": "Delete several"
+      }
     }
   }
 }
