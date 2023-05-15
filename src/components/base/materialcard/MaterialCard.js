@@ -21,7 +21,7 @@ const MaterialCard = forwardRef(function MaterialCard(
   {
     propAndChildrenTemplate = templateForRelatedWorks,
     propAndChildrenInput,
-    colSizing = { xs: 11, sm: 5, lg: 4 },
+    colSizing = { xs: 10, sm: 5, lg: 4 },
     onClick = null,
   },
   ref
