@@ -9,10 +9,12 @@
   --underline-font-hover-color: var(--mine-shaft);
   /* -- */
   cursor: pointer;
+  width: 100%;
 }
 
 .related_element {
   display: flex;
+  height: 100%;
   gap: var(--pt2);
   box-sizing: border-box;
 
@@ -22,6 +24,11 @@
   color: var(--mine-shaft);
 }
 
+.related_element__vertical_version {
+  flex-direction: column;
+  gap: var(--pt1);
+}
+
 .cover {
   object-fit: contain;
   object-position: 50% 0;
@@ -29,10 +36,14 @@
   align-self: center;
 }
 
+.cover__vertical_version {
+  width: 87.5%;
+  flex-grow: 1;
+}
+
 .text {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
 }
 
 .text > *:first-child {
@@ -44,5 +55,9 @@
 }
 
 .text > *:nth-child(n+3) {
+  padding-bottom: 0;
+}
+
+.text > *:last-child {
   padding-bottom: 0;
 }

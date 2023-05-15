@@ -53,7 +53,7 @@ WrappedDetailsSection.story = {
             lix: "2222",
           }),
 
-          materialTypes: () => [{ specific: "Musik (dvd)" }],
+          materialTypes: () => [{ specific: "Bog" }],
         },
       },
     },

@@ -72,11 +72,19 @@ function parseForOccasion(manifestations) {
  * @returns {JSX.Element}
  */
 export function Description({ className = "", data = "", skeleton = false }) {
-  const abstract = data?.abstract?.join(", ");
+  const abstract = data?.abstract?.map((abs, index) => (
+    <div
+      key={index}
+      className={index < data?.abstract?.length - 1 ? styles.chapter : ""}
+    >
+      {abs}
+    </div>
+  ));
+
   const occasion = parseForOccasion(data?.manifestations);
   const preAbstract = parseCreatorsForInterview(data?.creators);
 
-  if (!(abstract || occasion || preAbstract)) {
+  if (!(!isEmpty(abstract) || occasion || preAbstract)) {
     return null;
   }
   // Translate Context
@@ -85,7 +93,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
   return (
     <Section title={Translate({ ...context, label: "title" })}>
       <Row className={`${styles.description} ${className}`}>
-        {(abstract || preAbstract || occasion) && (
+        {(!isEmpty(abstract) || preAbstract || occasion) && (
           <Col xs={12} md={8}>
             {occasion && (
               <Text
@@ -107,7 +115,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
                 {preAbstract}.
               </Text>
             )}
-            {abstract && (
+            {!isEmpty(abstract) && (
               <Text
                 dataCy={"description"}
                 type="text2"

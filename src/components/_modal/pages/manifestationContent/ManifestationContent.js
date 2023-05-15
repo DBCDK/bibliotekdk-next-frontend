@@ -8,7 +8,8 @@ import ManifestationParts from "@/components/manifestationparts/ManifestationPar
 import styles from "./ManifestationContent.module.css";
 
 export default function ManifestationContent(props) {
-  const { pid, showOrderTxt, singleManifestation } = props.context;
+  const { pid, showOrderTxt, singleManifestation, parts } = props.context;
+
   return (
     <div>
       <Top className={styles} title="Indhold" />
@@ -22,6 +23,7 @@ export default function ManifestationContent(props) {
         pid={pid}
         showMoreButton={false}
         titlesOnly={false}
+        parts={parts}
         className={styles.contentlist}
       />
     </div>
