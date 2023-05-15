@@ -52,7 +52,7 @@ export default function Wrap({ helpTextId }) {
   );
 
   if (isLoading) {
-    return <Skeleton lines={2} />;
+    return <Skeleton lines={2} className={styles.helpskeleton} />;
   }
 
   if (!data || !data?.nodeById || error) {

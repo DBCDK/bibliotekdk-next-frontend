@@ -40,6 +40,7 @@ export function Arrow({
     </span>
   );
 }
+
 Arrow.propTypes = {
   onClick: PropTypes.func,
   disabled: PropTypes.bool,

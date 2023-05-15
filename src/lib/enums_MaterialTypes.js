@@ -40,7 +40,6 @@ export const MaterialTypeOrderEnum = Object.freeze({
     "FILM (DVD)": { display: "dvd", code: "123" },
   },
   MUSIC: {
-    "MUSIK (NET)": { display: "musik (net)", code: "123" },
     "CD (MUSIK)": { display: "cd (musik)", code: "123" },
     GRAMMOFONPLADE: { display: "grammofonplade", code: "123" },
   },

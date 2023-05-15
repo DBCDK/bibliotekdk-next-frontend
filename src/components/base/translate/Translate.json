@@ -211,6 +211,14 @@
         "da": "Spil",
         "en": "Games"
       },
+      "computergames": {
+        "da": "computerspil",
+        "en": "computergames"
+      },
+      "boardgames": {
+        "da": "brætspil",
+        "en": "boardgames"
+      },
       "music": {
         "da": "Musik",
         "en": "Music"
@@ -553,6 +561,10 @@
         "da": "Indhold",
         "en": "Contents"
       },
+      "manifestationPartsButton": {
+        "da": "Se fuldt indhold",
+        "en": "Full content"
+      },
       "subject": {
         "da": "Emneord",
         "en": "Emneord"
@@ -742,6 +754,10 @@
       "ensemble": {
         "da": "Besætning",
         "en": "Ensemble"
+      },
+      "schooluse": {
+        "da": "Undervisning",
+        "en": "Education"
       },
 
       "physicalDescription": {
@@ -1565,6 +1581,10 @@
       "label-article": {
         "da": "Artikler",
         "en": "Articles"
+      },
+      "label-periodica": {
+        "da": "Periodikum",
+        "en": "LABEL: Mangler oversættelse!"
       },
       "label-movie": {
         "da": "Film",
@@ -2913,6 +2933,16 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
+      }
+    },
+    "profile": {
+      "myLibraries": {
+        "da": "Mine biblioteker",
+        "en": "My libraries"
+      },
+      "loansAndReservations": {
+        "da": "Lån og reseveringer",
+        "en": "Loan and reservations"
       }
     }
   }
