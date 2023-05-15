@@ -3,9 +3,16 @@ import MaterialRow from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
+import { useState } from "react";
 
 export default ({}) => {
   const { loans } = useUser();
+  const [isCheckbox, setIsCheckbox] = useState({
+    depts: false,
+    loans: false,
+    orders: false,
+  });
+
   return (
     <>
       <section className={styles.section}>
@@ -33,7 +40,13 @@ export default ({}) => {
           <Title type="title5" tag="h3">
             Lån
           </Title>
-          <Button type="secondary" size="small">
+          <Button
+            type="secondary"
+            size="small"
+            onClick={() =>
+              setIsCheckbox({ ...isCheckbox, loans: !isCheckbox.loans })
+            }
+          >
             Forny flere
           </Button>
         </div>
@@ -48,6 +61,8 @@ export default ({}) => {
             creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
             library={"Herlev bibliotek"}
             buttonText="Forny"
+            hasCheckbox={isCheckbox.loans}
+            id={loan.loanId}
           />
         ))}
       </section>
@@ -57,7 +72,13 @@ export default ({}) => {
           <Title type="title5" tag="h3">
             Reserveringer
           </Title>
-          <Button type="secondary" size="small">
+          <Button
+            type="secondary"
+            size="small"
+            onClick={() =>
+              setIsCheckbox({ ...isCheckbox, orders: !isCheckbox.orders })
+            }
+          >
             Slet flere
           </Button>
         </div>
