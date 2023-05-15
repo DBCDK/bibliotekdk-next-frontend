@@ -15,7 +15,8 @@ describe("Details-Movie", () => {
     cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
 
     cy.get("[data-cy=text-genre-form]")
-      .next("span")
+      .next("div")
+      .first()
       .should("have.text", "actionfilm, thriller, science fiction");
 
     cy.get("[data-cy=section-title]")

@@ -430,9 +430,11 @@ function RenderMovieLanguages({ values }) {
 
 function RenderGenre({ values }) {
   return (
-    <Text type="text4" lines={1} tag="p">
-      {values.join(", ")}
-    </Text>
+    <div>
+      <Text type="text4" lines={1} tag="span">
+        {values.join(", ")}
+      </Text>
+    </div>
   );
 }
 
