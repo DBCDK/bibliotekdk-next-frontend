@@ -82,9 +82,9 @@ function parsePhysicalDescriptions(manifestation) {
 }
 
 function getRequirementsFromPhysicalDesc(manifestation) {
-  return manifestation?.physicalDescriptions?.map(
-    (description) => description.requirements
-  );
+  return manifestation?.physicalDescriptions
+    ?.map((description) => description.requirements)
+    .join(", ");
 }
 
 /**
@@ -306,8 +306,9 @@ function RenderMovieActorValues({ values, skeleton }) {
 }
 
 /**
+ * OUTCOMMENTED -> pjo 090523 - jed data is fucked up, let's wait a little to see if it gets better
  * Render adaption (movie based on .. a book or something)
- * We give a link to the material the movie is  base on.
+ * We give a link to the material the movie is  based on.
  * @param values
  * @param skeleton
  * @returns {""|JSX.Element}
@@ -424,6 +425,7 @@ function RenderMovieLanguages({ values }) {
  * @returns {*}
  * @constructor
  */
+
 function RenderGenre({ values }) {
   return (
     <Text type="text4" lines={1} tag="span">
@@ -465,11 +467,6 @@ function RenderMovieAudience({ values }) {
 
   return (
     <div className={styles.wrapper}>
-      {!image && (
-        <Text type="text4" lines={2}>
-          {values?.join(", ")}
-        </Text>
-      )}
       {image && (
         <div className={styles.pegiimage}>
           <div className={styles.spacemaker}>
@@ -686,6 +683,7 @@ export function fieldsForRows(manifestation, work, context) {
         hasadaption: {
           label: Translate({ ...context, label: "hasadaption" }),
           value: "",
+          // pjo 090523 commented out for now - jed data is fucked up
           // value: manifestation?.relations?.hasAdaptation?.find((rel) =>
           //   rel?.pid?.startsWith("870970")
           // ),
@@ -701,6 +699,26 @@ export function fieldsForRows(manifestation, work, context) {
               ? manifestation.audience
               : null,
           jsxParser: RenderLitteratureAudience,
+        },
+      },
+      {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          value: !isEmpty(manifestation?.audience?.ages)
+            ? manifestation?.audience?.ages.join(", ")
+            : !isEmpty(manifestation?.audience?.childrenOrAdults)
+            ? manifestation?.audience?.childrenOrAdults
+                .map((child) => child.display)
+                .join(", ")
+            : null,
+        },
+      },
+      {
+        audienceschool: {
+          label: Translate({ ...context, label: "schooluse" }),
+          value: !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
+            : manifestation?.audience?.schoolUse || null,
         },
       },
       {
@@ -811,9 +829,9 @@ export function fieldsForRows(manifestation, work, context) {
 }
 
 /**
- * Merge given arrays - keys in extending array overwrites keys in base array.
+ * Merge given arrays - keys in extending array overwrites keys in base (DEFAULT) array.
  * If an index is given in object it is inserted as desired.
- * New keys are appended to base arrray.
+ * New keys are appended to base array.
  * @param baseArray
  * @param extendingArray
  * @returns {*}

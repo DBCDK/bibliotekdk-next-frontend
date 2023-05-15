@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Overview, { OverviewSkeleton } from "./Overview";
-
 import { StoryTitle, StoryDescription } from "@/storybook";
-import { AccessEnum } from "@/lib/enums";
+import automock_utils from "@/components/_modal/pages/automock_utils";
+import merge from "lodash/merge";
 
 const exportedObject = {
   title: "work/Overview",
@@ -10,8 +10,7 @@ const exportedObject = {
 
 export default exportedObject;
 
-const date = new Date();
-const time = date.getTime();
+const { DEFAULT_STORY_PARAMETERS } = automock_utils();
 
 /** OverviewComponentBuilder
  * @param {string} type
@@ -32,8 +31,8 @@ function OverviewComponentBuilder({
         Overview with description: {descriptionName}
       </StoryDescription>
       <Overview
-        workId={overviewProps.workId ?? "some-workId"}
-        type={overviewProps.type || []}
+        workId={overviewProps.workId}
+        type={overviewProps.type}
         onTypeChange={(el) => overviewProps.onTypeChange(el.type)}
         login={() => {}}
       />
@@ -41,142 +40,11 @@ function OverviewComponentBuilder({
   );
 }
 
-function OverviewStoryBuilder(storyname, resolvers = {}, query = {}) {
-  return {
-    parameters: {
-      graphql: {
-        debug: true,
-        resolvers: resolvers,
-        url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",
-      },
-      nextRouter: {
-        showInfo: true,
-        pathname: `/materiale/${storyname}Edition/work-of:870970-basis:${storyname}`,
-        query: query,
-      },
-    },
-  };
-}
-
-function resolvers(storyname) {
-  return {
-    ...OverviewStoryBuilder(`${storyname}`, {
-      Query: {
-        work: () => {
-          return {
-            titles: { full: ["Asterix og Obelix i det vilde vesten"] },
-            materialTypes: [
-              { specific: "bog" },
-              { specific: "ebog" },
-              { specific: "lydbog (bånd)" },
-              { specific: "lydbog (cd-mp3)" },
-              { specific: "lydbog (net)" },
-            ],
-            creators: [{ display: "Lucky Luke" }, { display: "Ratata" }],
-            workTypes: ["LITERATURE"],
-            manifestations: {
-              mostRelevant: [
-                {
-                  pid: "some-pid-bog" + time,
-                  materialTypes: [{ specific: "bog" }],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-                {
-                  pid: "some-pid-bog-1" + time,
-                  materialTypes: [{ specific: "ebog" }],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-                {
-                  pid: "some-pid-bog-2" + time,
-                  materialTypes: [{ specific: "lydbog (bånd)" }],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-                {
-                  pid: "some-pid-bog-3" + time,
-                  materialTypes: [{ specific: "lydbog (cd-mp3)" }],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-                {
-                  pid: "some-pid-bog-4" + time,
-                  materialTypes: [{ specific: "lydbog (net)" }],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-                {
-                  pid: "some-pid-bog-5" + time,
-                  materialTypes: [
-                    { specific: "lydbog (net)" },
-                    { specific: "soloplade" },
-                  ],
-                  cover: {
-                    detail: "hejsa.cob",
-                  },
-                },
-              ],
-            },
-          };
-        },
-        manifestations: () => {
-          return [
-            {
-              pid: "some-pid-bog" + time,
-              materialTypes: [{ specific: "Ebog" }],
-              accessTypes: [
-                {
-                  display: "fysisk",
-                },
-              ],
-              access: [
-                {
-                  __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-                  loanIsPossible: true,
-                },
-              ],
-              workTypes: ["LITERATURE"],
-              genreAndForm: ["some-genreAndForm - 1", "some-genreAndForm - 2"],
-              physicalDescriptions: [...new Array(10).fill({})],
-              contributors: [...new Array(10).fill({})],
-            },
-            {
-              pid: "some-pid-ebog" + time,
-              materialTypes: [{ specific: "Ebog" }],
-              accessTypes: [
-                {
-                  display: "fysisk",
-                },
-              ],
-              access: [
-                {
-                  __resolveType: AccessEnum.INTER_LIBRARY_LOAN,
-                  loanIsPossible: true,
-                },
-              ],
-              workTypes: ["LITERATURE"],
-              genreAndForm: ["some-genreAndForm - 1", "some-genreAndForm - 2"],
-              physicalDescriptions: [...new Array(10).fill({})],
-              contributors: [...new Array(10).fill({})],
-            },
-          ];
-        },
-      },
-    }),
-  };
-}
-
 export function OverviewWrapped() {
   const [type, setType] = useState(["bog"]);
 
   const overviewProps = {
-    workId: `some-workId-${type}`,
+    workId: `some-work-id-5`,
     type: type,
     onTypeChange: (el) => setType(el),
   };
@@ -186,15 +54,19 @@ export function OverviewWrapped() {
   );
 }
 
-OverviewWrapped.story = {
-  ...resolvers("Wrapped"),
-};
+OverviewWrapped.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 export function OverviewWrappedNoType() {
   const [type, setType] = useState([]);
 
   const overviewProps = {
-    workId: `some-workId-${type}`,
+    workId: `some-work-id-5`,
     type: type,
     onTypeChange: (el) => {
       setTimeout(() => {
@@ -206,9 +78,13 @@ export function OverviewWrappedNoType() {
   return <OverviewComponentBuilder overviewProps={overviewProps} type={[]} />;
 }
 
-OverviewWrappedNoType.story = {
-  ...resolvers("Wrapped"),
-};
+OverviewWrappedNoType.story = merge({}, DEFAULT_STORY_PARAMETERS, {
+  parameters: {
+    graphql: {
+      resolvers: {},
+    },
+  },
+});
 
 /**
  * skeleton

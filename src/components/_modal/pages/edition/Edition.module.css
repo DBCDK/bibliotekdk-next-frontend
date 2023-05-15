@@ -9,6 +9,10 @@
   flex-wrap: nowrap;
 }
 
+.edition .editiontxt {
+  margin-right: var(--pt1);
+}
+
 .edition .title {
   padding: 0 var(--pt2) 0 0;
 }
@@ -56,14 +60,13 @@
   max-height: 100px;
 }
 
-.periodicasummary{
+.periodicasummary {
   /* margin-top: var(--pt2); */
 }
 
-.periodicaformlink{
+.periodicaformlink {
   margin-top: var(--pt2);
 }
-
 
 .link {
   display: flex;
@@ -78,7 +81,6 @@
 .arrow {
   margin: 0 0 0 var(--pt1);
 }
-
 
 @media (min-width: 576px) {
   .edition {

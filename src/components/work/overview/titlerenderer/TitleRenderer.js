@@ -58,9 +58,7 @@ RenderLanguageAddition.propTypes = {
   type: PropTypes.string,
 };
 
-export function RenderTitlesWithoutLanguage({ titles: titlesBeforeFilter }) {
-  const titles = titlesBeforeFilter?.full;
-
+export function RenderTitlesWithoutLanguage({ titles }) {
   return titles?.map((title, index, titlesArray) => (
     <Fragment key={`${title}-${index}`}>
       {title} {index < titlesArray.length - 1 && <br />}
@@ -68,5 +66,5 @@ export function RenderTitlesWithoutLanguage({ titles: titlesBeforeFilter }) {
   ));
 }
 RenderTitlesWithoutLanguage.propTypes = {
-  titles: PropTypes.object,
+  titles: PropTypes.arrayOf(PropTypes.string),
 };

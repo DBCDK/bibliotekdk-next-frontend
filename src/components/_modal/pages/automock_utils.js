@@ -10,9 +10,15 @@ const MANIFESTATION_1 = {
   pid: "some-pid-1",
   materialTypes: [
     {
-      specific: "Bog",
+      specific: "bog",
     },
   ],
+  edition: {
+    edition: "101. udgave",
+    publicationYear: {
+      display: "2009-1",
+    },
+  },
   accessTypes: [{ code: "PHYSICAL", display: "fysisk" }],
   access: [
     {
@@ -33,6 +39,12 @@ const MANIFESTATION_2 = {
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
+  },
+  edition: {
+    edition: "102. udgave",
+    publicationYear: {
+      display: "2009-2",
+    },
   },
   cover: {
     detail:
@@ -184,18 +196,25 @@ const ALL_WORKS = [
       all: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
       mostRelevant: [MANIFESTATION_1, MANIFESTATION_2, MANIFESTATION_3],
     },
+    workTypes: ["LITERATURE"],
+    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+    genreAndForm: ["roman"],
   },
   // A work that is an indexed periodica article
   {
     workId: "some-work-id-2",
     manifestations: { all: [MANIFESTATION_4], mostRelevant: [MANIFESTATION_4] },
     workTypes: ["ARTICLE"],
+    fictionNonfiction: { display: "skønlitteratur", code: "FICTION" },
+    genreAndForm: [],
   },
   // A work that is a periodica
   {
     workId: "some-work-id-3",
     manifestations: { all: [MANIFESTATION_5], mostRelevant: [MANIFESTATION_5] },
     workTypes: ["PERIODICA"],
+    fictionNonfiction: null,
+    genreAndForm: ["roman"],
   },
   // A work that is an ebog
   {
@@ -211,7 +230,7 @@ const ALL_WORKS = [
     creators: [{ display: "Børge 'Linoleum' Skovgulv Gummigulv" }],
     materialTypes: [
       {
-        specific: "Bog",
+        specific: "bog",
       },
     ],
     relations: {
@@ -221,6 +240,33 @@ const ALL_WORKS = [
       isAdaptationOf: [],
       discusses: [],
       discussedIn: [],
+    },
+  },
+  {
+    workId: "some-work-id-5",
+    titles: {
+      full: ["Hugo i Sølvskoven"],
+    },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      all: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
+      mostRelevant: [
+        MANIFESTATION_1,
+        MANIFESTATION_2,
+        MANIFESTATION_3,
+        MANIFESTATION_4,
+        MANIFESTATION_5,
+        MANIFESTATION_6,
+        MANIFESTATION_7,
+      ],
     },
   },
 ];

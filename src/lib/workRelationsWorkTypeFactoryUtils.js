@@ -28,6 +28,14 @@ export function extractGoodCover(manifestations) {
     : covers?.[0] || [];
 }
 
+function getParentRelationInput(parentWork) {
+  return {
+    ...parentWork,
+    relationType: "current",
+    cover: extractGoodCover(parentWork?.manifestations?.mostRelevant),
+  };
+}
+
 /**
  * Article series needs to be enriched with data from ownerWork
  *  Article include relationType 'continues' and 'continuedIn'
@@ -52,11 +60,7 @@ export function enrichArticleSeries(manifestations, parentWork) {
       manifestation.relationType === RelationTypeEnum.CONTINUEDIN.key
   );
 
-  const parentRelationInput = {
-    ...parentWork,
-    relationType: "current",
-    cover: extractGoodCover(parentWork?.manifestations?.mostRelevant),
-  };
+  const parentRelationInput = getParentRelationInput(parentWork);
 
   return [...continues, ...[parentRelationInput], ...continuedIn].map(
     (manifestation) => {
@@ -110,7 +114,7 @@ export function enrichLiterature(manifestations) {
  * @param manifestation
  * @return {*}
  */
-export function mapRelationTypes(manifestation) {
+export function mapRelationWorkTypes(manifestation) {
   return RelationTypeEnum[manifestation?.relationType?.toUpperCase()]?.workType;
 }
 
@@ -122,18 +126,24 @@ export function mapRelationTypes(manifestation) {
  * @return {*}
  */
 export function enrichBySpecificWorkType(manifestations, work) {
-  const relationTypes = uniq(manifestations.map(mapRelationTypes));
+  const relationWorkTypes = uniq(manifestations.map(mapRelationWorkTypes));
 
   const enrichMapper = {
     [WorkTypeEnum.ARTICLE]: () => enrichArticleSeries(manifestations, work),
     [WorkTypeEnum.MOVIE]: () => enrichMovie(manifestations),
-    [WorkTypeEnum.DEBATEARTICLE]: () =>
-      enrichDebateArticle(manifestations, work),
-    [WorkTypeEnum.LITERATURE]: () => enrichLiterature(manifestations, work),
+    [WorkTypeEnum.DEBATEARTICLE]: () => enrichDebateArticle(manifestations),
+    [WorkTypeEnum.LITERATURE]: () => enrichLiterature(manifestations),
   };
 
-  return relationTypes
-    .map((relationType) => enrichMapper[relationType]?.())
+  return relationWorkTypes
+    .map((relationWorkType) =>
+      enrichMapper[relationWorkType]?.().map((manifestation) => {
+        return {
+          ...manifestation,
+          relationWorkType: relationWorkType,
+        };
+      })
+    )
     .filter(
       (manifestation) => manifestation && typeof manifestation !== "undefined"
     )
@@ -204,13 +214,13 @@ export function parseSingleRelationObject(
 /**
  * Gives the flattened relations and parses them to
  *  provide them with e.g. relationType and ownerWork workId
- * @param work
+ * @param relations
  * @return {[{hej: number}]|[{hej: number}]|[{hej: number}]|*|FlatArray<*, *>[]|*[]}
  */
-function getAllWorksWithRelationTypeAndWorkId(work) {
+function getAllWorksWithRelationTypeAndWorkId(relations) {
   return (
-    (work?.relations &&
-      Object.entries(work?.relations)
+    (relations &&
+      Object.entries(relations)
         ?.map((relationTypeArray) =>
           parseSingleRelationObject(relationTypeArray)
         )
@@ -247,7 +257,7 @@ function getUniqWorkWithWorkId(manifestations) {
  */
 export function parseRelations(work) {
   return chainFunctions([
-    getAllWorksWithRelationTypeAndWorkId,
+    (work) => getAllWorksWithRelationTypeAndWorkId(work?.relations),
     getUniqWorkWithWorkId,
     (manifestations) => enrichBySpecificWorkType(manifestations, work),
     groupManifestations,
@@ -260,12 +270,13 @@ export function parseRelations(work) {
  * Returns the factory given work
  * - flatRelations derived from {@link parseRelations}
  * @param work
- * @return {{flatRelations: *}}
+ * @return {{groupedRelations, groupedByRelationWorkTypes, flatRelations: *}}
  */
 export function workRelationsWorkTypeFactory(work) {
   const parsedRelations = work && parseRelations(work);
 
   return {
+    groupedByRelationWorkTypes: groupBy(parsedRelations, "relationWorkType"),
     groupedRelations: groupBy(parsedRelations, "relationType"),
     flatRelations: parsedRelations,
   };

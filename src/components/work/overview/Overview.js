@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import AlternativeOptions from "./alternatives";
 import LocalizationsLink from "./localizationslink";
+import WorkGroupingsOverview from "./workgroupingsoverview";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
@@ -22,6 +23,7 @@ import {
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import { Title } from "@/components/base/title/Title";
 import { useRouter } from "next/router";
+import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
 function useInitMaterialType(
   uniqueMaterialTypes,
@@ -79,11 +81,18 @@ export function Overview({
 
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
+  const titles = [
+    ...(Array.isArray(work?.titles?.full) ? work?.titles?.full : []),
+    ...(Array.isArray(work?.titles?.parallel) ? work?.titles?.parallel : []),
+  ];
+
   return (
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
-          <Col xs={12} xl={3} className={styles.breadcrumbs} />
+          <Col xs={12} xl={3} className={styles.breadcrumbs}>
+            <Breadcrumbs workId={workId} />
+          </Col>
           <Col
             xs={12}
             lg={3}
@@ -108,9 +117,12 @@ export function Overview({
                   skeleton={skeleton}
                   data-cy={"title-overview"}
                 >
-                  <RenderTitlesWithoutLanguage titles={work?.titles} />
+                  <RenderTitlesWithoutLanguage titles={titles} />
                   <RenderLanguageAddition work={work} />
                 </Title>
+              </Col>
+              <Col xs={12}>
+                <WorkGroupingsOverview workId={workId} />
               </Col>
               <Col xs={12} className={styles.ornament}>
                 <Icon
