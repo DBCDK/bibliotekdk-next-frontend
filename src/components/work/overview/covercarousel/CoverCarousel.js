@@ -23,6 +23,7 @@ import useScrollSlider from "@/components/hooks/useScrollSlider";
 import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import Custom404 from "@/pages/404";
 
 const CoverElement = forwardRef(function CoverElement(
   { thisIndex, manifestation, fullTitle, setVisibleElement, sliderId },
@@ -153,13 +154,16 @@ export function CoverCarousel({
 }
 
 export default function Wrap({ allPids, selectedPids, workTitles }) {
-  const { data: manifestationsData, isLoading: manifestationsIsLoading } =
-    useData(
-      selectedPids?.length > 0 &&
-        manifestationFragments.editionManifestations({
-          pid: allPids,
-        })
-    );
+  const {
+    data: manifestationsData,
+    isLoading: manifestationsIsLoading,
+    error: manifestationsError,
+  } = useData(
+    selectedPids?.length > 0 &&
+      manifestationFragments.editionManifestations({
+        pid: allPids,
+      })
+  );
 
   const { manifestationsWithCover } = useMemo(() => {
     return getManifestationsWithCorrectCover(
@@ -169,7 +173,11 @@ export default function Wrap({ allPids, selectedPids, workTitles }) {
     );
   }, [manifestationsData?.manifestations, selectedPids]);
 
-  if (!manifestationsData || manifestationsIsLoading) {
+  if (manifestationsError) {
+    return <Custom404 />;
+  }
+
+  if (manifestationsIsLoading) {
     return <Skeleton className={styles.carousel_skeleton} />;
   }
 
