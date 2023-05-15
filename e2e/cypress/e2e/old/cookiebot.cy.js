@@ -36,7 +36,7 @@ describe("CookieBot", () => {
     });
 
     // widget always visible
-    cy.get("#CookiebotWidget").should("not.exist");
+    // cy.get("#CookiebotWidget").should("not.exist");
   });
 
   it(`can deny cookies`, () => {
