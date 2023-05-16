@@ -98,6 +98,7 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
   const [activeIndex, setActiveIndex] = useState();
 
   useEffect(() => {
+    console.log("expandedGroup", expandedGroup);
     if (!active) {
       setExpandedGroup();
     }
@@ -133,10 +134,12 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
               <Icon
                 size={{ w: 1, h: 1 }}
                 src="arrowrightblue.svg"
-                className={classNames(active ? styles.helpiconrotate : "")}
+                className={classNames(
+                  index === expandedGroup ? styles.helpiconrotate : ""
+                )}
               />
             </span>
-            <Title type={active ? "title4" : "title5"}>
+            <Title type={index === expandedGroup ? "title4" : "title5"}>
               {Translate({
                 context: "profile",
                 label: `${group.name}`,
@@ -146,7 +149,7 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
         </div>
         <div
           key={`dev-helpmenu-${index}`}
-          className={classNames(active ? "" : styles.helphide)}
+          className={classNames(index === expandedGroup ? "" : styles.helphide)}
         >
           <MenuGroup
             menuItems={menus}
