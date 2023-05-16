@@ -1,4 +1,5 @@
 import Text from "@/components/base/text/Text";
+import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon/Icon";
 import styles from "@/components/profile/profilemenu/ProfileMenu.module.css";
@@ -13,22 +14,23 @@ const links = ["loansAndReservations", "myLibraries"];
  *
  * @returns {JSX.Element}
  */
-function MenuLink({ label, href = "#!", setActiveLink, active = false }) {
+function MenuLink({ label, href = "#!", setActiveLink, active }) {
   const activeClass = active ? styles.active : "";
-  const type = active ? "text1" : "text2";
+  const type = active ? "title4" : "title5";
 
   return (
-    <div
-      className={`${styles.link} ${activeClass}`}
-      onClick={() => setActiveLink(links[0])}
-      onKeyDown={(event) => {
-        if (event.key === "Enter") {
-          setActiveLink(links[0]);
-        }
-      }}
-    >
-      <Link href={href} dataCy="menu-fixed-links">
-        <Text type={type}>{Translate({ context: "profile", label })}</Text>
+    <div className={`${styles.link} ${activeClass}`}>
+      <Link
+        href={href}
+        dataCy="menu-fixed-links"
+        onClick={() => setActiveLink(links[1])}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            setActiveLink(links[1]);
+          }
+        }}
+      >
+        <Title type={type}>{Translate({ context: "profile", label })}</Title>
       </Link>
       <Icon src="arrowrightblue.svg" size={1} />
     </div>
@@ -43,31 +45,37 @@ function MenuLink({ label, href = "#!", setActiveLink, active = false }) {
  * @return {*}
  * @constructor
  */
-function MenuGroup({ menuItems, group }) {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  return menuItems[group.name].map((item, index) => (
-    <div className={styles.helplink} key={`div-menulink-${index}`}>
-      <Link
-        href={`/profil/laan-og-reserveringer#${item.title}`}
-        key={`menulink-${index}`}
-        className={classNames(item.id === activeIndex ? styles.helpactive : "")}
-        onClick={() => setActiveIndex(item.id)}
-      >
-        <Text type="text2" lines={2}>
-          {Translate({
-            context: "profile",
-            label: `${item.title}`,
-          })}
+function MenuGroup({ menuItems, group, activeIndex, setActiveIndex }) {
+  return menuItems[group.name].map((item, index) => {
+    const title = Translate({
+      context: "profile",
+      label: `${item.title}`,
+    });
+    const titleDanish = Translate({
+      context: "profile",
+      label: `${item.title}`,
+      requestedLang: "da",
+    });
+    return (
+      <div className={styles.helplink} key={`div-menulink-${index}`}>
+        <Link
+          href={`/profil/laan-og-reserveringer#${titleDanish.toLowerCase()}`}
+          key={`menulink-${index}`}
+          className={`${styles.subLink} ${classNames(
+            item.id === activeIndex ? styles.helpactive : ""
+          )}`}
+          onClick={() => setActiveIndex(item.id)}
+        >
+          <Text type="text2">{title}</Text>
           {item.id === activeIndex && (
             <span className={styles.helpiconlink}>
               <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
             </span>
           )}
-        </Text>
-      </Link>
-    </div>
-  ));
+        </Link>
+      </div>
+    );
+  });
 }
 
 /**
@@ -80,8 +88,11 @@ function MenuGroup({ menuItems, group }) {
  * @return {*}
  * @constructor
  */
-function MenuGroups({ menus, groups, className, active, setActiveLink }) {
+function MenuGroups({ menus, groups, className, setActiveLink, active }) {
   const [expandedGroup, setExpandedGroup] = useState();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  console.log("loans and reservations ", active);
 
   useEffect(() => {
     if (!active) {
@@ -100,19 +111,23 @@ function MenuGroups({ menus, groups, className, active, setActiveLink }) {
       >
         <div
           tabIndex={0}
+          className={styles.helpgroup}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               setExpandedGroup(index === expandedGroup ? null : index);
               setActiveLink(links[1]);
             }
           }}
-          className={styles.helpgroup}
           onClick={() => {
             setExpandedGroup(index === expandedGroup ? null : index);
             setActiveLink(links[1]);
           }}
         >
-          <Text type="text2" lines={30} key={`helpmenu-${index}`}>
+          <div
+            lines={30}
+            key={`helpmenu-${index}`}
+            className={styles.menuGroups}
+          >
             <span className={styles.helpicongroup}>
               <Icon
                 size={{ w: 1, h: 1 }}
@@ -122,19 +137,25 @@ function MenuGroups({ menus, groups, className, active, setActiveLink }) {
                 )}
               />
             </span>
-            <span>
+            <Title type={active ? "title4" : "title5"}>
               {Translate({
                 context: "profile",
                 label: `${group.name}`,
               })}
-            </span>
-          </Text>
+            </Title>
+          </div>
         </div>
         <div
           key={`dev-helpmenu-${index}`}
           className={classNames(expanded || active ? "" : styles.helphide)}
         >
-          <MenuGroup menuItems={menus} group={group} key={`links-${index}`} />
+          <MenuGroup
+            menuItems={menus}
+            group={group}
+            key={`links-${index}`}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
         </div>
       </div>
     );
@@ -149,6 +170,7 @@ function MenuGroups({ menus, groups, className, active, setActiveLink }) {
  */
 export default function ProfileMenu() {
   const [activeLink, setActiveLink] = useState(links[0]);
+
   const menus = {
     loansAndReservations: [
       { title: "debt", id: 0 },
@@ -158,19 +180,23 @@ export default function ProfileMenu() {
   };
   const groups = [{ name: "loansAndReservations", id: 0 }];
 
+  useEffect(() => {
+    console.log("ACTIVELINK", activeLink);
+  }, []);
+
   return (
     <>
-      <MenuLink
-        label={links[0]}
-        href="/profil/mine-biblioteker"
-        active={activeLink === links[0]}
-        setActiveLink={setActiveLink}
-      />
       <MenuGroups
         menus={menus}
         groups={groups}
-        active={activeLink === links[1]}
         setActiveLink={setActiveLink}
+        active={activeLink === links[0]}
+      />
+      <MenuLink
+        label={links[1]}
+        href="/profil/mine-biblioteker"
+        setActiveLink={setActiveLink}
+        active={activeLink === links[1]}
       />
     </>
   );
