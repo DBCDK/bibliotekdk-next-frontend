@@ -8,6 +8,7 @@ import { useState } from "react";
 
 /**
  * TODO
+ * -----
  * Dates
  * Status
  * Dept data
@@ -18,10 +19,12 @@ import { useState } from "react";
  * data reducer (material row)
  * Material row standalone mock
  * Last border on link
+ * Image height
  */
 
 const LoansAndReservations = ({}) => {
-  const { loans, orders } = useUser();
+  const { loanerInfo } = useUser();
+  const { loans, orders } = loanerInfo;
   const [isCheckbox, setIsCheckbox] = useState({
     depts: false,
     loans: false,
@@ -37,7 +40,7 @@ const LoansAndReservations = ({}) => {
           </Title>
         </div>
 
-        {loans.map((loan) => (
+        {loans?.map((loan) => (
           <MaterialRow
             key={loan.loanId}
             image={loan.manifestation.cover.thumbnail}
@@ -66,9 +69,9 @@ const LoansAndReservations = ({}) => {
           </Button>
         </div>
 
-        {loans.map((loan) => (
+        {loans?.map((loan, i) => (
           <MaterialRow
-            key={loan.loanId}
+            key={`loan-${loan.loanId}-#${i}`}
             image={loan.manifestation.cover.thumbnail}
             title={loan.manifestation.titles.main[0]}
             creator={loan.manifestation.creators[0].display}
@@ -102,9 +105,9 @@ const LoansAndReservations = ({}) => {
           </Button>
         </div>
 
-        {orders.map((order) => (
+        {orders?.map((order, i) => (
           <MaterialRow
-            key={order.loanId}
+            key={`loan-${order.loanId}-#${i}`}
             image={order.manifestation.cover.thumbnail}
             title={order.manifestation.titles.main[0]}
             creator={order.manifestation.creators[0].display}

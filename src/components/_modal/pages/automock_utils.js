@@ -603,12 +603,34 @@ const USER_ORDERS = [
   },
 ];
 
+const USER_DEBT = [
+  {
+    title: "Den store danske møbelguide",
+    amount: "224",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+  {
+    title: "Den store Gatsby",
+    amount: "50",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+];
+
 function useMockLoanerInfo(pickupBranch = "790900") {
   const { updateLoanerInfo } = useUser();
   const id = useId();
 
   useMemo(() => {
-    updateLoanerInfo({ pickupBranch: pickupBranch });
+    updateLoanerInfo({
+      pickupBranch: pickupBranch,
+      loans: USER_LOANS,
+      orders: USER_ORDERS,
+      debt: USER_DEBT,
+    });
   }, [id]);
 }
 

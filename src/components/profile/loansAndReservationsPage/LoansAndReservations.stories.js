@@ -1,9 +1,15 @@
 import LoansAndReservations from "./LoansAndReservations";
+import automock_utils from "@/components/_modal/pages/automock_utils";
 
-export default {
+const { useMockLoanerInfo } = automock_utils();
+
+const exportedObject = {
   title: "profile/Loans and reservations",
 };
 
-export function LoansAndReservationsStory() {
+export const LoansAndReservationsStory = () => {
+  useMockLoanerInfo("790900");
   return <LoansAndReservations />;
-}
+};
+
+export default exportedObject;
