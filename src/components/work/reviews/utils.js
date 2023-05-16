@@ -154,14 +154,6 @@ export function contentParser({ content, manifestations }) {
         arr.forEach((chunk) => chunks.push(chunk));
         chunks.splice(idx + 1, 0, lectorLink({ work, key: `link-${idx}` }));
       });
-    /** the regexp is not supported by javascript - (lookbehind) - simply replace \ ... **/
-    // No manifestation references was found, search and replace \\ notations with "" in paragraph content
-    /*else {
-    const regex = /(?<=\\)(.*?)(?=\\)/g;
-    const match = content?.match(regex);
-    const trimmed = content?.replace(`\\${match}\\`, `"${match}"`);
-    chunks.push(trimmed);
-  }*/
   }
 
   // add tailing dot space after each paragraph

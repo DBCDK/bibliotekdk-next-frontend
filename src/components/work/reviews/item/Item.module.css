@@ -3,12 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   height: 100%;
-
   position: relative;
-
-  /* margin-right: var(--pt5); */
   padding: 0 var(--pt5);
 }
 
@@ -84,7 +80,6 @@
 }
 
 /* seperator */
-
 .item .seperator {
   width: 1px;
   height: 100%;
@@ -95,7 +90,6 @@
 }
 
 /* Skeleton */
-
 .item.skeleton div {
   width: 100%;
 }
@@ -107,13 +101,8 @@
     padding: 0 var(--pt8);
   }
 
-  .item {
-    /* min-width: min-content; */
-  }
-
   .item.hasContent {
     flex-shrink: 0;
-    /* max-width: 600px; */
   }
 
   .item.hasContent .details > div:last-child > p {
