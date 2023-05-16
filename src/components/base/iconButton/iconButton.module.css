@@ -1,0 +1,26 @@
+
+.close p {
+  margin: 0 var(--pt1) 0 0;
+
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.icon svg path {
+  /* default as blue icon */
+  stroke: var(--blue);
+  fill: var(--blue);
+}
+.close{
+  cursor: pointer;
+background-color: transparent;
+align-items: center;
+display: flex;
+
+}
+.wrap{
+  align-items: center;
+display: flex;
+}
