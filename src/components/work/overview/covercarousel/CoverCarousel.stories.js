@@ -32,6 +32,7 @@ function CoverCarouselComponentBuilder({
       <StoryTitle>CoverCarousel - {descriptionName}</StoryTitle>
       <StoryDescription>The CoverCarousel: {descriptionName}</StoryDescription>
       <CoverCarousel
+        allPids={coverCarouselProps.allPids}
         selectedPids={coverCarouselProps.selectedPids}
         workTitles={coverCarouselProps.workTitles}
       />
@@ -41,6 +42,7 @@ function CoverCarouselComponentBuilder({
 
 export function CoverCarouselMultipleCovers() {
   const coverCarouselProps = {
+    allPids: ["some-pid-1", "some-pid-2", "some-pid-3"],
     selectedPids: ["some-pid-1", "some-pid-2"],
     workTitles: {
       titles: {
@@ -66,6 +68,7 @@ CoverCarouselMultipleCovers.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 
 export function CoverCarouselSingleManifestation() {
   const coverCarouselProps = {
+    allPids: ["some-pid-1", "some-pid-2", "some-pid-3"],
     selectedPids: ["some-pid-1"],
     workTitles: {
       titles: {
@@ -91,6 +94,7 @@ CoverCarouselSingleManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 
 export function CoverCarouselMultipleManifestationsSingleCover() {
   const coverCarouselProps = {
+    allPids: ["some-pid-1", "some-pid-2", "some-pid-3", "some-pid-6"],
     selectedPids: ["some-pid-1", "some-pid-6"],
     workTitles: {
       titles: {
