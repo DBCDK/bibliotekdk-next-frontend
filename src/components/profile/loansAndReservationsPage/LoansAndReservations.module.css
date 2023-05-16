@@ -7,3 +7,7 @@
   justify-content: space-between;
   margin-bottom: var(--pt2);
 }
+
+.subHeading {
+  margin-bottom: var(--pt8);
+}

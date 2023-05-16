@@ -1,4 +1,4 @@
-import LoansAndReservations from "./LoansAndReservations";
+import LoansAndReservations from "./Page";
 import automock_utils from "@/components/_modal/pages/automock_utils";
 
 const { useMockLoanerInfo } = automock_utils();

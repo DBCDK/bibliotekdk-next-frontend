@@ -49,6 +49,7 @@ const MaterialRow = ({
           aria-checked={isChecked}
           tabIndex="0"
           aria-labelledby="chk1-label"
+          data-id={id}
           onClick={() => setIsChecked(!isChecked)}
           className={classNames(
             styles.materialRow,
@@ -73,10 +74,10 @@ const MaterialRow = ({
         )}
 
         <div>
-          <Cover src={image} className={styles.cover} size="fill-width" />
+          <Cover src={image} size="fill-width" />
         </div>
 
-        <div className={styles.info}>
+        <div>
           {/* Make correct header */}
           <Title type="title8" as="h4">
             {title}

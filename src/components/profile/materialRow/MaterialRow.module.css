@@ -3,14 +3,19 @@
   grid-column-gap: var(--pt3);
   grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
   padding: var(--pt2);
-  
 }
 
 .materialRow_withCheckbox {
   grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1fr;
+  cursor: pointer;
+}
+
+.materialRow_withCheckbox:focus-visible, .materialRow_withCheckbox:hover {
+  outline: 1px solid var(--blue);
 }
 
 .materialRow_wrapper {
+  width: 100%;
   border-top: 1px solid var(--iron);
 }
 

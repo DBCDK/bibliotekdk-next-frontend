@@ -1,9 +1,11 @@
 import MaterialRow from "./MaterialRow";
 
-export default {
+const exportedObject = {
   title: "profile/MaterialRow",
 };
 
 export function MaterialRowStory() {
   return <MaterialRow />;
 }
+
+export default exportedObject;
