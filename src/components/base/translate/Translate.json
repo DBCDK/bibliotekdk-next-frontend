@@ -755,6 +755,10 @@
         "da": "Besætning",
         "en": "Ensemble"
       },
+      "schooluse": {
+        "da": "Undervisning",
+        "en": "Education"
+      },
 
       "physicalDescription": {
         "da": "Længde",
@@ -2932,6 +2936,14 @@
       }
     },
     "profile": {
+      "myLibraries": {
+        "da": "Mine biblioteker",
+        "en": "My libraries"
+      },
+      "loansAndReservations": {
+        "da": "Lån og reseveringer",
+        "en": "Loan and reservations"
+      },
       "dept": {
         "da": "Mellemværende",
         "en": "Intermediate"

@@ -14,8 +14,17 @@
   padding-bottom: var(--pt3);
 }
 
+.cover_and_materialInformation {
+  display: grid;
+  grid-template-rows: fit-content(100%) 1fr;
+  grid-template-columns: none;
+  row-gap: var(--pt4);
+  /* Remove the padding from Bootstrap Row */
+  padding-right: calc(var(--pt2) * -1);
+  padding-left: calc(var(--pt2) * -1);
+}
+
 .cover {
-  /* max-width: 200px; */
   /* Padding is beyond cover width */
   /* Remove the padding from Bootstrap Row */
   padding-right: calc(var(--pt2) * -1);
@@ -23,16 +32,14 @@
 }
 
 .about {
-  padding-right: var(--pt2);
+  /* Re-add the padding from Bootstrap Row */
+  padding-right: calc(var(--pt2) * 1);
+  padding-left: calc(var(--pt2) * 1);
 }
 
 .ornament {
   padding-top: var(--pt3);
   padding-bottom: var(--pt3);
-}
-
-.actions {
-  padding: var(--pt5) 0 0 0;
 }
 
 .materials {
@@ -58,44 +65,29 @@
   text-transform: uppercase;
 }
 
-.disabledbutton {
-  outline: 1px solid black;
-}
-
-.externalLink i {
-  min-width: 20px !important;
-  max-width: 20px !important;
-  min-height: 20px !important;
-  max-height: 20px !important;
-  margin-right: var(--pt1);
-}
-.externalLink img {
-  margin-bottom: -2px;
-}
-
 .skeleton {
   background-color: white;
 }
 
 @media (min-width: 768px) {
-  .cover {
-    /* Padding is beyond cover width */
-    padding-right: var(--pt4);
-    padding-left: 0;
+  .cover_and_materialInformation {
+    display: grid;
+    grid-template-columns: 1fr minmax(300px, max-content);
+  /*fit-content(100%);*/
+    grid-template-rows: none;
   }
+
+  .about {
+    /* Have the left but not right padding from Bootstrap Row */
+    padding-right: calc(var(--pt2) * -1);
+    padding-left: calc(var(--pt2) * 1);
+  }
+
   .overview {
     padding: var(--pt8) 0 var(--pt7) 0;
   }
 
   .breadcrumbs {
     padding-bottom: var(--pt4);
-  }
-}
-
-@media (min-width: 992px) {
-  .cover {
-    /* Padding is beyond cover width */
-    padding-inline: 0;
-    margin-right: var(--pt6);
   }
 }

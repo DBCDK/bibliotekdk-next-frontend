@@ -1,6 +1,8 @@
 /**
  * @file - Manifestationparts.js
  * Show a list of manifestationParts - eg. tracks from music - contents of sheetmusic etc.
+ * Is also used to show content of litterature (tableOfContents)
+ *
  * NOTICE
  * data input for this component is the 'parts' prop. It must be in the form :
  *  [title(string), creators[{display:string}] || creatorsFromDescription[string], playingTime(string)]
@@ -101,6 +103,7 @@ export default function Wrap({
   className,
   label,
   showMoreButton = true,
+  parts = [],
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
@@ -108,14 +111,17 @@ export default function Wrap({
 
   const modal = useModal();
 
-  if (error || !data) {
+  if (error || (!data && isEmpty(parts))) {
     return null;
   }
   if (isLoading) {
+    // @TODO -> skeleton
     return null;
   }
-
-  const parts = data?.manifestation?.manifestationParts?.parts;
+  // if we have manifestation parts from usedata hook we use them before data given in props.
+  // TODO .. is that correct ?
+  const manifestationparts =
+    data?.manifestation?.manifestationParts?.parts || parts;
 
   // Open a modal
   const modalOpen = () => {
@@ -129,7 +135,7 @@ export default function Wrap({
 
   return (
     <ManifestationParts
-      parts={parts}
+      parts={manifestationparts}
       titlesOnly={titlesOnly}
       className={className}
       label={label}

@@ -56,6 +56,7 @@ export function editionManifestations({ pid }) {
     apiUrl: ApiEnums.FBI_API,
     query: `query editionManifestations($pid: [String!]!) {
       manifestations(pid: $pid) {
+        pid
         materialTypes {
           specific
         }
