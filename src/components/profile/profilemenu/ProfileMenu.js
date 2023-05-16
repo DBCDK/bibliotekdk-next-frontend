@@ -73,7 +73,7 @@ function MenuLinks({
     return (
       <div className={styles.grouplink} key={`div-menulink-${index}`}>
         <Link
-          href={`${href}#${titleDanish.toLowerCase()}`} //TODO dont hardcode
+          href={`${href}#${titleDanish.toLowerCase()}`}
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
             index === activeIndex ? styles.groupactive : ""
@@ -150,6 +150,7 @@ function MenuGroup({ menus, href, name, className }) {
         <MenuLinks
           menuItems={menus}
           href={href}
+          passHref={true}
           groupName={name}
           key={`links-${name}`}
           activeIndex={activeIndex}
