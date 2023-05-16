@@ -9,6 +9,19 @@ import Link from "@/components/base/link/Link";
 import classNames from "classnames";
 import { useState } from "react";
 
+/**
+ * Use as renderButton if needed
+ */
+export const MaterialRowButton = ({ buttonText = null, buttonAction }) => {
+  return (
+    <div className={styles.buttonContainer}>
+      <Button type="secondary" size="small" onClick={buttonAction}>
+        {buttonText}
+      </Button>
+    </div>
+  );
+};
+
 export default ({
   image,
   title,
@@ -18,8 +31,7 @@ export default ({
   library,
   hasCheckbox = false,
   id,
-  buttonText = null,
-  buttonAction,
+  renderButton,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -83,15 +95,7 @@ export default ({
           <Text type="text2">6. okt 2022</Text>
         </div>
 
-        <div>
-          {buttonText && (
-            <div className={styles.buttonContainer}>
-              <Button type="secondary" size="small" onClick={buttonAction}>
-                {buttonText}
-              </Button>
-            </div>
-          )}
-        </div>
+        <div>{renderButton && renderButton}</div>
       </>
     </ConditionalWrapper>
   );

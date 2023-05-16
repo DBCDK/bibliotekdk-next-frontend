@@ -1,5 +1,5 @@
 import useUser from "@/components/hooks/useUser";
-import MaterialRow from "../materialRow/MaterialRow";
+import MaterialRow, { MaterialRowButton } from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
@@ -74,9 +74,13 @@ export default ({}) => {
             materialType={loan.manifestation.materialTypes[0].specific}
             creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
             library={"Herlev bibliotek"}
-            buttonText={Translate({ context: "profile", label: "renew" })}
             hasCheckbox={isCheckbox.loans}
             id={loan.loanId}
+            renderButton={
+              <MaterialRowButton
+                buttonText={Translate({ context: "profile", label: "renew" })}
+              />
+            }
           />
         ))}
       </section>
@@ -112,6 +116,11 @@ export default ({}) => {
             buttonText={Translate({ context: "profile", label: "delete" })}
             hasCheckbox={isCheckbox.orders}
             id={order.orderId}
+            renderButton={
+              <MaterialRowButton
+                buttonText={Translate({ context: "profile", label: "delete" })}
+              />
+            }
           />
         ))}
       </section>
