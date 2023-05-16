@@ -4,7 +4,7 @@ import Text from "@/components/base/text";
 import styles from "./MaterialRow.module.css";
 import Title from "@/components/base/title";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
-import ConditionalWrapper from "@/components/utils/ConditionalWrapper";
+import ConditionalWrapper from "@/components/base/conditionalwrapper/ConditionalWrapper";
 import Link from "@/components/base/link/Link";
 import classNames from "classnames";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export const MaterialRowButton = ({ buttonText = null, buttonAction }) => {
   );
 };
 
-export default ({
+const MaterialRow = ({
   image,
   title,
   creator,
@@ -100,3 +100,5 @@ export default ({
     </ConditionalWrapper>
   );
 };
+
+export default MaterialRow;

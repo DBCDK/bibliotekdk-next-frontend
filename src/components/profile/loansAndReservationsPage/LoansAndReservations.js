@@ -17,9 +17,10 @@ import { useState } from "react";
  * action placeholders
  * data reducer (material row)
  * Material row standalone mock
+ * Last border on link
  */
 
-export default ({}) => {
+const LoansAndReservations = ({}) => {
   const { loans, orders } = useUser();
   const [isCheckbox, setIsCheckbox] = useState({
     depts: false,
@@ -113,7 +114,6 @@ export default ({}) => {
               3
             )}
             library={order.pickupBranch.agencyName}
-            buttonText={Translate({ context: "profile", label: "delete" })}
             hasCheckbox={isCheckbox.orders}
             id={order.orderId}
             renderButton={
@@ -127,3 +127,5 @@ export default ({}) => {
     </>
   );
 };
+
+export default LoansAndReservations;
