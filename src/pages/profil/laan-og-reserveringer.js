@@ -5,6 +5,7 @@ import { fetchAll } from "@/lib/api/apiServerOnly";
 
 export default function LoansAndReservations() {
   const router = useRouter();
+
   return (
     <>
       <Header router={router} />

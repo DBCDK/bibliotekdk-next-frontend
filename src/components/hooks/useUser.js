@@ -90,9 +90,11 @@ function useUserImpl() {
         }
       });
     }
-
     return {
       ...data?.session,
+      debt: data?.user?.debt || [],
+      loans: data?.user?.loans || [],
+      orders: data?.user?.orders || [],
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
   }, [data?.session, loggedInUser]);

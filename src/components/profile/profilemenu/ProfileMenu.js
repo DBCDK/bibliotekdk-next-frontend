@@ -7,13 +7,14 @@ import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
+import useUser from "@/components/hooks/useUser";
 
 const links = ["loansAndReservations", "myLibraries"];
 const menus = {
   loansAndReservations: [
     { title: "debt", id: 0, number: 0 },
-    { title: "loan", id: 1, number: 4 },
-    { title: "reservations", id: 2, number: 2 },
+    { title: "loans", id: 1, number: 0 },
+    { title: "orders", id: 2, number: 0 },
   ],
 };
 
@@ -168,6 +169,17 @@ function MenuGroup({ menus, href, name, className }) {
  * @returns {JSX.Element}
  */
 export default function ProfileMenu() {
+  const user = useUser();
+
+  //add number of loans, reservations and debt to menu
+  //remove item menu "debt" from menu if loaner doesnt have debt
+  menus.loansAndReservations.forEach((item, index) => {
+    const number = user.loanerInfo[item.title]?.length;
+    if (number === 0 && item.title === "debt") {
+      menus.loansAndReservations.splice(index, 1);
+    }
+    item.number = number || 0;
+  });
   return (
     <>
       <MenuGroup

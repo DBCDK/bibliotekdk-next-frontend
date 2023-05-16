@@ -55,6 +55,59 @@ export function session() {
         }
         pickupBranch
       }
+      user{
+              debt {
+          title
+          amount
+          creator
+          date
+          currency
+        }
+        loans {
+          loanId
+          dueDate
+          manifestation {
+            pid
+            titles {
+              main
+            }
+            creators {
+              display
+            }
+            materialTypes {
+              specific
+            }
+            cover {
+              thumbnail
+            }
+            recordCreationDate
+          }
+        }
+        orders {
+          orderId
+          status
+          pickUpBranch {
+            agencyName
+          }
+          pickUpExpiryDate
+          manifestation {
+            pid
+            titles {
+              main
+            }
+            creators {
+              display
+            }
+            materialTypes {
+              specific
+            }
+            cover {
+              thumbnail
+            }
+            recordCreationDate
+          }
+        }
+      }
       monitor(name: "bibdknext_session")
     }`,
     variables: {},
