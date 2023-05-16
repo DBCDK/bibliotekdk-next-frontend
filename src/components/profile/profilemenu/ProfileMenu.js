@@ -15,15 +15,10 @@ const menus = {
     { title: "loan", id: 1 },
     { title: "reservations", id: 2 },
   ],
-  secondGroup: [
-    { title: "debt", id: 0 },
-    { title: "loan", id: 1 },
-    { title: "reservations", id: 2 },
-  ],
 };
 
 /**
- * Other menu links
+ * Simple menu link. Used in ProfileMenu.
  *
  * @returns {JSX.Element}
  */
@@ -50,11 +45,13 @@ function MenuLink({ label, href = "#!" }) {
 
 /**
  * One group of menu links
- * for example "Lån og reserveringer", which contains subcategories: "Lån", "Reserveringer", "Mellemværende"
+ * for example "Lån", "Reserveringer", "Mellemværende" under "Lån og reserveringer"
  * @param menuItems
+ * @param href
  * @param groupName
- * @return {*}
- * @constructor
+ * @param activeIndex
+ * @param setActiveIndex
+ * @return {JSX.Element}
  */
 function MenuLinks({
   menuItems,
@@ -101,13 +98,11 @@ function MenuLinks({
 }
 
 /**
- * Menu item, that contains subcategories as links
+ * Menu link, that contains subcategories, which also are links
  * @param menus
  * @param href
- * @param groups
  * @param className
- * @return {*}
- * @constructor
+ * @return {JSX.Element}
  */
 function MenuGroup({ menus, href, name, className }) {
   const [activeIndex, setActiveIndex] = useState();
@@ -118,7 +113,6 @@ function MenuGroup({ menus, href, name, className }) {
     setIsActive(router.asPath.includes(href));
   }, [router.asPath]);
 
-  console.log("isActive", isActive);
   return (
     <div
       key={`menu-component-${name}`}
@@ -176,12 +170,6 @@ export default function ProfileMenu() {
       <MenuGroup
         menus={menus}
         name={links[0]}
-        href="/profil/laan-og-reserveringer"
-      />
-      <MenuLink label={"secondSingleLink"} href="/profil/mine-biblioteker" />
-      <MenuGroup
-        menus={menus}
-        name={"secondGroup"}
         href="/profil/laan-og-reserveringer"
       />
       <MenuLink label={links[1]} href="/profil/mine-biblioteker" />
