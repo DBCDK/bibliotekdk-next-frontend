@@ -59,7 +59,8 @@ function Item({ data, work, isLoading }) {
 
   return (
     <Col
-      sm={!!hasContent.length ? 8 : 4}
+      xs={!!hasContent.length ? 10 : 8}
+      md={!!hasContent.length ? 9 : 4}
       data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
     >
@@ -140,7 +141,22 @@ function Item({ data, work, isLoading }) {
 
           <div className={styles.links}>
             {hasUrls.map((url) => {
+              // general link text
               const shouldUseAlternateText = url?.includes("https://moreinfo");
+              const reviewLinkLabel = Translate({
+                context: "reviews",
+                label: shouldUseAlternateText
+                  ? "alternateReviewLinkText"
+                  : "reviewLinkText",
+              });
+              // material link text
+              const materialReviewLinkLabel =
+                isMaterialReview &&
+                Translate({
+                  context: "reviews",
+                  label: "materialReviewLinkText",
+                });
+
               return (
                 <div className={styles.link} key={url}>
                   <Icon
@@ -156,12 +172,7 @@ function Item({ data, work, isLoading }) {
                     border={{ top: false, bottom: { keepVisible: true } }}
                   >
                     <Text type="text2" skeleton={isLoading} lines={1}>
-                      {Translate({
-                        context: "reviews",
-                        label: shouldUseAlternateText
-                          ? "alternateReviewLinkText"
-                          : "reviewLinkText",
-                      })}
+                      {materialReviewLinkLabel || reviewLinkLabel}
                     </Text>
                   </Link>
                 </div>
@@ -170,6 +181,7 @@ function Item({ data, work, isLoading }) {
           </div>
         </div>
       </div>
+      <hr className={styles.seperator} />
     </Col>
   );
 }

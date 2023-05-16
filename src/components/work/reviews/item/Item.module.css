@@ -1,25 +1,19 @@
-.item,
-.item.hasContent {
+.item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+
+  height: 100%;
 
   position: relative;
+
   /* margin-right: var(--pt5); */
   padding: 0 var(--pt5);
-  box-sizing: border-box;
 }
 
 .item.hasContent .wrap {
   width: 100%;
-}
-
-.item {
-  /* max-width: 400px; */
-}
-
-.item.hasContent {
-  /* min-width: 70%; */
 }
 
 .details {
@@ -87,6 +81,17 @@
 
 .item .link i {
   margin-right: var(--pt1);
+}
+
+/* seperator */
+
+.item .seperator {
+  width: 1px;
+  height: 100%;
+  background-color: var(--iron);
+  border: 0;
+  position: absolute;
+  left: 1px;
 }
 
 /* Skeleton */

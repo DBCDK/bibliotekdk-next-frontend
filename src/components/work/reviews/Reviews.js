@@ -65,16 +65,13 @@ export function Reviews({ data = [], isLoading = false }) {
       >
         {reviews
           .map((review, idx) => (
-            <>
-              <Item
-                key={`review_item_${idx}`}
-                idx={idx}
-                data={review}
-                work={data}
-                isLoading={isLoading}
-              />
-              <hr className={styles.seperator} />
-            </>
+            <Item
+              key={`review_item_${idx}`}
+              idx={idx}
+              data={review}
+              work={data}
+              isLoading={isLoading}
+            />
           ))
           .filter((valid) => valid)}
       </ScrollSnapSlider>

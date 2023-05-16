@@ -95,7 +95,11 @@ export function getContent(data) {
   }
 
   if (data.abstract) {
-    return data.abstract;
+    // Remove abstracts containing only a rating "Vurdering:"
+    const filtered = data.abstract.filter(
+      (abs) => !abs.startsWith("Vurdering:")
+    );
+    return filtered;
   }
 
   return [];
