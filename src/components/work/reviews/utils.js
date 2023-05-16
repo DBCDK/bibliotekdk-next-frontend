@@ -1,8 +1,12 @@
-import { encodeTitleCreator } from "@/lib/utils";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
 import { dateToShortDate, numericToISO } from "@/utils/datetimeConverter";
+import {
+  getWorkUrl,
+  getMaterialReviewUrl,
+  getInfomediaReviewUrl,
+} from "@/lib/utils";
 
 /**
  * Sort reviews by
@@ -120,14 +124,14 @@ export function getUrls(data, work) {
   const urlTxt = title && encodeString(title);
 
   if (isMaterialReview) {
-    return data.pid && [`/anmeldelse/${urlTxt}/${workId}/${data.pid}`];
+    return data.pid && [getMaterialReviewUrl(urlTxt, workId, data.pid)];
   }
 
   if (isInfomediaReview) {
     const infomediaAccess = data.access?.find((a) => a.id);
     return (
       infomediaAccess.id && [
-        `/anmeldelse/${urlTxt}/${workId}/${infomediaAccess.id}`,
+        getInfomediaReviewUrl(urlTxt, workId, infomediaAccess.id),
       ]
     );
   }
@@ -173,15 +177,12 @@ function lectorLink({ work, key }) {
     return ". ";
   }
 
-  // @TODO there may be more than one creator - for now simply grab the first
-  // @TODO if more should be handled it should be done here: src/lib/utils::encodeTitleCreator
   const creator = work?.creators[0]?.display || "";
   const title = work?.titles?.main?.[0] || "";
-  const title_crator = encodeTitleCreator(title, creator);
 
-  const path = `/materiale/${title_crator}/${work?.workId}`;
+  const path = getWorkUrl(title, creator, work?.workId);
   return (
-    <Link key={key} href={path}>
+    <Link key={key} href={path} border={{ bottom: { keepVisible: true } }}>
       {work?.titles?.main}
     </Link>
   );

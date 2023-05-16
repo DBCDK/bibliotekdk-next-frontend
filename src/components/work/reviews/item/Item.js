@@ -26,6 +26,8 @@ import styles from "./Item.module.css";
  * @returns {JSX}
  */
 function Item({ data, work, isLoading }) {
+  console.log("data", data);
+
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
 
