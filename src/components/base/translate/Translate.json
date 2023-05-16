@@ -2941,8 +2941,12 @@
         "en": "My libraries"
       },
       "loansAndReservations": {
-        "da": "Lån og reseveringer",
+        "da": "Lån og reserveringer",
         "en": "Loan and reservations"
+      },
+      "secondGroup": {
+        "da": "Anden gruppe",
+        "en": "Second group"
       },
       "loan": {
         "da": "Lån",
@@ -2953,7 +2957,7 @@
         "en": "Debt"
       },
       "reservations": {
-        "da": "Reseveringer",
+        "da": "Reserveringer",
         "en": "Reservations"
       }
     }

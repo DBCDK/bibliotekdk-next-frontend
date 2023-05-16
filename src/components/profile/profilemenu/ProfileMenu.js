@@ -62,12 +62,17 @@ function MenuGroup({ menuItems, group, activeIndex, setActiveIndex }) {
           href={`/profil/laan-og-reserveringer#${titleDanish.toLowerCase()}`}
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
-            item.id === activeIndex ? styles.helpactive : ""
+            index === activeIndex ? styles.helpactive : ""
           )}`}
-          onClick={() => setActiveIndex(item.id)}
+          onClick={() => setActiveIndex(index)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              setActiveIndex(index);
+            }
+          }}
         >
           <Text type="text2">{title}</Text>
-          {item.id === activeIndex && (
+          {index === activeIndex && (
             <span className={styles.helpiconlink}>
               <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
             </span>
@@ -89,10 +94,8 @@ function MenuGroup({ menuItems, group, activeIndex, setActiveIndex }) {
  * @constructor
  */
 function MenuGroups({ menus, groups, className, setActiveLink, active }) {
-  const [expandedGroup, setExpandedGroup] = useState();
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  console.log("loans and reservations ", active);
+  const [expandedGroup, setExpandedGroup] = useState(); //number
+  const [activeIndex, setActiveIndex] = useState();
 
   useEffect(() => {
     if (!active) {
@@ -101,8 +104,6 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
   }, [active]);
 
   return groups.map((group, index) => {
-    const expanded = index === expandedGroup;
-
     return (
       <div
         key={`group-${group.name}-${index}`}
@@ -115,12 +116,12 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               setExpandedGroup(index === expandedGroup ? null : index);
-              setActiveLink(links[1]);
+              setActiveLink(links[0]);
             }
           }}
           onClick={() => {
             setExpandedGroup(index === expandedGroup ? null : index);
-            setActiveLink(links[1]);
+            setActiveLink(links[0]);
           }}
         >
           <div
@@ -132,9 +133,7 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
               <Icon
                 size={{ w: 1, h: 1 }}
                 src="arrowrightblue.svg"
-                className={classNames(
-                  expanded || active ? styles.helpiconrotate : ""
-                )}
+                className={classNames(active ? styles.helpiconrotate : "")}
               />
             </span>
             <Title type={active ? "title4" : "title5"}>
@@ -147,7 +146,7 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
         </div>
         <div
           key={`dev-helpmenu-${index}`}
-          className={classNames(expanded || active ? "" : styles.helphide)}
+          className={classNames(active ? "" : styles.helphide)}
         >
           <MenuGroup
             menuItems={menus}
@@ -169,7 +168,7 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
  * @returns {JSX.Element}
  */
 export default function ProfileMenu() {
-  const [activeLink, setActiveLink] = useState(links[0]);
+  const [activeLink, setActiveLink] = useState();
 
   const menus = {
     loansAndReservations: [
@@ -177,8 +176,16 @@ export default function ProfileMenu() {
       { title: "loan", id: 1 },
       { title: "reservations", id: 2 },
     ],
+    secondGroup: [
+      { title: "debt", id: 0 },
+      { title: "loan", id: 1 },
+      { title: "reservations", id: 2 },
+    ],
   };
-  const groups = [{ name: "loansAndReservations", id: 0 }];
+  const groups = [
+    { name: "loansAndReservations", id: 0 },
+    { name: "secondGroup", id: 1 },
+  ];
 
   useEffect(() => {
     console.log("ACTIVELINK", activeLink);
