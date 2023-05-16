@@ -2940,6 +2940,10 @@
         "da": "Mine biblioteker",
         "en": "My libraries"
       },
+      "secondSingleLink": {
+        "da": "Andet single link",
+        "en": "Second single link"
+      },
       "loansAndReservations": {
         "da": "Lån og reserveringer",
         "en": "Loan and reservations"
