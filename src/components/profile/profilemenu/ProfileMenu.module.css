@@ -75,3 +75,7 @@
 .grouphide {
   display: none;
 }
+
+.number {
+  margin-left: var(--pt05);
+}

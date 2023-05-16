@@ -11,9 +11,9 @@ import classNames from "classnames/bind";
 const links = ["loansAndReservations", "myLibraries"];
 const menus = {
   loansAndReservations: [
-    { title: "debt", id: 0 },
-    { title: "loan", id: 1 },
-    { title: "reservations", id: 2 },
+    { title: "debt", id: 0, number: 0 },
+    { title: "loan", id: 1, number: 4 },
+    { title: "reservations", id: 2, number: 2 },
   ],
 };
 
@@ -22,9 +22,9 @@ const menus = {
  *
  * @returns {JSX.Element}
  */
-function MenuLink({ label, href = "#!" }) {
+function MenuLink({ label, href }) {
   const router = useRouter();
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(router.asPath.includes(href));
 
   useEffect(() => {
     setIsActive(router.asPath.includes(href));
@@ -86,6 +86,9 @@ function MenuLinks({
           }}
         >
           <Text type="text2">{title}</Text>
+          <Text type="text2" className={styles.number}>
+            ({item.number})
+          </Text>
           {index === activeIndex && (
             <span className={styles.groupiconlink}>
               <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
