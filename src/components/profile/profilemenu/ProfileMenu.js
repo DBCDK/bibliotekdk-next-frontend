@@ -71,12 +71,12 @@ function MenuLinks({
       requestedLang: "da",
     });
     return (
-      <div className={styles.helplink} key={`div-menulink-${index}`}>
+      <div className={styles.grouplink} key={`div-menulink-${index}`}>
         <Link
           href={`${href}#${titleDanish.toLowerCase()}`} //TODO dont hardcode
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
-            index === activeIndex ? styles.helpactive : ""
+            index === activeIndex ? styles.groupactive : ""
           )}`}
           onClick={() => setActiveIndex(index)}
           onKeyDown={(event) => {
@@ -87,7 +87,7 @@ function MenuLinks({
         >
           <Text type="text2">{title}</Text>
           {index === activeIndex && (
-            <span className={styles.helpiconlink}>
+            <span className={styles.groupiconlink}>
               <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
             </span>
           )}
@@ -117,20 +117,19 @@ function MenuGroup({ menus, href, name, className }) {
     <div
       key={`menu-component-${name}`}
       className={className}
-      data-cy="help-menu"
+      data-cy="group-menu"
     >
-      <Link
-        tabIndex={0}
-        className={styles.helpgroup}
-        href={href}
-        passHref={true}
-      >
-        <div lines={30} key={`helpmenu-${name}`} className={styles.menuGroups}>
-          <span className={styles.helpicongroup}>
+      <Link tabIndex={"0"} className={styles.group} href={href} passHref={true}>
+        <div
+          lines={30}
+          key={`groupmenu-${name}`}
+          className={styles.grouptitlecontainer}
+        >
+          <span className={styles.groupicon}>
             <Icon
               size={{ w: 1, h: 1 }}
               src="arrowrightblue.svg"
-              className={classNames(isActive ? styles.helpiconrotate : "")}
+              className={classNames(isActive ? styles.groupiconrotate : "")}
             />
           </span>
           <Title type={isActive ? "title4" : "title5"}>
@@ -142,8 +141,8 @@ function MenuGroup({ menus, href, name, className }) {
         </div>
       </Link>
       <div
-        key={`dev-helpmenu-${name}`}
-        className={classNames(isActive ? "" : styles.helphide)}
+        key={`dev-groupmenu-${name}`}
+        className={classNames(isActive ? "" : styles.grouphide)}
       >
         <MenuLinks
           menuItems={menus}

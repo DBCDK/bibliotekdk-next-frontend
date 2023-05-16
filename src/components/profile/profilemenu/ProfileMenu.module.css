@@ -1,8 +1,3 @@
-.menuGroups {
-  display: inline-flex;
-  align-items: center;
-}
-
 .link {
   margin-bottom: var(--pt1);
   margin-left: var(--pt2);
@@ -23,55 +18,60 @@
   display: inline-flex;
 }
 
-.helplink {
+.grouptitlecontainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.grouplink {
   padding-left: var(--pt4);
 }
-.helplink p {
+.grouplink p {
   white-space: normal;
 }
 
-.helpmenu {
+.groupmenu {
   display: none;
 }
 
 @media (min-width: 992px) {
-  .helpmenu {
+  .groupmenu {
     display: block;
   }
 }
 
-.helpicongroup {
+.groupicon {
   padding-right: var(--pt1);
 }
 
-.helpiconlink {
+.groupiconlink {
   padding-left: var(--pt1);
   position: relative;
   top: 2px;
 }
 
-.helpiconrotate {
+.groupiconrotate {
   transform: rotate(90deg);
   position: relative;
   top: 5px;
 }
 
-.helpgroup {
+.group {
   cursor: pointer;
 }
 
-.helpgroup:hover {
+.group:hover {
   text-decoration: underline;
 }
 
-.helpgroup:focus {
+.group:focus {
   text-decoration: underline;
 }
 
-.helpactive p {
+.groupactive p {
   font-family: var(--body-font-semibold);
 }
 
-.helphide {
+.grouphide {
   display: none;
 }
