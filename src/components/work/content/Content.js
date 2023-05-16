@@ -10,9 +10,11 @@ import Translate from "@/components/base/translate";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import styles from "./Content.module.css";
-import { useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
+import { useModal } from "@/components/_modal";
+import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * The Component function
@@ -22,25 +24,61 @@ import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
  *
  * @returns {JSX.Element}
  */
-export function Content({ className = "", data = {}, skeleton = false }) {
-  if (!data?.tableOfContents?.listOfContent?.length) {
+export function Content({
+  className = "",
+  manifestation = {},
+  skeleton = false,
+}) {
+  const modal = useModal();
+
+  if (!manifestation?.tableOfContents?.listOfContent?.length) {
     return null;
   }
+
+  const morecontent = manifestation?.tableOfContents?.listOfContent
+    ?.map((n) => {
+      return {
+        title: n?.content,
+      };
+    })
+    // we have arrays with empty content in data - TODO tell jedi team
+    .filter((more) => !isEmpty(more.title));
+
+  if (isEmpty(morecontent)) {
+    return null;
+  }
+
   // Translate Context
   const context = { context: "content" };
 
+  const numberToShow = 10;
+
+  const modalOpen = () => {
+    modal.push("manifestationContent", {
+      pid: manifestation?.pid,
+      showOrderTxt: false,
+      singleManifestation: true,
+      showmoreButton: false,
+      parts: morecontent,
+    });
+  };
+
   return (
-    <Section title={Translate({ ...context, label: "title" })}>
+    <Section
+      title={Translate({ ...context, label: "title" })}
+      divider={{ content: false }}
+    >
       <Row className={`${styles.content} ${className}`}>
-        {data?.tableOfContents?.listOfContent?.map((n, i) => {
-          return (
-            <Col key={n.content + i} xs={12}>
-              <Text type="text3" skeleton={skeleton} lines={8}>
-                {n.content}
-              </Text>
-            </Col>
-          );
-        })}
+        {skeleton && <Text skeleton={skeleton}></Text>}
+        <Col xs={12} md={8}>
+          <ManifestationParts
+            parts={morecontent}
+            showMoreButton={true}
+            titlesOnly={false}
+            numberToShow={numberToShow}
+            modalOpen={modalOpen}
+          />
+        </Col>
       </Row>
     </Section>
   );
@@ -81,13 +119,11 @@ export default function Wrap(props) {
   );
 
   // Find manifestation of the right type that contains tableOfContents
-  const manifestation = useMemo(() => {
-    return data?.work?.manifestations?.all?.find(
-      (manifestation) =>
-        manifestation?.tableOfContents &&
-        isEqual(flattenMaterialType(manifestation), type)
-    );
-  }, [data]);
+  const manifestation = data?.work?.manifestations?.mostRelevant?.find(
+    (manifestation) =>
+      manifestation?.tableOfContents &&
+      isEqual(flattenMaterialType(manifestation), type)
+  );
 
   if (error) {
     return null;
@@ -96,7 +132,7 @@ export default function Wrap(props) {
     return <ContentSkeleton {...props} />;
   }
 
-  return <Content {...props} data={manifestation} />;
+  return <Content {...props} manifestation={manifestation} />;
 }
 
 // PropTypes for component

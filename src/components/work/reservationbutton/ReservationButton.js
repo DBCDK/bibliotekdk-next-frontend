@@ -184,7 +184,6 @@ export function OrderButton({
   // Set the index, buttonProps, and buttonTxt
   const index = caseScenarioMap.findIndex((caseCheck) => caseCheck);
   const buttonProps = {
-    className: styles.externalLink,
     skeleton: buttonPropsMap[index].disabled ? null : !access,
     type: buttonType,
     size: size,
@@ -240,7 +239,6 @@ function ReservationButton({
   ) {
     return (
       <Button
-        className={styles.externalLink}
         skeleton={true}
         type={buttonType}
         size={size}

@@ -10,7 +10,9 @@ export default function useDataForWorkRelationsWorkTypeFactory({ workId }) {
     data: relationData,
     isLoading: relationsIsLoading,
     error: relationsError,
-  } = useData(workFragments.workForWorkRelationsWorkTypeFactory({ workId }));
+  } = useData(
+    workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
+  );
 
   return {
     workRelationsWorkTypeFactory: workRelationsWorkTypeFactory(

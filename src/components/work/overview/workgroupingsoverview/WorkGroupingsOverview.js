@@ -21,6 +21,7 @@ import Translate from "@/components/base/translate";
 import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataForWorkRelationsWorkTypeFactory";
 import { useEffect, useState } from "react";
 import styles from "./WorkGroupingsOverview.module.css";
+import { dateToShortDate } from "@/utils/datetimeConverter";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
@@ -108,7 +109,7 @@ function RenderHostPublication({ hostPublication }) {
   return (
     hostPublication && (
       <Text className={styles.display_inline}>
-        {hostPublication?.title}, {hostPublication?.issue}
+        {hostPublication?.title}, {dateToShortDate(hostPublication?.issue)}
       </Text>
     )
   );
@@ -124,16 +125,17 @@ export default function Wrap({ workId }) {
     workId && workFragments.series({ workId: workId })
   );
 
-  const { workRelationsWorkTypeFactory } =
+  const { workRelationsWorkTypeFactory, data: workData } =
     useDataForWorkRelationsWorkTypeFactory({
       workId: workId,
     });
 
   const { groupedByRelationWorkTypes } = workRelationsWorkTypeFactory;
 
-  const current = groupedByRelationWorkTypes?.[WorkTypeEnum.ARTICLE]?.find(
-    (current) => current.relationType === "current"
-  );
+  const current =
+    groupedByRelationWorkTypes?.[WorkTypeEnum.ARTICLE]?.find(
+      (current) => current.relationType === "current"
+    ) || workData?.work;
 
   const hostPublication =
     current?.manifestations?.mostRelevant?.[0]?.hostPublication;
