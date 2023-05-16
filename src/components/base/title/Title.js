@@ -107,7 +107,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6", "span", "p"]),
+  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6", "span"]),
   type: PropTypes.oneOf([
     "title1",
     "title2",
