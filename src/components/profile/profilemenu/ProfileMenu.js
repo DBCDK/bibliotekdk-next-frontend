@@ -5,6 +5,7 @@ import Icon from "@/components/base/icon/Icon";
 import styles from "@/components/profile/profilemenu/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 
 const links = ["loansAndReservations", "myLibraries"];
@@ -41,12 +42,12 @@ function MenuLink({ label, href = "#!", setActiveLink, active }) {
  * One group of menu links
  * for example "Lån og reserveringer", which contains subcategories: "Lån", "Reserveringer", "Mellemværende"
  * @param menuItems
- * @param group
+ * @param groupName
  * @return {*}
  * @constructor
  */
-function MenuGroup({ menuItems, group, activeIndex, setActiveIndex }) {
-  return menuItems[group.name].map((item, index) => {
+function MenuLinks({ menuItems, groupName, activeIndex, setActiveIndex }) {
+  return menuItems[groupName].map((item, index) => {
     const title = Translate({
       context: "profile",
       label: `${item.title}`,
@@ -59,7 +60,7 @@ function MenuGroup({ menuItems, group, activeIndex, setActiveIndex }) {
     return (
       <div className={styles.helplink} key={`div-menulink-${index}`}>
         <Link
-          href={`/profil/laan-og-reserveringer#${titleDanish.toLowerCase()}`}
+          href={`/profil/laan-og-reserveringer#${titleDanish.toLowerCase()}`} //TODO dont hardcode
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
             index === activeIndex ? styles.helpactive : ""
@@ -151,9 +152,9 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
           key={`dev-helpmenu-${index}`}
           className={classNames(index === expandedGroup ? "" : styles.helphide)}
         >
-          <MenuGroup
+          <MenuLinks
             menuItems={menus}
-            group={group}
+            groupName={group.name}
             key={`links-${index}`}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
@@ -162,6 +163,72 @@ function MenuGroups({ menus, groups, className, setActiveLink, active }) {
       </div>
     );
   });
+}
+
+/**
+ * Menu item, that contains subcategories as links
+ * @param menus
+ * @param groups
+ * @param className
+ * @param setActiveLink
+ * @param active
+ * @return {*}
+ * @constructor
+ */
+function MenuGroup({ menus, name, className, setActiveLink, active }) {
+  const [activeIndex, setActiveIndex] = useState();
+  const router = useRouter();
+
+  return (
+    <div
+      key={`menu-component-${name}`}
+      className={className}
+      data-cy="help-menu"
+    >
+      <div
+        tabIndex={0}
+        className={styles.helpgroup}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            setActiveLink(active ? "" : name);
+            router.push(`/profil/laan-og-reserveringer`);
+          }
+        }}
+        onClick={() => {
+          setActiveLink(active ? "" : name);
+          router.push(`/profil/laan-og-reserveringer`);
+        }}
+      >
+        <div lines={30} key={`helpmenu-${name}`} className={styles.menuGroups}>
+          <span className={styles.helpicongroup}>
+            <Icon
+              size={{ w: 1, h: 1 }}
+              src="arrowrightblue.svg"
+              className={classNames(active ? styles.helpiconrotate : "")}
+            />
+          </span>
+          <Title type={active ? "title4" : "title5"}>
+            {Translate({
+              context: "profile",
+              label: `${name}`,
+            })}
+          </Title>
+        </div>
+      </div>
+      <div
+        key={`dev-helpmenu-${name}`}
+        className={classNames(active ? "" : styles.helphide)}
+      >
+        <MenuLinks
+          menuItems={menus}
+          groupName={name}
+          key={`links-${name}`}
+          activeIndex={activeIndex}
+          setActiveIndex={setActiveIndex}
+        />
+      </div>
+    </div>
+  );
 }
 
 /**
@@ -190,15 +257,17 @@ export default function ProfileMenu() {
     { name: "secondGroup", id: 1 },
   ];
 
-  useEffect(() => {
-    console.log("ACTIVELINK", activeLink);
-  }, []);
-
   return (
     <>
-      <MenuGroups
+      {/* <MenuGroups
         menus={menus}
         groups={groups}
+        setActiveLink={setActiveLink}
+        active={activeLink === links[0]}
+      /> */}
+      <MenuGroup
+        menus={menus}
+        name={links[0]}
         setActiveLink={setActiveLink}
         active={activeLink === links[0]}
       />
