@@ -6,8 +6,21 @@ import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
 import { useState } from "react";
 
+/**
+ * TODO
+ * Dates
+ * Status
+ * Dept data
+ * Better mock data (different books)
+ * checkbox focus style
+ * checkbox hover style
+ * action placeholders
+ * data reducer (material row)
+ * Material row standalone mock
+ */
+
 export default ({}) => {
-  const { loans } = useUser();
+  const { loans, orders } = useUser();
   const [isCheckbox, setIsCheckbox] = useState({
     depts: false,
     loans: false,
@@ -84,16 +97,21 @@ export default ({}) => {
           </Button>
         </div>
 
-        {loans.map((loan) => (
+        {orders.map((order) => (
           <MaterialRow
-            key={loan.loanId}
-            image={loan.manifestation.cover.thumbnail}
-            title={loan.manifestation.titles.main[0]}
-            creator={loan.manifestation.creators[0].display}
-            materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
-            library={"Herlev bibliotek"}
+            key={order.loanId}
+            image={order.manifestation.cover.thumbnail}
+            title={order.manifestation.titles.main[0]}
+            creator={order.manifestation.creators[0].display}
+            materialType={order.manifestation.materialTypes[0].specific}
+            creationYear={order.manifestation.recordCreationDate.substring(
+              0,
+              3
+            )}
+            library={order.pickupBranch.agencyName}
             buttonText={Translate({ context: "profile", label: "delete" })}
+            hasCheckbox={isCheckbox.orders}
+            id={order.orderId}
           />
         ))}
       </section>

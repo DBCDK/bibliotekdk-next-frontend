@@ -35,7 +35,7 @@ export default ({
         <article
           role="checkbox"
           aria-checked={isChecked}
-          tabindex="0"
+          tabIndex="0"
           aria-labelledby="chk1-label"
           onClick={() => setIsChecked(!isChecked)}
           className={classNames(
