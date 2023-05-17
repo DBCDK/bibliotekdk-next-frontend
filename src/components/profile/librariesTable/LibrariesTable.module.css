@@ -26,3 +26,7 @@
 .removeButtonIcon {
   margin-left: var(--pt1);
 }
+
+.textLabel {
+  color: var(--blue);
+}

@@ -35,7 +35,7 @@ export function LibrariesTableStory() {
   return (
     <div>
       <StoryTitle>LibrariesTable</StoryTitle>
-      <LibrariesTable mockData={mockData} />
+      <LibrariesTable data={mockData} />
     </div>
   );
 }
