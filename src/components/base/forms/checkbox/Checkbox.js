@@ -77,7 +77,7 @@ export function Checkbox({
 Checkbox.propTypes = {
   id: PropTypes.string.isRequired,
   ariaLabel: PropTypes.string.isRequired,
-  tabIndex: PropTypes.string,
+  tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
   checked: PropTypes.bool,
   invalid: PropTypes.bool,

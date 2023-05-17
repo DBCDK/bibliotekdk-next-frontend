@@ -2948,17 +2948,45 @@
         "da": "Tilføj bibliotek",
         "en": "Add library"
       },
-      "remove":{
-        "da":"Fjern",
+      "remove": {
+        "da": "Fjern",
         "en": "Remove"
       },
       "lastUsed": {
-        "da":"Sidst anvendt",
-        "en":"Last used"
+        "da": "Sidst anvendt",
+        "en": "Last used"
       },
-      "municipalityOfResidence":{
+      "municipalityOfResidence": {
         "da": "Bopælskommune",
         "en": "Municipality of residence"
+      },
+      "debt": {
+        "da": "Mellemværende",
+        "en": "Intermediate"
+      },
+      "loans": {
+        "da": "Lån",
+        "en": "Loans"
+      },
+      "orders": {
+        "da": "Reserveringer",
+        "en": "Reservations"
+      },
+      "renew": {
+        "da": "Forny",
+        "en": "Renew"
+      },
+      "renew-more": {
+        "da": "Forny flere",
+        "en": "Renew several"
+      },
+      "delete": {
+        "da": "Slet",
+        "en": "Delete"
+      },
+      "delete-more": {
+        "da": "Slet flere",
+        "en": "Delete several"
       }
     }
   }

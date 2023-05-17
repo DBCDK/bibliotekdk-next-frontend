@@ -1,0 +1,13 @@
+.section {
+  margin-bottom: var(--pt8);
+}
+
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--pt2);
+}
+
+.subHeading {
+  margin-bottom: var(--pt8);
+}
