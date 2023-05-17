@@ -2944,6 +2944,22 @@
         "da": "Lån og reseveringer",
         "en": "Loan and reservations"
       },
+      "addLibrary": {
+        "da": "Tilføj bibliotek",
+        "en": "Add library"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
+      "lastUsed": {
+        "da": "Sidst anvendt",
+        "en": "Last used"
+      },
+      "municipalityOfResidence": {
+        "da": "Bopælskommune",
+        "en": "Municipality of residence"
+      },
       "debt": {
         "da": "Mellemværende",
         "en": "Intermediate"
