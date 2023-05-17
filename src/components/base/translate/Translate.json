@@ -2941,20 +2941,36 @@
         "en": "My libraries"
       },
       "loansAndReservations": {
-        "da": "Lån og reserveringer",
-        "en": "Loans and orders"
-      },
-      "loans": {
-        "da": "Lån",
-        "en": "Loan"
+        "da": "Lån og reseveringer",
+        "en": "Loan and reservations"
       },
       "debt": {
         "da": "Mellemværende",
-        "en": "Debt"
+        "en": "Intermediate"
+      },
+      "loans": {
+        "da": "Lån",
+        "en": "Loans"
       },
       "orders": {
         "da": "Reserveringer",
-        "en": "Orders"
+        "en": "Reservations"
+      },
+      "renew": {
+        "da": "Forny",
+        "en": "Renew"
+      },
+      "renew-more": {
+        "da": "Forny flere",
+        "en": "Renew several"
+      },
+      "delete": {
+        "da": "Slet",
+        "en": "Delete"
+      },
+      "delete-more": {
+        "da": "Slet flere",
+        "en": "Delete several"
       }
     }
   }

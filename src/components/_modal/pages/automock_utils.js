@@ -464,12 +464,173 @@ const DEFAULT_STORY_PARAMETERS = {
   },
 };
 
+const USER_LOANS = [
+  {
+    loanId: "120200553",
+    dueDate: "2023-01-31T23:00:00.000Z",
+    manifestation: {
+      pid: "870970-basis:51098838",
+      titles: {
+        main: ["One Direction"],
+      },
+      creators: [
+        {
+          display: "Sarah Delmege",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51098838&attachment_type=forside_lille&bibliotek=870970&source_id=150020&key=f4ebcbb4b84cf26e7071",
+      },
+      recordCreationDate: "20140508",
+    },
+  },
+  {
+    loanId: "120200589",
+    dueDate: "2023-05-06T22:00:00.000Z",
+    manifestation: {
+      pid: "870970-basis:23424916",
+      titles: {
+        main: ["Efter uvejret"],
+      },
+      creators: [
+        {
+          display: "Lauren Brooke",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
+      },
+      recordCreationDate: "20010323",
+    },
+  },
+  {
+    loanId: "120200590",
+    dueDate: "2023-05-04T22:00:00.000Z",
+    manifestation: {
+      pid: "870970-basis:23518260",
+      titles: {
+        main: ["Vennebogen & Koglerier"],
+      },
+      creators: [
+        {
+          display: "Peer Hultberg",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://default-forsider.dbc.dk/covers-12/thumbnail/4f0789e9-b478-526d-879e-a5931d9c552e.jpg",
+      },
+      recordCreationDate: "20010529",
+    },
+  },
+];
+
+const USER_ORDERS = [
+  {
+    orderId: "2982910",
+    status: "",
+    pickupBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: "2023-05-04T22:00:00.000Z",
+    manifestation: {
+      pid: "870970-basis:23518260",
+      titles: {
+        main: ["Vennebogen & Koglerier"],
+      },
+      creators: [
+        {
+          display: "Peer Hultberg",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://default-forsider.dbc.dk/covers-12/thumbnail/4f0789e9-b478-526d-879e-a5931d9c552e.jpg",
+      },
+      recordCreationDate: "20010529",
+    },
+  },
+  {
+    orderId: "2982910",
+    status: "",
+    pickupBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: "2023-05-04T22:00:00.000Z",
+    manifestation: {
+      pid: "870970-basis:23424916",
+      titles: {
+        main: ["Efter uvejret"],
+      },
+      creators: [
+        {
+          display: "Lauren Brooke",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
+      },
+      recordCreationDate: "20010323",
+    },
+  },
+];
+
+const USER_DEBT = [
+  {
+    title: "Den store danske møbelguide",
+    amount: "224",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+  {
+    title: "Den store Gatsby",
+    amount: "50",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+];
+
 function useMockLoanerInfo(pickupBranch = "790900") {
   const { updateLoanerInfo } = useUser();
   const id = useId();
 
   useMemo(() => {
-    updateLoanerInfo({ pickupBranch: pickupBranch });
+    updateLoanerInfo({
+      pickupBranch: pickupBranch,
+      loans: USER_LOANS,
+      orders: USER_ORDERS,
+      debt: USER_DEBT,
+    });
   }, [id]);
 }
 
@@ -495,5 +656,7 @@ export default function automock_utils() {
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
+    USER_LOANS,
+    USER_ORDERS,
   };
 }

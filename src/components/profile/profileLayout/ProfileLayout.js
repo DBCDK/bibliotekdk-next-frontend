@@ -19,7 +19,7 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col md={9}>
           {/**page content here */}
-          <Title className={styles.title} type="title2">
+          <Title className={styles.title} type="title2" tag="h1">
             {title}
           </Title>
           {children}
