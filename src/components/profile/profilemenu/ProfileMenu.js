@@ -8,8 +8,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 import useUser from "@/components/hooks/useUser";
+import { encodeString } from "@/lib/utils";
 
-const links = ["loansAndReservations", "myLibraries"];
+/**
+ * Profile menu main items
+ */
+const menuItems = ["loansAndReservations", "myLibraries"];
+
+/**
+ * Menu items with subcategories
+ */
 const menus = {
   loansAndReservations: [
     { title: "debt", id: 0, number: 0 },
@@ -19,7 +27,7 @@ const menus = {
 };
 
 /**
- * Simple menu link. Used in ProfileMenu.
+ * Simple menu link without subcategories.
  *
  * @returns {JSX.Element}
  */
@@ -45,8 +53,8 @@ function MenuLink({ label, href }) {
 }
 
 /**
- * One group of menu links
- * for example "Lån", "Reserveringer", "Mellemværende" under "Lån og reserveringer"
+ * One group of subcategories in the menu.
+ * f. ex. "Lån", "Reserveringer", "Mellemværende" under "Lån og reserveringer"
  * @param menuItems
  * @param href
  * @param groupName
@@ -54,13 +62,15 @@ function MenuLink({ label, href }) {
  * @param setActiveIndex
  * @return {JSX.Element}
  */
-function MenuLinks({
+function MenuLinkGroup({
   menuItems,
   href,
   groupName,
   activeIndex,
   setActiveIndex,
 }) {
+  const router = useRouter();
+
   return menuItems[groupName].map((item, index) => {
     const title = Translate({
       context: "profile",
@@ -71,10 +81,18 @@ function MenuLinks({
       label: `${item.title}`,
       requestedLang: "da",
     });
+
+    const urlEnding = `#${encodeString(titleDanish)}`;
+
+    //marks subcategory when opening the page from an url with the subcategory
+    if (router.asPath.includes(urlEnding)) {
+      setActiveIndex(index);
+    }
+
     return (
       <div className={styles.grouplink} key={`div-menulink-${index}`}>
         <Link
-          href={`${href}#${titleDanish.toLowerCase()}`}
+          href={`${href}${urlEnding}`}
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
             index === activeIndex ? styles.groupactive : ""
@@ -148,7 +166,7 @@ function MenuGroup({ menus, href, name, className }) {
         key={`dev-groupmenu-${name}`}
         className={classNames(isActive ? "" : styles.grouphide)}
       >
-        <MenuLinks
+        <MenuLinkGroup
           menuItems={menus}
           href={href}
           passHref={true}
@@ -172,7 +190,7 @@ export default function ProfileMenu() {
   const user = useUser();
 
   //add number of loans, reservations and debt to menu
-  //remove item menu "debt" from menu if loaner doesnt have debt
+  //remove menu item "debt" from menu if loaner doesnt have debt
   menus.loansAndReservations.forEach((item, index) => {
     const number = user.loanerInfo[item.title]?.length;
     if (number === 0 && item.title === "debt") {
@@ -184,10 +202,10 @@ export default function ProfileMenu() {
     <>
       <MenuGroup
         menus={menus}
-        name={links[0]}
+        name={menuItems[0]}
         href="/profil/laan-og-reserveringer"
       />
-      <MenuLink label={links[1]} href="/profil/mine-biblioteker" />
+      <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
     </>
   );
 }
