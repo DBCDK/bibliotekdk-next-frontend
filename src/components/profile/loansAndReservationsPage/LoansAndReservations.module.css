@@ -11,3 +11,12 @@
 .subHeading {
   margin-bottom: var(--pt8);
 }
+
+.isReady {
+  display: block;
+  color: var(--success);
+}
+
+.isWarning {
+  color: var(--error_temp);
+}

@@ -23,6 +23,14 @@
   border-bottom: 1px solid var(--iron);
 }
 
+.materialRow_green {
+  background-color: var(--success-light);
+}
+
+.materialRow_red {
+  background-color: var(--error-light_temp);
+}
+
 .buttonContainer {
   display: flex;
   align-items: center;

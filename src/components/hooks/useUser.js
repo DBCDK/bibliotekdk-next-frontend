@@ -27,7 +27,6 @@ function useUserMock() {
   const useUserMockKey = "useUserMock";
   const authUser = { name: "Some Name", mail: "some@mail.dk" };
   const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
-  const { USER_LOANS, USER_ORDERS } = automock_utils();
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
@@ -46,9 +45,6 @@ function useUserMock() {
       // Broadcast update
       mutate(useUserMockKey);
     },
-    loans: USER_LOANS,
-    orders: USER_ORDERS,
-    fines: [],
   };
 }
 

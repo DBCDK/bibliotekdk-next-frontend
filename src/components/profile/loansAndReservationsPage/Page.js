@@ -1,5 +1,8 @@
 import useUser from "@/components/hooks/useUser";
-import MaterialRow, { MaterialRowButton } from "../materialRow/MaterialRow";
+import MaterialRow, {
+  DynamicCloumn,
+  MaterialRowButton,
+} from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
@@ -7,6 +10,7 @@ import Translate from "@/components/base/translate";
 import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
+import { dateToDayInMonth } from "@/utils/datetimeConverter";
 
 /**
  * TODO
@@ -32,9 +36,9 @@ const getCheckedElements = (parentRef) => {
   return checkedElements;
 };
 
-const LoansAndReservations = ({}) => {
+const LoansAndReservations = () => {
   const { loanerInfo } = useUser();
-  const { loans, orders } = loanerInfo;
+  const { loans, orders, debt } = loanerInfo;
   const [isCheckbox, setIsCheckbox] = useState({
     debts: false,
     loans: false,
@@ -71,15 +75,21 @@ const LoansAndReservations = ({}) => {
           </Title>
         </div>
 
-        {loans?.map((loan) => (
+        {debt?.map((intermediate, i) => (
           <MaterialRow
-            key={loan.loanId}
-            image={loan.manifestation.cover.thumbnail}
-            title={loan.manifestation.titles.main[0]}
-            creator={loan.manifestation.creators[0].display}
-            materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
+            key={`intermediate-${intermediate.title}-#${i}`}
+            // image={loan.manifestation.cover.thumbnail}
+            title={intermediate.title}
+            // creator={loan.manifestation.creators[0].display}
+            // materialType={loan.manifestation.materialTypes[0].specific}
+            // creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
             library={"Herlev bibliotek"}
+            dynamicColumn={
+              <DynamicCloumn className={styles.isWarning}>
+                {intermediate.amount} kr
+              </DynamicCloumn>
+            }
+            status="RED"
           />
         ))}
       </section>
@@ -138,27 +148,56 @@ const LoansAndReservations = ({}) => {
           </Button>
         </div>
 
-        {orders?.map((order, i) => (
-          <MaterialRow
-            key={`loan-${order.loanId}-#${i}`}
-            image={order.manifestation.cover.thumbnail}
-            title={order.manifestation.titles.main[0]}
-            creator={order.manifestation.creators[0].display}
-            materialType={order.manifestation.materialTypes[0].specific}
-            creationYear={order.manifestation.recordCreationDate.substring(
-              0,
-              4
-            )}
-            library={order.pickupBranch.agencyName}
-            hasCheckbox={isCheckbox.orders}
-            id={order.orderId}
-            renderButton={
-              <MaterialRowButton
-                buttonText={Translate({ context: "profile", label: "delete" })}
-              />
-            }
-          />
-        ))}
+        {orders?.map((order, i) => {
+          const pickUpDate = new Date(order.pickUpExpiryDate);
+          const dateString = dateToDayInMonth(pickUpDate);
+          const isReadyToPickup = !!order.pickUpExpiryDate;
+
+          return (
+            <MaterialRow
+              key={`loan-${order.loanId}-#${i}`}
+              image={order.manifestation.cover.thumbnail}
+              title={order.manifestation.titles.main[0]}
+              creator={order.manifestation.creators[0].display}
+              materialType={order.manifestation.materialTypes[0].specific}
+              creationYear={order.manifestation.recordCreationDate.substring(
+                0,
+                4
+              )}
+              library={order.pickupBranch.agencyName}
+              hasCheckbox={isCheckbox.orders}
+              id={order.orderId}
+              status={isReadyToPickup ? "GREEN" : "NONE"}
+              dynamicColumn={
+                <DynamicCloumn>
+                  {isReadyToPickup ? (
+                    <span className={styles.isReady}>
+                      {Translate({
+                        context: "profile",
+                        label: "ready-to-pickup",
+                      })}
+                    </span>
+                  ) : null}
+                  <span>
+                    {Translate({
+                      context: "profile",
+                      label: "pickup-deadline",
+                    })}
+                     {dateString}
+                  </span>
+                </DynamicCloumn>
+              }
+              renderButton={
+                <MaterialRowButton
+                  buttonText={Translate({
+                    context: "profile",
+                    label: "delete",
+                  })}
+                />
+              }
+            />
+          );
+        })}
       </section>
     </ProfileLayout>
   );
