@@ -55,8 +55,8 @@ export function session() {
         }
         pickupBranch
       }
-      user{
-              debt {
+      user {
+        debt {
           title
           amount
           creator

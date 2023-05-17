@@ -1,5 +1,5 @@
 import range from "lodash/range";
-import { getElementById } from "lib/utils";
+import { getElementById } from "@/lib/utils";
 
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
