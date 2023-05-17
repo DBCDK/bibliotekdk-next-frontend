@@ -26,7 +26,7 @@ import styles from "./Item.module.css";
  * @returns {JSX}
  */
 function Item({ data, work, isLoading }) {
-  console.log("data", data);
+  console.log("Item", { data });
 
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
@@ -62,6 +62,7 @@ function Item({ data, work, isLoading }) {
   return (
     <Col
       xs={!!hasContent.length ? 10 : 8}
+      sm={!!hasContent.length ? 10 : 6}
       md={!!hasContent.length ? 9 : 4}
       data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
@@ -93,6 +94,7 @@ function Item({ data, work, isLoading }) {
             <Text type="text3" className={styles.by}>
               {Translate({ context: "general", label: "by" })}
             </Text>
+
             <div>
               {hasCreator && (
                 <div>

@@ -11,6 +11,10 @@
   align-items: center;
 }
 
+.slider > div:first-child {
+  margin-left: calc(var(--pt2) * -1);
+}
+
 /* skeleton */
 .reviews.skeleton .arrow_overwrite {
   display: none;
@@ -25,5 +29,9 @@
 @media (min-width: 992px) {
   .sliderContainer {
     margin: unset;
+  }
+
+  .slider > div:first-child {
+    margin-left: unset;
   }
 }
