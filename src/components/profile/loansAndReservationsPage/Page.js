@@ -78,7 +78,7 @@ const LoansAndReservations = ({}) => {
             title={loan.manifestation.titles.main[0]}
             creator={loan.manifestation.creators[0].display}
             materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
+            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
             library={"Herlev bibliotek"}
           />
         ))}
@@ -108,7 +108,7 @@ const LoansAndReservations = ({}) => {
             title={loan.manifestation.titles.main[0]}
             creator={loan.manifestation.creators[0].display}
             materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 3)}
+            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
             library={"Herlev bibliotek"}
             hasCheckbox={isCheckbox.loans}
             id={loan.loanId}
@@ -147,7 +147,7 @@ const LoansAndReservations = ({}) => {
             materialType={order.manifestation.materialTypes[0].specific}
             creationYear={order.manifestation.recordCreationDate.substring(
               0,
-              3
+              4
             )}
             library={order.pickupBranch.agencyName}
             hasCheckbox={isCheckbox.orders}
