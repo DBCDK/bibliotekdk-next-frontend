@@ -3,7 +3,11 @@ import styles from "./iconButton.module.css";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
-
+/**
+ * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
+ * @param {obj} props
+ * @returns {component}
+ */
 function IconButton({
   className,
   onClick,

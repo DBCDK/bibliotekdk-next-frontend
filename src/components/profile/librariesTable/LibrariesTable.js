@@ -4,6 +4,11 @@ import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 
+/**
+ * Tablerow to be used in LibrariesTable component.
+ * @param {obj} props
+ * @returns {component}
+ */
 function TableItem({ agency, libraryName, type }) {
   const isHomeLibrary = "Herlev bibliotek" == libraryName; //Mock. Use real data
   const lastUsed = "Biblioteket Danasvej" == agency; //Mock. Use real data
@@ -44,10 +49,9 @@ function TableItem({ agency, libraryName, type }) {
 }
 
 /**
- * Layout to use in /profil subpages
- * Renders a side menu on left side and children on right side
- *
- * @returns {JSX.Element}
+ * Returns a table of users libraries
+ * @param {obj} props
+ * @returns {component}
  */
 export default function LibrariesTable({ data }) {
   return (
