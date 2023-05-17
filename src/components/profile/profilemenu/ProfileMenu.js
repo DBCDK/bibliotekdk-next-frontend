@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 import useUser from "@/components/hooks/useUser";
-import { encodeString } from "@/lib/utils";
+import { encodeString, getElementById } from "@/lib/utils";
 
 /**
  * Profile menu main items
@@ -89,6 +89,19 @@ function MenuLinkGroup({
       setActiveIndex(index);
     }
 
+    function handleScroll(e, index) {
+      if (typeof window === "undefined") return;
+      e.preventDefault();
+      //remove everything before the hash
+      const targetId = e.currentTarget.href.replace(/.*\#/, "");
+      const elem = getElementById(targetId);
+      window.scrollTo({
+        top: elem?.getBoundingClientRect().top,
+        behavior: "smooth",
+      });
+      setActiveIndex(index);
+    }
+
     return (
       <div className={styles.grouplink} key={`div-menulink-${index}`}>
         <Link
@@ -97,22 +110,24 @@ function MenuLinkGroup({
           className={`${styles.subLink} ${classNames(
             index === activeIndex ? styles.groupactive : ""
           )}`}
-          onClick={() => setActiveIndex(index)}
+          onClick={(e) => handleScroll(e, index)}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              setActiveIndex(index);
+              handleScroll(index);
             }
           }}
         >
-          <Text type="text2">{title}</Text>
-          <Text type="text2" className={styles.number}>
-            ({item.number})
-          </Text>
-          {index === activeIndex && (
-            <span className={styles.groupiconlink}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-            </span>
-          )}
+          <>
+            <Text type="text2">{title}</Text>
+            <Text type="text2" className={styles.number}>
+              ({item.number})
+            </Text>
+            {index === activeIndex && (
+              <span className={styles.groupiconlink}>
+                <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+              </span>
+            )}
+          </>
         </Link>
       </div>
     );

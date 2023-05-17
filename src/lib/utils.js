@@ -118,3 +118,7 @@ export function chainFunctions(functions) {
   return (initialValue) =>
     functions.reduce((accumulator, func) => func(accumulator), initialValue);
 }
+
+export function getElementById(elementId) {
+  return elementId && document.querySelector(`#${elementId}`);
+}

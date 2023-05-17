@@ -1,4 +1,5 @@
 import range from "lodash/range";
+import { getElementById } from "lib/utils";
 
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
@@ -6,10 +7,6 @@ export function scrollToElement(sliderElementId) {
     block: "nearest",
     inline: "center",
   });
-}
-
-export function getElementById(elementId) {
-  return elementId && document.querySelector(`#${elementId}`);
 }
 
 export function scrollToElementWithOffset(
