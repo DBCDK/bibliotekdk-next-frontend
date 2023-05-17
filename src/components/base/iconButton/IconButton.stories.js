@@ -18,7 +18,7 @@ export function Remove() {
         Any svg icon inside public/icons folder can be used with this component.
         Put icon name as prop
       </StoryDescription>
-      <IconButton>Fjern</IconButton>
+      <IconButton icon="close">Fjern</IconButton>
     </div>
   );
 }

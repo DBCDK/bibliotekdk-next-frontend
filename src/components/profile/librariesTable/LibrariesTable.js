@@ -1,7 +1,6 @@
 import Row from "react-bootstrap/Row";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
-
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 

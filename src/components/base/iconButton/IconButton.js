@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
-
 import styles from "./iconButton.module.css";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-
 import animations from "@/components/base/animation/animations.module.css";
+
 /**
- * For now only can only be used with Close-icon. Can be expanded if other icons are needed.
+ * For now can only be used with Close-icon. Can be expanded if other icons are needed.
  *
  */
 function IconButton({
