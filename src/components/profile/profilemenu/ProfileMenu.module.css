@@ -18,39 +18,39 @@
   display: inline-flex;
 }
 
-.grouptitlecontainer {
+.groupTitleContainer {
   display: inline-flex;
   align-items: center;
 }
 
-.grouplink {
+.groupLink {
   padding-left: var(--pt4);
 }
-.grouplink p {
+.groupLink p {
   white-space: normal;
 }
 
-.groupmenu {
+.groupMenu {
   display: none;
 }
 
 @media (min-width: 992px) {
-  .groupmenu {
+  .groupMenu {
     display: block;
   }
 }
 
-.groupicon {
+.groupIcon {
   padding-right: var(--pt1);
 }
 
-.groupiconlink {
+.groupIconLink {
   padding-left: var(--pt1);
   position: relative;
   top: 2px;
 }
 
-.groupiconrotate {
+.groupIconRotate {
   transform: rotate(90deg);
   position: relative;
   top: 5px;
@@ -68,11 +68,11 @@
   text-decoration: underline;
 }
 
-.groupactive p {
+.groupActive p {
   font-family: var(--body-font-semibold);
 }
 
-.grouphide {
+.groupHide {
   display: none;
 }
 

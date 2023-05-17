@@ -103,12 +103,12 @@ function MenuLinkGroup({
     }
 
     return (
-      <div className={styles.grouplink} key={`div-menulink-${index}`}>
+      <div className={styles.groupLink} key={`div-menulink-${index}`}>
         <Link
           href={`${href}${urlEnding}`}
           key={`menulink-${index}`}
           className={`${styles.subLink} ${classNames(
-            index === activeIndex ? styles.groupactive : ""
+            index === activeIndex ? styles.groupActive : ""
           )}`}
           onClick={(e) => handleScroll(e, index)}
           onKeyDown={(event) => {
@@ -123,7 +123,7 @@ function MenuLinkGroup({
               ({item.number})
             </Text>
             {index === activeIndex && (
-              <span className={styles.groupiconlink}>
+              <span className={styles.groupIconLink}>
                 <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
               </span>
             )}
@@ -159,14 +159,14 @@ function MenuGroup({ menus, href, name, className }) {
       <Link tabIndex={"0"} className={styles.group} href={href} passHref={true}>
         <div
           lines={30}
-          key={`groupmenu-${name}`}
-          className={styles.grouptitlecontainer}
+          key={`groupMenu-${name}`}
+          className={styles.groupTitleContainer}
         >
-          <span className={styles.groupicon}>
+          <span className={styles.groupIcon}>
             <Icon
               size={{ w: 1, h: 1 }}
               src="arrowrightblue.svg"
-              className={classNames(isActive ? styles.groupiconrotate : "")}
+              className={classNames(isActive ? styles.groupIconRotate : "")}
             />
           </span>
           <Title type={isActive ? "title4" : "title5"}>
@@ -178,8 +178,8 @@ function MenuGroup({ menus, href, name, className }) {
         </div>
       </Link>
       <div
-        key={`dev-groupmenu-${name}`}
-        className={classNames(isActive ? "" : styles.grouphide)}
+        key={`dev-groupMenu-${name}`}
+        className={classNames(isActive ? "" : styles.groupHide)}
       >
         <MenuLinkGroup
           menuItems={menus}
