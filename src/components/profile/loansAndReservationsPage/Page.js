@@ -7,6 +7,7 @@ import Translate from "@/components/base/translate";
 import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
+import { encodeString } from "@/lib/utils";
 
 /**
  * TODO
@@ -66,7 +67,17 @@ const LoansAndReservations = ({}) => {
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title
+            type="title5"
+            tag="h3"
+            id={encodeString(
+              Translate({
+                context: "profile",
+                label: "debt",
+                requestedLang: "da",
+              })
+            )}
+          >
             {Translate({ context: "profile", label: "debt" })}
           </Title>
         </div>
@@ -86,7 +97,17 @@ const LoansAndReservations = ({}) => {
 
       <section className={styles.section} ref={loansWrapperRef}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title
+            type="title5"
+            tag="h3"
+            id={encodeString(
+              Translate({
+                context: "profile",
+                label: "loans",
+                requestedLang: "da",
+              })
+            )}
+          >
             {Translate({ context: "profile", label: "loans" })}
           </Title>
           <Button
@@ -123,7 +144,17 @@ const LoansAndReservations = ({}) => {
 
       <section className={styles.section} ref={ordersWrapperRef}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title
+            type="title5"
+            tag="h3"
+            id={encodeString(
+              Translate({
+                context: "profile",
+                label: "orders",
+                requestedLang: "da",
+              })
+            )}
+          >
             {Translate({ context: "profile", label: "orders" })}
           </Title>
           <Button
