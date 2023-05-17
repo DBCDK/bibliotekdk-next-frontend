@@ -16,17 +16,45 @@ import { dateToDayInMonth } from "@/utils/datetimeConverter";
  * TODO
  * -----
  * Dates
- * Status
+ * Status (✓)
  * Dept data ✓
  * Better mock data (different books)
  * checkbox focus style ✓
  * checkbox hover style ✓
  * action placeholders ✓
- * data reducer (material row)
+ * data reducer (material row) ✓
  * Material row standalone mock
  * Last border on link
  * Image height
+ * Confirm selection
  */
+
+const dataReducer = (profile, data) => {
+  switch (profile) {
+    case "loan": {
+      return {
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: data.manifestation.creators[0].display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        library: "Herlev bibliotek", // TODO
+        id: data.loanId,
+      };
+    }
+    case "order": {
+      return {
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: data.manifestation.creators[0].display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        library: data.pickupBranch.agencyName,
+        id: data.orderId,
+      };
+    }
+  }
+};
 
 const getCheckedElements = (parentRef) => {
   const elements = [].slice.call(parentRef.current.children);
@@ -78,12 +106,8 @@ const LoansAndReservations = () => {
         {debt?.map((intermediate, i) => (
           <MaterialRow
             key={`intermediate-${intermediate.title}-#${i}`}
-            // image={loan.manifestation.cover.thumbnail}
             title={intermediate.title}
-            // creator={loan.manifestation.creators[0].display}
-            // materialType={loan.manifestation.materialTypes[0].specific}
-            // creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
-            library={"Herlev bibliotek"}
+            library={"Herlev bibliotek"} // TODO
             dynamicColumn={
               <DynamicCloumn className={styles.isWarning}>
                 {intermediate.amount} kr
@@ -111,24 +135,26 @@ const LoansAndReservations = () => {
           </Button>
         </div>
 
-        {loans?.map((loan, i) => (
-          <MaterialRow
-            key={`loan-${loan.loanId}-#${i}`}
-            image={loan.manifestation.cover.thumbnail}
-            title={loan.manifestation.titles.main[0]}
-            creator={loan.manifestation.creators[0].display}
-            materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
-            library={"Herlev bibliotek"}
-            hasCheckbox={isCheckbox.loans}
-            id={loan.loanId}
-            renderButton={
-              <MaterialRowButton
-                buttonText={Translate({ context: "profile", label: "renew" })}
-              />
-            }
-          />
-        ))}
+        {loans?.map((loan, i) => {
+          const dueDate = new Date(loan.dueDate);
+          const today = new Date();
+          const isCountdown = true; // TODO count X days from now
+          const isOverdue = false;
+
+          return (
+            <MaterialRow
+              {...dataReducer("loan", loan)}
+              key={`loan-${loan.loanId}-#${i}`}
+              hasCheckbox={isCheckbox.loans}
+              id={loan.loanId}
+              renderButton={
+                <MaterialRowButton
+                  buttonText={Translate({ context: "profile", label: "renew" })}
+                />
+              }
+            />
+          );
+        })}
       </section>
 
       <section className={styles.section} ref={ordersWrapperRef}>
@@ -155,18 +181,9 @@ const LoansAndReservations = () => {
 
           return (
             <MaterialRow
+              {...dataReducer("order", order)}
               key={`loan-${order.loanId}-#${i}`}
-              image={order.manifestation.cover.thumbnail}
-              title={order.manifestation.titles.main[0]}
-              creator={order.manifestation.creators[0].display}
-              materialType={order.manifestation.materialTypes[0].specific}
-              creationYear={order.manifestation.recordCreationDate.substring(
-                0,
-                4
-              )}
-              library={order.pickupBranch.agencyName}
               hasCheckbox={isCheckbox.orders}
-              id={order.orderId}
               status={isReadyToPickup ? "GREEN" : "NONE"}
               dynamicColumn={
                 <DynamicCloumn>

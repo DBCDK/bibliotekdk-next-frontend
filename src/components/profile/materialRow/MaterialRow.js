@@ -82,19 +82,19 @@ const MaterialRow = ({
           </div>
         )}
 
-        <div>
-          <Cover src={image} size="fill-width" />
-        </div>
+        <div>{!!image && <Cover src={image} size="fill-width" />}</div>
 
         <div>
           {/* Make correct header */}
           <Title type="title8" as="h4">
             {title}
           </Title>
-          <Text type="text2">{creator}</Text>
-          <Text type="text2">
-            {materialType}, {creationYear}
-          </Text>
+          {creator && <Text type="text2">{creator}</Text>}
+          {materialType && creationYear && (
+            <Text type="text2">
+              {materialType}, {creationYear}
+            </Text>
+          )}
         </div>
 
         <div>
