@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 import useUser from "@/components/hooks/useUser";
-import { encodeString, getElementById } from "@/lib/utils";
+import { encodeString } from "@/lib/utils";
 
 /**
  * This component shows a profile menu on the left handside of the profile page.
