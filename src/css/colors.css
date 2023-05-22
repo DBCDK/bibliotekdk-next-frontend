@@ -32,12 +32,12 @@
   --gray: #828282;
 
   /* Alerts */
-  --error: #D1414E;
+  --error: #d1414e;
   --error-light: #fab8ba;
 
   /* Alerts */
-  --error_temp: #BA4D57;
-  --error-light_temp: #FFF3F0;
+  --error_temp: #ba4d57;
+  --error-light_temp: #fff3f0;
 
   --warning: #fbd85b;
   --warning-light: #fbeaad;
@@ -48,8 +48,12 @@
   --success: #27ae60;
   --success-light: #d0f1d2;
 
-  --transparent: #FF000000;
+  --transparent: #ff000000;
   --link-background: rgba(0, 0, 0, 0.1);
+
+  /* skeleton */
+  --skeleton-bg-color: var(--concrete);
+  --skeleton-gradient-color: #e8e8e8;
 
   /* Underline defaults */
   --underline-font-color: var(--mine-shaft);

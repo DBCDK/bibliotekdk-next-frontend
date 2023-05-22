@@ -85,7 +85,7 @@ export function RatingSkeleton(props) {
  *
  * @returns {component}
  */
-export default function Container(props) {
+export default function Wrap(props) {
   if (props.skeleton) {
     return <RatingSkeleton {...props} />;
   }
@@ -93,8 +93,8 @@ export default function Container(props) {
   return <Rating {...props} />;
 }
 
-// PropTypes for Container component
-Container.propTypes = {
+// PropTypes for Wrap component
+Wrap.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   rating: PropTypes.string,
   type: PropTypes.string,

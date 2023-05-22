@@ -52,7 +52,7 @@ describe("Overview", () => {
 
     it(`First review should be visible - last not visible`, () => {
       cy.contains("Anmeldelser (");
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
       cy.should("not.have.text", "External");
     });
 
@@ -65,7 +65,7 @@ describe("Overview", () => {
     });
 
     it(`infomedia review should link to infomedia page`, () => {
-      cy.get("[data-cy=review-infomedia]")
+      cy.get("[data-cy=review-item-isInfomediaReview]")
         .contains("Læs anmeldelse")
         .should(
           "have.attr",
@@ -75,18 +75,18 @@ describe("Overview", () => {
     });
 
     it(`external review should link to external site`, () => {
-      cy.get("[data-cy=review-external]")
+      cy.get("[data-cy=review-item-isExternalReview]")
         .contains("Læs anmeldelse")
         .should("have.attr", "href", "http://www.some-url.dk");
     });
 
     it(`reviews are ordered correctly`, () => {
       // Librarians reviews should come first
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
 
       // Then litteratursiden, because it has external url (accessible without login)
       cy.get("[data-cy=right_arrow]").click();
-      cy.contains("Lektørudtalelse");
+      cy.contains("Bibliotekernes vurdering");
 
       cy.wait(200);
       cy.get("[data-cy=right_arrow]").click({ force: true });

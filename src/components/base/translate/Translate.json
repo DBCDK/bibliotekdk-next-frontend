@@ -316,7 +316,7 @@
         "en": "your library"
       },
       "lecturerStatement": {
-        "da": "Lektørudtalelse",
+        "da": "Bibliotekernes vurdering",
         "en": "Lecturer statement"
       },
       "expand": {
@@ -891,7 +891,7 @@
         "en": "Read review on DBC webarchive"
       },
       "materialReviewLinkText": {
-        "da": "Læs hele bibliotekernes vurdering",
+        "da": "Læs hele vurderingen",
         "en": "Read the entire library's assessment"
       },
       "materialTitle": {
