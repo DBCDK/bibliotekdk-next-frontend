@@ -464,18 +464,24 @@ const DEFAULT_STORY_PARAMETERS = {
   },
 };
 
+const createDateXDaysFromNow = (daysFromNow) => {
+  const today = new Date();
+  today.setDate(today.getDate() + daysFromNow);
+  today.setHours(today.getHours() + 2); // Add 2 hours to prevent that date is exactly 2 days from now
+  return today.toISOString();
+};
 const USER_LOANS = [
   {
     loanId: "120200553",
-    dueDate: "2023-01-31T23:00:00.000Z",
+    dueDate: createDateXDaysFromNow(-2),
     manifestation: {
       pid: "870970-basis:51098838",
       titles: {
-        main: ["One Direction"],
+        main: ["Ildkamp"],
       },
       creators: [
         {
-          display: "Sarah Delmege",
+          display: "Brandon Sanderson",
         },
       ],
       materialTypes: [
@@ -485,22 +491,22 @@ const USER_LOANS = [
       ],
       cover: {
         thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=51098838&attachment_type=forside_lille&bibliotek=870970&source_id=150020&key=f4ebcbb4b84cf26e7071",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
       },
-      recordCreationDate: "20140508",
+      recordCreationDate: "20220508",
     },
   },
   {
     loanId: "120200589",
-    dueDate: "2023-05-06T22:00:00.000Z",
+    dueDate: createDateXDaysFromNow(2),
     manifestation: {
       pid: "870970-basis:23424916",
       titles: {
-        main: ["Efter uvejret"],
+        main: ["Krigen med salamandrene"],
       },
       creators: [
         {
-          display: "Lauren Brooke",
+          display: "Karel Čapek",
         },
       ],
       materialTypes: [
@@ -510,34 +516,34 @@ const USER_LOANS = [
       ],
       cover: {
         thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46068912&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=ccebcb7dc87e39614aa1",
       },
       recordCreationDate: "20010323",
     },
   },
   {
     loanId: "120200590",
-    dueDate: "2023-05-04T22:00:00.000Z",
+    dueDate: createDateXDaysFromNow(14),
     manifestation: {
       pid: "870970-basis:23518260",
       titles: {
-        main: ["Vennebogen & Koglerier"],
+        main: ["Tiger"],
       },
       creators: [
         {
-          display: "Peer Hultberg",
+          display: "Jan Jutte",
         },
       ],
       materialTypes: [
         {
-          specific: "bog",
+          specific: "billedbog",
         },
       ],
       cover: {
         thumbnail:
-          "https://default-forsider.dbc.dk/covers-12/thumbnail/4f0789e9-b478-526d-879e-a5931d9c552e.jpg",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
       },
-      recordCreationDate: "20010529",
+      recordCreationDate: "20200529",
     },
   },
 ];
@@ -549,15 +555,15 @@ const USER_ORDERS = [
     pickupBranch: {
       agencyName: "Husum Bibliotek",
     },
-    pickUpExpiryDate: "2023-05-04T22:00:00.000Z",
+    pickUpExpiryDate: createDateXDaysFromNow(10),
     manifestation: {
       pid: "870970-basis:23518260",
       titles: {
-        main: ["Vennebogen & Koglerier"],
+        main: ["Inferno"],
       },
       creators: [
         {
-          display: "Peer Hultberg",
+          display: "Dan Brown",
         },
       ],
       materialTypes: [
@@ -567,9 +573,9 @@ const USER_ORDERS = [
       ],
       cover: {
         thumbnail:
-          "https://default-forsider.dbc.dk/covers-12/thumbnail/4f0789e9-b478-526d-879e-a5931d9c552e.jpg",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
       },
-      recordCreationDate: "20010529",
+      recordCreationDate: "20170529",
     },
   },
   {
@@ -578,7 +584,7 @@ const USER_ORDERS = [
     pickupBranch: {
       agencyName: "Husum Bibliotek",
     },
-    pickUpExpiryDate: "2023-05-04T22:00:00.000Z",
+    pickUpExpiryDate: createDateXDaysFromNow(30),
     manifestation: {
       pid: "870970-basis:23424916",
       titles: {

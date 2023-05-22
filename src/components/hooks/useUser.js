@@ -5,7 +5,6 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
-import automock_utils from "../_modal/pages/automock_utils";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
@@ -27,7 +26,6 @@ function useUserMock() {
   const useUserMockKey = "useUserMock";
   const authUser = { name: "Some Name", mail: "some@mail.dk" };
   const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
-  const { USER_LOANS, USER_ORDERS } = automock_utils();
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
@@ -46,9 +44,6 @@ function useUserMock() {
       // Broadcast update
       mutate(useUserMockKey);
     },
-    loans: USER_LOANS,
-    orders: USER_ORDERS,
-    fines: [],
   };
 }
 

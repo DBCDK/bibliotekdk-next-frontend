@@ -123,6 +123,11 @@ export function reviews({ workId }) {
                     physicalDescriptions {
                       summary
                     }
+                    edition {
+                      publicationYear {
+                        display
+                      }
+                    }
                     recordCreationDate
                     review {
                       rating

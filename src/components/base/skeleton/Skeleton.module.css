@@ -33,7 +33,7 @@
 
   overflow: hidden;
 
-  background-color: var(--concrete);
+  background-color: var(--skeleton-bg-color);
   transition-duration: 1.5s;
   transition-property: background-color, background;
 
@@ -65,7 +65,7 @@
   background: linear-gradient(
     to right,
     transparent 0%,
-    #e8e8e8 50%,
+    var(--skeleton-gradient-color) 50%,
     transparent 100%
   );
   animation: load 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);

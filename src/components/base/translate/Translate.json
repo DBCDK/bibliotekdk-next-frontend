@@ -316,7 +316,7 @@
         "en": "your library"
       },
       "lecturerStatement": {
-        "da": "Lektørudtalelse",
+        "da": "Bibliotekernes vurdering",
         "en": "Lecturer statement"
       },
       "expand": {
@@ -891,7 +891,7 @@
         "en": "Read review on DBC webarchive"
       },
       "materialReviewLinkText": {
-        "da": "Læs hele bibliotekernes vurdering",
+        "da": "Læs hele vurderingen",
         "en": "Read the entire library's assessment"
       },
       "materialTitle": {
@@ -2987,6 +2987,22 @@
       "delete-more": {
         "da": "Slet flere",
         "en": "Delete several"
+      },
+      "ready-to-pickup": {
+        "da": "Klar til afhentning",
+        "en": "Ready to pickup"
+      }, 
+      "pickup-deadline": {
+        "da": "Hent senest",
+        "en": "Pickup at the latest"
+      },
+      "in": {
+        "da": "Om",
+        "en": "In"
+      },
+      "date-overdue": {
+        "da": "Dato overskredet",
+        "en": "Date overdue"
       }
     }
   }
