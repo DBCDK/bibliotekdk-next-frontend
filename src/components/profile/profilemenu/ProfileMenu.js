@@ -122,12 +122,10 @@ function SubCategory({
       setActiveIndex(index);
     }
     const anchor = decodeURIComponent(location?.hash?.replace("#", "") || "");
-    console.log("anchor", anchor);
     const el = getElementById(anchor);
-    console.log("el", el);
     if (el) {
       //setIsScrolling(true);
-      scrollTo({ top: el.top, behavior: "smooth" });
+      scrollTo({ top: el.getBoundingClientRect().top, behavior: "smooth" });
     }
   }, [router]);
 
@@ -153,19 +151,15 @@ function SubCategory({
     <div className={styles.groupLink} key={`div-menulink-${index}`}>
       <Link
         href={`${href}${urlEnding}`}
-        key={`menulink-${index}`}
         className={`${styles.subLink} ${classNames(
           index === activeIndex ? styles.groupActive : ""
         )}`}
+        dataCy={`menu-subcategory-${index}`}
         onClick={async (e) => {
-          console.log("e", e);
-          console.log("router", router.asPath);
           await replaceHash(urlEnding);
-          //router.replace("#" + e.text?.replace?.(/\s/g, "-"));
-          console.log("router", router.asPath);
         }}
 
-        // onKeyDown={(event) => {
+        // onKeyDown={(event) => { //TODO
         //   if (event.key === "Enter") {
         //     setActiveIndex(index);
         //   }
@@ -274,13 +268,8 @@ export default function ProfileMenu() {
         menus={menus}
         name={menuItems[0]}
         href="/profil/laan-og-reserveringer"
-        dataCy={`menugroup-0`}
       />
-      <MenuLink
-        label={menuItems[1]}
-        href="/profil/mine-biblioteker"
-        dataCy={`menulink-0`}
-      />
+      <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
     </>
   );
 }

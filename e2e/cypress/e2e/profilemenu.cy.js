@@ -1,14 +1,28 @@
 describe("Profilemenu", () => {
-  it(`Single Edition with year, publisher, ordertext`, () => {
+  it(`GroupLink opens subcategories and they are clickable`, () => {
     cy.visit("/iframe.html?id=profile-profilemenu--profile-menu-story");
 
-    cy.get('[data-cy="group-menu-loansAndReservations"]').then((el) => {
-      expect(el).to.exist;
-    });
-    cy.get('[data-cy="group-menu-loansAndReservations"]').click();
-    // count how many children there are
-    //click on children
-    // check href
-    // there should be additional text for specific edition
+    cy.get('[data-cy="group-menu-loansAndReservations"]')
+      .should("exist")
+      .click();
+
+    cy.get('[data-cy*="menu-subcategory"]').should("have.length", 3);
+    cy.get('[data-cy="menu-subcategory-0"]').should("exist");
+
+    cy.get('[data-cy="menu-subcategory-0"]')
+      .should("exist")
+      .should("have.attr", "href")
+      .and("include", "#mellemvaerende");
+
+    //check number of items in subcategory
+  });
+
+  it(`GroupLink opens subcategories and they are clickable`, () => {
+    cy.visit("/iframe.html?id=profile-profilemenu--profile-menu-story");
+
+    cy.get('[data-cy="menu-fixed-links"]')
+      .should("exist")
+      .should("have.attr", "href")
+      .and("include", "/profil/mine-biblioteker");
   });
 });
