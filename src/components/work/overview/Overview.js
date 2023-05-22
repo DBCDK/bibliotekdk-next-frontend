@@ -79,6 +79,11 @@ export function Overview({
     router
   );
 
+  // OBS: We load allPids for CoverCarousel, to ensure smooth change of MaterialType
+  const allPids = useMemo(
+    () => manifestations?.map((manifestation) => manifestation?.pid),
+    [manifestations]
+  );
   const selectedPids = useMemo(() => flatPidsByType(type), [type]);
 
   const titles = [
@@ -90,27 +95,28 @@ export function Overview({
     <div className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
+          {/* Breadcrumbs */}
           <Col xs={12} xl={3} className={styles.breadcrumbs}>
             <Breadcrumbs workId={workId} />
           </Col>
-          <Col
-            xs={12}
-            lg={3}
-            md={{ span: 5, order: 3 }}
-            className={styles.cover}
-          >
-            <CoverCarousel
-              selectedPids={selectedPids}
-              workTitles={work?.titles}
-            />
-          </Col>
 
-          <Col
-            xs={12}
-            md={{ order: 2, span: true }}
-            className={`${styles.about}`}
-          >
-            <Row>
+          {/* Cover and MaterialInformation */}
+          <Col xs={12} xl={9} className={styles.cover_and_materialInformation}>
+            {/* Cover */}
+            <Col xs={{ order: 1 }} md={{ order: 2 }} className={styles.cover}>
+              <CoverCarousel
+                allPids={allPids}
+                selectedPids={selectedPids}
+                workTitles={work?.titles}
+              />
+            </Col>
+
+            {/* MaterialInformation */}
+            <Col
+              xs={{ order: 2 }}
+              md={{ order: 1 }}
+              className={`${styles.about}`}
+            >
               <Col xs={12}>
                 <Title
                   type={"title3"}
@@ -158,7 +164,7 @@ export function Overview({
               <Col xs={12} className={styles.info}>
                 <LocalizationsLink selectedPids={selectedPids} />
               </Col>
-            </Row>
+            </Col>
           </Col>
         </Row>
       </Container>

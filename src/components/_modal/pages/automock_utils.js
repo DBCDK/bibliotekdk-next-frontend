@@ -464,12 +464,179 @@ const DEFAULT_STORY_PARAMETERS = {
   },
 };
 
+const createDateXDaysFromNow = (daysFromNow) => {
+  const today = new Date();
+  today.setDate(today.getDate() + daysFromNow);
+  today.setHours(today.getHours() + 2); // Add 2 hours to prevent that date is exactly 2 days from now
+  return today.toISOString();
+};
+const USER_LOANS = [
+  {
+    loanId: "120200553",
+    dueDate: createDateXDaysFromNow(-2),
+    manifestation: {
+      pid: "870970-basis:51098838",
+      titles: {
+        main: ["Ildkamp"],
+      },
+      creators: [
+        {
+          display: "Brandon Sanderson",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
+      },
+      recordCreationDate: "20220508",
+    },
+  },
+  {
+    loanId: "120200589",
+    dueDate: createDateXDaysFromNow(2),
+    manifestation: {
+      pid: "870970-basis:23424916",
+      titles: {
+        main: ["Krigen med salamandrene"],
+      },
+      creators: [
+        {
+          display: "Karel Čapek",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=46068912&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=ccebcb7dc87e39614aa1",
+      },
+      recordCreationDate: "20010323",
+    },
+  },
+  {
+    loanId: "120200590",
+    dueDate: createDateXDaysFromNow(14),
+    manifestation: {
+      pid: "870970-basis:23518260",
+      titles: {
+        main: ["Tiger"],
+      },
+      creators: [
+        {
+          display: "Jan Jutte",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "billedbog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
+      },
+      recordCreationDate: "20200529",
+    },
+  },
+];
+
+const USER_ORDERS = [
+  {
+    orderId: "2982910",
+    status: "",
+    pickupBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: createDateXDaysFromNow(10),
+    manifestation: {
+      pid: "870970-basis:23518260",
+      titles: {
+        main: ["Inferno"],
+      },
+      creators: [
+        {
+          display: "Dan Brown",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
+      },
+      recordCreationDate: "20170529",
+    },
+  },
+  {
+    orderId: "2982910",
+    status: "",
+    pickupBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: createDateXDaysFromNow(30),
+    manifestation: {
+      pid: "870970-basis:23424916",
+      titles: {
+        main: ["Efter uvejret"],
+      },
+      creators: [
+        {
+          display: "Lauren Brooke",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
+      },
+      recordCreationDate: "20010323",
+    },
+  },
+];
+
+const USER_DEBT = [
+  {
+    title: "Den store danske møbelguide",
+    amount: "224",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+  {
+    title: "Den store Gatsby",
+    amount: "50",
+    creator: null,
+    date: "1969-12-31T23:00:00.000Z",
+    currency: "DKK",
+  },
+];
+
 function useMockLoanerInfo(pickupBranch = "790900") {
   const { updateLoanerInfo } = useUser();
   const id = useId();
 
   useMemo(() => {
-    updateLoanerInfo({ pickupBranch: pickupBranch });
+    updateLoanerInfo({
+      pickupBranch: pickupBranch,
+      loans: USER_LOANS,
+      orders: USER_ORDERS,
+      debt: USER_DEBT,
+    });
   }, [id]);
 }
 
@@ -495,5 +662,7 @@ export default function automock_utils() {
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
+    USER_LOANS,
+    USER_ORDERS,
   };
 }

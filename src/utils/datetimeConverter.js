@@ -67,3 +67,16 @@ export function dateToShortDate(date, prefix = "") {
     return date;
   }
 }
+
+/**
+ *
+ * @returns {string} format: dd. mmm.
+ */
+export const dateToDayInMonth = (date) => {
+  // get short month and remove leading spaces
+  const shortMonths = months({ label: "shortenedMonths" });
+  return `${date.getDate()}. ${shortMonths[date.getMonth()].replace(
+    /\s/g,
+    ""
+  )}`;
+};

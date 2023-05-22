@@ -114,3 +114,6 @@ e2e/reports/
 
 # NextJS
 .env.local
+
+#Macos
+.DS_Store

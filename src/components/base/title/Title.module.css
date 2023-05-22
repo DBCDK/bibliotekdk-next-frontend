@@ -34,7 +34,7 @@
 
 .title6 {
   font-size: 18px;
-  line-height: 24px;
+  line-height: 28px;
   font-family: var(--title-font);
 }
 
@@ -42,9 +42,16 @@
      places than work overview */
 .title7 {
   font-size: 18px;
-  line-height: 24px;
+  line-height: 28px;
   font-family: var(--title-font);
 }
+
+/* Matches text1 style until we support text styles as titles project wide */
+.title8 {
+  font-size: 17px;
+  line-height: 26px;
+  font-family: var(--body-font-semibold);
+} 
 
 .clamp {
   display: -webkit-box;

@@ -24,13 +24,11 @@ function useAccessTokenMock() {
  */
 function useUserMock() {
   const useUserMockKey = "useUserMock";
-
+  const authUser = { name: "Some Name", mail: "some@mail.dk" };
+  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
   const { data, mutate } = useSWR(useUserMockKey, () => loanerInfoMock, {
     initialData: loanerInfoMock,
   });
-
-  const authUser = { name: "Some Name", mail: "some@mail.dk" };
-  const loggedInUser = { userName: authUser.name, userMail: authUser.mail };
 
   return {
     authUser,
@@ -55,11 +53,8 @@ function useUserMock() {
 function useUserImpl() {
   // Fetch loaner info from session
   const { data, mutate } = useData(sessionFragments.session());
-
   const { data: session } = useSession();
-
   const sessionMutate = useMutate();
-
   const isAuthenticated = !!session?.user?.uniqueId;
 
   const {

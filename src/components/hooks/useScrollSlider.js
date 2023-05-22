@@ -30,7 +30,7 @@ function useScrollSlider({
 
   return {
     index: index,
-    visibleElement: visibleElement,
+    visibleElement: visibleElement || 0,
     setVisibleElement: setVisibleElement,
     parentRef: parentRef,
     sliderElementId: (idx) => sliderElementId(idx, sliderId),

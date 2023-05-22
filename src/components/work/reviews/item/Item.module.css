@@ -1,0 +1,160 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  padding: 0 var(--pt4);
+}
+
+.item.hasContent .wrap {
+  width: 100%;
+}
+
+.details {
+  flex-wrap: wrap;
+  margin-bottom: var(--pt1);
+}
+
+.details div {
+  min-width: 100%;
+  display: flex;
+}
+
+.details > div:last-child p {
+  flex-shrink: 1;
+}
+
+.item .date {
+  order: 1;
+}
+
+.item .rating {
+  order: 1;
+}
+
+.details > div:first-child {
+  align-items: baseline;
+  margin-bottom: var(--pt2);
+}
+
+.details div:first-child .date {
+  display: none;
+}
+
+.item .details .by {
+  margin-right: var(--pt1);
+  display: none;
+}
+
+.item.hasCreator .details > div > .by {
+  display: block;
+}
+
+.details > div:last-child {
+  width: 100%;
+  align-items: baseline;
+}
+
+.details > div:last-child > div {
+  display: unset;
+}
+
+.item .links {
+  margin-top: var(--pt2);
+}
+
+.item .link {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--pt2);
+}
+
+.item .link:last-child {
+  margin-bottom: unset;
+}
+
+.item .link i {
+  margin-right: var(--pt1);
+}
+
+/* seperator */
+.item .seperator {
+  width: 1px;
+  height: 100%;
+  background-color: var(--iron);
+  border: 0;
+  position: absolute;
+  left: 1px;
+}
+
+/* Skeleton */
+.item.skeleton div {
+  width: 100%;
+}
+
+/* items with content specific styling */
+
+.item.hasContent .details > div:last-child > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item.hasContent.hasRating .details > div:last-child > div {
+  flex-direction: row-reverse;
+}
+
+.item.hasContent .details > div:last-child > div > * {
+  min-width: unset;
+  align-items: baseline;
+}
+
+.item.hasContent .details > div:last-child .date {
+  display: none;
+}
+
+.item.hasContent .details > div:first-child {
+  margin-bottom: var(--pt4);
+}
+
+.item.hasContent .publisher {
+  margin-right: var(--pt2);
+}
+
+.item.hasContent .details div:first-child {
+  flex-wrap: wrap;
+}
+
+.item.hasContent .details div:first-child .date {
+  display: block;
+}
+
+.item.hasContent.hasCreator .details .by {
+  display: block;
+}
+
+.item.hasContent.hasCreator .details > div > .by {
+  display: none;
+}
+
+@media (min-width: 576px) {
+  .item.hasContent {
+    flex-shrink: 0;
+  }
+
+  .item.hasContent .details > div:last-child > p {
+    display: none;
+  }
+
+  .details > * {
+    min-width: unset;
+  }
+}
+
+@media (min-width: 992px) {
+  .item,
+  .item.hasContent {
+    padding: 0 var(--pt8);
+  }
+}
