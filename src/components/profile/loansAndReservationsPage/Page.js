@@ -110,13 +110,13 @@ const LoansAndReservations = () => {
           <Title
             type="title5"
             tag="h3"
-            id={encodeString(
+            id={`sublink-${encodeString(
               Translate({
                 context: "profile",
                 label: "debt",
                 requestedLang: "da",
               })
-            )}
+            )}`}
           >
             {Translate({ context: "profile", label: "debt" })}
           </Title>
@@ -142,13 +142,13 @@ const LoansAndReservations = () => {
           <Title
             type="title5"
             tag="h3"
-            id={encodeString(
+            id={`sublink-${encodeString(
               Translate({
                 context: "profile",
                 label: "loans",
                 requestedLang: "da",
               })
-            )}
+            )}`}
           >
             {Translate({ context: "profile", label: "loans" })}
           </Title>
@@ -226,13 +226,13 @@ const LoansAndReservations = () => {
           <Title
             type="title5"
             tag="h3"
-            id={encodeString(
+            id={`sublink-${encodeString(
               Translate({
                 context: "profile",
                 label: "orders",
                 requestedLang: "da",
               })
-            )}
+            )}`}
           >
             {Translate({ context: "profile", label: "orders" })}
           </Title>

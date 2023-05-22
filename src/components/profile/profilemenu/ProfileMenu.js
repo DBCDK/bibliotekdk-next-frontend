@@ -7,10 +7,9 @@ import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
-import useUser from "@/components/hooks/useUser";
 import { encodeString } from "@/lib/utils";
 import { getElementById } from "@/lib/utils";
-//import { handleScroll } from "@/components/base/anchor/utils";
+import useUser from "@/components/hooks/useUser";
 
 /**
  * This component shows a profile menu on the left handside of the profile page.
@@ -19,22 +18,6 @@ import { getElementById } from "@/lib/utils";
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
  * @returns {JSX.Element}
  */
-
-/**
- * Profile menu main items
- */
-const menuItems = ["loansAndReservations", "myLibraries"];
-
-/**
- * Menu items with subcategories
- */
-const menus = {
-  loansAndReservations: [
-    { title: "debt", id: 0, itemLength: 0 },
-    { title: "loans", id: 1, itemLength: 0 },
-    { title: "orders", id: 2, itemLength: 0 },
-  ],
-};
 
 /**
  * Simple menu link without subcategories.
@@ -81,6 +64,7 @@ function MenuLinkGroup({
 }) {
   const router = useRouter();
 
+  console.log("groupName ", menuItems);
   return menuItems[groupName].map((item, index) => {
     return (
       <SubCategory
@@ -96,14 +80,7 @@ function MenuLinkGroup({
   });
 }
 
-function SubCategory({
-  item,
-  index,
-  router,
-  href,
-  activeIndex,
-  setActiveIndex,
-}) {
+function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   const title = Translate({
     context: "profile",
     label: `${item.title}`,
@@ -113,35 +90,34 @@ function SubCategory({
     label: `${item.title}`,
     requestedLang: "da",
   });
-  const urlEnding = `#${encodeString(titleDanish)}`;
-  //marks subcategory when opening the page from an url with the subcategory
+  const urlEnding = `${encodeString(titleDanish)}`;
 
   // Scroll to anchor
   useEffect(() => {
-    if (router.asPath.includes(urlEnding)) {
-      setActiveIndex(index);
-    }
-    const anchor = decodeURIComponent(location?.hash?.replace("#", "") || "");
+    const anchor = decodeURIComponent(
+      location?.hash?.replace("#", "sublink-") || ""
+    );
     const el = getElementById(anchor);
     if (el) {
-      scrollTo({ top: el.top, behavior: "smooth" });
+      scrollTo({ top: el.offsetTop, behavior: "smooth" });
+    }
+    if (router.asPath.includes(`#${urlEnding}`)) {
+      //console.log("setting active index");
+      setActiveIndex(index);
     }
   }, [router]);
 
   async function replaceHash(newEnding) {
-    console.log("new url ", newEnding);
-    const currentUrl = router.asPath;
-    const hashIndex = currentUrl.indexOf("#");
+    console.log("NEW ENDING", newEnding);
+    const baseUrl = router.pathname;
+    const newUrl = baseUrl + "#" + newEnding;
+    console.log("NEW URL", newUrl);
 
-    if (hashIndex !== -1) {
-      const baseUrl = currentUrl.slice(0, hashIndex);
-      const newUrl = baseUrl + newEnding;
-      try {
-        router.replace(newUrl);
-      } catch (e) {
-        if (!e.cancelled) {
-          throw e;
-        }
+    try {
+      router.replace(newUrl);
+    } catch (e) {
+      if (!e.cancelled) {
+        throw e;
       }
     }
   }
@@ -149,14 +125,14 @@ function SubCategory({
   return (
     <div className={styles.groupLink} key={`div-menulink-${index}`}>
       <Link
-        href={`${href}${urlEnding}`}
         className={`${styles.subLink} ${classNames(
           index === activeIndex ? styles.groupActive : ""
         )}`}
         dataCy={`menu-subcategory-${index}`}
         onClick={async (e) => {
-          e.preventDefault();
+          //e.preventDefault();
           await replaceHash(urlEnding);
+          setActiveIndex(index);
         }}
 
         // onKeyDown={(event) => { //TODO
@@ -247,21 +223,28 @@ function MenuGroup({ menus, href, name, className }) {
 /**
  * ProfileMenu to use in /profil subpages
  * Renders a side menu on left side
- *
+ * @param menus
+ * @param menuItems
  * @returns {JSX.Element}
  */
-export default function ProfileMenu() {
+export default function ProfileMenu({ menus, menuItems }) {
   const user = useUser();
 
-  //add itemLength of loans, reservations and debt to menu
+  if (!menus || !menus.loansAndReservations) return null;
+
+  console.log("MENU 1", menus);
+
+  console.log("USER ", user);
   //remove menu item "debt" from menu if loaner doesnt have debt
-  menus.loansAndReservations.forEach((item, index) => {
-    const itemLength = user.loanerInfo[item.title]?.length;
-    if (itemLength === 0 && item.title === "debt") {
-      menus.loansAndReservations.splice(index, 1);
-    }
-    item.itemLength = itemLength || 0;
+  const list = menus.loansAndReservations.filter((item) => {
+    item.title !== "debt" || user.loanerInfo[item.title]?.length > 0;
   });
+
+  // menus.loansAndReservations = list;
+
+  console.log("LIST ", list);
+  console.log("MENU ", menus);
+
   return (
     <>
       <MenuGroup
