@@ -11,10 +11,10 @@ import useUser from "@/components/hooks/useUser";
 import { encodeString, getElementById } from "@/lib/utils";
 
 /**
- * It shows a profile menu on the left handside of the profile page.
- * It contains simple links ("Mine bilioteker")
- * and links with subcategories such as "Lån og reserveringer"
- * with subcateogries "Lån", "Reserveringer", "Mellemværende".
+ * This component shows a profile menu on the left handside of the profile page.
+ * It contains two types of links:
+ * simple links such as "Mine bilioteker"
+ * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
  * @returns {JSX.Element}
  */
 
