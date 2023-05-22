@@ -11,6 +11,14 @@ import useUser from "@/components/hooks/useUser";
 import { encodeString, getElementById } from "@/lib/utils";
 
 /**
+ * It shows a profile menu on the left handside of the profile page.
+ * It contains simple links ("Mine bilioteker")
+ * and links with subcategories such as "Lån og reserveringer"
+ * with subcateogries "Lån", "Reserveringer", "Mellemværende".
+ * @returns {JSX.Element}
+ */
+
+/**
  * Profile menu main items
  */
 const menuItems = ["loansAndReservations", "myLibraries"];
@@ -91,9 +99,9 @@ function MenuLinkGroup({
 
     function handleScroll(e, index) {
       if (typeof window === "undefined") return;
-      e.preventDefault();
+      //e.preventDefault();
       //remove everything before the hash
-      const targetId = e.currentTarget.href.replace(/.*\#/, "");
+      const targetId = new URL(e.currentTarget.href).hash.slice(1);
       const elem = getElementById(targetId);
       window.scrollTo({
         top: elem?.getBoundingClientRect().top,
@@ -207,11 +215,11 @@ export default function ProfileMenu() {
   //add number of loans, reservations and debt to menu
   //remove menu item "debt" from menu if loaner doesnt have debt
   menus.loansAndReservations.forEach((item, index) => {
-    const number = user.loanerInfo[item.title]?.length;
-    if (number === 0 && item.title === "debt") {
+    const itemLength = user.loanerInfo[item.title]?.length;
+    if (itemLength === 0 && item.title === "debt") {
       menus.loansAndReservations.splice(index, 1);
     }
-    item.number = number || 0;
+    item.number = itemLength || 0;
   });
   return (
     <>
