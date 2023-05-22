@@ -2979,6 +2979,14 @@
       "pickup-deadline": {
         "da": "Hent senest",
         "en": "Pickup at the latest"
+      },
+      "in": {
+        "da": "Om",
+        "en": "In"
+      },
+      "date-overdue": {
+        "da": "Dato overskredet",
+        "en": "Date overdue"
       }
     }
   }

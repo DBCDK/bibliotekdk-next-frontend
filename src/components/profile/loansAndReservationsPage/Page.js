@@ -34,6 +34,7 @@ import {
  * Actions
  */
 
+// Set to when warning should be shown
 const DAYS_TO_COUNTDOWN = 5;
 
 export const dataReducer = (profile, data) => {
@@ -170,13 +171,22 @@ const LoansAndReservations = () => {
                   {isOverdue ? (
                     <>
                       <span className={styles.isWarning}>{dateString}</span>
-                      <span className={styles.isWarning}>Dato overskredet</span>
+                      <span className={styles.isWarning}>
+                        {Translate({
+                          context: "profile",
+                          label: "date-overdue",
+                        })}
+                      </span>
                     </>
                   ) : isCountdown ? (
                     <>
                       <span>{dateString}</span>
                       <span className={styles.isWarning}>
-                        Om {daysToDueDate} dage
+                        {Translate({ context: "profile", label: "in" })}{" "}
+                        {daysToDueDate}{" "}
+                        {daysToDueDate === 1
+                          ? Translate({ context: "units", label: "day" })
+                          : Translate({ context: "units", label: "days" })}
                       </span>
                     </>
                   ) : (
