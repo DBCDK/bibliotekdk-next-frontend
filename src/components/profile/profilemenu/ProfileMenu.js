@@ -64,7 +64,6 @@ function MenuLinkGroup({
 }) {
   const router = useRouter();
 
-  console.log("groupName ", menuItems);
   return menuItems[groupName].map((item, index) => {
     return (
       <SubCategory
@@ -102,17 +101,13 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
       scrollTo({ top: el.offsetTop, behavior: "smooth" });
     }
     if (router.asPath.includes(`#${urlEnding}`)) {
-      //console.log("setting active index");
       setActiveIndex(index);
     }
   }, [router]);
 
   async function replaceHash(newEnding) {
-    console.log("NEW ENDING", newEnding);
     const baseUrl = router.pathname;
     const newUrl = baseUrl + "#" + newEnding;
-    console.log("NEW URL", newUrl);
-
     try {
       router.replace(newUrl);
     } catch (e) {
@@ -129,17 +124,14 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
           index === activeIndex ? styles.groupActive : ""
         )}`}
         dataCy={`menu-subcategory-${index}`}
-        onClick={async (e) => {
-          //e.preventDefault();
-          await replaceHash(urlEnding);
-          setActiveIndex(index);
+        onClick={() => {
+          replaceHash(urlEnding);
         }}
-
-        // onKeyDown={(event) => { //TODO
-        //   if (event.key === "Enter") {
-        //     setActiveIndex(index);
-        //   }
-        // }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            replaceHash(urlEnding);
+          }
+        }}
       >
         <>
           <Text type="text2">{title}</Text>
@@ -221,29 +213,40 @@ function MenuGroup({ menus, href, name, className }) {
 }
 
 /**
+ * Profile menu main items
+ */
+const menuItems = ["loansAndReservations", "myLibraries"];
+
+const initialLoansAndReservations = {
+  loansAndReservations: [
+    { title: "debt", id: 0, itemLength: 0 },
+    { title: "loans", id: 1, itemLength: 0 },
+    { title: "orders", id: 2, itemLength: 0 },
+  ],
+};
+
+/**
  * ProfileMenu to use in /profil subpages
  * Renders a side menu on left side
- * @param menus
- * @param menuItems
  * @returns {JSX.Element}
  */
-export default function ProfileMenu({ menus, menuItems }) {
+export default function ProfileMenu() {
   const user = useUser();
 
-  if (!menus || !menus.loansAndReservations) return null;
+  const menus = {
+    ...initialLoansAndReservations,
+    loansAndReservations: initialLoansAndReservations.loansAndReservations
+      .filter(
+        (item) =>
+          item.title !== "debt" || user?.loanerInfo[item.title]?.length > 0
+      )
+      .map((item) => ({
+        ...item,
+        itemLength: user?.loanerInfo[item.title]?.length || 0,
+      })),
+  };
 
-  console.log("MENU 1", menus);
-
-  console.log("USER ", user);
-  //remove menu item "debt" from menu if loaner doesnt have debt
-  const list = menus.loansAndReservations.filter((item) => {
-    item.title !== "debt" || user.loanerInfo[item.title]?.length > 0;
-  });
-
-  // menus.loansAndReservations = list;
-
-  console.log("LIST ", list);
-  console.log("MENU ", menus);
+  if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
     <>
