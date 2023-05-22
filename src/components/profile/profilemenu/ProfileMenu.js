@@ -173,6 +173,7 @@ function MenuGroup({ menus, href, name, className }) {
         href={href}
         passHref={true}
         dataCy={`group-menu-${name}`}
+        active={isActive}
       >
         <div
           lines={30}

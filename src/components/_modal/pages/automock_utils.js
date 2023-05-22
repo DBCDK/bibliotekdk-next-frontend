@@ -640,6 +640,20 @@ function useMockLoanerInfo(pickupBranch = "790900") {
   }, [id]);
 }
 
+function useMockLoanerInfoNoDebt(pickupBranch = "790900") {
+  const { updateLoanerInfo } = useUser();
+  const id = useId();
+
+  useMemo(() => {
+    updateLoanerInfo({
+      pickupBranch: pickupBranch,
+      loans: USER_LOANS,
+      orders: USER_ORDERS,
+      debt: [],
+    });
+  }, [id]);
+}
+
 export default function automock_utils() {
   return {
     MANIFESTATION_1,
@@ -662,6 +676,7 @@ export default function automock_utils() {
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
+    useMockLoanerInfoNoDebt,
     USER_LOANS,
     USER_ORDERS,
   };
