@@ -15,6 +15,7 @@
 
 html {
   overflow-y: scroll;
+  scroll-behavior: smooth !important;
   height: 100%;
 }
 

@@ -28,9 +28,9 @@ const menuItems = ["loansAndReservations", "myLibraries"];
  */
 const menus = {
   loansAndReservations: [
-    { title: "debt", id: 0, number: 0 },
-    { title: "loans", id: 1, number: 0 },
-    { title: "orders", id: 2, number: 0 },
+    { title: "debt", id: 0, itemLength: 0 },
+    { title: "loans", id: 1, itemLength: 0 },
+    { title: "orders", id: 2, itemLength: 0 },
   ],
 };
 
@@ -127,8 +127,8 @@ function MenuLinkGroup({
         >
           <>
             <Text type="text2">{title}</Text>
-            <Text type="text2" className={styles.number}>
-              ({item.number})
+            <Text type="text2" className={styles.itemLength}>
+              ({item.itemLength})
             </Text>
             {index === activeIndex && (
               <span className={styles.groupIconLink}>
@@ -212,14 +212,14 @@ function MenuGroup({ menus, href, name, className }) {
 export default function ProfileMenu() {
   const user = useUser();
 
-  //add number of loans, reservations and debt to menu
+  //add itemLength of loans, reservations and debt to menu
   //remove menu item "debt" from menu if loaner doesnt have debt
   menus.loansAndReservations.forEach((item, index) => {
     const itemLength = user.loanerInfo[item.title]?.length;
     if (itemLength === 0 && item.title === "debt") {
       menus.loansAndReservations.splice(index, 1);
     }
-    item.number = itemLength || 0;
+    item.itemLength = itemLength || 0;
   });
   return (
     <>
