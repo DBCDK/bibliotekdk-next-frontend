@@ -52,8 +52,6 @@ export function getReviewType(data) {
  * @returns {string}
  */
 export function getPublisher(data) {
-  console.log();
-
   const isType = getReviewType(data);
   const isMaterialReview = isType === "isMaterialReview";
   const isExternalReview = isType === "isExternalReview";

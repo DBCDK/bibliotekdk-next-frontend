@@ -155,7 +155,6 @@
 @media (min-width: 992px) {
   .item,
   .item.hasContent {
-    flex-shrink: 0;
     padding: 0 var(--pt8);
   }
 }
