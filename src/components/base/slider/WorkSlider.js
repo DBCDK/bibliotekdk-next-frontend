@@ -70,7 +70,7 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   const { elementRef, hasBeenSeen } = useBundledElementVisibleById({
     rootId: sliderId,
-    rootMargin: "0px",
+    rootMargin: "1px",
     threshold: 1,
   });
 
