@@ -124,8 +124,7 @@ function SubCategory({
     const anchor = decodeURIComponent(location?.hash?.replace("#", "") || "");
     const el = getElementById(anchor);
     if (el) {
-      //setIsScrolling(true);
-      scrollTo({ top: el.getBoundingClientRect().top, behavior: "smooth" });
+      scrollTo({ top: el.top, behavior: "smooth" });
     }
   }, [router]);
 
@@ -156,6 +155,7 @@ function SubCategory({
         )}`}
         dataCy={`menu-subcategory-${index}`}
         onClick={async (e) => {
+          e.preventDefault();
           await replaceHash(urlEnding);
         }}
 
