@@ -37,8 +37,8 @@ import {
 // Set to when warning should be shown
 const DAYS_TO_COUNTDOWN = 5;
 
-export const dataReducer = (profile, data) => {
-  switch (profile) {
+export const dataReducer = (dataType, data) => {
+  switch (dataType) {
     case "loan": {
       return {
         image: data.manifestation.cover.thumbnail,
