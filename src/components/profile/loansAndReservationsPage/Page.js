@@ -10,26 +10,33 @@ import Translate from "@/components/base/translate";
 import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
-import { dateToDayInMonth } from "@/utils/datetimeConverter";
+import {
+  dateToDayInMonth,
+  timestampToShortDate,
+} from "@/utils/datetimeConverter";
 
 /**
  * TODO
  * -----
- * Dates
- * Status (✓)
+ * Dates ✓
+ * Status ✓
  * Dept data ✓
  * Better mock data (different books)
  * checkbox focus style ✓
  * checkbox hover style ✓
  * action placeholders ✓
  * data reducer (material row) ✓
- * Material row standalone mock
+ * Material row standalone mock ✓
  * Last border on link
  * Image height
- * Confirm selection
+ * Confirm selection styling
+ * Queue numbers & cross library reservertions
+ * Actions
  */
 
-const dataReducer = (profile, data) => {
+const DAYS_TO_COUNTDOWN = 5;
+
+export const dataReducer = (profile, data) => {
   switch (profile) {
     case "loan": {
       return {
@@ -138,8 +145,14 @@ const LoansAndReservations = () => {
         {loans?.map((loan, i) => {
           const dueDate = new Date(loan.dueDate);
           const today = new Date();
-          const isCountdown = true; // TODO count X days from now
-          const isOverdue = false;
+          const futureDate = new Date();
+          futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN);
+          const daysToDueDate = Math.floor(
+            (dueDate - today) / (1000 * 60 * 60 * 24)
+          );
+          const isCountdown = dueDate >= today && dueDate <= futureDate;
+          const isOverdue = dueDate < today;
+          const dateString = timestampToShortDate(dueDate);
 
           return (
             <MaterialRow
@@ -152,6 +165,26 @@ const LoansAndReservations = () => {
                   buttonText={Translate({ context: "profile", label: "renew" })}
                 />
               }
+              dynamicColumn={
+                <DynamicCloumn>
+                  {isOverdue ? (
+                    <>
+                      <span className={styles.isWarning}>{dateString}</span>
+                      <span className={styles.isWarning}>Dato overskredet</span>
+                    </>
+                  ) : isCountdown ? (
+                    <>
+                      <span>{dateString}</span>
+                      <span className={styles.isWarning}>
+                        Om {daysToDueDate} dage
+                      </span>
+                    </>
+                  ) : (
+                    <span>{dateString}</span>
+                  )}
+                </DynamicCloumn>
+              }
+              status={isOverdue ? "RED" : "NONE"}
             />
           );
         })}
@@ -176,8 +209,10 @@ const LoansAndReservations = () => {
 
         {orders?.map((order, i) => {
           const pickUpDate = new Date(order.pickUpExpiryDate);
-          const dateString = dateToDayInMonth(pickUpDate);
           const isReadyToPickup = !!order.pickUpExpiryDate;
+          const dateString = isReadyToPickup
+            ? dateToDayInMonth(pickUpDate)
+            : null;
 
           return (
             <MaterialRow

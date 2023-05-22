@@ -5,7 +5,6 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
-import automock_utils from "../_modal/pages/automock_utils";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
