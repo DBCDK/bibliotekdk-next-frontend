@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 import useUser from "@/components/hooks/useUser";
 import { encodeString } from "@/lib/utils";
+import { getElementById } from "@/lib/utils";
+//import { handleScroll } from "@/components/base/anchor/utils";
 
 /**
  * This component shows a profile menu on the left handside of the profile page.
@@ -80,53 +82,109 @@ function MenuLinkGroup({
   const router = useRouter();
 
   return menuItems[groupName].map((item, index) => {
-    const title = Translate({
-      context: "profile",
-      label: `${item.title}`,
-    });
-    const titleDanish = Translate({
-      context: "profile",
-      label: `${item.title}`,
-      requestedLang: "da",
-    });
+    return (
+      <SubCategory
+        key={`subcategory-${item.title}`}
+        item={item}
+        index={index}
+        router={router}
+        href={href}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
+      />
+    );
+  });
+}
 
-    const urlEnding = `#${encodeString(titleDanish)}`;
+function SubCategory({
+  item,
+  index,
+  router,
+  href,
+  activeIndex,
+  setActiveIndex,
+}) {
+  const title = Translate({
+    context: "profile",
+    label: `${item.title}`,
+  });
+  const titleDanish = Translate({
+    context: "profile",
+    label: `${item.title}`,
+    requestedLang: "da",
+  });
+  const urlEnding = `#${encodeString(titleDanish)}`;
+  //marks subcategory when opening the page from an url with the subcategory
 
-    //marks subcategory when opening the page from an url with the subcategory
+  // Scroll to anchor
+  useEffect(() => {
     if (router.asPath.includes(urlEnding)) {
       setActiveIndex(index);
     }
+    const anchor = decodeURIComponent(location?.hash?.replace("#", "") || "");
+    console.log("anchor", anchor);
+    const el = getElementById(anchor);
+    console.log("el", el);
+    if (el) {
+      //setIsScrolling(true);
+      scrollTo({ top: el.top, behavior: "smooth" });
+    }
+  }, [router]);
 
-    return (
-      <div className={styles.groupLink} key={`div-menulink-${index}`}>
-        <Link
-          href={`${href}${urlEnding}`}
-          key={`menulink-${index}`}
-          className={`${styles.subLink} ${classNames(
-            index === activeIndex ? styles.groupActive : ""
-          )}`}
-          onClick={() => setActiveIndex(index)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter") {
-              setActiveIndex(index);
-            }
-          }}
-        >
-          <>
-            <Text type="text2">{title}</Text>
-            <Text type="text2" className={styles.itemLength}>
-              ({item.itemLength})
-            </Text>
-            {index === activeIndex && (
-              <span className={styles.groupIconLink}>
-                <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-              </span>
-            )}
-          </>
-        </Link>
-      </div>
-    );
-  });
+  async function replaceHash(newEnding) {
+    console.log("new url ", newEnding);
+    const currentUrl = router.asPath;
+    const hashIndex = currentUrl.indexOf("#");
+
+    if (hashIndex !== -1) {
+      const baseUrl = currentUrl.slice(0, hashIndex);
+      const newUrl = baseUrl + newEnding;
+      try {
+        router.replace(newUrl);
+      } catch (e) {
+        if (!e.cancelled) {
+          throw e;
+        }
+      }
+    }
+  }
+
+  return (
+    <div className={styles.groupLink} key={`div-menulink-${index}`}>
+      <Link
+        href={`${href}${urlEnding}`}
+        key={`menulink-${index}`}
+        className={`${styles.subLink} ${classNames(
+          index === activeIndex ? styles.groupActive : ""
+        )}`}
+        onClick={async (e) => {
+          console.log("e", e);
+          console.log("router", router.asPath);
+          await replaceHash(urlEnding);
+          //router.replace("#" + e.text?.replace?.(/\s/g, "-"));
+          console.log("router", router.asPath);
+        }}
+
+        // onKeyDown={(event) => {
+        //   if (event.key === "Enter") {
+        //     setActiveIndex(index);
+        //   }
+        // }}
+      >
+        <>
+          <Text type="text2">{title}</Text>
+          <Text type="text2" className={styles.itemLength}>
+            ({item.itemLength})
+          </Text>
+          {index === activeIndex && (
+            <span className={styles.groupIconLink}>
+              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+            </span>
+          )}
+        </>
+      </Link>
+    </div>
+  );
 }
 
 /**
@@ -146,12 +204,14 @@ function MenuGroup({ menus, href, name, className }) {
   }, [router.asPath]);
 
   return (
-    <div
-      key={`menu-component-${name}`}
-      className={className}
-      data-cy="group-menu"
-    >
-      <Link tabIndex={"0"} className={styles.group} href={href} passHref={true}>
+    <div key={`menu-component-${name}`} className={className}>
+      <Link
+        tabIndex={"0"}
+        className={styles.group}
+        href={href}
+        passHref={true}
+        dataCy={`group-menu-${name}`}
+      >
         <div
           lines={30}
           key={`groupMenu-${name}`}
@@ -214,8 +274,13 @@ export default function ProfileMenu() {
         menus={menus}
         name={menuItems[0]}
         href="/profil/laan-og-reserveringer"
+        dataCy={`menugroup-0`}
       />
-      <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
+      <MenuLink
+        label={menuItems[1]}
+        href="/profil/mine-biblioteker"
+        dataCy={`menulink-0`}
+      />
     </>
   );
 }
