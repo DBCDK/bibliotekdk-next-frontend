@@ -97,19 +97,6 @@ function MenuLinkGroup({
       setActiveIndex(index);
     }
 
-    function handleScroll(e, index) {
-      if (typeof window === "undefined") return;
-      //e.preventDefault();
-      //remove everything before the hash
-      const targetId = new URL(e.currentTarget.href).hash.slice(1);
-      const elem = getElementById(targetId);
-      window.scrollTo({
-        top: elem?.getBoundingClientRect().top,
-        behavior: "smooth",
-      });
-      setActiveIndex(index);
-    }
-
     return (
       <div className={styles.groupLink} key={`div-menulink-${index}`}>
         <Link
@@ -118,10 +105,10 @@ function MenuLinkGroup({
           className={`${styles.subLink} ${classNames(
             index === activeIndex ? styles.groupActive : ""
           )}`}
-          onClick={(e) => handleScroll(e, index)}
+          onClick={() => setActiveIndex(index)}
           onKeyDown={(event) => {
             if (event.key === "Enter") {
-              handleScroll(index);
+              setActiveIndex(index);
             }
           }}
         >
