@@ -6,7 +6,7 @@ import Title from "@/components/base/title";
 import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper/ConditionalWrapper";
 import Link from "@/components/base/link/Link";
-import classNames from "classnames";
+import cx from "classnames";
 import { useState } from "react";
 
 /**
@@ -22,6 +22,8 @@ export const MaterialRowButton = ({ buttonText = null, buttonAction }) => {
   );
 };
 
+export const DynamicCloumn = ({ ...props }) => <Text type="text2" {...props} />;
+
 const MaterialRow = ({
   image,
   title,
@@ -29,8 +31,10 @@ const MaterialRow = ({
   materialType,
   creationYear,
   library,
+  dynamicColumn,
   hasCheckbox = false,
   id,
+  status,
   renderButton,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -39,7 +43,12 @@ const MaterialRow = ({
     <ConditionalWrapper
       condition={!hasCheckbox}
       wrapper={(children) => (
-        <Link className={styles.materialRow_wrapper}>
+        <Link
+          className={cx(styles.materialRow_wrapper, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
+        >
           <article className={styles.materialRow}>{children}</article>
         </Link>
       )}
@@ -51,7 +60,7 @@ const MaterialRow = ({
           aria-labelledby="chk1-label"
           data-id={id}
           onClick={() => setIsChecked(!isChecked)}
-          className={classNames(
+          className={cx(
             styles.materialRow,
             styles.materialRow_withCheckbox,
             styles.materialRow_wrapper
@@ -73,28 +82,26 @@ const MaterialRow = ({
           </div>
         )}
 
-        <div>
-          <Cover src={image} size="fill-width" />
-        </div>
+        <div>{!!image && <Cover src={image} size="fill-width" />}</div>
 
         <div>
           {/* Make correct header */}
           <Title type="title8" as="h4">
             {title}
           </Title>
-          <Text type="text2">{creator}</Text>
-          <Text type="text2">
-            {materialType}, {creationYear}
-          </Text>
+          {creator && <Text type="text2">{creator}</Text>}
+          {materialType && creationYear && (
+            <Text type="text2">
+              {materialType}, {creationYear}
+            </Text>
+          )}
         </div>
 
         <div>
           <Text type="text2">{library}</Text>
         </div>
 
-        <div>
-          <Text type="text2">6. okt 2022</Text>
-        </div>
+        <div>{dynamicColumn}</div>
 
         <div>{renderButton && renderButton}</div>
       </>

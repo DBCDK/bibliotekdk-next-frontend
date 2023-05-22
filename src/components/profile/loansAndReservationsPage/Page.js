@@ -1,5 +1,8 @@
 import useUser from "@/components/hooks/useUser";
-import MaterialRow, { MaterialRowButton } from "../materialRow/MaterialRow";
+import MaterialRow, {
+  DynamicCloumn,
+  MaterialRowButton,
+} from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
 import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
@@ -7,22 +10,59 @@ import Translate from "@/components/base/translate";
 import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
+import {
+  dateToDayInMonth,
+  timestampToShortDate,
+} from "@/utils/datetimeConverter";
 
 /**
  * TODO
  * -----
- * Dates
- * Status
+ * Dates ✓
+ * Status ✓
  * Dept data ✓
  * Better mock data (different books)
  * checkbox focus style ✓
  * checkbox hover style ✓
  * action placeholders ✓
- * data reducer (material row)
- * Material row standalone mock
+ * data reducer (material row) ✓
+ * Material row standalone mock ✓
  * Last border on link
  * Image height
+ * Confirm selection styling
+ * Queue numbers & cross library reservertions
+ * Actions
  */
+
+// Set to when warning should be shown
+const DAYS_TO_COUNTDOWN = 5;
+
+export const dataReducer = (dataType, data) => {
+  switch (dataType) {
+    case "loan": {
+      return {
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: data.manifestation.creators[0].display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        library: "Herlev bibliotek", // TODO
+        id: data.loanId,
+      };
+    }
+    case "order": {
+      return {
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: data.manifestation.creators[0].display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        library: data.pickupBranch.agencyName,
+        id: data.orderId,
+      };
+    }
+  }
+};
 
 const getCheckedElements = (parentRef) => {
   const elements = [].slice.call(parentRef.current.children);
@@ -32,9 +72,9 @@ const getCheckedElements = (parentRef) => {
   return checkedElements;
 };
 
-const LoansAndReservations = ({}) => {
+const LoansAndReservations = () => {
   const { loanerInfo } = useUser();
-  const { loans, orders } = loanerInfo;
+  const { loans, orders, debt } = loanerInfo;
   const [isCheckbox, setIsCheckbox] = useState({
     debts: false,
     loans: false,
@@ -71,15 +111,17 @@ const LoansAndReservations = ({}) => {
           </Title>
         </div>
 
-        {loans?.map((loan) => (
+        {debt?.map((intermediate, i) => (
           <MaterialRow
-            key={loan.loanId}
-            image={loan.manifestation.cover.thumbnail}
-            title={loan.manifestation.titles.main[0]}
-            creator={loan.manifestation.creators[0].display}
-            materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
-            library={"Herlev bibliotek"}
+            key={`intermediate-${intermediate.title}-#${i}`}
+            title={intermediate.title}
+            library={"Herlev bibliotek"} // TODO
+            dynamicColumn={
+              <DynamicCloumn className={styles.isWarning}>
+                {intermediate.amount} kr
+              </DynamicCloumn>
+            }
+            status="RED"
           />
         ))}
       </section>
@@ -101,24 +143,61 @@ const LoansAndReservations = ({}) => {
           </Button>
         </div>
 
-        {loans?.map((loan, i) => (
-          <MaterialRow
-            key={`loan-${loan.loanId}-#${i}`}
-            image={loan.manifestation.cover.thumbnail}
-            title={loan.manifestation.titles.main[0]}
-            creator={loan.manifestation.creators[0].display}
-            materialType={loan.manifestation.materialTypes[0].specific}
-            creationYear={loan.manifestation.recordCreationDate.substring(0, 4)}
-            library={"Herlev bibliotek"}
-            hasCheckbox={isCheckbox.loans}
-            id={loan.loanId}
-            renderButton={
-              <MaterialRowButton
-                buttonText={Translate({ context: "profile", label: "renew" })}
-              />
-            }
-          />
-        ))}
+        {loans?.map((loan, i) => {
+          const dueDate = new Date(loan.dueDate);
+          const today = new Date();
+          const futureDate = new Date();
+          futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN);
+          const daysToDueDate = Math.floor(
+            (dueDate - today) / (1000 * 60 * 60 * 24)
+          );
+          const isCountdown = dueDate >= today && dueDate <= futureDate;
+          const isOverdue = dueDate < today;
+          const dateString = timestampToShortDate(dueDate);
+
+          return (
+            <MaterialRow
+              {...dataReducer("loan", loan)}
+              key={`loan-${loan.loanId}-#${i}`}
+              hasCheckbox={isCheckbox.loans}
+              id={loan.loanId}
+              renderButton={
+                <MaterialRowButton
+                  buttonText={Translate({ context: "profile", label: "renew" })}
+                />
+              }
+              dynamicColumn={
+                <DynamicCloumn>
+                  {isOverdue ? (
+                    <>
+                      <span className={styles.isWarning}>{dateString}</span>
+                      <span className={styles.isWarning}>
+                        {Translate({
+                          context: "profile",
+                          label: "date-overdue",
+                        })}
+                      </span>
+                    </>
+                  ) : isCountdown ? (
+                    <>
+                      <span>{dateString}</span>
+                      <span className={styles.isWarning}>
+                        {Translate({ context: "profile", label: "in" })}{" "}
+                        {daysToDueDate}{" "}
+                        {daysToDueDate === 1
+                          ? Translate({ context: "units", label: "day" })
+                          : Translate({ context: "units", label: "days" })}
+                      </span>
+                    </>
+                  ) : (
+                    <span>{dateString}</span>
+                  )}
+                </DynamicCloumn>
+              }
+              status={isOverdue ? "RED" : "NONE"}
+            />
+          );
+        })}
       </section>
 
       <section className={styles.section} ref={ordersWrapperRef}>
@@ -138,27 +217,49 @@ const LoansAndReservations = ({}) => {
           </Button>
         </div>
 
-        {orders?.map((order, i) => (
-          <MaterialRow
-            key={`loan-${order.loanId}-#${i}`}
-            image={order.manifestation.cover.thumbnail}
-            title={order.manifestation.titles.main[0]}
-            creator={order.manifestation.creators[0].display}
-            materialType={order.manifestation.materialTypes[0].specific}
-            creationYear={order.manifestation.recordCreationDate.substring(
-              0,
-              4
-            )}
-            library={order.pickupBranch.agencyName}
-            hasCheckbox={isCheckbox.orders}
-            id={order.orderId}
-            renderButton={
-              <MaterialRowButton
-                buttonText={Translate({ context: "profile", label: "delete" })}
-              />
-            }
-          />
-        ))}
+        {orders?.map((order, i) => {
+          const pickUpDate = new Date(order.pickUpExpiryDate);
+          const isReadyToPickup = !!order.pickUpExpiryDate;
+          const dateString = isReadyToPickup
+            ? dateToDayInMonth(pickUpDate)
+            : null;
+
+          return (
+            <MaterialRow
+              {...dataReducer("order", order)}
+              key={`loan-${order.loanId}-#${i}`}
+              hasCheckbox={isCheckbox.orders}
+              status={isReadyToPickup ? "GREEN" : "NONE"}
+              dynamicColumn={
+                <DynamicCloumn>
+                  {isReadyToPickup ? (
+                    <span className={styles.isReady}>
+                      {Translate({
+                        context: "profile",
+                        label: "ready-to-pickup",
+                      })}
+                    </span>
+                  ) : null}
+                  <span>
+                    {Translate({
+                      context: "profile",
+                      label: "pickup-deadline",
+                    })}
+                     {dateString}
+                  </span>
+                </DynamicCloumn>
+              }
+              renderButton={
+                <MaterialRowButton
+                  buttonText={Translate({
+                    context: "profile",
+                    label: "delete",
+                  })}
+                />
+              }
+            />
+          );
+        })}
       </section>
     </ProfileLayout>
   );
