@@ -6,7 +6,6 @@ describe("Profilemenu", () => {
       .click();
     cy.get('[data-cy*="menu-subcategory"]').should("have.length", 3);
     cy.get('[data-cy="menu-subcategory-0"]').should("exist");
-    cy.get('[data-cy="menu-subcategory-0"]').should("exist");
   });
 
   it(`User without debt: GroupLink opens subcategories and they are clickable`, () => {

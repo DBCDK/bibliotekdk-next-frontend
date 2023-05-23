@@ -87,9 +87,9 @@ function useUserImpl() {
     }
     return {
       ...data?.session,
-      debt: data?.user?.debt || [],
-      loans: data?.user?.loans || [],
-      orders: data?.user?.orders || [],
+      debt: userData?.user?.debt || [],
+      loans: userData?.user?.loans || [],
+      orders: userData?.user?.orders || [],
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
   }, [data?.session, loggedInUser]);

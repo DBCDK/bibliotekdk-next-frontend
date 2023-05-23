@@ -21,6 +21,40 @@ export function basic() {
         mail
         address
         postalCode
+        debt {
+            title
+            amount
+            creator
+            date
+            currency
+        }
+          loans {
+            loanId
+            dueDate
+            manifestation {
+              pid
+              titles {
+                main
+              }
+              creators {
+                display
+              }
+              materialTypes {
+                specific
+              }
+              cover {
+                thumbnail
+              }
+              recordCreationDate
+            }
+          }
+          orders {
+            orderId
+            status
+            pickUpBranch {
+              agencyName
+          }
+        }   
       }
       monitor(name: "bibdknext_user")
      }`,

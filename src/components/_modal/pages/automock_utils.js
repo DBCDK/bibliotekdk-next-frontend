@@ -626,7 +626,7 @@ const USER_DEBT = [
   },
 ];
 
-function useMockLoanerInfo(pickupBranch = "790900") {
+function useMockLoanerInfo(pickupBranch = "790900", hasDebt = true) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
 
@@ -635,21 +635,7 @@ function useMockLoanerInfo(pickupBranch = "790900") {
       pickupBranch: pickupBranch,
       loans: USER_LOANS,
       orders: USER_ORDERS,
-      debt: USER_DEBT,
-    });
-  }, [id]);
-}
-
-function useMockLoanerInfoNoDebt(pickupBranch = "790900") {
-  const { updateLoanerInfo } = useUser();
-  const id = useId();
-
-  useMemo(() => {
-    updateLoanerInfo({
-      pickupBranch: pickupBranch,
-      loans: USER_LOANS,
-      orders: USER_ORDERS,
-      debt: [],
+      debt: hasDebt ? USER_DEBT : [],
     });
   }, [id]);
 }
@@ -676,7 +662,6 @@ export default function automock_utils() {
     REVIEW_1,
     DEFAULT_STORY_PARAMETERS,
     useMockLoanerInfo,
-    useMockLoanerInfoNoDebt,
     USER_LOANS,
     USER_ORDERS,
   };
