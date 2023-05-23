@@ -2,6 +2,28 @@
   display: flex;
 }
 
+.col_flex__vertical_version {
+  width: 75%;
+}
+
+@media (min-width: 364px) {
+  .col_flex__vertical_version {
+    width: 45%;
+  }
+}
+
+@media(min-width: 576px) {
+  .col_flex__vertical_version {
+    width: 26.25%;
+  }
+}
+
+@media(min-width: 768px) {
+  .col_flex__vertical_version {
+    width: 22.22%;
+  }
+}
+
 .link_style {
   flex-grow: 1;
   /* Add underline colors */
@@ -37,8 +59,8 @@
 }
 
 .cover__vertical_version {
-  width: 87.5%;
-  flex-grow: 1;
+  width: 95%;
+  height: calc(var(--pt16) * 2);
 }
 
 .text {

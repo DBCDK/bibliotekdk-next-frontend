@@ -3,6 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: row;
+  margin-inline: calc(var(--pt2) * -1);
 }
 
 .flex_arrow {
@@ -30,10 +31,19 @@
   padding-bottom: var(--pt2);
 
   overflow-x: scroll;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
 }
 
+.flex_box > *:first-child {
+  margin-left: calc(var(--pt2) * 1);
+}
+
+.flex_box > *:last-child {
+  margin-right: calc(var(--pt2) * 1);
+}
+
+/* Reset scrollbar */
 .flex_box::-webkit-scrollbar {
   width: 10px;
   height: var(--pt05);
@@ -55,6 +65,18 @@
 @media (min-width: 992px) {
   .flex_arrow {
     display: initial;
+  }
+
+  .flex_row {
+    margin-inline: 0;
+  }
+
+  .flex_box > *:first-child {
+    margin-left: 0;
+  }
+
+  .flex_box > *:last-child {
+    margin-right: 0;
   }
 }
 

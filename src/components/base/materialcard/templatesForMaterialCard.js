@@ -30,15 +30,20 @@ export function templateForVerticalWorkCard(material) {
     workId: material?.workId,
     children: (
       <>
-        <Text {...propFunc("text1", 2)} title={fullTitle}>
-          {fullTitle}
-        </Text>
-        <Text {...propFunc("text2", 2)} title={firstCreator}>
-          {firstCreator}
-        </Text>
+        {fullTitle && (
+          <Text {...propFunc("text1", 2)} title={fullTitle}>
+            {fullTitle}
+          </Text>
+        )}
+        {firstCreator && (
+          <Text {...propFunc("text2", 2)} title={firstCreator}>
+            {firstCreator}
+          </Text>
+        )}
       </>
     ),
     // Styling
+    elementContainerClassName: styles.col_flex__vertical_version,
     relatedElementClassName: styles.related_element__vertical_version,
     coverImageClassName: styles.cover__vertical_version,
   };
