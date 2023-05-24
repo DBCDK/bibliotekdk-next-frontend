@@ -8,7 +8,7 @@ const exportedObject = {
 };
 
 export const LoansAndReservationsStory = () => {
-  useMockLoanerInfo("790900");
+  useMockLoanerInfo();
   return <LoansAndReservations />;
 };
 

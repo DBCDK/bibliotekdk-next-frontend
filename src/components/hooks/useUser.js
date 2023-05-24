@@ -40,7 +40,6 @@ function useUserMock() {
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
-
       // Broadcast update
       mutate(useUserMockKey);
     },
