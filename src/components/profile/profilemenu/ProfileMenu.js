@@ -158,26 +158,24 @@ function MenuGroup({ menus, href, name, className }) {
           </Title>
         </div>
       </Link>
-      <nav
+      <ul
         className={classNames(
           styles.linkGroup,
           isActive ? "" : styles.groupHide
         )}
       >
-        <ul>
-          {menus[name].map((item, index) => (
-            <SubCategory
-              key={`subcategory-${item.title}`}
-              item={item}
-              index={index}
-              router={router}
-              href={href}
-              activeIndex={activeIndex}
-              setActiveIndex={setActiveIndex}
-            />
-          ))}
-        </ul>
-      </nav>
+        {menus[name].map((item, index) => (
+          <SubCategory
+            key={`subcategory-${item.title}`}
+            item={item}
+            index={index}
+            router={router}
+            href={href}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+          />
+        ))}
+      </ul>
     </nav>
   );
 }
