@@ -1,3 +1,7 @@
+.menu {
+  list-style: none;
+}
+
 .link {
   margin-bottom: var(--pt1);
   margin-left: var(--pt2);
@@ -16,6 +20,11 @@
 
 .subLink {
   display: inline-flex;
+  padding-left: var(--pt4);
+}
+
+.subLink p {
+  white-space: normal;
 }
 
 .groupTitleContainer {
@@ -23,15 +32,16 @@
   align-items: center;
 }
 
-.groupLink {
-  padding-left: var(--pt4);
+.menuLink {
+  list-style: none;
 }
-.groupLink p {
-  white-space: normal;
-}
-
 .groupMenu {
   display: none;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 992px) {

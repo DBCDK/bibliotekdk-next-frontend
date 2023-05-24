@@ -33,50 +33,15 @@ function MenuLink({ label, href }) {
   }, [router.asPath]);
 
   const type = isActive ? "title4" : "title5";
-  const activeClass = isActive ? styles.active : "";
 
   return (
-    <div className={`${styles.link} ${activeClass}`}>
+    <li className={classNames(styles.link, isActive ? styles.active : "")}>
       <Link href={href} dataCy="menu-fixed-links">
         <Title type={type}>{Translate({ context: "profile", label })}</Title>
       </Link>
       <Icon src="arrowrightblue.svg" size={1} />
-    </div>
+    </li>
   );
-}
-
-/**
- * One group of subcategories in the menu.
- * f. ex. "Lån", "Reserveringer", "Mellemværende" under "Lån og reserveringer"
- * @param menuItems
- * @param href
- * @param groupName
- * @param activeIndex
- * @param setActiveIndex
- * @return {JSX.Element}
- */
-function MenuLinkGroup({
-  menuItems,
-  href,
-  groupName,
-  activeIndex,
-  setActiveIndex,
-}) {
-  const router = useRouter();
-
-  return menuItems[groupName].map((item, index) => {
-    return (
-      <SubCategory
-        key={`subcategory-${item.title}`}
-        item={item}
-        index={index}
-        router={router}
-        href={href}
-        activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-      />
-    );
-  });
 }
 
 function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
@@ -103,7 +68,7 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
     if (router.asPath.includes(`#${urlEnding}`)) {
       setActiveIndex(index);
     }
-  }, [router]);
+  }, [router.asPath]);
 
   async function replaceHash(newEnding) {
     const baseUrl = router.pathname;
@@ -118,11 +83,12 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   }
 
   return (
-    <div className={styles.groupLink} key={`div-menulink-${index}`}>
+    <li className={styles.menuLink} key={`div-menulink-${index}`}>
       <Link
-        className={`${styles.subLink} ${classNames(
+        className={classNames(
+          styles.subLink,
           index === activeIndex ? styles.groupActive : ""
-        )}`}
+        )}
         dataCy={`menu-subcategory-${index}`}
         onClick={() => {
           replaceHash(urlEnding);
@@ -145,7 +111,7 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
           )}
         </>
       </Link>
-    </div>
+    </li>
   );
 }
 
@@ -166,20 +132,14 @@ function MenuGroup({ menus, href, name, className }) {
   }, [router.asPath]);
 
   return (
-    <div key={`menu-component-${name}`} className={className}>
+    <nav className={className} aria-labelledby={`navigation-${name}`}>
       <Link
-        tabIndex={"0"}
         className={styles.group}
         href={href}
-        passHref={true}
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
-        <div
-          lines={30}
-          key={`groupMenu-${name}`}
-          className={styles.groupTitleContainer}
-        >
+        <div className={styles.groupTitleContainer}>
           <span className={styles.groupIcon}>
             <Icon
               size={{ w: 1, h: 1 }}
@@ -187,7 +147,10 @@ function MenuGroup({ menus, href, name, className }) {
               className={classNames(isActive ? styles.groupIconRotate : "")}
             />
           </span>
-          <Title type={isActive ? "title4" : "title5"}>
+          <Title
+            type={isActive ? "title4" : "title5"}
+            id={`navigation-${name}`}
+          >
             {Translate({
               context: "profile",
               label: `${name}`,
@@ -195,21 +158,27 @@ function MenuGroup({ menus, href, name, className }) {
           </Title>
         </div>
       </Link>
-      <div
-        key={`dev-groupMenu-${name}`}
-        className={classNames(isActive ? "" : styles.groupHide)}
+      <nav
+        className={classNames(
+          styles.linkGroup,
+          isActive ? "" : styles.groupHide
+        )}
       >
-        <MenuLinkGroup
-          menuItems={menus}
-          href={href}
-          passHref={true}
-          groupName={name}
-          key={`links-${name}`}
-          activeIndex={activeIndex}
-          setActiveIndex={setActiveIndex}
-        />
-      </div>
-    </div>
+        <ul>
+          {menus[name].map((item, index) => (
+            <SubCategory
+              key={`subcategory-${item.title}`}
+              item={item}
+              index={index}
+              router={router}
+              href={href}
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
+            />
+          ))}
+        </ul>
+      </nav>
+    </nav>
   );
 }
 
@@ -250,13 +219,16 @@ export default function ProfileMenu() {
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
-    <>
+    <nav className={styles.menu}>
       <MenuGroup
         menus={menus}
         name={menuItems[0]}
         href="/profil/laan-og-reserveringer"
       />
-      <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
-    </>
+      {/* more MenuLinks are coming soon */}
+      <ul>
+        <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
+      </ul>
+    </nav>
   );
 }

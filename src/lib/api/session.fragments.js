@@ -54,7 +54,7 @@ export function session() {
           userTelephone
         }
         pickupBranch
-      } 
+      }
       monitor(name: "bibdknext_session")
     }`,
     variables: {},
