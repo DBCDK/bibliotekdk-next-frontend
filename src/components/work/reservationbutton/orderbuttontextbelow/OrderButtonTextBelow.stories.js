@@ -22,7 +22,7 @@ function ButtonTxtComponentBuilder({
   selectedPids = ["some-other-id-builder" + time],
   storyNameOverride = null,
 }) {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   const descriptionName = storyNameOverride ? storyNameOverride : type;
   return (
     <div>

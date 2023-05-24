@@ -10,11 +10,11 @@ const exportedObject = {
 export default exportedObject;
 
 export function ProfileMenuStoryWithDebt() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return <ProfileMenu />;
 }
 
 export function ProfileMenuStoryWithoutDebt() {
-  useMockLoanerInfo(undefined, undefined, undefined, []);
+  useMockLoanerInfo({ debt: [] });
   return <ProfileMenu />;
 }

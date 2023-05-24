@@ -124,7 +124,7 @@ export function Article() {
  * @return {JSX.Element}
  */
 export function FullManifestation() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <ManifestationFull
       workId={"some-work-id-1"}

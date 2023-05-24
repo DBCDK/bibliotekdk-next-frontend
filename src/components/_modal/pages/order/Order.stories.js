@@ -91,7 +91,7 @@ PickupNotAllowed.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticle() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article"
@@ -121,7 +121,7 @@ OrderIndexedPeriodicaArticle.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderIndexedPeriodicaArticleILL() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Indexed Periodica Article - ILL"
@@ -151,7 +151,7 @@ OrderIndexedPeriodicaArticleILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolume() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -181,7 +181,7 @@ OrderPeriodicaVolume.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function OrderPeriodicaVolumeOnlyILL() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="Order Periodica Volume"
@@ -212,7 +212,7 @@ OrderPeriodicaVolumeOnlyILL.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function NotBlockedUser() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="User is blocked from loaning"
@@ -243,7 +243,7 @@ NotBlockedUser.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function BlockedUser() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <OrderPageComponentBuilder
       title="User is blocked from loaning"

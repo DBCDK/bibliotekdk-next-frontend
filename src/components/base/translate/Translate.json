@@ -2944,6 +2944,10 @@
         "da": "Lån og reseveringer",
         "en": "Loan and reservations"
       },
+      "profileNavigation": {
+        "da": "Profil navigation",
+        "en": "Profile navigation"
+      },
       "addLibrary": {
         "da": "Tilføj bibliotek",
         "en": "Add library"
@@ -2991,7 +2995,7 @@
       "ready-to-pickup": {
         "da": "Klar til afhentning",
         "en": "Ready to pickup"
-      }, 
+      },
       "pickup-deadline": {
         "da": "Hent senest",
         "en": "Pickup at the latest"

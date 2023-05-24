@@ -132,7 +132,7 @@ function MenuGroup({ menus, href, name, className }) {
   }, [router.asPath]);
 
   return (
-    <li className={className} aria-labelledby={`navigation-${name}`}>
+    <li className={className}>
       <Link
         className={styles.group}
         href={href}
@@ -217,7 +217,13 @@ export default function ProfileMenu() {
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
-    <nav className={styles.menu}>
+    <nav
+      className={styles.menu}
+      aria-label={`${Translate({
+        context: "profile",
+        label: "profileNavigation",
+      })}`}
+    >
       <ul className={styles.menu}>
         <MenuGroup
           menus={menus}

@@ -77,7 +77,7 @@ ReservationButtonPhysicalBook.story = merge({}, DEFAULT_STORY_PARAMETERS, {
 });
 
 export function ReservationButtonEBook() {
-  useMockLoanerInfo();
+  useMockLoanerInfo({});
   return (
     <ReservationButtonComponentBuilder
       type={["ebog"]}
