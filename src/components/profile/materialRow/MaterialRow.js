@@ -12,12 +12,10 @@ import { useState } from "react";
 /**
  * Use as renderButton if needed
  */
-export const MaterialRowButton = ({ buttonText = null, buttonAction }) => {
+export const MaterialRowButton = ({ ...props }) => {
   return (
     <div className={styles.buttonContainer}>
-      <Button type="secondary" size="small" onClick={buttonAction}>
-        {buttonText}
-      </Button>
+      <Button type="secondary" size="small" {...props} />
     </div>
   );
 };
@@ -85,8 +83,7 @@ const MaterialRow = ({
         <div>{!!image && <Cover src={image} size="fill-width" />}</div>
 
         <div>
-          {/* Make correct header */}
-          <Title type="title8" as="h4">
+          <Title type="title8" as="h3">
             {title}
           </Title>
           {creator && <Text type="text2">{creator}</Text>}

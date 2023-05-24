@@ -19,7 +19,7 @@
   border-top: 1px solid var(--iron);
 }
 
-.materialRow_wrapper:last-of-type() {
+.materialRow_wrapper:last-of-type {
   border-bottom: 1px solid var(--iron);
 }
 

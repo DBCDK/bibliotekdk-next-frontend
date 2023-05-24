@@ -15,25 +15,6 @@ import {
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 
-/**
- * TODO
- * -----
- * Dates ✓
- * Status ✓
- * Dept data ✓
- * Better mock data (different books)
- * checkbox focus style ✓
- * checkbox hover style ✓
- * action placeholders ✓
- * data reducer (material row) ✓
- * Material row standalone mock ✓
- * Last border on link
- * Image height
- * Confirm selection styling
- * Queue numbers & cross library reservertions
- * Actions
- */
-
 // Set to when warning should be shown
 const DAYS_TO_COUNTDOWN = 5;
 
@@ -73,7 +54,7 @@ const getCheckedElements = (parentRef) => {
 };
 
 const LoansAndReservations = () => {
-  const { loanerInfo } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt } = loanerInfo;
   const [isCheckbox, setIsCheckbox] = useState({
     debts: false,
@@ -97,6 +78,14 @@ const LoansAndReservations = () => {
     }
   };
 
+  const onDeleteSingle = (id) => {
+    const newOrders = loanerInfo.orders;
+    const index = newOrders.map(item => item.orderId).indexOf(id);
+    newOrders.splice(index, 1);
+    // TODO proper mutate function
+    updateLoanerInfo({...loanerInfo}, {orders: newOrders});
+  }
+
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "loansAndReservations" })}
@@ -106,7 +95,7 @@ const LoansAndReservations = () => {
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title type="title5" tag="h2">
             {Translate({ context: "profile", label: "debt" })}
           </Title>
         </div>
@@ -128,7 +117,7 @@ const LoansAndReservations = () => {
 
       <section className={styles.section} ref={loansWrapperRef}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title type="title5" tag="h2">
             {Translate({ context: "profile", label: "loans" })}
           </Title>
           <Button
@@ -163,8 +152,7 @@ const LoansAndReservations = () => {
               id={loan.loanId}
               renderButton={
                 <MaterialRowButton
-                  buttonText={Translate({ context: "profile", label: "renew" })}
-                />
+                >{Translate({ context: "profile", label: "renew" })}</MaterialRowButton>
               }
               dynamicColumn={
                 <DynamicCloumn>
@@ -202,7 +190,7 @@ const LoansAndReservations = () => {
 
       <section className={styles.section} ref={ordersWrapperRef}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h3">
+          <Title type="title5" tag="h2">
             {Translate({ context: "profile", label: "orders" })}
           </Title>
           <Button
@@ -251,11 +239,12 @@ const LoansAndReservations = () => {
               }
               renderButton={
                 <MaterialRowButton
-                  buttonText={Translate({
-                    context: "profile",
-                    label: "delete",
-                  })}
-                />
+                  
+                  onClick={() => onDeleteSingle(order.orderId)}
+                >{Translate({
+                  context: "profile",
+                  label: "delete",
+                })}</MaterialRowButton>
               }
             />
           );
