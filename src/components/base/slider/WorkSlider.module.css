@@ -19,3 +19,11 @@
   padding-right: var(--pt1);
   margin-right: 0;
 }
+
+.SlideChildren > * {
+  box-shadow: 1px 0 0 var(--iron);
+}
+
+.SlideChildren > *:last-child {
+  box-shadow: none;
+}

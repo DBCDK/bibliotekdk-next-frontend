@@ -491,11 +491,19 @@ function RenderMovieAudience({ values }) {
  * @constructor
  */
 function RenderLitteratureAudience({ values }) {
+  const general = values.generalAudience
+    ? values.generalAudience.join(", ")
+    : "";
   const lix = values?.lix ? "lix: " + values.lix : "";
   const lettal = values?.let ? "let: " + values.let : "";
 
   return (
     <div>
+      {general && (
+        <Text type="text4" lines={1}>
+          {general}
+        </Text>
+      )}
       {lix && (
         <Text type="text4" lines={1}>
           {lix}
@@ -695,7 +703,9 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "level" }),
           tooltip: "tooltip_lix",
           value:
-            manifestation?.audience?.let || manifestation?.audience?.lix
+            manifestation?.audience?.let ||
+            manifestation?.audience?.lix ||
+            !isEmpty(manifestation.audience.generalAudience)
               ? manifestation.audience
               : null,
           jsxParser: RenderLitteratureAudience,
@@ -706,8 +716,12 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "audience" }),
           value: !isEmpty(manifestation?.audience?.ages)
             ? manifestation?.audience?.ages.join(", ")
-            : !isEmpty(manifestation?.audience?.childrenOrAdults)
-            ? manifestation?.audience?.childrenOrAdults
+            : !isEmpty(manifestation?.audience?.libraryRecommendation)
+            ? manifestation?.audience?.libraryRecommendation
+                .map((child) => child.display)
+                .join(", ")
+            : !isEmpty(manifestation?.audience?.primaryTarget)
+            ? manifestation?.audience?.primaryTarget
                 .map((child) => child.display)
                 .join(", ")
             : null,
@@ -716,9 +730,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceschool: {
           label: Translate({ ...context, label: "schooluse" }),
-          value: !isEmpty(manifestation?.audience?.generalAudience)
-            ? manifestation?.audience?.generalAudience.join(", ")
-            : manifestation?.audience?.schoolUse || null,
+          value: manifestation?.audience?.schoolUse || null,
         },
       },
       {

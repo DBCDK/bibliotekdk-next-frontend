@@ -1,5 +1,8 @@
 /**
  * @file {@link useElementVisible} and {@link useBundledElementVisibleById} hook is a wrapper around IntersectionObserver.
+ *  Handles the intersectionObserver
+ *  IntersectionObserver can be used for different things, ie. lazy load
+ *  or counting the number of objects that has been observed for data_collect
  */
 
 import { useEffect, useRef, useState } from "react";

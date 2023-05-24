@@ -22,6 +22,7 @@ import {
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
 import { Title } from "@/components/base/title/Title";
+import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
 function useInitMaterialType(
@@ -29,7 +30,8 @@ function useInitMaterialType(
   inUniqueMaterialTypes,
   type,
   onTypeChange,
-  workId
+  workId,
+  router
 ) {
   useEffect(() => {
     if (
@@ -41,7 +43,7 @@ function useInitMaterialType(
         type: uniqueMaterialTypes?.[0],
       });
     }
-  }, [workId]);
+  }, [workId, router.query]);
 }
 
 /**
@@ -61,6 +63,7 @@ export function Overview({
   skeleton = false,
 }) {
   const manifestations = work?.manifestations?.mostRelevant;
+  const router = useRouter();
 
   const { uniqueMaterialTypes, inUniqueMaterialTypes, flatPidsByType } =
     useMemo(() => {
@@ -72,7 +75,8 @@ export function Overview({
     inUniqueMaterialTypes,
     type,
     onTypeChange,
-    workId
+    workId,
+    router
   );
 
   // OBS: We load allPids for CoverCarousel, to ensure smooth change of MaterialType

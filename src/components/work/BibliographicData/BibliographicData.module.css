@@ -126,5 +126,9 @@
   .container {
     column-count: 2;
     -webkit-column-count: 2;
+    margin: var(--pt3) 0 var(--pt5) 0;
+  }
+  .fullmanifestation {
+    margin: var(--pt3) 0 var(--pt5) 0;
   }
 }
