@@ -1,0 +1,91 @@
+.menu {
+  list-style: none;
+}
+
+.link {
+  margin-bottom: var(--pt1);
+  margin-left: var(--pt2);
+  display: flex;
+  align-items: center;
+}
+
+.link i {
+  display: none;
+  margin: 0 0 0 var(--pt1);
+}
+
+.link.active i {
+  display: block;
+}
+
+.subLink {
+  display: inline-flex;
+  padding-left: var(--pt4);
+}
+
+.subLink p {
+  white-space: normal;
+}
+
+.groupTitleContainer {
+  display: inline-flex;
+  align-items: center;
+}
+
+.menuLink {
+  list-style: none;
+}
+.groupMenu {
+  display: none;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 992px) {
+  .groupMenu {
+    display: block;
+  }
+}
+
+.groupIcon {
+  padding-right: var(--pt1);
+}
+
+.groupIconLink {
+  padding-left: var(--pt1);
+  position: relative;
+  top: 2px;
+}
+
+.groupIconRotate {
+  transform: rotate(90deg);
+  position: relative;
+  top: 5px;
+}
+
+.group {
+  cursor: pointer;
+}
+
+.group:hover {
+  text-decoration: underline;
+}
+
+.group:focus {
+  text-decoration: underline;
+}
+
+.groupActive p {
+  font-family: var(--body-font-semibold);
+}
+
+.groupHide {
+  display: none;
+}
+
+.itemLength {
+  margin-left: var(--pt05);
+}
