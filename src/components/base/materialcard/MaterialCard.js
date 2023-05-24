@@ -21,7 +21,7 @@ const MaterialCard = forwardRef(function MaterialCard(
   {
     propAndChildrenTemplate = templateForRelatedWorks,
     propAndChildrenInput,
-    colSizing = { xs: 11, sm: 5, lg: 4 },
+    colSizing = { xs: 10, sm: 5, lg: 4 },
     onClick = null,
   },
   ref
@@ -33,6 +33,7 @@ const MaterialCard = forwardRef(function MaterialCard(
     image_src,
     children,
     workId,
+    elementContainerClassName,
     relatedElementClassName,
     coverImageClassName,
   } = renderProps;
@@ -48,7 +49,7 @@ const MaterialCard = forwardRef(function MaterialCard(
     <Col
       // Col props
       {...colSizing}
-      className={`${styles.col_flex}`}
+      className={`${styles.col_flex} ${elementContainerClassName}`}
     >
       <Link
         href={link_href}

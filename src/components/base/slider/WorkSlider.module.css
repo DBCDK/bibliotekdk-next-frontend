@@ -10,7 +10,7 @@
 }
 
 .SlideWrapper {
-  border-right: 1px solid rgba(0, 0, 0, 0.25);
+  border-right: 1px solid var(--iron);
   height: auto;
 }
 
@@ -18,4 +18,12 @@
   border-right: 0;
   padding-right: var(--pt1);
   margin-right: 0;
+}
+
+.SlideChildren > * {
+  box-shadow: 1px 0 0 var(--iron);
+}
+
+.SlideChildren > *:last-child {
+  box-shadow: none;
 }

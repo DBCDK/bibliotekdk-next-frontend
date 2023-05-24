@@ -25,6 +25,7 @@
   --arrow_transition: all 0.5s;
   --arrow_opacity: 1;
   --arrow_size: var(--pt5);
+  --tranform_base: calc(calc(var(--arrow_size) * 4) + var(--pt2));
 }
 
 .grid_cover_area {
@@ -36,49 +37,25 @@
 
 .left_arrow,
 .right_arrow {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-
   opacity: var(--arrow_opacity);
   transition: var(--arrow_transition);
 }
 
 .left_arrow {
-  --left_transform: none;
+  grid-area: ⬅️;
+  --left_transform: translateX(calc(var(--tranform_base) * 1));
   transform: var(--left_transform);
 }
 .right_arrow {
-  margin-left: calc(var(--arrow_size) * -1);
-
-  --right_transform: none;
+  grid-area: ➡️;
+  --right_transform: translateX(calc(var(--tranform_base) * -1));
   transform: var(--right_transform);
 }
 
-:is(.left_arrow, .right_arrow)::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-
-  width: calc(var(--arrow_size) * 1.8);
-  height: calc(var(--arrow_size) * 8);
-  top: calc(var(--arrow_size) * 0.5);
-
-  transform: translateX(-50%) translateY(-50%);
-}
-
-.left_arrow::before {
-  left: calc(var(--arrow_size) * 1);
-}
-
-.right_arrow::before {
-  left: 0;
-}
-
-.full_cover_carousel:is(:hover, :focus-visible, :focus-within) :is(.left_arrow, .right_arrow),
+.full_cover_carousel:is(:hover, :focus-visible) :is(.left_arrow, .right_arrow),
 :is(.left_arrow, .right_arrow):is(:hover, :focus-visible) {
-  --left_transform: translateX(calc(var(--pt11) * -2));
-  --right_transform: translateX(calc(var(--pt11) * 2));
+  --left_transform: none;
+  --right_transform: none;
   --arrow_opacity: 1;
 }
 
@@ -95,7 +72,7 @@
   gap: var(--pt2);
 }
 
- /*Hide scroll bar*/
+/*Hide scroll bar*/
 .carousel::-webkit-scrollbar {
   display: none;
 }
@@ -111,15 +88,15 @@
 }
 
 .cover_image {
-  max-height: 90%;
-  max-width: var(--carousel-cover-max-width);
+  max-height: 360px;
+  max-width: 50%;
   height: auto;
 
   box-shadow: var(--basic_box_shadow);
-  outline: var(--basic_box_border);
+  border: var(--basic_box_border);
 }
 
-.cover_image:is(:focus-visible, :focus-within) {
+.grid_cover_area:is(:focus-visible, :focus) > .cover_element > .cover_image {
   box-shadow: var(--basic_big_box_shadow);
 }
 
@@ -149,7 +126,7 @@
 /* END COVER */
 
 /* START OVERRIDING STYLE OF ARROWS */
-.arrow_styling {
+.full_cover_carousel .arrow_styling {
   display: none;
   z-index: -1;
   --arrow__background_color: var(--white);
@@ -161,15 +138,22 @@
 /* END ARROWS */
 
 @media (min-width: 768px) {
-  .arrow_styling {
+  .full_cover_carousel .arrow_styling {
     display: initial;
   }
 
   .full_cover_carousel {
+    --grid_template:
+      "⬅️ 🖼️ ➡️"
+      "🎱️ 🎱️ 🎱️"
+    ;
     --carousel-width: 240px;
     --carousel-cover-max-width: 240px;
-    width: calc(var(--carousel-width));
+    width: calc(var(--carousel-width) + calc(var(--tranform_base) * 2));
     max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
-    margin-right: var(--arrow_size);
+  }
+
+  .cover_image {
+    max-width: var(--carousel-cover-max-width);
   }
 }
