@@ -132,7 +132,7 @@ function MenuGroup({ menus, href, name, className }) {
   }, [router.asPath]);
 
   return (
-    <nav className={className} aria-labelledby={`navigation-${name}`}>
+    <li className={className} aria-labelledby={`navigation-${name}`}>
       <Link
         className={styles.group}
         href={href}
@@ -176,7 +176,7 @@ function MenuGroup({ menus, href, name, className }) {
           />
         ))}
       </ul>
-    </nav>
+    </li>
   );
 }
 
@@ -218,13 +218,13 @@ export default function ProfileMenu() {
 
   return (
     <nav className={styles.menu}>
-      <MenuGroup
-        menus={menus}
-        name={menuItems[0]}
-        href="/profil/laan-og-reserveringer"
-      />
-      {/* more MenuLinks are coming soon */}
-      <ul>
+      <ul className={styles.menu}>
+        <MenuGroup
+          menus={menus}
+          name={menuItems[0]}
+          href="/profil/laan-og-reserveringer"
+        />
+        {/* more MenuLinks are coming soon */}
         <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
       </ul>
     </nav>
