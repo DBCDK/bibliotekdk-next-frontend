@@ -3005,8 +3005,8 @@
         "en": "In"
       },
       "date-overdue": {
-        "da": "Dato overskredet",
-        "en": "Date overdue"
+        "da": "Frist overskredet!",
+        "en": "Return deadline overdue!"
       },
       "loans-subtext": {
         "da": "Du ser lån og reserveringer for",
@@ -3035,6 +3035,10 @@
       "pickup-at": {
         "da": "Afhentes på",
         "en": "Pickup at"
+      },
+      "price": {
+        "da": "Pris",
+        "en": "Price"
       }
     }
   }

@@ -3,6 +3,7 @@
   grid-column-gap: var(--pt3);
   grid-template-columns: 4fr 2fr 2fr 1fr;
   padding: var(--pt05) var(--pt1);
+  border-bottom: 1px solid var(--iron);
 }
 
 .materialRow {
@@ -23,10 +24,6 @@
 
 .materialRow_wrapper {
   width: 100%;
-  border-top: 1px solid var(--iron);
-}
-
-.materialRow_wrapper:last-of-type {
   border-bottom: 1px solid var(--iron);
 }
 

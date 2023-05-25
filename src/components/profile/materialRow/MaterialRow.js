@@ -9,6 +9,8 @@ import Link from "@/components/base/link/Link";
 import cx from "classnames";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import IconButton from "@/components/base/iconButton/IconButton";
+import { getWorkUrl } from "@/lib/utils";
 
 /**
  * Use as renderButton if needed
@@ -21,7 +23,15 @@ export const MaterialRowButton = ({ ...props }) => {
   );
 };
 
-export const DynamicCloumn = ({ ...props }) => <Text type="text2" {...props} />;
+export const MaterialRowIconButton = ({ ...props }) => {
+  return (
+    <div className={styles.buttonContainer}>
+      <IconButton {...props} />
+    </div>
+  );
+};
+
+export const DynamicCloumn = ({ ...props }) => <p {...props} />;
 
 export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
   return (
@@ -65,6 +75,7 @@ const MaterialRow = ({
   id,
   status = "NONE",
   renderButton,
+  workId,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -116,11 +127,20 @@ const MaterialRow = ({
         )}
 
         <div className={styles.materialInfo}>
-          <div className={styles.imageContainer}>
-            {!!image && <Cover src={image} size="fill-width" />}
-          </div>
+          {!!image && (
+            <div className={styles.imageContainer}>
+              <Cover src={image} size="fill-width" />
+            </div>
+          )}
           <div>
-            <Link href="">
+            <ConditionalWrapper
+              condition={!!title && !!creator && !!id}
+              wrapper={(children) => (
+                <Link href={getWorkUrl(title, creator, workId)}>
+                  {children}
+                </Link>
+              )}
+            >
               <Title
                 type="title8"
                 as="h3"
@@ -129,7 +149,7 @@ const MaterialRow = ({
               >
                 {title}
               </Title>
-            </Link>
+            </ConditionalWrapper>
 
             {creator && <Text type="text2">{creator}</Text>}
             {materialType && creationYear && (
@@ -164,6 +184,7 @@ MaterialRow.propTypes = {
   id: PropTypes.string.isRequired,
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   renderButton: PropTypes.object,
+  workId: PropTypes.string,
 };
 
 export default MaterialRow;
