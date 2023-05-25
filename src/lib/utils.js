@@ -149,5 +149,5 @@ export function chainFunctions(functions) {
 }
 
 export function getElementById(elementId) {
-  return elementId && document.querySelector(`#${elementId}`);
+  return elementId && document.querySelector(`#${CSS.escape(elementId)}`);
 }
