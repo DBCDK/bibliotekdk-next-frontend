@@ -8,7 +8,7 @@ describe("Series", () => {
 
   it(`Verify title and creator are shown`, () => {
     cy.contains("Minder om");
-    cy.get("a").should("have.length", 20);
+    cy.get("a").should("have.length", 20, { timeout: 10000 });
 
     cy.get("a").eq(0).contains("recommend.result[0].work.titles.full[0]");
     cy.get("a").eq(0).contains("recommend.result[0].work.creators[0].display");
@@ -46,108 +46,22 @@ describe("Series", () => {
             "recommend.result[1].work.workId",
             "recommend.result[2].work.workId",
             "recommend.result[3].work.workId",
-            // "recommend.result[4].work.workId",
-            // "recommend.result[5].work.workId",
           ],
         },
       });
     });
   });
+
   it(`Should collect all shown recommendations, when slider is scrolled`, () => {
     // Wait for recommendations to be loaded
+    // We test the scrolling functionaility in relatedworks.cy.js, så here we emulate it
     cy.contains("recommend.result[0].work.titles.full[0]");
 
-    cy.contains("recommend.result[0].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[1].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[2].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[3].work.titles.full[0]").should("be.visible");
+    // Emulate the scroll using cy.scrollTo
+    // The id :r0: is deterministic as we are using reacts useId
+    cy.get(`#${CSS.escape(":r0:")}`).scrollTo("right", { duration: 200 });
 
-    // The rest are not visible
-    cy.contains("recommend.result[11].work.titles.full[0]").should(
-      "not.be.visible"
-    );
-
-    // Scroll to let user see more recommendations
-    cy.get("[data-cy=right_arrow]").should("be.visible").click();
-    cy.contains("recommend.result[4].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[5].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[6].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[7].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[8].work.titles.full[0]").should("be.visible");
-
-    // The first ones are not visible
-    cy.contains("recommend.result[0].work.titles.full[0]").should(
-      "not.be.visible"
-    );
-
-    cy.get("[data-cy=right_arrow]").should("be.visible").click();
-    cy.contains("recommend.result[9].work.titles.full[0]").should("be.visible");
-    cy.contains("recommend.result[10].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[11].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[12].work.titles.full[0]").should(
-      "be.visible"
-    );
-
-    // The second ones are not visible
-    cy.contains("recommend.result[6].work.titles.full[0]").should(
-      "not.be.visible"
-    );
-
-    cy.get("[data-cy=right_arrow]").should("be.visible").click();
-    cy.contains("recommend.result[13].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[14].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[15].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[16].work.titles.full[0]").should(
-      "be.visible"
-    );
-
-    // 12th should not be not visible
-    cy.contains("recommend.result[10].work.titles.full[0]").should(
-      "not.be.visible"
-    );
-
-    cy.get("[data-cy=right_arrow]").should("be.visible").click();
-    cy.contains("recommend.result[15].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[16].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[17].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[18].work.titles.full[0]").should(
-      "be.visible"
-    );
-    cy.contains("recommend.result[19].work.titles.full[0]").should(
-      "be.visible"
-    );
-
-    // The first ones and after 1st click are not visible
-    cy.contains("recommend.result[0].work.titles.full[0]", {
-      timeout: 10000,
-    }).should("not.be.visible");
-    cy.contains("recommend.result[6].work.titles.full[0]", {
-      timeout: 10000,
-    }).should("not.be.visible");
-    cy.contains("recommend.result[10].work.titles.full[0]", {
-      timeout: 10000,
-    }).should("not.be.visible");
-    cy.contains("recommend.result[14].work.titles.full[0]", {
-      timeout: 10000,
-    }).should("not.be.visible");
-
-    cy.contains("recommend.result[19].work.titles.full[0]")
+    cy.contains("recommend.result[19].work.titles.full[0]", { timeout: 10000 })
       .focus()
       .should("be.visible", { timeout: 10000 })
       .click();

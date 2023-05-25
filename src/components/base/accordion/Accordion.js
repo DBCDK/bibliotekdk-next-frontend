@@ -111,7 +111,7 @@ export function Item({
             additionalTxt && styles.firstelement,
           ].join(" ")}
         >
-          <Link tag={"div"}>
+          <Link tag={"span"}>
             <Text type="text2" skeleton={isLoading} lines="1" tag={"span"}>
               {title}
             </Text>

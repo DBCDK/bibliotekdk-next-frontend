@@ -40,7 +40,6 @@ function useUserMock() {
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
-
       // Broadcast update
       mutate(useUserMockKey);
     },
@@ -85,9 +84,11 @@ function useUserImpl() {
         }
       });
     }
-
     return {
       ...data?.session,
+      debt: userData?.user?.debt || [],
+      loans: userData?.user?.loans || [],
+      orders: userData?.user?.orders || [],
       userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
     };
   }, [data?.session, loggedInUser]);
