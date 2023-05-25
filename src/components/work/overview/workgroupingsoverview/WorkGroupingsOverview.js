@@ -13,15 +13,13 @@ import {
   getIndexForAnchor,
   getUniqueIdForAnchor,
 } from "@/components/base/anchor/Anchor";
-import {
-  getElementById,
-  scrollToElementWithOffset,
-} from "@/components/base/scrollsnapslider/utils";
+import { scrollToElementWithOffset } from "@/components/base/scrollsnapslider/utils";
 import Translate from "@/components/base/translate";
 import useDataForWorkRelationsWorkTypeFactory from "@/components/hooks/useDataForWorkRelationsWorkTypeFactory";
 import { useEffect, useState } from "react";
 import styles from "./WorkGroupingsOverview.module.css";
 import { dateToShortDate } from "@/utils/datetimeConverter";
+import { getElementById } from "@/lib/utils";
 
 function getAnchor(anchorReference) {
   const seriesAnchorIndex = getIndexForAnchor(Translate(anchorReference));
