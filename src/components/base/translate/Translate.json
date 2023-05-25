@@ -316,7 +316,7 @@
         "en": "your library"
       },
       "lecturerStatement": {
-        "da": "Lektørudtalelse",
+        "da": "Bibliotekernes vurdering",
         "en": "Lecturer statement"
       },
       "expand": {
@@ -891,7 +891,7 @@
         "en": "Read review on DBC webarchive"
       },
       "materialReviewLinkText": {
-        "da": "Læs hele bibliotekernes vurdering",
+        "da": "Læs hele vurderingen",
         "en": "Read the entire library's assessment"
       },
       "materialTitle": {
@@ -2944,6 +2944,26 @@
         "da": "Lån og reseveringer",
         "en": "Loan and reservations"
       },
+      "profileNavigation": {
+        "da": "Profil navigation",
+        "en": "Profile navigation"
+      },
+      "addLibrary": {
+        "da": "Tilføj bibliotek",
+        "en": "Add library"
+      },
+      "remove": {
+        "da": "Fjern",
+        "en": "Remove"
+      },
+      "lastUsed": {
+        "da": "Sidst anvendt",
+        "en": "Last used"
+      },
+      "municipalityOfResidence": {
+        "da": "Bopælskommune",
+        "en": "Municipality of residence"
+      },
       "debt": {
         "da": "Mellemværende",
         "en": "Intermediate"
@@ -2975,7 +2995,7 @@
       "ready-to-pickup": {
         "da": "Klar til afhentning",
         "en": "Ready to pickup"
-      }, 
+      },
       "pickup-deadline": {
         "da": "Hent senest",
         "en": "Pickup at the latest"

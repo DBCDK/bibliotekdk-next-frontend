@@ -189,7 +189,13 @@ export function setTranslations(translations) {
  * @returns {string}
  *
  */
-function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
+function DoTranslate({
+  context,
+  label,
+  vars = [],
+  renderAsHtml = false,
+  requestedLang = undefined,
+}) {
   // hmm .. this is for test purposes:  cy- and jest-tests
   // use translation file for tests
   if (process.env.STORYBOOK_ACTIVE || process.env.JEST_WORKER_ID) {
@@ -202,12 +208,18 @@ function DoTranslate({ context, label, vars = [], renderAsHtml = false }) {
   if (!contexts[context][label]) {
     return `[! unknown label: ${label} in context: ${context}]`;
   }
+
+  if (requestedLang && !contexts[context][label][requestedLang]) {
+    return `[! unknown language: ${requestedLang} in label: ${label}]`;
+  }
+
   if (!contexts[context][label][lang]) {
     return `[! unknown language: ${lang} in label: ${label}]`;
   }
 
   // Requested text
-  const text = contexts[context][label][lang];
+  const languageToRetrieve = requestedLang || lang;
+  const text = contexts[context][label][languageToRetrieve];
 
   // Result
   let result = text;
@@ -262,8 +274,20 @@ function NewlineInText(text, renderAsHtml) {
   return text;
 }
 
-function Translate({ context, label, vars = [], renderAsHtml = false }) {
-  const translated = DoTranslate({ context, label, vars, renderAsHtml });
+function Translate({
+  context,
+  label,
+  vars = [],
+  renderAsHtml = false,
+  requestedLang = undefined,
+}) {
+  const translated = DoTranslate({
+    context,
+    label,
+    vars,
+    renderAsHtml,
+    requestedLang,
+  });
   return NewlineInText(translated, renderAsHtml);
 }
 

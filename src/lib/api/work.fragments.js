@@ -123,6 +123,11 @@ export function reviews({ workId }) {
                     physicalDescriptions {
                       summary
                     }
+                    edition {
+                      publicationYear {
+                        display
+                      }
+                    }
                     recordCreationDate
                     review {
                       rating
@@ -672,12 +677,13 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   workId
   titles {
     main
+    full
   }
   creators {
     display
   }
   manifestations {
-    all {
+    mostRelevant {
       materialTypes {
         specific
       }

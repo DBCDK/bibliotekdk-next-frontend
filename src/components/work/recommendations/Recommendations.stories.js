@@ -41,9 +41,10 @@ WrappedRecommendationsSlider.story = {
               : [],
         },
         Manifestations: {
-          all: () => [...new Array(1).fill({})],
+          mostRelevant: () => [...new Array(1).fill({})],
         },
         Cover: {
+          origin: () => "moreinfo",
           detail: ({ path }) => `https://picsum.photos/seed/${path}/200/300`,
         },
       },

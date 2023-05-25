@@ -13,9 +13,11 @@ import {
 export default function ScrollSnapSlider({
   sliderId,
   slideDistanceFunctionOverride = getScrollToNextCoveredChild,
-  className = null,
+  className = "",
   childContainerClassName = null,
   children,
+  arrowClass,
+  ignoreElements = ["hr"],
 }) {
   const parentRef = useRef(null);
   const [containerScroll, setContainerScroll] = useState({});
@@ -24,7 +26,7 @@ export default function ScrollSnapSlider({
   useEffect(() => {
     if (parentRef.current.childNodes) {
       setContainerScroll(scrollSetter(parentRef.current));
-      setChildScroll(childSetter(parentRef.current.childNodes));
+      setChildScroll(childSetter(parentRef.current.childNodes, ignoreElements));
     }
 
     // OBS for Dependencies: Children are NECESSARY for render timing
@@ -56,35 +58,33 @@ export default function ScrollSnapSlider({
   );
 
   return (
-    <>
-      <div className={`${styles.flex_row} ${className}`}>
-        {containerScroll.xScrollable > 0 && (
-          <Arrow
-            arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left}`}
-            orientation={"left"}
-            clickCallback={() => scrollFunction("left")}
-            dataDisabled={Math.floor(containerScroll.x) <= 0}
-          />
-        )}
-        <div
-          ref={parentRef}
-          id={sliderId}
-          onScroll={debouncedOnScroll}
-          className={`${styles.flex_box} ${childContainerClassName}`}
-        >
-          {children}
-        </div>
-        {containerScroll.xScrollable > 0 && (
-          <Arrow
-            arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right}`}
-            orientation={"right"}
-            clickCallback={() => scrollFunction("right")}
-            dataDisabled={
-              Math.floor(containerScroll.xScrollable - containerScroll.x) <= 0
-            }
-          />
-        )}
+    <div className={`${styles.flex_row} ${className}`}>
+      {containerScroll.xScrollable > 0 && (
+        <Arrow
+          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_left} ${arrowClass}`}
+          orientation={"left"}
+          clickCallback={() => scrollFunction("left")}
+          dataDisabled={Math.floor(containerScroll.x) <= 0}
+        />
+      )}
+      <div
+        ref={parentRef}
+        id={sliderId}
+        onScroll={debouncedOnScroll}
+        className={`${styles.flex_box} ${childContainerClassName}`}
+      >
+        {children}
       </div>
-    </>
+      {containerScroll.xScrollable > 0 && (
+        <Arrow
+          arrowClass={`${styles.flex_arrow} ${styles.flex_arrow_right} ${arrowClass}`}
+          orientation={"right"}
+          clickCallback={() => scrollFunction("right")}
+          dataDisabled={
+            Math.floor(containerScroll.xScrollable - containerScroll.x) <= 0
+          }
+        />
+      )}
+    </div>
   );
 }

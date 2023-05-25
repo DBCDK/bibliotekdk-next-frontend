@@ -57,7 +57,9 @@ export default function Wrap({ filters = [], limit = 30, ...props }) {
   }
 
   const works = cat?.subCategories?.[0]?.result?.map((obj) =>
-    merge({}, obj.work, { manifestations: { all: [obj.manifestation] } })
+    merge({}, obj.work, {
+      manifestations: { mostRelevant: [obj.manifestation] },
+    })
   );
 
   if (works?.length === 0) {

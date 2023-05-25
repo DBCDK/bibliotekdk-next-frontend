@@ -1,4 +1,5 @@
 import range from "lodash/range";
+import { getElementById } from "@/lib/utils";
 
 export function scrollToElement(sliderElementId) {
   document.querySelector(`#${CSS.escape(sliderElementId)}`).scrollIntoView({
@@ -6,10 +7,6 @@ export function scrollToElement(sliderElementId) {
     block: "nearest",
     inline: "center",
   });
-}
-
-export function getElementById(elementId) {
-  return elementId && document.querySelector(`#${elementId}`);
 }
 
 export function scrollToElementWithOffset(
@@ -111,19 +108,21 @@ export function scrollSetter(target) {
   };
 }
 
-export function childSetter(childNodes) {
+export function childSetter(childNodes, ignoreElements = []) {
   const childWidths = [];
   // Everything is slightly offset. I noticed 15px at one point
   // TODO: Please fix this if you know how to
   const offset = childNodes?.[0]?.offsetLeft;
 
-  childNodes.forEach((child) =>
-    childWidths.push({
-      width: child.offsetWidth,
-      posLeft: child.offsetLeft - offset,
-      posRight: child.offsetLeft + child.offsetWidth - offset,
-    })
-  );
+  childNodes.forEach((child) => {
+    if (!ignoreElements.includes(child.localName)) {
+      return childWidths.push({
+        width: child.offsetWidth,
+        posLeft: child.offsetLeft - offset,
+        posRight: child.offsetLeft + child.offsetWidth - offset,
+      });
+    }
+  });
   return childWidths;
 }
 

@@ -147,14 +147,12 @@ function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
         href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
         key={`menulink-${index}`}
         className={classNames(
-          menuItems[group.name][index].id === parseInt(helpTextId, "10")
-            ? styles.helpactive
-            : ""
+          item.id === parseInt(helpTextId, "10") ? styles.helpactive : ""
         )}
       >
         <Text type="text2" lines={2}>
           {item.title}
-          {menuItems[group.name][index].id === parseInt(helpTextId, "10") && (
+          {item.id === parseInt(helpTextId, "10") && (
             <span className={styles.helpiconlink}>
               <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
             </span>

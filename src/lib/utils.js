@@ -48,8 +48,37 @@ export function encodeTitleCreator(title = "", creator = "") {
     : encodeString(title);
 }
 
+/**
+ *
+ * @param {string} fullTitle
+ * @param {string} creator
+ * @param {string} workId
+ * @returns {string}
+ */
 export function getWorkUrl(fullTitle, creator, workId) {
   return `/materiale/${encodeTitleCreator(fullTitle, creator)}/${workId}`;
+}
+
+/**
+ *
+ * @param {string} title
+ * @param {string} workId
+ * @param {string} id
+ * @returns {string}
+ */
+export function getInfomediaReviewUrl(title, workId, id) {
+  return `/anmeldelse/${title}/${workId}/${id}`;
+}
+
+/**
+ *
+ * @param {string} title
+ * @param {string} workId
+ * @param {string} pid
+ * @returns {string}
+ */
+export function getMaterialReviewUrl(title, workId, pid) {
+  return `/anmeldelse/${title}/${workId}/${pid}`;
 }
 
 /**
@@ -117,4 +146,8 @@ export function comparableYear(a) {
 export function chainFunctions(functions) {
   return (initialValue) =>
     functions.reduce((accumulator, func) => func(accumulator), initialValue);
+}
+
+export function getElementById(elementId) {
+  return elementId && document.querySelector(`#${elementId}`);
 }

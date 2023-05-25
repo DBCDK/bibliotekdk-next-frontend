@@ -9,6 +9,7 @@ import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
+import { encodeString } from "@/lib/utils";
 import {
   dateToDayInMonth,
   timestampToShortDate,
@@ -76,7 +77,13 @@ const LoansAndReservations = () => {
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h2">
+          <Title type="title5" tag="h2" id={`sublink-${encodeString(
+              Translate({
+                context: "profile",
+                label: "debt",
+                requestedLang: "da",
+              })
+            )}`}>
             {Translate({ context: "profile", label: "debt" })}
           </Title>
         </div>
@@ -99,7 +106,13 @@ const LoansAndReservations = () => {
 
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h2">
+          <Title type="title5" tag="h2" id={`sublink-${encodeString(
+              Translate({
+                context: "profile",
+                label: "loans",
+                requestedLang: "da",
+              })
+            )}`}>
             {Translate({ context: "profile", label: "loans" })}
           </Title>
         </div>
@@ -167,7 +180,13 @@ const LoansAndReservations = () => {
 
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title type="title5" tag="h2">
+          <Title type="title5" tag="h2" id={`sublink-${encodeString(
+              Translate({
+                context: "profile",
+                label: "orders",
+                requestedLang: "da",
+              })
+            )}`}>
             {Translate({ context: "profile", label: "orders" })}
           </Title>
         </div>

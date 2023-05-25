@@ -1,5 +1,6 @@
 import Header from "@/components/header/Header";
 import { useRouter } from "next/router";
+import { fetchAll } from "@/lib/api/apiServerOnly";
 
 import Page from "@/components/profile/myLibrariesPage";
 /**
@@ -15,3 +16,13 @@ export default function MyLibraries() {
     </>
   );
 }
+
+/**
+ * We use getInitialProps to let Next.js
+ * fetch the data server side
+ *
+ * https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering
+ */
+MyLibraries.getInitialProps = (ctx) => {
+  return fetchAll([], ctx);
+};

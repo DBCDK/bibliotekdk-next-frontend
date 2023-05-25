@@ -10,56 +10,13 @@ import { cyKey } from "@/utils/trim";
 import Section from "@/components/base/section";
 import Translate from "@/components/base/translate";
 
-import InfomediaReview from "./types/infomedia";
-import ExternalReview from "./types/external";
-import MaterialReview from "./types/material";
+import Item from "./item";
 
 import { sortReviews } from "./utils";
 import styles from "./Reviews.module.css";
 
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
-import { getScrollToNextFullWidth } from "@/components/base/scrollsnapslider/utils";
-
-/**
- * Selecting the correct review template
- *
- * @param review
- *
- * @returns {component}
- */
-
-function getTemplate(review) {
-  if (review.review?.reviewByLibrarians?.length > 0) {
-    return MaterialReview;
-  }
-
-  if (review.access?.find((a) => a.__typename === "InfomediaService")) {
-    return InfomediaReview;
-  }
-
-  return ExternalReview;
-}
-
-function ReviewFromTemplate({ review, idx, skeleton, title, workId }) {
-  const Review = getTemplate(review);
-
-  if (Review) {
-    const skeletonReview = skeleton
-      ? `${styles.skeleton} ${styles.custom}`
-      : "";
-
-    return (
-      <Review
-        skeleton={skeleton}
-        key={`review-${idx}`}
-        data={review}
-        className={`${styles.SlideWrapper} ${skeletonReview}`}
-        title={title}
-        workId={workId}
-      />
-    );
-  }
-}
+import { getScrollToNextCoveredChild } from "@/components/base/scrollsnapslider/utils";
 
 /**
  * The Component function
@@ -69,57 +26,51 @@ function ReviewFromTemplate({ review, idx, skeleton, title, workId }) {
  *
  * @returns {JSX.Element}
  */
-export function Reviews({ data = [], skeleton = false }) {
+export function Reviews({ data = [], isLoading = false }) {
   // Translate Context
   const sliderId = "review_scrollSnapSlider";
 
   const context = { context: "reviews" };
-  const workId = data?.workId;
-  const title = data?.titles?.main?.[0];
 
   const reviews = useMemo(
     () => [...data?.relations?.hasReview].sort(sortReviews),
     [data]
   );
 
+  const isLoadingClass = isLoading ? styles.skeleton : "";
+
   // Setup a window resize listener, triggering a component
   // rerender, when window size changes.
   useWindowSize();
 
-  const ReviewFromTemplateWithProps = ({ review, idx }) => (
-    <ReviewFromTemplate
-      review={review}
-      idx={idx}
-      skeleton={skeleton}
-      title={title}
-      workId={workId}
-    />
-  );
-
   return (
     <Section
-      className={`${styles.reviews}`}
+      className={`${styles.reviews} ${isLoadingClass}`}
       dataCy={cyKey({ name: "section", prefix: "reviews" })}
+      isLoading={isLoading}
       title={Translate({
         ...context,
         label: "title",
-        vars: [`${skeleton ? "..." : reviews.length}`],
+        vars: [`${isLoading ? "..." : reviews.length}`],
       })}
       space={{ top: "var(--pt8)" }}
       backgroundColor="var(--parchment)"
     >
       <ScrollSnapSlider
+        className={styles.sliderContainer}
         sliderId={sliderId}
-        slideDistanceFunctionOverride={getScrollToNextFullWidth}
+        slideDistanceFunctionOverride={getScrollToNextCoveredChild}
         childContainerClassName={styles.slider}
         arrowClass={styles.arrow_overwrite}
       >
         {reviews
           .map((review, idx) => (
-            <ReviewFromTemplateWithProps
-              key={`review_lector_${idx}`}
-              review={review}
+            <Item
+              key={`review_item_${idx}`}
               idx={idx}
+              data={review}
+              work={data}
+              isLoading={isLoading}
             />
           ))
           .filter((valid) => valid)}
@@ -139,16 +90,34 @@ export function Reviews({ data = [], skeleton = false }) {
 export function ReviewsSkeleton(props) {
   const data = {
     relations: {
-      hasReview: [{ access: [], review: { reviewByLibrarians: [{}] } }],
+      hasReview: [
+        {
+          pid: "some:pid",
+          access: [{ id: "1" }],
+          creators: [{ display: "John Doe" }],
+          hostPublication: { issue: "2015-08-15" },
+          review: { rating: "4/6", reviewByLibrarians: [{ content: "..." }] },
+        },
+        {
+          pid: "some:pid",
+          access: [{ id: "1" }],
+          creators: [{ display: "John Doe" }],
+          hostPublication: { issue: "2015-08-15" },
+          review: { rating: "4/6", reviewByLibrarians: [{ content: "..." }] },
+        },
+      ],
     },
   };
+
+  const work = { workId: "1234", title: "Some title" };
 
   return (
     <Reviews
       {...props}
       data={data}
+      work={work}
       className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
+      isLoading={true}
     />
   );
 }

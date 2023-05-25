@@ -8,16 +8,15 @@
  * - Slider will automatically scroll to card in focus,
  *   when tabbing through cards
  */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useId } from "react";
 import PropTypes from "prop-types";
-import Swiper from "react-id-swiper";
-import { useRouter } from "next/router";
 import useWindowSize from "@/lib/useWindowSize";
 import styles from "./WorkSlider.module.css";
 import Card from "@/components/base/card";
-import { ArrowLeft } from "@/components/base/arrow/ArrowLeft";
-import { ArrowRight } from "@/components/base/arrow/ArrowRight";
-import { getCoverImage } from "@/components/utils/getCoverImage";
+import MaterialCard from "@/components/base/materialcard/MaterialCard";
+import { templateForVerticalWorkCard } from "@/components/base/materialcard/templatesForMaterialCard";
+import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
+import { useBundledElementVisibleById } from "@/components/hooks/useElementVisible";
 
 /**
  * The work slider skeleton React component
@@ -52,12 +51,6 @@ export function hashCode(str) {
   );
 }
 
-// A map containing a progres for each slider
-const storedProgress = {};
-
-// A map containing the maximum progress sliders have been in (used for data collect)
-const storedProgressMax = {};
-
 /**
  * The work slider React component
  *
@@ -73,105 +66,19 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
   // rerender, when window size changes.
   useWindowSize();
 
-  // router used for creating uniq (pr. page) swiper hash keys by prefixing the asPath
-  const router = useRouter();
+  const sliderId = useId();
 
-  // Ref to the swiper instance
-  const swiperRef = useRef(null);
+  const { elementRef, hasBeenSeen } = useBundledElementVisibleById({
+    rootId: sliderId,
+    rootMargin: "1px",
+    threshold: 1,
+  });
 
-  // Ref to the first work card
-  const cardRef = useRef(null);
-
-  // The bounding rectangel for the swiper DOM element
-  const swiperRect = swiperRef.current
-    ? swiperRef.current.getBoundingClientRect()
-    : null;
-
-  // The bounding rectangel for the first work card DOM element
-  const cardRect = cardRef.current
-    ? cardRef.current.getBoundingClientRect()
-    : null;
-
-  // Variables used for enabling/disabling prev/next buttons
-  const [{ progress }, setPosition] = useState({});
-
-  // The number of cards to slide in one swipe (or clicking next/prev)
-  // Calculated based on width of swiper and width of a card
-  const slidesPerGroup =
-    swiperRect && cardRect ? Math.floor(swiperRect.width / cardRect.width) : 1;
-
-  const isBeginning = progress === 0;
-  const isEnd = progress === 1 || works?.length <= slidesPerGroup;
-
-  // Generate hash to uniquely identify this list of works
-  const hash = useMemo(
-    () =>
-      `${router.asPath}-${hashCode(works.map((work) => work.workId).join(""))}`,
-    [works, router.asPath]
-  );
-
-  // Store progress for slider
-  useEffect(() => {
-    if (typeof progress === "number") {
-      storedProgress[hash] = progress;
-      storedProgressMax[hash] = Math.max(
-        storedProgressMax[hash] || 0,
-        progress
-      );
-    }
-  }, [progress]);
-
-  // Update slidesPerGroup
-  // Restore progress for slider
-  useEffect(() => {
-    if (!swiperRef.current?.swiper) {
-      return;
-    }
-    swiperRef.current.swiper.params.slidesPerGroup = slidesPerGroup;
-    swiperRef.current.swiper.update();
-    if (slidesPerGroup > 1 && storedProgress[hash]) {
-      swiperRef.current.swiper.setProgress(storedProgress[hash], 0);
-    }
-  }, [works, slidesPerGroup]);
-
-  // If there is enough room to the left of the slider,
-  // we move the left arrow a bit to the left
-  const leftAdjustArrow = swiperRect ? swiperRect.left > 100 : true;
-
-  // The Swiper params
-  const params = {
-    slidesPerView: "auto",
-    slidesPerGroup,
-    on: {
-      init: (swiper) => {
-        // We update progress on init
-        setPosition({
-          progress: storedProgress[hash] || Math.min(swiper.progress, 0),
-        });
-      },
-      activeIndexChange: (swiper) => {
-        setPosition({
-          progress: swiper.progress,
-        });
-      },
-    },
-  };
-
-  /**
-   * Slide forward
-   */
-  function nextHandler() {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideNext();
-    }
-  }
-
-  /**
-   * Slide backwards
-   */
-  function prevHandler() {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slidePrev();
+  function onClick(work, idx) {
+    if (onWorkClick) {
+      const shownWorks = Array.from(hasBeenSeen, ([name]) => name);
+      // Find all the works that have been shown for this slider
+      onWorkClick(work, shownWorks, idx);
     }
   }
 
@@ -181,55 +88,28 @@ export default function WorkSlider({ skeleton, works, onWorkClick, ...props }) {
 
   // And finally we return the React component
   return (
-    <div className={styles.WorkSlider} data-cy={props["data-cy"]}>
-      <Swiper {...params} ref={swiperRef}>
-        {works?.map((work, idx) => {
-          const cover = getCoverImage(work?.manifestations?.all);
-          const type = work?.manifestations?.all.find(
-            (manifestation) => manifestation?.materialTypes?.[0]?.specific
-          )?.materialTypes?.[0]?.specific;
-
+    <div
+      className={styles.WorkSlider}
+      data-cy={props["data-cy"]}
+      key={sliderId}
+    >
+      <ScrollSnapSlider
+        sliderId={sliderId}
+        childContainerClassName={styles.SlideChildren}
+      >
+        {works.map((work, idx) => {
           return (
-            <Card
-              cardRef={idx === 0 && cardRef}
-              cover={cover}
-              creators={work?.creators}
-              workId={work?.workId}
-              title={work?.titles?.main?.[0]}
-              type={type}
-              key={work?.workId}
-              className={styles.SlideWrapper}
-              onFocus={() => {
-                // Make sure focused card become visible
-                // when tabbing through.
-                swiperRef.current.swiper.slideTo(idx);
-              }}
-              onClick={() => {
-                if (onWorkClick) {
-                  // Find all the works that have been shown for this slider
-                  const shownWorks = works
-                    ?.map((work) => work?.workId)
-                    .slice(
-                      0,
-                      Math.max(
-                        Math.ceil(storedProgressMax[hash] * works.length),
-                        slidesPerGroup,
-                        idx
-                      ) + 1
-                    );
-                  onWorkClick(work, shownWorks, idx);
-                }
-              }}
+            <MaterialCard
+              key={JSON.stringify(work) + idx}
+              propAndChildrenTemplate={templateForVerticalWorkCard}
+              propAndChildrenInput={work}
+              colSizing={{ xs: 4, sm: 3, md: 2, lg: 2 }}
+              onClick={() => onClick(work, idx)}
+              ref={(element) => (elementRef.current[idx] = element)}
             />
           );
         })}
-      </Swiper>
-      <ArrowLeft
-        onClick={prevHandler}
-        disabled={isBeginning}
-        leftAdjust={leftAdjustArrow}
-      />
-      <ArrowRight onClick={nextHandler} disabled={isEnd} />
+      </ScrollSnapSlider>
     </div>
   );
 }

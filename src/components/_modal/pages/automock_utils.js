@@ -626,16 +626,20 @@ const USER_DEBT = [
   },
 ];
 
-function useMockLoanerInfo(pickupBranch = "790900") {
+function useMockLoanerInfo({
+  pickupBranch = "790900",
+  loans = USER_LOANS,
+  orders = USER_ORDERS,
+  debt = USER_DEBT,
+}) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
-
   useMemo(() => {
     updateLoanerInfo({
-      pickupBranch: pickupBranch,
-      loans: USER_LOANS,
-      orders: USER_ORDERS,
-      debt: USER_DEBT,
+      pickupBranch,
+      loans,
+      orders,
+      debt,
     });
   }, [id]);
 }
