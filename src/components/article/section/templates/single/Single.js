@@ -61,21 +61,20 @@ export default function Single({ articles, skeleton }) {
                 {bodyText}
               </Text>
             </span>
-            <div />
-            <span className={styles.title}>
-              <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
-                <Link
-                  className={`
-                      ${styles.title} 
-                      ${styles.underlineContainer__colors}
-                    `}
-                >
+            <Title
+              tag="h3"
+              type="title3"
+              lines={1}
+              skeleton={skeleton}
+              className={styles.title}
+            >
+              <span className={styles.title_title}>
+                <Link className={styles.underlineContainer__colors}>
                   {article.title}
                 </Link>
-              </Title>
-            </span>
-            <div />
-            <Link a={false} href={{ pathname, query }} target={`${target}`}>
+              </span>
+            </Title>
+            <Link a={false} target={`${target}`}>
               <Button type="secondary" size="medium" skeleton={skeleton}>
                 {btnLabel}
               </Button>

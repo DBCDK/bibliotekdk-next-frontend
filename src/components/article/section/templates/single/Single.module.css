@@ -16,10 +16,17 @@
   padding-bottom: var(--pt2);
 }
 
+.content > :last-child {
+  padding-left: var(--pt16);
+}
+
 .title {
   margin-bottom: var(--pt3);
 }
 
+.title_title {
+  width: 300px;
+}
 
 .text {
   margin-bottom: var(--pt1);
@@ -39,7 +46,7 @@
 .title,
 .text {
   position: relative;
-  display: inline-block;
+  /*display: inline-block;*/
 }
 
 .title:hover hr:last-child {
