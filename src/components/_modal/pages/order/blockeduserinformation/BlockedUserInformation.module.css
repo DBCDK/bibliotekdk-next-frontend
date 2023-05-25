@@ -6,6 +6,10 @@
   display: contents;
 }
 
+.display_inline {
+  display: inline;
+}
+
 /* Mobile first */
 div.redBorder {
   padding: var(--pt2) var(--pt2);
