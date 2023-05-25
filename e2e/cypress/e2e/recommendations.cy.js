@@ -54,7 +54,7 @@ describe("Series", () => {
 
   it(`Should collect all shown recommendations, when slider is scrolled`, () => {
     // Wait for recommendations to be loaded
-    // We test the scrolling functionaility in relatedworks.cy.js, så here we emulate it
+    // We test the scrolling functionaility in scrollsnapslider.cy.js, så here we emulate it
     cy.contains("recommend.result[0].work.titles.full[0]");
 
     // Emulate the scroll using cy.scrollTo

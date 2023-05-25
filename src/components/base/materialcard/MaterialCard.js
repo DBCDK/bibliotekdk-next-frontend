@@ -49,7 +49,6 @@ const MaterialCard = forwardRef(function MaterialCard(
         className={`${styles.link_style}`}
         border={{ top: false, bottom: true }}
         onClick={onClick}
-        dataCy={`materialCard-${fullTitle}`}
       >
         <div
           ref={ref}
