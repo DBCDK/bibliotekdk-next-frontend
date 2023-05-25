@@ -179,7 +179,7 @@
 
 .underlineContainer:is(:hover, :focus, :focus-visible),
 .underlineContainer__only_internal_animations:is(:hover, :focus, :focus-visible) .underlineContainer {
-  animation: __underline 0.6s ease;
+  animation: __underline 0.3s ease;
   color: var(--underline-font-hover-color);
   background-image: var(--underline-hover-background-image);
   background-size: var(--underline-background-hover-size_100pct);

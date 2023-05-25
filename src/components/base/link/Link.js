@@ -43,7 +43,6 @@ function Link({
   disabled = false,
   ariaLabel = "",
   scroll = true,
-  data_display = "inline-block",
   data_use_new_underline = false,
 }) {
   const Tag = tag;
@@ -71,9 +70,7 @@ function Link({
         className={
           data_use_new_underline
             ? className
-            : `${styles.link} ${animationClass} ${disabledClass} ${className} ${
-                data_display === "inline" && styles.display_inline
-              }`
+            : `${styles.link} ${animationClass} ${disabledClass} ${className}`
         }
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
@@ -146,7 +143,6 @@ Link.propTypes = {
  * @param className
  * @param disabled
  * @param border
- * @param data_display
  * @param data_use_new_underline
  * @param data_underline_animation_disabled
  * @param props
@@ -157,7 +153,6 @@ export default function Wrap({
   className = "",
   disabled = false,
   border = { top: false, bottom: true },
-  data_display = "inline",
   data_use_new_underline = true,
   data_underline_animation_disabled = false,
   ...props
@@ -177,10 +172,8 @@ export default function Wrap({
     newBorder = { top: false, bottom: false };
 
     newClassName = [
-      styles.border_like,
       animations.underlineContainer,
       underline_data_exception_classes,
-      `${data_display === "inline" && styles.display_inline}`,
       className,
     ].join(" ");
   }
@@ -190,7 +183,6 @@ export default function Wrap({
       border={newBorder}
       className={newClassName}
       disabled={disabled}
-      data_display={data_display}
       data_use_new_underline={data_use_new_underline}
       data_underline_animation_disabled={data_underline_animation_disabled}
       {...props}
@@ -203,7 +195,6 @@ export default function Wrap({
 export function LinkOnlyInternalAnimations({ href, target, children }) {
   return (
     <Link
-      data_display={"inline"}
       border={{ top: false, bottom: false }}
       className={animations.underlineContainer__only_internal_animations}
       href={href}

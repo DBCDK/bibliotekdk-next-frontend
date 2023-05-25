@@ -2,14 +2,7 @@
   color: var(--mine-shaft);
   text-decoration: none;
   cursor: pointer;
-}
-
-.border_like {
-  position: relative;
-  text-decoration: none;
-  /* !Dangerous: Prevent multiline */
-  white-space: nowrap;
-  display: inline-block;
+  white-space: normal;
 }
 
 .border {
@@ -18,16 +11,6 @@
   /* !Dangerous: Prevent multiline */
   white-space: nowrap;
   display: inline-block;
-}
-
-.border.display_inline,
-.border_like.display_inline {
-  white-space: normal;
-  display: inline;
-}
-
-div.display_inline {
-  display: inline;
 }
 
 /* real focus */
