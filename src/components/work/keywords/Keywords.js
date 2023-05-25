@@ -134,7 +134,6 @@ export function FlatSubjectsForFullManifestation(subjects) {
           a
           href={url(sub.display)}
           border={{ bottom: { keepVisible: true } }}
-          className={styles.bibliographickeywordslink}
           key={`flat-subject-${index}`}
         >
           <Text type="text3" tag="span">
@@ -157,10 +156,14 @@ export function FlatSubjectsForFullManifestation(subjects) {
  */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
-    <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
+    <div data-cy="keywords" className={`${className}`}>
       {grouped?.map((group, idx) => {
         return (
-          <div key={group.key} data-cy={`keyword-group-${idx}`}>
+          <div
+            key={group.key}
+            className={styles.keyword_group}
+            data-cy={`keyword-group-${idx}`}
+          >
             {group.subjects.map(({ display }) => {
               const key = cyKey({ name: display, prefix: "keyword" });
 
@@ -172,7 +175,6 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
                 >
                   <Title type="title4" skeleton={skeleton}>
                     <Link
-                      a
                       href={url(display)}
                       border={{ bottom: { keepVisible: true } }}
                     >
