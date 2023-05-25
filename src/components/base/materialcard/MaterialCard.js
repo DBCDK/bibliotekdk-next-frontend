@@ -4,7 +4,6 @@
  */
 import styles from "./MaterialCard.module.css";
 import Translate from "@/components/base/translate";
-import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templatesForMaterialCard";
@@ -38,13 +37,6 @@ const MaterialCard = forwardRef(function MaterialCard(
     coverImageClassName,
   } = renderProps;
 
-  const animationStyle = [
-    animations.underlineContainer,
-    animations.top_line_false,
-    animations.top_line_keep_false,
-    animations.bottom_line_keep_false,
-  ].join(" ");
-
   return (
     <Col
       // Col props
@@ -54,9 +46,8 @@ const MaterialCard = forwardRef(function MaterialCard(
       <Link
         href={link_href}
         // Link props
-        className={`${animationStyle} ${styles.link_style}`}
-        border={{ top: false, bottom: false }}
-        data_display={"inline"}
+        className={`${styles.link_style}`}
+        border={{ top: false, bottom: true }}
         onClick={onClick}
       >
         <div
