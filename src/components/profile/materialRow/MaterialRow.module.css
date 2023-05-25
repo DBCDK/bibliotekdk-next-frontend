@@ -1,12 +1,19 @@
+.materialHeaderRow {
+  display: grid;
+  grid-column-gap: var(--pt3);
+  grid-template-columns: 4fr 2fr 2fr 1fr;
+  padding: var(--pt05) var(--pt1);
+}
+
 .materialRow {
   display: grid;
   grid-column-gap: var(--pt3);
-  grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
-  padding: var(--pt2);
+  grid-template-columns: 4fr 2fr 2fr 1fr;
+  padding: var(--pt2) var(--pt1);
 }
 
 .materialRow_withCheckbox {
-  grid-template-columns: 1fr 1fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 1fr 3fr 2fr 2fr 1fr;
   cursor: pointer;
 }
 
@@ -29,6 +36,15 @@
 
 .materialRow_red {
   background-color: var(--error-light_temp);
+}
+
+.materialInfo {
+  display: flex;
+}
+
+.imageContainer {
+  width: var(--pt7);
+  margin-right: var(--pt5);
 }
 
 .buttonContainer {

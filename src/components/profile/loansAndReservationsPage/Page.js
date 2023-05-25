@@ -1,19 +1,26 @@
 import useUser from "@/components/hooks/useUser";
 import MaterialRow, {
   DynamicCloumn,
+  MaterialHeaderRow,
   MaterialRowButton,
 } from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
-import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
-import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
 import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+
+/**
+ * TODO
+ * ----
+ * empty list
+ * link underline
+ * link href
+ */
 
 // Set to when warning should be shown
 const DAYS_TO_COUNTDOWN = 5;
@@ -45,53 +52,27 @@ export const dataReducer = (dataType, data) => {
   }
 };
 
-const getCheckedElements = (parentRef) => {
-  const elements = [].slice.call(parentRef.current.children);
-  const checkedElements = elements
-    .filter((element) => element.ariaChecked === "true")
-    .map((element) => element.getAttribute("data-id"));
-  return checkedElements;
-};
-
 const LoansAndReservations = () => {
   const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt } = loanerInfo;
-  const [isCheckbox, setIsCheckbox] = useState({
-    debts: false,
-    loans: false,
-    orders: false,
-  });
-  const loansWrapperRef = useRef();
-  const ordersWrapperRef = useRef();
 
-  const onRenewSeveral = () => {
-    if (isCheckbox.loans && loansWrapperRef && loansWrapperRef.current) {
-      const ids = getCheckedElements(loansWrapperRef);
-      alert("Renew ids \n" + ids.join(", "));
-    }
-  };
-
-  const onDeleteSeveral = () => {
-    if (isCheckbox.orders && ordersWrapperRef && ordersWrapperRef.current) {
-      const ids = getCheckedElements(ordersWrapperRef);
-      alert("Delete ids \n" + ids.join(", "));
-    }
-  };
-
-  const onDeleteSingle = (id) => {
+  const onDeleteOrder = (id) => {
     const newOrders = loanerInfo.orders;
-    const index = newOrders.map(item => item.orderId).indexOf(id);
+    const index = newOrders.map((item) => item.orderId).indexOf(id);
     newOrders.splice(index, 1);
     // TODO proper mutate function
-    updateLoanerInfo({...loanerInfo}, {orders: newOrders});
-  }
+    updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
+  };
 
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "loansAndReservations" })}
     >
       <Text type="text3" className={styles.subHeading}>
-        Herlev Bibliotek, Ballerup Bibliotek og Det Kongelige Bibliotek
+        {Translate({ context: "profile", label: "loans-subtext" })}{" "}
+        <span className={styles.yourLibraries}>
+          {Translate({ context: "profile", label: "your-libraries" })}
+        </span>
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
@@ -111,27 +92,23 @@ const LoansAndReservations = () => {
               </DynamicCloumn>
             }
             status="RED"
+            id={`debt-${i}`}
           />
         ))}
       </section>
 
-      <section className={styles.section} ref={loansWrapperRef}>
+      <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title type="title5" tag="h2">
             {Translate({ context: "profile", label: "loans" })}
           </Title>
-          <Button
-            type="secondary"
-            size="small"
-            onClick={() => {
-              onRenewSeveral();
-              setIsCheckbox({ ...isCheckbox, loans: !isCheckbox.loans });
-            }}
-          >
-            {Translate({ context: "profile", label: "renew-more" })}
-          </Button>
         </div>
 
+        <MaterialHeaderRow
+          column1={Translate({ context: "profile", label: "material" })}
+          column2={Translate({ context: "profile", label: "return-deadline" })}
+          column3={Translate({ context: "profile", label: "loaner-library" })}
+        />
         {loans?.map((loan, i) => {
           const dueDate = new Date(loan.dueDate);
           const today = new Date();
@@ -148,11 +125,11 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("loan", loan)}
               key={`loan-${loan.loanId}-#${i}`}
-              hasCheckbox={isCheckbox.loans}
               id={loan.loanId}
               renderButton={
-                <MaterialRowButton
-                >{Translate({ context: "profile", label: "renew" })}</MaterialRowButton>
+                <MaterialRowButton>
+                  {Translate({ context: "profile", label: "renew" })}
+                </MaterialRowButton>
               }
               dynamicColumn={
                 <DynamicCloumn>
@@ -188,23 +165,18 @@ const LoansAndReservations = () => {
         })}
       </section>
 
-      <section className={styles.section} ref={ordersWrapperRef}>
+      <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title type="title5" tag="h2">
             {Translate({ context: "profile", label: "orders" })}
           </Title>
-          <Button
-            type="secondary"
-            size="small"
-            onClick={() => {
-              onDeleteSeveral();
-              setIsCheckbox({ ...isCheckbox, orders: !isCheckbox.orders });
-            }}
-          >
-            {Translate({ context: "profile", label: "delete-more" })}
-          </Button>
         </div>
 
+        <MaterialHeaderRow
+          column1={Translate({ context: "profile", label: "material" })}
+          column2={Translate({ context: "profile", label: "status" })}
+          column3={Translate({ context: "profile", label: "pickup-at" })}
+        />
         {orders?.map((order, i) => {
           const pickUpDate = new Date(order.pickUpExpiryDate);
           const isReadyToPickup = !!order.pickUpExpiryDate;
@@ -216,7 +188,6 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("order", order)}
               key={`loan-${order.loanId}-#${i}`}
-              hasCheckbox={isCheckbox.orders}
               status={isReadyToPickup ? "GREEN" : "NONE"}
               dynamicColumn={
                 <DynamicCloumn>
@@ -238,13 +209,12 @@ const LoansAndReservations = () => {
                 </DynamicCloumn>
               }
               renderButton={
-                <MaterialRowButton
-                  
-                  onClick={() => onDeleteSingle(order.orderId)}
-                >{Translate({
-                  context: "profile",
-                  label: "delete",
-                })}</MaterialRowButton>
+                <MaterialRowButton onClick={() => onDeleteOrder(order.orderId)}>
+                  {Translate({
+                    context: "profile",
+                    label: "delete",
+                  })}
+                </MaterialRowButton>
               }
             />
           );
