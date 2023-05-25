@@ -56,7 +56,6 @@ export default function Logo({
       dataCy={cyKey({
         name: "logo",
       })}
-      data_display={"inline"}
     >
       <div className={styles.display_flex}>
         <SvgParser fill={fill} />
