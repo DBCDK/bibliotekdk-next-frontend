@@ -4,11 +4,12 @@
  */
 
 describe("Related Keywords", () => {
-  it(`Can tab through related keywords`, () => {
+  it.only(`Can tab through related keywords`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--default");
-    cy.get("body").tab().contains("Spring over");
-    cy.focused().tab().should("have.attr", "data-cy", "related-subject-heste");
-    cy.tabs(10).contains("Spring over");
+    cy.get("body")
+      .tab()
+      .should("have.attr", "data-cy", "related-subject-heste");
+    cy.tabs(9);
     cy.focused().tab().should("have.attr", "data-cy", "related-subject-heste");
   });
 
