@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
-import ProfileMenu from "../profilemenu/ProfileMenu";
+import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 
 /**
  * ProfileLayout to use in /profil subpages

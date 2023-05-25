@@ -214,7 +214,10 @@ export function Header({
                   className={`${styles.search}`}
                   data-cy={cyKey({ name: "search", prefix: "header" })}
                 >
-                  <DesktopMaterialSelect className={styles.select} />
+                  <DesktopMaterialSelect
+                    className={styles.select}
+                    context="facets"
+                  />
 
                   <div
                     className={`${styles.suggester__wrap} ${

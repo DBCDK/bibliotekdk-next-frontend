@@ -8,3 +8,7 @@
 .row > * {
   min-width: 0px;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}

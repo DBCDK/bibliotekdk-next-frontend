@@ -2,7 +2,7 @@ import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Icon from "@/components/base/icon/Icon";
-import styles from "@/components/profile/profilemenu/ProfileMenu.module.css";
+import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -18,6 +18,8 @@ import useUser from "@/components/hooks/useUser";
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
  * @returns {JSX.Element}
  */
+
+const CONTEXT = "profile";
 
 /**
  * Simple menu link without subcategories.
@@ -37,7 +39,7 @@ function MenuLink({ label, href }) {
   return (
     <li className={classNames(styles.link, isActive ? styles.active : "")}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Title type={type}>{Translate({ context: "profile", label })}</Title>
+        <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
       </Link>
       <Icon src="arrowrightblue.svg" size={1} />
     </li>
@@ -46,11 +48,11 @@ function MenuLink({ label, href }) {
 
 function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   const title = Translate({
-    context: "profile",
+    context: CONTEXT,
     label: `${item.title}`,
   });
   const titleDanish = Translate({
-    context: "profile",
+    context: CONTEXT,
     label: `${item.title}`,
     requestedLang: "da",
   });
@@ -152,7 +154,7 @@ function MenuGroup({ menus, href, name, className }) {
             id={`navigation-${name}`}
           >
             {Translate({
-              context: "profile",
+              context: CONTEXT,
               label: `${name}`,
             })}
           </Title>
@@ -217,22 +219,37 @@ export default function ProfileMenu() {
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
-    <nav
-      className={styles.menu}
-      aria-label={`${Translate({
-        context: "profile",
-        label: "profileNavigation",
-      })}`}
-    >
-      <ul className={styles.menu}>
-        <MenuGroup
-          menus={menus}
-          name={menuItems[0]}
-          href="/profil/laan-og-reserveringer"
-        />
-        {/* more MenuLinks are coming soon */}
-        <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
-      </ul>
-    </nav>
+    <>
+      <nav
+        className={styles.menu}
+        aria-label={`${Translate({
+          context: CONTEXT,
+          label: "profileNavigation",
+        })}`}
+      >
+        <ul className={styles.menu}>
+          <MenuGroup
+            menus={menus}
+            name={menuItems[0]}
+            href={`/profil/${encodeString(
+              Translate({
+                context: CONTEXT,
+                label: menuItems[0],
+              })
+            )}`}
+          />
+          {/* more MenuLinks are coming soon */}
+          <MenuLink
+            label={menuItems[1]}
+            href={`/profil/${encodeString(
+              Translate({
+                context: CONTEXT,
+                label: menuItems[1],
+              })
+            )}`}
+          />
+        </ul>
+      </nav>
+    </>
   );
 }
