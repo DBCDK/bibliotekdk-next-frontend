@@ -1,13 +1,13 @@
 import useUser from "@/components/hooks/useUser";
 import MaterialRow, {
-  DynamicCloumn,
+  DynamicColumn,
+  MaterialHeaderRow,
   MaterialRowButton,
+  MaterialRowIconButton,
 } from "../materialRow/MaterialRow";
 import Title from "@/components/base/title";
-import Button from "@/components/base/button/Button";
 import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
-import { useRef, useState } from "react";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
 import { encodeString } from "@/lib/utils";
@@ -15,24 +15,14 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+import cx from "classnames";
+import { useRouter } from "next/router";
 
 /**
  * TODO
- * -----
- * Dates ✓
- * Status ✓
- * Dept data ✓
- * Better mock data (different books)
- * checkbox focus style ✓
- * checkbox hover style ✓
- * action placeholders ✓
- * data reducer (material row) ✓
- * Material row standalone mock ✓
- * Last border on link
- * Image height
- * Confirm selection styling
- * Queue numbers & cross library reservertions
- * Actions
+ * ----
+ * user library
+ * order data when fbi-api is ready
  */
 
 // Set to when warning should be shown
@@ -49,6 +39,7 @@ export const dataReducer = (dataType, data) => {
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: "Herlev bibliotek", // TODO
         id: data.loanId,
+        workId: "work-of:" + data.manifestation.pid,
       };
     }
     case "order": {
@@ -60,42 +51,25 @@ export const dataReducer = (dataType, data) => {
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: data.pickupBranch.agencyName,
         id: data.orderId,
+        workId: "work-of:" + data.manifestation.pid,
       };
     }
   }
 };
 
-const getCheckedElements = (parentRef) => {
-  const elements = [].slice.call(parentRef.current.children);
-  const checkedElements = elements
-    .filter((element) => element.ariaChecked === "true")
-    .map((element) => element.getAttribute("data-id"));
-  return checkedElements;
-};
-
 const LoansAndReservations = () => {
-  const { loanerInfo } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt } = loanerInfo;
-  const [isCheckbox, setIsCheckbox] = useState({
-    debts: false,
-    loans: false,
-    orders: false,
-  });
-  const loansWrapperRef = useRef();
-  const ordersWrapperRef = useRef();
+  const router = useRouter();
+  const locale = router.locale === undefined ? "da" : router.locale;
+  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
 
-  const onRenewSeveral = () => {
-    if (isCheckbox.loans && loansWrapperRef && loansWrapperRef.current) {
-      const ids = getCheckedElements(loansWrapperRef);
-      alert("Renew ids \n" + ids.join(", "));
-    }
-  };
-
-  const onDeleteSeveral = () => {
-    if (isCheckbox.orders && ordersWrapperRef && ordersWrapperRef.current) {
-      const ids = getCheckedElements(ordersWrapperRef);
-      alert("Delete ids \n" + ids.join(", "));
-    }
+  const onDeleteOrder = (id) => {
+    const newOrders = loanerInfo.orders;
+    const index = newOrders.map((item) => item.orderId).indexOf(id);
+    newOrders.splice(index, 1);
+    // TODO proper mutate function
+    updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
   };
 
   return (
@@ -103,13 +77,16 @@ const LoansAndReservations = () => {
       title={Translate({ context: "profile", label: "loansAndReservations" })}
     >
       <Text type="text3" className={styles.subHeading}>
-        Herlev Bibliotek, Ballerup Bibliotek og Det Kongelige Bibliotek
+        {Translate({ context: "profile", label: "loans-subtext" })}{" "}
+        <span className={styles.yourLibraries}>
+          {Translate({ context: "profile", label: "your-libraries" })}
+        </span>
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title
             type="title5"
-            tag="h3"
+            tag="h2"
             id={`sublink-${encodeString(
               Translate({
                 context: "profile",
@@ -122,26 +99,34 @@ const LoansAndReservations = () => {
           </Title>
         </div>
 
+        <MaterialHeaderRow
+          column1={Translate({ context: "profile", label: "material" })}
+          column2={Translate({ context: "profile", label: "price" })}
+          column3={Translate({ context: "profile", label: "loaner-library" })}
+        />
         {debt?.map((intermediate, i) => (
           <MaterialRow
             key={`intermediate-${intermediate.title}-#${i}`}
             title={intermediate.title}
             library={"Herlev bibliotek"} // TODO
             dynamicColumn={
-              <DynamicCloumn className={styles.isWarning}>
-                {intermediate.amount} kr
-              </DynamicCloumn>
+              <DynamicColumn className={styles.isWarning}>
+                <Text type="text1" tag="span">
+                  {intermediate.amount} kr
+                </Text>
+              </DynamicColumn>
             }
             status="RED"
+            id={`debt-${i}`}
           />
         ))}
       </section>
 
-      <section className={styles.section} ref={loansWrapperRef}>
+      <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title
             type="title5"
-            tag="h3"
+            tag="h2"
             id={`sublink-${encodeString(
               Translate({
                 context: "profile",
@@ -152,26 +137,21 @@ const LoansAndReservations = () => {
           >
             {Translate({ context: "profile", label: "loans" })}
           </Title>
-          <Button
-            type="secondary"
-            size="small"
-            onClick={() => {
-              onRenewSeveral();
-              setIsCheckbox({ ...isCheckbox, loans: !isCheckbox.loans });
-            }}
-          >
-            {Translate({ context: "profile", label: "renew-more" })}
-          </Button>
         </div>
 
+        <MaterialHeaderRow
+          column1={Translate({ context: "profile", label: "material" })}
+          column2={Translate({ context: "profile", label: "return-deadline" })}
+          column3={Translate({ context: "profile", label: "loaner-library" })}
+        />
         {loans?.map((loan, i) => {
           const dueDate = new Date(loan.dueDate);
           const today = new Date();
           const futureDate = new Date();
           futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN);
-          const daysToDueDate = Math.floor(
-            (dueDate - today) / (1000 * 60 * 60 * 24)
-          );
+          const daysToDueDate =
+            Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+          const dayToText = timeFormatter.format(daysToDueDate, "day");
           const isCountdown = dueDate >= today && dueDate <= futureDate;
           const isOverdue = dueDate < today;
           const dateString = timestampToShortDate(dueDate);
@@ -180,40 +160,53 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("loan", loan)}
               key={`loan-${loan.loanId}-#${i}`}
-              hasCheckbox={isCheckbox.loans}
-              id={loan.loanId}
               renderButton={
-                <MaterialRowButton
-                  buttonText={Translate({ context: "profile", label: "renew" })}
-                />
+                <MaterialRowButton>
+                  {Translate({ context: "profile", label: "renew" })}
+                </MaterialRowButton>
               }
               dynamicColumn={
-                <DynamicCloumn>
+                <DynamicColumn>
                   {isOverdue ? (
                     <>
-                      <span className={styles.isWarning}>{dateString}</span>
-                      <span className={styles.isWarning}>
+                      <Text type="text2" tag="span">
+                        {dateString}
+                      </Text>
+                      <Text type="text1" className={styles.isWarning}>
                         {Translate({
                           context: "profile",
                           label: "date-overdue",
                         })}
-                      </span>
+                      </Text>
                     </>
                   ) : isCountdown ? (
                     <>
-                      <span>{dateString}</span>
-                      <span className={styles.isWarning}>
-                        {Translate({ context: "profile", label: "in" })}{" "}
-                        {daysToDueDate}{" "}
-                        {daysToDueDate === 1
-                          ? Translate({ context: "units", label: "day" })
-                          : Translate({ context: "units", label: "days" })}
-                      </span>
+                      <Text type="text2" tag="span">
+                        {dateString}
+                      </Text>
+                      <Text
+                        type="text1"
+                        tag="span"
+                        className={cx(styles.isWarning, styles.upperCase)}
+                      >
+                        {dayToText}
+                      </Text>
                     </>
                   ) : (
-                    <span>{dateString}</span>
+                    <>
+                      <Text type="text2" tag="span">
+                        {dateString}
+                      </Text>
+                      <Text
+                        type="text2"
+                        tag="span"
+                        className={styles.upperCase}
+                      >
+                        {dayToText}
+                      </Text>
+                    </>
                   )}
-                </DynamicCloumn>
+                </DynamicColumn>
               }
               status={isOverdue ? "RED" : "NONE"}
             />
@@ -221,11 +214,11 @@ const LoansAndReservations = () => {
         })}
       </section>
 
-      <section className={styles.section} ref={ordersWrapperRef}>
+      <section className={styles.section}>
         <div className={styles.titleRow}>
           <Title
             type="title5"
-            tag="h3"
+            tag="h2"
             id={`sublink-${encodeString(
               Translate({
                 context: "profile",
@@ -236,18 +229,13 @@ const LoansAndReservations = () => {
           >
             {Translate({ context: "profile", label: "orders" })}
           </Title>
-          <Button
-            type="secondary"
-            size="small"
-            onClick={() => {
-              onDeleteSeveral();
-              setIsCheckbox({ ...isCheckbox, orders: !isCheckbox.orders });
-            }}
-          >
-            {Translate({ context: "profile", label: "delete-more" })}
-          </Button>
         </div>
 
+        <MaterialHeaderRow
+          column1={Translate({ context: "profile", label: "material" })}
+          column2={Translate({ context: "profile", label: "status" })}
+          column3={Translate({ context: "profile", label: "pickup-at" })}
+        />
         {orders?.map((order, i) => {
           const pickUpDate = new Date(order.pickUpExpiryDate);
           const isReadyToPickup = !!order.pickUpExpiryDate;
@@ -259,34 +247,35 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("order", order)}
               key={`loan-${order.loanId}-#${i}`}
-              hasCheckbox={isCheckbox.orders}
               status={isReadyToPickup ? "GREEN" : "NONE"}
               dynamicColumn={
-                <DynamicCloumn>
+                <DynamicColumn>
                   {isReadyToPickup ? (
-                    <span className={styles.isReady}>
+                    <Text type="text1" tag="span" className={styles.isReady}>
                       {Translate({
                         context: "profile",
                         label: "ready-to-pickup",
                       })}
-                    </span>
+                    </Text>
                   ) : null}
-                  <span>
+                  <Text type="text2">
                     {Translate({
                       context: "profile",
                       label: "pickup-deadline",
                     })}
                      {dateString}
-                  </span>
-                </DynamicCloumn>
+                  </Text>
+                </DynamicColumn>
               }
               renderButton={
-                <MaterialRowButton
-                  buttonText={Translate({
+                <MaterialRowIconButton
+                  onClick={() => onDeleteOrder(order.orderId)}
+                >
+                  {Translate({
                     context: "profile",
                     label: "delete",
                   })}
-                />
+                </MaterialRowIconButton>
               }
             />
           );

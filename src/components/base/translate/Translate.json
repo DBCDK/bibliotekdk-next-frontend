@@ -3000,13 +3000,41 @@
         "da": "Hent senest",
         "en": "Pickup at the latest"
       },
-      "in": {
-        "da": "Om",
-        "en": "In"
-      },
       "date-overdue": {
-        "da": "Dato overskredet",
-        "en": "Date overdue"
+        "da": "Frist overskredet!",
+        "en": "Return deadline overdue!"
+      },
+      "loans-subtext": {
+        "da": "Du ser lån og reserveringer for",
+        "en": "You are looking at loans and reservations for"
+      },
+      "your-libraries": {
+        "da": "dine biblioteker",
+        "en": "your libraries"
+      },
+      "material": {
+        "da": "Materiale",
+        "en": "Material"
+      },
+      "return-deadline": {
+        "da": "Afleveringsfrist",
+        "en": "Return deadline"
+      },
+      "loaner-library": {
+        "da": "Udlånsbibliotek",
+        "en": "Loaning library"
+      },
+      "status": {
+        "da": "Status",
+        "en": "Status"
+      },
+      "pickup-at": {
+        "da": "Afhentes på",
+        "en": "Pickup at"
+      },
+      "price": {
+        "da": "Pris",
+        "en": "Price"
       }
     }
   }
