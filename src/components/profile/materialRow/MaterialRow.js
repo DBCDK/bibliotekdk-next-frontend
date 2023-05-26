@@ -31,7 +31,7 @@ export const MaterialRowIconButton = ({ ...props }) => {
   );
 };
 
-export const DynamicCloumn = ({ ...props }) => <p {...props} />;
+export const DynamicColumn = ({ ...props }) => <p {...props} />;
 
 export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
   return (

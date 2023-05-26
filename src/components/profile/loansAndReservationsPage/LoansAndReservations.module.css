@@ -25,3 +25,7 @@
 .yourLibraries {
   text-decoration: underline;
 }
+
+.upperCase::first-letter {
+  text-transform:capitalize;
+}

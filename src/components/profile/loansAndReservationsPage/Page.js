@@ -1,6 +1,6 @@
 import useUser from "@/components/hooks/useUser";
 import MaterialRow, {
-  DynamicCloumn,
+  DynamicColumn,
   MaterialHeaderRow,
   MaterialRowButton,
   MaterialRowIconButton,
@@ -15,6 +15,8 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+import cx from "classnames";
+import { useRouter } from "next/router";
 
 /**
  * TODO
@@ -56,8 +58,11 @@ export const dataReducer = (dataType, data) => {
 };
 
 const LoansAndReservations = () => {
-  const { loanerInfo, updateLoanerInfo, ...data } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt } = loanerInfo;
+  const router = useRouter();
+  const locale = router.locale === undefined ? "da" : router.locale;
+  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
 
   const onDeleteOrder = (id) => {
     const newOrders = loanerInfo.orders;
@@ -105,11 +110,11 @@ const LoansAndReservations = () => {
             title={intermediate.title}
             library={"Herlev bibliotek"} // TODO
             dynamicColumn={
-              <DynamicCloumn className={styles.isWarning}>
+              <DynamicColumn className={styles.isWarning}>
                 <Text type="text1" tag="span">
                   {intermediate.amount} kr
                 </Text>
-              </DynamicCloumn>
+              </DynamicColumn>
             }
             status="RED"
             id={`debt-${i}`}
@@ -146,6 +151,7 @@ const LoansAndReservations = () => {
           futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN);
           const daysToDueDate =
             Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+          const dayToText = timeFormatter.format(daysToDueDate, "day");
           const isCountdown = dueDate >= today && dueDate <= futureDate;
           const isOverdue = dueDate < today;
           const dateString = timestampToShortDate(dueDate);
@@ -160,7 +166,7 @@ const LoansAndReservations = () => {
                 </MaterialRowButton>
               }
               dynamicColumn={
-                <DynamicCloumn>
+                <DynamicColumn>
                   {isOverdue ? (
                     <>
                       <Text type="text2" tag="span">
@@ -181,13 +187,9 @@ const LoansAndReservations = () => {
                       <Text
                         type="text1"
                         tag="span"
-                        className={styles.isWarning}
+                        className={cx(styles.isWarning, styles.upperCase)}
                       >
-                        {Translate({ context: "profile", label: "in" })}{" "}
-                        {daysToDueDate}{" "}
-                        {daysToDueDate === 1
-                          ? Translate({ context: "units", label: "day" })
-                          : Translate({ context: "units", label: "days" })}
+                        {dayToText}
                       </Text>
                     </>
                   ) : (
@@ -195,16 +197,16 @@ const LoansAndReservations = () => {
                       <Text type="text2" tag="span">
                         {dateString}
                       </Text>
-                      <Text type="text2" tag="span">
-                        {Translate({ context: "profile", label: "in" })}{" "}
-                        {daysToDueDate}{" "}
-                        {daysToDueDate === 1
-                          ? Translate({ context: "units", label: "day" })
-                          : Translate({ context: "units", label: "days" })}
+                      <Text
+                        type="text2"
+                        tag="span"
+                        className={styles.upperCase}
+                      >
+                        {dayToText}
                       </Text>
                     </>
                   )}
-                </DynamicCloumn>
+                </DynamicColumn>
               }
               status={isOverdue ? "RED" : "NONE"}
             />
@@ -247,7 +249,7 @@ const LoansAndReservations = () => {
               key={`loan-${order.loanId}-#${i}`}
               status={isReadyToPickup ? "GREEN" : "NONE"}
               dynamicColumn={
-                <DynamicCloumn>
+                <DynamicColumn>
                   {isReadyToPickup ? (
                     <Text type="text1" tag="span" className={styles.isReady}>
                       {Translate({
@@ -263,7 +265,7 @@ const LoansAndReservations = () => {
                     })}
                      {dateString}
                   </Text>
-                </DynamicCloumn>
+                </DynamicColumn>
               }
               renderButton={
                 <MaterialRowIconButton
