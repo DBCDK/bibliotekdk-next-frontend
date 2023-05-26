@@ -1,1 +1,1 @@
-export { default } from "./DropdownComponent.js";
+export { default } from "./NavigationDropdown.js";
