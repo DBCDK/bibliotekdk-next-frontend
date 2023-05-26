@@ -23,7 +23,7 @@ function DropdownToggle({ menuTitle: menuTitle }) {
         <Icon
           size={{ w: 1, h: 1 }}
           src="arrowrightblue.svg"
-          className={styles.dropdownIcon}
+          //className={styles.dropdownIcon}
           alt=""
         />
       </Text>
@@ -83,15 +83,9 @@ function DropdownItem({
     }
   }, [router.asPath]);
 
-  console.log(
-    "STYLE ",
-    classNames(styles.link, selected === i ? styles.linkSelected : ""),
-    i
-  );
-
   return (
     // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
-    <div
+    <li
       className={classNames(
         selected === i ? styles.linkBackgroundSelected : ""
       )}
@@ -99,6 +93,7 @@ function DropdownItem({
       <Link
         dataCy={`mobile-link-${item}`}
         href={`/profil/${urlEnding}`}
+        border={{ border: false }}
         className={classNames(
           styles.link,
           selected === i ? styles.linkSelected : ""
@@ -111,7 +106,6 @@ function DropdownItem({
             styles.text,
             selected === i ? styles.textSelected : styles.textNotSelected
           )}
-          styles={{ textDecoration: "none", color: "inherit" }}
         >
           {Translate({
             context: context,
@@ -126,6 +120,6 @@ function DropdownItem({
           )}
         </Text>
       </Link>
-    </div>
+    </li>
   );
 }

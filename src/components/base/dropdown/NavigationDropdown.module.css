@@ -22,6 +22,10 @@
   text-align: left;
 }
 
+.dropdownToggle:hover {
+  cursor: pointer;
+}
+
 .dropdownIcon {
   transform: rotate(90deg);
   position: relative;
@@ -47,6 +51,7 @@
 /* Link item  */
 
 .linkBackgroundSelected {
+  text-decoration: none;
   background-color: var(--blue);
   color: var(--white);
 }
@@ -55,7 +60,6 @@
   width: 100%;
   padding: var(--pt1) var(--pt2);
   text-decoration: none;
-  color: inherit;
 }
 
 .linkSelected {
@@ -76,5 +80,5 @@
 .textNotSelected:hover,
 .textNotSelected:focus {
   text-decoration: none;
-  color: black;
+  color: var(--mine-shaft);
 }
