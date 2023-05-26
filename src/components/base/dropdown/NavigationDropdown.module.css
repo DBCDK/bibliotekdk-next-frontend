@@ -59,7 +59,12 @@
 .link {
   width: 100%;
   padding: var(--pt1) var(--pt2);
-  text-decoration: none;
+}
+
+.link:hover,
+.link:focus {
+  /* overwrite link component styling */
+  color: inherit !important;
 }
 
 .linkSelected {
