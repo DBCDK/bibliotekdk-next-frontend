@@ -5,6 +5,7 @@
   min-width: 125px;
   border-radius: 0;
   margin-bottom: var(--pt3);
+  text-decoration: none;
 }
 
 .dropdownWrap:hover {
@@ -40,6 +41,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Link item  */
@@ -52,13 +54,27 @@
 .link {
   width: 100%;
   padding: var(--pt1) var(--pt2);
+  text-decoration: none;
+  color: inherit;
 }
 
 .linkSelected {
   color: var(--white);
 }
 
-.navLinkIcon {
-  display: flex;
-  align-items: center;
+.linkSelected:hover,
+.linkSelected:focus {
+  text-decoration: none;
+}
+
+.textSelected:hover,
+.textSelected:focus {
+  text-decoration: none;
+  color: var(--white);
+}
+
+.textNotSelected:hover,
+.textNotSelected:focus {
+  text-decoration: none;
+  color: black;
 }

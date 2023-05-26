@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useWindowSize from "./useWindowSize";
 
-const MAX_MOBILE_WIDTH = 375;
+const MAX_MOBILE_WIDTH = 768;
 
 /**
  * Hook that checks with help of useWindowSize hook if the window is mobile (width <=375px) or desktop (>375px)
@@ -15,7 +15,6 @@ const useIsMobile = () => {
 
   useEffect(() => {
     setIsMobile(windowSize.width <= MAX_MOBILE_WIDTH);
-    console.log("window.width ", windowSize.width);
   }, [windowSize.width]);
 
   return isMobile;

@@ -42,7 +42,7 @@ export default function NavigationDropdown({ context, menuItems }) {
   return (
     <Dropdown type="nav" role="navigation" className={styles.dropdownWrap}>
       <DropdownToggle menuTitle={menuTitle} />
-      <Dropdown.Menu className={styles.dropdownMenu}>
+      <Dropdown.Menu className={styles.dropdownMenu} role="list">
         {menuItems.map((item, i) => (
           <DropdownItem
             key={`nav-item-${i}`}
@@ -83,6 +83,12 @@ function DropdownItem({
     }
   }, [router.asPath]);
 
+  console.log(
+    "STYLE ",
+    classNames(styles.link, selected === i ? styles.linkSelected : ""),
+    i
+  );
+
   return (
     // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
     <div
@@ -98,15 +104,22 @@ function DropdownItem({
           selected === i ? styles.linkSelected : ""
         )}
       >
-        <Text tag="span" type="text3" className={styles.text}>
+        <Text
+          tag="span"
+          type="text3"
+          className={classNames(
+            styles.text,
+            selected === i ? styles.textSelected : styles.textNotSelected
+          )}
+          styles={{ textDecoration: "none", color: "inherit" }}
+        >
           {Translate({
             context: context,
             label: menuItems[i],
           })}
           {selected === i && (
             <Icon
-              size={{ w: 1.5, h: 1.5 }}
-              className={styles.navLinkIcon}
+              size={{ w: 1, h: 1 }} //TODO
               src="checkmark.svg"
               alt=""
             />
