@@ -5,9 +5,11 @@ import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
-import { useState } from "react";
+import useWindowSize from "@/components/hooks/useWindowSize";
+import { useEffect, useState } from "react";
 import useIsMobile from "@/components/hooks/useIsMobile";
 
+const MAX_MOBILE_WIDTH = 375;
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
 
@@ -18,7 +20,16 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
  * @returns {JSX.Element}
  */
 export default function ProfileLayout({ title, children }) {
+  //const windowSize = useWindowSize();
+
   const isMobile = useIsMobile();
+  // useState(
+  //   windowSize.width <= MAX_MOBILE_WIDTH
+  // );
+
+  // useEffect(() => {
+  //   setIsMobile(windowSize.width <= MAX_MOBILE_WIDTH);
+  // }, [windowSize.width]);
 
   return (
     <Container fluid className={styles.container}>

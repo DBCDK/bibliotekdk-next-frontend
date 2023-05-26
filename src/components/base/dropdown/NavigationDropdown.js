@@ -5,42 +5,43 @@ import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 
 import Translate from "@/components/base/translate";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "./NavigationDropdown.module.css";
 import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 import Link from "../link/Link";
 
+function DropdownToggle({ menuTitle: menuTitle }) {
+  return (
+    <Dropdown.Toggle
+      variant="success"
+      id="dropdown-basic"
+      className={styles.dropdownToggle}
+    >
+      <Text tag="span" type="text3" className={styles.text}>
+        {menuTitle}
+        <Icon
+          size={{ w: 1, h: 1 }}
+          src="arrowrightblue.svg"
+          className={styles.dropdownIcon}
+          alt=""
+        />
+      </Text>
+    </Dropdown.Toggle>
+  );
+}
+
 export default function NavigationDropdown({ context, menuItems }) {
-  const ref = useRef(null);
   const router = useRouter();
+  const menuTitle = Translate({
+    context: context,
+    label: "profileMenu",
+  });
   const [selected, setSelected] = useState(0);
 
   return (
-    <Dropdown
-      type="nav"
-      role="navigation"
-      className={styles.dropdownWrap}
-      ref={ref}
-    >
-      <Dropdown.Toggle
-        variant="success"
-        id="dropdown-basic"
-        className={styles.dropdownToggle}
-      >
-        <Text tag="span" type="text3" className={styles.text}>
-          {Translate({
-            context: context,
-            label: "profileMenu",
-          })}
-          <Icon
-            size={{ w: 1, h: 1 }}
-            src="arrowrightblue.svg"
-            className={styles.dropdownIcon}
-            alt=""
-          />
-        </Text>
-      </Dropdown.Toggle>
+    <Dropdown type="nav" role="navigation" className={styles.dropdownWrap}>
+      <DropdownToggle menuTitle={menuTitle} />
       <Dropdown.Menu className={styles.dropdownMenu}>
         {menuItems.map((item, i) => (
           <DropdownItem
@@ -77,7 +78,7 @@ function DropdownItem({
   );
 
   useEffect(() => {
-    if (router.asPath.includes(urlEnding)) {
+    if (router.asPath.includes(urlEnding) && selected !== i) {
       setSelected(i);
     }
   }, [router.asPath]);
@@ -94,9 +95,8 @@ function DropdownItem({
         href={`/profil/${urlEnding}`}
         className={classNames(
           styles.link,
-          selected === i ? styles.itemSelected : ""
+          selected === i ? styles.linkSelected : ""
         )}
-        onClick={() => setSelected(i)}
       >
         <Text tag="span" type="text3" className={styles.text}>
           {Translate({
@@ -106,7 +106,7 @@ function DropdownItem({
           {selected === i && (
             <Icon
               size={{ w: 1.5, h: 1.5 }}
-              className={styles.navItemIcon}
+              className={styles.navLinkIcon}
               src="checkmark.svg"
               alt=""
             />

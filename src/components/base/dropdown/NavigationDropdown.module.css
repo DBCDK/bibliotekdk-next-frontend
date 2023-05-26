@@ -1,16 +1,5 @@
-.toggle {
-  height: 100%;
-}
-
-.title {
-  display: flex;
-  justify-content: space-between; /* TODO make work on all devices */
-}
-
 .dropdownWrap {
   font-family: var(--ibm_plex_sansregular);
-  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
-  border: 1px solid var(--gray);
   background-color: var(--white);
   width: 100%;
   min-width: 125px;
@@ -22,27 +11,10 @@
   cursor: pointer;
 }
 
-.dropdownitem a {
-  text-decoration: none;
-}
-
-.leftspace {
-  width: 25px;
-  background-color: red;
-}
-
-.dropdownmenu {
-  border: 1px solid var(--blue);
-  background-color: var(--white);
-  position: absolute;
-  z-index: 1;
-  /* bootstrap default styles override */
-  padding: 0;
-  left: -10px !important;
-}
-
 .dropdownToggle {
   background-color: var(--white);
+  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
+  border: 1px solid var(--gray);
   min-width: 125px;
   height: 100%;
   width: 100%;
@@ -55,35 +27,13 @@
   top: 5px;
 }
 
-.link {
-  width: 100%;
-  padding-inline: var(--pt2);
-}
-
-.link:hover,
-.link:focus {
-  background-color: var(--blue);
-  color: var(--white);
-}
-
-.linkBackgroundSelected {
-  background-color: var(--blue);
-  color: var(--white);
-}
-
 .dropdownMenu {
   border-radius: 0;
   width: 100%;
   border: 1px solid var(--gray);
-  /* TODO: can i do this prettier? */
-  /* override default position and push 16px to the left */
-  left: calc(var(--pt2) * -1) !important;
-  margin-inline: 1px;
-  top: 14px !important;
-}
-
-.itemSelected {
-  color: var(--white);
+  padding: 0;
+  /* override bootstrap default position and push 16px to the left */
+  top: -3px !important;
 }
 
 .text {
@@ -92,7 +42,23 @@
   justify-content: space-between;
 }
 
-.navItemIcon {
+/* Link item  */
+
+.linkBackgroundSelected {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+.link {
+  width: 100%;
+  padding: var(--pt1) var(--pt2);
+}
+
+.linkSelected {
+  color: var(--white);
+}
+
+.navLinkIcon {
   display: flex;
   align-items: center;
 }

@@ -9,10 +9,13 @@ const MAX_MOBILE_WIDTH = 375;
  */
 const useIsMobile = () => {
   const windowSize = useWindowSize();
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    windowSize.width <= MAX_MOBILE_WIDTH
+  );
 
   useEffect(() => {
     setIsMobile(windowSize.width <= MAX_MOBILE_WIDTH);
+    console.log("window.width ", windowSize.width);
   }, [windowSize.width]);
 
   return isMobile;
