@@ -705,7 +705,7 @@ export function fieldsForRows(manifestation, work, context) {
           value:
             manifestation?.audience?.let ||
             manifestation?.audience?.lix ||
-            !isEmpty(manifestation.audience.generalAudience)
+            !isEmpty(manifestation.audience?.generalAudience)
               ? manifestation.audience
               : null,
           jsxParser: RenderLitteratureAudience,
@@ -765,7 +765,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         creatorsfromdescription: {
           label: Translate({ ...context, label: "creatorsfromdescription" }),
-          value: manifestation?.creatorsFromDescription.join("; ") || [],
+          value: manifestation?.creatorsFromDescription?.join("; ") || [],
         },
       },
     ],

@@ -232,14 +232,13 @@ export function OverviewError() {
  */
 export default function Wrap({ workId, type, onTypeChange, login }) {
   const user = useUser();
-
   const fbiWork = useData(workFragments.overviewWork({ workId }));
 
   if (fbiWork.isLoading) {
     return <OverviewSkeleton isSlow={fbiWork.isSlow} />;
   }
 
-  if (fbiWork.error || fbiWork.error) {
+  if (fbiWork.error) {
     return <OverviewError />;
   }
 
