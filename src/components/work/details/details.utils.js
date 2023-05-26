@@ -219,6 +219,7 @@ function RenderCreatorValues({ values, skeleton }) {
                   name: person.display,
                   prefix: "details-creatore",
                 })}
+                className={styles.linkWrap}
                 disabled={skeleton}
                 border={{ bottom: { keepVisible: true } }}
                 key={`crators-${index}`}
