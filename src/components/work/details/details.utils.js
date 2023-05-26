@@ -212,32 +212,35 @@ function RenderCreatorValues({ values, skeleton }) {
     valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
         {valuesToRender.map((person, index) => (
-            <div key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`} className={styles.creatorWrapper}>
-              <Link
-                href={`/find?q.creator=${person.display}`}
-                dataCy={cyKey({
-                  name: person.display,
-                  prefix: "details-creatore",
-                })}
-                className={styles.linkWrap}
-                disabled={skeleton}
-                border={{ bottom: { keepVisible: true } }}
-                key={`crators-${index}`}
-              >
-                <Text type="text4" lines={0} key={index}>
-                  {person?.display}
-                </Text>
-              </Link>
-              <Text
-                type="text4"
-                lines={0}
-                key={index}
-                tag="span"
-                className={styles.txtInline}
-              >
-                {parseFunction(person)}
+          <div
+            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+            className={styles.creatorWrapper}
+          >
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person.display,
+                prefix: "details-creatore",
+              })}
+              className={styles.linkWrap}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+              key={`crators-${index}`}
+            >
+              <Text type="text4" lines={0} key={index}>
+                {person?.display}
               </Text>
-            </div>
+            </Link>
+            <Text
+              type="text4"
+              lines={0}
+              key={index}
+              tag="span"
+              className={styles.txtInline}
+            >
+              {parseFunction(person)}
+            </Text>
+          </div>
         ))}
         {length > 4 && (
           <Text
