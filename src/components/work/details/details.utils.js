@@ -10,7 +10,6 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
-import { Fragment } from "react";
 import { toLower } from "lodash/toLower";
 
 /**
@@ -213,10 +212,7 @@ function RenderCreatorValues({ values, skeleton }) {
     valuesToRender && (
       <div data-cy={"creator-contributor-text-helper"}>
         {valuesToRender.map((person, index) => (
-          <Fragment
-            key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
-          >
-            <div>
+            <div key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`} className={styles.creatorWrapper}>
               <Link
                 href={`/find?q.creator=${person.display}`}
                 dataCy={cyKey({
@@ -241,7 +237,6 @@ function RenderCreatorValues({ values, skeleton }) {
                 {parseFunction(person)}
               </Text>
             </div>
-          </Fragment>
         ))}
         {length > 4 && (
           <Text
