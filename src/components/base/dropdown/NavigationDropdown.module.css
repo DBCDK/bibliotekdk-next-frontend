@@ -70,20 +70,3 @@
 .linkSelected {
   color: var(--white);
 }
-
-.linkSelected:hover,
-.linkSelected:focus {
-  text-decoration: none;
-}
-
-.textSelected:hover,
-.textSelected:focus {
-  text-decoration: none;
-  color: var(--white);
-}
-
-.textNotSelected:hover,
-.textNotSelected:focus {
-  text-decoration: none;
-  color: var(--mine-shaft);
-}
