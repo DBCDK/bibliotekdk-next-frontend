@@ -14,7 +14,7 @@
 
 .dropdownToggle {
   background-color: var(--white);
-  padding: var(--pt2) var(--pt2) var(--pt2) var(--pt2);
+  padding: var(--pt2) 0;
   border: 1px solid var(--gray);
   min-width: 125px;
   height: 100%;
@@ -46,6 +46,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: var(--pt2);
+  padding-right: var(--pt2);
 }
 
 /* Link item  */
@@ -57,8 +59,10 @@
 }
 
 .link {
+  display: flex;
+  align-items: center;
+  padding: var(--pt1) 0;
   width: 100%;
-  padding: var(--pt1) var(--pt2);
 }
 
 .link:hover,
