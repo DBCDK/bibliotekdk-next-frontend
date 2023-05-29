@@ -5,7 +5,7 @@ import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
-import useIsMobile from "@/components/hooks/useIsMobile";
+import useWindowSize from "@/components/hooks/useWindowSize";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -17,15 +17,15 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
  * @returns {JSX.Element}
  */
 export default function ProfileLayout({ title, children }) {
-  const isMobile = useIsMobile();
+  const windowSize = useWindowSize(); //TODO check with UX how breakpoints should work
 
   return (
     <Container fluid className={styles.container}>
-      {isMobile && (
+      {windowSize.width <= 1020 && (
         <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
       )}
       <Row>
-        {!isMobile && (
+        {windowSize.width > 1020 && (
           <Col md={3}>
             <ProfileMenu />
           </Col>
