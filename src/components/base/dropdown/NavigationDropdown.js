@@ -11,6 +11,44 @@ import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 import Link from "../link/Link";
 
+export default function NavigationDropdown({ context, menuItems }) {
+  const router = useRouter();
+  const menuTitle = Translate({
+    context: context,
+    label: "profileMenu",
+  });
+  const [selected, setSelected] = useState(0);
+  const [expandMenu, setExpandMenu] = useState(false);
+
+  return (
+    <Dropdown
+      show={expandMenu}
+      type="nav"
+      role="navigation"
+      className={styles.dropdownWrap}
+    >
+      <DropdownToggle
+        menuTitle={menuTitle}
+        onClick={() => setExpandMenu(!expandMenu)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            setExpandMenu(!expandMenu);
+          }
+        }}
+      />
+      <DropdownMenu
+        menuItems={menuItems}
+        selected={selected}
+        setSelected={setSelected}
+        expandMenu={expandMenu}
+        setExpandMenu={setExpandMenu}
+        context={context}
+        router={router}
+      />
+    </Dropdown>
+  );
+}
+
 function DropdownToggle({ onClick, menuTitle: menuTitle }) {
   return (
     <Dropdown.Toggle
@@ -29,43 +67,6 @@ function DropdownToggle({ onClick, menuTitle: menuTitle }) {
         />
       </Text>
     </Dropdown.Toggle>
-  );
-}
-
-export default function NavigationDropdown({ context, menuItems }) {
-  const router = useRouter();
-  const menuTitle = Translate({
-    context: context,
-    label: "profileMenu",
-  });
-  const [selected, setSelected] = useState(0);
-  const [expandMenu, setExpandMenu] = useState(false);
-
-  useEffect(() => {
-    console.log("expandMenu useEffect value", expandMenu);
-  }, [expandMenu]);
-
-  return (
-    <Dropdown
-      show={expandMenu}
-      type="nav"
-      role="navigation"
-      className={styles.dropdownWrap}
-    >
-      <DropdownToggle
-        menuTitle={menuTitle}
-        onClick={() => setExpandMenu(!expandMenu)}
-      />
-      <DropdownMenu
-        menuItems={menuItems}
-        selected={selected}
-        setSelected={setSelected}
-        expandMenu={expandMenu}
-        setExpandMenu={setExpandMenu}
-        context={context}
-        router={router}
-      />
-    </Dropdown>
   );
 }
 
@@ -123,7 +124,6 @@ function DropdownItem({
     if (router.asPath.includes(urlEnding) && selected !== i) {
       setSelected(i);
     }
-    // setExpandMenu(false);
   }, [router.asPath]);
 
   return (
@@ -136,14 +136,18 @@ function DropdownItem({
       <Link
         dataCy={`mobile-link-${item}`}
         href={`/profil/${urlEnding}`}
-        border={{ ...{ top: false }, ...{ bottom: false } }}
+        border={false}
         className={classNames(
           styles.link,
           selected === i ? styles.linkSelected : ""
         )}
         onClick={() => {
           if (selected === i) {
-            console.log("setting to false", selected, i);
+            setExpandMenu(false);
+          }
+        }}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" && selected === i) {
             setExpandMenu(false);
           }
         }}
@@ -154,11 +158,7 @@ function DropdownItem({
             label: menuItems[i],
           })}
           {selected === i && (
-            <Icon
-              size={{ w: 1, h: 1 }} //TODO
-              src="checkmark.svg"
-              alt=""
-            />
+            <Icon size={{ w: 1, h: 1 }} src="checkmark.svg" alt="" />
           )}
         </Text>
       </Link>
