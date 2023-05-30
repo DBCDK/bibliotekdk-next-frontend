@@ -7,9 +7,9 @@ import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import { useState, useEffect } from "react";
 import styles from "./NavigationDropdown.module.css";
-import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 import Link from "../link/Link";
+import cx from "classnames";
 
 export default function NavigationDropdown({ context, menuItems }) {
   const router = useRouter();
@@ -128,19 +128,12 @@ function DropdownItem({
 
   return (
     // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
-    <li
-      className={classNames(
-        selected === i ? styles.linkBackgroundSelected : ""
-      )}
-    >
+    <li className={cx({ [styles.linkBackgroundSelected]: selected === i })}>
       <Link
         dataCy={`mobile-link-${item}`}
         href={`/profil/${urlEnding}`}
         border={false}
-        className={classNames(
-          styles.link,
-          selected === i ? styles.linkSelected : ""
-        )}
+        className={cx(styles.link, { [styles.linkSelected]: selected === i })}
         onClick={() => {
           if (selected === i) {
             setExpandMenu(false);

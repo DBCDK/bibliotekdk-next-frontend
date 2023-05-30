@@ -6,13 +6,13 @@ import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import classNames from "classnames/bind";
-import { encodeString } from "@/lib/utils";
-import { getElementById } from "@/lib/utils";
+import cx from "classnames";
+import { getElementById, encodeString, getTranslatedUrl } from "@/lib/utils";
 import useUser from "@/components/hooks/useUser";
 
 /**
- * This component shows a profile menu on the left handside of the profile page.
+ * This component shows a profile menu.
+ * It is used on the left handside of the profile page.
  * It contains two types of links:
  * simple links such as "Mine bilioteker"
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
@@ -37,7 +37,7 @@ function MenuLink({ label, href }) {
   const type = isActive ? "title4" : "title5";
 
   return (
-    <li className={classNames(styles.link, isActive ? styles.active : "")}>
+    <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy="menu-fixed-links">
         <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
       </Link>
@@ -87,10 +87,9 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   return (
     <li className={styles.menuLink} key={`div-menulink-${index}`}>
       <Link
-        className={classNames(
-          styles.subLink,
-          index === activeIndex ? styles.groupActive : ""
-        )}
+        className={cx(styles.subLink, {
+          [styles.groupActive]: index === activeIndex,
+        })}
         dataCy={`menu-subcategory-${index}`}
         onClick={() => {
           replaceHash(urlEnding);
@@ -146,7 +145,7 @@ function MenuGroup({ menus, href, name, className }) {
             <Icon
               size={{ w: 1, h: 1 }}
               src="arrowrightblue.svg"
-              className={classNames(isActive ? styles.groupIconRotate : "")}
+              className={cx({ [styles.groupIconRotate]: isActive })}
             />
           </span>
           <Title
@@ -160,12 +159,7 @@ function MenuGroup({ menus, href, name, className }) {
           </Title>
         </div>
       </Link>
-      <ul
-        className={classNames(
-          styles.linkGroup,
-          isActive ? "" : styles.groupHide
-        )}
-      >
+      <ul className={cx(styles.linkGroup, { [styles.groupHide]: !isActive })}>
         {menus[name].map((item, index) => (
           <SubCategory
             key={`subcategory-${item.title}`}
@@ -231,22 +225,12 @@ export default function ProfileMenu() {
           <MenuGroup
             menus={menus}
             name={menuItems[0]}
-            href={`/profil/${encodeString(
-              Translate({
-                context: CONTEXT,
-                label: menuItems[0],
-              })
-            )}`}
+            href={`/profil/${getTranslatedUrl(CONTEXT, menuItems[0])}`}
           />
           {/* more MenuLinks are coming soon */}
           <MenuLink
             label={menuItems[1]}
-            href={`/profil/${encodeString(
-              Translate({
-                context: CONTEXT,
-                label: menuItems[1],
-              })
-            )}`}
+            href={`/profil/${getTranslatedUrl(CONTEXT, menuItems[1])}`}
           />
         </ul>
       </nav>

@@ -2,6 +2,12 @@
   list-style: none;
 }
 
+@media (max-width: 1019px) {
+  .menu {
+    display: none;
+  }
+}
+
 .link {
   margin-bottom: var(--pt1);
   margin-left: var(--pt2);

@@ -1,4 +1,5 @@
 import getConfig from "next/config";
+import Translate from "@/components/base/translate";
 import uniq from "lodash/uniq";
 
 const APP_URL =
@@ -150,4 +151,19 @@ export function chainFunctions(functions) {
 
 export function getElementById(elementId) {
   return elementId && document.querySelector(`#${elementId}`);
+}
+
+/**
+ * function that translates and encodes label
+ * @param {string} context
+ * @param {string} label
+ * @returns {string}
+ */
+export function getTranslatedUrl(context, label) {
+  return encodeString(
+    Translate({
+      context,
+      label,
+    })
+  );
 }

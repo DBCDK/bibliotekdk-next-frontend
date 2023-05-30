@@ -8,6 +8,12 @@
   text-decoration: none;
 }
 
+@media (min-width: 1020px) {
+  .dropdownWrap {
+    display: none;
+  }
+}
+
 .dropdownWrap:hover {
   cursor: pointer;
 }
@@ -37,7 +43,7 @@
   width: 100%;
   border: 1px solid var(--gray);
   padding: 0;
-  /* override bootstrap default position and push 16px to the left */
+  /* override bootstrap default position and push dropdown menu up */
   top: -3px !important;
 }
 
