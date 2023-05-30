@@ -21,3 +21,11 @@
   display: block;
   color: var(--error_temp);
 }
+
+.yourLibraries {
+  text-decoration: underline;
+}
+
+.upperCase::first-letter {
+  text-transform:capitalize;
+}

@@ -479,6 +479,9 @@ const USER_LOANS = [
       titles: {
         main: ["Ildkamp"],
       },
+      ownerWork: {
+        workId: "work-of:870970-basis:51098838",
+      },
       creators: [
         {
           display: "Brandon Sanderson",
@@ -498,11 +501,14 @@ const USER_LOANS = [
   },
   {
     loanId: "120200589",
-    dueDate: createDateXDaysFromNow(2),
+    dueDate: createDateXDaysFromNow(0),
     manifestation: {
       pid: "870970-basis:23424916",
       titles: {
         main: ["Krigen med salamandrene"],
+      },
+      ownerWork: {
+        workId: "work-of:870970-basis:23424916",
       },
       creators: [
         {
@@ -522,12 +528,43 @@ const USER_LOANS = [
     },
   },
   {
+    loanId: "120204379",
+    dueDate: createDateXDaysFromNow(2),
+    manifestation: {
+      pid: "3A870970-basis:3A50752224",
+      titles: {
+        main: ["Dig og mig ved daggry"],
+      },
+      ownerWork: {
+        workId: "work-of:3A870970-basis:3A50752224",
+      },
+      creators: [
+        {
+          display: "Sanne Munk Jensen",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=52102782&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=08dd127a70a7b84c5d5f",
+      },
+      recordCreationDate: "20150323",
+    },
+  },
+  {
     loanId: "120200590",
     dueDate: createDateXDaysFromNow(14),
     manifestation: {
       pid: "870970-basis:23518260",
       titles: {
         main: ["Tiger"],
+      },
+      ownerWork: {
+        workId: "work-of:870970-basis:23518260",
       },
       creators: [
         {
@@ -561,6 +598,9 @@ const USER_ORDERS = [
       titles: {
         main: ["Inferno"],
       },
+      ownerWork: {
+        workId: "work-of:870970-basis:23518260",
+      },
       creators: [
         {
           display: "Dan Brown",
@@ -589,6 +629,9 @@ const USER_ORDERS = [
       pid: "870970-basis:23424916",
       titles: {
         main: ["Efter uvejret"],
+      },
+      ownerWork: {
+        workId: "work-of:870970-basis:23424916",
       },
       creators: [
         {

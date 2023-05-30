@@ -18,7 +18,7 @@ export default function Custom500() {
           {Translate({
             context: "errorpages",
             label: "500_internal_server_error_description",
-          })}
+          })}{" "}
           <Link
             href={Translate({
               context: "errorpages",

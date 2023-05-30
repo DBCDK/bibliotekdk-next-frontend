@@ -177,7 +177,8 @@ export default function Wrap(props) {
     }) || manifestations?.[0];
 
   // attach relations for manifestation to display
-  manifestationByMaterialType.relations = groupedRelations;
+  if (manifestationByMaterialType)
+    manifestationByMaterialType.relations = groupedRelations;
 
   return (
     <Details
