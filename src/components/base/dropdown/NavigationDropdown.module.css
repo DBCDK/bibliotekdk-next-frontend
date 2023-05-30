@@ -8,7 +8,7 @@
   text-decoration: none;
 }
 
-@media (min-width: 1020px) {
+@media (min-width: 992px) {
   .dropdownWrap {
     display: none;
   }

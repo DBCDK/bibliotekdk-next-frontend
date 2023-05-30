@@ -1,7 +1,6 @@
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
-import Icon from "@/components/base/icon/Icon";
 import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
@@ -41,7 +40,6 @@ function MenuLink({ label, href }) {
       <Link href={href} dataCy="menu-fixed-links">
         <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
       </Link>
-      <Icon src="arrowrightblue.svg" size={1} />
     </li>
   );
 }
@@ -105,11 +103,6 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
           <Text type="text2" className={styles.itemLength}>
             ({item.itemLength})
           </Text>
-          {index === activeIndex && (
-            <span className={styles.groupIconLink}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-            </span>
-          )}
         </>
       </Link>
     </li>
@@ -140,24 +133,12 @@ function MenuGroup({ menus, href, name, className }) {
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
-        <div className={styles.groupTitleContainer}>
-          <span className={styles.groupIcon}>
-            <Icon
-              size={{ w: 1, h: 1 }}
-              src="arrowrightblue.svg"
-              className={cx({ [styles.groupIconRotate]: isActive })}
-            />
-          </span>
-          <Title
-            type={isActive ? "title4" : "title5"}
-            id={`navigation-${name}`}
-          >
-            {Translate({
-              context: CONTEXT,
-              label: `${name}`,
-            })}
-          </Title>
-        </div>
+        <Title type={isActive ? "title4" : "title5"} id={`navigation-${name}`}>
+          {Translate({
+            context: CONTEXT,
+            label: `${name}`,
+          })}
+        </Title>
       </Link>
       <ul className={cx(styles.linkGroup, { [styles.groupHide]: !isActive })}>
         {menus[name].map((item, index) => (
