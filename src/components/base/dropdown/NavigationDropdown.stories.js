@@ -13,5 +13,9 @@ export default exportedObject;
 
 export function Dropdown() {
   useMockLoanerInfo({});
-  return <NavigationDropdown context="profile" menuItems={menuItems} />;
+  return (
+    <div style={{ height: "500px" }}>
+      <NavigationDropdown context="profile" menuItems={menuItems} />
+    </div>
+  );
 }
