@@ -1,27 +1,33 @@
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
-import Icon from "@/components/base/icon/Icon";
-import styles from "@/components/profile/profilemenu/ProfileMenu.module.css";
+import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import classNames from "classnames/bind";
-import { encodeString } from "@/lib/utils";
-import { getElementById } from "@/lib/utils";
+import cx from "classnames";
+import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
 import useUser from "@/components/hooks/useUser";
 
 /**
- * This component shows a profile menu on the left handside of the profile page.
+ * This component shows a profile menu for logged in users.
+ * It is used on the left handside of the profile page when window wider than 992px.
  * It contains two types of links:
  * simple links such as "Mine bilioteker"
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
  * @returns {JSX.Element}
  */
 
+const CONTEXT = "profile";
+
+function getProfileUrl(wordToTranslate) {
+  return `/profil/${translateAndEncode(CONTEXT, wordToTranslate, "da")}`;
+}
+
 /**
  * Simple menu link without subcategories.
- *
+ * @param label
+ * @param href
  * @returns {JSX.Element}
  */
 function MenuLink({ label, href }) {
@@ -35,22 +41,21 @@ function MenuLink({ label, href }) {
   const type = isActive ? "title4" : "title5";
 
   return (
-    <li className={classNames(styles.link, isActive ? styles.active : "")}>
+    <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Title type={type}>{Translate({ context: "profile", label })}</Title>
+        <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
       </Link>
-      <Icon src="arrowrightblue.svg" size={1} />
     </li>
   );
 }
 
 function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   const title = Translate({
-    context: "profile",
+    context: CONTEXT,
     label: `${item.title}`,
   });
   const titleDanish = Translate({
-    context: "profile",
+    context: CONTEXT,
     label: `${item.title}`,
     requestedLang: "da",
   });
@@ -85,10 +90,9 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   return (
     <li className={styles.menuLink} key={`div-menulink-${index}`}>
       <Link
-        className={classNames(
-          styles.subLink,
-          index === activeIndex ? styles.groupActive : ""
-        )}
+        className={cx(styles.subLink, {
+          [styles.groupActive]: index === activeIndex,
+        })}
         dataCy={`menu-subcategory-${index}`}
         onClick={() => {
           replaceHash(urlEnding);
@@ -104,11 +108,6 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
           <Text type="text2" className={styles.itemLength}>
             ({item.itemLength})
           </Text>
-          {index === activeIndex && (
-            <span className={styles.groupIconLink}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-            </span>
-          )}
         </>
       </Link>
     </li>
@@ -119,6 +118,7 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
  * Menu link, that contains subcategories, which also are links
  * @param menus
  * @param href
+ * @param name
  * @param className
  * @return {JSX.Element}
  */
@@ -139,31 +139,14 @@ function MenuGroup({ menus, href, name, className }) {
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
-        <div className={styles.groupTitleContainer}>
-          <span className={styles.groupIcon}>
-            <Icon
-              size={{ w: 1, h: 1 }}
-              src="arrowrightblue.svg"
-              className={classNames(isActive ? styles.groupIconRotate : "")}
-            />
-          </span>
-          <Title
-            type={isActive ? "title4" : "title5"}
-            id={`navigation-${name}`}
-          >
-            {Translate({
-              context: "profile",
-              label: `${name}`,
-            })}
-          </Title>
-        </div>
+        <Title type={isActive ? "title4" : "title5"} id={`navigation-${name}`}>
+          {Translate({
+            context: CONTEXT,
+            label: `${name}`,
+          })}
+        </Title>
       </Link>
-      <ul
-        className={classNames(
-          styles.linkGroup,
-          isActive ? "" : styles.groupHide
-        )}
-      >
+      <ul className={styles.linkGroup}>
         {menus[name].map((item, index) => (
           <SubCategory
             key={`subcategory-${item.title}`}
@@ -217,22 +200,24 @@ export default function ProfileMenu() {
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
-    <nav
-      className={styles.menu}
-      aria-label={`${Translate({
-        context: "profile",
-        label: "profileNavigation",
-      })}`}
-    >
-      <ul className={styles.menu}>
-        <MenuGroup
-          menus={menus}
-          name={menuItems[0]}
-          href="/profil/laan-og-reserveringer"
-        />
-        {/* more MenuLinks are coming soon */}
-        <MenuLink label={menuItems[1]} href="/profil/mine-biblioteker" />
-      </ul>
-    </nav>
+    <>
+      <nav
+        className={styles.menu}
+        aria-label={`${Translate({
+          context: CONTEXT,
+          label: "profileNavigation",
+        })}`}
+      >
+        <ul className={styles.menu}>
+          <MenuGroup
+            menus={menus}
+            name={menuItems[0]}
+            href={getProfileUrl(menuItems[0])}
+          />
+          {/* more MenuLinks are coming soon */}
+          <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />
+        </ul>
+      </nav>
+    </>
   );
 }

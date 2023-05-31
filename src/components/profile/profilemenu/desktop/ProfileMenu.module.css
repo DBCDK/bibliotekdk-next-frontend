@@ -2,9 +2,14 @@
   list-style: none;
 }
 
+@media (max-width: 991px) {
+  .menu {
+    display: none;
+  }
+}
+
 .link {
-  margin-bottom: var(--pt1);
-  margin-left: var(--pt2);
+  margin: var(--pt1) 0;
   display: flex;
   align-items: center;
 }
@@ -20,7 +25,8 @@
 
 .subLink {
   display: inline-flex;
-  padding-left: var(--pt4);
+  padding-left: var(--pt2);
+  padding-top: var(--pt1);
 }
 
 .subLink p {
@@ -50,22 +56,6 @@
   }
 }
 
-.groupIcon {
-  padding-right: var(--pt1);
-}
-
-.groupIconLink {
-  padding-left: var(--pt1);
-  position: relative;
-  top: 2px;
-}
-
-.groupIconRotate {
-  transform: rotate(90deg);
-  position: relative;
-  top: 5px;
-}
-
 .group {
   cursor: pointer;
 }
@@ -80,10 +70,6 @@
 
 .groupActive p {
   font-family: var(--body-font-semibold);
-}
-
-.groupHide {
-  display: none;
 }
 
 .itemLength {

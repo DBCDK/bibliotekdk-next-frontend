@@ -823,6 +823,14 @@
       "title": {
         "da": "Relaterede værker",
         "en": "Related works"
+      },
+      "ARTICLE-subtitle": {
+        "da": "I samme artikelrække",
+        "en": "In same article series"
+      },
+      "DEBATEARTICLE-subtitle": {
+        "da": "Flere indlæg i debatten",
+        "en": "More posts in the debate"
       }
     },
     "content": {
@@ -2940,8 +2948,12 @@
         "da": "Mine biblioteker",
         "en": "My libraries"
       },
+      "profileMenu": {
+        "da": "Profilmenu",
+        "en": "Profile menu"
+      },
       "loansAndReservations": {
-        "da": "Lån og reseveringer",
+        "da": "Lån og reserveringer",
         "en": "Loan and reservations"
       },
       "profileNavigation": {
