@@ -10,7 +10,6 @@ import capitalize from "lodash/capitalize";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
-import { Fragment } from "react";
 import { toLower } from "lodash/toLower";
 
 /**
@@ -216,35 +215,35 @@ function RenderCreatorValues({ values, skeleton }) {
         className={styles.link_list}
       >
         {valuesToRender.map((person, index) => (
-          <Fragment
+          <div
             key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
+            className={styles.creatorWrapper}
           >
-            <div>
-              <Link
-                href={`/find?q.creator=${person.display}`}
-                dataCy={cyKey({
-                  name: person.display,
-                  prefix: "details-creatore",
-                })}
-                disabled={skeleton}
-                border={{ bottom: { keepVisible: true } }}
-                key={`crators-${index}`}
-              >
-                <Text type="text4" tag="span" lines={0} key={index}>
-                  {person?.display}
-                </Text>
-              </Link>
-              <Text
-                type="text4"
-                lines={0}
-                key={index}
-                tag="span"
-                className={styles.txtInline}
-              >
-                {parseFunction(person)}
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person.display,
+                prefix: "details-creatore",
+              })}
+              className={styles.linkWrap}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+              key={`crators-${index}`}
+            >
+              <Text type="text4" lines={0} key={index}>
+                {person?.display}
               </Text>
-            </div>
-          </Fragment>
+            </Link>
+            <Text
+              type="text4"
+              lines={0}
+              key={index}
+              tag="span"
+              className={styles.txtInline}
+            >
+              {parseFunction(person)}
+            </Text>
+          </div>
         ))}
         {length > 4 && (
           <Text
@@ -710,7 +709,7 @@ export function fieldsForRows(manifestation, work, context) {
           value:
             manifestation?.audience?.let ||
             manifestation?.audience?.lix ||
-            !isEmpty(manifestation.audience.generalAudience)
+            !isEmpty(manifestation.audience?.generalAudience)
               ? manifestation.audience
               : null,
           jsxParser: RenderLitteratureAudience,
@@ -770,7 +769,7 @@ export function fieldsForRows(manifestation, work, context) {
       {
         creatorsfromdescription: {
           label: Translate({ ...context, label: "creatorsfromdescription" }),
-          value: manifestation?.creatorsFromDescription.join("; ") || [],
+          value: manifestation?.creatorsFromDescription?.join("; ") || [],
         },
       },
     ],

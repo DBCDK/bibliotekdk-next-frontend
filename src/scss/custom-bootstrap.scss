@@ -9,8 +9,6 @@
 // @import "~bootstrap/scss/bootstrap-grid.scss";
 // @import "~bootstrap/scss/bootstrap-utilities.scss";
 
-
-
 // Configuration
 @import "~bootstrap/scss/_functions";
 
@@ -36,8 +34,8 @@ $container-padding-x: $grid-gutter-width;
 @import "~bootstrap/scss/_transitions";
 @import "~bootstrap/scss/_dropdown";
 // @import "~bootstrap/scss/_button-group";
-// @import "~bootstrap/scss/_nav";
-// @import "~bootstrap/scss/_navbar";
+@import "~bootstrap/scss/_nav";
+@import "~bootstrap/scss/_navbar";
 // @import "~bootstrap/scss/_card";
 @import "~bootstrap/scss/_accordion";
 // @import "~bootstrap/scss/_breadcrumb";

@@ -36,6 +36,7 @@
 
 .txtInline {
   display: inline-block;
+  white-space: nowrap;
 }
 
 .pegiimage {
@@ -53,6 +54,18 @@
   margin-left: var(--pt05);
 }
 
+.creatorWrapper {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  width: 100%;
+}
+
+.linkWrap {
+  word-break: break-word;
+  white-space: pre-wrap;
+  margin-right: var(--pt05);
+}
+
 .container {
   column-count: 2;
   -webkit-column-count: 2;
@@ -65,7 +78,7 @@
   -webkit-column-break-inside: avoid;
   overflow-wrap: break-word;
   padding-bottom: var(--pt3);
-  padding-right: var(--pt5);
+  padding-right: var(--pt3);
 }
 
 @media (min-width: 768px) {
