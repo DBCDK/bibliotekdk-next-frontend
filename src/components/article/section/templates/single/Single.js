@@ -75,7 +75,12 @@ export default function Single({ articles, skeleton }) {
               </span>
             </Title>
             <Link a={false} target={`${target}`}>
-              <Button type="secondary" size="medium" skeleton={skeleton}>
+              <Button
+                onClick={() => {}}
+                type="secondary"
+                size="medium"
+                skeleton={skeleton}
+              >
                 {btnLabel}
               </Button>
             </Link>
