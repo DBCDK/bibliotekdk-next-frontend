@@ -38,6 +38,12 @@
   align-items: center;
 }
 
+.groupTitle {
+  word-break: break-word;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+
 .menuLink {
   list-style: none;
 }
