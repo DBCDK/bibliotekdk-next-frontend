@@ -72,10 +72,6 @@
   font-family: var(--body-font-semibold);
 }
 
-.groupHide {
-  display: none;
-}
-
 .itemLength {
   margin-left: var(--pt05);
 }
