@@ -57,7 +57,12 @@ function DropdownToggle({ onClick, menuTitle: menuTitle }) {
       className={styles.dropdownToggle}
       onClick={onClick}
     >
-      <Text tag="span" type="text3" className={styles.text}>
+      <Text
+        tag="span"
+        type="text3"
+        className={styles.text}
+        dataCy={"toggle-text"}
+      >
         {menuTitle}
         <Icon
           size={{ w: 1, h: 1 }}
@@ -84,6 +89,7 @@ function DropdownMenu({
       show={expandMenu}
       className={styles.dropdownMenu}
       role="list"
+      data-cy="dropdown-menu"
     >
       {menuItems.map((item, i) => (
         <DropdownItem
