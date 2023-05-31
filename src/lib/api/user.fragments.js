@@ -36,6 +36,9 @@ export function basic() {
               titles {
                 main
               }
+              ownerWork {
+                workId
+              }
               creators {
                 display
               }

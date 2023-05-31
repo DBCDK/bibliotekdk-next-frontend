@@ -19,6 +19,9 @@ import Parts from "../parts";
 import Anchor from "@/components/base/anchor";
 import min from "lodash/min";
 import { AnchorsEnum } from "@/lib/enums";
+import { useData } from "@/lib/api/api";
+import * as workFragments from "@/lib/api/work.fragments";
+import Custom404 from "@/pages/404";
 
 /**
  * The work page React component
@@ -35,6 +38,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
   const router = useRouter();
   const mainRef = useRef();
   const [containerWidth, setContainerWidth] = useState();
+  const fbiWork = useData(workFragments.overviewWork({ workId }));
 
   useEffect(() => {
     // TODO: Make a more elegant solution, when someone has an idea.
@@ -53,6 +57,10 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
       };
     }
   }, [workId, login, type]);
+
+  if (!fbiWork.isLoading && fbiWork.data.work === null) {
+    return <Custom404 />;
+  }
 
   return (
     <main

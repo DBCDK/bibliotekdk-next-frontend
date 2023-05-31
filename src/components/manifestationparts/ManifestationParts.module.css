@@ -43,4 +43,5 @@
 .arrowchanges {
   display: flex;
   align-items: center;
+  padding-left: var(--pt2);
 }

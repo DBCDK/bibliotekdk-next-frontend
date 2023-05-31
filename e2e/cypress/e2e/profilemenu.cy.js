@@ -1,4 +1,4 @@
-describe("Profilemenu", () => {
+describe("Profilemenu on desktop", () => {
   it(`User with debt: GroupLink opens subcategories and they are clickable`, () => {
     cy.visit("/iframe.html?id=profile-profilemenu--profile-menu-story");
     cy.get('[data-cy="group-menu-loansAndReservations"]')
