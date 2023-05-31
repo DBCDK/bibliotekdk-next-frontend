@@ -4,6 +4,10 @@ import {
   parseRelations,
   parseSingleRelationObject,
   parseSingleRelation,
+  getParentRelationInput,
+  sortByDate,
+  getRelationsAsArray,
+  getUniqWorkWithWorkId,
 } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import { RelationTypeEnum, WorkTypeEnum } from "@/lib/enums";
 
@@ -37,8 +41,16 @@ function getRelationTypeArray(relationType) {
     [
       RelationTypeEnum.CONTINUES.key,
       [
-        { pid: "continues__0", ownerWork: { workId: "continues__0__321" } },
-        { pid: "continues__1", ownerWork: { workId: "continues__1__321" } },
+        {
+          pid: "continues__0",
+          ownerWork: { workId: "continues__0__321" },
+          generation: 1,
+        },
+        {
+          pid: "continues__1",
+          ownerWork: { workId: "continues__1__321" },
+          generation: 1,
+        },
       ],
     ],
     [
@@ -47,10 +59,12 @@ function getRelationTypeArray(relationType) {
         {
           pid: "continued_in__0",
           ownerWork: { workId: "continued_in__0__321" },
+          generation: 1,
         },
         {
           pid: "continued_in__1",
           ownerWork: { workId: "continued_in__1__321" },
+          generation: 1,
         },
       ],
     ],
@@ -60,10 +74,12 @@ function getRelationTypeArray(relationType) {
         {
           pid: "has_adaptation__0",
           ownerWork: { workId: "has_adaptation__0__321" },
+          generation: 1,
         },
         {
           pid: "has_adaptation__1",
           ownerWork: { workId: "has_adaptation__1__321" },
+          generation: 1,
         },
       ],
     ],
@@ -73,10 +89,12 @@ function getRelationTypeArray(relationType) {
         {
           pid: "is_adaptation_of__0",
           ownerWork: { workId: "is_adaptation_of__0__321" },
+          generation: 1,
         },
         {
           pid: "is_adaptation_of__1",
           ownerWork: { workId: "is_adaptation_of__0__321" },
+          generation: 1,
         },
       ],
     ],
@@ -87,10 +105,221 @@ function getRelationTypeArray(relationType) {
   );
 }
 
+function getWork(workIds) {
+  const works = [
+    {
+      workId: "work_with_stuff__0",
+      workTypes: [WorkTypeEnum.ARTICLE],
+      materialTypes: [{ specific: "avisartikel" }],
+      titles: {
+        main: ["hejmain"],
+        full: ["hejfull"],
+      },
+      creators: {
+        display: "hejCreator",
+      },
+      manifestations: {
+        mostRelevant: [
+          {
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            hostPublication: { issue: "2000-01-20" },
+          },
+        ],
+      },
+      relations: {
+        [RelationTypeEnum.CONTINUES.key]: [
+          {
+            pid: "continues__0",
+            cover: { detail: "default.dk", origin: "default" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "continues__0__321",
+            },
+            hostPublication: { issue: "2000-01-10" },
+          },
+          {
+            pid: "continues__1",
+            cover: { detail: "default.dk", origin: "default" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "continues__1__321",
+            },
+            hostPublication: { issue: "2000-01-11" },
+          },
+        ],
+        [RelationTypeEnum.CONTINUEDIN.key]: [
+          {
+            pid: "continued_in__0",
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "continued_in__0__321",
+            },
+            hostPublication: { issue: "2000-01-30" },
+          },
+          {
+            pid: "continued_in__1",
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "continued_in__1__321",
+            },
+            hostPublication: { issue: "2000-01-31" },
+          },
+        ],
+        [RelationTypeEnum.HASADAPTATION.key]: [
+          {
+            pid: "has_adaptation__0",
+            cover: { detail: "default.dk", origin: "default" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "has_adaptation__0__321",
+            },
+          },
+          {
+            pid: "has_adaptation__1",
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "has_adaptation__1__321",
+            },
+          },
+        ],
+        [RelationTypeEnum.ISADAPTATIONOF.key]: [
+          {
+            pid: "is_adaptation_of__0",
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "is_adaptation_of__0__321",
+            },
+          },
+          {
+            pid: "is_adaptation_of__1",
+            cover: { detail: "default.dk", origin: "default" },
+            materialTypes: [{ specific: "avisartikel" }],
+            ownerWork: {
+              workId: "is_adaptation_of__1__321",
+            },
+          },
+        ],
+      },
+    },
+  ];
+
+  return works.filter((work) => workIds.includes(work.workId));
+}
+
+function getFlatRelations() {
+  return [
+    {
+      pid: "continues__0",
+      cover: { detail: "default.dk", origin: "default" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "ARTICLE",
+      workId: "continues__0__321",
+      hostPublication: { issue: "2000-01-10" },
+    },
+    {
+      pid: "continues__1",
+      cover: { detail: "default.dk", origin: "default" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "ARTICLE",
+      workId: "continues__1__321",
+      hostPublication: { issue: "2000-01-11" },
+    },
+    {
+      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      materialTypesArray: ["avisartikel"],
+      workId: "work_with_stuff__0",
+      generation: 0,
+      workTypes: [WorkTypeEnum.ARTICLE],
+      materialTypes: [{ specific: "avisartikel" }],
+      relationWorkType: "ARTICLE",
+      titles: {
+        main: ["hejmain"],
+        full: ["hejfull"],
+      },
+      creators: {
+        display: "hejCreator",
+      },
+      hostPublication: { issue: "2000-01-20" },
+      manifestations: {
+        mostRelevant: [
+          {
+            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+            hostPublication: { issue: "2000-01-20" },
+          },
+        ],
+      },
+    },
+    {
+      pid: "continued_in__0",
+      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "ARTICLE",
+      workId: "continued_in__0__321",
+      hostPublication: { issue: "2000-01-30" },
+    },
+    {
+      pid: "continued_in__1",
+      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "ARTICLE",
+      workId: "continued_in__1__321",
+      hostPublication: { issue: "2000-01-31" },
+    },
+    {
+      pid: "has_adaptation__0",
+      cover: { detail: "default.dk", origin: "default" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "LITERATURE",
+      workId: "has_adaptation__0__321",
+    },
+    {
+      pid: "has_adaptation__1",
+      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "LITERATURE",
+      workId: "has_adaptation__1__321",
+    },
+    {
+      pid: "is_adaptation_of__0",
+      cover: { detail: "moreinfo.dk", origin: "moreinfo" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "MOVIE",
+      workId: "is_adaptation_of__0__321",
+    },
+    {
+      pid: "is_adaptation_of__1",
+      cover: { detail: "default.dk", origin: "default" },
+      generation: 1,
+      materialTypes: [{ specific: "avisartikel" }],
+      materialTypesArray: ["avisartikel"],
+      relationWorkType: "MOVIE",
+      workId: "is_adaptation_of__1__321",
+    },
+  ];
+}
+
 describe("extractGoodCover", () => {
   it("empty manifestations (expect empty result)", () => {
     const actual = extractGoodCover([]);
-    const expected = [];
+    const expected = {};
     expect(actual).toEqual(expected);
   });
   it("one manifestation default cover (expect the one)", () => {
@@ -106,6 +335,116 @@ describe("extractGoodCover", () => {
     ]);
     const actual = extractGoodCover(manifestations);
     const expected = getManifestations(["moreinfo_cover__0"])[0].cover;
+    expect(actual).toEqual(expected);
+  });
+});
+
+describe("getParentRelationInput", () => {
+  it("should be return empty object if no parentWork", () => {
+    const actual = getParentRelationInput({});
+    const expected = {};
+    expect(actual).toEqual(expected);
+  });
+
+  it("should be enriched properly with poor parent", () => {
+    const actual = getParentRelationInput({ workId: "parent" });
+    const expected = {
+      workId: "parent",
+      relationType: "current",
+      hostPublication: {},
+      cover: {},
+      generation: 0,
+    };
+    expect(actual).toMatchObject(expected);
+  });
+
+  it("should be enriched properly with hostPublication", () => {
+    const actual = getParentRelationInput({
+      workId: "parent",
+      manifestations: {
+        mostRelevant: [{ hostPublication: { issue: "2000-01-10" } }],
+      },
+    });
+    const expected = {
+      workId: "parent",
+      relationType: "current",
+      hostPublication: { issue: "2000-01-10" },
+      cover: {},
+      generation: 0,
+    };
+    expect(actual).toMatchObject(expected);
+  });
+
+  it("should be enriched properly with cover", () => {
+    const actual = getParentRelationInput({
+      workId: "parent",
+      manifestations: {
+        mostRelevant: [
+          {
+            hostPublication: { issue: "2000-01-10" },
+            cover: { origin: "moreinfo", detail: "moreinfo.dk" },
+          },
+        ],
+      },
+    });
+    const expected = {
+      workId: "parent",
+      relationType: "current",
+      hostPublication: { issue: "2000-01-10" },
+      cover: {},
+      generation: 0,
+    };
+    expect(actual).toMatchObject(expected);
+  });
+});
+
+describe("sortByDate", () => {
+  it("sort properly (expect a before b, alas negative", () => {
+    const actual = sortByDate(
+      { hostPublication: { issue: "2000-01-01" } },
+      { hostPublication: { issue: "2000-01-02" } }
+    );
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sort properly (expect b before a, alas positive", () => {
+    const actual = sortByDate(
+      { hostPublication: { issue: "2000-01-02" } },
+      { hostPublication: { issue: "2000-01-01" } }
+    );
+    const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+  it("sort properly (expect a equal b, alas 0", () => {
+    const actual = sortByDate(
+      { hostPublication: { issue: "2000-01-31" } },
+      { hostPublication: { issue: "2000-01-31" } }
+    );
+    const expected = 0;
+    expect(actual).toEqual(expected);
+  });
+  it("sort properly (missing a, b before a, alas 1", () => {
+    const actual = sortByDate(
+      { hostPublication: { hej: "nej" } },
+      { hostPublication: { issue: "2000-01-31" } }
+    );
+    const expected = 1;
+    expect(actual).toEqual(expected);
+  });
+  it("sort properly (missing b, a before b, alas -1", () => {
+    const actual = sortByDate(
+      { hostPublication: { issue: "2000-01-31" } },
+      { hostPublication: { hej: "nej" } }
+    );
+    const expected = -1;
+    expect(actual).toEqual(expected);
+  });
+  it("sort properly (missing a and b, alas 0", () => {
+    const actual = sortByDate(
+      { hostPublication: { hej: "nej" } },
+      { hostPublication: { hej: "nej" } }
+    );
+    const expected = 0;
     expect(actual).toEqual(expected);
   });
 });
@@ -189,105 +528,52 @@ describe("parseSingleRelationObject", () => {
   });
 });
 
-function getWork(workIds) {
-  const works = [
-    {
-      workId: "work_with_stuff__0",
-      workTypes: [WorkTypeEnum.ARTICLE],
-      materialTypes: [{ specific: "avisartikel" }],
-      titles: {
-        main: ["hejmain"],
-        full: ["hejfull"],
-      },
-      creators: {
-        display: "hejCreator",
-      },
-      manifestations: {
-        mostRelevant: [
-          {
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-          },
-        ],
-      },
-      relations: {
-        [RelationTypeEnum.CONTINUES.key]: [
-          {
-            pid: "continues__0",
-            cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "continues__0__321",
-            },
-          },
-          {
-            pid: "continues__1",
-            cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "continues__1__321",
-            },
-          },
-        ],
-        [RelationTypeEnum.CONTINUEDIN.key]: [
-          {
-            pid: "continued_in__0",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "continued_in__0__321",
-            },
-          },
-          {
-            pid: "continued_in__1",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "continued_in__1__321",
-            },
-          },
-        ],
-        [RelationTypeEnum.HASADAPTATION.key]: [
-          {
-            pid: "has_adaptation__0",
-            cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "has_adaptation__0__321",
-            },
-          },
-          {
-            pid: "has_adaptation__1",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "has_adaptation__1__321",
-            },
-          },
-        ],
-        [RelationTypeEnum.ISADAPTATIONOF.key]: [
-          {
-            pid: "is_adaptation_of__0",
-            cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "is_adaptation_of__0__321",
-            },
-          },
-          {
-            pid: "is_adaptation_of__1",
-            cover: { detail: "default.dk", origin: "default" },
-            materialTypes: [{ specific: "avisartikel" }],
-            ownerWork: {
-              workId: "is_adaptation_of__1__321",
-            },
-          },
-        ],
-      },
-    },
-  ];
+describe("getRelationsAsArray", () => {
+  it("empty work (expect empty result)", () => {
+    const actual = getRelationsAsArray({});
+    const expected = [];
+    expect(actual).toEqual(expected);
+  });
+  it("with work (expect the standard relations with specific workIds)", () => {
+    const work = getWork(["work_with_stuff__0"])[0];
+    const actual = getRelationsAsArray(work.relations);
+    const expected = [
+      { workId: "continues__0__321" },
+      { workId: "continues__1__321" },
+      { workId: "continued_in__0__321" },
+      { workId: "continued_in__1__321" },
+      { workId: "has_adaptation__0__321" },
+      { workId: "has_adaptation__1__321" },
+      { workId: "is_adaptation_of__0__321" },
+      { workId: "is_adaptation_of__1__321" },
+    ];
+    expect(actual).toMatchObject(expected);
+  });
+});
 
-  return works.filter((work) => workIds.includes(work.workId));
-}
+describe("getUniqWorkWithWorkId", () => {
+  it("empty work (expect empty result)", () => {
+    const actual = getUniqWorkWithWorkId([]);
+    const expected = [];
+    expect(actual).toEqual(expected);
+  });
+  it("with work (expect parsedRelations)", () => {
+    const manifestations = getFlatRelations();
+    const actual = getUniqWorkWithWorkId(manifestations);
+    const expected = [
+      { workId: "work_with_stuff__0" },
+      { workId: "continues__0__321" },
+      { workId: "continues__1__321" },
+      { workId: "continued_in__0__321" },
+      { workId: "continued_in__1__321" },
+      { workId: "has_adaptation__0__321" },
+      { workId: "has_adaptation__1__321" },
+      { workId: "is_adaptation_of__0__321" },
+      { workId: "is_adaptation_of__1__321" },
+    ];
+    expect(actual).toMatchObject(expected);
+  });
+});
 
 describe("parseRelations", () => {
   it("empty work (expect empty result)", () => {
@@ -297,105 +583,8 @@ describe("parseRelations", () => {
   });
   it("with work (expect parsedRelations)", () => {
     const work = getWork(["work_with_stuff__0"])[0];
-
     const actual = parseRelations(work);
-    const expected = [
-      {
-        pid: "continues__0",
-        relationType: RelationTypeEnum.CONTINUES.key,
-        cover: { detail: "default.dk", origin: "default" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "ARTICLE",
-        workId: "continues__0__321",
-      },
-      {
-        pid: "continues__1",
-        relationType: RelationTypeEnum.CONTINUES.key,
-        cover: { detail: "default.dk", origin: "default" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "ARTICLE",
-        workId: "continues__1__321",
-      },
-      {
-        cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-        materialTypesArray: ["avisartikel"],
-        relationType: "current",
-        workId: "work_with_stuff__0",
-        workTypes: [WorkTypeEnum.ARTICLE],
-        materialTypes: [{ specific: "avisartikel" }],
-        relationWorkType: "ARTICLE",
-        titles: {
-          main: ["hejmain"],
-          full: ["hejfull"],
-        },
-        creators: {
-          display: "hejCreator",
-        },
-        manifestations: {
-          mostRelevant: [
-            {
-              cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-            },
-          ],
-        },
-      },
-      {
-        pid: "continued_in__0",
-        relationType: RelationTypeEnum.CONTINUEDIN.key,
-        cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "ARTICLE",
-        workId: "continued_in__0__321",
-      },
-      {
-        pid: "continued_in__1",
-        relationType: RelationTypeEnum.CONTINUEDIN.key,
-        cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "ARTICLE",
-        workId: "continued_in__1__321",
-      },
-      {
-        pid: "has_adaptation__0",
-        relationType: RelationTypeEnum.HASADAPTATION.key,
-        cover: { detail: "default.dk", origin: "default" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "LITERATURE",
-        workId: "has_adaptation__0__321",
-      },
-      {
-        pid: "has_adaptation__1",
-        relationType: RelationTypeEnum.HASADAPTATION.key,
-        cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "LITERATURE",
-        workId: "has_adaptation__1__321",
-      },
-      {
-        pid: "is_adaptation_of__0",
-        relationType: RelationTypeEnum.ISADAPTATIONOF.key,
-        cover: { detail: "moreinfo.dk", origin: "moreinfo" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "MOVIE",
-        workId: "is_adaptation_of__0__321",
-      },
-      {
-        pid: "is_adaptation_of__1",
-        relationType: RelationTypeEnum.ISADAPTATIONOF.key,
-        cover: { detail: "default.dk", origin: "default" },
-        materialTypes: [{ specific: "avisartikel" }],
-        materialTypesArray: ["avisartikel"],
-        relationWorkType: "MOVIE",
-        workId: "is_adaptation_of__1__321",
-      },
-    ];
-    expect(actual).toEqual(expected);
+    const expected = getFlatRelations();
+    expect(actual).toMatchObject(expected);
   });
 });
