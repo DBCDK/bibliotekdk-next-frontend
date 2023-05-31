@@ -6,8 +6,10 @@ import {
 } from "@/lib/manifestationFactoryUtils";
 import { RelationTypeEnum, WorkTypeEnum } from "@/lib/enums";
 import uniq from "lodash/uniq";
-import { chainFunctions, encodeTitleCreator } from "@/lib/utils";
+import { chainFunctions, getWorkUrl } from "@/lib/utils";
 import groupBy from "lodash/groupBy";
+import merge from "lodash/merge";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Extract covers that are not default
@@ -20,20 +22,68 @@ export function extractGoodCover(manifestations) {
   );
 
   const non_default_covers = covers?.filter(
-    (cover) => cover.origin !== "default"
+    (cover) => cover?.origin !== "default"
   );
 
-  return non_default_covers?.length > 0
+  return !isEmpty(non_default_covers)
     ? non_default_covers?.[0]
-    : covers?.[0] || [];
+    : covers?.[0] || {};
 }
 
-function getParentRelationInput(parentWork) {
+/**
+ * Enriches parent to follow thea same format as its relations
+ * @param parentWork
+ * @return {(*&{relationType: string, cover: (*|*[]), generation: number, hostPublication: (*|{})})|{}}
+ */
+export function getParentRelationInput(parentWork) {
+  if (!parentWork || isEmpty(parentWork)) {
+    return {};
+  }
+
   return {
     ...parentWork,
     relationType: "current",
+    hostPublication:
+      parentWork?.manifestations?.mostRelevant?.[0]?.hostPublication || {},
     cover: extractGoodCover(parentWork?.manifestations?.mostRelevant),
+    generation: 0,
   };
+}
+
+/**
+ *
+ * @param a
+ * @param b
+ * @return {number}
+ */
+export function sortByDate(a, b) {
+  const collator = Intl.Collator("da");
+
+  return collator.compare(
+    JSON.stringify(new Date(a?.hostPublication?.issue)),
+    JSON.stringify(new Date(b?.hostPublication?.issue))
+  );
+}
+
+/**
+ * Used by {@link enrichArticleSeries} and {@link enrichDebateArticle} because the same logic is used
+ * @param parentWork
+ * @param articleRelevant
+ * @return {*}
+ */
+function enrichAnyArticleTypeSeries(parentWork, articleRelevant) {
+  const parentRelationInput = getParentRelationInput(parentWork);
+
+  const sortedManifestations = chainFunctions([getUniqWorkWithWorkId])([
+    ...articleRelevant,
+    ...[parentRelationInput],
+  ]).sort(sortByDate);
+
+  return sortedManifestations.map((manifestation) => {
+    return manifestation;
+    // TODO: Figure out if "partInSeries" can be given from JED
+    // return { ...manifestation, partInSeries: `Del ${index + 1}` };
+  });
 }
 
 /**
@@ -51,24 +101,7 @@ export function enrichArticleSeries(manifestations, parentWork) {
     )
   );
 
-  const continues = articleRelevant.filter(
-    (manifestation) =>
-      manifestation.relationType === RelationTypeEnum.CONTINUES.key
-  );
-  const continuedIn = articleRelevant.filter(
-    (manifestation) =>
-      manifestation.relationType === RelationTypeEnum.CONTINUEDIN.key
-  );
-
-  const parentRelationInput = getParentRelationInput(parentWork);
-
-  return [...continues, ...[parentRelationInput], ...continuedIn].map(
-    (manifestation) => {
-      return manifestation;
-      // TODO: Figure out if "partInSeries" can be given from JED
-      // return { ...manifestation, partInSeries: `Del ${index + 1}` };
-    }
-  );
+  return enrichAnyArticleTypeSeries(parentWork, articleRelevant);
 }
 
 /**
@@ -87,14 +120,17 @@ export function enrichMovie(manifestations) {
  * DebateArticles include relationTypes 'discusses' and 'discussedIn'
  *  Used in {@link enrichBySpecificWorkType}
  * @param manifestations
+ * @param parentWork
  * @return {*[]}
  */
-export function enrichDebateArticle(manifestations) {
-  return manifestations.filter((manifestation) =>
+export function enrichDebateArticle(manifestations, parentWork) {
+  const debateArticleRelevant = manifestations.filter((manifestation) =>
     [RelationTypeEnum.DISCUSSES.key, RelationTypeEnum.DISCUSSEDIN.key].includes(
       manifestation?.relationType
     )
   );
+
+  return enrichAnyArticleTypeSeries(parentWork, debateArticleRelevant);
 }
 
 /**
@@ -131,7 +167,8 @@ export function enrichBySpecificWorkType(manifestations, work) {
   const enrichMapper = {
     [WorkTypeEnum.ARTICLE]: () => enrichArticleSeries(manifestations, work),
     [WorkTypeEnum.MOVIE]: () => enrichMovie(manifestations),
-    [WorkTypeEnum.DEBATEARTICLE]: () => enrichDebateArticle(manifestations),
+    [WorkTypeEnum.DEBATEARTICLE]: () =>
+      enrichDebateArticle(manifestations, work),
     [WorkTypeEnum.LITERATURE]: () => enrichLiterature(manifestations),
   };
 
@@ -159,6 +196,7 @@ export function enrichBySpecificWorkType(manifestations, work) {
 export function filterFieldsInElement(entry) {
   delete entry.ownerWork;
   delete entry.relations;
+  delete entry.relationType;
 
   return entry;
 }
@@ -168,9 +206,10 @@ export function filterFieldsInElement(entry) {
  *  fields needed by GUI
  * @param manifestation
  * @param relationType
+ * @param generation
  * @return {*}
  */
-export function parseSingleRelation(manifestation, relationType) {
+export function parseSingleRelation(manifestation, relationType, generation) {
   const workTitles = manifestation?.ownerWork?.titles;
   const workCreators = manifestation?.ownerWork?.creators;
   const workId = manifestation?.ownerWork?.workId;
@@ -179,16 +218,17 @@ export function parseSingleRelation(manifestation, relationType) {
     workId &&
     workTitles?.full?.join(": ") &&
     workCreators?.[0]?.display &&
-    `materiale/${encodeTitleCreator(
+    getWorkUrl(
       workTitles?.full?.join(": "),
-      workCreators?.[0]?.display
-    )}/${manifestation?.ownerWork?.workId}`;
-
+      workCreators?.[0]?.display,
+      manifestation?.ownerWork?.workId
+    );
   return {
     ...manifestation,
     ...(relationType && { relationType: relationType }),
     ...(workId && { workId: workId }),
     ...(linkToWork && { linkToWork: linkToWork }),
+    ...(generation && { generation: generation }),
   };
 }
 
@@ -202,7 +242,8 @@ export function parseSingleRelation(manifestation, relationType) {
  */
 export function parseSingleRelationObject(
   relationTypeArray,
-  passedFunction = parseSingleRelation
+  passedFunction = (manifestation, relationType) =>
+    parseSingleRelation(manifestation, relationType, 1)
 ) {
   return (
     relationTypeArray?.[1]?.map((manifestation) =>
@@ -212,21 +253,54 @@ export function parseSingleRelationObject(
 }
 
 /**
+ * Centralise logic for creating relations as array
+ * @param relations
+ * @param parser
+ * @return {FlatArray<*, *>[]}
+ */
+export function getRelationsAsArray(
+  relations,
+  parser = (manifestation, relationType) =>
+    parseSingleRelation(manifestation, relationType, 1)
+) {
+  return (
+    relations &&
+    Object.entries(relations)
+      ?.map((relationTypeArray) =>
+        parseSingleRelationObject(relationTypeArray, parser)
+      )
+      .flat()
+  );
+}
+
+/**
  * Gives the flattened relations and parses them to
  *  provide them with e.g. relationType and ownerWork workId
  * @param relations
- * @return {[{hej: number}]|[{hej: number}]|[{hej: number}]|*|FlatArray<*, *>[]|*[]}
+ * @return {*[]}
  */
 function getAllWorksWithRelationTypeAndWorkId(relations) {
-  return (
-    (relations &&
-      Object.entries(relations)
-        ?.map((relationTypeArray) =>
-          parseSingleRelationObject(relationTypeArray)
-        )
-        .flat()) ||
-    []
+  const relationsArray_generation_1 = getRelationsAsArray(relations);
+
+  const relationArray_generation_1_merged =
+    relationsArray_generation_1 &&
+    merge(
+      ...relationsArray_generation_1
+        ?.map((relation) => relation?.ownerWork?.relations)
+        .filter((rel) => typeof rel !== "undefined")
+        .flat()
+    );
+
+  const relations_generation_2 = getRelationsAsArray(
+    relationArray_generation_1_merged,
+    (manifestation, relationType) =>
+      parseSingleRelation(manifestation, relationType, 2)
   );
+
+  return [
+    ...(relationsArray_generation_1 ? relationsArray_generation_1 : []),
+    ...(relations_generation_2 ? relations_generation_2 : []),
+  ];
 }
 
 /**
@@ -235,11 +309,12 @@ function getAllWorksWithRelationTypeAndWorkId(relations) {
  * @param manifestations
  * @return {*}
  */
-function getUniqWorkWithWorkId(manifestations) {
+export function getUniqWorkWithWorkId(manifestations) {
   return uniqWith(
-    manifestations,
-    (a, b) =>
-      isEqual(a.workId, b.workId) && isEqual(a.relationType, b.relationType)
+    // We sort by generation, to ensure that closest descendent is the one
+    //  chosen by `uniqWith`
+    manifestations.sort((a, b) => (a?.generation || 0) - b?.generation),
+    (a, b) => isEqual(a.workId, b.workId)
   );
 }
 

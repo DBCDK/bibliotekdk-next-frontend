@@ -789,6 +789,9 @@ const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAc
       }
     }
   }
+  hostPublication {
+    issue
+  }
   materialTypes {
     specific
   }
@@ -869,31 +872,51 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
   workTypes
 }`;
 
-const relationsForWorkRelations = `fragment relationsForWorkRelations on Relations {
-  hasAdaptation {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
-  }
-  isAdaptationOf {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
-  }
-  continues {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
-  }
-  continuedIn {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
-  }
-  discusses {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
-  }
-  discussedIn {
-    ...coverFragment
-    ...manifestationDetailsForAccessFactory
+const relationManifestation = `fragment relationManifestation on Manifestation {
+  ...coverFragment
+  ...manifestationDetailsForAccessFactory
+  ownerWork {
+    relations {
+      continues {
+        ...coverFragment
+        ...manifestationDetailsForAccessFactory
+      }
+      continuedIn {
+        ...coverFragment
+        ...manifestationDetailsForAccessFactory
+      }
+      discusses {
+        ...coverFragment
+        ...manifestationDetailsForAccessFactory
+      }
+      discussedIn {
+        ...coverFragment
+        ...manifestationDetailsForAccessFactory
+      }
+    }
   }
 }
 ${manifestationDetailsForAccessFactory}
 ${coverFragment}`;
+
+const relationsForWorkRelations = `fragment relationsForWorkRelations on Relations {
+  hasAdaptation {
+    ...relationManifestation
+  }
+  isAdaptationOf {
+    ...relationManifestation
+  }
+  continues {
+    ...relationManifestation
+  }
+  continuedIn {
+    ...relationManifestation
+  }
+  discusses {
+    ...relationManifestation
+  }
+  discussedIn {
+    ...relationManifestation
+  }
+}
+${relationManifestation}`;

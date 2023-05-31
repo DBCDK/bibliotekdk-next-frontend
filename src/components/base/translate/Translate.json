@@ -823,6 +823,14 @@
       "title": {
         "da": "Relaterede værker",
         "en": "Related works"
+      },
+      "ARTICLE-subtitle": {
+        "da": "I samme artikelrække",
+        "en": "In same article series"
+      },
+      "DEBATEARTICLE-subtitle": {
+        "da": "Flere indlæg i debatten",
+        "en": "More posts in the debate"
       }
     },
     "content": {
