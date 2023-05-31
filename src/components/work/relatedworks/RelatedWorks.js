@@ -5,8 +5,10 @@ import { useData } from "@/lib/api/api";
 import { workForWorkRelationsWorkTypeFactory } from "@/lib/api/work.fragments";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import ScrollSnapSlider from "@/components/base/scrollsnapslider/ScrollSnapSlider";
+import uniq from "lodash/uniq";
+import { WorkTypeEnum } from "@/lib/enums";
 
-function RelatedWorks({ relations, className, subtitle }) {
+function RelatedWorks({ relations, className, subtitleLabel }) {
   const context = { context: "relatedworks" };
   const sliderId = "relatedWorks_slide";
 
@@ -23,14 +25,23 @@ function RelatedWorks({ relations, className, subtitle }) {
       title={Translate({ ...context, label: "title" })}
       space={{ top: "var(--pt8)", bottom: "var(--pt4)" }}
       className={`${className}`}
-      subtitle={subtitle}
+      subtitle={Translate({ ...context, label: subtitleLabel })}
     >
       <ScrollSnapSlider sliderId={sliderId}>{relatedWorks}</ScrollSnapSlider>
     </Section>
   );
 }
 
-export default function Wrap({ workId, subtitle = "" }) {
+function getSubTitleLabelForRelatedWork(relations) {
+  const relationWorkType =
+    relations && uniq(relations.map((relation) => relation.relationWorkType));
+
+  return relationWorkType?.length === 1
+    ? `${relationWorkType[0]}-subtitle`
+    : "";
+}
+
+export default function Wrap({ workId }) {
   const workForWorkRelationsWorkTypeFactory_response = useData(
     workId && workForWorkRelationsWorkTypeFactory({ workId: workId })
   );
@@ -39,5 +50,18 @@ export default function Wrap({ workId, subtitle = "" }) {
     workForWorkRelationsWorkTypeFactory_response?.data?.work
   );
 
-  return <RelatedWorks relations={flatRelations} subtitle={subtitle} />;
+  // This functionality is opt-in for now
+  //  Currently we only use Articles and debate articles
+  const filteredFlatRelations = flatRelations?.filter((manifestation) =>
+    [WorkTypeEnum.ARTICLE, WorkTypeEnum.DEBATEARTICLE].includes(
+      manifestation.relationWorkType
+    )
+  );
+
+  return (
+    <RelatedWorks
+      relations={filteredFlatRelations}
+      subtitleLabel={getSubTitleLabelForRelatedWork(filteredFlatRelations)}
+    />
+  );
 }
