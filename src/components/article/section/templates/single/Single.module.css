@@ -46,7 +46,6 @@
 .title,
 .text {
   position: relative;
-  /*display: inline-block;*/
 }
 
 .title:hover hr:last-child {

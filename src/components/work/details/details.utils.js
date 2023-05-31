@@ -230,7 +230,7 @@ function RenderCreatorValues({ values, skeleton }) {
               border={{ bottom: { keepVisible: true } }}
               key={`crators-${index}`}
             >
-              <Text type="text4" lines={0} key={index}>
+              <Text type="text4" tag={"span"} lines={0} key={index}>
                 {person?.display}
               </Text>
             </Link>

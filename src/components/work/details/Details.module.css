@@ -20,7 +20,7 @@
 
 .link_list {
   line-height: 22px;
-  margin-bottom: calc(var(--pt05) * -0.5);
+  margin-bottom: calc(var(--pt025) * -1);
 }
 
 .link {

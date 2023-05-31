@@ -33,13 +33,6 @@ export function QuickFilters({ onFiltersClick }) {
       border={false}
     >
       <div className={styles.link}>
-        {/*<div className={styles.section}>*/}
-        {/*<Container className={styles.fullwidth} fluid>*/}
-        {/*  <Row>*/}
-        {/*    <div className={styles.quickfilters}>*/}
-        {/*      <Col xs={{ span: 9, offset: 3 }}>*/}
-        {/*        <div>*/}
-        {/*<div className={styles.links}>*/}
         <Icon src="settings.svg" size={2} />
         <Link
           dataCy="view-all-filters"
@@ -54,13 +47,6 @@ export function QuickFilters({ onFiltersClick }) {
             })}
           </Text>
         </Link>
-        {/*</div>*/}
-        {/*        </div>*/}
-        {/*      </Col>*/}
-        {/*    </div>*/}
-        {/*  </Row>*/}
-        {/*</Container>*/}
-        {/*</div>*/}
       </div>
     </LinkOnlyInternalAnimations>
   );

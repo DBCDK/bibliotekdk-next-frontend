@@ -52,8 +52,6 @@
 }
 
 .materials {
-  /*display: inline-table;*/
-  /*display: flex;*/
   display: inline;
   margin-top: var(--pt2);
   column-gap: var(--pt2);
@@ -69,8 +67,6 @@
 .materials > :last-child {
   margin-right: initial;
 }
-
-
 
 .creator {
   margin-top: var(--pt1);

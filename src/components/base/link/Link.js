@@ -140,6 +140,9 @@ Link.propTypes = {
 
 /**
  * Wrapper for using new underline that allows line wrap
+ *   HOW TO USE:
+ *   - MULTILINE: The link element and their children must be inline-elements
+ *   - BLOCK ELEMENT: The link element must be a block :-)
  * @param className
  * @param disabled
  * @param border

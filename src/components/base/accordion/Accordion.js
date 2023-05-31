@@ -116,7 +116,11 @@ export function Item({
               {title}
             </Text>
           </Link>
-          {subTitle && <Text tag={"span"} type="text4"></Text>}
+          {subTitle && (
+            <Text tag={"span"} type="text4">
+              {subTitle}
+            </Text>
+          )}
         </div>
         {additionalTxt && (
           <div className={styles.textbox}>
