@@ -3039,6 +3039,14 @@
       "price": {
         "da": "Pris",
         "en": "Price"
+      },
+      "front-of-row": {
+        "da": "Forrest i køen",
+        "en": "Front of queue"
+      },
+      "in-row": {
+        "da": "foran dig",
+        "en": "in front of you"
       }
     }
   }

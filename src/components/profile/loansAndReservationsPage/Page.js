@@ -37,7 +37,6 @@ export const dataReducer = (dataType, data) => {
         creator: data.manifestation.creators[0].display,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        library: "Herlev bibliotek", // TODO
         id: data.loanId,
         workId: "work-of:" + data.manifestation.pid,
       };
@@ -49,7 +48,8 @@ export const dataReducer = (dataType, data) => {
         creator: data.manifestation.creators[0].display,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
-        library: data.pickupBranch.agencyName,
+        library: data.pickUpBranch.agencyName,
+        holdQueuePosition: data.holdQueuePosition,
         id: data.orderId,
         workId: "work-of:" + data.manifestation.pid,
       };
@@ -58,11 +58,15 @@ export const dataReducer = (dataType, data) => {
 };
 
 const LoansAndReservations = () => {
-  const { loanerInfo, updateLoanerInfo } = useUser();
-  const { loans, orders, debt } = loanerInfo;
+  const { loanerInfo, updateLoanerInfo, ...data } = useUser();
+  const { loans, orders, debt, agency } = loanerInfo;
+  console.log("ag", agency);
   const router = useRouter();
   const locale = router.locale === undefined ? "da" : router.locale;
   const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
+  const libraryString = agency?.result[0].agencyName || "";
+
+  console.log(data, loanerInfo);
 
   const onDeleteOrder = (id) => {
     const newOrders = loanerInfo.orders;
@@ -108,7 +112,7 @@ const LoansAndReservations = () => {
           <MaterialRow
             key={`intermediate-${intermediate.title}-#${i}`}
             title={intermediate.title}
-            library={"Herlev bibliotek"} // TODO
+            library={libraryString}
             dynamicColumn={
               <DynamicColumn className={styles.isWarning}>
                 <Text type="text1" tag="span">
@@ -160,6 +164,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("loan", loan)}
               key={`loan-${loan.loanId}-#${i}`}
+              library={libraryString}
               renderButton={
                 <MaterialRowButton>
                   {Translate({ context: "profile", label: "renew" })}
@@ -251,20 +256,36 @@ const LoansAndReservations = () => {
               dynamicColumn={
                 <DynamicColumn>
                   {isReadyToPickup ? (
-                    <Text type="text1" tag="span" className={styles.isReady}>
-                      {Translate({
-                        context: "profile",
-                        label: "ready-to-pickup",
-                      })}
-                    </Text>
-                  ) : null}
-                  <Text type="text2">
-                    {Translate({
-                      context: "profile",
-                      label: "pickup-deadline",
-                    })}
-                     {dateString}
-                  </Text>
+                    <>
+                      <Text type="text1" tag="span" className={styles.isReady}>
+                        {Translate({
+                          context: "profile",
+                          label: "ready-to-pickup",
+                        })}
+                      </Text>
+                      <Text type="text2" tag="span">
+                        {Translate({
+                          context: "profile",
+                          label: "pickup-deadline",
+                        })}
+                         {dateString}
+                      </Text>
+                    </>
+                  ) : (
+                    <>
+                      <Text type="text2" tag="span">
+                        {order.holdQueuePosition === "1"
+                          ? `${Translate({
+                              context: "profile",
+                              label: "front-of-row",
+                            })}`
+                          : `${order.holdQueuePosition - 1} ${Translate({
+                              context: "profile",
+                              label: "in-row",
+                            })}`}
+                      </Text>
+                    </>
+                  )}
                 </DynamicColumn>
               }
               renderButton={

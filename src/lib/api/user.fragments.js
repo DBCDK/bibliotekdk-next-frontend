@@ -21,6 +21,14 @@ export function basic() {
         mail
         address
         postalCode
+        agency {
+          result {
+            branchId
+            agencyId
+            agencyName
+            name
+          }
+        }
         debt {
             title
             amount
@@ -56,7 +64,32 @@ export function basic() {
             status
             pickUpBranch {
               agencyName
-          }
+            }
+            pickUpExpiryDate
+            holdQueuePosition
+            creator
+            orderType
+            orderDate
+            title
+            manifestation {
+              pid
+              titles {
+                main
+              }
+              ownerWork {
+                workId
+              }
+              creators {
+                display
+              }
+              materialTypes {
+                specific
+              }
+              cover {
+                thumbnail
+              }
+              recordCreationDate
+            }
         }   
       }
       monitor(name: "bibdknext_user")
