@@ -25,7 +25,6 @@ import { AnchorsEnum } from "@/lib/enums";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 import Custom404 from "@/pages/404";
-import Head from "next/head";
 
 /**
  * The work page React component
@@ -63,19 +62,7 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
   }, [workId, login, type]);
 
   if (!fbiWork.isLoading && fbiWork.data.work === null) {
-    return (
-      <>
-        <Head>
-          <title>
-            {Translate({
-              context: "errorpages",
-              label: "404_not_found_title",
-            })}
-          </title>
-        </Head>
-        <Custom404 />
-      </>
-    );
+    return <Custom404 />;
   }
 
   return (
