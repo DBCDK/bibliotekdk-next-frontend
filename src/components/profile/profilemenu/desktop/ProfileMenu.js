@@ -10,8 +10,8 @@ import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
 import useUser from "@/components/hooks/useUser";
 
 /**
- * This component shows a profile menu.
- * It is used on the left handside of the profile page.
+ * This component shows a profile menu for logged in users.
+ * It is used on the left handside of the profile page when window wider than 992px.
  * It contains two types of links:
  * simple links such as "Mine bilioteker"
  * and links with subcategories such as "Lån og reserveringer" with subcateogries "Lån", "Reserveringer", "Mellemværende".
@@ -26,7 +26,8 @@ function getProfileUrl(wordToTranslate) {
 
 /**
  * Simple menu link without subcategories.
- *
+ * @param label
+ * @param href
  * @returns {JSX.Element}
  */
 function MenuLink({ label, href }) {
@@ -117,6 +118,7 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
  * Menu link, that contains subcategories, which also are links
  * @param menus
  * @param href
+ * @param name
  * @param className
  * @return {JSX.Element}
  */
@@ -144,7 +146,7 @@ function MenuGroup({ menus, href, name, className }) {
           })}
         </Title>
       </Link>
-      <ul className={cx(styles.linkGroup, { [styles.groupHide]: !isActive })}>
+      <ul className={styles.linkGroup}>
         {menus[name].map((item, index) => (
           <SubCategory
             key={`subcategory-${item.title}`}
