@@ -2940,8 +2940,12 @@
         "da": "Mine biblioteker",
         "en": "My libraries"
       },
+      "profileMenu": {
+        "da": "Profilmenu",
+        "en": "Profile menu"
+      },
       "loansAndReservations": {
-        "da": "Lån og reseveringer",
+        "da": "Lån og reserveringer",
         "en": "Loan and reservations"
       },
       "profileNavigation": {
