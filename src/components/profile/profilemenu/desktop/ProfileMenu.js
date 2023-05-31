@@ -6,7 +6,7 @@ import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import cx from "classnames";
-import { getElementById, encodeString, getTranslatedUrl } from "@/lib/utils";
+import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
 import useUser from "@/components/hooks/useUser";
 
 /**
@@ -19,6 +19,10 @@ import useUser from "@/components/hooks/useUser";
  */
 
 const CONTEXT = "profile";
+
+function getProfileUrl(wordToTranslate) {
+  return `/profil/${translateAndEncode(CONTEXT, wordToTranslate, "da")}`;
+}
 
 /**
  * Simple menu link without subcategories.
@@ -206,13 +210,10 @@ export default function ProfileMenu() {
           <MenuGroup
             menus={menus}
             name={menuItems[0]}
-            href={`/profil/${getTranslatedUrl(CONTEXT, menuItems[0])}`}
+            href={getProfileUrl(menuItems[0])}
           />
           {/* more MenuLinks are coming soon */}
-          <MenuLink
-            label={menuItems[1]}
-            href={`/profil/${getTranslatedUrl(CONTEXT, menuItems[1])}`}
-          />
+          <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />
         </ul>
       </nav>
     </>

@@ -159,11 +159,12 @@ export function getElementById(elementId) {
  * @param {string} label
  * @returns {string}
  */
-export function getTranslatedUrl(context, label) {
+export function translateAndEncode(context, label, requestedLang = undefined) {
   return encodeString(
     Translate({
       context,
       label,
+      requestedLang,
     })
   );
 }
