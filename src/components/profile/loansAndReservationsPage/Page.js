@@ -58,15 +58,12 @@ export const dataReducer = (dataType, data) => {
 };
 
 const LoansAndReservations = () => {
-  const { loanerInfo, updateLoanerInfo, ...data } = useUser();
+  const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt, agency } = loanerInfo;
-  console.log("ag", agency);
   const router = useRouter();
   const locale = router.locale === undefined ? "da" : router.locale;
   const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
   const libraryString = agency?.result[0].agencyName || "";
-
-  console.log(data, loanerInfo);
 
   const onDeleteOrder = (id) => {
     const newOrders = loanerInfo.orders;
