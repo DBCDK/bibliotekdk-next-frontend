@@ -63,7 +63,7 @@ const LoansAndReservations = () => {
   const router = useRouter();
   const locale = router.locale === undefined ? "da" : router.locale;
   const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
-  const libraryString = agency?.result[0].agencyName || "";
+  const libraryString = agency.result ? agency.result[0].agencyName : "";
 
   const onDeleteOrder = (id) => {
     const newOrders = loanerInfo.orders;
