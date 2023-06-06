@@ -692,7 +692,7 @@ function useMockLoanerInfo({
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
-      pickUpBranch,
+      pickupBranch: pickUpBranch,
       loans,
       orders,
       debt,

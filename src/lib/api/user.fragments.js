@@ -36,60 +36,60 @@ export function basic() {
             date
             currency
         }
-          loans {
-            loanId
-            dueDate
-            manifestation {
-              pid
-              titles {
-                main
-              }
-              ownerWork {
-                workId
-              }
-              creators {
-                display
-              }
-              materialTypes {
-                specific
-              }
-              cover {
-                thumbnail
-              }
-              recordCreationDate
+        loans {
+          loanId
+          dueDate
+          manifestation {
+            pid
+            titles {
+              main
             }
+            ownerWork {
+              workId
+            }
+            creators {
+              display
+            }
+            materialTypes {
+              specific
+            }
+            cover {
+              thumbnail
+            }
+            recordCreationDate
           }
-          orders {
-            orderId
-            status
-            pickUpBranch {
-              agencyName
+        }
+        orders {
+          orderId
+          status
+          pickUpBranch {
+            agencyName
+          }
+          pickUpExpiryDate
+          holdQueuePosition
+          creator
+          orderType
+          orderDate
+          title
+          manifestation {
+            pid
+            titles {
+              main
             }
-            pickUpExpiryDate
-            holdQueuePosition
-            creator
-            orderType
-            orderDate
-            title
-            manifestation {
-              pid
-              titles {
-                main
-              }
-              ownerWork {
-                workId
-              }
-              creators {
-                display
-              }
-              materialTypes {
-                specific
-              }
-              cover {
-                thumbnail
-              }
-              recordCreationDate
+            ownerWork {
+              workId
             }
+            creators {
+              display
+            }
+            materialTypes {
+              specific
+            }
+            cover {
+              thumbnail
+            }
+            recordCreationDate
+          }
         }   
       }
       monitor(name: "bibdknext_user")
