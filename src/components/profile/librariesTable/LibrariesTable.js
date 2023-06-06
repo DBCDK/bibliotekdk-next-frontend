@@ -9,11 +9,13 @@ import Title from "@/components/base/title";
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ name, agencyName, type }) {
+function TableItem({ name, agencyId }) {
   const isHomeLibrary = false; // Cannot be implemented yet
-  const lastUsed = false; // Cannot be implemented yet
-  type = type || "Folkebibliotek"; //mock
-
+  //const lastUsed = false; // Cannot be implemented yet
+  const isPublic = isPublicLibrary(agencyId);
+  const type = isPublic
+    ? Translate({ context: "profile", label: "publicLibrary" })
+    : Translate({ context: "profile", label: "academicLibrary" });
   return (
     <div className={styles.tableItem}>
       <div>
@@ -28,7 +30,7 @@ function TableItem({ name, agencyName, type }) {
         )}
       </div>
 
-      {false && (
+      {/*TODO: use when bopælskommune is implemented
         <div>
           <Title type="title5"> {agencyName || "-"}</Title>
           {lastUsed && (
@@ -37,11 +39,10 @@ function TableItem({ name, agencyName, type }) {
             </Text>
           )}
         </div>
-      )}
+      */}
 
-      <Text type="text2">{type || "-"}</Text>
-      {/**todo: find Forskningsbibliotek in a different way */}
-      {type == "Forskningsbibliotek" && (
+      <Text type="text2">{type}</Text>
+      {!isPublic && (
         <IconButton
           className={styles.closeButton}
           icon="close"
@@ -63,17 +64,16 @@ export default function LibrariesTable({ data }) {
   return (
     <>
       <div className={styles.headerRow}>
-        <Text className={styles.headerItem}>Biblioteker</Text>
-        <Text className={styles.headerItem}>Bibliotekstype</Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "libraries" })}
+        </Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "libraryType" })}
+        </Text>
       </div>
       <div className={styles.tableContainer}>
         {data?.map((item) => (
-          <TableItem
-            key={item.agencyName}
-            agencyName={item.agencyName}
-            name={item.name}
-            type={getLibraryType(item.agencyId)}
-          />
+          <TableItem key={item.agencyName} {...item} />
         ))}
       </div>
     </>
@@ -83,13 +83,9 @@ export default function LibrariesTable({ data }) {
 /**
  *
  * @param {*} agencyID
- * @returns type of library based on agencyID.
+ * @returns returns true if public library (Folkebibliotek)
  */
-const getLibraryType = (agencyID) => {
-  const faroIslandLibraries = ["900455", "911116", "911130"];
-  if (agencyID?.charAt(0) === "7" || faroIslandLibraries.includes(agencyID)) {
-    return "Folkebibliotek";
-  } else {
-    return "Forskningsbibliotek";
-  }
+const isPublicLibrary = (agencyID) => {
+  const faroIslandsLibraries = ["900455", "911116", "911130"];
+  return agencyID?.charAt(0) === "7" || faroIslandsLibraries.includes(agencyID);
 };

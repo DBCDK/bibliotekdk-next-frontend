@@ -15,16 +15,10 @@ const mockData = [
     agencyId: "72000",
   },
   {
-    agencyName: "Biblioteket Danasvej",
-    name: "Biblioteket Frederiksberg",
-    type: "Folkebibliotek",
-    agencyId: "73000",
-  },
-  {
     agencyName: "Københavns Universitetsbibliotek, Søndre Campus",
     name: "Det Kgl. Bibliotek",
     type: "Uddannelsesbibliotek",
-    agencyId: "74000",
+    agencyId: "84000",
   },
 ];
 const exportedObject = {
