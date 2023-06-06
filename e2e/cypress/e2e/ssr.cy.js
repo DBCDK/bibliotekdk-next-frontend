@@ -78,24 +78,22 @@ describe("Server Side Rendering", () => {
 
   describe(`material`, () => {
     it(`has correct metadata`, () => {
+      const descriptionExpectation =
+        "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online.";
       getPageHead(
         "/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763?type=ebog"
       ).then((res) => {
         expect(res.title).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
-        expect(res.description).to.equal(
-          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-        );
+        expect(res.description).to.equal(descriptionExpectation);
         expect(res["og:url"]).to.equal(
           "http://localhost:3000/materiale/hest-hest-tiger-tiger_mette-e-neerlin/work-of:870970-basis:51701763"
         );
         expect(res["og:title"]).to.equal(
           "Hest, hest, tiger, tiger af Mette E. Neerlin"
         );
-        expect(res["og:description"]).to.equal(
-          "Lån Hest, hest, tiger, tiger af Mette E. Neerlin som bog, ebog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-        );
+        expect(res["og:description"]).to.equal(descriptionExpectation);
         expect(res["og:image"]).to.exist;
       });
     });
@@ -171,7 +169,7 @@ describe("Server Side Rendering", () => {
         "/materiale/midt-i-en-droem_vagn-noergaard/work-of%3A870970-basis%3A53189148?type=node"
       ).then((res) => {
         expect(res.jsonld.mainEntity.url).to.equal(
-          "http://localhost:3000/materiale/midt-i-en-droem/work-of:870970-basis:53189148"
+          "http://localhost:3000/materiale/midt-i-en-droem_vagn-noergaard/work-of:870970-basis:53189148"
         );
 
         expect(res.jsonld.mainEntity["@type"]).to.equal("CreativeWork");
