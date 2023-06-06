@@ -15,6 +15,7 @@ function IconButton({
   children,
   icon = "close",
   textType = "text3",
+  textStyle = "",
   ...props
 }) {
   return (
@@ -31,7 +32,7 @@ function IconButton({
     >
       <Text
         type={textType}
-        className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+        className={`${textStyle} ${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
       >
         {children}
       </Text>

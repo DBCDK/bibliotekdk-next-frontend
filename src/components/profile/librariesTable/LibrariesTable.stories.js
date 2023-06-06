@@ -3,22 +3,17 @@ import { StoryTitle } from "@/storybook";
 import LibrariesTable from "./LibrariesTable";
 const mockData = [
   {
-    agencyName: "Biblioteket kilden",
-    name: "Herlev bibliotek",
-    type: "Folkebibliotek",
-    agencyId: "71000",
+    agencyName: "Silkeborg Biblioteker",
+    agencyId: "774000",
   },
   {
-    agencyName: null,
-    name: "Ballerup bibliotek",
-    type: "Folkebibliotek",
-    agencyId: "72000",
+    agencyId: "710100",
+    agencyName: "Københavns Biblioteker",
   },
   {
-    agencyName: "Københavns Universitetsbibliotek, Søndre Campus",
+    agencyName: "Syddansk Universitetsbibliotek",
     name: "Det Kgl. Bibliotek",
-    type: "Uddannelsesbibliotek",
-    agencyId: "84000",
+    agencyId: "820030",
   },
 ];
 const exportedObject = {

@@ -1,12 +1,18 @@
 .tableItem {
   display: grid;
-  grid-template-columns: 3fr 3fr 2fr;
+  grid-template-columns: 6fr 2fr;
   padding: var(--pt3) 0;
-
+  grid-gap: var(--pt3);
   align-items: center;
 }
+.libraryInfo {
+  display: grid;
+  grid-template-columns: 3fr 3fr;
+  align-items: center;
+  grid-gap: var(--pt2);
+}
 @media (max-width: 550px) {
-  .tableItem {
+  .libraryInfo {
     display: block;
   }
 

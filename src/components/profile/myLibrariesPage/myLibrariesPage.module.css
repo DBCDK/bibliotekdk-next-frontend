@@ -3,6 +3,5 @@
 }
 
 .pageDescription{
-  display: flex;
-  gap: 2px;
+display: inline;
 }

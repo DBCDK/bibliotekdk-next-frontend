@@ -25,13 +25,29 @@ export default function MyLibrariesPage() {
 
   const result = userData?.user?.agency?.result;
 
+  //Find a list of user agencies
+  const agencies = [];
+  const addedAgencyIds = [];
+
+  result?.forEach((library) => {
+    if (!addedAgencyIds.includes(library.agencyId)) {
+      addedAgencyIds.push(library.agencyId);
+      agencies.push({
+        agencyId: library.agencyId,
+        agencyName: library.agencyName,
+      });
+    }
+  });
+
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
-      <div className={styles.pageDescription}>
-        <Text>
+      <div>
+        <Text className={styles.pageDescription}>
           {Translate({ context: "profile", label: "myLibrariesInfo" })}
         </Text>
         <IconButton
+          className={styles.pageDescription}
+          textStyle={styles.showMoreText}
           icon={showMore ? "arrowUp" : "arrowDown"}
           onClick={() => setShowMore(!showMore)}
         >{`Vis ${showMore ? "mindre" : "mere"}`}</IconButton>
@@ -42,7 +58,7 @@ export default function MyLibrariesPage() {
           {Translate({ context: "profile", label: "myLibrariesMoreInfo" })}
         </Text>
       )}
-      <LibrariesTable data={result} />
+      <LibrariesTable data={agencies} />
       <IconButton icon="chevron" className={styles.addLibrary} textType="text2">
         {Translate({ context: "profile", label: "addLibrary" })}
       </IconButton>

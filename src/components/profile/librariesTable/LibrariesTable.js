@@ -9,7 +9,7 @@ import Title from "@/components/base/title";
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ name, agencyId }) {
+function TableItem({ agencyName, agencyId }) {
   const isHomeLibrary = false; // Cannot be implemented yet
   //const lastUsed = false; // Cannot be implemented yet
   const isPublic = isPublicLibrary(agencyId);
@@ -18,19 +18,20 @@ function TableItem({ name, agencyId }) {
     : Translate({ context: "profile", label: "academicLibrary" });
   return (
     <div className={styles.tableItem}>
-      <div>
-        <Title type="title5"> {name || "-"}</Title>
-        {isHomeLibrary && (
-          <Text type="text3" className={styles.textLabel}>
-            {Translate({
-              context: "profile",
-              label: "municipalityOfResidence",
-            })}
-          </Text>
-        )}
-      </div>
+      <div className={styles.libraryInfo}>
+        <div>
+          <Title type="title5"> {agencyName || "-"}</Title>
+          {isHomeLibrary && (
+            <Text type="text3" className={styles.textLabel}>
+              {Translate({
+                context: "profile",
+                label: "municipalityOfResidence",
+              })}
+            </Text>
+          )}
+        </div>
 
-      {/*TODO: use when bopælskommune is implemented
+        {/*TODO: use when bopælskommune is implemented
         <div>
           <Title type="title5"> {agencyName || "-"}</Title>
           {lastUsed && (
@@ -41,7 +42,9 @@ function TableItem({ name, agencyId }) {
         </div>
       */}
 
-      <Text type="text2">{type}</Text>
+        <Text type="text2">{type}</Text>
+      </div>
+
       {!isPublic && (
         <IconButton
           className={styles.closeButton}
@@ -87,5 +90,6 @@ export default function LibrariesTable({ data }) {
  */
 const isPublicLibrary = (agencyID) => {
   const faroIslandsLibraries = ["900455", "911116", "911130"];
-  return agencyID?.charAt(0) === "7" || faroIslandsLibraries.includes(agencyID);
+  const parsedID = agencyID + "";
+  return parsedID?.charAt(0) === "7" || faroIslandsLibraries.includes(parsedID);
 };
