@@ -2961,8 +2961,16 @@
         "en": "Profile navigation"
       },
       "addLibrary": {
-        "da": "Tilføj bibliotek",
-        "en": "Add library"
+        "da": "Tilføj uddannelsesbibliotek",
+        "en": "Add academic library"
+      },
+      "myLibrariesInfo":{
+        "da":"Du kan være låner på et eller flere biblioteker. Der hvor du er registeret vises her.",
+        "en": "You can be a borrower at one or more libraries. Where you are registered is shown here."
+      },
+      "myLibrariesMoreInfo":{
+        "da":"De folkebiblioteker, hvor du er låner, hentes automatisk. Så hvis biblioteket ikke vises nedenfor er du ikke registreret som låner på biblioteket. Uddannelses- og forskningsbiblioteker tilføjes manuelt, via linket nedenfor.",
+        "en": "The public libraries where you are a borrower are automatically downloaded. So if the library does not appear below, you are not registered as a borrower at the library. Educational and research libraries are added manually, via the link below."
       },
       "remove": {
         "da": "Fjern",

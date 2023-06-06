@@ -1,20 +1,28 @@
-.tableContainer {
-  padding-right: var(--pt4);
-}
-
 .tableItem {
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr 1fr;
-  padding: var(--pt3) var(--pt2);
+  grid-template-columns: 3fr 3fr 2fr;
+  padding: var(--pt3) 0;
+
   align-items: center;
 }
+@media (max-width: 550px) {
+  .tableItem {
+    display: block;
+  }
 
-.tableItem {
-  border-bottom: 1px solid var(--iron);
+  .headerItem {
+    display: none;
+  }
 }
-
-.tableItem:first-child {
-  border-top: 1px solid var(--iron);
+.headerRow {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  margin-top: var(--pt3);
+  border-bottom: 1px solid var(--iron);
+  width: 100%;
+}
+.headerItem {
+  padding: 0;
 }
 
 .removeButton {
