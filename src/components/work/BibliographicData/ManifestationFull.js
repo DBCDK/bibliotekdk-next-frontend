@@ -4,6 +4,8 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useMemo } from "react";
+import cx from "classnames";
+import animations from "@/components/base/animation/animations.module.css";
 
 import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
@@ -21,6 +23,8 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
+import { useRouter } from "next/router";
+import Icon from "@/components/base/icon";
 
 /**
  * Column one of full view. Some links and a button.
@@ -85,6 +89,29 @@ function ColumnOne({ workId, manifestation }) {
                 context: "references",
                 label: "label_references_title",
               })}
+            </Text>
+          </Link>
+        </div>
+        <div
+          className={cx(
+            styles.copy_link,
+            animations["h-elastic"],
+            animations["f-elastic"]
+          )}
+        >
+          <Icon
+            size={{ w: 2, h: 2 }}
+            src={"copy_link.svg"}
+            className={styles.icon}
+          />
+          <Link
+            border={{ bottom: { keepVisible: true } }}
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+            }}
+          >
+            <Text type="text3" className={styles.linkstyle}>
+              Kopier link til udgave
             </Text>
           </Link>
         </div>
