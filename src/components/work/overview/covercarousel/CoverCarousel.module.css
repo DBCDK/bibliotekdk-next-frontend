@@ -6,10 +6,7 @@
 
   /* Setting up CoverCarousel */
   display: grid;
-  --grid_template:
-    "🖼️"
-    "🎱️"
-  ;
+  --grid_template: "🖼️" "🎱️";
   grid-template-areas: var(--grid_template);
 
   align-items: center;
@@ -53,7 +50,7 @@
 }
 
 .full_cover_carousel:is(:hover, :focus-visible) :is(.left_arrow, .right_arrow),
-:is(.left_arrow, .right_arrow):is(:hover, :focus-visible) {
+:is(.left_arrow, .right_arrow) :is(:hover, :focus-visible) {
   --left_transform: none;
   --right_transform: none;
   --arrow_opacity: 1;
@@ -137,20 +134,26 @@
 }
 /* END ARROWS */
 
+@media (min-width: 768px) and (max-width: 1440px) {
+  .full_cover_carousel {
+    padding-right: var(--pt2);
+  }
+}
+
 @media (min-width: 768px) {
   .full_cover_carousel .arrow_styling {
     display: initial;
   }
 
   .full_cover_carousel {
-    --grid_template:
-      "⬅️ 🖼️ ➡️"
-      "🎱️ 🎱️ 🎱️"
-    ;
+    --grid_template: "⬅️ 🖼️ ➡️" "🎱️ 🎱️ 🎱️";
     --carousel-width: 240px;
     --carousel-cover-max-width: 240px;
     width: calc(var(--carousel-width) + calc(var(--tranform_base) * 2));
-    max-width: calc(var(--carousel-cover-max-width) + calc(var(--carousel-cover-max-width) * 0.5));
+    max-width: calc(
+      var(--carousel-cover-max-width) +
+        calc(var(--carousel-cover-max-width) * 0.5)
+    );
   }
 
   .cover_image {

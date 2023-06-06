@@ -139,7 +139,11 @@ function MenuGroup({ menus, href, name, className }) {
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
-        <Title type={isActive ? "title4" : "title5"} id={`navigation-${name}`}>
+        <Title
+          className={styles.groupTitle}
+          type={isActive ? "title4" : "title5"}
+          id={`navigation-${name}`}
+        >
           {Translate({
             context: CONTEXT,
             label: `${name}`,

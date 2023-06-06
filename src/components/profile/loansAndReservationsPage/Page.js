@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
  */
 
 // Set to when warning should be shown
-const DAYS_TO_COUNTDOWN = 5;
+const DAYS_TO_COUNTDOWN_RED = 5;
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -148,7 +148,7 @@ const LoansAndReservations = () => {
           const dueDate = new Date(loan.dueDate);
           const today = new Date();
           const futureDate = new Date();
-          futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN);
+          futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
           const daysToDueDate =
             Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
           const dayToText = timeFormatter.format(daysToDueDate, "day");
