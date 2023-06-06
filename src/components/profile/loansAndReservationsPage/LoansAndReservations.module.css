@@ -9,6 +9,7 @@
 }
 
 .subHeading {
+  margin-top: -1px; /* align with breadcrumb */
   margin-bottom: var(--pt8);
 }
 
@@ -27,5 +28,5 @@
 }
 
 .upperCase::first-letter {
-  text-transform:capitalize;
+  text-transform: capitalize;
 }
