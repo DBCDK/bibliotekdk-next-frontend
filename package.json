@@ -15,7 +15,7 @@
     "lint": "next lint",
     "cy:run": "npx cypress@10.3.0 run --project ./e2e",
     "cy:open": "npx cypress@10.3.0 open --project ./e2e",
-    "prettier": "prettier --write 'src/**/*.js'",
+    "prettier": "prettier --write 'src/**/*.js' 'e2e/**/*.js'",
     "test": "jest src/",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"
   },
