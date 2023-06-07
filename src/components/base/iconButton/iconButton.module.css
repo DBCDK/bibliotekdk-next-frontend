@@ -1,7 +1,3 @@
-.close p {
-  margin: 0 var(--pt1) 0 0;
-}
-
 .icon {
   cursor: pointer;
 }
@@ -14,10 +10,9 @@
 .close {
   cursor: pointer;
   background-color: transparent;
-  align-items: center;
+  justify-content: center;
   display: flex;
 }
-.wrap {
-  align-items: center;
-  display: flex;
+.textWrapper {
+  margin: 0 var(--pt1) 0 0;
 }

@@ -1,5 +1,6 @@
 .container {
   padding-top: var(--pt6);
+  min-height: calc(80vh);
 }
 .title {
   margin-bottom: var(--pt1);

@@ -41,15 +41,16 @@ export default function MyLibrariesPage() {
 
   return (
     <Layout title={Translate({ context: "profile", label: "myLibraries" })}>
-      <div>
+      <div className={styles.pageDescriptionContainer}>
         <Text className={styles.pageDescription}>
           {Translate({ context: "profile", label: "myLibrariesInfo" })}
         </Text>
+
         <IconButton
-          className={styles.pageDescription}
-          textStyle={styles.showMoreText}
+          className={styles.showMoreBtn}
           icon={showMore ? "arrowUp" : "arrowDown"}
           onClick={() => setShowMore(!showMore)}
+          keepUnderline={true}
         >
           {Translate({
             context: "profile",
@@ -59,7 +60,7 @@ export default function MyLibrariesPage() {
       </div>
 
       {showMore && (
-        <Text>
+        <Text className={styles.showMoreText}>
           {Translate({ context: "profile", label: "myLibrariesMoreInfo" })}
         </Text>
       )}

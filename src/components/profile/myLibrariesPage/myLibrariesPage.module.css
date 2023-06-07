@@ -2,6 +2,13 @@
   margin-top: var(--pt5);
 }
 
-.pageDescription{
-display: inline;
+.pageDescription {
+  margin-right: var(--pt1);
+}
+.pageDescriptionContainer {
+  display: flex;
+}
+
+.showMoreText {
+  margin-top: var(--pt1);
 }
