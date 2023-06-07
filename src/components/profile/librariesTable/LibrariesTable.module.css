@@ -27,9 +27,6 @@
   border-bottom: 1px solid var(--iron);
   width: 100%;
 }
-.headerItem {
-  padding: 0;
-}
 
 .removeButton {
   display: flex;

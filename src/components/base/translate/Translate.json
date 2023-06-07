@@ -2986,6 +2986,8 @@
         "da": "Forskningsbibliotek",
         "en": "Academic library"
       },
+      "showMore": {"da":"Vis mere", "en":"Show more"},
+      "showLess": {"da":"Vis mindre", "en":"Show less"},
 
       "remove": {
         "da": "Fjern",

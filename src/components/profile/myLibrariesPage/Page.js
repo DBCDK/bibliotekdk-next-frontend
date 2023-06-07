@@ -29,12 +29,12 @@ export default function MyLibrariesPage() {
   const agencies = [];
   const addedAgencyIds = [];
 
-  result?.forEach((library) => {
-    if (!addedAgencyIds.includes(library.agencyId)) {
-      addedAgencyIds.push(library.agencyId);
+  result?.forEach((branch) => {
+    if (!addedAgencyIds.includes(branch.agencyId)) {
+      addedAgencyIds.push(branch.agencyId);
       agencies.push({
-        agencyId: library.agencyId,
-        agencyName: library.agencyName,
+        agencyId: branch.agencyId,
+        agencyName: branch.agencyName,
       });
     }
   });
@@ -50,7 +50,12 @@ export default function MyLibrariesPage() {
           textStyle={styles.showMoreText}
           icon={showMore ? "arrowUp" : "arrowDown"}
           onClick={() => setShowMore(!showMore)}
-        >{`Vis ${showMore ? "mindre" : "mere"}`}</IconButton>
+        >
+          {Translate({
+            context: "profile",
+            label: showMore ? "showLess" : "showMore",
+          })}
+        </IconButton>
       </div>
 
       {showMore && (

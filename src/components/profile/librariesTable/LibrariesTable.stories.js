@@ -12,7 +12,6 @@ const mockData = [
   },
   {
     agencyName: "Syddansk Universitetsbibliotek",
-    name: "Det Kgl. Bibliotek",
     agencyId: "820030",
   },
 ];
