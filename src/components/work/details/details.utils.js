@@ -210,7 +210,10 @@ function RenderCreatorValues({ values, skeleton }) {
   const valuesToRender = length > 4 ? values.splice(0, 4) : values;
   return (
     valuesToRender && (
-      <div data-cy={"creator-contributor-text-helper"}>
+      <div
+        data-cy={"creator-contributor-text-helper"}
+        className={styles.link_list}
+      >
         {valuesToRender.map((person, index) => (
           <div
             key={`RenderCreatorValues__${JSON.stringify(person)}_${index}`}
@@ -227,7 +230,7 @@ function RenderCreatorValues({ values, skeleton }) {
               border={{ bottom: { keepVisible: true } }}
               key={`crators-${index}`}
             >
-              <Text type="text4" lines={0} key={index}>
+              <Text type="text4" tag={"span"} lines={0} key={index}>
                 {person?.display}
               </Text>
             </Link>
@@ -278,21 +281,21 @@ function RenderMovieActorValues({ values, skeleton }) {
       </Text>
       {actorsToRender.map((person, index) => {
         return (
-          <Link
-            href={`/find?q.creator=${person.display}`}
-            dataCy={cyKey({
-              name: person?.display,
-              prefix: "overview-genre",
-            })}
-            disabled={skeleton}
-            border={{ bottom: { keepVisible: true } }}
-            key={`actors-${index}`}
-            className={styles.link}
-          >
-            <Text type="text4" skeleton={skeleton} lines={0} key={index}>
-              {person?.display}
-            </Text>
-          </Link>
+          <div key={`actors-${index}`} className={styles.link_list}>
+            <Link
+              href={`/find?q.creator=${person.display}`}
+              dataCy={cyKey({
+                name: person?.display,
+                prefix: "overview-genre",
+              })}
+              disabled={skeleton}
+              border={{ bottom: { keepVisible: true } }}
+            >
+              <Text type="text4" tag="span" skeleton={skeleton} lines={0}>
+                {person?.display}
+              </Text>
+            </Link>
+          </div>
         );
       })}
       {tooLong && (
@@ -427,9 +430,11 @@ function RenderMovieLanguages({ values }) {
 
 function RenderGenre({ values }) {
   return (
-    <Text type="text4" lines={1} tag="span">
-      {values.join(", ")}
-    </Text>
+    <div>
+      <Text type="text4" lines={1} tag="span">
+        {values.join(", ")}
+      </Text>
+    </div>
   );
 }
 

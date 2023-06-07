@@ -589,7 +589,7 @@ const USER_ORDERS = [
   {
     orderId: "2982910",
     status: "",
-    pickupBranch: {
+    pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
     pickUpExpiryDate: createDateXDaysFromNow(10),
@@ -621,10 +621,11 @@ const USER_ORDERS = [
   {
     orderId: "2982910",
     status: "",
-    pickupBranch: {
+    pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
-    pickUpExpiryDate: createDateXDaysFromNow(30),
+    pickUpExpiryDate: null,
+    holdQueuePosition: "3",
     manifestation: {
       pid: "870970-basis:23424916",
       titles: {
@@ -669,20 +670,33 @@ const USER_DEBT = [
   },
 ];
 
+const USER_AGENCY = {
+  result: [
+    {
+      agencyId: "726500",
+      agencyName: "Roskilde Bibliotekerne",
+      branchId: "726500",
+      name: "Roskilde Bibliotek",
+    },
+  ],
+};
+
 function useMockLoanerInfo({
-  pickupBranch = "790900",
+  pickUpBranch = "790900",
   loans = USER_LOANS,
   orders = USER_ORDERS,
   debt = USER_DEBT,
+  agency = USER_AGENCY,
 }) {
   const { updateLoanerInfo } = useUser();
   const id = useId();
   useMemo(() => {
     updateLoanerInfo({
-      pickupBranch,
+      pickupBranch: pickUpBranch,
       loans,
       orders,
       debt,
+      agency,
     });
   }, [id]);
 }
@@ -727,5 +741,6 @@ export default function automock_utils() {
     USER_LOANS,
     USER_ORDERS,
     USER_LIBRARIES,
+    USER_AGENCY,
   };
 }

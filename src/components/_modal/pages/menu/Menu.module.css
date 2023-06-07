@@ -44,14 +44,10 @@ li.language {
 }
 
 /* Link component styles override */
-
-.link,
-.link:hover,
-.link:focus-within {
-  color: white !important;
-}
-.link div hr {
-  background-color: white;
+.link {
+  --underline-bottom-hover-color: var(--white);
+  --underline-font-color: var(--white);
+  --underline-font-hover-color: var(--white);
 }
 
 @media (min-width: 576px) {

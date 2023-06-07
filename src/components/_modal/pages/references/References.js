@@ -28,7 +28,7 @@ export function References({ context }) {
         href={links[onlinekey]}
         target="_blank"
       >
-        <Text type="text3">
+        <Text type="text3" tag="span">
           {Translate({ context: "references", label: `${onlinekey}_label` })}
         </Text>
       </Link>

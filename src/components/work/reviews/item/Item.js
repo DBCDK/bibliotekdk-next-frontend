@@ -167,16 +167,23 @@ function Item({ data, work, isLoading }) {
                     skeleton={isLoading}
                     alt=""
                   />
-                  <Link
-                    href={url}
-                    target="_blank"
-                    disabled={isLoading || !url}
-                    border={{ top: false, bottom: { keepVisible: true } }}
-                  >
-                    <Text type="text2" skeleton={isLoading} lines={1}>
-                      {materialReviewLinkLabel || reviewLinkLabel}
-                    </Text>
-                  </Link>
+                  <span>
+                    <Link
+                      href={url}
+                      target="_blank"
+                      disabled={isLoading || !url}
+                      border={{ top: false, bottom: { keepVisible: true } }}
+                    >
+                      <Text
+                        type="text2"
+                        skeleton={isLoading}
+                        lines={1}
+                        tag={"span"}
+                      >
+                        {materialReviewLinkLabel || reviewLinkLabel}
+                      </Text>
+                    </Link>
+                  </span>
                 </div>
               );
             })}

@@ -15,6 +15,7 @@ import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect } from "react";
 import useElementVisible from "@/components/hooks/useElementVisible";
 import { useRouter } from "next/router";
+import Link from "@/components/base/link";
 
 // A variable indicating if an accordion has been rendered
 // Used to determine if we should scroll to anchor.
@@ -96,10 +97,8 @@ export function Item({
         tabIndex="0"
         className={[
           styles.header,
-          animations["on-hover"],
-          animations["on-focus"],
-          animations["f-outline"],
           isCurrentEventKey && styles.open,
+          animations.underlineContainer__only_internal_animations,
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
@@ -112,23 +111,21 @@ export function Item({
             additionalTxt && styles.firstelement,
           ].join(" ")}
         >
-          <Text
-            type="text2"
-            skeleton={isLoading}
-            lines="1"
-            className={[
-              animations["h-color-blue"],
-              animations["h-border-bottom"],
-            ].join(" ")}
-          >
-            {title}
-          </Text>
-          {subTitle && <Text type="text4">{subTitle}</Text>}
+          <Link tag={"span"}>
+            <Text type="text2" skeleton={isLoading} lines="1" tag={"span"}>
+              {title}
+            </Text>
+          </Link>
+          {subTitle && (
+            <Text tag={"span"} type="text4">
+              {subTitle}
+            </Text>
+          )}
         </div>
         {additionalTxt && (
           <div className={styles.textbox}>
-            {additionalTxt.map((txt, index) => (
-              <Text type="text2" key={`addition-${index}`}>
+            {additionalTxt?.map((txt, index) => (
+              <Text tag={"span"} type="text2" key={`addition-${index}`}>
                 {txt}
               </Text>
             ))}

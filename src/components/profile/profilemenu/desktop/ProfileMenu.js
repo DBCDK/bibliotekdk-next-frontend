@@ -102,6 +102,7 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
             replaceHash(urlEnding);
           }
         }}
+        border={{ top: false, bottom: false }}
       >
         <>
           <Text type="text2">{title}</Text>

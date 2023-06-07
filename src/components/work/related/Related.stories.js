@@ -25,9 +25,9 @@ export function Default() {
     <div>
       <StoryTitle>Related subjects</StoryTitle>
       <StoryDescription>
-        Relted subjects for a given search query
+        Related subjects for a given search query
       </StoryDescription>
-      <div>
+      <div style={{ marginTop: "100px" }}>
         <Related data={dummy} isLoading={false} />
       </div>
     </div>
@@ -39,7 +39,7 @@ export function Connected() {
     <div>
       <StoryTitle>Connected result page</StoryTitle>
       <StoryDescription>Uses mocked GraphQL provider</StoryDescription>
-      <div style={{ maxWidth: "1200px", margin: "auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "auto", marginTop: "100px" }}>
         <WrappedRelated workId="work-of:870970-basis:51701763" />
       </div>
     </div>
@@ -51,30 +51,28 @@ Connected.story = {
     graphql: {
       debug: true,
       resolvers: {
-        Subject: {
-          __resolveType: () => "SubjectText",
+        Query: {
+          relatedSubjects: () => ["savn", "melankoli"],
         },
-        Work: {
-          subjects: () => ({
-            dbcVerified: [
-              {
-                display: "savn",
-                __typename: "SubjectText",
-                language: {
-                  display: "dansk",
-                  isoCode: "dan",
-                },
+        SubjectContainer: {
+          dbcVerified: () => [
+            {
+              display: "savn",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
               },
-              {
-                display: "melankoli",
-                __typename: "SubjectText",
-                language: {
-                  display: "dansk",
-                  isoCode: "dan",
-                },
+            },
+            {
+              display: "melankoli",
+              __typename: "SubjectText",
+              language: {
+                display: "dansk",
+                isoCode: "dan",
               },
-            ],
-          }),
+            },
+          ],
         },
       },
     },

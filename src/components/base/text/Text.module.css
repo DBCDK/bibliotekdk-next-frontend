@@ -1,6 +1,6 @@
 .text {
   font-family: var(--body-font);
-  display: block;
+  /* TODO: What is the reason for block? It is quite often troublesome */
   letter-spacing: 0.2px;
 
   /* Bootstrap default override */
