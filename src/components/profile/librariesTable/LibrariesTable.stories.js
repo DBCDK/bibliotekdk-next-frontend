@@ -1,20 +1,9 @@
 import { StoryTitle } from "@/storybook";
+import automock_utils from "@/components/_modal/pages/automock_utils";
 
 import LibrariesTable from "./LibrariesTable";
-const mockData = [
-  {
-    agencyName: "Silkeborg Biblioteker",
-    agencyId: "774000",
-  },
-  {
-    agencyId: "710100",
-    agencyName: "Københavns Biblioteker",
-  },
-  {
-    agencyName: "Syddansk Universitetsbibliotek",
-    agencyId: "820030",
-  },
-];
+
+const { USER_LIBRARIES } = automock_utils();
 const exportedObject = {
   title: "profile/LibrariesTable",
 };
@@ -27,7 +16,7 @@ export function LibrariesTableStory() {
   return (
     <div>
       <StoryTitle>LibrariesTable</StoryTitle>
-      <LibrariesTable data={mockData} />
+      <LibrariesTable data={USER_LIBRARIES} />
     </div>
   );
 }

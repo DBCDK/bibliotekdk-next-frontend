@@ -13,9 +13,11 @@ function TableItem({ agencyName, agencyId }) {
   const isHomeLibrary = false; // Cannot be implemented yet
   //const lastUsed = false; // Cannot be implemented yet
   const isPublic = isPublicLibrary(agencyId);
-  const type = isPublic
-    ? Translate({ context: "profile", label: "publicLibrary" })
-    : Translate({ context: "profile", label: "academicLibrary" });
+
+  const type = Translate({
+    context: "profile",
+    label: isPublic ? "publicLibrary" : "academicLibrary",
+  });
   return (
     <div className={styles.tableItem}>
       <div className={styles.libraryInfo}>
@@ -89,7 +91,9 @@ export default function LibrariesTable({ data }) {
  * @returns returns true if public library (Folkebibliotek)
  */
 const isPublicLibrary = (agencyID) => {
-  const faroIslandsLibraries = ["900455", "911116", "911130"];
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
   const parsedID = agencyID + "";
-  return parsedID?.charAt(0) === "7" || faroIslandsLibraries.includes(parsedID);
+  return (
+    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
+  );
 };

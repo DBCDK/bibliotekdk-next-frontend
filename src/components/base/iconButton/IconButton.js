@@ -62,6 +62,8 @@ IconButton.propTypes = {
   onClick: PropTypes.func,
   alt: PropTypes.string,
   children: PropTypes.any,
+  /** type prop for the <Text/> component */
+  textType: PropTypes.string,
   /** Has to match an svg file name inside public/icons folder*/
   icon: PropTypes.string,
 };

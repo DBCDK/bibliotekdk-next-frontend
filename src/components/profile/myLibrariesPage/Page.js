@@ -30,11 +30,12 @@ export default function MyLibrariesPage() {
   const addedAgencyIds = [];
 
   result?.forEach((branch) => {
-    if (!addedAgencyIds.includes(branch.agencyId)) {
-      addedAgencyIds.push(branch.agencyId);
+    const { agencyId, agencyName } = branch;
+    if (agencyId && agencyName && !addedAgencyIds.includes(agencyId)) {
+      addedAgencyIds.push(agencyId);
       agencies.push({
-        agencyId: branch.agencyId,
-        agencyName: branch.agencyName,
+        agencyId,
+        agencyName,
       });
     }
   });

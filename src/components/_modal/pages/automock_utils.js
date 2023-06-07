@@ -687,6 +687,21 @@ function useMockLoanerInfo({
   }, [id]);
 }
 
+const USER_LIBRARIES = [
+  {
+    agencyName: "Silkeborg Biblioteker",
+    agencyId: "774000",
+  },
+  {
+    agencyId: "710100",
+    agencyName: "Københavns Biblioteker",
+  },
+  {
+    agencyName: "Syddansk Universitetsbibliotek",
+    agencyId: "820030",
+  },
+];
+
 export default function automock_utils() {
   return {
     MANIFESTATION_1,
@@ -711,5 +726,6 @@ export default function automock_utils() {
     useMockLoanerInfo,
     USER_LOANS,
     USER_ORDERS,
+    USER_LIBRARIES,
   };
 }
