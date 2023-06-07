@@ -11,6 +11,8 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@/components/base/iconButton/IconButton";
 import { getWorkUrl } from "@/lib/utils";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useModal } from "@/components/_modal";
 
 /**
  * Use as renderButton if needed
@@ -63,21 +65,86 @@ export const getCheckedElements = (parentRef) => {
   return checkedElements;
 };
 
-const MaterialRow = ({
+const MobileMaterialRow = ({
   image,
-  title,
   creator,
   materialType,
   creationYear,
-  library,
   dynamicColumn,
-  hasCheckbox = false,
-  id,
-  status = "NONE",
-  renderButton,
+  title,
   workId,
+  id,
 }) => {
+  const modal = useModal();
+
+  const onClick = () => {
+    modal.push("material", { label: "material" });
+  };
+
+  return (
+    <article
+      className={styles.materialRow_mobile}
+      role="button"
+      onClick={onClick}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") {
+          onClick();
+        }
+      }}
+    >
+      <div className={styles.imageContainer_mobile}>
+        <Cover src={image} size="fill-width" />
+      </div>
+      <div>
+        <ConditionalWrapper
+          condition={!!title && !!creator && !!id}
+          wrapper={(children) => (
+            <Link href={getWorkUrl(title, creator, workId)}>{children}</Link>
+          )}
+        >
+          <Title
+            type="title8"
+            as="h3"
+            className={styles.materialTitle}
+            id={`material-title-${id}`}
+          >
+            {title}
+          </Title>
+        </ConditionalWrapper>
+        {creator && <Text type="text2">{creator}</Text>}
+        {materialType && creationYear && (
+          <Text type="text2">
+            {materialType}, {creationYear}
+          </Text>
+        )}
+        <div className={styles.dynamicColumn_mobile}>{dynamicColumn}</div>
+      </div>
+    </article>
+  );
+};
+
+const MaterialRow = (props) => {
+  const {
+    image,
+    title,
+    creator,
+    materialType,
+    creationYear,
+    library,
+    dynamicColumn,
+    hasCheckbox = false,
+    id,
+    status = "NONE",
+    renderButton,
+    workId,
+  } = props;
   const [isChecked, setIsChecked] = useState(false);
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  if (isMobileSize) return <MobileMaterialRow {...props} />;
 
   return (
     <ConditionalWrapper
