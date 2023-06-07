@@ -124,7 +124,12 @@
 
 .copy_link {
     display: flex;
+    align-items: center;
     gap: var(--pt05);
+}
+
+.copy_link a {
+    margin-bottom: 0;
 }
 
 .icon img {

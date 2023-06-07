@@ -23,7 +23,6 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
-import { useRouter } from "next/router";
 import Icon from "@/components/base/icon";
 
 /**
@@ -92,7 +91,8 @@ function ColumnOne({ workId, manifestation }) {
             </Text>
           </Link>
         </div>
-        <div
+        <Link
+          border={false}
           className={cx(
             styles.copy_link,
             animations["h-elastic"],
@@ -114,7 +114,7 @@ function ColumnOne({ workId, manifestation }) {
               Kopier link til udgave
             </Text>
           </Link>
-        </div>
+        </Link>
       </div>
     </Col>
   );
