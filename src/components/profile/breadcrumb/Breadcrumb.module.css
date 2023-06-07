@@ -1,0 +1,13 @@
+.breadcrumb > hr {
+  margin-bottom: 10px;
+}
+.text {
+  font-family: var(--body-font);
+  padding-top: var(--pt6);
+}
+
+@media (max-width: 991px) {
+  .breadcrumb {
+    display: none;
+  }
+}

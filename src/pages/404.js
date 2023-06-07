@@ -5,12 +5,21 @@ import Section from "@/components/base/section";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export function Custom() {
   const router = useRouter();
 
   return (
     <>
+      <Head>
+        <title>
+          {Translate({
+            context: "errorpages",
+            label: "404_not_found_title",
+          })}
+        </title>
+      </Head>
       <Header router={router} />
       <Section
         title={Translate({
