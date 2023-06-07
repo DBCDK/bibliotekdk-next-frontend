@@ -346,7 +346,7 @@ describe("Search", () => {
       cy.get("[data-cy=words-container]")
         .should("exist")
         .children()
-        .should("have.length", 2);
+        .should("have.length", 3);
 
       cy.get("[data-cy=words-container]").each((el, idx) => {
         cy.get(el).click();
