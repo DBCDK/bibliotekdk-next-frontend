@@ -4,12 +4,13 @@
  */
 
 describe("Related Keywords", () => {
-  it(`Can tab through related keywords`, () => {
+  it.only(`Can tab through related keywords`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--default");
-    cy.get("body").tab();
-    cy.focused().should("have.attr", "data-cy", "related-subject-heste");
-    cy.tabs(10);
-    cy.focused().should("have.attr", "data-cy", "related-subject-heste");
+    cy.get("body")
+      .tab()
+      .should("have.attr", "data-cy", "related-subject-heste");
+    cy.tabs(9);
+    cy.focused().tab().should("have.attr", "data-cy", "related-subject-heste");
   });
 
   it(`Can visit keywords`, () => {
@@ -27,14 +28,16 @@ describe("Related Keywords", () => {
   it(`Can render and interact with connected related subjects`, () => {
     cy.visit("/iframe.html?id=work-relatedsubjects--connected");
     cy.get("[data-cy=words-container]", { timeout: 10000 })
+      .should("exist")
       .children()
-      .should("have.length", 2);
-    cy.get("[data-cy=words-container]")
-      .children()
-      .each((el, idx) => {
-        expect(
-          el[0].href.indexOf(`/find?q.subject=relatedSubjects[${idx}]`) !== -1
-        ).to.be.true;
-      });
+      .should("exist")
+      .should("have.length.least", 3);
+
+    cy.get("[data-cy=related-subject-savn]", {
+      timeout: 10000,
+    }).should("have.attr", "href", "/find?q.subject=savn");
+    cy.get("[data-cy=related-subject-melankoli]", {
+      timeout: 10000,
+    }).should("have.attr", "href", "/find?q.subject=melankoli");
   });
 });

@@ -86,7 +86,7 @@ function ArticleHeader({ article, skeleton }) {
                   }
                 }}
               >
-                <Text type="text3">
+                <Text type="text3" tag="span">
                   {Translate({ ...context, label: "printButton" })}
                 </Text>
               </Link>

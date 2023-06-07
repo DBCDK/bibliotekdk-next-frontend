@@ -1,50 +1,15 @@
 /**
-* Keywords container
-* 
-*/
-
-.bibliographickeywordslink {
-  display: inline-block;
-}
-
-.bibliographickeywordslink p {
-  display: contents;
-}
-
-.keywords {
-  overflow: hidden;
-}
-
-/**
 * Keyword items
 * 
 */
 
+.keyword_group {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .keyword {
-  display: inline-block;
   margin: 0 var(--pt3) var(--pt3) 0;
-}
-
-.keyword a {
-  color: var(--mine-shaft);
-  text-decoration: none;
-  display: block;
-}
-
-.keyword a p {
-  color: red;
-}
-
-.keyword a h1 {
-  max-width: calc(100vw - 40px);
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.keyword a:focus {
-  color: var(--blue);
 }
 
 .keyword h1 {

@@ -13,7 +13,6 @@ function propFunc(textType, lines) {
     clamp: true,
     type: textType,
     lines: lines,
-    data_display: "inline",
   };
 }
 

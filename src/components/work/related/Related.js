@@ -18,17 +18,18 @@ import * as workFragments from "@/lib/api/work.fragments";
  */
 function Word({ word, isLoading }) {
   return (
-    <Link
-      href={`/find?q.subject=${word}`}
-      dataCy={cyKey({ name: word, prefix: "related-subject" })}
-      className={styles.word}
-      disabled={isLoading}
-      border={{ bottom: { keepVisible: true } }}
-    >
-      <Text type="text2" skeleton={isLoading} lines={1}>
-        {word}
-      </Text>
-    </Link>
+    <span className={styles.word}>
+      <Link
+        href={`/find?q.subject=${word}`}
+        dataCy={cyKey({ name: word, prefix: "related-subject" })}
+        disabled={isLoading}
+        border={{ bottom: { keepVisible: true } }}
+      >
+        <Text type="text2" skeleton={isLoading} lines={1} tag="span">
+          {word}
+        </Text>
+      </Link>
+    </span>
   );
 }
 

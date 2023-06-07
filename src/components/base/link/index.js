@@ -1,1 +1,1 @@
-export { default } from "./Link.js";
+export { default, LinkOnlyInternalAnimations } from "./Link.js";

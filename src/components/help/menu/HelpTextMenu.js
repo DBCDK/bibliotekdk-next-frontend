@@ -27,9 +27,15 @@ function MenuLink({ label, href = "#!", active = false }) {
   return (
     <div className={`${styles.link} ${activeClass}`}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Text type={type}>{Translate({ context: "help", label })}</Text>
+        <Text type={type} tag="span" className={styles.menu_link_margin}>
+          {Translate({ context: "help", label })}
+        </Text>
       </Link>
-      <Icon src="arrowrightblue.svg" size={1} />
+      {active && (
+        <span className={styles.helpiconlink}>
+          <Icon src="arrowrightblue.svg" size={1} />
+        </span>
+      )}
     </div>
   );
 }
@@ -66,24 +72,25 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
               setExpandedGroup(index === expandedGroup ? null : index);
             }
           }}
-          className={styles.helpgroup}
           onClick={() => {
             setExpandedGroup(index === expandedGroup ? null : index);
           }}
         >
-          <Text type="text2" lines={30} key={`helpmenu-${index}`}>
+          <Text
+            type={expanded || activelink ? "text1" : "text2"}
+            lines={30}
+            key={`helpmenu-${index}`}
+          >
             <span className={styles.helpicongroup}>
               <Icon
                 size={{ w: 1, h: 1 }}
                 src="arrowrightblue.svg"
-                className={classNames(
-                  expanded || activelink ? styles.helpiconrotate : ""
-                )}
+                className={expanded || activelink ? styles.helpiconrotate : ""}
               />
             </span>
-            <span>
+            <Link>
               {Translate({ context: "helpmenu", label: `${group.name}` })}
-            </span>
+            </Link>
           </Text>
         </div>
         <div
@@ -141,26 +148,27 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
  * @constructor
  */
 function HelptTextMenuLinks({ menuItems, group, helpTextId }) {
-  return menuItems[group.name].map((item, index) => (
-    <div className={styles.helplink} key={`div-menulink-${index}`}>
-      <Link
-        href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
-        key={`menulink-${index}`}
-        className={classNames(
-          item.id === parseInt(helpTextId, "10") ? styles.helpactive : ""
+  return menuItems[group.name].map((item, index) => {
+    const active = item.id === parseInt(helpTextId, "10");
+
+    return (
+      <div className={styles.helplink} key={`div-menulink-${index}`}>
+        <Link
+          href={`/hjaelp/${encodeString(item.title)}/${item.id}`}
+          key={`menulink-${index}`}
+        >
+          <Text type={active ? "text1" : "text2"} lines={2} tag="span">
+            {item.title}
+          </Text>
+        </Link>
+        {active && (
+          <span className={styles.helpiconlink}>
+            <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
+          </span>
         )}
-      >
-        <Text type="text2" lines={2}>
-          {item.title}
-          {item.id === parseInt(helpTextId, "10") && (
-            <span className={styles.helpiconlink}>
-              <Icon size={{ w: 1, h: 1 }} src="arrowrightblue.svg" />
-            </span>
-          )}
-        </Text>
-      </Link>
-    </div>
-  ));
+      </div>
+    );
+  });
 }
 
 /**

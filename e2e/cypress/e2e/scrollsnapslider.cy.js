@@ -10,7 +10,7 @@ function appendScrollToArray($el, arrayOfScrolls) {
   assertCurrentLeftScroll(arrayOfScrolls.at(-1), arrayOfScrolls.at(-2));
 }
 
-describe("Related works", () => {
+describe("ScrollSnapSlider", () => {
   it("desktop", () => {
     cy.visit("/iframe.html?id=work-relatedworks--related-works-physical-book");
 
@@ -72,5 +72,30 @@ describe("Related works", () => {
 
     cy.get("[data-cy=right_arrow]").should("not.be.visible");
     cy.get("[data-cy=left_arrow]").should("not.be.visible");
+  });
+
+  it(`Tabbing may be used to slide`, () => {
+    cy.visit("/iframe.html?id=work-relatedworks--related-works-physical-book");
+
+    cy.viewport(1920, 1080);
+
+    let leftScroll = [0];
+    function appendScrollToArrayWithProps($el) {
+      appendScrollToArray($el, leftScroll);
+    }
+
+    cy.get("#relatedWorks_slide")
+      .should("exist")
+      .should(appendScrollToArrayWithProps);
+
+    cy.get("[data-cy=link]").tabs(7);
+    cy.get("#relatedWorks_slide").should(appendScrollToArrayWithProps);
+
+    cy.contains("Hugo i Sølvskoven").should(($el) =>
+      assertCurrentLeftScroll(
+        $el[0].getBoundingClientRect().left,
+        leftScroll.at(-1)
+      )
+    );
   });
 });

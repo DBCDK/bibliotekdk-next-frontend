@@ -35,11 +35,17 @@ describe("Keywords", () => {
 
     cy.get("body").tab();
 
-    cy.focused().parent().should("have.attr", "data-cy", "keyword-historie");
+    cy.focused()
+      .parent()
+      .parent()
+      .should("have.attr", "data-cy", "keyword-historie");
 
     cy.tabs(3);
 
-    cy.focused().parent().should("have.attr", "data-cy", "keyword-1930-1939");
+    cy.focused()
+      .parent()
+      .parent()
+      .should("have.attr", "data-cy", "keyword-1930-1939");
   });
 
   it(`Can visit keywords`, () => {
@@ -48,6 +54,7 @@ describe("Keywords", () => {
 
     // Get selected tag
     cy.get(`[data-cy=keyword-${tag}]`)
+      .children()
       .children()
       .should("have.attr", "target", "_self")
       .should("have.attr", "href", url);
