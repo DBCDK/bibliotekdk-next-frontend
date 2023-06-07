@@ -112,18 +112,15 @@ export function Header({
       },
     },
     {
-      label: user.isAuthenticated || user.isGuestUser ? "logout" : "login",
+      label: user.isAuthenticated || user.isGuestUser ? "profile" : "login",
       icon: LoginIcon,
-      //onClick: user.isAuthenticated ? signOut : signIn,
-      onClick: user.isAuthenticated
-        ? // sign user out - either guest- or hejmdal-user
-          signOut
-        : user.isGuestUser
-        ? async () => {
-            await user.guestLogout();
-          }
-        : // open login modal
-          () => modal.push("login"),
+      onClick: () => {
+        if (user.isAuthenticated) {
+          router.push("/profil/laan-og-reserveringer");
+        } else {
+          modal.push("login");
+        }
+      },
     },
     /*{
       label: "basket",
