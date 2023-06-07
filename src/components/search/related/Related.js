@@ -21,17 +21,18 @@ import styles from "./Related.module.css";
  */
 function Word({ word, isLoading }) {
   return (
-    <Link
-      href={`/find?q.subject=${word}`}
-      dataCy={cyKey({ name: word, prefix: "related-subject" })}
-      className={styles.word}
-      disabled={isLoading}
-      border={{ bottom: { keepVisible: true } }}
-    >
-      <Text skeleton={isLoading} lines={1} tag="span">
-        {word}
-      </Text>
-    </Link>
+    <span className={styles.word}>
+      <Link
+        href={`/find?q.subject=${word}`}
+        dataCy={cyKey({ name: word, prefix: "related-subject" })}
+        disabled={isLoading}
+        border={{ bottom: { keepVisible: true } }}
+      >
+        <Text skeleton={isLoading} lines={1} tag="span">
+          {word}
+        </Text>
+      </Link>
+    </span>
   );
 }
 
@@ -40,19 +41,12 @@ function Word({ word, isLoading }) {
  * Returns a list of related subject words/items
  */
 export function Words({ data, isLoading }) {
-  const skeletonClass = isLoading ? styles.skeleton : "";
-
   return (
-    <div className={`${skeletonClass} ${styles.related}`}>
-      <Text className={styles.label} skeleton={isLoading} lines={1}>
-        {Translate({ context: "search", label: "relatedSubjects" })}
-      </Text>
-      <div className={styles.words} data-cy="words-container">
-        {data.map((w) => (
-          <Word key={w} word={w} isLoading={isLoading} />
-        ))}
-      </div>
-    </div>
+    <>
+      {data.map((w) => (
+        <Word key={w} word={w} isLoading={isLoading} />
+      ))}
+    </>
   );
 }
 
@@ -92,7 +86,15 @@ export function Related({ data, isLoading }) {
               label: "skipRelatedSubjects",
             })}
           />
-          <Words data={data} isLoading={isLoading} />
+
+          <div className={styles.related}>
+            <div className={styles.words} data-cy="words-container">
+              <Text skeleton={isLoading} lines={1} tag={"span"}>
+                {Translate({ context: "search", label: "relatedSubjects" })}
+              </Text>
+              <Words data={data} isLoading={isLoading} />
+            </div>
+          </div>
         </div>
       )}
     </Section>
