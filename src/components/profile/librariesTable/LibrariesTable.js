@@ -1,49 +1,61 @@
-import Row from "react-bootstrap/Row";
 import Translate from "@/components/base/translate/Translate";
 import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
+import Title from "@/components/base/title";
 
 /**
  * Tablerow to be used in LibrariesTable component.
  * @param {obj} props
  * @returns {component}
  */
-function TableItem({ agency, libraryName, type }) {
-  const isHomeLibrary = "Herlev bibliotek" == libraryName; //Mock. Use real data
-  const lastUsed = "Biblioteket Danasvej" == agency; //Mock. Use real data
+function TableItem({ agencyName, agencyId }) {
+  const isHomeLibrary = false; // Cannot be implemented yet
+  //const lastUsed = false; // Cannot be implemented yet
+  const isPublic = isPublicLibrary(agencyId);
 
+  const type = Translate({
+    context: "profile",
+    label: isPublic ? "publicLibrary" : "academicLibrary",
+  });
   return (
     <div className={styles.tableItem}>
-      <div>
-        <Text type="text1"> {libraryName || "-"}</Text>
-        {isHomeLibrary && (
-          <Text type="text3" className={styles.textLabel}>
-            {Translate({
-              context: "profile",
-              label: "municipalityOfResidence",
-            })}
-          </Text>
-        )}
+      <div className={styles.libraryInfo}>
+        <div>
+          <Title type="title5"> {agencyName || "-"}</Title>
+          {isHomeLibrary && (
+            <Text type="text3" className={styles.textLabel}>
+              {Translate({
+                context: "profile",
+                label: "municipalityOfResidence",
+              })}
+            </Text>
+          )}
+        </div>
+
+        {/*TODO: use when bopælskommune is implemented
+        <div>
+          <Title type="title5"> {agencyName || "-"}</Title>
+          {lastUsed && (
+            <Text type="text3" className={styles.textLabel}>
+              {Translate({ context: "profile", label: "lastUsed" })}
+            </Text>
+          )}
+        </div>
+      */}
+
+        <Text type="text2">{type}</Text>
       </div>
 
-      <div>
-        <Text type="text2"> {agency || "-"}</Text>
-        {lastUsed && (
-          <Text type="text3" className={styles.textLabel}>
-            {Translate({ context: "profile", label: "lastUsed" })}
-          </Text>
-        )}
-      </div>
-
-      <Text type="text2">{type || "-"}</Text>
-      <IconButton
-        className={styles.closeButton}
-        icon="close"
-        alt={Translate({ context: "profile", label: "remove" })}
-      >
-        {Translate({ context: "profile", label: "remove" })}
-      </IconButton>
+      {!isPublic && (
+        <IconButton
+          className={styles.closeButton}
+          icon="close"
+          alt={Translate({ context: "profile", label: "remove" })}
+        >
+          {Translate({ context: "profile", label: "remove" })}
+        </IconButton>
+      )}
     </div>
   );
 }
@@ -56,16 +68,32 @@ function TableItem({ agency, libraryName, type }) {
 export default function LibrariesTable({ data }) {
   return (
     <>
-      <Row className={styles.tableContainer}>
+      <div className={styles.headerRow}>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "libraries" })}
+        </Text>
+        <Text className={styles.headerItem}>
+          {Translate({ context: "profile", label: "libraryType" })}
+        </Text>
+      </div>
+      <div className={styles.tableContainer}>
         {data?.map((item) => (
-          <TableItem
-            key={item.agency}
-            agency={item.agency}
-            libraryName={item.libraryName}
-            type={item.type}
-          />
+          <TableItem key={item.agencyName} {...item} />
         ))}
-      </Row>
+      </div>
     </>
   );
 }
+
+/**
+ *
+ * @param {*} agencyID
+ * @returns returns true if public library (Folkebibliotek)
+ */
+const isPublicLibrary = (agencyID) => {
+  const faroeIslandsLibraries = ["900455", "911116", "911130"];
+  const parsedID = agencyID + "";
+  return (
+    parsedID?.charAt(0) === "7" || faroeIslandsLibraries.includes(parsedID)
+  );
+};

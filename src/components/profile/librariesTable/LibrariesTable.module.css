@@ -1,20 +1,31 @@
-.tableContainer {
-  padding-right: var(--pt4);
-}
-
 .tableItem {
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr 1fr;
-  padding: var(--pt3) var(--pt2);
+  grid-template-columns: 6fr 2fr;
+  padding: var(--pt3) 0;
+  grid-gap: var(--pt3);
   align-items: center;
 }
-
-.tableItem {
-  border-bottom: 1px solid var(--iron);
+.libraryInfo {
+  display: grid;
+  grid-template-columns: 3fr 3fr;
+  align-items: center;
+  grid-gap: var(--pt2);
 }
+@media (max-width: 550px) {
+  .libraryInfo {
+    display: block;
+  }
 
-.tableItem:first-child {
-  border-top: 1px solid var(--iron);
+  .headerItem {
+    display: none;
+  }
+}
+.headerRow {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  margin-top: var(--pt3);
+  border-bottom: 1px solid var(--iron);
+  width: 100%;
 }
 
 .removeButton {
