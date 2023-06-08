@@ -13,9 +13,9 @@ describe("bibliographic data", () => {
       .should("have.attr", "href")
       .should("not.be.empty")
       .and("contain", "/find?q.creator=manifestation.creators[0].display");
-    cy.get("[data-cy=link-references] p")
-      .first()
-      .should("have.text", "Download til referencesystemer");
+    cy.get("[data-cy=link-references]").contains(
+      "Download til referencesystemer"
+    );
   });
 
   it("Full manifestation - check localizationlink", () => {

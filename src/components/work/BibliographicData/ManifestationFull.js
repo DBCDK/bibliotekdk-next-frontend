@@ -71,7 +71,7 @@ function ColumnOne({ workId, manifestation }) {
             <LocalizationsLink selectedPids={[manifestation?.pid]} />
           </span>
         </div>
-        <div>
+        <div className={styles.linkstyle}>
           <Link
             dataCy="link-references"
             border={{ bottom: { keepVisible: true } }}
@@ -84,7 +84,7 @@ function ColumnOne({ workId, manifestation }) {
               )
             }
           >
-            <Text type="text3" className={styles.linkstyle}>
+            <Text type="text3" tag="span">
               {Translate({
                 context: "references",
                 label: "label_references_title",

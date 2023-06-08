@@ -12,14 +12,13 @@ import Image from "@/components/base/image";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Skeleton from "@/components/base/skeleton";
-import Link from "@/components/base/link";
+import Link, { LinkOnlyInternalAnimations } from "@/components/base/link";
 import Button from "@/components/base/button";
 
 import { articlePathAndTarget } from "@/components/articles/utils";
 
 import styles from "./Single.module.css";
 import Translate from "@/components/base/translate";
-import AnimationLine from "@/components/base/animation/line";
 import React from "react";
 
 /**
@@ -48,44 +47,58 @@ export default function Single({ articles, skeleton }) {
 
   return (
     <Row className={styles.wrap}>
-      <Col xs={12} lg={{ span: 10, offset: 1 }}>
-        <Link a={false} href={{ pathname, query }} target={`${target}`}>
-          <Row className={`${styles.content} ${skeletonClass}`}>
-            <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
-              <span className={styles.text}>
-                <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
-                  {bodyText}
-                </Text>
-              </span>
-              <div />
-              <span className={styles.title}>
-                <Title tag="h3" type="title3" lines={1} skeleton={skeleton}>
+      <Col
+        as={LinkOnlyInternalAnimations}
+        href={{ pathname, query }}
+        target={`${target}`}
+        xs={12}
+        lg={{ span: 10, offset: 1 }}
+      >
+        <Row className={`${styles.content} ${skeletonClass}`}>
+          <Col xs={{ span: 12, order: 2 }} md={{ span: 5, order: 1 }}>
+            <span className={styles.text}>
+              <Text type="text2" lines={1} clamp={true} skeleton={skeleton}>
+                {bodyText}
+              </Text>
+            </span>
+            <Title
+              tag="h3"
+              type="title3"
+              lines={1}
+              skeleton={skeleton}
+              className={styles.title}
+            >
+              <span className={styles.title_title}>
+                <Link className={styles.underlineContainer__colors}>
                   {article.title}
-                </Title>
-                <AnimationLine />
+                </Link>
               </span>
-              <div />
-              <Link a={false} href={{ pathname, query }} target={`${target}`}>
-                <Button type="secondary" size="medium" skeleton={skeleton}>
-                  {btnLabel}
-                </Button>
-              </Link>
-            </Col>
-            <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
-              <div className={styles.imagewrapper}>
-                {image && (
-                  <Image
-                    src={image.url}
-                    alt={image.alt}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                )}
-                {skeleton && <Skeleton className={styles.imageskeleton} />}
-              </div>
-            </Col>
-          </Row>
-        </Link>
+            </Title>
+            <Link a={false} target={`${target}`}>
+              <Button
+                onClick={() => {}}
+                type="secondary"
+                size="medium"
+                skeleton={skeleton}
+              >
+                {btnLabel}
+              </Button>
+            </Link>
+          </Col>
+          <Col xs={{ span: 12, order: 1 }} md={{ span: 7, order: 2 }}>
+            <div className={styles.imagewrapper}>
+              {image && (
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              )}
+              {skeleton && <Skeleton className={styles.imageskeleton} />}
+            </div>
+          </Col>
+        </Row>
       </Col>
     </Row>
   );

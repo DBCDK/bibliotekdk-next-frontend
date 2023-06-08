@@ -5,8 +5,6 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
-import classNames from "classnames/bind";
-import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * Return a svg with inline styling from parameter
@@ -46,34 +44,32 @@ export default function Logo({
   if (fill === "var(--white)") {
     color = "white";
   }
+
+  const translated2 = translated.map(
+    (translation) => translation.props.children
+  );
+
   return (
-    <div className={styles.wrapper}>
-      <Link
-        className={[
-          styles.logoWrap,
-          animations["on-focus"],
-          animations["f-outline"],
-        ].join(" ")}
-        border={false}
-        href={href}
-        dataCy={cyKey({
-          name: "logo",
-        })}
-      >
+    <Link
+      border={false}
+      href={href}
+      dataCy={cyKey({
+        name: "logo",
+      })}
+    >
+      <div className={styles.display_flex}>
         <SvgParser fill={fill} />
 
         <Text
-          type="text4"
-          className={classNames(
-            styles.logotxt,
-            color === "white" ? styles.white : ""
-          )}
-          tag="span"
+          type="text1"
+          tag={"div"}
+          className={`${color === "white" ? styles.white : ""} ${styles.text}`}
         >
-          {translated}
+          <div className={styles.logotxt1}>{translated2[0]}</div>
+          <div>{translated2[1]}</div>
         </Text>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
 

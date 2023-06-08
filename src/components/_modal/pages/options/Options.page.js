@@ -26,7 +26,9 @@ export function OptionsLinkAndDescription({ props, templateProps }) {
   return (
     <li className={`${className} ${styles.item}`}>
       <Link border={{ bottom: { keepVisible: true } }} {...linkProps}>
-        <Text type="text1">{linkText}</Text>
+        <Text type="text1" tag="span">
+          {linkText}
+        </Text>
       </Link>
       <Text type="text3">{descriptionText}</Text>
     </li>
