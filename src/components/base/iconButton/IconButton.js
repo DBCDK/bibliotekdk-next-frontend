@@ -22,7 +22,6 @@ function IconButton({
   children,
   icon = "close",
   textType = "text3",
-  textStyle = "",
   keepUnderline,
   ...props
 }) {
