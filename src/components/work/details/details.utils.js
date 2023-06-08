@@ -34,17 +34,36 @@ function parseLanguages(manifestation) {
  * Get languages from given manifestion. We sort with "Dansk" first.
  * @param manifestation
  * @returns {{subtitles: (*|*[]), spoken: (*|*[]), main: (*|*[])}}
+ *
+ * We need to export this function ONLY to run some unittest.
  */
-function getLanguageValues(manifestation) {
-  const main =
-    manifestation?.languages?.main?.map((mlang) => mlang.display) || [];
+export function getLanguageValues(manifestation) {
+  // we pick main language from either [main] or [original] .. or .. spoken if danish
+  let main = manifestation?.languages?.main
+    // we do NOT want multiple languagse (isoCode=="mul")
+    ?.filter((mlang) => mlang.isoCode !== "mul")
+    ?.map((mlang) => mlang.display);
+  //if main language is empty we try to get it from [original]
+  if (isEmpty(main)) {
+    main =
+      manifestation?.languages?.original
+        ?.map((orig) => orig?.display)
+        ?.sort((a) => {
+          try {
+            return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+          } catch (e) {
+            return 0;
+          }
+        }) || [];
+  }
+
   // speken languages - put "dansk" first
   const spoken =
     manifestation?.languages?.spoken
       ?.map((spok) => spok?.display)
       ?.sort((a) => {
         try {
-          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+          return a === "dansk" || a === "engelsk" ? -1 : 0;
         } catch (e) {
           return 0;
         }
@@ -52,10 +71,10 @@ function getLanguageValues(manifestation) {
   // subtitles - put "dansk" first
   const subtitles =
     manifestation?.languages?.subtitles
-      .map((sub) => sub?.display)
+      ?.map((sub) => sub?.display)
       ?.sort((a) => {
         try {
-          return toLower(a) === "dansk" || toLower(a) === "engelsk" ? -1 : 0;
+          return a === "dansk" || a === "engelsk" ? -1 : 0;
         } catch (e) {
           return 0;
         }
@@ -65,7 +84,11 @@ function getLanguageValues(manifestation) {
     return {};
   }
 
-  return { main: main, spoken: spoken, subtitles: subtitles };
+  return {
+    main: main,
+    spoken: spoken,
+    subtitles: subtitles,
+  };
 }
 
 /**
@@ -374,11 +397,12 @@ function RenderGameLanguages({ values }) {
  */
 function RenderMovieLanguages({ values }) {
   // get the first 2 languages of the subtitle
+
   const subtitles =
     values["subtitles"]?.length > 0
       ? values["subtitles"]
-          ?.splice(0, 2)
-          .map((sub) => capitalize(sub))
+          ?.slice(0, 2)
+          //.map((sub) => capitalize(sub))
           .join(", ")
       : null;
 
@@ -388,12 +412,12 @@ function RenderMovieLanguages({ values }) {
       }`
     : "";
 
-  // spoken is synchronized languages
+  // spoken is synchronized languages - we pick the first two here
   const spoken =
     values["spoken"]?.length > 0
       ? values["spoken"]
-          ?.splice(0, 2)
-          .map((sub) => capitalize(sub))
+          ?.slice(0, 2)
+          //.map((sub) => capitalize(sub))
           .join(", ")
       : null;
   let spokenAsString = spoken
@@ -403,9 +427,9 @@ function RenderMovieLanguages({ values }) {
     : "";
   spokenAsString += spokenAsString && subtitlesAsString ? "," : "";
 
-  // main is the spoken language ??
+  // select a language to be shown as main
   let mainlanguage = values["main"]?.map((sub) => capitalize(sub)).join(", ");
-  mainlanguage = mainlanguage ? mainlanguage + " tale " : "";
+  mainlanguage = mainlanguage ? mainlanguage + " tale" : "";
   mainlanguage += subtitlesAsString || spokenAsString ? "," : "";
 
   const fullstring = `${mainlanguage} ${spokenAsString} ${subtitlesAsString}`;

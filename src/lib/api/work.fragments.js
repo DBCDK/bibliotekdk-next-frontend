@@ -391,10 +391,15 @@ export function fbiOverviewDetail({ workId }) {
                 }
                 spoken {
                   display
+                  isoCode
                 }
                 main {
                   display
+                  isoCode
                 }
+                original {
+                  display
+                }                
               }
               creatorsFromDescription
               physicalDescriptions {
