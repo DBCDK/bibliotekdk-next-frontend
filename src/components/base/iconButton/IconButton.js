@@ -43,12 +43,7 @@ function IconButton({
         border={{ bottom: { keepVisible: keepUnderline } }}
         tag="div"
       >
-        <Text
-          type={textType}
-          className={`${textStyle} ${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
-        >
-          {children}
-        </Text>
+        <Text type={textType}>{children}</Text>
       </Link>
       <Icon
         size={{ w: 2, h: "auto" }}
