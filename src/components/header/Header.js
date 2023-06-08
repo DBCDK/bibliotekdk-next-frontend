@@ -4,8 +4,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useState } from "react";
 
-import { signOut } from "@dbcdk/login-nextjs/client";
-
 import useHistory from "@/components/hooks/useHistory";
 import useFilters from "@/components/hooks/useFilters";
 import useQ from "@/components/hooks/useQ";
