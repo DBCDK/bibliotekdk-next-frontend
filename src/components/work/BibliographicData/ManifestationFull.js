@@ -24,6 +24,7 @@ import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
 import Icon from "@/components/base/icon";
+import { IconLink } from "@/components/base/iconlink/IconLink";
 
 /**
  * Column one of full view. Some links and a button.
@@ -91,6 +92,14 @@ function ColumnOne({ workId, manifestation }) {
             </Text>
           </Link>
         </div>
+        <IconLink
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href);
+          }}
+          iconSrc={"copy_link.svg"}
+        >
+          Kopier link til udgave
+        </IconLink>
         <Link
           border={false}
           className={cx(
