@@ -7,11 +7,12 @@
   stroke: var(--blue);
   fill: var(--blue);
 }
-.close {
+.container {
   cursor: pointer;
   background-color: transparent;
   justify-content: center;
   display: flex;
+  align-items: center;
 }
 .textWrapper {
   margin: 0 var(--pt1) 0 0;
