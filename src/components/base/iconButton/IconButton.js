@@ -8,6 +8,11 @@ import AnimationLine from "@/components/base/animation/line";
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
  * @param {obj} props
+ * @param {string} props.className
+ * @param {function} props.onClick
+ * @param {string} props.alt
+ * @param {obj} props.children
+ * @param {string} props.icon
  * @returns {component}
  */
 function IconButton({
@@ -24,7 +29,6 @@ function IconButton({
   return (
     <button
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
-      border={false}
       onClick={() => onClick && onClick()}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.keyCode === 13) {
