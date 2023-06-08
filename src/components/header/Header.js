@@ -113,7 +113,7 @@ export function Header({
       label: user.isAuthenticated || user.isGuestUser ? "profile" : "login",
       icon: LoginIcon,
       onClick: () => {
-        if (user.isAuthenticated) {
+        if (user.isAuthenticated || user.isGuestUser) {
           router.push("/profil/laan-og-reserveringer");
         } else {
           modal.push("login");
