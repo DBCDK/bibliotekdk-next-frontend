@@ -596,8 +596,6 @@ function RenderLitteratureAudience({ values }) {
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
 
-  console.log(manifestation, "MANIFESTATION");
-
   const fieldsMap = {
     DEFAULT: [
       {

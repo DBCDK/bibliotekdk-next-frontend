@@ -38,7 +38,6 @@ function useUserMock() {
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
-      console.log(obj, "UDPDATE LOANERINFO");
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
       // Broadcast update
