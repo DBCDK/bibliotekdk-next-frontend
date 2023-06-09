@@ -381,6 +381,9 @@ export function fbiOverviewDetail({ workId }) {
                 childrenOrAdults {
                   display
                 }
+                ages {
+                  display
+                }                
                 lix
                 let
               }          
@@ -391,10 +394,15 @@ export function fbiOverviewDetail({ workId }) {
                 }
                 spoken {
                   display
+                  isoCode
                 }
                 main {
                   display
+                  isoCode
                 }
+                original {
+                  display
+                }                
               }
               creatorsFromDescription
               physicalDescriptions {
