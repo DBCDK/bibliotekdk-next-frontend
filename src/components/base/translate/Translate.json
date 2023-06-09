@@ -3067,6 +3067,10 @@
       "no-results-orders": {
         "da": "Du har ingen reserveringer",
         "en": "You have no reservations"
+      },
+      "your-loan": {
+        "da": "Dit lån",
+        "en": "Your loan"
       }
     }
   }
