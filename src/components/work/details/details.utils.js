@@ -400,10 +400,7 @@ function RenderMovieLanguages({ values }) {
 
   const subtitles =
     values["subtitles"]?.length > 0
-      ? values["subtitles"]
-          ?.slice(0, 2)
-          //.map((sub) => capitalize(sub))
-          .join(", ")
+      ? values["subtitles"]?.slice(0, 2).join(", ")
       : null;
 
   const subtitlesAsString = subtitles
@@ -415,10 +412,7 @@ function RenderMovieLanguages({ values }) {
   // spoken is synchronized languages - we pick the first two here
   const spoken =
     values["spoken"]?.length > 0
-      ? values["spoken"]
-          ?.slice(0, 2)
-          //.map((sub) => capitalize(sub))
-          .join(", ")
+      ? values["spoken"]?.slice(0, 2).join(", ")
       : null;
   let spokenAsString = spoken
     ? `synkronisering på ${spoken} ${
