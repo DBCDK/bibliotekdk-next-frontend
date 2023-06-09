@@ -1,15 +1,15 @@
-import Cover from "@/components/base/cover/Cover";
-import Button from "@/components/base/button/Button";
+import Cover from "@/components/base/cover";
+import Button from "@/components/base/button";
 import Text from "@/components/base/text";
 import styles from "./MaterialRow.module.css";
 import Title from "@/components/base/title";
-import { Checkbox } from "@/components/base/forms/checkbox/Checkbox";
-import ConditionalWrapper from "@/components/base/conditionalwrapper/ConditionalWrapper";
-import Link from "@/components/base/link/Link";
+import { Checkbox } from "@/components/base/forms/checkbox";
+import ConditionalWrapper from "@/components/base/conditionalwrapper";
+import Link from "@/components/base/link";
 import cx from "classnames";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import IconButton from "@/components/base/iconButton/IconButton";
+import IconButton from "@/components/base/iconButton";
 import { getWorkUrl } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -17,9 +17,9 @@ import { useModal } from "@/components/_modal";
 /**
  * Use as renderButton if needed
  */
-export const MaterialRowButton = ({ ...props }) => {
+export const MaterialRowButton = ({ wrapperClassname, ...props }) => {
   return (
-    <div className={styles.buttonContainer}>
+    <div className={cx(styles.buttonContainer, wrapperClassname)}>
       <Button type="primary" size="small" {...props} />
     </div>
   );
@@ -65,20 +65,26 @@ export const getCheckedElements = (parentRef) => {
   return checkedElements;
 };
 
-const MobileMaterialRow = ({
-  image,
-  creator,
-  materialType,
-  creationYear,
-  dynamicColumn,
-  title,
-  workId,
-  id,
-}) => {
+const MobileMaterialRow = (props) => {
+  const {
+    image,
+    creator,
+    materialType,
+    creationYear,
+    dynamicColumn,
+    title,
+    workId,
+    id,
+  } = props;
   const modal = useModal();
 
   const onClick = () => {
-    modal.push("material", { label: "material" });
+    modal.push("material", {
+      label: "Dit lån",
+      ...props,
+      dynamicColumn: null,
+      renderButton: null,
+    });
   };
 
   return (
