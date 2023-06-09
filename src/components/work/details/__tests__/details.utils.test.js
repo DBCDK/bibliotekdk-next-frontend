@@ -6,7 +6,6 @@ import {
   filterAndMerge,
   getLanguageValues,
 } from "@/components/work/details/details.utils";
-import get from "lodash/get";
 
 test("Test get Languages method", () => {
   let manifestation = {};
