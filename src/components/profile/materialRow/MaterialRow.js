@@ -103,21 +103,14 @@ const MobileMaterialRow = (props) => {
         <Cover src={image} size="fill-width" />
       </div>
       <div>
-        <ConditionalWrapper
-          condition={!!title && !!creator && !!id}
-          wrapper={(children) => (
-            <Link href={getWorkUrl(title, creator, workId)}>{children}</Link>
-          )}
+        <Title
+          type="title8"
+          tag="h3"
+          className={styles.materialTitle}
+          id={`material-title-${id}`}
         >
-          <Title
-            type="title8"
-            as="h3"
-            className={styles.materialTitle}
-            id={`material-title-${id}`}
-          >
-            {title}
-          </Title>
-        </ConditionalWrapper>
+          {title}
+        </Title>
         {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
           <Text type="text2">
@@ -209,14 +202,23 @@ const MaterialRow = (props) => {
             <ConditionalWrapper
               condition={!!title && !!creator && !!id}
               wrapper={(children) => (
-                <Link href={getWorkUrl(title, creator, workId)}>
+                <Link
+                  border={{
+                    top: false,
+                    bottom: {
+                      keepVisible: true,
+                    },
+                  }}
+                  href={getWorkUrl(title, creator, workId)}
+                  className={styles.blackUnderline}
+                >
                   {children}
                 </Link>
               )}
             >
               <Title
                 type="title8"
-                as="h3"
+                tag="h3"
                 className={styles.materialTitle}
                 id={`material-title-${id}`}
               >

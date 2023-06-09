@@ -38,6 +38,13 @@
   font-family: var(--title-font);
 }
 
+/* Maybe rename when revisited properly */
+.title6b {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: var(--body-font-semibold);
+}
+
 /* TODO: WARNING: Don't use this other
      places than work overview */
 .title7 {

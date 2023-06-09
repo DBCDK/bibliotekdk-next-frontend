@@ -16,12 +16,16 @@ const Material = ({ context }) => {
 
   return (
     <article className={styles.Material}>
-      {/* h3 used as it's correct for the context https://stackoverflow.com/questions/38448811/is-it-semantically-correct-to-use-h1-in-a-dialog */}
-      <Top title={label} titleTag="h3" />
+      <Top title={label} titleTag="h4" />
       <hr />
       <div className={styles.splitContainer}>
         <div>
-          <Title type="title5" tag="h4">
+          {/**
+           * This is the main titel of the article
+           * h3 used as it's correct for the context
+           * https://stackoverflow.com/questions/38448811/is-it-semantically-correct-to-use-h1-in-a-dialog
+           * */}
+          <Title type="title5" tag="h3">
             {title}
           </Title>
           {creator && (
@@ -57,7 +61,16 @@ const Material = ({ context }) => {
         </div>
       </div>
 
-      <Link className={styles.link} href={getWorkUrl(title, creator, workId)}>
+      <Link
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: true,
+          },
+        }}
+        className={styles.link}
+        href={getWorkUrl(title, creator, workId)}
+      >
         <Text type="text2">Gå til bogen</Text>
       </Link>
 
@@ -70,6 +83,8 @@ const Material = ({ context }) => {
             context: "recommendations",
             label: "remindsOf",
           })}
+          headerTag="h3"
+          titleDivider={false}
         />
       </div>
     </article>

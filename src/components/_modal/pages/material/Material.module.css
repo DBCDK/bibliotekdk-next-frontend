@@ -1,5 +1,5 @@
 .Material {
-  padding: var(--pt3) var(--pt2) 0;
+  padding: 0 var(--pt2);
 }
 
 .spacer {

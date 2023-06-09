@@ -47,10 +47,6 @@
   outline: 2px solid var(--blue);
 }
 
-.materialRow_mobile:focus-visible, .materialRow_mobile:hover {
-  background-color: var(--black-squeeze);
-}
-
 .materialInfo {
   display: flex;
 }
@@ -68,4 +64,24 @@
 
 .dynamicColumn_mobile {
   margin-top: var(--pt1);
+}
+
+.blackUnderline hr {
+  background-color: var(--mine-shaft);
+}
+
+.blackUnderline:hover hr, .blackUnderline:focus-visible hr {
+  background-color: var(--blue);
+}
+
+@media (hover: hover) {
+  .materialRow_mobile:focus-visible, .materialRow_mobile:hover {
+    background-color: var(--black-squeeze);
+  }
+}
+
+@media (max-width: 992px) {
+  .materialHeaderRow {
+    display: none;
+  }
 }

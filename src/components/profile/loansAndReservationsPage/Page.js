@@ -17,6 +17,7 @@ import {
 } from "@/utils/datetimeConverter";
 import cx from "classnames";
 import { useRouter } from "next/router";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * TODO
@@ -58,6 +59,9 @@ export const dataReducer = (dataType, data) => {
 };
 
 const LoansAndReservations = () => {
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo, updateLoanerInfo } = useUser();
   const { loans, orders, debt, agency } = loanerInfo;
   const router = useRouter();
@@ -85,19 +89,36 @@ const LoansAndReservations = () => {
       </Text>
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title
-            type="title5"
-            tag="h2"
-            id={`sublink-${encodeString(
-              Translate({
-                context: "profile",
-                label: "debt",
-                requestedLang: "da",
-              })
-            )}`}
-          >
-            {Translate({ context: "profile", label: "debt" })}
-          </Title>
+          {isMobileSize ? (
+            <Title
+              type="title6b"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "debt",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "debt" })} ({debt?.length}
+              )
+            </Title>
+          ) : (
+            <Title
+              type="title5"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "debt",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "debt" })}
+            </Title>
+          )}
         </div>
 
         <MaterialHeaderRow
@@ -105,39 +126,65 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "price" })}
           column3={Translate({ context: "profile", label: "loaner-library" })}
         />
-        {debt?.map((intermediate, i) => (
-          <MaterialRow
-            key={`intermediate-${intermediate.title}-#${i}`}
-            title={intermediate.title}
-            library={libraryString}
-            dynamicColumn={
-              <DynamicColumn className={styles.isWarning}>
-                <Text type="text1" tag="span">
-                  {intermediate.amount} kr
-                </Text>
-              </DynamicColumn>
-            }
-            status="RED"
-            id={`debt-${i}`}
-          />
-        ))}
+        {debt && debt.length !== 0 ? (
+          debt?.map((intermediate, i) => (
+            <MaterialRow
+              key={`intermediate-${intermediate.title}-#${i}`}
+              title={intermediate.title}
+              library={libraryString}
+              dynamicColumn={
+                <DynamicColumn className={styles.isWarning}>
+                  <Text type="text1" tag="span">
+                    {intermediate.amount} kr
+                  </Text>
+                </DynamicColumn>
+              }
+              status="RED"
+              id={`debt-${i}`}
+            />
+          ))
+        ) : (
+          <Text className={styles.emptyMessage} type="text2">
+            {Translate({
+              context: "profile",
+              label: "no-results-debts",
+            })}
+          </Text>
+        )}
       </section>
 
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title
-            type="title5"
-            tag="h2"
-            id={`sublink-${encodeString(
-              Translate({
-                context: "profile",
-                label: "loans",
-                requestedLang: "da",
-              })
-            )}`}
-          >
-            {Translate({ context: "profile", label: "loans" })}
-          </Title>
+          {isMobileSize ? (
+            <Title
+              type="title6b"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "loans",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "loans" })} (
+              {loans?.length})
+            </Title>
+          ) : (
+            <Title
+              type="title5"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "loans",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "loans" })}
+            </Title>
+          )}
         </div>
 
         <MaterialHeaderRow
@@ -145,92 +192,118 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "return-deadline" })}
           column3={Translate({ context: "profile", label: "loaner-library" })}
         />
-        {loans?.map((loan, i) => {
-          const dueDate = new Date(loan.dueDate);
-          const today = new Date();
-          const futureDate = new Date();
-          futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
-          const daysToDueDate =
-            Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
-          const dayToText = timeFormatter.format(daysToDueDate, "day");
-          const isCountdown = dueDate >= today && dueDate <= futureDate;
-          const isOverdue = dueDate < today;
-          const dateString = timestampToShortDate(dueDate);
+        {loans && loans.length !== 0 ? (
+          loans?.map((loan, i) => {
+            const dueDate = new Date(loan.dueDate);
+            const today = new Date();
+            const futureDate = new Date();
+            futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
+            const daysToDueDate =
+              Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+            const dayToText = timeFormatter.format(daysToDueDate, "day");
+            const isCountdown = dueDate >= today && dueDate <= futureDate;
+            const isOverdue = dueDate < today;
+            const dateString = timestampToShortDate(dueDate);
 
-          return (
-            <MaterialRow
-              {...dataReducer("loan", loan)}
-              key={`loan-${loan.loanId}-#${i}`}
-              library={libraryString}
-              renderButton={
-                <MaterialRowButton>
-                  {Translate({ context: "profile", label: "renew" })}
-                </MaterialRowButton>
-              }
-              dynamicColumn={
-                <DynamicColumn>
-                  {isOverdue ? (
-                    <>
-                      <Text type="text2" tag="span">
-                        {dateString}
-                      </Text>
-                      <Text type="text1" className={styles.isWarning}>
-                        {Translate({
-                          context: "profile",
-                          label: "date-overdue",
-                        })}
-                      </Text>
-                    </>
-                  ) : isCountdown ? (
-                    <>
-                      <Text type="text2" tag="span">
-                        {dateString}
-                      </Text>
-                      <Text
-                        type="text1"
-                        tag="span"
-                        className={cx(styles.isWarning, styles.upperCase)}
-                      >
-                        {dayToText}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <Text type="text2" tag="span">
-                        {dateString}
-                      </Text>
-                      <Text
-                        type="text2"
-                        tag="span"
-                        className={styles.upperCase}
-                      >
-                        {dayToText}
-                      </Text>
-                    </>
-                  )}
-                </DynamicColumn>
-              }
-              status={isOverdue ? "RED" : "NONE"}
-            />
-          );
-        })}
+            return (
+              <MaterialRow
+                {...dataReducer("loan", loan)}
+                key={`loan-${loan.loanId}-#${i}`}
+                library={libraryString}
+                renderButton={
+                  <MaterialRowButton>
+                    {Translate({ context: "profile", label: "renew" })}
+                  </MaterialRowButton>
+                }
+                dynamicColumn={
+                  <DynamicColumn>
+                    {isOverdue ? (
+                      <>
+                        <Text type="text2" tag="span">
+                          {dateString}
+                        </Text>
+                        <Text type="text1" className={styles.isWarning}>
+                          {Translate({
+                            context: "profile",
+                            label: "date-overdue",
+                          })}
+                        </Text>
+                      </>
+                    ) : isCountdown ? (
+                      <>
+                        <Text type="text2" tag="span">
+                          {dateString}
+                        </Text>
+                        <Text
+                          type="text1"
+                          tag="span"
+                          className={cx(styles.isWarning, styles.upperCase)}
+                        >
+                          {dayToText}
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Text type="text2" tag="span">
+                          {dateString}
+                        </Text>
+                        <Text
+                          type="text2"
+                          tag="span"
+                          className={styles.upperCase}
+                        >
+                          {dayToText}
+                        </Text>
+                      </>
+                    )}
+                  </DynamicColumn>
+                }
+                status={isOverdue ? "RED" : "NONE"}
+              />
+            );
+          })
+        ) : (
+          <Text className={styles.emptyMessage} type="text2">
+            {Translate({
+              context: "profile",
+              label: "no-results-loans",
+            })}
+          </Text>
+        )}
       </section>
 
       <section className={styles.section}>
         <div className={styles.titleRow}>
-          <Title
-            type="title5"
-            tag="h2"
-            id={`sublink-${encodeString(
-              Translate({
-                context: "profile",
-                label: "orders",
-                requestedLang: "da",
-              })
-            )}`}
-          >
-            {Translate({ context: "profile", label: "orders" })}
-          </Title>
+          {isMobileSize ? (
+            <Title
+              type="title6b"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "orders",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "orders" })} (
+              {orders?.length})
+            </Title>
+          ) : (
+            <Title
+              type="title5"
+              tag="h2"
+              id={`sublink-${encodeString(
+                Translate({
+                  context: "profile",
+                  label: "orders",
+                  requestedLang: "da",
+                })
+              )}`}
+            >
+              {Translate({ context: "profile", label: "orders" })}
+            </Title>
+          )}
         </div>
 
         <MaterialHeaderRow
@@ -238,66 +311,79 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "status" })}
           column3={Translate({ context: "profile", label: "pickup-at" })}
         />
-        {orders?.map((order, i) => {
-          const pickUpDate = new Date(order.pickUpExpiryDate);
-          const isReadyToPickup = !!order.pickUpExpiryDate;
-          const dateString = isReadyToPickup
-            ? dateToDayInMonth(pickUpDate)
-            : null;
+        {orders && orders.length !== 0 ? (
+          orders?.map((order, i) => {
+            const pickUpDate = new Date(order.pickUpExpiryDate);
+            const isReadyToPickup = !!order.pickUpExpiryDate;
+            const dateString = isReadyToPickup
+              ? dateToDayInMonth(pickUpDate)
+              : null;
 
-          return (
-            <MaterialRow
-              {...dataReducer("order", order)}
-              key={`loan-${order.loanId}-#${i}`}
-              status={isReadyToPickup ? "GREEN" : "NONE"}
-              dynamicColumn={
-                <DynamicColumn>
-                  {isReadyToPickup ? (
-                    <>
-                      <Text type="text1" tag="span" className={styles.isReady}>
-                        {Translate({
-                          context: "profile",
-                          label: "ready-to-pickup",
-                        })}
-                      </Text>
-                      <Text type="text2" tag="span">
-                        {Translate({
-                          context: "profile",
-                          label: "pickup-deadline",
-                        })}
-                         {dateString}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <Text type="text2" tag="span">
-                        {order.holdQueuePosition === "1"
-                          ? `${Translate({
-                              context: "profile",
-                              label: "front-of-row",
-                            })}`
-                          : `${order.holdQueuePosition - 1} ${Translate({
-                              context: "profile",
-                              label: "in-row",
-                            })}`}
-                      </Text>
-                    </>
-                  )}
-                </DynamicColumn>
-              }
-              renderButton={
-                <MaterialRowIconButton
-                  onClick={() => onDeleteOrder(order.orderId)}
-                >
-                  {Translate({
-                    context: "profile",
-                    label: "delete",
-                  })}
-                </MaterialRowIconButton>
-              }
-            />
-          );
-        })}
+            return (
+              <MaterialRow
+                {...dataReducer("order", order)}
+                key={`loan-${order.loanId}-#${i}`}
+                status={isReadyToPickup ? "GREEN" : "NONE"}
+                dynamicColumn={
+                  <DynamicColumn>
+                    {isReadyToPickup ? (
+                      <>
+                        <Text
+                          type="text1"
+                          tag="span"
+                          className={styles.isReady}
+                        >
+                          {Translate({
+                            context: "profile",
+                            label: "ready-to-pickup",
+                          })}
+                        </Text>
+                        <Text type="text2" tag="span">
+                          {Translate({
+                            context: "profile",
+                            label: "pickup-deadline",
+                          })}
+                           {dateString}
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Text type="text2" tag="span">
+                          {order.holdQueuePosition === "1"
+                            ? `${Translate({
+                                context: "profile",
+                                label: "front-of-row",
+                              })}`
+                            : `${order.holdQueuePosition - 1} ${Translate({
+                                context: "profile",
+                                label: "in-row",
+                              })}`}
+                        </Text>
+                      </>
+                    )}
+                  </DynamicColumn>
+                }
+                renderButton={
+                  <MaterialRowIconButton
+                    onClick={() => onDeleteOrder(order.orderId)}
+                  >
+                    {Translate({
+                      context: "profile",
+                      label: "delete",
+                    })}
+                  </MaterialRowIconButton>
+                }
+              />
+            );
+          })
+        ) : (
+          <Text className={styles.emptyMessage} type="text2">
+            {Translate({
+              context: "profile",
+              label: "no-results-orders",
+            })}
+          </Text>
+        )}
       </section>
     </ProfileLayout>
   );
