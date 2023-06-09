@@ -381,6 +381,9 @@ export function fbiOverviewDetail({ workId }) {
                 childrenOrAdults {
                   display
                 }
+                ages {
+                  display
+                }                
                 lix
                 let
               }          

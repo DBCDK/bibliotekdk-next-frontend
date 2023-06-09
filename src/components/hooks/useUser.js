@@ -38,6 +38,7 @@ function useUserMock() {
     isLoggedIn: true,
     loanerInfo: { ...data, userParameters: { ...loggedInUser } },
     updateLoanerInfo: (obj) => {
+      console.log(obj, "UDPDATE LOANERINFO");
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
       // Broadcast update
@@ -73,7 +74,7 @@ function useUserImpl() {
     }
   }
 
-  const loanerInfo = useMemo(() => {
+  const sessionData = useMemo(() => {
     const sessionCopy = data?.session;
 
     // delete all keys with no value
@@ -86,11 +87,17 @@ function useUserImpl() {
     }
     return {
       ...data?.session,
+      userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
+    };
+  }, [data?.session, loggedInUser]);
+
+  const loanerInfo = useMemo(() => {
+    return {
       debt: userData?.user?.debt || [],
       loans: userData?.user?.loans || [],
       orders: userData?.user?.orders || [],
       agency: userData?.user.agency || {},
-      userParameters: { ...loggedInUser, ...sessionCopy?.userParameters },
+      ...sessionData,
     };
   }, [data?.session, loggedInUser]);
 
@@ -106,7 +113,7 @@ function useUserImpl() {
     isGuestUser,
     isLoggedIn: isAuthenticated || isGuestUser,
     updateLoanerInfo: async (obj) => {
-      const newSession = merge({}, loanerInfo, obj);
+      const newSession = merge({}, sessionData, obj);
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
 

@@ -595,6 +595,9 @@ function RenderLitteratureAudience({ values }) {
  */
 export function fieldsForRows(manifestation, work, context) {
   const materialType = work?.workTypes?.[0] || null;
+
+  console.log(manifestation, "MANIFESTATION");
+
   const fieldsMap = {
     DEFAULT: [
       {
@@ -738,7 +741,11 @@ export function fieldsForRows(manifestation, work, context) {
         audienceage: {
           label: Translate({ ...context, label: "audience" }),
           value: !isEmpty(manifestation?.audience?.ages)
-            ? manifestation?.audience?.ages.join(", ")
+            ? manifestation?.audience?.ages?.map((age, index) => (
+                <Text type="text4" lines={1} key={index}>
+                  For {age.display} årige
+                </Text>
+              ))
             : !isEmpty(manifestation?.audience?.libraryRecommendation)
             ? manifestation?.audience?.libraryRecommendation
                 .map((child) => child.display)
