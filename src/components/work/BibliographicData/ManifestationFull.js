@@ -3,7 +3,7 @@
  */
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useMemo, useState } from "react";
+import React, { useId, useMemo, useState } from "react";
 import animations from "@/components/base/animation/animations.module.css";
 
 import Text from "@/components/base/text";
@@ -25,6 +25,9 @@ import AlternativeOptions from "@/components/work/overview/alternatives/Alternat
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import CopyLink from "@/public/icons/copy_link.svg";
 import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
+import TjoolTjip from "@/components/base/tjooltjip";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
 /**
  * Column one of full view. Some links and a button.
@@ -35,11 +38,18 @@ import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
+  const copyLinkId = useId();
   function permalinkToPid(hash) {
     return `/work/pid/${hash.slice(1)}`;
   }
 
   const [checkMarkActive, setCheckMarkActive] = useState(false);
+
+  const tooltip = (
+    <Tooltip id={copyLinkId}>
+      {checkMarkActive ? "Link kopieret!" : "Kopier link"}
+    </Tooltip>
+  );
 
   function onClickCopyLink(event) {
     event.preventDefault();
@@ -106,17 +116,30 @@ function ColumnOne({ workId, manifestation }) {
             </Text>
           </Link>
         </div>
-        <IconLink
-          className={styles.linkstyle}
-          onClick={(event) => onClickCopyLink(event)}
-          href={permalinkToPid(window.location.hash)}
-          iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
-          iconPlacement={"right"}
-          iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-          iconStyle={{ marginTop: "var(--pt05)" }}
+        <OverlayTrigger
+          overlay={
+            <Tooltip id={copyLinkId}>
+              {checkMarkActive ? "Link kopieret!" : "Kopier link"}
+            </Tooltip>
+          }
+          placement="right"
+          delayShow={300}
+          delayHide={150}
         >
-          Kopier link til udgave
-        </IconLink>
+          <div style={{ width: "fit-content" }}>
+            <IconLink
+              className={styles.linkstyle}
+              onClick={(event) => onClickCopyLink(event)}
+              href={permalinkToPid(window.location.hash)}
+              iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
+              iconPlacement={"right"}
+              iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+              iconStyle={{ marginTop: "var(--pt05)" }}
+            >
+              Kopier link til udgave
+            </IconLink>
+          </div>
+        </OverlayTrigger>
       </div>
     </Col>
   );
@@ -146,7 +169,7 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   }
 
   return (
-    <Row>
+    <Row key={data?.manifestation?.pid}>
       <ColumnOne workId={workId} manifestation={data?.manifestation} />
       <Col xs={12} md>
         <div className={styles.container}>

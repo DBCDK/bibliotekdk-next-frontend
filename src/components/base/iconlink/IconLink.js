@@ -32,7 +32,8 @@ export function IconLink({
         size={{ w: 2, h: "auto" }}
         dataCy="icon-link-icon"
         className={cx(...iconAnimation)}
-        title={JSON.stringify(children)}
+        title={"Link kopieret"}
+        // title={JSON.stringify(children)}
         alt={JSON.stringify(children)}
       >
         <IconChild
@@ -51,7 +52,7 @@ export function IconLink({
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>
-        <Link border={border}>
+        <Link border={border} tag={"span"}>
           <Text type={textType} tag="span">
             {children}
           </Text>

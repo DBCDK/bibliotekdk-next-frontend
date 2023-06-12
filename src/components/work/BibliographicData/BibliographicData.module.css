@@ -67,9 +67,15 @@
   max-height: 100%;
 }
 
-.addilinks a {
-  margin-bottom: var(--pt2);
+.addilinks {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--pt2);
 }
+
+/*.addilinks a {*/
+/*  margin-bottom: var(--pt2);*/
+/*}*/
 
 .locationtitle {
   margin-bottom: var(--pt1);
@@ -119,7 +125,7 @@
 }
 
 .linkstyle {
-  padding-top: var(--pt2);
+  width: fit-content;
 }
 
 @media (min-width: 768px) {
