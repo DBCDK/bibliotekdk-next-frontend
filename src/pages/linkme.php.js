@@ -49,7 +49,11 @@ function LinkmePhp() {
 
   // if all is well - redirect to work page
   if (workId && data?.work) {
-    router.push(pathname);
+    const routerPath = {
+      pathname: pathname,
+      hash: router.query["rec.id"],
+    };
+    router.push(routerPath);
   } else {
     // something is wrong - we did not find title/author - goto  404 (not found) page
     // check if clientside
@@ -91,7 +95,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
   // if this is a bot title and author and workid has been fetched - redirect
   // to appropiate page. We use 301 (moved permanently) status code
   if (title_author && workId && ctx.res) {
-    const path = `/materiale/${title_author}/${workId}`;
+    const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
   }
