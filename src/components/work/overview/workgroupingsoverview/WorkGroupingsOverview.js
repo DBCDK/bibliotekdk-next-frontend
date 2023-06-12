@@ -75,7 +75,7 @@ WorkGroupingsOverview.propTypes = {
 };
 
 function getSeriesMap(series, seriesMembers) {
-  const numberInSeries = series?.numberInSeries?.number?.join(".") + " ";
+  const numberInSeries = series?.numberInSeries?.number?.join(".");
 
   return (
     seriesMembers?.length > 0 && {
