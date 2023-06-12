@@ -847,7 +847,7 @@ export function fieldsForRows(manifestation, work, context) {
       },
       {
         audience: {
-          label: Translate({ ...context, label: "audience" }),
+          label: "",
           value: manifestation?.audience?.generalAudience || "",
           jsxParser: RenderMovieAudience,
         },
