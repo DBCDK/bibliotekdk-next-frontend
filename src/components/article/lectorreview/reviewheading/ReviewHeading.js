@@ -6,7 +6,6 @@ import { workTypeTranslator } from "@/components/work/reservationbutton/Reservat
 import Section from "@/components/base/section";
 import styles from "@/components/article/lectorreview/LectorReviewPage.module.css";
 import Col from "react-bootstrap/Col";
-import { LinkArrow } from "@/components/article/lectorreview/linkarrow/LinkArrow";
 import Translate from "@/components/base/translate";
 import { Title } from "@/components/base/title/Title";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
