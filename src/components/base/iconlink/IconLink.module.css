@@ -3,7 +3,3 @@
   align-items: center;
   gap: var(--pt1);
 }
-
-.flex_box > * > a {
-  margin-bottom: 0;
-}
