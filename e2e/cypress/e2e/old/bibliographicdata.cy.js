@@ -16,6 +16,13 @@ describe("bibliographic data", () => {
     cy.get("[data-cy=link-references]").contains(
       "Download til referencesystemer"
     );
+
+    cy.contains("Kopier link til udgave").click();
+
+    cy.window()
+      .its("navigator.clipboard")
+      .invoke("readText")
+      .should("contain", "/work/pid");
   });
 
   it("Full manifestation - check localizationlink", () => {
@@ -24,5 +31,12 @@ describe("bibliographic data", () => {
       "have.text",
       "Se om den er hjemme på dit bibliotek"
     );
+
+    cy.contains("Kopier link til udgave").click();
+
+    cy.window()
+      .its("navigator.clipboard")
+      .invoke("readText")
+      .should("contain", "/work/pid");
   });
 });
