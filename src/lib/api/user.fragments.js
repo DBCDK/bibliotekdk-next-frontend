@@ -114,6 +114,7 @@ export function branchesForUser() {
           result {
             agencyId
             agencyName
+            name
           }
         }
       }
