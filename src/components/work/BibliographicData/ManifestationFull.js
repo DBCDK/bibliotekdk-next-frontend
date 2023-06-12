@@ -25,7 +25,6 @@ import AlternativeOptions from "@/components/work/overview/alternatives/Alternat
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import CopyLink from "@/public/icons/copy_link.svg";
 import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
-import TjoolTjip from "@/components/base/tjooltjip";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 
@@ -47,7 +46,15 @@ function ColumnOne({ workId, manifestation }) {
 
   const tooltip = (
     <Tooltip id={copyLinkId}>
-      {checkMarkActive ? "Link kopieret!" : "Kopier link"}
+      {checkMarkActive
+        ? Translate({
+            context: "bibliographic-data",
+            label: "link_copied",
+          })
+        : Translate({
+            context: "bibliographic-data",
+            label: "copy_link",
+          })}
     </Tooltip>
   );
 
@@ -117,11 +124,7 @@ function ColumnOne({ workId, manifestation }) {
           </Link>
         </div>
         <OverlayTrigger
-          overlay={
-            <Tooltip id={copyLinkId}>
-              {checkMarkActive ? "Link kopieret!" : "Kopier link"}
-            </Tooltip>
-          }
+          overlay={tooltip}
           placement="right"
           delayShow={300}
           delayHide={150}
@@ -136,7 +139,10 @@ function ColumnOne({ workId, manifestation }) {
               iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
               iconStyle={{ marginTop: "var(--pt05)" }}
             >
-              Kopier link til udgave
+              {Translate({
+                context: "bibliographic-data",
+                label: "copy_link_to_edition",
+              })}
             </IconLink>
           </div>
         </OverlayTrigger>
