@@ -12,6 +12,8 @@
 }
 
 .words {
+  display: flex;
+  flex-wrap: wrap;
   padding-bottom: var(--pt1);
 }
 
@@ -20,5 +22,6 @@
 }
 
 .word {
+  display: inline;
   margin: 0 var(--pt3) var(--pt2) 0;
 }

@@ -26,9 +26,9 @@ export function Default() {
     <div>
       <StoryTitle>Related subjects</StoryTitle>
       <StoryDescription>
-        Relted subjects for a given search query
+        Related subjects for a given search query
       </StoryDescription>
-      <div>
+      <div style={{ marginTop: "10px" }}>
         <Words data={data} isLoading={false} />
       </div>
     </div>
@@ -40,7 +40,7 @@ export function Connected() {
     <div>
       <StoryTitle>Connected result page</StoryTitle>
       <StoryDescription>Uses mocked GraphQL provider</StoryDescription>
-      <div style={{ maxWidth: "1200px", margin: "auto" }}>
+      <div style={{ maxWidth: "1200px", margin: "auto", marginTop: "100px" }}>
         <WrappedRelated workId="work-of:870970-basis:51701763" />
       </div>
     </div>

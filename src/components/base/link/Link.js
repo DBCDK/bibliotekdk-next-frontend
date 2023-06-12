@@ -4,7 +4,20 @@ import { default as NextLink } from "next/link";
 import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
+import animations from "@/components/base/animation/animations.module.css";
 
+function parseBorders(border) {
+  return [
+    ...(!Boolean(border?.top) ? [animations.top_line_false] : []),
+    ...(!Boolean(border?.top?.keepVisible)
+      ? [animations.top_line_keep_false]
+      : []),
+    ...(!Boolean(border?.bottom) ? [animations.bottom_line_false] : []),
+    ...(!Boolean(border?.bottom?.keepVisible)
+      ? [animations.bottom_line_keep_false]
+      : []),
+  ];
+}
 /**
  * The Component function
  *
@@ -13,7 +26,7 @@ import styles from "./Link.module.css";
  *
  * @returns {component}
  */
-export default function Link({
+function Link({
   children = "Im a hyperlink now!",
   a = true,
   linkRef = null,
@@ -30,7 +43,7 @@ export default function Link({
   disabled = false,
   ariaLabel = "",
   scroll = true,
-  data_display = "inline-block",
+  data_use_new_underline = false,
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -54,11 +67,11 @@ export default function Link({
         }}
         onKeyDown={onKeyDown}
         onFocus={onFocus}
-        className={`${
-          styles.link
-        } ${animationClass} ${disabledClass} ${className} ${
-          data_display === "inline" && styles.display_inline
-        }`}
+        className={
+          data_use_new_underline
+            ? className
+            : `${styles.link} ${animationClass} ${disabledClass} ${className}`
+        }
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
       >
@@ -124,3 +137,73 @@ Link.propTypes = {
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
 };
+
+/**
+ * Wrapper for using new underline that allows line wrap
+ *   HOW TO USE:
+ *   - MULTILINE: The link element (default display is inline) and their children must be inline-elements
+ *   - BLOCK ELEMENT: The link and/or children is a block (or even inline-block) :-)
+ * @param className
+ * @param disabled
+ * @param border
+ * @param data_use_new_underline
+ * @param data_underline_animation_disabled
+ * @param props
+ * @return {JSX.Element}
+ * @constructor
+ */
+export default function Wrap({
+  className = "",
+  disabled = false,
+  border = { top: false, bottom: true },
+  data_use_new_underline = true,
+  data_underline_animation_disabled = false,
+  ...props
+}) {
+  let newBorder = border;
+  let newClassName = className;
+
+  const underline_data_exception_classes = [
+    ...parseBorders(border),
+    ...(disabled ? [animations.link_disabled] : []),
+    ...(data_underline_animation_disabled
+      ? [animations.animation_disabled]
+      : []),
+  ].join(" ");
+
+  if (data_use_new_underline === true) {
+    newBorder = { top: false, bottom: false };
+
+    newClassName = [
+      animations.underlineContainer,
+      underline_data_exception_classes,
+      className,
+    ].join(" ");
+  }
+
+  return (
+    <Link
+      border={newBorder}
+      className={newClassName}
+      disabled={disabled}
+      data_use_new_underline={data_use_new_underline}
+      data_underline_animation_disabled={data_underline_animation_disabled}
+      {...props}
+    >
+      {props.children}
+    </Link>
+  );
+}
+
+export function LinkOnlyInternalAnimations({ href, target, children }) {
+  return (
+    <Link
+      border={{ top: false, bottom: false }}
+      className={animations.underlineContainer__only_internal_animations}
+      href={href}
+      target={`${target}`}
+    >
+      {children}
+    </Link>
+  );
+}

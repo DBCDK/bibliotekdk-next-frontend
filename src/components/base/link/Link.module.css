@@ -2,6 +2,7 @@
   color: var(--mine-shaft);
   text-decoration: none;
   cursor: pointer;
+  white-space: normal;
 }
 
 .border {
@@ -12,18 +13,13 @@
   display: inline-block;
 }
 
-.border.display_inline {
-  white-space: normal;
-  display: inline;
-}
-
 /* real focus */
 .border:focus-visible {
-  color: var(--blue);
   text-decoration: none;
 }
 
 .link.border:focus-visible > div > hr:last-child {
+  color: var(--blue);
   display: none;
 }
 

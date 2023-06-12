@@ -47,19 +47,19 @@ function Menu({ modal }) {
           // Link tabIndex can also be removed when hiddenClass is no longer needed
           return (
             <li key={a.label} className={hiddenClass}>
-              <Link
-                className={`${styles.link}`}
-                title={title}
-                href={a.href}
-                dataCy={cyKey({
-                  name: a.label,
-                  prefix: "menu-link",
-                })}
-              >
-                <Title type="title5" tag="h2">
+              <Title type="title5" tag="h2">
+                <Link
+                  className={`${styles.link}`}
+                  title={title}
+                  href={a.href}
+                  dataCy={cyKey({
+                    name: a.label,
+                    prefix: "menu-link",
+                  })}
+                >
                   {title}
-                </Title>
-              </Link>
+                </Link>
+              </Title>
             </li>
           );
         })}

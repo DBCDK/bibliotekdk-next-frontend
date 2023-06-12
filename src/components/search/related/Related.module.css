@@ -21,27 +21,20 @@
 }
 
 .related {
-  display: flex;
-  overflow-x: auto;
-  padding: 0 var(--pt2) 0 var(--pt2);
-  align-items: baseline;
-}
-
-.related.skeleton {
-  align-items: flex-start;
+  display: block;
+  margin: var(--pt2);
 }
 
 .words {
   display: flex;
-  padding-bottom: var(--pt1);
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--pt3);
+  row-gap: var(--pt1);
 }
 
 .word {
-  margin-left: var(--pt3);
-}
-
-.label {
-  min-width: fit-content;
+  display: inline;
 }
 
 .filterButton {
@@ -62,21 +55,7 @@
     padding-top: var(--pt6);
   }
 
-  .related {
-    overflow: unset;
-    padding-bottom: unset;
-  }
-
   .skip {
-    display: block;
-  }
-
-  .words {
-    display: unset;
-    padding: 0;
-  }
-
-  .word {
-    margin-bottom: var(--pt1);
+    display: inline;
   }
 }

@@ -134,10 +134,11 @@ export function FlatSubjectsForFullManifestation(subjects) {
           a
           href={url(sub.display)}
           border={{ bottom: { keepVisible: true } }}
-          className={styles.bibliographickeywordslink}
           key={`flat-subject-${index}`}
         >
-          <Text type="text3">{sub.display}</Text>
+          <Text type="text3" tag="span">
+            {sub.display}
+          </Text>
         </Link>
         {index < subjects?.dbcVerified?.length - 1 && <>,&nbsp;</>}
       </>
@@ -152,14 +153,17 @@ export function FlatSubjectsForFullManifestation(subjects) {
  * @param skeleton
  * @param sizeClass
  * @returns {JSX.Element}
- * @constructor
  */
 function KeyWordList({ className, grouped, skeleton, sizeClass }) {
   return (
-    <div data-cy="keywords" className={`${styles.keywords} ${className}`}>
+    <div data-cy="keywords" className={`${className}`}>
       {grouped?.map((group, idx) => {
         return (
-          <div key={group.key} data-cy={`keyword-group-${idx}`}>
+          <div
+            key={group.key}
+            className={styles.keyword_group}
+            data-cy={`keyword-group-${idx}`}
+          >
             {group.subjects.map(({ display }) => {
               const key = cyKey({ name: display, prefix: "keyword" });
 
@@ -169,15 +173,14 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
                   className={`${styles.keyword} ${sizeClass}`}
                   key={`${key}-${JSON.stringify(display)}`}
                 >
-                  <Link
-                    a
-                    href={url(display)}
-                    border={{ bottom: { keepVisible: true } }}
-                  >
-                    <Title type="title4" skeleton={skeleton}>
+                  <Title type="title4" skeleton={skeleton}>
+                    <Link
+                      href={url(display)}
+                      border={{ bottom: { keepVisible: true } }}
+                    >
                       {display}
-                    </Title>
-                  </Link>
+                    </Link>
+                  </Title>
                 </span>
               );
             })}

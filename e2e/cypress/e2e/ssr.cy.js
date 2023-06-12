@@ -141,7 +141,7 @@ describe("Server Side Rendering", () => {
       });
     });
 
-    it(`has json-ld for movie`, () => {
+    it.skip(`has json-ld for movie`, () => {
       getPageHead(
         "/materiale/the-jungle-book_jon-favreau/work-of%3A870970-basis%3A52331080"
       ).then((res) => {

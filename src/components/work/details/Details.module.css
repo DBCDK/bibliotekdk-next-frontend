@@ -18,6 +18,11 @@
   align-items: center;
 }
 
+.link_list {
+  line-height: 22px;
+  margin-bottom: calc(var(--pt025) * -1);
+}
+
 .link {
   white-space: normal;
   display: table;
