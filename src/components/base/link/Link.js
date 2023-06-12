@@ -5,6 +5,7 @@ import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
 import animations from "@/components/base/animation/animations.module.css";
+import cx from "classnames";
 
 function parseBorders(border) {
   return [
@@ -96,6 +97,33 @@ function Link({
   );
 }
 
+export const PropType_Link_border = PropTypes.oneOfType([
+  PropTypes.bool,
+  PropTypes.shape({
+    bottom: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.shape({
+        keepVisible: PropTypes.bool,
+      }),
+    ]),
+    top: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.shape({
+        keepVisible: PropTypes.bool,
+      }),
+    ]),
+  }),
+]);
+
+export const PropType_Link_href = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+    query: PropTypes.object,
+  }),
+  PropTypes.object,
+]);
+
 // PropTypes for component
 Link.propTypes = {
   children: PropTypes.oneOfType([
@@ -106,32 +134,9 @@ Link.propTypes = {
   target: PropTypes.oneOf(["_blank", "_self", "_parent", "_top"]),
   a: PropTypes.bool,
   dataCy: PropTypes.string,
-  border: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.shape({
-      bottom: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.shape({
-          bottom: PropTypes.bool,
-        }),
-      ]),
-      top: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.shape({
-          bottom: PropTypes.bool,
-        }),
-      ]),
-    }),
-  ]),
+  border: PropType_Link_border,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  href: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-      query: PropTypes.object,
-    }),
-    PropTypes.object,
-  ]),
+  href: PropType_Link_href,
   tabIndex: PropTypes.string,
   tag: PropTypes.oneOf(["a", "span"]),
   disabled: PropTypes.bool,
@@ -195,13 +200,26 @@ export default function Wrap({
   );
 }
 
-export function LinkOnlyInternalAnimations({ href, target, children }) {
+export function LinkOnlyInternalAnimations({
+  dataCy,
+  className,
+  href = null,
+  onClick = () => {},
+  target = "_self",
+  border = { top: false, bottom: false },
+  children,
+}) {
   return (
     <Link
-      border={{ top: false, bottom: false }}
-      className={animations.underlineContainer__only_internal_animations}
+      dataCy={dataCy}
+      className={cx(
+        animations.underlineContainer__only_internal_animations,
+        className
+      )}
       href={href}
-      target={`${target}`}
+      onClick={onClick}
+      target={target}
+      border={border}
     >
       {children}
     </Link>

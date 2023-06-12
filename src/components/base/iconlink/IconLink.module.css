@@ -1,0 +1,5 @@
+.flex_box {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+}

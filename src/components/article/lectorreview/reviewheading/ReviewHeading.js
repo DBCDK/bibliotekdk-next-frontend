@@ -6,12 +6,13 @@ import { workTypeTranslator } from "@/components/work/reservationbutton/Reservat
 import Section from "@/components/base/section";
 import styles from "@/components/article/lectorreview/LectorReviewPage.module.css";
 import Col from "react-bootstrap/Col";
-import { LinkArrow } from "@/components/article/lectorreview/linkarrow/LinkArrow";
 import Translate from "@/components/base/translate";
 import { Title } from "@/components/base/title/Title";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForHeaderWorkCard } from "@/components/base/materialcard/templatesForMaterialCard";
 import * as PropTypes from "prop-types";
+import { IconLink } from "@/components/base/iconlink/IconLink";
+import ChevronLeft from "@/public/icons/chevron_left.svg";
 
 /**
  * ReviewHeading includes the title of LectorReviews (Bibliotekets vurdering / Librarian's Assessment)
@@ -33,17 +34,17 @@ export function ReviewHeading({ propAndChildrenInput }) {
     >
       <Col xs={12} className={`${styles.overview}`}>
         <div className={styles.back_button}>
-          <LinkArrow
-            orientation={"left"}
-            link={templateForHeaderWorkCard(propAndChildrenInput).link_href}
-            textBorder={{ bottom: true }}
+          <IconLink
+            href={templateForHeaderWorkCard(propAndChildrenInput).link_href}
+            border={{ bottom: true, top: false }}
+            iconSrc={ChevronLeft}
           >
             {[
               Translate({ context: "general", label: "back-to" }),
               " ",
               workTypeTranslated,
             ].join("")}
-          </LinkArrow>
+          </IconLink>
         </div>
         <div className={styles.title_box}>
           <Title type="title2" className={styles.title}>

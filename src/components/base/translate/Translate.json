@@ -568,6 +568,18 @@
       "subject": {
         "da": "Emneord",
         "en": "Emneord"
+      },
+      "copy_link_to_edition": {
+        "da": "Kopier link til udgave",
+        "en": "Copy link to edition"
+      },
+      "link_copied": {
+        "da": "Link kopieret!",
+        "en": "Link copied!"
+      },
+      "copy_link": {
+        "da": "Kopier link",
+        "en": "Copy link"
       }
     },
     "references": {
@@ -2986,8 +2998,8 @@
         "da": "Forskningsbibliotek",
         "en": "Academic library"
       },
-      "showMore": {"da":"Vis mere", "en":"Show more"},
-      "showLess": {"da":"Vis mindre", "en":"Show less"},
+      "showMore": { "da": "Vis mere", "en": "Show more" },
+      "showLess": { "da": "Vis mindre", "en": "Show less" },
 
       "remove": {
         "da": "Fjern",
