@@ -49,8 +49,7 @@ function Link({
   const Tag = tag;
   // Maybe wrap with an a-tag
   if (a) {
-    // const animationClass = !!border ? styles.border : "";
-    const animationClass = "";
+    const animationClass = !!border ? styles.border : "";
 
     const disabledClass = disabled ? styles.disabled : "";
 
