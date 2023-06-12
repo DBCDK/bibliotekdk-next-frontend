@@ -120,28 +120,7 @@
 
 .linkstyle {
   padding-top: var(--pt2);
-  display: contents;
 }
-
-.copy_link {
-    display: flex;
-    align-items: center;
-    gap: var(--pt05);
-}
-
-.copy_link a {
-    margin-bottom: 0;
-}
-
-.icon img {
-    margin-bottom: 0;
-}
-
-/*.icon svg path {*/
-/*    !* default as blue icon *!*/
-/*    !*stroke: var(--blue);*!*/
-/*    !*fill: var(--blue);*!*/
-/*}*/
 
 @media (min-width: 768px) {
   .container {

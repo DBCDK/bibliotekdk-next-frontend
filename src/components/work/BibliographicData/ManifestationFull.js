@@ -4,7 +4,6 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useMemo } from "react";
-import cx from "classnames";
 import animations from "@/components/base/animation/animations.module.css";
 
 import Text from "@/components/base/text";
@@ -23,8 +22,10 @@ import { useData } from "@/lib/api/api";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
-import Icon from "@/components/base/icon";
 import { IconLink } from "@/components/base/iconlink/IconLink";
+import CopyLink from "@/public/icons/copy_link.svg";
+import { checkQuery } from "@/pages/linkme.php";
+import { useRouter } from "next/router";
 
 /**
  * Column one of full view. Some links and a button.
@@ -35,6 +36,9 @@ import { IconLink } from "@/components/base/iconlink/IconLink";
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
+  function linkme(hash) {
+    return `/linkme.php/?rec.id=${hash}`;
+  }
 
   return (
     <Col
@@ -93,37 +97,18 @@ function ColumnOne({ workId, manifestation }) {
           </Link>
         </div>
         <IconLink
+          className={styles.linkstyle}
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
           }}
-          iconSrc={"copy_link.svg"}
+          href={linkme(window.location.hash.slice(1))}
+          iconSrc={CopyLink}
+          iconPlacement={"right"}
+          iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
+          iconStyle={{ marginTop: "var(--pt05)" }}
         >
           Kopier link til udgave
         </IconLink>
-        <Link
-          border={false}
-          className={cx(
-            styles.copy_link,
-            animations["h-elastic"],
-            animations["f-elastic"]
-          )}
-        >
-          <Icon
-            size={{ w: 2, h: 2 }}
-            src={"copy_link.svg"}
-            className={styles.icon}
-          />
-          <Link
-            border={{ bottom: { keepVisible: true } }}
-            onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
-            }}
-          >
-            <Text type="text3" className={styles.linkstyle}>
-              Kopier link til udgave
-            </Text>
-          </Link>
-        </Link>
       </div>
     </Col>
   );

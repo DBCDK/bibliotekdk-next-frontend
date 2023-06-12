@@ -1,0 +1,17 @@
+.flex_box {
+  display: flex;
+  align-items: center;
+  gap: var(--pt1);
+}
+
+.flex_box > * > a {
+  margin-bottom: 0;
+}
+
+/*.icon {*/
+/*  !*margin-top: var(--pt05);*!*/
+/*}*/
+
+/*.icon img {*/
+/*  margin-bottom: 0;*/
+/*}*/
