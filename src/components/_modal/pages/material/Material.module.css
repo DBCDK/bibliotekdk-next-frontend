@@ -37,3 +37,7 @@
   padding: var(--pt6) 0;
   margin: var(--pt7) calc(var(--pt2) * -1) 0;
 }
+
+.isWarning {
+  color: var(--error_temp);
+}

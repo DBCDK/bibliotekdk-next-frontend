@@ -3071,6 +3071,10 @@
       "your-loan": {
         "da": "Dit lån",
         "en": "Your loan"
+      },
+      "to-return": {
+        "da": "Afleveres d.",
+        "en": "Hand in by"
       }
     }
   }

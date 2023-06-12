@@ -5,14 +5,160 @@ import Cover from "@/components/base/cover";
 import Icon from "@/components/base/icon";
 import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
-import { MaterialRowButton } from "@/components/profile/materialRow/MaterialRow";
+import {
+  MaterialRowButton,
+  MaterialRowIconButton,
+  loanDateAnalysis,
+} from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
 import Link from "@/components/base/link";
 import Recommendations from "@/components/work/recommendations";
+import { dateToDayInMonth } from "@/utils/datetimeConverter";
+import cx from "classnames";
+
+const DynamicContentLoan = ({ dueDateString }) => {
+  const { isCountdown, isOverdue, dateString, daysToDueDateString } =
+    loanDateAnalysis(dueDateString);
+
+  return (
+    <>
+      <Text type="text2" className={styles.spacer}>
+        {Translate({ context: "profile", label: "to-return" })} {dateString}
+      </Text>
+      <div className={styles.status}>
+        <Icon
+          className={styles.ornament}
+          size={{ w: 5, h: "auto" }}
+          src={"ornament1.svg"}
+          alt=""
+        />
+        {isOverdue ? (
+          <Text type="text2">
+            {Translate({
+              context: "profile",
+              label: "date-overdue",
+            })}
+          </Text>
+        ) : (
+          <Text
+            type="text2"
+            className={cx({ [styles.isWarning]: isCountdown })}
+          >
+            {daysToDueDateString}
+          </Text>
+        )}
+      </div>
+    </>
+  );
+};
+
+const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+  const pickUpDate = new Date(pickUpExpiryDate);
+  const isReadyToPickup = !!pickUpExpiryDate;
+  const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
+
+  if (isReadyToPickup) {
+    return (
+      <>
+        <Text type="text1" tag="span" className={styles.isReady}>
+          {Translate({
+            context: "profile",
+            label: "ready-to-pickup",
+          })}
+        </Text>
+        <div className={styles.status}>
+          <Icon
+            className={styles.ornament}
+            size={{ w: 5, h: "auto" }}
+            src={"ornament1.svg"}
+            alt=""
+          />
+          <Text type="text2" tag="span">
+            {Translate({
+              context: "profile",
+              label: "pickup-deadline",
+            })}
+             {dateString}
+          </Text>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <div className={styles.status}>
+      <Icon
+        className={styles.ornament}
+        size={{ w: 5, h: "auto" }}
+        src={"ornament1.svg"}
+        alt=""
+      />
+      <Text type="text2" tag="span">
+        {holdQueuePosition === "1"
+          ? `${Translate({
+              context: "profile",
+              label: "front-of-row",
+            })}`
+          : `${holdQueuePosition - 1} ${Translate({
+              context: "profile",
+              label: "in-row",
+            })}`}
+      </Text>
+    </div>
+  );
+};
 
 const Material = ({ context }) => {
-  const { label, title, creator, materialType, creationYear, image, workId } =
-    context;
+  const {
+    label,
+    title,
+    creator,
+    materialType,
+    creationYear,
+    image,
+    workId,
+    dueDateString,
+    type,
+    pickUpExpiryDate,
+    holdQueuePosition,
+  } = context;
+
+  const renderDynamicContent = () => {
+    switch (type) {
+      case "LOAN":
+        return <DynamicContentLoan dueDateString={dueDateString} />;
+      case "ORDER":
+        return (
+          <DynamicColumnOrder
+            pickUpExpiryDate={pickUpExpiryDate}
+            holdQueuePosition={holdQueuePosition}
+          />
+        );
+    }
+  };
+
+  const renderDynamicButton = () => {
+    switch (type) {
+      case "LOAN":
+        return (
+          <MaterialRowButton wrapperClassname={styles.button}>
+            {Translate({ context: "profile", label: "renew" })}
+          </MaterialRowButton>
+        );
+      case "ORDER":
+        return (
+          <MaterialRowIconButton
+            wrapperClassname={styles.button}
+            onClick={() => onDeleteOrder(order.orderId)}
+          >
+            {Translate({
+              context: "profile",
+              label: "delete",
+            })}
+          </MaterialRowIconButton>
+        );
+    }
+  };
 
   return (
     <article className={styles.Material}>
@@ -39,22 +185,9 @@ const Material = ({ context }) => {
             </Text>
           )}
 
-          <Text type="text2" className={styles.spacer}>
-            Afleveres d. 30 maj 2023
-          </Text>
-          <div className={styles.status}>
-            <Icon
-              className={styles.ornament}
-              size={{ w: 5, h: "auto" }}
-              src={"ornament1.svg"}
-              alt=""
-            />
-            <Text type="text2">Frist overskredet</Text>
-          </div>
+          {renderDynamicContent()}
 
-          <MaterialRowButton wrapperClassname={styles.button}>
-            {Translate({ context: "profile", label: "renew" })}
-          </MaterialRowButton>
+          {renderDynamicButton()}
         </div>
         <div>
           <Cover src={image} size="fill-width" />

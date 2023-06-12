@@ -19,13 +19,7 @@ function IconButton({
   return (
     <button
       className={`${styles.close} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
-      border={false}
       onClick={() => onClick && onClick()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          onClick && onClick();
-        }
-      }}
       {...props}
     >
       <Text

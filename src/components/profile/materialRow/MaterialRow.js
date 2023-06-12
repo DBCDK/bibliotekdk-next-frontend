@@ -3,7 +3,7 @@ import Button from "@/components/base/button";
 import Text from "@/components/base/text";
 import styles from "./MaterialRow.module.css";
 import Title from "@/components/base/title";
-import { Checkbox } from "@/components/base/forms/checkbox";
+import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
@@ -22,7 +22,33 @@ import { useRouter } from "next/router";
 import useUser from "@/components/hooks/useUser";
 
 // Set to when warning should be shown
-const DAYS_TO_COUNTDOWN_RED = 5;
+export const DAYS_TO_COUNTDOWN_RED = 5;
+
+export const loanDateAnalysis = (dueDateString) => {
+  const router = useRouter();
+  const locale = router.locale === undefined ? "da" : router.locale;
+  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
+
+  const dueDate = new Date(dueDateString);
+  const today = new Date();
+  const futureDate = new Date();
+  futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
+  const daysToDueDate =
+    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+
+  return {
+    dayToText: timeFormatter.format(daysToDueDate, "day"),
+    isCountdown: dueDate >= today && dueDate <= futureDate,
+    isOverdue: dueDate < today,
+    dateString: timestampToShortDate(dueDate),
+    daysToDueDate: Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1, // Add 1 so due date today is "in 1 day"
+    daysToDueDateString: `${daysToDueDate} ${
+      daysToDueDate === 1
+        ? Translate({ context: "units", label: "day" })
+        : Translate({ context: "units", label: "days" })
+    }`,
+  };
+};
 
 export const MaterialRowButton = ({ wrapperClassname, ...props }) => {
   return (
@@ -32,9 +58,9 @@ export const MaterialRowButton = ({ wrapperClassname, ...props }) => {
   );
 };
 
-export const MaterialRowIconButton = ({ ...props }) => {
+export const MaterialRowIconButton = ({ wrapperClassname, ...props }) => {
   return (
-    <div className={styles.buttonContainer}>
+    <div className={cx(wrapperClassname, styles.buttonContainer)}>
       <IconButton {...props} />
     </div>
   );
@@ -48,21 +74,9 @@ const DynamicColumnDebt = ({ amount, currency }) => (
   </DynamicColumn>
 );
 
-const DynamicColumnLoan = ({ dueDateString }) => {
-  const router = useRouter();
-  const locale = router.locale === undefined ? "da" : router.locale;
-  const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
-
-  const dueDate = new Date(dueDateString);
-  const today = new Date();
-  const futureDate = new Date();
-  futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
-  const daysToDueDate =
-    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
-  const dayToText = timeFormatter.format(daysToDueDate, "day");
-  const isCountdown = dueDate >= today && dueDate <= futureDate;
-  const isOverdue = dueDate < today;
-  const dateString = timestampToShortDate(dueDate);
+export const DynamicColumnLoan = ({ dueDateString }) => {
+  const { isCountdown, isOverdue, dateString, daysToDueDateString } =
+    loanDateAnalysis(dueDateString);
 
   return (
     <DynamicColumn>
@@ -71,7 +85,7 @@ const DynamicColumnLoan = ({ dueDateString }) => {
           <Text type="text2" tag="span">
             {dateString}
           </Text>
-          <Text type="text1" className={styles.isWarning}>
+          <Text type="text1" className={styles.isWarning} tag="span">
             {Translate({
               context: "profile",
               label: "date-overdue",
@@ -88,7 +102,7 @@ const DynamicColumnLoan = ({ dueDateString }) => {
             tag="span"
             className={cx(styles.isWarning, styles.upperCase)}
           >
-            {dayToText}
+            {daysToDueDateString}
           </Text>
         </>
       ) : (
@@ -97,7 +111,7 @@ const DynamicColumnLoan = ({ dueDateString }) => {
             {dateString}
           </Text>
           <Text type="text2" tag="span" className={styles.upperCase}>
-            {dayToText}
+            {daysToDueDateString}
           </Text>
         </>
       )}
@@ -181,7 +195,7 @@ export const getCheckedElements = (parentRef) => {
 };
 
 const MobileMaterialRow = (props) => {
-  const { image, creator, materialType, creationYear, title, id } = props;
+  const { image, creator, materialType, creationYear, title, id, type } = props;
   const modal = useModal();
 
   const onClick = () => {
@@ -192,16 +206,26 @@ const MobileMaterialRow = (props) => {
   };
 
   return (
-    <article
-      className={styles.materialRow_mobile}
-      role="button"
-      onClick={onClick}
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") {
-          onClick();
-        }
-      }}
+    <ConditionalWrapper
+      condition={type === "DEBT"}
+      wrapper={(children) => (
+        <article className={styles.materialRow_mobile}>{children}</article>
+      )}
+      elseWrapper={(children) => (
+        <article
+          className={styles.materialRow_mobile}
+          role="button"
+          onClick={onClick}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              onClick();
+            }
+          }}
+        >
+          {children}
+        </article>
+      )}
     >
       <div className={styles.imageContainer_mobile}>
         <Cover src={image} size="fill-width" />
@@ -221,9 +245,8 @@ const MobileMaterialRow = (props) => {
             {materialType}, {creationYear}
           </Text>
         )}
-        {/*<div className={styles.dynamicColumn_mobile}>{dynamicColumn}</div>*/}
       </div>
-    </article>
+    </ConditionalWrapper>
   );
 };
 
