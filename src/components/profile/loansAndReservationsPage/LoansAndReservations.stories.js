@@ -1,5 +1,7 @@
 import LoansAndReservations from "./Page";
 import automock_utils from "@/components/_modal/pages/automock_utils";
+import Modal from "@/components/_modal/Modal";
+import Pages from "@/components/_modal/pages";
 
 const { useMockLoanerInfo } = automock_utils();
 
@@ -9,7 +11,14 @@ const exportedObject = {
 
 export const LoansAndReservationsStory = () => {
   useMockLoanerInfo({});
-  return <LoansAndReservations />;
+  return (
+    <>
+      <Modal.Container>
+        <Modal.Page id="material" component={Pages.Material} />
+      </Modal.Container>
+      <LoansAndReservations />
+    </>
+  );
 };
 
 export default exportedObject;
