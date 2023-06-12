@@ -42,10 +42,14 @@ export default function WorkPage() {
   useMemo(() => {
     if (query.type) {
       router.replace(
-        { pathname: router.pathname, query },
+        { pathname: router.pathname, query: query },
         {
-          pathname: router.asPath.replace(/\?.*/, ""),
-          query,
+          pathname: router.asPath.split("#")[0].replace(/\?.*/, ""),
+          query: query,
+          ...(window.location.hash &&
+            !router.query.type && {
+              hash: window.location.hash,
+            }),
         },
         { shallow: true, scroll: false }
       );

@@ -3,7 +3,7 @@
  */
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import animations from "@/components/base/animation/animations.module.css";
 
 import Text from "@/components/base/text";
@@ -24,8 +24,7 @@ import ManifestationParts from "@/components/manifestationparts/ManifestationPar
 import AlternativeOptions from "@/components/work/overview/alternatives/Alternatives";
 import { IconLink } from "@/components/base/iconlink/IconLink";
 import CopyLink from "@/public/icons/copy_link.svg";
-import { checkQuery } from "@/pages/linkme.php";
-import { useRouter } from "next/router";
+import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
 
 /**
  * Column one of full view. Some links and a button.
@@ -36,8 +35,19 @@ import { useRouter } from "next/router";
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
-  function linkme(hash) {
-    return `/linkme.php/?rec.id=${hash}`;
+  function permalinkToPid(hash) {
+    return `/work/pid/${hash.slice(1)}`;
+  }
+
+  const [checkMarkActive, setCheckMarkActive] = useState(false);
+
+  function onClickCopyLink(event) {
+    event.preventDefault();
+    setCheckMarkActive(true);
+    setTimeout(() => setCheckMarkActive(false), 2000);
+    navigator.clipboard.writeText(
+      window.location.host + permalinkToPid(window.location.hash)
+    );
   }
 
   return (
@@ -98,11 +108,9 @@ function ColumnOne({ workId, manifestation }) {
         </div>
         <IconLink
           className={styles.linkstyle}
-          onClick={() => {
-            navigator.clipboard.writeText(window.location.href);
-          }}
-          href={linkme(window.location.hash.slice(1))}
-          iconSrc={CopyLink}
+          onClick={(event) => onClickCopyLink(event)}
+          href={permalinkToPid(window.location.hash)}
+          iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
           iconPlacement={"right"}
           iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
           iconStyle={{ marginTop: "var(--pt05)" }}

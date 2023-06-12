@@ -31,7 +31,7 @@ export function IconLink({
       <Icon
         size={{ w: 2, h: "auto" }}
         dataCy="icon-link-icon"
-        className={cx(styles.icon, ...iconAnimation)}
+        className={cx(...iconAnimation)}
         title={JSON.stringify(children)}
         alt={JSON.stringify(children)}
       >
