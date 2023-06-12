@@ -1,5 +1,6 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
+import { creatorsFragment } from "@/lib/api/work.fragments";
 
 /**
  * @file Contains GraphQL queries all taking a workId as variable
@@ -15,7 +16,7 @@ export function basic() {
     apiUrl: ApiEnums.FBI_API,
     // delay: 1000, // for debugging
     query: `
-    query {
+    query BasicUser {
       user {
         name
         mail
@@ -48,7 +49,7 @@ export function basic() {
               workId
             }
             creators {
-              display
+              ...creatorsFragment
             }
             materialTypes {
               specific
@@ -80,7 +81,7 @@ export function basic() {
               workId
             }
             creators {
-              display
+              ...creatorsFragment
             }
             materialTypes {
               specific
@@ -92,8 +93,8 @@ export function basic() {
           }
         }   
       }
-      monitor(name: "bibdknext_user")
-     }`,
+    }
+    ${creatorsFragment}`,
     variables: {},
     slowThreshold: 3000,
   };

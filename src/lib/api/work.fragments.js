@@ -50,11 +50,15 @@ export function recommendations({ workId }) {
         reader
         work {
           ...workSliderFragment
+          creators {
+            ...creatorsFragment
+          }
         }
       }
     }
   }
   ${workSliderFragment}
+  ${creatorsFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -98,7 +102,7 @@ export function reviews({ workId }) {
                     abstract
                     pid
                     creators {
-                      display
+                      ...creatorsFragment
                     }
                     access {
                       __typename
@@ -142,7 +146,7 @@ export function reviews({ workId }) {
                               main
                             }
                             creators {
-                              display
+                              ...creatorsFragment
                             }
                           }
                         }
@@ -151,7 +155,8 @@ export function reviews({ workId }) {
                   }
                 }
               }
-            }`,
+            } 
+            ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -173,11 +178,15 @@ export function series({ workId }) {
       work(id: $workId) {
         seriesMembers {
           ...workSliderFragment
+          creators {
+            ...creatorsFragment
+          }
         }
         ...seriesFragment
       }
     }
     ${workSliderFragment}
+    ${creatorsFragment}
     ${seriesFragment}
   `,
     variables: { workId },
@@ -206,7 +215,7 @@ export function infomediaArticlePublicInfo({ workId }) {
           main
         }
         creators {
-          display
+          ...creatorsFragment
         }
         subjects {
           dbcVerified {
@@ -233,6 +242,7 @@ export function infomediaArticlePublicInfo({ workId }) {
         
       }
     }
+  ${creatorsFragment}
   `,
     variables: { workId },
     slowThreshold: 3000,
@@ -285,14 +295,7 @@ export function description({ workId }) {
       work(id: $workId) {
         abstract
         creators {
-          display
-          roles {
-            function {
-              plural
-              singular
-            }
-            functionCode
-          }
+          ...creatorsFragment
         }
         manifestations {
           bestRepresentation {
@@ -305,7 +308,8 @@ export function description({ workId }) {
         }
       }      
       monitor(name: "bibdknext_work_basic")
-    }`,
+    }
+    ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -360,7 +364,7 @@ export function fbiOverviewDetail({ workId }) {
           workTypes
           genreAndForm 
           creators {
-            display
+            ...creatorsFragment
           }
           materialTypes {
             specific
@@ -447,7 +451,8 @@ export function fbiOverviewDetail({ workId }) {
         monitor(name: "bibdknext_work_overview_details")
       }
       ${manifestationDetailsForAccessFactory}
-      ${manifestationAccess}`,
+      ${manifestationAccess}
+      ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -469,7 +474,7 @@ export function workJsonLd({ workId }) {
                 main
               }
               creators {
-                display
+                ...creatorsFragment
               }
               workTypes
               abstract
@@ -516,7 +521,8 @@ export function workJsonLd({ workId }) {
             }
             monitor(name: "bibdknext_work_json_ld")
           }
-          ${manifestationDetailsForAccessFactory}`,
+          ${manifestationDetailsForAccessFactory}
+          ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -569,8 +575,8 @@ export function listOfAllManifestations({ workId }) {
               }
               edition
             }
-            creators{
-              display
+            creators {
+              ...creatorsFragment
             }
             contributors{
               display
@@ -581,7 +587,8 @@ export function listOfAllManifestations({ workId }) {
         }
       }
       monitor(name: "bibdknext_list_of_all_manifestations")
-    }`,
+    }
+    ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 3000,
   };
@@ -598,7 +605,7 @@ export function orderPageWorkWithManifestations({ workId }) {
         }
         workTypes
         manifestations {
-          all {
+          mostRelevant {
             ...manifestationAccess
             ...manifestationDetailsForAccessFactory
           }
@@ -623,14 +630,7 @@ export function overviewWork({ workId }) {
           parallel
         }
         creators {
-          ... on Corporation {
-            __typename
-            display
-          }
-          ... on Person {
-            __typename
-            display
-          }
+          ...creatorsFragment
         }
         materialTypes {
           specific
@@ -673,11 +673,132 @@ export function overviewWork({ workId }) {
       monitor(name: "bibdknext_overview_work")
     }
     ${genreAndFormAndWorkTypesFragment}
+    ${creatorsFragment}
     `,
     variables: { workId },
     slowThreshold: 3000,
   };
 }
+
+export function pidToWorkId({ pid }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidToWorkId($pid: String!) {
+      work(pid: $pid) {
+        titles {
+          main
+        }
+        creators {
+          ...creatorsFragment
+        }
+        workId
+      }
+      monitor(name: "bibdknext_pid_to_workid")
+    }
+    ${creatorsFragment}`,
+    variables: { pid },
+    slowThreshold: 3000,
+  };
+}
+
+export function workIdToTitleCreator({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query workIdToTitleCreator($workId: String!) {
+      work(id: $workId) {
+        ...titleCreatorFragment
+        creators {
+          ...creatorsFragment
+        }
+        workId
+      }
+    }
+    ${titleFragment}
+    ${creatorsFragment}
+    `,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export function workForWorkRelationsWorkTypeFactory({ workId }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query workForWorkRelationsWorkTypeFactory($workId: String!) {
+      work(id: $workId) {
+        ...workRelationsWorkTypeFactory
+        relations {
+          ...relationsForWorkRelations
+        }
+        creators {
+          ...creatorsFragment
+        }
+      }
+    }
+    ${workRelationsWorkTypeFactory}
+    ${relationsForWorkRelations}
+    ${creatorsFragment}`,
+    variables: { workId },
+    slowThreshold: 3000,
+  };
+}
+
+export const creatorsFragment = `fragment creatorsFragment on Creator {
+  ... on Corporation {
+    __typename
+    display
+    nameSort
+    roles {
+      function {
+        plural
+        singular
+      }
+      functionCode
+    }
+  }
+  ... on Person {
+    __typename
+    display
+    nameSort
+    roles {
+      function {
+        plural
+        singular
+      }
+      functionCode
+    }
+  }
+}`;
+
+const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFactory on Creator {
+  ... on Corporation {
+    __typename
+    display
+    nameSort
+    roles {
+      functionCode
+      function {
+        plural
+        singular
+      }
+    }
+  }
+  ... on Person {
+    __typename
+    display
+    nameSort
+    roles {
+      functionCode
+      function {
+        plural
+        singular
+      }
+    }
+  }
+}`;
 
 // Use this fragments in queries that provide data
 // to the WorkSlider
@@ -686,9 +807,6 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   titles {
     main
     full
-  }
-  creators {
-    display
   }
   manifestations {
     mostRelevant {
@@ -703,27 +821,6 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   }
 }`;
 
-export function pidToWorkId({ pid }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query pidToWorkId($pid: String!) {
-      work(pid: $pid) {
-        titles {
-          main
-        }
-        creators{
-          display
-        }
-        workId
-      }
-      monitor(name: "bibdknext_pid_to_workid")
-    }`,
-    variables: { pid },
-    slowThreshold: 3000,
-  };
-}
-
 const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragment on Work {
   genreAndForm
   workTypes
@@ -733,31 +830,11 @@ const genreAndFormAndWorkTypesFragment = `fragment genreAndFormAndWorkTypesFragm
   }
 }`;
 
-export function workIdToTitleCreator({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query workIdToTitleCreator($workId: String!) {
-      work(id: $workId) {
-        ...titleCreatorFragment
-      }
-    }
-    ${titleCreatorFragment}
-    `,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
-const titleCreatorFragment = `fragment titleCreatorFragment on Work {
+const titleFragment = `fragment titleFragment on Work {
   titles {
     main
     full
   }
-  creators {
-    display
-  }
-  workId
 }`;
 
 const coverFragment = `fragment coverFragment on Manifestation {
@@ -777,7 +854,7 @@ const seriesFragment = `fragment seriesFragment on Work {
   }
 }`;
 
-const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
+export const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
   pid
   ownerWork {
     workId
@@ -787,15 +864,7 @@ const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAc
     full
   }
   creators {
-    display
-    nameSort
-    roles {
-      functionCode
-      function {
-        plural
-        singular
-      }
-    }
+    ...creatorsFragmentForAccessFactory
   }
   hostPublication {
     issue
@@ -804,7 +873,8 @@ const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAc
     specific
   }
   workTypes
-}`;
+}
+${creatorsFragmentForAccessFactory}`;
 
 const manifestationAccess = `fragment manifestationAccess on Manifestation {
    access {
@@ -834,25 +904,6 @@ const manifestationAccess = `fragment manifestationAccess on Manifestation {
   }
 }`;
 
-export function workForWorkRelationsWorkTypeFactory({ workId }) {
-  return {
-    apiUrl: ApiEnums.FBI_API,
-    query: `
-    query workForWorkRelationsWorkTypeFactory($workId: String!) {
-      work(id: $workId) {
-        ...workRelationsWorkTypeFactory
-        relations {
-          ...relationsForWorkRelations
-        }
-      }
-    }
-    ${workRelationsWorkTypeFactory}
-    ${relationsForWorkRelations}`,
-    variables: { workId },
-    slowThreshold: 3000,
-  };
-}
-
 const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on Work {
   manifestations {
     mostRelevant {
@@ -869,9 +920,6 @@ const workRelationsWorkTypeFactory = `fragment workRelationsWorkTypeFactory on W
   titles {
     main
     full
-  }
-  creators {
-    display
   }
   materialTypes {
     specific

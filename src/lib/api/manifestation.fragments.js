@@ -3,6 +3,10 @@
  *
  */
 import { ApiEnums } from "@/lib/api/api";
+import {
+  creatorsFragment,
+  manifestationDetailsForAccessFactory,
+} from "@/lib/api/work.fragments";
 
 export function refWorks(pid) {
   return {
@@ -38,6 +42,9 @@ export function manifestationFullManifestation({ pid }) {
       manifestation(pid: $pid) {
         ...manifestationCoverFragment
         ...manifestationFragment
+        creators {
+          ...creatorsFragment
+        }
         ...accessFragment
       }
       monitor(name: "bibdknext_manifestation_manifestation")
@@ -45,6 +52,7 @@ export function manifestationFullManifestation({ pid }) {
     ${manifestationFragment}
     ${manifestationCoverFragment}
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -71,7 +79,7 @@ export function editionManifestations({ pid }) {
           full
         }
         creators {
-          display
+          ...creatorsFragment
         }
         workTypes
         ...manifestationCoverFragment
@@ -81,6 +89,7 @@ export function editionManifestations({ pid }) {
     }
     ${manifestationCoverFragment}
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -98,7 +107,7 @@ export function alternativesManifestations({ pid }) {
           main
         }
         creators {
-          display
+          ...creatorsFragment
         }
         materialTypes {
           specific
@@ -112,6 +121,7 @@ export function alternativesManifestations({ pid }) {
       monitor(name: "bibdknext_manifestation_manifestations")
     }
     ${accessFragment}
+    ${creatorsFragment}
     `,
     variables: { pid },
     slowThreshold: 3000,
@@ -156,7 +166,7 @@ export function manifestationParts({ pid }) {
               display
             }
             creators {
-              display
+              ...creatorsFragment
             }
             creatorsFromDescription            
             subjects {
@@ -167,7 +177,7 @@ export function manifestationParts({ pid }) {
         }
       }
     }
-    `,
+    ${creatorsFragment}`,
     variables: { pid },
     slowThreshold: 3000,
   };
@@ -212,29 +222,6 @@ export function manifestationForLectorReview({ pid }) {
   };
 }
 
-const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
-  pid
-  titles {
-    main
-    full
-  }
-  creators {
-    display
-    nameSort
-    roles {
-      functionCode
-      function {
-        plural
-        singular
-      }
-    }
-  }
-  materialTypes {
-    specific
-  }
-  workTypes
-}`;
-
 const accessFragment = `fragment accessFragment on Manifestation {
   access {
     __typename
@@ -263,6 +250,7 @@ const accessFragment = `fragment accessFragment on Manifestation {
   }
 }`;
 
+// NOTE Creators Fragment is not added, because it is implemented from ManifestationDetailsForAccessFactory
 const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
    abstract
    review {
@@ -282,7 +270,7 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
            titlePlusLanguage
          }
          creators {
-           display
+           ...creatorsFragment
          }
          materialTypes {
            specific
@@ -296,17 +284,18 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
    }
    pid
    creators {
-     display
+     ...creatorsFragment
    }
    recordCreationDate
 }`;
 
+// NOTE Creators Fragment is not added, because it is implemented from ManifestationDetailsForAccessFactory
 const reviewOfFragment = `fragment reviewOfFragment on Manifestation {
    relations {
      isReviewOf {
        pid
        creators {
-         display
+         ...creatorsFragment
        }
        materialTypes {
          specific
@@ -348,14 +337,6 @@ const manifestationFragment = `fragment manifestationFragment on Manifestation {
     original
     alternative
     parallel
-  }
-  creators {
-    display
-    roles {
-      function {
-        singular
-      }
-    }
   }
   contributors {
     display
