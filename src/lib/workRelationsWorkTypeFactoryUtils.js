@@ -220,7 +220,7 @@ export function parseSingleRelation(manifestation, relationType, generation) {
     workCreators?.[0]?.display &&
     getWorkUrl(
       workTitles?.full?.join(": "),
-      workCreators?.[0]?.display,
+      workCreators,
       manifestation?.ownerWork?.workId
     );
   return {

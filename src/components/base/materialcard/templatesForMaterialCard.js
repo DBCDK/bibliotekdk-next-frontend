@@ -3,7 +3,7 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
-import { getWorkUrl } from "@/lib/utils";
+import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
 import styles from "./MaterialCard.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
@@ -18,12 +18,14 @@ function propFunc(textType, lines) {
 
 export function templateForVerticalWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
-  const firstCreator = material?.creators?.[0]?.display;
+  const creators = material?.creators;
+  const firstCreator =
+    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const coverSrc = getCoverImage(material.manifestations.mostRelevant);
 
   return {
-    link_href: getWorkUrl(fullTitle, firstCreator, material?.workId),
+    link_href: getWorkUrl(fullTitle, creators, material?.workId),
     fullTitle: fullTitle,
     image_src: coverSrc?.detail,
     workId: material?.workId,
@@ -50,7 +52,9 @@ export function templateForVerticalWorkCard(material) {
 
 export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
-  const firstCreator = material?.creators?.[0]?.display;
+  const creators = material?.creators;
+  const firstCreator =
+    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([material]);
   const formattedMaterialTypes =
     formatMaterialTypesToPresentation(flatMaterialTypes);
@@ -63,7 +67,7 @@ export function templateForHeaderWorkCard(material) {
     .join(", ");
 
   return {
-    link_href: getWorkUrl(fullTitle, firstCreator, material?.ownerWork?.workId),
+    link_href: getWorkUrl(fullTitle, creators, material?.ownerWork?.workId),
     fullTitle: fullTitle,
     image_src: material.cover.detail,
     workId: material?.ownerWork?.workId,
@@ -88,13 +92,15 @@ export function templateForHeaderWorkCard(material) {
 
 export function templateForRelatedWorks(material) {
   const fullTitle = material?.titles?.full?.join(": ");
-  const firstCreator = material?.creators?.[0]?.display;
+  const creators = material?.creators;
+  const firstCreator =
+    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
     material?.materialTypesArray
   );
 
   return {
-    link_href: getWorkUrl(fullTitle, firstCreator, material?.workId),
+    link_href: getWorkUrl(fullTitle, creators, material?.workId),
     fullTitle: fullTitle,
     image_src: material?.cover?.detail,
     workId: material?.workId,

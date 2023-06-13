@@ -66,7 +66,7 @@ export const getCheckedElements = (parentRef) => {
 const MaterialRow = ({
   image,
   title,
-  creator,
+  creators,
   materialType,
   creationYear,
   library,
@@ -134,9 +134,9 @@ const MaterialRow = ({
           )}
           <div>
             <ConditionalWrapper
-              condition={!!title && !!creator && !!id}
+              condition={!!title && !!creators && !isEmpty(creators) && !!id}
               wrapper={(children) => (
-                <Link href={getWorkUrl(title, creator, workId)}>
+                <Link href={getWorkUrl(title, creators, workId)}>
                   {children}
                 </Link>
               )}

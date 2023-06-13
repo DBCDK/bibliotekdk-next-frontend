@@ -34,7 +34,7 @@ export const dataReducer = (dataType, data) => {
       return {
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
-        creator: data.manifestation.creators[0].display,
+        creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         id: data.loanId,
@@ -45,7 +45,7 @@ export const dataReducer = (dataType, data) => {
       return {
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
-        creator: data.manifestation.creators[0].display,
+        creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: data.pickUpBranch.agencyName,

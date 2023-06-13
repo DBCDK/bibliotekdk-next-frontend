@@ -1,16 +1,11 @@
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import styles from "@/components/work/overview/Overview.module.css";
+import { extractCreatorPrioritiseCorporation } from "@/lib/utils";
 
 export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
   const searchOnUrl = "/find?q.creator=";
-
-  const corporations = creatorsBeforeFilter?.filter(
-    (creator) => creator.__typename === "Corporation"
-  );
-
-  const creators =
-    corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+  const creators = extractCreatorPrioritiseCorporation(creatorsBeforeFilter);
 
   return (
     creators?.map((creator, index) => {
