@@ -703,6 +703,27 @@ const workSliderFragment = `fragment workSliderFragment on Work {
   }
 }`;
 
+export function oclcToWorkId({ oclc }) {
+  return {
+    apiUrl: ApiEnums.FBI_API,
+    query: `
+    query pidToWorkId($oclc: String!) {
+      work(oclc: $oclc) {
+        titles {
+          main
+        }
+        creators{
+          display
+        }
+        workId
+      }
+      monitor(name: "bibdknext_oclc_to_workid")
+    }`,
+    variables: { oclc },
+    slowThreshold: 3000,
+  };
+}
+
 export function pidToWorkId({ pid }) {
   return {
     apiUrl: ApiEnums.FBI_API,
