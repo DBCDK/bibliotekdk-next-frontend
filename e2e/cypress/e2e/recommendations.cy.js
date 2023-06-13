@@ -11,18 +11,20 @@ describe("Series", () => {
     cy.get("a").should("have.length", 20, { timeout: 10000 });
 
     cy.get("a").eq(0).contains("recommend.result[0].work.titles.full[0]");
-    cy.get("a").eq(0).contains("recommend.result[0].work.creators[0].display");
+    cy.get("a").eq(0).contains("recommend.result[0].work.creators[");
 
     cy.get("a").eq(1).contains("recommend.result[1].work.titles.full[0]");
-    cy.get("a").eq(1).contains("recommend.result[1].work.creators[0].display");
+    cy.get("a").eq(1).contains("recommend.result[1].work.creators[");
 
     cy.get("a")
       .eq(0)
       .should("have.attr", "href")
+      // We are unaware of which creator this will use, so we just check that the rest of the href is correct
       .and(
         "contain",
-        "/materiale/recommend-result-0-work-titles-full-0-recommend-result-0-work-titles-full-1-_recommend-result-0-work-creators-0-display/recommend.result[0].work.workId"
-      );
+        "/materiale/recommend-result-0-work-titles-full-0-recommend-result-0-work-titles-full-1-_recommend-result-0-work-creators"
+      )
+      .and("contain", "-display/recommend.result[0].work.workId");
   });
 
   it(`Should collect data for recommender`, () => {
