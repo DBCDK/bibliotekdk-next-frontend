@@ -58,7 +58,7 @@ export default function Recommendations({
       title={Translate({ ...context, label: "remindsOf" })}
       dataCy="section-recommend"
       divider={{ content: false, title: titleDivider }}
-      headerTag={!!headerTag ? headerTag : undefined}
+      headerTag={headerTag}
     >
       <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>

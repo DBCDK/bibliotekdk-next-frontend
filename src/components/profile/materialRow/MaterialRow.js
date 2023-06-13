@@ -110,7 +110,11 @@ export const DynamicColumnLoan = ({ dueDateString }) => {
           <Text type="text2" tag="span">
             {dateString}
           </Text>
-          <Text type="text2" tag="span" className={styles.upperCase}>
+          <Text
+            type="text2"
+            tag="span"
+            className={cx(styles.upperCase, styles.block)}
+          >
             {daysToDueDateString}
           </Text>
         </>
