@@ -94,7 +94,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
   const pid = ctx.query["rec.id"];
   const serverQueries = await fetchAll([pidToWorkId, oclcToWorkId], ctx, {
     pid: pid,
-    oclc: ctx.query?.["rec.id"],
+    oclc: getOclcId(ctx.query?.["ccl"]),
   });
 
   const workId = Object.values(serverQueries.initialData)?.[0]?.data?.work
