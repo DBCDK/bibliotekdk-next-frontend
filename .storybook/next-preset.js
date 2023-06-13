@@ -56,8 +56,7 @@ module.exports = {
             modules: true,
           },
         },
-      ],
-      include: path.resolve(__dirname, "../src/scss")
+      ]
     });
 
     newConfig.module.rules.push({
@@ -66,6 +65,19 @@ module.exports = {
       type: "javascript/auto",
     });
 
+    newConfig.module.rules.push({
+      test: /\.scss$/,
+      use: [
+        // Creates `style` nodes from JS strings
+        "style-loader",
+        // Translates CSS into CommonJS
+        "css-loader",
+        // Compiles Sass to CSS
+        "sass-loader",
+      ],
+      exclude: path.resolve(__dirname, "./node_modules"),
+      include: path.resolve(__dirname, "./src/scss"),
+    });
 
     // Adds svg loader to storybook webpack config
     const fileLoaderRule = newConfig.module.rules.find(
