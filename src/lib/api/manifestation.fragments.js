@@ -3,10 +3,11 @@
  *
  */
 import { ApiEnums } from "@/lib/api/api";
+
 import {
   creatorsFragment,
   manifestationDetailsForAccessFactory,
-} from "@/lib/api/work.fragments";
+} from "@/lib/api/fragments.utils";
 
 export function refWorks(pid) {
   return {
@@ -250,7 +251,6 @@ const accessFragment = `fragment accessFragment on Manifestation {
   }
 }`;
 
-// NOTE Creators Fragment is not added, because it is implemented from ManifestationDetailsForAccessFactory
 const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
    abstract
    review {
@@ -287,7 +287,8 @@ const lectorReviewFragment = `fragment lectorReviewFragment on Manifestation {
      ...creatorsFragment
    }
    recordCreationDate
-}`;
+}
+${creatorsFragment}`;
 
 // NOTE Creators Fragment is not added, because it is implemented from ManifestationDetailsForAccessFactory
 const reviewOfFragment = `fragment reviewOfFragment on Manifestation {

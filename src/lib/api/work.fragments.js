@@ -4,6 +4,10 @@
  */
 
 import { ApiEnums } from "@/lib/api/api";
+import {
+  creatorsFragment,
+  manifestationDetailsForAccessFactory,
+} from "@/lib/api/fragments.utils";
 
 export function tableOfContents({ workId }) {
   return {
@@ -708,7 +712,7 @@ export function workIdToTitleCreator({ workId }) {
     query: `
     query workIdToTitleCreator($workId: String!) {
       work(id: $workId) {
-        ...titleCreatorFragment
+        ...titleFragment
         creators {
           ...creatorsFragment
         }
@@ -745,60 +749,6 @@ export function workForWorkRelationsWorkTypeFactory({ workId }) {
     slowThreshold: 3000,
   };
 }
-
-export const creatorsFragment = `fragment creatorsFragment on Creator {
-  ... on Corporation {
-    __typename
-    display
-    nameSort
-    roles {
-      function {
-        plural
-        singular
-      }
-      functionCode
-    }
-  }
-  ... on Person {
-    __typename
-    display
-    nameSort
-    roles {
-      function {
-        plural
-        singular
-      }
-      functionCode
-    }
-  }
-}`;
-
-const creatorsFragmentForAccessFactory = `fragment creatorsFragmentForAccessFactory on Creator {
-  ... on Corporation {
-    __typename
-    display
-    nameSort
-    roles {
-      functionCode
-      function {
-        plural
-        singular
-      }
-    }
-  }
-  ... on Person {
-    __typename
-    display
-    nameSort
-    roles {
-      functionCode
-      function {
-        plural
-        singular
-      }
-    }
-  }
-}`;
 
 // Use this fragments in queries that provide data
 // to the WorkSlider
@@ -853,28 +803,6 @@ const seriesFragment = `fragment seriesFragment on Work {
     }
   }
 }`;
-
-export const manifestationDetailsForAccessFactory = `fragment manifestationDetailsForAccessFactory on Manifestation {
-  pid
-  ownerWork {
-    workId
-  }
-  titles {
-    main
-    full
-  }
-  creators {
-    ...creatorsFragmentForAccessFactory
-  }
-  hostPublication {
-    issue
-  }
-  materialTypes {
-    specific
-  }
-  workTypes
-}
-${creatorsFragmentForAccessFactory}`;
 
 const manifestationAccess = `fragment manifestationAccess on Manifestation {
    access {

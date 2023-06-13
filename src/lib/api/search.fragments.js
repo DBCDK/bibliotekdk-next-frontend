@@ -5,7 +5,8 @@
 
 import { FilterTypeEnum } from "@/lib/enums";
 import { ApiEnums } from "@/lib/api/api";
-import { creatorsFragment } from "@/lib/api/work.fragments";
+
+import { creatorsFragment } from "@/lib/api/fragments.utils";
 
 /**
  * Hitcount

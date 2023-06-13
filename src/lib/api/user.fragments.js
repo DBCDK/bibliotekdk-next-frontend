@@ -1,6 +1,7 @@
 import { lang } from "@/components/base/translate";
 import { ApiEnums } from "@/lib/api/api";
-import { creatorsFragment } from "@/lib/api/work.fragments";
+
+import { creatorsFragment } from "@/lib/api/fragments.utils";
 
 /**
  * @file Contains GraphQL queries all taking a workId as variable
