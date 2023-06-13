@@ -10,7 +10,7 @@
  */
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
-import { pidToWorkId } from "@/lib/api/work.fragments";
+import { pidToWorkId, oclcToWorkId } from "@/lib/api/work.fragments";
 import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 import Custom404 from "@/pages/404";
@@ -25,11 +25,26 @@ export function checkQuery(query) {
   return !!query["rec.id"];
 }
 
+/**
+ * Strip query parameter to get id from worldcat.org
+ * ccl is of the form: wcx=1317822460
+ * @param ccl
+ * @returns {string}
+ */
+function getOclcId(ccl) {
+  return ccl.replace("wcx=", "");
+}
+
 function LinkmePhp() {
   const router = useRouter();
 
+  const isOclc = router?.query?.["ref"] === "worldcat";
   const { data, isLoading } = useData(
-    router?.query?.["rec.id"] && pidToWorkId({ pid: router.query["rec.id"] })
+    router?.query?.["rec.id"]
+      ? pidToWorkId({ pid: router.query["rec.id"] })
+      : isOclc
+      ? oclcToWorkId({ oclc: getOclcId(router.query["ccl"]) })
+      : null
   );
 
   // check if data fetching is done
@@ -77,8 +92,9 @@ export default LinkmePhp;
  */
 LinkmePhp.getInitialProps = async (ctx) => {
   const pid = ctx.query["rec.id"];
-  const serverQueries = await fetchAll([pidToWorkId], ctx, {
+  const serverQueries = await fetchAll([pidToWorkId, oclcToWorkId], ctx, {
     pid: pid,
+    oclc: getOclcId(ctx.query?.["ccl"]),
   });
 
   const workId = Object.values(serverQueries.initialData)?.[0]?.data?.work
