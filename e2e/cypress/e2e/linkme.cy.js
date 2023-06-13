@@ -19,7 +19,7 @@ describe(`linkme`, () => {
     cy.contains("Siden blev ikke fundet");
   });
 
-  it.skip("redirect on correct rec.id", () => {
+  it("redirect on correct rec.id", () => {
     const path = "/linkme.php/?rec.id=874310-katalog%3ADBB0422141";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);
@@ -27,7 +27,7 @@ describe(`linkme`, () => {
     cy.contains("Grum : Roman fra Sø og Mose", { timeout: 10000 });
   });
 
-  it.skip("serverside redirect", () => {
+  it("serverside redirect", () => {
     const path = "/linkme.php/?rec.id=874310-katalog%3ADBB0422141&isBot=true";
     const url = `${nextjsBaseUrl}${path}`;
     cy.visit(url);

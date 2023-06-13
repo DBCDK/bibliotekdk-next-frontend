@@ -32,7 +32,13 @@ export function checkQuery(query) {
  * @returns {string}
  */
 function getOclcId(ccl) {
-  return ccl.replace("wcx=", "");
+  if (!ccl) {
+    return null;
+  }
+  if (ccl.startsWith("wcx=")) {
+    return ccl.replace("wcx=", "");
+  }
+  return null;
 }
 
 function LinkmePhp() {
