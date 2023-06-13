@@ -57,6 +57,7 @@ module.exports = {
           },
         },
       ],
+      include: path.resolve(__dirname, "../src/scss")
     });
 
     newConfig.module.rules.push({
@@ -65,12 +66,6 @@ module.exports = {
       type: "javascript/auto",
     });
 
-    // Then we tell webpack what to do with CSS modules
-    newConfig.module.rules.push({
-      test: /\.scss$/,
-      loaders: ["style-loader", "css-loader", "sass-loader"],
-      include: path.resolve(__dirname, "../src/scss"),
-    });
 
     // Adds svg loader to storybook webpack config
     const fileLoaderRule = newConfig.module.rules.find(
@@ -81,7 +76,7 @@ module.exports = {
     newConfig.module.rules.push({
       test: /\.svg$/,
       enforce: "pre",
-      loader: require.resolve("@svgr/webpack"),
+      use: require.resolve("@svgr/webpack"),
     });
 
     return newConfig;
