@@ -8,7 +8,7 @@ import Translate from "@/components/base/translate";
 import {
   MaterialRowButton,
   MaterialRowIconButton,
-  loanDateAnalysis,
+  useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
 import Link from "@/components/base/link";
@@ -18,7 +18,7 @@ import cx from "classnames";
 
 const DynamicContentLoan = ({ dueDateString }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
-    loanDateAnalysis(dueDateString);
+    useLoanDateAnalysis(dueDateString);
 
   return (
     <>

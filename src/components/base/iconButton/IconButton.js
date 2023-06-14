@@ -5,7 +5,6 @@ import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useState } from "react";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
@@ -29,7 +28,13 @@ function IconButton({
 }) {
   return (
     <button
-      className={cx(styles.container, animations["on-hover"], animations["on-focus"], styles.focusStyle, className)}
+      className={cx(
+        styles.container,
+        animations["on-hover"],
+        animations["on-focus"],
+        styles.focusStyle,
+        className
+      )}
       onClick={() => onClick && onClick()}
       {...props}
     >

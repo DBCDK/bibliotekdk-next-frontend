@@ -24,7 +24,7 @@ import useUser from "@/components/hooks/useUser";
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
 
-export const loanDateAnalysis = (dueDateString) => {
+export const useLoanDateAnalysis = (dueDateString) => {
   const router = useRouter();
   const locale = router.locale === undefined ? "da" : router.locale;
   const timeFormatter = new Intl.RelativeTimeFormat(locale, { style: "short" });
@@ -76,7 +76,7 @@ const DynamicColumnDebt = ({ amount, currency }) => (
 
 export const DynamicColumnLoan = ({ dueDateString }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
-    loanDateAnalysis(dueDateString);
+    useLoanDateAnalysis(dueDateString);
 
   return (
     <DynamicColumn>
