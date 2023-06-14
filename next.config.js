@@ -89,6 +89,11 @@ module.exports = {
         destination: "/materiale/titel_skaber/work-of:workId",
         permanent: true,
       },
+      {
+        source: "/work/pid/:pid",
+        destination: "/linkme.php/?rec.id=:pid",
+        permanent: true,
+      },
     ];
   },
   experimental: {

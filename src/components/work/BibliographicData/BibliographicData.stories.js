@@ -37,6 +37,10 @@ BibData.story = merge({}, DEFAULT_STORY_PARAMETERS, {
         },
       },
     },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/materiale/some-title/some-work-id-1",
+    },
   },
 });
 
@@ -152,6 +156,10 @@ FullManifestation.story = merge({}, DEFAULT_STORY_PARAMETERS, {
           },
         },
       },
+    },
+    nextRouter: {
+      showInfo: true,
+      pathname: "/materiale/some-title/some-work-id",
     },
   },
 });

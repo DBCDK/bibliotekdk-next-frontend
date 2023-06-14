@@ -328,6 +328,22 @@ describe("Search", () => {
 
       cy.get("[data-cy=skeleton]").should("exist");
     });
+
+    it("should have language when mainLanguages is other language (here klingon)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-one-other-language-klingon"
+      );
+
+      cy.contains("Klingon");
+    });
+
+    it("should have language when mainLanguages is other languages (here elvish and klingon)", () => {
+      cy.visit(
+        "/iframe.html?id=search-result-resultrow--with-two-other-languages-elvish-klingon"
+      );
+
+      cy.contains("flere sprog");
+    });
   });
 
   describe("Related search subjects", () => {

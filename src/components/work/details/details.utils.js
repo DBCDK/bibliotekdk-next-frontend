@@ -726,9 +726,7 @@ export function fieldsForRows(manifestation, work, context) {
           label: Translate({ ...context, label: "level" }),
           tooltip: "tooltip_lix",
           value:
-            manifestation?.audience?.let ||
-            manifestation?.audience?.lix ||
-            !isEmpty(manifestation.audience?.generalAudience)
+            manifestation?.audience?.let || manifestation?.audience?.lix
               ? manifestation.audience
               : null,
           jsxParser: RenderLitteratureAudience,
@@ -743,6 +741,8 @@ export function fieldsForRows(manifestation, work, context) {
                   For {age.display} årige
                 </Text>
               ))
+            : !isEmpty(manifestation?.audience?.generalAudience)
+            ? manifestation?.audience?.generalAudience.join(", ")
             : !isEmpty(manifestation?.audience?.libraryRecommendation)
             ? manifestation?.audience?.libraryRecommendation
                 .map((child) => child.display)
@@ -757,7 +757,11 @@ export function fieldsForRows(manifestation, work, context) {
       {
         audienceschool: {
           label: Translate({ ...context, label: "schooluse" }),
-          value: manifestation?.audience?.schoolUse || null,
+          value: manifestation?.audience?.schoolUse
+            ? manifestation.audience.schoolUse
+                .map((aud) => aud.display)
+                .join(", ")
+            : null,
         },
       },
       {
@@ -790,8 +794,14 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
+        contributors: {
+          label: "",
+          value: "",
+        },
+      },
+      {
         creatorsfromdescription: {
-          label: Translate({ ...context, label: "creatorsfromdescription" }),
+          label: Translate({ ...context, label: "creators" }),
           value: manifestation?.creatorsFromDescription?.join("; ") || [],
         },
       },
