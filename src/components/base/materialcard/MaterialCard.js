@@ -42,6 +42,7 @@ const MaterialCard = forwardRef(function MaterialCard(
       // Col props
       {...colSizing}
       className={`${styles.col_flex} ${elementContainerClassName}`}
+      as="article"
     >
       <Link
         href={link_href}
