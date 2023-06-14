@@ -794,8 +794,14 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
+        contributors: {
+          label: "",
+          value: "",
+        },
+      },
+      {
         creatorsfromdescription: {
-          label: Translate({ ...context, label: "creatorsfromdescription" }),
+          label: Translate({ ...context, label: "creators" }),
           value: manifestation?.creatorsFromDescription?.join("; ") || [],
         },
       },
