@@ -60,6 +60,7 @@
 
 .cover__vertical_version {
   width: 95%;
+  object-position: 50% 100%;
   height: calc(var(--pt16) * 2);
 }
 

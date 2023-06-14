@@ -52,6 +52,7 @@ export function LectorReviewPage({ review }) {
     </>
   );
 }
+
 LectorReviewPage.propTypes = {
   review: PropTypes.object,
 };

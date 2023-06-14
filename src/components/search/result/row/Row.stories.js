@@ -130,6 +130,36 @@ export function WithoutMaterialTypes() {
   );
 }
 
+export function WithOneOtherLanguageKlingon() {
+  const rowProps = {
+    work: work_klingon_language,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
+export function WithTwoOtherLanguagesElvishKlingon() {
+  const rowProps = {
+    work: work_2_other_languages,
+    className: "",
+    onClick: () => {},
+  };
+
+  return (
+    <RowComponentBuilder
+      storyNameOverride={"WithOtherLanguages"}
+      rowProps={rowProps}
+    />
+  );
+}
+
 export function SlowLoading() {
   const rowProps = {
     work: {},
@@ -226,6 +256,80 @@ const work = {
     },
     {
       specific: "punktskrift",
+    },
+  ],
+  titles: {
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
+  },
+};
+
+const work_klingon_language = {
+  workId: "some-id-2",
+  manifestations: {
+    mostRelevant: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
+  },
+  mainLanguages: [
+    {
+      isoCode: "kli",
+      display: "Klingon",
+    },
+  ],
+  workTypes: ["LITERATURE"],
+  creators: [
+    {
+      display: "Joanne K Rowling",
+    },
+  ],
+  titles: {
+    main: ["Harry Potter og De Vises Sten"],
+    full: ["Harry Potter og De Vises Sten"],
+  },
+};
+
+const work_2_other_languages = {
+  workId: "some-id-3",
+  manifestations: {
+    mostRelevant: [
+      {
+        cover: {
+          detail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=22629344&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=0136749c6e9729d895ed",
+        },
+        materialTypes: [
+          {
+            specific: "bog",
+          },
+        ],
+      },
+    ],
+  },
+  mainLanguages: [
+    {
+      isoCode: "elf",
+      display: "elvish",
+    },
+    {
+      isoCode: "kli",
+      display: "klingon",
+    },
+  ],
+  workTypes: ["LITERATURE"],
+  creators: [
+    {
+      display: "Joanne K Rowling",
     },
   ],
   titles: {

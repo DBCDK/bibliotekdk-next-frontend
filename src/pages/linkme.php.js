@@ -10,7 +10,7 @@
  */
 import { fetchAll } from "@/lib/api/apiServerOnly";
 import { useRouter } from "next/router";
-import { pidToWorkId } from "@/lib/api/work.fragments";
+import { pidToWorkId, oclcToWorkId } from "@/lib/api/work.fragments";
 import { encodeTitleCreator, getCanonicalWorkUrl } from "@/lib/utils";
 import { useData } from "@/lib/api/api";
 import Custom404 from "@/pages/404";
@@ -25,11 +25,32 @@ export function checkQuery(query) {
   return !!query["rec.id"];
 }
 
+/**
+ * Strip query parameter to get id from worldcat.org
+ * ccl is of the form: wcx=1317822460
+ * @param ccl
+ * @returns {string}
+ */
+function getOclcId(ccl) {
+  if (!ccl) {
+    return null;
+  }
+  if (ccl.startsWith("wcx=")) {
+    return ccl.replace("wcx=", "");
+  }
+  return null;
+}
+
 function LinkmePhp() {
   const router = useRouter();
 
+  const isOclc = router?.query?.["ref"] === "worldcat";
   const { data, isLoading } = useData(
-    router?.query?.["rec.id"] && pidToWorkId({ pid: router.query["rec.id"] })
+    router?.query?.["rec.id"]
+      ? pidToWorkId({ pid: router.query["rec.id"] })
+      : isOclc
+      ? oclcToWorkId({ oclc: getOclcId(router.query["ccl"]) })
+      : null
   );
 
   // check if data fetching is done
@@ -49,7 +70,11 @@ function LinkmePhp() {
 
   // if all is well - redirect to work page
   if (workId && data?.work) {
-    router.push(pathname);
+    const routerPath = {
+      pathname: pathname,
+      hash: router.query["rec.id"],
+    };
+    router.push(routerPath);
   } else {
     // something is wrong - we did not find title/author - goto  404 (not found) page
     // check if clientside
@@ -91,7 +116,7 @@ LinkmePhp.getInitialProps = async (ctx) => {
   // if this is a bot title and author and workid has been fetched - redirect
   // to appropiate page. We use 301 (moved permanently) status code
   if (title_author && workId && ctx.res) {
-    const path = `/materiale/${title_author}/${workId}`;
+    const path = `/materiale/${title_author}/${workId}#${ctx.query["rec.id"]}`;
     ctx.res.writeHead(301, { Location: path });
     ctx.res.end();
   }

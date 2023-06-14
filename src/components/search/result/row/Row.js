@@ -49,18 +49,18 @@ function TitlesForSearch({ work, isLoading }) {
       tag="h2"
       lines={4}
       clamp={true}
-      title={titles?.full?.join(" ")}
+      title={titles?.join(" ")}
       data-cy={"ResultRow-title"}
       skeleton={isLoading}
       className={`${styles.display_inline}`}
     >
       <div id={titlesElementId} className={`${styles.wrap_3_lines}`}>
         <RenderTitlesWithoutLanguage titles={titles} />
-        {!titleClamped && titles?.full?.length < 2 && (
+        {!titleClamped && titles?.length < 2 && (
           <RenderLanguageAddition work={work} type={"title6"} />
         )}
       </div>
-      {(titleClamped || titles?.full?.length > 1) && (
+      {(titleClamped || titles?.length > 1) && (
         <RenderLanguageAddition work={work} type={"title6"} />
       )}
     </Title>
