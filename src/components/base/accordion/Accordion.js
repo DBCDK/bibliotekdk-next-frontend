@@ -124,14 +124,11 @@ export function Item({
         </div>
         {additionalTxt && (
           <div className={styles.textbox}>
-            {additionalTxt?.map((txt, index) => {
-              console.log("additionalTxt: ", additionalTxt);
-              return (
-                <Text tag={"span"} type="text2" key={`addition-${index}`}>
-                  {txt}
-                </Text>
-              );
-            })}
+            {additionalTxt?.map((txt, index) => (
+              <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                {txt}
+              </Text>
+            ))}
           </div>
         )}
         <ExpandIcon open={isCurrentEventKey} size={4} />
