@@ -122,18 +122,18 @@ export function Item({
             </Text>
           )}
         </div>
-        {/*{additionalTxt && (*/}
-        <div className={styles.textbox}>
-          {additionalTxt?.map((txt, index) => {
-            console.log("additionalTxt: ", additionalTxt);
-            return (
-              <Text tag={"span"} type="text2" key={`addition-${index}`}>
-                {txt}
-              </Text>
-            );
-          })}
-        </div>
-        {/*)}*/}
+        {additionalTxt && (
+          <div className={styles.textbox}>
+            {additionalTxt?.map((txt, index) => {
+              console.log("additionalTxt: ", additionalTxt);
+              return (
+                <Text tag={"span"} type="text2" key={`addition-${index}`}>
+                  {txt}
+                </Text>
+              );
+            })}
+          </div>
+        )}
         <ExpandIcon open={isCurrentEventKey} size={4} />
       </Card.Header>
       <BootstrapAccordion.Collapse
