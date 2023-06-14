@@ -342,6 +342,8 @@ const MaterialRow = (props) => {
             })}
           </MaterialRowIconButton>
         );
+      default:
+        return null;
     }
   };
 

@@ -66,12 +66,13 @@
   margin-top: var(--pt1);
 }
 
-.blackUnderline hr {
-  background-color: var(--mine-shaft);
+.blackUnderline * {
+  display: inline;
 }
 
-.blackUnderline:hover hr, .blackUnderline:focus-visible hr {
-  background-color: var(--blue);
+.blackUnderline {
+  --underline-bottom-color: var(--mine-shaft);
+  --underline-bottom-hover-color: var(--blue);
 }
 
 .isReady {

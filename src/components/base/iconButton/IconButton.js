@@ -36,6 +36,7 @@ function IconButton({
         onClick={(e) => e.preventDefault()}
         border={{ bottom: { keepVisible: keepUnderline } }}
         tag="div"
+        tabIndex={-1}
       >
         <Text type={textType}>{children}</Text>
       </Link>
