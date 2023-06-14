@@ -741,7 +741,7 @@ export function fieldsForRows(manifestation, work, context) {
                   For {age.display} årige
                 </Text>
               ))
-            : !isEmpty(manifestation.audience?.generalAudience)
+            : !isEmpty(manifestation?.audience?.generalAudience)
             ? manifestation?.audience?.generalAudience.join(", ")
             : !isEmpty(manifestation?.audience?.libraryRecommendation)
             ? manifestation?.audience?.libraryRecommendation
