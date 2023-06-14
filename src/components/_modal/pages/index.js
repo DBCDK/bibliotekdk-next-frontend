@@ -10,6 +10,7 @@ import Filter from "./filter";
 import Localizations from "./localizations";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
+import Material from "./material";
 
 const _modal = {
   Menu,
@@ -24,6 +25,7 @@ const _modal = {
   Localizations,
   References,
   ManifestationContent,
+  Material,
 };
 
 export default _modal;

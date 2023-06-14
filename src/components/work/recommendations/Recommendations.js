@@ -27,7 +27,11 @@ import { useMemo } from "react";
  * @param {object} props
  * @param {string} props.workId The work id
  */
-export default function Recommendations({ workId }) {
+export default function Recommendations({
+  workId,
+  headerTag,
+  titleDivider = true,
+}) {
   const { data, isLoading } = useData(
     workFragments.recommendations({ workId })
   );
@@ -53,7 +57,8 @@ export default function Recommendations({ workId }) {
     <Section
       title={Translate({ ...context, label: "remindsOf" })}
       dataCy="section-recommend"
-      divider={{ content: false }}
+      divider={{ content: false, title: titleDivider }}
+      headerTag={headerTag}
     >
       <Row className={`${styles.recommendations}`}>
         <Col xs={12} md>

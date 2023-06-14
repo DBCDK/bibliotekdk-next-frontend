@@ -3015,7 +3015,7 @@
       },
       "debt": {
         "da": "Mellemværende",
-        "en": "Intermediate"
+        "en": "Claims"
       },
       "loans": {
         "da": "Lån",
@@ -3092,6 +3092,26 @@
       "in-row": {
         "da": "foran dig",
         "en": "in front of you"
+      },
+      "no-results-debts": {
+        "da": "Du har ingen udestående mellemværende",
+        "en": "You hav no unresolved claims"
+      },
+      "no-results-loans": {
+        "da": "Du har ingen aktive lån",
+        "en": "You have no active loans"
+      },
+      "no-results-orders": {
+        "da": "Du har ingen reserveringer",
+        "en": "You have no reservations"
+      },
+      "your-loan": {
+        "da": "Dit lån",
+        "en": "Your loan"
+      },
+      "to-return": {
+        "da": "Afleveres d.",
+        "en": "Hand in by"
       }
     }
   }
