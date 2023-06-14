@@ -76,6 +76,7 @@
   overflow-wrap: break-word;
   padding-bottom: var(--pt3);
   padding-right: var(--pt3);
+  position: relative;
 }
 
 @media (min-width: 768px) {
