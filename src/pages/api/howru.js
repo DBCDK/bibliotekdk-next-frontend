@@ -42,6 +42,7 @@ export default async function handler(req, res) {
           ...func({
             workId: "work-of:870970-basis:23154382",
             pid: "870970-basis:23154382",
+            oclc: "1200830771",
           }),
           accessToken: session?.accessToken,
         }),
