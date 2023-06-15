@@ -4,6 +4,7 @@ import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
 import animations from "@/components/base/animation/animations.module.css";
 import Link from "@/components/base/link";
+import cx from "classnames";
 
 /**
  * An animated button that contains a text and an Icon. Pass Icon name that matches an svg file inside public/icons
@@ -27,20 +28,22 @@ function IconButton({
 }) {
   return (
     <button
-      className={`${styles.container} ${animations["on-hover"]} ${animations["on-focus"]} ${className}`}
+      className={cx(
+        styles.container,
+        animations["on-hover"],
+        animations["on-focus"],
+        styles.focusStyle,
+        className
+      )}
       onClick={() => onClick && onClick()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.keyCode === 13) {
-          onClick && onClick();
-        }
-      }}
       {...props}
     >
       <Link
-        className={`${animations["on-focus"]} ${styles.textWrapper} `}
+        className={styles.textWrapper}
         onClick={(e) => e.preventDefault()}
         border={{ bottom: { keepVisible: keepUnderline } }}
         tag="div"
+        tabIndex={-1}
       >
         <Text type={textType}>{children}</Text>
       </Link>

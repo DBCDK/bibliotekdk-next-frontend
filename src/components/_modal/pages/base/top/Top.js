@@ -100,6 +100,7 @@ export function Back({ className, onBack }) {
  * @param title
  * @param {boolean} back
  * @param {boolean} sticky
+ * @param titleTag
  * @returns {JSX.Element}
  */
 export default function Top({
@@ -108,6 +109,7 @@ export default function Top({
   title,
   back = true,
   sticky = false,
+  titleTag,
 }) {
   let modal = useModal();
 
@@ -135,6 +137,7 @@ export default function Top({
           <Title
             type="title4"
             className={`${styles.title} ${className.title || ""}`}
+            tag={titleTag}
           >
             {title}
           </Title>

@@ -49,6 +49,7 @@ export default function Section({
   space = {},
   elRef = null,
   subtitle = "",
+  headerTag = "h2",
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -87,7 +88,7 @@ export default function Section({
   if (title) {
     title =
       typeof title === "string" ? (
-        <Title type="title4" tag="h2" skeleton={isLoading}>
+        <Title type="title4" tag={headerTag} skeleton={isLoading}>
           {title}
         </Title>
       ) : (
@@ -147,4 +148,5 @@ Section.propTypes = {
   divider: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  headerTag: PropTypes.string,
 };

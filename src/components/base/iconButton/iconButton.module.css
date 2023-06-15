@@ -17,3 +17,7 @@
 .textWrapper {
   margin: 0 var(--pt1) 0 0;
 }
+
+.focusStyle:focus-visible {
+  outline: 1px solid var(--blue);
+}
