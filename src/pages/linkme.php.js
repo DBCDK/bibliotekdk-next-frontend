@@ -108,10 +108,10 @@ LinkmePhp.getInitialProps = async (ctx) => {
   const title = Object.values(serverQueries.initialData)?.[0]?.data?.work
     ?.titles?.main?.[0];
 
-  const creator = Object.values(serverQueries.initialData)?.[0]?.data?.work
-    ?.creators?.[0]?.display;
+  const creators = Object.values(serverQueries.initialData)?.[0]?.data?.work
+    ?.creators;
 
-  const title_author = encodeTitleCreator(title, creator);
+  const title_author = encodeTitleCreator(title, creators);
   // redirect serverside
   // if this is a bot title and author and workid has been fetched - redirect
   // to appropiate page. We use 301 (moved permanently) status code

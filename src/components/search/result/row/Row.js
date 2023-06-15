@@ -7,7 +7,10 @@ import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 
 import Cover from "@/components/base/cover";
-import { encodeTitleCreator } from "@/lib/utils";
+import {
+  encodeTitleCreator,
+  extractCreatorPrioritiseCorporation,
+} from "@/lib/utils";
 import Link from "@/components/base/link";
 
 import styles from "./Row.module.css";
@@ -102,7 +105,8 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorName = work?.creators?.[0]?.display;
+  const creatorName = extractCreatorPrioritiseCorporation(work?.creators)?.[0]
+    ?.display;
 
   const { filters } = useFilters();
 
@@ -130,7 +134,7 @@ export default function ResultRow({
           query: {
             title_author: encodeTitleCreator(
               work?.titles?.main?.[0],
-              work?.creators?.[0]?.display
+              work?.creators
             ),
             workId: work?.workId,
           },
@@ -171,7 +175,7 @@ export default function ResultRow({
                         query: {
                           title_author: encodeTitleCreator(
                             work?.titles?.main?.[0],
-                            work?.creators?.[0]?.display
+                            work?.creators
                           ),
                           type: formatMaterialTypesToUrl(materialTypeArray),
                           workId: work?.workId,

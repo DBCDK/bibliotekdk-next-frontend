@@ -32,32 +32,40 @@ export function encodeString(str = "") {
     .replace(/-+/g, "-");
 }
 
+export function extractCreatorPrioritiseCorporation(creatorsBeforeFilter) {
+  const corporations = creatorsBeforeFilter?.filter(
+    (creator) => creator.__typename === "Corporation"
+  );
+
+  return corporations?.length > 0 ? corporations : creatorsBeforeFilter;
+}
+
 /**
  * Encode title and creator to be used
  * as part of the URL path
  *
  * @param {string} title
- * @param {string} creator
+ * @param {array<object>} creators
  *
  * @returns {string} encoded string
  */
-export function encodeTitleCreator(title = "", creator = "") {
-  // @TODO there may be more than one creator - should it be handled? if yes
-  // then it should be handled here - make creator an array
+export function encodeTitleCreator(title = "", creators = []) {
+  const creator = extractCreatorPrioritiseCorporation(creators)?.[0];
+
   return creator
-    ? encodeString(title) + "_" + encodeString(creator)
+    ? encodeString(title) + "_" + encodeString(creator.display)
     : encodeString(title);
 }
 
 /**
  *
  * @param {string} fullTitle
- * @param {string} creator
+ * @param {array<object>} creators
  * @param {string} workId
  * @returns {string}
  */
-export function getWorkUrl(fullTitle, creator, workId) {
-  return `/materiale/${encodeTitleCreator(fullTitle, creator)}/${workId}`;
+export function getWorkUrl(fullTitle, creators, workId) {
+  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
 }
 
 /**
@@ -91,7 +99,7 @@ export function getMaterialReviewUrl(title, workId, pid) {
 export function getCanonicalWorkUrl({ title, creators, id }) {
   return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
-    creators?.[0]?.display || creators?.[0]?.name || ""
+    extractCreatorPrioritiseCorporation(creators) || [{ display: "" }]
   )}/${id}`;
 }
 

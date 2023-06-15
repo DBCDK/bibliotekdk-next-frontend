@@ -7,6 +7,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
+import { extractCreatorPrioritiseCorporation } from "@/lib/utils";
 
 export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
@@ -95,7 +96,9 @@ export function getSeo(work) {
   return {
     title: `${work?.titles?.main[0]}${
       work?.creators && work?.creators[0]
-        ? ` af ${work?.creators[0].display}`
+        ? ` af ${
+            extractCreatorPrioritiseCorporation(work?.creators)?.[0]?.display
+          }`
         : ""
     }`,
     description: getPageDescription(work),

@@ -6,6 +6,8 @@
 import { FilterTypeEnum } from "@/lib/enums";
 import { ApiEnums } from "@/lib/api/api";
 
+import { creatorsFragment } from "@/lib/api/fragments.utils";
+
 /**
  * Hitcount
  *
@@ -65,7 +67,7 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
             }            
           }
           creators {
-            display
+            ...creatorsFragment
           }
           materialTypes {
             specific
@@ -83,7 +85,8 @@ export function all({ q, limit = 100, offset = 0, filters = {} }) {
         hitcount
       }
       monitor(name: "bibdknext_search_all")
-    }`,
+    }
+    ${creatorsFragment}`,
     variables: {
       q,
       limit,

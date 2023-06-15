@@ -81,7 +81,7 @@ export function enrichInfomediaAccess(singleInfomediaAccess) {
         url: infomediaUrl(
           encodeTitleCreator(
             singleInfomediaAccess?.titles?.[0],
-            singleInfomediaAccess?.creators?.[0]?.display
+            singleInfomediaAccess?.creators
           ),
           `work-of:${singleInfomediaAccess?.pid}`,
           singleInfomediaAccess.id

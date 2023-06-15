@@ -35,7 +35,7 @@ export default function useOrderPageInformation(workId, pid, periodicaForm) {
     return inferAccessTypes(
       periodicaForm,
       pickupBranch,
-      workData?.work?.manifestations?.all
+      workData?.work?.manifestations?.mostRelevant
     );
   }, [workData?.work, periodicaForm, pickupBranch]);
 

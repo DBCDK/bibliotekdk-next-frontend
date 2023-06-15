@@ -21,7 +21,7 @@ import TjoolTjip from "@/components/base/tjooltjip";
 
 function DefaultDetailValues({ values }) {
   return (
-    <Text type="text4" lines={2}>
+    <Text tag="div" type="text4" lines={2}>
       {values}
     </Text>
   );
@@ -68,7 +68,7 @@ function Details({ className = "", manifestation = {}, work = {} }) {
 
                 return (
                   !isEmpty(field[fieldName].value) && (
-                    /** this is the label **/
+                    // this is the label
                     <div className={styles.item} key={index}>
                       <Text
                         type="text3"
@@ -88,12 +88,14 @@ function Details({ className = "", manifestation = {}, work = {} }) {
                         ></TjoolTjip>
                       )}
                       {/** some fields has a custom jsx parser .. **/}
-                      {field[fieldName].jsxParser ? (
-                        field[fieldName].jsxParser({
-                          values: field[fieldName].value,
+                      {field?.[fieldName]?.jsxParser ? (
+                        field?.[fieldName]?.jsxParser({
+                          values: field?.[fieldName]?.value,
                         })
                       ) : (
-                        <DefaultDetailValues values={field[fieldName].value} />
+                        <DefaultDetailValues
+                          values={field?.[fieldName]?.value}
+                        />
                       )}
                     </div>
                   )
@@ -151,23 +153,19 @@ export default function Wrap(props) {
     data,
     isLoading: overViewIsLoading,
     error,
-  } = useData(workFragments.fbiOverviewDetail({ workId }));
+  } = useData(workId && workFragments.fbiOverviewDetail({ workId: workId }));
 
   const {
     data: relationData,
     isLoading: relationsIsLoading,
     error: relationsError,
-  } = useData(workFragments.workForWorkRelationsWorkTypeFactory({ workId }));
+  } = useData(
+    workId &&
+      workFragments.workForWorkRelationsWorkTypeFactory({ workId: workId })
+  );
 
   const { groupedRelations } = workRelationsWorkTypeFactory(relationData?.work);
 
-  if (error || relationsError) {
-    return null;
-  }
-
-  if (overViewIsLoading || relationsIsLoading) {
-    return <DetailsSkeleton />;
-  }
   const manifestations = data?.work?.manifestations?.mostRelevant;
 
   // find the selected materialType (manifestation), use first manifestation as fallback
@@ -179,6 +177,14 @@ export default function Wrap(props) {
   // attach relations for manifestation to display
   if (manifestationByMaterialType)
     manifestationByMaterialType.relations = groupedRelations;
+
+  if (error || relationsError) {
+    return null;
+  }
+
+  if (overViewIsLoading || relationsIsLoading) {
+    return <DetailsSkeleton />;
+  }
 
   return (
     <Details

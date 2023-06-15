@@ -30,7 +30,7 @@ function substituteContentSubstitute(single) {
       workId: manifestation?.ownerWork?.workId,
       link: getWorkUrl(
         manifestation?.titles?.full?.join(": "),
-        manifestation?.creators?.[0]?.display,
+        manifestation?.creators,
         manifestation?.ownerWork?.workId
       ),
     };
