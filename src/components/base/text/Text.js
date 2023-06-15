@@ -72,7 +72,7 @@ function Text({
  *
  * @returns {component}
  */
-function TextSkeleton(props) {
+export function TextSkeleton(props) {
   if (!props.lines) {
     return null;
   }
@@ -114,6 +114,17 @@ export default function Container(props) {
   return <Text {...props} />;
 }
 
+const textTypes = ["text1", "text2", "text3", "text4", "text5", "text6"];
+const titleTypes = [
+  "title1",
+  "title2",
+  "title3",
+  "title4",
+  "title5",
+  "title6",
+  "title7",
+];
+
 // PropTypes for the component
 Container.propTypes = {
   id: PropTypes.string,
@@ -125,7 +136,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["text1", "text2", "text3", "text4", "text5", "text6"]),
-  tag: PropTypes.oneOf(["p", "span", "div", "label"]),
+  type: PropTypes.oneOf([...textTypes, ...titleTypes]),
+  tag: PropTypes.any, // Support all tags.
   skeleton: PropTypes.bool,
 };

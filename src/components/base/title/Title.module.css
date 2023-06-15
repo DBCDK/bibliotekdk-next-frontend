@@ -46,13 +46,6 @@
   font-family: var(--title-font);
 }
 
-/* Matches text1 style until we support text styles as titles project wide */
-.title8 {
-  font-size: 17px;
-  line-height: 26px;
-  font-family: var(--body-font-semibold);
-} 
-
 .clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -84,30 +77,4 @@
     font-size: 24px;
     line-height: 32px;
   }
-}
-
-/* 
-* Skeleton
-*
-*/
-
-.skeleton {
-  position: relative;
-  pointer-events: none;
-  cursor: default;
-  user-select: none;
-}
-
-.skeleton > * {
-  color: transparent;
-}
-
-.skeleton h1 {
-  /* large block of text to only 1 line */
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.skeleton span {
-  display: block;
 }

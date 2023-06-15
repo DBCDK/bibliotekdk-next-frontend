@@ -142,7 +142,7 @@ const MaterialRow = ({
               )}
             >
               <Title
-                type="title8"
+                type="text1"
                 as="h3"
                 className={styles.materialTitle}
                 id={`material-title-${id}`}
