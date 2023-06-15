@@ -3,6 +3,7 @@ import Text from "@/components/base/text";
 import IconButton from "@/components/base/iconButton/IconButton";
 import styles from "./LibrariesTable.module.css";
 import Title from "@/components/base/title";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 /**
  * Tablerow to be used in LibrariesTable component.
@@ -10,6 +11,9 @@ import Title from "@/components/base/title";
  * @returns {component}
  */
 function TableItem({ agencyName, agencyId }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+
   const isHomeLibrary = false; // Cannot be implemented yet
   //const lastUsed = false; // Cannot be implemented yet
   const isPublic = isPublicLibrary(agencyId);
@@ -22,7 +26,9 @@ function TableItem({ agencyName, agencyId }) {
     <div className={styles.tableItem}>
       <div className={styles.libraryInfo}>
         <div>
-          <Title type="title5"> {agencyName || "-"}</Title>
+          <Title type={isMobile ? "title6" : "title5"}>
+            {agencyName || "-"}
+          </Title>
           {isHomeLibrary && (
             <Text type="text3" className={styles.textLabel}>
               {Translate({

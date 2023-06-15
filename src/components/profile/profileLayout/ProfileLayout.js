@@ -6,6 +6,7 @@ import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
+import useBreakpoint from "@/components/hooks/useBreakpoint";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -18,6 +19,10 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
  * @returns {JSX.Element}
  */
 export default function ProfileLayout({ title, children }) {
+  const breakpoint = useBreakpoint();
+  const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  console.log("isMobile", isMobile);
+
   return (
     <Container fluid className={styles.container}>
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
@@ -28,7 +33,11 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          <Title className={styles.title} type="title2" tag="h1">
+          <Title
+            className={styles.title}
+            type={isMobile ? "title4" : "title2"}
+            tag="h1"
+          >
             {title}
           </Title>
           {children}

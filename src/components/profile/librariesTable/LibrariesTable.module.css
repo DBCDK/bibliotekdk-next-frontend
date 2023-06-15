@@ -19,6 +19,10 @@
   .headerItem {
     display: none;
   }
+  
+  .tableItem {
+    display: flex;
+  }
 }
 .headerRow {
   display: grid;
