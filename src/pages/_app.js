@@ -154,6 +154,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="filter" component={Pages.Filter} />
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />
+              <Modal.Page id="material" component={Pages.Material} />
               <Modal.Page
                 id="manifestationContent"
                 component={Pages.ManifestationContent}
