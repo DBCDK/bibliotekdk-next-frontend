@@ -15,7 +15,7 @@ export default function Container(props) {
     return <TextSkeleton {...props} />;
   }
 
-  return <Text type="title1" tag="h1" children="I'm a title" {...props} />;
+  return <Text type="title1" tag="h1" {...props} />;
 }
 
 // PropTypes for the component
