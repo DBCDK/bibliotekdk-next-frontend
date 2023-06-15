@@ -13,10 +13,7 @@ import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
 
 import { getJSONLD } from "@/lib/jsonld/work";
-import {
-  extractCreatorPrioritiseCorporation,
-  getCanonicalWorkUrl,
-} from "@/lib/utils";
+import { getCanonicalWorkUrl } from "@/lib/utils";
 import useCanonicalUrl from "@/components/hooks/useCanonicalUrl";
 import { getSeo } from "@/components/work/utils";
 import { getCoverImage } from "@/components/utils/getCoverImage";
