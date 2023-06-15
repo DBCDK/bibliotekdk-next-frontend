@@ -21,7 +21,6 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
 export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
-  console.log("isMobile", isMobile);
 
   return (
     <Container fluid className={styles.container}>
