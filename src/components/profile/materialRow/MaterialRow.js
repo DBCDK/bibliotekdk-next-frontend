@@ -10,7 +10,7 @@ import cx from "classnames";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import IconButton from "@/components/base/iconButton";
-import { getWorkUrl } from "@/lib/utils";
+import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import Translate from "@/components/base/translate";
@@ -20,6 +20,7 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import useUser from "@/components/hooks/useUser";
+import isEmpty from "lodash/isEmpty";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -187,20 +188,23 @@ export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
 
 /**
  * Use for checkbox functionality
- * @param ref of parent html element, which contains your group of material rows
+ * @param parentRef of parent html element, which contains your group of material rows
  * @returns the 'data-id' of the material row (id from component parameter)
  */
 export const getCheckedElements = (parentRef) => {
   const elements = [].slice.call(parentRef.current.children);
-  const checkedElements = elements
+  return elements
     .filter((element) => element.ariaChecked === "true")
     .map((element) => element.getAttribute("data-id"));
-  return checkedElements;
 };
 
 const MobileMaterialRow = (props) => {
-  const { image, creator, materialType, creationYear, title, id, type } = props;
+  const { image, creators, materialType, creationYear, title, id, type } =
+    props;
   const modal = useModal();
+
+  const firstCreator =
+    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const onClick = () => {
     modal.push("material", {
@@ -243,7 +247,7 @@ const MobileMaterialRow = (props) => {
         >
           {title}
         </Title>
-        {creator && <Text type="text2">{creator}</Text>}
+        {firstCreator && <Text type="text2">{firstCreator}</Text>}
         {materialType && creationYear && (
           <Text type="text2">
             {materialType}, {creationYear}
@@ -277,6 +281,9 @@ const MaterialRow = (props) => {
   const { updateLoanerInfo } = useUser();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  const firstCreator =
+    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const getStatus = () => {
     switch (type) {
@@ -430,7 +437,7 @@ const MaterialRow = (props) => {
               </Title>
             </ConditionalWrapper>
 
-            {creator && <Text type="text2">{creator}</Text>}
+            {firstCreator && <Text type="text2">{firstCreator}</Text>}
             {materialType && creationYear && (
               <Text type="text2">
                 {materialType}, {creationYear}
