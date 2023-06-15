@@ -2977,8 +2977,8 @@
         "en": "Add academic library"
       },
       "myLibrariesInfo": {
-        "da": "Du kan være låner på et eller flere biblioteker. Der hvor du er registeret vises her.",
-        "en": "You can be a borrower at one or more libraries. Where you are registered is shown here."
+        "da": "Du kan være låner på et eller flere biblioteker. De steder hvor du er registeret vises nedenfor.",
+        "en": "You can be a borrower at one or more libraries. The places where you are registered are shown here."
       },
       "myLibrariesMoreInfo": {
         "da": "De folkebiblioteker, hvor du er låner, hentes automatisk. Så hvis biblioteket ikke vises nedenfor er du ikke registreret som låner på biblioteket. Uddannelses- og forskningsbiblioteker tilføjes manuelt, via linket nedenfor.",
