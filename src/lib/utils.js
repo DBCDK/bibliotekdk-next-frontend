@@ -175,6 +175,7 @@ export function getElementById(elementId) {
  * function that translates and encodes label
  * @param {string} context
  * @param {string} label
+ * @param requestedLang
  * @returns {string}
  */
 export function translateAndEncode(context, label, requestedLang = undefined) {

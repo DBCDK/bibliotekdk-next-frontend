@@ -115,7 +115,6 @@ Header.propTypes = {
 /**
  *  Default export function of the Component
  *
- * @param {obj} props
  * See propTypes for specific props and types
  *
  * @returns {component}
