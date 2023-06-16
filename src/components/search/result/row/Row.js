@@ -124,7 +124,7 @@ export default function ResultRow({
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
-    <div className={styles.search}>
+    <article className={styles.search}>
       <Link
         a={true}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
@@ -207,7 +207,7 @@ export default function ResultRow({
           />
         </div>
       </Link>
-    </div>
+    </article>
   );
 }
 ResultRow.propTypes = {
