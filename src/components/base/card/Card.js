@@ -57,7 +57,7 @@ export default function Card({
       href={{
         pathname: "/materiale/[title_author]/[workId]",
         query: {
-          title_author: encodeTitleCreator(title, creators?.[0]?.display),
+          title_author: encodeTitleCreator(title, creators),
           workId,
           type,
         },

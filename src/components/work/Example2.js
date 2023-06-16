@@ -10,6 +10,8 @@ import { useData } from "@/lib/api";
 import Link from "next/link";
 import { encodeTitleCreator } from "@/lib/utils";
 
+import { creatorsFragment } from "@/lib/api/fragments.utils";
+
 /**
  * This function will create a query object
  *
@@ -28,13 +30,13 @@ function query({ workId }) {
           pid
           title
           creators {
-            name
+            ...creatorsFragment
           }
         }
       }
     }
   }
-  `,
+  ${creatorsFragment}`,
     variables: { workId },
     slowThreshold: 2000,
   };
@@ -58,7 +60,7 @@ export function Example2({ recommendations }) {
               as={`/materiale/${encodeURIComponent(
                 encodeTitleCreator(
                   manifestation.title[0],
-                  manifestation.creators[0] && manifestation.creators[0].name
+                  manifestation?.creators && manifestation.creators
                 )
               )}/${manifestation.pid}`}
             >

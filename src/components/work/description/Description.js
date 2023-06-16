@@ -121,6 +121,7 @@ export function Description({ className = "", data = "", skeleton = false }) {
                 type="text2"
                 skeleton={skeleton}
                 lines={4}
+                tag="span"
               >
                 {abstract}
               </Text>
@@ -166,12 +167,12 @@ export default function Wrap(props) {
     workFragments.description({ workId })
   );
 
-  if (isLoading) {
-    return <DescriptionSkeleton />;
-  }
-
   if (error) {
     return null;
+  }
+
+  if (isLoading) {
+    return <DescriptionSkeleton />;
   }
 
   return <Description {...props} data={data?.work} />;
