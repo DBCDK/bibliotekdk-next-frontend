@@ -62,10 +62,29 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @param {string} fullTitle
  * @param {array<object>} creators
  * @param {string} workId
- * @returns {string}
+ * @return {{query: {title_author: string, workId}, pathname: string}}
  */
 export function getWorkUrl(fullTitle, creators, workId) {
-  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
+  return {
+    pathname: `/materiale/[title_author]/[workId]`,
+    query: {
+      title_author: encodeTitleCreator(fullTitle, creators),
+      workId: workId,
+    },
+  };
+}
+
+/**
+ *
+ * @param {string} title
+ * @param {number|string} articleId
+ * @return {{query: {articleId, title}, pathname: string}}
+ */
+export function getArticleUrl(title, articleId) {
+  return {
+    pathname: `/artikel/[title]/[articleId]`,
+    query: { title: title, articleId: articleId },
+  };
 }
 
 /**
