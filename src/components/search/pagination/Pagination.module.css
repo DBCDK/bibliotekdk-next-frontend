@@ -7,7 +7,8 @@
 }
 
 .arrow_hidden {
-  opacity: 0;
+  /* Hide completely from DOM - not tabbable */
+  display: none;
 }
 
 .pagination {
