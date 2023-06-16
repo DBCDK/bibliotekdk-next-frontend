@@ -65,13 +65,7 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @return {{query: {title_author: string, workId}, pathname: string}}
  */
 export function getWorkUrl(fullTitle, creators, workId) {
-  return {
-    pathname: `/materiale/[title_author]/[workId]`,
-    query: {
-      title_author: encodeTitleCreator(fullTitle, creators),
-      workId: workId,
-    },
-  };
+  return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
 }
 
 /**
@@ -81,10 +75,7 @@ export function getWorkUrl(fullTitle, creators, workId) {
  * @return {{query: {articleId, title}, pathname: string}}
  */
 export function getArticleUrl(title, articleId) {
-  return {
-    pathname: `/artikel/[title]/[articleId]`,
-    query: { title: title, articleId: articleId },
-  };
+  return `/artikel/${encodeString(title)}/${articleId}`;
 }
 
 /**
@@ -95,7 +86,7 @@ export function getArticleUrl(title, articleId) {
  * @returns {string}
  */
 export function getInfomediaReviewUrl(title, workId, id) {
-  return `/anmeldelse/${title}/${workId}/${id}`;
+  return `/anmeldelse/${encodeString(title)}/${workId}/${id}`;
 }
 
 /**
