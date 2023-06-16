@@ -20,6 +20,7 @@ import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
 import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import Translate from "@/components/base/translate";
 
 export function ManifestationParts({
   parts,
@@ -85,7 +86,11 @@ export function ManifestationParts({
             <div>
               <LinkArrow className={styles.arrowchanges}>
                 <Text type="text3" lines={1} onClick={modalOpen}>
-                  Se alle ({parts.length})
+                  {Translate({
+                    context: "manifestation_content",
+                    label: "see_all",
+                  })}{" "}
+                  ({parts.length})
                 </Text>
               </LinkArrow>
             </div>
