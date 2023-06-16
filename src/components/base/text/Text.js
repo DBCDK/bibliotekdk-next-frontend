@@ -137,6 +137,6 @@ Container.propTypes = {
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   type: PropTypes.oneOf([...textTypes, ...titleTypes]),
-  tag: PropTypes.any, // Support all tags.
+  tag: PropTypes.string, // Support all tags.
   skeleton: PropTypes.bool,
 };

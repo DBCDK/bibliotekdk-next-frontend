@@ -138,7 +138,7 @@ Link.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropType_Link_href,
   tabIndex: PropTypes.string,
-  tag: PropTypes.oneOf(["a", "span"]),
+  tag: PropTypes.string, // support any tag
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
 };
