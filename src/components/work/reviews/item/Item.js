@@ -64,15 +64,17 @@ function Item({ data, work, isLoading }) {
       md={!!hasContent.length ? 9 : 4}
       data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
+      as="article"
     >
-      <div className={styles.wrap}>
-        <div className={styles.details}>
+      <figure className={styles.wrap}>
+        <figcaption className={styles.details}>
           <div>
             {hasPublisher && (
               <Title
                 type="title5"
                 className={styles.publisher}
                 skeleton={isLoading}
+                tag="h3"
               >
                 {hasPublisher}
               </Title>
@@ -123,8 +125,8 @@ function Item({ data, work, isLoading }) {
               )}
             </div>
           </div>
-        </div>
-        <div>
+        </figcaption>
+        <blockquote>
           <Title
             type="title6"
             tag="span"
@@ -188,8 +190,8 @@ function Item({ data, work, isLoading }) {
               );
             })}
           </div>
-        </div>
-      </div>
+        </blockquote>
+      </figure>
       <hr className={styles.seperator} />
     </Col>
   );
