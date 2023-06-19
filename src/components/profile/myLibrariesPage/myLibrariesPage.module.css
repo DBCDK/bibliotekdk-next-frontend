@@ -10,15 +10,7 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 720px) {
-
-  .pageDescriptionContainer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-}
-
 .showMoreText {
   margin-top: var(--pt1);
+  margin-bottom: var(--pt1);
 }
