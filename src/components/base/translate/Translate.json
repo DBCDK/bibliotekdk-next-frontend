@@ -582,6 +582,16 @@
         "en": "Copy link"
       }
     },
+    "manifestation_content": {
+      "contents": {
+        "da": "Indhold",
+        "en": "Contents"
+      },
+      "see_all": {
+        "da": "Se alle",
+        "en": "See all"
+      }
+    },
     "references": {
       "label_references_title": {
         "da": "Download til referencesystemer",
