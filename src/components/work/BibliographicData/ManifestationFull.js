@@ -175,7 +175,7 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
 
   return (
     <Row key={data?.manifestation?.pid}>
-      {/*<ColumnOne workId={workId} manifestation={data?.manifestation} />*/}
+      <ColumnOne workId={workId} manifestation={data?.manifestation} />
       <Col xs={12} md>
         <div className={styles.container}>
           {parsed?.map(({ label, value }) => {
