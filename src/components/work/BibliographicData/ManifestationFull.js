@@ -137,7 +137,6 @@ function ColumnOne({ workId, manifestation }) {
               iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
               iconPlacement={"right"}
               iconAnimation={[animations["h-elastic"], animations["f-elastic"]]}
-              iconStyle={{ marginTop: "var(--pt05)" }}
             >
               {Translate({
                 context: "bibliographic-data",
