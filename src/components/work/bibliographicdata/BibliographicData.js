@@ -146,7 +146,6 @@ export function BibliographicData({ manifestations, workId }) {
           );
         })}
       </Accordion>
-      {/*</div>*/}
     </Section>
   );
 }
