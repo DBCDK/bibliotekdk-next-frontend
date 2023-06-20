@@ -5,7 +5,7 @@ import Icon from "@/components/base/icon";
 import Text from "@/components/base/text";
 
 import Translate from "@/components/base/translate";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./NavigationDropdown.module.css";
 import { useRouter } from "next/router";
 import Link from "../link/Link";
@@ -130,6 +130,8 @@ function DropdownItem({
   i,
   router,
 }) {
+  const listItemRef = useRef(null);
+
   const urlEnding = encodeString(
     Translate({
       context: context,
@@ -144,16 +146,53 @@ function DropdownItem({
     }
   }, [router.asPath]);
 
+  useEffect(() => {
+    if (selected === i) {
+      listItemRef.current.focus();
+    }
+  }, [selected, i]);
+
+  /**
+   * Handles keyboard navigation in dropdown menu
+   * If arrowDown or up, we can click into next or previous item
+   * @param {*} e
+   */
+  function handleKeyDown(e) {
+    if (e.key === "ArrowDown" && i < menuItems.length - 1) {
+      e.preventDefault();
+      const nextItem = listItemRef.current.nextSibling;
+      if (nextItem) {
+        nextItem.focus();
+        setSelected(i + 1);
+      }
+    } else if (e.key === "ArrowUp" && i > 0) {
+      e.preventDefault();
+      const prevItem = listItemRef.current.previousSibling;
+      if (prevItem) {
+        prevItem.focus();
+        setSelected(i - 1);
+      }
+    } else if (e.key === "Enter" && selected === i) {
+      setExpandMenu(false);
+    }
+  }
+
   return (
     // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
-    <li className={cx({ [styles.linkBackgroundSelected]: selected === i })}>
+    <li
+      ref={listItemRef}
+      className={cx({
+        [styles.linkBackgroundSelected]: selected === i,
+      })}
+      onKeyDown={handleKeyDown}
+    >
       <Link
         dataCy={`mobile-link-${item}`}
         href={`/profil/${urlEnding}`}
         border={false}
         role="menuitem"
         key={`/profil/${urlEnding}`}
-        className={cx(styles.link, { [styles.linkSelected]: selected === i })}
+        className={cx(styles.link)}
         onClick={() => {
           if (selected === i) {
             setExpandMenu(false);
@@ -173,7 +212,7 @@ function DropdownItem({
           {selected === i && (
             <Icon
               size={{ w: "1_5", h: "1_5" }}
-              src="checkmark.svg"
+              src="checkmark_blue.svg"
               alt=""
               role="presentation"
             />

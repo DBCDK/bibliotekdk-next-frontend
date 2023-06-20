@@ -28,7 +28,7 @@
 .dropdownToggle {
   background-color: var(--white);
   padding: var(--pt2) 0;
-  border: 1px solid var(--gray);
+  outline: 1px solid var(--gray);
   min-width: 125px;
   height: 100%;
   width: 100%;
@@ -39,8 +39,9 @@
   cursor: pointer;
 }
 
+.dropdownToggle:hover,
 .dropdownToggle:focus {
-  color: var(--blue);
+  outline: solid 2px var(--blue);
 }
 
 .dropdownIconRotate {
@@ -50,10 +51,11 @@
 .dropdownMenu {
   border-radius: 0;
   width: 100%;
-  border: 1px solid var(--gray);
+  outline: 1px solid var(--gray);
   padding: 0;
   /* override bootstrap default position and push dropdown menu up */
-  top: -3px !important;
+  /* we keep 2px space to show outline on foucs*/
+  top: -1px !important;
 }
 
 .text {
@@ -69,14 +71,15 @@
 
 .linkBackgroundSelected {
   text-decoration: none;
-  background-color: var(--blue);
-  color: var(--white);
+  background-color: var(--concrete);
 }
 
 .link {
   display: flex;
   align-items: center;
   padding: var(--pt2) 0;
+  margin-top: 1px;
+  margin-bottom: 1px;
   width: 100%;
 }
 
@@ -86,6 +89,7 @@
   color: inherit !important;
 }
 
-.linkSelected {
-  color: var(--white);
+.link:hover,
+.link:focus {
+  outline: solid 2px var(--blue);
 }
