@@ -11,6 +11,7 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
+import { HiddenRoleFunctionEnum } from "@/lib/enums";
 
 /**
  * Parse languages in given manifestation.
@@ -161,11 +162,17 @@ function getCreatorsAndContributors(manifestation) {
 /**
  * Map a single person ({disploy{roles[{function, functioncode}]}}
  * @param person
+ * @param hiddenRoles
  * @returns {*}
  *  a string "disploy (function)" .. eg "ebbe fisk (instruktør)"
  */
-function parseFunction(person) {
-  const roles = person?.roles?.map((role) => role?.function?.singular || "");
+export function parseFunction(
+  person,
+  hiddenRoles = Object.values(HiddenRoleFunctionEnum).map((role) => role.code)
+) {
+  const roles = person?.roles
+    ?.filter((role) => !hiddenRoles.includes(role?.functionCode))
+    ?.map((role) => role?.function?.singular || "");
   return roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "";
 }
 

@@ -4,6 +4,7 @@ import Link from "@/components/base/link";
 import Text from "@/components/base/text";
 import React, { useEffect, useState } from "react";
 import { FlatSubjectsForFullManifestation } from "@/components/work/keywords/Keywords";
+import { parseFunction } from "@/components/work/details/details.utils";
 
 // fields to handle - add to handle a field eg. subjects or lix or let or ...
 const fields = () => [
@@ -60,7 +61,9 @@ const fields = () => [
     }),
     valueParser: (creators) =>
       creators?.length === 1 && (
-        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+        <ParsedAndRenderedCreatorsOrContributors
+          creatorsOrContributors={creators}
+        />
       ),
   },
   {
@@ -71,7 +74,9 @@ const fields = () => [
     }),
     valueParser: (creators) =>
       creators?.length > 1 && (
-        <ParsedCreatorsOrContributors creatorsOrContributors={creators} />
+        <ParsedAndRenderedCreatorsOrContributors
+          creatorsOrContributors={creators}
+        />
       ),
   },
   {
@@ -82,7 +87,9 @@ const fields = () => [
     }),
     valueParser: (contributors) =>
       contributors?.length > 0 && (
-        <ParsedCreatorsOrContributors creatorsOrContributors={contributors} />
+        <ParsedAndRenderedCreatorsOrContributors
+          creatorsOrContributors={contributors}
+        />
       ),
   },
   {
@@ -218,7 +225,7 @@ const fields = () => [
       label: "usedLanguage",
     }),
     valueParser: (languages) =>
-      <ParsedLanguages languages={languages} /> || null,
+      <ParsedAndRenderedLanguages languages={languages} /> || null,
   },
   {
     dataField: "edition",
@@ -424,7 +431,7 @@ export function parseManifestation(manifestation) {
   );
 }
 
-export function ParsedCreatorsOrContributors({
+export function ParsedAndRenderedCreatorsOrContributors({
   creatorsOrContributors,
   Tag = ManifestationLink,
 }) {
@@ -440,10 +447,7 @@ export function ParsedCreatorsOrContributors({
   return creatorsOrContributors?.map((C, idx) => (
     <Text tag={"div"} key={`${C?.display}${idx}`}>
       <Tag>{C?.display}</Tag>
-      {C?.roles?.length > 0 &&
-        ` (${C?.roles
-          ?.map((role) => role?.["function"]?.singular)
-          .join(", ")})`}
+      {parseFunction(C)}
       <br />
     </Text>
   ));
@@ -460,7 +464,7 @@ function ManifestationLink({ children }) {
   );
 }
 
-function ParsedLanguages({ languages }) {
+function ParsedAndRenderedLanguages({ languages }) {
   const languagesNotesExist = languages?.notes?.length > 0;
 
   const languagesExist =
