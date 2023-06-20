@@ -1,12 +1,13 @@
-import styles from "@/components/_modal/pages/order/Order.module.css";
+import styles from "./LocalizationInformation.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
 import { useModal } from "@/components/_modal";
 import { LOGIN_MODE } from "@/components/_modal/pages/loanerform/LoanerForm";
+import { IconLink } from "@/components/base/iconlink/IconLink";
+import ChevronRight from "@/public/icons/chevron_right.svg";
 
 function LocalizationInformation({
   availableAsDigitalCopy,
@@ -37,12 +38,14 @@ function LocalizationInformation({
               {pickupBranch?.name}
             </Text>
           )}
-          <LinkArrow
-            className={styles.link}
+          <IconLink
             onClick={onClick}
             disabled={isLoadingBranches}
+            tag={"button"}
+            iconSrc={ChevronRight}
+            iconPlacement={"right"}
           >
-            <Text type="text3" className={styles.fullLink}>
+            <Text tag="span" type="text3" className={styles.fullLink}>
               {Translate({
                 context: "order",
                 label:
@@ -53,13 +56,13 @@ function LocalizationInformation({
                     : "pickup-link",
               })}
             </Text>
-            <Text type="text3" className={styles.shortLink}>
+            <Text tag="span" type="text3" className={styles.shortLink}>
               {Translate({
                 context: "general",
                 label: pickupBranch ? "change" : "select",
               })}
             </Text>
-          </LinkArrow>
+          </IconLink>
         </div>
         {(isLoadingBranches || pickupBranch) && (
           <div className={styles.address}>
