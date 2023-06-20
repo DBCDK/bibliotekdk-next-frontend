@@ -30,12 +30,11 @@ export default function NavigationDropdown({ context, menuItems }) {
     >
       <DropdownToggle
         menuTitle={menuTitle}
-        onClick={() => setExpandMenu(!expandMenu)}
-        onKeyDown={(e) => {
-          console.log("key", e.key);
-
+        handleClick={() => setExpandMenu(!expandMenu)}
+        handleKeyDown={(e) => {
           if (e.key === "Enter") {
-            console.log("open or close ", !expandMenu);
+            e.preventDefault();
+
             setExpandMenu(!expandMenu);
           }
         }}
@@ -54,17 +53,16 @@ export default function NavigationDropdown({ context, menuItems }) {
   );
 }
 
-function DropdownToggle({ onClick, onKeyDown, menuTitle, expandMenu }) {
+function DropdownToggle({ handleClick, handleKeyDown, menuTitle, expandMenu }) {
   return (
     <Dropdown.Toggle
       variant="success"
       id="menubutton"
       className={styles.dropdownToggle}
-      onClick={onClick}
+      onClick={handleClick}
       onKeyDown={(e) => {
-        console.log(e.key);
         if (e.key === "Enter") {
-          onKeyDown(e);
+          handleKeyDown(e);
         }
       }}
     >

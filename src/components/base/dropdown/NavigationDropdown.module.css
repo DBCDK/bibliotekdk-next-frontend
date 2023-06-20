@@ -41,7 +41,6 @@
 
 .dropdownToggle:focus {
   color: var(--blue);
-  background-color: green;
 }
 
 .dropdownIconRotate {
