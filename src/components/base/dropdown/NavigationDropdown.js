@@ -26,15 +26,20 @@ export default function NavigationDropdown({ context, menuItems }) {
       type="nav"
       role="navigation"
       className={styles.dropdownWrap}
+      tabIndex={-1}
     >
       <DropdownToggle
         menuTitle={menuTitle}
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={(e) => {
+          console.log("key", e.key);
+
           if (e.key === "Enter") {
+            console.log("open or close ", !expandMenu);
             setExpandMenu(!expandMenu);
           }
         }}
+        expandMenu={expandMenu}
       />
       <DropdownMenu
         menuItems={menuItems}
@@ -49,13 +54,19 @@ export default function NavigationDropdown({ context, menuItems }) {
   );
 }
 
-function DropdownToggle({ onClick, menuTitle: menuTitle }) {
+function DropdownToggle({ onClick, onKeyDown, menuTitle, expandMenu }) {
   return (
     <Dropdown.Toggle
       variant="success"
-      id="dropdown-basic"
+      id="menubutton"
       className={styles.dropdownToggle}
       onClick={onClick}
+      onKeyDown={(e) => {
+        console.log(e.key);
+        if (e.key === "Enter") {
+          onKeyDown(e);
+        }
+      }}
     >
       <Text
         tag="span"
@@ -65,9 +76,11 @@ function DropdownToggle({ onClick, menuTitle: menuTitle }) {
       >
         {menuTitle}
         <Icon
-          size={{ w: 1, h: 1 }}
-          src="arrowrightblue.svg"
-          className={styles.dropdownIcon}
+          size={{ w: 2, h: 2 }}
+          src="arrowDown.svg"
+          className={cx({
+            [styles.dropdownIconRotate]: expandMenu,
+          })}
           alt=""
         />
       </Text>
@@ -88,12 +101,13 @@ function DropdownMenu({
     <Dropdown.Menu
       show={expandMenu}
       className={styles.dropdownMenu}
-      role="list"
+      role="menu"
+      aria-labelledby="menubutton"
       data-cy="dropdown-menu"
     >
       {menuItems.map((item, i) => (
         <DropdownItem
-          key={`nav-item-${i}`}
+          key={`menu-item-${item}`} //TODO use url?
           item={item}
           i={i}
           menuItems={menuItems}
@@ -139,6 +153,8 @@ function DropdownItem({
         dataCy={`mobile-link-${item}`}
         href={`/profil/${urlEnding}`}
         border={false}
+        role="menuitem"
+        key={`/profil/${urlEnding}`}
         className={cx(styles.link, { [styles.linkSelected]: selected === i })}
         onClick={() => {
           if (selected === i) {
@@ -157,7 +173,12 @@ function DropdownItem({
             label: menuItems[i],
           })}
           {selected === i && (
-            <Icon size={{ w: 1, h: 1 }} src="checkmark.svg" alt="" />
+            <Icon
+              size={{ w: "1_5", h: "1_5" }}
+              src="checkmark.svg"
+              alt=""
+              role="presentation"
+            />
           )}
         </Text>
       </Link>
