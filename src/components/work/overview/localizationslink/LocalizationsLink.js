@@ -49,7 +49,7 @@ export function LocalizationsLink({
         dataCy={localizationLinkKey}
         ariaLabel="open localizations"
       >
-        <Text type="text3" className={styles.linkstyle}>
+        <Text tag={"span"} type="text3" className={styles.linkstyle}>
           {Translate({
             context: "overview",
             label: "check_branch_holding",

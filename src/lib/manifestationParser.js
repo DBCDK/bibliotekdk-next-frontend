@@ -165,7 +165,11 @@ const fields = () => [
       context: "bibliographic-data",
       label: "subject",
     }),
-    valueParser: FlatSubjectsForFullManifestation,
+    valueParser: (value) => (
+      <FlatSubjectsForFullManifestation
+        subjects={value.dbcVerified.map((val) => val.display)}
+      />
+    ),
   },
   // {
   //   dataField: "physicalDescriptions",

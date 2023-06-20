@@ -59,3 +59,16 @@
     transparent 100%
   );
 }
+
+.words {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word:last-child {
+  margin-right: 0;
+}
+
+.word {
+  display: inline;
+}
