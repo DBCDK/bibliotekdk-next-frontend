@@ -17,7 +17,7 @@ import { encodeString } from "@/lib/utils";
 const LinkDropdown = ({
   uniqueIdButton = "linkmenu",
   uniqueIdMenu = "menubutton",
-  version = "large",
+  version = "small",
   active = 0,
   onItemClick,
   linkProps,
@@ -30,24 +30,27 @@ const LinkDropdown = ({
     label: "profileMenu",
   });
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [expandMenu, setExpandMenu] = useState(false);
   const menuRef = useRef(null);
   const [itemRefs, setItemRefs] = useState([]);
 
   useEffect(() => {
-    // Update with active page
+    initializeItemRefs();
+  }, []);
+
+  const initializeItemRefs = () => {
     setItemRefs((itemRefs) =>
       Array(menuItems.length)
-        .fill([])
+        .fill(null)
         .map((_, i) => itemRefs[i] || createRef())
     );
-  }, []);
+  };
 
   useEffect(() => {
     // Detect clicks outside of menu
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
+        setExpandMenu(false);
       }
     };
 
@@ -62,13 +65,14 @@ const LinkDropdown = ({
       (ref) => ref.current === document.activeElement
     );
     if (active === -1) {
-      await setIsMenuOpen(true);
+      setExpandMenu(true);
     }
     // either first element in list, or one next
     const toFocus =
       active === -1 || active === menuItems.length - 1 ? 0 : active + 1;
     if (active === -1) {
-      setIsMenuOpen(true);
+      //todo delete?
+      setExpandMenu(true);
     }
 
     if (itemRefs[toFocus] && itemRefs[toFocus].current) {
@@ -82,7 +86,7 @@ const LinkDropdown = ({
       (ref) => ref.current === document.activeElement
     );
     if (active === -1) {
-      await setIsMenuOpen(true);
+      setExpandMenu(true);
     }
     // either last element in list, or one previous
     const toFocus =
@@ -94,35 +98,43 @@ const LinkDropdown = ({
     }
   };
 
-  const onMenuKeyDown = (e) => {
+  /**
+   * TODO add last item goes to first item when clicking down/right and the other way around
+   * TODO from start button come to first item
+   * Handles keyboard navigation in dropdown menu, especially for firefox
+   * If arrowDown or up, we can click into next or previous item
+   * @param {*} e
+   */
+  function onMenuKeyDown(e, i) {
     switch (e.key) {
       case "Escape":
-        setIsMenuOpen(false);
+        setExpandMenu(false);
+        break;
+      case "ArrowDown":
+      case "ArrowRight":
+        e.preventDefault();
+        tabNext();
         break;
       case "ArrowUp":
       case "ArrowLeft":
         tabPrevious();
-        break;
-      case "ArrowRight":
-      case "ArrowDown":
-        tabNext();
         break;
       case "Tab": {
         const lastIndex = menuItems.length - 1;
         if (itemRefs[lastIndex] && itemRefs[lastIndex].current) {
           const current = itemRefs[lastIndex].current;
           if (current === document.activeElement) {
-            setIsMenuOpen(false);
+            setExpandMenu(false);
           }
         }
         break;
       }
     }
-  };
+  }
 
   const onButtonClick = (e) => {
     if (e.key === "Enter") {
-      setIsMenuOpen(!isMenuOpen);
+      setExpandMenu(!expandMenu);
     }
   };
 
@@ -130,11 +142,10 @@ const LinkDropdown = ({
     if (onItemClick) {
       onItemClick(e);
     }
-
-    setIsMenuOpen(false);
+    setExpandMenu(false);
   };
 
-  const isLinkActive = (index) => {
+  const isSelectedLink = (index) => {
     return router.asPath.includes(
       encodeString(
         Translate({
@@ -153,7 +164,6 @@ const LinkDropdown = ({
         [styles.wrapper_small]: version === "small",
       })}
       ref={menuRef}
-      tabIndex={0}
       onKeyDown={onMenuKeyDown}
     >
       <div
@@ -161,14 +171,14 @@ const LinkDropdown = ({
         id={uniqueIdMenu}
         aria-haspopup="true"
         aria-controls={uniqueIdButton}
-        aria-expanded={isMenuOpen}
-        tabIndex={1}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        aria-expanded={expandMenu}
+        tabIndex={0}
+        onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
         className={cx({
-          [styles.menuButton]: true,
+          [styles.dropdownToggle]: true,
           [styles.menuButton_small]: version === "small",
-          [styles.menuButton_active]: isMenuOpen,
+          [styles.menuButton_active]: expandMenu,
         })}
       >
         <div>{menuTitle}</div>
@@ -176,66 +186,73 @@ const LinkDropdown = ({
           className={cx({
             [styles.chevron]: true,
             [styles.chevron_small]: version === "small",
-            [styles.chevron_active]: isMenuOpen,
+            [styles.chevron_active]: expandMenu,
           })}
         >
           <Icon
             size={{ w: 2, h: 2 }}
             src="arrowDown.svg"
             className={cx({
-              [styles.dropdownIconRotate]: true, //expandMenu,
+              [styles.dropdownIconRotate]: expandMenu,
             })}
             alt=""
           />
         </span>
       </div>
 
-      <ul
-        id={uniqueIdButton}
-        role="menu"
-        aria-labelledby={uniqueIdMenu}
-        className={cx({
-          [styles.menu]: true,
-          [styles.menu_small]: version === "small",
-          [styles.menu_active]: isMenuOpen,
-        })}
-      >
-        {isMenuOpen &&
-          menuItems.map((item, index) => (
-            <Link
-              key={`/profil/${index}`} //TODO
-              role="menuitem"
-              href={encodeString(
-                Translate({
-                  context: context,
-                  label: menuItems[index],
-                  requestedLang: "da",
-                })
-              )}
-              className={cx({
-                [styles.menuItem]: true,
-                [styles.menuItem_small]: version === "small",
-                [styles.menuItem_active]: isLinkActive(index),
-              })}
-              onClick={onLinkClick}
-              ref={itemRefs[index]}
-              // data-cy={`link-dropdown-${cleanUrl(item.text)}`}
-              {...linkProps}
-            >
-              <span style={{ display: "flex" }}>
-                {Translate({
-                  context: context,
-                  label: menuItems[index],
-                })}
-                {isLinkActive(item) && (
-                  <span className={styles.checkmark} role="presentation">
-                    <Icon size={{ w: 1, h: 1 }} src="checkmark.svg" alt="" />
-                  </span>
-                )}
-              </span>
-            </Link>
-          ))}
-      </ul>
+      {expandMenu && (
+        <ul
+          id={uniqueIdButton}
+          role="menu"
+          aria-labelledby={uniqueIdMenu}
+          className={styles.menu}
+        >
+          {menuItems.map((item, index) => {
+            const link = encodeString(
+              Translate({
+                context: context,
+                label: menuItems[index],
+                requestedLang: "da",
+              })
+            );
+            return (
+              <Link
+                key={`/profil/${link}`}
+                role="menuitem"
+                href={link}
+                onClick={onLinkClick}
+                ref={itemRefs[index]}
+                // data-cy={`link-dropdown-${cleanUrl(item.text)}`}
+                {...linkProps}
+              >
+                <a
+                  onClick={onLinkClick}
+                  ref={itemRefs[index]}
+                  className={cx({
+                    [styles.menuItem]: true,
+                    [styles.menuItem_small]: version === "small",
+                    [styles.menuItem_selected]: isSelectedLink(index),
+                  })}
+                >
+                  {Translate({
+                    context: context,
+                    label: menuItems[index],
+                  })}
+                  {isSelectedLink(index) && (
+                    <span className={styles.checkmark} role="presentation">
+                      <Icon
+                        size={{ w: "1_5", h: "1_5" }}
+                        src="checkmark_blue.svg"
+                        alt=""
+                      />
+                    </span>
+                  )}
+                </a>
+              </Link>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

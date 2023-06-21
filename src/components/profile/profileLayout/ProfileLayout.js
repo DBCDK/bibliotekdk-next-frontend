@@ -25,8 +25,8 @@ export default function ProfileLayout({ title, children }) {
 
   return (
     <Container fluid className={styles.container}>
-      <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
-      {/* <NavigationDropdown2 context={CONTEXT} menuItems={MENUITEMS} /> */}
+      {/* <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} /> */}
+      <NavigationDropdown2 context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
         <Col lg={3}>
