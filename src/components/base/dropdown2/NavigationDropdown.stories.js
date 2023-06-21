@@ -1,4 +1,4 @@
-import NavigationDropdown2 from "./NavigationDropdown2";
+import NavigationDropdown from "./NavigationDropdown";
 import automock_utils from "@/components/_modal/pages/automock_utils";
 import { StoryDescription } from "@/storybook";
 const { useMockLoanerInfo } = automock_utils();
@@ -6,7 +6,7 @@ const { useMockLoanerInfo } = automock_utils();
 const menuItems = ["loansAndReservations", "myLibraries"];
 
 const exportedObject = {
-  title: "base/NavigationDropdown2",
+  title: "base/NavigationDropdown",
 };
 
 export default exportedObject;
@@ -16,9 +16,10 @@ export function Dropdown() {
   return (
     <div style={{ height: "500px" }}>
       <StoryDescription>
-        Shows when canvas has width up to 992px
+        Shows when canvas has width up to 992px. The story is not showing icons
+        used at the end of the line.
       </StoryDescription>
-      <NavigationDropdown2 context="profile" menuItems={menuItems} />
+      <NavigationDropdown context="profile" menuItems={menuItems} />
     </div>
   );
 }

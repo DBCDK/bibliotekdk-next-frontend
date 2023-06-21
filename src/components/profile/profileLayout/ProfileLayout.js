@@ -6,7 +6,7 @@ import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import NavigationDropdown2 from "@/components/base/dropdown2/NavigationDropdown2";
+import NavigationDropdown from "@/components/base/dropdown2/NavigationDropdown";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -24,8 +24,7 @@ export default function ProfileLayout({ title, children }) {
 
   return (
     <Container fluid className={styles.container}>
-      {/* <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} /> */}
-      <NavigationDropdown2 context={CONTEXT} menuItems={MENUITEMS} />
+      <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
         <Col lg={3}>

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { createRef, useEffect, useRef, useState } from "react";
 import Icon from "@/components/base/icon";
 import cx from "classnames";
-import styles from "./NavigationDropdown2.module.css";
+import styles from "./NavigationDropdown.module.css";
 import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
 import animations from "@/components/base/animation/animations.module.css";
@@ -159,6 +159,7 @@ function LinkDropdown({
         tabIndex={0}
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
+        data-cy="mobile-menu-button"
         className={cx(animations["on-hover"], animations["on-focus"], {
           [styles.menuButton]: true,
         })}
