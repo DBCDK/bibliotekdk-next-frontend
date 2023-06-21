@@ -10,17 +10,15 @@ import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * This component creates a dropdown with links inside.
- *
- * There is 2 variants of the dropdown, small and large. Both contain a list of links, which switches the user's active page on activation
  * This component should standardize the accessability concerns in creating a mix between an accordion and a link list.
  */
 
-const LinkDropdown = ({
+function LinkDropdown({
   context,
   menuItems,
   uniqueIdButton = "linkmenu",
   uniqueIdMenu = "menubutton",
-}) => {
+}) {
   const menuTitle = Translate({
     context: context,
     label: "profileMenu",
@@ -34,13 +32,13 @@ const LinkDropdown = ({
     initializeItemRefs();
   }, []);
 
-  const initializeItemRefs = () => {
+  function initializeItemRefs() {
     setItemRefs((itemRefs) =>
       Array(menuItems.length)
         .fill(null)
         .map((_, i) => itemRefs[i] || createRef())
     );
-  };
+  }
 
   useEffect(() => {
     // Detect clicks outside of menu
@@ -56,7 +54,7 @@ const LinkDropdown = ({
     };
   }, [menuRef]);
 
-  const tabNext = async () => {
+  async function tabNext() {
     const active = itemRefs.findIndex(
       (ref) => ref.current === document.activeElement
     );
@@ -71,9 +69,9 @@ const LinkDropdown = ({
       const current = itemRefs[toFocus].current;
       current?.focus();
     }
-  };
+  }
 
-  const tabPrevious = async () => {
+  async function tabPrevious() {
     const active = itemRefs.findIndex(
       (ref) => ref.current === document.activeElement
     );
@@ -88,16 +86,14 @@ const LinkDropdown = ({
       const current = itemRefs[toFocus].current;
       current?.focus();
     }
-  };
+  }
 
   /**
-   * TODO add last item goes to first item when clicking down/right and the other way around
-   * TODO from start button come to first item
-   * Handles keyboard navigation in dropdown menu, especially for firefox
-   * If arrowDown or up, we can click into next or previous item
+   * Handles keyboard navigation in dropdown menu
+   * If arrowDown/right or up/left, we can click into next or previous item
    * @param {*} e
    */
-  function onMenuKeyDown(e, i) {
+  function onMenuKeyDown(e) {
     switch (e.key) {
       case "Escape":
         setExpandMenu(false);
@@ -124,17 +120,30 @@ const LinkDropdown = ({
     }
   }
 
-  const onButtonClick = (e) => {
+  function onButtonClick(e) {
     if (e.key === "Enter") {
       setExpandMenu(!expandMenu);
     }
-  };
+  }
 
-  const onLinkClick = (e) => {
-    setExpandMenu(false);
-  };
+  function onLinkClick(index) {
+    if (isSelectedLink(index)) {
+      setExpandMenu(false);
+    }
+  }
 
-  const isSelectedLink = (index) => {
+  function isSelectedLink(index) {
+    console.log("router.asPath", router.asPath);
+    console.log(
+      "menuItems[index]",
+      encodeString(
+        Translate({
+          context: context,
+          label: menuItems[index],
+          requestedLang: "da",
+        })
+      )
+    );
     return router.asPath.includes(
       encodeString(
         Translate({
@@ -144,10 +153,14 @@ const LinkDropdown = ({
         })
       )
     );
-  };
+  }
 
   return (
-    <div className={styles.wrapper} ref={menuRef} onKeyDown={onMenuKeyDown}>
+    <div
+      className={cx(styles.wrapper, { [styles.wrapper_expanded]: expandMenu })}
+      ref={menuRef}
+      onKeyDown={onMenuKeyDown}
+    >
       <div
         role="button"
         id={uniqueIdMenu}
@@ -198,11 +211,10 @@ const LinkDropdown = ({
                 key={`/profil/${link}`}
                 role="menuitem"
                 href={link}
-                onClick={onLinkClick}
                 ref={itemRefs[index]}
               >
                 <a
-                  onClick={onLinkClick}
+                  onClick={() => onLinkClick(index)}
                   data-cy={`mobile-link-${menuItems[index]}`}
                   ref={itemRefs[index]}
                   className={cx({
@@ -231,6 +243,6 @@ const LinkDropdown = ({
       )}
     </div>
   );
-};
+}
 
 export default LinkDropdown;
