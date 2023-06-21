@@ -103,7 +103,27 @@ WrappedDetailsSectionMovie.story = {
           creators: () => [
             {
               display: "William Steig",
-              roles: [],
+              roles: [
+                {
+                  functionCode: "drt",
+                  function: {
+                    singular: "instruktør",
+                    plural: "instruktører",
+                  },
+                },
+              ],
+            },
+            {
+              display: "Anders Thomas Jensen",
+              roles: [
+                {
+                  functionCode: "cre",
+                  function: {
+                    singular: "ophav",
+                    plural: "ophav",
+                  },
+                },
+              ],
             },
           ],
           contributors: () => [

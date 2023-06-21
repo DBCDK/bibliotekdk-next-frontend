@@ -11,6 +11,7 @@ import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Image from "@/components/base/image";
 import { toLower } from "lodash/toLower";
+import { parseFunction } from "@/lib/centralParsers.utils";
 
 /**
  * Parse languages in given manifestation.
@@ -156,17 +157,6 @@ function getCreatorsAndContributors(manifestation) {
   const contributors = manifestation?.contributors || [];
 
   return [...creators, ...contributors];
-}
-
-/**
- * Map a single person ({disploy{roles[{function, functioncode}]}}
- * @param person
- * @returns {*}
- *  a string "disploy (function)" .. eg "ebbe fisk (instruktør)"
- */
-function parseFunction(person) {
-  const roles = person?.roles?.map((role) => role?.function?.singular || "");
-  return roles?.length > 0 ? " (" + roles?.join(", ") + ") " : "";
 }
 
 /**
