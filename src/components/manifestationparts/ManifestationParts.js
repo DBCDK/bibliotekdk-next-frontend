@@ -38,13 +38,19 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  // we want contributorsFromDescription AND creatorsFromDescription in the same string
+
+  const contributorsDisplay = (part) => {
+    const fromDescription =
+      part?.contributorsFromDescription?.join(", ") +
+      part?.creatorsFromDescription?.join(", ");
+
+    return !isEmpty(fromDescription) ? (
+      <span className={styles.contributors}>({fromDescription})</span>
+    ) : null;
+  };
   const creatorsDisplay = (part) => {
-    const creatorString = !isEmpty(part.creators)
-      ? "  -  " + part.creators.map((creator) => creator.display).join(", ")
-      : !isEmpty(part.creatorsFromDescription)
-      ? "  -  " + part.creatorsFromDescription.join(", ")
-      : "";
-    return creatorString;
+    return part?.creators?.map((creator) => creator?.display).join(", ");
   };
 
   // show some kind of contributors also
@@ -55,16 +61,23 @@ export function ManifestationParts({
     (part, index) =>
       part?.title && (
         <li key={`manifestationlist-${index}`}>
-          <Text type="text3" lines={1} className={styles.partstitle}>
-            {part.title}
-            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
-          </Text>
-
-          {!titlesOnly && part.playingTime && (
-            <Text type="text3" lines={1} className={styles.nobreak}>
-              {part.playingTime}
+          <div className={styles.titleandcreator}>
+            <Text type="text3" lines={1} className={styles.partstitle}>
+              {part.title}
+              {contributorsDisplay(part) && contributorsDisplay(part)}
             </Text>
-          )}
+
+            <Text type="text3" lines={1} className={styles.creators}>
+              {!titlesOnly && creatorsDisplay(part) && (
+                <span>{creatorsDisplay(part)}</span>
+              )}
+            </Text>
+            {!titlesOnly && part.playingTime && (
+              <Text type="text3" lines={1} className={styles.playingtime}>
+                {part.playingTime}
+              </Text>
+            )}
+          </div>
         </li>
       )
   );
