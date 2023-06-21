@@ -18,7 +18,7 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": <ParsedCreatorsOrContributors
+    "value": <ParsedAndRenderedCreatorsOrContributors
       creatorsOrContributors={
         Array [
           Object {
@@ -63,7 +63,7 @@ Array [
   Object {
     "dataField": "contributors",
     "label": "Bidrag",
-    "value": <ParsedCreatorsOrContributors
+    "value": <ParsedAndRenderedCreatorsOrContributors
       creatorsOrContributors={
         Array [
           Object {
@@ -204,7 +204,7 @@ Array [
   Object {
     "dataField": "languages",
     "label": "Anvendt sprog",
-    "value": <ParsedLanguages
+    "value": <ParsedAndRenderedLanguages
       languages={
         Object {
           "main": Array [
@@ -286,7 +286,7 @@ Array [
   Object {
     "dataField": "creators",
     "label": "Skabere",
-    "value": <ParsedCreatorsOrContributors
+    "value": <ParsedAndRenderedCreatorsOrContributors
       creatorsOrContributors={
         Array [
           Object {

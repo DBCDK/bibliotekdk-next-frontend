@@ -14,6 +14,11 @@ describe("Details-Movie", () => {
     cy.get("[data-cy=text-udgivet]").should("have.text", "Udgivet");
     cy.get("[data-cy=text-skuespillere]").should("have.text", "Skuespillere");
 
+    cy.contains("Nikolaj Lie Kaas");
+    cy.contains("William Steig (instruktør)");
+    cy.contains("Anders Thomas Jensen");
+    cy.should("not.contain", "(ophav)");
+
     cy.get("[data-cy=text-genre-form]")
       .next("div")
       .first()

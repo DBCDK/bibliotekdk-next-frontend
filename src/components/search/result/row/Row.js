@@ -105,8 +105,9 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorName = extractCreatorPrioritiseCorporation(work?.creators)?.[0]
-    ?.display;
+  const creatorsNames = extractCreatorPrioritiseCorporation(
+    work?.creators
+  )?.map((creator) => creator.display);
 
   const { filters } = useFilters();
 
@@ -151,7 +152,7 @@ export default function ResultRow({
               skeleton={(!work?.creators && isLoading) || !work?.creators}
               lines={1}
             >
-              {creatorName || " "}
+              {creatorsNames?.join(", ") || " "}
             </Text>
             <div className={styles.materials}>
               <Text
