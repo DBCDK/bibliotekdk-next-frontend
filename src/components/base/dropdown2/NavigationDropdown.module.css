@@ -21,6 +21,7 @@
 
 .wrapper_expanded {
   padding-bottom: var(--pt5);
+  border-bottom: none;
 }
 
 .chevron {
@@ -36,7 +37,6 @@
 
 .menu {
   width: 100%;
-  margin-top: 2px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -51,17 +51,12 @@
   text-decoration: none;
   text-align: left;
   height: 100%;
-  margin-top: 1px;
-  margin-bottom: 1px;
+  /* margin-top: 1px;
+  margin-bottom: 1px; */
   border-bottom: 1px solid var(--gray);
 }
 
-.menuItem:first-child {
-  margin-top: 0;
-}
-
 .menuItem:last-child {
-  margin-bottom: 0;
   border-bottom: none;
 }
 
@@ -73,6 +68,7 @@
 }
 
 .menuItem_selected {
+  margin-top: 2px;
   background-color: var(--concrete);
 }
 

@@ -7,6 +7,7 @@ import styles from "./NavigationDropdown.module.css";
 import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
 import animations from "@/components/base/animation/animations.module.css";
+import Text from "@/components/base/text";
 
 /**
  * This component creates a dropdown with links inside.
@@ -164,7 +165,9 @@ function LinkDropdown({
           [styles.menuButton]: true,
         })}
       >
-        <div data-cy="menu-title">{menuTitle}</div>
+        <Text tag="div" type="text3" dataCy="menu-title">
+          {menuTitle}
+        </Text>
         <span className={styles.chevron}>
           <Icon
             size={{ w: 2, h: 2 }}
@@ -206,10 +209,13 @@ function LinkDropdown({
                     [styles.menuItem_selected]: isSelectedLink(index),
                   })}
                 >
-                  {Translate({
-                    context: context,
-                    label: menuItems[index],
-                  })}
+                  <Text tag="span" type="text3">
+                    {Translate({
+                      context: context,
+                      label: menuItems[index],
+                    })}
+                  </Text>
+
                   {isSelectedLink(index) && (
                     <span className={styles.checkmark} role="presentation">
                       <Icon
