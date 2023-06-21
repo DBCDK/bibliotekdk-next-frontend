@@ -6,6 +6,7 @@ import cx from "classnames";
 import styles from "./NavigationDropdown2.module.css";
 import Translate from "@/components/base/translate";
 import { encodeString } from "@/lib/utils";
+import animations from "@/components/base/animation/animations.module.css";
 
 /**
  * This component creates a dropdown with links inside.
@@ -175,7 +176,7 @@ const LinkDropdown = ({
         tabIndex={0}
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
-        className={cx({
+        className={cx(animations["on-hover"], animations["on-focus"], {
           [styles.dropdownToggle]: true,
           [styles.menuButton_small]: version === "small",
           [styles.menuButton_active]: expandMenu,
@@ -192,7 +193,7 @@ const LinkDropdown = ({
           <Icon
             size={{ w: 2, h: 2 }}
             src="arrowDown.svg"
-            className={cx({
+            className={cx(animations["h-elastic"], animations["f-elastic"], {
               [styles.dropdownIconRotate]: expandMenu,
             })}
             alt=""
