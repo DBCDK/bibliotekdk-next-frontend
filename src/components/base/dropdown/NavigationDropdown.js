@@ -143,6 +143,8 @@ function DropdownItem({
     })
   );
 
+  console.log("URL ENDING: ", urlEnding);
+
   // useEffect(() => {
   //   if (router.asPath.includes(urlEnding) && selected !== i) {
   //     setSelected(i);
@@ -166,7 +168,7 @@ function DropdownItem({
    * If arrowDown or up, we can click into next or previous item
    * @param {*} e
    */
-  function handleKeyDown(e) {
+  function handleKeyDown(e, isChrome) {
     if (e.key === "ArrowDown" && i < menuItems.length - 1) {
       e.preventDefault();
       const nextItem = listItemRef.current.nextSibling;
@@ -183,6 +185,9 @@ function DropdownItem({
       listItemRef.current.blur();
       setExpandMenu(false);
       setSelected(i);
+      if (!isChrome) {
+        router.push(`/profil/${urlEnding}`);
+      }
     }
   }
 
@@ -194,7 +199,7 @@ function DropdownItem({
       })}
       ref={listItemRef}
       onKeyDown={(e) => {
-        handleKeyDown(e);
+        handleKeyDown(e, false);
       }}
       tabIndex={0}
     >
@@ -206,13 +211,10 @@ function DropdownItem({
           href={`/profil/${urlEnding}`}
           border={false}
           key={`/profil/${urlEnding}`}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              selected === i ? setSelected(-1) : setSelected(i);
-            }
-          }}
-          // onClick={() => {
-          //   selected === i ? setSelected(-1) : setSelected(i);
+          // onKeyDown={(e) => {
+          //   if (e.key === "Enter") {
+          //     selected === i ? setSelected(-1) : setSelected(i);
+          //   }
           // }}
         >
           <Text tag="span" type="text3" className={styles.text}>
