@@ -5,6 +5,12 @@
   padding-bottom: var(--pt3);
 }
 
+@media (min-width: 992px) {
+  .wrapper {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 767px) {
   .wrapper {
     width: 100%;

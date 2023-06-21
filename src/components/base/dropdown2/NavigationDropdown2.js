@@ -16,15 +16,10 @@ import animations from "@/components/base/animation/animations.module.css";
  */
 
 const LinkDropdown = ({
-  uniqueIdButton = "linkmenu",
-  uniqueIdMenu = "menubutton",
-  version = "small",
-  active = 0,
-  onItemClick,
-  linkProps,
-  className,
   context,
   menuItems,
+  uniqueIdButton = "linkmenu",
+  uniqueIdMenu = "menubutton",
 }) => {
   const menuTitle = Translate({
     context: context,
@@ -71,10 +66,6 @@ const LinkDropdown = ({
     // either first element in list, or one next
     const toFocus =
       active === -1 || active === menuItems.length - 1 ? 0 : active + 1;
-    if (active === -1) {
-      //todo delete?
-      setExpandMenu(true);
-    }
 
     if (itemRefs[toFocus] && itemRefs[toFocus].current) {
       const current = itemRefs[toFocus].current;
@@ -140,9 +131,6 @@ const LinkDropdown = ({
   };
 
   const onLinkClick = (e) => {
-    if (onItemClick) {
-      onItemClick(e);
-    }
     setExpandMenu(false);
   };
 
@@ -159,14 +147,7 @@ const LinkDropdown = ({
   };
 
   return (
-    <div
-      className={cx(className, {
-        [styles.wrapper]: true,
-        [styles.wrapper_small]: version === "small",
-      })}
-      ref={menuRef}
-      onKeyDown={onMenuKeyDown}
-    >
+    <div className={styles.wrapper} ref={menuRef} onKeyDown={onMenuKeyDown}>
       <div
         role="button"
         id={uniqueIdMenu}
@@ -178,15 +159,13 @@ const LinkDropdown = ({
         onKeyDown={onButtonClick}
         className={cx(animations["on-hover"], animations["on-focus"], {
           [styles.dropdownToggle]: true,
-          [styles.menuButton_small]: version === "small",
           [styles.menuButton_active]: expandMenu,
         })}
       >
-        <div>{menuTitle}</div>
+        <div data-cy="menu-title">{menuTitle}</div>
         <span
           className={cx({
             [styles.chevron]: true,
-            [styles.chevron_small]: version === "small",
             [styles.chevron_active]: expandMenu,
           })}
         >
@@ -221,15 +200,13 @@ const LinkDropdown = ({
                 href={link}
                 onClick={onLinkClick}
                 ref={itemRefs[index]}
-                // data-cy={`link-dropdown-${cleanUrl(item.text)}`}
-                {...linkProps}
               >
                 <a
                   onClick={onLinkClick}
+                  data-cy={`mobile-link-${menuItems[index]}`}
                   ref={itemRefs[index]}
                   className={cx({
                     [styles.menuItem]: true,
-                    [styles.menuItem_small]: version === "small",
                     [styles.menuItem_selected]: isSelectedLink(index),
                   })}
                 >

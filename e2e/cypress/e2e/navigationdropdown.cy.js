@@ -5,7 +5,7 @@ describe("Dropdown navigation on small screens", () => {
   });
 
   it("should show the profile menu", () => {
-    cy.get('[data-cy="toggle-text"]').contains("Profilmenu").click();
+    cy.get('[data-cy="menu-title"]').contains("Profilmenu").click();
     cy.get('[data-cy="mobile-link-myLibraries"]').click();
     cy.get('[data-cy="mobile-link-myLibraries"]')
       .parent()
