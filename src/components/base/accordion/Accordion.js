@@ -67,7 +67,7 @@ export function Item({
   const handleKeypress = (e) => {
     //it triggers by pressing the enter key
     if (e.key === "Enter" || e.keyCode === 13) {
-      onClick(() => {});
+      onClick();
     }
   };
 
@@ -76,7 +76,7 @@ export function Item({
   useEffect(() => {
     if (firstAccordionRender && id && `#${id}` === window.location.hash) {
       setTimeout(() => {
-        onClick(() => {});
+        onClick();
         window.scrollTo({
           behavior: "smooth",
           top:
@@ -99,7 +99,11 @@ export function Item({
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
         // Card.Header
         tabIndex="0"
-        className={[styles.wrapper, isCurrentEventKey && styles.open].join(" ")}
+        className={[
+          styles.wrapper,
+          isCurrentEventKey && styles.open,
+          animations.underlineContainer__only_internal_animations,
+        ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
       >
@@ -112,7 +116,7 @@ export function Item({
               additionalTxt && styles.firstelement,
             ].join(" ")}
           >
-            <Link tag={"span"} className={styles.link_on_year}>
+            <Link tag={"span"} className={styles.link_on_year} tabIndex={-1}>
               <Text type="text2" skeleton={isLoading} lines={1} tag={"span"}>
                 {title}
               </Text>
@@ -176,7 +180,7 @@ export function AccordionSkeleton({ className }) {
 
   return (
     <BootstrapAccordion
-      className={cx(styles.skeleton, className)}
+      className={`${styles.skeleton}, ${className}`}
       data-cy="accordion"
     >
       <>

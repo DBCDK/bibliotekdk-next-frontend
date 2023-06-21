@@ -4,13 +4,15 @@
   height: fit-content;
 }
 
-.wrapper:focus,
-.wrapper:hover {
+.wrapper:focus-visible {
   z-index: 2;
 }
 
+.wrapper:hover {
+  z-index: 3;
+}
+
 .wrapper {
-  composes: underlineContainer__only_internal_animations from "/src/components/base/animation/animations.module.css";
   width: auto;
 
   --underline-bottom-hover-color: var(--blue);
