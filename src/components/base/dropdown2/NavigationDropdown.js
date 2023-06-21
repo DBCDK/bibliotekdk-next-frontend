@@ -14,12 +14,9 @@ import Text from "@/components/base/text";
  * This component should standardize the accessability concerns in creating a mix between an accordion and a link list.
  */
 
-function LinkDropdown({
-  context,
-  menuItems,
-  uniqueIdButton = "linkmenu",
-  uniqueIdMenu = "menuButton",
-}) {
+function LinkDropdown({ context, menuItems }) {
+  const uniqueIdButton = "linkmenu";
+  const uniqueIdMenu = "menuButton";
   const menuTitle = Translate({
     context: context,
     label: "profileMenu",
@@ -66,10 +63,7 @@ function LinkDropdown({
     const toFocus =
       active === -1 || active === menuItems.length - 1 ? 0 : active + 1;
 
-    if (itemRefs[toFocus] && itemRefs[toFocus].current) {
-      const current = itemRefs[toFocus].current;
-      current?.focus();
-    }
+    itemRefs[toFocus]?.current?.focus();
   }
 
   async function tabPrevious() {
@@ -83,10 +77,7 @@ function LinkDropdown({
     const toFocus =
       active === -1 || active === 0 ? menuItems.length - 1 : active - 1;
 
-    if (itemRefs[toFocus] && itemRefs[toFocus].current) {
-      const current = itemRefs[toFocus].current;
-      current?.focus();
-    }
+    itemRefs[toFocus]?.current?.focus();
   }
 
   /**

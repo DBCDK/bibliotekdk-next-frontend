@@ -51,8 +51,6 @@
   text-decoration: none;
   text-align: left;
   height: 100%;
-  /* margin-top: 1px;
-  margin-bottom: 1px; */
   border-bottom: 1px solid var(--gray);
 }
 
