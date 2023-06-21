@@ -192,10 +192,8 @@ const LinkDropdown = ({
         >
           <Icon
             size={{ w: 2, h: 2 }}
-            src="arrowDown.svg"
-            className={cx(animations["h-elastic"], animations["f-elastic"], {
-              [styles.dropdownIconRotate]: expandMenu,
-            })}
+            src={expandMenu ? "arrowUp.svg" : "arrowDown.svg"}
+            className={cx(animations["h-elastic"], animations["f-elastic"])}
             alt=""
           />
         </span>
