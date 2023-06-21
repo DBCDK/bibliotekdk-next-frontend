@@ -44,10 +44,6 @@
   outline: solid 2px var(--blue);
 }
 
-.dropdownIconRotate {
-  transform: rotate(180deg);
-}
-
 .dropdownMenu {
   border-radius: 0;
   width: 100%;

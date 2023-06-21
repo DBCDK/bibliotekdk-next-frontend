@@ -4,7 +4,6 @@ import Row from "react-bootstrap/Row";
 import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
-import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import NavigationDropdown2 from "@/components/base/dropdown2/NavigationDropdown2";

@@ -17,7 +17,7 @@ function LinkDropdown({
   context,
   menuItems,
   uniqueIdButton = "linkmenu",
-  uniqueIdMenu = "menubutton",
+  uniqueIdMenu = "menuButton",
 }) {
   const menuTitle = Translate({
     context: context,
@@ -133,17 +133,6 @@ function LinkDropdown({
   }
 
   function isSelectedLink(index) {
-    console.log("router.asPath", router.asPath);
-    console.log(
-      "menuItems[index]",
-      encodeString(
-        Translate({
-          context: context,
-          label: menuItems[index],
-          requestedLang: "da",
-        })
-      )
-    );
     return router.asPath.includes(
       encodeString(
         Translate({
@@ -171,17 +160,11 @@ function LinkDropdown({
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
         className={cx(animations["on-hover"], animations["on-focus"], {
-          [styles.dropdownToggle]: true,
-          [styles.menuButton_active]: expandMenu,
+          [styles.menuButton]: true,
         })}
       >
         <div data-cy="menu-title">{menuTitle}</div>
-        <span
-          className={cx({
-            [styles.chevron]: true,
-            [styles.chevron_active]: expandMenu,
-          })}
-        >
+        <span className={styles.chevron}>
           <Icon
             size={{ w: 2, h: 2 }}
             src={expandMenu ? "arrowUp.svg" : "arrowDown.svg"}
