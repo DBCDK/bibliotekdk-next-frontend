@@ -479,6 +479,7 @@ export function workJsonLd({ workId }) {
               workId
               titles {
                 main
+                full
               }
               creators {
                 ...creatorsFragment

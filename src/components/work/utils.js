@@ -54,6 +54,21 @@ export function onOnlineAccess(url, target = "_blank") {
 }
 
 /**
+ * Generates the work page title
+ * @param {object} work
+ * @return {string}
+ */
+function getPageTitle(work) {
+  return `${work?.titles?.main[0]}${
+    work?.creators && work?.creators[0]
+      ? ` af ${extractCreatorPrioritiseCorporation(work?.creators)
+          ?.map((creator) => creator?.display)
+          ?.join(", ")}`
+      : ""
+  }`;
+}
+
+/**
  * Generates the work page description
  * @param {object} work The work
  * @returns {string}
@@ -94,13 +109,7 @@ function getPageDescription(work) {
 export function getSeo(work) {
   // Return title and description
   return {
-    title: `${work?.titles?.main[0]}${
-      work?.creators && work?.creators[0]
-        ? ` af ${extractCreatorPrioritiseCorporation(work?.creators)
-            ?.map((creator) => creator?.display)
-            ?.join(", ")}`
-        : ""
-    }`,
+    title: getPageTitle(work),
     description: getPageDescription(work),
   };
 }
