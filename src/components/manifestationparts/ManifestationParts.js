@@ -61,23 +61,20 @@ export function ManifestationParts({
     (part, index) =>
       part?.title && (
         <li key={`manifestationlist-${index}`}>
-          <div className={styles.titleandcreator}>
-            <Text type="text3" lines={1} className={styles.partstitle}>
-              {part.title}
-              {contributorsDisplay(part) && contributorsDisplay(part)}
-            </Text>
-
-            <Text type="text3" lines={1} className={styles.creators}>
-              {!titlesOnly && creatorsDisplay(part) && (
-                <span>{creatorsDisplay(part)}</span>
-              )}
-            </Text>
-            {!titlesOnly && part.playingTime && (
-              <Text type="text3" lines={1} className={styles.playingtime}>
-                {part.playingTime}
-              </Text>
+          <Text type="text3" lines={1}>
+            {part.title}
+            {contributorsDisplay(part) && contributorsDisplay(part)}
+          </Text>
+          <Text type="text3" lines={1}>
+            {!titlesOnly && creatorsDisplay(part) && (
+              <span>{creatorsDisplay(part)}</span>
             )}
-          </div>
+          </Text>
+          {!titlesOnly && (
+            <Text type="text3" lines={1}>
+              {part?.playingTime || ""}
+            </Text>
+          )}
         </li>
       )
   );
