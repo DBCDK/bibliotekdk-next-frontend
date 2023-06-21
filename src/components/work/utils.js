@@ -96,9 +96,9 @@ export function getSeo(work) {
   return {
     title: `${work?.titles?.main[0]}${
       work?.creators && work?.creators[0]
-        ? ` af ${
-            extractCreatorPrioritiseCorporation(work?.creators)?.[0]?.display
-          }`
+        ? ` af ${extractCreatorPrioritiseCorporation(work?.creators)
+            ?.map((creator) => creator?.display)
+            ?.join(", ")}`
         : ""
     }`,
     description: getPageDescription(work),
