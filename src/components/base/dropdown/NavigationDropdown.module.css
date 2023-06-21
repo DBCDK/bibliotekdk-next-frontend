@@ -55,7 +55,14 @@
   padding: 0;
   /* override bootstrap default position and push dropdown menu up */
   /* we keep 2px space to show outline on foucs*/
-  top: -1px !important;
+  top: -2px !important;
+}
+.dropdownMenu:focus {
+  outline: solid 2px red;
+}
+
+.navigationList {
+  list-style: none;
 }
 
 .text {
@@ -68,6 +75,12 @@
 }
 
 /* Link item  */
+
+.linkBackground:hover,
+.linkBackground:focus {
+  outline: solid 2px var(--blue);
+  background-color: yellow;
+}
 
 .linkBackgroundSelected {
   text-decoration: none;
@@ -87,9 +100,5 @@
 .link:focus {
   /* overwrite link component styling */
   color: inherit !important;
-}
-
-.link:hover,
-.link:focus {
   outline: solid 2px var(--blue);
 }

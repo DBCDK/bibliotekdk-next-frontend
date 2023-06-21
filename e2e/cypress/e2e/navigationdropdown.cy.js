@@ -16,6 +16,6 @@ describe("Dropdown navigation on small screens", () => {
       "/profil/mine-biblioteker"
     );
     cy.get('[data-cy="mobile-link-myLibraries"]').click();
-    cy.get(".dropdown-menu").should("not.be.visible");
+    cy.get(".dropdown-nav").should("not.be.visible");
   });
 });

@@ -10,6 +10,7 @@ import styles from "./NavigationDropdown.module.css";
 import { useRouter } from "next/router";
 import Link from "../link/Link";
 import cx from "classnames";
+import { set } from "lodash";
 
 export default function NavigationDropdown({ context, menuItems }) {
   const router = useRouter();
@@ -34,7 +35,6 @@ export default function NavigationDropdown({ context, menuItems }) {
         handleKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-
             setExpandMenu(!expandMenu);
           }
         }}
@@ -57,8 +57,10 @@ function DropdownToggle({ handleClick, handleKeyDown, menuTitle, expandMenu }) {
   return (
     <Dropdown.Toggle
       variant="success"
-      id="menubutton"
+      id="navigationbutton"
       className={styles.dropdownToggle}
+      aria-expanded={expandMenu}
+      aria-haspopup="true"
       onClick={handleClick}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -99,13 +101,14 @@ function DropdownMenu({
     <Dropdown.Menu
       show={expandMenu}
       className={styles.dropdownMenu}
-      role="menu"
-      aria-labelledby="menubutton"
-      data-cy="dropdown-menu"
+      role="navigation"
+      aria-labelledby="navigationbutton"
+      data-cy="dropdown-nav"
+      tabIndex={-1}
     >
       {menuItems.map((item, i) => (
         <DropdownItem
-          key={`menu-item-${item}`} //TODO use url?
+          key={`nav-item-${item}`} //TODO use url?
           item={item}
           i={i}
           menuItems={menuItems}
@@ -140,17 +143,23 @@ function DropdownItem({
     })
   );
 
-  useEffect(() => {
-    if (router.asPath.includes(urlEnding) && selected !== i) {
-      setSelected(i);
-    }
-  }, [router.asPath]);
+  // useEffect(() => {
+  //   if (router.asPath.includes(urlEnding) && selected !== i) {
+  //     setSelected(i);
+  //   }
+  // }, [router.asPath]);
+
+  // useEffect(() => {
+  //   if (selected === i) {
+  //     listItemRef.current.focus();
+  //   }
+  // }, [selected, i]);
 
   useEffect(() => {
-    if (selected === i) {
+    if (listItemRef.current) {
       listItemRef.current.focus();
     }
-  }, [selected, i]);
+  }, []);
 
   /**
    * Handles keyboard navigation in dropdown menu
@@ -163,62 +172,65 @@ function DropdownItem({
       const nextItem = listItemRef.current.nextSibling;
       if (nextItem) {
         nextItem.focus();
-        setSelected(i + 1);
       }
     } else if (e.key === "ArrowUp" && i > 0) {
       e.preventDefault();
       const prevItem = listItemRef.current.previousSibling;
       if (prevItem) {
         prevItem.focus();
-        setSelected(i - 1);
       }
-    } else if (e.key === "Enter" && selected === i) {
+    } else if (e.key === "Enter") {
+      listItemRef.current.blur();
       setExpandMenu(false);
+      setSelected(i);
     }
   }
 
   return (
     // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
     <li
-      ref={listItemRef}
-      className={cx({
+      className={cx(styles.linkBackground, {
         [styles.linkBackgroundSelected]: selected === i,
       })}
-      onKeyDown={handleKeyDown}
+      ref={listItemRef}
+      onKeyDown={(e) => {
+        handleKeyDown(e);
+      }}
+      tabIndex={0}
     >
-      <Link
-        dataCy={`mobile-link-${item}`}
-        href={`/profil/${urlEnding}`}
-        border={false}
-        role="menuitem"
-        key={`/profil/${urlEnding}`}
-        className={cx(styles.link)}
-        onClick={() => {
-          if (selected === i) {
-            setExpandMenu(false);
-          }
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && selected === i) {
-            setExpandMenu(false);
-          }
-        }}
-      >
-        <Text tag="span" type="text3" className={styles.text}>
-          {Translate({
-            context: context,
-            label: menuItems[i],
-          })}
-          {selected === i && (
-            <Icon
-              size={{ w: "1_5", h: "1_5" }}
-              src="checkmark_blue.svg"
-              alt=""
-              role="presentation"
-            />
-          )}
-        </Text>
-      </Link>
+      <div role="button" tabIndex={-1}>
+        <Link //TODO we have to have onclick here
+          role="menuitem"
+          className={styles.link}
+          dataCy={`mobile-link-${item}`}
+          href={`/profil/${urlEnding}`}
+          border={false}
+          key={`/profil/${urlEnding}`}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              selected === i ? setSelected(-1) : setSelected(i);
+            }
+          }}
+          // onClick={() => {
+          //   selected === i ? setSelected(-1) : setSelected(i);
+          // }}
+        >
+          <Text tag="span" type="text3" className={styles.text}>
+            {Translate({
+              context: context,
+              label: menuItems[i],
+            })}
+            {selected === i && (
+              <Icon
+                size={{ w: "1_5", h: "1_5" }}
+                src="checkmark_blue.svg"
+                alt=""
+                role="presentation"
+              />
+            )}
+          </Text>
+        </Link>
+      </div>
     </li>
   );
 }
