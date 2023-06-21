@@ -137,7 +137,7 @@ function LinkDropdown({ context, menuItems }) {
   }
 
   return (
-    <div
+    <nav
       className={cx(styles.wrapper, { [styles.wrapper_expanded]: expandMenu })}
       ref={menuRef}
       onKeyDown={onMenuKeyDown}
@@ -175,6 +175,7 @@ function LinkDropdown({ context, menuItems }) {
           role="menu"
           aria-labelledby={uniqueIdMenu}
           className={styles.menu}
+          data-cy="mobile-menu"
         >
           {menuItems.map((item, index) => {
             const link = encodeString(
@@ -222,7 +223,7 @@ function LinkDropdown({ context, menuItems }) {
           })}
         </ul>
       )}
-    </div>
+    </nav>
   );
 }
 
