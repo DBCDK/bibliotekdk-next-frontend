@@ -21,14 +21,16 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
 export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isTablet = breakpoint === "md";
 
   return (
     <Container fluid className={styles.container}>
+      {(isMobile || isTablet) && <Breadcrumb textType="test3" />}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
         <Col lg={3}>
-          <Breadcrumb />
+          {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
           <ProfileMenu />
         </Col>
         <Col lg={9}>
