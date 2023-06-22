@@ -8,10 +8,18 @@
   margin-bottom: var(--pt2);
 }
 
-.manifestionlist li {
+.manifestionlist li{
   display: flex;
-  justify-content: space-between;
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+}
+
+.manifestionlist li p{
+  margin: 0 0 0 var(--pt1);
+  display: block;
+}
+
+.manifestionlist li p:first-child{
+  width: 50%;
 }
 
 .manifestionlist li:nth-child(odd) {
@@ -26,8 +34,9 @@
   white-space: nowrap;
 }
 
-.partstitle {
-  max-width: 80%;
+.contributors {
+  color: var(--gray);
+  margin-left: var(--pt1);
 }
 
 .manifestionPartsButton {
@@ -45,3 +54,17 @@
   align-items: center;
   padding-left: var(--pt2);
 }
+
+.manifestionlist li p:last-child{
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+@media (min-width: 992px) {
+  .manifestionlist li p{
+    display: inline;
+  }
+}
+
+
+
