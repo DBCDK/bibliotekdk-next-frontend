@@ -20,4 +20,7 @@
     line-height: 26px; /*overwrite reset.css */
     padding-top: var(--pt1); /*align vertically with header*/
   }
+  .breadcrumb {
+    padding-bottom: var(--pt3);
+  }
 }
