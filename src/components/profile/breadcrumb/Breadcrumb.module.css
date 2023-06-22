@@ -1,13 +1,22 @@
-.breadcrumb > hr {
-  margin-bottom: 10px;
-}
-.text {
-  font-family: var(--body-font);
-  padding-top: var(--pt6);
+.breadcrumb {
+  padding-bottom: var(--pt2);
 }
 
-@media (max-width: 991px) {
-  .breadcrumb {
-    display: none;
+.text {
+  font-family: var(--body-font);
+}
+
+/*overwrite reset.css*/
+@media screen and (min-width: 576px) {
+  .text {
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+/*overwrite reset.css*/
+@media screen and (min-width: 992px) {
+  .text {
+    font-size: 17px;
   }
 }
