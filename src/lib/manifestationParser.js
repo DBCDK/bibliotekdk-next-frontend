@@ -99,6 +99,7 @@ const fields = () => [
       context: "bibliographic-data",
       label: "publisher",
     }),
+    valueParser: (publishers) => publishers.join(", "),
   },
   {
     dataField: "edition",

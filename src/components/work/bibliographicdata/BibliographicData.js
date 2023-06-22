@@ -115,10 +115,13 @@ export function BibliographicData({ manifestations, workId }) {
           // show some publishing info
           const shortPublishing =
             manifestation?.hostPublication?.title ||
-            manifestation?.publisher +
-              (manifestation?.edition?.edition
-                ? `, ${manifestation?.edition?.edition}`
-                : "");
+            [
+              ...manifestation?.publisher,
+              ...(!isEmpty(manifestation?.edition?.edition)
+                ? [manifestation?.edition?.edition]
+                : []),
+            ].join(", ") ||
+            "";
 
           // the list to pass to accordion
           const additinalText = [

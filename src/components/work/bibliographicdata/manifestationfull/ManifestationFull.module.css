@@ -76,4 +76,8 @@
     -webkit-column-count: 2;
     margin: var(--pt1) 0 var(--pt5) 0;
   }
+
+  .manifestationPartsList li p:first-child{
+    width: 100%;
+  }
 }
