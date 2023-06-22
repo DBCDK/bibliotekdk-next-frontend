@@ -41,8 +41,10 @@ export function ManifestationParts({
   // we want contributorsFromDescription AND creatorsFromDescription in the same string
   const creatorsAndContributorsDisplay = (part) => {
     const fromDescriptionArray = [
-      ...part?.contributorsFromDescription,
-      ...part?.creatorsFromDescription,
+      ...(part?.contributorsFromDescription
+        ? part?.contributorsFromDescription
+        : []),
+      ...(part?.creatorsFromDescription ? part?.creatorsFromDescription : []),
     ];
 
     const fromDescription = fromDescriptionArray?.join(", ");
