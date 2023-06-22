@@ -119,31 +119,33 @@ function groupSubjects(subjects) {
 
 /**
  * Used in manifestationParser to get a list of links to subjects.
- * @param subjects
- * @returns {unknown[] | undefined}
- * @constructor
+ * @param {array} subjects
+ * @returns {JSX.Element}
  */
-export function FlatSubjectsForFullManifestation(subjects) {
+export function FlatSubjectsForFullManifestation({ subjects }) {
   // const grouped = groupSubjects(subjects?.dbcVerified);
   // @TODO .. should we use this group shit for anything in full manifestation ?
 
-  return subjects?.dbcVerified?.map((sub, index) => {
-    return (
-      <>
-        <Link
-          a
-          href={url(sub.display)}
-          border={{ bottom: { keepVisible: true } }}
-          key={`flat-subject-${index}`}
-        >
-          <Text type="text3" tag="span">
-            {sub.display}
-          </Text>
-        </Link>
-        {index < subjects?.dbcVerified?.length - 1 && <>,&nbsp;</>}
-      </>
-    );
-  });
+  return (
+    <div className={styles.words}>
+      {subjects?.map((subject, index) => {
+        return (
+          <span className={styles.word} key={subject + "-" + index}>
+            <Link
+              href={url(subject)}
+              border={{ bottom: { keepVisible: true } }}
+              key={`flat-subject-${index}`}
+            >
+              <Text type="text3" tag="span">
+                {subject}
+              </Text>
+            </Link>
+            {index < subjects?.length - 1 && <>,&nbsp;</>}
+          </span>
+        );
+      })}
+    </div>
+  );
 }
 
 /**

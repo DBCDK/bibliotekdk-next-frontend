@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import React, { useMemo } from "react";
 import Accordion, { Item } from "@/components/base/accordion";
 import Section from "@/components/base/section";
-import ManifestationFull from "./ManifestationFull";
+import ManifestationFull from "./manifestationfull/ManifestationFull";
 import Translate from "@/components/base/translate";
 import { useData } from "@/lib/api/api";
 import * as workFragments from "@/lib/api/work.fragments";
