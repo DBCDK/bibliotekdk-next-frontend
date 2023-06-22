@@ -1,166 +1,230 @@
-import { encodeString } from "@/lib/utils";
-import Dropdown from "react-bootstrap/Dropdown";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { createRef, useEffect, useRef, useState } from "react";
 import Icon from "@/components/base/icon";
+import cx from "classnames";
+import styles from "./NavigationDropdown.module.css";
+import Translate from "@/components/base/translate";
+import { encodeString } from "@/lib/utils";
+import animations from "@/components/base/animation/animations.module.css";
 import Text from "@/components/base/text";
 
-import Translate from "@/components/base/translate";
-import { useState, useEffect } from "react";
-import styles from "./NavigationDropdown.module.css";
-import { useRouter } from "next/router";
-import Link from "../link/Link";
-import cx from "classnames";
+/**
+ * This component creates a dropdown with links inside.
+ * This component should standardize the accessability concerns in creating a mix between an accordion and a link list.
+ */
 
-export default function NavigationDropdown({ context, menuItems }) {
-  const router = useRouter();
+function LinkDropdown({ context, menuItems }) {
+  const uniqueIdButton = "linkmenu";
+  const uniqueIdMenu = "menuButton";
   const menuTitle = Translate({
     context: context,
     label: "profileMenu",
   });
-  const [selected, setSelected] = useState(0);
+  const router = useRouter();
   const [expandMenu, setExpandMenu] = useState(false);
-
-  return (
-    <Dropdown
-      show={expandMenu}
-      type="nav"
-      role="navigation"
-      className={styles.dropdownWrap}
-    >
-      <DropdownToggle
-        menuTitle={menuTitle}
-        onClick={() => setExpandMenu(!expandMenu)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            setExpandMenu(!expandMenu);
-          }
-        }}
-      />
-      <DropdownMenu
-        menuItems={menuItems}
-        selected={selected}
-        setSelected={setSelected}
-        expandMenu={expandMenu}
-        setExpandMenu={setExpandMenu}
-        context={context}
-        router={router}
-      />
-    </Dropdown>
-  );
-}
-
-function DropdownToggle({ onClick, menuTitle: menuTitle }) {
-  return (
-    <Dropdown.Toggle
-      variant="success"
-      id="dropdown-basic"
-      className={styles.dropdownToggle}
-      onClick={onClick}
-    >
-      <Text
-        tag="span"
-        type="text3"
-        className={styles.text}
-        dataCy={"toggle-text"}
-      >
-        {menuTitle}
-        <Icon
-          size={{ w: 1, h: 1 }}
-          src="arrowrightblue.svg"
-          className={styles.dropdownIcon}
-          alt=""
-        />
-      </Text>
-    </Dropdown.Toggle>
-  );
-}
-
-function DropdownMenu({
-  menuItems,
-  selected,
-  setSelected,
-  expandMenu,
-  setExpandMenu,
-  context,
-  router,
-}) {
-  return (
-    <Dropdown.Menu
-      show={expandMenu}
-      className={styles.dropdownMenu}
-      role="list"
-      data-cy="dropdown-menu"
-    >
-      {menuItems.map((item, i) => (
-        <DropdownItem
-          key={`nav-item-${i}`}
-          item={item}
-          i={i}
-          menuItems={menuItems}
-          selected={selected}
-          setSelected={setSelected}
-          setExpandMenu={setExpandMenu}
-          context={context}
-          router={router}
-        />
-      ))}
-    </Dropdown.Menu>
-  );
-}
-
-function DropdownItem({
-  item,
-  menuItems,
-  selected,
-  setSelected,
-  setExpandMenu,
-  context,
-  i,
-  router,
-}) {
-  const urlEnding = encodeString(
-    Translate({
-      context: context,
-      label: menuItems[i],
-      requestedLang: "da",
-    })
-  );
+  const menuRef = useRef(null);
+  const [itemRefs, setItemRefs] = useState([]);
 
   useEffect(() => {
-    if (router.asPath.includes(urlEnding) && selected !== i) {
-      setSelected(i);
+    initializeItemRefs();
+  }, []);
+
+  function initializeItemRefs() {
+    setItemRefs((itemRefs) =>
+      Array(menuItems.length)
+        .fill(null)
+        .map((_, i) => itemRefs[i] || createRef())
+    );
+  }
+
+  useEffect(() => {
+    // Detect clicks outside of menu
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setExpandMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
+  async function tabNext() {
+    const active = itemRefs.findIndex(
+      (ref) => ref.current === document.activeElement
+    );
+    if (active === -1) {
+      setExpandMenu(true);
     }
-  }, [router.asPath]);
+    // either first element in list, or one next
+    const toFocus =
+      active === -1 || active === menuItems.length - 1 ? 0 : active + 1;
+
+    itemRefs[toFocus]?.current?.focus();
+  }
+
+  async function tabPrevious() {
+    const active = itemRefs.findIndex(
+      (ref) => ref.current === document.activeElement
+    );
+    if (active === -1) {
+      setExpandMenu(true);
+    }
+    // either last element in list, or one previous
+    const toFocus =
+      active === -1 || active === 0 ? menuItems.length - 1 : active - 1;
+
+    itemRefs[toFocus]?.current?.focus();
+  }
+
+  /**
+   * Handles keyboard navigation in dropdown menu
+   * If arrowDown/right or up/left, we can click into next or previous item
+   * @param {*} e
+   */
+  function onMenuKeyDown(e) {
+    switch (e.key) {
+      case "Escape":
+        setExpandMenu(false);
+        break;
+      case "ArrowDown":
+      case "ArrowRight":
+        e.preventDefault();
+        tabNext();
+        break;
+      case "ArrowUp":
+      case "ArrowLeft":
+        tabPrevious();
+        break;
+      case "Tab": {
+        const lastIndex = menuItems.length - 1;
+        if (itemRefs[lastIndex] && itemRefs[lastIndex].current) {
+          const current = itemRefs[lastIndex].current;
+          if (current === document.activeElement) {
+            setExpandMenu(false);
+          }
+        }
+        break;
+      }
+    }
+  }
+
+  function onButtonClick(e) {
+    if (e.key === "Enter") {
+      setExpandMenu(!expandMenu);
+    }
+  }
+
+  function onLinkClick(index) {
+    if (isSelectedLink(index)) {
+      setExpandMenu(false);
+    }
+  }
+
+  function isSelectedLink(index) {
+    return router.asPath.includes(
+      encodeString(
+        Translate({
+          context: context,
+          label: menuItems[index],
+          requestedLang: "da",
+        })
+      )
+    );
+  }
 
   return (
-    // we use Link instead of Dropdown.Item, since Dropdown.Item rerenders entire page and makes site blink
-    <li className={cx({ [styles.linkBackgroundSelected]: selected === i })}>
-      <Link
-        dataCy={`mobile-link-${item}`}
-        href={`/profil/${urlEnding}`}
-        border={false}
-        className={cx(styles.link, { [styles.linkSelected]: selected === i })}
-        onClick={() => {
-          if (selected === i) {
-            setExpandMenu(false);
-          }
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" && selected === i) {
-            setExpandMenu(false);
-          }
-        }}
+    <nav
+      className={cx(styles.wrapper, { [styles.wrapper_expanded]: expandMenu })}
+      ref={menuRef}
+      onKeyDown={onMenuKeyDown}
+    >
+      <div
+        role="button"
+        id={uniqueIdMenu}
+        aria-haspopup="true"
+        aria-controls={uniqueIdButton}
+        aria-expanded={expandMenu}
+        tabIndex={0}
+        onClick={() => setExpandMenu(!expandMenu)}
+        onKeyDown={onButtonClick}
+        data-cy="mobile-menu-button"
+        className={cx(animations["on-hover"], animations["on-focus"], {
+          [styles.menuButton]: true,
+        })}
       >
-        <Text tag="span" type="text3" className={styles.text}>
-          {Translate({
-            context: context,
-            label: menuItems[i],
-          })}
-          {selected === i && (
-            <Icon size={{ w: 1, h: 1 }} src="checkmark.svg" alt="" />
-          )}
+        <Text tag="div" type="text3" dataCy="menu-title">
+          {menuTitle}
         </Text>
-      </Link>
-    </li>
+        <span className={styles.chevron}>
+          <Icon
+            size={{ w: 2, h: 2 }}
+            src={expandMenu ? "arrowUp.svg" : "arrowDown.svg"}
+            className={cx(animations["h-elastic"], animations["f-elastic"])}
+            alt=""
+          />
+        </span>
+      </div>
+
+      {expandMenu && (
+        <ul
+          id={uniqueIdButton}
+          role="menu"
+          aria-labelledby={uniqueIdMenu}
+          className={styles.menu}
+          data-cy="mobile-menu"
+        >
+          {menuItems.map((item, index) => {
+            const link = encodeString(
+              Translate({
+                context: context,
+                label: menuItems[index],
+                requestedLang: "da",
+              })
+            );
+            return (
+              <Link
+                key={`/profil/${link}`}
+                role="menuitem"
+                href={link}
+                ref={itemRefs[index]}
+              >
+                <a
+                  onClick={() => onLinkClick(index)}
+                  data-cy={`mobile-link-${menuItems[index]}`}
+                  ref={itemRefs[index]}
+                  className={cx({
+                    [styles.menuItem]: true,
+                    [styles.menuItem_selected]: isSelectedLink(index),
+                  })}
+                >
+                  <Text tag="span" type="text3">
+                    {Translate({
+                      context: context,
+                      label: menuItems[index],
+                    })}
+                  </Text>
+
+                  {isSelectedLink(index) && (
+                    <span className={styles.checkmark} role="presentation">
+                      <Icon
+                        size={{ w: "1_5", h: "1_5" }}
+                        src="checkmark_blue.svg"
+                        alt=""
+                      />
+                    </span>
+                  )}
+                </a>
+              </Link>
+            );
+          })}
+        </ul>
+      )}
+    </nav>
   );
 }
+
+export default LinkDropdown;

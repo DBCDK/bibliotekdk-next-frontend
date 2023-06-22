@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
-import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -25,6 +25,7 @@ export default function ProfileLayout({ title, children }) {
   return (
     <Container fluid className={styles.container}>
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+
       <Row>
         <Col lg={3}>
           <Breadcrumb />
