@@ -6,7 +6,7 @@ import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
-import NavigationDropdown from "@/components/base/dropdown2/NavigationDropdown";
+import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
