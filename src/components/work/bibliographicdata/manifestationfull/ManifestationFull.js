@@ -12,7 +12,7 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
-import styles from "./BibliographicData.module.css";
+import styles from "./ManifestationFull.module.css";
 import { cyKey } from "@/utils/trim";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
@@ -27,13 +27,13 @@ import CopyLink from "@/public/icons/copy_link.svg";
 import CheckMarkBlue from "@/public/icons/checkmark_blue.svg";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import cx from "classnames";
 
 /**
  * Column one of full view. Some links and a button.
  * @param workId
  * @param manifestation
  * @returns {JSX.Element}
- * @constructor
  */
 function ColumnOne({ workId, manifestation }) {
   const modal = useModal();
@@ -76,10 +76,14 @@ function ColumnOne({ workId, manifestation }) {
       className={styles.fullmanifestation}
     >
       {manifestation?.cover?.detail && (
-        <Cover src={manifestation?.cover?.detail} size="thumbnail" />
+        <Cover
+          className={styles.cover}
+          src={manifestation?.cover?.detail}
+          size="thumbnail"
+        />
       )}
 
-      <div>
+      <div className={cx(styles.button)}>
         <ReservationButton
           workId={workId}
           selectedPids={[manifestation?.pid]}
@@ -89,40 +93,40 @@ function ColumnOne({ workId, manifestation }) {
         />
       </div>
 
-      <div className={styles.alternativeoptions}>
+      <div className={cx(styles.alternativeoptions)}>
         <AlternativeOptions
           workId={workId}
           selectedPids={[manifestation?.pid]}
         />
       </div>
 
-      <div className={styles.addilinks}>
-        <div>
-          <span>
-            <LocalizationsLink selectedPids={[manifestation?.pid]} />
-          </span>
-        </div>
-        <div className={styles.linkstyle}>
-          <Link
-            dataCy="link-references"
-            border={{ bottom: { keepVisible: true } }}
-            onClick={() =>
-              openReferencesModal(
-                modal,
-                [manifestation?.pid],
-                workId,
-                manifestation
-              )
-            }
-          >
-            <Text type="text3" tag="span">
-              {Translate({
-                context: "references",
-                label: "label_references_title",
-              })}
-            </Text>
-          </Link>
-        </div>
+      <div className={styles.localizations_link}>
+        <LocalizationsLink selectedPids={[manifestation?.pid]} />
+      </div>
+
+      <div className={styles.reference_downloads}>
+        <Link
+          dataCy="link-references"
+          border={{ bottom: { keepVisible: true } }}
+          onClick={() =>
+            openReferencesModal(
+              modal,
+              [manifestation?.pid],
+              workId,
+              manifestation
+            )
+          }
+        >
+          <Text type="text3" tag="span">
+            {Translate({
+              context: "references",
+              label: "label_references_title",
+            })}
+          </Text>
+        </Link>
+      </div>
+
+      <div className={styles.copy_link}>
         <OverlayTrigger
           overlay={tooltip}
           placement="right"
@@ -131,7 +135,7 @@ function ColumnOne({ workId, manifestation }) {
         >
           <div style={{ width: "fit-content" }}>
             <IconLink
-              className={styles.linkstyle}
+              className={styles.copy_link}
               onClick={(event) => onClickCopyLink(event)}
               href={permalinkToPid(window.location.hash)}
               iconSrc={checkMarkActive ? CheckMarkBlue : CopyLink}
@@ -156,7 +160,6 @@ function ColumnOne({ workId, manifestation }) {
  * @param pid
  * @param hasBeenSeen
  * @returns {JSX.Element}
- * @constructor
  */
 export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
   const { data } = useData(
