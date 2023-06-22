@@ -39,18 +39,23 @@ export function ManifestationParts({
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
   // we want contributorsFromDescription AND creatorsFromDescription in the same string
+  const creatorsAndContributorsDisplay = (part) => {
+    const fromDescriptionArray = [
+      ...part?.contributorsFromDescription,
+      ...part?.creatorsFromDescription,
+    ];
 
-  const contributorsDisplay = (part) => {
-    const fromDescription =
-      part?.contributorsFromDescription?.join(", ") +
-      part?.creatorsFromDescription?.join(", ");
+    const fromDescription = fromDescriptionArray?.join(", ");
 
     return !isEmpty(fromDescription) ? (
       <span className={styles.contributors}>({fromDescription})</span>
     ) : null;
   };
   const creatorsDisplay = (part) => {
-    return part?.creators?.map((creator) => creator?.display).join(", ");
+    const creatorsString = part?.creators
+      ?.map((creator) => creator?.display)
+      .join(", ");
+    return !isEmpty(creatorsString) ? <span>{creatorsString}</span> : null;
   };
 
   // show some kind of contributors also
@@ -63,12 +68,11 @@ export function ManifestationParts({
         <li key={`manifestationlist-${index}`}>
           <Text type="text3" lines={1}>
             {part.title}
-            {contributorsDisplay(part) && contributorsDisplay(part)}
+            {creatorsAndContributorsDisplay(part) &&
+              creatorsAndContributorsDisplay(part)}
           </Text>
           <Text type="text3" lines={1}>
-            {!titlesOnly && creatorsDisplay(part) && (
-              <span>{creatorsDisplay(part)}</span>
-            )}
+            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
           </Text>
           {!titlesOnly && (
             <Text type="text3" lines={1}>
