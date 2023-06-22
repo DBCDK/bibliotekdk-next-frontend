@@ -79,6 +79,6 @@ describe("Accordion", () => {
     cy.get("[data-cy=accordion-item]")
       .last()
       .find(".collapse")
-      .should("not.be.visible");
+      .should("have.class", "show");
   });
 });
