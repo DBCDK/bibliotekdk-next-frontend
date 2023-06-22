@@ -163,9 +163,7 @@ Array [
   Object {
     "dataField": "publisher",
     "label": "Udgiver",
-    "value": Array [
-      "Universal Sony Pictures Home Entertainment",
-    ],
+    "value": "Universal Sony Pictures Home Entertainment",
   },
   Object {
     "dataField": "edition",
