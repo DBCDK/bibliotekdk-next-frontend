@@ -95,7 +95,7 @@ function useUserImpl() {
       debt: userData?.user?.debt || [],
       loans: userData?.user?.loans || [],
       orders: userData?.user?.orders || [],
-      agency: userData?.user.agency || {},
+      agency: userData?.user?.agency || {},
       ...sessionData,
     };
   }, [data?.session, loggedInUser]);
