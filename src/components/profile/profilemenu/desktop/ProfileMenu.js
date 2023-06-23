@@ -49,7 +49,14 @@ function MenuLink({ label, href }) {
   );
 }
 
-function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
+function SubCategory({
+  item,
+  index,
+  router,
+  baseUrl,
+  activeIndex,
+  setActiveIndex,
+}) {
   const title = Translate({
     context: CONTEXT,
     label: `${item.title}`,
@@ -76,7 +83,6 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   }, [router.asPath]);
 
   async function replaceHash(newEnding) {
-    const baseUrl = router.pathname;
     const newUrl = baseUrl + "#" + newEnding;
     try {
       router.replace(newUrl);
@@ -118,25 +124,25 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
 /**
  * Menu link, that contains subcategories, which also are links
  * @param menus
- * @param href
+ * @param categoryUrl
  * @param name
  * @param className
  * @return {JSX.Element}
  */
-function MenuGroup({ menus, href, name, className }) {
+function MenuGroup({ menus, categoryUrl, name, className }) {
   const [activeIndex, setActiveIndex] = useState();
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(name));
 
   useEffect(() => {
-    setIsActive(router.asPath.includes(href));
+    setIsActive(router.asPath.includes(categoryUrl));
   }, [router.asPath]);
 
   return (
     <li className={className}>
       <Link
         className={styles.group}
-        href={href}
+        href={categoryUrl}
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
@@ -158,7 +164,7 @@ function MenuGroup({ menus, href, name, className }) {
             item={item}
             index={index}
             router={router}
-            href={href}
+            baseUrl={categoryUrl}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />
@@ -207,7 +213,7 @@ export default function ProfileMenu() {
   return (
     <>
       <nav
-        className={styles.menu}
+        className={`${styles.nav} ${styles.menu}`}
         aria-label={`${Translate({
           context: CONTEXT,
           label: "profileNavigation",
@@ -217,7 +223,7 @@ export default function ProfileMenu() {
           <MenuGroup
             menus={menus}
             name={menuItems[0]}
-            href={getProfileUrl(menuItems[0])}
+            categoryUrl={getProfileUrl(menuItems[0])}
           />
           {/* more MenuLinks are coming soon */}
           <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />
