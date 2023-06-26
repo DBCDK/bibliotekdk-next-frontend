@@ -26,6 +26,7 @@ module.exports = {
           ),
           "@/public": path.resolve(__dirname, "../public"),
           "@": path.resolve(__dirname, "../src"),
+          "/src": path.resolve(__dirname, "../src"),
         },
       },
 
@@ -56,7 +57,7 @@ module.exports = {
             modules: true,
           },
         },
-      ]
+      ],
     });
 
     newConfig.module.rules.push({

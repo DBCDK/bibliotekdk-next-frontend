@@ -8,7 +8,7 @@ import Content from "../content";
 import Keywords from "../keywords";
 import Related from "../related";
 import Reviews from "../reviews";
-import BibliographicData from "../BibliographicData";
+import BibliographicData from "../bibliographicdata";
 import Series from "../series";
 import Header from "@/components/header/Header";
 import React, { useEffect, useRef, useState } from "react";

@@ -1,13 +1,26 @@
-.breadcrumb > hr {
-  margin-bottom: 10px;
-}
-.text {
-  font-family: var(--body-font);
-  padding-top: var(--pt6);
+.breadcrumb {
+  padding-bottom: var(--pt2);
 }
 
-@media (max-width: 991px) {
+.text {
+  font-family: var(--body-font);
+}
+
+@media screen and (min-width: 576px) {
+  .text {
+    /*overwrite reset.css*/
+    font-size: 14px;
+    line-height: 22px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .text {
+    font-size: 17px; /*overwrite reset.css*/
+    line-height: 26px; /*overwrite reset.css */
+    padding-top: var(--pt1); /*align vertically with header*/
+  }
   .breadcrumb {
-    display: none;
+    padding-bottom: var(--pt3);
   }
 }

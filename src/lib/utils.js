@@ -66,10 +66,20 @@ export function encodeTitleCreator(title = "", creators = []) {
  * @param {string} fullTitle
  * @param {array<object>} creators
  * @param {string} workId
- * @returns {string}
+ * @return {{query: {title_author: string, workId}, pathname: string}}
  */
 export function getWorkUrl(fullTitle, creators, workId) {
   return `/materiale/${encodeTitleCreator(fullTitle, creators)}/${workId}`;
+}
+
+/**
+ *
+ * @param {string} title
+ * @param {number|string} articleId
+ * @return {{query: {articleId, title}, pathname: string}}
+ */
+export function getArticleUrl(title, articleId) {
+  return `/artikel/${encodeString(title)}/${articleId}`;
 }
 
 /**
@@ -80,7 +90,7 @@ export function getWorkUrl(fullTitle, creators, workId) {
  * @returns {string}
  */
 export function getInfomediaReviewUrl(title, workId, id) {
-  return `/anmeldelse/${title}/${workId}/${id}`;
+  return `/anmeldelse/${encodeString(title)}/${workId}/${id}`;
 }
 
 /**
@@ -169,6 +179,7 @@ export function getElementById(elementId) {
  * function that translates and encodes label
  * @param {string} context
  * @param {string} label
+ * @param requestedLang
  * @returns {string}
  */
 export function translateAndEncode(context, label, requestedLang = undefined) {

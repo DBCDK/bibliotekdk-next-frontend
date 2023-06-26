@@ -20,6 +20,7 @@ import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
 import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
+import Translate from "@/components/base/translate";
 
 export function ManifestationParts({
   parts,
@@ -37,13 +38,26 @@ export function ManifestationParts({
   const partsToShow = (numberToShow && parts?.slice(0, numberToShow)) || parts;
   const showMore = showMoreButton && parts?.length > partsToShow?.length;
 
+  // we want contributorsFromDescription AND creatorsFromDescription in the same string
+  const creatorsAndContributorsDisplay = (part) => {
+    const fromDescriptionArray = [
+      ...(part?.contributorsFromDescription
+        ? part?.contributorsFromDescription
+        : []),
+      ...(part?.creatorsFromDescription ? part?.creatorsFromDescription : []),
+    ];
+
+    const fromDescription = fromDescriptionArray?.join(", ");
+
+    return !isEmpty(fromDescription) ? (
+      <span className={styles.contributors}>({fromDescription})</span>
+    ) : null;
+  };
   const creatorsDisplay = (part) => {
-    const creatorString = !isEmpty(part.creators)
-      ? "  -  " + part.creators.map((creator) => creator.display).join(", ")
-      : !isEmpty(part.creatorsFromDescription)
-      ? "  -  " + part.creatorsFromDescription.join(", ")
-      : "";
-    return creatorString;
+    const creatorsString = part?.creators
+      ?.map((creator) => creator?.display)
+      .join(", ");
+    return !isEmpty(creatorsString) ? <span>{creatorsString}</span> : null;
   };
 
   // show some kind of contributors also
@@ -54,14 +68,17 @@ export function ManifestationParts({
     (part, index) =>
       part?.title && (
         <li key={`manifestationlist-${index}`}>
-          <Text type="text3" lines={1} className={styles.partstitle}>
+          <Text type="text3" lines={1}>
             {part.title}
+            {creatorsAndContributorsDisplay(part) &&
+              creatorsAndContributorsDisplay(part)}
+          </Text>
+          <Text type="text3" lines={1}>
             {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
           </Text>
-
-          {!titlesOnly && part.playingTime && (
-            <Text type="text3" lines={1} className={styles.nobreak}>
-              {part.playingTime}
+          {!titlesOnly && (
+            <Text type="text3" lines={1}>
+              {part?.playingTime || ""}
             </Text>
           )}
         </li>
@@ -85,7 +102,11 @@ export function ManifestationParts({
             <div>
               <LinkArrow className={styles.arrowchanges}>
                 <Text type="text3" lines={1} onClick={modalOpen}>
-                  Se alle ({parts.length})
+                  {Translate({
+                    context: "manifestation_content",
+                    label: "see_all",
+                  })}{" "}
+                  ({parts.length})
                 </Text>
               </LinkArrow>
             </div>

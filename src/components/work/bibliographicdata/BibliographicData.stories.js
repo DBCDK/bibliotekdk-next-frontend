@@ -1,5 +1,5 @@
 import BibliographicData from "./BibliographicData";
-import ManifestationFull from "@/components/work/BibliographicData/ManifestationFull";
+import ManifestationFull from "@/components/work/bibliographicdata/manifestationfull/ManifestationFull";
 import automock_utils from "@/components/_modal/pages/automock_utils";
 import merge from "lodash/merge";
 import { AccessEnum } from "@/lib/enums";

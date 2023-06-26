@@ -582,6 +582,16 @@
         "en": "Copy link"
       }
     },
+    "manifestation_content": {
+      "contents": {
+        "da": "Indhold",
+        "en": "Contents"
+      },
+      "see_all": {
+        "da": "Se alle",
+        "en": "See all"
+      }
+    },
     "references": {
       "label_references_title": {
         "da": "Download til referencesystemer",
@@ -2977,7 +2987,7 @@
         "en": "Add academic library"
       },
       "myLibrariesInfo": {
-        "da": "Du kan være låner på et eller flere biblioteker. De steder hvor du er registeret vises nedenfor.",
+        "da": "Du kan være låner på et eller flere biblioteker. De biblioteker hvor du er registeret vises nedenfor.",
         "en": "You can be a borrower at one or more libraries. The places where you are registered are shown here."
       },
       "myLibrariesMoreInfo": {

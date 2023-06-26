@@ -6,13 +6,20 @@ import Top from "@/components/_modal/pages/base/top";
 import Edition from "@/components/_modal/pages/edition/Edition";
 import ManifestationParts from "@/components/manifestationparts/ManifestationParts";
 import styles from "./ManifestationContent.module.css";
+import Translate from "@/components/base/translate";
 
 export default function ManifestationContent(props) {
   const { pid, showOrderTxt, singleManifestation, parts } = props.context;
 
   return (
     <div>
-      <Top className={styles} title="Indhold" />
+      <Top
+        className={styles}
+        title={Translate({
+          context: "manifestation_content",
+          label: "contents",
+        })}
+      />
       <Edition
         showOrderTxt={showOrderTxt}
         singleManifestation={singleManifestation}

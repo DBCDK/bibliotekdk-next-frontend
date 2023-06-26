@@ -49,3 +49,7 @@ export const AnchorsEnum = Object.freeze({
   SERIES: { context: "workmenu", label: "series" },
   RELATED_WORKS: { context: "relatedworks", label: "title" },
 });
+
+export const HiddenRoleFunctionEnum = Object.freeze({
+  OPHAV: { code: "cre", singular: "ophav", plural: "ophav" },
+});

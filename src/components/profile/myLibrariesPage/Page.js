@@ -46,7 +46,11 @@ export default function MyLibrariesPage() {
         <Text className={styles.pageDescription}>
           {Translate({ context: "profile", label: "myLibrariesInfo" })}
         </Text>
-
+        {showMore && (
+          <Text className={styles.showMoreText}>
+            {Translate({ context: "profile", label: "myLibrariesMoreInfo" })}
+          </Text>
+        )}
         <IconButton
           className={styles.showMoreBtn}
           icon={showMore ? "arrowUp" : "arrowDown"}
@@ -60,11 +64,6 @@ export default function MyLibrariesPage() {
         </IconButton>
       </div>
 
-      {showMore && (
-        <Text className={styles.showMoreText}>
-          {Translate({ context: "profile", label: "myLibrariesMoreInfo" })}
-        </Text>
-      )}
       <LibrariesTable data={agencies} />
       <IconButton icon="chevron" className={styles.addLibrary} textType="text2">
         {Translate({ context: "profile", label: "addLibrary" })}

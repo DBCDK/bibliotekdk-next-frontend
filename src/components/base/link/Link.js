@@ -208,7 +208,10 @@ export function LinkOnlyInternalAnimations({
   target = "_self",
   border = { top: false, bottom: false },
   children,
+  disabled = false,
 }) {
+  border = disabled ? { top: false, bottom: false } : border;
+
   return (
     <Link
       dataCy={dataCy}
@@ -220,6 +223,7 @@ export function LinkOnlyInternalAnimations({
       onClick={onClick}
       target={target}
       border={border}
+      disabled={disabled}
     >
       {children}
     </Link>

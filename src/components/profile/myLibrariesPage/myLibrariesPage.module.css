@@ -7,17 +7,10 @@
 }
 .pageDescriptionContainer {
   display: flex;
-}
-
-@media (max-width: 720px) {
-
-  .pageDescriptionContainer {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
+  flex-wrap: wrap;
 }
 
 .showMoreText {
   margin-top: var(--pt1);
+  margin-bottom: var(--pt1);
 }

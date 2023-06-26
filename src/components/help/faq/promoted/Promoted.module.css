@@ -11,10 +11,6 @@
   width: 100%;
 }
 
-.accordion > div:first-child {
-  border-top: 1px solid var(--iron);
-}
-
 @media (min-width: 576px) {
   .button {
     width: auto;
