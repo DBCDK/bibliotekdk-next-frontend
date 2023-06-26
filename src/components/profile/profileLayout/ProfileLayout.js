@@ -29,7 +29,7 @@ export default function ProfileLayout({ title, children }) {
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
-        <Col lg={3}>
+        <Col lg={3} className={styles.navColumn}>
           {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
           <ProfileMenu />
         </Col>
