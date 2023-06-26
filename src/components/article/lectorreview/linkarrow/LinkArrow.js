@@ -5,8 +5,8 @@
  */
 
 import Link from "@/components/base/link";
-import styles from "@/components/article/lectorreview/linkarrow/LinkArrow.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import styles from "./LinkArrow.module.css";
+import animations from "css/animations";
 import Icon from "@/components/base/icon";
 import ChevronSvg from "@/public/icons/chevron_left.svg";
 import Text from "@/components/base/text";

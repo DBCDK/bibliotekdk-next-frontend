@@ -1,5 +1,5 @@
 import { Localizations } from "./Localizations";
-import { LocalizationItem } from "./LocalizationItem";
+import { LocalizationItem } from "./localizationitem/LocalizationItem";
 import { LocalizationsLink } from "@/components/work/overview/localizationslink/LocalizationsLink";
 import Modal, { useModal } from "@/components/_modal";
 import { useEffect } from "react";

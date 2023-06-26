@@ -35,7 +35,7 @@ export function Published({ className, data }) {
             <Text className={styles.group} type="text1">
               {key}
             </Text>
-            <Accordion data={data[key]} className={styles.accordion} />
+            <Accordion data={data[key]} />
           </div>
         );
       })}

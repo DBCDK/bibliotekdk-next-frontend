@@ -6,7 +6,7 @@
  * see Example.js for more documentation
  */
 
-import { useData } from "@/lib/api";
+import { useData } from "@/lib/api/api";
 import Link from "next/link";
 import { encodeTitleCreator } from "@/lib/utils";
 

@@ -60,7 +60,7 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   if (isReadyToPickup) {
     return (
       <>
-        <Text type="text1" tag="span" className={styles.isReady}>
+        <Text type="text1" tag="span">
           {Translate({
             context: "profile",
             label: "ready-to-pickup",

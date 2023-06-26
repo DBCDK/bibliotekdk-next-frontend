@@ -146,7 +146,7 @@ export function DescriptionSkeleton(props) {
     <Description
       {...props}
       data="..."
-      className={`${props.className} ${styles.skeleton}`}
+      className={`${props.className}`}
       skeleton={true}
     />
   );

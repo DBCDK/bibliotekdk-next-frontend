@@ -49,7 +49,7 @@ export default function Page() {
       <main>
         <Container className={styles.top} fluid>
           <Faq className={styles.faq} />
-          <Sections className={styles.sections} />
+          <Sections />
           <Contact />
         </Container>
       </main>

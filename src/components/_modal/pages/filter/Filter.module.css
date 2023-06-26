@@ -54,10 +54,6 @@
   margin-left: var(--pt1);
 }
 
-.wrap .score {
-  margin-left: auto;
-}
-
 .group {
   padding-bottom: var(--pt3);
 }

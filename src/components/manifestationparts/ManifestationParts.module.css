@@ -30,17 +30,9 @@
   background: none;
 }
 
-.nobreak {
-  white-space: nowrap;
-}
-
 .contributors {
   color: var(--gray);
   margin-left: var(--pt1);
-}
-
-.manifestionPartsButton {
-  margin: var(--pt2) 0 var(--pt2) 0;
 }
 
 .arrowAndTxtContainer {

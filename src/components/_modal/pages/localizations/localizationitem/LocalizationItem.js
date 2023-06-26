@@ -1,11 +1,12 @@
 import { useData } from "@/lib/api/api";
 import * as branchesFragments from "@/lib/api/branches.fragments";
 import Text from "@/components/base/text/Text";
-import styles from "./Localizations.module.css";
+import styles from "./LocalizationItem.module.css";
 import Divider from "@/components/base/divider";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
+import cx from "classnames";
 
 /**
  * Loading component
@@ -124,7 +125,14 @@ export function LocalizationItem({ branch, holdings, isLoading, index }) {
         {!isLoading && (
           <>
             {blinkingcolors.includes(color) && (
-              <div className={styles[`${color}`]}></div>
+              <div
+                className={cx({
+                  [styles.green]: color === "green",
+                  [styles.red]: color === "red",
+                  [styles.yellow]: color === "yellow",
+                  [styles.none]: color === "none",
+                })}
+              ></div>
             )}
             <span aria-live="polite" aria-busy="false">
               <Text

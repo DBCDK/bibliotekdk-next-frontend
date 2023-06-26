@@ -37,17 +37,17 @@
   text-rendering: geometricPrecision;
 }
 
-.flatnose {
-  position: absolute;
-  width: 1px;
-  height: 10px;
-  background: white;
-  top: 6px;
-  left: 12px;
-  opacity: 1;
-  transition-delay: 0.2s;
-  shape-rendering: geometricPrecision;
-}
+/*.flatnose {*/
+/*  position: absolute;*/
+/*  width: 1px;*/
+/*  height: 10px;*/
+/*  background: white;*/
+/*  top: 6px;*/
+/*  left: 12px;*/
+/*  opacity: 1;*/
+/*  transition-delay: 0.2s;*/
+/*  shape-rendering: geometricPrecision;*/
+/*}*/
 
 .trapezoid:nth-child(1) {
   transform: rotate(-45deg);

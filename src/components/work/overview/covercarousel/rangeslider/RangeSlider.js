@@ -1,4 +1,4 @@
-import styles from "@/components/work/overview/covercarousel/rangeslider/RangeSlider.module.css";
+import styles from "./RangeSlider.module.css";
 
 export default function RangeSlider({
   index,

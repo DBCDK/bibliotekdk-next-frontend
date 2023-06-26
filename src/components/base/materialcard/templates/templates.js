@@ -5,7 +5,7 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
-import styles from "./MaterialCard.module.css";
+import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
 
 function propFunc(textType, lines) {

@@ -55,7 +55,6 @@ function TableItem({ agencyName, agencyId }) {
 
       {!isPublic && (
         <IconButton
-          className={styles.closeButton}
           icon="close"
           alt={Translate({ context: "profile", label: "remove" })}
         >
@@ -82,7 +81,7 @@ export default function LibrariesTable({ data }) {
           {Translate({ context: "profile", label: "libraryType" })}
         </Text>
       </div>
-      <div className={styles.tableContainer}>
+      <div>
         {data?.map((item) => (
           <TableItem key={item.agencyName} {...item} />
         ))}

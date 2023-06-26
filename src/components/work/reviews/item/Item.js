@@ -37,23 +37,23 @@ function Item({ data, work, isLoading }) {
   const hasUrls = getUrls(data, work) || [];
 
   const typeClass = styles[isType];
-  const hasDateClass = !!hasDate ? styles.hasDate : "";
+  // const hasDateClass = !!hasDate ? styles.hasDate : "";
   const hasRatingClass = !!hasRating ? styles.hasRating : "";
   const hasCreatorClass = !!hasCreator ? styles.hasCreator : "";
-  const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
+  // const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
   const hasContentClass = !!hasContent.length ? styles.hasContent : "";
-  const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
+  // const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
 
   const isLoadingClass = isLoading ? styles.skeleton : "";
 
   const classNames = [
     typeClass,
-    hasDateClass,
+    // hasDateClass,
     hasRatingClass,
     hasCreatorClass,
-    hasPublisherClass,
+    // hasPublisherClass,
     hasContentClass,
-    hasUrlClass,
+    // hasUrlClass,
     isLoadingClass,
   ].join(" ");
 
@@ -134,7 +134,7 @@ function Item({ data, work, isLoading }) {
           >
             {hasContent.map((content, i) => {
               return (
-                <p key={`content-${i}`} className={styles.reviewTxt}>
+                <p key={`content-${i}`}>
                   {isMaterialReview ? contentParser(content) : content}
                 </p>
               );

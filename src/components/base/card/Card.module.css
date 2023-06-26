@@ -37,10 +37,6 @@
 .Creator {
   margin: 0;
 }
-.Description {
-  margin: 0;
-  /* margin-top: var(--pt05); */
-}
 .CoverWrapper {
   height: 200px;
   display: flex;
@@ -55,13 +51,6 @@
   }
   .CoverWrapper {
     height: 200px;
-  }
-}
-
-/* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-  .button {
-    display: inherit;
   }
 }
 

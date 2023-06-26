@@ -4,7 +4,7 @@ import { default as NextLink } from "next/link";
 import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import cx from "classnames";
 
 function parseBorders(border) {

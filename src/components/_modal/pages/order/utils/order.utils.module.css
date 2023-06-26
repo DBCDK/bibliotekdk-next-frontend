@@ -1,0 +1,8 @@
+
+.invalid {
+  color: var(--error);
+}
+
+.invalidInput {
+  border: 1px solid var(--error);
+}

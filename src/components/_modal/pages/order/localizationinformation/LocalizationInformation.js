@@ -65,7 +65,7 @@ function LocalizationInformation({
           </IconLink>
         </div>
         {(isLoadingBranches || pickupBranch) && (
-          <div className={styles.address}>
+          <div>
             <Text
               type="text3"
               skeleton={!pickupBranch?.postalAddress}
