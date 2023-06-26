@@ -213,7 +213,7 @@ export default function ProfileMenu() {
   return (
     <>
       <nav
-        className={`${styles.nav} ${styles.menu}`}
+        className={styles.nav}
         aria-label={`${Translate({
           context: CONTEXT,
           label: "profileNavigation",
