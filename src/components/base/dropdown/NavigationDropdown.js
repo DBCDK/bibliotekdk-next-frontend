@@ -57,7 +57,8 @@ function LinkDropdown({ context, menuItems }) {
       (ref) => ref.current === document.activeElement
     );
     if (active === -1) {
-      setExpandMenu(true);
+      //await does have effect despite warning and ensures that first item in list is set into focus
+      await setExpandMenu(true);
     }
     // either first element in list, or one next
     const toFocus =
@@ -70,8 +71,10 @@ function LinkDropdown({ context, menuItems }) {
     const active = itemRefs.findIndex(
       (ref) => ref.current === document.activeElement
     );
+
     if (active === -1) {
-      setExpandMenu(true);
+      //await does have effect despite warning and ensures that last item in list is set into focus
+      await setExpandMenu(true);
     }
     // either last element in list, or one previous
     const toFocus =
