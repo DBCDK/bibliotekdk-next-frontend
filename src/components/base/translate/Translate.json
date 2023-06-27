@@ -3056,7 +3056,7 @@
         "en": "Ready to pickup"
       },
       "pickup-deadline": {
-        "da": "Hent senest",
+        "da": "Hentes senest",
         "en": "Pickup at the latest"
       },
       "date-overdue": {
@@ -3102,10 +3102,6 @@
       "in-row": {
         "da": "foran dig",
         "en": "in front of you"
-      },
-      "no-results-debts": {
-        "da": "Du har ingen udestående mellemværende",
-        "en": "You hav no unresolved claims"
       },
       "no-results-loans": {
         "da": "Du har ingen aktive lån",
