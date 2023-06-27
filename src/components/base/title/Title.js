@@ -15,7 +15,7 @@ export default function Container(props) {
     return <TextSkeleton {...props} />;
   }
 
-  return <Text type="title1" tag="h1" {...props} />;
+  return <Text type="title1" tag="div" {...props} />;
 }
 
 // PropTypes for the component
@@ -27,7 +27,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]).isRequired,
+  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]), // .isRequired
   type: PropTypes.oneOf([
     "title1",
     "title2",

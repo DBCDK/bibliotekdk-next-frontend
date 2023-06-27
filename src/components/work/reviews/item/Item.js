@@ -180,7 +180,7 @@ function Item({ data, work, isLoading }) {
                         type="text2"
                         skeleton={isLoading}
                         lines={1}
-                        tag={"span"}
+                        tag="span"
                       >
                         {materialReviewLinkLabel || reviewLinkLabel}
                       </Text>
