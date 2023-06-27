@@ -172,7 +172,9 @@ function Item({ data, work, isLoading }) {
                   <span>
                     <Link
                       href={url}
-                      target="_blank"
+                      target={
+                        isType === "isExternalReview" ? "_blank" : "_self"
+                      }
                       disabled={isLoading || !url}
                       border={{ top: false, bottom: { keepVisible: true } }}
                     >

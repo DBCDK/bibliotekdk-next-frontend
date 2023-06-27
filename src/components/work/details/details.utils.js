@@ -397,7 +397,7 @@ function RenderMovieLanguages({ values }) {
       : null;
 
   const subtitlesAsString = subtitles
-    ? `Undertekster på ${subtitles} ${
+    ? `undertekster på ${subtitles} ${
         values["subtitles"]?.length > 1 ? "og andre sprog" : ""
       }`
     : "";

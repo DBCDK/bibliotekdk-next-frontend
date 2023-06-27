@@ -68,63 +68,56 @@ const LoansAndReservations = () => {
           {Translate({ context: "profile", label: "your-libraries" })}
         </span>
       </Text>
-      <section className={styles.section}>
-        <div className={styles.titleRow}>
-          {isMobileSize ? (
-            <Title
-              type="title6b"
-              tag="h2"
-              id={`sublink-${encodeString(
-                Translate({
-                  context: "profile",
-                  label: "debt",
-                  requestedLang: "da",
-                })
-              )}`}
-            >
-              {Translate({ context: "profile", label: "debt" })} ({debt?.length}
-              )
-            </Title>
-          ) : (
-            <Title
-              type="title5"
-              tag="h2"
-              id={`sublink-${encodeString(
-                Translate({
-                  context: "profile",
-                  label: "debt",
-                  requestedLang: "da",
-                })
-              )}`}
-            >
-              {Translate({ context: "profile", label: "debt" })}
-            </Title>
-          )}
-        </div>
 
-        <MaterialHeaderRow
-          column1={Translate({ context: "profile", label: "material" })}
-          column2={Translate({ context: "profile", label: "price" })}
-          column3={Translate({ context: "profile", label: "loaner-library" })}
-        />
-        {debt && debt.length !== 0 ? (
-          debt?.map((claim, i) => (
+      {debt && debt.length !== 0 && (
+        <section className={styles.section}>
+          <div className={styles.titleRow}>
+            {isMobileSize ? (
+              <Title
+                type="title6b"
+                tag="h2"
+                id={`sublink-${encodeString(
+                  Translate({
+                    context: "profile",
+                    label: "debt",
+                    requestedLang: "da",
+                  })
+                )}`}
+              >
+                {Translate({ context: "profile", label: "debt" })} (
+                {debt?.length})
+              </Title>
+            ) : (
+              <Title
+                type="title5"
+                tag="h2"
+                id={`sublink-${encodeString(
+                  Translate({
+                    context: "profile",
+                    label: "debt",
+                    requestedLang: "da",
+                  })
+                )}`}
+              >
+                {Translate({ context: "profile", label: "debt" })}
+              </Title>
+            )}
+          </div>
+          <MaterialHeaderRow
+            column1={Translate({ context: "profile", label: "material" })}
+            column2={Translate({ context: "profile", label: "price" })}
+            column3={Translate({ context: "profile", label: "loaner-library" })}
+          />
+          {debt?.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}
               key={`debt-${claim.title}-#${i}`}
               library={libraryString}
               id={`debt-${i}`}
             />
-          ))
-        ) : (
-          <Text className={styles.emptyMessage} type="text2">
-            {Translate({
-              context: "profile",
-              label: "no-results-debts",
-            })}
-          </Text>
-        )}
-      </section>
+          ))}
+        </section>
+      )}
 
       <section className={styles.section}>
         <div className={styles.titleRow}>
