@@ -25,7 +25,7 @@ export default function ProfileLayout({ title, children }) {
 
   return (
     <Container fluid className={styles.container}>
-      {(isMobile || isTablet) && <Breadcrumb textType="test3" />}
+      {(isMobile || isTablet) && <Breadcrumb textType="text3" />}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>

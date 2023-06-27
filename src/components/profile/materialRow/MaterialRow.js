@@ -9,6 +9,7 @@ import Link from "@/components/base/link";
 import cx from "classnames";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
@@ -76,6 +77,9 @@ const DynamicColumnDebt = ({ amount, currency }) => (
 );
 
 export const DynamicColumnLoan = ({ dueDateString }) => {
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
     useLoanDateAnalysis(dueDateString);
 
@@ -83,41 +87,93 @@ export const DynamicColumnLoan = ({ dueDateString }) => {
     <DynamicColumn>
       {isOverdue ? (
         <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text type="text1" className={styles.isWarning} tag="span">
-            {Translate({
-              context: "profile",
-              label: "date-overdue",
-            })}
-          </Text>
-        </>
-      ) : isCountdown ? (
-        <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text
-            type="text1"
-            tag="span"
-            className={cx(styles.isWarning, styles.upperCase)}
-          >
-            {daysToDueDateString}
-          </Text>
+          {isMobileSize ? (
+            <>
+              <Text type="text2" tag="p">
+                {Translate({
+                  context: "profile",
+                  label: "to-return",
+                })}{" "}
+                {dateString}
+              </Text>
+              <div>
+                <Icon
+                  className={styles.ornament}
+                  size={{ w: 5, h: "auto" }}
+                  src={"ornament1.svg"}
+                  alt=""
+                />
+                <Text
+                  type="text1"
+                  className={cx(styles.isWarning, styles.inlineBlock)}
+                  tag="p"
+                >
+                  {Translate({
+                    context: "profile",
+                    label: "date-overdue",
+                  })}
+                </Text>
+              </div>
+            </>
+          ) : (
+            <>
+              <Text type="text1" className={styles.isWarning} tag="p">
+                {Translate({
+                  context: "profile",
+                  label: "date-overdue",
+                })}
+              </Text>
+              <Text type="text2" tag="p">
+                {dateString}
+              </Text>
+            </>
+          )}
         </>
       ) : (
         <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text
-            type="text2"
-            tag="span"
-            className={cx(styles.upperCase, styles.block)}
-          >
-            {daysToDueDateString}
-          </Text>
+          {isMobileSize ? (
+            <>
+              <Text type="text2" tag="p">
+                {Translate({
+                  context: "profile",
+                  label: "to-return",
+                })}{" "}
+                {dateString}
+              </Text>
+              <div>
+                <Icon
+                  className={styles.ornament}
+                  size={{ w: 5, h: "auto" }}
+                  src={"ornament1.svg"}
+                  alt=""
+                />
+                <Text
+                  type="text1"
+                  tag="p"
+                  className={cx(styles.upperCase, styles.inlineBlock, {
+                    [styles.isWarning]: isCountdown,
+                  })}
+                >
+                  {daysToDueDateString}
+                </Text>
+              </div>
+            </>
+          ) : (
+            <>
+              <Text
+                type="text1"
+                tag="p"
+                className={cx(styles.upperCase, {
+                  [styles.isWarning]: isCountdown,
+                })}
+              >
+                {daysToDueDateString}
+              </Text>
+              <Text type="text2" tag="p">
+                {dateString}
+              </Text>
+            </>
+          )}
         </>
       )}
     </DynamicColumn>
@@ -125,6 +181,9 @@ export const DynamicColumnLoan = ({ dueDateString }) => {
 };
 
 const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
@@ -133,40 +192,94 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
     <DynamicColumn>
       {isReadyToPickup ? (
         <>
-          <Text type="text1" tag="span" className={styles.isReady}>
-            {Translate({
-              context: "profile",
-              label: "ready-to-pickup",
-            })}
-          </Text>
-          <Text type="text2" tag="span">
-            {Translate({
-              context: "profile",
-              label: "pickup-deadline",
-            })}
-             {dateString}
-          </Text>
+          {isMobileSize ? (
+            <>
+              <Text type="text2" tag="p">
+                {Translate({
+                  context: "profile",
+                  label: "pickup-deadline",
+                })}
+                 {dateString}
+              </Text>
+              <div>
+                <Icon
+                  className={styles.ornament}
+                  size={{ w: 5, h: "auto" }}
+                  src={"ornament1.svg"}
+                  alt=""
+                />
+                <Text
+                  type="text1"
+                  tag="p"
+                  className={cx(styles.isReady, styles.inlineBlock)}
+                >
+                  {Translate({
+                    context: "profile",
+                    label: "ready-to-pickup",
+                  })}
+                </Text>
+              </div>
+            </>
+          ) : (
+            <>
+              <Text type="text1" tag="p" className={styles.isReady}>
+                {Translate({
+                  context: "profile",
+                  label: "ready-to-pickup",
+                })}
+              </Text>
+              <Text type="text2" tag="p">
+                {Translate({
+                  context: "profile",
+                  label: "pickup-deadline",
+                })}
+                 {dateString}
+              </Text>
+            </>
+          )}
         </>
       ) : (
         <>
-          <Text type="text2" tag="span">
-            {holdQueuePosition === "1"
-              ? `${Translate({
-                  context: "profile",
-                  label: "front-of-row",
-                })}`
-              : `${holdQueuePosition - 1} ${Translate({
-                  context: "profile",
-                  label: "in-row",
-                })}`}
-          </Text>
+          {isMobileSize ? (
+            <div>
+              <Icon
+                className={styles.ornament}
+                size={{ w: 5, h: "auto" }}
+                src={"ornament1.svg"}
+                alt=""
+              />
+              <Text type="text2" tag="p" className={styles.inlineBlock}>
+                {holdQueuePosition === "1"
+                  ? `${Translate({
+                      context: "profile",
+                      label: "front-of-row",
+                    })}`
+                  : `${holdQueuePosition - 1} ${Translate({
+                      context: "profile",
+                      label: "in-row",
+                    })}`}
+              </Text>
+            </div>
+          ) : (
+            <Text type="text2" tag="p">
+              {holdQueuePosition === "1"
+                ? `${Translate({
+                    context: "profile",
+                    label: "front-of-row",
+                  })}`
+                : `${holdQueuePosition - 1} ${Translate({
+                    context: "profile",
+                    label: "in-row",
+                  })}`}
+            </Text>
+          )}
         </>
       )}
     </DynamicColumn>
   );
 };
 
-const DynamicColumn = ({ ...props }) => <p {...props} />;
+const DynamicColumn = ({ ...props }) => <div {...props} />;
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
@@ -198,7 +311,7 @@ export const getCheckedElements = (parentRef) => {
     .map((element) => element.getAttribute("data-id"));
 };
 
-const MobileMaterialRow = (props) => {
+const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   const { image, creators, materialType, creationYear, title, id, type } =
     props;
   const modal = useModal();
@@ -236,7 +349,7 @@ const MobileMaterialRow = (props) => {
       )}
     >
       <div className={styles.imageContainer_mobile}>
-        <Cover src={image} size="fill-width" />
+        {!!image && <Cover src={image} size="fill-width" />}
       </div>
       <div>
         <Title
@@ -253,6 +366,16 @@ const MobileMaterialRow = (props) => {
             {materialType}, {creationYear}
           </Text>
         )}
+
+        <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
+      </div>
+      <div className={styles.arrowright_container}>
+        <Icon
+          alt=""
+          size={{ w: "auto", h: 2 }}
+          src="arrowrightblue.svg"
+          className={styles.arrowright}
+        />
       </div>
     </ConditionalWrapper>
   );
@@ -354,7 +477,10 @@ const MaterialRow = (props) => {
     }
   };
 
-  if (isMobileSize) return <MobileMaterialRow {...props} />;
+  if (isMobileSize)
+    return (
+      <MobileMaterialRow renderDynamicColumn={renderDynamicColumn} {...props} />
+    );
 
   return (
     <ConditionalWrapper
