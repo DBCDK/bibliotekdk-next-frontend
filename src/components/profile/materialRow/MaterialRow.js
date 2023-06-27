@@ -11,7 +11,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
-import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
+import { getWorkUrl } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import Translate from "@/components/base/translate";
@@ -21,7 +21,6 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import useUser from "@/components/hooks/useUser";
-import isEmpty from "lodash/isEmpty";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -52,10 +51,15 @@ export const useLoanDateAnalysis = (dueDateString) => {
   };
 };
 
-export const MaterialRowButton = ({ wrapperClassname, ...props }) => {
+export const MaterialRowButton = ({
+  wrapperClassname,
+  size = "small",
+  type = "primary",
+  ...props
+}) => {
   return (
     <div className={cx(styles.buttonContainer, wrapperClassname)}>
-      <Button type="primary" size="small" {...props} />
+      <Button type={type} size={size} {...props} />
     </div>
   );
 };
@@ -118,6 +122,9 @@ export const DynamicColumnLoan = ({ dueDateString }) => {
 };
 
 const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
@@ -144,7 +151,7 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
             alt=""
           />
           <Text
-            type={isReadyToPickup ? "text1" : "text2"}
+            type={isReadyToPickup || isMobileSize ? "text1" : "text2"}
             tag="p"
             className={cx(styles.inlineBlock, {
               [styles.isReady]: isReadyToPickup,
@@ -206,12 +213,8 @@ export const getCheckedElements = (parentRef) => {
 };
 
 const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
-  const { image, creators, materialType, creationYear, title, id, type } =
-    props;
+  const { image, creator, materialType, creationYear, title, id, type } = props;
   const modal = useModal();
-
-  const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const onClick = () => {
     modal.push("material", {
@@ -254,9 +257,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         >
           {title}
         </Title>
-        {firstCreator && <Text type="text2">{firstCreator}</Text>}
+        {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
-          <Text type="text2">
+          <Text type="text2" className={styles.uppercase}>
             {materialType}, {creationYear}
           </Text>
         )}
@@ -279,6 +282,7 @@ const MaterialRow = (props) => {
   const {
     image,
     title,
+    creator,
     creators,
     materialType,
     creationYear,
@@ -298,9 +302,6 @@ const MaterialRow = (props) => {
   const { updateLoanerInfo } = useUser();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-
-  const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const getStatus = () => {
     switch (type) {
@@ -431,7 +432,7 @@ const MaterialRow = (props) => {
           )}
           <div>
             <ConditionalWrapper
-              condition={!!title && !!creators && !isEmpty(creators) && !!id}
+              condition={!!title && !!creator && !!id}
               wrapper={(children) => (
                 <Link
                   border={{
@@ -457,9 +458,9 @@ const MaterialRow = (props) => {
               </Title>
             </ConditionalWrapper>
 
-            {firstCreator && <Text type="text2">{firstCreator}</Text>}
+            {creator && <Text type="text2">{creator}</Text>}
             {materialType && creationYear && (
-              <Text type="text2">
+              <Text type="text2" className={styles.uppercase}>
                 {materialType}, {creationYear}
               </Text>
             )}

@@ -128,6 +128,10 @@
   margin-right: var(--pt1);
 }
 
+.uppercase::first-letter {
+  text-transform: uppercase;
+}
+
 @media (hover: hover) {
   .materialRow_mobile:focus-visible, .materialRow_mobile:hover {
     background-color: var(--black-squeeze);
