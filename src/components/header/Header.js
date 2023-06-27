@@ -252,7 +252,6 @@ export function Header({
                         vars: [countQ],
                       })}
                     </MoreOptionsLink>
-
                     <ExpandedSearch
                       className={styles.expandedSearch}
                       collapseOpen={collapseOpen}

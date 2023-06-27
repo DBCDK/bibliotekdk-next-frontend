@@ -1,8 +1,4 @@
-import {
-  StoryTitle,
-  StoryDescription,
-  StorySpace,
-} from "@/storybook/Storybook";
+import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import WrappedDetails, { DetailsSkeleton } from "./Details";
 
 const exportedObject = {

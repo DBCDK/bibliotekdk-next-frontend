@@ -14,11 +14,42 @@
     "start": "run-p start:storybook start:next",
     "lint": "next lint",
     "lint:cacheclearing": "next lint --no-cache",
+    "find:unused": "next-unused",
     "cy:run": "npx cypress@10.3.0 run --project ./e2e",
     "cy:open": "npx cypress@10.3.0 open --project ./e2e",
     "prettier": "prettier --write 'src/**/*.js' 'e2e/**/*.js'",
     "test": "jest src/",
     "postinstall": "npx --yes @dbcdk/npm-tools@latest verify latest"
+  },
+  "next-unused": {
+    "debug": false,
+    "alias": {
+      "@": "src"
+    },
+    "include": [
+      "src/components",
+      "src/css",
+      "src/lib",
+      "src/pages",
+      "src/scss",
+      "src/stories",
+      "src/utils"
+    ],
+    "exclude": [
+      ".test.",
+      ".stories.",
+      ".fixture.",
+      "mockedFetcher.js",
+      "Storybook.js",
+      "Storybook.module.css",
+      "invertColor.js",
+      "src/components/base/color/*",
+      "src/components/base/bookmark/*",
+      "src/components/base/storybook/index.js"
+    ],
+    "entrypoints": [
+      "src/pages"
+    ]
   },
   "author": "Frontend @ DBC",
   "license": "GNU",
@@ -44,6 +75,7 @@
     "eslint-plugin-storybook": "^0.6.12",
     "graphql": "^15.8.0",
     "jest": "^26.6.0",
+    "next-unused": "^0.0.6",
     "prettier": "^2.3.2",
     "sass-loader": "^13.3.2",
     "storybook": "^7.0.20",

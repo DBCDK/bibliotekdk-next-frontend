@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/storybook": ["src/components/base/storybook"],
       "@/storybook/*": ["src/components/base/storybook/*"],
       "@/public/*": ["public/*"],
       "css/animations": [
