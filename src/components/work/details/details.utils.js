@@ -853,6 +853,15 @@ export function fieldsForRows(manifestation, work, context) {
         },
       },
       {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          value:
+            manifestation?.audience?.ages
+              .map((val) => val.display)
+              .join(", ") || null,
+        },
+      },
+      {
         adaption: {
           label: Translate({ ...context, label: "adaption" }),
           value: "", // @TODO removed this one for now - data is fucked up parseIsAdaptionOf(manifestation),
