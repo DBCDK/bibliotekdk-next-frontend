@@ -80,7 +80,6 @@ export default function Wrap({ title = "", type = "" }) {
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
-  // const fragmentType = type === SuggestTypeEnum.ALL ? "all" : "typedSuggest";
 
   const { data: allData } = useData(
     suggestFragments.all({
@@ -100,15 +99,6 @@ export default function Wrap({ title = "", type = "" }) {
   );
 
   const data = type === SuggestTypeEnum.ALL ? allData : typedSuggestData;
-
-  // const { data } = useData(
-  //   suggestFragments[fragmentType]({
-  //     q: query,
-  //     workType,
-  //     suggestType: type,
-  //     limit: 10,
-  //   })
-  // );
 
   const filtered = useMemo(
     () =>
