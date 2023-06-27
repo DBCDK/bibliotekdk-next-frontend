@@ -3047,6 +3047,10 @@
         "da": "Slet",
         "en": "Delete"
       },
+      "delete-order": {
+        "da": "Slet reservation",
+        "en": "Delete reservation"
+      },
       "delete-more": {
         "da": "Slet flere",
         "en": "Delete several"
