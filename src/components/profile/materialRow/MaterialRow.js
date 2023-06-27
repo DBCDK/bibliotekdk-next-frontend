@@ -77,209 +77,103 @@ const DynamicColumnDebt = ({ amount, currency }) => (
 );
 
 export const DynamicColumnLoan = ({ dueDateString }) => {
-  const breakpoint = useBreakpoint();
-  const isMobileSize =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
     useLoanDateAnalysis(dueDateString);
 
   return (
     <DynamicColumn>
-      {isOverdue ? (
-        <>
-          {isMobileSize ? (
-            <>
-              <Text type="text2" tag="p">
-                {Translate({
-                  context: "profile",
-                  label: "to-return",
-                })}{" "}
-                {dateString}
-              </Text>
-              <div>
-                <Icon
-                  className={styles.ornament}
-                  size={{ w: 5, h: "auto" }}
-                  src={"ornament1.svg"}
-                  alt=""
-                />
-                <Text
-                  type="text1"
-                  className={cx(styles.isWarning, styles.inlineBlock)}
-                  tag="p"
-                >
-                  {Translate({
-                    context: "profile",
-                    label: "date-overdue",
-                  })}
-                </Text>
-              </div>
-            </>
-          ) : (
-            <>
-              <Text type="text1" className={styles.isWarning} tag="p">
-                {Translate({
-                  context: "profile",
-                  label: "date-overdue",
-                })}
-              </Text>
-              <Text type="text2" tag="p">
-                {dateString}
-              </Text>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          {isMobileSize ? (
-            <>
-              <Text type="text2" tag="p">
-                {Translate({
-                  context: "profile",
-                  label: "to-return",
-                })}{" "}
-                {dateString}
-              </Text>
-              <div>
-                <Icon
-                  className={styles.ornament}
-                  size={{ w: 5, h: "auto" }}
-                  src={"ornament1.svg"}
-                  alt=""
-                />
-                <Text
-                  type="text1"
-                  tag="p"
-                  className={cx(styles.upperCase, styles.inlineBlock, {
-                    [styles.isWarning]: isCountdown,
-                  })}
-                >
-                  {daysToDueDateString}
-                </Text>
-              </div>
-            </>
-          ) : (
-            <>
-              <Text
-                type="text1"
-                tag="p"
-                className={cx(styles.upperCase, {
-                  [styles.isWarning]: isCountdown,
-                })}
-              >
-                {daysToDueDateString}
-              </Text>
-              <Text type="text2" tag="p">
-                {dateString}
-              </Text>
-            </>
-          )}
-        </>
-      )}
+      <Text type="text2" tag="p">
+        <span className={styles.mobileText}>
+          {Translate({
+            context: "profile",
+            label: "to-return",
+          })}{" "}
+        </span>
+        {dateString}
+      </Text>
+      <div>
+        <Icon
+          className={styles.ornament}
+          size={{ w: 5, h: "auto" }}
+          src={"ornament1.svg"}
+          alt=""
+        />
+        <Text
+          type="text1"
+          className={cx(styles.inlineBlock, {
+            [styles.isWarning]: isOverdue || isCountdown,
+          })}
+          tag="p"
+        >
+          {isOverdue
+            ? Translate({
+                context: "profile",
+                label: "date-overdue",
+              })
+            : daysToDueDateString}
+        </Text>
+      </div>
     </DynamicColumn>
   );
 };
 
 const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
-  const breakpoint = useBreakpoint();
-  const isMobileSize =
-    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
 
   return (
     <DynamicColumn>
-      {isReadyToPickup ? (
-        <>
-          {isMobileSize ? (
-            <>
-              <Text type="text2" tag="p">
-                {Translate({
-                  context: "profile",
-                  label: "pickup-deadline",
-                })}
-                 {dateString}
-              </Text>
-              <div>
-                <Icon
-                  className={styles.ornament}
-                  size={{ w: 5, h: "auto" }}
-                  src={"ornament1.svg"}
-                  alt=""
-                />
-                <Text
-                  type="text1"
-                  tag="p"
-                  className={cx(styles.isReady, styles.inlineBlock)}
-                >
-                  {Translate({
-                    context: "profile",
-                    label: "ready-to-pickup",
-                  })}
-                </Text>
-              </div>
-            </>
-          ) : (
-            <>
-              <Text type="text1" tag="p" className={styles.isReady}>
-                {Translate({
+      <>
+        <Text type="text2" tag="p">
+          {isReadyToPickup && (
+            <span>
+              {Translate({
+                context: "profile",
+                label: "pickup-deadline",
+              })}{" "}
+            </span>
+          )}
+          {dateString}
+        </Text>
+        <div>
+          <Icon
+            className={styles.ornament}
+            size={{ w: 5, h: "auto" }}
+            src={"ornament1.svg"}
+            alt=""
+          />
+          <Text
+            type={isReadyToPickup ? "text1" : "text2"}
+            tag="p"
+            className={cx(styles.inlineBlock, {
+              [styles.isReady]: isReadyToPickup,
+            })}
+          >
+            {isReadyToPickup
+              ? Translate({
                   context: "profile",
                   label: "ready-to-pickup",
-                })}
-              </Text>
-              <Text type="text2" tag="p">
-                {Translate({
+                })
+              : holdQueuePosition === "1"
+              ? `${Translate({
                   context: "profile",
-                  label: "pickup-deadline",
-                })}
-                 {dateString}
-              </Text>
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          {isMobileSize ? (
-            <div>
-              <Icon
-                className={styles.ornament}
-                size={{ w: 5, h: "auto" }}
-                src={"ornament1.svg"}
-                alt=""
-              />
-              <Text type="text2" tag="p" className={styles.inlineBlock}>
-                {holdQueuePosition === "1"
-                  ? `${Translate({
-                      context: "profile",
-                      label: "front-of-row",
-                    })}`
-                  : `${holdQueuePosition - 1} ${Translate({
-                      context: "profile",
-                      label: "in-row",
-                    })}`}
-              </Text>
-            </div>
-          ) : (
-            <Text type="text2" tag="p">
-              {holdQueuePosition === "1"
-                ? `${Translate({
-                    context: "profile",
-                    label: "front-of-row",
-                  })}`
-                : `${holdQueuePosition - 1} ${Translate({
-                    context: "profile",
-                    label: "in-row",
-                  })}`}
-            </Text>
-          )}
-        </>
-      )}
+                  label: "front-of-row",
+                })}`
+              : `${holdQueuePosition - 1} ${Translate({
+                  context: "profile",
+                  label: "in-row",
+                })}`}
+          </Text>
+        </div>
+      </>
     </DynamicColumn>
   );
 };
 
-const DynamicColumn = ({ ...props }) => <div {...props} />;
+const DynamicColumn = ({ className, ...props }) => (
+  <div className={cx(styles.dynamicColumn, className)} {...props} />
+);
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3 }) => {

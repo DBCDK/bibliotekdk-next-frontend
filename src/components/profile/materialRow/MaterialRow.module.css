@@ -114,6 +114,11 @@
   transition: transform 0.3s ease-in-out;
 }
 
+.dynamicColumn {
+  display: flex;
+  flex-direction: column;
+}
+
 .dynamicContent {
   margin-top: var(--pt1);
 }
@@ -132,5 +137,15 @@
 @media (max-width: 992px) {
   .materialHeaderRow {
     display: none;
+  }
+}
+
+@media (min-width: 993px) {
+  .mobileText, i.ornament {
+    display: none;
+  }
+
+  .dynamicColumn {
+    flex-direction: column-reverse;
   }
 }
