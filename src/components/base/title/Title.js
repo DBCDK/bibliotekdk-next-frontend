@@ -10,12 +10,12 @@ import Text, { TextSkeleton } from "../text/Text";
  *
  * @returns {JSX.Element}
  */
-export default function Container(props) {
+export default function Container({children = "I'm a title", ...props}) {
   if (props.skeleton) {
     return <TextSkeleton {...props} />;
   }
 
-  return <Text type="title1" tag="div" {...props} />;
+  return <Text type="title1" {...props}>{children}</Text>;
 }
 
 // PropTypes for the component
@@ -27,7 +27,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]), // .isRequired
+  tag: PropTypes.oneOf(["h1", "h2", "h3", "h4", "h5", "h6"]).isRequired,
   type: PropTypes.oneOf([
     "title1",
     "title2",
