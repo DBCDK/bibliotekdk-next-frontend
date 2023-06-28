@@ -146,7 +146,9 @@ export function useMutate() {
     setError(null);
     try {
       const res = await fetcherImpl(key);
+      console.log("res", res);
       if (res.errors) {
+        console.error("NOT GOOD", res.errors);
         throw res.errors[0].message;
       }
       setData(res);
@@ -154,6 +156,7 @@ export function useMutate() {
       console.error(e, "USEMUTATE");
       setError(e);
     }
+    console.log("WE MADE IT");
     setisLoading(false);
   }
   return {

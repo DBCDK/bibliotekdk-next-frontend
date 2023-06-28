@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
+import { handleCancelOrder } from "./utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import Translate from "@/components/base/translate";
@@ -283,6 +284,7 @@ const MaterialRow = (props) => {
     materialType,
     creationYear,
     library,
+    agencyId,
     hasCheckbox = false,
     id,
     workId,
@@ -292,10 +294,11 @@ const MaterialRow = (props) => {
     dueDateString,
     amount,
     currency,
+    orderMutation,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateLoanerInfo } = useUser();
+  //const { updateLoanerInfo } = useUser();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -319,12 +322,17 @@ const MaterialRow = (props) => {
     }
   };
 
-  const onDeleteOrder = (id) => {
-    const newOrders = loanerInfo.orders;
-    const index = newOrders.map((item) => item.orderId).indexOf(id);
-    newOrders.splice(index, 1);
+  const onCancelOrder = async (id, agencyId) => {
+    // const newOrders = loanerInfo.orders;
+    // const index = newOrders.map((item) => item.orderId).indexOf(id);
+    // newOrders.splice(index, 1);
     // TODO proper mutate function
-    updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
+    console.log("###########", id, agencyId);
+    const res = await handleCancelOrder(id, agencyId, orderMutation);
+    console.log("###########", res);
+    //update UI After delettion
+    //show that you successfully cancelled the order
+    //updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
   };
 
   const status = getStatus();
@@ -359,7 +367,7 @@ const MaterialRow = (props) => {
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton onClick={() => onDeleteOrder(order.orderId)}>
+          <MaterialRowIconButton onClick={() => onCancelOrder(id, agencyId)}>
             {Translate({
               context: "profile",
               label: "delete",
@@ -472,7 +480,7 @@ const MaterialRow = (props) => {
           <Text type="text2">{library}</Text>
         </div>
 
-        <div>{renderDynamicButton()}</div>
+        <div>{renderDynamicButton(id, agencyId)}</div>
       </>
     </ConditionalWrapper>
   );

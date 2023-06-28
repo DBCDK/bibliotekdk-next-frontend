@@ -76,3 +76,31 @@ export function submitPeriodicaArticleOrder({
     },
   };
 }
+
+/**
+ * When user deletes an order/reservation
+ *
+ * @param {object} params
+ * @param {string} params.orderId the order id
+ * @param {string} params.agencyId the agency idª
+ */
+
+export function cancelOrder({ orderId, agencyId }) {
+  return {
+    query: `
+    mutation cancelOrder($orderId: String!, $agencyId: String!) {
+    cancelOrder(orderId: $orderId, agencyId: $agencyId, dryRun: true) {
+      deleted
+      error
+        }
+      } 
+    } 
+    `,
+    variables: {
+      input: {
+        orderId,
+        agencyId,
+      },
+    },
+  };
+}

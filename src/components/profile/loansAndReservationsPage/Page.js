@@ -7,6 +7,7 @@ import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
 import { encodeString } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { useMutate } from "@/lib/api/api";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -21,29 +22,31 @@ export const dataReducer = (dataType, data) => {
     case "LOAN": {
       return {
         type: "LOAN",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
-        creators: data.manifestation.creators,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        image: data.manifestation?.cover.thumbnail,
+        title: data.manifestation?.titles.main[0],
+        creators: data.manifestation?.creators,
+        materialType: data.manifestation?.materialTypes[0].specific,
+        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
         dueDateString: data.dueDate,
         id: data.loanId,
-        workId: "work-of:" + data.manifestation.pid,
+        workId: "work-of:" + data.manifestation?.pid,
       };
     }
     case "ORDER": {
       return {
         type: "ORDER",
-        image: data.manifestation.cover.thumbnail,
-        title: data.manifestation.titles.main[0],
-        creators: data.manifestation.creators,
-        materialType: data.manifestation.materialTypes[0].specific,
-        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+        image: data.manifestation?.cover.thumbnail,
+        title: data.manifestation?.titles.main[0],
+        creators: data.manifestation?.creators,
+        materialType: data.manifestation?.materialTypes[0].specific,
+        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
         library: data.pickUpBranch.agencyName,
+        agencyId: data.libraryId,
         holdQueuePosition: data.holdQueuePosition,
         pickUpExpiryDate: data.pickUpExpiryDate,
         id: data.orderId,
-        workId: "work-of:" + data.manifestation.pid,
+        workId: "work-of:" + data.manifestation?.pid,
+        orderMutation: data.orderMutation,
       };
     }
   }
@@ -51,12 +54,14 @@ export const dataReducer = (dataType, data) => {
 
 const LoansAndReservations = () => {
   const breakpoint = useBreakpoint();
+  const orderMutation = useMutate();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
   const { loans, orders, debt, agency } = loanerInfo;
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
+  const libraryId = agency?.result?.[0]?.agencyId;
 
   return (
     <ProfileLayout
@@ -218,7 +223,7 @@ const LoansAndReservations = () => {
         {orders && orders.length !== 0 ? (
           orders?.map((order, i) => (
             <MaterialRow
-              {...dataReducer("ORDER", order)}
+              {...dataReducer("ORDER", { ...order, libraryId, orderMutation })}
               key={`loan-${order.loanId}-#${i}`}
             />
           ))

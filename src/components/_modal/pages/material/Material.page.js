@@ -121,6 +121,9 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
+    // orderId,
+    // agencyId,
+    // orderMutation,
   } = context;
 
   const renderDynamicContent = () => {
@@ -149,7 +152,7 @@ const Material = ({ context }) => {
         return (
           <MaterialRowIconButton
             wrapperClassname={styles.button}
-            onClick={() => onDeleteOrder(order.orderId)}
+            onClick={() => onCancelOrder(order.orderId)}
           >
             {Translate({
               context: "profile",
