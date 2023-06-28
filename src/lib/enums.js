@@ -8,7 +8,7 @@ export const SuggestTypeEnum = Object.freeze({
 });
 
 export const FilterTypeEnum = Object.freeze({
-  MATERIAL_TYPES: "materialTypes",
+  MATERIAL_TYPES: "materialTypesSpecific",
   ACCESS_TYPES: "accessTypes",
   SUBJECTS: "subjects",
   CREATORS: "creators",

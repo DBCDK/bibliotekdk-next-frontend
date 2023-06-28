@@ -362,7 +362,7 @@ function RenderGameLanguages({ values }) {
     values["main"].length > 0
       ? values["main"]
           ?.splice(0, 2)
-          .map((sub) => capitalize(sub))
+          .map((sub) => sub)
           .join(", ")
       : null;
 
@@ -683,6 +683,29 @@ export function fieldsForRows(manifestation, work, context) {
           value: work?.genreAndForm || [],
           jsxParser: RenderGenre,
           index: 0,
+        },
+      },
+      // remove physicaldescription - we want it in seperate fields (@xee playingtime & extent)
+      {
+        physicalDescriptions: {
+          label: "",
+          value: null,
+        },
+      },
+      {
+        playingtime: {
+          label: Translate({ ...context, label: "playingtime" }),
+          value: manifestation?.physicalDescriptions?.[0]?.playingTime,
+        },
+      },
+      {
+        extent: {
+          label: Translate({ ...context, label: "extent" }),
+          value:
+            manifestation?.physicalDescriptions?.[0]?.numberOfUnits ||
+            manifestation?.physicalDescriptions?.[0]?.size
+              ? `${manifestation?.physicalDescriptions?.[0]?.numberOfUnits}  ${manifestation?.physicalDescriptions?.[0]?.size}`
+              : null,
         },
       },
       {
