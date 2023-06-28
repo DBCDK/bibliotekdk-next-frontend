@@ -685,6 +685,29 @@ export function fieldsForRows(manifestation, work, context) {
           index: 0,
         },
       },
+      // remove physicaldescription - we want it in seperate fields (@xee playingtime & extent)
+      {
+        physicalDescriptions: {
+          label: "",
+          value: null,
+        },
+      },
+      {
+        playingtime: {
+          label: Translate({ ...context, label: "playingtime" }),
+          value: manifestation?.physicalDescriptions?.[0]?.playingTime,
+        },
+      },
+      {
+        extent: {
+          label: Translate({ ...context, label: "extent" }),
+          value:
+            manifestation?.physicalDescriptions?.[0]?.numberOfUnits ||
+            manifestation?.physicalDescriptions?.[0]?.size
+              ? `${manifestation?.physicalDescriptions?.[0]?.numberOfUnits}  ${manifestation?.physicalDescriptions?.[0]?.size}`
+              : null,
+        },
+      },
       {
         audience: {
           label: Translate({ ...context, label: "other-audience" }),
