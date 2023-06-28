@@ -7,6 +7,7 @@ import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
 import { encodeString, extractCreatorPrioritiseCorporation } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -117,12 +118,9 @@ const LoansAndReservations = () => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
-  const { debt, agency } = loanerInfo;
-  let { orders, loans } = loanerInfo;
+  const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
-  orders = sortOrders(orders);
-  loans = sortLoans(loans);
 
   return (
     <ProfileLayout
