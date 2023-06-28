@@ -89,18 +89,15 @@ export function cancelOrder({ orderId, agencyId }) {
   return {
     query: `
     mutation cancelOrder($orderId: String!, $agencyId: String!) {
-    cancelOrder(orderId: $orderId, agencyId: $agencyId, dryRun: true) {
-      deleted
-      error
-        }
-      } 
+      deleteOrder(orderId: $orderId, agencyId: $agencyId, dryRun: false) {
+        deleted
+        error
+      }
     } 
     `,
     variables: {
-      input: {
-        orderId,
-        agencyId,
-      },
+      orderId,
+      agencyId,
     },
   };
 }

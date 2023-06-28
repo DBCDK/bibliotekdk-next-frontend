@@ -452,6 +452,10 @@ const DEFAULT_STORY_PARAMETERS = {
             );
             return { status: "OK" };
           },
+          cancelOrder: (args) => {
+            console.debug("cancelOrder", args?.variables?.input);
+            return { status: "OK" };
+          },
         },
       },
       url: "https://fbi-api-staging.k8s.dbc.dk/bibdk21/graphql",

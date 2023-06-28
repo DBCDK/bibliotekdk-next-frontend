@@ -59,7 +59,7 @@ export async function fetcher(
   const apiUrl =
     apiUrlFromQuery && config[apiUrlFromQuery]?.url
       ? config[apiUrlFromQuery]?.url
-      : config.api.url;
+      : config.fbi_api.url;
 
   const headers = {
     "Content-Type": "application/json",
