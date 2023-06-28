@@ -59,13 +59,13 @@
 }
 
 .form {
-  display: flex;  
+  display: flex;
 }
 
 .input_wrap {
   position: relative;
   line-height: 0;
-  
+
   padding: 0;
   height: 56px;
   width: 100%;

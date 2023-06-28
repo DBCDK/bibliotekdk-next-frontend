@@ -46,9 +46,9 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;        /* number of lines to show */
-  line-height: 32px;            /* fallback */
-  max-height: calc(32px * 3);   /* fallback */
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-height: 32px; /* fallback */
+  max-height: calc(32px * 3); /* fallback */
 }
 
 .materials {

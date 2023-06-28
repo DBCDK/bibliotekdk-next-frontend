@@ -6,11 +6,7 @@
 
 .overview {
   display: grid;
-  --grid_template_areas:
-    "back"
-    "title"
-    "work_card"
-  ;
+  --grid_template_areas: "back" "title" "work_card";
 
   grid-template-areas: var(--grid_template_areas);
   grid-auto-columns: minmax(0, 1fr);
@@ -39,7 +35,6 @@
   border-top: var(--card_border);
 }
 
-
 @media (min-width: 768px) {
   .top {
     padding-inline: var(--pt2);
@@ -67,9 +62,7 @@
 
 @media (min-width: 992px) {
   .overview {
-    --grid_template_areas:
-      "back title title work_card work_card work_card"
-    ;
+    --grid_template_areas: "back title title work_card work_card work_card";
   }
 
   .title {

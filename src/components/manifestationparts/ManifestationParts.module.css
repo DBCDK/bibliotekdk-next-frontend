@@ -8,17 +8,17 @@
   margin-bottom: var(--pt2);
 }
 
-.manifestionlist li{
+.manifestionlist li {
   display: flex;
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
 }
 
-.manifestionlist li p{
+.manifestionlist li p {
   margin: 0 0 0 var(--pt1);
   display: block;
 }
 
-.manifestionlist li p:first-child{
+.manifestionlist li p:first-child {
   width: 50%;
 }
 
@@ -47,16 +47,13 @@
   padding-left: var(--pt2);
 }
 
-.manifestionlist li p:last-child{
+.manifestionlist li p:last-child {
   margin-left: auto;
   white-space: nowrap;
 }
 
 @media (min-width: 992px) {
-  .manifestionlist li p{
+  .manifestionlist li p {
     display: inline;
   }
 }
-
-
-

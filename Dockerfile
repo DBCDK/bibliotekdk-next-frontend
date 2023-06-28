@@ -14,12 +14,11 @@ RUN npm set progress=false && npm config set depth 0 && \
     npm install
 
 # Run lint and tests
-RUN npm run lint
-RUN npm run test
+RUN npm run format:lint:test
 
 # build for production
 RUN npm run build:storybook && \
-    npm run build:next && \
+    npm run build:next:no:lint && \
     npm prune --production
 
 # ---- Release ----

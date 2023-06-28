@@ -8,13 +8,13 @@
   }
 }
 
-@media(min-width: 576px) {
+@media (min-width: 576px) {
   .col_flex__vertical_version {
     width: 26.25%;
   }
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .col_flex__vertical_version {
     width: 22.22%;
   }

@@ -44,7 +44,7 @@
   padding-bottom: var(--pt2);
 }
 
-.text > *:nth-child(n+3) {
+.text > *:nth-child(n + 3) {
   padding-bottom: 0;
 }
 
