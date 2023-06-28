@@ -472,31 +472,31 @@ const createDateXDaysFromNow = (daysFromNow) => {
 };
 const USER_LOANS = [
   {
-    loanId: "120200553",
-    dueDate: createDateXDaysFromNow(-2),
+    loanId: "120200590",
+    dueDate: createDateXDaysFromNow(14),
     manifestation: {
-      pid: "870970-basis:51098838",
+      pid: "870970-basis:23518260",
       titles: {
-        main: ["Ildkamp"],
+        main: ["Tiger"],
       },
       ownerWork: {
-        workId: "work-of:870970-basis:51098838",
+        workId: "work-of:870970-basis:23518260",
       },
       creators: [
         {
-          display: "Brandon Sanderson",
+          display: "Jan Jutte",
         },
       ],
       materialTypes: [
         {
-          specific: "bog",
+          specific: "billedbog",
         },
       ],
       cover: {
         thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
       },
-      recordCreationDate: "20220508",
+      recordCreationDate: "20200529",
     },
   },
   {
@@ -555,32 +555,33 @@ const USER_LOANS = [
       recordCreationDate: "20150323",
     },
   },
+
   {
-    loanId: "120200590",
-    dueDate: createDateXDaysFromNow(14),
+    loanId: "120200553",
+    dueDate: createDateXDaysFromNow(-2),
     manifestation: {
-      pid: "870970-basis:23518260",
+      pid: "870970-basis:51098838",
       titles: {
-        main: ["Tiger"],
+        main: ["Ildkamp"],
       },
       ownerWork: {
-        workId: "work-of:870970-basis:23518260",
+        workId: "work-of:870970-basis:51098838",
       },
       creators: [
         {
-          display: "Jan Jutte",
+          display: "Brandon Sanderson",
         },
       ],
       materialTypes: [
         {
-          specific: "billedbog",
+          specific: "bog",
         },
       ],
       cover: {
         thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47468736&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=f516a8895f6a4af424c3",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=135272809&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=355a65c276690f5dd12f",
       },
-      recordCreationDate: "20200529",
+      recordCreationDate: "20220508",
     },
   },
 ];
@@ -592,18 +593,19 @@ const USER_ORDERS = [
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
     },
-    pickUpExpiryDate: createDateXDaysFromNow(10),
+    pickUpExpiryDate: null,
+    holdQueuePosition: "5",
     manifestation: {
-      pid: "870970-basis:23518260",
+      pid: "870970-basis:23424916",
       titles: {
-        main: ["Inferno"],
+        main: ["Efter uvejret"],
       },
       ownerWork: {
-        workId: "work-of:870970-basis:23518260",
+        workId: "work-of:870970-basis:23424916",
       },
       creators: [
         {
-          display: "Dan Brown",
+          display: "Lauren Brooke",
         },
       ],
       materialTypes: [
@@ -613,13 +615,13 @@ const USER_ORDERS = [
       ],
       cover: {
         thumbnail:
-          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
       },
-      recordCreationDate: "20170529",
+      recordCreationDate: "20010323",
     },
   },
   {
-    orderId: "2982910",
+    orderId: "2982912",
     status: "",
     pickUpBranch: {
       agencyName: "Husum Bibliotek",
@@ -649,6 +651,38 @@ const USER_ORDERS = [
           "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=23424916&attachment_type=forside_lille&bibliotek=870970&source_id=870970&key=72fda7f507bed4f70854",
       },
       recordCreationDate: "20010323",
+    },
+  },
+  {
+    orderId: "2982913",
+    status: "",
+    pickUpBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: createDateXDaysFromNow(10),
+    manifestation: {
+      pid: "870970-basis:23518260",
+      titles: {
+        main: ["Inferno"],
+      },
+      ownerWork: {
+        workId: "work-of:870970-basis:23518260",
+      },
+      creators: [
+        {
+          display: "Dan Brown",
+        },
+      ],
+      materialTypes: [
+        {
+          specific: "bog",
+        },
+      ],
+      cover: {
+        thumbnail:
+          "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=53552315&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=56c69012754540b94e24",
+      },
+      recordCreationDate: "20170529",
     },
   },
 ];
