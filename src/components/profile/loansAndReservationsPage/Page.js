@@ -36,7 +36,21 @@ export const dataReducer = (dataType, data) => {
     }
     case "ORDER": {
       if (!data.manifestation) {
-        // Under process?
+        // No manifestation - we show what we can
+        return {
+          type: "ORDER",
+          image: data.manifestation?.cover.thumbnail,
+          title: data.title,
+          creator: data.creator,
+          creators: data.manifestation?.creators,
+          materialType: data.manifestation?.materialTypes[0].specific,
+          creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+          library: data.pickUpBranch.agencyName,
+          holdQueuePosition: data.holdQueuePosition,
+          pickUpExpiryDate: data.pickUpExpiryDate,
+          id: data.orderId,
+          workId: "work-of:" + data.manifestation?.pid,
+        };
       }
       return {
         type: "ORDER",

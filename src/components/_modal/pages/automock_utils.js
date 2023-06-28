@@ -685,6 +685,16 @@ const USER_ORDERS = [
       recordCreationDate: "20170529",
     },
   },
+  {
+    orderId: "2982913",
+    status: "",
+    pickUpBranch: {
+      agencyName: "Husum Bibliotek",
+    },
+    pickUpExpiryDate: null,
+    title: "Ko og Kylling",
+    holdQueuePosition: "8",
+  },
 ];
 
 const USER_DEBT = [
