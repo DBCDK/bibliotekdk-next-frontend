@@ -5,7 +5,7 @@ import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
-import { encodeString } from "@/lib/utils";
+import { encodeString, extractCreatorPrioritiseCorporation } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useMutate } from "@/lib/api/api";
 
@@ -22,11 +22,13 @@ export const dataReducer = (dataType, data) => {
     case "LOAN": {
       return {
         type: "LOAN",
-        image: data.manifestation?.cover.thumbnail,
-        title: data.manifestation?.titles.main[0],
-        creators: data.manifestation?.creators,
-        materialType: data.manifestation?.materialTypes[0].specific,
-        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: extractCreatorPrioritiseCorporation(
+          data.manifestation?.creators
+        )?.[0]?.display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         dueDateString: data.dueDate,
         id: data.loanId,
         workId: "work-of:" + data.manifestation?.pid,
@@ -35,11 +37,13 @@ export const dataReducer = (dataType, data) => {
     case "ORDER": {
       return {
         type: "ORDER",
-        image: data.manifestation?.cover.thumbnail,
-        title: data.manifestation?.titles.main[0],
-        creators: data.manifestation?.creators,
-        materialType: data.manifestation?.materialTypes[0].specific,
-        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+        image: data.manifestation.cover.thumbnail,
+        title: data.manifestation.titles.main[0],
+        creator: extractCreatorPrioritiseCorporation(
+          data.manifestation?.creators
+        )?.[0]?.display,
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: data.pickUpBranch.agencyName,
         agencyId: data.libraryId,
         holdQueuePosition: data.holdQueuePosition,

@@ -362,7 +362,7 @@ function RenderGameLanguages({ values }) {
     values["main"].length > 0
       ? values["main"]
           ?.splice(0, 2)
-          .map((sub) => capitalize(sub))
+          .map((sub) => sub)
           .join(", ")
       : null;
 
@@ -850,6 +850,15 @@ export function fieldsForRows(manifestation, work, context) {
           label: "",
           value: manifestation?.audience?.generalAudience || "",
           jsxParser: RenderMovieAudience,
+        },
+      },
+      {
+        audienceage: {
+          label: Translate({ ...context, label: "audience" }),
+          value:
+            manifestation?.audience?.ages
+              .map((val) => val.display)
+              .join(", ") || null,
         },
       },
       {

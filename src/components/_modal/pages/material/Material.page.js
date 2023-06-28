@@ -7,7 +7,6 @@ import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import {
   MaterialRowButton,
-  MaterialRowIconButton,
   useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
@@ -60,11 +59,12 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   if (isReadyToPickup) {
     return (
       <>
-        <Text type="text1" tag="span" className={styles.isReady}>
+        <Text type="text2" tag="p" className={styles.spacer}>
           {Translate({
             context: "profile",
-            label: "ready-to-pickup",
-          })}
+            label: "pickup-deadline",
+          })}{" "}
+          {dateString}
         </Text>
         <div className={styles.status}>
           <Icon
@@ -73,12 +73,11 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
             src={"ornament1.svg"}
             alt=""
           />
-          <Text type="text2" tag="span">
+          <Text type="text1" tag="p" className={styles.isReady}>
             {Translate({
               context: "profile",
-              label: "pickup-deadline",
+              label: "ready-to-pickup",
             })}
-             {dateString}
           </Text>
         </div>
       </>
@@ -86,7 +85,7 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   }
 
   return (
-    <div className={styles.status}>
+    <div className={cx(styles.status, styles.spacer)}>
       <Icon
         className={styles.ornament}
         size={{ w: 5, h: "auto" }}
@@ -113,6 +112,7 @@ const Material = ({ context }) => {
     label,
     title,
     creator,
+    creators,
     materialType,
     creationYear,
     image,
@@ -144,21 +144,23 @@ const Material = ({ context }) => {
     switch (type) {
       case "LOAN":
         return (
-          <MaterialRowButton wrapperClassname={styles.button}>
+          <MaterialRowButton size="medium" wrapperClassname={styles.button}>
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton
+          <MaterialRowButton
+            type="secondary"
+            size="medium"
             wrapperClassname={styles.button}
             onClick={() => onCancelOrder(order.orderId)}
           >
             {Translate({
               context: "profile",
-              label: "delete",
+              label: "delete-order",
             })}
-          </MaterialRowIconButton>
+          </MaterialRowButton>
         );
     }
   };
@@ -183,7 +185,7 @@ const Material = ({ context }) => {
             </Text>
           )}
           {materialType && creationYear && (
-            <Text type="text2" className={styles.spacer}>
+            <Text type="text2" className={cx(styles.spacer, styles.uppercase)}>
               {materialType}, {creationYear}
             </Text>
           )}
@@ -204,10 +206,11 @@ const Material = ({ context }) => {
             keepVisible: true,
           },
         }}
-        className={styles.link}
-        href={getWorkUrl(title, creator, workId)}
+        href={getWorkUrl(title, creators, workId)}
       >
-        <Text type="text2">Gå til bogen</Text>
+        <Text className={styles.link} type="text2" tag="span">
+          Gå til bogen
+        </Text>
       </Link>
 
       <Text type="text2">Udlånt af</Text>
