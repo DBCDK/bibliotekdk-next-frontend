@@ -7,6 +7,7 @@ import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
 import { encodeString, extractCreatorPrioritiseCorporation } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -35,6 +36,23 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "ORDER": {
+      if (!data.manifestation) {
+        // No manifestation - we show what we can
+        return {
+          type: "ORDER",
+          image: data.manifestation?.cover.thumbnail,
+          title: data.title,
+          creator: data.creator,
+          creators: data.manifestation?.creators,
+          materialType: data.manifestation?.materialTypes[0].specific,
+          creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+          library: data.pickUpBranch.agencyName,
+          holdQueuePosition: data.holdQueuePosition,
+          pickUpExpiryDate: data.pickUpExpiryDate,
+          id: data.orderId,
+          workId: "work-of:" + data.manifestation?.pid,
+        };
+      }
       return {
         type: "ORDER",
         image: data.manifestation.cover.thumbnail,
@@ -60,7 +78,7 @@ const LoansAndReservations = () => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
-  const { loans, orders, debt, agency } = loanerInfo;
+  const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
 
