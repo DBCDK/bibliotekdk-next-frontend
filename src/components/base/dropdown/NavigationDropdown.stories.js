@@ -16,7 +16,8 @@ export function Dropdown() {
   return (
     <div style={{ height: "500px" }}>
       <StoryDescription>
-        Shows when canvas has width up to 992px
+        Shows when canvas has width up to 992px. The story is not showing icons
+        used at the end of the line.
       </StoryDescription>
       <NavigationDropdown context="profile" menuItems={menuItems} />
     </div>

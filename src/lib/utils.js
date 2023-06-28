@@ -33,6 +33,10 @@ export function encodeString(str = "") {
 }
 
 export function extractCreatorPrioritiseCorporation(creatorsBeforeFilter) {
+  if (!creatorsBeforeFilter) return;
+  if (!Array.isArray(creatorsBeforeFilter)) {
+    creatorsBeforeFilter = [creatorsBeforeFilter];
+  }
   const corporations = creatorsBeforeFilter?.filter(
     (creator) => creator.__typename === "Corporation"
   );

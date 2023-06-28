@@ -4,9 +4,9 @@ import Row from "react-bootstrap/Row";
 import { Title } from "@/components/base/title/Title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
-import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -21,13 +21,16 @@ const MENUITEMS = ["loansAndReservations", "myLibraries"];
 export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
+  const isTablet = breakpoint === "md";
 
   return (
     <Container fluid className={styles.container}>
+      {(isMobile || isTablet) && <Breadcrumb textType="text3" />}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
+
       <Row>
-        <Col lg={3}>
-          <Breadcrumb />
+        <Col lg={3} className={styles.navColumn}>
+          {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
           <ProfileMenu />
         </Col>
         <Col lg={9}>
