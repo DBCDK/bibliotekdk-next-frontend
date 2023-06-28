@@ -25,7 +25,7 @@
     }
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": 1,
     "mocha/no-exclusive-tests": "error",
     "cypress/no-unnecessary-waiting": 0,
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],

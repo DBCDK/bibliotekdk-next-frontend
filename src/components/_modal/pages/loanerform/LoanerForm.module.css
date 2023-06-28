@@ -38,7 +38,7 @@
 .guestlogin {
   color: var(--blue);
 }
-.inline{
+.inline {
   display: inline-block;
   margin-right: var(--pt2);
   margin-top: var(--pt2);

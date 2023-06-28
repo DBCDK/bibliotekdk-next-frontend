@@ -1,9 +1,6 @@
 .info {
   display: grid;
-  --info__grid_template_areas:
-    "infoDate infoPrint"
-    "infoLector infoLector"
-  ;
+  --info__grid_template_areas: "infoDate infoPrint" "infoLector infoLector";
   grid-template-areas: var(--info__grid_template_areas);
   column-gap: var(--pt8);
   row-gap: var(--pt1);
@@ -33,9 +30,7 @@
 @media (min-width: 1200px) {
   .info {
     grid-template-columns: fit-content(100%) fit-content(100%) 1fr;
-    --info__grid_template_areas:
-      "infoDate infoLector infoPrint"
-    ;
+    --info__grid_template_areas: "infoDate infoLector infoPrint";
   }
 }
 

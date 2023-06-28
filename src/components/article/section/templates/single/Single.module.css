@@ -13,10 +13,7 @@
 
 .content {
   display: grid;
-  --grid_template_areas:
-    "gridText"
-    "gridImage"
-  ;
+  --grid_template_areas: "gridText" "gridImage";
   gap: var(--pt2);
   align-items: center;
 
@@ -40,9 +37,7 @@
 
 @media (min-width: 768px) {
   .content {
-    --grid_template_areas:
-      "gridText gridImage"
-    ;
+    --grid_template_areas: "gridText gridImage";
     grid-auto-columns: 5fr 7fr;
   }
 }
