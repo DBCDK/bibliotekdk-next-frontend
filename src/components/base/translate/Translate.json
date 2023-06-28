@@ -757,6 +757,14 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "playingtime": {
+        "da": "Spilletid",
+        "en": "Playing time"
+      },
+      "extent": {
+        "da": "Omfang",
+        "en": "Extent"
+      },
       "level": {
         "da": "Sværhedsgrad",
         "en": "level"
@@ -1328,6 +1336,10 @@
         "da": "Materialetype",
         "en": "Format"
       },
+      "label-materialTypesSpecific": {
+        "da": "Materialetype",
+        "en": "Format"
+      },
       "label-fictionalCharacter": {
         "da": "Fiktive karakterer",
         "en": "Fictitious characters"
@@ -1368,7 +1380,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-literature-materialTypes": {
+      "label-literature-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1408,7 +1420,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-article-materialTypes": {
+      "label-article-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1448,7 +1460,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-movie-materialTypes": {
+      "label-movie-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1488,7 +1500,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-game-materialTypes": {
+      "label-game-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1528,7 +1540,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-music-materialTypes": {
+      "label-music-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1568,7 +1580,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-sheetmusic-materialTypes": {
+      "label-sheetmusic-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
