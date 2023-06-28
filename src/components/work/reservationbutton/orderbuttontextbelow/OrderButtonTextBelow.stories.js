@@ -1,7 +1,7 @@
 import { StoryDescription, StoryTitle } from "@/storybook";
 import OrderButtonTextBelow from "@/components/work/reservationbutton/orderbuttontextbelow/OrderButtonTextBelow";
 import { AccessEnum } from "@/lib/enums";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {

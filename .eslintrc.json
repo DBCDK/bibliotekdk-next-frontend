@@ -29,6 +29,21 @@
     "mocha/no-exclusive-tests": "error",
     "cypress/no-unnecessary-waiting": 0,
     "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "import/no-unused-modules": [
+      0,
+      {
+        "unusedExports": true,
+        "missingExports": false,
+        "ignoreExports": [
+          "src/pages",
+          "src/**/__fixtures__/*",
+          "src/**/__test__/*",
+          "src/**/__tests__/*",
+          "src/**/*.stories.js",
+          "src/**/*.test.js"
+        ]
+      }
+    ],
     "no-restricted-imports": [
       "error",
       {
@@ -69,6 +84,9 @@
         ]
       }
     ],
+
+    "react/jsx-uses-vars": 2,
+    "react/jsx-uses-react": 2,
 
     // TODO: Turn these on at some point
     /* next/core-web-vitals */

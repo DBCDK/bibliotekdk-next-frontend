@@ -1,5 +1,5 @@
 import NavigationDropdown from "./NavigationDropdown";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import { StoryDescription } from "@/storybook";
 const { useMockLoanerInfo } = automock_utils();
 
