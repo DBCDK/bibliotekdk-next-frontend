@@ -362,7 +362,7 @@ function RenderGameLanguages({ values }) {
     values["main"].length > 0
       ? values["main"]
           ?.splice(0, 2)
-          .map((sub) => capitalize(sub))
+          .map((sub) => sub)
           .join(", ")
       : null;
 
