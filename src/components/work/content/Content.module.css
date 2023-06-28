@@ -6,9 +6,3 @@
   /* Remove above concrete bg-color from p in skeleton mode */
   background-color: transparent;
 }
-
-.arrowAndTxtContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}

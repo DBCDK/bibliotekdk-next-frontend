@@ -1,0 +1,32 @@
+.col_flex__vertical_version {
+  width: 75%;
+}
+
+@media (min-width: 364px) {
+  .col_flex__vertical_version {
+    width: 45%;
+  }
+}
+
+@media(min-width: 576px) {
+  .col_flex__vertical_version {
+    width: 26.25%;
+  }
+}
+
+@media(min-width: 768px) {
+  .col_flex__vertical_version {
+    width: 22.22%;
+  }
+}
+
+.related_element__vertical_version {
+  flex-direction: column;
+  gap: var(--pt1);
+}
+
+.cover__vertical_version {
+  width: 95%;
+  object-position: 50% 100%;
+  height: calc(var(--pt16) * 2);
+}

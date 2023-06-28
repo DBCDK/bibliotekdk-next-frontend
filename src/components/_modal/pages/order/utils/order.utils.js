@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-restricted-imports
 import styles from "@/components/_modal/pages/order/Order.module.css";
 
 /**
@@ -25,8 +26,10 @@ export function extractClassNameAndMessage(validated, failedSubmission) {
 
   // Email validation class
   const validClass =
+    // eslint-disable-next-line css-modules/no-undef-class
     failedSubmission && !emailStatus ? styles.invalid : styles.valid;
   const customInvalidClass =
+    // eslint-disable-next-line css-modules/no-undef-class
     failedSubmission && !emailStatus ? styles.invalidInput : "";
 
   // Set email input message if any
@@ -37,6 +40,7 @@ export function extractClassNameAndMessage(validated, failedSubmission) {
     (validated?.details?.requireYear?.message ||
       (!hasEmail && validated?.details?.hasMail?.message));
 
+  // eslint-disable-next-line css-modules/no-undef-class
   const invalidClass = actionMessage ? styles.invalid : "";
 
   return {

@@ -1,7 +1,8 @@
-import styles from "@/components/base/arrow/Arrow.module.css";
+import styles from "./Arrow.module.css";
 import Icon from "@/components/base/icon";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
+import cx from "classnames";
 
 /**
  * The left arrow React component
@@ -22,9 +23,12 @@ export function Arrow({
 
   return (
     <span
-      className={`${styles.button} ${styles[orientation]} ${
-        leftAdjust && styles[`${orientation}-adjust`]
-      } ${disabled && styles.disabled}`}
+      className={cx(styles.button, {
+        [styles.left]: orientation === "left",
+        [styles.right]: orientation === "right",
+        [styles["left-adjust"]]: leftAdjust && orientation === "Left",
+        [styles.disabled]: disabled,
+      })}
       data-cy={`arrow-${orientation}`}
       onClick={onClick}
     >

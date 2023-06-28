@@ -2,10 +2,10 @@ import styles from "./Feedback.module.css";
 import Text from "@/components/base/text/Text";
 import Icon from "@/components/base/icon/Icon";
 import { useEffect, useState } from "react";
-import classNames from "classnames/bind";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Cookies from "js-cookie";
+import cx from "classnames";
 
 /**
  * @param sessioneTime
@@ -56,9 +56,10 @@ export default function Feedback({
   return (
     <div data-cy="feedback-wrapper" className={styles.feedbackwrap}>
       <div
-        className={classNames(
-          feedbackOpen ? styles.feedbackopen : styles.feedbackclosed
-        )}
+        className={cx({
+          [styles.feedbackopen]: feedbackOpen,
+          [styles.feedbackclosed]: !feedbackOpen,
+        })}
       >
         <div>
           <Icon
@@ -72,7 +73,7 @@ export default function Feedback({
           />
         </div>
         <div className={styles.feedbacklink} data-cy="feedback-link-text">
-          <Text type="text3" tag="span" className={styles.feedbacktext}>
+          <Text type="text3" tag="span">
             {Translate({
               context: "feedback",
               label: "feed_back_text",
@@ -95,7 +96,6 @@ export default function Feedback({
         </div>
       </div>
       <div
-        className={styles.blue}
         onClick={() => {
           handleCookie("click");
         }}

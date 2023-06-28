@@ -9,7 +9,7 @@ import ExpandIcon from "@/components/base/animation/expand";
 import Text from "@/components/base/text";
 
 import styles from "./Accordion.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 
 import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect } from "react";

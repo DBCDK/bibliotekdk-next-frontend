@@ -2,7 +2,7 @@
  * @file details.utils.js - various helper methods for details section on workpage
  */
 
-import styles from "@/components/work/details/Details.module.css";
+import styles from "./details.utils.module.css";
 import isEmpty from "lodash/isEmpty";
 import Text from "@/components/base/text/Text";
 import Translate from "@/components/base/translate";
@@ -478,7 +478,7 @@ function RenderMovieAudience({ values }) {
   }
 
   return (
-    <div className={styles.wrapper}>
+    <div>
       {image && (
         <div className={styles.pegiimage}>
           <div className={styles.spacemaker}>

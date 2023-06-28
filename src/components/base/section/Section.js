@@ -103,8 +103,8 @@ export default function Section({
       data-cy={dataCy}
       ref={elRef}
     >
-      <Container className={styles.container} fluid>
-        <Row as="section" className={styles.section}>
+      <Container fluid>
+        <Row as="section">
           {title && (
             <Col
               xs={12}

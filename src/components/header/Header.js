@@ -217,9 +217,7 @@ export function Header({
                   <DesktopMaterialSelect className={styles.select} />
 
                   <div
-                    className={`${styles.suggester__wrap} ${
-                      !collapseOpen ? styles.collapsed : ""
-                    } ${suggesterVisibleMobileClass}`}
+                    className={`${styles.suggester__wrap} ${suggesterVisibleMobileClass}`}
                   >
                     <Suggester
                       className={`${styles.suggester}`}
@@ -400,13 +398,7 @@ export function StaticHeader({ router = null, context }) {
  * @returns {JSX.Element}
  */
 function HeaderSkeleton(props) {
-  return (
-    <Header
-      {...props}
-      className={`${props.className} ${styles.skeleton}`}
-      skeleton={true}
-    />
-  );
+  return <Header {...props} className={`${props.className}`} skeleton={true} />;
 }
 
 /**

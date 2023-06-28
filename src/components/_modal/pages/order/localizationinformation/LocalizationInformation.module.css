@@ -22,6 +22,10 @@
   color: var(--error);
 }
 
+.invalid-pickup {
+  margin: var(--pt05) 0 0 0;
+}
+
 /* action */
 .shortLink {
   display: inline;

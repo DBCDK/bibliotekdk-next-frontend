@@ -1,4 +1,4 @@
-import styles from "@/components/header/expandedsearch/ExpandedSearch.module.css";
+import styles from "./SuggesterTemplate.module.css";
 import Suggester from "@/components/base/suggester/Suggester";
 import Input from "@/components/base/forms/input/Input";
 import React, { useMemo } from "react";
@@ -60,6 +60,13 @@ export function SuggesterWithInput({
   );
 }
 
+/**
+ *
+ * @param title
+ * @param {string} type
+ * @return {JSX.Element}
+ * @constructor
+ */
 export default function Wrap({ title = "", type = "" }) {
   const { q, setQ, setQuery } = useQ();
 
@@ -73,16 +80,25 @@ export default function Wrap({ title = "", type = "" }) {
 
   // use the useData hook to fetch data
   const query = q[type] ? q[type] : "";
-  const fragmentType = type === SuggestTypeEnum.ALL ? "all" : "typedSuggest";
 
-  const { data } = useData(
-    suggestFragments[fragmentType]({
+  const { data: allData } = useData(
+    suggestFragments.all({
+      q: query,
+      workType,
+      limit: 10,
+    })
+  );
+
+  const { data: typedSuggestData } = useData(
+    suggestFragments.typedSuggest({
       q: query,
       workType,
       suggestType: type,
       limit: 10,
     })
   );
+
+  const data = type === SuggestTypeEnum.ALL ? allData : typedSuggestData;
 
   const filtered = useMemo(
     () =>

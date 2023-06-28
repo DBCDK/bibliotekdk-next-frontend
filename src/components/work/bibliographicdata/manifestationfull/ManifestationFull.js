@@ -4,7 +4,8 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useId, useMemo, useState } from "react";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
+import styles from "./ManifestationFull.module.css";
 
 import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
@@ -12,7 +13,6 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
-import styles from "./ManifestationFull.module.css";
 import { cyKey } from "@/utils/trim";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
