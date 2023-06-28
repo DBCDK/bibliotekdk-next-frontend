@@ -7,7 +7,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { extractCreatorPrioritiseCorporation } from "@/lib/utils";
+import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
 export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
@@ -61,7 +61,7 @@ export function onOnlineAccess(url, target = "_blank") {
 function getPageTitle(work) {
   return `${work?.titles?.main[0]}${
     work?.creators && work?.creators[0]
-      ? ` af ${extractCreatorPrioritiseCorporation(work?.creators)
+      ? ` af ${extractCreatorsPrioritiseCorporation(work?.creators)
           ?.map((creator) => creator?.display)
           ?.join(", ")}`
       : ""

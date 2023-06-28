@@ -5,7 +5,7 @@ import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
-import { encodeString, extractCreatorPrioritiseCorporation } from "@/lib/utils";
+import { encodeString, extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 
@@ -24,7 +24,7 @@ export const dataReducer = (dataType, data) => {
         type: "LOAN",
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
-        creator: extractCreatorPrioritiseCorporation(
+        creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
         creators: data.manifestation.creators,
@@ -57,7 +57,7 @@ export const dataReducer = (dataType, data) => {
         type: "ORDER",
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
-        creator: extractCreatorPrioritiseCorporation(
+        creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
         creators: data.manifestation.creators,
