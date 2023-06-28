@@ -24,12 +24,24 @@
 }
 
 .button {
-  width: 180px;
   margin-bottom: var(--pt4);
 }
 
 .link {
+  display: inline-block;
   margin-bottom: var(--pt2);
+}
+
+.uppercase::first-letter {
+  text-transform: uppercase;
+}
+
+.isReady {
+  color: var(--success);
+}
+
+.isWarning {
+  color: var(--error_temp);
 }
 
 .recommendationsContainer {

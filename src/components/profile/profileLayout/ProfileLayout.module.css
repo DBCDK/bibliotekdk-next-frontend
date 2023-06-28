@@ -2,6 +2,23 @@
   padding-top: var(--pt8);
   min-height: calc(80vh);
 }
+
+@media screen and (max-width: 767px) {
+  .container {
+    padding-top: var(--pt3);
+  }
+}
+
 .title {
   margin-bottom: var(--pt1);
+}
+
+.navColumn {
+  min-height: calc(80vh);
+}
+
+@media screen and (max-width: 991px) {
+  .navColumn {
+    min-height: 0px;
+  }
 }
