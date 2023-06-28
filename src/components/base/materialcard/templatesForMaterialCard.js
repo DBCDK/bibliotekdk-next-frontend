@@ -3,7 +3,7 @@ import {
   manifestationMaterialTypeFactory,
 } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
-import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
+import { extractCreatorsPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
 import styles from "./MaterialCard.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
@@ -20,7 +20,7 @@ export function templateForVerticalWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
 
   const coverSrc = getCoverImage(material.manifestations.mostRelevant);
 
@@ -54,7 +54,7 @@ export function templateForHeaderWorkCard(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
   const { flatMaterialTypes } = manifestationMaterialTypeFactory([material]);
   const formattedMaterialTypes =
     formatMaterialTypesToPresentation(flatMaterialTypes);
@@ -94,7 +94,7 @@ export function templateForRelatedWorks(material) {
   const fullTitle = material?.titles?.full?.join(": ");
   const creators = material?.creators;
   const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
+    extractCreatorsPrioritiseCorporation(creators)?.[0]?.display;
   const formattedMaterialTypes = formatMaterialTypesToPresentation(
     material?.materialTypesArray
   );
