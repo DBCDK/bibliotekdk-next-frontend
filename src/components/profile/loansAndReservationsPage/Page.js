@@ -11,6 +11,7 @@ import {
 } from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
+import Link from "@/components/base/link";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -91,9 +92,18 @@ const LoansAndReservations = () => {
     >
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
-        <span className={styles.yourLibraries}>
+        <Link
+          className={styles.yourLibraries}
+          href="/profil/mine-biblioteker"
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: true,
+            },
+          }}
+        >
           {Translate({ context: "profile", label: "your-libraries" })}
-        </span>
+        </Link>
       </Text>
 
       {debt && debt.length !== 0 && (
@@ -141,6 +151,7 @@ const LoansAndReservations = () => {
               key={`debt-${claim.title}-#${i}`}
               library={libraryString}
               id={`debt-${i}`}
+              dataCy={`debt-${i}`}
             />
           ))}
         </section>
@@ -191,6 +202,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              dataCy={`loan-${i}`}
             />
           ))
         ) : (
@@ -247,6 +259,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("ORDER", order)}
               key={`loan-${order.loanId}-#${i}`}
+              dataCy={`order-${i}`}
             />
           ))
         ) : (

@@ -3131,6 +3131,10 @@
         "da": "Dit lån",
         "en": "Your loan"
       },
+      "your-order": {
+        "da": "Din reservering",
+        "en": "Your reservation"
+      },
       "to-return": {
         "da": "Afleveres d.",
         "en": "Hand in by"
