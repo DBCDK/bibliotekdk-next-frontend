@@ -10,6 +10,7 @@ import {
   useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
+import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
 import Recommendations from "@/components/work/recommendations";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
@@ -121,10 +122,12 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
-    // orderId,
-    // agencyId,
-    // orderMutation,
+    id,
+    agencyId,
+    orderMutation,
   } = context;
+
+  const modal = useModal();
 
   const renderDynamicContent = () => {
     switch (type) {
@@ -154,7 +157,7 @@ const Material = ({ context }) => {
             type="secondary"
             size="medium"
             wrapperClassname={styles.button}
-            onClick={() => onCancelOrder(order.orderId)}
+            onClick={() => onClickDelete({ id, agencyId, orderMutation })}
           >
             {Translate({
               context: "profile",
@@ -164,6 +167,17 @@ const Material = ({ context }) => {
         );
     }
   };
+
+  function onClickDelete({ orderId, agencyId, orderMutation }) {
+    modal.push("deleteOrder", {
+      label: Translate({ context: "profile", label: "delete-order" }),
+      mobile: true,
+      isReadyToPickup: !!pickUpExpiryDate,
+      orderId: orderId,
+      agencyId: agencyId,
+      orderMutation: orderMutation,
+    });
+  }
 
   return (
     <article className={styles.Material}>

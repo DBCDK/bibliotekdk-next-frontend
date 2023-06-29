@@ -6,17 +6,19 @@ import Button from "@/components/base/button";
 import { handleCancelOrder } from "./utils";
 
 function DeleteOrder({ context, modal }) {
-  const { label, isReadyToPickup, orderId, agencyId, orderMutation } = context;
+  const { label, mobile, isReadyToPickup, orderId, agencyId, orderMutation } =
+    context;
 
   function closeModal() {
-    modal.clear();
+    mobile ? modal.prev() : modal.clear();
   }
 
   async function onCancelOrder() {
     console.log("########### TO DELETE", orderId, agencyId);
-    const res = await handleCancelOrder(orderId, agencyId, orderMutation);
-    console.log("###########", res);
-    modal.clear();
+    //const res = await handleCancelOrder(orderId, agencyId, orderMutation);
+    //console.log("###########", res);
+    console.log("mobile", mobile);
+    mobile ? modal.prev() : modal.clear();
   }
 
   return (

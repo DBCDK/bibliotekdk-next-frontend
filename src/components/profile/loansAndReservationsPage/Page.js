@@ -62,6 +62,108 @@ const LoansAndReservations = () => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
+  const orders2 = [
+    {
+      creator: "Bech, Glenn",
+      holdQueuePosition: "327",
+      manifestation: {
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lo…=870970&source_id=150082&key=dbfc9fe50c64f4b6c0dc",
+        },
+        creators: [
+          {
+            display: "Glenn Bech (f. 1991-04-08)",
+            nameSort: "bech glenn f 1991 04 08",
+            roles: [],
+          },
+        ],
+        materialTypes: [
+          { specific: "Bog", type: "http://data.deichman.no/mediaType#Book" },
+        ],
+        ownerWork: { workId: "work-of:870970-basis:62937106" },
+        pid: "870970-basis:62937106",
+        recordCreationDate: "20220901",
+        titles: { main: ["Jeg anerkender ikke længere jeres autoritet"] },
+      },
+      orderDate: "2023-05-24T12:17:51.000Z",
+      orderId: "78190430",
+      orderType: "normal",
+      pickUpBranch: { agencyName: "Københavns Biblioteker" },
+      pickUpExpiryDate: null,
+      status: "ACTIVE",
+      titles: {
+        main: ["Jeg anerkender ikke længere jeres autoritet: manifest 1"],
+      },
+    },
+    {
+      creator: "Bech, Glenn",
+      holdQueuePosition: "327",
+      manifestation: {
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lo…=870970&source_id=150082&key=dbfc9fe50c64f4b6c0dc",
+        },
+        creators: [
+          {
+            display: "Glenn Bech (f. 1991-04-08)",
+            nameSort: "bech glenn f 1991 04 08",
+            roles: [],
+          },
+        ],
+        materialTypes: [
+          { specific: "Bog", type: "http://data.deichman.no/mediaType#Book" },
+        ],
+        ownerWork: { workId: "work-of:870970-basis:62937106" },
+        pid: "870970-basis:62937106",
+        recordCreationDate: "20220901",
+        titles: { main: ["Jeg anerkender ikke længere jeres autoritet"] },
+      },
+      orderDate: "2023-05-24T12:17:51.000Z",
+      orderId: "78190430",
+      orderType: "normal",
+      pickUpBranch: { agencyName: "Københavns Biblioteker" },
+      pickUpExpiryDate: null,
+      status: "ACTIVE",
+      titles: {
+        main: ["Buch 2"],
+      },
+    },
+    {
+      creator: "Bech, Glenn",
+      holdQueuePosition: "327",
+      manifestation: {
+        cover: {
+          thumbnail:
+            "https://moreinfo.addi.dk/2.11/more_info_get.php?lo…=870970&source_id=150082&key=dbfc9fe50c64f4b6c0dc",
+        },
+        creators: [
+          {
+            display: "Glenn Bech (f. 1991-04-08)",
+            nameSort: "bech glenn f 1991 04 08",
+            roles: [],
+          },
+        ],
+        materialTypes: [
+          { specific: "Bog", type: "http://data.deichman.no/mediaType#Book" },
+        ],
+        ownerWork: { workId: "work-of:870970-basis:62937106" },
+        pid: "870970-basis:62937106",
+        recordCreationDate: "20220901",
+        titles: { main: ["Jeg anerkender ikke længere jeres autoritet"] },
+      },
+      orderDate: "2023-05-24T12:17:51.000Z",
+      orderId: "78190430",
+      orderType: "normal",
+      pickUpBranch: { agencyName: "Københavns Biblioteker" },
+      pickUpExpiryDate: null,
+      status: "ACTIVE",
+      titles: {
+        main: ["Buch 3"],
+      },
+    },
+  ];
+
   const { loans, orders, debt, agency } = loanerInfo;
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
@@ -200,7 +302,7 @@ const LoansAndReservations = () => {
               )}`}
             >
               {Translate({ context: "profile", label: "orders" })} (
-              {orders?.length})
+              {orders2?.length})
             </Title>
           ) : (
             <Title
@@ -224,8 +326,8 @@ const LoansAndReservations = () => {
           column2={Translate({ context: "profile", label: "status" })}
           column3={Translate({ context: "profile", label: "pickup-at" })}
         />
-        {orders && orders.length !== 0 ? (
-          orders?.map((order, i) => (
+        {orders2 && orders2.length !== 0 ? (
+          orders2?.map((order, i) => (
             <MaterialRow
               {...dataReducer("ORDER", { ...order, libraryId, orderMutation })}
               key={`loan-${order.loanId}-#${i}`}

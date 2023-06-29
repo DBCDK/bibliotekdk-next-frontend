@@ -328,6 +328,7 @@ const MaterialRow = (props) => {
   function onClickDelete() {
     modal.push("deleteOrder", {
       label: Translate({ context: "profile", label: "delete-order" }),
+      mobile: false,
       isReadyToPickup: !!pickUpExpiryDate,
       orderId: id,
       agencyId: agencyId,
