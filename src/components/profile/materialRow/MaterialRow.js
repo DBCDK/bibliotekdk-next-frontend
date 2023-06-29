@@ -179,7 +179,11 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
 };
 
 const DynamicColumn = ({ className, ...props }) => (
-  <div className={cx(styles.dynamicColumn, className)} {...props} />
+  <div
+    className={cx(styles.dynamicColumn, className)}
+    data-cy="dynamic-column"
+    {...props}
+  />
 );
 
 /* Use as section header to describe the content of the columns */
@@ -222,6 +226,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     id,
     type,
     status,
+    dataCy,
   } = props;
   const modal = useModal();
 
@@ -244,6 +249,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
           })}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -262,6 +268,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
               onClick();
             }
           }}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -318,6 +325,7 @@ const MaterialRow = (props) => {
     dueDateString,
     amount,
     currency,
+    dataCy,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
@@ -376,13 +384,16 @@ const MaterialRow = (props) => {
         return null;
       case "LOAN":
         return (
-          <MaterialRowButton>
+          <MaterialRowButton dataCy="loan-button">
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton onClick={() => onDeleteOrder(order.orderId)}>
+          <MaterialRowIconButton
+            onClick={() => onDeleteOrder(order.orderId)}
+            dataCy="order-button"
+          >
             {Translate({
               context: "profile",
               label: "delete",
@@ -423,6 +434,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_red]: status === "RED",
             }
           )}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -433,6 +445,7 @@ const MaterialRow = (props) => {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
           })}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -484,9 +497,17 @@ const MaterialRow = (props) => {
               </Title>
             </ConditionalWrapper>
 
-            {creator && <Text type="text2">{creator}</Text>}
+            {creator && (
+              <Text type="text2" dataCy="creator">
+                {creator}
+              </Text>
+            )}
             {materialType && creationYear && (
-              <Text type="text2" className={styles.uppercase}>
+              <Text
+                type="text2"
+                className={styles.uppercase}
+                dataCy="materialtype-and-creationyear"
+              >
                 {materialType}, {creationYear}
               </Text>
             )}

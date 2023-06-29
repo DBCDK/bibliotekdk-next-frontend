@@ -151,6 +151,7 @@ const LoansAndReservations = () => {
               key={`debt-${claim.title}-#${i}`}
               library={libraryString}
               id={`debt-${i}`}
+              dataCy={`debt-${i}`}
             />
           ))}
         </section>
@@ -201,6 +202,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              dataCy={`loan-${i}`}
             />
           ))
         ) : (
@@ -257,6 +259,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("ORDER", order)}
               key={`loan-${order.loanId}-#${i}`}
+              dataCy={`order-${i}`}
             />
           ))
         ) : (

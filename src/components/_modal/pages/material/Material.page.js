@@ -15,13 +15,17 @@ import Recommendations from "@/components/work/recommendations";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import cx from "classnames";
 
-const DynamicContentLoan = ({ dueDateString }) => {
+const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
     useLoanDateAnalysis(dueDateString);
 
   return (
     <>
-      <Text type="text2" className={styles.spacer}>
+      <Text
+        type="text2"
+        className={styles.spacer}
+        dataCy={`${dataCyPrefix}-return-date`}
+      >
         {Translate({ context: "profile", label: "to-return" })} {dateString}
       </Text>
       <div className={styles.status}>
@@ -30,9 +34,10 @@ const DynamicContentLoan = ({ dueDateString }) => {
           size={{ w: 5, h: "auto" }}
           src={"ornament1.svg"}
           alt=""
+          dataCy={`${dataCyPrefix}-ornament`}
         />
         {isOverdue ? (
-          <Text type="text2">
+          <Text type="text2" dataCy={`${dataCyPrefix}-message`}>
             {Translate({
               context: "profile",
               label: "date-overdue",
@@ -42,6 +47,7 @@ const DynamicContentLoan = ({ dueDateString }) => {
           <Text
             type="text2"
             className={cx({ [styles.isWarning]: isCountdown })}
+            dataCy={`${dataCyPrefix}-message`}
           >
             {daysToDueDateString}
           </Text>
@@ -147,7 +153,12 @@ const Material = ({ context }) => {
   const renderDynamicContent = () => {
     switch (type) {
       case "LOAN":
-        return <DynamicContentLoan dueDateString={dueDateString} />;
+        return (
+          <DynamicContentLoan
+            dueDateString={dueDateString}
+            dataCyPrefix="dyn-cont-loan"
+          />
+        );
       case "ORDER":
         return (
           <DynamicColumnOrder
@@ -163,7 +174,11 @@ const Material = ({ context }) => {
     switch (type) {
       case "LOAN":
         return (
-          <MaterialRowButton size="medium" wrapperClassname={styles.button}>
+          <MaterialRowButton
+            size="medium"
+            wrapperClassname={styles.button}
+            dataCy="loan-button"
+          >
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
@@ -174,6 +189,7 @@ const Material = ({ context }) => {
             size="medium"
             wrapperClassname={styles.button}
             onClick={() => onDeleteOrder(order.orderId)}
+            dataCy="order-button"
           >
             {Translate({
               context: "profile",
@@ -185,7 +201,7 @@ const Material = ({ context }) => {
   };
 
   return (
-    <article className={styles.Material}>
+    <article className={styles.Material} data-cy="loans-and-reservations-modal">
       <Top
         title={label}
         titleTag="h4"
@@ -203,12 +219,16 @@ const Material = ({ context }) => {
             {title}
           </Title>
           {creator && (
-            <Text type="text2" className={styles.spacer}>
+            <Text type="text2" className={styles.spacer} dataCy="creator">
               {creator}
             </Text>
           )}
           {materialType && creationYear && (
-            <Text type="text2" className={cx(styles.spacer, styles.uppercase)}>
+            <Text
+              type="text2"
+              className={cx(styles.spacer, styles.uppercase)}
+              dataCy="materialtype-and-creationyear"
+            >
               {materialType}, {creationYear}
             </Text>
           )}
