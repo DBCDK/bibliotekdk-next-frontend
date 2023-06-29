@@ -329,15 +329,16 @@ const MaterialRow = (props) => {
   function onClickDelete() {
     modal.push("deleteOrder", {
       label: Translate({ context: "profile", label: "delete-order" }),
-      firstInLine: false,
+      isReadyToPickup: !!pickUpExpiryDate,
+      onCancelOrder: () => onCancelOrder(),
     });
   }
 
-  const onCancelOrder = async (id, agencyId) => {
+  async function onCancelOrder() {
     console.log("###########", id, agencyId);
-    const res = await handleCancelOrder(id, agencyId, orderMutation);
-    console.log("###########", res);
-  };
+    //const res = await handleCancelOrder(id, agencyId, orderMutation);
+    //console.log("###########", res);
+  }
 
   const status = getStatus();
 

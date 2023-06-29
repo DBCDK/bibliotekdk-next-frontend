@@ -5,7 +5,7 @@ import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 
 function DeleteOrder({ context }) {
-  const { label, firstInLine } = context;
+  const { label, isReadyToPickup, onCancelOrder } = context;
   return (
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" />
@@ -20,7 +20,9 @@ function DeleteOrder({ context }) {
         <Text type="text2" tag="div" className={styles.text}>
           {Translate({
             context: "profile",
-            label: firstInLine ? "no-longer-reserved" : "miss-spot-in-queue",
+            label: isReadyToPickup
+              ? "no-longer-reserved"
+              : "miss-spot-in-queue",
           })}
         </Text>
 
@@ -28,7 +30,8 @@ function DeleteOrder({ context }) {
           className={styles.button}
           type="primary"
           size="medium"
-          onClick={() => console.log("click it")}
+          onClick={() => onCancelOrder}
+          onKeyPress={() => console.log("click it")}
         >
           {Translate({
             context: "profile",
@@ -40,6 +43,7 @@ function DeleteOrder({ context }) {
           type="secondary"
           size="medium"
           onClick={() => console.log("click it")}
+          onKeyPress={() => console.log("click it")}
         >
           {Translate({
             context: "general",
