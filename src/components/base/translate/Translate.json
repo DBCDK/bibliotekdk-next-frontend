@@ -3108,8 +3108,8 @@
         "en": "Pickup at"
       },
       "price": {
-        "da": "Pris",
-        "en": "Price"
+        "da": "Beløb",
+        "en": "Amount"
       },
       "front-of-row": {
         "da": "Forrest i køen",
