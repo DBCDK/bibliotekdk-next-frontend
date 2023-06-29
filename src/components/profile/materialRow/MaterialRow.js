@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { getWorkUrl } from "@/lib/utils";
-import { handleCancelOrder } from "./utils";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -330,14 +329,10 @@ const MaterialRow = (props) => {
     modal.push("deleteOrder", {
       label: Translate({ context: "profile", label: "delete-order" }),
       isReadyToPickup: !!pickUpExpiryDate,
-      onCancelOrder: () => onCancelOrder(),
+      orderId: id,
+      agencyId: agencyId,
+      orderMutation: orderMutation,
     });
-  }
-
-  async function onCancelOrder() {
-    console.log("###########", id, agencyId);
-    const res = await handleCancelOrder(id, agencyId, orderMutation);
-    console.log("###########", res);
   }
 
   const status = getStatus();

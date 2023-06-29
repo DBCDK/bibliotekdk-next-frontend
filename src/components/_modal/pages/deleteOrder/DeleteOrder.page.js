@@ -3,11 +3,19 @@ import styles from "./DeleteOrder.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
+import { handleCancelOrder } from "./utils";
 
 function DeleteOrder({ context, modal }) {
-  const { label, isReadyToPickup, onCancelOrder } = context;
+  const { label, isReadyToPickup, orderId, agencyId, orderMutation } = context;
 
   function closeModal() {
+    modal.clear();
+  }
+
+  async function onCancelOrder() {
+    console.log("########### TO DELETE", orderId, agencyId);
+    const res = await handleCancelOrder(orderId, agencyId, orderMutation);
+    console.log("###########", res);
     modal.clear();
   }
 
@@ -35,7 +43,7 @@ function DeleteOrder({ context, modal }) {
           className={styles.button}
           type="primary"
           size="medium"
-          onClick={() => onCancelOrder}
+          onClick={onCancelOrder}
           onKeyPress={(e) => {
             if (e.key === "Enter") onCancelOrder();
           }}
@@ -51,7 +59,7 @@ function DeleteOrder({ context, modal }) {
           size="medium"
           onClick={closeModal}
           onKeyPress={(e) => {
-            if (e.key === "Enter") altert("Close it");
+            if (e.key === "Enter") closeModal();
           }}
         >
           {Translate({
