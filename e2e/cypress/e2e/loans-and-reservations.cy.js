@@ -31,7 +31,7 @@ describe(`Loans and reservations`, () => {
     });
   });
 
-  it("Mobile Renders properly", () => {
+  it("Mobile renders properly", () => {
     cy.viewport("iphone-6");
 
     cy.get("[data-cy=debt-0]").should("exist");

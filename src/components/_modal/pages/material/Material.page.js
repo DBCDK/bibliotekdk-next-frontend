@@ -65,6 +65,16 @@ const DynamicColumnOrder = ({
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
+  const inLineText =
+    holdQueuePosition === "1"
+      ? `${Translate({
+          context: "profile",
+          label: "front-of-row",
+        })}`
+      : `${holdQueuePosition - 1} ${Translate({
+          context: "profile",
+          label: "in-row",
+        })}`;
 
   if (isReadyToPickup) {
     return (
@@ -118,15 +128,7 @@ const DynamicColumnOrder = ({
           alt=""
         />
         <Text type="text2" tag="span">
-          {holdQueuePosition === "1"
-            ? `${Translate({
-                context: "profile",
-                label: "front-of-row",
-              })}`
-            : `${holdQueuePosition - 1} ${Translate({
-                context: "profile",
-                label: "in-row",
-              })}`}
+          {inLineText}
         </Text>
       </div>
     </>
