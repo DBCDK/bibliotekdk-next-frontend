@@ -306,6 +306,7 @@ function Container({ children, className = {}, mock = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_container">
+          HEEEJ
           {modal.stack.map((obj, index) => {
             // prevent render if modal/component is not visible
             // if (!obj.active) {
@@ -450,6 +451,7 @@ export function useModal() {
    * Push
    */
   function _push(id, context = {}) {
+    console.log("id", id);
     if (id) {
       let copy = [..._stack];
       // Skip "reset" on empty stack

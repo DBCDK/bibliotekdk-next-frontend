@@ -303,6 +303,8 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
+  const modal = useModal();
+
   //const { updateLoanerInfo } = useUser();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -324,17 +326,17 @@ const MaterialRow = (props) => {
     }
   };
 
+  function onClickDelete() {
+    modal.push("deleteOrder", {
+      label: Translate({ context: "profile", label: "delete-order" }),
+      firstInLine: false,
+    });
+  }
+
   const onCancelOrder = async (id, agencyId) => {
-    // const newOrders = loanerInfo.orders;
-    // const index = newOrders.map((item) => item.orderId).indexOf(id);
-    // newOrders.splice(index, 1);
-    // TODO proper mutate function
     console.log("###########", id, agencyId);
     const res = await handleCancelOrder(id, agencyId, orderMutation);
     console.log("###########", res);
-    //update UI After delettion
-    //show that you successfully cancelled the order
-    //updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
   };
 
   const status = getStatus();
@@ -369,7 +371,9 @@ const MaterialRow = (props) => {
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton onClick={() => onCancelOrder(id, agencyId)}>
+          <MaterialRowIconButton
+            onClick={onClickDelete /*onCancelOrder(id, agencyId)*/}
+          >
             {Translate({
               context: "profile",
               label: "delete",
