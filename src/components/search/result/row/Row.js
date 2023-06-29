@@ -9,7 +9,7 @@ import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
-  extractCreatorPrioritiseCorporation,
+  extractCreatorsPrioritiseCorporation,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
@@ -105,7 +105,7 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorsNames = extractCreatorPrioritiseCorporation(
+  const creatorsNames = extractCreatorsPrioritiseCorporation(
     work?.creators
   )?.map((creator) => creator.display);
 

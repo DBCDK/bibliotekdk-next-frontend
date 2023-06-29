@@ -14,7 +14,7 @@ p.subHeading {
 }
 
 .yourLibraries {
-  text-decoration: underline;
+  --underline-bottom-color: var(--mine-shaft);
 }
 
 .upperCase::first-letter {

@@ -5,8 +5,13 @@ import styles from "./LoansAndReservations.module.css";
 import Translate from "@/components/base/translate";
 import ProfileLayout from "../profileLayout";
 import Text from "@/components/base/text";
-import { encodeString } from "@/lib/utils";
+import {
+  encodeString,
+  extractCreatorsPrioritiseCorporation,
+} from "@/lib/utils";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
+import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
+import Link from "@/components/base/link";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -23,6 +28,9 @@ export const dataReducer = (dataType, data) => {
         type: "LOAN",
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
+        creator: extractCreatorsPrioritiseCorporation(
+          data.manifestation.creators
+        )?.[0]?.display,
         creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
@@ -32,10 +40,30 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "ORDER": {
+      if (!data.manifestation) {
+        // No manifestation - we show what we can
+        return {
+          type: "ORDER",
+          image: data.manifestation?.cover.thumbnail,
+          title: data.title,
+          creator: data.creator,
+          creators: data.manifestation?.creators,
+          materialType: data.manifestation?.materialTypes[0].specific,
+          creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+          library: data.pickUpBranch.agencyName,
+          holdQueuePosition: data.holdQueuePosition,
+          pickUpExpiryDate: data.pickUpExpiryDate,
+          id: data.orderId,
+          workId: "work-of:" + data.manifestation?.pid,
+        };
+      }
       return {
         type: "ORDER",
         image: data.manifestation.cover.thumbnail,
         title: data.manifestation.titles.main[0],
+        creator: extractCreatorsPrioritiseCorporation(
+          data.manifestation.creators
+        )?.[0]?.display,
         creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
@@ -54,7 +82,7 @@ const LoansAndReservations = () => {
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
-  const { loans, orders, debt, agency } = loanerInfo;
+  const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
 
@@ -64,9 +92,18 @@ const LoansAndReservations = () => {
     >
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
-        <span className={styles.yourLibraries}>
+        <Link
+          className={styles.yourLibraries}
+          href="/profil/mine-biblioteker"
+          border={{
+            top: false,
+            bottom: {
+              keepVisible: true,
+            },
+          }}
+        >
           {Translate({ context: "profile", label: "your-libraries" })}
-        </span>
+        </Link>
       </Text>
 
       {debt && debt.length !== 0 && (
@@ -114,6 +151,7 @@ const LoansAndReservations = () => {
               key={`debt-${claim.title}-#${i}`}
               library={libraryString}
               id={`debt-${i}`}
+              dataCy={`debt-${i}`}
             />
           ))}
         </section>
@@ -164,6 +202,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              dataCy={`loan-${i}`}
             />
           ))
         ) : (
@@ -220,6 +259,7 @@ const LoansAndReservations = () => {
             <MaterialRow
               {...dataReducer("ORDER", order)}
               key={`loan-${order.loanId}-#${i}`}
+              dataCy={`order-${i}`}
             />
           ))
         ) : (
