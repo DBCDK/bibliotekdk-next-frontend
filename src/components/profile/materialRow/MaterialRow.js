@@ -236,7 +236,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={styles.materialRow_mobile}
           role="button"
           onClick={onClick}
-          tabIndex={0}
+          tabIndex="0"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               onClick();
@@ -336,8 +336,8 @@ const MaterialRow = (props) => {
 
   async function onCancelOrder() {
     console.log("###########", id, agencyId);
-    //const res = await handleCancelOrder(id, agencyId, orderMutation);
-    //console.log("###########", res);
+    const res = await handleCancelOrder(id, agencyId, orderMutation);
+    console.log("###########", res);
   }
 
   const status = getStatus();
@@ -433,7 +433,7 @@ const MaterialRow = (props) => {
               checked={isChecked}
               id={`material-row-${id}`}
               aria-labelledby={`material-title-${id}`}
-              tabIndex={-1}
+              tabIndex="-1"
             />
           </div>
         )}

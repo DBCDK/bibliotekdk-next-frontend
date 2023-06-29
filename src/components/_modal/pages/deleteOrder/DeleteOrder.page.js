@@ -4,8 +4,13 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 
-function DeleteOrder({ context }) {
+function DeleteOrder({ context, modal }) {
   const { label, isReadyToPickup, onCancelOrder } = context;
+
+  function closeModal() {
+    modal.clear();
+  }
+
   return (
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" />
@@ -31,7 +36,9 @@ function DeleteOrder({ context }) {
           type="primary"
           size="medium"
           onClick={() => onCancelOrder}
-          onKeyPress={() => console.log("click it")}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") onCancelOrder();
+          }}
         >
           {Translate({
             context: "profile",
@@ -42,8 +49,10 @@ function DeleteOrder({ context }) {
           className={styles.cancelButton}
           type="secondary"
           size="medium"
-          onClick={() => console.log("click it")}
-          onKeyPress={() => console.log("click it")}
+          onClick={closeModal}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") altert("Close it");
+          }}
         >
           {Translate({
             context: "general",

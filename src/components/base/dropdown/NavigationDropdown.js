@@ -151,7 +151,7 @@ function LinkDropdown({ context, menuItems }) {
         aria-haspopup="true"
         aria-controls={uniqueIdButton}
         aria-expanded={expandMenu}
-        tabIndex={0}
+        tabIndex="0"
         onClick={() => setExpandMenu(!expandMenu)}
         onKeyDown={onButtonClick}
         data-cy="mobile-menu-button"

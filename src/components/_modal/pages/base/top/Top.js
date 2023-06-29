@@ -112,7 +112,6 @@ export default function Top({
   titleTag,
 }) {
   let modal = useModal();
-  console.log("Title", title);
 
   if (modalBeforeCheck) {
     modal = modalBeforeCheck;

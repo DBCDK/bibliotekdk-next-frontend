@@ -66,7 +66,7 @@ function HelpTextGroups({ menus, groups, helpTextId, className }) {
         data-cy="help-menu"
       >
         <div
-          tabIndex={0}
+          tabIndex="0"
           onKeyDown={(event) => {
             if (event.key === "Enter") {
               setExpandedGroup(index === expandedGroup ? null : index);
