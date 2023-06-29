@@ -213,12 +213,24 @@ export const getCheckedElements = (parentRef) => {
 };
 
 const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
-  const { image, creator, materialType, creationYear, title, id, type } = props;
+  const {
+    image,
+    creator,
+    materialType,
+    creationYear,
+    title,
+    id,
+    type,
+    status,
+  } = props;
   const modal = useModal();
 
   const onClick = () => {
     modal.push("material", {
-      label: Translate({ context: "profile", label: "your-loan" }),
+      label: Translate({
+        context: "profile",
+        label: `your-${type === "LOAN" ? "loan" : "order"}`,
+      }),
       ...props,
     });
   };
@@ -227,11 +239,21 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     <ConditionalWrapper
       condition={type === "DEBT"}
       wrapper={(children) => (
-        <article className={styles.materialRow_mobile}>{children}</article>
+        <article
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
+        >
+          {children}
+        </article>
       )}
       elseWrapper={(children) => (
         <article
-          className={styles.materialRow_mobile}
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
           role="button"
           onClick={onClick}
           tabIndex={0}
@@ -374,7 +396,11 @@ const MaterialRow = (props) => {
 
   if (isMobileSize)
     return (
-      <MobileMaterialRow renderDynamicColumn={renderDynamicColumn} {...props} />
+      <MobileMaterialRow
+        renderDynamicColumn={renderDynamicColumn}
+        status={status}
+        {...props}
+      />
     );
 
   return (

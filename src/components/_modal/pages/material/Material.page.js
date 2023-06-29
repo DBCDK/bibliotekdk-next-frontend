@@ -51,7 +51,11 @@ const DynamicContentLoan = ({ dueDateString }) => {
   );
 };
 
-const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+const DynamicColumnOrder = ({
+  pickUpExpiryDate,
+  holdQueuePosition,
+  library,
+}) => {
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
@@ -60,6 +64,13 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
     return (
       <>
         <Text type="text2" tag="p" className={styles.spacer}>
+          {Translate({
+            context: "profile",
+            label: "pickup-at",
+          })}{" "}
+          {library}
+        </Text>
+        <Text type="text2" tag="p">
           {Translate({
             context: "profile",
             label: "pickup-deadline",
@@ -85,25 +96,34 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   }
 
   return (
-    <div className={cx(styles.status, styles.spacer)}>
-      <Icon
-        className={styles.ornament}
-        size={{ w: 5, h: "auto" }}
-        src={"ornament1.svg"}
-        alt=""
-      />
-      <Text type="text2" tag="span">
-        {holdQueuePosition === "1"
-          ? `${Translate({
-              context: "profile",
-              label: "front-of-row",
-            })}`
-          : `${holdQueuePosition - 1} ${Translate({
-              context: "profile",
-              label: "in-row",
-            })}`}
+    <>
+      <Text type="text2" tag="p" className={styles.spacer}>
+        {Translate({
+          context: "profile",
+          label: "pickup-at",
+        })}{" "}
+        {library}
       </Text>
-    </div>
+      <div className={styles.status}>
+        <Icon
+          className={styles.ornament}
+          size={{ w: 5, h: "auto" }}
+          src={"ornament1.svg"}
+          alt=""
+        />
+        <Text type="text2" tag="span">
+          {holdQueuePosition === "1"
+            ? `${Translate({
+                context: "profile",
+                label: "front-of-row",
+              })}`
+            : `${holdQueuePosition - 1} ${Translate({
+                context: "profile",
+                label: "in-row",
+              })}`}
+        </Text>
+      </div>
+    </>
   );
 };
 
@@ -121,6 +141,7 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
+    library,
   } = context;
 
   const renderDynamicContent = () => {
@@ -132,6 +153,7 @@ const Material = ({ context }) => {
           <DynamicColumnOrder
             pickUpExpiryDate={pickUpExpiryDate}
             holdQueuePosition={holdQueuePosition}
+            library={library}
           />
         );
     }
@@ -164,7 +186,11 @@ const Material = ({ context }) => {
 
   return (
     <article className={styles.Material}>
-      <Top title={label} titleTag="h4" />
+      <Top
+        title={label}
+        titleTag="h4"
+        className={{ top: styles.topElement, title: styles.topTitle }}
+      />
       <hr />
       <div className={styles.splitContainer}>
         <div>
@@ -210,8 +236,13 @@ const Material = ({ context }) => {
         </Text>
       </Link>
 
-      <Text type="text2">Udlånt af</Text>
-      <Text type="text1">Sorø bibliotek</Text>
+      {type === "LOAN" && (
+        <>
+          <Text type="text2">Udlånt af</Text>
+          <Text type="text1">{library}</Text>
+        </>
+      )}
+
       <div className={styles.recommendationsContainer}>
         <Recommendations
           workId={workId}
