@@ -15,15 +15,15 @@ function DeleteOrder({ context, modal }) {
 
   async function onCancelOrder() {
     console.log("########### TO DELETE", orderId, agencyId);
+    //TODO comment in
     //const res = await handleCancelOrder(orderId, agencyId, orderMutation);
     //console.log("###########", res);
-    console.log("mobile", mobile);
-    mobile ? modal.prev() : modal.clear();
+    modal.clear();
   }
 
   return (
     <article className={styles.deleteOrder}>
-      <Top title={label} titleTag="h4" />
+      <Top title={label} titleTag="h4" dataCy="modal-header" />
       <hr />
       <div className={styles.container}>
         <Text type="text2" tag="div">
