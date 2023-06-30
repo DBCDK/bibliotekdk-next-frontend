@@ -3120,8 +3120,8 @@
         "en": "Pickup at"
       },
       "price": {
-        "da": "Pris",
-        "en": "Price"
+        "da": "Beløb",
+        "en": "Amount"
       },
       "front-of-row": {
         "da": "Forrest i køen",
@@ -3142,6 +3142,10 @@
       "your-loan": {
         "da": "Dit lån",
         "en": "Your loan"
+      },
+      "your-order": {
+        "da": "Din reservering",
+        "en": "Your reservation"
       },
       "to-return": {
         "da": "Afleveres d.",

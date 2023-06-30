@@ -129,6 +129,16 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
+  const inLineText =
+    holdQueuePosition === "1"
+      ? `${Translate({
+          context: "profile",
+          label: "front-of-row",
+        })}`
+      : `${holdQueuePosition - 1} ${Translate({
+          context: "profile",
+          label: "in-row",
+        })}`;
 
   return (
     <DynamicColumn>
@@ -163,15 +173,7 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
                   context: "profile",
                   label: "ready-to-pickup",
                 })
-              : holdQueuePosition === "1"
-              ? `${Translate({
-                  context: "profile",
-                  label: "front-of-row",
-                })}`
-              : `${holdQueuePosition - 1} ${Translate({
-                  context: "profile",
-                  label: "in-row",
-                })}`}
+              : inLineText}
           </Text>
         </div>
       </>
@@ -180,7 +182,11 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
 };
 
 const DynamicColumn = ({ className, ...props }) => (
-  <div className={cx(styles.dynamicColumn, className)} {...props} />
+  <div
+    className={cx(styles.dynamicColumn, className)}
+    data-cy="dynamic-column"
+    {...props}
+  />
 );
 
 /* Use as section header to describe the content of the columns */
@@ -214,12 +220,25 @@ export const getCheckedElements = (parentRef) => {
 };
 
 const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
-  const { image, creator, materialType, creationYear, title, id, type } = props;
+  const {
+    image,
+    creator,
+    materialType,
+    creationYear,
+    title,
+    id,
+    type,
+    status,
+    dataCy,
+  } = props;
   const modal = useModal();
 
   const onClick = () => {
     modal.push("material", {
-      label: Translate({ context: "profile", label: "your-loan" }),
+      label: Translate({
+        context: "profile",
+        label: `your-${type === "LOAN" ? "loan" : "order"}`,
+      }),
       ...props,
     });
   };
@@ -228,11 +247,22 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     <ConditionalWrapper
       condition={type === "DEBT"}
       wrapper={(children) => (
-        <article className={styles.materialRow_mobile}>{children}</article>
+        <article
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
+          data-cy={dataCy}
+        >
+          {children}
+        </article>
       )}
       elseWrapper={(children) => (
         <article
-          className={styles.materialRow_mobile}
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
           role="button"
           onClick={onClick}
           tabIndex="0"
@@ -241,6 +271,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
               onClick();
             }
           }}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -299,6 +330,7 @@ const MaterialRow = (props) => {
     amount,
     currency,
     orderMutation,
+    dataCy,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
@@ -362,7 +394,7 @@ const MaterialRow = (props) => {
         return null;
       case "LOAN":
         return (
-          <MaterialRowButton>
+          <MaterialRowButton dataCy="loan-button">
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
@@ -370,6 +402,7 @@ const MaterialRow = (props) => {
         return (
           <MaterialRowIconButton
             onClick={onClickDelete /*onCancelOrder(id, agencyId)*/}
+            dataCy="order-button"
           >
             {Translate({
               context: "profile",
@@ -384,7 +417,11 @@ const MaterialRow = (props) => {
 
   if (isMobileSize)
     return (
-      <MobileMaterialRow renderDynamicColumn={renderDynamicColumn} {...props} />
+      <MobileMaterialRow
+        renderDynamicColumn={renderDynamicColumn}
+        status={status}
+        {...props}
+      />
     );
 
   return (
@@ -407,6 +444,7 @@ const MaterialRow = (props) => {
               [styles.materialRow_red]: status === "RED",
             }
           )}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -417,6 +455,7 @@ const MaterialRow = (props) => {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
           })}
+          data-cy={dataCy}
         >
           {children}
         </article>
@@ -468,9 +507,17 @@ const MaterialRow = (props) => {
               </Title>
             </ConditionalWrapper>
 
-            {creator && <Text type="text2">{creator}</Text>}
+            {creator && (
+              <Text type="text2" dataCy="creator">
+                {creator}
+              </Text>
+            )}
             {materialType && creationYear && (
-              <Text type="text2" className={styles.uppercase}>
+              <Text
+                type="text2"
+                className={styles.uppercase}
+                dataCy="materialtype-and-creationyear"
+              >
                 {materialType}, {creationYear}
               </Text>
             )}
