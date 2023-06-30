@@ -110,13 +110,13 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
           type={type}
           anchor-label={Translate({ context: "content", label: "title" })}
         />
-        <div
+        <section
           type={type}
           anchor-label={Translate({ context: "keywords", label: "title" })}
         >
           <Keywords workId={workId} />
           <Related workId={workId} />
-        </div>
+        </section>
         {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
         <Series workId={workId} anchor-label={Translate(AnchorsEnum.SERIES)} />
         <Recommendations

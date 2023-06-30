@@ -218,6 +218,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
       title={Translate({ ...context, label: "title" })}
       space={{ top: "var(--pt8)" }}
       backgroundColor="var(--jagged-ice)"
+      sectionTag="div" // Section sat in parent
     >
       <KeyWordList
         className={className}

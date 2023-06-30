@@ -50,6 +50,7 @@ export default function Section({
   elRef = null,
   subtitle = "",
   headerTag = "h2",
+  sectionTag = "section",
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -104,7 +105,7 @@ export default function Section({
       ref={elRef}
     >
       <Container className={styles.container} fluid>
-        <Row as="section" className={styles.section}>
+        <Row as={sectionTag} className={styles.section}>
           {title && (
             <Col
               xs={12}
@@ -149,4 +150,5 @@ Section.propTypes = {
   space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   headerTag: PropTypes.string,
+  sectionTag: PropTypes.string,
 };
