@@ -204,6 +204,7 @@ function ReservationButton({
   singleManifestation = false,
   buttonType = "primary",
   size = "large",
+  className,
 }) {
   const user = useUser();
   const modal = useModal();
@@ -243,6 +244,7 @@ function ReservationButton({
         type={buttonType}
         size={size}
         dataCy={"button-order-overview-loading"}
+        className={className}
       >
         {"loading"}
       </Button>

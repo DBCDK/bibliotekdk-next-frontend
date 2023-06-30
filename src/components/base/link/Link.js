@@ -45,6 +45,7 @@ function Link({
   ariaLabel = "",
   scroll = true,
   data_use_new_underline = false,
+  ...props
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -75,6 +76,7 @@ function Link({
         }
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
+        {...props}
       >
         {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
@@ -91,7 +93,7 @@ function Link({
 
   // Return the component
   return (
-    <NextLink href={href} shallow={true} scroll={scroll}>
+    <NextLink href={href} shallow={true} scroll={scroll} {...props}>
       {children}
     </NextLink>
   );
@@ -192,7 +194,6 @@ export default function Wrap({
       className={newClassName}
       disabled={disabled}
       data_use_new_underline={data_use_new_underline}
-      data_underline_animation_disabled={data_underline_animation_disabled}
       {...props}
     >
       {props.children}

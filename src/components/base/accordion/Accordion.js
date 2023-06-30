@@ -106,6 +106,10 @@ export function Item({
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
+        role="button"
+        id={`accordion-unique-toggle-${eventKey}-${title}`}
+        aria-controls={`accordion-unique-${eventKey}-${title}`}
+        aria-expanded={isCurrentEventKey}
       >
         <div className={styles.header_content}>
           <div
@@ -116,8 +120,8 @@ export function Item({
               additionalTxt && styles.firstelement,
             ].join(" ")}
           >
-            <Link tag={"span"} className={styles.link_on_year} tabIndex={-1}>
-              <Text type="text2" skeleton={isLoading} lines={1} tag={"span"}>
+            <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+              <Text type="text2" skeleton={isLoading} lines={1} tag="h3">
                 {title}
               </Text>
             </Link>
@@ -144,6 +148,9 @@ export function Item({
       <BootstrapAccordion.Collapse
         className={styles.content}
         eventKey={eventKey}
+        role="region"
+        id={`accordion-unique-${eventKey}`}
+        aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
       >
         <Card.Body>
           {typeof children === "function"
