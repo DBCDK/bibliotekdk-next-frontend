@@ -1,7 +1,7 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Title } from "@/components/base/title";
+import Title from "@/components/base/title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";

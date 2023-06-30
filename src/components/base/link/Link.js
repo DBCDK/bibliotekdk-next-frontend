@@ -137,7 +137,7 @@ Link.propTypes = {
   border: PropType_Link_border,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropType_Link_href,
-  tabIndex: PropTypes.string,
+  tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   tag: PropTypes.string, // support any tag
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,

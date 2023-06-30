@@ -3,7 +3,7 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 
 const exportedObject = {
   title: "work/Overview/TitleRenderer",

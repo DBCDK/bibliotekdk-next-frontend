@@ -14,7 +14,7 @@ import { useModal } from "@/components/_modal";
 import BurgerIcon from "@/components/header/icons/burger";
 
 import styles from "./Header.module.css";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Logo from "@/components/base/logo/Logo";
