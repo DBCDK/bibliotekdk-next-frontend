@@ -109,7 +109,13 @@ export default function Top({
   title,
   back = true,
   sticky = false,
-  titleTag,
+
+  /**
+   *  Defaults heading to h2. We never want more than one h1 per page, this is a dialog sits on top of a page.
+   *  Avoids confusion about whether we changed page or gave them a modal.
+   *  In scenarios think about the context of where they entered the dialog - this should determine the precise heading level.
+   */
+  titleTag = "h2",
 }) {
   let modal = useModal();
 
