@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Title.module.css";
-import clampStyles from "@/components/base/clamp/Clamp.module.css";
+import clampStyles from "css/clamp";
+import cx from "classnames";
 
 /**
  * The Component function
@@ -47,9 +48,25 @@ export const Title = ({
   return (
     <Tag
       {...props}
-      className={`${styles.title} ${styles[type]} ${className} ${
-        clamp && styles.clamp
-      } ${clampClasses.join(" ")}`}
+      className={cx(
+        styles.title,
+        {
+          [styles.title1]: type === "title1",
+          [styles.title2]: type === "title2",
+          [styles.title3]: type === "title3",
+          [styles.title4]: type === "title4",
+          [styles.title5]: type === "title5",
+          [styles.title6]: type === "title6",
+          [styles.title6b]: type === "title6b",
+          [styles.title7]: type === "title7",
+          [styles.title8]: type === "title8",
+        },
+        className,
+        {
+          [styles.clamp]: clamp,
+        },
+        clampClasses.join(" ")
+      )}
     >
       {children}
     </Tag>

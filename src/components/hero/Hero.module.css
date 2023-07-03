@@ -10,10 +10,6 @@
   z-index: 1;
 }
 
-.herobackground {
-  position: relative;
-}
-
 .gradient {
   position: absolute;
   top: 0;
@@ -55,12 +51,6 @@
   bottom: var(--pt4);
   padding: var(--pt3) 0 var(--pt4) 0;
   display: none;
-}
-
-.readmorebutton {
-  margin-top: var(--pt5);
-  max-width: 208px;
-  display: none !important;
 }
 
 .herotitle {
@@ -119,11 +109,5 @@
 
   .fakesearchinput {
     display: none !important;
-  }
-
-  .readmorebutton {
-    margin-top: var(--pt5);
-    max-width: 208px;
-    display: initial !important;
   }
 }

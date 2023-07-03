@@ -52,13 +52,13 @@
   padding: var(--pt1) 0 0 0;
 }
 
-.tooltip{
+.tooltip {
   position: relative;
   top: var(--pt05);
   margin-left: var(--pt1);
 }
 
-.textinline{
+.textinline {
   display: inline;
 }
 
@@ -104,7 +104,6 @@
 .arrow {
   margin: 0 0 0 var(--pt1);
 }
-
 
 @media (min-width: 576px) {
   .top {

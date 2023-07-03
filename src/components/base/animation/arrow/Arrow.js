@@ -12,7 +12,6 @@ export default function Arrow({ flip = false, className = "" }) {
       <div className={styles.trapezoid} />
       <div className={styles.trapezoid} />
       <div className={styles.trapezoid} />
-      {/* <div className={styles.flatnose} /> */}
     </div>
   );
 }

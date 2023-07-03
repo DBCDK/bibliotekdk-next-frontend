@@ -35,7 +35,7 @@
   padding: 0 var(--pt4) 0 var(--pt2);
 }
 
-.divflex{
+.divflex {
   display: flex;
   padding: 0 0 var(--pt3) 0;
   justify-content: space-between;
@@ -52,10 +52,6 @@
 
 .wrap .term {
   margin-left: var(--pt1);
-}
-
-.wrap .score {
-  margin-left: auto;
 }
 
 .group {

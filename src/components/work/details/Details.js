@@ -15,7 +15,7 @@ import isEqual from "lodash/isEqual";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import isEmpty from "lodash/isEmpty";
 
-import { fieldsForRows } from "@/components/work/details/details.utils";
+import { fieldsForRows } from "@/components/work/details/utils/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
 import TjoolTjip from "@/components/base/tjooltjip";
 

@@ -1,0 +1,83 @@
+.top {
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  background-color: var(--pippin);
+}
+
+.overview {
+  display: grid;
+  --grid_template_areas: "back" "title" "work_card";
+
+  grid-template-areas: var(--grid_template_areas);
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+
+.back_button {
+  grid-area: back;
+}
+
+.title_box {
+  grid-area: title;
+  align-self: center;
+}
+
+.title {
+  padding-top: var(--pt5);
+  padding-bottom: var(--pt5);
+}
+
+.work_card {
+  grid-area: work_card;
+  border-left: none;
+  padding-top: var(--pt1_5);
+  --card_border: 1px solid var(--gray);
+  border-top: var(--card_border);
+}
+
+@media (min-width: 768px) {
+  .top {
+    padding-inline: var(--pt2);
+    padding-top: var(--pt5);
+    padding-bottom: var(--pt5);
+  }
+
+  .overview {
+    --grid_template_areas: "back back" "title work_card";
+  }
+
+  .title {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .work_card {
+    padding-left: var(--pt2);
+    padding-top: 0;
+    border-left: var(--card_border);
+    border-top: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .overview {
+    --grid_template_areas: "back title title work_card work_card work_card";
+  }
+
+  .title {
+    padding-left: var(--pt2);
+  }
+}
+
+@media (min-width: 1200px) {
+  .title {
+    padding-left: var(--pt5);
+  }
+}
+
+@media print {
+  .back_button {
+    display: none;
+  }
+}

@@ -141,7 +141,6 @@
     border: 1px solid var(--gray);
   }
 
-
   .input__focused {
     border: 1px solid var(--blue);
     outline: 1px solid var(--blue);

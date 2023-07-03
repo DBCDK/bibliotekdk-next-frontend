@@ -5,7 +5,8 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Text.module.css";
-import clampStyles from "@/components/base/clamp/Clamp.module.css";
+import clampStyles from "css/clamp";
+import cx from "classnames";
 
 /**
  * The Component function
@@ -51,9 +52,19 @@ function Text({
   return (
     <Tag
       id={id}
-      className={`${styles.text} ${
-        styles[type]
-      } ${className} ${clampClasses.join(" ")}`}
+      className={cx(
+        styles.text,
+        {
+          [styles.text1]: type === "text1",
+          [styles.text2]: type === "text2",
+          [styles.text3]: type === "text3",
+          [styles.text4]: type === "text4",
+          [styles.text5]: type === "text5",
+          [styles.text6]: type === "text6",
+        },
+        className,
+        clampClasses.join(" ")
+      )}
       onClick={onClick}
       data-cy={key}
       tabIndex={tabIndex}

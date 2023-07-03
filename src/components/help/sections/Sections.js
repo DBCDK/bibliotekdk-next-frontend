@@ -65,7 +65,7 @@ export function Sections({ className, data, skeleton }) {
             }
             key={`${group_name}_${i}`}
           >
-            <Row className={styles.content}>
+            <Row>
               <Col lg={8}>
                 <Divider className={styles.divider} />
                 {links.map((l, i) => {
