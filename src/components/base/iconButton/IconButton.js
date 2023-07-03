@@ -24,6 +24,7 @@ function IconButton({
   icon = "close",
   textType = "text3",
   keepUnderline,
+  dataCy,
   ...props
 }) {
   return (
@@ -36,6 +37,7 @@ function IconButton({
         className
       )}
       onClick={() => onClick && onClick()}
+      data-cy={dataCy}
       {...props}
     >
       <Link

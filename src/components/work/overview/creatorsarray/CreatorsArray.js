@@ -1,10 +1,10 @@
 import Link from "@/components/base/link";
 import Text from "@/components/base/text";
-import { extractCreatorPrioritiseCorporation } from "@/lib/utils";
+import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
 export function CreatorsArray({ creators: creatorsBeforeFilter, skeleton }) {
   const searchOnUrl = "/find?q.creator=";
-  const creators = extractCreatorPrioritiseCorporation(creatorsBeforeFilter);
+  const creators = extractCreatorsPrioritiseCorporation(creatorsBeforeFilter);
 
   return (
     creators?.map((creator, index) => {
