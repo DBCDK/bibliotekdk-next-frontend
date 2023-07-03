@@ -14,7 +14,10 @@ import cx from "classnames";
  * @param {string} props.alt
  * @param {obj} props.children
  * @param {string} props.icon
- * @returns {component}
+ * @param {string} props.textType
+ * @param {boolean} props.keepUnderline
+ * @param {string} props.dataCy
+ * @returns {JSX.Element}
  */
 function IconButton({
   className,
