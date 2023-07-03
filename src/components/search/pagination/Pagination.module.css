@@ -56,6 +56,10 @@
   background-color: var(--blue);
 }
 
+.arrowPlaceholder {
+  width: var(--pt4);
+}
+
 @media (min-width: 768px) {
   .desktop {
     display: flex;

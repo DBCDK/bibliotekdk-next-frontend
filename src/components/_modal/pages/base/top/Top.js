@@ -111,7 +111,7 @@ export default function Top({
   sticky = false,
 
   /**
-   *  Defaults heading to h2. We never want more than one h1 per page, this is a dialog sits on top of a page.
+   *  Defaults heading to h2. We never want more than one h1 per page, this is a dialog that sits on top of a page.
    *  By doing this, we avoid confusion, whether we changed page or opened a modal.
    *  When you use this component, think about the context where the user entered the dialog.
    */

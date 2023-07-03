@@ -7,6 +7,7 @@ import AccordionContext from "react-bootstrap/AccordionContext";
 import ExpandIcon from "@/components/base/animation/expand";
 
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 
 import styles from "./Accordion.module.css";
 import animations from "@/components/base/animation/animations.module.css";
@@ -121,9 +122,9 @@ export function Item({
             ].join(" ")}
           >
             <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
-              <Text type="text2" skeleton={isLoading} lines={1} tag="h3">
+              <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
                 {title}
-              </Text>
+              </Title>
             </Link>
             {subTitle && (
               <Text tag={"span"} type="text4">
