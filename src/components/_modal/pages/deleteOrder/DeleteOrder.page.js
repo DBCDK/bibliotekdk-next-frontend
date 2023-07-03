@@ -4,10 +4,18 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import { handleCancelOrder } from "./utils";
+import useUser from "@/components/hooks/useUser";
 
 function DeleteOrder({ context, modal }) {
-  const { label, mobile, isReadyToPickup, orderId, agencyId, orderMutation } =
-    context;
+  const {
+    label,
+    mobile,
+    isReadyToPickup,
+    orderId,
+    agencyId,
+    orderMutation,
+    onClose,
+  } = context;
 
   function closeModal() {
     mobile ? modal.prev() : modal.clear();
@@ -15,9 +23,13 @@ function DeleteOrder({ context, modal }) {
 
   async function onCancelOrder() {
     console.log("########### TO DELETE", orderId, agencyId);
-    //TODO comment in
-    //const res = await handleCancelOrder(orderId, agencyId, orderMutation);
-    //console.log("###########", res);
+    const res = await handleCancelOrder(orderId, agencyId, orderMutation);
+    console.log("###########", res);
+    if (!res) {
+      onClose({ success: true, message: "Order deleted", orderId });
+    } else {
+      onClose({ success: false, message: res.error, orderId }); //TODO test og gør andereldes
+    }
     modal.clear();
   }
 

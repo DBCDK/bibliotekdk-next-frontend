@@ -22,6 +22,8 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import useUser from "@/components/hooks/useUser";
+import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
+import { set } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -230,6 +232,8 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     type,
     status,
     dataCy,
+    onCloseModal,
+    removeOrder,
   } = props;
   const modal = useModal();
 
@@ -331,10 +335,13 @@ const MaterialRow = (props) => {
     currency,
     orderMutation,
     dataCy,
+    removeOrder,
+    //animateRemove,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
   const modal = useModal();
+  const [animateRemove, setAnimateRemove] = useState(false);
 
   //const { updateLoanerInfo } = useUser();
   const isMobileSize =
@@ -357,17 +364,6 @@ const MaterialRow = (props) => {
     }
   };
 
-  function onClickDelete() {
-    modal.push("deleteOrder", {
-      label: Translate({ context: "profile", label: "delete-order" }),
-      mobile: false,
-      isReadyToPickup: !!pickUpExpiryDate,
-      orderId: id,
-      agencyId: agencyId,
-      orderMutation: orderMutation,
-    });
-  }
-
   const status = getStatus();
 
   const renderDynamicColumn = () => {
@@ -388,6 +384,17 @@ const MaterialRow = (props) => {
     }
   };
 
+  function onCloseModal({ success, message, orderId }) {
+    //removeOrder(orderId);
+    setAnimateRemove(true);
+    console.log("onCloseModal", success, message, orderId);
+    if (success) {
+      return orderId;
+    } else {
+      //show error message
+    }
+  }
+
   const renderDynamicButton = () => {
     switch (type) {
       case "DEBT":
@@ -401,7 +408,17 @@ const MaterialRow = (props) => {
       case "ORDER":
         return (
           <MaterialRowIconButton
-            onClick={onClickDelete /*onCancelOrder(id, agencyId)*/}
+            onClick={() =>
+              onClickDelete({
+                modal,
+                mobile: false,
+                pickUpExpiryDate,
+                id,
+                agencyId,
+                orderMutation,
+                onCloseModal,
+              })
+            }
             dataCy="order-button"
           >
             {Translate({
@@ -420,6 +437,7 @@ const MaterialRow = (props) => {
       <MobileMaterialRow
         renderDynamicColumn={renderDynamicColumn}
         status={status}
+        onCloseModal={onCloseModal}
         {...props}
       />
     );
@@ -442,6 +460,7 @@ const MaterialRow = (props) => {
             {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
+              [styles.materialRow_animated]: animateRemove,
             }
           )}
           data-cy={dataCy}
@@ -454,6 +473,7 @@ const MaterialRow = (props) => {
           className={cx(styles.materialRow, styles.materialRow_wrapper, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
+            [styles.materialRow_animated]: animateRemove,
           })}
           data-cy={dataCy}
         >

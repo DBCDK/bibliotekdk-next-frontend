@@ -306,7 +306,6 @@ function Container({ children, className = {}, mock = {} }) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal_container">
-          HEEEJ
           {modal.stack.map((obj, index) => {
             // prevent render if modal/component is not visible
             // if (!obj.active) {
