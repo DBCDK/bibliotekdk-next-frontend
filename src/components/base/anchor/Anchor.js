@@ -116,7 +116,6 @@ function Menu({
     e.preventDefault();
     setIsScrolling(true);
     setIsClicked(id);
-
     handleScroll(
       window,
       section.element,
