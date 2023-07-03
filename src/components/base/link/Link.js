@@ -93,7 +93,7 @@ function Link({
 
   // Return the component
   return (
-    <NextLink href={href} shallow={true} scroll={scroll} {...props}>
+    <NextLink href={href} shallow={true} scroll={scroll}>
       {children}
     </NextLink>
   );
@@ -194,6 +194,7 @@ export default function Wrap({
       className={newClassName}
       disabled={disabled}
       data_use_new_underline={data_use_new_underline}
+      {...props}
     >
       {props.children}
     </Link>
