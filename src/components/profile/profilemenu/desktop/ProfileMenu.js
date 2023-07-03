@@ -3,7 +3,7 @@ import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
@@ -195,6 +195,10 @@ const initialLoansAndReservations = {
 export default function ProfileMenu() {
   const user = useUser();
 
+  useEffect(() => {
+    console.log("user?.loanerInfo?.orders ", user?.loanerInfo?.orders.length);
+  }, [user?.loanerInfo?.orders.length]);
+
   const menus = {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations
@@ -208,10 +212,19 @@ export default function ProfileMenu() {
       })),
   };
 
+  // const hi = useMemo(() => {
+  //   return user?.loanerInfo?.orders;
+  // }, [user?.loanerInfo?.orders?.length]);
+
+  useEffect(() => {
+    console.log("user?.loanerInfo?.orders ", user?.loanerInfo?.orders.length);
+  }, [user?.loanerInfo?.orders.length]);
+
   if (!menus || !menus.loansAndReservations) return <></>;
 
   return (
     <>
+      {/* <div>{JSON.stringify(hi.map((o) => o.orderId))}</div> */}
       <nav
         className={styles.nav}
         aria-label={`${Translate({

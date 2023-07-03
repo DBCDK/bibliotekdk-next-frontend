@@ -40,7 +40,7 @@ function useUserMock() {
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
-      console.log("updateLoanerInfo obj", obj);
+      console.log("Mock: updateLoanerInfo obj", obj);
       // Broadcast update
       mutate(useUserMockKey);
     },
@@ -61,6 +61,7 @@ function useUserImpl() {
     data: userData,
     isLoading: userIsLoading,
     error: userDataError,
+    mutate: userMutate,
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
@@ -92,6 +93,7 @@ function useUserImpl() {
   }, [data?.session, loggedInUser]);
 
   const loanerInfo = useMemo(() => {
+    console.log("useMEmo in USEUSER ", userData?.user?.orders?.length);
     return {
       debt: userData?.user?.debt || [],
       loans: userData?.user?.loans || [],
@@ -99,7 +101,7 @@ function useUserImpl() {
       agency: userData?.user?.agency || {},
       ...sessionData,
     };
-  }, [data?.session, loggedInUser]);
+  }, [data?.session, loggedInUser, userData?.user?.orders?.length]);
 
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
@@ -115,10 +117,14 @@ function useUserImpl() {
     updateLoanerInfo: async (obj) => {
       const newSession = merge({}, sessionData, obj);
       // Update global loaner info object
+      console.log("Da real ting: updateLoanerInfo obj", obj);
       await sessionMutate.post(sessionFragments.submitSession(newSession));
+
+      console.log("121 HERE ");
 
       // Broadcast update
       await mutate();
+      await userMutate({ ...userData, orders: userData?.user?.orders || [] });
     },
     guestLogout: async () => {
       // Delete global loaner info object

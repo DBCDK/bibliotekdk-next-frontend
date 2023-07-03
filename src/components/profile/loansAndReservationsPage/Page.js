@@ -14,7 +14,7 @@ import { useMutate } from "@/lib/api/api";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -90,11 +90,19 @@ const LoansAndReservations = () => {
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
+  // const [orders, setX] = useState(preOrders);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setX(preOrders);
+  //   }, 1000);
+  // }, [loanerInfo.orders.length]);
 
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "loansAndReservations" })}
     >
+      <div>{JSON.stringify(loanerInfo.orders.map((o) => o.orderId))}</div>
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
         <Link
@@ -150,6 +158,7 @@ const LoansAndReservations = () => {
             column2={Translate({ context: "profile", label: "price" })}
             column3={Translate({ context: "profile", label: "loaner-library" })}
           />
+
           {debt?.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}

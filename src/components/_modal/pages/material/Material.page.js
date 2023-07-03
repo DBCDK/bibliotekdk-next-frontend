@@ -160,8 +160,6 @@ const Material = ({ context }) => {
 
   const modal = useModal();
 
-  console.log("MATERIAL PAGE", onCloseModal);
-
   const renderDynamicContent = () => {
     switch (type) {
       case "LOAN":
