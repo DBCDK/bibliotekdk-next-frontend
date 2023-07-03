@@ -15,6 +15,7 @@ import { getWorkUrl } from "@/lib/utils";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
+import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import {
   dateToDayInMonth,
@@ -337,6 +338,7 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
+  const { loanerInfo, updateLoanerInfo } = useUser();
   const modal = useModal();
   const [animateRemove, setAnimateRemove] = useState(false);
 
@@ -381,9 +383,22 @@ const MaterialRow = (props) => {
   };
 
   function onCloseModal({ success, message, orderId }) {
-    //removeOrder(orderId);
     setAnimateRemove(true);
-    console.log("onCloseModal", success, message, orderId);
+    setTimeout(() => {
+      const newOrders = loanerInfo.orders;
+      const index = newOrders.map((item) => item.orderId).indexOf(id);
+      newOrders.splice(index, 1);
+      console.log("NEW ORDERS", newOrders);
+      console.log("NEW loanerInfo newOrders", newOrders);
+      updateLoanerInfo({
+        pickupBranch: loanerInfo.pickUpBranch,
+        loans: loanerInfo.loans,
+        orders: loanerInfo.orders,
+        debt: loanerInfo.debt,
+        agency: loanerInfo.agency,
+      });
+    }, 1000);
+
     if (success) {
       return orderId;
     } else {

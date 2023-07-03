@@ -90,17 +90,6 @@ const LoansAndReservations = () => {
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
-  const [ordersToShow, setOrdersToShow] = useState(orders);
-
-  const removeOrder = (orderId) => {
-    console.log("ordersToShow", ordersToShow);
-    setOrdersToShow((prevItems) => {
-      const index = prevItems.findIndex((item) => item.id === orderId);
-      const updatedItems = [...prevItems];
-      updatedItems.splice(index, 1);
-      return updatedItems;
-    });
-  };
 
   return (
     <ProfileLayout
@@ -277,7 +266,6 @@ const LoansAndReservations = () => {
                 ...order,
                 libraryId,
                 orderMutation,
-                removeOrder,
               })}
               key={`loan-${order.loanId}-#${i}`}
               dataCy={`order-${i}`}
