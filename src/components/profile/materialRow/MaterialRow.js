@@ -21,9 +21,7 @@ import {
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
-import useUser from "@/components/hooks/useUser";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
-import { set } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -232,9 +230,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     type,
     status,
     dataCy,
-    onCloseModal,
-    removeOrder,
+    animateRemove,
   } = props;
+
   const modal = useModal();
 
   const onClick = () => {
@@ -266,6 +264,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
+            [styles.materialRow_mobile_animated]: animateRemove,
           })}
           role="button"
           onClick={onClick}
@@ -335,15 +334,12 @@ const MaterialRow = (props) => {
     currency,
     orderMutation,
     dataCy,
-    removeOrder,
-    //animateRemove,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
   const modal = useModal();
   const [animateRemove, setAnimateRemove] = useState(false);
 
-  //const { updateLoanerInfo } = useUser();
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -438,6 +434,7 @@ const MaterialRow = (props) => {
         renderDynamicColumn={renderDynamicColumn}
         status={status}
         onCloseModal={onCloseModal}
+        animateRemove={animateRemove}
         {...props}
       />
     );
@@ -460,7 +457,7 @@ const MaterialRow = (props) => {
             {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-              [styles.materialRow_animated]: animateRemove,
+              [styles.materialRow_animated]: animateRemove, //TODO do i need both?
             }
           )}
           data-cy={dataCy}
@@ -473,7 +470,7 @@ const MaterialRow = (props) => {
           className={cx(styles.materialRow, styles.materialRow_wrapper, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_animated]: animateRemove,
+            [styles.materialRow_animated]: animateRemove, //TODO do i need both?
           })}
           data-cy={dataCy}
         >

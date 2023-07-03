@@ -12,7 +12,7 @@
   grid-template-columns: 4fr 2fr 2fr 1fr;
   padding: var(--pt2) var(--pt1);
   height: var(--pt16);
-  transition: height 1s, padding 1s;
+  transition: height 0.5s, padding 0.5s;
 }
 
 .materialRow_withCheckbox {
@@ -33,11 +33,10 @@
 .materialRow_animated {
   height: 0;
   overflow: hidden;
-  padding-top: 0; /*can i make this transition be triggered later?*/
+  padding-top: 0;
   padding-bottom: 0;
   border-bottom: none;
 }
-
 .materialRow_green {
   background-color: var(--success-light);
 }
@@ -54,11 +53,9 @@
   padding: var(--pt2);
   cursor: pointer;
   border-top: 1px solid var(--iron);
+  max-height: 200px;
+  transition: max-height 0.5s, padding 0.5s;
 }
-
-/* .materialRow_animateRemove {
-  transform: translateY(-100%);
-} */
 
 .materialRow_mobile:focus-visible {
   outline: 2px solid var(--blue);
@@ -67,6 +64,14 @@
 .materialRow_mobile:hover .arrowright,
 .materialRow_mobile:focus-visible .arrowright {
   transform: translate(var(--pt05), 0);
+}
+
+.materialRow_mobile_animated {
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-top: none;
 }
 
 .materialInfo {

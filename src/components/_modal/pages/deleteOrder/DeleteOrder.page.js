@@ -22,9 +22,7 @@ function DeleteOrder({ context, modal }) {
   }
 
   async function onCancelOrder() {
-    console.log("########### TO DELETE", orderId, agencyId);
     const res = await handleCancelOrder(orderId, agencyId, orderMutation);
-    console.log("###########", res);
     if (!res) {
       onClose({ success: true, message: "Order deleted", orderId });
     } else {
