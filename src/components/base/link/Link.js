@@ -194,7 +194,6 @@ export default function Wrap({
       className={newClassName}
       disabled={disabled}
       data_use_new_underline={data_use_new_underline}
-      {...props}
     >
       {props.children}
     </Link>
