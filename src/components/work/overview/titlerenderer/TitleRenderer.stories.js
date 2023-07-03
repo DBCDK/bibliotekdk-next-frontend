@@ -29,7 +29,7 @@ function TitleRendererComponentBuilder({
       <StoryDescription>
         TitleRenderer with description: {descriptionName}
       </StoryDescription>
-      <Title type={"title3"} skeleton={false} data-cy={"title-overview"}>
+      <Title type={"title3"} skeleton={false} dataCy={"title-overview"}>
         <RenderTitlesWithoutLanguage titles={titleRendererProps?.titles} />
         <RenderLanguageAddition work={titleRendererProps} />
       </Title>

@@ -125,7 +125,7 @@ export function Overview({
                 tag="h1"
                 type="title3"
                 skeleton={skeleton}
-                data-cy="title-overview"
+                dataCy="title-overview"
               >
                 <RenderTitlesWithoutLanguage titles={titles} />
                 <RenderLanguageAddition work={work} />

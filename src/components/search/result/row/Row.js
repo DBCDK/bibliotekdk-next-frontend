@@ -53,7 +53,7 @@ function TitlesForSearch({ work, isLoading }) {
       lines={4}
       clamp={true}
       title={titles?.join(" ")}
-      data-cy={"ResultRow-title"}
+      dataCy={"ResultRow-title"}
       skeleton={isLoading}
       className={`${styles.display_inline}`}
     >
