@@ -24,7 +24,7 @@ export function Localizations({
       <Top />
 
       <div>
-        <Title type="title4" className={styles.title}>
+        <Title type="title4" className={styles.title} tag="h2">
           {Translate({
             context: "holdings",
             label: "label_localizations_title",

@@ -63,79 +63,84 @@ export default function WorkPage({ workId, onTypeChange, login, type }) {
   }
 
   return (
-    <main
-      ref={mainRef}
-      {...(containerWidth && {
-        style: {
-          "--container_width": `${containerWidth}px`,
-        },
-      })}
-    >
+    <>
       <Header router={router} />
-      <Anchor.Wrap>
-        <Overview
-          workId={workId}
-          onTypeChange={onTypeChange}
-          login={login}
-          type={type}
-          anchor-label={Translate({ context: "workmenu", label: "loan" })}
-        />
+      <main
+        ref={mainRef}
+        {...(containerWidth && {
+          style: {
+            "--container_width": `${containerWidth}px`,
+          },
+        })}
+      >
+        <Anchor.Wrap>
+          <Overview
+            workId={workId}
+            onTypeChange={onTypeChange}
+            login={login}
+            type={type}
+            anchor-label={Translate({ context: "workmenu", label: "loan" })}
+          />
 
-        <Anchor.Menu />
-        <Details
-          workId={workId}
-          type={type}
-          anchor-label={Translate({ context: "details", label: "title" })}
-        />
-        <Description
-          workId={workId}
-          type={type}
-          anchor-label={Translate({ context: "description", label: "title" })}
-        />
-        <Parts
-          workId={workId}
-          type={type}
-          anchor-label={Translate({
-            context: "bibliographic-data",
-            label: "manifestationParts",
-          })}
-        />
-        <RelatedWorks
-          workId={workId}
-          type={type}
-          anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
-        />
-        <Content
-          workId={workId}
-          type={type}
-          anchor-label={Translate({ context: "content", label: "title" })}
-        />
-        <section
-          type={type}
-          anchor-label={Translate({ context: "keywords", label: "title" })}
-        >
-          <Keywords workId={workId} />
-          <Related workId={workId} />
-        </section>
-        {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
-        <Series workId={workId} anchor-label={Translate(AnchorsEnum.SERIES)} />
-        <Recommendations
-          workId={workId}
-          anchor-label={Translate({
-            context: "recommendations",
-            label: "remindsOf",
-          })}
-        />
-        <Reviews
-          workId={workId}
-          anchor-label={Translate({ context: "workmenu", label: "reviews" })}
-        />
-        <BibliographicData
-          workId={workId}
-          anchor-label={Translate({ context: "workmenu", label: "editions" })}
-        />
-      </Anchor.Wrap>
-    </main>
+          <Anchor.Menu />
+          <Details
+            workId={workId}
+            type={type}
+            anchor-label={Translate({ context: "details", label: "title" })}
+          />
+          <Description
+            workId={workId}
+            type={type}
+            anchor-label={Translate({ context: "description", label: "title" })}
+          />
+          <Parts
+            workId={workId}
+            type={type}
+            anchor-label={Translate({
+              context: "bibliographic-data",
+              label: "manifestationParts",
+            })}
+          />
+          <RelatedWorks
+            workId={workId}
+            type={type}
+            anchor-label={Translate(AnchorsEnum.RELATED_WORKS)}
+          />
+          <Content
+            workId={workId}
+            type={type}
+            anchor-label={Translate({ context: "content", label: "title" })}
+          />
+          <section
+            type={type}
+            anchor-label={Translate({ context: "keywords", label: "title" })}
+          >
+            <Keywords workId={workId} />
+            <Related workId={workId} />
+          </section>
+          {/* TODO: WorkGroupingsOverview.js refererer til dennes oversættelse */}
+          <Series
+            workId={workId}
+            anchor-label={Translate(AnchorsEnum.SERIES)}
+          />
+          <Recommendations
+            workId={workId}
+            anchor-label={Translate({
+              context: "recommendations",
+              label: "remindsOf",
+            })}
+          />
+          <Reviews
+            workId={workId}
+            anchor-label={Translate({ context: "workmenu", label: "reviews" })}
+          />
+          <BibliographicData
+            workId={workId}
+            anchor-label={Translate({ context: "workmenu", label: "editions" })}
+          />
+        </Anchor.Wrap>
+      </main>
+    </>
   );
 }
 

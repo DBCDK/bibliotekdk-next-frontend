@@ -97,7 +97,7 @@ export function Receipt({
               <Icon size={3} src="check.svg" />
             </div>
 
-            <Title className={styles.title} type="title4">
+            <Title className={styles.title} type="title4" tag="h2">
               {Translate({ context: "order", label: "order-success" })}
             </Title>
 

@@ -28,7 +28,7 @@ export function OrdererInformation({
     <>
       {(isLoadingBranches || name) && (
         <div className={styles.user}>
-          <Title type="title5">
+          <Title type="title5" tag="h3">
             {Translate({ context: "order", label: "ordered-by" })}
           </Title>
           <div className={styles.name}>

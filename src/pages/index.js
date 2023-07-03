@@ -24,48 +24,50 @@ const Index = () => {
   const ogImage = parseHero(data);
 
   return (
-    <div>
+    <>
       <Header />
-      <Hero />
-      <Head>
-        {ogImage && ogImage.image && ogImage.image.ogurl && (
-          <meta
-            key="og:image"
-            property="og:image"
-            content={`${ogImage?.image?.ogurl}`}
-          />
-        )}
-      </Head>
+      <main>
+        <Hero />
+        <Head>
+          {ogImage && ogImage.image && ogImage.image.ogurl && (
+            <meta
+              key="og:image"
+              property="og:image"
+              content={`${ogImage?.image?.ogurl}`}
+            />
+          )}
+        </Head>
 
-      <ArticleSection
-        title={Translate({ context: "index", label: "section1" })}
-        matchTag="section 1"
-        template="triple"
-      />
+        <ArticleSection
+          title={Translate({ context: "index", label: "section1" })}
+          matchTag="section 1"
+          template="triple"
+        />
 
-      <ArticleSection
-        title={Translate({ context: "index", label: "section3" })}
-        matchTag="section 3"
-        template="double"
-      />
-      <ArticleSection title={false} matchTag="section 4" template="single" />
-      <InspirationSlider
-        title={Translate({
-          context: "inspiration",
-          label: "category-fiction-nyeste",
-        })}
-        backgroundColor="var(--parchment)"
-        filters={[{ category: "fiction", subCategories: ["nyeste"] }]}
-      />
-      <InspirationSlider
-        title={Translate({
-          context: "inspiration",
-          label: "category-nonfiction-nyeste",
-        })}
-        divider={{ content: false }}
-        filters={[{ category: "nonfiction", subCategories: ["nyeste"] }]}
-      />
-    </div>
+        <ArticleSection
+          title={Translate({ context: "index", label: "section3" })}
+          matchTag="section 3"
+          template="double"
+        />
+        <ArticleSection title={false} matchTag="section 4" template="single" />
+        <InspirationSlider
+          title={Translate({
+            context: "inspiration",
+            label: "category-fiction-nyeste",
+          })}
+          backgroundColor="var(--parchment)"
+          filters={[{ category: "fiction", subCategories: ["nyeste"] }]}
+        />
+        <InspirationSlider
+          title={Translate({
+            context: "inspiration",
+            label: "category-nonfiction-nyeste",
+          })}
+          divider={{ content: false }}
+          filters={[{ category: "nonfiction", subCategories: ["nyeste"] }]}
+        />
+      </main>
+    </>
   );
 };
 

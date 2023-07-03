@@ -234,7 +234,7 @@ export function Pickup({
         })}
 
       <div className={styles.search}>
-        <Title type="title4" className={styles.title}>
+        <Title type="title4" className={styles.title} tag="h2">
           {Translate({
             context: "order",
             label:
