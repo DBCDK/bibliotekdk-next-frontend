@@ -1,3 +1,7 @@
+.col_flex {
+  display: flex;
+}
+
 .col_flex__vertical_version {
   width: 75%;
 }
@@ -20,9 +24,28 @@
   }
 }
 
+.related_element {
+  display: flex;
+  height: 100%;
+  gap: var(--pt2);
+  box-sizing: border-box;
+
+  padding: var(--pt1);
+
+  /* Reset anchor tag */
+  color: var(--mine-shaft);
+}
+
 .related_element__vertical_version {
   flex-direction: column;
   gap: var(--pt1);
+}
+
+.cover {
+  object-fit: contain;
+  object-position: 50% 0;
+  width: var(--pt11);
+  align-self: center;
 }
 
 .cover__vertical_version {
