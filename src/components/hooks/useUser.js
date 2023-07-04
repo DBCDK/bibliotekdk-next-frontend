@@ -93,7 +93,6 @@ function useUserImpl() {
   }, [data?.session, loggedInUser]);
 
   const loanerInfo = useMemo(() => {
-    console.log("useMEmo in USEUSER ", userData?.user?.orders?.length);
     return {
       debt: userData?.user?.debt || [],
       loans: userData?.user?.loans || [],
@@ -117,14 +116,11 @@ function useUserImpl() {
     updateLoanerInfo: async (obj) => {
       const newSession = merge({}, sessionData, obj);
       // Update global loaner info object
-      console.log("Da real ting: updateLoanerInfo obj", obj);
       await sessionMutate.post(sessionFragments.submitSession(newSession));
-
-      console.log("121 HERE ");
 
       // Broadcast update
       await mutate();
-      await userMutate({ ...userData, orders: userData?.user?.orders || [] });
+      await userMutate({ orders: userData?.user?.orders || [] }); //@morten det her er den nye metode
     },
     guestLogout: async () => {
       // Delete global loaner info object

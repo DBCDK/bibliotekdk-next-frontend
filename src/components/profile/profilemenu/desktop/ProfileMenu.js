@@ -3,7 +3,7 @@ import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import cx from "classnames";
 import { getElementById, encodeString, translateAndEncode } from "@/lib/utils";
@@ -211,14 +211,6 @@ export default function ProfileMenu() {
         itemLength: user?.loanerInfo[item.title]?.length || 0,
       })),
   };
-
-  // const hi = useMemo(() => {
-  //   return user?.loanerInfo?.orders;
-  // }, [user?.loanerInfo?.orders?.length]);
-
-  useEffect(() => {
-    console.log("user?.loanerInfo?.orders ", user?.loanerInfo?.orders.length);
-  }, [user?.loanerInfo?.orders.length]);
 
   if (!menus || !menus.loansAndReservations) return <></>;
 
