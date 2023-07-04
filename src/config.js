@@ -13,7 +13,7 @@ const config = {
   },
   fbi_api: {
     url:
-      "https://fbi-api.dbc.dk/SimpleSearch/graphql" ||
+      // "https://fbi-api.dbc.dk/SimpleSearch/graphql" ||
       process.env.NEXT_PUBLIC_FBI_API_URL ||
       "https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql",
     timeout: process.env.API_TIMEOUT_MS || 150,
