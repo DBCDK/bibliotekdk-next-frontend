@@ -8,6 +8,7 @@ import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
 import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
 import { forwardRef } from "react";
+import cx from "classnames";
 
 /**
  *
@@ -47,22 +48,18 @@ const MaterialCard = forwardRef(function MaterialCard(
       <Link
         href={link_href}
         // Link props
-        className={`${styles.link_style}`}
+        className={cx(styles.link_style)}
         border={{ top: false, bottom: true }}
         onClick={onClick}
       >
-        <div
-          ref={ref}
-          id={workId}
-          className={`${styles.related_element} ${relatedElementClassName}`}
-        >
+        <div ref={ref} id={workId} className={cx(relatedElementClassName)}>
           <img
             src={image_src}
-            className={`${styles.cover} ${coverImageClassName}`}
+            className={cx(coverImageClassName)}
             title={fullTitle}
             alt={Translate({ context: "general", label: "frontpage" })}
           />
-          <div className={styles.text}>{children}</div>
+          <div className={cx(styles.text)}>{children}</div>
         </div>
       </Link>
     </Col>

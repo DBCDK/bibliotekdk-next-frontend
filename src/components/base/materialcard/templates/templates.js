@@ -7,6 +7,7 @@ import { extractCreatorsPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
 import Text from "@/components/base/text";
 import styles from "./templates.module.css";
 import { getCoverImage } from "@/components/utils/getCoverImage";
+import cx from "classnames";
 
 function propFunc(textType, lines) {
   return {
@@ -44,9 +45,15 @@ export function templateForVerticalWorkCard(material) {
       </>
     ),
     // Styling
-    elementContainerClassName: styles.col_flex__vertical_version,
-    relatedElementClassName: styles.related_element__vertical_version,
-    coverImageClassName: styles.cover__vertical_version,
+    elementContainerClassName: cx(
+      styles.col_flex,
+      styles.col_flex__vertical_version
+    ),
+    relatedElementClassName: cx(
+      styles.related_element,
+      styles.related_element__vertical_version
+    ),
+    coverImageClassName: cx(styles.cover, styles.cover__vertical_version),
   };
 }
 
@@ -87,6 +94,10 @@ export function templateForHeaderWorkCard(material) {
         </Text>
       </>
     ),
+    // Styling
+    elementContainerClassName: cx(styles.col_flex),
+    relatedElementClassName: cx(styles.related_element),
+    coverImageClassName: cx(styles.cover),
   };
 }
 
@@ -119,5 +130,9 @@ export function templateForRelatedWorks(material) {
         </Text>
       </>
     ),
+    // Styling
+    elementContainerClassName: cx(styles.col_flex),
+    relatedElementClassName: cx(styles.related_element),
+    coverImageClassName: cx(styles.cover),
   };
 }
