@@ -32,16 +32,6 @@
   width: 100%;
 }
 
-.removeButton {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: fit-content;
-}
-.removeButtonIcon {
-  margin-left: var(--pt1);
-}
-
 .textLabel {
   color: var(--blue);
 }

@@ -6,7 +6,7 @@ import styles from "./MaterialCard.module.css";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Col from "react-bootstrap/Col";
-import { templateForRelatedWorks } from "@/components/base/materialcard/templatesForMaterialCard";
+import { templateForRelatedWorks } from "@/components/base/materialcard/templates/templates";
 import { forwardRef } from "react";
 
 /**

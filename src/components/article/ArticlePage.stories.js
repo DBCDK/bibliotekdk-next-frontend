@@ -8,7 +8,7 @@ import ReviewPage from "@/pages/anmeldelse/[title]/[workId]/[articleId]";
 import InfomediaArticlePage from "@/pages/infomedia/[title]/[workId]/[infomediaId]";
 
 import { AccessEnum } from "@/lib/enums.js";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {
   title: "articles/page",

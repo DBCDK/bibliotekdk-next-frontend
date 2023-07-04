@@ -10,7 +10,7 @@ import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Top from "../base/top";
 import styles from "./Pickup.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import useUser from "@/components/hooks/useUser";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
@@ -81,7 +81,6 @@ function Row({
       label={branch.name}
       disabled={disabled}
       className={[
-        styles.radiobutton,
         alternativeMatchClass,
         disabledClass,
         animations["on-hover"],
@@ -96,7 +95,6 @@ function Row({
           type="text2"
           dataCy={`text-${branch.name}`}
           className={[
-            styles.library,
             animations["h-border-bottom"],
             animations["h-color-blue"],
           ].join(" ")}
@@ -243,7 +241,7 @@ export function Pickup({
                 : "pickup-search-title-2",
           })}
         </Title>
-        <Text type="text3" className={styles.description}>
+        <Text type="text3">
           {Translate({
             context: "order",
             label: "pickup-search-description",

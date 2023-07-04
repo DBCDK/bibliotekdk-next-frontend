@@ -1,7 +1,7 @@
 import { StoryTitle } from "@/storybook";
 import { HelpTextMenu } from "@/components/help/menu/HelpTextMenu";
 
-import allHelp from "./allHelp.json";
+import allHelp from "./allHelp.fixture.json";
 
 const exportedObject = {
   title: "help/menu",

@@ -4,7 +4,7 @@ import {
   HelpText as NamedHelpText,
 } from "@/components/help/texts/HelpText";
 
-import aHelpText from "./aHelpText.json";
+import aHelpText from "./aHelpText.fixture.json";
 
 const exportedObject = {
   title: "help/Helptext",

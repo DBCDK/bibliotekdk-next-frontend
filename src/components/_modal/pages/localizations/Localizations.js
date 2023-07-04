@@ -6,7 +6,7 @@ import * as libraryFragments from "@/lib/api/library.fragments";
 import Translate from "@/components/base/translate";
 import debounce from "lodash/debounce";
 import Search from "@/components/base/forms/search";
-import LocalizationItem from "./LocalizationItem";
+import LocalizationItem from "./localizationitem/LocalizationItem";
 
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
@@ -45,7 +45,6 @@ export function Localizations({
           context: "order",
           label: "pickup-input-placeholder",
         })}
-        className={styles.input}
         onChange={debounce((value) => onChange(value), 100)}
         id="localizations_search"
       />

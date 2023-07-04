@@ -4,17 +4,6 @@
   align-items: center;
 }
 
-.wrap {
-  width: var(--pt5);
-  height: var(--pt5);
-  border-radius: 50%;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .text {
   width: calc(100% - 40px);
 
@@ -29,7 +18,4 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.type {
 }

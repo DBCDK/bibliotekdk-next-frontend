@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import styles from "./iconButton.module.css";
 import Text from "@/components/base/text";
 import Icon from "@/components/base/icon";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import Link from "@/components/base/link";
 import cx from "classnames";
 
@@ -14,7 +14,10 @@ import cx from "classnames";
  * @param {string} props.alt
  * @param {obj} props.children
  * @param {string} props.icon
- * @returns {component}
+ * @param {string} props.textType
+ * @param {boolean} props.keepUnderline
+ * @param {string} props.dataCy
+ * @returns {JSX.Element}
  */
 function IconButton({
   className,

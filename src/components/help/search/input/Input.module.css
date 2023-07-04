@@ -59,13 +59,13 @@
 }
 
 .form {
-  display: flex;  
+  display: flex;
 }
 
 .input_wrap {
   position: relative;
   line-height: 0;
-  
+
   padding: 0;
   height: 56px;
   width: 100%;
@@ -87,7 +87,6 @@
   transition-timing-function: cubic-bezier(0.38, 1.95, 0.4, 0.4);
 }
 
-.input_wrap .arrow path,
 .input_wrap .clear path {
   fill: var(--blue);
 }

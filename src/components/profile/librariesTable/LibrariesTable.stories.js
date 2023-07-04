@@ -1,5 +1,5 @@
 import { StoryTitle } from "@/storybook";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 import LibrariesTable from "./LibrariesTable";
 

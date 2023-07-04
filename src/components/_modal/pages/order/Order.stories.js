@@ -4,7 +4,7 @@ import Modal from "@/components/_modal";
 import Pages from "@/components/_modal/pages";
 import ReservationButton from "@/components/work/reservationbutton/ReservationButton";
 import merge from "lodash/merge";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 
 const exportedObject = {
   title: "modal/Order",

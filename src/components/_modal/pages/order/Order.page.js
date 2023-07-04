@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import Top from "../base/top";
 import data from "./dummy.data";
+// eslint-disable-next-line css-modules/no-unused-class
 import styles from "./Order.module.css";
 import Edition from "@/components/_modal/pages/edition/Edition";
 import {
@@ -14,7 +15,7 @@ import OrderConfirmationButton from "@/components/_modal/pages/order/orderconfir
 import BlockedUserInformation from "@/components/_modal/pages/order/blockeduserinformation/BlockedUserInformation";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { onMailChange } from "@/components/_modal/pages/order/utils";
+import { onMailChange } from "@/components/_modal/pages/order/utils/order.utils";
 import { useRelevantAccessesForOrderPage } from "@/components/work/utils";
 
 /**

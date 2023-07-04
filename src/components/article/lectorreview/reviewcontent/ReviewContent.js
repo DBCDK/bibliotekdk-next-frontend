@@ -3,7 +3,7 @@
  */
 
 import Section from "@/components/base/section";
-import styles from "@/components/article/lectorreview/LectorReviewPage.module.css";
+import styles from "./ReviewContent.module.css";
 import Col from "react-bootstrap/Col";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";

@@ -1,8 +1,7 @@
 import RightSvg from "@/public/icons/arrowright_no_fill.svg";
 import LeftSvg from "@/public/icons/arrowleft_no_fill.svg";
-import styles from "@/components/work/overview/covercarousel/arrow/Arrow.module.css";
+import styles from "./Arrow.module.css";
 import Icon from "@/components/base/icon";
-import animations from "@/components/base/animation/animations.module.css";
 import Translate from "@/components/base/translate";
 import React from "react";
 
@@ -21,8 +20,6 @@ export function Arrow({
     styles.arrow_functionality,
     dataDisabled && styles.disabled_icon,
     arrowClass,
-    animations["h-elastic"],
-    animations["f-elastic"],
   ].join(" ");
 
   return (

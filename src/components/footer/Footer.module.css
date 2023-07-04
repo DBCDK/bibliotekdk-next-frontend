@@ -31,12 +31,6 @@
   --underline-bottom-hover-color: var(--white);
 }
 
-.disabled {
-  color: var(--gray);
-  cursor: default;
-  pointer-events: none;
-}
-
 .about {
   padding-top: var(--pt5);
 }

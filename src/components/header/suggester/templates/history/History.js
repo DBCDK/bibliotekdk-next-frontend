@@ -23,11 +23,9 @@ import styles from "./History.module.css";
 export function History({ className = "", data = {}, skeleton = false }) {
   const context = { context: "suggester" };
 
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   return (
     <div
-      className={`${styles.history} ${className} ${skeletonClass}`}
+      className={`${styles.history} ${className}`}
       data-cy={cyKey({ name: "history-element", prefix: "suggester" })}
     >
       <div className={styles.wrap}>
@@ -70,7 +68,7 @@ export function History({ className = "", data = {}, skeleton = false }) {
  * @returns {JSX.Element}
  */
 export function HistorySkeleton(props) {
-  return <History {...props} className={styles.skeleton} skeleton={true} />;
+  return <History {...props} skeleton={true} />;
 }
 
 /**

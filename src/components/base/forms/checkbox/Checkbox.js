@@ -19,7 +19,6 @@ export function Checkbox({
   className,
   tabIndex = "0",
   id,
-  invalid,
   checked = false,
   disabled = false,
   onChange,
@@ -41,12 +40,11 @@ export function Checkbox({
 
   const disabledClass = disabled ? styles.disabled : "";
   const readOnlyClass = readOnly ? styles.readOnly : "";
-  const invalidClass = !disabledClass && invalid ? styles.error : "";
 
   return (
     <label
       htmlFor={id}
-      className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${invalidClass} ${className}`}
+      className={`${styles.wrap} ${disabledClass} ${readOnlyClass} ${className}`}
     >
       <input
         id={id}
@@ -95,7 +93,7 @@ Checkbox.propTypes = {
  */
 export function SkeletonCheckbox() {
   return (
-    <div className={`${styles.input} ${styles.skeleton}`}>
+    <div className={`${styles.input}`}>
       <Skeleton />
     </div>
   );

@@ -1,5 +1,5 @@
 import LoansAndReservations from "./Page";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import Modal from "@/components/_modal/Modal";
 import Pages from "@/components/_modal/pages";
 import { StoryTitle, StoryDescription } from "@/storybook";

@@ -260,11 +260,7 @@ function renderInputComponent(
           <ArrowSvg />
         </Icon>
       </span>
-      <input
-        {...props}
-        className={cx(props.className, styles.margin_right_to_input)}
-        title={placeholder}
-      />
+      <input {...props} className={cx(props.className)} title={placeholder} />
       <span
         className={`${styles.clear} ${clearVisibleClass}`}
         onClick={() => {

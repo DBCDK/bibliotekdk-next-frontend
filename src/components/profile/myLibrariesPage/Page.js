@@ -52,7 +52,6 @@ export default function MyLibrariesPage() {
           </Text>
         )}
         <IconButton
-          className={styles.showMoreBtn}
           icon={showMore ? "arrowUp" : "arrowDown"}
           onClick={() => setShowMore(!showMore)}
           keepUnderline={true}

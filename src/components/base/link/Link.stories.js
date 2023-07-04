@@ -1,4 +1,4 @@
-import { StoryTitle, StoryDescription } from "../storybook";
+import { StoryTitle, StoryDescription } from "@/storybook";
 
 import Link from "./Link";
 

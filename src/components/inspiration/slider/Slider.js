@@ -10,8 +10,6 @@ import useElementVisible from "@/components/hooks/useElementVisible";
 import Section from "@/components/base/section";
 import WorkSlider from "@/components/base/slider/WorkSlider";
 
-import styles from "./Slider.module.css";
-
 export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
   const isClient = typeof window !== "undefined";
   const { elementRef, hasBeenSeen } = useElementVisible({
@@ -29,7 +27,7 @@ export function Slider({ data, isLoading, lazyLoad = true, ...props }) {
       {...props}
       elRef={elementRef}
     >
-      <Row className={`${styles.slider}`}>
+      <Row>
         <Col>
           <WorkSlider
             skeleton={isLoading || hide}

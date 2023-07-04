@@ -9,10 +9,8 @@ import Text from "@/components/base/text";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 
-//import { Back } from "@/components/modal";
-
 import styles from "./Login.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 import { signIn } from "next-auth/react";
@@ -52,7 +50,6 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
           type="text2"
           dataCy={`text-${branch.name}`}
           className={[
-            styles.library,
             animations["h-border-bottom"],
             animations["h-color-blue"],
           ].join(" ")}
@@ -64,7 +61,7 @@ function Row({ branch, onSelect, isLoading, disabled, includeArrows, _ref }) {
           />
         </Text>
         {matchOthers && (
-          <Text type="text3" className={styles.alternativeMatch}>
+          <Text type="text3">
             <span
               dangerouslySetInnerHTML={{
                 __html: matchOthers,

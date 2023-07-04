@@ -46,9 +46,9 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;        /* number of lines to show */
-  line-height: 32px;            /* fallback */
-  max-height: calc(32px * 3);   /* fallback */
+  -webkit-line-clamp: 3; /* number of lines to show */
+  line-height: 32px; /* fallback */
+  max-height: calc(32px * 3); /* fallback */
 }
 
 .materials {
@@ -71,10 +71,6 @@
 .creator {
   margin-top: var(--pt1);
 }
-.pagination {
-  display: flex;
-  justify-content: center;
-}
 
 .cover img {
   box-sizing: border-box;
@@ -90,10 +86,6 @@
 @media (min-width: 992px) {
   .wrapper:first-child {
     margin-top: 0;
-  }
-
-  .leftcol {
-    display: unset;
   }
 
   .row_wrapper {

@@ -1,9 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
-      "@/public/*": ["../public/*"]
+      "@/storybook": ["src/components/base/storybook"],
+      "@/storybook/*": ["src/components/base/storybook/*"],
+      "@/public/*": ["public/*"],
+      "css/animations": [
+        "./src/components/base/animation/animations.module.css"
+      ],
+      "css/clamp": ["./src/components/base/clamp/Clamp.module.css"],
+      "@/*": ["src/*"]
     }
   },
   "exclude": ["node_modules", "dist"]
