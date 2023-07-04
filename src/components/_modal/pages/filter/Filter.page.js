@@ -264,7 +264,7 @@ export function Filter(props) {
         <>
           <Top modal={modal} back={false} />
           <span className={styles.wrap}>
-            <Title type="title4">
+            <Title type="title4" tag="h2">
               {Translate({
                 context: "modal",
                 label: "title-filter",

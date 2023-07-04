@@ -281,7 +281,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       </div>
       <div>
         <Title
-          type="title8"
+          type="text1"
           tag="h3"
           className={styles.materialTitle}
           id={`material-title-${id}`}
@@ -490,7 +490,7 @@ const MaterialRow = (props) => {
               )}
             >
               <Title
-                type="title8"
+                type="text1"
                 tag="h3"
                 className={styles.materialTitle}
                 id={`material-title-${id}`}

@@ -22,7 +22,7 @@ function LocalizationInformation({
     <>
       <div className={styles.pickup}>
         <div className={styles.title}>
-          <Title type="title5">
+          <Title type="title5" tag="h3">
             {Translate({
               context: "order",
               label:

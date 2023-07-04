@@ -12,6 +12,7 @@ export function Arrow({
   dataDisabled = false,
   dataCy = `${orientation}_arrow`,
   size = { w: 5, h: 5 },
+  tabIndex = 0,
 }) {
   const ArrowTag = orientation === "right" ? RightSvg : LeftSvg;
 
@@ -33,7 +34,7 @@ export function Arrow({
       onClick={clickCallback}
       tag={"button"}
       dataCy={dataCy}
-      tabIndex="0"
+      tabIndex={tabIndex}
     >
       <ArrowTag />
     </Icon>

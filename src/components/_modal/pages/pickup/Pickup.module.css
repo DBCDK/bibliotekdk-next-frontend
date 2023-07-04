@@ -1,9 +1,6 @@
 .pickup {
   padding: 0 var(--pt2) var(--pt2) var(--pt2);
 }
-.pickup h2 {
-  margin: 0 0 var(--pt2) 0;
-}
 
 .search .input {
   margin: var(--pt2) 0;

@@ -36,7 +36,7 @@ export function Hero({ image }) {
           sm={{ span: 10, offset: 1 }}
           xs={{ span: 12, offset: 0 }}
         >
-          <Title type="title2" className={styles.heromobiletxt}>
+          <Title type="title2" className={styles.heromobiletxt} tag="h1">
             {Translate({
               context: "general",
               label: "heroTxt",
@@ -55,7 +55,7 @@ export function Hero({ image }) {
               className={styles.heroicon}
             />
 
-            <Title type="title2" className={styles.herotitle}>
+            <Title type="title2" className={styles.herotitle} tag="h1">
               {Translate({
                 context: "general",
                 label: "heroTxt",

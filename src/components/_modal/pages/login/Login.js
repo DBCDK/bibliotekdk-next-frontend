@@ -133,7 +133,7 @@ export function LoginPickup({
     <div className={`${styles.login} ${className}`}>
       <Top />
       <div className={styles.search}>
-        <Title type="title4" className={styles.title}>
+        <Title type="title4" className={styles.title} tag="h2">
           {Translate({ context: "order", label: "pickup-search-title-2" })}
         </Title>
         <Text type="text3">

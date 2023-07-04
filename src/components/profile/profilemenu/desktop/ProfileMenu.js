@@ -43,7 +43,9 @@ function MenuLink({ label, href }) {
   return (
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
+        <Title type={type} tag="div">
+          {Translate({ context: CONTEXT, label })}
+        </Title>
       </Link>
     </li>
   );
@@ -150,6 +152,7 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
           className={styles.groupTitle}
           type={isActive ? "title4" : "title5"}
           id={`navigation-${name}`}
+          tag="div"
         >
           {Translate({
             context: CONTEXT,

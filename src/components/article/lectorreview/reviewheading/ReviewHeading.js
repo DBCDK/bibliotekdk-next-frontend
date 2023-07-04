@@ -7,7 +7,7 @@ import Section from "@/components/base/section";
 import styles from "./ReviewHeading.module.css";
 import Col from "react-bootstrap/Col";
 import Translate from "@/components/base/translate";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 import MaterialCard from "@/components/base/materialcard/MaterialCard";
 import { templateForHeaderWorkCard } from "@/components/base/materialcard/templates/templates";
 import * as PropTypes from "prop-types";

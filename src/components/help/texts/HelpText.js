@@ -25,7 +25,7 @@ export function HelpText({ helptext }) {
         <Title
           type="title4"
           className={styles.title}
-          data-cy={"help-text-title"}
+          dataCy={"help-text-title"}
         >
           {helptext.title}
         </Title>

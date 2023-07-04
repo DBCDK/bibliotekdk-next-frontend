@@ -21,7 +21,7 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
@@ -92,83 +92,83 @@ export function Overview({
   ];
 
   return (
-    <div className={`${styles.background} ${className}`}>
-      <Container fluid>
-        <Row className={`${styles.overview}`}>
-          {/* Breadcrumbs */}
-          <Col xs={12} xl={3} className={styles.breadcrumbs}>
-            <Breadcrumbs workId={workId} />
+    <Container
+      fluid
+      className={`${styles.background} ${className}`}
+      as="section"
+    >
+      <Row className={`${styles.overview}`}>
+        {/* Breadcrumbs */}
+        <Col xs={12} xl={3} className={styles.breadcrumbs}>
+          <Breadcrumbs workId={workId} />
+        </Col>
+
+        {/* Cover and MaterialInformation */}
+        <Col xs={12} xl={9} className={styles.cover_and_materialInformation}>
+          {/* Cover */}
+          <Col xs={{ order: 1 }} md={{ order: 2 }} className={styles.cover}>
+            <CoverCarousel
+              allPids={allPids}
+              selectedPids={selectedPids}
+              workTitles={work?.titles}
+            />
           </Col>
 
-          {/* Cover and MaterialInformation */}
-          <Col xs={12} xl={9} className={styles.cover_and_materialInformation}>
-            {/* Cover */}
-            <Col xs={{ order: 1 }} md={{ order: 2 }} className={styles.cover}>
-              <CoverCarousel
-                allPids={allPids}
-                selectedPids={selectedPids}
-                workTitles={work?.titles}
-              />
-            </Col>
-
-            {/* MaterialInformation */}
-            <Col
-              xs={{ order: 2 }}
-              md={{ order: 1 }}
-              className={`${styles.about}`}
-            >
-              <Col xs={12}>
-                <Title
-                  type={"title3"}
-                  skeleton={skeleton}
-                  data-cy={"title-overview"}
-                >
-                  <RenderTitlesWithoutLanguage titles={titles} />
-                  <RenderLanguageAddition work={work} />
-                </Title>
-              </Col>
-              <Col xs={12}>
-                <WorkGroupingsOverview workId={workId} />
-              </Col>
-              <Col xs={12} className={styles.ornament}>
-                <Icon
-                  size={{ w: 7, h: "auto" }}
-                  src={"ornament1.svg"}
-                  skeleton={skeleton}
-                  alt=""
-                />
-              </Col>
-              <Col xs={12}>
-                <CreatorsArray creators={work?.creators} />
-              </Col>
-              <Col xs={12} className={styles.materials}>
-                <MaterialTypeSwitcher
-                  uniqueMaterialTypes={uniqueMaterialTypes}
-                  skeleton={skeleton}
-                  onTypeChange={onTypeChange}
-                  type={type}
-                />
-              </Col>
-              <Col xs={12} sm={9} xl={7} className={styles.basket}>
-                <ReservationButton
-                  workId={workId}
-                  selectedPids={selectedPids}
-                />
-              </Col>
-              <OrderButtonTextBelow
-                workId={workId}
-                selectedPids={selectedPids}
+          {/* MaterialInformation */}
+          <Col
+            xs={{ order: 2 }}
+            md={{ order: 1 }}
+            className={`${styles.about}`}
+          >
+            <Col xs={12}>
+              <Title
+                tag="h1"
+                type="title3"
                 skeleton={skeleton}
+                dataCy="title-overview"
+              >
+                <RenderTitlesWithoutLanguage titles={titles} />
+                <RenderLanguageAddition work={work} />
+              </Title>
+            </Col>
+            <Col xs={12}>
+              <WorkGroupingsOverview workId={workId} />
+            </Col>
+            <Col xs={12} className={styles.ornament}>
+              <Icon
+                size={{ w: 7, h: "auto" }}
+                src={"ornament1.svg"}
+                skeleton={skeleton}
+                alt=""
               />
-              <AlternativeOptions workId={workId} selectedPids={selectedPids} />
-              <Col xs={12} className={styles.info}>
-                <LocalizationsLink selectedPids={selectedPids} />
-              </Col>
+            </Col>
+            <Col xs={12}>
+              <CreatorsArray creators={work?.creators} />
+            </Col>
+            <Col xs={12} className={styles.materials}>
+              <MaterialTypeSwitcher
+                uniqueMaterialTypes={uniqueMaterialTypes}
+                skeleton={skeleton}
+                onTypeChange={onTypeChange}
+                type={type}
+              />
+            </Col>
+            <Col xs={12} sm={9} xl={7} className={styles.basket}>
+              <ReservationButton workId={workId} selectedPids={selectedPids} />
+            </Col>
+            <OrderButtonTextBelow
+              workId={workId}
+              selectedPids={selectedPids}
+              skeleton={skeleton}
+            />
+            <AlternativeOptions workId={workId} selectedPids={selectedPids} />
+            <Col xs={12} className={styles.info}>
+              <LocalizationsLink selectedPids={selectedPids} />
             </Col>
           </Col>
-        </Row>
-      </Container>
-    </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

@@ -55,12 +55,22 @@ function Text({
       className={cx(
         styles.text,
         {
+          [styles.text]: textTypes.includes(type),
+          [styles.title]: titleTypes.includes(type),
           [styles.text1]: type === "text1",
           [styles.text2]: type === "text2",
           [styles.text3]: type === "text3",
           [styles.text4]: type === "text4",
           [styles.text5]: type === "text5",
           [styles.text6]: type === "text6",
+          [styles.title1]: type === "title1",
+          [styles.title2]: type === "title2",
+          [styles.title3]: type === "title3",
+          [styles.title4]: type === "title4",
+          [styles.title5]: type === "title5",
+          [styles.title6]: type === "title6",
+          [styles.title6b]: type === "title6b",
+          [styles.title7]: type === "title7",
         },
         className,
         clampClasses.join(" ")
@@ -83,7 +93,7 @@ function Text({
  *
  * @returns {component}
  */
-function TextSkeleton(props) {
+export function TextSkeleton(props) {
   if (!props.lines) {
     return null;
   }
@@ -125,6 +135,17 @@ export default function Container(props) {
   return <Text {...props} />;
 }
 
+const textTypes = ["text1", "text2", "text3", "text4", "text5", "text6"];
+const titleTypes = [
+  "title1",
+  "title2",
+  "title3",
+  "title4",
+  "title5",
+  "title6",
+  "title7",
+];
+
 // PropTypes for the component
 Container.propTypes = {
   id: PropTypes.string,
@@ -136,7 +157,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf(["text1", "text2", "text3", "text4", "text5", "text6"]),
-  tag: PropTypes.oneOf(["p", "span", "div", "label"]),
+  type: PropTypes.oneOf([...textTypes, ...titleTypes]),
+  tag: PropTypes.string, // Support all tags.
   skeleton: PropTypes.bool,
 };

@@ -11,6 +11,7 @@
   font-family: var(--body-font-semibold);
   transition: color 0.5s;
   color: var(--blue);
+  margin-left: 2px; /* Account for outline, and align with content */
 }
 
 .fullmanifestation .alternativeoptions {
