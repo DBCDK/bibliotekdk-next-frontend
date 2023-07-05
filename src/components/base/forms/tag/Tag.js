@@ -108,7 +108,7 @@ Container.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
-  opaqueText: PropTypes.bool, // Use for disabled but
+  opaqueText: PropTypes.bool, // Use for disabled but opaque text
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
   tag: PropTypes.string,
