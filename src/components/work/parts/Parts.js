@@ -5,7 +5,7 @@
 
 import Section from "@/components/base/section";
 import Row from "react-bootstrap/Row";
-import styles from "@/components/work/parts/Parts.module.css";
+import styles from "./Parts.module.css";
 import Col from "react-bootstrap/Col";
 import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
 import { useData } from "@/lib/api/api";

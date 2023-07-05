@@ -5,6 +5,7 @@ import { cyKey } from "@/utils/trim";
 import Skeleton from "@/components/base/skeleton";
 
 import styles from "./Button.module.css";
+import cx from "classnames";
 
 function handleOnButtonClick() {
   alert("Button clicked!");
@@ -36,7 +37,18 @@ function Button({
     <button
       id={id}
       data-cy={key}
-      className={`${className} ${styles.button} ${styles[size]} ${styles[type]}  ${disabledStyle}`}
+      className={cx(
+        className,
+        styles.button,
+        {
+          [styles.large]: size === "large",
+          [styles.medium]: size === "medium",
+          [styles.small]: size === "small",
+          [styles.primary]: type === "primary",
+          [styles.secondary]: type === "secondary",
+        },
+        disabledStyle
+      )}
       onClick={(e) => (onClick ? onClick(e) : handleOnButtonClick(e))}
       aria-disabled={disabled}
       disabled={disabled}

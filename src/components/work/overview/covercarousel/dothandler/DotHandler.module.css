@@ -26,7 +26,7 @@
 
 .dot::after {
   isolation: isolate;
-  content: '';
+  content: "";
   position: absolute;
 
   z-index: 1;
@@ -42,7 +42,7 @@
 }
 
 .dot::before {
-  content: '';
+  content: "";
   position: absolute;
 
   z-index: -1;
@@ -58,9 +58,7 @@
 
 .dot:is(:hover, :focus)::after,
 .dot.active_dot::after {
-  transform:
-    translate(-50%, -50%)
-  ;
+  transform: translate(-50%, -50%);
 }
 
 .dot.active_dot {
@@ -74,7 +72,5 @@
 .plus_covers {
   cursor: default;
   color: var(--gray);
-  transform:
-    translateX(calc(var(--pt1) * -1))
-  ;
+  transform: translateX(calc(var(--pt1) * -1));
 }

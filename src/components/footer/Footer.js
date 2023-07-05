@@ -198,7 +198,7 @@ const BranchLinks = () => {
  */
 const FooterSection = () => {
   return (
-    <div className={styles.containerback}>
+    <footer className={styles.containerback}>
       <Container fluid>
         <Row
           as="section"
@@ -238,7 +238,7 @@ const FooterSection = () => {
           </Col>
         </Row>
       </Container>
-    </div>
+    </footer>
   );
 };
 

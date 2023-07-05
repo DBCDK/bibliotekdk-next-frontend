@@ -1,7 +1,7 @@
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
-import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
+import styles from "./ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -43,7 +43,9 @@ function MenuLink({ label, href }) {
   return (
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
+        <Title type={type} tag="div">
+          {Translate({ context: CONTEXT, label })}
+        </Title>
       </Link>
     </li>
   );
@@ -150,6 +152,7 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
           className={styles.groupTitle}
           type={isActive ? "title4" : "title5"}
           id={`navigation-${name}`}
+          tag="div"
         >
           {Translate({
             context: CONTEXT,

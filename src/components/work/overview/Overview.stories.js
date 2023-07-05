@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Overview, { OverviewSkeleton } from "./Overview";
 import { StoryTitle, StoryDescription } from "@/storybook";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import merge from "lodash/merge";
 
 const exportedObject = {

@@ -4,7 +4,7 @@ import { default as NextLink } from "next/link";
 import AnimationLine from "@/components/base/animation/line";
 
 import styles from "./Link.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import cx from "classnames";
 
 function parseBorders(border) {
@@ -45,6 +45,7 @@ function Link({
   ariaLabel = "",
   scroll = true,
   data_use_new_underline = false,
+  ...props
 }) {
   const Tag = tag;
   // Maybe wrap with an a-tag
@@ -75,6 +76,7 @@ function Link({
         }
         tabIndex={disabled ? "-1" : tabIndex}
         aria-label={ariaLabel}
+        {...props}
       >
         {border.top && <AnimationLine keepVisible={!!border.top.keepVisible} />}
         {children}
@@ -137,8 +139,8 @@ Link.propTypes = {
   border: PropType_Link_border,
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   href: PropType_Link_href,
-  tabIndex: PropTypes.string,
-  tag: PropTypes.oneOf(["a", "span"]),
+  tabIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  tag: PropTypes.string, // support any tag
   disabled: PropTypes.bool,
   ariaLabel: PropTypes.string,
 };
@@ -192,7 +194,6 @@ export default function Wrap({
       className={newClassName}
       disabled={disabled}
       data_use_new_underline={data_use_new_underline}
-      data_underline_animation_disabled={data_underline_animation_disabled}
       {...props}
     >
       {props.children}

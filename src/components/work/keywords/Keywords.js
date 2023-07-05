@@ -175,7 +175,7 @@ function KeyWordList({ className, grouped, skeleton, sizeClass }) {
                   className={`${styles.keyword} ${sizeClass}`}
                   key={`${key}-${JSON.stringify(display)}`}
                 >
-                  <Title type="title4" skeleton={skeleton}>
+                  <Title type="title4" skeleton={skeleton} tag="div">
                     <Link
                       href={url(display)}
                       border={{ bottom: { keepVisible: true } }}
@@ -218,6 +218,7 @@ export function Keywords({ className = "", data = [], skeleton = false }) {
       title={Translate({ ...context, label: "title" })}
       space={{ top: "var(--pt8)" }}
       backgroundColor="var(--jagged-ice)"
+      sectionTag="div" // Section sat in parent
     >
       <KeyWordList
         className={className}

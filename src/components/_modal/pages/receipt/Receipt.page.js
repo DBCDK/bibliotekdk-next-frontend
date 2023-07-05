@@ -62,7 +62,6 @@ export function Receipt({
   }
 
   // Define order status' class'
-  const orderingClass = isOrdering ? styles.ordering : "";
   const orderedClass = isOrdered && !delay ? styles.ordered : "";
   const failedClass = isFailed && !delay ? styles.failed : "";
 
@@ -76,9 +75,7 @@ export function Receipt({
   const duration = articleOrderIsLoading ? 10 : 1;
 
   return (
-    <div
-      className={`${styles.receipt} ${orderingClass} ${orderedClass} ${failedClass}`}
-    >
+    <div className={`${styles.receipt} ${orderedClass} ${failedClass}`}>
       <div className={styles.container}>
         <Top className={{ top: styles.top }} back={false} />
         <div className={`${styles.wrap} ${styles.progress}`}>
@@ -97,7 +94,7 @@ export function Receipt({
               <Icon size={3} src="check.svg" />
             </div>
 
-            <Title className={styles.title} type="title4">
+            <Title className={styles.title} type="title4" tag="h2">
               {Translate({ context: "order", label: "order-success" })}
             </Title>
 

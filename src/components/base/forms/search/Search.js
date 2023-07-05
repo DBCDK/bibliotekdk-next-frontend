@@ -32,7 +32,6 @@ function Search(props) {
       <Input
         {...props}
         type="input"
-        className={styles.input}
         onBlur={(e) => onBlur && onBlur(e?.target?.value)}
         onChange={(e) => onChange && onChange(e.target.value)}
         aria-label={props.placeholder}

@@ -24,7 +24,7 @@ export default function BurgerIcon(props) {
       className={`${className} ${styles.trigger}`}
       animation={true}
     >
-      <div className={styles.burger}>
+      <div>
         <div className={styles.icon}>
           <div className={styles.line} />
           <div className={styles.line} />

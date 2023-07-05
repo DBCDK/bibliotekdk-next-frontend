@@ -1,4 +1,5 @@
-import styles from "@/components/_modal/pages/order/Order.module.css";
+// eslint-disable-next-line css-modules/no-unused-class
+import styles from "./OrdererInformation.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
@@ -7,7 +8,7 @@ import Email from "@/components/base/forms/email";
 import debounce from "lodash/debounce";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils";
+import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
 
 export function OrdererInformation({
   isLoadingBranches,
@@ -28,7 +29,7 @@ export function OrdererInformation({
     <>
       {(isLoadingBranches || name) && (
         <div className={styles.user}>
-          <Title type="title5">
+          <Title type="title5" tag="h3">
             {Translate({ context: "order", label: "ordered-by" })}
           </Title>
           <div className={styles.name}>

@@ -1,7 +1,6 @@
 import { parseManifestation } from "../manifestationParser";
 import twoRows from "./__fixtures__/objectWithTwoArray.json";
 import twoElements from "./__fixtures__/objectWithtwoElements.json";
-import { test } from "@jest/globals";
 
 test("Test_parseManifestation", () => {
   // corner cases empty array

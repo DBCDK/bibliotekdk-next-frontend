@@ -112,8 +112,27 @@ function Menu({
   const isScrollingClass =
     isSticky && isScrolling ? `scrolling ${styles.isScrolling}` : "";
 
+  const handleClick = (e, id, section) => {
+    e.preventDefault();
+    setIsScrolling(true);
+    setIsClicked(id);
+    handleScroll(
+      window,
+      section.element,
+      section.offset,
+      // callback
+      () => {
+        setTimeout(() => {
+          setIsScrolling(false);
+          setIsClicked(false);
+        }, 100);
+        alignMenuItem(itemsWrap, itemRefs.current[id], 16);
+      }
+    );
+  };
+
   return (
-    <div
+    <nav
       className={styles.wrap}
       ref={menuWrap}
       style={{ height }}
@@ -151,30 +170,16 @@ function Menu({
 
                 return (
                   <Link
-                    tabIndex="-1"
                     key={`link-${id}`}
                     linkRef={itemRef}
                     className={`anchor-menu-item ${styles.item} ${activeClass} ${isClickedClass}`}
                     dataCy="anchor-menu-item"
-                    tag="span"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setIsScrolling(true);
-                      setIsClicked(id);
-
-                      handleScroll(
-                        window,
-                        section.element,
-                        section.offset,
-                        // callback
-                        () => {
-                          setTimeout(() => {
-                            setIsScrolling(false);
-                            setIsClicked(false);
-                          }, 100);
-                          alignMenuItem(itemsWrap, itemRefs.current[id], 16);
-                        }
-                      );
+                    onClick={(e) => handleClick(e, id, section)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handleClick(e, id, section);
+                        section?.element?.focus();
+                      }
                     }}
                   >
                     <Text type={"text2"}>{titles[id]}</Text>
@@ -185,7 +190,7 @@ function Menu({
           </Row>
         </Container>
       </div>
-    </div>
+    </nav>
   );
 }
 
@@ -215,6 +220,7 @@ function Element({ id, children, sectionRef, onChange }) {
       data-cy="anchor-section"
       className="anchor-section"
       ref={sectionRef}
+      tabIndex={-1} // Not tabbable, but able to set focus
     >
       {children}
     </div>

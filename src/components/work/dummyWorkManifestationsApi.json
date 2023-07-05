@@ -1,703 +1,635 @@
 {
   "work": {
-  "cover": {
-    "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54189141&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dc9018aa5381fc2f69c9"
+    "cover": {
+      "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54189141&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dc9018aa5381fc2f69c9"
+    },
+    "path": ["Bøger", "Fiktion", "skønlitteratur", "roman"],
+    "seo": {
+      "title": "Månesøsteren af Lucinda Riley",
+      "description": "Lån Månesøsteren som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
+    },
+    "workTypes": ["literature"],
+    "manifestations": [
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54189141&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dc9018aa5381fc2f69c9"
+        },
+        "datePublished": "2018",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "1. udgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763855099",
+        "materialType": "Bog",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:54189141",
+        "physicalDescription": "636 sider",
+        "publisher": ["Cicero"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47137721&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2713f5ea8b21c204b759"
+        },
+        "datePublished": "2019",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "2. udgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763863711",
+        "materialType": "Bog",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": ["Tidligere: 1. udgave. 2018. ISBN: 9788763855099"],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:47137721",
+        "physicalDescription": "636 sider",
+        "publisher": ["Cicero"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=38467212&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=038128a6d18b8ab90038"
+        },
+        "datePublished": "2020",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "3. udgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763865425",
+        "materialType": "Bog",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": ["Tidligere: 2. udgave. 2019. ISBN: 9788763863711"],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:38467212",
+        "physicalDescription": "636 sider",
+        "publisher": ["Cicero"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          },
+          {
+            "type": "edt",
+            "functionSingular": "redaktør",
+            "name": "Vibeke Hvidtfeldt"
+          }
+        ],
+        "cover": {
+          "detail": null
+        },
+        "datePublished": "2019",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "MagnaPrintudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788793852112",
+        "materialType": "Bog stor skrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "800010-katalog:99123305309405763__1",
+        "physicalDescription": "357 sider",
+        "publisher": ["Nyt Dansk Litteraturselskab"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
+        "volume": "Bind 2"
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          },
+          {
+            "type": "edt",
+            "functionSingular": "redaktør",
+            "name": "Vibeke Hvidtfeldt"
+          }
+        ],
+        "cover": {
+          "detail": null
+        },
+        "datePublished": "2019",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "MagnaPrintudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788793852112",
+        "materialType": "Bog stor skrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "800010-katalog:99123305311205763__1",
+        "physicalDescription": "377 sider",
+        "publisher": ["Nyt Dansk Litteraturselskab"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
+        "volume": "Bind 3"
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          },
+          {
+            "type": "edt",
+            "functionSingular": "redaktør",
+            "name": "Vibeke Hvidtfeldt"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322448&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=bf2a504e45b5ccb0fce2"
+        },
+        "datePublished": "",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "MagnaPrintudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788793852112",
+        "materialType": "Bog stor skrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:47322448",
+        "physicalDescription": "356 sider",
+        "publisher": ["Nyt Dansk Litteraturselskab"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
+        "volume": "Bind 1"
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          },
+          {
+            "type": "edt",
+            "functionSingular": "redaktør",
+            "name": "Vibeke Hvidtfeldt"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322472&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=2e687eb89f0032b1c132"
+        },
+        "datePublished": "",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "MagnaPrintudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788793852112",
+        "materialType": "Bog stor skrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:47322472",
+        "physicalDescription": "357 sider",
+        "publisher": ["Nyt Dansk Litteraturselskab"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
+        "volume": "Bind 2"
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          },
+          {
+            "type": "edt",
+            "functionSingular": "redaktør",
+            "name": "Vibeke Hvidtfeldt"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322529&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=c89f18741ed8afb395dc"
+        },
+        "datePublished": "",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "MagnaPrintudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788793852112",
+        "materialType": "Bog stor skrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:47322529",
+        "physicalDescription": "377 sider",
+        "publisher": ["Nyt Dansk Litteraturselskab"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
+        "volume": "Bind 3"
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54979037&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=685ccd1547f8f27ba735"
+        },
+        "datePublished": "2018",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "1. eBogsudgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763859059",
+        "materialType": "E-bog",
+        "notes": ["Downloades i EPUB-format"],
+        "language": ["Dansk"],
+        "originals": [],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:54979037",
+        "physicalDescription": "",
+        "publisher": ["Cicero"],
+        "shelf": null,
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "dkind",
+            "functionSingular": "indlæser",
+            "name": "Maria Stokholm"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=45942570&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=fe1a6480c3a5c81da5db"
+        },
+        "datePublished": "2018",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "1. udgave",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763897167",
+        "materialType": "Lydbog (cd)",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [
+          "Gengivelse af bogen",
+          "Indlæst efter 1. udgave. 2018. ISBN: 9788763855099"
+        ],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:45942570",
+        "physicalDescription": "18 cd'er i 1 mappe (20 t., 15 min.)",
+        "publisher": ["Cicero", "AV Forlaget Den Grimme Ælling"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "aut",
+            "functionSingular": "forfatter",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "dkind",
+            "functionSingular": "indlæser",
+            "name": "Maria Stokholm"
+          },
+          {
+            "type": "trl",
+            "functionSingular": "oversætter",
+            "name": "Ulla Lauridsen"
+          }
+        ],
+        "cover": {
+          "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54982003&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4ecdd18ccecbaa11d581"
+        },
+        "datePublished": "2018",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": "9788763860079",
+        "materialType": "Lydbog (net)",
+        "notes": ["Downloades i MP3-format"],
+        "language": ["Dansk"],
+        "originals": [
+          "Gengivelse af bogen",
+          "Indlæst efter 1. udgave. 2018. ISBN: 9788763855099"
+        ],
+        "originalTitle": "The moon sister",
+        "pid": "870970-basis:54982003",
+        "physicalDescription": "",
+        "publisher": ["Cicero"],
+        "shelf": null,
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "",
+            "functionSingular": "",
+            "name": "Lucinda Riley"
+          },
+          {
+            "type": "",
+            "functionSingular": "",
+            "name": "Maria Stokholm"
+          }
+        ],
+        "cover": {
+          "detail": null
+        },
+        "datePublished": "2019",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": null,
+        "materialType": "Lydbog (net)",
+        "notes": [
+          "Spilletid: 20 t., 11 min.",
+          "Digital lydbog uden tekst",
+          "Indlæst i 2018",
+          "Indlæser: Maria Stokholm"
+        ],
+        "language": ["Dansk"],
+        "originals": [
+          "Indlæst efter udgaven: Kbh. : Cicero, 2018",
+          "Kopieret efter udgaven: Kbh. : Cicero, 2018"
+        ],
+        "originalTitle": "The moon sister",
+        "pid": "874310-katalog:DBB0046573",
+        "physicalDescription": "581166275 bytes",
+        "publisher": ["Nota"],
+        "shelf": null,
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      },
+      {
+        "inLanguage": "da",
+        "usedLanguage": null,
+        "content": [],
+        "creators": [
+          {
+            "type": "",
+            "functionSingular": "",
+            "name": "Lucinda Riley"
+          }
+        ],
+        "cover": {
+          "detail": null
+        },
+        "datePublished": "2019",
+        "dk5": [
+          {
+            "value": "83-26"
+          },
+          {
+            "value": "sk"
+          }
+        ],
+        "edition": "",
+        "hostPublication": null,
+        "physicalDescriptionArticles": null,
+        "isbn": null,
+        "materialType": "Punktskrift",
+        "notes": [],
+        "language": ["Dansk"],
+        "originals": [
+          "Også udgivet som:",
+          "AutoBraille version af udgaven: Kbh. : Cicero, 2018"
+        ],
+        "originalTitle": "The moon sister",
+        "pid": "874310-katalog:DBB0419047",
+        "physicalDescription": "18 bind",
+        "publisher": ["Nota"],
+        "shelf": "skønlitteratur",
+        "title": "Månesøsteren : Tiggys historie",
+        "volume": null
+      }
+    ]
   },
-  "path": [
-    "Bøger",
-    "Fiktion",
-    "skønlitteratur",
-    "roman"
-  ],
-      "seo": {
-    "title": "Månesøsteren af Lucinda Riley",
-        "description": "Lån Månesøsteren som bog, e-bog eller lydbog. Bestil, reserver, lån fra alle danmarks biblioteker. Afhent på dit lokale bibliotek eller find online."
-  },
-  "workTypes": [
-    "literature"
-  ],
-      "manifestations": [
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54189141&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=dc9018aa5381fc2f69c9"
-      },
-      "datePublished": "2018",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "1. udgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763855099",
-      "materialType": "Bog",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:54189141",
-      "physicalDescription": "636 sider",
-      "publisher": [
-        "Cicero"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47137721&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=2713f5ea8b21c204b759"
-      },
-      "datePublished": "2019",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "2. udgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763863711",
-      "materialType": "Bog",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Tidligere: 1. udgave. 2018. ISBN: 9788763855099"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:47137721",
-      "physicalDescription": "636 sider",
-      "publisher": [
-        "Cicero"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=38467212&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=038128a6d18b8ab90038"
-      },
-      "datePublished": "2020",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "3. udgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763865425",
-      "materialType": "Bog",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Tidligere: 2. udgave. 2019. ISBN: 9788763863711"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:38467212",
-      "physicalDescription": "636 sider",
-      "publisher": [
-        "Cicero"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        },
-        {
-          "type": "edt",
-          "functionSingular": "redaktør",
-          "name": "Vibeke Hvidtfeldt"
-        }
-      ],
-      "cover": {
-        "detail": null
-      },
-      "datePublished": "2019",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "MagnaPrintudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788793852112",
-      "materialType": "Bog stor skrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "800010-katalog:99123305309405763__1",
-      "physicalDescription": "357 sider",
-      "publisher": [
-        "Nyt Dansk Litteraturselskab"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
-      "volume": "Bind 2"
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        },
-        {
-          "type": "edt",
-          "functionSingular": "redaktør",
-          "name": "Vibeke Hvidtfeldt"
-        }
-      ],
-      "cover": {
-        "detail": null
-      },
-      "datePublished": "2019",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "MagnaPrintudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788793852112",
-      "materialType": "Bog stor skrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "800010-katalog:99123305311205763__1",
-      "physicalDescription": "377 sider",
-      "publisher": [
-        "Nyt Dansk Litteraturselskab"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
-      "volume": "Bind 3"
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        },
-        {
-          "type": "edt",
-          "functionSingular": "redaktør",
-          "name": "Vibeke Hvidtfeldt"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322448&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=bf2a504e45b5ccb0fce2"
-      },
-      "datePublished": "",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "MagnaPrintudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788793852112",
-      "materialType": "Bog stor skrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:47322448",
-      "physicalDescription": "356 sider",
-      "publisher": [
-        "Nyt Dansk Litteraturselskab"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
-      "volume": "Bind 1"
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        },
-        {
-          "type": "edt",
-          "functionSingular": "redaktør",
-          "name": "Vibeke Hvidtfeldt"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322472&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=2e687eb89f0032b1c132"
-      },
-      "datePublished": "",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "MagnaPrintudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788793852112",
-      "materialType": "Bog stor skrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:47322472",
-      "physicalDescription": "357 sider",
-      "publisher": [
-        "Nyt Dansk Litteraturselskab"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
-      "volume": "Bind 2"
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        },
-        {
-          "type": "edt",
-          "functionSingular": "redaktør",
-          "name": "Vibeke Hvidtfeldt"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=47322529&attachment_type=forside_stor&bibliotek=870970&source_id=870970&key=c89f18741ed8afb395dc"
-      },
-      "datePublished": "",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "MagnaPrintudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788793852112",
-      "materialType": "Bog stor skrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:47322529",
-      "physicalDescription": "377 sider",
-      "publisher": [
-        "Nyt Dansk Litteraturselskab"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie (MagnaPrintserien)",
-      "volume": "Bind 3"
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54979037&attachment_type=forside_stor&bibliotek=870970&source_id=150015&key=685ccd1547f8f27ba735"
-      },
-      "datePublished": "2018",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "1. eBogsudgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763859059",
-      "materialType": "E-bog",
-      "notes": [
-        "Downloades i EPUB-format"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:54979037",
-      "physicalDescription": "",
-      "publisher": [
-        "Cicero"
-      ],
-      "shelf": null,
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "dkind",
-          "functionSingular": "indlæser",
-          "name": "Maria Stokholm"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=45942570&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=fe1a6480c3a5c81da5db"
-      },
-      "datePublished": "2018",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "1. udgave",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763897167",
-      "materialType": "Lydbog (cd)",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Gengivelse af bogen",
-        "Indlæst efter 1. udgave. 2018. ISBN: 9788763855099"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:45942570",
-      "physicalDescription": "18 cd'er i 1 mappe (20 t., 15 min.)",
-      "publisher": [
-        "Cicero",
-        "AV Forlaget Den Grimme Ælling"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "aut",
-          "functionSingular": "forfatter",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "dkind",
-          "functionSingular": "indlæser",
-          "name": "Maria Stokholm"
-        },
-        {
-          "type": "trl",
-          "functionSingular": "oversætter",
-          "name": "Ulla Lauridsen"
-        }
-      ],
-      "cover": {
-        "detail": "https://moreinfo.addi.dk/2.11/more_info_get.php?lokalid=54982003&attachment_type=forside_stor&bibliotek=870970&source_id=150020&key=4ecdd18ccecbaa11d581"
-      },
-      "datePublished": "2018",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": "9788763860079",
-      "materialType": "Lydbog (net)",
-      "notes": [
-        "Downloades i MP3-format"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Gengivelse af bogen",
-        "Indlæst efter 1. udgave. 2018. ISBN: 9788763855099"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "870970-basis:54982003",
-      "physicalDescription": "",
-      "publisher": [
-        "Cicero"
-      ],
-      "shelf": null,
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "",
-          "functionSingular": "",
-          "name": "Lucinda Riley"
-        },
-        {
-          "type": "",
-          "functionSingular": "",
-          "name": "Maria Stokholm"
-        }
-      ],
-      "cover": {
-        "detail": null
-      },
-      "datePublished": "2019",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": null,
-      "materialType": "Lydbog (net)",
-      "notes": [
-        "Spilletid: 20 t., 11 min.",
-        "Digital lydbog uden tekst",
-        "Indlæst i 2018",
-        "Indlæser: Maria Stokholm"
-      ],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Indlæst efter udgaven: Kbh. : Cicero, 2018",
-        "Kopieret efter udgaven: Kbh. : Cicero, 2018"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "874310-katalog:DBB0046573",
-      "physicalDescription": "581166275 bytes",
-      "publisher": [
-        "Nota"
-      ],
-      "shelf": null,
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    },
-    {
-      "inLanguage": "da",
-      "usedLanguage": null,
-      "content": [],
-      "creators": [
-        {
-          "type": "",
-          "functionSingular": "",
-          "name": "Lucinda Riley"
-        }
-      ],
-      "cover": {
-        "detail": null
-      },
-      "datePublished": "2019",
-      "dk5": [
-        {
-          "value": "83-26"
-        },
-        {
-          "value": "sk"
-        }
-      ],
-      "edition": "",
-      "hostPublication": null,
-      "physicalDescriptionArticles": null,
-      "isbn": null,
-      "materialType": "Punktskrift",
-      "notes": [],
-      "language": [
-        "Dansk"
-      ],
-      "originals": [
-        "Også udgivet som:",
-        "AutoBraille version af udgaven: Kbh. : Cicero, 2018"
-      ],
-      "originalTitle": "The moon sister",
-      "pid": "874310-katalog:DBB0419047",
-      "physicalDescription": "18 bind",
-      "publisher": [
-        "Nota"
-      ],
-      "shelf": "skønlitteratur",
-      "title": "Månesøsteren : Tiggys historie",
-      "volume": null
-    }
-  ]
-},
   "monitor": "OK"
 }

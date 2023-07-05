@@ -1,3 +1,10 @@
+/* TODO: Add these */
+.imageContainer_mobile {
+}
+.materialTitle {
+}
+/* --- */
+
 .materialHeaderRow {
   display: grid;
   grid-column-gap: var(--pt3);
@@ -89,9 +96,10 @@
   justify-self: flex-end;
 }
 
-.dynamicColumn_mobile {
-  margin-top: var(--pt1);
-}
+/* TODO */
+/*.dynamicColumn_mobile {*/
+/*  margin-top: var(--pt1);*/
+/*}*/
 
 .blackUnderline * {
   display: inline;
@@ -110,10 +118,6 @@
 .isWarning {
   display: block;
   color: var(--error_temp);
-}
-
-.block {
-  display: block;
 }
 
 .inlineBlock {
