@@ -56,8 +56,6 @@ function useUserImpl() {
   const { data: session } = useSession();
   const sessionMutate = useMutate();
   const isAuthenticated = !!session?.user?.uniqueId;
-  const [isFirstRun, setIsFirstRun] = useState(true);
-  const [copyLoanerInfo, setCopyLoanerInfo] = useState({});
 
   const {
     data: userData,
@@ -65,7 +63,6 @@ function useUserImpl() {
     error: userDataError,
     mutate: userMutate,
     isValidating,
-    isReallyLoading,
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
@@ -96,62 +93,6 @@ function useUserImpl() {
     };
   }, [data?.session, loggedInUser]);
 
-  //remove useMemo --> useEffect / state
-  //elelr isValidating og previousData
-  // const loanerInfo = useMemo(() => {
-  //   // console.log("session", sessionData);
-  //   let debt = [];
-  //   let loans = [];
-  //   let orders = [];
-  //   let agency = {};
-
-  //   if (isAuthenticated) {
-  //     console.log("authenticated");
-  //     if (isFirstRun) {
-  //       if (userData?.user) {
-  //         console.log("first time and we have userdata");
-
-  //         setIsFirstRun(false);
-  //         setCopyLoanerInfo({ ...userData?.user });
-  //         debt = userData?.user?.debt;
-  //         loans = userData?.user?.loans;
-  //         orders = userData?.user?.orders;
-  //         agency = userData?.user?.agency;
-  //       } else {
-  //         setIsFirstRun(false);
-  //         console.log("first time and we dont have userdata");
-  //         debt = userData?.user?.debt;
-  //         loans = userData?.user?.loans;
-  //         orders = userData?.user?.orders;
-  //         agency = userData?.user?.agency;
-  //       }
-  //     }
-  //     if (!isFirstRun) {
-  //       console.log("not first time");
-  //       if (userData?.user) {
-  //         console.log("not forst time and we have userdata");
-  //         debt, loans, orders, (agency = { ...userData?.user });
-  //       } else {
-  //         console.log("not first time and we dont have userdata");
-  //         debt, loans, orders, (agency = { ...copyLoanerInfo });
-  //       }
-  //     }
-  //   }
-
-  //   if (!isAuthenticated) {
-  //     setIsFirstRun(true);
-  //     setCopyLoanerInfo({});
-  //   }
-
-  //   return {
-  //     debt,
-  //     loans,
-  //     orders,
-  //     agency,
-  //     ...sessionData,
-  //   };
-  // }, [data?.session]); //dont need to check loggedInUser, isnce its gonna change, when session changes
-
   const [loanerInfo, setLoanerInfo] = useState({
     debt: [],
     loans: [],
@@ -161,18 +102,6 @@ function useUserImpl() {
   });
 
   useEffect(() => {
-    console.log(
-      "isAuthenticated: ",
-      isAuthenticated,
-      "swr: ",
-      userData,
-      userDataError,
-      userIsLoading,
-      isValidating,
-      "loanerInfo: ",
-      loanerInfo
-    );
-
     if (!isAuthenticated) {
       setLoanerInfo({
         debt: [],
