@@ -347,6 +347,13 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
+  useEffect(() => {
+    if (setRemovedOrderId) {
+      console.log("removeOrdreid ", removedOrderId);
+      console.log("current id ", id);
+    }
+  });
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -387,13 +394,15 @@ const MaterialRow = (props) => {
     }
   };
 
-  async function onCloseModal({ success, message, orderId }) {
+  async function onCloseModal({ success, message }) {
     console.log("success ", success);
     if (success) {
-      setRemovedOrderId(orderId);
+      setRemovedOrderId(id);
+      //console.log("setting remove orderid ", removedOrderId);
+
       setTimeout(() => {
         updateOrderInfo();
-      }, 4000);
+      }, 1000);
       setHasError(false);
     } else {
       setHasError(true);

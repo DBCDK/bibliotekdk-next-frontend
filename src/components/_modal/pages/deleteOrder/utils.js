@@ -2,20 +2,12 @@ import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 
 export async function handleCancelOrder(orderId, agencyId, orderMutation) {
-  try {
-    return orderMutation.post(
-      orderMutations.cancelOrder({
-        orderId,
-        agencyId,
-      })
-    );
-  } catch (e) {
-    console.log("could not delete orderq", e);
-
-    return {
-      error: `Could not delete order with orderId ${orderId} and agencyId ${agencyId} due to error ${e}`,
-    };
-  }
+  orderMutation.post(
+    orderMutations.cancelOrder({
+      orderId,
+      agencyId,
+    })
+  );
 }
 
 /**
