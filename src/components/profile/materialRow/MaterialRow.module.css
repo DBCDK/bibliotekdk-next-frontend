@@ -54,7 +54,7 @@
   cursor: pointer;
   border-top: 1px solid var(--iron);
   max-height: 200px;
-  transition: max-height 0.5s, padding 0.5s;
+  transition: max-height 0.8s, padding 0.8s;
 }
 
 .materialRow_mobile:focus-visible {

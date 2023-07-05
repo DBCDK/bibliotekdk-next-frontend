@@ -7,7 +7,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
@@ -347,12 +347,6 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
-  //convert to upper case
-
-  console.log("TITLE ", title.toUpperCase());
-  console.log("removedOrderId ", removedOrderId);
-  console.log("function setRemovedorderdID ", setRemovedOrderId);
-
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -396,12 +390,10 @@ const MaterialRow = (props) => {
   async function onCloseModal({ success, message, orderId }) {
     console.log("success ", success);
     if (success) {
-      console.log("SETTING REMOVE ORDER ID", orderId);
       setRemovedOrderId(orderId);
-      //setTimeout(() => {
-      updateOrderInfo();
-      //}, 1000);
-      //updateOrderInfo();
+      setTimeout(() => {
+        updateOrderInfo();
+      }, 4000);
       setHasError(false);
     } else {
       setHasError(true);
