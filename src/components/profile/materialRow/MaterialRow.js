@@ -237,6 +237,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   } = props;
 
   const modal = useModal();
+  const x = useMutate();
 
   const onClick = () => {
     modal.push("material", {
@@ -244,6 +245,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         context: "profile",
         label: `your-${type === "LOAN" ? "loan" : "order"}`,
       }),
+      orderMutation: x,
       ...props,
     });
   };
@@ -267,7 +269,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_mobile_animated]: animateRemove,
+            [styles.materialRow_mobile_animated]: false,
           })}
           role="button"
           onClick={onClick}
@@ -433,16 +435,20 @@ const MaterialRow = (props) => {
     }
   };
 
-  if (isMobileSize)
+  if (isMobileSize) {
+    console.log("order mutation ", orderMutation);
+
     return (
       <MobileMaterialRow
         renderDynamicColumn={renderDynamicColumn}
         status={status}
         onCloseModal={onCloseModal}
+        orderMutation={orderMutation}
         animateRemove={animateRemove}
         {...props}
       />
     );
+  }
 
   return (
     <>
@@ -464,7 +470,7 @@ const MaterialRow = (props) => {
               {
                 [styles.materialRow_green]: status === "GREEN",
                 [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: animateRemove, //TODO maybe delete here if checkbox only for lån
+                [styles.materialRow_animated]: false, //TODO maybe delete here if checkbox only for lån
               }
             )}
             data-cy={dataCy}
@@ -477,7 +483,7 @@ const MaterialRow = (props) => {
             className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-              [styles.materialRow_animated]: animateRemove, //TODO do i need both?
+              [styles.materialRow_animated]: false, //TODO do i need both?
             })}
             data-cy={dataCy}
           >

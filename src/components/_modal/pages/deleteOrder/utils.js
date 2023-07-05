@@ -10,6 +10,8 @@ export async function handleCancelOrder(orderId, agencyId, orderMutation) {
       })
     );
   } catch (e) {
+    console.log("could not delete orderq", e);
+
     return {
       error: `Could not delete order with orderId ${orderId} and agencyId ${agencyId} due to error ${e}`,
     };

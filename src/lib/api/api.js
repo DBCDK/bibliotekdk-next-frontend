@@ -181,7 +181,7 @@ export function useData(query) {
   const [isSlow, setIsSlow] = useState(false);
 
   // Fetch data
-  const { data, error, mutate, isValidating, isLoading } = useSWR(
+  const { data, error, mutate, isLoading, isValidating } = useSWR(
     key,
     fetcherImpl,
     {
@@ -191,7 +191,6 @@ export function useData(query) {
     }
   );
 
-  console.log("ISLOADING ", isLoading);
   return {
     data: data?.data,
     error: error || data?.errors,

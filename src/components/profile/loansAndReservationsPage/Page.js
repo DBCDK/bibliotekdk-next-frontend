@@ -87,6 +87,8 @@ const LoansAndReservations = () => {
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
 
+  //console.log("RERENDER PAGE", orders);
+
   return (
     <ProfileLayout
       title={Translate({ context: "profile", label: "loansAndReservations" })}

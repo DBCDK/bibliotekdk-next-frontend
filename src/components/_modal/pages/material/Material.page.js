@@ -16,6 +16,7 @@ import Recommendations from "@/components/work/recommendations";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
+import { useMutate } from "@/lib/api/api";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -160,6 +161,8 @@ const Material = ({ context }) => {
 
   const modal = useModal();
 
+  const x = useMutate();
+
   const renderDynamicContent = () => {
     switch (type) {
       case "LOAN":
@@ -205,7 +208,7 @@ const Material = ({ context }) => {
                 pickUpExpiryDate,
                 id,
                 agencyId,
-                orderMutation,
+                orderMutation: x,
                 onCloseModal,
               });
             }}
