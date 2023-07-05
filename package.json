@@ -9,7 +9,7 @@
     "build:next:no:lint": "next build --no-lint",
     "build:next:no:lint:f": "run-s -l build:next:no:lint",
     "start:next": "NODE_OPTIONS='--require ./logger' next start -p ${PORT:-3000}",
-    "dev:storybook": "STORYBOOK_ACTIVE=1 storybook dev -s ./public -p \"${STORYBOOK_PORT:-4000}\"",
+    "dev:storybook": "STORYBOOK_ACTIVE=1 storybook dev -s ../public -p \"${STORYBOOK_PORT:-4000}\"",
     "build:storybook": "STORYBOOK_ACTIVE=1 storybook build -c .storybook -o dist/storybook --quiet && cp -r public/* dist/storybook/",
     "build:storybook:f": "run-s -l build:storybook",
     "start:storybook": "STORYBOOK_ACTIVE=1 && ENABLE_STORYBOOK=1 && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
@@ -65,10 +65,10 @@
   "devDependencies": {
     "@graphql-tools/mock": "^8.6.1",
     "@graphql-tools/schema": "^8.3.3",
-    "@storybook/addon-a11y": "^7.0.20",
-    "@storybook/addon-actions": "^7.0.20",
-    "@storybook/nextjs": "^7.0.20",
-    "@storybook/react": "^7.0.20",
+    "@storybook/addon-a11y": "^7.0.25",
+    "@storybook/addon-actions": "^7.0.25",
+    "@storybook/nextjs": "^7.0.25",
+    "@storybook/react": "^7.0.25",
     "@svgr/webpack": "^8.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "babel-jest": "^27.4.6",
@@ -87,7 +87,7 @@
     "next-unused": "^0.0.6",
     "prettier": "^2.3.2",
     "sass-loader": "^13.3.2",
-    "storybook": "^7.0.20",
+    "storybook": "^7.0.25",
     "style-loader": "^3.3.3"
   },
   "dependencies": {
