@@ -159,8 +159,7 @@ const Material = ({ context }) => {
   } = context;
 
   const modal = useModal();
-
-  const x = useMutate();
+  const orderMutation = useMutate();
 
   const renderDynamicContent = () => {
     switch (type) {
@@ -207,7 +206,7 @@ const Material = ({ context }) => {
                 pickUpExpiryDate,
                 id,
                 agencyId,
-                orderMutation: x,
+                orderMutation,
                 onCloseModal,
               });
             }}

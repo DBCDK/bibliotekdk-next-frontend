@@ -237,7 +237,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   } = props;
 
   const modal = useModal();
-  const x = useMutate();
 
   const onClick = () => {
     modal.push("material", {
@@ -245,7 +244,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         context: "profile",
         label: `your-${type === "LOAN" ? "loan" : "order"}`,
       }),
-      orderMutation: x,
       ...props,
     });
   };
@@ -269,7 +267,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_mobile_animated]: false,
+            [styles.materialRow_mobile_animated]: animateRemove,
           })}
           role="button"
           onClick={onClick}
@@ -347,6 +345,9 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
+  console.log("TITLE ", title);
+  console.log("animateremove ", animateRemove);
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -390,7 +391,7 @@ const MaterialRow = (props) => {
   async function onCloseModal({ success, message, orderId }) {
     console.log("success ", success);
     if (success) {
-      setAnimateRemove(true);
+      //setAnimateRemove(true);
       updateOrderInfo();
       setHasError(false);
     } else {
@@ -436,14 +437,11 @@ const MaterialRow = (props) => {
   };
 
   if (isMobileSize) {
-    console.log("order mutation ", orderMutation);
-
     return (
       <MobileMaterialRow
         renderDynamicColumn={renderDynamicColumn}
         status={status}
         onCloseModal={onCloseModal}
-        orderMutation={orderMutation}
         animateRemove={animateRemove}
         {...props}
       />
