@@ -154,7 +154,6 @@ const Material = ({ context }) => {
     holdQueuePosition,
     id,
     agencyId,
-    orderMutation,
     onCloseModal,
     library,
   } = context;
