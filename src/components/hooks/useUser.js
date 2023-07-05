@@ -5,6 +5,7 @@ import merge from "lodash/merge";
 import { useData, useMutate } from "@/lib/api/api";
 import * as userFragments from "@/lib/api/user.fragments";
 import * as sessionFragments from "@/lib/api/session.fragments";
+import { useEffect } from "react";
 
 // Context for storing anonymous session
 export const AnonymousSessionContext = createContext();
@@ -40,7 +41,6 @@ function useUserMock() {
     updateLoanerInfo: (obj) => {
       // Update global loaner info object
       loanerInfoMock = { ...loanerInfoMock, ...obj };
-      console.log("Mock: updateLoanerInfo obj", obj);
       // Broadcast update
       mutate(useUserMockKey);
     },
@@ -62,6 +62,8 @@ function useUserImpl() {
     isLoading: userIsLoading,
     error: userDataError,
     mutate: userMutate,
+    isValidating,
+    isReallyLoading,
   } = useData(isAuthenticated && userFragments.basic());
 
   let loggedInUser = {};
@@ -92,7 +94,19 @@ function useUserImpl() {
     };
   }, [data?.session, loggedInUser]);
 
+  //remove useMemo --> useEffect / state
+  //elelr isValidating og previousData
   const loanerInfo = useMemo(() => {
+    // console.log(
+    //   "loading",
+    //   isAuthenticated,
+    //   userIsLoading,
+    //   userData?.user?.orders,
+    //   userDataError,
+    //   isValidating,
+    //   isReallyLoading
+    // );
+
     return {
       debt: userData?.user?.debt || [],
       loans: userData?.user?.loans || [],
@@ -100,7 +114,7 @@ function useUserImpl() {
       agency: userData?.user?.agency || {},
       ...sessionData,
     };
-  }, [data?.session, loggedInUser, userData?.user?.orders?.length]);
+  }, [data?.session, loggedInUser]);
 
   const isGuestUser =
     !isAuthenticated && Object.keys(loanerInfo?.userParameters).length > 0;
@@ -117,10 +131,13 @@ function useUserImpl() {
       const newSession = merge({}, sessionData, obj);
       // Update global loaner info object
       await sessionMutate.post(sessionFragments.submitSession(newSession));
-
       // Broadcast update
       await mutate();
-      await userMutate({ orders: userData?.user?.orders || [] }); //@morten det her er den nye metode
+    },
+    updateOrderInfo: async () => {
+      // Broadcast update
+      //if (!userData?.user?.orders) return;
+      await userMutate({ orders: userData?.user?.orders });
     },
     guestLogout: async () => {
       // Delete global loaner info object

@@ -1,0 +1,12 @@
+.ErrorRow {
+  width: 100%;
+  display: flex;
+  padding: 0px 102px;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--error);
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: 0.2px;
+  font-family: "ibm_plex_sansregular";
+}

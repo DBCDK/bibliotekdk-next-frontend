@@ -8,10 +8,12 @@ import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
 import { useState } from "react";
+import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { getWorkUrl } from "@/lib/utils";
+import ErrorRow from "../errorRow/ErrorRow";
 
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
@@ -333,14 +335,15 @@ const MaterialRow = (props) => {
     dueDateString,
     amount,
     currency,
-    orderMutation,
     dataCy,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateLoanerInfo } = useUser();
+  const { updateOrderInfo } = useUser();
   const modal = useModal();
   const [animateRemove, setAnimateRemove] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -382,17 +385,14 @@ const MaterialRow = (props) => {
     }
   };
 
-  function onCloseModal({ success, message, orderId }) {
-    setAnimateRemove(true);
-    updateLoanerInfo();
-
-    // setTimeout(() => {
-    // }, 1000);
-
+  async function onCloseModal({ success, message, orderId }) {
+    console.log("success ", success);
     if (success) {
-      return orderId;
+      setAnimateRemove(true);
+      updateOrderInfo();
+      setHasError(false);
     } else {
-      //show error message
+      setHasError(true);
     }
   }
 
@@ -445,116 +445,119 @@ const MaterialRow = (props) => {
     );
 
   return (
-    <ConditionalWrapper
-      condition={hasCheckbox}
-      wrapper={(children) => (
-        <article
-          role="checkbox"
-          aria-checked={isChecked}
-          tabIndex="0"
-          aria-labelledby="chk1-label"
-          data-id={id}
-          onClick={() => setIsChecked(!isChecked)}
-          className={cx(
-            styles.materialRow,
-            styles.materialRow_withCheckbox,
-            styles.materialRow_wrapper,
-            {
+    <>
+      {hasError && <ErrorRow />}
+      <ConditionalWrapper
+        condition={hasCheckbox}
+        wrapper={(children) => (
+          <article
+            role="checkbox"
+            aria-checked={isChecked}
+            tabIndex="0"
+            aria-labelledby="chk1-label"
+            data-id={id}
+            onClick={() => setIsChecked(!isChecked)}
+            className={cx(
+              styles.materialRow,
+              styles.materialRow_withCheckbox,
+              styles.materialRow_wrapper,
+              {
+                [styles.materialRow_green]: status === "GREEN",
+                [styles.materialRow_red]: status === "RED",
+                [styles.materialRow_animated]: animateRemove, //TODO maybe delete here if checkbox only for lån
+              }
+            )}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
+        )}
+        elseWrapper={(children) => (
+          <article
+            className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
               [styles.materialRow_animated]: animateRemove, //TODO do i need both?
-            }
-          )}
-          data-cy={dataCy}
-        >
-          {children}
-        </article>
-      )}
-      elseWrapper={(children) => (
-        <article
-          className={cx(styles.materialRow, styles.materialRow_wrapper, {
-            [styles.materialRow_green]: status === "GREEN",
-            [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_animated]: animateRemove, //TODO do i need both?
-          })}
-          data-cy={dataCy}
-        >
-          {children}
-        </article>
-      )}
-    >
-      <>
-        {hasCheckbox && (
-          <div>
-            <Checkbox
-              checked={isChecked}
-              id={`material-row-${id}`}
-              aria-labelledby={`material-title-${id}`}
-              tabIndex="-1"
-            />
-          </div>
+            })}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
         )}
-
-        <div className={styles.materialInfo}>
-          {!!image && (
-            <div className={styles.imageContainer}>
-              <Cover src={image} size="fill-width" />
+      >
+        <>
+          {hasCheckbox && (
+            <div>
+              <Checkbox
+                checked={isChecked}
+                id={`material-row-${id}`}
+                aria-labelledby={`material-title-${id}`}
+                tabIndex="-1"
+              />
             </div>
           )}
-          <div>
-            <ConditionalWrapper
-              condition={!!title && !!creator && !!id}
-              wrapper={(children) => (
-                <Link
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                  href={getWorkUrl(title, creators, workId)}
-                  className={styles.blackUnderline}
+
+          <div className={styles.materialInfo}>
+            {!!image && (
+              <div className={styles.imageContainer}>
+                <Cover src={image} size="fill-width" />
+              </div>
+            )}
+            <div>
+              <ConditionalWrapper
+                condition={!!title && !!creator && !!id}
+                wrapper={(children) => (
+                  <Link
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                    href={getWorkUrl(title, creators, workId)}
+                    className={styles.blackUnderline}
+                  >
+                    {children}
+                  </Link>
+                )}
+              >
+                <Title
+                  type="title8"
+                  tag="h3"
+                  className={styles.materialTitle}
+                  id={`material-title-${id}`}
                 >
-                  {children}
-                </Link>
+                  {title}
+                </Title>
+              </ConditionalWrapper>
+
+              {creator && (
+                <Text type="text2" dataCy="creator">
+                  {creator}
+                </Text>
               )}
-            >
-              <Title
-                type="title8"
-                tag="h3"
-                className={styles.materialTitle}
-                id={`material-title-${id}`}
-              >
-                {title}
-              </Title>
-            </ConditionalWrapper>
-
-            {creator && (
-              <Text type="text2" dataCy="creator">
-                {creator}
-              </Text>
-            )}
-            {materialType && creationYear && (
-              <Text
-                type="text2"
-                className={styles.uppercase}
-                dataCy="materialtype-and-creationyear"
-              >
-                {materialType}, {creationYear}
-              </Text>
-            )}
+              {materialType && creationYear && (
+                <Text
+                  type="text2"
+                  className={styles.uppercase}
+                  dataCy="materialtype-and-creationyear"
+                >
+                  {materialType}, {creationYear}
+                </Text>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>{renderDynamicColumn()}</div>
+          <div>{renderDynamicColumn()}</div>
 
-        <div>
-          <Text type="text2">{library}</Text>
-        </div>
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
 
-        <div>{renderDynamicButton(id, agencyId)}</div>
-      </>
-    </ConditionalWrapper>
+          <div>{renderDynamicButton(id, agencyId)}</div>
+        </>
+      </ConditionalWrapper>
+    </>
   );
 };
 

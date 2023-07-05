@@ -181,17 +181,25 @@ export function useData(query) {
   const [isSlow, setIsSlow] = useState(false);
 
   // Fetch data
-  const { data, error, mutate } = useSWR(key, fetcherImpl, {
-    loadingTimeout: query?.slowThreshold || 5000,
-    onLoadingSlow: () => setIsSlow(true),
-  });
+  const { data, error, mutate, isValidating, isLoading } = useSWR(
+    key,
+    fetcherImpl,
+    {
+      keepPreviousData: true,
+      loadingTimeout: query?.slowThreshold || 5000,
+      onLoadingSlow: () => setIsSlow(true),
+    }
+  );
 
+  console.log("ISLOADING ", isLoading);
   return {
     data: data?.data,
     error: error || data?.errors,
     isLoading: query && !data,
+    isReallyLoading: isLoading,
     isSlow: data ? false : isSlow,
     mutate,
+    isValidating,
   };
 }
 

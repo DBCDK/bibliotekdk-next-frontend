@@ -45,19 +45,3 @@ export function onClickDelete({
     onClose: onCloseModal,
   });
 }
-
-// /**
-//  *
-//  * @param {boolean} success
-//  * @param {string} message
-//  * @param {string} orderId
-//  * @returns orderId if success, otherwise error message
-//  */
-// function onCloseModal({ success, message, orderId }) {
-//   console.log("onCloseModal", success, message, orderId);
-//   if (success) {
-//     return orderId;
-//   } else {
-//     //show error message
-//   }
-// }

@@ -3150,6 +3150,10 @@
       "to-return": {
         "da": "Afleveres d.",
         "en": "Hand in by"
+      },
+      "error-deleting-order": {
+        "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
+        "en": "An error occurred while the reservation was being deleted. Try again."
       }
     }
   }

@@ -195,10 +195,6 @@ const initialLoansAndReservations = {
 export default function ProfileMenu() {
   const user = useUser();
 
-  useEffect(() => {
-    console.log("user?.loanerInfo?.orders ", user?.loanerInfo?.orders.length);
-  }, [user?.loanerInfo?.orders.length]);
-
   const menus = {
     ...initialLoansAndReservations,
     loansAndReservations: initialLoansAndReservations.loansAndReservations
@@ -216,7 +212,6 @@ export default function ProfileMenu() {
 
   return (
     <>
-      {/* <div>{JSON.stringify(hi.map((o) => o.orderId))}</div> */}
       <nav
         className={styles.nav}
         aria-label={`${Translate({
