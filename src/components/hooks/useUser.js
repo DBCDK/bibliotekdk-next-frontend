@@ -141,8 +141,7 @@ function useUserImpl() {
     },
     updateOrderInfo: async () => {
       // Broadcast update
-      //if (!userData?.user?.orders) return;
-      await userMutate({ orders: userData?.user?.orders });
+      await userMutate({ orders: userData?.user?.orders }); //extend once we can renew loans
     },
     guestLogout: async () => {
       // Delete global loaner info object

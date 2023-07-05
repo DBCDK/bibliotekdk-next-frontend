@@ -12,7 +12,7 @@ import {
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -88,11 +88,6 @@ const LoansAndReservations = () => {
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
-
-  // useEffect(() => {
-  //   setRemovedOrderId(-1);
-  //   console.log("set remove orderid to -1");
-  // }, [orders.length]);
 
   return (
     <ProfileLayout

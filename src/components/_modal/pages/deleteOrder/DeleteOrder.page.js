@@ -4,7 +4,6 @@ import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
 import { handleCancelOrder } from "./utils";
-import useUser from "@/components/hooks/useUser";
 
 function DeleteOrder({ context, modal }) {
   const {
@@ -22,13 +21,11 @@ function DeleteOrder({ context, modal }) {
   }
 
   async function onCancelOrder() {
-    //HERE GUCK
-    const res = await handleCancelOrder(orderId, agencyId, orderMutation);
-    //await handleCancelOrder(undefined, agencyId, orderMutation);
+    await handleCancelOrder(orderId, agencyId, orderMutation);
     if (!orderMutation.error) {
-      onClose({ success: true, message: "Order deleted", orderId });
+      onClose({ success: true });
     } else {
-      onClose({ success: false, message: res.error, orderId }); //TODO test og gør andereldes
+      onClose({ success: false });
     }
     modal.clear();
   }

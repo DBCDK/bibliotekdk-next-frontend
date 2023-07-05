@@ -14,7 +14,6 @@ import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { getWorkUrl } from "@/lib/utils";
 import ErrorRow from "../errorRow/ErrorRow";
-
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
 import useUser from "@/components/hooks/useUser";
@@ -25,7 +24,6 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
-import { update } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -254,6 +252,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       condition={type === "DEBT"}
       wrapper={(children) => (
         <article
+          key={"article" + id}
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
@@ -394,15 +393,10 @@ const MaterialRow = (props) => {
     }
   };
 
-  async function onCloseModal({ success, message }) {
-    console.log("success ", success);
+  async function onCloseModal({ success }) {
     if (success) {
       setRemovedOrderId(id);
-      //console.log("setting remove orderid ", removedOrderId);
-
-      setTimeout(() => {
-        updateOrderInfo();
-      }, 1000);
+      updateOrderInfo();
       setHasError(false);
     } else {
       setHasError(true);
@@ -449,6 +443,7 @@ const MaterialRow = (props) => {
   if (isMobileSize) {
     return (
       <MobileMaterialRow
+        key={"article" + id}
         renderDynamicColumn={renderDynamicColumn}
         status={status}
         onCloseModal={onCloseModal}
@@ -460,11 +455,19 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && <ErrorRow />}
+      {hasError && (
+        <ErrorRow
+          text={Translate({
+            context: "profile",
+            label: "error-deleting-order",
+          })}
+        />
+      )}
       <ConditionalWrapper
         condition={hasCheckbox}
         wrapper={(children) => (
           <article
+            key={"article" + id}
             role="checkbox"
             aria-checked={isChecked}
             tabIndex="0"
@@ -478,7 +481,7 @@ const MaterialRow = (props) => {
               {
                 [styles.materialRow_green]: status === "GREEN",
                 [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: id === removedOrderId, //TODO maybe delete here if checkbox only for lån
+                [styles.materialRow_animated]: id === removedOrderId,
               }
             )}
             data-cy={dataCy}
@@ -488,11 +491,11 @@ const MaterialRow = (props) => {
         )}
         elseWrapper={(children) => (
           <article
-            key={"article" + id}
+            key={"article" + id} //to avoid rerendering
             className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-              [styles.materialRow_animated]: id === removedOrderId, //TODO do i need both?
+              [styles.materialRow_animated]: id === removedOrderId,
             })}
             data-cy={dataCy}
           >
