@@ -25,6 +25,7 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
+import { update } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -233,7 +234,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     type,
     status,
     dataCy,
-    animateRemove,
+    removedOrderId,
   } = props;
 
   const modal = useModal();
@@ -267,7 +268,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_mobile_animated]: animateRemove,
+            [styles.materialRow_mobile_animated]: id === removedOrderId,
           })}
           role="button"
           onClick={onClick}
@@ -336,17 +337,21 @@ const MaterialRow = (props) => {
     amount,
     currency,
     dataCy,
+    removedOrderId,
+    setRemovedOrderId,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
   const { updateOrderInfo } = useUser();
   const modal = useModal();
-  const [animateRemove, setAnimateRemove] = useState(false);
   const [hasError, setHasError] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
-  console.log("TITLE ", title);
-  console.log("animateremove ", animateRemove);
+  //convert to upper case
+
+  console.log("TITLE ", title.toUpperCase());
+  console.log("removedOrderId ", removedOrderId);
+  console.log("function setRemovedorderdID ", setRemovedOrderId);
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
@@ -391,8 +396,12 @@ const MaterialRow = (props) => {
   async function onCloseModal({ success, message, orderId }) {
     console.log("success ", success);
     if (success) {
-      //setAnimateRemove(true);
+      console.log("SETTING REMOVE ORDER ID", orderId);
+      setRemovedOrderId(orderId);
+      //setTimeout(() => {
       updateOrderInfo();
+      //}, 1000);
+      //updateOrderInfo();
       setHasError(false);
     } else {
       setHasError(true);
@@ -442,7 +451,7 @@ const MaterialRow = (props) => {
         renderDynamicColumn={renderDynamicColumn}
         status={status}
         onCloseModal={onCloseModal}
-        animateRemove={animateRemove}
+        removedOrderId={removedOrderId}
         {...props}
       />
     );
@@ -468,7 +477,7 @@ const MaterialRow = (props) => {
               {
                 [styles.materialRow_green]: status === "GREEN",
                 [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: false, //TODO maybe delete here if checkbox only for lån
+                [styles.materialRow_animated]: id === removedOrderId, //TODO maybe delete here if checkbox only for lån
               }
             )}
             data-cy={dataCy}
@@ -478,10 +487,11 @@ const MaterialRow = (props) => {
         )}
         elseWrapper={(children) => (
           <article
+            key={"article" + id}
             className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-              [styles.materialRow_animated]: false, //TODO do i need both?
+              [styles.materialRow_animated]: id === removedOrderId, //TODO do i need both?
             })}
             data-cy={dataCy}
           >

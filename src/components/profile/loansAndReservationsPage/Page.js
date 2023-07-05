@@ -12,6 +12,8 @@ import {
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
+import { useEffect, useState } from "react";
+import { remove } from "lodash";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -83,9 +85,15 @@ const LoansAndReservations = () => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
   const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
+  const [removedOrderId, setRemovedOrderId] = useState(-1);
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
+
+  useEffect(() => {
+    console.log("setting remove orderid ", removedOrderId);
+    setRemovedOrderId(-1);
+  }, [orders.length]);
 
   return (
     <ProfileLayout
@@ -263,6 +271,8 @@ const LoansAndReservations = () => {
                 ...order,
                 libraryId,
               })}
+              removedOrderId={removedOrderId}
+              setRemovedOrderId={setRemovedOrderId}
               key={`loan-${order.loanId}-#${i}`}
               dataCy={`order-${i}`}
             />

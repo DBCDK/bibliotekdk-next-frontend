@@ -36,9 +36,7 @@ export function onClickDelete({
   agencyId,
   orderMutation,
   onCloseModal,
-  setAnimateRemove,
 }) {
-  console.log("setAnimateRemove push", setAnimateRemove);
   modal.push("deleteOrder", {
     label: Translate({ context: "profile", label: "delete-order" }),
     mobile: mobile,
@@ -47,6 +45,5 @@ export function onClickDelete({
     agencyId: agencyId,
     orderMutation: orderMutation,
     onClose: onCloseModal,
-    setAnimateRemove: setAnimateRemove,
   });
 }
