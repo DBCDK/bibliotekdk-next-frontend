@@ -142,7 +142,12 @@ export function Edition({
             </Link>
           ) : null}
           <div>
-            <Tag tag="span" skeleton={!materialType && isLoading}>
+            <Tag
+              tag="span"
+              skeleton={!materialType && isLoading}
+              disabled
+              opaqueText
+            >
               {formatMaterialTypesToPresentation(materialType)}
             </Tag>
           </div>
