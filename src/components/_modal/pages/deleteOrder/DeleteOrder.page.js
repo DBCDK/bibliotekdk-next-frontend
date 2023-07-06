@@ -35,13 +35,13 @@ function DeleteOrder({ context, modal }) {
       <Top title={label} titleTag="h4" dataCy="modal-header" />
       <hr />
       <div className={styles.container}>
-        <Text type="text2" tag="div">
+        <Text type="text2" tag="p">
           {Translate({
             context: "profile",
             label: "delete-order-confirmation",
           })}
         </Text>
-        <Text type="text2" tag="div" className={styles.text}>
+        <Text type="text2" tag="p" className={styles.text}>
           {Translate({
             context: "profile",
             label: isReadyToPickup
