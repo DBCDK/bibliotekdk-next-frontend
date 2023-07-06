@@ -288,7 +288,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       </div>
       <div>
         <Title
-          type="title2"
+          type="text1"
           tag="h3"
           className={styles.materialTitle}
           id={`material-title-${materialId}`}
