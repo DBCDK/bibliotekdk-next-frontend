@@ -13,7 +13,7 @@ function checkPrefilledQueryParameters() {
 }
 
 describe("Search", () => {
-  describe(`Form`, () => {
+  describe.only(`Form`, () => {
     it(`Maps query parameters from url to input fields`, () => {
       cy.visit("/iframe.html?id=layout-header--nav-header-prefilled");
 
@@ -183,6 +183,17 @@ describe("Search", () => {
       cy.get("[data-cy=router-query]").then((el) => {
         expect(JSON.parse(el.text())).to.deep.equal({ "q.all": "hest" });
       });
+    });
+
+    it("Search with whitespace in the beginning of the string gets stripped from query", () => {
+      cy.visit(
+        "/iframe.html?id=layout-header--nav-header&nextRouter.pathname=/some-page"
+      );
+
+      cy.get("header [data-cy=suggester-input]").clear().type(" harry{enter}");
+      cy.get("[data-cy=router-query]").contains(`{"q.all":"harry"}`);
+      cy.get("header [data-cy=suggester-input]").clear().type("       hest{enter}");
+      cy.get("[data-cy=router-query]").contains(`{"q.all":"hest"}`);
     });
 
     it(`When on another page than /find, it should go to find page when performing search`, () => {

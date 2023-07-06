@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 import { useEffect } from "react";
-
 import Input from "@/components/base/forms/input";
 import Icon from "@/components/base/icon";
-
 import styles from "./Search.module.css";
 
 /**
@@ -16,9 +14,8 @@ import styles from "./Search.module.css";
  *
  * @returns {component}
  */
-function Search(props) {
-  const { className, onChange, onBlur, value = "", onMount } = props;
 
+function Search({ className, onChange, onBlur, value = "", onMount }) {
   // Validation onMount
   useEffect(
     () => {

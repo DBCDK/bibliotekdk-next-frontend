@@ -34,6 +34,7 @@ import styles from "./Suggester.module.css";
 import useDataCollect from "@/lib/useDataCollect";
 import { SuggestTypeEnum } from "@/lib/enums";
 import cx from "classnames";
+import { stripBeginningSpaces } from "@/lib/utils";
 
 // Context
 const context = { context: "suggester" };
@@ -356,8 +357,8 @@ export function Suggester({
     onChange: (event, { newValue }) => {
       // For updating onChange when deleting last char in input
       newValue === "" && onChange && onChange("");
-      // internal query update
-      setIntQuery(newValue);
+      // internal query update - remove initial spaces
+      setIntQuery(stripBeginningSpaces(newValue));
     },
     onKeyDown: onKeyDown,
     onFocus: (e) =>

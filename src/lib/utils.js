@@ -191,3 +191,13 @@ export function translateAndEncode(context, label, requestedLang = undefined) {
     })
   );
 }
+
+/**
+ * Removes initial space from string
+ * example "   string" becomes "string"
+ * @param {string} val 
+ * @returns {string}
+ */
+export const stripBeginningSpaces = (val) => {
+  return val.replace(/^\s+/g, "")
+}
