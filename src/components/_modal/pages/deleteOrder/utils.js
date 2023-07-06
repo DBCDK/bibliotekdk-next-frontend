@@ -15,7 +15,7 @@ export async function handleCancelOrder(orderId, agencyId, orderMutation) {
  * @param {*} param0.modal
  * @param {boolean} param0.mobile
  * @param {Date} param0.pickUpExpiryDate
- * @param {string} param0.id
+ * @param {string} param0.materialId
  * @param {string} param0.agencyId
  * @param {string} param0.orderMutation
  * @returns success status, error message
@@ -24,7 +24,7 @@ export function onClickDelete({
   modal,
   mobile,
   pickUpExpiryDate,
-  id,
+  materialId,
   agencyId,
   orderMutation,
   onCloseModal,
@@ -33,7 +33,7 @@ export function onClickDelete({
     label: Translate({ context: "profile", label: "delete-order" }),
     mobile: mobile,
     isReadyToPickup: !!pickUpExpiryDate,
-    orderId: id,
+    orderId: materialId,
     agencyId: agencyId,
     orderMutation: orderMutation,
     onClose: onCloseModal,

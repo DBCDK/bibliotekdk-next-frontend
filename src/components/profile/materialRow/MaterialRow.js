@@ -273,9 +273,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           onClick={onClick}
           tabIndex="0"
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onClick();
-            }
+            e.key === "Enter" && onClick();
           }}
           data-cy={dataCy}
         >
