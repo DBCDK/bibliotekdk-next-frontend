@@ -1,7 +1,6 @@
 .ErrorRow {
   width: 100%;
   display: flex;
-  padding: 0px 102px;
   justify-content: center;
   align-items: center;
   background-color: var(--error);

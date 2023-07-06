@@ -448,7 +448,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && (
+      {true && (
         <ErrorRow
           text={Translate({
             context: "profile",
