@@ -18,8 +18,8 @@
   grid-column-gap: var(--pt3);
   grid-template-columns: 4fr 2fr 2fr 1fr;
   padding: var(--pt2) var(--pt1);
-  height: var(--pt16);
-  transition: height 0.5s, padding 0.5s;
+  max-height: 200px;
+  transition: max-height 0.5s, padding 0.5s;
 }
 
 .materialRow_withCheckbox {
@@ -60,7 +60,7 @@
   padding: var(--pt2);
   cursor: pointer;
   border-top: 1px solid var(--iron);
-  max-height: 200px;
+  max-height: 260px;
   transition: max-height 0.8s, padding 0.8s;
 }
 

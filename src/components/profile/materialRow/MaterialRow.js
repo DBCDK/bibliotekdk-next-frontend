@@ -346,13 +346,6 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
-  useEffect(() => {
-    if (setRemovedOrderId) {
-      console.log("removeOrdreid ", removedOrderId);
-      console.log("current id ", id);
-    }
-  });
-
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
