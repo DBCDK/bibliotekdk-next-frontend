@@ -228,7 +228,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     materialType,
     creationYear,
     title,
-    id,
+    id: materialId,
     type,
     status,
     dataCy,
@@ -252,7 +252,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       condition={type === "DEBT"}
       wrapper={(children) => (
         <article
-          key={"article" + id}
+          key={"article" + materialId}
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
@@ -267,7 +267,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
-            [styles.materialRow_mobile_animated]: id === removedOrderId,
+            [styles.materialRow_mobile_animated]: materialId === removedOrderId,
           })}
           role="button"
           onClick={onClick}
@@ -288,10 +288,10 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       </div>
       <div>
         <Title
-          type="text1"
+          type="title2"
           tag="h3"
           className={styles.materialTitle}
-          id={`material-title-${id}`}
+          id={`material-title-${materialId}`}
         >
           {title}
         </Title>
@@ -327,7 +327,7 @@ const MaterialRow = (props) => {
     library,
     agencyId,
     hasCheckbox = false,
-    id,
+    id: materialId,
     workId,
     type,
     holdQueuePosition,
@@ -388,7 +388,7 @@ const MaterialRow = (props) => {
 
   async function onCloseModal({ success }) {
     if (success) {
-      setRemovedOrderId(id);
+      setRemovedOrderId(materialId);
       updateOrderInfo();
       setHasError(false);
     } else {
@@ -414,7 +414,7 @@ const MaterialRow = (props) => {
                 modal,
                 mobile: false,
                 pickUpExpiryDate,
-                id,
+                materialId,
                 agencyId,
                 orderMutation,
                 onCloseModal,
@@ -445,7 +445,7 @@ const MaterialRow = (props) => {
           />
         )}
         <MobileMaterialRow
-          key={"article" + id}
+          key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
           onCloseModal={onCloseModal}
@@ -470,12 +470,12 @@ const MaterialRow = (props) => {
         condition={hasCheckbox}
         wrapper={(children) => (
           <article
-            key={"article" + id}
+            key={"article" + materialId}
             role="checkbox"
             aria-checked={isChecked}
             tabIndex="0"
             aria-labelledby="chk1-label"
-            data-id={id}
+            data-id={materialId}
             onClick={() => setIsChecked(!isChecked)}
             className={cx(
               styles.materialRow,
@@ -484,7 +484,7 @@ const MaterialRow = (props) => {
               {
                 [styles.materialRow_green]: status === "GREEN",
                 [styles.materialRow_red]: status === "RED",
-                [styles.materialRow_animated]: id === removedOrderId,
+                [styles.materialRow_animated]: materialId === removedOrderId,
               }
             )}
             data-cy={dataCy}
@@ -494,11 +494,11 @@ const MaterialRow = (props) => {
         )}
         elseWrapper={(children) => (
           <article
-            key={"article" + id} //to avoid rerendering
+            key={"article" + materialId} //to avoid rerendering
             className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-              [styles.materialRow_animated]: id === removedOrderId,
+              [styles.materialRow_animated]: materialId === removedOrderId,
             })}
             data-cy={dataCy}
           >
@@ -511,8 +511,8 @@ const MaterialRow = (props) => {
             <div>
               <Checkbox
                 checked={isChecked}
-                id={`material-row-${id}`}
-                aria-labelledby={`material-title-${id}`}
+                id={`material-row-${materialId}`}
+                aria-labelledby={`material-title-${materialId}`}
                 tabIndex="-1"
               />
             </div>
@@ -526,7 +526,7 @@ const MaterialRow = (props) => {
             )}
             <div>
               <ConditionalWrapper
-                condition={!!title && !!creator && !!id}
+                condition={!!title && !!creator && !!materialId}
                 wrapper={(children) => (
                   <Link
                     border={{
@@ -546,7 +546,7 @@ const MaterialRow = (props) => {
                   type="text1"
                   tag="h3"
                   className={styles.materialTitle}
-                  id={`material-title-${id}`}
+                  id={`material-title-${materialId}`}
                 >
                   {title}
                 </Title>
@@ -575,7 +575,7 @@ const MaterialRow = (props) => {
             <Text type="text2">{library}</Text>
           </div>
 
-          <div>{renderDynamicButton(id, agencyId)}</div>
+          <div>{renderDynamicButton(materialId, agencyId)}</div>
         </>
       </ConditionalWrapper>
     </>
@@ -590,7 +590,7 @@ MaterialRow.propTypes = {
   creationYear: PropTypes.string,
   library: PropTypes.string.isRequired,
   hasCheckbox: PropTypes.bool,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired, //materialId
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
   type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),

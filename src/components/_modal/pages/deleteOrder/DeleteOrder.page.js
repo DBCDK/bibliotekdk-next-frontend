@@ -56,7 +56,7 @@ function DeleteOrder({ context, modal }) {
           size="medium"
           onClick={onCancelOrder}
           onKeyPress={(e) => {
-            if (e.key === "Enter") onCancelOrder();
+            e.key === "Enter" && onCancelOrder();
           }}
         >
           {Translate({
@@ -70,7 +70,7 @@ function DeleteOrder({ context, modal }) {
           size="medium"
           onClick={closeModal}
           onKeyPress={(e) => {
-            if (e.key === "Enter") closeModal();
+            e.key === "Enter" && closeModal();
           }}
         >
           {Translate({

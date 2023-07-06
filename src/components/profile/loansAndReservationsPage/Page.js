@@ -32,11 +32,11 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
-        materialType: data.manifestation?.materialTypes[0].specific,
-        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         dueDateString: data.dueDate,
         id: data.loanId,
-        workId: "work-of:" + data.manifestation?.pid,
+        workId: "work-of:" + data.manifestation.pid,
       };
     }
     case "ORDER": {
@@ -44,17 +44,17 @@ export const dataReducer = (dataType, data) => {
         // No manifestation - we show what we can
         return {
           type: "ORDER",
-          image: data.manifestation?.cover.thumbnail,
+          image: data.manifestation.cover.thumbnail,
           title: data.title,
           creator: data.creator,
-          creators: data.manifestation?.creators,
-          materialType: data.manifestation?.materialTypes[0].specific,
-          creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+          creators: data.manifestation.creators,
+          materialType: data.manifestation.materialTypes[0].specific,
+          creationYear: data.manifestation.recordCreationDate.substring(0, 4),
           library: data.pickUpBranch.agencyName,
           holdQueuePosition: data.holdQueuePosition,
           pickUpExpiryDate: data.pickUpExpiryDate,
           id: data.orderId,
-          workId: "work-of:" + data.manifestation?.pid,
+          workId: "work-of:" + data.manifestation.pid,
         };
       }
       return {
@@ -64,14 +64,14 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
-        materialType: data.manifestation?.materialTypes[0].specific,
-        creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+        materialType: data.manifestation.materialTypes[0].specific,
+        creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: data.pickUpBranch.agencyName,
         agencyId: data.libraryId,
         holdQueuePosition: data.holdQueuePosition,
         pickUpExpiryDate: data.pickUpExpiryDate,
         id: data.orderId,
-        workId: "work-of:" + data.manifestation?.pid,
+        workId: "work-of:" + data.manifestation.pid,
         orderMutation: data.orderMutation,
       };
     }
@@ -84,7 +84,7 @@ const LoansAndReservations = () => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
   const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
-  const [removedOrderId, setRemovedOrderId] = useState(-1);
+  const [removedOrderId, setRemovedOrderId] = useState("");
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
   const libraryId = agency?.result?.[0]?.agencyId;
