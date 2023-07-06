@@ -63,6 +63,10 @@
   border: none;
 }
 
+.opaque {
+  /* Placeholder for class only used in extension of .disabled */
+}
+
 /* 
 * Focus
 *
