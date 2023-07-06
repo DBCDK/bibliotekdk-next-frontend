@@ -435,14 +435,24 @@ const MaterialRow = (props) => {
 
   if (isMobileSize) {
     return (
-      <MobileMaterialRow
-        key={"article" + id}
-        renderDynamicColumn={renderDynamicColumn}
-        status={status}
-        onCloseModal={onCloseModal}
-        removedOrderId={removedOrderId}
-        {...props}
-      />
+      <>
+        {hasError && (
+          <ErrorRow
+            text={Translate({
+              context: "profile",
+              label: "error-deleting-order",
+            })}
+          />
+        )}
+        <MobileMaterialRow
+          key={"article" + id}
+          renderDynamicColumn={renderDynamicColumn}
+          status={status}
+          onCloseModal={onCloseModal}
+          removedOrderId={removedOrderId}
+          {...props}
+        />
+      </>
     );
   }
 

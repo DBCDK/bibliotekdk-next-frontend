@@ -9,3 +9,9 @@
   letter-spacing: 0.2px;
   font-family: "ibm_plex_sansregular";
 }
+
+@media screen and (max-width: 480px) {
+  .ErrorRow {
+    padding: var(--pt2);
+  }
+}
