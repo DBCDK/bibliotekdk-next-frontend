@@ -55,6 +55,7 @@ export function Result({
             <span />
           )
         }
+        id="search-result-section"
       >
         {Array(isMobile ? page : 1)
           .fill({})
