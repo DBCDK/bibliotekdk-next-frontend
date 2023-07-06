@@ -3060,8 +3060,8 @@
         "en": "Delete"
       },
       "delete-order": {
-        "da": "Slet din reservering",
-        "en": "Delete your reservation"
+        "da": "Slet reservering",
+        "en": "Delete reservation"
       },
       "delete-order-confirmation": {
         "da": "Er du sikker på, at du vil slette reserveringen?",
