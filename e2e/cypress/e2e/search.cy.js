@@ -125,6 +125,7 @@ describe("Search", () => {
           "q.creator": "suggest.result[0].term",
           "q.subject": "some subject",
           workTypes: "movie",
+          materialTypes: "bog"
         });
       });
     });
