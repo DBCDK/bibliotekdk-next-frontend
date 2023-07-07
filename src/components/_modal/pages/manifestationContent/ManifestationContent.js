@@ -1,3 +1,6 @@
+/* eslint-disable css-modules/no-unused-class  */
+/* Since we pass all styles to children  */
+
 /**
  * @file ManifestationContent.js
  * Show manifesttionParts in modal

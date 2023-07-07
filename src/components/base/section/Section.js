@@ -51,6 +51,7 @@ export default function Section({
   subtitle = "",
   headerTag = "h2",
   sectionTag = "section",
+  id,
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -103,6 +104,8 @@ export default function Section({
       style={style}
       data-cy={dataCy}
       ref={elRef}
+      id={id}
+      tabIndex={!!id ? -1 : null} // If id is sat, we wont the ability to set focus on element - used for skip links
     >
       <Container fluid>
         <Row as={sectionTag}>
