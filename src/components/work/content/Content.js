@@ -64,7 +64,6 @@ export function Content({
       title={Translate({ ...context, label: "title" })}
       divider={{ content: false }}
     >
-      {/*<div>{JSON.stringify(manifestation)}</div>*/}
       <Row className={`${styles.content} ${className}`}>
         {skeleton && <Text skeleton={skeleton}></Text>}
         <Col xs={12} md={8}>
@@ -129,19 +128,14 @@ export default function Wrap(props) {
 
   const sortedManifestations =
     manifestations &&
-    [...manifestations]?.sort((a, b) => {
-      if (a?.tableOfContents?.listOfContent) {
-        return -1;
-      } else if (b?.tableOfContents?.listOfContent) {
-        return 1;
-      } else if (a?.tableOfContents?.content) {
-        return -1;
-      } else if (b?.tableOfContents?.content) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+    [...manifestations]?.sort(
+      (a, b) =>
+        -Number(!!a?.tableOfContents?.listOfContent) ||
+        Number(!!b?.tableOfContents?.listOfContent) ||
+        -Number(!!a?.tableOfContents?.content) ||
+        Number(!!b?.tableOfContents?.content) ||
+        0
+    );
 
   const manifestation = sortedManifestations?.[0];
 
