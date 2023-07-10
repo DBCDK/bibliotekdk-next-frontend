@@ -3,7 +3,6 @@ import { StoryTitle, StoryDescription, StorySpace } from "@/storybook";
 import WrappedContent, { ContentSkeleton } from "./Content";
 import merge from "lodash/merge";
 import automock_utils from "@/lib/automock_utils.fixture";
-import { tableOfContents } from "@/lib/api/work.fragments";
 
 const exportedObject = {
   title: "work/Content",
