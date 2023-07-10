@@ -25,6 +25,20 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "LOAN": {
+      if (!data.manifestation) {
+        // No manifestation - we show what we can
+        return {
+          type: "LOAN",
+          image: null,
+          title: null,
+          creator: null,
+          materialType: null,
+          creationYear: null,
+          dueDateString: data.dueDate,
+          id: data.loanId,
+          workId: "work-of:" + null,
+        };
+      }
       return {
         type: "LOAN",
         image: data.manifestation.cover.thumbnail,
@@ -44,17 +58,17 @@ export const dataReducer = (dataType, data) => {
         // No manifestation - we show what we can
         return {
           type: "ORDER",
-          image: data.manifestation.cover.thumbnail,
+          image: null,
           title: data.title,
           creator: data.creator,
-          creators: data.manifestation.creators,
-          materialType: data.manifestation.materialTypes[0].specific,
-          creationYear: data.manifestation.recordCreationDate.substring(0, 4),
+          creators: null,
+          materialType: null,
+          creationYear: null,
           library: data.pickUpBranch.agencyName,
           holdQueuePosition: data.holdQueuePosition,
           pickUpExpiryDate: data.pickUpExpiryDate,
           id: data.orderId,
-          workId: "work-of:" + data.manifestation.pid,
+          workId: "work-of:" + null,
         };
       }
       return {
