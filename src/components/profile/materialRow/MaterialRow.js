@@ -7,7 +7,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";

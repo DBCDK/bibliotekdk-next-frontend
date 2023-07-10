@@ -20,8 +20,8 @@ function DeleteOrder({ context, modal }) {
     mobile ? modal.prev() : modal.clear();
   }
 
-  async function onCancelOrder() {
-    await handleCancelOrder(orderId, agencyId, orderMutation);
+  function onCancelOrder() {
+    handleCancelOrder(orderId, agencyId, orderMutation);
     if (!orderMutation.error) {
       onClose({ success: true });
     } else {
