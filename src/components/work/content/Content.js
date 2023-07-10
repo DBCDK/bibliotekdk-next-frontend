@@ -14,6 +14,7 @@ import { manifestationMaterialTypeFactory } from "@/lib/manifestationFactoryUtil
 import { useModal } from "@/components/_modal";
 import { ManifestationParts } from "@/components/manifestationparts/ManifestationParts";
 import isEmpty from "lodash/isEmpty";
+import { getFirstMatch } from "@/lib/utils";
 
 /**
  * The Component function
@@ -128,14 +129,16 @@ export default function Wrap(props) {
 
   const sortedManifestations =
     manifestations &&
-    [...manifestations]?.sort(
-      (a, b) =>
-        -Number(!!a?.tableOfContents?.listOfContent) ||
-        Number(!!b?.tableOfContents?.listOfContent) ||
-        -Number(!!a?.tableOfContents?.content) ||
-        Number(!!b?.tableOfContents?.content) ||
-        0
-    );
+    [...manifestations]
+      ?.filter((el) => !isEmpty(el?.tableOfContents))
+      ?.sort((a, b) =>
+        getFirstMatch(true, 0, [
+          [!isEmpty(a?.tableOfContents?.listOfContent), -1],
+          [!isEmpty(b?.tableOfContents?.listOfContent), 1],
+          [!isEmpty(a?.tableOfContents?.content), -1],
+          [!isEmpty(b?.tableOfContents?.content), 1],
+        ])
+      );
 
   const manifestation = sortedManifestations?.[0];
 
