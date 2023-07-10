@@ -109,49 +109,6 @@ ContentWrapped_No_ListOfContent.story = merge({}, DEFAULT_STORY_PARAMETERS, {
   },
 });
 
-// ContentWrapped.story = {
-//   parameters: {
-//     graphql: {
-//       resolvers: {
-//         Query: {
-//           work: () => {
-//             return {
-//               workId: "some-id-2",
-//               materialTypes: [{ specific: "bog" }],
-//               workTypes: ["LITERATURE"],
-//               manifestations: {
-//                 mostRelevant: [{ pid: "some-pid-2" }],
-//               },
-//             };
-//           },
-//           manifestations: () => {
-//             return [
-//               {
-//                 pid: "some-pid-2",
-//                 materialTypes: [{ specific: "bog" }],
-//                 tableOfContents: {
-//                   heading: "Kapitler",
-//                   listOfContent: [
-//                     { content: "Kapitel Miaw" },
-//                     { content: "Kapitel Vuf" },
-//                     { content: "Kapitel Mæh" },
-//                     { content: "Kapitel Muh" },
-//                   ],
-//                 },
-//               },
-//             ];
-//           },
-//         },
-//       },
-//     },
-//     // nextRouter: {
-//     //   showInfo: true,
-//     //   pathname: "/",
-//     //   query: {},
-//     // },
-//   },
-// };
-
 /**
  * Returns Loading content section
  *
