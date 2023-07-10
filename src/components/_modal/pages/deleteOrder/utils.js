@@ -1,9 +1,9 @@
 import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 
-export function handleCancelOrder(orderId, agencyId, orderMutation) {
+export function handleDeleteOrder(orderId, agencyId, orderMutation) {
   orderMutation.post(
-    orderMutations.cancelOrder({
+    orderMutations.deleteOrder({
       orderId,
       agencyId,
     })

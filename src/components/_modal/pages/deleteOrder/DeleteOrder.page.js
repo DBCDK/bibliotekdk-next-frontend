@@ -3,7 +3,7 @@ import styles from "./DeleteOrder.module.css";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
-import { handleCancelOrder } from "./utils";
+import { handleDeleteOrder } from "./utils";
 
 function DeleteOrder({ context, modal }) {
   const {
@@ -20,8 +20,8 @@ function DeleteOrder({ context, modal }) {
     mobile ? modal.prev() : modal.clear();
   }
 
-  function onCancelOrder() {
-    handleCancelOrder(orderId, agencyId, orderMutation);
+  function onDeleteOrder() {
+    handleDeleteOrder(orderId, agencyId, orderMutation);
     if (!orderMutation.error) {
       onClose({ success: true });
     } else {
@@ -54,9 +54,9 @@ function DeleteOrder({ context, modal }) {
           className={styles.button}
           type="primary"
           size="medium"
-          onClick={onCancelOrder}
+          onClick={onDeleteOrder}
           onKeyPress={(e) => {
-            e.key === "Enter" && onCancelOrder();
+            e.key === "Enter" && onDeleteOrder();
           }}
         >
           {Translate({

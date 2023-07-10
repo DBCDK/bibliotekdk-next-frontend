@@ -19,7 +19,7 @@ export function DeleteOrderInQueue() {
       label: "delete-order",
     }),
     isReadyToPickup: false,
-    onCancelOrder: () => alert("Reservering slettet"),
+    onDeleteOrder: () => alert("Reservering slettet"),
   };
 
   // simulate order submit and callback
@@ -48,7 +48,7 @@ export function DeleteOrderReadyToPickUp() {
       label: "delete-order",
     }),
     isReadyToPickup: true,
-    onCancelOrder: () => alert("Reservering slettet"),
+    onDeleteOrder: () => alert("Reservering slettet"),
   };
 
   // simulate order submit and callback

@@ -85,7 +85,7 @@ export function submitPeriodicaArticleOrder({
  * @param {string} params.agencyId the agency idª
  */
 
-export function cancelOrder({ orderId, agencyId }) {
+export function deleteOrder({ orderId, agencyId }) {
   return {
     query: `
     mutation cancelOrder($orderId: String!, $agencyId: String!) {

@@ -452,8 +452,8 @@ const DEFAULT_STORY_PARAMETERS = {
             );
             return { status: "OK" };
           },
-          cancelOrder: (args) => {
-            console.debug("cancelOrder", args?.variables?.input);
+          deleteOrder: (args) => {
+            console.debug("deleteOrder", args?.variables?.input);
             return { status: "OK" };
           },
         },
