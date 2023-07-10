@@ -1,0 +1,17 @@
+.ErrorRow {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--error);
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: 0.2px;
+  font-family: "ibm_plex_sansregular";
+}
+
+@media screen and (max-width: 480px) {
+  .ErrorRow {
+    padding: var(--pt2);
+  }
+}

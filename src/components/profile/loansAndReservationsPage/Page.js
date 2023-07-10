@@ -12,6 +12,7 @@ import {
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { arangeLoanerInfo } from "@/lib/userdataFactoryUtils";
 import Link from "@/components/base/link";
+import { useState } from "react";
 
 export const dataReducer = (dataType, data) => {
   switch (dataType) {
@@ -24,6 +25,20 @@ export const dataReducer = (dataType, data) => {
       };
     }
     case "LOAN": {
+      if (!data.manifestation) {
+        // No manifestation - we show what we can
+        return {
+          type: "LOAN",
+          image: null,
+          title: null,
+          creator: null,
+          materialType: null,
+          creationYear: null,
+          dueDateString: data.dueDate,
+          id: data.loanId,
+          workId: "work-of:" + null,
+        };
+      }
       return {
         type: "LOAN",
         image: data.manifestation.cover.thumbnail,
@@ -31,7 +46,6 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
-        creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         dueDateString: data.dueDate,
@@ -44,17 +58,17 @@ export const dataReducer = (dataType, data) => {
         // No manifestation - we show what we can
         return {
           type: "ORDER",
-          image: data.manifestation?.cover.thumbnail,
+          image: null,
           title: data.title,
           creator: data.creator,
-          creators: data.manifestation?.creators,
-          materialType: data.manifestation?.materialTypes[0].specific,
-          creationYear: data.manifestation?.recordCreationDate.substring(0, 4),
+          creators: null,
+          materialType: null,
+          creationYear: null,
           library: data.pickUpBranch.agencyName,
           holdQueuePosition: data.holdQueuePosition,
           pickUpExpiryDate: data.pickUpExpiryDate,
           id: data.orderId,
-          workId: "work-of:" + data.manifestation?.pid,
+          workId: "work-of:" + null,
         };
       }
       return {
@@ -64,14 +78,15 @@ export const dataReducer = (dataType, data) => {
         creator: extractCreatorsPrioritiseCorporation(
           data.manifestation.creators
         )?.[0]?.display,
-        creators: data.manifestation.creators,
         materialType: data.manifestation.materialTypes[0].specific,
         creationYear: data.manifestation.recordCreationDate.substring(0, 4),
         library: data.pickUpBranch.agencyName,
+        agencyId: data.libraryId,
         holdQueuePosition: data.holdQueuePosition,
         pickUpExpiryDate: data.pickUpExpiryDate,
         id: data.orderId,
         workId: "work-of:" + data.manifestation.pid,
+        orderMutation: data.orderMutation,
       };
     }
   }
@@ -83,8 +98,10 @@ const LoansAndReservations = () => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const { loanerInfo } = useUser();
   const { debt, agency, orders, loans } = arangeLoanerInfo(loanerInfo);
+  const [removedOrderId, setRemovedOrderId] = useState("");
   const libraryString =
     agency && agency.result ? agency.result[0].agencyName : "";
+  const libraryId = agency?.result?.[0]?.agencyId;
 
   return (
     <ProfileLayout
@@ -145,6 +162,7 @@ const LoansAndReservations = () => {
             column2={Translate({ context: "profile", label: "price" })}
             column3={Translate({ context: "profile", label: "loaner-library" })}
           />
+
           {debt?.map((claim, i) => (
             <MaterialRow
               {...dataReducer("DEBT", claim)}
@@ -257,7 +275,12 @@ const LoansAndReservations = () => {
         {orders && orders.length !== 0 ? (
           orders?.map((order, i) => (
             <MaterialRow
-              {...dataReducer("ORDER", order)}
+              {...dataReducer("ORDER", {
+                ...order,
+                libraryId,
+              })}
+              removedOrderId={removedOrderId}
+              setRemovedOrderId={setRemovedOrderId}
               key={`loan-${order.loanId}-#${i}`}
               dataCy={`order-${i}`}
             />

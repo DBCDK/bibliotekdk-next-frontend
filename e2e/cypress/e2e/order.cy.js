@@ -97,7 +97,6 @@ describe("Order", () => {
       );
 
       cy.getConsoleEntry("elbaPlaceCopy").then((entry) => {
-        console.log(entry, "LOGENTRY");
         expect(entry[1]).to.deep.equal({
           pid: "some-pid-4",
           userMail: "some@mail.dk",
@@ -171,7 +170,6 @@ describe("Order", () => {
       cy.contains("some-order-id");
 
       cy.getConsoleEntry("submitOrder").then((entry) => {
-        console.log(entry, "ENTTRY");
         expect(entry[1]).to.deep.equal({
           pids: ["some-pid-5"],
           pickUpBranch: "branches.result[0].branchId",

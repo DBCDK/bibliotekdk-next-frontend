@@ -8,19 +8,22 @@ import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
 import { useState } from "react";
+import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
 import { getWorkUrl } from "@/lib/utils";
+import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
+import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
-import useUser from "@/components/hooks/useUser";
+import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -225,11 +228,13 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     materialType,
     creationYear,
     title,
-    id,
+    id: materialId,
     type,
     status,
     dataCy,
+    removedOrderId,
   } = props;
+
   const modal = useModal();
 
   const onClick = () => {
@@ -247,6 +252,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
       condition={type === "DEBT"}
       wrapper={(children) => (
         <article
+          key={"article" + materialId}
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
@@ -261,14 +267,13 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           className={cx(styles.materialRow_mobile, {
             [styles.materialRow_green]: status === "GREEN",
             [styles.materialRow_red]: status === "RED",
+            [styles.materialRow_mobile_animated]: materialId === removedOrderId,
           })}
           role="button"
           onClick={onClick}
-          tabIndex={0}
+          tabIndex="0"
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onClick();
-            }
+            e.key === "Enter" && onClick();
           }}
           data-cy={dataCy}
         >
@@ -284,7 +289,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
           type="text1"
           tag="h3"
           className={styles.materialTitle}
-          id={`material-title-${id}`}
+          id={`material-title-${materialId}`}
         >
           {title}
         </Title>
@@ -318,8 +323,9 @@ const MaterialRow = (props) => {
     materialType,
     creationYear,
     library,
+    agencyId,
     hasCheckbox = false,
-    id,
+    id: materialId,
     workId,
     type,
     holdQueuePosition,
@@ -328,10 +334,16 @@ const MaterialRow = (props) => {
     amount,
     currency,
     dataCy,
+    removedOrderId,
+    setRemovedOrderId,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateLoanerInfo } = useUser();
+  const { updateOrderInfo } = useUser();
+  const modal = useModal();
+  const [hasError, setHasError] = useState(false);
+  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
@@ -350,14 +362,6 @@ const MaterialRow = (props) => {
       default:
         return "NONE";
     }
-  };
-
-  const onDeleteOrder = (id) => {
-    const newOrders = loanerInfo.orders;
-    const index = newOrders.map((item) => item.orderId).indexOf(id);
-    newOrders.splice(index, 1);
-    // TODO proper mutate function
-    updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
   };
 
   const status = getStatus();
@@ -380,6 +384,16 @@ const MaterialRow = (props) => {
     }
   };
 
+  async function onCloseModal({ success }) {
+    if (success) {
+      setRemovedOrderId(materialId);
+      updateOrderInfo();
+      setHasError(false);
+    } else {
+      setHasError(true);
+    }
+  }
+
   const renderDynamicButton = () => {
     switch (type) {
       case "DEBT":
@@ -393,7 +407,17 @@ const MaterialRow = (props) => {
       case "ORDER":
         return (
           <MaterialRowIconButton
-            onClick={() => onDeleteOrder(order.orderId)}
+            onClick={() =>
+              onClickDelete({
+                modal,
+                mobile: false,
+                pickUpExpiryDate,
+                materialId,
+                agencyId,
+                orderMutation,
+                onCloseModal,
+              })
+            }
             dataCy="order-button"
           >
             {Translate({
@@ -407,124 +431,152 @@ const MaterialRow = (props) => {
     }
   };
 
-  if (isMobileSize)
+  if (isMobileSize) {
     return (
-      <MobileMaterialRow
-        renderDynamicColumn={renderDynamicColumn}
-        status={status}
-        {...props}
-      />
+      <>
+        {hasError && (
+          <ErrorRow
+            text={Translate({
+              context: "profile",
+              label: "error-deleting-order",
+            })}
+          />
+        )}
+        <MobileMaterialRow
+          key={"article" + materialId}
+          renderDynamicColumn={renderDynamicColumn}
+          status={status}
+          onCloseModal={onCloseModal}
+          removedOrderId={removedOrderId}
+          {...props}
+        />
+      </>
     );
+  }
 
   return (
-    <ConditionalWrapper
-      condition={hasCheckbox}
-      wrapper={(children) => (
-        <article
-          role="checkbox"
-          aria-checked={isChecked}
-          tabIndex="0"
-          aria-labelledby="chk1-label"
-          data-id={id}
-          onClick={() => setIsChecked(!isChecked)}
-          className={cx(
-            styles.materialRow,
-            styles.materialRow_withCheckbox,
-            styles.materialRow_wrapper,
-            {
+    <>
+      {hasError && (
+        <ErrorRow
+          text={Translate({
+            context: "profile",
+            label: "error-deleting-order",
+          })}
+        />
+      )}
+      <ConditionalWrapper
+        condition={hasCheckbox}
+        wrapper={(children) => (
+          <article
+            key={"article" + materialId}
+            role="checkbox"
+            aria-checked={isChecked}
+            tabIndex="0"
+            aria-labelledby="chk1-label"
+            data-id={materialId}
+            onClick={() => setIsChecked(!isChecked)}
+            className={cx(
+              styles.materialRow,
+              styles.materialRow_withCheckbox,
+              styles.materialRow_wrapper,
+              {
+                [styles.materialRow_green]: status === "GREEN",
+                [styles.materialRow_red]: status === "RED",
+                [styles.materialRow_animated]: materialId === removedOrderId,
+              }
+            )}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
+        )}
+        elseWrapper={(children) => (
+          <article
+            key={"article" + materialId} //to avoid rerendering
+            className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-            }
-          )}
-          data-cy={dataCy}
-        >
-          {children}
-        </article>
-      )}
-      elseWrapper={(children) => (
-        <article
-          className={cx(styles.materialRow, styles.materialRow_wrapper, {
-            [styles.materialRow_green]: status === "GREEN",
-            [styles.materialRow_red]: status === "RED",
-          })}
-          data-cy={dataCy}
-        >
-          {children}
-        </article>
-      )}
-    >
-      <>
-        {hasCheckbox && (
-          <div>
-            <Checkbox
-              checked={isChecked}
-              id={`material-row-${id}`}
-              aria-labelledby={`material-title-${id}`}
-              tabIndex={-1}
-            />
-          </div>
+              [styles.materialRow_animated]: materialId === removedOrderId,
+            })}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
         )}
-
-        <div className={styles.materialInfo}>
-          {!!image && (
-            <div className={styles.imageContainer}>
-              <Cover src={image} size="fill-width" />
+      >
+        <>
+          {hasCheckbox && (
+            <div>
+              <Checkbox
+                checked={isChecked}
+                id={`material-row-${materialId}`}
+                aria-labelledby={`material-title-${materialId}`}
+                tabIndex="-1"
+              />
             </div>
           )}
-          <div>
-            <ConditionalWrapper
-              condition={!!title && !!creator && !!id}
-              wrapper={(children) => (
-                <Link
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                  href={getWorkUrl(title, creators, workId)}
-                  className={styles.blackUnderline}
+
+          <div className={styles.materialInfo}>
+            {!!image && (
+              <div className={styles.imageContainer}>
+                <Cover src={image} size="fill-width" />
+              </div>
+            )}
+            <div>
+              <ConditionalWrapper
+                condition={!!title && !!creator && !!materialId}
+                wrapper={(children) => (
+                  <Link
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                    href={getWorkUrl(title, creators, workId)}
+                    className={styles.blackUnderline}
+                  >
+                    {children}
+                  </Link>
+                )}
+              >
+                <Title
+                  type="text1"
+                  tag="h3"
+                  className={styles.materialTitle}
+                  id={`material-title-${materialId}`}
                 >
-                  {children}
-                </Link>
+                  {title}
+                </Title>
+              </ConditionalWrapper>
+
+              {creator && (
+                <Text type="text2" dataCy="creator">
+                  {creator}
+                </Text>
               )}
-            >
-              <Title
-                type="text1"
-                tag="h3"
-                className={styles.materialTitle}
-                id={`material-title-${id}`}
-              >
-                {title}
-              </Title>
-            </ConditionalWrapper>
-
-            {creator && (
-              <Text type="text2" dataCy="creator">
-                {creator}
-              </Text>
-            )}
-            {materialType && creationYear && (
-              <Text
-                type="text2"
-                className={styles.uppercase}
-                dataCy="materialtype-and-creationyear"
-              >
-                {materialType}, {creationYear}
-              </Text>
-            )}
+              {materialType && creationYear && (
+                <Text
+                  type="text2"
+                  className={styles.uppercase}
+                  dataCy="materialtype-and-creationyear"
+                >
+                  {materialType}, {creationYear}
+                </Text>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>{renderDynamicColumn()}</div>
+          <div>{renderDynamicColumn()}</div>
 
-        <div>
-          <Text type="text2">{library}</Text>
-        </div>
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
 
-        <div>{renderDynamicButton()}</div>
-      </>
-    </ConditionalWrapper>
+          <div>{renderDynamicButton(materialId, agencyId)}</div>
+        </>
+      </ConditionalWrapper>
+    </>
   );
 };
 
@@ -536,7 +588,7 @@ MaterialRow.propTypes = {
   creationYear: PropTypes.string,
   library: PropTypes.string.isRequired,
   hasCheckbox: PropTypes.bool,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired, //materialId
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
   type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),

@@ -1,0 +1,19 @@
+.deleteOrder {
+  padding: var(--pt7) var(--pt6);
+}
+
+.container {
+  margin-top: var(--pt2);
+}
+
+.text {
+  margin-bottom: var(--pt5);
+}
+
+.button {
+  margin-bottom: var(--pt2);
+}
+
+.cancelButton {
+  width: 100%;
+}

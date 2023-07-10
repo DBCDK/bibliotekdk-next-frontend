@@ -3060,8 +3060,20 @@
         "en": "Delete"
       },
       "delete-order": {
-        "da": "Slet reservation",
+        "da": "Slet reservering",
         "en": "Delete reservation"
+      },
+      "delete-order-confirmation": {
+        "da": "Er du sikker på, at du vil slette reserveringen?",
+        "en": "Are you sure you want to delete the reservation?"
+      },
+      "miss-spot-in-queue": {
+        "da": "Du mister din plads i køen.",
+        "en": "You will lose your spot in the queue."
+      },
+      "no-longer-reserved": {
+        "da": "Hvis du sletter reserveringen, er materialet ikke længere sat til side til dig.",
+        "en": "If you delete the reservation, the material will no longer be reserved for you."
       },
       "delete-more": {
         "da": "Slet flere",
@@ -3138,6 +3150,10 @@
       "to-return": {
         "da": "Afleveres d.",
         "en": "Hand in by"
+      },
+      "error-deleting-order": {
+        "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
+        "en": "An error occurred while the reservation was being deleted. Try again."
       }
     }
   }
