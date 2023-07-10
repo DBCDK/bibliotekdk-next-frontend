@@ -7,7 +7,8 @@
 }
 
 .arrow_hidden {
-  opacity: 0;
+  /* Hide completely from DOM - not tabbable */
+  display: none;
 }
 
 .pagination {
@@ -53,6 +54,10 @@
 .pagination button.selected {
   color: white;
   background-color: var(--blue);
+}
+
+.arrowPlaceholder {
+  width: var(--pt4);
 }
 
 @media (min-width: 768px) {

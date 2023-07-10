@@ -22,11 +22,8 @@ describe("bibliographic data", () => {
 
   it("Full manifestation - check localizationlink", () => {
     cy.visit("/iframe.html?id=work-bibliographic-data--full-manifestation");
-    cy.get("[data-cy=link-localizations] p", { timeout: 10000 }).should(
-      "have.text",
-      "Se om den er hjemme på dit bibliotek"
-    );
 
+    cy.contains("Se om den er hjemme på dit bibliotek");
     cy.contains("Kopier link til udgave");
   });
 });

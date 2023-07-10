@@ -7,6 +7,7 @@ import Icon from "@/components/base/icon";
 
 import styles from "./Tag.module.css";
 import Translate from "../../translate";
+import cx from "classnames";
 
 /**
  * The Component function
@@ -22,21 +23,23 @@ function Tag({
   selected = false,
   onClick = null,
   disabled = false,
+  opaqueText = false,
   skeleton = false,
   tag = "button",
   dataCy = "",
 }) {
   const context = { context: "form" };
   const Tag = tag;
-
   const key = cyKey({ name: children, prefix: "tag" });
-  const disabledStyle = disabled ? styles.disabled : "";
-  const selectedStyle = selected ? styles.selected : "";
 
   return (
     <Tag
       data-cy={dataCy || key}
-      className={`${styles.tag} ${className} ${selectedStyle} ${disabledStyle}`}
+      className={cx(styles.tag, className, {
+        [styles.selected]: selected,
+        [styles.disabled]: disabled,
+        [styles.opaque]: opaqueText,
+      })}
       onClick={onClick}
     >
       {children}
@@ -105,6 +108,7 @@ Container.propTypes = {
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   selected: PropTypes.bool,
   disabled: PropTypes.bool,
+  opaqueText: PropTypes.bool, // Use for disabled but opaque text
   skeleton: PropTypes.bool,
   onClick: PropTypes.func,
   tag: PropTypes.string,

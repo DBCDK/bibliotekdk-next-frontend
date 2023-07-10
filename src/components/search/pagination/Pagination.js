@@ -109,6 +109,8 @@ export default function Pagination({
           size={{ w: 4, h: 4 }}
         />
 
+        {!showPreviousPageArrow && <div className={styles.arrowPlaceholder} />}
+
         {arrayOfPaginationPages.map((page, index) => {
           return (
             <Icon
@@ -139,6 +141,8 @@ export default function Pagination({
           dataDisabled={!(!isLoading && showNextPageArrow)}
           size={{ w: 4, h: 4 }}
         />
+
+        {!showNextPageArrow && <div className={styles.arrowPlaceholder} />}
       </div>
     </React.Fragment>
   );

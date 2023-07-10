@@ -1,3 +1,4 @@
+/* Texts */
 .text {
   font-family: var(--body-font);
   /* TODO: What is the reason for block? It is quite often troublesome */
@@ -22,24 +23,106 @@
   font-size: 14px;
   line-height: 22px;
 }
+
 .text4 {
   font-size: 14px;
   line-height: 22px;
   font-family: var(--body-font-semibold);
 }
+
 .text5 {
   font-size: 11px;
   line-height: 17px;
 }
+
 .text6 {
   font-size: 11px;
   line-height: 17px;
   font-family: var(--body-font-semibold);
 }
-.clamp {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+
+/* Titles */
+.title {
+  font-family: var(--title-font);
+
+  /* Bootstrap default override */
+  margin: 0;
+}
+
+.title1 {
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.title2 {
+  font-size: 40px;
+  line-height: 52px;
+}
+
+.title3 {
+  font-size: 28px;
+  line-height: 38px;
+}
+
+.title4 {
+  font-size: 24px;
+  line-height: 32px;
+  font-family: var(--title-font-medium);
+}
+
+.title5 {
+  font-size: 24px;
+  line-height: 32px;
+  font-family: var(--title-font);
+}
+
+.title6 {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: var(--title-font);
+}
+
+/* Maybe rename when revisited properly */
+.title6b {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: var(--body-font-semibold);
+}
+
+/* TODO: WARNING: Don't use this other
+     places than work overview */
+.title7 {
+  font-size: 18px;
+  line-height: 28px;
+  font-family: var(--title-font);
+}
+
+/* Small devices */
+@media (min-width: 576px) {
+  .title1 {
+    font-size: 48px;
+    line-height: 56px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .title1 {
+    font-size: 80px;
+    line-height: 92px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .title3 {
+    font-size: 40px;
+    line-height: 52px;
+  }
+  .title7 {
+    font-size: 24px;
+    line-height: 32px;
+  }
 }
 
 /* 

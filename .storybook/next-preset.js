@@ -25,6 +25,14 @@ module.exports = {
             "../src/components/base/storybook"
           ),
           "@/public": path.resolve(__dirname, "../public"),
+          "css/animations": path.resolve(
+            __dirname,
+            "../src/components/base/animation/animations.module.css"
+          ),
+          "css/clamp": path.resolve(
+            __dirname,
+            "../src/components/base/clamp/Clamp.module.css"
+          ),
           "@": path.resolve(__dirname, "../src"),
         },
       },
@@ -56,7 +64,7 @@ module.exports = {
             modules: true,
           },
         },
-      ]
+      ],
     });
 
     newConfig.module.rules.push({

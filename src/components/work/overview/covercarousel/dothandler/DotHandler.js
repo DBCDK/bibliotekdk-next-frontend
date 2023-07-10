@@ -1,4 +1,4 @@
-import styles from "@/components/work/overview/covercarousel/dothandler/DotHandler.module.css";
+import styles from "./DotHandler.module.css";
 import React from "react";
 import Text from "@/components/base/text";
 

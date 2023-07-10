@@ -11,7 +11,7 @@ import Arrow from "@/components/base/animation/arrow";
 
 import styles from "./List.module.css";
 
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 
 /**
  * A custom Radio Button displayed as a row
@@ -195,9 +195,9 @@ function Group({
       data-cy={props["data-cy"]}
       role="group"
       aria-label={label}
-      className={`${styles.group} ${
-        enabled ? styles.enabled : styles.disabled
-      } ${props.className}`}
+      className={`${styles.group} ${enabled ? "" : styles.disabled} ${
+        props.className
+      }`}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement

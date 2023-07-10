@@ -1,9 +1,9 @@
 import styles from "./Edition.module.css";
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import Tag from "@/components/base/forms/tag";
-import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import Cover from "@/components/base/cover";
 import { useModal } from "@/components/_modal";
 import { useData } from "@/lib/api/api";
@@ -18,6 +18,8 @@ import {
 } from "@/lib/manifestationFactoryUtils";
 import { AccessEnum } from "@/lib/enums";
 import isEmpty from "lodash/isEmpty";
+import { IconLink } from "@/components/base/iconlink/IconLink";
+import ChevronRight from "@/public/icons/chevron_right.svg";
 
 export function Edition({
   isLoading,
@@ -87,17 +89,17 @@ export function Edition({
     <div className={styles.edition}>
       <div className={styles.left}>
         <div className={styles.title}>
-          <Text
-            type="text1"
-            skeleton={!manifestation?.titles?.full && isLoading}
-            lines={1}
-          >
-            {titles?.map((title, index) => (
-              <>
-                {title} {index < titles?.length - 1 && <br />}
-              </>
-            ))}
-          </Text>
+          {titles?.map((title, index) => (
+            <Title
+              tag="h3"
+              type="text1"
+              skeleton={!manifestation?.titles?.full && isLoading}
+              lines={1}
+              key={title + "-" + index}
+            >
+              {title} {index < titles?.length - 1 && <br />}
+            </Title>
+          ))}
         </div>
         <div className={styles.creators}>
           <Text
@@ -140,7 +142,12 @@ export function Edition({
             </Link>
           ) : null}
           <div>
-            <Tag tag="span" skeleton={!materialType && isLoading}>
+            <Tag
+              tag="span"
+              skeleton={!materialType && isLoading}
+              disabled
+              opaqueText
+            >
               {formatMaterialTypesToPresentation(materialType)}
             </Tag>
           </div>
@@ -164,22 +171,23 @@ export function Edition({
           </div>
         )}
         {isPeriodicaLike && showChangeManifestation && (
-          <LinkArrow
+          <IconLink
             onClick={() => {
               modal.push("periodicaform", {
                 periodicaForm: periodicaForm,
               });
             }}
-            disabled={false}
             className={styles.periodicaformlink}
+            border={{ bottom: true, top: false }}
+            tag={"button"}
+            iconSrc={ChevronRight}
+            iconPlacement={"right"}
           >
-            <Text type="text3">
-              {Translate({
-                context: "order-periodica",
-                label: "title",
-              })}
-            </Text>
-          </LinkArrow>
+            {Translate({
+              context: "order-periodica",
+              label: "title",
+            })}
+          </IconLink>
         )}
       </div>
       <div className={styles.right}>

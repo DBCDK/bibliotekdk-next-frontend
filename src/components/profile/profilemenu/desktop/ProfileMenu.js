@@ -1,7 +1,7 @@
 import Text from "@/components/base/text/Text";
 import Title from "@/components/base/title";
 import Link from "@/components/base/link";
-import styles from "@/components/profile/profilemenu/desktop/ProfileMenu.module.css";
+import styles from "./ProfileMenu.module.css";
 import Translate from "@/components/base/translate/Translate";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -43,13 +43,22 @@ function MenuLink({ label, href }) {
   return (
     <li className={cx(styles.link, { [styles.simpleLink]: isActive })}>
       <Link href={href} dataCy="menu-fixed-links">
-        <Title type={type}>{Translate({ context: CONTEXT, label })}</Title>
+        <Title type={type} tag="div">
+          {Translate({ context: CONTEXT, label })}
+        </Title>
       </Link>
     </li>
   );
 }
 
-function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
+function SubCategory({
+  item,
+  index,
+  router,
+  baseUrl,
+  activeIndex,
+  setActiveIndex,
+}) {
   const title = Translate({
     context: CONTEXT,
     label: `${item.title}`,
@@ -76,7 +85,6 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
   }, [router.asPath]);
 
   async function replaceHash(newEnding) {
-    const baseUrl = router.pathname;
     const newUrl = baseUrl + "#" + newEnding;
     try {
       router.replace(newUrl);
@@ -118,25 +126,25 @@ function SubCategory({ item, index, router, activeIndex, setActiveIndex }) {
 /**
  * Menu link, that contains subcategories, which also are links
  * @param menus
- * @param href
+ * @param categoryUrl
  * @param name
  * @param className
  * @return {JSX.Element}
  */
-function MenuGroup({ menus, href, name, className }) {
+function MenuGroup({ menus, categoryUrl, name, className }) {
   const [activeIndex, setActiveIndex] = useState();
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(name));
 
   useEffect(() => {
-    setIsActive(router.asPath.includes(href));
+    setIsActive(router.asPath.includes(categoryUrl));
   }, [router.asPath]);
 
   return (
     <li className={className}>
       <Link
         className={styles.group}
-        href={href}
+        href={categoryUrl}
         dataCy={`group-menu-${name}`}
         active={isActive}
       >
@@ -144,6 +152,7 @@ function MenuGroup({ menus, href, name, className }) {
           className={styles.groupTitle}
           type={isActive ? "title4" : "title5"}
           id={`navigation-${name}`}
+          tag="div"
         >
           {Translate({
             context: CONTEXT,
@@ -158,7 +167,7 @@ function MenuGroup({ menus, href, name, className }) {
             item={item}
             index={index}
             router={router}
-            href={href}
+            baseUrl={categoryUrl}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />
@@ -207,7 +216,7 @@ export default function ProfileMenu() {
   return (
     <>
       <nav
-        className={styles.menu}
+        className={styles.nav}
         aria-label={`${Translate({
           context: CONTEXT,
           label: "profileNavigation",
@@ -217,7 +226,7 @@ export default function ProfileMenu() {
           <MenuGroup
             menus={menus}
             name={menuItems[0]}
-            href={getProfileUrl(menuItems[0])}
+            categoryUrl={getProfileUrl(menuItems[0])}
           />
           {/* more MenuLinks are coming soon */}
           <MenuLink label={menuItems[1]} href={getProfileUrl(menuItems[1])} />

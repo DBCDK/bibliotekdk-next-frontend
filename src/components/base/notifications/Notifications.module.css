@@ -10,7 +10,7 @@
   background-color: var(--info-light);
 }
 
-.succuss {
+.success {
   background-color: var(--success);
 }
 
@@ -26,13 +26,12 @@ div.notification {
 
 /* Small devices (landscape phones, 576px and down) */
 @media (max-width: 576px) {
-  div.notification{
+  div.notification {
     text-align: left;
   }
 }
 
-
-div.notification i{
+div.notification i {
   float: right;
   padding: var(--pt1);
 }

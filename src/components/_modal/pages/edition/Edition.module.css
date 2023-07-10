@@ -56,10 +56,6 @@
   flex-shrink: 2;
 }
 
-.right .cover {
-  max-height: 100px;
-}
-
 .periodicasummary {
   /* margin-top: var(--pt2); */
 }
@@ -68,29 +64,8 @@
   margin-top: var(--pt2);
 }
 
-.link {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.link .fullLink {
-  display: none;
-}
-
-.arrow {
-  margin: 0 0 0 var(--pt1);
-}
-
 @media (min-width: 576px) {
   .edition {
     padding: var(--pt3) var(--pt6);
-  }
-  .link .fullLink {
-    display: block;
-  }
-
-  .link .shortLink {
-    display: none;
   }
 }

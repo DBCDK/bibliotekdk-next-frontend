@@ -32,7 +32,11 @@ export function encodeString(str = "") {
     .replace(/-+/g, "-");
 }
 
-export function extractCreatorPrioritiseCorporation(creatorsBeforeFilter) {
+export function extractCreatorsPrioritiseCorporation(creatorsBeforeFilter) {
+  if (!creatorsBeforeFilter) return;
+  if (!Array.isArray(creatorsBeforeFilter)) {
+    creatorsBeforeFilter = [creatorsBeforeFilter];
+  }
   const corporations = creatorsBeforeFilter?.filter(
     (creator) => creator.__typename === "Corporation"
   );
@@ -50,7 +54,7 @@ export function extractCreatorPrioritiseCorporation(creatorsBeforeFilter) {
  * @returns {string} encoded string
  */
 export function encodeTitleCreator(title = "", creators = []) {
-  const creator = extractCreatorPrioritiseCorporation(creators)?.[0];
+  const creator = extractCreatorsPrioritiseCorporation(creators)?.[0];
 
   return creator
     ? encodeString(title) + "_" + encodeString(creator.display)
@@ -109,7 +113,7 @@ export function getMaterialReviewUrl(title, workId, pid) {
 export function getCanonicalWorkUrl({ title, creators, id }) {
   return `${APP_URL}/materiale/${encodeTitleCreator(
     title,
-    extractCreatorPrioritiseCorporation(creators) || [{ display: "" }]
+    extractCreatorsPrioritiseCorporation(creators) || [{ display: "" }]
   )}/${id}`;
 }
 

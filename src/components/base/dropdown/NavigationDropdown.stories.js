@@ -1,5 +1,5 @@
 import NavigationDropdown from "./NavigationDropdown";
-import automock_utils from "@/components/_modal/pages/automock_utils";
+import automock_utils from "@/lib/automock_utils.fixture";
 import { StoryDescription } from "@/storybook";
 const { useMockLoanerInfo } = automock_utils();
 
@@ -16,7 +16,8 @@ export function Dropdown() {
   return (
     <div style={{ height: "500px" }}>
       <StoryDescription>
-        Shows when canvas has width up to 992px
+        Shows when canvas has width up to 992px. The story is not showing icons
+        used at the end of the line.
       </StoryDescription>
       <NavigationDropdown context="profile" menuItems={menuItems} />
     </div>

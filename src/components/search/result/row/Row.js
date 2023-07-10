@@ -9,7 +9,7 @@ import Text from "@/components/base/text";
 import Cover from "@/components/base/cover";
 import {
   encodeTitleCreator,
-  extractCreatorPrioritiseCorporation,
+  extractCreatorsPrioritiseCorporation,
 } from "@/lib/utils";
 import Link from "@/components/base/link";
 
@@ -53,7 +53,7 @@ function TitlesForSearch({ work, isLoading }) {
       lines={4}
       clamp={true}
       title={titles?.join(" ")}
-      data-cy={"ResultRow-title"}
+      dataCy={"ResultRow-title"}
       skeleton={isLoading}
       className={`${styles.display_inline}`}
     >
@@ -105,8 +105,9 @@ export default function ResultRow({
   onClick,
   isLoading,
 }) {
-  const creatorName = extractCreatorPrioritiseCorporation(work?.creators)?.[0]
-    ?.display;
+  const creatorsNames = extractCreatorsPrioritiseCorporation(
+    work?.creators
+  )?.map((creator) => creator.display);
 
   const { filters } = useFilters();
 
@@ -124,7 +125,7 @@ export default function ResultRow({
   uniqueMaterialTypes.sort(sortMaterialTypesByFilter(materialTypes));
 
   return (
-    <div className={styles.search}>
+    <article className={styles.search}>
       <Link
         a={true}
         border={{ top: { keepVisible: true }, bottom: { keepVisible: true } }}
@@ -151,7 +152,7 @@ export default function ResultRow({
               skeleton={(!work?.creators && isLoading) || !work?.creators}
               lines={1}
             >
-              {creatorName || " "}
+              {creatorsNames?.join(", ") || " "}
             </Text>
             <div className={styles.materials}>
               <Text
@@ -207,7 +208,7 @@ export default function ResultRow({
           />
         </div>
       </Link>
-    </div>
+    </article>
   );
 }
 ResultRow.propTypes = {

@@ -33,7 +33,7 @@ export function sortReviews(a, b) {
  *
  * @param review
  *
- * @returns {component}
+ * @returns string
  */
 
 export function getReviewType(data) {

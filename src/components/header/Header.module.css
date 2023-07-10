@@ -63,24 +63,6 @@
 
 /* Logo */
 
-.logoWrap:focus-visible {
-  outline: solid 1px var(--blue);
-  outline-offset: var(--pt1);
-}
-
-.logoWrap:active {
-  outline: none;
-}
-
-.logo {
-  cursor: pointer;
-}
-
-.logo {
-  /* inline dynamic style override */
-  width: var(--pt13) !important;
-}
-
 .select {
   white-space: nowrap;
   height: 64px;
@@ -118,14 +100,6 @@
 
 .linkshowmore.hidden {
   visibility: hidden;
-}
-
-/* Dropdown */
-
-.dropdown {
-  height: 100%;
-  width: 208px;
-  border-left: none !important;
 }
 
 /* Search button */
@@ -182,11 +156,6 @@
   color: white;
 }
 
-.showexpandedlink {
-  padding-right: var(--pt4);
-  float: right;
-}
-
 @media (max-width: 991px) {
   .search > * {
     display: none;
@@ -232,11 +201,6 @@
   .header {
     padding-top: var(--pt1);
     /*padding-bottom: var(--pt4);*/
-  }
-
-  .logo {
-    /* important style override */
-    width: var(--pt15) !important;
   }
 
   .header .bottom {

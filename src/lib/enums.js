@@ -8,7 +8,7 @@ export const SuggestTypeEnum = Object.freeze({
 });
 
 export const FilterTypeEnum = Object.freeze({
-  MATERIAL_TYPES: "materialTypes",
+  MATERIAL_TYPES: "materialTypesSpecific",
   ACCESS_TYPES: "accessTypes",
   SUBJECTS: "subjects",
   CREATORS: "creators",
@@ -48,4 +48,8 @@ export const RelationTypeEnum = Object.freeze({
 export const AnchorsEnum = Object.freeze({
   SERIES: { context: "workmenu", label: "series" },
   RELATED_WORKS: { context: "relatedworks", label: "title" },
+});
+
+export const HiddenRoleFunctionEnum = Object.freeze({
+  OPHAV: { code: "cre", singular: "ophav", plural: "ophav" },
 });

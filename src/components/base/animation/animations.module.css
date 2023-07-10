@@ -14,11 +14,34 @@
   border-bottom: solid 1px var(--blue);
   transform: scaleX(0);
 }
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-border-bottom:after,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-border-bottom:after,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-border-bottom:after,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-border-bottom:after,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-border-bottom:after {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-border-bottom:after,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-border-bottom:after,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-border-bottom:after,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-border-bottom:after,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-border-bottom:after {
   transform: scaleX(1);
   transition: transform 0.4s;
 }
@@ -28,27 +51,96 @@
 .f-translate-right {
   transition: transform 0.3s;
 }
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-translate-right,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-translate-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-translate-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-translate-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-translate-right {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-translate-right,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-translate-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-translate-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-translate-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-translate-right {
   transform: translateX(var(--pt2));
 }
 
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-color-blue,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-color-blue,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-color-blue,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-color-blue,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-color-blue {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-color-blue,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-color-blue,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-color-blue,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-color-blue,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-color-blue {
   color: var(--blue);
 }
 
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-outline,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-outline,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-outline,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-outline,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-outline {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-outline,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-outline,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-outline,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-outline,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-outline {
   outline: solid 1px var(--blue);
   border-color: transparent !important;
 }
@@ -61,19 +153,65 @@
   transition: transform 0.3s;
 }
 
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-bounce-right,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-bounce-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-bounce-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-bounce-right,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-bounce-right {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-bounce-right,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-bounce-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-bounce-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-bounce-right,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-bounce-right {
   animation: bounceRight 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
 }
 
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-bounce-left,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-bounce-left,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-bounce-left,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-bounce-left,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-bounce-left {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-bounce-left,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-bounce-left,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-bounce-left,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-bounce-left,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-bounce-left {
   animation: bounceRight 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
 }
 
@@ -96,11 +234,34 @@
 }
 
 /* elastic */
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover.h-elastic,
-:is(.on-hover, .underlineContainer, .underlineContainer__only_internal_animations):hover .h-elastic,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible.f-elastic,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible .f-elastic,
-:is(.on-focus, .underlineContainer, .underlineContainer__only_internal_animations):focus-visible ~ .f-elastic {
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover.h-elastic,
+:is(
+    .on-hover,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):hover
+  .h-elastic,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible.f-elastic,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  .f-elastic,
+:is(
+    .on-focus,
+    .underlineContainer,
+    .underlineContainer__only_internal_animations
+  ):focus-visible
+  ~ .f-elastic {
   animation: elastic 0.4s cubic-bezier(0.3, 1, 0.32, 1.3);
 }
 
@@ -156,18 +317,37 @@
 .underlineContainer {
   --underline-height: 1px;
   --underline-background-position: 50% 0%, 50% 100%, 50% 50%;
-  --underline-background-size: 100% var(--underline-height), 100% var(--underline-height), 100% 100%;
-  --underline-background-hover-size_0pct: 0% var(--underline-height), 0 var(--underline-height), 100% 100%;
-  --underline-background-hover-size_100pct: 100% var(--underline-height), 100% var(--underline-height), 100% 100%;
+  --underline-background-size: 100% var(--underline-height),
+    100% var(--underline-height), 100% 100%;
+  --underline-background-hover-size_0pct: 0% var(--underline-height),
+    0 var(--underline-height), 100% 100%;
+  --underline-background-hover-size_100pct: 100% var(--underline-height),
+    100% var(--underline-height), 100% 100%;
 
-  --underline-background-image:
-    linear-gradient(var(--underline-top-color), var(--underline-top-color)),
-    linear-gradient(var(--underline-bottom-color), var(--underline-bottom-color)),
-    linear-gradient(var(--underline-middle-color), var(--underline-middle-color));
-  --underline-hover-background-image:
-    linear-gradient(var(--underline-top-hover-color), var(--underline-top-hover-color)),
-    linear-gradient(var(--underline-bottom-hover-color), var(--underline-bottom-hover-color)),
-    linear-gradient(var(--underline-middle-hover-color), var(--underline-middle-hover-color));
+  --underline-background-image: linear-gradient(
+      var(--underline-top-color),
+      var(--underline-top-color)
+    ),
+    linear-gradient(
+      var(--underline-bottom-color),
+      var(--underline-bottom-color)
+    ),
+    linear-gradient(
+      var(--underline-middle-color),
+      var(--underline-middle-color)
+    );
+  --underline-hover-background-image: linear-gradient(
+      var(--underline-top-hover-color),
+      var(--underline-top-hover-color)
+    ),
+    linear-gradient(
+      var(--underline-bottom-hover-color),
+      var(--underline-bottom-hover-color)
+    ),
+    linear-gradient(
+      var(--underline-middle-hover-color),
+      var(--underline-middle-hover-color)
+    );
 
   text-decoration: none;
   color: var(--underline-font-color);
@@ -179,8 +359,9 @@
   cursor: pointer;
 }
 
-.underlineContainer:is(:hover, :focus, :focus-visible),
-.underlineContainer__only_internal_animations:is(:hover, :focus, :focus-visible) .underlineContainer {
+.underlineContainer:is(:hover, :focus-visible),
+.underlineContainer__only_internal_animations:is(:hover, :focus-visible)
+  .underlineContainer {
   animation: __underline 0.3s ease;
   color: var(--underline-font-hover-color);
   background-image: var(--underline-hover-background-image);
@@ -197,4 +378,3 @@
   }
 }
 /* ================================================================= */
-

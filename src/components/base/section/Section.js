@@ -50,6 +50,8 @@ export default function Section({
   elRef = null,
   subtitle = "",
   headerTag = "h2",
+  sectionTag = "section",
+  id,
 }) {
   const backgroundClass = backgroundColor ? styles.background : "";
 
@@ -102,9 +104,11 @@ export default function Section({
       style={style}
       data-cy={dataCy}
       ref={elRef}
+      id={id}
+      tabIndex={!!id ? -1 : null} // If id is sat, we wont the ability to set focus on element - used for skip links
     >
-      <Container className={styles.container} fluid>
-        <Row as="section" className={styles.section}>
+      <Container fluid>
+        <Row as={sectionTag}>
           {title && (
             <Col
               xs={12}
@@ -149,4 +153,5 @@ Section.propTypes = {
   space: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   headerTag: PropTypes.string,
+  sectionTag: PropTypes.string,
 };

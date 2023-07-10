@@ -21,7 +21,7 @@ import response from "./dummy.data";
 import { useData } from "@/lib/api/api";
 import * as searchFragments from "@/lib/api/search.fragments";
 
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 import styles from "./Filter.module.css";
 import { FilterTypeEnum } from "@/lib/enums";
 
@@ -264,7 +264,7 @@ export function Filter(props) {
         <>
           <Top modal={modal} back={false} />
           <span className={styles.wrap}>
-            <Title type="title4" className={styles.title}>
+            <Title type="title4" tag="h2">
               {Translate({
                 context: "modal",
                 label: "title-filter",
@@ -333,7 +333,6 @@ export function Filter(props) {
                         type="text1"
                         dataCy={`text-${facet.name}`}
                         className={[
-                          styles.facet,
                           animations["h-border-bottom"],
                           animations["h-color-blue"],
                         ].join(" ")}

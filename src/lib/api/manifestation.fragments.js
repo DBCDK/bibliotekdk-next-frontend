@@ -169,6 +169,7 @@ export function manifestationParts({ pid }) {
             creators {
               ...creatorsFragment
             }
+            contributorsFromDescription
             creatorsFromDescription            
             subjects {
               display

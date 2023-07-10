@@ -29,20 +29,9 @@ function CreateLines({ n, children }) {
  *
  * @returns {JSX.Element}
  */
-export default function Skeleton({
-  children,
-  className = "",
-  isSlow = false,
-  lines = 1,
-}) {
-  // Adds the slow loading class (error/red loading color)
-  const slowClass = isSlow ? styles.slow : "";
-
+export default function Skeleton({ children, className = "", lines = 1 }) {
   return (
-    <div
-      className={`${styles.skeleton} ${className} ${slowClass}`}
-      data-cy={"skeleton"}
-    >
+    <div className={`${styles.skeleton} ${className}`} data-cy={"skeleton"}>
       <div className={styles.lines}>
         <CreateLines n={lines}>{children}</CreateLines>
       </div>

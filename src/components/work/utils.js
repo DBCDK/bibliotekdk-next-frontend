@@ -7,7 +7,7 @@ import * as branchesFragments from "@/lib/api/branches.fragments";
 import { useMemo } from "react";
 import { accessFactory } from "@/lib/accessFactoryUtils";
 import * as manifestationFragments from "@/lib/api/manifestation.fragments";
-import { extractCreatorPrioritiseCorporation } from "@/lib/utils";
+import { extractCreatorsPrioritiseCorporation } from "@/lib/utils";
 
 export function openLocalizationsModal(modal, pids) {
   modal.push("localizations", {
@@ -54,6 +54,21 @@ export function onOnlineAccess(url, target = "_blank") {
 }
 
 /**
+ * Generates the work page title
+ * @param {object} work
+ * @return {string}
+ */
+function getPageTitle(work) {
+  return `${work?.titles?.main[0]}${
+    work?.creators && work?.creators[0]
+      ? ` af ${extractCreatorsPrioritiseCorporation(work?.creators)
+          ?.map((creator) => creator?.display)
+          ?.join(", ")}`
+      : ""
+  }`;
+}
+
+/**
  * Generates the work page description
  * @param {object} work The work
  * @returns {string}
@@ -94,13 +109,7 @@ function getPageDescription(work) {
 export function getSeo(work) {
   // Return title and description
   return {
-    title: `${work?.titles?.main[0]}${
-      work?.creators && work?.creators[0]
-        ? ` af ${
-            extractCreatorPrioritiseCorporation(work?.creators)?.[0]?.display
-          }`
-        : ""
-    }`,
+    title: getPageTitle(work),
     description: getPageDescription(work),
   };
 }
