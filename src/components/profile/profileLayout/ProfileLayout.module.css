@@ -26,7 +26,7 @@
 .logoutContainer {
   display: flex;
   justify-content: flex-end;
-  /*margin-top: calc(var(--pt7) * -1); /*TODO: find a better solution*/
+  margin-top: calc(var(--pt7) * -1);
   align-items: center;
   padding-bottom: var(--pt2);
 }
@@ -44,9 +44,12 @@
     display: none;
   }
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
   .logoutBtn {
     margin-left: var(--pt4);
     margin-right: 0;
+  }
+  .logoutContainer{
+    margin-top: 0;
   }
 }
