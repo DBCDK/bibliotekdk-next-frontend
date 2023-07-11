@@ -28,22 +28,19 @@ export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
-  const { loanerInfo } = useUser();
-  const userName = loanerInfo?.userParameters?.userName;
-  console.log("userName", userName);
 
   return (
     <Container fluid className={styles.container}>
       {(isMobile || isTablet) && (
         <div className={styles.profileHeaderContainer}>
           <Breadcrumb textType="text3" />
-          <LogoutButton userName={userName} />
+          <LogoutButton />
         </div>
       )}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
-        {!isMobile && !isTablet && <LogoutButton userName={userName} />}
+        {!isMobile && !isTablet && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
           {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
           <ProfileMenu />
@@ -64,12 +61,13 @@ export default function ProfileLayout({ title, children }) {
   );
 }
 
-const LogoutButton = ({ userName }) => {
+const LogoutButton = () => {
   const user = useUser();
-console.log('user',user)
-if(!user.isAuthenticated){
-  return;
-}
+  console.log("user", user);
+  if (!user.isAuthenticated) {
+    return;
+  }
+  const userName =  user?.loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
       <Text className={styles.logoutBtnText}>{`${Translate({

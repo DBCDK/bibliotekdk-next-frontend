@@ -52,13 +52,15 @@ function IconButton({
       >
         <Text type={textType}>{children}</Text>
       </Link>
-{icon&&      <Icon
-        size={{ w: 2, h: "auto" }}
-        className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
-        alt={alt}
-        title={alt}
-        src={`${icon}.svg`}
-      />}
+      {icon && (
+        <Icon
+          size={{ w: 2, h: "auto" }}
+          className={`${styles.icon} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
+          alt={alt}
+          title={alt}
+          src={`${icon}.svg`}
+        />
+      )}
     </button>
   );
 }

@@ -22,7 +22,7 @@ export default function MyLibrariesPage() {
   const { data: userData } = useData(
     isAuthenticated && userFragments.branchesForUser()
   );
-console.log('userData',userData)
+  console.log("userData", userData);
   const result = userData?.user?.agency?.result;
 
   //Find a list of user agencies

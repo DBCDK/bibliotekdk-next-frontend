@@ -23,31 +23,30 @@
   }
 }
 
-.logoutContainer{
-display: flex;
-justify-content: flex-end;
-/*margin-top: calc(var(--pt7) * -1); /*TODO: find a better solution*/
-align-items: center;
-padding-bottom: var(--pt2);
+.logoutContainer {
+  display: flex;
+  justify-content: flex-end;
+  /*margin-top: calc(var(--pt7) * -1); /*TODO: find a better solution*/
+  align-items: center;
+  padding-bottom: var(--pt2);
 }
-.logoutBtn{
+.logoutBtn {
   margin-left: var(--pt4);
   /* margin-right: var(--pt2); */
 }
-.profileHeaderContainer{
+.profileHeaderContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-@media screen and (max-width: 576px){
-  .logoutBtnText{
+@media screen and (max-width: 576px) {
+  .logoutBtnText {
     display: none;
   }
 }
 @media screen and (max-width: 768px) {
-  .logoutBtn{
+  .logoutBtn {
     margin-left: var(--pt4);
     margin-right: 0;
-  
   }
 }
