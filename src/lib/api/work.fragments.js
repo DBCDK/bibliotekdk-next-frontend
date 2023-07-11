@@ -342,9 +342,6 @@ export function buttonTxt({ workId }) {
           specific
         }
         manifestations {
-          all {
-            pid
-          }
           mostRelevant {
             pid
             materialTypes {
@@ -490,7 +487,7 @@ export function workJsonLd({ workId }) {
               workTypes
               abstract
               manifestations {
-                all {
+                mostRelevant {
                   ...manifestationDetailsForAccessFactory
                   cover {
                     detail

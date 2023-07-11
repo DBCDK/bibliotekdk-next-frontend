@@ -50,7 +50,9 @@ export function Header({ details }) {
   const pageTitle = seo.title;
 
   /** get coverUrl **/
-  const coverUrl = getCoverImage(data?.work?.manifestations?.all).detail;
+  const coverUrl = getCoverImage(
+    data?.work?.manifestations?.mostRelevant
+  ).detail;
 
   /**
    * NOTE - first creator[0], title, workid - in paramters for getCanonicalWorkUrl
