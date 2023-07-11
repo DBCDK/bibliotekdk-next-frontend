@@ -32,7 +32,6 @@
 }
 .logoutBtn {
   margin-left: var(--pt4);
-  /* margin-right: var(--pt2); */
 }
 .profileHeaderContainer {
   display: flex;
@@ -49,7 +48,7 @@
     margin-left: var(--pt4);
     margin-right: 0;
   }
-  .logoutContainer{
+  .logoutContainer {
     margin-top: 0;
   }
 }

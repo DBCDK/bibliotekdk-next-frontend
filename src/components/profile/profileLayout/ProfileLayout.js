@@ -8,7 +8,6 @@ import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
 import useUser from "@/components/hooks/useUser";
-import IconButton from "@/components/base/iconButton/IconButton";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
@@ -63,11 +62,11 @@ export default function ProfileLayout({ title, children }) {
 
 const LogoutButton = () => {
   const user = useUser();
-  console.log("user", user);
+
   if (!user.isAuthenticated) {
     return;
   }
-  const userName =  user?.loanerInfo?.userParameters?.userName;
+  const userName = user?.loanerInfo?.userParameters?.userName;
   return (
     <div className={styles.logoutContainer}>
       <Text className={styles.logoutBtnText}>{`${Translate({
@@ -83,8 +82,6 @@ const LogoutButton = () => {
           }
         }}
         className={styles.logoutBtn}
-        // href="/profil/mine-biblioteker"
-
         border={{
           top: false,
           bottom: {
