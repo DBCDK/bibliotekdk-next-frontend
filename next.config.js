@@ -126,7 +126,6 @@ module.exports = {
     },
     fbi_api: {
       url:
-        "https://localhost:3005/SimpleSearch/graphql" || //TODO remove!!!!
         process.env.NEXT_PUBLIC_FBI_API_URL ||
         "https://fbi-api-staging.k8s.dbc.dk/SimpleSearch/graphql",
       timeout: process.env.API_TIMEOUT_MS || 150,

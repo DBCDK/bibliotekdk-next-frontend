@@ -3,7 +3,7 @@ import styles from "./OrdererInformation.module.css";
 import Title from "@/components/base/title";
 import Translate from "@/components/base/translate";
 import Text from "@/components/base/text";
-import TjoolTjip from "@/components/base/tjooltjip";
+import Tooltip from "@/components/base/tooltip";
 import Email from "@/components/base/forms/email";
 import debounce from "lodash/debounce";
 import * as PropTypes from "prop-types";
@@ -44,7 +44,7 @@ export function OrdererInformation({
               </Text>
               {(isLoadingBranches ||
                 (mail && lockedMessage && pickupBranch?.borrowerCheck)) && (
-                <TjoolTjip
+                <Tooltip
                   placement="right"
                   labelToTranslate="tooltip_change_email"
                   customClass={styles.tooltip}

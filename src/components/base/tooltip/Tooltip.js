@@ -1,13 +1,13 @@
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Icon from "@/components/base/icon";
-import styles from "./TjoolTjip.module.css";
+import styles from "./Tooltip.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import PropTypes from "prop-types";
 import { useRef } from "react";
 
-export default function TjoolTjip({
+export default function Tooltip({
   placement = "bottom",
   labelToTranslate,
   customClass,
@@ -57,7 +57,7 @@ export default function TjoolTjip({
 }
 
 // PropTypes for component
-TjoolTjip.propTypes = {
+Tooltip.propTypes = {
   placement: PropTypes.string,
   labelToTranslate: PropTypes.string,
 };

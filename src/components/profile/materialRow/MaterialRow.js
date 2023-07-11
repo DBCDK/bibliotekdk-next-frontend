@@ -7,7 +7,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
@@ -24,6 +24,7 @@ import {
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
+import { handleRenewOrder } from "../utils";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -339,13 +340,21 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateOrderInfo } = useUser();
+  const { updateOrderInfo, updateLoanInfo } = useUser();
   const modal = useModal();
   const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  useEffect(() => {
+    if (orderMutation.error) {
+      setHasError(true);
+      setErrorMessage(orderMutation.error);
+    }
+  }, [orderMutation.error]);
 
   const getStatus = () => {
     switch (type) {
@@ -394,13 +403,52 @@ const MaterialRow = (props) => {
     }
   }
 
+  function onClickRenew({ loanId, agencyId, orderMutation }) {
+    console.log("params ", loanId, agencyId, orderMutation);
+    handleRenewOrder({
+      loanId,
+      agencyId,
+      orderMutation,
+    });
+    //updateLoanInfo();
+  }
+
   const renderDynamicButton = () => {
+    console.log("renderDynamicButton ", errorMessage !== "");
     switch (type) {
       case "DEBT":
         return null;
       case "LOAN":
-        return (
-          <MaterialRowButton dataCy="loan-button">
+        return hasError ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Text type="text3">
+              {Translate({
+                context: "profile",
+                label: "error-renew-loan",
+              })}
+            </Text>
+            <Text type="text4" style={{ color: "blue" }}>
+              !
+            </Text>
+          </div>
+        ) : (
+          <MaterialRowButton
+            dataCy="loan-button"
+            onClick={() =>
+              onClickRenew({
+                loanId: materialId,
+                agencyId,
+                orderMutation,
+              })
+            }
+          >
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
@@ -434,7 +482,7 @@ const MaterialRow = (props) => {
   if (isMobileSize) {
     return (
       <>
-        {hasError && (
+        {hasError && type === "ORDER" && (
           <ErrorRow
             text={Translate({
               context: "profile",
@@ -456,7 +504,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && (
+      {hasError && type === "ORDER" && (
         <ErrorRow
           text={Translate({
             context: "profile",

@@ -220,6 +220,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              agencyId={libraryId}
               dataCy={`loan-${i}`}
             />
           ))
