@@ -3,7 +3,7 @@ export function dummy_workDataApi({ workId }) {
     [workId]: {
       work: {
         manifestations: {
-          all: [
+          mostRelevant: [
             {
               accessTypes: { code: "ONLINE" },
               access: [{ loginRequired: true, __typename: "InfomediaService" }],

@@ -78,7 +78,7 @@ function getPageDescription(work) {
   const creator = work?.creators?.[0]?.display || "";
 
   const { uniqueMaterialTypes: materialTypes, inUniqueMaterialTypes } =
-    manifestationMaterialTypeFactory(work?.manifestations?.all);
+    manifestationMaterialTypeFactory(work?.manifestations?.mostRelevant);
 
   // We check for "bog", "ebog", "lydbog ..."-something, and combined material (= "sammensat materiale")
   let types = [];
