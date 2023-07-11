@@ -12,6 +12,7 @@ import IconButton from "@/components/base/iconButton/IconButton";
 import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
+import { signOut } from "@dbcdk/login-nextjs/client";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -33,19 +34,16 @@ export default function ProfileLayout({ title, children }) {
 
   return (
     <Container fluid className={styles.container}>
-      {(isMobile || isTablet) &&
-      <div className={styles.profileHeaderContainer}>
-      <Breadcrumb textType="text3" />
-      <LogoutButton userName={userName} />
-
-      </div>
-
-      }
+      {(isMobile || isTablet) && (
+        <div className={styles.profileHeaderContainer}>
+          <Breadcrumb textType="text3" />
+          <LogoutButton userName={userName} />
+        </div>
+      )}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
-     
-        {!isMobile && !isTablet &&    <LogoutButton userName={userName} />}
+        {!isMobile && !isTablet && <LogoutButton userName={userName} />}
         <Col lg={3} className={styles.navColumn}>
           {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
           <ProfileMenu />
@@ -67,6 +65,11 @@ export default function ProfileLayout({ title, children }) {
 }
 
 const LogoutButton = ({ userName }) => {
+  const user = useUser();
+console.log('user',user)
+if(!user.isAuthenticated){
+  return;
+}
   return (
     <div className={styles.logoutContainer}>
       <Text className={styles.logoutBtnText}>{`${Translate({
@@ -74,8 +77,16 @@ const LogoutButton = ({ userName }) => {
         label: "signed-in-as-name",
       })} ${userName}`}</Text>
       <Link
+        onClick={() => {
+          if (user.isAuthenticated) {
+            signOut();
+          } else if (user.isGuestUser) {
+            user.guestLogout();
+          }
+        }}
         className={styles.logoutBtn}
-        href="/profil/mine-biblioteker"
+        // href="/profil/mine-biblioteker"
+
         border={{
           top: false,
           bottom: {
