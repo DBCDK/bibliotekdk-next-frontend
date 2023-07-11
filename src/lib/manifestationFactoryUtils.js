@@ -269,7 +269,7 @@ export function flattenGroupedSortedManifestations(manifestationsByType) {
  * - flattenedGroupedSortedManifestations derived from {@link flattenGroupedSortedManifestations}
  * - manifestationsEnrichedWithDefaultFrontpage derived from {@link enrichManifestationsWithDefaultFrontpages}
  * @param manifestations
- * @return {{manifestationsByType: *, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: *, flatPidsByType: (function(*): *|*[]), flattenedGroupedSortedManifestations: *, manifestationsEnrichedWithDefaultFrontpage: *}}}
+ * @returns {{flattenGroupedSortedManifestationsByType: (function(*): *[]), manifestationsByType, manifestationsEnrichedWithDefaultFrontpage: (function(*): {cover: ({detail: *}|{detail: null}), manifestations: *, materialType}), flattenedGroupedSortedManifestations: *[], flatMaterialTypes: *, inUniqueMaterialTypes: (function(*): boolean), uniqueMaterialTypes: Array<MaterialTypesArray>, flatPidsByType: (function(*): *|*[])}}
  */
 export function manifestationMaterialTypeFactory(manifestations) {
   manifestationWorkType = manifestations?.[0]?.ownerWork?.workTypes || [];
@@ -292,6 +292,10 @@ export function manifestationMaterialTypeFactory(manifestations) {
     flatPidsByType: (typeArr) =>
       getFlatPidsByType(typeArr, manifestationsByType),
     flattenedGroupedSortedManifestations: flattenedGroupedSortedManifestations,
+    flattenGroupedSortedManifestationsByType: (typeArr) =>
+      flattenGroupedSortedManifestations({
+        [typeArr]: manifestationsByType[typeArr],
+      }),
     manifestationsEnrichedWithDefaultFrontpage: (typeArr) =>
       enrichManifestationsWithDefaultFrontpages(typeArr, manifestationsByType),
   };

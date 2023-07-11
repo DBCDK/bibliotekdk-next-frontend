@@ -3,7 +3,7 @@ import useUser from "@/components/hooks/useUser";
 import { useId, useMemo } from "react";
 import { AccessEnum } from "@/lib/enums";
 
-const MANIFESTATION_1 = {
+const MANIFESTATION_BASE = {
   titles: {
     full: ["Hugo i Sølvskoven"],
   },
@@ -33,9 +33,13 @@ const MANIFESTATION_1 = {
   },
   creators: [{ display: "Linoleum Gummigulv" }],
 };
+
+const MANIFESTATION_1 = {
+  ...MANIFESTATION_BASE,
+};
 // Another manifestation that may be ordered via ILL
 const MANIFESTATION_2 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-2",
   titles: {
     full: ["Hugo i Sølvskoven 2", "Rise of Rita"],
@@ -54,7 +58,7 @@ const MANIFESTATION_2 = {
 };
 // A manifestation that may not be ordered via ILL
 const MANIFESTATION_3 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-3",
   titles: {
     full: ["Hugo i Sølvskoven 3", "Gulvguldets hemmelighed"],
@@ -73,7 +77,7 @@ const MANIFESTATION_3 = {
 };
 // Indexed article, that may be ordered via digital article copy
 const MANIFESTATION_4 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-4",
   titles: {
     full: [
@@ -105,7 +109,7 @@ const MANIFESTATION_4 = {
 };
 // A periodica
 const MANIFESTATION_5 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-5",
   titles: {
     full: ["Hugo i Sølvskoven 5", "Gulvguldmonstrene mod Grullerne"],
@@ -135,7 +139,7 @@ const MANIFESTATION_5 = {
 
 // A manifestation with edition, publisher, creator
 const MANIFESTATION_6 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-6",
   titles: {
     full: ["Hugo i Sølvskoven 6", "Gulvguldmonstrene vender tilbage"],
@@ -156,7 +160,7 @@ const MANIFESTATION_6 = {
 };
 
 const MANIFESTATION_7 = {
-  ...MANIFESTATION_1,
+  ...MANIFESTATION_BASE,
   pid: "some-pid-7",
   materialTypes: [
     {
@@ -178,6 +182,49 @@ const MANIFESTATION_7 = {
   },
 };
 
+const MANIFESTATION_8 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-8",
+  materialTypes: [
+    {
+      specific: "bog",
+    },
+  ],
+  titles: [{ full: "Lær at læse med Hugo og Rita" }],
+  workTypes: ["LITERATURE"],
+  tableOfContents: {
+    heading: "Kapitler",
+    listOfContent: [
+      { content: "Kapitel Alfabetet" },
+      { content: "Kapitel Andre mennesker" },
+      { content: "Kapitel Ting og sager" },
+      { content: "Kapitel Dyr og skov" },
+    ],
+  },
+};
+
+const MANIFESTATION_9 = {
+  ...MANIFESTATION_BASE,
+  pid: "some-pid-9",
+  materialTypes: [
+    {
+      specific: "bog",
+    },
+  ],
+  titles: [{ full: "Lær at læse med Hugo og Rita" }],
+  workTypes: ["LITERATURE"],
+  tableOfContents: {
+    heading: null,
+    listOfContent: null,
+    content: `Kapitler ( 
+      Kapitel Alfabetet ; 
+      Kapitel Andre mennesker ;
+      Kapitel Ting og sager ; 
+      Kapitel Dyr og skov ;
+    ) ;`,
+  },
+};
+
 const ALL_MANIFESTATIONS = [
   MANIFESTATION_1,
   MANIFESTATION_2,
@@ -186,6 +233,8 @@ const ALL_MANIFESTATIONS = [
   MANIFESTATION_5,
   MANIFESTATION_6,
   MANIFESTATION_7,
+  MANIFESTATION_8,
+  MANIFESTATION_9,
 ];
 
 const ALL_WORKS = [
@@ -267,6 +316,24 @@ const ALL_WORKS = [
         MANIFESTATION_6,
         MANIFESTATION_7,
       ],
+    },
+  },
+  {
+    workId: "some-work-id-6",
+    titles: { full: ["Lær at læse med Hugo og Rita"] },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      mostRelevant: [MANIFESTATION_9, MANIFESTATION_8],
+      all: [MANIFESTATION_9, MANIFESTATION_8],
+    },
+  },
+  {
+    workId: "some-work-id-7",
+    titles: { full: ["Lær at læse med Hugo og Rita 2"] },
+    creators: [{ display: "Linoleum Gummigulv" }],
+    manifestations: {
+      mostRelevant: [MANIFESTATION_9],
+      all: [MANIFESTATION_9],
     },
   },
 ];
@@ -450,6 +517,10 @@ const DEFAULT_STORY_PARAMETERS = {
               "submitPeriodicaArticleOrder",
               args?.variables?.input
             );
+            return { status: "OK" };
+          },
+          deleteOrder: (args) => {
+            console.debug("deleteOrder", args?.variables?.input);
             return { status: "OK" };
           },
         },
@@ -769,6 +840,8 @@ export default function automock_utils() {
     MANIFESTATION_5,
     MANIFESTATION_6,
     MANIFESTATION_7,
+    MANIFESTATION_8,
+    MANIFESTATION_9,
     ALL_MANIFESTATIONS,
     ALL_WORKS,
     BRANCH_1,

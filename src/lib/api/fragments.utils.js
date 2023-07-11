@@ -60,6 +60,11 @@ export const manifestationDetailsForAccessFactory = `fragment manifestationDetai
     main
     full
   }
+  edition {
+    publicationYear {
+      display
+    }
+  }
   creators {
     ...creatorsFragmentForAccessFactory
   }

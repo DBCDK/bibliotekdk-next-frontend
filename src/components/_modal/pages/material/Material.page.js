@@ -10,10 +10,13 @@ import {
   useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
+import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
 import Recommendations from "@/components/work/recommendations";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
+import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
+import { useMutate } from "@/lib/api/api";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -149,8 +152,14 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
+    id: materialId,
+    agencyId,
+    onCloseModal,
     library,
   } = context;
+
+  const modal = useModal();
+  const orderMutation = useMutate();
 
   const renderDynamicContent = () => {
     switch (type) {
@@ -190,7 +199,17 @@ const Material = ({ context }) => {
             type="secondary"
             size="medium"
             wrapperClassname={styles.button}
-            onClick={() => onDeleteOrder(order.orderId)}
+            onClick={() => {
+              onClickDelete({
+                modal,
+                mobile: true,
+                pickUpExpiryDate,
+                materialId,
+                agencyId,
+                orderMutation,
+                onCloseModal,
+              });
+            }}
             dataCy="order-button"
           >
             {Translate({

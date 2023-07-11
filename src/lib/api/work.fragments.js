@@ -26,11 +26,14 @@ export function tableOfContents({ workId }) {
               listOfContent {
                 content
               }
+              content
             }
+            ...manifestationDetailsForAccessFactory
           }
         }
       }
-    }`,
+    }
+    ${manifestationDetailsForAccessFactory}`,
     variables: { workId },
     slowThreshold: 3000,
   };
