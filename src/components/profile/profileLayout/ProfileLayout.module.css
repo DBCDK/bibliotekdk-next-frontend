@@ -26,8 +26,8 @@
 .logoutContainer {
   display: flex;
   justify-content: flex-end;
-  margin-top: calc(var(--pt7) * -1);
   align-items: center;
+  margin-top: calc(var(--pt7) * -1);
   padding-bottom: var(--pt2);
 }
 .logoutBtn {
