@@ -145,6 +145,7 @@ const titleTypes = [
   "title6",
   "title7",
 ];
+export const allTextTypes = [...textTypes, ...titleTypes];
 
 // PropTypes for the component
 Container.propTypes = {
@@ -157,7 +158,7 @@ Container.propTypes = {
     PropTypes.node,
   ]),
   className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  type: PropTypes.oneOf([...textTypes, ...titleTypes]),
+  type: PropTypes.oneOf(allTextTypes),
   tag: PropTypes.string, // Support all tags.
   skeleton: PropTypes.bool,
 };
