@@ -27,7 +27,7 @@ export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
-
+  const isDesktop = !isMobile && !isTablet;
   return (
     <Container fluid className={styles.container}>
       {(isMobile || isTablet) && (
@@ -39,9 +39,9 @@ export default function ProfileLayout({ title, children }) {
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
-        {!isMobile && !isTablet && <LogoutButton />}
+        {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
-          {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
+          {isDesktop && <Breadcrumb textType="text2" />}
           <ProfileMenu />
         </Col>
         <Col lg={9}>
