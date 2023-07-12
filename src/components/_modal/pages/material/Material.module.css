@@ -58,3 +58,16 @@
 .topTitle {
   padding-top: var(--pt4);
 }
+
+.buttonRowWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.renewError {
+  margin-bottom: var(--pt4);
+  margin-left: var(--pt2);
+  width: 50%;
+}

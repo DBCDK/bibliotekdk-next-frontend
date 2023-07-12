@@ -316,7 +316,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   );
 };
 
-const RenewedSpan = () => {
+export const RenewedSpan = () => {
   return (
     <span className={styles.renewedWrapper}>
       <Text type="text2">
@@ -417,6 +417,7 @@ const MaterialRow = (props) => {
     }
   };
 
+  //TODO handle error/success in useEffect instead
   async function onCloseModal({ success }) {
     if (success) {
       setRemovedOrderId(materialId);
@@ -499,8 +500,8 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          onCloseModal={onCloseModal}
-          removedOrderId={removedOrderId}
+          onCloseModal={onCloseModal} //TODO handle error/success in useEffect instead
+          removedOrderId={removedOrderId} //TODO handle error/success in useEffect instead
           {...props}
         />
       </>
@@ -654,6 +655,9 @@ MaterialRow.propTypes = {
   dueDate: PropTypes.string,
   amount: PropTypes.string,
   currency: PropTypes.string,
+  agencyId: PropTypes.string,
+  removedOrderId: PropTypes.string,
+  setRemovedOrderId: PropTypes.func,
 };
 
 export default MaterialRow;
