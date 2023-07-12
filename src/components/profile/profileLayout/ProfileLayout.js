@@ -12,6 +12,8 @@ import Text from "@/components/base/text";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
 import { signOut } from "@dbcdk/login-nextjs/client";
+import Button from "@/components/base/button";
+import Icon from "@/components/base/icon";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -28,6 +30,8 @@ export default function ProfileLayout({ title, children }) {
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
+  const user = useUser();
+
   return (
     <Container fluid className={styles.container}>
       {(isMobile || isTablet) && (
@@ -46,14 +50,49 @@ export default function ProfileLayout({ title, children }) {
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          <Title
-            className={styles.title}
-            type={isMobile ? "title4" : "title2"}
-            tag="h1"
-          >
-            {title}
-          </Title>
-          {children}
+          {user?.isAuthenticated ? (
+            <>
+              <Title
+                className={styles.title}
+                type={isMobile ? "title4" : "title2"}
+                tag="h1"
+              >
+                {title}
+              </Title>
+              {children}
+            </>
+          ) : (
+            <div>
+              <Title className={styles.loginTitle} tag="h2" type="title3">
+              {Translate({
+                  context: "header",
+                  label: "login",
+                })}              </Title>
+              <Text className={styles.loginText} type="text2">
+                Log venligst ind for at se din profil, lån og reserveringer.
+              </Text>
+              <Text type="text2">Vi glæder os til at byde dig indenfor.</Text>
+
+              <Button
+                className={styles.loginButton}
+                size="medium"
+                type="primary"
+                onClick={() => {
+                  console.log("login");
+                }}
+              >
+                <Icon
+                  className={styles.buttonIcon}
+                  size={2}
+                  src="external.svg"
+                />
+                {Translate({
+                  context: "header",
+                  label: "login",
+                })}
+              </Button>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>
