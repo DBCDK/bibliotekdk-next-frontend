@@ -3166,6 +3166,10 @@
       "renewed": {
         "da": "Fornyet",
         "en": "Renewed"
+      },
+      "signed-in-as-name": {
+        "da": "Du er logget ind som",
+        "en": "You are signed in as"
       }
     }
   }

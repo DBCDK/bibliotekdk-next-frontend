@@ -1,6 +1,6 @@
 describe(`Loans and reservations`, () => {
-  it("Renders properly", () => {
-    cy.visit(
+  it("Renders properly", async () => {
+    await cy.visit(
       "iframe.html?args=&id=profile-loans-and-reservations--loans-and-reservations-story&viewMode=story"
     );
 
@@ -31,8 +31,8 @@ describe(`Loans and reservations`, () => {
     });
   });
 
-  it("Mobile renders properly", () => {
-    cy.viewport("iphone-6");
+  it("Mobile renders properly", async () => {
+    await cy.viewport("iphone-6");
 
     cy.get("[data-cy=debt-0]").should("exist");
     cy.get("[data-cy=order-0]").within(() => {
@@ -61,8 +61,8 @@ describe(`Loans and reservations`, () => {
     });
   });
 
-  it("Opens modal & shows correct content", () => {
-    cy.viewport("iphone-6");
+  it("Opens modal & shows correct content", async () => {
+    await cy.viewport("iphone-6");
     cy.get("[data-cy=loan-0]").click();
 
     cy.get("[data-cy=loans-and-reservations-modal]").within(() => {
