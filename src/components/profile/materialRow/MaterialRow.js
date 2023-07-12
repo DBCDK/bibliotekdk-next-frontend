@@ -26,7 +26,6 @@ import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewOrder } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
-import { set } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
