@@ -11,12 +11,14 @@ export default function Tooltip({
   placement = "bottom",
   labelToTranslate,
   customClass,
+  trigger = ["focus"],
+  children,
 }) {
   const spanRef = useRef();
   return (
     <span className={`${customClass ? customClass : ""}`}>
       <OverlayTrigger
-        trigger={["focus"]}
+        trigger={trigger}
         delayShow={300}
         delayHide={150}
         placement={placement}
@@ -43,13 +45,17 @@ export default function Tooltip({
             }
           }}
         >
-          <Icon
-            src="questionmark.svg"
-            alt="info"
-            data-cy="tooltip-icon"
-            size={3}
-            className={styles.tooltipcursor}
-          ></Icon>
+          {children ? (
+            children
+          ) : (
+            <Icon
+              src="questionmark.svg"
+              alt="info"
+              data-cy="tooltip-icon"
+              size={3}
+              className={styles.tooltipcursor}
+            ></Icon>
+          )}
         </span>
       </OverlayTrigger>
     </span>

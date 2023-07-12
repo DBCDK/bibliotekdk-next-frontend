@@ -25,6 +25,8 @@ import {
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewOrder } from "../utils";
+import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
+import { set } from "lodash";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -315,6 +317,25 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   );
 };
 
+const RenewedSpan = () => {
+  return (
+    <span className={styles.renewedWrapper}>
+      <Text type="text2">
+        {Translate({
+          context: "profile",
+          label: "renewed",
+        })}
+      </Text>
+      <Icon
+        size={{ w: 3, h: "auto" }}
+        src={"checkmark_blue.svg"}
+        alt=""
+        className={styles.renewedIcon}
+      />
+    </span>
+  );
+};
+
 const MaterialRow = (props) => {
   const {
     image,
@@ -343,7 +364,7 @@ const MaterialRow = (props) => {
   const { updateOrderInfo, updateLoanInfo } = useUser();
   const modal = useModal();
   const [hasError, setHasError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [renewed, setRenewed] = useState(false);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
   const isMobileSize =
@@ -352,9 +373,13 @@ const MaterialRow = (props) => {
   useEffect(() => {
     if (orderMutation.error) {
       setHasError(true);
-      setErrorMessage(orderMutation.error);
+      setRenewed(false);
     }
-  }, [orderMutation.error]);
+    if (orderMutation.data) {
+      setRenewed(true);
+      setHasError(false);
+    }
+  }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -404,40 +429,21 @@ const MaterialRow = (props) => {
   }
 
   function onClickRenew({ loanId, agencyId, orderMutation }) {
-    console.log("params ", loanId, agencyId, orderMutation);
+    updateLoanInfo();
     handleRenewOrder({
       loanId,
       agencyId,
       orderMutation,
     });
-    //updateLoanInfo();
   }
 
   const renderDynamicButton = () => {
-    console.log("renderDynamicButton ", errorMessage !== "");
     switch (type) {
       case "DEBT":
         return null;
       case "LOAN":
         return hasError ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            <Text type="text3">
-              {Translate({
-                context: "profile",
-                label: "error-renew-loan",
-              })}
-            </Text>
-            <Text type="text4" style={{ color: "blue" }}>
-              !
-            </Text>
-          </div>
+          <MaterialRowTooltip labelToTranslate="renew-loan-tooltip" />
         ) : (
           <MaterialRowButton
             dataCy="loan-button"
@@ -621,7 +627,11 @@ const MaterialRow = (props) => {
             <Text type="text2">{library}</Text>
           </div>
 
-          <div>{renderDynamicButton(materialId, agencyId)}</div>
+          {renewed ? (
+            <RenewedSpan />
+          ) : (
+            <div>{renderDynamicButton(materialId, agencyId)}</div>
+          )}
         </>
       </ConditionalWrapper>
     </>

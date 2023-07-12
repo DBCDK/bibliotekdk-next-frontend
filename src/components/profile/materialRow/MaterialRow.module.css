@@ -157,6 +157,16 @@
   text-transform: uppercase;
 }
 
+.renewedWrapper {
+  display: flex;
+  align-items: top;
+}
+
+.renewedIcon {
+  padding-top: 5px;
+  padding-left: var(--pt1);
+}
+
 @media (hover: hover) {
   .materialRow_mobile:focus-visible,
   .materialRow_mobile:hover {
