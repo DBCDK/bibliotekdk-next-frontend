@@ -199,6 +199,7 @@ const Material = ({ context }) => {
   };
 
   function handleClickRenew() {
+    //TODO update material page with new dato!
     handleRenewOrder({
       materialId,
       agencyId,
@@ -223,6 +224,7 @@ const Material = ({ context }) => {
             <MaterialRowButton
               size="medium"
               wrapperClassname={styles.button}
+              disabled={hasError || renewed}
               dataCy="loan-button"
               onClick={handleClickRenew}
               onKeyPress={(e) => {
@@ -240,7 +242,6 @@ const Material = ({ context }) => {
             type="secondary"
             size="medium"
             wrapperClassname={styles.button}
-            disabled={hasError || renewed}
             onClick={() => {
               onClickDelete({
                 modal,
