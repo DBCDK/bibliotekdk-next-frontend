@@ -3154,6 +3154,10 @@
       "error-deleting-order": {
         "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
         "en": "An error occurred while the reservation was being deleted. Try again."
+      },
+      "signed-in-as-name": {
+        "da": "Du er logget ind som",
+        "en": "You are signed in as"
       }
     }
   }

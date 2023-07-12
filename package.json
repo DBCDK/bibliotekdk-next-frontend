@@ -15,7 +15,7 @@
     "start:storybook": "STORYBOOK_ACTIVE=1 && ENABLE_STORYBOOK=1 && http-server -p \"${STORYBOOK_PORT:-4000}\" dist/storybook --silent || exit 0",
     "dev": "run-p dev:storybook dev:next",
     "start": "run-p start:storybook start:next",
-    "prettier:write": "prettier --write 'src/**/*' 'e2e/**/*.js'",
+    "prettier": "prettier --write 'src/**/*' 'e2e/**/*.js'",
     "prettier:check": "prettier --check src",
     "prettier:check:f": "run-s -l prettier:check",
     "lint": "next lint",
