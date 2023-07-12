@@ -97,7 +97,7 @@
     "bootstrap": "^5.2.3",
     "classnames": "^2.3.2",
     "dbc-node-logger": "^2.0.9",
-    "http-server": "^0.12.3",
+    "http-server": "^14.1.1",
     "identity-obj-proxy": "^3.0.0",
     "isbot": "^3.0.13",
     "isomorphic-unfetch": "^3.0.0",
