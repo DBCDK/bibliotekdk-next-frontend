@@ -28,14 +28,16 @@ export function onClickDelete({
   agencyId,
   orderMutation,
   onCloseModal,
+  title,
 }) {
   modal.push("deleteOrder", {
-    label: Translate({ context: "profile", label: "delete-order" }),
+    label: Translate({ context: "profile", label: "delete-order" }) + "?",
     mobile: mobile,
     isReadyToPickup: !!pickUpExpiryDate,
     orderId: materialId,
     agencyId: agencyId,
     orderMutation: orderMutation,
     onClose: onCloseModal,
+    title,
   });
 }

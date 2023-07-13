@@ -14,6 +14,7 @@ function DeleteOrder({ context, modal }) {
     agencyId,
     orderMutation,
     onClose,
+    title,
   } = context;
 
   function closeModal() {
@@ -33,15 +34,17 @@ function DeleteOrder({ context, modal }) {
   return (
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" dataCy="modal-header" />
-      <hr />
       <div className={styles.container}>
-        <Text type="text2" tag="p">
+        <Text type="text2" tag="p" className={styles.text1}>
           {Translate({
             context: "profile",
             label: "delete-order-confirmation",
           })}
         </Text>
-        <Text type="text2" tag="p" className={styles.text}>
+        <Text type="text1" tag="p" className={styles.text1}>
+          {title}
+        </Text>
+        <Text type="text2" tag="p" className={styles.text2}>
           {Translate({
             context: "profile",
             label: isReadyToPickup
@@ -53,7 +56,7 @@ function DeleteOrder({ context, modal }) {
         <Button
           className={styles.button}
           type="primary"
-          size="medium"
+          size="large"
           onClick={onDeleteOrder}
           onKeyPress={(e) => {
             e.key === "Enter" && onDeleteOrder();
@@ -67,7 +70,7 @@ function DeleteOrder({ context, modal }) {
         <Button
           className={styles.cancelButton}
           type="secondary"
-          size="medium"
+          size="large"
           onClick={closeModal}
           onKeyPress={(e) => {
             e.key === "Enter" && closeModal();

@@ -1,12 +1,23 @@
 .deleteOrder {
-  padding: var(--pt7) var(--pt6);
+  padding: 0 var(--pt2);
+}
+
+@media (min-width: 992px) {
+  .deleteOrder {
+    padding: 0 var(--pt5);
+  }
 }
 
 .container {
   margin-top: var(--pt2);
 }
 
-.text {
+.text1 {
+  margin-top: var(--pt3);
+  margin-bottom: var(--pt2);
+}
+
+.text2 {
   margin-bottom: var(--pt5);
 }
 

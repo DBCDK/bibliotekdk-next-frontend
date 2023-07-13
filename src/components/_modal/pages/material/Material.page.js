@@ -208,6 +208,7 @@ const Material = ({ context }) => {
                 agencyId,
                 orderMutation,
                 onCloseModal,
+                title,
               });
             }}
             dataCy="order-button"
