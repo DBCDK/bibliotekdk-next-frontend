@@ -20,6 +20,7 @@ export function DeleteOrderInQueue() {
         label: "delete-order",
       }) + "?",
     isReadyToPickup: false,
+    title: "Citronbjerget",
     onDeleteOrder: () => alert("Reservering slettet"),
   };
 
@@ -50,6 +51,7 @@ export function DeleteOrderReadyToPickUp() {
         label: "delete-order",
       }) + "?",
     isReadyToPickup: true,
+    title: "Citronbjerget",
     onDeleteOrder: () => alert("Reservering slettet"),
   };
 

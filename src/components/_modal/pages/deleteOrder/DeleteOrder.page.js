@@ -35,16 +35,31 @@ function DeleteOrder({ context, modal }) {
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" dataCy="modal-header" />
       <div className={styles.container}>
-        <Text type="text2" tag="p" className={styles.text1}>
+        <Text
+          type="text2"
+          tag="p"
+          className={styles.text1}
+          dataCy="delete-order-confirmation-1"
+        >
           {Translate({
             context: "profile",
             label: "delete-order-confirmation",
           })}
         </Text>
-        <Text type="text1" tag="p" className={styles.text1}>
+        <Text
+          type="text1"
+          tag="p"
+          className={styles.text1}
+          dataCy="material-title"
+        >
           {title}
         </Text>
-        <Text type="text2" tag="p" className={styles.text2}>
+        <Text
+          type="text2"
+          tag="p"
+          className={styles.text2}
+          dataCy="delete-order-confirmation-2"
+        >
           {Translate({
             context: "profile",
             label: isReadyToPickup
