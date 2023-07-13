@@ -72,9 +72,17 @@ export default function ProfileLayout({ title, children }) {
                 })}{" "}
               </Title>
               <Text className={styles.loginText} type="text2">
-                Log venligst ind for at se din profil, lån og reserveringer.
+                {Translate({
+                  context: "profile",
+                  label: "login-to-see-profile",
+                })}
               </Text>
-              <Text type="text2">Vi glæder os til at byde dig indenfor.</Text>
+              <Text type="text2">
+                {Translate({
+                  context: "profile",
+                  label: "login-welcome",
+                })}
+              </Text>
 
               <Button
                 className={styles.loginButton}
