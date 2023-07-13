@@ -3158,6 +3158,14 @@
       "signed-in-as-name": {
         "da": "Du er logget ind som",
         "en": "You are signed in as"
+      },
+      "login-to-see-profile": {
+        "da": "Log venligst ind for at se din profil, lån og reserveringer.",
+        "en": "Sign in to see your profile, loans and reservations."
+      },
+      "login-welcome": {
+        "da": "Vi glæder os til at byde dig indenfor.",
+        "en": "We look forward to welcoming you inside."
       }
     }
   }
