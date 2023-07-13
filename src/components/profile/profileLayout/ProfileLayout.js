@@ -14,6 +14,7 @@ import Translate from "@/components/base/translate/Translate";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
 import Icon from "@/components/base/icon";
+import { useModal } from "@/components/_modal";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -31,6 +32,7 @@ export default function ProfileLayout({ title, children }) {
   const isTablet = breakpoint === "md";
   const isDesktop = !isMobile && !isTablet;
   const user = useUser();
+  const modal = useModal();
 
   return (
     <Container fluid className={styles.container}>
@@ -64,10 +66,11 @@ export default function ProfileLayout({ title, children }) {
           ) : (
             <div>
               <Title className={styles.loginTitle} tag="h2" type="title3">
-              {Translate({
+                {Translate({
                   context: "header",
                   label: "login",
-                })}              </Title>
+                })}{" "}
+              </Title>
               <Text className={styles.loginText} type="text2">
                 Log venligst ind for at se din profil, lån og reserveringer.
               </Text>
@@ -78,7 +81,7 @@ export default function ProfileLayout({ title, children }) {
                 size="medium"
                 type="primary"
                 onClick={() => {
-                  console.log("login");
+                  modal.push("login");
                 }}
               >
                 <Icon

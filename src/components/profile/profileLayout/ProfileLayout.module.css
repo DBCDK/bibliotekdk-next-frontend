@@ -53,20 +53,20 @@
   }
 }
 
-.loginTitle{
-  margin-bottom:var(--pt5) ;
+.loginTitle {
+  margin-bottom: var(--pt5);
 }
-.loginText{
+.loginText {
   margin-bottom: var(--pt4);
 }
-.loginButton{
+.loginButton {
   margin-top: var(--pt5);
   padding: var(--pt2) var(--pt5) !important;
-  width: fit-content;
+  width: 209px;
   align-items: center;
   display: flex;
 }
 
-.buttonIcon{
+.buttonIcon {
   margin-right: var(--pt1);
 }
