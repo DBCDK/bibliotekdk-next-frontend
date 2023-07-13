@@ -18,10 +18,8 @@ import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
 import { useMutate } from "@/lib/api/api";
-import { renewLoan } from "@/lib/api/loans.mutations";
 import { handleRenewOrder } from "@/components/profile/utils";
 import { useEffect, useState } from "react";
-import { set } from "lodash";
 import { RenewError } from "@/components/profile/materialRow/materialRowTooltip/MaterialRowTooltip";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
@@ -199,7 +197,7 @@ const Material = ({ context }) => {
   };
 
   function handleClickRenew() {
-    //TODO update material page with new dato!
+    //TODO check if material page is automatically updated with new due date through mutationObject
     handleRenewOrder({
       materialId,
       agencyId,
