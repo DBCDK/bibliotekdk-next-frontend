@@ -254,6 +254,7 @@ const Material = ({ context }) => {
                 agencyId,
                 orderMutation,
                 onCloseModal,
+                title,
               });
             }}
             onKeyPress={(e) => {

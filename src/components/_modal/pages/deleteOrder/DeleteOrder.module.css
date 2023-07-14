@@ -1,12 +1,18 @@
 .deleteOrder {
-  padding: var(--pt7) var(--pt6);
+  padding: 0 var(--pt2);
 }
 
-.container {
-  margin-top: var(--pt2);
+@media (min-width: 992px) {
+  .deleteOrder {
+    padding: 0 var(--pt5);
+  }
 }
 
-.text {
+.confirmationText {
+  margin-bottom: var(--pt2);
+}
+
+.bottomConfirmationText {
   margin-bottom: var(--pt5);
 }
 

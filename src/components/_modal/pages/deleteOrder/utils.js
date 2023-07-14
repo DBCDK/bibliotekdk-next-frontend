@@ -28,6 +28,7 @@ export function onClickDelete({
   agencyId,
   orderMutation,
   onCloseModal,
+  title,
 }) {
   modal.push("deleteOrder", {
     label: Translate({ context: "profile", label: "delete-order" }),
@@ -37,5 +38,6 @@ export function onClickDelete({
     agencyId: agencyId,
     orderMutation: orderMutation,
     onClose: onCloseModal,
+    title,
   });
 }

@@ -3067,9 +3067,13 @@
         "da": "Slet reservering",
         "en": "Delete reservation"
       },
+      "delete-order-questionmark": {
+        "da": "Slet reservering?",
+        "en": "Delete reservation?"
+      },
       "delete-order-confirmation": {
-        "da": "Er du sikker på, at du vil slette reserveringen?",
-        "en": "Are you sure you want to delete the reservation?"
+        "da": "Er du sikker på, at du vil slette din reservering:",
+        "en": "Are you sure you want to delete the reservation:"
       },
       "miss-spot-in-queue": {
         "da": "Du mister din plads i køen.",
@@ -3170,6 +3174,14 @@
       "signed-in-as-name": {
         "da": "Du er logget ind som",
         "en": "You are signed in as"
+      },
+      "login-to-see-profile": {
+        "da": "Log venligst ind for at se din profil, lån og reserveringer.",
+        "en": "Sign in to see your profile, loans and reservations."
+      },
+      "login-welcome": {
+        "da": "Vi glæder os til at byde dig indenfor.",
+        "en": "We look forward to welcoming you inside."
       }
     }
   }
