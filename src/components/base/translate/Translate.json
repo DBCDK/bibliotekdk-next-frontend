@@ -3063,9 +3063,13 @@
         "da": "Slet reservering",
         "en": "Delete reservation"
       },
+      "delete-order-questionmark": {
+        "da": "Slet reservering?",
+        "en": "Delete reservation?"
+      },
       "delete-order-confirmation": {
-        "da": "Er du sikker på, at du vil slette reserveringen?",
-        "en": "Are you sure you want to delete the reservation?"
+        "da": "Er du sikker på, at du vil slette din reservering:",
+        "en": "Are you sure you want to delete the reservation:"
       },
       "miss-spot-in-queue": {
         "da": "Du mister din plads i køen.",

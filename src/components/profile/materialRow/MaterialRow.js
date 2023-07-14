@@ -416,6 +416,7 @@ const MaterialRow = (props) => {
                 agencyId,
                 orderMutation,
                 onCloseModal,
+                title,
               })
             }
             dataCy="order-button"
