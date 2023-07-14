@@ -12,9 +12,6 @@ describe("deleteOrderModal", () => {
       "have.text",
       "Hvis du sletter reserveringen, er materialet ikke længere sat til side til dig."
     );
-
-    //get first paragraph in  a list of paragraphs and check text
-    //test material-title data-cy element if it exists and contains text
     cy.get("[data-cy=material-title]")
       .should("exist")
       .contains("Citronbjerget");
