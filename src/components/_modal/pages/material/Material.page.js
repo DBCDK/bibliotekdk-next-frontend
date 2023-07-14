@@ -198,11 +198,16 @@ const Material = ({ context }) => {
 
   function handleClickRenew() {
     //TODO check if material page is automatically updated with new due date through mutationObject
-    handleRenewOrder({
-      materialId,
-      agencyId,
-      orderMutation,
-    });
+    try {
+      console.log("handleCLick material page", materialId, agencyId);
+      handleRenewOrder({
+        loanId: materialId,
+        agencyId,
+        orderMutation,
+      });
+    } catch (e) {
+      console.log("error in handleClickRenew", e);
+    }
   }
 
   /**

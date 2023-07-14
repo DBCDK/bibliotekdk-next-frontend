@@ -160,6 +160,8 @@
 .renewedWrapper {
   display: flex;
   align-items: top;
+  margin-bottom: var(--pt4);
+  padding-left: var(--pt2);
 }
 
 .renewedIcon {

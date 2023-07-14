@@ -429,12 +429,17 @@ const MaterialRow = (props) => {
   }
 
   function onClickRenew({ loanId, agencyId, orderMutation }) {
+    console.log("onClickRenew", loanId, agencyId, orderMutation);
+    try {
+      handleRenewOrder({
+        loanId,
+        agencyId,
+        orderMutation,
+      });
+    } catch (e) {
+      console.log("Mist ", e);
+    }
     updateLoanInfo();
-    handleRenewOrder({
-      loanId,
-      agencyId,
-      orderMutation,
-    });
   }
 
   const renderDynamicButton = () => {
