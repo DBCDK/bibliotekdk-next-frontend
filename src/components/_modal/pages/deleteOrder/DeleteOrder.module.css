@@ -8,16 +8,11 @@
   }
 }
 
-.container {
-  margin-top: var(--pt2);
-}
-
-.text1 {
-  margin-top: var(--pt3);
+.confirmationText {
   margin-bottom: var(--pt2);
 }
 
-.text2 {
+.bottomConfirmationText {
   margin-bottom: var(--pt5);
 }
 

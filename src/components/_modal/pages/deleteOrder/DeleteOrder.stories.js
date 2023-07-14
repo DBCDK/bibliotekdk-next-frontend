@@ -14,11 +14,10 @@ export function DeleteOrderInQueue() {
 
   // dummy context for receipt
   const context = {
-    label:
-      Translate({
-        context: "profile",
-        label: "delete-order",
-      }) + "?",
+    label: Translate({
+      context: "profile",
+      label: "delete-order",
+    }),
     isReadyToPickup: false,
     title: "Citronbjerget",
     onDeleteOrder: () => alert("Reservering slettet"),
@@ -45,11 +44,10 @@ export function DeleteOrderReadyToPickUp() {
 
   // dummy context for receipt
   const context = {
-    label:
-      Translate({
-        context: "profile",
-        label: "delete-order",
-      }) + "?",
+    label: Translate({
+      context: "profile",
+      label: "delete-order",
+    }),
     isReadyToPickup: true,
     title: "Citronbjerget",
     onDeleteOrder: () => alert("Reservering slettet"),

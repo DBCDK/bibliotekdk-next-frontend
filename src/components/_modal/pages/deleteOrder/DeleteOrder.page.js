@@ -34,11 +34,11 @@ function DeleteOrder({ context, modal }) {
   return (
     <article className={styles.deleteOrder}>
       <Top title={label} titleTag="h4" dataCy="modal-header" />
-      <div className={styles.container}>
+      <>
         <Text
           type="text2"
           tag="p"
-          className={styles.text1}
+          className={styles.confirmationText}
           dataCy="delete-order-confirmation-1"
         >
           {Translate({
@@ -49,7 +49,7 @@ function DeleteOrder({ context, modal }) {
         <Text
           type="text1"
           tag="p"
-          className={styles.text1}
+          className={styles.confirmationText}
           dataCy="material-title"
         >
           {title}
@@ -57,7 +57,7 @@ function DeleteOrder({ context, modal }) {
         <Text
           type="text2"
           tag="p"
-          className={styles.text2}
+          className={styles.bottomConfirmationText}
           dataCy="delete-order-confirmation-2"
         >
           {Translate({
@@ -96,7 +96,7 @@ function DeleteOrder({ context, modal }) {
             label: "cancel",
           })}
         </Button>
-      </div>
+      </>
     </article>
   );
 }

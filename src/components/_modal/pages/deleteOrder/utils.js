@@ -31,7 +31,7 @@ export function onClickDelete({
   title,
 }) {
   modal.push("deleteOrder", {
-    label: Translate({ context: "profile", label: "delete-order" }) + "?",
+    label: Translate({ context: "profile", label: "delete-order" }),
     mobile: mobile,
     isReadyToPickup: !!pickUpExpiryDate,
     orderId: materialId,
