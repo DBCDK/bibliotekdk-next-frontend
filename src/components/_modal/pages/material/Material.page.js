@@ -21,6 +21,7 @@ import { useMutate } from "@/lib/api/api";
 import { handleRenewOrder } from "@/components/profile/utils";
 import { useEffect, useState } from "react";
 import { RenewError } from "@/components/profile/materialRow/materialRowTooltip/MaterialRowTooltip";
+import { handleMutationUpdates } from "@/components/profile/utils";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -168,12 +169,7 @@ const Material = ({ context }) => {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    if (orderMutation.error) {
-      setHasError(true);
-    }
-    if (orderMutation.data) {
-      setRenewed(true);
-    }
+    handleMutationUpdates(orderMutation, setHasError, setRenewed);
   }, [orderMutation.error, orderMutation.data]);
 
   const renderDynamicContent = () => {

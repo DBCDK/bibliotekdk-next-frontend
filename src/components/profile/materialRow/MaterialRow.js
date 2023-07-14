@@ -22,6 +22,7 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+import { handleMutationUpdates } from "./../utils";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 import { handleRenewOrder } from "../utils";
@@ -370,14 +371,7 @@ const MaterialRow = (props) => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    if (orderMutation.error) {
-      setHasError(true);
-      setRenewed(false);
-    }
-    if (orderMutation.data) {
-      setRenewed(true);
-      setHasError(false);
-    }
+    handleMutationUpdates(orderMutation, setHasError, setRenewed);
   }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
