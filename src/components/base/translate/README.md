@@ -18,7 +18,8 @@ staging:
 http://bibdk-backend-www-master.febib-staging.svc.cloud.dbc.dk/
 and prod:
 http://bibdk-backend-www-master.febib-prod.svc.cloud.dbc.dk/
-Translations are transferred from prod to staging every now and then. So translations on staging server are NOT permanent but overwritten on transfers. For details on transfor, check **OVERWRITE STG WITH PROD**
+
+The translations on staging server are overwritten with production data once in a while. So translations on staging server are NOT permanent but will be overwritten regularly. For details on this, check **OVERWRITE STG WITH PROD**
 Translation on prod are permanent.
 
 REMEMBER
