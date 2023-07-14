@@ -4,15 +4,16 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useId, useMemo, useState } from "react";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
+import styles from "./ManifestationFull.module.css";
 
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 import Cover from "@/components/base/cover";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 
 import { parseManifestation } from "@/lib/manifestationParser";
-import styles from "./ManifestationFull.module.css";
 import { cyKey } from "@/utils/trim";
 import LocalizationsLink from "@/components/work/overview/localizationslink/LocalizationsLink";
 import { useModal } from "@/components/_modal";
@@ -83,7 +84,7 @@ function ColumnOne({ workId, manifestation }) {
         />
       )}
 
-      <div className={cx(styles.button)}>
+      <div className={styles.button}>
         <ReservationButton
           workId={workId}
           selectedPids={[manifestation?.pid]}
@@ -188,9 +189,9 @@ export default function ManifestationFull({ workId, pid, hasBeenSeen }) {
                 key={label}
                 data-cy={cyKey({ name: `${label}`, prefix: "edition-data" })}
               >
-                <Text type="text4" lines={1}>
+                <Title type="text4" tag="h4" lines={1}>
                   {label}
-                </Text>
+                </Title>
                 <Text type="text3" lines={2} tag="span">
                   {value}
                 </Text>

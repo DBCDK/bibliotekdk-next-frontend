@@ -7,22 +7,28 @@ import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import {
   MaterialRowButton,
-  MaterialRowIconButton,
   useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
+import { useModal } from "@/components/_modal";
 import Link from "@/components/base/link";
 import Recommendations from "@/components/work/recommendations";
 import { dateToDayInMonth } from "@/utils/datetimeConverter";
+import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
+import { useMutate } from "@/lib/api/api";
 
-const DynamicContentLoan = ({ dueDateString }) => {
+const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
     useLoanDateAnalysis(dueDateString);
 
   return (
     <>
-      <Text type="text2" className={styles.spacer}>
+      <Text
+        type="text2"
+        className={styles.spacer}
+        dataCy={`${dataCyPrefix}-return-date`}
+      >
         {Translate({ context: "profile", label: "to-return" })} {dateString}
       </Text>
       <div className={styles.status}>
@@ -31,9 +37,10 @@ const DynamicContentLoan = ({ dueDateString }) => {
           size={{ w: 5, h: "auto" }}
           src={"ornament1.svg"}
           alt=""
+          dataCy={`${dataCyPrefix}-ornament`}
         />
         {isOverdue ? (
-          <Text type="text2">
+          <Text type="text2" dataCy={`${dataCyPrefix}-message`}>
             {Translate({
               context: "profile",
               label: "date-overdue",
@@ -43,6 +50,7 @@ const DynamicContentLoan = ({ dueDateString }) => {
           <Text
             type="text2"
             className={cx({ [styles.isWarning]: isCountdown })}
+            dataCy={`${dataCyPrefix}-message`}
           >
             {daysToDueDateString}
           </Text>
@@ -52,19 +60,41 @@ const DynamicContentLoan = ({ dueDateString }) => {
   );
 };
 
-const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+const DynamicColumnOrder = ({
+  pickUpExpiryDate,
+  holdQueuePosition,
+  library,
+}) => {
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
+  const inLineText =
+    holdQueuePosition === "1"
+      ? `${Translate({
+          context: "profile",
+          label: "front-of-row",
+        })}`
+      : `${holdQueuePosition - 1} ${Translate({
+          context: "profile",
+          label: "in-row",
+        })}`;
 
   if (isReadyToPickup) {
     return (
       <>
-        <Text type="text1" tag="span" className={styles.isReady}>
+        <Text type="text2" tag="p" className={styles.spacer}>
           {Translate({
             context: "profile",
-            label: "ready-to-pickup",
-          })}
+            label: "pickup-at",
+          })}{" "}
+          {library}
+        </Text>
+        <Text type="text2" tag="p">
+          {Translate({
+            context: "profile",
+            label: "pickup-deadline",
+          })}{" "}
+          {dateString}
         </Text>
         <div className={styles.status}>
           <Icon
@@ -73,12 +103,11 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
             src={"ornament1.svg"}
             alt=""
           />
-          <Text type="text2" tag="span">
+          <Text type="text1" tag="p" className={styles.isReady}>
             {Translate({
               context: "profile",
-              label: "pickup-deadline",
+              label: "ready-to-pickup",
             })}
-             {dateString}
           </Text>
         </div>
       </>
@@ -86,25 +115,26 @@ const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
   }
 
   return (
-    <div className={styles.status}>
-      <Icon
-        className={styles.ornament}
-        size={{ w: 5, h: "auto" }}
-        src={"ornament1.svg"}
-        alt=""
-      />
-      <Text type="text2" tag="span">
-        {holdQueuePosition === "1"
-          ? `${Translate({
-              context: "profile",
-              label: "front-of-row",
-            })}`
-          : `${holdQueuePosition - 1} ${Translate({
-              context: "profile",
-              label: "in-row",
-            })}`}
+    <>
+      <Text type="text2" tag="p" className={styles.spacer}>
+        {Translate({
+          context: "profile",
+          label: "pickup-at",
+        })}{" "}
+        {library}
       </Text>
-    </div>
+      <div className={styles.status}>
+        <Icon
+          className={styles.ornament}
+          size={{ w: 5, h: "auto" }}
+          src={"ornament1.svg"}
+          alt=""
+        />
+        <Text type="text2" tag="span">
+          {inLineText}
+        </Text>
+      </div>
+    </>
   );
 };
 
@@ -113,6 +143,7 @@ const Material = ({ context }) => {
     label,
     title,
     creator,
+    creators,
     materialType,
     creationYear,
     image,
@@ -121,17 +152,30 @@ const Material = ({ context }) => {
     type,
     pickUpExpiryDate,
     holdQueuePosition,
+    id: materialId,
+    agencyId,
+    onCloseModal,
+    library,
   } = context;
+
+  const modal = useModal();
+  const orderMutation = useMutate();
 
   const renderDynamicContent = () => {
     switch (type) {
       case "LOAN":
-        return <DynamicContentLoan dueDateString={dueDateString} />;
+        return (
+          <DynamicContentLoan
+            dueDateString={dueDateString}
+            dataCyPrefix="dyn-cont-loan"
+          />
+        );
       case "ORDER":
         return (
           <DynamicColumnOrder
             pickUpExpiryDate={pickUpExpiryDate}
             holdQueuePosition={holdQueuePosition}
+            library={library}
           />
         );
     }
@@ -141,28 +185,50 @@ const Material = ({ context }) => {
     switch (type) {
       case "LOAN":
         return (
-          <MaterialRowButton wrapperClassname={styles.button}>
+          <MaterialRowButton
+            size="medium"
+            wrapperClassname={styles.button}
+            dataCy="loan-button"
+          >
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton
+          <MaterialRowButton
+            type="secondary"
+            size="medium"
             wrapperClassname={styles.button}
-            onClick={() => onDeleteOrder(order.orderId)}
+            onClick={() => {
+              onClickDelete({
+                modal,
+                mobile: true,
+                pickUpExpiryDate,
+                materialId,
+                agencyId,
+                orderMutation,
+                onCloseModal,
+                title,
+              });
+            }}
+            dataCy="order-button"
           >
             {Translate({
               context: "profile",
-              label: "delete",
+              label: "delete-order",
             })}
-          </MaterialRowIconButton>
+          </MaterialRowButton>
         );
     }
   };
 
   return (
-    <article className={styles.Material}>
-      <Top title={label} titleTag="h4" />
+    <article className={styles.Material} data-cy="loans-and-reservations-modal">
+      <Top
+        title={label}
+        titleTag="h4"
+        className={{ top: styles.topElement, title: styles.topTitle }}
+      />
       <hr />
       <div className={styles.splitContainer}>
         <div>
@@ -175,12 +241,16 @@ const Material = ({ context }) => {
             {title}
           </Title>
           {creator && (
-            <Text type="text2" className={styles.spacer}>
+            <Text type="text2" className={styles.spacer} dataCy="creator">
               {creator}
             </Text>
           )}
           {materialType && creationYear && (
-            <Text type="text2" className={styles.spacer}>
+            <Text
+              type="text2"
+              className={cx(styles.spacer, styles.uppercase)}
+              dataCy="materialtype-and-creationyear"
+            >
               {materialType}, {creationYear}
             </Text>
           )}
@@ -201,14 +271,20 @@ const Material = ({ context }) => {
             keepVisible: true,
           },
         }}
-        className={styles.link}
-        href={getWorkUrl(title, creator, workId)}
+        href={getWorkUrl(title, creators, workId)}
       >
-        <Text type="text2">Gå til bogen</Text>
+        <Text className={styles.link} type="text2" tag="span">
+          Gå til bogen
+        </Text>
       </Link>
 
-      <Text type="text2">Udlånt af</Text>
-      <Text type="text1">Sorø bibliotek</Text>
+      {type === "LOAN" && (
+        <>
+          <Text type="text2">Udlånt af</Text>
+          <Text type="text1">{library}</Text>
+        </>
+      )}
+
       <div className={styles.recommendationsContainer}>
         <Recommendations
           workId={workId}

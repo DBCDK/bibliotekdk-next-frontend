@@ -37,23 +37,23 @@ function Item({ data, work, isLoading }) {
   const hasUrls = getUrls(data, work) || [];
 
   const typeClass = styles[isType];
-  const hasDateClass = !!hasDate ? styles.hasDate : "";
+  // const hasDateClass = !!hasDate ? styles.hasDate : "";
   const hasRatingClass = !!hasRating ? styles.hasRating : "";
   const hasCreatorClass = !!hasCreator ? styles.hasCreator : "";
-  const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
+  // const hasPublisherClass = !!hasPublisher ? styles.hasPublisher : "";
   const hasContentClass = !!hasContent.length ? styles.hasContent : "";
-  const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
+  // const hasUrlClass = !!hasUrls.length ? styles.hasUrl : "";
 
   const isLoadingClass = isLoading ? styles.skeleton : "";
 
   const classNames = [
     typeClass,
-    hasDateClass,
+    // hasDateClass,
     hasRatingClass,
     hasCreatorClass,
-    hasPublisherClass,
+    // hasPublisherClass,
     hasContentClass,
-    hasUrlClass,
+    // hasUrlClass,
     isLoadingClass,
   ].join(" ");
 
@@ -64,15 +64,17 @@ function Item({ data, work, isLoading }) {
       md={!!hasContent.length ? 9 : 4}
       data-cy={`review-item-${isType}`}
       className={`${styles.item} ${classNames}`}
+      as="article"
     >
-      <div className={styles.wrap}>
-        <div className={styles.details}>
+      <figure className={styles.wrap}>
+        <figcaption className={styles.details}>
           <div>
             {hasPublisher && (
               <Title
                 type="title5"
                 className={styles.publisher}
                 skeleton={isLoading}
+                tag="h3"
               >
                 {hasPublisher}
               </Title>
@@ -123,8 +125,8 @@ function Item({ data, work, isLoading }) {
               )}
             </div>
           </div>
-        </div>
-        <div>
+        </figcaption>
+        <blockquote>
           <Title
             type="title6"
             tag="span"
@@ -134,7 +136,7 @@ function Item({ data, work, isLoading }) {
           >
             {hasContent.map((content, i) => {
               return (
-                <p key={`content-${i}`} className={styles.reviewTxt}>
+                <p key={`content-${i}`}>
                   {isMaterialReview ? contentParser(content) : content}
                 </p>
               );
@@ -170,7 +172,9 @@ function Item({ data, work, isLoading }) {
                   <span>
                     <Link
                       href={url}
-                      target="_blank"
+                      target={
+                        isType === "isExternalReview" ? "_blank" : "_self"
+                      }
                       disabled={isLoading || !url}
                       border={{ top: false, bottom: { keepVisible: true } }}
                     >
@@ -178,7 +182,7 @@ function Item({ data, work, isLoading }) {
                         type="text2"
                         skeleton={isLoading}
                         lines={1}
-                        tag={"span"}
+                        tag="span"
                       >
                         {materialReviewLinkLabel || reviewLinkLabel}
                       </Text>
@@ -188,8 +192,8 @@ function Item({ data, work, isLoading }) {
               );
             })}
           </div>
-        </div>
-      </div>
+        </blockquote>
+      </figure>
       <hr className={styles.seperator} />
     </Col>
   );

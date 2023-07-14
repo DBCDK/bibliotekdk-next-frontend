@@ -231,7 +231,7 @@ export function Page({ data, isLoading }) {
         space={{ top: "var(--pt4)", bottom: "var(--pt4)" }}
       >
         <div className="inspiration-section-about">
-          <Title type="title3" skeleton={isLoading}>
+          <Title type="title3" skeleton={isLoading} tag="h1">
             {title}
           </Title>
           <Text type="text2" skeleton={isLoading} lines={2}>

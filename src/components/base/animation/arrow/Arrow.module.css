@@ -37,18 +37,6 @@
   text-rendering: geometricPrecision;
 }
 
-.flatnose {
-  position: absolute;
-  width: 1px;
-  height: 10px;
-  background: white;
-  top: 6px;
-  left: 12px;
-  opacity: 1;
-  transition-delay: 0.2s;
-  shape-rendering: geometricPrecision;
-}
-
 .trapezoid:nth-child(1) {
   transform: rotate(-45deg);
 }
@@ -61,45 +49,3 @@
 .trapezoid:nth-child(4) {
   transform: translateX(8px) translateY(6px) rotate(225deg);
 }
-
-/* .trapezoid {
-      position: absolute;
-      width: 2px;
-      border-bottom: 16px solid blue;
-      border-left: 0px solid transparent;
-      border-right: 0px solid transparent;
-      transform: scale(1);
-      transition: all 0.25s;
-    }
-    .trapezoid:nth-child(1) {
-      transform: rotate(-45deg)
-    }
-    .trapezoid:nth-child(2) {
-      transform: translateY(90px) rotate(-135deg)
-    }
-    .white {
-      position: absolute;
-      width: 20px;
-      height: 100px;
-      background: white;
-      transform: translateY(80px) translateX(85px)
-    }
-    .wrapper {
-      margin-left: 800px;
-      position: relative;
-      width: 10px;
-      height: 20px;
-      background: red;
-    }
-    .wrapper:hover {
-    
-    }
-    .wrapper:hover .trapezoid {
-      border-left: 0px solid transparent;
-      border-right: 0px solid transparent;
-      width: 40px;
-    }
-    .wrapper:hover .trapezoid:nth-child(1) {
-    
-      
-    } */

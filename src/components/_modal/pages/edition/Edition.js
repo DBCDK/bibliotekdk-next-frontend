@@ -1,5 +1,6 @@
 import styles from "./Edition.module.css";
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 import Link from "@/components/base/link";
 import Translate from "@/components/base/translate";
 import Tag from "@/components/base/forms/tag";
@@ -89,15 +90,15 @@ export function Edition({
       <div className={styles.left}>
         <div className={styles.title}>
           {titles?.map((title, index) => (
-            <Text
-              tag="span"
+            <Title
+              tag="h3"
               type="text1"
               skeleton={!manifestation?.titles?.full && isLoading}
               lines={1}
               key={title + "-" + index}
             >
               {title} {index < titles?.length - 1 && <br />}
-            </Text>
+            </Title>
           ))}
         </div>
         <div className={styles.creators}>
@@ -141,7 +142,12 @@ export function Edition({
             </Link>
           ) : null}
           <div>
-            <Tag tag="span" skeleton={!materialType && isLoading}>
+            <Tag
+              tag="span"
+              skeleton={!materialType && isLoading}
+              disabled
+              opaqueText
+            >
               {formatMaterialTypesToPresentation(materialType)}
             </Tag>
           </div>

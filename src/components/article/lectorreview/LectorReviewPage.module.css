@@ -6,11 +6,7 @@
 
 .overview {
   display: grid;
-  --grid_template_areas:
-    "back"
-    "title"
-    "work_card"
-  ;
+  --grid_template_areas: "back" "title" "work_card";
 
   grid-template-areas: var(--grid_template_areas);
   grid-auto-columns: minmax(0, 1fr);
@@ -41,10 +37,7 @@
 
 .info {
   display: grid;
-  --info__grid_template_areas:
-    "infoDate infoPrint"
-    "infoLector infoLector"
-  ;
+  --info__grid_template_areas: "infoDate infoPrint" "infoLector infoLector";
   grid-template-areas: var(--info__grid_template_areas);
   column-gap: var(--pt8);
   row-gap: var(--pt1);
@@ -106,10 +99,7 @@
   }
 
   .overview {
-    --grid_template_areas:
-      "back back"
-      "title work_card"
-    ;
+    --grid_template_areas: "back back" "title work_card";
   }
 
   .title {
@@ -126,12 +116,9 @@
   }
 }
 
-
 @media (min-width: 992px) {
   .overview {
-    --grid_template_areas:
-      "back title title work_card work_card work_card"
-    ;
+    --grid_template_areas: "back title title work_card work_card work_card";
   }
 
   .title {
@@ -142,9 +129,7 @@
 @media (min-width: 1200px) {
   .info {
     grid-template-columns: fit-content(100%) fit-content(100%) 1fr;
-    --info__grid_template_areas:
-      "infoDate infoLector infoPrint"
-    ;
+    --info__grid_template_areas: "infoDate infoLector infoPrint";
   }
 
   .title {

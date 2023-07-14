@@ -1,13 +1,3 @@
-.textAboveButton{
-    padding-bottom: var(--pt1);
+.textAboveButton {
+  padding-bottom: var(--pt1);
 }
-
-.info {
-    padding-top: var(--pt1);
-    height: auto;
-}
-
-.info span{
-    display: block;
-}
-

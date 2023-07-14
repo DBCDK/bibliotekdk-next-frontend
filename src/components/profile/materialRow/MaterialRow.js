@@ -8,19 +8,22 @@ import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
 import { useState } from "react";
+import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
+import Icon from "@/components/base/icon";
 import IconButton from "@/components/base/iconButton";
-import { extractCreatorPrioritiseCorporation, getWorkUrl } from "@/lib/utils";
+import { getWorkUrl } from "@/lib/utils";
+import ErrorRow from "../errorRow/ErrorRow";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import { useModal } from "@/components/_modal";
+import useUser from "@/components/hooks/useUser";
 import Translate from "@/components/base/translate";
 import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
 import { useRouter } from "next/router";
-import useUser from "@/components/hooks/useUser";
-import isEmpty from "lodash/isEmpty";
+import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -51,10 +54,15 @@ export const useLoanDateAnalysis = (dueDateString) => {
   };
 };
 
-export const MaterialRowButton = ({ wrapperClassname, ...props }) => {
+export const MaterialRowButton = ({
+  wrapperClassname,
+  size = "small",
+  type = "primary",
+  ...props
+}) => {
   return (
     <div className={cx(styles.buttonContainer, wrapperClassname)}>
-      <Button type="primary" size="small" {...props} />
+      <Button type={type} size={size} {...props} />
     </div>
   );
 };
@@ -81,92 +89,107 @@ export const DynamicColumnLoan = ({ dueDateString }) => {
 
   return (
     <DynamicColumn>
-      {isOverdue ? (
-        <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text type="text1" className={styles.isWarning} tag="span">
-            {Translate({
-              context: "profile",
-              label: "date-overdue",
-            })}
-          </Text>
-        </>
-      ) : isCountdown ? (
-        <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text
-            type="text1"
-            tag="span"
-            className={cx(styles.isWarning, styles.upperCase)}
-          >
-            {daysToDueDateString}
-          </Text>
-        </>
-      ) : (
-        <>
-          <Text type="text2" tag="span">
-            {dateString}
-          </Text>
-          <Text
-            type="text2"
-            tag="span"
-            className={cx(styles.upperCase, styles.block)}
-          >
-            {daysToDueDateString}
-          </Text>
-        </>
-      )}
+      <Text type="text2" tag="p">
+        <span className={styles.mobileText}>
+          {Translate({
+            context: "profile",
+            label: "to-return",
+          })}{" "}
+        </span>
+        {dateString}
+      </Text>
+      <div>
+        <Icon
+          className={styles.ornament}
+          size={{ w: 5, h: "auto" }}
+          src={"ornament1.svg"}
+          alt=""
+        />
+        <Text
+          type="text1"
+          className={cx(styles.inlineBlock, {
+            [styles.isWarning]: isOverdue || isCountdown,
+          })}
+          tag="p"
+        >
+          {isOverdue
+            ? Translate({
+                context: "profile",
+                label: "date-overdue",
+              })
+            : daysToDueDateString}
+        </Text>
+      </div>
     </DynamicColumn>
   );
 };
 
 const DynamicColumnOrder = ({ pickUpExpiryDate, holdQueuePosition }) => {
+  const breakpoint = useBreakpoint();
+  const isMobileSize =
+    breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
   const pickUpDate = new Date(pickUpExpiryDate);
   const isReadyToPickup = !!pickUpExpiryDate;
   const dateString = isReadyToPickup ? dateToDayInMonth(pickUpDate) : null;
+  const inLineText =
+    holdQueuePosition === "1"
+      ? `${Translate({
+          context: "profile",
+          label: "front-of-row",
+        })}`
+      : `${holdQueuePosition - 1} ${Translate({
+          context: "profile",
+          label: "in-row",
+        })}`;
 
   return (
     <DynamicColumn>
-      {isReadyToPickup ? (
-        <>
-          <Text type="text1" tag="span" className={styles.isReady}>
-            {Translate({
-              context: "profile",
-              label: "ready-to-pickup",
+      <>
+        <Text type="text2" tag="p">
+          {isReadyToPickup && (
+            <span>
+              {Translate({
+                context: "profile",
+                label: "pickup-deadline",
+              })}{" "}
+            </span>
+          )}
+          {dateString}
+        </Text>
+        <div>
+          <Icon
+            className={styles.ornament}
+            size={{ w: 5, h: "auto" }}
+            src={"ornament1.svg"}
+            alt=""
+          />
+          <Text
+            type={isReadyToPickup || isMobileSize ? "text1" : "text2"}
+            tag="p"
+            className={cx(styles.inlineBlock, {
+              [styles.isReady]: isReadyToPickup,
             })}
-          </Text>
-          <Text type="text2" tag="span">
-            {Translate({
-              context: "profile",
-              label: "pickup-deadline",
-            })}
-             {dateString}
-          </Text>
-        </>
-      ) : (
-        <>
-          <Text type="text2" tag="span">
-            {holdQueuePosition === "1"
-              ? `${Translate({
+          >
+            {isReadyToPickup
+              ? Translate({
                   context: "profile",
-                  label: "front-of-row",
-                })}`
-              : `${holdQueuePosition - 1} ${Translate({
-                  context: "profile",
-                  label: "in-row",
-                })}`}
+                  label: "ready-to-pickup",
+                })
+              : inLineText}
           </Text>
-        </>
-      )}
+        </div>
+      </>
     </DynamicColumn>
   );
 };
 
-const DynamicColumn = ({ ...props }) => <p {...props} />;
+const DynamicColumn = ({ className, ...props }) => (
+  <div
+    className={cx(styles.dynamicColumn, className)}
+    data-cy="dynamic-column"
+    {...props}
+  />
+);
 
 /* Use as section header to describe the content of the columns */
 export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
@@ -198,17 +221,28 @@ export const getCheckedElements = (parentRef) => {
     .map((element) => element.getAttribute("data-id"));
 };
 
-const MobileMaterialRow = (props) => {
-  const { image, creators, materialType, creationYear, title, id, type } =
-    props;
-  const modal = useModal();
+const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
+  const {
+    image,
+    creator,
+    materialType,
+    creationYear,
+    title,
+    id: materialId,
+    type,
+    status,
+    dataCy,
+    removedOrderId,
+  } = props;
 
-  const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
+  const modal = useModal();
 
   const onClick = () => {
     modal.push("material", {
-      label: Translate({ context: "profile", label: "your-loan" }),
+      label: Translate({
+        context: "profile",
+        label: `your-${type === "LOAN" ? "loan" : "order"}`,
+      }),
       ...props,
     });
   };
@@ -217,42 +251,64 @@ const MobileMaterialRow = (props) => {
     <ConditionalWrapper
       condition={type === "DEBT"}
       wrapper={(children) => (
-        <article className={styles.materialRow_mobile}>{children}</article>
+        <article
+          key={"article" + materialId}
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+          })}
+          data-cy={dataCy}
+        >
+          {children}
+        </article>
       )}
       elseWrapper={(children) => (
         <article
-          className={styles.materialRow_mobile}
+          className={cx(styles.materialRow_mobile, {
+            [styles.materialRow_green]: status === "GREEN",
+            [styles.materialRow_red]: status === "RED",
+            [styles.materialRow_mobile_animated]: materialId === removedOrderId,
+          })}
           role="button"
           onClick={onClick}
-          tabIndex={0}
+          tabIndex="0"
           onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onClick();
-            }
+            e.key === "Enter" && onClick();
           }}
+          data-cy={dataCy}
         >
           {children}
         </article>
       )}
     >
       <div className={styles.imageContainer_mobile}>
-        <Cover src={image} size="fill-width" />
+        {!!image && <Cover src={image} size="fill-width" />}
       </div>
       <div>
         <Title
-          type="title8"
+          type="text1"
           tag="h3"
           className={styles.materialTitle}
-          id={`material-title-${id}`}
+          id={`material-title-${materialId}`}
         >
           {title}
         </Title>
-        {firstCreator && <Text type="text2">{firstCreator}</Text>}
+        {creator && <Text type="text2">{creator}</Text>}
         {materialType && creationYear && (
-          <Text type="text2">
+          <Text type="text2" className={styles.uppercase}>
             {materialType}, {creationYear}
           </Text>
         )}
+
+        <div className={styles.dynamicContent}>{renderDynamicColumn()}</div>
+      </div>
+      <div className={styles.arrowright_container}>
+        <Icon
+          alt=""
+          size={{ w: "auto", h: 2 }}
+          src="arrowrightblue.svg"
+          className={styles.arrowright}
+        />
       </div>
     </ConditionalWrapper>
   );
@@ -262,12 +318,14 @@ const MaterialRow = (props) => {
   const {
     image,
     title,
+    creator,
     creators,
     materialType,
     creationYear,
     library,
+    agencyId,
     hasCheckbox = false,
-    id,
+    id: materialId,
     workId,
     type,
     holdQueuePosition,
@@ -275,15 +333,19 @@ const MaterialRow = (props) => {
     dueDateString,
     amount,
     currency,
+    dataCy,
+    removedOrderId,
+    setRemovedOrderId,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateLoanerInfo } = useUser();
+  const { updateOrderInfo } = useUser();
+  const modal = useModal();
+  const [hasError, setHasError] = useState(false);
+  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
-
-  const firstCreator =
-    extractCreatorPrioritiseCorporation(creators)?.[0]?.display;
 
   const getStatus = () => {
     switch (type) {
@@ -300,14 +362,6 @@ const MaterialRow = (props) => {
       default:
         return "NONE";
     }
-  };
-
-  const onDeleteOrder = (id) => {
-    const newOrders = loanerInfo.orders;
-    const index = newOrders.map((item) => item.orderId).indexOf(id);
-    newOrders.splice(index, 1);
-    // TODO proper mutate function
-    updateLoanerInfo({ ...loanerInfo }, { orders: newOrders });
   };
 
   const status = getStatus();
@@ -330,19 +384,43 @@ const MaterialRow = (props) => {
     }
   };
 
+  async function onCloseModal({ success }) {
+    if (success) {
+      setRemovedOrderId(materialId);
+      updateOrderInfo();
+      setHasError(false);
+    } else {
+      setHasError(true);
+    }
+  }
+
   const renderDynamicButton = () => {
     switch (type) {
       case "DEBT":
         return null;
       case "LOAN":
         return (
-          <MaterialRowButton>
+          <MaterialRowButton dataCy="loan-button">
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
       case "ORDER":
         return (
-          <MaterialRowIconButton onClick={() => onDeleteOrder(order.orderId)}>
+          <MaterialRowIconButton
+            onClick={() =>
+              onClickDelete({
+                modal,
+                mobile: false,
+                pickUpExpiryDate,
+                materialId,
+                agencyId,
+                orderMutation,
+                onCloseModal,
+                title,
+              })
+            }
+            dataCy="order-button"
+          >
             {Translate({
               context: "profile",
               label: "delete",
@@ -354,107 +432,152 @@ const MaterialRow = (props) => {
     }
   };
 
-  if (isMobileSize) return <MobileMaterialRow {...props} />;
+  if (isMobileSize) {
+    return (
+      <>
+        {hasError && (
+          <ErrorRow
+            text={Translate({
+              context: "profile",
+              label: "error-deleting-order",
+            })}
+          />
+        )}
+        <MobileMaterialRow
+          key={"article" + materialId}
+          renderDynamicColumn={renderDynamicColumn}
+          status={status}
+          onCloseModal={onCloseModal}
+          removedOrderId={removedOrderId}
+          {...props}
+        />
+      </>
+    );
+  }
 
   return (
-    <ConditionalWrapper
-      condition={hasCheckbox}
-      wrapper={(children) => (
-        <article
-          role="checkbox"
-          aria-checked={isChecked}
-          tabIndex="0"
-          aria-labelledby="chk1-label"
-          data-id={id}
-          onClick={() => setIsChecked(!isChecked)}
-          className={cx(
-            styles.materialRow,
-            styles.materialRow_withCheckbox,
-            styles.materialRow_wrapper,
-            {
+    <>
+      {hasError && (
+        <ErrorRow
+          text={Translate({
+            context: "profile",
+            label: "error-deleting-order",
+          })}
+        />
+      )}
+      <ConditionalWrapper
+        condition={hasCheckbox}
+        wrapper={(children) => (
+          <article
+            key={"article" + materialId}
+            role="checkbox"
+            aria-checked={isChecked}
+            tabIndex="0"
+            aria-labelledby="chk1-label"
+            data-id={materialId}
+            onClick={() => setIsChecked(!isChecked)}
+            className={cx(
+              styles.materialRow,
+              styles.materialRow_withCheckbox,
+              styles.materialRow_wrapper,
+              {
+                [styles.materialRow_green]: status === "GREEN",
+                [styles.materialRow_red]: status === "RED",
+                [styles.materialRow_animated]: materialId === removedOrderId,
+              }
+            )}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
+        )}
+        elseWrapper={(children) => (
+          <article
+            key={"article" + materialId} //to avoid rerendering
+            className={cx(styles.materialRow, styles.materialRow_wrapper, {
               [styles.materialRow_green]: status === "GREEN",
               [styles.materialRow_red]: status === "RED",
-            }
-          )}
-        >
-          {children}
-        </article>
-      )}
-      elseWrapper={(children) => (
-        <article
-          className={cx(styles.materialRow, styles.materialRow_wrapper, {
-            [styles.materialRow_green]: status === "GREEN",
-            [styles.materialRow_red]: status === "RED",
-          })}
-        >
-          {children}
-        </article>
-      )}
-    >
-      <>
-        {hasCheckbox && (
-          <div>
-            <Checkbox
-              checked={isChecked}
-              id={`material-row-${id}`}
-              aria-labelledby={`material-title-${id}`}
-              tabIndex={-1}
-            />
-          </div>
+              [styles.materialRow_animated]: materialId === removedOrderId,
+            })}
+            data-cy={dataCy}
+          >
+            {children}
+          </article>
         )}
-
-        <div className={styles.materialInfo}>
-          {!!image && (
-            <div className={styles.imageContainer}>
-              <Cover src={image} size="fill-width" />
+      >
+        <>
+          {hasCheckbox && (
+            <div>
+              <Checkbox
+                checked={isChecked}
+                id={`material-row-${materialId}`}
+                aria-labelledby={`material-title-${materialId}`}
+                tabIndex="-1"
+              />
             </div>
           )}
-          <div>
-            <ConditionalWrapper
-              condition={!!title && !!creators && !isEmpty(creators) && !!id}
-              wrapper={(children) => (
-                <Link
-                  border={{
-                    top: false,
-                    bottom: {
-                      keepVisible: true,
-                    },
-                  }}
-                  href={getWorkUrl(title, creators, workId)}
-                  className={styles.blackUnderline}
-                >
-                  {children}
-                </Link>
-              )}
-            >
-              <Title
-                type="title8"
-                tag="h3"
-                className={styles.materialTitle}
-                id={`material-title-${id}`}
-              >
-                {title}
-              </Title>
-            </ConditionalWrapper>
 
-            {firstCreator && <Text type="text2">{firstCreator}</Text>}
-            {materialType && creationYear && (
-              <Text type="text2">
-                {materialType}, {creationYear}
-              </Text>
+          <div className={styles.materialInfo}>
+            {!!image && (
+              <div className={styles.imageContainer}>
+                <Cover src={image} size="fill-width" />
+              </div>
             )}
+            <div>
+              <ConditionalWrapper
+                condition={!!title && !!creator && !!materialId}
+                wrapper={(children) => (
+                  <Link
+                    border={{
+                      top: false,
+                      bottom: {
+                        keepVisible: true,
+                      },
+                    }}
+                    href={getWorkUrl(title, creators, workId)}
+                    className={styles.blackUnderline}
+                  >
+                    {children}
+                  </Link>
+                )}
+              >
+                <Title
+                  type="text1"
+                  tag="h3"
+                  className={styles.materialTitle}
+                  id={`material-title-${materialId}`}
+                >
+                  {title}
+                </Title>
+              </ConditionalWrapper>
+
+              {creator && (
+                <Text type="text2" dataCy="creator">
+                  {creator}
+                </Text>
+              )}
+              {materialType && creationYear && (
+                <Text
+                  type="text2"
+                  className={styles.uppercase}
+                  dataCy="materialtype-and-creationyear"
+                >
+                  {materialType}, {creationYear}
+                </Text>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div>{renderDynamicColumn()}</div>
+          <div>{renderDynamicColumn()}</div>
 
-        <div>
-          <Text type="text2">{library}</Text>
-        </div>
+          <div>
+            <Text type="text2">{library}</Text>
+          </div>
 
-        <div>{renderDynamicButton()}</div>
-      </>
-    </ConditionalWrapper>
+          <div>{renderDynamicButton(materialId, agencyId)}</div>
+        </>
+      </ConditionalWrapper>
+    </>
   );
 };
 
@@ -466,7 +589,7 @@ MaterialRow.propTypes = {
   creationYear: PropTypes.string,
   library: PropTypes.string.isRequired,
   hasCheckbox: PropTypes.bool,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired, //materialId
   status: PropTypes.oneOf(["NONE", "GREEN", "RED"]),
   workId: PropTypes.string,
   type: PropTypes.oneOf(["DEBT", "LOAN", "ORDER"]),

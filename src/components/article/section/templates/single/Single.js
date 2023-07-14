@@ -35,8 +35,6 @@ export default function Single({ articles, skeleton }) {
   // extract image from article
   const image = article && article.fieldImage;
 
-  const skeletonClass = skeleton ? styles.skeleton : "";
-
   const { target, query, pathname } = articlePathAndTarget(article);
   // Action button label
   const btnLabel = get(article, "fieldAlternativeArticleUrl.title", false)
@@ -51,7 +49,7 @@ export default function Single({ articles, skeleton }) {
       as={LinkOnlyInternalAnimations}
       href={{ pathname, query }}
       target={`${target}`}
-      className={cx(styles.content, skeletonClass)}
+      className={cx(styles.content)}
       xs={12}
       lg={{ span: 10, offset: 1 }}
     >

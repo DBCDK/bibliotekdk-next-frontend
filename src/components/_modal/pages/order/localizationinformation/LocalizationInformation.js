@@ -22,7 +22,7 @@ function LocalizationInformation({
     <>
       <div className={styles.pickup}>
         <div className={styles.title}>
-          <Title type="title5">
+          <Title type="title5" tag="h3">
             {Translate({
               context: "order",
               label:
@@ -65,7 +65,7 @@ function LocalizationInformation({
           </IconLink>
         </div>
         {(isLoadingBranches || pickupBranch) && (
-          <div className={styles.address}>
+          <div>
             <Text
               type="text3"
               skeleton={!pickupBranch?.postalAddress}

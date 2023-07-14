@@ -1,0 +1,37 @@
+.link_list {
+  line-height: 22px;
+  margin-bottom: calc(var(--pt025) * -1);
+}
+
+.creatorWrapper {
+  white-space: pre-wrap;
+  width: 100%;
+}
+
+.linkWrap {
+  margin-right: var(--pt05);
+}
+
+.txtInline {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0 0 var(--pt05) 0;
+}
+
+.pegiimage {
+  border: 1px solid var(--iron);
+  display: flex;
+  padding: var(--pt1);
+  align-items: center;
+}
+
+.spacemaker {
+  min-width: 25%;
+}
+
+.imgtext {
+  margin-left: var(--pt05);
+}

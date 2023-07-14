@@ -1,6 +1,6 @@
 import Svg from "./singleLogo.svg";
 import PropTypes from "prop-types";
-import styles from "@/components/base/logo/Logo.module.css";
+import styles from "./Logo.module.css";
 import Link from "@/components/base/link";
 import { cyKey } from "@/utils/trim";
 import Text from "@/components/base/text/Text";

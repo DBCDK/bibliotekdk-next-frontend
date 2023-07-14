@@ -21,7 +21,7 @@ import {
   RenderLanguageAddition,
   RenderTitlesWithoutLanguage,
 } from "@/components/work/overview/titlerenderer/TitleRenderer";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title/Title";
 import { useRouter } from "next/router";
 import Breadcrumbs from "@/components/work/overview/breadcrumbs/Breadcrumbs";
 
@@ -92,7 +92,7 @@ export function Overview({
   ];
 
   return (
-    <div className={`${styles.background} ${className}`}>
+    <section className={`${styles.background} ${className}`}>
       <Container fluid>
         <Row className={`${styles.overview}`}>
           {/* Breadcrumbs */}
@@ -119,9 +119,10 @@ export function Overview({
             >
               <Col xs={12}>
                 <Title
-                  type={"title3"}
+                  tag="h1"
+                  type="title3"
                   skeleton={skeleton}
-                  data-cy={"title-overview"}
+                  dataCy="title-overview"
                 >
                   <RenderTitlesWithoutLanguage titles={titles} />
                   <RenderLanguageAddition work={work} />
@@ -168,7 +169,7 @@ export function Overview({
           </Col>
         </Row>
       </Container>
-    </div>
+    </section>
   );
 }
 

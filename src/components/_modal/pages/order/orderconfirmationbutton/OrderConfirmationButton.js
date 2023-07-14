@@ -1,11 +1,12 @@
-import styles from "@/components/_modal/pages/order/Order.module.css";
+// eslint-disable-next-line css-modules/no-unused-class
+import styles from "./OrderConfirmationButton.module.css";
 import Text from "@/components/base/text";
 import Translate from "@/components/base/translate";
 import Link from "@/components/base/link";
 import Button from "@/components/base/button";
 import * as PropTypes from "prop-types";
 import useOrderPageInformation from "@/components/hooks/useOrderPageInformations";
-import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils";
+import { extractClassNameAndMessage } from "@/components/_modal/pages/order/utils/order.utils";
 import { AccessEnum } from "@/lib/enums";
 
 function OrderConfirmationButton({

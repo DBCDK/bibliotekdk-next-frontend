@@ -18,7 +18,6 @@ const titles = [
   "title5",
   "title6",
   "title7",
-  "title8",
 ];
 const size = [
   "80/92 - 400",
@@ -28,7 +27,6 @@ const size = [
   "24/32 - 400",
   "18/24 - 400",
   "18/24 - 400 (work overview specific - grows on larger screens)",
-  "17/26 - 600 (matches text1 style)",
 ];
 
 /**

@@ -11,6 +11,7 @@ import Localizations from "./localizations";
 import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
+import DeleteOrder from "./deleteOrder";
 
 const _modal = {
   Menu,
@@ -26,6 +27,7 @@ const _modal = {
   References,
   ManifestationContent,
   Material,
+  DeleteOrder,
 };
 
 export default _modal;

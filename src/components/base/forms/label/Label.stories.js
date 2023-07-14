@@ -1,4 +1,4 @@
-import Label from "./";
+import Label from "./Label";
 import Input from "../input/";
 
 import { StoryTitle } from "@/storybook";

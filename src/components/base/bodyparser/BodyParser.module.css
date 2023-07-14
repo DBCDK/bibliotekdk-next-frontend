@@ -41,8 +41,7 @@
 .body h4,
 .body h5,
 .body h6,
-.body em[style*="bold"]
-{
+.body em[style*="bold"] {
   font-size: 17px;
   line-height: 26px;
   font-family: var(--body-font-semibold);
@@ -65,5 +64,3 @@
     max-height: 375px;
   }
 }
-
-

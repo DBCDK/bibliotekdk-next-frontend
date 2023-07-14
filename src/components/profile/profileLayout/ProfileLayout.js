@@ -1,12 +1,20 @@
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { Title } from "@/components/base/title/Title";
+import Title from "@/components/base/title";
 import styles from "./ProfileLayout.module.css";
 import ProfileMenu from "../profilemenu/desktop/ProfileMenu";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import useBreakpoint from "@/components/hooks/useBreakpoint";
 import NavigationDropdown from "@/components/base/dropdown/NavigationDropdown";
+import useUser from "@/components/hooks/useUser";
+import Text from "@/components/base/text";
+import Link from "@/components/base/link";
+import Translate from "@/components/base/translate/Translate";
+import { signOut } from "@dbcdk/login-nextjs/client";
+import Button from "@/components/base/button";
+import Icon from "@/components/base/icon";
+import { useModal } from "@/components/_modal";
 
 const CONTEXT = "profile";
 const MENUITEMS = ["loansAndReservations", "myLibraries"];
@@ -22,29 +30,122 @@ export default function ProfileLayout({ title, children }) {
   const breakpoint = useBreakpoint();
   const isMobile = breakpoint === "xs" || breakpoint === "sm";
   const isTablet = breakpoint === "md";
+  const isDesktop = !isMobile && !isTablet;
+  const user = useUser();
+  const modal = useModal();
 
   return (
     <Container fluid className={styles.container}>
-      {(isMobile || isTablet) && <Breadcrumb textType="text3" />}
+      {(isMobile || isTablet) && (
+        <div className={styles.profileHeaderContainer}>
+          <Breadcrumb textType="text3" />
+          <LogoutButton />
+        </div>
+      )}
       <NavigationDropdown context={CONTEXT} menuItems={MENUITEMS} />
 
       <Row>
+        {isDesktop && <LogoutButton />}
         <Col lg={3} className={styles.navColumn}>
-          {!isMobile && !isTablet && <Breadcrumb textType="text2" />}
+          {isDesktop && <Breadcrumb textType="text2" />}
           <ProfileMenu />
         </Col>
         <Col lg={9}>
           {/**page content here */}
-          <Title
-            className={styles.title}
-            type={isMobile ? "title4" : "title2"}
-            tag="h1"
-          >
-            {title}
-          </Title>
-          {children}
+          {user?.isAuthenticated ? (
+            <>
+              <Title
+                className={styles.title}
+                type={isMobile ? "title4" : "title2"}
+                tag="h1"
+              >
+                {title}
+              </Title>
+              {children}
+            </>
+          ) : (
+            <div>
+              <Title className={styles.loginTitle} tag="h2" type="title3">
+                {Translate({
+                  context: "header",
+                  label: "login",
+                })}{" "}
+              </Title>
+              <Text className={styles.loginText} type="text2">
+                {Translate({
+                  context: "profile",
+                  label: "login-to-see-profile",
+                })}
+              </Text>
+              <Text type="text2">
+                {Translate({
+                  context: "profile",
+                  label: "login-welcome",
+                })}
+              </Text>
+
+              <Button
+                className={styles.loginButton}
+                size="medium"
+                type="primary"
+                onClick={() => {
+                  modal.push("login");
+                }}
+              >
+                <Icon
+                  className={styles.buttonIcon}
+                  size={2}
+                  src="external.svg"
+                />
+                {Translate({
+                  context: "header",
+                  label: "login",
+                })}
+              </Button>
+            </div>
+          )}
         </Col>
       </Row>
     </Container>
   );
 }
+
+const LogoutButton = () => {
+  const user = useUser();
+
+  if (!user.isAuthenticated) {
+    return;
+  }
+  const userName = user?.loanerInfo?.userParameters?.userName;
+  return (
+    <div className={styles.logoutContainer}>
+      <Text className={styles.logoutBtnText}>{`${Translate({
+        context: "profile",
+        label: "signed-in-as-name",
+      })} ${userName}`}</Text>
+      <Link
+        onClick={() => {
+          if (user.isAuthenticated) {
+            signOut();
+          } else if (user.isGuestUser) {
+            user.guestLogout();
+          }
+        }}
+        className={styles.logoutBtn}
+        border={{
+          top: false,
+          bottom: {
+            keepVisible: true,
+          },
+        }}
+      >
+        <Text>
+          {Translate({
+            context: "header",
+            label: "logout",
+          })}
+        </Text>
+      </Link>
+    </div>
+  );
+};

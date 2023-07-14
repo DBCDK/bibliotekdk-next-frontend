@@ -7,9 +7,10 @@ import AccordionContext from "react-bootstrap/AccordionContext";
 import ExpandIcon from "@/components/base/animation/expand";
 
 import Text from "@/components/base/text";
+import Title from "@/components/base/title";
 
 import styles from "./Accordion.module.css";
-import animations from "@/components/base/animation/animations.module.css";
+import animations from "css/animations";
 
 import BodyParser from "@/components/base/bodyparser";
 import React, { useEffect } from "react";
@@ -106,6 +107,10 @@ export function Item({
         ].join(" ")}
         onClick={onClick}
         onKeyDown={handleKeypress}
+        role="button"
+        id={`accordion-unique-toggle-${eventKey}-${title}`}
+        aria-controls={`accordion-unique-${eventKey}-${title}`}
+        aria-expanded={isCurrentEventKey}
       >
         <div className={styles.header_content}>
           <div
@@ -116,10 +121,10 @@ export function Item({
               additionalTxt && styles.firstelement,
             ].join(" ")}
           >
-            <Link tag={"span"} className={styles.link_on_year} tabIndex={-1}>
-              <Text type="text2" skeleton={isLoading} lines={1} tag={"span"}>
+            <Link tag="span" className={styles.link_on_year} tabIndex={-1}>
+              <Title type="text2" skeleton={isLoading} lines={1} tag="h3">
                 {title}
-              </Text>
+              </Title>
             </Link>
             {subTitle && (
               <Text tag={"span"} type="text4">
@@ -144,6 +149,9 @@ export function Item({
       <BootstrapAccordion.Collapse
         className={styles.content}
         eventKey={eventKey}
+        role="region"
+        id={`accordion-unique-${eventKey}`}
+        aria-labelledby={`accordion-unique-toggle-${eventKey}-${title}`}
       >
         <Card.Body>
           {typeof children === "function"

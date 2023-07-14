@@ -757,6 +757,14 @@
         "da": "Detaljer",
         "en": "Details"
       },
+      "playingtime": {
+        "da": "Spilletid",
+        "en": "Playing time"
+      },
+      "extent": {
+        "da": "Omfang",
+        "en": "Extent"
+      },
       "level": {
         "da": "Sværhedsgrad",
         "en": "level"
@@ -1328,6 +1336,10 @@
         "da": "Materialetype",
         "en": "Format"
       },
+      "label-materialTypesSpecific": {
+        "da": "Materialetype",
+        "en": "Format"
+      },
       "label-fictionalCharacter": {
         "da": "Fiktive karakterer",
         "en": "Fictitious characters"
@@ -1368,7 +1380,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-literature-materialTypes": {
+      "label-literature-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1408,7 +1420,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-article-materialTypes": {
+      "label-article-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1448,7 +1460,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-movie-materialTypes": {
+      "label-movie-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1488,7 +1500,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-game-materialTypes": {
+      "label-game-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1528,7 +1540,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-music-materialTypes": {
+      "label-music-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -1568,7 +1580,7 @@
         "da": "Sprog",
         "en": "Language"
       },
-      "label-sheetmusic-materialTypes": {
+      "label-sheetmusic-materialTypesSpecific": {
         "da": "Materialetype",
         "en": "Format"
       },
@@ -3047,6 +3059,26 @@
         "da": "Slet",
         "en": "Delete"
       },
+      "delete-order": {
+        "da": "Slet reservering",
+        "en": "Delete reservation"
+      },
+      "delete-order-questionmark": {
+        "da": "Slet reservering?",
+        "en": "Delete reservation?"
+      },
+      "delete-order-confirmation": {
+        "da": "Er du sikker på, at du vil slette din reservering:",
+        "en": "Are you sure you want to delete the reservation:"
+      },
+      "miss-spot-in-queue": {
+        "da": "Du mister din plads i køen.",
+        "en": "You will lose your spot in the queue."
+      },
+      "no-longer-reserved": {
+        "da": "Hvis du sletter reserveringen, er materialet ikke længere sat til side til dig.",
+        "en": "If you delete the reservation, the material will no longer be reserved for you."
+      },
       "delete-more": {
         "da": "Slet flere",
         "en": "Delete several"
@@ -3056,7 +3088,7 @@
         "en": "Ready to pickup"
       },
       "pickup-deadline": {
-        "da": "Hent senest",
+        "da": "Hentes senest",
         "en": "Pickup at the latest"
       },
       "date-overdue": {
@@ -3092,8 +3124,8 @@
         "en": "Pickup at"
       },
       "price": {
-        "da": "Pris",
-        "en": "Price"
+        "da": "Beløb",
+        "en": "Amount"
       },
       "front-of-row": {
         "da": "Forrest i køen",
@@ -3102,10 +3134,6 @@
       "in-row": {
         "da": "foran dig",
         "en": "in front of you"
-      },
-      "no-results-debts": {
-        "da": "Du har ingen udestående mellemværende",
-        "en": "You hav no unresolved claims"
       },
       "no-results-loans": {
         "da": "Du har ingen aktive lån",
@@ -3119,9 +3147,29 @@
         "da": "Dit lån",
         "en": "Your loan"
       },
+      "your-order": {
+        "da": "Din reservering",
+        "en": "Your reservation"
+      },
       "to-return": {
         "da": "Afleveres d.",
         "en": "Hand in by"
+      },
+      "error-deleting-order": {
+        "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
+        "en": "An error occurred while the reservation was being deleted. Try again."
+      },
+      "signed-in-as-name": {
+        "da": "Du er logget ind som",
+        "en": "You are signed in as"
+      },
+      "login-to-see-profile": {
+        "da": "Log venligst ind for at se din profil, lån og reserveringer.",
+        "en": "Sign in to see your profile, loans and reservations."
+      },
+      "login-welcome": {
+        "da": "Vi glæder os til at byde dig indenfor.",
+        "en": "We look forward to welcoming you inside."
       }
     }
   }

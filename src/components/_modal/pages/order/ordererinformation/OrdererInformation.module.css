@@ -1,0 +1,49 @@
+.user {
+  padding: var(--pt2);
+}
+
+/* User */
+
+.name {
+  padding: var(--pt2) 0 0 0;
+}
+
+.email {
+  padding: var(--pt2) 0 0 0;
+}
+
+.input {
+  margin: var(--pt2) 0 0 0;
+}
+
+.emailMessage {
+  padding: var(--pt1) 0 0 0;
+}
+
+.tooltip {
+  position: relative;
+  top: var(--pt05);
+  margin-left: var(--pt1);
+}
+
+.textinline {
+  display: inline;
+}
+
+.skeleton .emailMessage {
+  padding: var(--pt1) 0;
+}
+
+.userStatusLink {
+  display: inline;
+}
+
+@media (min-width: 576px) {
+  .user {
+    padding: var(--pt3) var(--pt6);
+  }
+
+  .emailMessage.valid {
+    display: none;
+  }
+}

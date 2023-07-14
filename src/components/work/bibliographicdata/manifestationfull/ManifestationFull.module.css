@@ -11,6 +11,7 @@
   font-family: var(--body-font-semibold);
   transition: color 0.5s;
   color: var(--blue);
+  margin-left: 2px; /* Account for outline, and align with content */
 }
 
 .fullmanifestation .alternativeoptions {
@@ -77,7 +78,7 @@
     margin: var(--pt1) 0 var(--pt5) 0;
   }
 
-  .manifestationPartsList li p:first-child{
+  .manifestationPartsList li p:first-child {
     width: 100%;
   }
 }
