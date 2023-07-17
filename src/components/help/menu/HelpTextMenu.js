@@ -127,7 +127,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
   const isFaqPage = Router.pathname.includes("/faq");
 
   return (
-    <>
+    <div className={styles.container}>
       <MenuLink label="Help and guides" href="/hjaelp" />
       <MenuLink label="faq-title" href="/hjaelp/faq" active={isFaqPage} />
       <HelpTextGroups
@@ -136,7 +136,7 @@ export function HelpTextMenu({ helpTexts, helpTextId, ...props }) {
         helpTextId={helpTextId}
         groups={groups}
       />
-    </>
+    </div>
   );
 }
 
