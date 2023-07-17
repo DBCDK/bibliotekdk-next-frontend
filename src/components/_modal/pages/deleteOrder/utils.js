@@ -12,15 +12,14 @@ export function handleDeleteOrder(orderId, agencyId, orderAndLoansMutation) {
 
 /**
  * Opens delete order modal
- * @param {*} param0.modal
- * @param {boolean} param0.mobile
- * @param {Date} param0.pickUpExpiryDate
- * @param {string} param0.materialId
- * @param {string} param0.agencyId
- * @param {string} param0.title
- * @param {*} param0.onCloseModal
- * @param {string} param0.orderAndLoansMutation
- * @returns success status, error message
+ * @param {obj} modal
+ * @param {boolean} mobile
+ * @param {Date} pickUpExpiryDate
+ * @param {string} materialId
+ * @param {string} agencyId
+ * @param {string} title
+ * @param {function} onCloseModal
+ * @param {obj} orderAndLoansMutation
  */
 export function onClickDelete({
   modal,

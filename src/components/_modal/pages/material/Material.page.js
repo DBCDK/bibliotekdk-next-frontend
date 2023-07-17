@@ -168,20 +168,21 @@ const Material = ({ context }) => {
   const orderAndLoansMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [renewedDato, setRenewedDato] = useState(null);
+  const [renewedDateString, setRenewedDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
 
   useEffect(() => {
-    //when we show new book, reset variables to avoid showing errors/renwed status and new due date of previous book
+    //when we open modal for a new book,
+    //reset variables to avoid showing errors/renwed status and new due date of previous book
     setRenewed(false);
     setHasError(false);
-    setRenewedDato(null);
-  }, [title]);
+    setRenewedDateString(null);
+  }, [materialId]);
 
   useEffect(() => {
     handleMutationUpdates(orderAndLoansMutation, setHasError, setRenewed);
     if (orderAndLoansMutation.data?.renewLoan?.renewed) {
-      setRenewedDato(orderAndLoansMutation.data.renewLoan.dueDate);
+      setRenewedDateString(orderAndLoansMutation.data.renewLoan.dueDate);
     }
   }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
@@ -190,7 +191,9 @@ const Material = ({ context }) => {
       case "LOAN":
         return (
           <DynamicContentLoan
-            dueDateString={renewedDato ? renewedDato : dueDateString}
+            dueDateString={
+              renewedDateString ? renewedDateString : dueDateString
+            }
             dataCyPrefix="dyn-cont-loan"
           />
         );
