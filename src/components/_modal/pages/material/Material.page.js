@@ -7,6 +7,7 @@ import styles from "./Material.module.css";
 import Translate from "@/components/base/translate";
 import {
   MaterialRowButton,
+  RenewedSpan,
   useLoanDateAnalysis,
 } from "@/components/profile/materialRow/MaterialRow";
 import { getWorkUrl } from "@/lib/utils";
@@ -17,6 +18,11 @@ import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
 import { useMutate } from "@/lib/api/api";
+import { handleRenewOrder } from "@/components/profile/utils";
+import { useEffect, useState } from "react";
+import { RenewError } from "@/components/profile/materialRow/materialRowTooltip/MaterialRowTooltip";
+import { handleMutationUpdates } from "@/components/profile/utils";
+import useUser from "@/components/hooks/useUser";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -159,14 +165,35 @@ const Material = ({ context }) => {
   } = context;
 
   const modal = useModal();
-  const orderMutation = useMutate();
+  const orderAndLoansMutation = useMutate();
+  const [renewed, setRenewed] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [renewedDateString, setRenewedDateString] = useState(null);
+  const { updateUserStatusInfo } = useUser();
+
+  useEffect(() => {
+    //when we open modal for a new book,
+    //reset variables to avoid showing errors/renwed status and new due date of previous book
+    setRenewed(false);
+    setHasError(false);
+    setRenewedDateString(null);
+  }, [materialId]);
+
+  useEffect(() => {
+    handleMutationUpdates(orderAndLoansMutation, setHasError, setRenewed);
+    if (orderAndLoansMutation.data?.renewLoan?.renewed) {
+      setRenewedDateString(orderAndLoansMutation.data.renewLoan.dueDate);
+    }
+  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
   const renderDynamicContent = () => {
     switch (type) {
       case "LOAN":
         return (
           <DynamicContentLoan
-            dueDateString={dueDateString}
+            dueDateString={
+              renewedDateString ? renewedDateString : dueDateString
+            }
             dataCyPrefix="dyn-cont-loan"
           />
         );
@@ -181,17 +208,46 @@ const Material = ({ context }) => {
     }
   };
 
+  function handleClickRenew() {
+    handleRenewOrder({
+      loanId: materialId,
+      agencyId,
+      orderAndLoansMutation,
+    });
+    //update loans from modal, since we want the loans page to refresh and show the new data.
+    // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
+    // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
+    updateUserStatusInfo("LOAN");
+  }
+
+  /**
+   * shown when orderAndLoansMutation updates with either a data content or an error
+   */
+  const AfterRenewMessage = ({ hasError, renewed }) => {
+    if (hasError)
+      return <RenewError isColumn={false} customClass={styles.renewError} />;
+    if (renewed) return <RenewedSpan />;
+  };
+
   const renderDynamicButton = () => {
     switch (type) {
       case "LOAN":
         return (
-          <MaterialRowButton
-            size="medium"
-            wrapperClassname={styles.button}
-            dataCy="loan-button"
-          >
-            {Translate({ context: "profile", label: "renew" })}
-          </MaterialRowButton>
+          <div className={styles.buttonRowWrapper}>
+            <MaterialRowButton
+              size="medium"
+              wrapperClassname={styles.button}
+              disabled={hasError || renewed}
+              dataCy="loan-button"
+              onClick={handleClickRenew}
+              onKeyPress={(e) => {
+                e.key === "Enter" && handleClickRenew();
+              }}
+            >
+              {Translate({ context: "profile", label: "renew" })}
+            </MaterialRowButton>
+            <AfterRenewMessage hasError={hasError} renewed={renewed} />
+          </div>
         );
       case "ORDER":
         return (
@@ -206,16 +262,29 @@ const Material = ({ context }) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderMutation,
+                orderAndLoansMutation,
                 onCloseModal,
                 title,
               });
+            }}
+            onKeyPress={(e) => {
+              e.key === "Enter" &&
+                onClickDelete({
+                  modal,
+                  mobile: true,
+                  pickUpExpiryDate,
+                  materialId,
+                  agencyId,
+                  orderAndLoansMutation,
+                  onCloseModal,
+                  title,
+                });
             }}
             dataCy="order-button"
           >
             {Translate({
               context: "profile",
-              label: "delete-order-questionmark",
+              label: "delete-order",
             })}
           </MaterialRowButton>
         );

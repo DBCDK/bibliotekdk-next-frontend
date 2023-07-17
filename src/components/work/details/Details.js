@@ -17,7 +17,7 @@ import isEmpty from "lodash/isEmpty";
 
 import { fieldsForRows } from "@/components/work/details/utils/details.utils";
 import { workRelationsWorkTypeFactory } from "@/lib/workRelationsWorkTypeFactoryUtils";
-import TjoolTjip from "@/components/base/tjooltjip";
+import Tooltip from "@/components/base/tooltip";
 
 function DefaultDetailValues({ values }) {
   return (
@@ -82,10 +82,10 @@ function Details({ className = "", manifestation = {}, work = {} }) {
                       </Text>
                       {/** some labels has a tooltip attached .. **/}
                       {field[fieldName]?.tooltip && (
-                        <TjoolTjip
+                        <Tooltip
                           labelToTranslate={field[fieldName].tooltip}
                           customClass={styles.tooltipinline}
-                        ></TjoolTjip>
+                        ></Tooltip>
                       )}
                       {/** some fields has a custom jsx parser .. **/}
                       {field?.[fieldName]?.jsxParser ? (

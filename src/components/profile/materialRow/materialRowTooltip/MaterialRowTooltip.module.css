@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.wrapper_column {
+  flex-direction: column;
+}
+
+.wrapper_column:hover {
+  cursor: pointer;
+}
+
+.exclamationMark {
+  color: var(--blue);
+  font-weight: 700;
+  padding-left: var(--pt05);
+}

@@ -157,6 +157,18 @@
   text-transform: uppercase;
 }
 
+.renewedWrapper {
+  display: flex;
+  align-items: top;
+  margin-bottom: var(--pt4);
+  padding-left: var(--pt2);
+}
+
+.renewedIcon {
+  padding-top: 5px;
+  padding-left: var(--pt1);
+}
+
 @media (hover: hover) {
   .materialRow_mobile:focus-visible,
   .materialRow_mobile:hover {

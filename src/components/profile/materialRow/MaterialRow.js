@@ -7,7 +7,7 @@ import Checkbox from "@/components/base/forms/checkbox";
 import ConditionalWrapper from "@/components/base/conditionalwrapper";
 import Link from "@/components/base/link";
 import cx from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutate } from "@/lib/api/api";
 import PropTypes from "prop-types";
 import Icon from "@/components/base/icon";
@@ -22,8 +22,11 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
+import { handleMutationUpdates } from "./../utils";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
+import { handleRenewOrder } from "../utils";
+import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
 
 // Set to when warning should be shown
 export const DAYS_TO_COUNTDOWN_RED = 5;
@@ -314,6 +317,25 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   );
 };
 
+export const RenewedSpan = () => {
+  return (
+    <span className={styles.renewedWrapper}>
+      <Text type="text2">
+        {Translate({
+          context: "profile",
+          label: "renewed",
+        })}
+      </Text>
+      <Icon
+        size={{ w: 3, h: "auto" }}
+        src={"checkmark_blue.svg"}
+        alt=""
+        className={styles.renewedIcon}
+      />
+    </span>
+  );
+};
+
 const MaterialRow = (props) => {
   const {
     image,
@@ -339,13 +361,24 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateOrderInfo } = useUser();
+  const { updateUserStatusInfo } = useUser();
   const modal = useModal();
   const [hasError, setHasError] = useState(false);
-  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
+  const [renewed, setRenewed] = useState(false);
+  const [renewedDueDateString, setRenewedDueDateString] = useState(null);
+  const orderAndLoansMutation = useMutate(); //keep here to avoid entire page updte on orderAndLoansMutation update
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
+
+  useEffect(() => {
+    handleMutationUpdates(
+      orderAndLoansMutation,
+      setHasError,
+      setRenewed,
+      setRenewedDueDateString
+    );
+  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -371,7 +404,13 @@ const MaterialRow = (props) => {
       case "DEBT":
         return <DynamicColumnDebt amount={amount} currency={currency} />;
       case "LOAN":
-        return <DynamicColumnLoan dueDateString={dueDateString} />;
+        return (
+          <DynamicColumnLoan
+            dueDateString={
+              renewedDueDateString ? renewedDueDateString : dueDateString
+            }
+          />
+        );
       case "ORDER":
         return (
           <DynamicColumnOrder
@@ -384,14 +423,24 @@ const MaterialRow = (props) => {
     }
   };
 
+  //TODO handle error/success in useEffect instead
   async function onCloseModal({ success }) {
     if (success) {
       setRemovedOrderId(materialId);
-      updateOrderInfo();
+      updateUserStatusInfo("ORDER");
       setHasError(false);
     } else {
       setHasError(true);
     }
+  }
+
+  function onClickRenew({ loanId, agencyId, orderAndLoansMutation }) {
+    handleRenewOrder({
+      loanId,
+      agencyId,
+      orderAndLoansMutation,
+    });
+    updateUserStatusInfo("LOAN");
   }
 
   const renderDynamicButton = () => {
@@ -399,8 +448,19 @@ const MaterialRow = (props) => {
       case "DEBT":
         return null;
       case "LOAN":
-        return (
-          <MaterialRowButton dataCy="loan-button">
+        return hasError ? (
+          <MaterialRowTooltip labelToTranslate="renew-loan-tooltip" />
+        ) : (
+          <MaterialRowButton
+            dataCy="loan-button"
+            onClick={() =>
+              onClickRenew({
+                loanId: materialId,
+                agencyId,
+                orderAndLoansMutation,
+              })
+            }
+          >
             {Translate({ context: "profile", label: "renew" })}
           </MaterialRowButton>
         );
@@ -414,7 +474,7 @@ const MaterialRow = (props) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderMutation,
+                orderAndLoansMutation,
                 onCloseModal,
                 title,
               })
@@ -435,7 +495,7 @@ const MaterialRow = (props) => {
   if (isMobileSize) {
     return (
       <>
-        {hasError && (
+        {hasError && type === "ORDER" && (
           <ErrorRow
             text={Translate({
               context: "profile",
@@ -447,8 +507,8 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          onCloseModal={onCloseModal}
-          removedOrderId={removedOrderId}
+          onCloseModal={onCloseModal} //TODO handle error/success in useEffect instead
+          removedOrderId={removedOrderId} //TODO handle error/success in useEffect instead
           {...props}
         />
       </>
@@ -457,7 +517,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && (
+      {hasError && type === "ORDER" && (
         <ErrorRow
           text={Translate({
             context: "profile",
@@ -574,7 +634,11 @@ const MaterialRow = (props) => {
             <Text type="text2">{library}</Text>
           </div>
 
-          <div>{renderDynamicButton(materialId, agencyId)}</div>
+          {renewed ? (
+            <RenewedSpan />
+          ) : (
+            <div>{renderDynamicButton(materialId, agencyId)}</div>
+          )}
         </>
       </ConditionalWrapper>
     </>
@@ -598,6 +662,9 @@ MaterialRow.propTypes = {
   dueDate: PropTypes.string,
   amount: PropTypes.string,
   currency: PropTypes.string,
+  agencyId: PropTypes.string,
+  removedOrderId: PropTypes.string,
+  setRemovedOrderId: PropTypes.func,
 };
 
 export default MaterialRow;

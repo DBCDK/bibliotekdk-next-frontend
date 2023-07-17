@@ -86,7 +86,7 @@ export const dataReducer = (dataType, data) => {
         pickUpExpiryDate: data.pickUpExpiryDate,
         id: data.orderId,
         workId: "work-of:" + data.manifestation.pid,
-        orderMutation: data.orderMutation,
+        orderAndLoansMutation: data.orderAndLoansMutation,
       };
     }
   }
@@ -220,6 +220,7 @@ const LoansAndReservations = () => {
               {...dataReducer("LOAN", loan)}
               key={`loan-${loan.loanId}-#${i}`}
               library={libraryString}
+              agencyId={libraryId}
               dataCy={`loan-${i}`}
             />
           ))

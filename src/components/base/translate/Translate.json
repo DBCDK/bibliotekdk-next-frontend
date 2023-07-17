@@ -104,6 +104,10 @@
       "tooltip_lix": {
         "da": "Lix står for læsbarhedsindeks. Lix-tal er opdelt efter klassetrin:\\n0.-1. klasse: lix 2-10\\n2. klasse: lix 11-15\\n3. klasse: lix 16-19\\n4. klasse: lix 20+\\n \\n Let-tal står for læseegnethedstal. \\n Begynderlæsningsbøgerne er inddelt i 16 niveauer, hvor det laveste er 5, og det højeste er 20. ",
         "en": "You can only order a digital copy, if your library subscribes to the service Digital Artikelservice at the Royal Danish Library."
+      },
+      "renew-loan-tooltip": {
+        "da": "Det er dit udlånsbibliotek, der sætter reglerne for om materialet kan fornyes. Tjek gerne deres retningslinjer for mere information.",
+        "en": "Your library defines the rules for renewing loans. Please check their guidelines for more information."
       }
     },
     "general": {
@@ -3158,6 +3162,14 @@
       "error-deleting-order": {
         "da": "Noget gik galt, da reserveringen skulle slettes. Prøv igen.",
         "en": "An error occurred while the reservation was being deleted. Try again."
+      },
+      "error-renew-loan": {
+        "da": "Kan ikke fornyes",
+        "en": "Cannot be renewed"
+      },
+      "renewed": {
+        "da": "Fornyet",
+        "en": "Renewed"
       },
       "signed-in-as-name": {
         "da": "Du er logget ind som",

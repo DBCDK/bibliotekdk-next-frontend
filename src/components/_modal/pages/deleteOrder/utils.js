@@ -1,8 +1,8 @@
 import * as orderMutations from "@/lib/api/order.mutations";
 import Translate from "@/components/base/translate";
 
-export function handleDeleteOrder(orderId, agencyId, orderMutation) {
-  orderMutation.post(
+export function handleDeleteOrder(orderId, agencyId, orderAndLoansMutation) {
+  orderAndLoansMutation.post(
     orderMutations.deleteOrder({
       orderId,
       agencyId,
@@ -12,13 +12,14 @@ export function handleDeleteOrder(orderId, agencyId, orderMutation) {
 
 /**
  * Opens delete order modal
- * @param {*} param0.modal
- * @param {boolean} param0.mobile
- * @param {Date} param0.pickUpExpiryDate
- * @param {string} param0.materialId
- * @param {string} param0.agencyId
- * @param {string} param0.orderMutation
- * @returns success status, error message
+ * @param {obj} modal
+ * @param {boolean} mobile
+ * @param {Date} pickUpExpiryDate
+ * @param {string} materialId
+ * @param {string} agencyId
+ * @param {string} title
+ * @param {function} onCloseModal
+ * @param {obj} orderAndLoansMutation
  */
 export function onClickDelete({
   modal,
@@ -26,7 +27,7 @@ export function onClickDelete({
   pickUpExpiryDate,
   materialId,
   agencyId,
-  orderMutation,
+  orderAndLoansMutation,
   onCloseModal,
   title,
 }) {
@@ -39,7 +40,7 @@ export function onClickDelete({
     isReadyToPickup: !!pickUpExpiryDate,
     orderId: materialId,
     agencyId: agencyId,
-    orderMutation: orderMutation,
+    orderAndLoansMutation: orderAndLoansMutation,
     onClose: onCloseModal,
     title,
   });
