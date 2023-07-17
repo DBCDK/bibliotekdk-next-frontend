@@ -139,14 +139,20 @@ function useUserImpl() {
       // Broadcast update
       await mutate();
     },
-    //TODO can we merge updateORderInfo and updateLoansInfo into one function but only update the relevant part of the user object?
-    updateOrderInfo: async () => {
+    updateUserStatusInfo: async (type) => {
       // Broadcast update
-      await userMutate({ orders: userData?.user?.orders });
-    },
-    updateLoanInfo: async () => {
-      // Broadcast update
-      await userMutate({ loans: userData?.user?.loans });
+      let updatedData;
+      switch (type) {
+        case "LOAN":
+          updatedData = { loans: userData?.user?.loans };
+          break;
+        case "ORDER":
+          updatedData = { orders: userData?.user?.orders };
+          break;
+        default:
+          break;
+      }
+      if (updatedData) await userMutate(updatedData);
     },
     guestLogout: async () => {
       // Delete global loaner info object

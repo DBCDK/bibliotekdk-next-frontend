@@ -22,6 +22,7 @@ import { handleRenewOrder } from "@/components/profile/utils";
 import { useEffect, useState } from "react";
 import { RenewError } from "@/components/profile/materialRow/materialRowTooltip/MaterialRowTooltip";
 import { handleMutationUpdates } from "@/components/profile/utils";
+import useUser from "@/components/hooks/useUser";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
   const { isCountdown, isOverdue, dateString, daysToDueDateString } =
@@ -167,9 +168,21 @@ const Material = ({ context }) => {
   const orderMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [renewedDato, setRenewedDato] = useState(null);
+  const { updateUserStatusInfo } = useUser();
+
+  useEffect(() => {
+    //when we show new book, reset variables to avoid showing errors/renwed status and new due date of previous book
+    setRenewed(false);
+    setHasError(false);
+    setRenewedDato(null);
+  }, [title]);
 
   useEffect(() => {
     handleMutationUpdates(orderMutation, setHasError, setRenewed);
+    if (orderMutation.data?.renewLoan?.renewed) {
+      setRenewedDato(orderMutation.data.renewLoan.dueDate);
+    }
   }, [orderMutation.error, orderMutation.data]);
 
   const renderDynamicContent = () => {
@@ -177,7 +190,7 @@ const Material = ({ context }) => {
       case "LOAN":
         return (
           <DynamicContentLoan
-            dueDateString={dueDateString}
+            dueDateString={renewedDato ? renewedDato : dueDateString}
             dataCyPrefix="dyn-cont-loan"
           />
         );
@@ -193,17 +206,15 @@ const Material = ({ context }) => {
   };
 
   function handleClickRenew() {
-    //TODO check if material page is automatically updated with new due date through mutationObject
-    try {
-      console.log("handleCLick material page", materialId, agencyId);
-      handleRenewOrder({
-        loanId: materialId,
-        agencyId,
-        orderMutation,
-      });
-    } catch (e) {
-      console.log("error in handleClickRenew", e);
-    }
+    handleRenewOrder({
+      loanId: materialId,
+      agencyId,
+      orderMutation,
+    });
+    //update loans from modal, since we want the loans page to refresh and show the new data.
+    // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
+    // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
+    updateUserStatusInfo("LOAN");
   }
 
   /**
@@ -263,13 +274,14 @@ const Material = ({ context }) => {
                   agencyId,
                   orderMutation,
                   onCloseModal,
+                  title,
                 });
             }}
             dataCy="order-button"
           >
             {Translate({
               context: "profile",
-              label: "delete-order-questionmark",
+              label: "delete-order",
             })}
           </MaterialRowButton>
         );

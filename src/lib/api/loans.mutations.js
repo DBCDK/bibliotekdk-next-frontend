@@ -15,6 +15,7 @@ export function renewLoan({ loanId, agencyId }) {
       renewLoan(loanId: $loanId, agencyId: $agencyId, dryRun: false) {
         renewed
         error
+        dueDate
       }
     } 
     `,

@@ -1,7 +1,6 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 
 export function handleRenewOrder({ loanId, agencyId, orderMutation }) {
-  console.log("handleRenewOrder", loanId, agencyId);
   orderMutation.post(
     loanMutations.renewLoan({
       loanId,
@@ -18,15 +17,23 @@ export function handleRenewOrder({ loanId, agencyId, orderMutation }) {
  * @param {*} setRenewed
  * @returns
  */
-export function handleMutationUpdates(orderMutation, setHasError, setRenewed) {
+export function handleMutationUpdates(
+  orderMutation,
+  setHasError,
+  setRenewed,
+  setRenewedDueDateString
+) {
   //error not handled inside fbi-api or error while mutating
   if (orderMutation.error) {
     setHasError(true);
     return;
   }
   if (orderMutation.data) {
-    if (orderMutation.data.renewed) {
+    if (orderMutation.data.renewLoan?.renewed) {
       setRenewed(true);
+      if (setRenewedDueDateString)
+        //set on desktop but not for mobile
+        setRenewedDueDateString(orderMutation.data.renewLoan.dueDate);
     } else setHasError(true); //error handled inside fbi-api
   }
 }

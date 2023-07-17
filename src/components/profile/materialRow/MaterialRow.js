@@ -361,17 +361,23 @@ const MaterialRow = (props) => {
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
-  const { updateOrderInfo, updateLoanInfo } = useUser();
+  const { updateUserStatusInfo } = useUser();
   const modal = useModal();
   const [hasError, setHasError] = useState(false);
   const [renewed, setRenewed] = useState(false);
+  const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    handleMutationUpdates(orderMutation, setHasError, setRenewed);
+    handleMutationUpdates(
+      orderMutation,
+      setHasError,
+      setRenewed,
+      setRenewedDueDateString
+    );
   }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
@@ -398,7 +404,13 @@ const MaterialRow = (props) => {
       case "DEBT":
         return <DynamicColumnDebt amount={amount} currency={currency} />;
       case "LOAN":
-        return <DynamicColumnLoan dueDateString={dueDateString} />;
+        return (
+          <DynamicColumnLoan
+            dueDateString={
+              renewedDueDateString ? renewedDueDateString : dueDateString
+            }
+          />
+        );
       case "ORDER":
         return (
           <DynamicColumnOrder
@@ -415,7 +427,7 @@ const MaterialRow = (props) => {
   async function onCloseModal({ success }) {
     if (success) {
       setRemovedOrderId(materialId);
-      updateOrderInfo();
+      updateUserStatusInfo("ORDER");
       setHasError(false);
     } else {
       setHasError(true);
@@ -423,17 +435,12 @@ const MaterialRow = (props) => {
   }
 
   function onClickRenew({ loanId, agencyId, orderMutation }) {
-    console.log("onClickRenew", loanId, agencyId, orderMutation);
-    try {
-      handleRenewOrder({
-        loanId,
-        agencyId,
-        orderMutation,
-      });
-    } catch (e) {
-      console.log("Mist ", e);
-    }
-    updateLoanInfo();
+    handleRenewOrder({
+      loanId,
+      agencyId,
+      orderMutation,
+    });
+    updateUserStatusInfo("LOAN");
   }
 
   const renderDynamicButton = () => {
