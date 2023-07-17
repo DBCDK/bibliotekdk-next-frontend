@@ -140,7 +140,7 @@ function useUserImpl() {
       await mutate();
     },
     updateUserStatusInfo: async (type) => {
-      // Broadcast update
+      // Broadcast update about either loans or orders
       let updatedData;
       switch (type) {
         case "LOAN":

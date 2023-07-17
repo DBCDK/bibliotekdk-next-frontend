@@ -12,7 +12,7 @@ function DeleteOrder({ context, modal }) {
     isReadyToPickup,
     orderId,
     agencyId,
-    orderMutation,
+    orderAndLoansMutation,
     onClose,
     title,
   } = context;
@@ -22,8 +22,8 @@ function DeleteOrder({ context, modal }) {
   }
 
   function onDeleteOrder() {
-    handleDeleteOrder(orderId, agencyId, orderMutation);
-    if (!orderMutation.error) {
+    handleDeleteOrder(orderId, agencyId, orderAndLoansMutation);
+    if (!orderAndLoansMutation.error) {
       onClose({ success: true });
     } else {
       onClose({ success: false });

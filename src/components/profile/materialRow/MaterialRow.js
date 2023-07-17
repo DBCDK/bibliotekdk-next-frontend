@@ -366,19 +366,19 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const [renewed, setRenewed] = useState(false);
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
-  const orderMutation = useMutate(); //keep here to avoid entire page updte on orderMutation update
+  const orderAndLoansMutation = useMutate(); //keep here to avoid entire page updte on orderAndLoansMutation update
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
     handleMutationUpdates(
-      orderMutation,
+      orderAndLoansMutation,
       setHasError,
       setRenewed,
       setRenewedDueDateString
     );
-  }, [orderMutation.error, orderMutation.data]);
+  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -434,11 +434,11 @@ const MaterialRow = (props) => {
     }
   }
 
-  function onClickRenew({ loanId, agencyId, orderMutation }) {
+  function onClickRenew({ loanId, agencyId, orderAndLoansMutation }) {
     handleRenewOrder({
       loanId,
       agencyId,
-      orderMutation,
+      orderAndLoansMutation,
     });
     updateUserStatusInfo("LOAN");
   }
@@ -457,7 +457,7 @@ const MaterialRow = (props) => {
               onClickRenew({
                 loanId: materialId,
                 agencyId,
-                orderMutation,
+                orderAndLoansMutation,
               })
             }
           >
@@ -474,7 +474,7 @@ const MaterialRow = (props) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderMutation,
+                orderAndLoansMutation,
                 onCloseModal,
                 title,
               })

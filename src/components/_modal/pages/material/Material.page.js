@@ -165,7 +165,7 @@ const Material = ({ context }) => {
   } = context;
 
   const modal = useModal();
-  const orderMutation = useMutate();
+  const orderAndLoansMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [renewedDato, setRenewedDato] = useState(null);
@@ -179,11 +179,11 @@ const Material = ({ context }) => {
   }, [title]);
 
   useEffect(() => {
-    handleMutationUpdates(orderMutation, setHasError, setRenewed);
-    if (orderMutation.data?.renewLoan?.renewed) {
-      setRenewedDato(orderMutation.data.renewLoan.dueDate);
+    handleMutationUpdates(orderAndLoansMutation, setHasError, setRenewed);
+    if (orderAndLoansMutation.data?.renewLoan?.renewed) {
+      setRenewedDato(orderAndLoansMutation.data.renewLoan.dueDate);
     }
-  }, [orderMutation.error, orderMutation.data]);
+  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
   const renderDynamicContent = () => {
     switch (type) {
@@ -209,7 +209,7 @@ const Material = ({ context }) => {
     handleRenewOrder({
       loanId: materialId,
       agencyId,
-      orderMutation,
+      orderAndLoansMutation,
     });
     //update loans from modal, since we want the loans page to refresh and show the new data.
     // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
@@ -218,7 +218,7 @@ const Material = ({ context }) => {
   }
 
   /**
-   * shown when orderMutation updates with either a data content or an error
+   * shown when orderAndLoansMutation updates with either a data content or an error
    */
   const AfterRenewMessage = ({ hasError, renewed }) => {
     if (hasError)
@@ -259,7 +259,7 @@ const Material = ({ context }) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderMutation,
+                orderAndLoansMutation,
                 onCloseModal,
                 title,
               });
@@ -272,7 +272,7 @@ const Material = ({ context }) => {
                   pickUpExpiryDate,
                   materialId,
                   agencyId,
-                  orderMutation,
+                  orderAndLoansMutation,
                   onCloseModal,
                   title,
                 });

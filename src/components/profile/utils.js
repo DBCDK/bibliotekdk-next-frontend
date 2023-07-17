@@ -1,7 +1,7 @@
 import * as loanMutations from "@/lib/api/loans.mutations";
 
-export function handleRenewOrder({ loanId, agencyId, orderMutation }) {
-  orderMutation.post(
+export function handleRenewOrder({ loanId, agencyId, orderAndLoansMutation }) {
+  orderAndLoansMutation.post(
     loanMutations.renewLoan({
       loanId,
       agencyId,
@@ -12,28 +12,29 @@ export function handleRenewOrder({ loanId, agencyId, orderMutation }) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {*} orderMutation
+ * @param {*} orderAndLoansMutation
  * @param {*} setHasError
  * @param {*} setRenewed
  * @returns
  */
 export function handleMutationUpdates(
-  orderMutation,
+  orderAndLoansMutation,
   setHasError,
   setRenewed,
   setRenewedDueDateString
 ) {
   //error not handled inside fbi-api or error while mutating
-  if (orderMutation.error) {
+  if (orderAndLoansMutation.error) {
     setHasError(true);
     return;
   }
-  if (orderMutation.data) {
-    if (orderMutation.data.renewLoan?.renewed) {
+  if (orderAndLoansMutation.data) {
+    if (orderAndLoansMutation.data.renewLoan?.renewed) {
       setRenewed(true);
       if (setRenewedDueDateString)
-        //set on desktop but not for mobile
-        setRenewedDueDateString(orderMutation.data.renewLoan.dueDate);
+        //set on desktop but not for mobile, bc
+        //on mobile we update the modal with dueDate from mutation object & we rerender loans page, once the modal is closed
+        setRenewedDueDateString(orderAndLoansMutation.data.renewLoan.dueDate);
     } else setHasError(true); //error handled inside fbi-api
   }
 }
