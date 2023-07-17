@@ -16,7 +16,7 @@ export function DeleteOrderInQueue() {
   const context = {
     label: Translate({
       context: "profile",
-      label: "delete-order",
+      label: "delete-order-questionmark",
     }),
     isReadyToPickup: false,
     title: "Citronbjerget",
@@ -46,7 +46,7 @@ export function DeleteOrderReadyToPickUp() {
   const context = {
     label: Translate({
       context: "profile",
-      label: "delete-order",
+      label: "delete-order-questionmark",
     }),
     isReadyToPickup: true,
     title: "Citronbjerget",

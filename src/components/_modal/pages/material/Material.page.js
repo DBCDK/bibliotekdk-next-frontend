@@ -215,7 +215,7 @@ const Material = ({ context }) => {
           >
             {Translate({
               context: "profile",
-              label: "delete-order",
+              label: "delete-order-questionmark",
             })}
           </MaterialRowButton>
         );
