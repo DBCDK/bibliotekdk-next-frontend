@@ -21,7 +21,7 @@ export function handleRenewOrder({ loanId, agencyId, orderAndLoansMutation }) {
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo
  */
-export function handleMutationUpdates(
+export async function handleMutationUpdates(
   desktop,
   orderAndLoansMutation,
   setHasError,
@@ -39,7 +39,7 @@ export function handleMutationUpdates(
   if (orderAndLoansMutation.data) {
     if (orderAndLoansMutation.data?.deleteOrder?.deleted) {
       setRemovedOrderId();
-      updateUserStatusInfo("ORDER");
+      await updateUserStatusInfo("ORDER");
     } else if (
       orderAndLoansMutation.data?.renewLoan?.renewed &&
       orderAndLoansMutation.data?.renewLoan?.dueDate

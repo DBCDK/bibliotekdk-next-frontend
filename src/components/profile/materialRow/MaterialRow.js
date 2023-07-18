@@ -374,7 +374,6 @@ const MaterialRow = (props) => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    console.log("handle in moaterial row ");
     handleMutationUpdates(
       true,
       orderAndLoansMutation,
