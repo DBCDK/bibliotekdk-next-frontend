@@ -21,7 +21,6 @@
 }
 
 .cancelButton {
-  width: calc(
-    100% - var(--pt05)
-  ); /*remove outline from width to have same width as (delete-) .button*/
+  /*remove outline from width to have same width as (delete-) .button*/
+  width: calc(100% - var(--pt05));
 }
