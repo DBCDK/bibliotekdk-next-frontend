@@ -52,7 +52,7 @@ function DeleteOrder({ context, modal }) {
           className={styles.confirmationText}
           dataCy="material-title"
         >
-          {`"${title}"`}
+          &quot;{title}&quot;
         </Text>
         <Text
           type="text2"
