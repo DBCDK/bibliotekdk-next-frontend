@@ -160,7 +160,8 @@ const Material = ({ context }) => {
     holdQueuePosition,
     id: materialId,
     agencyId,
-    onCloseModal,
+    setHasErrorList,
+    setRemovedOrderId,
     library,
   } = context;
 
@@ -168,7 +169,7 @@ const Material = ({ context }) => {
   const orderAndLoansMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [renewedDateString, setRenewedDateString] = useState(null);
+  const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
 
   useEffect(() => {
@@ -176,14 +177,20 @@ const Material = ({ context }) => {
     //reset variables to avoid showing errors/renwed status and new due date of previous book
     setRenewed(false);
     setHasError(false);
-    setRenewedDateString(null);
+    setRenewedDueDateString(null);
   }, [materialId]);
 
   useEffect(() => {
-    handleMutationUpdates(orderAndLoansMutation, setHasError, setRenewed);
-    if (orderAndLoansMutation.data?.renewLoan?.renewed) {
-      setRenewedDateString(orderAndLoansMutation.data.renewLoan.dueDate);
-    }
+    handleMutationUpdates(
+      false,
+      orderAndLoansMutation,
+      setHasError,
+      setRenewed,
+      setRenewedDueDateString,
+      setHasErrorList,
+      () => setRemovedOrderId(materialId),
+      updateUserStatusInfo
+    );
   }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
   const renderDynamicContent = () => {
@@ -192,7 +199,7 @@ const Material = ({ context }) => {
         return (
           <DynamicContentLoan
             dueDateString={
-              renewedDateString ? renewedDateString : dueDateString
+              renewedDueDateString ? renewedDueDateString : dueDateString
             }
             dataCyPrefix="dyn-cont-loan"
           />
@@ -263,7 +270,6 @@ const Material = ({ context }) => {
                 materialId,
                 agencyId,
                 orderAndLoansMutation,
-                onCloseModal,
                 title,
               });
             }}
@@ -276,7 +282,6 @@ const Material = ({ context }) => {
                   materialId,
                   agencyId,
                   orderAndLoansMutation,
-                  onCloseModal,
                   title,
                 });
             }}

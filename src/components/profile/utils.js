@@ -12,35 +12,40 @@ export function handleRenewOrder({ loanId, agencyId, orderAndLoansMutation }) {
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {*} orderAndLoansMutation
- * @param {*} setHasError
- * @param {*} setRenewed
- * @returns
+ * @param {boolean} desktop
+ * @param {obj} orderAndLoansMutation
+ * @param {function} setHasError
+ * @param {function} setRenewed
+ * @param {function} setRenewedDueDateString
+ * @param {function} setHasErrorList
+ * @param {function} setRemovedOrderId
+ * @param {function} updateUserStatusInfo
  */
 export function handleMutationUpdates(
+  desktop,
   orderAndLoansMutation,
   setHasError,
   setRenewed,
-  setRenewedDueDateString = null
+  setRenewedDueDateString,
+  setHasErrorList = undefined, // provided only for mobile to show error on orderslist
+  setRemovedOrderId = undefined, // provided on delete order
+  updateUserStatusInfo = undefined //rerender on delete order
 ) {
   //error not handled inside fbi-api or error while mutating
   if (orderAndLoansMutation.error) {
     setHasError(true);
-    return;
+    if (!desktop && setHasErrorList) setHasErrorList(true);
   }
   if (orderAndLoansMutation.data) {
-    if (
-      orderAndLoansMutation.data?.renewLoan?.renewed ||
-      orderAndLoansMutation.data?.deleteOrder?.deleted
+    if (orderAndLoansMutation.data?.deleteOrder?.deleted) {
+      setRemovedOrderId();
+      updateUserStatusInfo("ORDER");
+    } else if (
+      orderAndLoansMutation.data?.renewLoan?.renewed &&
+      orderAndLoansMutation.data?.renewLoan?.dueDate
     ) {
       setRenewed(true);
-      if (
-        setRenewedDueDateString &&
-        orderAndLoansMutation.data?.renewLoan?.dueDate
-      )
-        //for loan renewals only on desktop but not for mobile, bc
-        //on mobile we update the modal with dueDate from mutation object & we rerender loans page, once the modal is closed
-        setRenewedDueDateString(orderAndLoansMutation.data.renewLoan.dueDate);
+      setRenewedDueDateString(orderAndLoansMutation.data.renewLoan.dueDate);
     } else setHasError(true); //error handled inside fbi-api
   }
 }

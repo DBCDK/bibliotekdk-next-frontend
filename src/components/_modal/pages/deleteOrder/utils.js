@@ -18,7 +18,6 @@ export function handleDeleteOrder(orderId, agencyId, orderAndLoansMutation) {
  * @param {string} materialId
  * @param {string} agencyId
  * @param {string} title
- * @param {function} onCloseModal
  * @param {obj} orderAndLoansMutation
  */
 export function onClickDelete({
@@ -28,7 +27,6 @@ export function onClickDelete({
   materialId,
   agencyId,
   orderAndLoansMutation,
-  onCloseModal,
   title,
 }) {
   modal.push("deleteOrder", {
@@ -41,7 +39,6 @@ export function onClickDelete({
     orderId: materialId,
     agencyId: agencyId,
     orderAndLoansMutation: orderAndLoansMutation,
-    onClose: onCloseModal,
     title,
   });
 }

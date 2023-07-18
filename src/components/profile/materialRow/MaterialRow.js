@@ -236,6 +236,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     status,
     dataCy,
     removedOrderId,
+    setHasErrorList,
   } = props;
 
   const modal = useModal();
@@ -247,6 +248,7 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         label: `your-${type === "LOAN" ? "loan" : "order"}`,
       }),
       ...props,
+      setHasErrorList,
     });
   };
 
@@ -372,11 +374,16 @@ const MaterialRow = (props) => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
+    console.log("handle in moaterial row ");
     handleMutationUpdates(
+      true,
       orderAndLoansMutation,
       setHasError,
       setRenewed,
-      setRenewedDueDateString
+      setRenewedDueDateString,
+      undefined,
+      () => setRemovedOrderId(materialId),
+      updateUserStatusInfo
     );
   }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
 
@@ -423,17 +430,6 @@ const MaterialRow = (props) => {
     }
   };
 
-  //TODO handle error/success in useEffect instead
-  async function onCloseModal({ success }) {
-    if (success) {
-      setRemovedOrderId(materialId);
-      updateUserStatusInfo("ORDER");
-      setHasError(false);
-    } else {
-      setHasError(true);
-    }
-  }
-
   function onClickRenew({ loanId, agencyId, orderAndLoansMutation }) {
     handleRenewOrder({
       loanId,
@@ -475,7 +471,6 @@ const MaterialRow = (props) => {
                 materialId,
                 agencyId,
                 orderAndLoansMutation,
-                onCloseModal,
                 title,
               })
             }
@@ -507,8 +502,7 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          onCloseModal={onCloseModal} //TODO handle error/success in useEffect instead
-          removedOrderId={removedOrderId} //TODO handle error/success in useEffect instead
+          setHasErrorList={setHasError}
           {...props}
         />
       </>
