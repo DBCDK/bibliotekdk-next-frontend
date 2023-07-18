@@ -34,7 +34,7 @@ export const dataReducer = (dataType, data) => {
           data?.manifestation?.creators
         )?.[0]?.display,
         materialType: data?.manifestation?.materialTypes?.[0]?.specific,
-        creationYear: data?.manifestation?.recordCreationDate.substring(0, 4),
+        creationYear: data?.manifestation?.recordCreationDate?.substring(0, 4),
         dueDateString: data?.dueDate,
         id: data?.loanId,
         workId: "work-of:" + data?.manifestation?.pid,
