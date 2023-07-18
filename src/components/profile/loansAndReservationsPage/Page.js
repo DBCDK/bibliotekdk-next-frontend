@@ -26,7 +26,6 @@ export const dataReducer = (dataType, data) => {
     }
     case "LOAN": {
       //some loans dont have manifestation
-      console.log("loans", data?.creator);
       return {
         type: "LOAN",
         image: data?.manifestation?.cover?.thumbnail,
