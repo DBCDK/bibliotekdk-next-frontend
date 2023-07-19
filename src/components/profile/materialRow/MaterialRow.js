@@ -457,7 +457,6 @@ const MaterialRow = (props) => {
           <MaterialRowButton
             dataCy="loan-button"
             onClick={() =>
-              //TODO HERE what about onKeyPress?
               onClickRenew({
                 loanId: materialId,
                 agencyId,
