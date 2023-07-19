@@ -26,13 +26,20 @@ export async function handleLoanMutationUpdates(
   const { error, data } = loanMutation;
   //error not handled inside fbi-api or error while mutating
   if (error) {
+    console.log("HAS ERROR");
     setHasError(true);
   }
   if (data) {
+    console.log("HAS DATA");
     if (data?.renewLoan?.renewed && data?.renewLoan?.dueDate) {
+      console.log("HAS OFFICIAL ERROR");
+
       setRenewed(true);
       setRenewedDueDateString(data.renewLoan.dueDate);
-    } else setHasError(true); //error handled inside fbi-api
+    } else {
+      console.log("HAS UNOFFICIAL ERROR");
+      setHasError(true);
+    } //error handled inside fbi-api
   }
 }
 

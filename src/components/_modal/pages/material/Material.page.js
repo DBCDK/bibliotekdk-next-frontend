@@ -232,7 +232,7 @@ const Material = ({ context }) => {
     handleRenewLoan({
       loanId: materialId,
       agencyId,
-      orderMutation,
+      loanMutation,
     });
     //update loans from modal, since we want the loans page to refresh and show the new data.
     // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
