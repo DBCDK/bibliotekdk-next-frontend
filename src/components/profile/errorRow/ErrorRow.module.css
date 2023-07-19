@@ -8,6 +8,7 @@
   line-height: 26px;
   letter-spacing: 0.2px;
   font-family: "ibm_plex_sansregular";
+  color: var(--white);
 }
 
 @media screen and (max-width: 480px) {

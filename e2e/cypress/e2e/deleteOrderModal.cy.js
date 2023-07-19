@@ -6,7 +6,7 @@ describe("deleteOrderModal", () => {
     cy.get("h4").contains("Slet reservering?");
     cy.get("[data-cy=delete-order-confirmation-1]").should(
       "have.text",
-      "Er du sikker på, at du vil slette din reservering:"
+      "Du er ved at slette din reservering:"
     );
     cy.get("[data-cy=delete-order-confirmation-2]").should(
       "have.text",
