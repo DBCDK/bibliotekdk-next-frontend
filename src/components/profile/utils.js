@@ -25,20 +25,19 @@ export async function handleLoanMutationUpdates(
 ) {
   const { error, data, isLoading } = loanMutation;
 
-  if (isLoading) return;
   //error not handled inside fbi-api or error while mutating
   if (error) {
-    console.log("HAS ERROR");
     setHasRenewError(true);
     return;
   }
-  if (data?.renewLoan?.renewed && data?.renewLoan?.dueDate) {
+  if (isLoading || !data) return;
+
+  if (data.renewLoan?.renewed && data?.renewLoan?.dueDate) {
     setRenewed(true);
     setRenewedDueDateString(data.renewLoan.dueDate);
   }
-  if (data?.renewLoan?.renewed === false) {
+  if (data.renewLoan?.renewed === false) {
     //error handled inside fbi-api
-    console.log("INSIDE");
     setHasRenewError(true);
   }
 }
@@ -59,25 +58,22 @@ export async function handleOrderMutationUpdates(
 ) {
   const { error, data, isLoading } = orderMutation;
 
-  if (isLoading) {
-    return;
-  }
-
   //error not handled inside fbi-api or error while mutating
   if (error) {
     setHasError(true);
     return;
   }
 
+  if (isLoading || !data) return;
+
   //order was successfully deleted
-  if (data?.deleteOrder?.deleted) {
-    console.log("DELETED", setRemovedOrderId);
+  if (data.deleteOrder?.deleted) {
     setRemovedOrderId();
     await updateUserStatusInfo("ORDER");
     return;
   }
   //error deleting order inside fbi-api
-  if (data?.deleteOrder?.deleted === false) {
+  if (data.deleteOrder?.deleted === false) {
     setHasError(true);
   }
 }

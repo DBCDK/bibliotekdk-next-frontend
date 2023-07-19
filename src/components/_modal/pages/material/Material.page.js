@@ -192,6 +192,12 @@ const Material = ({ context }) => {
       setRenewed,
       setRenewedDueDateString
     );
+    if (loanMutation?.data?.renewLoan?.renewed) {
+      //update loans from modal, since we want the loans page to refresh and show the new data.
+      // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
+      // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
+      updateUserStatusInfo("LOAN");
+    }
   }, [loanMutation.error, loanMutation.data]);
 
   useEffect(() => {
@@ -231,10 +237,6 @@ const Material = ({ context }) => {
       agencyId,
       loanMutation,
     });
-    //update loans from modal, since we want the loans page to refresh and show the new data.
-    // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
-    // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
-    await updateUserStatusInfo("LOAN");
   }
 
   /**

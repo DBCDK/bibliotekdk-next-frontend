@@ -389,7 +389,6 @@ const MaterialRow = (props) => {
     handleOrderMutationUpdates(
       orderMutation,
       setHasDeleteError,
-      //undefined,
       () => setRemovedOrderId(materialId),
       updateUserStatusInfo
     );
@@ -439,8 +438,6 @@ const MaterialRow = (props) => {
   };
 
   function onClickRenew({ loanId, agencyId, loanMutation }) {
-    console.log("cLICKING");
-
     handleRenewLoan({
       loanId,
       agencyId,
