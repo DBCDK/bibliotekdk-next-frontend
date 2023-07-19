@@ -163,7 +163,7 @@ const Material = ({ context }) => {
     holdQueuePosition,
     id: materialId,
     agencyId,
-    setHasErrorList,
+    setHasDeleteError,
     setRemovedOrderId,
     library,
   } = context;
@@ -171,25 +171,24 @@ const Material = ({ context }) => {
   const modal = useModal();
   const orderMutation = useMutate();
   const loanMutation = useMutate();
-
   const [renewed, setRenewed] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [hasRenewError, setHasRenewError] = useState(false);
+
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
 
   useEffect(() => {
-    //when we open modal for a new book,
+    //RENEW LOAN: when we open modal for a new book,
     //reset variables to avoid showing errors/renwed status and new due date of previous book
     setRenewed(false);
-    setHasError(false);
+    setHasRenewError(false);
     setRenewedDueDateString(null);
   }, [materialId]);
 
   useEffect(() => {
     handleLoanMutationUpdates(
-      false,
       loanMutation,
-      setHasError,
+      setHasRenewError,
       setRenewed,
       setRenewedDueDateString
     );
@@ -197,10 +196,8 @@ const Material = ({ context }) => {
 
   useEffect(() => {
     handleOrderMutationUpdates(
-      false,
       orderMutation,
-      setHasError,
-      setHasErrorList,
+      setHasDeleteError,
       () => setRemovedOrderId(materialId),
       updateUserStatusInfo
     );
@@ -243,8 +240,8 @@ const Material = ({ context }) => {
   /**
    * shown when loanMutation updates with either a data content or an error
    */
-  const AfterRenewMessage = ({ hasError, renewed }) => {
-    if (hasError)
+  const AfterRenewMessage = ({ hasRenewError, renewed }) => {
+    if (hasRenewError)
       return <RenewError isColumn={false} customClass={styles.renewError} />;
     if (renewed) return <RenewedSpan />;
   };
@@ -257,7 +254,7 @@ const Material = ({ context }) => {
             <MaterialRowButton
               size="medium"
               wrapperClassname={styles.button}
-              disabled={hasError || renewed}
+              disabled={hasRenewError || renewed}
               dataCy="loan-button"
               onClick={handleClickRenew}
               onKeyPress={(e) => {
@@ -266,7 +263,10 @@ const Material = ({ context }) => {
             >
               {Translate({ context: "profile", label: "renew" })}
             </MaterialRowButton>
-            <AfterRenewMessage hasError={hasError} renewed={renewed} />
+            <AfterRenewMessage
+              hasRenewError={hasRenewError}
+              renewed={renewed}
+            />
           </div>
         );
       case "ORDER":

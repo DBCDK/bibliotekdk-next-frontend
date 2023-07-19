@@ -13,64 +13,71 @@ export function handleRenewLoan({ loanId, agencyId, loanMutation }) {
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
  * @param {obj} loanMutation
- * @param {function} setHasError
+ * @param {function} setHasRenewError
  * @param {function} setRenewed
  * @param {function} setRenewedDueDateString
  */
 export async function handleLoanMutationUpdates(
   loanMutation,
-  setHasError,
+  setHasRenewError,
   setRenewed,
   setRenewedDueDateString
 ) {
-  const { error, data } = loanMutation;
+  const { error, data, isLoading } = loanMutation;
+
+  if (isLoading) return;
   //error not handled inside fbi-api or error while mutating
   if (error) {
     console.log("HAS ERROR");
-    setHasError(true);
+    setHasRenewError(true);
+    return;
   }
-  if (data) {
-    console.log("HAS DATA");
-    if (data?.renewLoan?.renewed && data?.renewLoan?.dueDate) {
-      console.log("HAS OFFICIAL ERROR");
-
-      setRenewed(true);
-      setRenewedDueDateString(data.renewLoan.dueDate);
-    } else {
-      console.log("HAS UNOFFICIAL ERROR");
-      setHasError(true);
-    } //error handled inside fbi-api
+  if (data?.renewLoan?.renewed && data?.renewLoan?.dueDate) {
+    setRenewed(true);
+    setRenewedDueDateString(data.renewLoan.dueDate);
+  }
+  if (data?.renewLoan?.renewed === false) {
+    //error handled inside fbi-api
+    console.log("INSIDE");
+    setHasRenewError(true);
   }
 }
 
 /**
  * handles updates in mutation object on loans and reservations page
  * Its called in two places, depending on if on desktop or mobile
- * @param {boolean} desktop
  * @param {obj} loanMutation
  * @param {function} setHasError
- * @param {function} setHasErrorList
  * @param {function} setRemovedOrderId
  * @param {function} updateUserStatusInfo
  */
 export async function handleOrderMutationUpdates(
-  desktop,
   orderMutation,
   setHasError,
-  setHasErrorList = undefined, // provided only for mobile to show error on orderslist
-  setRemovedOrderId = undefined, // provided on delete order
-  updateUserStatusInfo = undefined //rerender on delete order
+  setRemovedOrderId,
+  updateUserStatusInfo
 ) {
-  const { error, data } = orderMutation;
+  const { error, data, isLoading } = orderMutation;
+
+  if (isLoading) {
+    return;
+  }
+
   //error not handled inside fbi-api or error while mutating
   if (error) {
     setHasError(true);
-    if (!desktop && setHasErrorList) setHasErrorList(true);
+    return;
   }
-  if (data) {
-    if (data?.deleteOrder?.deleted) {
-      setRemovedOrderId();
-      await updateUserStatusInfo("ORDER");
-    } else setHasError(true); //error handled inside fbi-api
+
+  //order was successfully deleted
+  if (data?.deleteOrder?.deleted) {
+    console.log("DELETED", setRemovedOrderId);
+    setRemovedOrderId();
+    await updateUserStatusInfo("ORDER");
+    return;
+  }
+  //error deleting order inside fbi-api
+  if (data?.deleteOrder?.deleted === false) {
+    setHasError(true);
   }
 }

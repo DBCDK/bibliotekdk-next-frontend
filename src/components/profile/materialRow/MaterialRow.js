@@ -239,7 +239,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
     status,
     dataCy,
     removedOrderId,
-    setHasErrorList,
   } = props;
 
   const modal = useModal();
@@ -251,7 +250,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         label: `your-${type === "LOAN" ? "loan" : "order"}`,
       }),
       ...props,
-      setHasErrorList,
     });
   };
 
@@ -368,7 +366,8 @@ const MaterialRow = (props) => {
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
   const modal = useModal();
-  const [hasError, setHasError] = useState(false);
+  const [hasDeleteError, setHasDeleteError] = useState(false);
+  const [hasRenewError, setHasRenewError] = useState(false);
   const [renewed, setRenewed] = useState(false);
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const orderMutation = useMutate();
@@ -379,9 +378,8 @@ const MaterialRow = (props) => {
 
   useEffect(() => {
     handleLoanMutationUpdates(
-      true,
       loanMutation,
-      setHasError,
+      setHasRenewError,
       setRenewed,
       setRenewedDueDateString
     );
@@ -389,10 +387,9 @@ const MaterialRow = (props) => {
 
   useEffect(() => {
     handleOrderMutationUpdates(
-      true,
       orderMutation,
-      setHasError,
-      undefined,
+      setHasDeleteError,
+      //undefined,
       () => setRemovedOrderId(materialId),
       updateUserStatusInfo
     );
@@ -442,6 +439,8 @@ const MaterialRow = (props) => {
   };
 
   function onClickRenew({ loanId, agencyId, loanMutation }) {
+    console.log("cLICKING");
+
     handleRenewLoan({
       loanId,
       agencyId,
@@ -455,7 +454,7 @@ const MaterialRow = (props) => {
       case "DEBT":
         return null;
       case "LOAN":
-        return hasError ? (
+        return hasRenewError ? (
           <MaterialRowTooltip labelToTranslate="renew-loan-tooltip" />
         ) : (
           <MaterialRowButton
@@ -502,7 +501,7 @@ const MaterialRow = (props) => {
   if (isMobileSize) {
     return (
       <>
-        {hasError && type === "ORDER" && (
+        {hasDeleteError && type === "ORDER" && (
           <ErrorRow
             text={Translate({
               context: "profile",
@@ -514,7 +513,7 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          setHasErrorList={setHasError}
+          setHasDeleteError={setHasDeleteError}
           {...props}
         />
       </>
@@ -523,7 +522,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && type === "ORDER" && (
+      {hasDeleteError && type === "ORDER" && (
         <ErrorRow
           text={Translate({
             context: "profile",
