@@ -3072,8 +3072,8 @@
         "en": "Delete reservation?"
       },
       "delete-order-confirmation": {
-        "da": "Er du sikker på, at du vil slette din reservering:",
-        "en": "Are you sure you want to delete the reservation:"
+        "da": "Du er ved at slette din reservering:",
+        "en": "You are about to delete your reservation:"
       },
       "miss-spot-in-queue": {
         "da": "Du mister din plads i køen.",
