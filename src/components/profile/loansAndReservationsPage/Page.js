@@ -58,7 +58,7 @@ export const dataReducer = (dataType, data) => {
         pickUpExpiryDate: data?.pickUpExpiryDate,
         id: data?.orderId,
         workId: "work-of:" + data?.manifestation?.pid,
-        orderAndLoansMutation: data?.orderAndLoansMutation,
+        orderMutation: data?.orderMutation,
       };
     }
   }

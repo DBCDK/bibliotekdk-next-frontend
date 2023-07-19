@@ -22,10 +22,13 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
-import { handleMutationUpdates } from "./../utils";
+import {
+  handleLoanMutationUpdates,
+  handleOrderMutationUpdates,
+} from "./../utils";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
-import { handleRenewOrder } from "../utils";
+import { handleRenewLoan } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
 
 // Set to when warning should be shown
@@ -368,23 +371,32 @@ const MaterialRow = (props) => {
   const [hasError, setHasError] = useState(false);
   const [renewed, setRenewed] = useState(false);
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
-  const orderAndLoansMutation = useMutate(); //keep here to avoid entire page updte on orderAndLoansMutation update
+  const orderMutation = useMutate();
+  const loanMutation = useMutate();
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    handleMutationUpdates(
+    handleLoanMutationUpdates(
       true,
-      orderAndLoansMutation,
+      loanMutation,
       setHasError,
       setRenewed,
-      setRenewedDueDateString,
+      setRenewedDueDateString
+    );
+  }, [loanMutation.error, loanMutation.data]);
+
+  useEffect(() => {
+    handleOrderMutationUpdates(
+      true,
+      orderMutation,
+      setHasError,
       undefined,
       () => setRemovedOrderId(materialId),
       updateUserStatusInfo
     );
-  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
+  }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -429,11 +441,11 @@ const MaterialRow = (props) => {
     }
   };
 
-  function onClickRenew({ loanId, agencyId, orderAndLoansMutation }) {
-    handleRenewOrder({
+  function onClickRenew({ loanId, agencyId, loanMutation }) {
+    handleRenewLoan({
       loanId,
       agencyId,
-      orderAndLoansMutation,
+      loanMutation,
     });
     updateUserStatusInfo("LOAN");
   }
@@ -449,10 +461,11 @@ const MaterialRow = (props) => {
           <MaterialRowButton
             dataCy="loan-button"
             onClick={() =>
+              //TODO HERE what about onKeyPress?
               onClickRenew({
                 loanId: materialId,
                 agencyId,
-                orderAndLoansMutation,
+                loanMutation,
               })
             }
           >
@@ -469,7 +482,7 @@ const MaterialRow = (props) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderAndLoansMutation,
+                orderMutation,
                 title,
               })
             }

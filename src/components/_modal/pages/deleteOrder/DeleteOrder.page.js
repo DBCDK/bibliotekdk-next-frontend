@@ -12,7 +12,7 @@ function DeleteOrder({ context, modal }) {
     isReadyToPickup,
     orderId,
     agencyId,
-    orderAndLoansMutation,
+    orderMutation,
     title,
   } = context;
 
@@ -21,7 +21,7 @@ function DeleteOrder({ context, modal }) {
   }
 
   function onDeleteOrder() {
-    handleDeleteOrder(orderId, agencyId, orderAndLoansMutation);
+    handleDeleteOrder(orderId, agencyId, orderMutation);
     modal.clear();
   }
 
