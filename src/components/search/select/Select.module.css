@@ -66,7 +66,7 @@
 .dropdownicon {
   transform: rotate(90deg);
   position: absolute;
-  right: 16px;
+  right: var(--pt2);
   top: 0;
   bottom: 0;
   margin: auto;
