@@ -16,10 +16,17 @@
 .manifestionlist li p {
   margin: 0 0 0 var(--pt1);
   display: block;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
 }
 
 .manifestionlist li p:first-child {
-  width: 50%;
+  min-width: 50%;
+}
+
+.rightAlign {
+  text-align: right;
 }
 
 .manifestionlist li:nth-child(odd) {
@@ -45,11 +52,6 @@
   display: flex;
   align-items: center;
   padding-left: var(--pt2);
-}
-
-.manifestionlist li p:last-child {
-  margin-left: auto;
-  white-space: nowrap;
 }
 
 @media (min-width: 992px) {
