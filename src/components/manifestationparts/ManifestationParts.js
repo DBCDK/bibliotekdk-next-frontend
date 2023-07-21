@@ -21,6 +21,7 @@ import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
 import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 export function ManifestationParts({
   parts,
@@ -73,11 +74,23 @@ export function ManifestationParts({
             {creatorsAndContributorsDisplay(part) &&
               creatorsAndContributorsDisplay(part)}
           </Text>
-          <Text type="text3" lines={1}>
-            {!titlesOnly && creatorsDisplay(part) && creatorsDisplay(part)}
-          </Text>
-          {!titlesOnly && (
-            <Text type="text3" lines={1}>
+
+          {!titlesOnly && creatorsDisplay(part) && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx({ [styles.rightAlign]: !part?.playingTime })}
+            >
+              {creatorsDisplay(part)}
+            </Text>
+          )}
+
+          {!titlesOnly && part?.playingTime && (
+            <Text
+              type="text3"
+              lines={1}
+              className={cx({ [styles.rightAlign]: !creatorsDisplay(part) })}
+            >
               {part?.playingTime || ""}
             </Text>
           )}
