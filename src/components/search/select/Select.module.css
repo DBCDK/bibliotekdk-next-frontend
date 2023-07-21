@@ -49,6 +49,7 @@
 }
 
 .dropdowntoggle {
+  position: relative;
   padding: var(--pt2) var(--pt5) var(--pt2) var(--pt2);
   border: 1px solid var(--gray);
   border-right: none;
@@ -58,11 +59,21 @@
   text-align: left;
 }
 
+.dropdowntoggle[aria-expanded="true"] .dropdownicon img {
+  transform: rotate(180deg);
+}
+
 .dropdownicon {
   transform: rotate(90deg);
-  position: relative;
-  right: -30px;
-  top: 5px;
+  position: absolute;
+  right: var(--pt2);
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.dropdownicon img {
+  transition: transform 0.2s linear;
 }
 
 .materials {
