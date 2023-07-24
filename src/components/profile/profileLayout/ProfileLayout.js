@@ -13,7 +13,6 @@ import Link from "@/components/base/link";
 import Translate from "@/components/base/translate/Translate";
 import { signOut } from "@dbcdk/login-nextjs/client";
 import Button from "@/components/base/button";
-import Icon from "@/components/base/icon";
 import { useModal } from "@/components/_modal";
 
 const CONTEXT = "profile";
