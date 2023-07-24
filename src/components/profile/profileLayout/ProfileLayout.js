@@ -69,7 +69,7 @@ export default function ProfileLayout({ title, children }) {
                 {Translate({
                   context: "header",
                   label: "login",
-                })}{" "}
+                })}
               </Title>
               <Text className={styles.loginText} type="text2">
                 {Translate({
@@ -92,11 +92,6 @@ export default function ProfileLayout({ title, children }) {
                   modal.push("login");
                 }}
               >
-                <Icon
-                  className={styles.buttonIcon}
-                  size={2}
-                  src="external.svg"
-                />
                 {Translate({
                   context: "header",
                   label: "login",

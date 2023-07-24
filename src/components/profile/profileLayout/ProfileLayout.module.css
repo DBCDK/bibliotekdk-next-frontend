@@ -62,9 +62,16 @@
 .loginButton {
   margin-top: var(--pt5);
   padding: var(--pt2) var(--pt5) !important;
-  width: 209px;
   align-items: center;
+  justify-content: center;
   display: flex;
+  width: "100%";
+  max-width: 400px;
+}
+@media screen and (min-width: 576px) {
+  .loginButton {
+    width: fit-content;
+  }
 }
 
 .buttonIcon {
