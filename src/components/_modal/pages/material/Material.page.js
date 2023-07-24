@@ -277,6 +277,7 @@ const Material = ({ context }) => {
             type="secondary"
             size="medium"
             wrapperClassname={styles.button}
+            className={styles.buttonDelete}
             onClick={() => {
               onClickDelete({
                 modal,

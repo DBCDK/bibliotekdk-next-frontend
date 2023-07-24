@@ -82,7 +82,6 @@ const LoansAndReservations = () => {
       <Text type="text3" className={styles.subHeading}>
         {Translate({ context: "profile", label: "loans-subtext" })}{" "}
         <Link
-          className={styles.yourLibraries}
           href="/profil/mine-biblioteker"
           border={{
             top: false,

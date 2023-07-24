@@ -71,3 +71,8 @@
   margin-left: var(--pt2);
   width: 50%;
 }
+
+/* Specificity to override */
+button.buttonDelete[data-cy="order-button"] {
+  white-space: nowrap;
+}
