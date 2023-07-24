@@ -24,7 +24,7 @@ describe("Profilemenu on desktop", () => {
       .click()
       .children()
       .first()
-      .should("have.css", "font-family", "ibm_plex_sanssemibold");
+      .should("have.css", "font-family", "ibm_plex_sansregular");
   });
 
   it(`Simple link has href and is bold after on click`, () => {
