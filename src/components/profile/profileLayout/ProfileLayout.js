@@ -92,11 +92,6 @@ export default function ProfileLayout({ title, children }) {
                   modal.push("login");
                 }}
               >
-                <Icon
-                  className={styles.buttonIcon}
-                  size={2}
-                  src="external.svg"
-                />
                 {Translate({
                   context: "header",
                   label: "login",
