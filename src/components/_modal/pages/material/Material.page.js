@@ -18,10 +18,13 @@ import { dateToDayInMonth } from "@/utils/datetimeConverter";
 import { onClickDelete } from "../deleteOrder/utils";
 import cx from "classnames";
 import { useMutate } from "@/lib/api/api";
-import { handleRenewOrder } from "@/components/profile/utils";
+import { handleRenewLoan } from "@/components/profile/utils";
 import { useEffect, useState } from "react";
 import { RenewError } from "@/components/profile/materialRow/materialRowTooltip/MaterialRowTooltip";
-import { handleMutationUpdates } from "@/components/profile/utils";
+import {
+  handleLoanMutationUpdates,
+  handleOrderMutationUpdates,
+} from "@/components/profile/utils";
 import useUser from "@/components/hooks/useUser";
 
 const DynamicContentLoan = ({ dueDateString, dataCyPrefix }) => {
@@ -160,31 +163,51 @@ const Material = ({ context }) => {
     holdQueuePosition,
     id: materialId,
     agencyId,
-    onCloseModal,
+    setHasDeleteError,
+    setRemovedOrderId,
     library,
   } = context;
 
   const modal = useModal();
-  const orderAndLoansMutation = useMutate();
+  const orderMutation = useMutate();
+  const loanMutation = useMutate();
   const [renewed, setRenewed] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [renewedDateString, setRenewedDateString] = useState(null);
+  const [hasRenewError, setHasRenewError] = useState(false);
+
+  const [renewedDueDateString, setRenewedDueDateString] = useState(null);
   const { updateUserStatusInfo } = useUser();
 
   useEffect(() => {
-    //when we open modal for a new book,
+    //RENEW LOAN: when we open modal for a new book,
     //reset variables to avoid showing errors/renwed status and new due date of previous book
     setRenewed(false);
-    setHasError(false);
-    setRenewedDateString(null);
+    setHasRenewError(false);
+    setRenewedDueDateString(null);
   }, [materialId]);
 
   useEffect(() => {
-    handleMutationUpdates(orderAndLoansMutation, setHasError, setRenewed);
-    if (orderAndLoansMutation.data?.renewLoan?.renewed) {
-      setRenewedDateString(orderAndLoansMutation.data.renewLoan.dueDate);
+    handleLoanMutationUpdates(
+      loanMutation,
+      setHasRenewError,
+      setRenewed,
+      setRenewedDueDateString
+    );
+    if (loanMutation?.data?.renewLoan?.renewed) {
+      //update loans from modal, since we want the loans page to refresh and show the new data.
+      // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
+      // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
+      updateUserStatusInfo("LOAN");
     }
-  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
+  }, [loanMutation.error, loanMutation.data]);
+
+  useEffect(() => {
+    handleOrderMutationUpdates(
+      orderMutation,
+      setHasDeleteError,
+      () => setRemovedOrderId(materialId),
+      updateUserStatusInfo
+    );
+  }, [orderMutation.error, orderMutation.data]);
 
   const renderDynamicContent = () => {
     switch (type) {
@@ -192,7 +215,7 @@ const Material = ({ context }) => {
         return (
           <DynamicContentLoan
             dueDateString={
-              renewedDateString ? renewedDateString : dueDateString
+              renewedDueDateString ? renewedDueDateString : dueDateString
             }
             dataCyPrefix="dyn-cont-loan"
           />
@@ -208,23 +231,19 @@ const Material = ({ context }) => {
     }
   };
 
-  function handleClickRenew() {
-    handleRenewOrder({
+  async function handleClickRenew() {
+    handleRenewLoan({
       loanId: materialId,
       agencyId,
-      orderAndLoansMutation,
+      loanMutation,
     });
-    //update loans from modal, since we want the loans page to refresh and show the new data.
-    // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
-    // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
-    updateUserStatusInfo("LOAN");
   }
 
   /**
-   * shown when orderAndLoansMutation updates with either a data content or an error
+   * shown when loanMutation updates with either a data content or an error
    */
-  const AfterRenewMessage = ({ hasError, renewed }) => {
-    if (hasError)
+  const AfterRenewMessage = ({ hasRenewError, renewed }) => {
+    if (hasRenewError)
       return <RenewError isColumn={false} customClass={styles.renewError} />;
     if (renewed) return <RenewedSpan />;
   };
@@ -237,7 +256,7 @@ const Material = ({ context }) => {
             <MaterialRowButton
               size="medium"
               wrapperClassname={styles.button}
-              disabled={hasError || renewed}
+              disabled={hasRenewError || renewed}
               dataCy="loan-button"
               onClick={handleClickRenew}
               onKeyPress={(e) => {
@@ -246,7 +265,10 @@ const Material = ({ context }) => {
             >
               {Translate({ context: "profile", label: "renew" })}
             </MaterialRowButton>
-            <AfterRenewMessage hasError={hasError} renewed={renewed} />
+            <AfterRenewMessage
+              hasRenewError={hasRenewError}
+              renewed={renewed}
+            />
           </div>
         );
       case "ORDER":
@@ -262,8 +284,7 @@ const Material = ({ context }) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderAndLoansMutation,
-                onCloseModal,
+                orderMutation,
                 title,
               });
             }}
@@ -275,8 +296,7 @@ const Material = ({ context }) => {
                   pickUpExpiryDate,
                   materialId,
                   agencyId,
-                  orderAndLoansMutation,
-                  onCloseModal,
+                  orderMutation,
                   title,
                 });
             }}

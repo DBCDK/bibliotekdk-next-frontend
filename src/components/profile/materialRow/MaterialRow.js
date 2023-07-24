@@ -22,10 +22,13 @@ import {
   dateToDayInMonth,
   timestampToShortDate,
 } from "@/utils/datetimeConverter";
-import { handleMutationUpdates } from "./../utils";
+import {
+  handleLoanMutationUpdates,
+  handleOrderMutationUpdates,
+} from "./../utils";
 import { useRouter } from "next/router";
 import { onClickDelete } from "@/components/_modal/pages/deleteOrder/utils";
-import { handleRenewOrder } from "../utils";
+import { handleRenewLoan } from "../utils";
 import MaterialRowTooltip from "./materialRowTooltip/MaterialRowTooltip";
 
 // Set to when warning should be shown
@@ -363,22 +366,33 @@ const MaterialRow = (props) => {
   const breakpoint = useBreakpoint();
   const { updateUserStatusInfo } = useUser();
   const modal = useModal();
-  const [hasError, setHasError] = useState(false);
+  const [hasDeleteError, setHasDeleteError] = useState(false);
+  const [hasRenewError, setHasRenewError] = useState(false);
   const [renewed, setRenewed] = useState(false);
   const [renewedDueDateString, setRenewedDueDateString] = useState(null);
-  const orderAndLoansMutation = useMutate(); //keep here to avoid entire page updte on orderAndLoansMutation update
+  const orderMutation = useMutate();
+  const loanMutation = useMutate();
 
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    handleMutationUpdates(
-      orderAndLoansMutation,
-      setHasError,
+    handleLoanMutationUpdates(
+      loanMutation,
+      setHasRenewError,
       setRenewed,
       setRenewedDueDateString
     );
-  }, [orderAndLoansMutation.error, orderAndLoansMutation.data]);
+  }, [loanMutation.error, loanMutation.data]);
+
+  useEffect(() => {
+    handleOrderMutationUpdates(
+      orderMutation,
+      setHasDeleteError,
+      () => setRemovedOrderId(materialId),
+      updateUserStatusInfo
+    );
+  }, [orderMutation.error, orderMutation.data]);
 
   const getStatus = () => {
     switch (type) {
@@ -423,22 +437,11 @@ const MaterialRow = (props) => {
     }
   };
 
-  //TODO handle error/success in useEffect instead
-  async function onCloseModal({ success }) {
-    if (success) {
-      setRemovedOrderId(materialId);
-      updateUserStatusInfo("ORDER");
-      setHasError(false);
-    } else {
-      setHasError(true);
-    }
-  }
-
-  function onClickRenew({ loanId, agencyId, orderAndLoansMutation }) {
-    handleRenewOrder({
+  function onClickRenew({ loanId, agencyId, loanMutation }) {
+    handleRenewLoan({
       loanId,
       agencyId,
-      orderAndLoansMutation,
+      loanMutation,
     });
     updateUserStatusInfo("LOAN");
   }
@@ -448,7 +451,7 @@ const MaterialRow = (props) => {
       case "DEBT":
         return null;
       case "LOAN":
-        return hasError ? (
+        return hasRenewError ? (
           <MaterialRowTooltip labelToTranslate="renew-loan-tooltip" />
         ) : (
           <MaterialRowButton
@@ -457,7 +460,7 @@ const MaterialRow = (props) => {
               onClickRenew({
                 loanId: materialId,
                 agencyId,
-                orderAndLoansMutation,
+                loanMutation,
               })
             }
           >
@@ -474,8 +477,7 @@ const MaterialRow = (props) => {
                 pickUpExpiryDate,
                 materialId,
                 agencyId,
-                orderAndLoansMutation,
-                onCloseModal,
+                orderMutation,
                 title,
               })
             }
@@ -495,7 +497,7 @@ const MaterialRow = (props) => {
   if (isMobileSize) {
     return (
       <>
-        {hasError && type === "ORDER" && (
+        {hasDeleteError && type === "ORDER" && (
           <ErrorRow
             text={Translate({
               context: "profile",
@@ -507,8 +509,7 @@ const MaterialRow = (props) => {
           key={"article" + materialId}
           renderDynamicColumn={renderDynamicColumn}
           status={status}
-          onCloseModal={onCloseModal} //TODO handle error/success in useEffect instead
-          removedOrderId={removedOrderId} //TODO handle error/success in useEffect instead
+          setHasDeleteError={setHasDeleteError}
           {...props}
         />
       </>
@@ -517,7 +518,7 @@ const MaterialRow = (props) => {
 
   return (
     <>
-      {hasError && type === "ORDER" && (
+      {hasDeleteError && type === "ORDER" && (
         <ErrorRow
           text={Translate({
             context: "profile",
