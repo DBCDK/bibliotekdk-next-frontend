@@ -51,14 +51,7 @@ function MenuLink({ label, href }) {
   );
 }
 
-function SubCategory({
-  item,
-  index,
-  router,
-  baseUrl,
-  activeIndex,
-  setActiveIndex,
-}) {
+function SubCategory({ item, index, router, baseUrl, setActiveIndex }) {
   const title = Translate({
     context: CONTEXT,
     label: `${item.title}`,
