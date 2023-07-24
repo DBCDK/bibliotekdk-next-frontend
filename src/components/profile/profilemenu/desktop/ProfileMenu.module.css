@@ -64,10 +64,6 @@
   text-decoration: underline;
 }
 
-.groupActive p {
-  font-family: var(--body-font-semibold);
-}
-
 .itemLength {
   margin-left: var(--pt05);
 }

@@ -98,9 +98,7 @@ function SubCategory({
   return (
     <li className={styles.menuLink} key={`div-menulink-${index}`}>
       <Link
-        className={cx(styles.subLink, {
-          [styles.groupActive]: index === activeIndex,
-        })}
+        className={styles.subLink}
         dataCy={`menu-subcategory-${index}`}
         onClick={() => {
           replaceHash(urlEnding);
