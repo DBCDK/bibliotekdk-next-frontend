@@ -51,7 +51,7 @@ function MenuLink({ label, href }) {
   );
 }
 
-function SubCategory({ item, index, router, baseUrl, setActiveIndex }) {
+function SubCategory({ item, index, router, baseUrl }) {
   const title = Translate({
     context: CONTEXT,
     label: `${item.title}`,
@@ -71,9 +71,6 @@ function SubCategory({ item, index, router, baseUrl, setActiveIndex }) {
     const el = getElementById(anchor);
     if (el) {
       scrollTo({ top: el.offsetTop, behavior: "smooth" });
-    }
-    if (router.asPath.includes(`#${urlEnding}`)) {
-      setActiveIndex(index);
     }
   }, [router.asPath]);
 
@@ -123,7 +120,6 @@ function SubCategory({ item, index, router, baseUrl, setActiveIndex }) {
  * @return {JSX.Element}
  */
 function MenuGroup({ menus, categoryUrl, name, className }) {
-  const [activeIndex, setActiveIndex] = useState();
   const router = useRouter();
   const [isActive, setIsActive] = useState(router.asPath.includes(name));
 
@@ -159,8 +155,6 @@ function MenuGroup({ menus, categoryUrl, name, className }) {
             index={index}
             router={router}
             baseUrl={categoryUrl}
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
           />
         ))}
       </ul>
