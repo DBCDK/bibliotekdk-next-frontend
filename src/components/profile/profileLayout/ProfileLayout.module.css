@@ -66,6 +66,7 @@
   justify-content: center;
   display: flex;
   width: "100%";
+  max-width: 400px;
 }
 @media screen and (min-width: 576px) {
   .loginButton {

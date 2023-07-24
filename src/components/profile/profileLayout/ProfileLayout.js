@@ -69,7 +69,7 @@ export default function ProfileLayout({ title, children }) {
                 {Translate({
                   context: "header",
                   label: "login",
-                })}{" "}
+                })}
               </Title>
               <Text className={styles.loginText} type="text2">
                 {Translate({
