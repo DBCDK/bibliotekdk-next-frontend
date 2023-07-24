@@ -67,6 +67,7 @@
 }
 
 .renewError {
+  justify-content: center;
   margin-bottom: var(--pt4);
   margin-left: var(--pt2);
   width: 50%;

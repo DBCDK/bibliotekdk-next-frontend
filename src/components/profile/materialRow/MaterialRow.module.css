@@ -94,6 +94,7 @@
   display: flex;
   align-items: center;
   justify-self: flex-end;
+  width: 50%;
 }
 
 /* TODO */
@@ -159,9 +160,10 @@
 
 .renewedWrapper {
   display: flex;
-  align-items: top;
   margin-bottom: var(--pt4);
   padding-left: var(--pt2);
+  width: 50%;
+  justify-content: center;
 }
 
 .renewedIcon {
