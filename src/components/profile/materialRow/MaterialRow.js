@@ -286,16 +286,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      <div className={styles.imageContainer_mobile}>
-        {!!image && <Cover src={image} size="fill-width" />}
-      </div>
-      <div>
-        <Title
-          type="text1"
-          tag="h3"
-          className={styles.materialTitle}
-          id={`material-title-${materialId}`}
-        >
+      <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+      <div className={styles.textContainer}>
+        <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
         {creator && <Text type="text2">{creator}</Text>}
@@ -583,7 +576,7 @@ const MaterialRow = (props) => {
                 <Cover src={image} size="fill-width" />
               </div>
             )}
-            <div>
+            <div className={styles.textContainer}>
               <ConditionalWrapper
                 condition={!!title && !!creator && !!materialId}
                 wrapper={(children) => (
@@ -604,7 +597,6 @@ const MaterialRow = (props) => {
                 <Title
                   type="text1"
                   tag="h3"
-                  className={styles.materialTitle}
                   id={`material-title-${materialId}`}
                 >
                   {title}
