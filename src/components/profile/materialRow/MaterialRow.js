@@ -43,15 +43,14 @@ export const useLoanDateAnalysis = (dueDateString) => {
   const today = new Date();
   const futureDate = new Date();
   futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
-  const daysToDueDate =
-    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1; // Add 1 so due date today is "in 1 day"
+  const daysToDueDate = Math.floor((dueDate - today) / (1000 * 60 * 60 * 24));
 
   return {
     dayToText: timeFormatter.format(daysToDueDate, "day"),
     isCountdown: dueDate >= today && dueDate <= futureDate,
     isOverdue: dueDate < today,
     dateString: timestampToShortDate(dueDate),
-    daysToDueDate: Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1, // Add 1 so due date today is "in 1 day"
+    daysToDueDate: daysToDueDate,
     daysToDueDateString: `${daysToDueDate} ${
       daysToDueDate === 1
         ? Translate({ context: "units", label: "day" })
@@ -287,16 +286,9 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
         </article>
       )}
     >
-      <div className={styles.imageContainer_mobile}>
-        {!!image && <Cover src={image} size="fill-width" />}
-      </div>
-      <div>
-        <Title
-          type="text1"
-          tag="h3"
-          className={styles.materialTitle}
-          id={`material-title-${materialId}`}
-        >
+      <div>{!!image && <Cover src={image} size="fill-width" />}</div>
+      <div className={styles.textContainer}>
+        <Title type="text1" tag="h3" id={`material-title-${materialId}`}>
           {title}
         </Title>
         {creator && <Text type="text2">{creator}</Text>}
@@ -584,7 +576,7 @@ const MaterialRow = (props) => {
                 <Cover src={image} size="fill-width" />
               </div>
             )}
-            <div>
+            <div className={styles.textContainer}>
               <ConditionalWrapper
                 condition={!!title && !!creator && !!materialId}
                 wrapper={(children) => (
@@ -605,7 +597,6 @@ const MaterialRow = (props) => {
                 <Title
                   type="text1"
                   tag="h3"
-                  className={styles.materialTitle}
                   id={`material-title-${materialId}`}
                 >
                   {title}

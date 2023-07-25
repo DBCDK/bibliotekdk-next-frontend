@@ -13,10 +13,6 @@ p.subHeading {
   margin-bottom: var(--pt4);
 }
 
-.yourLibraries {
-  --underline-bottom-color: var(--mine-shaft);
-}
-
 .emptyMessage {
   margin: var(--pt5) 0 var(--pt7);
   padding-left: var(--pt1);
