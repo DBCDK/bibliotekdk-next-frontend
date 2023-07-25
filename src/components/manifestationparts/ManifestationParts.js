@@ -85,7 +85,6 @@ export function ManifestationParts({
               lines={1}
               className={cx({
                 [styles.breakOrder_creator]: breakOnCreator,
-                //[styles.rightAlign]: !breakOnCreator && !part?.playingTime,
               })}
             >
               {creatorsDisplay(part)}
