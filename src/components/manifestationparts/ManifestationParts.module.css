@@ -10,7 +10,17 @@
 
 .manifestionlist li {
   display: flex;
+  flex-wrap: wrap;
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+}
+
+.break {
+  flex-basis: 100%;
+  width: 0;
+}
+
+.title {
+  font-family: var(--body-font-semibold);
 }
 
 .manifestionlist li p {
@@ -26,6 +36,10 @@
 }
 
 .rightAlign {
+  text-align: right;
+}
+
+.playingTime {
   text-align: right;
 }
 
@@ -52,6 +66,17 @@
   display: flex;
   align-items: center;
   padding-left: var(--pt2);
+}
+
+@media (max-width: 576px) {
+  .manifestionlist li {
+    display: block;
+    padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
+  }
+  .rightAlign {
+    display: block;
+    text-align: unset;
+  }
 }
 
 @media (min-width: 992px) {

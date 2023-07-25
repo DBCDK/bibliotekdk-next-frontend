@@ -31,6 +31,7 @@ export function ManifestationParts({
   modalOpen,
   showMoreButton = true,
   numberToShow,
+  breakOnCreator = false,
 }) {
   if (isEmpty(parts)) {
     return null;
@@ -69,17 +70,23 @@ export function ManifestationParts({
     (part, index) =>
       part?.title && (
         <li key={`manifestationlist-${index}`}>
-          <Text type="text3" lines={1}>
+          <Text type="text3" lines={1} className={styles.title}>
             {part.title}
             {creatorsAndContributorsDisplay(part) &&
               creatorsAndContributorsDisplay(part)}
           </Text>
+          {/* insert a break if wanted */}
+          {!titlesOnly && creatorsDisplay(part) && breakOnCreator && (
+            <div className={styles.break}></div>
+          )}
 
           {!titlesOnly && creatorsDisplay(part) && (
             <Text
               type="text3"
               lines={1}
-              className={cx({ [styles.rightAlign]: !part?.playingTime })}
+              className={cx({
+                [!breakOnCreator && styles.rightAlign]: !part?.playingTime,
+              })}
             >
               {creatorsDisplay(part)}
             </Text>
@@ -89,7 +96,7 @@ export function ManifestationParts({
             <Text
               type="text3"
               lines={1}
-              className={cx({ [styles.rightAlign]: !creatorsDisplay(part) })}
+              className={cx({ [styles.playingTime]: !creatorsDisplay(part) })}
             >
               {part?.playingTime || ""}
             </Text>
@@ -138,6 +145,7 @@ export default function Wrap({
   label,
   showMoreButton = true,
   parts = [],
+  breakOnCreator = false,
 }) {
   const { data, isLoading, error } = useData(
     pid && manifestationFragments.manifestationParts({ pid: pid })
@@ -176,6 +184,7 @@ export default function Wrap({
       modalOpen={modalOpen}
       showMoreButton={showMoreButton}
       numberToShow={numberToShow}
+      breakOnCreator={breakOnCreator}
     />
   );
 }
