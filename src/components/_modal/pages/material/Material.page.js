@@ -195,7 +195,7 @@ const Material = ({ context }) => {
     if (loanMutation?.data?.renewLoan?.renewed) {
       //update loans from modal, since we want the loans page to refresh and show the new data.
       // we dont do this for desktop. on desktop we show the new dueDate and "fonyet".
-      // If we refetched, the list would order again and we wouldnt know when to show the "fonyet" sign.
+      // If we refetched, the list would order again and we wouldnt know when to show "fonyet".
       updateUserStatusInfo("LOAN");
     }
   }, [loanMutation.error, loanMutation.data]);
@@ -245,7 +245,7 @@ const Material = ({ context }) => {
   const AfterRenewMessage = ({ hasRenewError, renewed }) => {
     if (hasRenewError)
       return <RenewError isColumn={false} customClass={styles.renewError} />;
-    if (renewed) return <RenewedSpan />;
+    if (renewed) return <RenewedSpan textType="text2" />;
   };
 
   const renderDynamicButton = () => {
@@ -346,13 +346,12 @@ const Material = ({ context }) => {
           )}
 
           {renderDynamicContent()}
-
-          {renderDynamicButton()}
         </div>
         <div>
           <Cover src={image} size="fill-width" />
         </div>
       </div>
+      {renderDynamicButton()}
 
       <Link
         border={{

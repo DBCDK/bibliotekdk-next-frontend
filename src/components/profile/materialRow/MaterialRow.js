@@ -312,10 +312,16 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
   );
 };
 
-export const RenewedSpan = () => {
+/**
+ * shows a span with text and a checkmark icon
+ * @param {string} textType
+ * @returns
+ */
+export const RenewedSpan = ({ textType = "text2" }) => {
+  console.log("texttype ", textType);
   return (
     <span className={styles.renewedWrapper}>
-      <Text type="text2">
+      <Text type={textType}>
         {Translate({
           context: "profile",
           label: "renewed",
@@ -435,7 +441,6 @@ const MaterialRow = (props) => {
       agencyId,
       loanMutation,
     });
-    updateUserStatusInfo("LOAN");
   }
 
   const renderDynamicButton = () => {
@@ -627,7 +632,7 @@ const MaterialRow = (props) => {
           </div>
 
           {renewed ? (
-            <RenewedSpan />
+            <RenewedSpan textType="text3" />
           ) : (
             <div>{renderDynamicButton(materialId, agencyId)}</div>
           )}
