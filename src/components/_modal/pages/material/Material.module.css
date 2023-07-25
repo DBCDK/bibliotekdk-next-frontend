@@ -73,6 +73,6 @@
 }
 
 /* Specificity to override */
-button.buttonDelete[data-cy="order-button"] {
+.button button.buttonDelete {
   white-space: nowrap;
 }
