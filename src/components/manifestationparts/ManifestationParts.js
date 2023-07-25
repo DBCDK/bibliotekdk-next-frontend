@@ -69,23 +69,23 @@ export function ManifestationParts({
   const displayarray = partsToShow.map(
     (part, index) =>
       part?.title && (
-        <li key={`manifestationlist-${index}`}>
+        <li
+          key={`manifestationlist-${index}`}
+          className={styles.manifestionlistItem}
+        >
           <Text type="text3" lines={1} className={styles.title}>
             {part.title}
             {creatorsAndContributorsDisplay(part) &&
               creatorsAndContributorsDisplay(part)}
           </Text>
-          {/* insert a break if wanted */}
-          {!titlesOnly && creatorsDisplay(part) && breakOnCreator && (
-            <div className={styles.break}></div>
-          )}
 
           {!titlesOnly && creatorsDisplay(part) && (
             <Text
               type="text3"
               lines={1}
               className={cx({
-                [!breakOnCreator && styles.rightAlign]: !part?.playingTime,
+                [styles.breakOrder_creator]: breakOnCreator,
+                //[styles.rightAlign]: !breakOnCreator && !part?.playingTime,
               })}
             >
               {creatorsDisplay(part)}
@@ -96,7 +96,9 @@ export function ManifestationParts({
             <Text
               type="text3"
               lines={1}
-              className={cx({ [styles.playingTime]: !creatorsDisplay(part) })}
+              className={cx(styles.playingTime, {
+                [styles.breakOrder_playingTime]: breakOnCreator,
+              })}
             >
               {part?.playingTime || ""}
             </Text>

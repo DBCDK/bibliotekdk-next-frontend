@@ -8,23 +8,17 @@
   margin-bottom: var(--pt2);
 }
 
-.manifestionlist li {
+.manifestionlistItem {
   display: flex;
   flex-wrap: wrap;
   padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
-}
-
-.break {
-  flex-basis: 100%;
-  width: 0;
 }
 
 .title {
   font-family: var(--body-font-semibold);
 }
 
-.manifestionlist li p {
-  margin: 0 0 0 var(--pt1);
+.manifestionlistItem p {
   display: block;
   flex-grow: 1;
   flex-shrink: 1;
@@ -66,6 +60,15 @@
   display: flex;
   align-items: center;
   padding-left: var(--pt2);
+}
+
+p.breakOrder_playingTime {
+  order: 1;
+}
+
+p.breakOrder_creator {
+  order: 2;
+  flex-basis: 100%;
 }
 
 @media (max-width: 576px) {
