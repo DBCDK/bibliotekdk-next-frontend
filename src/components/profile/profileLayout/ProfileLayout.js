@@ -85,7 +85,7 @@ export default function ProfileLayout({ title, children }) {
 
               <Button
                 className={styles.loginButton}
-                size="medium"
+                size="large"
                 type="primary"
                 onClick={() => {
                   modal.push("login");
