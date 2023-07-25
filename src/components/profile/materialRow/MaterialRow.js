@@ -50,7 +50,7 @@ export const useLoanDateAnalysis = (dueDateString) => {
     isCountdown: dueDate >= today && dueDate <= futureDate,
     isOverdue: dueDate < today,
     dateString: timestampToShortDate(dueDate),
-    daysToDueDate: daysToDueDate, // Add 1 so due date today is "in 1 day"
+    daysToDueDate: daysToDueDate,
     daysToDueDateString: `${daysToDueDate} ${
       daysToDueDate === 1
         ? Translate({ context: "units", label: "day" })
