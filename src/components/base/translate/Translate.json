@@ -2223,6 +2223,26 @@
       "demand_driven_acquisition-description": {
         "da": "Log ind på %s for at læse bogen",
         "en": "Login at &s to read the book"
+      },
+      "login-to-order": {
+        "da": "Log ind for at bestille",
+        "en": "Login to order"
+      },
+      "login-via-library": {
+        "da": "Log ind via dit bibliotek",
+        "en": "Login via your library"
+      },
+      "use-loan-info": {
+        "da": "Du skal bruge dine låneroplysninger i næste trin",
+        "en": "You need to use your loaner information in the next step"
+      },
+      "or-mit-id": {
+        "da": "eller med MitID",
+        "en": "or login with MitID"
+      },
+      "create-library-user": {
+        "da": "Opret dig som låner på et bibliotek",
+        "en": "Create a user at a library"
       }
     },
     "form": {

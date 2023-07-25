@@ -151,6 +151,7 @@ export default function MyApp({ Component, pageProps: _pageProps, router }) {
               <Modal.Page id="loanerform" component={Pages.Loanerform} />
               <Modal.Page id="receipt" component={Pages.Receipt} />
               <Modal.Page id="login" component={Pages.Login} />
+              <Modal.Page id="login2" component={Pages.Login2} />
               <Modal.Page id="filter" component={Pages.Filter} />
               <Modal.Page id="localizations" component={Pages.Localizations} />
               <Modal.Page id="references" component={Pages.References} />

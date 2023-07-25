@@ -1,0 +1,62 @@
+.login {
+  padding: 0 var(--pt2) var(--pt2) var(--pt2);
+}
+
+.libraryLoginSection {
+  padding-top: var(--pt4);
+  padding-bottom: var(--pt4);
+}
+
+.search {
+  padding-top: var(--pt05);
+  padding-bottom: var(--pt1);
+}
+
+.search .title {
+  padding: var(--pt1) 0;
+}
+
+.login mark {
+  background-color: transparent;
+  font-family: var(--body-font-semibold);
+}
+
+.libraryGroup {
+  z-index: 10;
+  position: relative;
+  margin-top: -50px;
+  background-color: var(--concrete);
+}
+
+.mitIDSection {
+  width: 100%;
+  position: absolute;
+  right: 0px;
+  top: 460px;
+  padding-right: var(--pt4);
+  padding-left: var(--pt4);
+}
+
+.mitIDButton {
+  width: 100%;
+  padding-top: var(--pt2);
+  padding-bottom: var(--pt2);
+  margin-top: var(--pt05);
+  margin-bottom: var(--pt7);
+}
+
+.mitIDIcon {
+  height: fit-content;
+  max-height: fit-content;
+}
+
+@media (min-width: 576px) {
+  .login {
+    padding: 0 var(--pt6) var(--pt3) var(--pt6);
+  }
+
+  .mitIDSection {
+    padding-right: var(--pt8);
+    padding-left: var(--pt8);
+  }
+}

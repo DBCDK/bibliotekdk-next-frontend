@@ -12,6 +12,7 @@ import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
+import Login2 from "./login2";
 
 const _modal = {
   Menu,
@@ -28,6 +29,7 @@ const _modal = {
   ManifestationContent,
   Material,
   DeleteOrder,
+  Login2,
 };
 
 export default _modal;
