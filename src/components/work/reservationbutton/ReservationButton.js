@@ -83,7 +83,11 @@ function handleGoToLogin(access, user, modal, onOnlineAccess) {
       access[0]?.url?.indexOf("ebscohost") !== -1);
 
   return goToLogin
-    ? modal?.push("login", {
+    ? modal?.push("login2", {
+        title: Translate({
+          context: "header",
+          label: "login",
+        }),
         mode: LOGIN_MODE.DDA,
         originUrl: access[0]?.origin,
       })

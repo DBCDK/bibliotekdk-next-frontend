@@ -25,16 +25,16 @@
   z-index: 10;
   position: relative;
   margin-top: -50px;
-  background-color: var(--concrete);
+  background-color: var(--white);
 }
 
 .mitIDSection {
   width: 100%;
   position: absolute;
   right: 0px;
-  top: 460px;
-  padding-right: var(--pt4);
-  padding-left: var(--pt4);
+  top: 300px;
+  padding-right: var(--pt2);
+  padding-left: var(--pt2);
 }
 
 .mitIDButton {
@@ -56,7 +56,7 @@
   }
 
   .mitIDSection {
-    padding-right: var(--pt8);
-    padding-left: var(--pt8);
+    padding-right: var(--pt6);
+    padding-left: var(--pt6);
   }
 }

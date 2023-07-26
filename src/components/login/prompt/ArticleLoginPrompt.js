@@ -27,6 +27,16 @@ export default function ArticleLoginPrompt({ articleId }) {
   );
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
+  function signIn() {
+    modal.push("login2", {
+      title: Translate({
+        context: "header",
+        label: "login",
+      }),
+      mode: LOGIN_MODE.INFOMEDIA,
+    });
+  }
+
   // Not logged in, no access
   if (!user?.isLoggedIn) {
     return (
@@ -36,7 +46,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "articles",
           label: "accessWarning",
         })}
-        signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
+        signIn={() => signIn()}
       />
     );
   }
@@ -58,7 +68,7 @@ export default function ArticleLoginPrompt({ articleId }) {
           context: "order",
           label: "change-pickup-digital-copy-link",
         })}
-        signIn={() => modal.push("login", { mode: LOGIN_MODE.INFOMEDIA })}
+        signIn={() => signIn()}
       />
     );
   }

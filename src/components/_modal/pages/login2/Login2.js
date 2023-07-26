@@ -85,17 +85,17 @@ function Select({
 }
 
 /**
- * @param {object}
- * @param data
+ * @param {obj}
+ * @param {boolean}data
  * @param className
- * @param isVisible
- * @param onChange
- * @param hasQuery avoids showing loading skeleton before user has typed anything
- * @param isLoading
+ * @param {boolean} isVisible
+ * @param {function} onChange
+ * @param {boolean} hasQuery dont show loading skeleton if there is no query / before user has typed anything
+ * @param {boolean} isLoading
  * @param includeArrows
- * @param modal
- * @param context
- * @param title
+ * @param {obj} modal
+ * @param {obj} context
+ * @param {string} title
  */
 export function Login({
   data,
@@ -106,8 +106,8 @@ export function Login({
   includeArrows,
   modal,
   context,
-  title,
 }) {
+  const { title } = { ...context };
   const allBranches = data?.result;
   const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
   const APP_URL =
@@ -130,6 +130,7 @@ export function Login({
       return;
     }
 
+    console.log("mode ", mode);
     // show loanerform for selected branch
     modal.push("loanerform", {
       branchId: branch.branchId,
@@ -191,6 +192,7 @@ export function Login({
             {Translate({ context: "login", label: "or-mit-id" })}
           </Text>
           <Button
+            disabled={true} //TODO: remove when MitID is implemented
             type="secondary"
             size="large"
             className={styles.mitIDButton}

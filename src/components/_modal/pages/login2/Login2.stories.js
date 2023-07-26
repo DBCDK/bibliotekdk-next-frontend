@@ -13,6 +13,9 @@ export default exportedObject;
  *
  */
 export function Login2Order() {
+  const context = {
+    title: Translate({ context: "login", label: "login-to-order" }),
+  };
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Login Modal</StoryTitle>
@@ -20,14 +23,15 @@ export function Login2Order() {
         Shows the login modal coming from order button
       </StoryDescription>
 
-      <Login2
-        title={Translate({ context: "login", label: "login-to-order" })}
-      />
+      <Login2 context={context} />
     </div>
   );
 }
 
 export function Login2Login() {
+  const context = {
+    title: Translate({ context: "header", label: "login" }),
+  };
   return (
     <div style={{ height: "100vh" }}>
       <StoryTitle>Login Modal</StoryTitle>
@@ -35,7 +39,7 @@ export function Login2Login() {
         Shows the login modal coming from login button in header
       </StoryDescription>
 
-      <Login2 title={Translate({ context: "header", label: "login" })} />
+      <Login2 context={context} />
     </div>
   );
 }

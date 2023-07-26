@@ -123,8 +123,15 @@ export function Header({
             await user.guestLogout();
           }
         : // open login modal
-          () => modal.push("login"),
+          () =>
+            modal.push("login2", {
+              title: Translate({
+                context: "header",
+                label: "login",
+              }),
+            }),
     },
+
     /*{
       label: "basket",
       icon: BasketIcon,
