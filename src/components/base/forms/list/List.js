@@ -169,7 +169,6 @@ function Group({
   ...props
 }) {
   const childrenRef = useRef([]);
-  console.log("propsI ", props.className);
 
   useEffect(() => {
     // find the radio button to have tabindex=0

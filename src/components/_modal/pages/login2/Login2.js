@@ -85,13 +85,12 @@ function Select({
 }
 
 /**
- * Make pickup branches selectable with Radio buttons
- *
  * @param {object}
  * @param data
  * @param className
  * @param isVisible
  * @param onChange
+ * @param hasQuery avoids showing loading skeleton before user has typed anything
  * @param isLoading
  * @param includeArrows
  * @param modal
@@ -102,6 +101,7 @@ export function Login({
   data,
   isVisible,
   onChange,
+  hasQuery,
   isLoading,
   includeArrows,
   modal,
@@ -110,13 +110,14 @@ export function Login({
 }) {
   const allBranches = data?.result;
   const { mode = LOGIN_MODE.PLAIN_LOGIN, originUrl = null } = context || {};
-
   const APP_URL =
     getConfig()?.publicRuntimeConfig?.app?.url || "http://localhost:3000"; //TODO NEXT_PUBLIC_APP_URL instead of getConfig()
 
   // remove all modal params from callbackurl - this is login context
   const regexp = /&modal=+[0-9]*/g;
   const callbackurl = `${APP_URL}${Router.asPath}`.replace(regexp, "");
+  const showResultsList = hasQuery && allBranches?.length > 0;
+  const showMitIDLogin = !hasQuery || !allBranches || allBranches.length < 1;
 
   const user = useUser();
   const onSelect = (branch) => {
@@ -129,7 +130,7 @@ export function Login({
       return;
     }
 
-    // show loanerform for selected bracnch
+    // show loanerform for selected branch
     modal.push("loanerform", {
       branchId: branch.branchId,
       doPolicyCheck: false,
@@ -165,7 +166,7 @@ export function Login({
           </Text>
         </section>
       </div>
-      {allBranches?.length > 0 && (
+      {showResultsList && (
         <List.Group
           enabled={!isLoading && isVisible}
           data-cy="list-branches"
@@ -184,7 +185,7 @@ export function Login({
           })}
         </List.Group>
       )}
-      {!allBranches && (
+      {showMitIDLogin && (
         <section className={styles.mitIDSection}>
           <Text type="text2">
             {Translate({ context: "login", label: "or-mit-id" })}
@@ -207,7 +208,6 @@ export function Login({
               className={styles.mitIDIcon}
             />
           </Button>
-
           <Link
             onClick={() => {
               alert("Implement link to library specific login instructions");
@@ -254,7 +254,7 @@ export default function Wrap(props) {
   const { data, isLoading } = useData(
     libraryFragments.search({ q: query || "" })
   );
-  console.log("DATA ", data);
+
   const dummyData = {
     hitcount: 10,
     result: [
@@ -262,12 +262,12 @@ export default function Wrap(props) {
       { name: "This is some other branch name" },
       { name: "This is also a branch name" },
       { name: "A branch name" },
-      { name: "Also a bracndh name" },
+      { name: "Also a branch name" },
       { name: "This is some branch name" },
       { name: "This is some other branch name" },
       { name: "This is also a branch name" },
       { name: "A branch name" },
-      { name: "Also a bracndh name" },
+      { name: "Also a branch name" },
     ],
   };
 
@@ -279,6 +279,7 @@ export default function Wrap(props) {
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}
       onChange={(q) => setQuery(q)}
+      hasQuery={!!query}
       includeArrows={includeArrows}
       onLogin={signIn}
       origin={originUrl}
