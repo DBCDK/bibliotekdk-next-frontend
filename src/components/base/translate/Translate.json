@@ -3099,6 +3099,10 @@
         "da": "Frist overskredet!",
         "en": "Return deadline overdue!"
       },
+      "last-day": {
+        "da": "I dag",
+        "en": "Today"
+      },
       "loans-subtext": {
         "da": "Du ser lån og reserveringer for",
         "en": "You are looking at loans and reservations for"

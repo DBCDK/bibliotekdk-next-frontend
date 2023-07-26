@@ -41,21 +41,28 @@ export const useLoanDateAnalysis = (dueDateString) => {
 
   const dueDate = new Date(dueDateString);
   const today = new Date();
-  const futureDate = new Date();
-  futureDate.setDate(today.getDate() + DAYS_TO_COUNTDOWN_RED);
-  const daysToDueDate = Math.floor((dueDate - today) / (1000 * 60 * 60 * 24));
+  /**
+   * Add 1, since we get dueDate at midnight, they have the whole day to turn in the material
+   * On the due date, we want daysToDueDate to be 0, 1 the day before and so on.
+   */
+  const daysToDueDate =
+    Math.floor((dueDate - today) / (1000 * 60 * 60 * 24)) + 1;
+  const daysToDueDateString =
+    daysToDueDate === 0
+      ? Translate({ context: "profile", label: "last-day" })
+      : `${daysToDueDate} ${
+          daysToDueDate === 1
+            ? Translate({ context: "units", label: "day" })
+            : Translate({ context: "units", label: "days" })
+        }`;
 
   return {
     dayToText: timeFormatter.format(daysToDueDate, "day"),
-    isCountdown: dueDate >= today && dueDate <= futureDate,
-    isOverdue: dueDate < today,
+    isCountdown: daysToDueDate <= DAYS_TO_COUNTDOWN_RED,
+    isOverdue: daysToDueDate < 0,
     dateString: timestampToShortDate(dueDate),
     daysToDueDate: daysToDueDate,
-    daysToDueDateString: `${daysToDueDate} ${
-      daysToDueDate === 1
-        ? Translate({ context: "units", label: "day" })
-        : Translate({ context: "units", label: "days" })
-    }`,
+    daysToDueDateString: daysToDueDateString,
   };
 };
 
