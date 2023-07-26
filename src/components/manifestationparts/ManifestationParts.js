@@ -83,7 +83,7 @@ export function ManifestationParts({
             <Text
               type="text3"
               lines={1}
-              className={cx({
+              className={cx(styles.creator, {
                 [styles.breakOrder_creator]: breakOnCreator,
               })}
             >
