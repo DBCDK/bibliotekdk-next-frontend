@@ -72,10 +72,6 @@ p.breakOrder_creator {
     display: block;
     padding: var(--pt1) var(--pt2) var(--pt1) var(--pt2);
   }
-  .rightAlign {
-    display: block;
-    text-align: unset;
-  }
 }
 
 @media (min-width: 992px) {
