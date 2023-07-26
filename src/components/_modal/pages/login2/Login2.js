@@ -132,14 +132,23 @@ export function Login({
 
     console.log("mode ", mode);
     // show loanerform for selected branch
-    modal.push("loanerform", {
-      branchId: branch.branchId,
-      doPolicyCheck: false,
-      callbackUrl: callbackurl,
-      mode,
-      originUrl,
-      clear: true,
-    });
+
+    if (
+      //we can order stuff for these libraries, but we cannot login/validate via them
+      mode === LOGIN_MODE.ORDER_PHYSICAL ||
+      mode === LOGIN_MODE.DIGITAL_COPY
+    ) {
+      modal.push("loanerform", {
+        branchId: branch.branchId,
+        doPolicyCheck: false,
+        callbackUrl: callbackurl,
+        mode,
+        originUrl,
+        clear: true,
+      });
+    } else {
+      console.log("login via XY understøttes ikke modal ");
+    }
   };
 
   return (

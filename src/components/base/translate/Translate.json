@@ -2243,6 +2243,34 @@
       "create-library-user": {
         "da": "Opret dig som låner på et bibliotek",
         "en": "Create a user at a library"
+      },
+      "login-not-supported": {
+        "da": "Log ind via %s understøttes ikke",
+        "en": "%s does not support login"
+      },
+      "but-you-can-order": {
+        "da": "Men du kan bestille materialer til %s",
+        "en": "But you can order materials to %s"
+      },
+      "more-functionality": {
+        "da": "Hvis du vil logge ind, og udnytte funktionaliteter som",
+        "en": "You need to use your loaner information from %s"
+      },
+      "functinality-1": {
+        "da": "huskeliste",
+        "en": "reminder list"
+      },
+      "functinality-2": {
+        "da": "Se lån and reserveringer",
+        "en": "See loans and reservations"
+      },
+      "login-with": {
+        "da": "så skal du logge ind via dit folkebilbiotek eller med MitID",
+        "en": "you need to login via your public library or with MitID"
+      },
+      "why-login-not-suported": {
+        "da": "Hvorfor understøttes logind ikke?",
+        "en": "Why does is login not support?"
       }
     },
     "form": {
