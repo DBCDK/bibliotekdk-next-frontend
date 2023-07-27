@@ -147,7 +147,9 @@ export function Login({
         clear: true,
       });
     } else {
-      console.log("login via XY understøttes ikke modal ");
+      modal.push("loginNotSupported", {
+        libraryName: branch.agencyName,
+      });
     }
   };
 

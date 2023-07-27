@@ -2261,12 +2261,12 @@
         "en": "reminder list"
       },
       "functinality-2": {
-        "da": "Se lån and reserveringer",
-        "en": "See loans and reservations"
+        "da": "se lån and reserveringer",
+        "en": "see loans and reservations"
       },
       "login-with": {
-        "da": "så skal du logge ind via dit folkebilbiotek eller med MitID",
-        "en": "you need to login via your public library or with MitID"
+        "da": "så skal du logge ind via dit folkebilbiotek eller med MitID.",
+        "en": "you need to login via your public library or with MitID."
       },
       "why-login-not-suported": {
         "da": "Hvorfor understøttes logind ikke?",
