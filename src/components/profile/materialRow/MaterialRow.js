@@ -384,8 +384,6 @@ const MaterialRow = (props) => {
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
-    console.log("loanMutation", loanMutation);
-
     handleLoanMutationUpdates(
       loanMutation,
       setHasRenewError,

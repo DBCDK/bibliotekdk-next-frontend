@@ -186,7 +186,6 @@ const Material = ({ context }) => {
   }, [materialId]);
 
   useEffect(() => {
-    console.log("loanMutation", loanMutation);
     handleLoanMutationUpdates(
       loanMutation,
       setHasRenewError,
