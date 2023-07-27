@@ -24,7 +24,7 @@
 }
 
 .button {
-  width: 66.67%; /* 2 grid columns */
+  width: 48%; /* ca 2 grid columns */
   margin-bottom: var(--pt4);
 }
 
