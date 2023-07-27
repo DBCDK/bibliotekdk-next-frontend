@@ -8,9 +8,9 @@ import PropTypes from "prop-types";
 import React, { useEffect, useRef } from "react";
 
 import Arrow from "@/components/base/animation/arrow";
-
+import Link from "@/components/base/link";
 import styles from "./List.module.css";
-
+import cx from "classnames";
 import animations from "css/animations";
 
 /**
@@ -129,11 +129,11 @@ function Select({
           onSelect(e);
         }
       }}
-      className={`${styles.row} ${animations["on-focus"]} ${
-        animations["f-outline"]
-      } ${selected ? styles.selected : ""} ${className || ""} ${
-        disabled ? styles.disabledrow : ""
-      }`}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.selected]: selected,
+        [styles.disabledrow]: disabled,
+      })}
+      tabIndex={disabled ? -1 : 0}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -162,6 +162,63 @@ Select.propTypes = {
   _ref: PropTypes.func,
 };
 
+function SelectGroup({
+  children,
+  disabled,
+  onDisabled,
+  label,
+  labelledBy,
+  onSelect,
+  selected,
+  _ref,
+  className,
+  includeArrows,
+  ...props
+}) {
+  return (
+    <Link
+      data-cy={props["data-cy"]}
+      ref={_ref}
+      aria-labelledby={labelledBy}
+      aria-checked={selected}
+      aria-disabled={!!disabled}
+      disabled={!!disabled}
+      onClick={(e) => {
+        e.preventDefault();
+        if (!disabled) {
+          onSelect();
+        }
+      }}
+      onKeyDown={(e) => {
+        if ((e.key === "Enter" || e.key === " ") && onSelect && !disabled) {
+          onSelect(e);
+        }
+      }}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.selected]: selected,
+        [styles.disabledrow]: disabled,
+      })}
+      border={false}
+    >
+      <div
+        className={[styles.content, animations["f-translate-right"]].join(" ")}
+      >
+        {children}
+      </div>
+      {!disabled ? (
+        includeArrows ? (
+          <Arrow
+            className={`${animations["h-bounce-left"]} ${animations["f-bounce-left"]}`}
+          />
+        ) : null
+      ) : (
+        onDisabled
+      )}
+      <div className={styles.label}>{label}</div>
+    </Link>
+  );
+}
+
 function Group({
   children,
   enabled = true,
@@ -176,7 +233,6 @@ function Group({
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
       if (el) {
-        el.tabIndex = "-1";
         if (
           el.getAttribute("aria-checked") === "true" ||
           el.getAttribute("aria-checked") === true
@@ -238,6 +294,6 @@ function Group({
   );
 }
 
-const ExportedList = { Group, Radio, Select };
+const ExportedList = { Group, Radio, Select, SelectGroup };
 
 export default ExportedList;

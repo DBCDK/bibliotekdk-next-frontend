@@ -144,6 +144,13 @@ function SelectedFilter({
                 sortOrder === "numerical" ? "alphabetically" : "numerical"
               );
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                setSortOrder(
+                  sortOrder === "numerical" ? "alphabetically" : "numerical"
+                );
+              }
+            }}
           >
             <Text type="text3" tag="span">
               {Translate({
@@ -316,7 +323,7 @@ export function Filter(props) {
                 });
 
                 return (
-                  <List.Select
+                  <List.SelectGroup
                     key={`${facet.name}-${idx}`}
                     selected={false}
                     onSelect={() => modal.push("filter", { facet })}
@@ -345,7 +352,7 @@ export function Filter(props) {
                         </Text>
                       )}
                     </span>
-                  </List.Select>
+                  </List.SelectGroup>
                 );
               })
               .filter((c) => c)}
