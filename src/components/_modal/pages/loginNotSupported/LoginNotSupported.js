@@ -9,7 +9,7 @@ import Translate from "@/components/base/translate";
 import styles from "./LoginNotSupported.module.css";
 import animations from "css/animations";
 
-export default function LoginNotSupported({ context }) {
+export default function LoginNotSupported({ context, modal }) {
   const { libraryName } = { ...context };
   return (
     <div className={styles.container}>
@@ -73,7 +73,7 @@ export default function LoginNotSupported({ context }) {
         }}
         border={{ bottom: { keepVisible: true } }}
       >
-        <Text type="text2" tag="span">
+        <Text type="text2">
           {Translate({ context: "login", label: "why-login-not-suported" })}
         </Text>
         <Icon
@@ -85,7 +85,16 @@ export default function LoginNotSupported({ context }) {
         />
       </Link>
 
-      <Button type="secondary" className={styles.backButton}>
+      <Button
+        type="secondary"
+        className={styles.backButton}
+        onClick={() => modal.prev()}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.keyCode === 13) {
+            modal.prev();
+          }
+        }}
+      >
         {Translate({ context: "general", label: "back" })}
       </Button>
     </div>
