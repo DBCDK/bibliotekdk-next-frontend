@@ -88,22 +88,6 @@ export default function LoginNotSupported({ context }) {
       <Button type="secondary" className={styles.backButton}>
         {Translate({ context: "general", label: "back" })}
       </Button>
-
-      <Link
-        onClick={() => {
-          alert("Implement link to library specific login instructions");
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            alert("Implement link to library specific login instructions");
-          }
-        }}
-        border={{ bottom: { keepVisible: true } }}
-      >
-        <Text type="text3" tag="span">
-          {Translate({ context: "login", label: "create-library-user" })}
-        </Text>
-      </Link>
     </div>
   );
 }

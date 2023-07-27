@@ -222,14 +222,7 @@ export function Login({
             />
           </Button>
           <Link
-            onClick={() => {
-              alert("Implement link to library specific login instructions");
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.keyCode === 13) {
-                alert("Implement link to library specific login instructions");
-              }
-            }}
+            href="/hjaelp/ny-bruger/45"
             border={{ bottom: { keepVisible: true } }}
           >
             <Text type="text3" tag="span">
