@@ -378,10 +378,14 @@ const MaterialRow = (props) => {
   const orderMutation = useMutate();
   const loanMutation = useMutate();
 
+  console.log("agencyId", agencyId);
+
   const isMobileSize =
     breakpoint === "xs" || breakpoint === "sm" || breakpoint === "md";
 
   useEffect(() => {
+    console.log("loanMutation", loanMutation);
+
     handleLoanMutationUpdates(
       loanMutation,
       setHasRenewError,
@@ -443,6 +447,7 @@ const MaterialRow = (props) => {
   };
 
   function onClickRenew({ loanId, agencyId, loanMutation }) {
+    console.log("agencyID", agencyId);
     handleRenewLoan({
       loanId,
       agencyId,
