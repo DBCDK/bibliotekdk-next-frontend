@@ -17,12 +17,8 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
-import {
-  manifestationForLectorReview,
-  manifestationsForAccessFactory,
-} from "@/lib/api/manifestation.fragments";
+import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
-import { ReviewHeading } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
 
 export function ReviewPage(props) {
   const { article, notFound, isLoading, articleId, material } = props;
