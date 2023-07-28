@@ -19,7 +19,7 @@ import animations from "css/animations";
 import { useData } from "@/lib/api/api";
 import * as libraryFragments from "@/lib/api/library.fragments";
 
-import styles from "./Login2.module.css";
+import styles from "./Login.module.css";
 
 import { signIn } from "next-auth/react";
 import getConfig from "next/config";

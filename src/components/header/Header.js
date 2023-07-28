@@ -124,7 +124,7 @@ export function Header({
           }
         : // open login modal
           () =>
-            modal.push("login2", {
+            modal.push("login", {
               title: Translate({
                 context: "header",
                 label: "login",

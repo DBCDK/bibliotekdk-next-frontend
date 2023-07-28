@@ -34,7 +34,7 @@ export default function ProfileLayout({ title, children }) {
   const modal = useModal();
 
   function openModal() {
-    modal.push("login2", {
+    modal.push("login", {
       title: Translate({
         context: "header",
         label: "login",

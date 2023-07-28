@@ -28,7 +28,7 @@ export default function ArticleLoginPrompt({ articleId }) {
   const agencyName = branchRes?.data?.branches?.result?.[0]?.agencyName || "";
 
   function signIn() {
-    modal.push("login2", {
+    modal.push("login", {
       title: Translate({
         context: "header",
         label: "login",

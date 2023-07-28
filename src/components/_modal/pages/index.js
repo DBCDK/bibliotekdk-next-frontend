@@ -11,7 +11,7 @@ import References from "./references";
 import ManifestationContent from "./manifestationContent";
 import Material from "./material";
 import DeleteOrder from "./deleteOrder";
-import Login2 from "./login2";
+import Login from "./login";
 import LoginNotSupported from "./loginNotSupported";
 
 const _modal = {
@@ -28,7 +28,7 @@ const _modal = {
   ManifestationContent,
   Material,
   DeleteOrder,
-  Login2,
+  Login,
   LoginNotSupported,
 };
 
