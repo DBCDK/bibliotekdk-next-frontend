@@ -21,10 +21,6 @@ import ChevronLeft from "@/public/icons/chevron_left.svg";
  * @return {JSX.Element}
  */
 export function ReviewHeading({ propAndChildrenInput }) {
-  const workTypeTranslated = workTypeTranslator(
-    propAndChildrenInput?.workTypes
-  );
-
   return (
     <Section
       space={false}
@@ -33,19 +29,7 @@ export function ReviewHeading({ propAndChildrenInput }) {
       className={`${styles.top}`}
     >
       <Col xs={12} className={`${styles.overview}`}>
-        <div className={styles.back_button}>
-          <IconLink
-            href={templateForHeaderWorkCard(propAndChildrenInput).link_href}
-            border={{ bottom: true, top: false }}
-            iconSrc={ChevronLeft}
-          >
-            {[
-              Translate({ context: "general", label: "back-to" }),
-              " ",
-              workTypeTranslated,
-            ].join("")}
-          </IconLink>
-        </div>
+        <ReviewHeadingLink propAndChildrenInput={propAndChildrenInput} />
         <div className={styles.title_box}>
           <Title type="title2" className={styles.title}>
             {Translate({ context: "reviews", label: "materialTitle-1" })} <br />{" "}
@@ -61,6 +45,27 @@ export function ReviewHeading({ propAndChildrenInput }) {
         </div>
       </Col>
     </Section>
+  );
+}
+
+export function ReviewHeadingLink({ propAndChildrenInput, className }) {
+  const workTypeTranslated = workTypeTranslator(
+    propAndChildrenInput?.workTypes
+  );
+  return (
+    <div className={`${styles.back_button}  ${className}`}>
+      <IconLink
+        href={templateForHeaderWorkCard(propAndChildrenInput).link_href}
+        border={{ bottom: true, top: false }}
+        iconSrc={ChevronLeft}
+      >
+        {[
+          Translate({ context: "general", label: "back-to" }),
+          " ",
+          workTypeTranslated,
+        ].join("")}
+      </IconLink>
+    </div>
   );
 }
 ReviewHeading.propTypes = {

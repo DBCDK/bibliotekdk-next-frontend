@@ -91,7 +91,11 @@ export function reviews({ workId }) {
               work(id: $workId) {
                 workId
                 titles {
-                  main
+                  main                  
+                }
+                workTypes
+                creators{
+                  display
                 }
                 subjects {
                   dbcVerified {
