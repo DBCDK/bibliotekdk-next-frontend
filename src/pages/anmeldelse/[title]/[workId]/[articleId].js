@@ -105,14 +105,9 @@ export default function Wrap() {
   const { data, isLoading: isLoadingWork } = useData(
     workFragments.reviews({ workId })
   );
-
-  console.log(data, "DATA");
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
-
-  console.log(publicReviewData, "PUBLIC");
-
   const {
     data: lectorReviewData,
     isLoading: lectorReviewIsLoading,
@@ -126,8 +121,6 @@ export default function Wrap() {
   } = useData(
     user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
-
-  console.log(infomediaArticleData, "INFOMEDIADATA");
 
   const article = parseInfomediaArticle(
     publicReviewData?.[0],
