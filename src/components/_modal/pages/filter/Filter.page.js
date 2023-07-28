@@ -323,9 +323,8 @@ export function Filter(props) {
                 });
 
                 return (
-                  <List.SelectGroup
+                  <List.FormLink
                     key={`${facet.name}-${idx}`}
-                    selected={false}
                     onSelect={() => modal.push("filter", { facet })}
                     label={facet.name}
                     className={`${styles.item} ${animations["on-hover"]}`}
@@ -352,7 +351,7 @@ export function Filter(props) {
                         </Text>
                       )}
                     </span>
-                  </List.SelectGroup>
+                  </List.FormLink>
                 );
               })
               .filter((c) => c)}

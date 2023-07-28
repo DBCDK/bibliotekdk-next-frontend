@@ -54,11 +54,10 @@ function Radio({
           onSelect(e);
         }
       }}
-      className={`${styles.row} ${animations["on-focus"]} ${
-        animations["f-outline"]
-      } ${selected ? styles.selected : ""} ${className || ""} ${
-        disabled ? styles.disabledrow : ""
-      }`}
+      className={cx(styles.row, className, animations["on-focus"], {
+        [styles.selected]: selected,
+        [styles.disabledrow]: disabled,
+      })}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -133,7 +132,6 @@ function Select({
         [styles.selected]: selected,
         [styles.disabledrow]: disabled,
       })}
-      tabIndex={disabled ? -1 : 0}
     >
       <div
         className={[styles.content, animations["f-translate-right"]].join(" ")}
@@ -162,14 +160,13 @@ Select.propTypes = {
   _ref: PropTypes.func,
 };
 
-function SelectGroup({
+function FormLink({
   children,
   disabled,
   onDisabled,
   label,
   labelledBy,
   onSelect,
-  selected,
   _ref,
   className,
   includeArrows,
@@ -180,7 +177,6 @@ function SelectGroup({
       data-cy={props["data-cy"]}
       ref={_ref}
       aria-labelledby={labelledBy}
-      aria-checked={selected}
       aria-disabled={!!disabled}
       disabled={!!disabled}
       onClick={(e) => {
@@ -190,12 +186,12 @@ function SelectGroup({
         }
       }}
       onKeyDown={(e) => {
-        if ((e.key === "Enter" || e.key === " ") && onSelect && !disabled) {
+        if (e.key === "Enter" && onSelect && !disabled) {
           onSelect(e);
         }
       }}
       className={cx(styles.row, className, animations["on-focus"], {
-        [styles.selected]: selected,
+        // [styles.selected]: selected,
         [styles.disabledrow]: disabled,
       })}
       border={false}
@@ -218,6 +214,13 @@ function SelectGroup({
     </Link>
   );
 }
+FormLink.propTypes = {
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  label: PropTypes.string,
+  onSelect: PropTypes.func,
+  _ref: PropTypes.func,
+};
 
 function Group({
   children,
@@ -233,6 +236,7 @@ function Group({
     let index = 0;
     childrenRef.current.forEach((el, idx) => {
       if (el) {
+        el.tabIndex = "-1";
         if (
           el.getAttribute("aria-checked") === "true" ||
           el.getAttribute("aria-checked") === true
@@ -258,6 +262,15 @@ function Group({
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement
         );
+
+        if (!childrenRef.current[index]) {
+          /**
+           * We are not in a form group, break.
+           * Happens for FormLink
+           */
+          return;
+        }
+
         if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
           e.preventDefault();
           const prevIndex =
@@ -294,6 +307,6 @@ function Group({
   );
 }
 
-const ExportedList = { Group, Radio, Select, SelectGroup };
+const ExportedList = { Group, Radio, Select, FormLink };
 
 export default ExportedList;
