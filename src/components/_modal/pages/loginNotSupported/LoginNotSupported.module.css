@@ -1,5 +1,5 @@
 .container {
-  padding: var(--pt2) var(--pt4);
+  padding: var(--pt2) var(--pt6) 0;
 }
 
 .header {
@@ -45,7 +45,7 @@
 
 .chevron {
   position: absolute;
-  left: 305px;
+  left: 318px;
 
   margin: auto;
 }

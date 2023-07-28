@@ -5,7 +5,6 @@ import PeriodicaForm from "./periodicaform";
 import Pickup from "./pickup";
 import Loanerform from "./loanerform";
 import Receipt from "./receipt";
-import Login from "./login";
 import Filter from "./filter";
 import Localizations from "./localizations";
 import References from "./references";
@@ -23,7 +22,6 @@ const _modal = {
   Pickup,
   Loanerform,
   Receipt,
-  Login,
   Filter,
   Localizations,
   References,

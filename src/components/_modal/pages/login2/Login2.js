@@ -130,9 +130,6 @@ export function Login({
       return;
     }
 
-    console.log("mode ", mode);
-    // show loanerform for selected branch
-
     if (
       //we can order stuff for these libraries, but we cannot login/validate via them
       mode === LOGIN_MODE.ORDER_PHYSICAL ||
