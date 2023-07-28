@@ -17,11 +17,15 @@ import {
 
 import ArticleLoginPrompt from "@/components/login/prompt/ArticleLoginPrompt";
 import Custom404 from "@/pages/404";
-import { manifestationForLectorReview } from "@/lib/api/manifestation.fragments";
+import {
+  manifestationForLectorReview,
+  manifestationsForAccessFactory,
+} from "@/lib/api/manifestation.fragments";
 import LectorReviewPage from "@/components/article/lectorreview/LectorReviewPage";
+import { ReviewHeading } from "@/components/article/lectorreview/reviewheading/ReviewHeading";
 
 export function ReviewPage(props) {
-  const { article, notFound, isLoading, articleId } = props;
+  const { article, notFound, isLoading, articleId, material } = props;
 
   const router = useRouter();
 
@@ -34,7 +38,11 @@ export function ReviewPage(props) {
         <ContentSkeleton />
       ) : (
         <>
-          {article && <Content data={{ article }} />}
+          {article && (
+            <>
+              <Content data={{ article }} backToMaterial={material} />
+            </>
+          )}
 
           <ArticleLoginPrompt articleId={articleId} />
         </>
@@ -98,9 +106,12 @@ export default function Wrap() {
     workFragments.reviews({ workId })
   );
 
+  console.log(data, "DATA");
   const publicReviewData = data?.work?.relations?.hasReview?.filter((el) =>
     el.access?.find((access) => access.id === articleId)
   );
+
+  console.log(publicReviewData, "PUBLIC");
 
   const {
     data: lectorReviewData,
@@ -115,6 +126,8 @@ export default function Wrap() {
   } = useData(
     user.isAuthenticated && articleId && infomediaArticle({ id: articleId })
   );
+
+  console.log(infomediaArticleData, "INFOMEDIADATA");
 
   const article = parseInfomediaArticle(
     publicReviewData?.[0],
@@ -139,8 +152,18 @@ export default function Wrap() {
     );
   }
 
+  // make a heading for infomedia articles - just like librarians reviews
+  const material = {
+    pid: publicReviewData[0]?.pid,
+    titles: { full: data?.work?.titles?.main },
+    materialTypes: data?.work?.materialTypes,
+    creators: data?.work?.creators,
+    ownerWork: { workId: data?.work?.workId },
+  };
+
   return (
     <ReviewPage
+      material={material}
       article={article}
       notFound={data && !publicReviewData}
       isLoading={isLoadingWork || isLoadingInfomedia}
