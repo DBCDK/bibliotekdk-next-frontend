@@ -1,7 +1,7 @@
-import Link from "@/components/base/link";
+import { useState } from "react";
 import Top from "@/components/_modal/pages/base/top";
 import Icon from "@/components/base/icon";
-
+import Collapse from "react-bootstrap/Collapse";
 import Title from "@/components/base/title";
 import Text from "@/components/base/text";
 import Button from "@/components/base/button";
@@ -11,6 +11,12 @@ import animations from "css/animations";
 
 export default function LoginNotSupported({ context, modal }) {
   const { libraryName } = { ...context };
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleCollapse = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <div className={styles.container}>
       <Top />
@@ -61,29 +67,41 @@ export default function LoginNotSupported({ context, modal }) {
         })}
       </Text>
 
-      <Link
-        className={styles.link}
-        onClick={() => {
-          alert("Show more");
-        }}
+      <Collapse in={expanded}>
+        <p className={styles.notSupportedReason} id="why-not-supported-text">
+          {Translate({
+            context: "login",
+            label: "not-supported-reason",
+          })}
+        </p>
+      </Collapse>
+      <button
+        aria-controls="why-not-supported-text"
+        aria-expanded={expanded}
+        className={`${styles.expandButton} ${animations["on-hover"]} ${animations["on-focus"]}`}
+        border={false}
+        onClick={toggleCollapse}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.keyCode === 13) {
-            alert("Show more");
+          if (e.key === "Enter") {
+            toggleCollapse();
           }
         }}
-        border={{ bottom: { keepVisible: true } }}
       >
-        <Text type="text2">
-          {Translate({ context: "login", label: "why-login-not-suported" })}
-        </Text>
-        <Icon
-          size={{ w: 2, h: "auto" }}
-          className={`${styles.chevron} ${animations["h-elastic"]} ${animations["f-elastic"]}`}
-          alt={"open arrow down"}
-          title={"open arrow down"}
-          src={"ArrowDown.svg"}
-        />
-      </Link>
+        <span className={styles.expandWrap}>
+          <Text
+            type="text2"
+            className={`${animations["f-border-bottom"]} ${animations["h-border-bottom"]}`}
+          >
+            {Translate({ context: "login", label: "why-login-not-suported" })}
+          </Text>
+          <Icon
+            size={{ w: "2", h: "auto" }}
+            src="arrowDown.svg"
+            className={styles.chevron}
+            alt=""
+          />
+        </span>
+      </button>
 
       <Button
         type="secondary"

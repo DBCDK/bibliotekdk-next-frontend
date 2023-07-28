@@ -2265,12 +2265,16 @@
         "en": "see loans and reservations"
       },
       "login-with": {
-        "da": "så skal du logge ind via dit folkebilbiotek eller med MitID.",
+        "da": "så skal du logge ind via dit folkebibliotek eller med MitID.",
         "en": "you need to login via your public library or with MitID."
       },
       "why-login-not-suported": {
-        "da": "Hvorfor understøttes logind ikke?",
+        "da": "Hvorfor understøttes log ind ikke?",
         "en": "Why does is login not support?"
+      },
+      "not-supported-reason": {
+        "da": "Nogle få forsknings- og uddannelsesbibliotekers systemer er ikke integereret med Bibliotek.dk, og vi vil derfor ikke kunne garantere en tværgående brugeroplevelse.",
+        "en": "A few research and educational libraries are not integrated with Bibliotek.dk, and we will therefore not be able to guarantee a cross-cutting user experience."
       }
     },
     "form": {

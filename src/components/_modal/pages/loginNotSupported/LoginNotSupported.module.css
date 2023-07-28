@@ -21,12 +21,44 @@
   padding-bottom: var(--pt2);
 }
 
-.chevron {
-  margin-left: var(--pt1);
+/* expand more information */
+.expandWrap {
+  display: flex;
+  align-items: center;
 }
 
-.link {
-  display: flex;
-  width: fit-content;
-  align-items: center;
+.expandButton {
+  background-color: var(--white);
+}
+
+.expandButton:hover {
+  cursor: pointer;
+}
+
+.expandButton .expandWrap p {
+  margin: 0 var(--pt1) 0 0;
+}
+
+.expandButton[aria-expanded="true"] .chevron img {
+  transform: rotate(180deg);
+}
+
+.chevron {
+  position: absolute;
+  left: 305px;
+
+  margin: auto;
+}
+
+.chevron img {
+  transition: transform 0.2s linear;
+}
+
+.notSupportedReason {
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 152.941% */
+  letter-spacing: 0.2px;
+  padding-bottom: var(--pt1);
 }
