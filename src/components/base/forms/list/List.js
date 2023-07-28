@@ -191,7 +191,6 @@ function FormLink({
         }
       }}
       className={cx(styles.row, className, animations["on-focus"], {
-        // [styles.selected]: selected,
         [styles.disabledrow]: disabled,
       })}
       border={false}
