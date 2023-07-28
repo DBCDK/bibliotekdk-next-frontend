@@ -97,7 +97,7 @@ function Select({
  * @param {obj} context
  * @param {string} title
  */
-export function Login({
+export function LoginPickup({
   data,
   isVisible,
   onChange,
@@ -130,11 +130,23 @@ export function Login({
       return;
     }
 
-    if (
-      //we can order stuff for these libraries, but we cannot login/validate via them
-      mode === LOGIN_MODE.ORDER_PHYSICAL ||
-      mode === LOGIN_MODE.DIGITAL_COPY
-    ) {
+    /**
+     * If we order a physical copy or a digital copy, we always show the loanerform
+     * If the mode neither of the two modes above, we check if the library supports borrowCheck
+     * If not, we show the loginNotSupported modal, we can order stuff for these libraries, but we cannot login/validate via them
+     * @param {string} mode
+     * @param {boolean} borrowCheck
+     * @returns {boolean}
+     */
+    const showLoanerForm = ({ mode, borrowCheck }) => {
+      return (
+        mode === LOGIN_MODE.ORDER_PHYSICAL ||
+        mode === LOGIN_MODE.DIGITAL_COPY ||
+        borrowCheck === true
+      );
+    };
+
+    if (showLoanerForm({ mode, borrowCheck: branch?.borrowerCheck })) {
       modal.push("loanerform", {
         branchId: branch.branchId,
         doPolicyCheck: false,
@@ -232,7 +244,7 @@ export function Login({
   );
 }
 
-Login.propTypes = {
+LoginPickup.propTypes = {
   data: PropTypes.object,
   className: PropTypes.string,
   onClose: PropTypes.func,
@@ -277,7 +289,7 @@ export default function Wrap(props) {
   const branches = !query ? agency : data?.branches;
   const includeArrows = !!query;
   return (
-    <Login
+    <LoginPickup
       {...props}
       isLoading={isLoading}
       data={isLoading ? dummyData : branches}

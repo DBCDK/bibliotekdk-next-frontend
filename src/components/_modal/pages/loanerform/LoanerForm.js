@@ -271,7 +271,7 @@ export function LoanerForm({
   let orderPossible =
     doPolicyCheck !== false ? branch.orderPolicy?.orderPossible : true;
 
-  // QUICKFIX - .. to avoid api check ..  all public libraries has access to dda - no other
+  // QUICKFIX - .. to avoid api check ..  all public libraries have access to dda - no other
   if (mode === LOGIN_MODE.DDA) {
     orderPossible = branch?.agencyId?.startsWith("7") || false;
   }
