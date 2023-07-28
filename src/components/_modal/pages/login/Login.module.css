@@ -30,11 +30,8 @@
 
 .mitIDSection {
   width: 100%;
-  position: absolute;
-  right: 0px;
-  top: 300px;
-  padding-right: var(--pt2);
-  padding-left: var(--pt2);
+  display: flex;
+  flex-direction: column;
 }
 
 .mitIDButton {
@@ -50,13 +47,12 @@
   max-height: fit-content;
 }
 
+.createLibraryUserLink {
+  width: fit-content;
+}
+
 @media (min-width: 576px) {
   .login {
     padding: 0 var(--pt6) var(--pt3) var(--pt6);
-  }
-
-  .mitIDSection {
-    padding-right: var(--pt6);
-    padding-left: var(--pt6);
   }
 }

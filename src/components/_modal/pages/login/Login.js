@@ -218,7 +218,7 @@ export function LoginPickup({
             className={styles.mitIDButton}
             onClick={() => alert("Implement MitID")}
             onKeyDown={(e) => {
-              if (e.key === "Enter" || e.keyCode === 13) {
+              if (e.key === "Enter") {
                 alert("Implement MitID");
               }
             }}
@@ -232,6 +232,7 @@ export function LoginPickup({
           </Button>
           <Link
             href="/hjaelp/ny-bruger/45"
+            className={styles.createLibraryUserLink}
             border={{ bottom: { keepVisible: true } }}
           >
             <Text type="text3" tag="span">
