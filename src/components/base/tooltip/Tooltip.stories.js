@@ -12,11 +12,7 @@ export function SimpleTooltipWithChild() {
   return (
     <div style={{ height: "200px", width: "300px" }}>
       <StoryTitle>Simple tooltip width child</StoryTitle>
-      <Popover
-        placement="right"
-        labelToTranslate="tooltip_change_email"
-        delayHide={0}
-      >
+      <Popover placement="right" labelToTranslate="tooltip_change_email">
         <p style={{ cursor: "pointer" }}>CLICK ME</p>
       </Popover>
     </div>
@@ -30,7 +26,6 @@ export function SimpleTooltipDefaultContent() {
       <Popover
         placement="right"
         labelToTranslate="tooltip_change_email"
-        delayHide={0}
       ></Popover>
     </div>
   );
