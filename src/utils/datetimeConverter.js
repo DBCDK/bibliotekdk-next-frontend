@@ -29,7 +29,7 @@ export function timestampToShortDate(timestamp) {
 
 /**
  * date
- * @param date yyyymmdd
+ * @param {string} numeric yyyymmdd
  * @returns {string} format: yyyy-mm-dd
  */
 export function numericToISO(numeric) {
