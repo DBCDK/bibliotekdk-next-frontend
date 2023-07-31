@@ -325,7 +325,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
  * @returns
  */
 export const RenewedSpan = ({ textType = "text2" }) => {
-  console.log("texttype ", textType);
   return (
     <span className={styles.renewedWrapper}>
       <Text type={textType}>

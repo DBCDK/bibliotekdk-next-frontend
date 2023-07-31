@@ -154,12 +154,12 @@
   display: flex;
   margin-bottom: var(--pt4);
   padding-left: var(--pt2);
-  width: 50%;
+  width: 100%;
   justify-content: center;
 }
 
 .renewedIcon {
-  padding-top: 5px;
+  padding-top: 1px;
   padding-left: var(--pt1);
 }
 
