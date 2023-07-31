@@ -53,6 +53,7 @@ export function IconLink({
         className={cx(...iconAnimation)}
         title={"Link kopieret"}
         alt={JSON.stringify(children.innerText)}
+        tabIndex="-1"
       >
         <IconChild
           style={{
@@ -76,7 +77,7 @@ export function IconLink({
     >
       {iconPlacement === "left" && <IconComponent />}
       <div>
-        <Link border={disabled ? {} : border} tag={"span"} disabled={disabled}>
+        <Link border={disabled ? {} : border} tag={"span"} disabled={true}>
           {typeof children === "string" ? (
             <Text type={textType} tag="span">
               {children}
@@ -92,7 +93,11 @@ export function IconLink({
 }
 
 IconLink.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  children: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.element,
+  ]),
   href: PropType_Link_href,
   onClick: PropTypes.func,
   textType: PropTypes.string,

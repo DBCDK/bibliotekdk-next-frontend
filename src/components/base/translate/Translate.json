@@ -183,6 +183,10 @@
         "da": "Billede:",
         "en": "Image:"
       },
+      "cover-slider-label": {
+        "da": "Billede karousel. Brug piletaster til at navigere",
+        "en": "Image carousel. Use arrow keys to navigate"
+      },
       "description": {
         "da": "Beskrivelse:",
         "en": "Description:"
@@ -3150,6 +3154,10 @@
       "date-overdue": {
         "da": "Frist overskredet!",
         "en": "Return deadline overdue!"
+      },
+      "last-day": {
+        "da": "I dag",
+        "en": "Today"
       },
       "loans-subtext": {
         "da": "Du ser lån og reserveringer for",
