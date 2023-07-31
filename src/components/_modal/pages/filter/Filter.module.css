@@ -55,7 +55,7 @@
 }
 
 .group {
-  padding-bottom: var(--pt3);
+  margin-bottom: var(--pt3);
 }
 
 .submit {
@@ -70,6 +70,6 @@
   }
 
   .group.terms {
-    padding-bottom: var(--pt6);
+    margin-bottom: var(--pt6);
   }
 }

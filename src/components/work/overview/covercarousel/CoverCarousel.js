@@ -24,6 +24,8 @@ import { scrollToElement } from "@/components/base/scrollsnapslider/utils";
 import range from "lodash/range";
 import { flattenMaterialType } from "@/lib/manifestationFactoryUtils";
 import Custom404 from "@/pages/404";
+import Translate from "@/components/base/translate";
+import cx from "classnames";
 
 const CoverElement = forwardRef(function CoverElement(
   { thisIndex, manifestation, fullTitle, setVisibleElement, sliderId },
@@ -85,12 +87,16 @@ export function CoverCarousel({
   const carouselId = useId();
   const carouselRef = useRef(null);
 
-  const { visibleElement, sliderElementId, setVisibleElement } =
-    useScrollSlider({
-      sliderId: sliderId,
-      parentRef: carouselRef,
-      disableScrollRestoration: true,
-    });
+  const {
+    visibleElement,
+    sliderElementId,
+    setVisibleElement,
+    index: currentIndex,
+  } = useScrollSlider({
+    sliderId: sliderId,
+    parentRef: carouselRef,
+    disableScrollRestoration: true,
+  });
 
   const length = manifestations?.length;
 
@@ -99,13 +105,21 @@ export function CoverCarousel({
   }
 
   return (
-    <div className={`${styles.full_cover_carousel}`}>
+    <div className={styles.full_cover_carousel}>
       <div
         className={`${styles.carousel} ${styles.grid_cover_area}`}
         ref={carouselRef}
         id={carouselId}
         tabIndex="0"
         alt=""
+        role="slider"
+        aria-label={Translate({
+          context: "general",
+          label: "image-carousel-label",
+        })}
+        aria-valuemin={1}
+        aria-valuemax={length}
+        aria-valuenow={currentIndex + 1}
       >
         {range(0, length, 1)?.map((value, idx) => {
           return (
@@ -128,16 +142,18 @@ export function CoverCarousel({
               clickCallback(moveCarousel(-1, length, visibleElement))
             }
             orientation={"left"}
-            arrowClass={`${styles.left_arrow} ${styles.arrow_styling}`}
+            arrowClass={cx(styles.left_arrow, styles.arrow_styling)}
             dataDisabled={!(visibleElement > 0)}
+            tabIndex={-1}
           />
           <Arrow
             clickCallback={() =>
               clickCallback(moveCarousel(1, length, visibleElement))
             }
             orientation={"right"}
-            arrowClass={`${styles.right_arrow} ${styles.arrow_styling}`}
+            arrowClass={cx(styles.right_arrow, styles.arrow_styling)}
             dataDisabled={!(visibleElement < length - 1)}
+            tabIndex={-1}
           />
           <div className={styles.dots}>
             <DotHandler

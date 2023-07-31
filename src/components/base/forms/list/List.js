@@ -225,6 +225,7 @@ function Group({
   children,
   enabled = true,
   label = "Select list group",
+  disableGroupOutline = false, // Use for group of FormLinks
   ...props
 }) {
   const childrenRef = useRef([]);
@@ -254,9 +255,10 @@ function Group({
       data-cy={props["data-cy"]}
       role="group"
       aria-label={label}
-      className={`${styles.group} ${enabled ? "" : styles.disabled} ${
-        props.className
-      }`}
+      className={cx(styles.group, props.className, {
+        [styles.disabled]: !enabled,
+        [styles.boxOutline]: !disableGroupOutline,
+      })}
       onKeyDown={(e) => {
         const index = childrenRef.current.findIndex(
           (el) => el === document.activeElement

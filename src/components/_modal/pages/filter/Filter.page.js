@@ -299,6 +299,7 @@ export function Filter(props) {
               context: "facets",
               label: "facets-group-label",
             })}
+            disableGroupOutline
           >
             {facets
               .map((facet, idx) => {
