@@ -19,7 +19,6 @@ import Text from "@/components/base/text/Text";
 import React from "react";
 import isEmpty from "lodash/isEmpty";
 import { useModal } from "@/components/_modal";
-// import { LinkArrow } from "@/components/_modal/pages/order/linkarrow/LinkArrow";
 import { IconLink as LinkArrow } from "@/components/base/iconlink/IconLink";
 import Translate from "@/components/base/translate";
 import cx from "classnames";

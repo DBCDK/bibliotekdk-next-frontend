@@ -90,7 +90,7 @@ function Link({
         onKeyDown={(e) => {
           onKeyDown
             ? onKeyDown(e)
-            : e?.key === "Enter" || e?.key === " "
+            : e?.key === "Enter"
             ? onClickWrapper(onClick, href, e)
             : (() => {})();
         }}
