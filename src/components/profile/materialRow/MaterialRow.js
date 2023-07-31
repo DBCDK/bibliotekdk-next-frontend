@@ -221,6 +221,62 @@ export const MaterialHeaderRow = ({ column1, column2, column3 }) => {
   );
 };
 
+const SkeletonMaterialRow = ({ version = "desktop" }) => {
+  if (version === "desktop") {
+    return (
+      <article className={cx(styles.materialRow, styles.materialRow_wrapper)}>
+        <div className={styles.materialInfo}>
+          <div className={styles.imageContainer}>
+            <Cover skeleton size="fill-width" />
+          </div>
+
+          <div className={styles.textContainer}>
+            <Title type="text1" tag="h3" skeleton lines={1} />
+            <Text type="text2" skeleton lines={1} />
+            <Text type="text2" className={styles.uppercase} skeleton />
+          </div>
+        </div>
+
+        <div>
+          <Text type="text2" skeleton lines={2} />
+        </div>
+        <div>
+          <Text type="text2" skeleton lines={1} />
+        </div>
+
+        <div>
+          <Button type="primary" size="small" skeleton />
+        </div>
+      </article>
+    );
+  } else if (version === "mobile") {
+    return (
+      <article className={styles.materialRow_mobile}>
+        <div>
+          <Cover skeleton size="fill-width" />
+        </div>
+        <div className={styles.textContainer}>
+          <Title type="text1" tag="h3" skeleton lines={1} />
+          <Text type="text2" skeleton lines={1} />
+          <Text type="text2" className={styles.uppercase} skeleton lines={1} />
+
+          <div className={styles.dynamicContent}>
+            <Text type="text2" skeleton lines={2} />
+          </div>
+        </div>
+        <div className={styles.arrowright_container}>
+          <Icon
+            alt=""
+            size={{ w: "auto", h: 2 }}
+            src="arrowrightblue.svg"
+            className={styles.arrowright}
+          />
+        </div>
+      </article>
+    );
+  }
+};
+
 /**
  * Use for checkbox functionality
  * @param parentRef of parent html element, which contains your group of material rows
@@ -325,7 +381,6 @@ const MobileMaterialRow = ({ renderDynamicColumn, ...props }) => {
  * @returns
  */
 export const RenewedSpan = ({ textType = "text2" }) => {
-  console.log("texttype ", textType);
   return (
     <span className={styles.renewedWrapper}>
       <Text type={textType}>
@@ -366,6 +421,7 @@ const MaterialRow = (props) => {
     dataCy,
     removedOrderId,
     setRemovedOrderId,
+    skeleton,
   } = props;
   const [isChecked, setIsChecked] = useState(false);
   const breakpoint = useBreakpoint();
@@ -497,6 +553,12 @@ const MaterialRow = (props) => {
         return null;
     }
   };
+
+  if (skeleton) {
+    return (
+      <SkeletonMaterialRow version={isMobileSize ? "mobile" : "desktop"} />
+    );
+  }
 
   if (isMobileSize) {
     return (
@@ -669,6 +731,7 @@ MaterialRow.propTypes = {
   agencyId: PropTypes.string,
   removedOrderId: PropTypes.string,
   setRemovedOrderId: PropTypes.func,
+  skeleton: PropTypes.bool,
 };
 
 export default MaterialRow;
