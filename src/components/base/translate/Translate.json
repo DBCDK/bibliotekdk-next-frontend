@@ -2983,6 +2983,10 @@
       "shortenedMonths": {
         "da": "jan, feb, mar, apr, maj, jun, jul, aug, sep, okt, nov, dec",
         "en": "jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec"
+      },
+      "monthsInFourCharacters": {
+        "da": "jan., feb., mar., apr., maj, juni, juli, aug., sep., okt., nov., dec.",
+        "en": "Jan., Feb., Mar., Apr., May, June, July, Aug., Sep., Oct., Nov., Dec."
       }
     },
     "profile": {

@@ -13,7 +13,7 @@ export function timestampToShortDate(timestamp) {
     return;
   }
 
-  const shortMonths = months({ label: "shortenedMonths" });
+  const shortMonths = months({ label: "monthsInFourCharacters" });
 
   const a = new Date(timestamp);
   if (isNaN(a)) {
@@ -24,12 +24,12 @@ export function timestampToShortDate(timestamp) {
   const month = (shortMonths && shortMonths[a.getMonth()]) || a.getMonth() + 1;
   const date = a.getDate();
 
-  return date + " " + month + ". " + year;
+  return date + ". " + month + " " + year;
 }
 
 /**
  * date
- * @param date yyyymmdd
+ * @param {string} numeric yyyymmdd
  * @returns {string} format: yyyy-mm-dd
  */
 export function numericToISO(numeric) {
